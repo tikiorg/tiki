@@ -93,21 +93,7 @@
 </form>
 {/if}
 </td>
-	{if $feature_multilingual == 'y'}
-		{if count($trads) > 1}
-			<td style="text-align:right;">
-			<form action="tiki-index.php" method="post">
-			<select name="page_id" onchange="page_id.form.submit()">
-			{section name=i loop=$trads}
-			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
-			{/section}
-			</select>
-			</form>
-			</td>
-		{elseif $trads[0].langName}
-			<td style="text-align:right;">{$trads[0].langName}</td>
-		{/if}
-	{/if}
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
 </tr>
 {/if}
 </table>

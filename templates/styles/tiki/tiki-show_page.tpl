@@ -30,7 +30,7 @@
 <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove" class="tablink">{tr}stop monitoring this page{/tr}</a></span>
 {/if}
 {/if}
-
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl"}{/if}
 </div>
 {/if}
 
@@ -152,6 +152,11 @@
 <span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 {/if}
+
+{if $print_page ne 'y' &&  $feature_multilingual == 'y'}
+<span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
+{/if}
+
 </div>
 {/if}
 
