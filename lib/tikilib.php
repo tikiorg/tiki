@@ -416,7 +416,9 @@ class TikiLib {
 
 	/*shared*/
 	function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
-		$title = addslashes($title);
+		// This *really* shouldn't be necessary now that the
+		// query itself has been fixed up. -rlpowell
+		//	$title = addslashes($title);
 
 		if ($taskId) {
 			$query = "update `tiki_user_tasks` set
@@ -903,7 +905,9 @@ class TikiLib {
 	/* Referer stats */
 	/*shared*/
 	function register_referer($referer) {
-		$referer = addslashes($referer);
+		// This *really* shouldn't be necessary now that the
+		// query itself has been fixed up. -rlpowell
+		//	$referer = addslashes($referer);
 
 		$now = date("U");
 		$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
@@ -1324,16 +1328,18 @@ class TikiLib {
 			$val = 1 / count($ret);
 
 			$pages[$page] = $val;
-			$query = "update `tiki_pages` set `pageRank`=$val where `pageName`='" . addslashes($page). "'";
-			$result = $this->query($query);
+			// Fixed query.  -rlpowell
+			$query = "update `tiki_pages` set `pageRank`=? where `pageName`= ?";
+			$result = $this->query($query, array($val, $page) );
 		}
 
 		for ($i = 0; $i < $loops; $i++) {
 			foreach ($pages as $pagename => $rank) {
 				// Get all the pages linking to this one
-				$query = "select `fromPage`  from `tiki_links` where `toPage` = '" . addslashes($pagename). "'";
+				// Fixed query.  -rlpowell
+				$query = "select `fromPage`  from `tiki_links` where `toPage` = ?";
 
-				$result = $this->query($query);
+				$result = $this->query($query, array( $pagename ) );
 
 				$sum = 0;
 
@@ -1341,9 +1347,10 @@ class TikiLib {
 					$linking = $res["fromPage"];
 
 					if (isset($pages[$linking])) {
-						$q2 = "select count(*) from `tiki_links` where `fromPage`='" . addslashes($linking). "'";
+						// Fixed query.  -rlpowell
+						$q2 = "select count(*) from `tiki_links` where `fromPage`= ?";
 
-						$cant = $this->getOne($q2);
+						$cant = $this->getOne($q2, array($linking) );
 
 						if ($cant == 0)
 							$cant = 1;
@@ -1354,8 +1361,9 @@ class TikiLib {
 
 				$val = (1 - 0.85) + 0.85 * $sum;
 				$pages[$pagename] = $val;
-				$query = "update `tiki_pages` set `pageRank`=$val where `pageName`='" . addslashes($pagename). "'";
-				$result = $this->query($query);
+				// Fixed query.  -rlpowell
+				$query = "update `tiki_pages` set `pageRank`=? where `pageName`=?";
+				$result = $this->query($query, array($val, $pagename) );
 
 			// Update
 			}
@@ -1410,7 +1418,8 @@ class TikiLib {
 						for ($i = 0; $i < count($asugs) && $i < 5; $i++) {
 							$sug = $asugs[$i];
 
-							//$repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");</script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br/>";
+							// If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
+							// $repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br/>";
 							$repl .= "<a href=\\\"javascript:param=doo_${word}_$i();replaceLimon(param);\\\">$sug</a><br/>";
 							$trl .= "<script language='Javascript' type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
 						}
@@ -1596,10 +1605,9 @@ class TikiLib {
 
 	/*shared*/
 	function uncategorize_object($type, $id) {
-		$id = addslashes($id);
-
-		$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`='$type' and `objId`='$id'";
-		$catObjectId = $this->getOne($query);
+		// Fixed query. -rlpowell
+		$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
+		$catObjectId = $this->getOne($query, array($type,$id));
 
 		if ($catObjectId) {
 			$query = "delete from `tiki_category_objects` where `catObjectId`=$catObjectId";
@@ -2417,82 +2425,176 @@ class TikiLib {
 	}
 
 	function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $user, $articleId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
-		$title = addslashes($title);
 
-		$heading = addslashes($heading);
-		$authorName = addslashes($authorName);
-		$imgdata = addslashes($imgdata);
-		$imgname = addslashes($imgname);
-		$body = addslashes($body);
-		$hash = md5($title . $heading . $body);
-		$now = date("U");
-		$query = "select `name`  from `tiki_topics` where `topicId` = $topicId";
-		$topicName = $this->getOne($query);
-		$topicName = addslashes($topicName);
-		$size = strlen($body);
+	    $hash = md5($title . $heading . $body);
+	    $now = date("U");
+	    // Fixed query. -rlpowell
+	    $query = "select `name`  from `tiki_topics` where `topicId` = ?";
+	    $topicName = $this->getOne($query, array($topicId) );
+	    $size = strlen($body);
 
-		if ($articleId) {
-			// Update the article
-			$query = "update `tiki_articles` set
-                `title` = '$title',
-                `authorName` = '$authorName',
-                `topicId` = $topicId,
-                `topicName` = '$topicName',
-                `size` = $size,
-                `useImage` = '$useImage',
-                `image_name` = '$imgname',
-                `image_type` = '$imgtype',
-                `image_size` = '$imgsize',
-                `image_data` = '$imgdata',
-                `isfloat` = '$isfloat',
-                `image_x` = $image_x,
-                `image_y` = $image_y,
-                `heading` = '$heading',
-                `body` = '$body',
-                `publishDate` = $publishDate,
-                `created` = $now,
-                `author` = '$user',
-                `type` = '$type',
-                `rating` = $rating
-                where `articleId` = $articleId";
+	    // Fixed query. -rlpowell
+	    if ($articleId) {
+		// Update the article
+		$query = "update `tiki_articles` set
+		    `title` = ?,
+		`authorName` = ?,
+		`topicId` = ?,
+		`topicName` = ?,
+		`size` = ?,
+		`useImage` = ?,
+		`image_name` = ?,
+		`image_type` = ?,
+		`image_size` = ?,
+		`image_data` = ?,
+		`isfloat` = ?,
+		`image_x` = ?,
+		`image_y` = ?,
+		`heading` = ?,
+		`body` = ?,
+		`publishDate` = ?,
+		`created` = ?,
+		`author` = ?,
+		`type` = ?,
+		`rating` = ?
+		    where `articleId` = ?";
 
-			$result = $this->query($query);
-		} else {
-			// Insert the article
-			$query = "insert into `tiki_articles`(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
-                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
+		$result = $this->query($query, array(
+			    $title,
+			    $authorName,
+			    $topicId,
+			    $topicName,
+			    $size,
+			    $useImage,
+			    $imgname,
+			    $imgtype,
+			    $imgsize,
+			    $imgdata,
+			    $isfloat,
+			    $image_x,
+			    $image_y,
+			    $heading,
+			    $body,
+			    $publishDate,
+			    $now,
+			    $user,
+			    $type,
+			    $rating, $articleId ) );
+	    } else {
+		// Fixed query. -rlpowell
+		// Insert the article
+		$query = "insert into `tiki_articles` (title,
+		authorName,
+		topicId,
+		useImage,
+		image_name,
+		image_size,
+		image_type,
+		image_data,
+		publishDate,
+		created,
+		heading,
+		body,
+		hash,
+		author,
+		reads,
+		votes,
+		points,
+		size,
+		topicName,
+		image_x,
+		image_y,
+		type,
+		rating,
+		isfloat) values( ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?,
+		    ?)";
 
-			$result = $this->query($query);
+		    $result = $this->query($query, array(
+		    $title,
+		    $authorName,
+		    $topicId,
+		    $useImage,
+		    $imgname,
+		    $imgsize,
+		    $imgtype,
+		    $imgdata,
+		    $publishDate,
+		    $now,
+		    $heading,
+		    $body,
+		    $hash,
+		    $user,
+		    0,
+		    0,
+		    0,
+		    $size,
+		    $topicName,
+		    $image_x,
+		    $image_y,
+		    $type,
+		    $rating,
+		    $isfloat
+		    )
+		    );
 
-			$query2 = "select max(`articleId`) from `tiki_articles` where `created` = $now and `title`='$title' and `hash`='$hash'";
-			$articleId = $this->getOne($query2);
-		}
+		    // Fixed query. -rlpowell
+		    $query2 = "select max(`articleId`) from `tiki_articles`
+			where `created` = ? and
+			`title`=? and `hash`=?";
+		    $articleId = $this->getOne($query2, array( $now,
+		    $title, $hash ) );
+	    }
 
-		return $articleId;
+	    return $articleId;
 	}
 
 	/*shared*/
 	function get_topic_image($topicId) {
-		$query = "select `image_name` ,`image_size`,`image_type`,`image_data` from `tiki_topics` where `topicId`=$topicId";
+	    // Fixed query. -rlpowell
+	    $query = "select `image_name` ,`image_size`,`image_type`,
+	    `image_data` from `tiki_topics` where `topicId`=?";
 
-		$result = $this->query($query);
+	    $result = $this->query($query, array($topicId));
 
-		$res = $result->fetchRow();
-		return $res;
+	    $res = $result->fetchRow();
+	    return $res;
 	}
 
 	/*shared*/
 	function get_featured_links($max = 10) {
-		$query = "select * from `tiki_featured_links` where `position`>0 order by `position` asc limit 0,$max";
+	    $query = "select * from `tiki_featured_links`
+		where `position`>0 order by `position` asc limit 0, ?";
 
-		$result = $this->query($query);
-		$ret = array();
+	    $result = $this->query($query, array( $max ) );
+	    $ret = array();
 
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
 
-		return $ret;
+	    return $ret;
 	}
 
 	function update_session($sessionId) {
@@ -2666,10 +2768,9 @@ class TikiLib {
 	}
 
 	function is_cached($url) {
-		$url = addslashes($url);
-
-		$query = "select `cacheId`  from `tiki_link_cache` where `url`='$url'";
-		$result = $this->query($query);
+		$query = "select `cacheId`  from `tiki_link_cache`
+		where `url`=?";
+		$result = $this->query($query, array($url) );
 		$cant = $result->numRows();
 		return $cant;
 	}
@@ -2702,28 +2803,32 @@ class TikiLib {
 	}
 
 	function refresh_cache($cacheId) {
-		$query = "select `url`  from `tiki_link_cache` where `cacheId`=$cacheId";
+		$query = "select `url`  from `tiki_link_cache`
+		where `cacheId`=?";
 
-		$url = $this->getOne($query);
+		$url = $this->getOne($query, array( $cacheId ) );
 		$data = $this->httprequest($url);
-		$data = addslashes($data);
 		$refresh = date("U");
-		$query = "update `tiki_link_cache` set `data`='$data', `refresh`=$refresh where `cacheId`=$cacheId";
-		$result = $this->query($query);
+		$query = "update `tiki_link_cache`
+		set `data`=?, `refresh`=?
+		where `cacheId`=? ";
+		$result = $this->query($query, array( $data, $refresh, $cacheId) );
 		return true;
 	}
 
 	function remove_cache($cacheId) {
-		$query = "delete from `tiki_link_cache` where `cacheId`=$cacheId";
+		$query = "delete from `tiki_link_cache`
+		where `cacheId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $cacheId ) );
 		return true;
 	}
 
 	function get_cache($cacheId) {
-		$query = "select * from `tiki_link_cache` where `cacheId`=$cacheId";
+		$query = "select * from `tiki_link_cache`
+		where `cacheId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $cacheId ) );
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -2732,23 +2837,23 @@ class TikiLib {
 		if (!$this->is_cached($url))
 			return false;
 
-		$query = "select `cacheId`  from `tiki_link_cache` where `url`='$url'";
-		$id = $this->getOne($query);
+		$query = "select `cacheId`  from `tiki_link_cache`
+		where `url`=?";
+		$id = $this->getOne($query, array( $url ) );
 		return $id;
 	}
 
 	function vote_page($page, $points) {
-		$page = addslashes($page);
-
-		$query = "update `pages` set `points`=points+$points, `votes`=votes+1 where `pageName`='$page'";
-		$result = $this->query($query);
+		$query = "update `pages`
+		set `points`=points+$points, `votes`=votes+1
+		where `pageName`=?";
+		$result = $this->query($query, array( $page ));
 	}
 
 	function get_votes($page) {
-		$page = addslashes($page);
-
-		$query = "select `points` ,`votes` from `pages` where `pageName`='$page'";
-		$result = $this->query($query);
+		$query = "select `points` ,`votes`
+		from `pages` where `pageName`=?";
+		$result = $this->query($query, array( $page ));
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -2756,9 +2861,11 @@ class TikiLib {
 	// This funcion return the $limit most accessed pages
 	// it returns pageName and hits for each page
 	function get_top_pages($limit) {
-		$query = "select `pageName` , `hits` from `tiki_pages` order by `hits` desc limit 0,$limit";
+		$query = "select `pageName` , `hits`
+		from `tiki_pages`
+		order by `hits` desc limit 0, ?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $limit ));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -2811,34 +2918,44 @@ class TikiLib {
 			return false;
 		}
 
-		$url = addslashes($url);
 		// This function stores a cached representation of a page in the cache
 		// Check if the URL is not already cached
 		//if($this->is_cached($url)) return false;
 		$data = $this->httprequest($url);
-		$data = addslashes($data);
-		$refresh = date("U");
-		$query = "insert into `tiki_link_cache`(url,data,refresh) values('$url','$data',$refresh)";
-		$result = $this->query($query);
-		return true;
+
+		// If stuff inside [] is *really* malformatted, $data
+		// will be empty.  -rlpowell
+		if ( $data )
+		{
+		    $refresh = date("U");
+		    $query = "insert into
+			`tiki_link_cache`(`url`,`data`,`refresh`)
+			values(?,?,?)";
+		    $result = $this->query($query, array($url,$data,$refresh));
+		    return true;
+		} else {
+		    return false;
+		}
 	}
 
 	// Removes all the versions of a page and the page itself
 	/*shared*/
 	function remove_all_versions($page, $comment = '') {
-		$page = addslashes($page);
-
 		$this->invalidate_cache($page);
-		$query = "delete from `tiki_pages` where `pageName` = '$page'";
-		$result = $this->query($query);
-		$query = "delete from `tiki_history` where `pageName` = '$page'";
-		$result = $this->query($query);
-		$query = "delete from `tiki_links` where `fromPage` = '$page'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_pages` where `pageName` = ?";
+		$result = $this->query($query, array( $page ) );
+		$query = "delete from `tiki_history` where `pageName` = ?";
+		$result = $this->query($query, array( $page ) );
+		$query = "delete from `tiki_links` where `fromPage` = ?";
+		$result = $this->query($query, array( $page ) );
 		$action = "Removed";
 		$t = date("U");
-		$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
-		$result = $this->query($query);
+		$query = "insert into
+		`tiki_actionlog`(action,pageName,lastModif,user,ip,comment)
+		values(?,?,?,'admin',?,?)";
+		$result = $this->query($query, array(
+		    $action,$page,$t,$_SERVER["REMOTE_ADDR"],$comment
+		) );
 		$this->remove_object('wiki page', $page);
 		$this->remove_from_structure($page);
 		return true;
@@ -2847,24 +2964,24 @@ class TikiLib {
 	/*shared*/
 	function remove_from_structure($page) {
 		// Now recursively remove
-		$page_sl = addslashes($page);
-
-		$query = "select `page` from `tiki_structures` where `parent`='$page_sl'";
-		$result = $this->query($query);
+		$query = "select `page` from `tiki_structures`
+		where `parent`=?";
+		$result = $this->query($query, array( $page ) );
 
 		while ($res = $result->fetchRow()) {
 			$this->remove_from_structure($res["page"]);
 		}
 
-		$query = "delete from `tiki_structures` where `page`='$page_sl'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_structures`
+		where `page`=?";
+		$result = $this->query($query, array( $page ) );
 		return true;
 	}
 
 	function remove_user($user) {
-		$query = "delete from `users_users` where `login` = '$user'";
+		$query = "delete from `users_users` where `login` = ?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array($user) );
 		return true;
 	}
 
@@ -2882,15 +2999,12 @@ class TikiLib {
 	function add_user($user, $pass, $email) {
 		global $wikiHomePage;
 
-		$user = addslashes($user);
-		$pass = addslashes($pass);
-		$email = addslashes($email);
-
 		if (user_exists($user))
 			return false;
 
-		$query = "insert into `users_users`(login,password,email) values('$user','$pass','$email')";
-		$result = $this->query($query);
+		$query = "insert into `users_users`(login,password,email)
+		values(?, ?, ?)";
+		$result = $this->query($query, array($user,$pass,$email) );
 		$action = "user $user added";
 		$t = date("U");
 		$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
@@ -2899,7 +3013,7 @@ class TikiLib {
 	}
 
 	function get_user_password($user) {
-		return $this->getOne("select `password`  from `users_users` where " . $this->convert_binary(). " `login`='$user'");
+		return $this->getOne("select `password`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 	}
 
 	function get_user_email($user) {
@@ -2907,9 +3021,10 @@ class TikiLib {
 	}
 
 	function get_user_info($user) {
-		$query = "select `login` , `email`, `lastLogin` from `tiki_users` where `user`='$user'";
+		$query = "select `login` , `email`, `lastLogin`
+		from `tiki_users` where `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $user ));
 		$res = $result->fetchRow();
 		$aux = array();
 		$aux["user"] = $res["user"];
@@ -3369,23 +3484,25 @@ class TikiLib {
 		global $user_preferences;
 
 		$user_preferences[$user][$name] = $value;
-		$name = addslashes($name);
-		$value = addslashes($value);
-		$query = "replace into tiki_user_preferences(user,prefName,value) values('$user','$name','$value')";
-		$result = $this->query($query);
+		$query = "replace into
+		tiki_user_preferences(user,prefName,value)
+		values(?, ?, ?)";
+		$result = $this->query($query, array($user,$name,$value) );
 		return true;
 	}
 
 	function validate_user($user, $pass) {
-		$query = "select `user`  from `tiki_users` where `user`='$user' and `password`='$pass'";
+		$query = "select `user`  from `tiki_users`
+		where `user`=? and `password`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $user, $pass ) );
 
 		if ($result->numRows()) {
 			$t = date("U");
 
-			$query = "update `tiki_users` set `lastLogin`='$t' where `user`='$user'";
-			$result = $this->query($query);
+			$query = "update `tiki_users` set `lastLogin`=?
+			where `user`=?";
+			$result = $this->query($query, array( $t, $user));
 			return true;
 		}
 
@@ -3395,18 +3512,15 @@ class TikiLib {
 	// This implements all the functions needed to use Tiki
 	/*shared*/
 	function page_exists($pageName) {
-		$pageName = addslashes($pageName);
-
 		$query = "select `pageName` from `tiki_pages` where `pageName` = ?";
 		$result = $this->query($query, array($pageName));
 		return $result->numRows();
 	}
 
 	function page_exists_desc($pageName) {
-		$pageName = addslashes($pageName);
-
-		$query = "select `description`  from `tiki_pages` where `pageName` = '$pageName'";
-		$result = $this->query($query);
+		$query = "select `description`  from `tiki_pages`
+		where `pageName` = ?";
+		$result = $this->query($query, array( $pageName ));
 
 		if (!$result->numRows())
 			return false;
@@ -3420,10 +3534,9 @@ class TikiLib {
 	}
 
 	function page_exists_modtime($pageName) {
-		$pageName = addslashes($pageName);
-
-		$query = "select `lastModif`  from `tiki_pages` where `pageName` = '$pageName'";
-		$result = $this->query($query);
+		$query = "select `lastModif`  from `tiki_pages`
+		where `pageName` = ?";
+		$result = $this->query($query, array( $pageName ));
 
 		if (!$result->numRows())
 			return false;
@@ -3437,8 +3550,6 @@ class TikiLib {
 	}
 
 	function add_hit($pageName) {
-		$pageName = addslashes($pageName);
-
 		$query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
 		$result = $this->query($query, array($pageName));
 		return true;
@@ -3448,10 +3559,13 @@ class TikiLib {
 		// Collect pages before modifying data
 		$pages = $this->get_pages($data);
 
-		$name = addslashes($name);
-		$description = addslashes($description);
-		$data = addslashes($data);
-		$comment = addslashes($comment);
+		// This *really* shouldn't be necessary now that the
+		// query itself has been fixed up, and it causes much
+		// badness to the phpwiki import.  -rlpowell 
+		// 	$name = addslashes($name);
+		// 	$description = addslashes($description);
+		// 	$data = addslashes($data);
+		// 	$comment = addslashes($comment);
 
 		if ($this->page_exists($name))
 			return false;
@@ -4003,12 +4117,10 @@ class TikiLib {
 		for ($i = 0; $i < count($pages[1]); $i++) {
 			$pattern = $pages[0][$i];
 
-			//$pattern=str_replace('|','\|',$pattern);
-			//$pattern=str_replace('(','\(',$pattern);
-			//$pattern=str_replace(')','\)',$pattern);
-			$pattern = str_replace('/', '\/', preg_quote($pattern));
+			$pattern = preg_quote($pattern, "/");
 
 			$pattern = "/" . $pattern . "/";
+
 			// Replace links to external wikis
 			$repl2 = true;
 
@@ -4085,7 +4197,8 @@ class TikiLib {
 					$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
 				}
 
-				$data = preg_replace("/\(\($page_parse\)\)/", "$repl", $data);
+				$page_parse_pq = preg_quote($page_parse, "/");
+				$data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 			}
 		}
 
@@ -4712,25 +4825,20 @@ foreach(array_unique($pages[1]) as $page_parse) {
 	}
 
 	function clear_links($page) {
-		$page = addslashes($page);
-
 		$query = "delete from `tiki_links` where `fromPage`=?";
 		$result = $this->query($query, array($page));
 	}
 
 	function replace_link($pageFrom, $pageTo) {
-		$pageFrom = addslashes($pageFrom);
-
-		$pageTo = addslashes($pageTo);
-		$query = "replace into tiki_links(fromPage,toPage) values('$pageFrom','$pageTo')";
-		$result = $this->query($query);
+		$query = "replace into tiki_links(fromPage,toPage)
+		values(?, ?)";
+		$result = $this->query($query, array($pageFrom,$pageTo));
 	}
 
 	function invalidate_cache($page) {
-		$page = addslashes($page);
-
-		$query = "update `tiki_pages` set `cache_timestamp`=0 where `pageName`='$page'";
-		$this->query($query);
+		$query = "update `tiki_pages` set `cache_timestamp`=0
+		where `pageName`=?";
+		$this->query($query, array($page) );
 	}
 
 	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
@@ -4868,35 +4976,42 @@ foreach(array_unique($pages[1]) as $page_parse) {
 	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '') {
 		global $smarty;
 
-		$pageName = addslashes($pageName);
-
 		if ($pageName == 'SandBox')
 			return;
 
 		// Collect pages before modifying edit_data
 		$pages = $this->get_pages($edit_data);
-		$edit_data = addslashes($edit_data);
-		$description = addslashes($description);
-		$edit_comment = addslashes($edit_comment);
 
 		if (!$this->page_exists($pageName))
 			return false;
 
 		$t = date("U");
-		$query = "delete from `tiki_history` where `pageName`='$pageName' and `version`=$version";
-		$result = $this->query($query);
+		$query = "delete from `tiki_history`
+		where `pageName`=? and `version`=,?";
+		$result = $this->query($query, array( $pageName, $version) );
 		$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description)
-              values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data','$description')";
-		$result = $this->query($query);
+		    values(?,?,?, ?,?,?, ?,?)";
+		$result = $this->query($query,
+		    array($pageName,$version,$lastModif,
+		    $edit_user,$edit_ip,$edit_comment,
+		    $edit_data,$description)
+		);
 
 		//print("version: $version<br/>");
 		// Get this page information
 		$info = $this->get_page_info($pageName);
 
 		if ($version >= $info["version"]) {
-			$query = "update `tiki_pages` set `data`='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip', description='$description' where `pageName`='$pageName'";
+			$query = "update `tiki_pages`
+			set `data`=?, comment=?,
+			lastModif=?, version=?, user=?,
+			ip=?, description=?
+			where `pageName`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,
+			array( $edit_data, $edit_comment, $t,
+			$version, $edit_user, $edit_ip, $description,
+			$pageName ) );
 			// Parse edit_data updating the list of links from this page
 			$this->clear_links($pageName);
 
