@@ -378,8 +378,10 @@ function convert_binary() {
 /*shared*/
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
     global $use_proxy,$proxy_host,$proxy_port;
-    // rewrite url if sloppy 
-    if (strpos($url, "http://") !== 0) {
+		// test url :
+		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+]$/",$url)) return false;
+    // rewrite url if sloppy # added a case for https urls
+    if ((strpos($url, "http://") !== 0) or (strpos($url, "https://") !== 0)) {
 	$url = "http://" . $url;
     }
     // (cdx) params for HTTP_Request.
