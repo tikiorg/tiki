@@ -6,28 +6,39 @@
 </div>
 
 {if $page_mode eq 'edit'}
-	<div id="panels"></div>
+	<div id="panel">
+		<menu>
+			<li><a href="#" onClick="insertRowClick()" class="linkbut">Insert Row</a></li>
+			<li><a href="#" onClick="insertColumnClick()" class="linkbut">Insert Column</a></li>
+			<li><a href="#" onClick="removeRowClick()" class="linkbut">Remove Row</a></li>
+			<li><a href="#" onClick="removeColumnClick()" class="linkbut">Remove Column</a></li>
+			<li><a href="#" onclick="mergeCellClick()" class="linkbut">Merge Cells</a></li>
+			<li><a href="#" onclick="restoreCellClick()" class="linkbut">Restore Cells</a></li>
+		</menu>
+		<div id="detail"></div>
+	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
-	<div class='submit'><a href='#' onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();'>Save</a></div>
-	<script language="JavaScript" type="text/javascript" src="lib/sheet/panel.js"></script>
+	<div class='submit'><input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="Save" /></div>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/control.js"></script>
 	<script language="JavaScript" type="text/javascript" src="lib/sheet/formula.js"></script>
 	<script language="JavaScript">
 	var g;
-{$init_grid}	
-	drawPanels( document.getElementById( 'panels' ) );
+{$init_grid}
+
+	controlInsertRowBefore = '<form name="insert" onSubmit="insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked /> Before <input type="radio" name="pos" value="after" /> After <select name="row">';
+	controlInsertRowAfter = '</select><input type="submit" name="submit" value="Insert Row" /></form>';
+	
+	controlInsertColumnBefore = '<form name="insert" onSubmit="insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked /> Before <input type="radio" name="pos" value="after" /> After <select name="column">';
+	controlInsertColumnAfter = '</select><input type="submit" name="submit" value="Insert Column" /></form>';
+
+	controlRemoveRowBefore = '<form name="insert" onSubmit="removeRowSubmit(this)"><select name="row">';
+	controlRemoveRowAfter = '</select><input type="submit" name="submit" value="Remove Row" /></form>';
+
+	controlRemoveColumnBefore = '<form name="insert" onSubmit="removeColumnSubmit(this)"><select name="column">';
+	controlRemoveColumnAfter = '</select><input type="submit" name="submit" value="Remove Column" /></form>';
 	initGrid();
 	</script>
-	<menu>
-		<li><a href="#" onClick="insertRowClick()">Insert Row</a></li>
-		<li><a href="#" onClick="insertColumnClick()">Insert Column</a></li>
-		<li><a href="#" onClick="removeRowClick()">Remove Row</a></li>
-		<li><a href="#" onClick="removeColumnClick()">Remove Column</a></li>
-		<li><a href="#" onclick="mergeCellClick()">Merge Cells</a></li>
-		<li><a href="#" onclick="restoreCellClick()">Restore Cells</a></li>
-	</menu>
-	<div id="detail"></div>
 
 {else}
 {$grid_content}

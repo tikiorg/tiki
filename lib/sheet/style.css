@@ -1,62 +1,16 @@
-
-/* Panel {{{1 */
-div.panel	table
-{
-	width:			100%;
-	border-style:	solid;
-	border-width:	1px;
-	border-color:	#000000;
-}
-
-div.panelMoving	table
-{
-	width:			100%;
-	border-style:	solid;
-	border-width:	1px;
-	border-color:	#000000;
-}
-
-div.panelMoving	th:after
-{
-	content:		" >";
-}
-
-div.panelMoving	th:before
-{
-	content:		"< ";
-}
-
-div.panelMoving	td
-{
-	visibility:		hidden;
-}
-
-div.panel	li
+div#panel	li
 {
 	list-style:		none;
-}
-
-div.panel	menu
-{
-	padding-left:	5px;
+	display:		inline;
 }
 
 /* }}}1 */
 
 /* Grid {{{1 */
-form#Grid	table
-{
-	border-style:	none	none	none	solid;
-	border-width:	1px;
-	border-color:	#000000;
-}
 
 form#Grid   table   input,	input#topbar
 {
 	width:			100%;
-	border-style:	solid;
-	border-width:	1px;
-	border-color:	#000000;
 }
 
 form#Grid	table	input
@@ -66,15 +20,8 @@ form#Grid	table	input
 
 form#Grid	table	input.selected
 {
-	background:		#cccccc;
+	background:		#000000;
 	color:			#ffffff;
 }
 
-form#Grid	div.submit
-{
-	width:			100%;
-	text-align:		center;
-	border-style:	solid;
-	border-width:	1px;
-}
 /* }}}1 */
