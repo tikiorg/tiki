@@ -3423,12 +3423,15 @@ function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',
 	$maxRecords = -1;
     }
 
-    if ($find) {
-	$mid = " where `pageName` like ? ";
-	$bindvars=array('%' . $find . '%');
+    if (is_array($find)) { // you can use an array of pages
+        $mid = " where `pageName` IN ('".implode("','", $find)."')";
+        $bindvars = array();
+    } elseif (is_string($find)) { // or a string
+        $mid = " where `pageName` like ? ";
+        $bindvars = array('%' . $find . '%');
     } else {
-	$mid = "";
-	$bindvars=array();
+        $mid = "";
+        $bindvars = array();
     }
 
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
