@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.70 2004-05-28 13:12:44 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.71 2004-06-07 19:43:54 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -87,6 +87,21 @@
 	  </select>
       </form>
       </td>
+	{/if}
+	{if $feature_multilingual == 'y'}
+		{if count($trads) > 1}
+			<td style="text-align:right;">
+			<form action="tiki-index.php" method="post">
+			<select name="page_id" onchange="page_id.form.submit()">
+			{section name=i loop=$trads}
+			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
+			{/section}
+			</form>
+			</td>
+		{else}
+		<td style="text-align:right;">{$trads[0].langName}</td>
+		{/if}
+		</td>
 	{/if}
 {*	</td>  *}
   {else}
