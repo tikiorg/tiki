@@ -20,6 +20,8 @@ class TikiLib {
 	var $parser;
 	var $pre_handlers = array();
 	var $pos_handlers = array();
+	
+	var $num_queries = 0;
 
 	// Constructor receiving a PEAR::Db database object.
 	function TikiLib($db) {
@@ -102,6 +104,9 @@ class TikiLib {
 		//echo "\n</pre>\n";
 		if (!$result && $reporterrors)
 			$this->sql_error($query, $values, $result);
+			
+		//count the number of queries made
+		$this->num_queries++;
 
 		return $result;
 	}
