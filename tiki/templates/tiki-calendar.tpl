@@ -29,7 +29,7 @@
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
 <div class="caltoggle"
 onclick="document.getElementById('calswitch').click();document.getElementById('calswitch').checked=!document.getElementById('calswitch').checked;document.getElementById('calswitch').click();"
-><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'calIds[]','calswitch');"> check / uncheck all</a></div>
+><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'calIds[]','calswitch');"> {tr}check / uncheck all{/tr}</a></div>
 {foreach item=k from=$listcals}
 <div class="calcheckbox"
 onclick="document.getElementById('groupcal_{$k}').checked=!document.getElementById('groupcal_{$k}').checked;"
@@ -45,7 +45,7 @@ onclick="this.checked=!this.checked;"/>
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
 <div class="caltoggle"
 onclick="document.getElementById('tikiswitch').click();document.getElementById('tikiswitch').checked=!document.getElementById('tikiswitch').checked;document.getElementById('tikiswitch').click();"
-><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;"> check / uncheck all</a></div>
+><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;"> {tr}check / uncheck all{/tr}</a></div>
 {foreach from=$tikiItems key=ki item=vi}
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
 <div class="calcheckbox"
@@ -81,7 +81,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 {/if}
 <div align="center" style="margin-top:10px;">
 <span style="float:right;">
-{tr}today{tr}: <a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{$now|tiki_long_date}</a>
+{tr}today{/tr}: <a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{$now|tiki_long_date}</a>
 </span>
 <span style="float:left;">
 <a href="tiki-calendar.php?todate={$monthbefore}" class="link" title="{$monthbefore|tiki_long_date}">-1m</a>
