@@ -5216,7 +5216,7 @@ function format_language_list($languages) {
 				}
 
 				// Sort the languages by their name in the current locale
-				usort($formatted, 'formatted_language_compare');
+				usort($formatted, array('TikiLib', 'formatted_language_compare'));
 				return $formatted;
 				}
 
