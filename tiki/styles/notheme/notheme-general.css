@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.4 2003-08-08 04:55:08 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.5 2003-08-14 00:46:57 zaufi Exp $
  *
  */
 
@@ -68,4 +68,12 @@ img {
 /* Expand all text editors to max size */
 textarea {
 	width: 99%;
+}
+
+/* Make definition lists looks better */
+dt {
+    display: compact;
+}
+dd {
+    margin-left: 4em;
 }

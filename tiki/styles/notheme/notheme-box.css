@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.4 2003-08-08 04:55:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.5 2003-08-14 00:46:57 zaufi Exp $
  *
  */
 
@@ -31,10 +31,8 @@ div#tiki-center > div.simplebox {
 div.box {
 	color: MenuText;
 	background-color: Menu;
-	width: 170px;
-	margin: 4px;
+	width: 176px;
 	margin-bottom: 6px;
-	padding-bottom: 10px;
 	border-top: 2px outset ThreeDLightShadow;
 	border-left: 2px outset ThreeDLightShadow;
 	border-bottom: 2px outset ThreeDShadow;
@@ -46,7 +44,7 @@ div.box {
 div.box-title {
 	color: HighlightText;
 	background-color: Highlight;
-	margin-top: 4px;
+	margin-top: 2px;
 	margin-bottom: 6px;
 	text-align: center;
 	font-variant: small-caps;
@@ -57,7 +55,7 @@ div.box-title {
 /* And this is the data */
 div.box-data {
 	margin: 0px;
-	padding: 4px;
+	padding: 10px 4px 10px 4px;
 }
 
 /* Now the boxes for the rest of Tiki (non-modules */
@@ -81,7 +79,7 @@ div.cbox#error-box {
 	padding-left: 2px;
 	padding-right: 2px;
 	padding-bottom: 20px;
-	border: 3px outset #A00000;
+	border: 3px ridge WindowFrame;
 	text-align: center;
 }
 
@@ -150,4 +148,19 @@ div.box-title:hover img {
 div.box-title td {
 	vertical-align: middle;
 	text-align: center;
+}
+
+/* Repaint module placed on wiki page */
+div.wikitext * div.box {
+    color: WindowText;
+    background-color: ThreeDHighlight;
+    border: none;
+}
+div.wikitext * div.box-title {
+    margin-bottom: 0px;
+    border: 2px ridge WindowFrame;
+}
+div.wikitext * div.box-data {
+    margin-top: 0px;
+    border: 2px ridge WindowFrame;
 }

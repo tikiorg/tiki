@@ -1,0 +1,9 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.III.css,v 1.2 2003-08-14 00:46:56 zaufi Exp $
+ *
+ * My second (or already thrid ?) theme :)
+ *
+ */
+
+@import "notheme.II.css";
+@import "notheme/notheme-III-box.css";

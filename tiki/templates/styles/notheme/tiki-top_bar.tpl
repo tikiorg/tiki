@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-top_bar.tpl,v 1.2 2003-08-01 10:31:19 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-top_bar.tpl,v 1.3 2003-08-14 00:48:27 zaufi Exp $ *}
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   <a href='tiki-calendar.php' class='linkmenu'>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.2 2003-08-01 10:31:19 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.3 2003-08-14 00:48:27 zaufi Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
@@ -31,7 +31,8 @@
 	{php} $add_style.='margin-right: 190px;'; {/php}
     {/if}
     {php}
-	$add_style = strlen($add_style) ? 'style="'.$add_style.'"' : ''; 
+    global $style;
+	$add_style = strlen($add_style) && !strstr($style, "II") ? 'style="'.$add_style.'"' : ''; 
 	global $smarty;
 	$smarty->assign('add_style', $add_style);
     {/php}
@@ -42,6 +43,11 @@
       {include file=$mid}
       {if $show_page_bar eq 'y'}
         {include file="tiki-page_bar.tpl"}
+      {/if}
+      {if $feature_bot_bar eq 'y' and strstr($style, "II") ne ''}
+        <div id="tiki-bot">
+          {include file="tiki-bot_bar.tpl"}
+        </div><!-- bottom -->
       {/if}
     </div><!-- center -->
 
@@ -57,11 +63,12 @@
 
   </div><!-- div id="tiki-mid" -->
 
-  {if $feature_bot_bar eq 'y'}
+  {if $feature_bot_bar eq 'y' and strstr($style, "II") eq ''}
     <div id="tiki-bot" {$add_style}>
       {include file="tiki-bot_bar.tpl"}
     </div><!-- bottom -->
   {/if}
+
 
 </div><!-- tiki-main -->
 
