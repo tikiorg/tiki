@@ -64,7 +64,7 @@ if (file_exists($file)) {
 }
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
-	TikiSetup::prependIncludePath('lib/adodb');
+	TikiInit::prependIncludePath('lib/adodb');
 	error_reporting (E_ALL);       # show any error messages triggered
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
