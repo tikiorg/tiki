@@ -39,7 +39,7 @@ $group_info = $userlib->get_group_info($group);
 $smarty->assign_by_ref('group_info',$group_info);
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'permName_desc'; 
+  $sort_mode = 'type_desc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 
@@ -61,7 +61,12 @@ if(isset($_REQUEST["find"])) {
   $find = ''; 
 }
 
-$perms = $userlib->get_permissions($offset,$maxRecords,$sort_mode,$find,'tiki');
+if(!isset($_REQUEST["type"])) {
+  $_REQUEST["type"]='';
+} 
+$smarty->assign('type',$_REQUEST["type"]);
+
+$perms = $userlib->get_permissions($offset,$maxRecords,$sort_mode,$find,$_REQUEST["type"]);
 $cant_pages = ceil($perms["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

@@ -2,20 +2,14 @@
 // Initialization
 require_once('tiki-setup.php');
 
-// Now check permissions to access this page
-/*
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages like this page"));
-  $smarty->display('error.tpl');
-  die;  
-}
-*/
 
-if($feature_galleries != 'y') {
+/*
+if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
+*/
 
 
 if(isset($_REQUEST["find"])) {
@@ -30,7 +24,7 @@ if(!isset($_REQUEST["galleryId"])) {
 $smarty->assign('galleryId',$_REQUEST["galleryId"]);
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo["path"]=str_replace("tiki-galleries","tiki-browse_gallery",$foo["path"]);
+$foo["path"]=str_replace("tiki-file_galleries","tiki-list_file_gallery",$foo["path"]);
 $smarty->assign('url',$_SERVER["SERVER_NAME"].$foo["path"]);
 
 // Init smarty variables to blank values
@@ -38,9 +32,6 @@ $smarty->assign('url',$_SERVER["SERVER_NAME"].$foo["path"]);
 $smarty->assign('name','');
 $smarty->assign('description','');
 $smarty->assign('maxRows',10);
-$smarty->assign('rowImages',6);
-$smarty->assign('thumbSizeX',80);
-$smarty->assign('thumbSizeY',80);
 $smarty->assign('public','n');
 $smarty->assign('edited','n');
 $smarty->assign('edit_mode','n');
@@ -51,14 +42,11 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
   $smarty->assign('edit_mode','y');
   $smarty->assign('edited','y');
   if($_REQUEST["galleryId"]>0) {
-    $info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
+    $info = $tikilib->get_file_gallery_info($_REQUEST["galleryId"]);
     //$smarty->assign_by_ref('theme',$info["theme"]);
     $smarty->assign_by_ref('name',$info["name"]);
     $smarty->assign_by_ref('description',$info["description"]);
     $smarty->assign_by_ref('maxRows',$info["maxRows"]);
-    $smarty->assign_by_ref('rowImages',$info["rowImages"]);
-    $smarty->assign_by_ref('thumbSizeX',$info["thumbSizeX"]);
-    $smarty->assign_by_ref('thumbSizeY',$info["thumbSizeY"]);
     $smarty->assign_by_ref('public',$info["public"]);
   }
 }
@@ -68,8 +56,8 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
 if(isset($_REQUEST["edit"])) {
   // Saving information
   // If the user is not gallery admin
-  if($tiki_p_admin_galleries != 'y') {
-    if($tiki_p_create_galleries != 'y') {
+  if($tiki_p_admin_file_galleries != 'y') {
+    if($tiki_p_create_file_galleries != 'y') {
       // If you can't create a gallery then you can't edit a gallery because you can't have a gallery
       $smarty->assign('msg',tra("Permission denied you cannot create galleries and so you cant edit them"));
       $smarty->display('error.tpl');
@@ -77,7 +65,7 @@ if(isset($_REQUEST["edit"])) {
     }
     // If the user can create a gallery then check if he can edit THIS gallery
     if($_REQUEST["galleryId"]>0) {
-      $info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
+      $info = $tikilib->get_file_gallery_info($_REQUEST["galleryId"]);
       if(!$user || $info["user"]!=$user) {
         $smarty->assign('msg',tra("Permission denied you cannot edit this gallery"));
         $smarty->display('error.tpl');
@@ -100,21 +88,21 @@ if(isset($_REQUEST["edit"])) {
   } else {
     $public ='n';
   }
-  $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public);
+  $tikilib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public);
   $smarty->assign('edit_mode','n');
 }
 
 
 if(isset($_REQUEST["removegal"])) {
-  if($tiki_p_admin_galleries != 'y') {
-     $info = $tikilib->get_gallery_info($_REQUEST["removegal"]);
+  if($tiki_p_admin_file_galleries != 'y') {
+     $info = $tikilib->get_file_gallery_info($_REQUEST["removegal"]);
      if(!$user || $info["user"]!=$user) {
        $smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
        $smarty->display('error.tpl');
        die;  
      }
   }
-  $tikilib->remove_gallery($_REQUEST["removegal"]);
+  $tikilib->remove_file_gallery($_REQUEST["removegal"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -136,7 +124,7 @@ $smarty->assign_by_ref('offset',$offset);
 
 // Get the list of libraries available for this user (or public galleries)
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
-$galleries = $tikilib->list_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
+$galleries = $tikilib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($galleries["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
@@ -158,6 +146,6 @@ $smarty->assign_by_ref('galleries',$galleries["data"]);
 //print_r($galleries["data"]);
 
 // Display the template
-$smarty->assign('mid','tiki-galleries.tpl');
+$smarty->assign('mid','tiki-file_galleries.tpl');
 $smarty->display('tiki.tpl');
 ?>

@@ -20,6 +20,11 @@ if($where=='pages' and $feature_wiki != 'y') {
   $smarty->display('error.tpl');
   die;  
 }
+if($where=='files' and $feature_file_galleries !='y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
 if($where=='articles' and $feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');

@@ -28,17 +28,10 @@ $gal_info = $tikilib->get_gallery($info["galleryId"]);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 
-// To browse the image the user has to have access to browser the gallery
-/*
-if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
-  $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
-  $smarty->display('error.tpl');
-  die;  
-}
-*/
+// Everybody can browse images
 
 if(isset($_REQUEST["move_image"])) {
-  if($user!='admin' && $user!=$gal_info["user"] ) {
+  if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"]) ) {
     $smarty->assign('msg',tra("Permission denied you cannot move images from this gallery"));
     $smarty->display('error.tpl');
     die;  
@@ -62,8 +55,6 @@ $smarty->assign_by_ref('image_user',$info["user"]);
 
 $galleries = $tikilib->list_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign_by_ref('galleries',$galleries["data"]);
-
-
 
 // Display the template
 $smarty->assign('mid','tiki-browse_image.tpl');

@@ -32,7 +32,7 @@ $smarty->assign('maxPosts',10);
 if(isset($_REQUEST["blogId"]) && $_REQUEST["blogId"]>0) {
   // Check permission
   $data = $tikilib->get_blog($_REQUEST["blogId"]);
-  if($data["user"]!=$user) {
+  if($data["user"]!=$user || !$user) {
     if($tiki_p_admin_blogs != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this blog"));
       $smarty->display('error.tpl');

@@ -8,7 +8,7 @@ if($feature_wiki != 'y') {
   die;  
 }
 
-
+//print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
 if(!$tikilib->page_exists("HomePage")) {
@@ -23,12 +23,15 @@ if(!isset($_SESSION["thedate"])) {
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
+  $_REQUEST["page"]='HomePage';
   $page = 'HomePage';
   $smarty->assign('page','HomePage'); 
 } else {
   $page = $_REQUEST["page"];
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
+
+
 
 require_once('tiki-pagesetup.php');
 
@@ -81,6 +84,21 @@ if(empty($info["user"])) {
 }
 $smarty->assign_by_ref('lastUser',$info["user"]);
 
+/*
+// force enable wiki comments (for development)
+$feature_wiki_comments = 'y';
+$smarty->assign('feature_wiki_comments','y');
+*/
+
+// Comments engine!
+if($feature_wiki_comments == 'y') {
+  $comments_per_page = $wiki_comments_per_page;
+  $comments_default_ordering = $wiki_comments_default_ordering;
+  $comments_vars=Array('page');
+  $comments_prefix_var='wikipage';
+  $comments_object_var='page';
+  include_once("comments.php");
+}
 
 
 // Display the Index Template

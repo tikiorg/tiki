@@ -118,6 +118,7 @@ $user_modules = $tikilib->list_user_modules();
 $smarty->assign_by_ref('user_modules',$user_modules["data"]);
 
 $all_modules = $tikilib->get_all_modules();
+sort($all_modules);
 $smarty->assign_by_ref('all_modules',$all_modules);
 
 $orders = Array();
