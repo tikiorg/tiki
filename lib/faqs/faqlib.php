@@ -94,6 +94,71 @@ class FaqLib extends TikiLib {
 		return $retval;
 	}
 
+    function list_faqs($offset, $maxRecords, $sort_mode, $find) {
+
+	if ($find) {
+	    $findesc = '%' . $find . '%';
+	    $mid = " where (`title` like ? or `description` like ?)";
+	    $bindvars=array($findesc,$findesc);
+	} else {
+	    $mid = "";
+	    $bindvars=array();
+	}
+	$query = "select * from `tiki_faqs` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_faqs` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
+
+	while ($res = $result->fetchRow()) {
+
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
+
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
+	    }
+
+	    if ($add) {
+		$res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
+		$ret[] = $res;
+	    }
+	}
+
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+    }
+
+    function get_faq($faqId) {
+	$query = "select * from `tiki_faqs` where `faqId`=?";
+	$result = $this->query($query,array((int)$faqId));
+	if (!$result->numRows()) return false;
+	$res = $result->fetchRow();
+	return $res;
+    }
+
 	function remove_faq($faqId) {
 		$query = "delete from `tiki_faqs` where `faqId`=?";
 

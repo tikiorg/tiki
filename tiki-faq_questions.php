@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.17 2004-05-01 01:06:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.18 2004-07-15 22:21:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ if (!isset($_REQUEST["faqId"])) {
 }
 
 $smarty->assign('faqId', $_REQUEST["faqId"]);
-$faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
+$faq_info = $faqlib->get_faq($_REQUEST["faqId"]);
 $smarty->assign('faq_info', $faq_info);
 
 if (!isset($_REQUEST["questionId"])) {
