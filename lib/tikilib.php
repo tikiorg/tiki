@@ -89,7 +89,7 @@ class TikiLib {
 	// Queries the database reporting an error if detected
 	// 
 	function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true) {
-		$query = $this->convert_query($query);
+		$this->convert_query($query);
 
 		//echo "query: $query <br/>";
 		//echo "<pre>";
@@ -113,7 +113,7 @@ class TikiLib {
 
 	// Gets one column for the database.
 	function getOne($query, $values = null, $reporterrors = true) {
-		$query = $this->convert_query($query);
+		$this->convert_query($query);
 
 		//echo "<pre>";
 		//echo "query: $query \n";
@@ -149,7 +149,7 @@ class TikiLib {
 	}
 
 	// functions to support DB abstraction
-	function convert_query($query) {
+	function convert_query(&$query) {
 		global $ADODB_Database;
 
 		switch ($ADODB_Database) {
@@ -174,7 +174,6 @@ class TikiLib {
 			break;
 		}
 
-		return ($query);
 	}
 
 	function convert_sortmode($sort_mode) {
