@@ -107,9 +107,12 @@
   <tr>
     <td class="even">
     <small>
-    {tr}You can include the image in an HTML or Tiki page using{/tr}:<br>
+    {tr}You can include the image in an HTML page using one of these lines{/tr}:<br>
     &lt;img src="{$url_show}?id={$imageId}" /&gt;<br>
-    &lt;img src="{$url_show}?name={$name|escape}" /&gt;
+    &lt;img src="{$url_show}?name={$name|escape}" /&gt;<br>
+    {tr}You can include the image in a tiki page using one of these lines{/tr}:<br>
+    {literal}{{/literal}img src={$url_show}?id={$imageId} {literal}}{/literal}<br>
+    {literal}{{/literal}img src={$url_show}?name={$name|escape} {literal}}{/literal}<br>
     </small>
     </td>
   </tr>
