@@ -27,6 +27,9 @@
   &nbsp;<a href="tiki-list_games.php" class="linkmenu">{tr}games{/tr}</a><br/>
 {/if}
 
+{if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+  &nbsp;<a href="tiki-calendar.php" class="linkmenu">{tr}calendar{/tr}</a><br/>
+{/if}
 
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="separator">
