@@ -4,13 +4,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Surveys" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Surveys{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border="0" src="img/icons/help.gif" alt="help" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin surveys tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}Click here to edit the administer surveys template{/tr}">
+<img border="0" src="img/icons/info.gif" alt="Edit Template" /></a>{/if}
 
 <!-- beginning of next bit -->
 
@@ -30,7 +30,7 @@
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
 <a href="tiki-admin_surveys.php">Create new survey</a>
 {else}
-<h2>{tr}Create New Survey:{/tr}</h2>
+<h2>{tr}Create New Survey{/tr}:</h2>
 {/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$info.name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br /><br />
@@ -38,23 +38,23 @@
 <form action="tiki-admin_surveys.php" method="post">
 <input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Status{/tr}</td><td>
 <select name="status">
 <option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}open{/tr}</option>
 <option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_surveys.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -65,12 +65,12 @@
 </table>
 <table class="normal">
 <tr>
-<td  class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td  class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}stat{/tr}</a></td>
-<td style="text-align:right;"  class="heading">{tr}questions{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></th>
+<th><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></th>
+<th><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}stat{/tr}</a></th>
+<th>{tr}questions{/tr}</th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -80,17 +80,17 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td style="text-align:center;" class="{cycle advance=false}">
 {if $channels[user].status eq 'o'}
-	<img src='img/icons/ofo.gif' alt='{tr}open{/tr}' />
+	<img src="img/icons/ofo.gif" alt="{tr}open{/tr}" />
 {else}
-	<img src='img/icons/fo.gif' alt='{tr}closed{/tr}' />
+	<img src="img/icons/fo.gif" alt="{tr}closed{/tr}" />
 {/if}
 </td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
 <td  class="{cycle}">
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src='img/icons/config.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='img/icons/question.gif' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}' /></a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' border='0' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src="img/icons/config.gif" border="0" alt="{tr}edit{/tr}" /></a>
+   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src="img/icons/question.gif" alt="{tr}question{/tr}" border="0" /></a>
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src="img/icons/key.gif" alt="{tr}Permissions{/tr}" border="0" /></a>{if $channels[user].individual eq 'y'}){/if}
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src="img/icons2/delete.gif" alt="{tr}remove{/tr}" border="0" /></a>
 </td>
 </tr>
 {/section}
