@@ -765,6 +765,7 @@ class TikiLib {
         $data=Array(date("j M",$res["day"]),$res["pageviews"]);
       } else {
         $data=Array("",$res["pageviews"]);
+      }
       $i++;
       $ret[]=$data;
     }
