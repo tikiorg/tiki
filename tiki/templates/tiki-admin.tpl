@@ -67,6 +67,7 @@
 <tr><td class="form">{tr}Directory{/tr}:</td><td><input type="checkbox" name="feature_directory" {if $feature_directory eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}User Messages{/tr}:</td><td><input type="checkbox" name="feature_messages" {if $feature_messages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}User Tasks{/tr}:</td><td><input type="checkbox" name="feature_tasks" {if $feature_tasks eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Newsreader{/tr}:</td><td><input type="checkbox" name="feature_newsreader" {if $feature_newsreader eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Contact{/tr}:</td><td><input type="checkbox" name="feature_contact" {if $feature_contact eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
