@@ -17,7 +17,7 @@ define("PASSWORD_INCORRECT", -3);
 define("USER_NOT_FOUND", -5);
 define("ACCOUNT_DISABLED", -6);
 
-class UsersLib extends TikiDB {
+class UsersLib extends TikiLib {
 # var $db;  // The PEAR db object used to access the database
 
     // change this to an email address to receive debug emails from the LDAP code

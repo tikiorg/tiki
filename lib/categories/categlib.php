@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.38 2004-06-08 21:13:30 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.39 2004-06-09 22:17:43 damosoft Exp $
  *
  * \brief Categories support class
  *
@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class CategLib extends TikiDB {
+class CategLib extends TikiLib {
 
 	function CategLib($db) {
 		# this is probably unneeded now
@@ -340,14 +340,13 @@ class CategLib extends TikiDB {
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
 	function categorize_page($pageName, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 
 		$catObjectId = $this->is_categorized('wiki page', $pageName);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_page_info($pageName);
+			$info = $this->get_page_info($pageName);
 
 			$href = 'tiki-index.php?page=' . urlencode($pageName);
 			$catObjectId = $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
@@ -357,14 +356,13 @@ class CategLib extends TikiDB {
 	}
 	
 	function categorize_tracker($trackerId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 
 		$catObjectId = $this->is_categorized('tracker', $trackerId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_tracker($trackerId);
+			$info = $this->get_tracker($trackerId);
 
 			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
 			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
@@ -374,13 +372,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_quiz($quizId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('quiz', $quizId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_quiz($quizId);
+			$info = $this->get_quiz($quizId);
 
 			$href = 'tiki-take_quiz.php?quizId=' . $quizId;
 			$catObjectId
@@ -391,13 +388,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_article($articleId, $categId) {
-		 global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('article', $articleId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_article($articleId);
+			$info = $this->get_article($articleId);
 
 			$href = 'tiki-read_article.php?articleId=' . $articleId;
 			$catObjectId = $this->add_categorized_object('article', $articleId, $info["heading"], $info["title"], $href);
@@ -407,13 +403,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_faq($faqId, $categId) {
-		 global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('faq', $faqId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_faq($faqId);
+			$info = $this->get_faq($faqId);
 
 			$href = 'tiki-view_faq.php?faqId=' . $faqId;
 			$catObjectId = $this->add_categorized_object('faq', $faqId, $info["description"], $info["title"], $href);
@@ -423,13 +418,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_blog($blogId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('blog', $blogId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_blog($blogId);
+			$info = $this->get_blog($blogId);
 
 			$href = 'tiki-view_blog.php?blogId=' . $blogId;
 			$catObjectId = $this->add_categorized_object('blog', $blogId, $info["description"], $info["title"], $href);
@@ -439,13 +433,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_directory($directoryId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('directory', $directoryId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_directory($directoryId);
+			$info = $this->get_directory($directoryId);
 
 			$href = 'tiki-directory_browse.php?parent=' . $directoryId;
 			$catObjectId = $this->add_categorized_object('directory', $directoryId, $info["description"], $info["name"], $href);
@@ -455,13 +448,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_gallery($galleryId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('image gallery', $galleryId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_gallery($galleryId);
+			$info = $this->get_gallery($galleryId);
 
 			$href = 'tiki-browse_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('image gallery', $galleryId, $info["description"], $info["name"], $href);
@@ -471,13 +463,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_file_gallery($galleryId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('file gallery', $galleryId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_file_gallery($galleryId);
+			$info = $this->get_file_gallery($galleryId);
 
 			$href = 'tiki-list_file_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('file gallery', $galleryId, $info["description"], $info["name"], $href);
@@ -487,13 +478,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_forum($forumId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('forum', $forumId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_forum($forumId);
+			$info = $this->get_forum($forumId);
 
 			$href = 'tiki-view_forum.php?forumId=' . $forumId;
 			$catObjectId = $this->add_categorized_object('forum', $forumId, $info["description"], $info["name"], $href);
@@ -503,13 +493,12 @@ class CategLib extends TikiDB {
 	}
 
 	function categorize_poll($pollId, $categId) {
-		global $tikilib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('poll', $pollId);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $tikilib->get_poll($pollId);
+			$info = $this->get_poll($pollId);
 
 			$href = 'tiki-poll_form.php?pollId=' . $pollId;
 			$catObjectId = $this->add_categorized_object('poll', $pollId, $info["title"], $info["title"], $href);

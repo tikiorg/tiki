@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class StructLib extends TikiDB {
+class StructLib extends TikiLib {
 	function StructLib($db) {
 		# this is probably uneeded now
 		if (!$db) {
@@ -71,7 +71,6 @@ class StructLib extends TikiDB {
 	}
 
 	function s_remove_page($page_ref_id, $delete) {
-		global $tikilib;
 		// Now recursively remove
 
 		$query = "select `page_ref_id`, ts.`page_id`, `pageName` ";
@@ -90,7 +89,7 @@ class StructLib extends TikiDB {
   		$query = "select count(*) from `tiki_structures` where `page_id`=?";
 	  	$count = $this->getOne($query, array((int)$page_info["page_id"]));
       if ($count = 1) {
-			  $tikilib->remove_all_versions($page_info["pageName"]);
+			  $this->remove_all_versions($page_info["pageName"]);
       }
 		}
 
@@ -172,11 +171,10 @@ class StructLib extends TikiDB {
 	    \return the new entries page_ref_id or null if not created.
 	*/
 	function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
-	global $tikilib;
         $ret = null;
         // If the page doesn't exist then create a new wiki page!
 		$now = date("U");
-		$created = $tikilib->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
+		$created = $this->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
 		// if were not trying to add a duplicate structure head 
 		if ($created or isset($parent_id)) {
             //Get the page Id
@@ -657,7 +655,6 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
   //the base.
   function structure_to_webhelp($page_ref_id, $dir, $top) {
   	global $style_base;
-	global $tikilib;
 
     //The first task is to convert the structure into an array with the
     //proper format to produce a WebHelp project.
@@ -692,7 +689,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
   		$docs[] = $res["pageName"]; 
   		if(empty($res["description"])) $res["description"]=$res["pageName"];
   		$pageName=$res["pageName"].'|'.$res["description"];
-  		$dat = $tikilib->parse_data($res['data']);
+  		$dat = $this->parse_data($res['data']);
 
   		//Now dump the page
   		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);

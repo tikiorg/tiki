@@ -4646,12 +4646,12 @@ function add_pageview() {
 	    {
 		$target = '';
 	    }
-
+	
 	    // The (?<!\[) stuff below is to give users an easy way to
 	    // enter square brackets in their output; things like [[foo]
 	    // get rendered as [foo]. -rlpowell
 
-	    if ($this->is_cached($link) && $cachepages == 'y')
+	if ($cachepages == 'y' && $this->is_cached($link))
 	    {
 		//use of urlencode for using cached versions of dynamic sites
 		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
