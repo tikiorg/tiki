@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.41 2004-02-11 15:10:43 melmut Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.42 2004-02-12 19:18:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -146,12 +146,10 @@ if (isset($_REQUEST["chgpswd"])) {
 	}
 
 	// admin can change password of __other__ users without giving old password
-	 if (($tiki_p_admin!='y'||$user==$userwatch)&&!$userlib->validate_user($userwatch, $_REQUEST["old"], '', '')) {
-                        $smarty->assign('msg', tra("Invalid old password"));
-
-                        $smarty->display("error.tpl");
-                die;
-                }
+	if (($tiki_p_admin != 'y' || $user == $userwatch) && !$userlib->validate_user($userwatch, $_REQUEST["old"], '', '')) {
+		$smarty->assign('msg', tra("Invalid old password"));
+		$smarty->display("error.tpl");
+		die;
 	}
 
 	//Validate password here
