@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.27 2003-12-04 08:59:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.28 2003-12-05 22:25:17 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if (isset($_REQUEST["postId"])) {
 
 $smarty->assign('postId', $postId);
 
-$smarty->assign('data', ' ');
+$smarty->assign('data', '');
 $smarty->assign('created', date("U"));
 
 $blog_data = $bloglib->get_blog($blogId);
@@ -80,7 +80,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	}
 
 	if (empty($data["data"]))
-		$data["data"] = ' ';
+		$data["data"] = '';
 
 	$smarty->assign('data', $data["data"]);
 	$smarty->assign('title', $data["title"]);
@@ -128,7 +128,7 @@ if (isset($_REQUEST["preview"])) {
 	}
 
 	if (empty($data))
-		$data = ' ';
+		$data = '';
 
 	$smarty->assign('data', $data);
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
@@ -222,7 +222,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	$parsed_data = $tikilib->parse_data($_REQUEST["data"]);
 
 	if (empty($data))
-		$data = ' ';
+		$data = '';
 
 	$smarty->assign('data', $data);
 	$smarty->assign('title', isset($_REQUEST["title"]) ? $_REQUEST['title'] : '');
