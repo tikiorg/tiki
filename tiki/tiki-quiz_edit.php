@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.10 2004-05-24 20:53:05 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.11 2004-05-26 20:52:36 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -95,6 +95,14 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
 
+	echo __FILE__." line ".__LINE__."<br />";
+	foreach($_REQUEST as $key => $val){
+		if (preg_match("/^quiz_/",$key)){
+			echo $key." = ".$val."<br />";
+		}
+	}
+	die;
+
 	// See tiki-edit_quiz_questions.php for how to get import the quiz questions.
 // if (isset($_REQUEST["import"])) {
 // 	check_ticket('edit-quiz-question');
@@ -128,15 +136,15 @@ if (isset($_REQUEST["save"])) {
 
 	$quiz = array();
 
-	if (!isset($_REQUEST['online']) && !($_REQUEST["online"] =! "choice_online" || $_REQUEST["online"] =! "choice_offline")){
+	if (!isset($_REQUEST['online']) && !($_REQUEST["online"] =! "online" || $_REQUEST["online"] =! "offline")){
 		echo "line: ".__LINE__."<br>";
 		echo 'Invalid value for $_REQUEST["online"].  Is your tpl file correct?<br>';
 		die;
 	}
-	if ($_REQUEST["online"] == "choice_online"){
+	if ($_REQUEST["online"] == "online"){
 		$quiz["online"] = "y";
 	}
-	else if ($_REQUEST["online"] == "choice_offline"){
+	else if ($_REQUEST["online"] == "offline"){
 		$quiz["online"] = "n";
 	}
 
@@ -219,14 +227,15 @@ if (isset($_REQUEST["save"])) {
 	$quizOld = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 }
 
+// Scaffolding
 // The taken and history stuff has to come from version and studentAttempts fields in
 //  the tiki_quiz table in the database.
-// $quiz['taken'] = 'y';
-// $quiz['history'] = array();
-// $quiz['history'][] = "and so on...";
-// $quiz['history'][] = "Version 3 was attempted by students 3 time(s).";
-// $quiz['history'][] = "Version 2 was attempted by students 2 time(s).";
-// $quiz['history'][] = "Version 1 was attempted by students 1 time(s).";
+// $quiz->taken = 'y';
+// $quiz->history = array();
+// $quiz->history[] = "and so on...";
+// $quiz->history[] = "Version 3 (date stamp) was attempted by students 3 time(s).";
+// $quiz->history[] = "Version 2 (date stamp) was attempted by students 2 time(s).";
+// $quiz->history[] = "Version 1 (date stamp) was attempted by students 1 time(s).";
 
 $smarty->assign('quiz', $quiz);
 
@@ -234,24 +243,25 @@ $smarty->assign('quiz', $quiz);
 // echo '$quiz->id = '.$quiz->id."<br>";
 // die;
 
-function setup_options(){
+function setup_options(&$tpl){
 	global $smarty;
 	global $tikilib;
 	global $user;
-	$smarty->assign('online_choices', array('choice_online'  => 'Online',
-																					'choice_offline' => 'Offline'));
+	$tpl['online_choices'] = array('online'  => 'Online',	'offline' => 'Offline');
 	
 	$optionsGrading = array();
 	$optionsGrading[] = "machine";
 	$optionsGrading[] = "peer review";
 	$optionsGrading[] = "teacher";
-	$smarty->assign('optionsGrading', $optionsGrading);
+	$tpl['optionsGrading'] = $optionsGrading;
+// 	$smarty->assign('optionsGrading', $optionsGrading);
 
 	$optionsShowScore = array();
 	$optionsShowScore[] = "immediately";
 	$optionsShowScore[] = "after expire date";
 	$optionsShowScore[] = "never";
-	$smarty->assign('optionsShowScore', $optionsShowScore);
+	$tpl['optionsShowScore'] = $optionsShowScore;
+// 	$smarty->assign('optionsShowScore', $optionsShowScore);
 	
 	// FIXME - This needs to be limited to the session timeout in php.ini
 	$mins = array();
@@ -269,6 +279,7 @@ function setup_options(){
 	}
 	$repetitions[] = "unlimited";
 	$smarty->assign('repetitions', $repetitions);
+	$tpl['qpp'] = $qpp;
 	$smarty->assign('qpp', $qpp);
 	
 	$smarty->assign('questionsPerPage', "Unlimited");
@@ -279,14 +290,18 @@ function setup_options(){
 		$tzName = "";
 	}
 	$smarty->assign('siteTimeZone', $tzName);
+	$tpl['siteTimeZone'] = $tzName;
 }
 
-setup_options();
+$tpl = array();
+setup_options(&$tpl);
+$smarty->assign('tpl', $tpl);
 
 ask_ticket('edit-quiz-question');
 
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
-$smarty->display("tiki.tpl");
+// $smarty->display("tiki.tpl");
+$smarty->display("ggg-tiki.tpl");
 
 ?>
