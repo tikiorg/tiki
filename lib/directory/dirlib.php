@@ -335,8 +335,7 @@ class DirLib extends TikiLib {
   function dir_replace_category($parent, $categId, $name, $description, $childrenType, $viewableChildren, $allowSites, $showCount, $editorGroup)
   {
     $name = addslashes($name);
-    $descripton = addslashes($description);
-    
+    $description = addslashes($description);
     if($categId) {
       $query = "update tiki_directory_categories set
         name = '$name',
