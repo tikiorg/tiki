@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.24 2004-01-14 06:12:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.25 2004-01-14 09:25:16 damosoft Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -13,7 +13,7 @@
 {if $feature_view_tpl eq 'y'}</a>{/if}
 <br />
 
-<span class="button2"><a href="tiki-admingroups.php" class="linkbuton">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
 <br /><br /><br />
 
@@ -42,7 +42,7 @@
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
-<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
+<span class="button2"><span class="linkbut">{$initials[ini]|capitalize}</span></span> . 
 {else}
 <a href="tiki-admingroups.php?initial={$initials[ini]}{if $find}&amp;find={$find}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{$initials[ini]}</a> . 
