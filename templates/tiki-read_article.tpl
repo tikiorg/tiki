@@ -1,3 +1,7 @@
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
+<div align="right">{$display_catpath}</div>
+{/if}
+
 {if $show_topline eq 'y' and $topline}<div class="articletopline">{$topline}</div>{/if}
 <div class="articletitle">
 <span class="titlea">
@@ -112,3 +116,8 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 
 {include file=comments.tpl}
 {/if}
+
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+<div class="catblock">{$display_catobjects}</div>
+{/if}
+
