@@ -143,7 +143,7 @@ class TikiLib {
 
 		trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
 		// only for debugging.
-		//print_r($values);
+		print_r($values);
 		//echo "<br/>";
 		die;
 	}
@@ -511,7 +511,6 @@ class TikiLib {
 
 	/*shared*/
 	function dir_list_all_valid_sites2($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
 			$mid = " where `isValid`=? and (`name` like ? or `description` like ?)";
