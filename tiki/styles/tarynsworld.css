@@ -762,7 +762,7 @@ DIV#page-bar {
 .linkbut {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   black;
+	color:   #da70d6;
 	background:   white;
 	text-decoration:   none;
 }
@@ -771,15 +771,14 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	background:   white;
-	color:   black;
+	color:   #da70d6;
 	text-decoration:   none;
 }
 
 .linkbut:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   black;
-	background:   #CCCCCC;
+	color:   #ff69b4;
 	text-decoration:   underline;
 }
 
@@ -859,8 +858,7 @@ div.wikitext {
 }
 
 .wiki:hover {
-	color:    black;
-	background-color:   #EFEFEF;
+	color:    #FF69B4;
 }
 
 /* Date displayed for last modification date of pages */
@@ -1023,10 +1021,10 @@ div.linksinfo {
 
 /* The header of a weblog post */
 div.posthead {
-	background-color:    #5B6C71;
+	background-color:    #ffe4e1;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	color:   white;
+	color:   #da70d6;
 	font-weight:   bold;
 	overflow:   hidden;
 	border:   1px solid black;
@@ -1087,11 +1085,11 @@ div.postbody {
 /* The weblog title */
 div.blogtitle {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
-	color:   white;
+	color:   #ff69b4;
 	font-size:   11px;
 	font-weight:   bold;
 	font-size:   18px;
-	background-color:   #5B6C71;
+	background-color:   #ffc0c8;
 	padding-left:   2px;
 	padding-right:   5px;
 	margin-top:   10px;
@@ -1102,7 +1100,7 @@ div.blogtitle {
 
 /* The weblog information */
 div.bloginfo {
-	background:    white;
+	background:    #ffe4e1;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
