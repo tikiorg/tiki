@@ -16,6 +16,12 @@ if(isset($_REQUEST['view_user'])) {
 }
 $smarty->assign('userwatch',$userwatch);
 
+if(!$userlib->user_exists($userwatch)) {
+    $smarty->assign('msg',tra("Unknown user"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+}
+
 if($tiki_p_admin != 'y') {
   $user_information = $tikilib->get_user_preference($userwatch,'user_information','public');
   if($user_information == 'private') {

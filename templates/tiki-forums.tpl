@@ -73,7 +73,6 @@
 {if $forum_list_visits eq 'y'}
 	<td style="text-align:right;" class="forumstableinfo{cycle}">{$channels[user].hits}</td>
 {/if}	
-</tr>
 {/section}
 </table>
 <br/>

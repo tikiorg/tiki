@@ -361,7 +361,20 @@ class UsersLib extends TikiLib {
       $query = "select login from users_users where binary login = '$user' and hash='$hash'";
       $result = $this->query($query);
       if($result->numRows()) {
-        return USER_VALID;
+        $t = date("U");
+        // Check
+        $current = $this->getOne("select currentLogin from users_users where login='$user'");
+        if (is_null($current)) {
+	    // First time
+	    $current = $t;
+		}
+		$query = "update users_users set lastLogin=$current where login='$user'";
+        $result = $this->query($query);
+        // check
+        
+        $query = "update users_users set currentLogin=$t where login='$user'";
+        $result = $this->query($query);
+        return true; 
       }
     } else {
       // Use challenge-reponse method
@@ -373,7 +386,22 @@ class UsersLib extends TikiLib {
       //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");
       //print("response : $response<br/>");
       if($response == md5($user.$hash.$_SESSION["challenge"])) {
-        return USER_VALID;
+
+        $t = date("U");
+        // Check
+        $current = $this->getOne("select currentLogin from users_users where login='$user'");
+        if (is_null($current)) {
+	    	// First time
+	    	$current = $t;
+		}
+		$query = "update users_users set lastLogin=$current where login='$user'";
+        $result = $this->query($query);
+        // check
+        $query = "update users_users set currentLogin=$t where login='$user'";
+        $result = $this->query($query);
+        return true;
+      } else {
+        return false;      
       }
     }
 
@@ -556,7 +584,7 @@ class UsersLib extends TikiLib {
   {
     $query = "delete from users_groups where groupName = '$group'";
     $result =  $this->query($query);
-    $query = "delete from tiki_group_inclusion where groupName = '$group'";
+    $query = "delete from tiki_group_inclusion where groupName = '$group' or includeGroup='$group'";
     $result =  $this->query($query);
     return true;
   }
@@ -819,13 +847,13 @@ class UsersLib extends TikiLib {
 
   function change_user_email($user,$email)
   {
-    $query = "update users_users set email='$email' where login='$user'";
+    $query = "update users_users set email='$email' where binary login='$user'";
     $result = $this->query($query);
   }
   
   function get_user_password($user) 
   {
-    $query = "select password from users_users where login='$user'";
+    $query = "select password from users_users where binary login='$user'";
     $pass = $this->getOne($query);
     return $pass;
   }
@@ -846,7 +874,7 @@ class UsersLib extends TikiLib {
   
   function is_due($user)
   {
-    $due = $this->getOne("select pass_due from users_users where login='$user'");
+    $due = $this->getOne("select pass_due from users_users where binary login='$user'");
     if($due<=date("U")) return true;
     return false;
   }
@@ -857,7 +885,7 @@ class UsersLib extends TikiLib {
     $hash = md5($pass);
     // Note that tiki-generated passwords are due inmediatley
     $now=date("U");
-    $query = "update users_users set password='$pass', hash='$hash',pass_due=$now where login='$user'";
+    $query = "update users_users set password='$pass', hash='$hash',pass_due=$now where binary login='$user'";
     $result = $this->query($query);
     return $pass;
   }
@@ -872,7 +900,7 @@ class UsersLib extends TikiLib {
     if($feature_clear_passwords == 'n') {
       $pass='';
     }
-    $query = "update users_users set hash='$hash',password='$pass',pass_due=$new_pass_due where login='$user'";
+    $query = "update users_users set hash='$hash',password='$pass',pass_due=$new_pass_due where binary login='$user'";
     $result = $this->query($query);
   }
   

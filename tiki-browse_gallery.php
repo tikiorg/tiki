@@ -156,15 +156,11 @@ $smarty->assign_by_ref('nextx',$nextscaleinfo["xsize"]);
 $smarty->assign_by_ref('nexty',$nextscaleinfo["ysize"]);
 
 // Can we rotate images
-/*
-if (function_exists("imagerotate")) {
+if ($imagegallib->canrotate) {
   $smarty->assign('imagerotate',true);
 } else {
   $smarty->assign('imagerotate',false);
 }
-*/
-// Above disabled until imagerotate is bug-free
-$smarty->assign('imagerotate',false);
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'created_desc'; 

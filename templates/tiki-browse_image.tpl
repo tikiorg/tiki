@@ -25,7 +25,7 @@
     {if $itype=='o'}
     <img alt="image" src="show_image.php?id={$imageId}" />
     {else}
-    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;scaled" title="{tr}Klick to enlarge{/tr}">
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;scaled" title="{tr}Klick to enlarge{/tr}">
     <img alt="image" src="show_image.php?id={$imageId}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}" /></a>
     {/if}
   </div>
@@ -36,6 +36,7 @@
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}&amp;popup={$popup}" class="gallink"> {tr}smaller{/tr}</a>|{/if}
     {if $itype !='o'}
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;popup={$popup}" class="gallink"> {tr}original size{/tr}</a>{/if}
+    {if $prevx != 0 && $nextx !=0}|{/if}
     {if $nextx != 0}
     |<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;popup={$popup}" class="gallink"> {tr}bigger{/tr}</a>{/if}]
     [{if $previmg}
@@ -58,6 +59,7 @@
         <tr><td class="imageinfo">{tr}Move image{/tr}:</td><td class="imageinfo">
         <form action="tiki-browse_image.php" method="post">
         <input type="hidden" name="imageId" value="{$imageId}"/>
+        <input type="hidden" name="galleryId" value="{$galleryId}"/>
         <select name="newgalleryId">
           {section name=idx loop=$galleries}
             <option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>

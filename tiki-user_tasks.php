@@ -34,20 +34,20 @@ $smarty->assign('comp_array_p',$comp_array_p);
 if(!isset($_REQUEST["taskId"])) $_REQUEST["taskId"]=0;
 
 
-if(isset($_REQUEST["complete"])) {
+if(isset($_REQUEST["complete"]) && isset($_REQUEST["task"])) {
   foreach(array_keys($_REQUEST["task"]) as $task) {      	
     $tasklib->complete_task($user, $task);
   }
 }
 
-if(isset($_REQUEST["open"])) {
+if(isset($_REQUEST["open"]) && isset($_REQUEST["task"])) {
   foreach(array_keys($_REQUEST["task"]) as $task) {      	
     $tasklib->open_task($user, $task);
   }
 }
 
 
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["task"])) {
   foreach(array_keys($_REQUEST["task"]) as $task) {      	
     $tasklib->remove_task($user, $task);
   }

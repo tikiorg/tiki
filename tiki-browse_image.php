@@ -136,6 +136,7 @@ if(count($image_next["data"])==1) {
 $smarty->assign('offset',$_REQUEST["offset"]);
 $smarty->assign('prevdesp',$_REQUEST["desp"]-1);
 $smarty->assign('nextdesp',$_REQUEST["desp"]+1);
+$smarty->assign('desp',$_REQUEST["desp"]);
 $smarty->assign('sort_mode',$_REQUEST["sort_mode"]);
 $smarty->assign('galleryId',$_REQUEST["galleryId"]);
 

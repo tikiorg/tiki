@@ -31,12 +31,12 @@ if(!isset($_REQUEST["password"])){
 if(!isset($_REQUEST["sendpages"])) {
   $sendpages = Array();
 } else {
-  $sendpages = unserialize(urldecode($sendpages));
+  $sendpages = unserialize(urldecode($_REQUEST['sendpages']));
 }
 if(!isset($_REQUEST["sendarticles"])) {
   $sendarticles = Array();
 } else {
-  $sendarticles = unserialize(urldecode($sendarticles));
+  $sendarticles = unserialize(urldecode($_REQUEST['sendarticles']));
 }
 
 $smarty->assign('username',$_REQUEST["username"]);
@@ -85,7 +85,8 @@ if(isset($_REQUEST["send"])) {
         new xmlrpcval($_REQUEST["password"],"string"),
         new xmlrpcval($page,"string"),
         new xmlrpcval(base64_encode($page_info["data"]),"string"),
-        new xmlrpcval($page_info["comment"],"string")
+        new xmlrpcval($page_info["comment"],"string"),
+        new xmlrpcval($page_info["description"],"string")
       ));
       $result=$client->send($searchMsg);
       if(!$result) {

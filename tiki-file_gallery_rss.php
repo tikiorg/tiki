@@ -31,10 +31,10 @@ print('>');
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns="http://purl.org/rss/1.0/">
 <channel rdf:about="<?php echo $home?>">
-  <title>Tiki RSS feed for the file gallery: <?php echo $galleryname?></title>
+  <title>Tiki RSS feed for the file gallery: <?php echo htmlspecialchars($galleryname);?></title>
   <link><?php echo $home?></link>
   <description>
-    <?php echo $gallerydesc?>
+    <?php echo htmlspecialchars($gallerydesc);?>
   </description>
   <image rdf:resource="<?php echo $img?>" />
   <items>
@@ -43,10 +43,10 @@ print('>');
         // LOOP collecting last changes to the wiki
         foreach($changes["data"] as $chg) {
           print('<rdf:li resource="'.$read.'?fileId='.$chg["fileId"].'">'."\n");
-          print('<title>'.$chg["filename"].'</title>'."\n");
+          print('<title>'.htmlspecialchars($chg["filename"]).'</title>'."\n");
           print('<link>'.$read.'?fileId='.$chg["fileId"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
-          print('<description>'.$chg["description"].'</description>'."\n");
+          print('<description>'.htmlspecialchars($chg["description"]).'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

@@ -28,7 +28,7 @@ if($tiki_p_view != 'y') {
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'pageName_desc'; 
+  $sort_mode = 'pageName_asc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 

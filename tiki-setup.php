@@ -227,7 +227,7 @@ $feature_file_galleries_rankings = 'n';
 $language = 'en';
 $lang_use_db = 'n';
 
-if (strstr(PHP_OS,'Windows')) $tmpDir='C:/Windows/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
+if (substr(PHP_OS, 0, 3) == 'WIN') $tmpDir='C:/Windows/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
 
 $feature_left_column = 'y';
 $feature_right_column = 'y';
@@ -681,7 +681,8 @@ $_SERVER["SERVER_NAME"] = $feature_server_name;
 
 
 
-// Fix IIS servers not settin
+// Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
+if(!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING']='';
 if(!isset($_SERVER['REQUEST_URI'])||empty($_SERVER['REQUEST_URI'])) {
   $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
 }
@@ -792,7 +793,7 @@ if(!file_exists('templates_c/preferences.php')) {
 $user_dbl='y';
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
-  $user_style = $tikilib->get_preference("style", 'jalist2.css');
+  $user_style = $tikilib->get_preference("style", 'elegant.css');
   if($user) {
     $user_dbl=$tikilib->get_user_preference($user,'user_dbl','y'); 
     if($change_theme == 'y') {
@@ -966,7 +967,6 @@ if(isset($_COOKIE["filegalmenu"])) {
 
 
 if($user && $feature_usermenu == 'y') {
-  $smarty->assign('foo_usr','hsah');
   if(!isset($_SESSION['usermenu'])) {
 	  include_once('lib/usermenu/usermenulib.php');
 	  $user_menus = $usermenulib->list_usermenus($user,0,-1,'position_asc','');

@@ -104,18 +104,21 @@ class Messu extends Tikilib {
 
   function flag_message($user, $msgId, $flag, $val)
   {
+    if(!$msgId) return false;
     $query = "update messu_messages set $flag='$val' where user='$user' and msgId=$msgId";
     $this->query($query);
   }
   
   function delete_message($user, $msgId)
   {
+  	if(!$msgId) return false;
     $query = "delete from messu_messages where user='$user' and msgId=$msgId";
     $this->query($query);
   }
   
   function get_next_message($user,$msgId, $sort_mode, $find, $flag, $flagval,$prio)
   {
+    if(!$msgId) return 0;
     if($prio) {
      $prio = " and priority=$prio ";
     }
@@ -138,6 +141,7 @@ class Messu extends Tikilib {
   
   function get_prev_message($user,$msgId, $sort_mode, $find, $flag, $flagval,$prio)
   {
+    if(!$msgId) return 0;
     if($prio) {
      $prio = " and priority=$prio ";
     }

@@ -1,7 +1,7 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a><br/><br/>
 <div class="simplebox">
-<b>{tr}Theme is selected as follows{tr}:</b><br/>
+<b>{tr}Theme is selected as follows{/tr}:</b><br/>
 1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br/>
 2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br/>
 3. {tr}If not then a theme for the section is used{/tr}<br/>

@@ -25,7 +25,7 @@ if($tiki_p_messages != 'y' ) {
 $maxRecords = $messulib->get_user_preference($_SESSION['user'],'maxRecords',20);
 
 // Mark messages if the mark button was pressed
-if(isset($_REQUEST["mark"])) {
+if(isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
   foreach(array_keys($_REQUEST["msg"]) as $msg) {      	
     $parts = explode('_',$_REQUEST['action']);
     $messulib->flag_message($_SESSION['user'], $msg, $parts[0], $parts[1]);
@@ -33,7 +33,7 @@ if(isset($_REQUEST["mark"])) {
 }
 
 // Delete messages if the delete button was pressed
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
   foreach(array_keys($_REQUEST["msg"]) as $msg) {      	
     $messulib->delete_message($_SESSION['user'], $msg);  
   }

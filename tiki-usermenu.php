@@ -22,15 +22,19 @@ if($tiki_p_usermenu != 'y') {
 
 if(!isset($_REQUEST["menuId"])) $_REQUEST["menuId"]=0;
 
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
   foreach(array_keys($_REQUEST["menu"]) as $men) {      	
     $usermenulib->remove_usermenu($user, $men);
   }
+  if(isset($_SESSION['usermenu'])) 
+  	unset($_SESSION['usermenu']); 
 }
 
 if(isset($_REQUEST['addbk'])) {
   $usermenulib->add_bk($user);
-  unset($_SESSION['usermenu']);
+  if(isset($_SESSION['usermenu'])) 
+  	unset($_SESSION['usermenu']); 
+
 }
 
 if($_REQUEST["menuId"]) {

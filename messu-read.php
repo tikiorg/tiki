@@ -21,18 +21,19 @@ if($tiki_p_messages != 'y' ) {
   die;  
 }
 
+if(isset($_REQUEST["delete"])) {
+  $messulib->delete_message($_SESSION['user'],$_REQUEST['msgdel']);
+}
 
 $smarty->assign('legend','');
-if(!isset($_REQUEST['msgId'])) {
+if(!isset($_REQUEST['msgId'])||$_REQUEST['msgId']==0) {
   $smarty->assign('legend','No more messages');
   $smarty->assign('mid','messu-read.tpl');
   $smarty->display("styles/$style_base/tiki.tpl");
   die;
 }
 
-if(isset($_REQUEST["delete"])) {
-  $messulib->delete_message($_SESSION['user'],$_REQUEST['msgdel']);
-}
+
 
 if(isset($_REQUEST['action'])) {
   $messulib->flag_message($_SESSION['user'], $_REQUEST['msgId'], $_REQUEST['action'], $_REQUEST['actionval']);

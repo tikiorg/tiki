@@ -36,6 +36,7 @@
   <div class="simplebox">
   <form method="post" action="tiki-user_information.php">
   <input type="hidden" name="to" value="{$userwatch}" />
+  <input type="hidden" name="view_user" value="{$userwatch}" />
   <table class="normalnoborder">
   <tr>
     <td class="form">{tr}Priority{/tr}:</td><td class="form">

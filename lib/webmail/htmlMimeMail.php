@@ -2,8 +2,8 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2003-02-12 16:12:52 $
-* CVS Revision...: $Revision: 1.3 $
+* Last Modified..: $Date: 2003-05-04 21:10:43 $
+* CVS Revision...: $Revision: 1.4 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -128,13 +128,14 @@ class htmlMimeMail
 		/**
         * Defaults for smtp sending
         */
-		if (!empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'])) {
-			$helo = $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'];
-		} elseif (!empty($GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'])) {
-			$helo = $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME'];
+		if (isset($_SERVER['HTTP_HOST'])&&!empty($_SERVER['HTTP_HOST'])) {
+			$helo = $_SERVER['HTTP_HOST'];
+		} elseif (isset($_SERVER['SERVER_NAME'])&&!empty($_SERVER['SERVER_NAME'])) {
+			$helo = $_SERVER['SERVER_NAME'];
 		} else {
 			$helo = 'localhost';
 		}
+
 
 		$this->smtp_params['host'] = 'localhost';
 		$this->smtp_params['port'] = 25;
@@ -608,7 +609,7 @@ class htmlMimeMail
 
 			// Add message ID header
 			srand((double)microtime()*10000000);
-			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), !empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST']) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'] : $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME']);
+			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), isset($_SERVER['HTTP_HOST'])&&!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']);
 			$this->headers['Message-ID'] = $message_id;
 
 			$this->is_built = true;
@@ -683,6 +684,16 @@ class htmlMimeMail
 			case 'smtp':
 				//require_once(dirname(__FILE__) . '/smtp.php');
 				//require_once(dirname(__FILE__) . '/RFC822.php');
+				//:TODO: This may not work (A fix)
+				if (isset($_SERVER['HTTP_HOST'])&&!empty($_SERVER['HTTP_HOST'])) {
+					$helo = $_SERVER['HTTP_HOST'];
+				} elseif (isset($_SERVER['SERVER_NAME'])&&!empty($_SERVER['SERVER_NAME'])) {
+					$helo = $_SERVER['SERVER_NAME'];
+				} else {
+					$helo = 'localhost';
+				}
+
+				$this->smtp_params['helo'] = $helo; 
 				$smtp = &smtp::connect($this->smtp_params);
 				
 				// Parse recipients argument for internet addresses
@@ -844,7 +855,7 @@ class htmlMimeMail
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.3 $
+* @version $Revision: 1.4 $
 * @package Mail
 */
 
@@ -1123,7 +1134,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.3 $
+* @version $Revision: 1.4 $
 * @package Mail
 */
 

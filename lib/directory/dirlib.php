@@ -602,9 +602,9 @@ $dirlib= new DirLib($dbTiki);
 
 function compare_paths($p1,$p2) {
   if($p1["path"]<$p2["path"]) {
-    return +1;
-  } elseif($p1["path"]>$p2["path"]) {
     return -1;
+  } elseif($p1["path"]>$p2["path"]) {
+    return +1;
   } else {
     return 0;
   }

@@ -351,12 +351,12 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("maxRecords",$_REQUEST["maxRecords"]);
   }
   
-  
+  header('location: tiki-admin.php#general');  
   
 }
 
 if(isset($_REQUEST["loginprefs"])) {
- if(isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"]=="on") {
+  if(isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"]=="on") {
     $tikilib->set_preference("change_theme",'y'); 
     $smarty->assign('change_theme','y');
   } else {

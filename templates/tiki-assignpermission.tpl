@@ -12,14 +12,14 @@
 </div>
 <br/>
 
-<form method="get" action="tiki-assignpermission.php">
+<form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group}" />
 <input type="hidden" name="type" value="{$type}" />
 {tr}Create level{/tr}:<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
 </form>
 <br/>
 <br/>
-<form method="get" action="tiki-assignpermission.php">
+<form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group}" />
 <input type="hidden" name="type" value="{$type}" />
 <select name="oper">
@@ -37,7 +37,7 @@
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
-   <form method="get" action="tiki-assignpermission.php">
+   <form method="post" action="tiki-assignpermission.php">
      <input type="text" name="find" value="{$find}" />
      <input type="hidden" name="group" value="{$group}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -49,7 +49,7 @@
 
 
 
-<form name="tiki-assignpermission.php" method="get">
+<form name="tiki-assignpermission.php" method="post">
 <input type="hidden" name="group" value="{$group}" />
 <input type="hidden" name="type" value="{$type}" />
 <input type="submit" name="update" value="{tr}update{/tr}" />
@@ -57,7 +57,7 @@
 <tr>
   <td colspan="7" class="odd">
    [
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}">{tr}All{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=">{tr}All{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=tiki">{tr}General{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=wiki">{tr}Wiki{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=file%20galleries">{tr}File gals{/tr}</a>|
@@ -89,6 +89,7 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=directory">{tr}Directory{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=workflow">{tr}Workflow{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=charts">{tr}Charts{/tr}</a>   
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=extwiki">{tr}ExtWikis{/tr}</a>
    ]
  </td>
 </tr>

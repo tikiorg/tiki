@@ -64,7 +64,9 @@ $smarty->assign_by_ref('offset',$offset);
 $now = date("U");
 if(isset($_SESSION["thedate"])) {
   if($_SESSION["thedate"]<$now) {
-    $pdate = $_SESSION["thedate"]; 
+    // If the session is older then set it to today
+    // so you can list articles
+    $pdate = $now; 
   } else {
     if($tiki_p_admin == 'y') {
       $pdate = $_SESSION["thedate"]; 

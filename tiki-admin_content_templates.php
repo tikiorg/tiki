@@ -99,6 +99,7 @@ if(isset($_REQUEST["save"])) {
   $info["section_wiki"]='n';
   $info["section_newsletters"]='n';
   $info["section_html"]='n';
+  $smarty->assign('info',$info);
   if(isset($_REQUEST["section_html"])&&$_REQUEST["section_html"]=='on') {
      $templateslib->add_template_to_section($tid,'html');
   }  else {

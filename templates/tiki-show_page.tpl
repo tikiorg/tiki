@@ -59,7 +59,7 @@
 </div>
 {/if}
 
-<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></p>
+<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
 {if $wiki_extras eq 'y'}
 <br/>
 {if $feature_wiki_attachments eq 'y'}
@@ -99,7 +99,7 @@
 <tr>
  <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16
  " name="userfile1" type="file">
- {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlenght="250" />
+ {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlength="250" />
  <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>
 </tr>

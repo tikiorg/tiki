@@ -19,8 +19,7 @@
     </tr>
     <tr>
       <td class="odd">Average:</td>
-      <td class="odd">{$channels[ix].average|string_format:"%.2f"}/5</td>
-      
+      <td class="odd">{$channels[ix].average|string_format:"%.2f"}</td>
     </tr>
   {elseif $channels[ix].type eq 's'}
     <tr>

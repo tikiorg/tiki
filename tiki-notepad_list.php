@@ -59,11 +59,12 @@ if(isset($_REQUEST["merge"])) {
   $tikilib->replace_note($user,0,$_REQUEST['merge_name'],$merge);
 }
 
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["note"])) {
   foreach(array_keys($_REQUEST["note"]) as $note) {      	
     $notepadlib->remove_note($user, $note);
   }
 }
+
 
 $quota = $userfileslib->userfiles_quota($user);
 

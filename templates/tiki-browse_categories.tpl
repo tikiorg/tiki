@@ -12,6 +12,7 @@
         <input type="submit" value="{tr}find{/tr}" name="search" />
         <input type="hidden" name="sort_mode" value="{$sort_mode}" />
 </form>
+{if count($children)}
 <h3>{tr}sub categories{/tr}</h3>
 <table class="subcats">
 <tr>
@@ -23,6 +24,7 @@
 {/section}
 </tr>
 </table>
+{/if}
 </div>
 <h3>{tr}Objects{/tr} ({$cantobjects})</h3>
 <table class="catobjects">

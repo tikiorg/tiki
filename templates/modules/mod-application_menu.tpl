@@ -28,7 +28,7 @@
 
 {if $user}
   <div class="separator"><a class='separator' href="javascript:setCookie('mymenu','c');hide('mymenu');">[-]</a> 
-  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
   <a class='separator' href="javascript:setCookie('mymenu','o');show('mymenu');">[+]</a></div>
   <div id='mymenu' style="{$mnu_mymenu}">
   {if $feature_userPreferences eq 'y'}

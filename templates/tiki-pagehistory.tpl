@@ -30,7 +30,9 @@
 <div align="center">
 <table border="1" cellpadding="0" cellspacing="0">
 <tr>
+{if $tiki_p_remove eq 'y'}
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+{else}
 <td class="heading">{tr}Date{/tr}</td>
 <td class="heading">{tr}Version{/tr}</td>
 <td class="heading">{tr}User{/tr}</td>
@@ -52,8 +54,6 @@
 <tr>
 {if $tiki_p_remove eq 'y'}
 <td class="{cycle advance=false}"><input type="checkbox" name="hist[{$history[hist].version}]" /></td>
-{else}
-<td class="{cycle advance=false}">&nbsp;</td>
 {/if}
 <td class="{cycle advance=false}">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$history[hist].version}&nbsp;</td>

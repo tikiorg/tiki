@@ -38,10 +38,13 @@
 <td class="odd">{$users[user].email}</td>
 <td class="odd">{$users[user].currentLogin|tiki_long_datetime}</td>
 <td class="odd">
-{section name=grs loop=$users[user].groups}
-{$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;
-{/section}
-</td>
+{foreach from=$users[user].groups item=grs}
+{$grs}
+{if $grs != "Anonymous"}
+(<a class="link"href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegr
+oup&amp;group={$grs}">x</a>)
+{/if}&nbsp;
+{/foreach}
 <td class="odd"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
                                    <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a><br/>
                                    <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a>
@@ -53,10 +56,13 @@
 <td class="even">{$users[user].email}</td>
 <td class="even">{$users[user].currentLogin|tiki_long_datetime}</td>
 <td class="even">
-{section name=grs loop=$users[user].groups}
-{$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;
-{/section}
-</td>
+{foreach from=$users[user].groups item=grs}
+{$grs}
+{if $grs != "Anonymous"}
+(<a class="link"href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegr
+oup&amp;group={$grs}">x</a>)
+{/if}&nbsp;
+{/foreach}
 <td class="even"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
                  <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a><br/>
                  <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a></td>

@@ -3,9 +3,9 @@
 <a href="tiki-admin_menus.php?menuId={$menuId}" class="link">{tr}Edit this menu{/tr}</a>
 <h2>{tr}Preview menu{/tr}</h2>
 <div align="center">
-<div style="text-align:left;width:130px;" class="cbox">
-<div class="cbox-title">{$menu_info.name}</div>
-<div class="cbox-data">
+<div style="text-align:left;width:130px;" class="box">
+<div class="box-title">{$menu_info.name}</div>
+<div class="box-data">
 {include file=tiki-user_menu.tpl}
 </div>
 </div>

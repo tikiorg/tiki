@@ -56,7 +56,7 @@ if(isset($_REQUEST["remove"])) {
   $tikilib->remove_featured_link($_REQUEST["remove"]);
 }
 
-$links=$tikilib->get_featured_links();
+$links=$tikilib->get_featured_links(999999);
 $smarty->assign_by_ref('links',$links);
 
 

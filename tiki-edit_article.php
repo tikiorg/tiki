@@ -260,6 +260,7 @@ if(isset($_REQUEST["save"])) {
   // Parse $edit and eliminate image references to external URIs (make them internal)
   $body = $imagegallib->capture_images($body);
   $heading = $imagegallib->capture_images($heading);
+  if(!isset($_REQUEST["rating"])) $_REQUEST['rating']=0;
   // If page exists
   $artid = $tikilib->replace_article(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'),
                             $_REQUEST["authorName"],

@@ -20,7 +20,6 @@ if(isset($_SESSION['thedate'])) {
 } else {
   $pdate = date("U");
 }
-$smarty->assign('pdate',$pdate);
 
 if(!isset($_REQUEST['day'])) $_REQUEST['day']=date("d");
 if(!isset($_REQUEST['mon'])) $_REQUEST['mon']=date("m");
@@ -28,6 +27,8 @@ if(!isset($_REQUEST['year'])) $_REQUEST['year']=date("Y");
 $smarty->assign('day',$_REQUEST['day']);
 $smarty->assign('mon',$_REQUEST['mon']);
 $smarty->assign('year',$_REQUEST['year']);
+//$pdate=date("U",strtotime($_REQUEST['year']."-".$_REQUEST['mon']."-".$_REQUEST['day'])+86399);
+$pdate=mktime(23,59,59,$_REQUEST['mon'],$_REQUEST['day'],$_REQUEST['year']);
 
 if(!isset($_REQUEST['ephId'])) $_REQUEST['ephId']=0;
 $smarty->assign('ephId',$_REQUEST['ephId']);
@@ -40,6 +41,7 @@ if(!$_REQUEST['ephId']) {
   $info = $ephlib->get_eph($_REQUEST['ephId']);
   $pdate = $info["publish"];
 }
+$smarty->assign('pdate',$pdate);
 $smarty->assign('info',$info);
 
 
@@ -101,11 +103,6 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-if(isset($_SESSION['thedate'])) {
- $pdate = $_SESSION['thedate'];
-} else {
- $pdate = date("U");
-}
 $channels = $ephlib->list_eph($offset,$maxRecords,$sort_mode,$find,$pdate);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

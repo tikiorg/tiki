@@ -70,9 +70,9 @@ while(false !== $file=readdir($h)) {
                   'decode_headers' => TRUE, 
                   'decode_bodies'  => TRUE
                   );  
+
     $output = Mail_mimeDecode::decode($params);    
-    unset($parts);
-    parse_output($output, $parts,0);  
+	parse_output($output, $parts,0);  
     usort($parts,'compare_import_versions');
     $last_part='';
     $last_part_ver=0;
@@ -99,7 +99,11 @@ while(false !== $file=readdir($h)) {
           $description = '';
         }
         $authorid=urldecode($part["author_id"]);
-        $hits=urldecode($part["hits"]);
+        if(isset($part["hits"])) {
+          $hits=urldecode($part["hits"]);
+        } else {
+          $hits = 0;
+        }
         $ex=substr($part["body"],0,25);
         //print(strlen($part["body"]));
         $msg='';
@@ -107,7 +111,6 @@ while(false !== $file=readdir($h)) {
           $tikilib->remove_all_versions($pagename,'');    
         }
         if($tikilib->page_exists($pagename)) {
-          
           if($_REQUEST["crunch"]=='n') {
             $msg='<b>'.tra('page not added (Exists)').'</b>';
           } else {
@@ -127,6 +130,7 @@ while(false !== $file=readdir($h)) {
       }
     }
     
+    unset($parts);
   }
 }
 closedir($h);

@@ -76,7 +76,7 @@ if(isset($_REQUEST["register"])) {
     }
   }
   
-  if($system_os != 'windows') {
+
     if($validateUsers=='y') {
       $ret = $registrationlib->SnowCheckMail($_REQUEST["email"]);
       if(!$ret[0]) {
@@ -85,7 +85,7 @@ if(isset($_REQUEST["register"])) {
         die;
       }
     }
-  } 
+
   
   if($validateUsers == 'y') {
     $apass = addslashes(substr(md5($tikilib->genPass()),0,25));

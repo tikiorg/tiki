@@ -172,17 +172,17 @@ class FileGalLib extends TikiLib {
     $archive->extract('temp');
     $files=Array();
     $h = opendir("temp");
-    $gal_info = $this->get_gallery($galleryId);
+    $gal_info = $this->get_file_gallery_info($galleryId);
     while (($file = readdir($h)) !== false) {
     if( $file!='.' && $file!='..' && is_file("temp/$file") && $file!='license.txt' ) {
       $files[]=$file;
       // check filters
       $upl=1;
       if(!empty($fgal_match_regex)) {
-        if(!preg_match("/$gal_match_regex/",$file,$reqs)) $upl=0;
+        if(!preg_match("/$fgal_match_regex/",$file,$reqs)) $upl=0;
       }
       if(!empty($fgal_nmatch_regex)) {
-        if(preg_match("/$gal_nmatch_regex/",$file,$reqs)) $upl=0;
+        if(preg_match("/$fgal_nmatch_regex/",$file,$reqs)) $upl=0;
       }
 
       $fp = fopen('temp/'.$file,"rb");

@@ -13,7 +13,8 @@ class RegistrationLib extends TikiLib {
     // Validate emails...
   function SnowCheckMail($Email,$Debug=false)
   {
-    $HTTP_HOST=$_SERVER['HTTP_HOST'];
+	global $system_os;
+    $HTTP_HOST=$_SERVER['SERVER_NAME']; 
     $Return =array();
     // Variable for return.
     // $Return[0] : [true|false]
@@ -35,6 +36,8 @@ class RegistrationLib extends TikiLib {
     // list function reference : http://www.php.net/manual/en/function.list.php
     // split function reference : http://www.php.net/manual/en/function.split.php
     list ( $Username, $Domain ) = split ("@",$Email);
+
+	if($system_os == 'windows') return $Return;
 
     // That MX(mail exchanger) record exists in domain check .
     // checkdnsrr function reference : http://www.php.net/manual/en/function.checkdnsrr.php

@@ -104,7 +104,7 @@
 <td class="{cycle}">
    <a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}">{tr}relate{/tr}</a>
-   <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {/section}

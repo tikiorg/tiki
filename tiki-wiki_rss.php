@@ -38,11 +38,11 @@ print('>');
           print('<link>'.$home.'?page='.$chg["pageName"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["lastModif"]);
           if(!empty($chg["comment"])) {
-            $comment="(".$chg["comment"].")";
+            $comment="(".htmlspecialchars($chg["comment"]).")";
           } else {
             $comment='';
           }
-          print('<description>'."[$data] :".$chg["action"]." ".$chg["pageName"].$comment.'</description>'."\n");
+          print('<description>'."[$data] :".$chg["action"]." ".htmlspecialchars($chg["pageName"]).$comment.'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

@@ -10,7 +10,7 @@ header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-articles_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-articles_rss.php","img/tiki.jpg",$foo["path"]);
-$foo3=str_replace("tiki-articles_rss","tiki-read_article.php",$foo["path"]);
+$foo3=str_replace("tiki-articles_rss.php","tiki-read_article.php",$foo["path"]);
 $home = httpPrefix().$foo1;
 $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
@@ -36,11 +36,11 @@ print('>');
       <?php
         // LOOP collecting last changes to the wiki
         foreach($changes["data"] as $chg) {
-          print('<rdf:li resource="'.$read.'?articleId='.$chg["articleId"].'">'."\n");
-          print('<title>'.$chg["title"].'</title>'."\n");
+          print('<rdf:li resource="'.htmlspecialchars($read).'?articleId='.htmlspecialchars($chg["articleId"]).'">'."\n");
+          print('<title>'.htmlspecialchars($chg["title"]).'</title>'."\n");
           print('<link>'.$read.'?articleId='.$chg["articleId"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["publishDate"]);
-          print('<description>'.$chg["heading"].'</description>'."\n");
+          print('<description>'.htmlspecialchars($chg["heading"]).'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

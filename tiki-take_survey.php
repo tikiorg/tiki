@@ -51,9 +51,7 @@ if($tikilib->user_has_voted($user,'survey'.$_REQUEST["surveyId"])) {
   $smarty->assign('msg',tra("You cannot take this survey twice"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
-} else {
-  $tikilib->register_user_vote($user,'survey'.$_REQUEST["surveyId"]);
-}
+} 
 }
 
 $srvlib->add_survey_hit($_REQUEST["surveyId"]);
@@ -89,6 +87,7 @@ if(isset($_REQUEST["ans"])) {
       }
     }	
   }
+  $tikilib->register_user_vote($user,'survey'.$_REQUEST["surveyId"]);
   header("location: tiki-list_surveys.php");
 }
 

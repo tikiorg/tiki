@@ -10,12 +10,12 @@
 function wikiplugin_code($data,$params) {
   global $tikilib;
   extract($params);
-  $code=htmlentities(htmlspecialchars(trim($data)));
+  $code=htmlspecialchars(trim($data));
   if(!isset($bgcolor)) {$bgcolor='#EEEEEE';}
-  $data = '<div style="background-color:$bgcolor;">'.$code.'</div>';
+  //If you want line numbering use something like this:
+  //$lines = explode("\n",$code);
+  //print_r($lines);
+  $data = "<div style='background-color:$bgcolor;'>".$code.'</div>';
   return $data;
 }
-
-
 ?>
-

@@ -119,7 +119,7 @@
 <table class="normal">
 <tr>
  <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">
- {tr}comment{/tr}: <input type="text" name="attach_comment" maxlenght="250" />
+ {tr}comment{/tr}: <input type="text" name="attach_comment" maxlength="250" />
  <input type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>
 </tr>

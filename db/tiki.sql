@@ -1499,9 +1499,9 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_uplo
 
 ### CHANGES FOR 1.6 ###
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minor','wiki','Can save as minor edit','editor');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minor','wiki','Can save as minor edit','editors');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editors');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editors');
 
 drop table if exists tiki_extwiki;
 create table tiki_extwiki(
@@ -1604,7 +1604,7 @@ create table tiki_eph(
   primary key(ephId)
 );
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_eph_admin','tiki','Can admin ephemerides','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_eph_admin','tiki','Can admin ephemerides','editors');
 
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered');
@@ -1690,7 +1690,7 @@ create table tiki_user_tasks(
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_messages','messu','Can use the messaging system','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups','editors');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast_all','messu','Can broadcast messages to all user','admin');
 
 drop table if exists messu_messages;
@@ -1739,13 +1739,13 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_struc
 
 ### DIRECTORIES BEGIN
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory','directory','Can admin the directory','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory','directory','Can admin the directory','editors');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_directory','directory','Can use the directory','basic');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories','editor');
-REPLACE INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories','editors');
+REPLACE INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites','editors');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory','basic');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid','editor');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_validate_links','directory','Can validate submited links','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid','editors');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_validate_links','directory','Can validate submited links','editors');
 
 
 
@@ -1831,13 +1831,13 @@ create index ti_cr on tiki_images (created);
 create index ti_hi on tiki_images (hits);
 create index ti_us on tiki_images (user);
 create index t_i_d_it on tiki_images_data (imageId,type);
+create index tc_pi on tiki_comments(parentId);
 
 # Optimization of others -- try yourself
 #create index tg_u on tiki_galleries (user);
 #create index ti_p_hi on tiki_pages (hits);
 #create index ti_p_lm on tiki_pages (lastModif);
 #create index up_t on users_permissions(type);
-#create index tc_pi on tiki_comments(parentId);
 #create index tf_n on tiki_forums(name);
 #create index tf_lp on tiki_forums(lastPost);
 #create index tf_h on tiki_forums(hits);
