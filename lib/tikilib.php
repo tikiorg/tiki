@@ -9666,7 +9666,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $line = preg_replace("/__([^_]+)__/","<b>$1</b>",$line);
         $line = preg_replace("/\'\'([^']+)\'\'/","<i>$1</i>",$line);
         // Reemplazar las definiciones
-        $line = preg_replace("/;([^:]+):([^\n]+)/","<dl><dt>$1</dt><dd>$2</dd></dl>",$line);
+        $line = preg_replace("/^;([^:]+):([^\n]+)/","<dl><dt>$1</dt><dd>$2</dd></dl>",$line);
         if(0) {
         $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/","<a class='wiki' $target href='$1'>$2</a>",$line);
         // Segundo intento reemplazar los [link] comunes
