@@ -28,14 +28,14 @@
 <form action="tiki-edit_quiz.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor"><label for="quiz-name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="quiz-name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor"><label for="quiz-desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="quiz-desc" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Quiz can be repeated{/tr}</td><td class="formcolor"><input type="checkbox" name="canRepeat" {if $canRepeat eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Store quiz results{/tr}</td><td class="formcolor"><input type="checkbox" name="storeResults" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
-<!--<tr><td class="formcolor">{tr}Questions per page{/tr}</td><td class="formcolor"><select name="questionsPerPage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select></td></tr>-->
-<tr><td class="formcolor">{tr}Quiz is time limited{/tr}</td><td class="formcolor"><input type="checkbox" name="timeLimited" {if $timeLimited eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Maximum time{/tr}</td><td class="formcolor"><select name="timeLimit">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td></tr>
+<tr><td class="formcolor"><label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</td><td class="formcolor"><input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor"><label for="quiz-results">{tr}Store quiz results{/tr}</td><td class="formcolor"><input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
+<!--<tr><td class="formcolor"><label for="quiz-perpage">{tr}Questions per page{/tr}</td><td class="formcolor"><select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select></td></tr>-->
+<tr><td class="formcolor"><label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label></td><td class="formcolor"><input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor"><label for="quiz-maxtime">{tr}Maximum time{/tr}</label></td><td class="formcolor"><select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
