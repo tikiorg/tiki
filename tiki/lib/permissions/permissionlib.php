@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/permissions/permissionlib.php,v 1.1 2004-10-26 18:36:32 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/permissions/permissionlib.php,v 1.2 2004-10-26 18:40:37 lfagundes Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -171,4 +171,41 @@ class PermissionLib extends TikiLib {
 
 global $dbTiki;
 $permissionlib = new PermissionLib($dbTiki);
+
+/*
+-- MySQL dump 9.09
+--
+-- Host: localhost    Database: tiki_dev
+-- ------------------------------------------------------
+-- Server version	4.0.16-log
+
+--
+-- Table structure for table `tiki_permission_indexed_objects`
+--
+
+CREATE TABLE tiki_permission_indexed_objects (
+  objectMD5 char(32) NOT NULL default '',
+  PRIMARY KEY  (objectMD5)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `tiki_permission_indexed_objects`
+--
+
+
+--
+-- Table structure for table `tiki_permission_index`
+--
+
+CREATE TABLE tiki_permission_index (
+  objectType varchar(20) NOT NULL default '',
+  objectId varchar(255) NOT NULL default '',
+  objectMD5 varchar(32) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
+  permName varchar(30) NOT NULL default '',
+  PRIMARY KEY  (objectType,objectId(30),objectMD5,groupName(30),permName)
+) TYPE=MyISAM;
+
+*/
+
 ?>
