@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.12 2003-12-18 09:58:03 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.13 2003-12-18 13:01:54 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -1025,11 +1025,10 @@ textarea.tshoutbox {
 	width: 100%;
 }
 /* calendar styles */
-#calendar
+table#caltable
 {
-width:100%;
+width: 100%;
 }
-
 .Cal0, .Cal1, .Cal2 {
 	border-top: 1px dashed #cccccc;
 	color: #425262;
