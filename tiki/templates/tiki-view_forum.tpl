@@ -376,7 +376,7 @@ a moderator approves it.{/tr}</small>
   	<td style="text-align:right;" class="topicscore{cycle advance=false}">{$comments_coms[ix].average|string_format:"%.2f"}</td>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	  <td class="topiclastpost{cycle advance=false}">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
+  	  <td class="topiclastpost{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime}<!--date_format:"%b %d [%H:%M]"-->
 	  {if $comments_coms[ix].replies.numReplies}
 	  <br/>
 	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
