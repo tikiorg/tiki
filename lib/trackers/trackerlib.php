@@ -210,6 +210,25 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 
+	function get_all_items($trackerId,$fieldId) {
+		global $cachelib;
+		$sort_mode = "value_asc";
+		$cache = md5($trackerId.'.'.$fieldId);
+		if (!$cachelib->isCached($cache)) {
+			$query = "select distinct ttif.`itemid`, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+			$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? order by ".$this->convert_sortmode($sort_mode);
+			$result = $this->query($query,array((int) $trackerId,(int)$fieldId));
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$k = $res['itemid'];
+				$ret[$k] = $res['value'];
+			}
+			$cachelib->cacheItem($cache,serialize($ret));
+			return $ret;
+		} else {
+			return unserialize($cachelib->getCached($cache));
+		}
+	}
 
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {

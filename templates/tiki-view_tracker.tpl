@@ -362,7 +362,11 @@ align       : "bR"
 </script>
 
 {elseif $fields[ix].type eq 'r'}
-<input type="text" name="{$fields[ix].ins_id}" value="{$defaultvalues.$fid|escape}" {if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
+<select name="{$fields[ix].ins_id}">
+{foreach key=id item=label from=$fields[ix].list}
+<option value="{$label|escape}" {if $defaultvalue eq $label}selected="selected"{/if}>{$label}</option>
+{/foreach}
+</select>
 
 {/if}
 
