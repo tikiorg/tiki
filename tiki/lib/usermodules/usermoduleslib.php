@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.25 2004-03-29 21:26:41 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.26 2004-04-25 20:15:25 chealer Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -9,8 +9,6 @@
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
-
-include_once ('lib/debug/debugger.php');
 
 /**
  * \brief Class to manage user assigned modules
@@ -57,33 +55,13 @@ class UserModulesLib extends TikiLib {
 
 	function assign_user_module($module, $position, $order, $user) {
 		$query = "select * from `tiki_modules` where `name`=?";
-
 		$result = $this->query($query,array($module));
 		$res = $result->fetchRow();
-		$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
-		$result1=$this->query($query1,array($module,$user),-1,-1,false);
-//DH Fix
-		$query2 = '
-    	insert INTO
-    		`tiki_user_assigned_modules`
-    	(
-    		`user`,
-    		`name`,
-    		`position`,
-    		`ord`,
-    		`type`
-    	) VALUES
-    		(?,?,?,?,?)
-    ';
-		$fields = array(
-			$user,
-			$module,
-			$position,
-			(int) $order,
-			$res['type']
-		);
-
-		$result2 = $this->query($query2, $fields);
+		$query="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
+		$result=$this->query($query,array($module,$user),-1,-1,false);
+		$query = 'insert into `tiki_user_assigned_modules`(`user`,`name`,`position`,`ord`,`type`) values(?,?,?,?,?)';
+		$bindvars = array($user,$module,$position,(int) $order,$res['type']);
+		$result = $this->query($query, $bindvars);
 	}
 
 	function get_user_assigned_modules($user) {
@@ -151,52 +129,32 @@ class UserModulesLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$mod_ok = 0;
+			if ($res['type'] != "h") {
+				if ($res["groups"] && $modallgroups != 'y') {
+					$groups = unserialize($res["groups"]);
 
-			if ($res["groups"] && $modallgroups != 'y') {
-				$groups = unserialize($res["groups"]);
+					$ins = array_intersect($groups, $user_groups);
 
-				$ins = array_intersect($groups, $user_groups);
-
-				if (count($ins) > 0) {
+					if (count($ins) > 0) {
+						$mod_ok = 1;
+					}
+				} else {
 					$mod_ok = 1;
 				}
-			} else {
-				$mod_ok = 1;
 			}
 
 			if ($mod_ok) {
-				$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
-				$result1=$this->query($query1,array($res['name'],$user),-1,-1,false);	
+				$query="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
+				$result2=$this->query($query,array($res['name'],$user),-1,-1,false);
 
-//DH Fix
-				$query2 = "
-			insert INTO
-				`tiki_user_assigned_modules`
-			(
-				`user`,
-				`name`,
-				`position`,
-				`ord`,
-				`type`
-			) VALUES (
-				?,?,?,?,?
-			)
-		";
-
-				$fields = array(
-					$user,
-					$res['name'],
-					$res['position'],
-					$res['ord'],
-					$res['type']
-				);
-
-				$result2 = $this->query($query2, $fields);
+				$query = "insert into `tiki_user_assigned_modules`
+				(`user`,`name`,`position`,`ord`,`type`) values(?,?,?,?,?)";
+				$bindvars = array($user,$res['name'],$res['position'],$res['ord'],$res['type']);
+				$result2 = $this->query($query, $bindvars);
 			}
 		}
 	}
-
-	// Return the list of modules that CAN be assigned by the user (he may have assigned or not the modules)
+	// Return the list of modules that can be assigned by the user
 	function get_user_assignable_modules($user) {
 		global $modallgroups;
 
