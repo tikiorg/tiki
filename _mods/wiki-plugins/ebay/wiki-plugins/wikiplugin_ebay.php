@@ -1,9 +1,9 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/ebay/wiki-plugins/wikiplugin_ebay.php,v 1.1 2004-09-13 11:13:58 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/ebay/wiki-plugins/wikiplugin_ebay.php,v 1.2 2004-09-13 11:22:26 damosoft Exp $
 
-// Wiki plugin to display a SWF file
-// damian aka damosoft 30 March 2004
+// Wiki plugin to display ebay search results file
+// damian aka damosoft 13 Sep 2004
 
 function wikiplugin_ebay_help() {
         return tra("Displays a button linking to ebay search results").":<br />~np~{EBAY(search=>keywords)/}~/np~";
