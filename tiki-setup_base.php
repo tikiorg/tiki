@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.32 2003-09-09 14:19:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.33 2003-09-10 05:47:30 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,13 +118,14 @@ function tra($content) {
         return $res["tran"];
     }
 }
-/* \brief  substr with a utf8 string - works only with $start and $length positive ou nuls
+/* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte
- * The first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD and it indicates how many bytes follow for this character.
+ * In a multybyte sequence, the first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD
+ * and it indicates how many bytes follow for this character.
  * All further bytes in a multibyte sequence are in the range 0x80 to 0xBF.
  */
 function utf8Substr($str, $start, $len = ''){
-	if (function_exists('mb_subtr')) /* php is compile with the mulitbyte support */
+	if (function_exists('mb_substr')) /* php is compiled with the mulitbyte support */
 		return mb_substr($string, $start, $len);
 	$limit = strlen($str);
 	for ($s = 0; $start > 0;--$start) {// found the real start
