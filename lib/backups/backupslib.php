@@ -6,15 +6,13 @@ class BackupLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to BAckupsLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function restore_database($filename) {
 		// Get the password before it's too late
-		$query = "select hash from users_users where login='Admin'";
-
-		$pwd = $this->getOne($query);
+		$query = "select `hash` from `users_users` where `login`=?";
+		$pwd = $this->getOne($query,array("admin"));
 
 		// Before anything read tiki.sql from db and run it
 		$fp = fopen("db/tiki.sql", "r");
@@ -36,18 +34,15 @@ class BackupLib extends TikiLib {
 			$result = $this->query($query);
 		}
 
-		$query = "update users_users set password = '$pwd' where login='admin'";
-		$result = $this->query($query);
+		$query = "update `users_users` set `password`=? where `login`=?";
+		$result = $this->query($query,array($pwd,'admin'));
 		@$fp = fopen($filename, "rb");
 
-		if (!$fp)
-			return false;
+		if (!$fp) return false;
 
 		while (!feof($fp)) {
 			$rlen = fread($fp, 4);
-
-			if (feof($fp))
-				break;
+			if (feof($fp)) break;
 
 			$len = unpack("L", $rlen);
 			$len = array_pop($len);
@@ -56,7 +51,7 @@ class BackupLib extends TikiLib {
 			$line = $this->RC4($pwd, $line);
 			// EXECUTE SQL SENTENCE HERE
 			//print("q: $line <br/>");
-			$result = $this->query($line);
+			$result = $this->query($line,array());
 		}
 
 		fclose ($fp);
@@ -112,8 +107,8 @@ class BackupLib extends TikiLib {
 	function backup_database($filename) {
 		ini_set("max_execution_time", "3000");
 
-		$query = "select hash from users_users where login='Admin'";
-		$pwd = $this->getOne($query);
+		$query = "select `hash` from `users_users` where `login`=?";
+		$pwd = $this->getOne($query,array("admin"));
 		@$fp = fopen($filename, "w");
 
 		if (!$fp)
@@ -124,16 +119,16 @@ class BackupLib extends TikiLib {
 		$sql = '';
 		$part = '';
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			list($key, $val) = each($res);
 
 			if (!strstr($val, 'babl')) {
 				// Now dump the table
-				$query2 = "select * from $val";
+				$query2 = "select * from `$val`";
 
 				$result2 = $this->query($query2);
 
-				while ($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+				while ($res2 = $result2->fetchRow()) {
 					$sentence = "values(";
 
 					$first = 1;
@@ -141,12 +136,10 @@ class BackupLib extends TikiLib {
 					foreach ($res2 as $field => $value) {
 						if ($first) {
 							$sentence .= "'" . addslashes($value). "'";
-
 							$first = 0;
 							$fields = '(' . $field;
 						} else {
 							$sentence .= ",'" . addslashes($value). "'";
-
 							$fields .= ",$field";
 						}
 					}
