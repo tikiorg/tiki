@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: msql.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: msql.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
 //
 // Database independent query interface definition for PHP's Mini-SQL
 // extension.
@@ -26,10 +26,15 @@ require_once 'DB/common.php';
 
 class DB_msql extends DB_common
 {
+    // {{{ properties
+
     var $connection;
     var $phptype, $dbsyntax;
     var $prepare_tokens = array();
     var $prepare_types = array();
+
+    // }}}
+    // {{{ constructor
 
     function DB_msql()
     {
@@ -43,6 +48,9 @@ class DB_msql extends DB_common
             'limit' => 'emulate'
         );
     }
+
+    // }}}
+    // {{{ connect()
 
     function connect($dsninfo, $persistent = false)
     {
@@ -73,12 +81,18 @@ class DB_msql extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ disconnect()
+
     function disconnect()
     {
         $ret = @msql_close($this->connection);
         $this->connection = null;
         return $ret;
     }
+
+    // }}}
+    // {{{ simpleQuery()
 
     function simpleQuery($query)
     {
@@ -93,6 +107,8 @@ class DB_msql extends DB_common
         return DB::isManip($query) ? DB_OK : $result;
     }
 
+
+    // }}}
     // {{{ nextResult()
 
     /**
@@ -110,18 +126,7 @@ class DB_msql extends DB_common
     }
 
     // }}}
-
-    function fetchRow($result, $fetchmode = DB_FETCHMODE_DEFAULT, $rownum=null)
-    {
-        if ($fetchmode == DB_FETCHMODE_DEFAULT) {
-            $fetchmode = $this->fetchmode;
-        }
-        $res = $this->fetchInto ($result, $arr, $fetchmode, $rownum);
-        if ($res !== DB_OK) {
-            return $res;
-        }
-        return $arr;
-    }
+    // {{{ fetchInto()
 
     function fetchInto($result, &$ar, $fetchmode, $rownum=null)
     {
@@ -145,6 +150,9 @@ class DB_msql extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ freeResult()
+
     function freeResult($result)
     {
         if (is_resource($result)) {
@@ -158,6 +166,9 @@ class DB_msql extends DB_common
         return true;
     }
 
+    // }}}
+    // {{{ numCols()
+
     function numCols($result)
     {
         $cols = @msql_num_fields($result);
@@ -167,6 +178,9 @@ class DB_msql extends DB_common
         return $cols;
     }
 
+    // }}}
+    // {{{ numRows()
+
     function numRows($result)
     {
         $rows = @msql_num_rows($result);
@@ -175,6 +189,9 @@ class DB_msql extends DB_common
         }
         return $rows;
     }
+
+    // }}}
+    // {{{ affected()
 
     /**
      * Gets the number of rows affected by a query.
@@ -187,6 +204,7 @@ class DB_msql extends DB_common
         return @msql_affected_rows($this->connection);
     }
 
+    // }}}
     // {{{ getSpecialQuery()
 
     /**

@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -13,10 +13,10 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Author: Stig Bakken <ssb@fast.no>                                    |
+// | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: odbc.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: odbc.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
 //
 // Database independent query interface definition for PHP's ODBC
 // extension.
@@ -61,21 +61,24 @@ class DB_odbc extends DB_common
             '21S01' => DB_ERROR_MISMATCH,
             '21S02' => DB_ERROR_MISMATCH,
             '22003' => DB_ERROR_INVALID_NUMBER,
+            '22005' => DB_ERROR_INVALID_NUMBER,
             '22008' => DB_ERROR_INVALID_DATE,
             '22012' => DB_ERROR_DIVZERO,
             '23000' => DB_ERROR_CONSTRAINT,
+            '23503' => DB_ERROR_CONSTRAINT,
             '24000' => DB_ERROR_INVALID,
             '34000' => DB_ERROR_INVALID,
             '37000' => DB_ERROR_SYNTAX,
             '42000' => DB_ERROR_SYNTAX,
+            '42601' => DB_ERROR_SYNTAX,
             'IM001' => DB_ERROR_UNSUPPORTED,
             'S0000' => DB_ERROR_NOSUCHTABLE,
-            'S0001' => DB_ERROR_NOT_FOUND,
-            'S0002' => DB_ERROR_NOT_FOUND,
+            'S0001' => DB_ERROR_ALREADY_EXISTS,
+            'S0002' => DB_ERROR_NOSUCHTABLE,
             'S0011' => DB_ERROR_ALREADY_EXISTS,
             'S0012' => DB_ERROR_NOT_FOUND,
             'S0021' => DB_ERROR_ALREADY_EXISTS,
-            'S0022' => DB_ERROR_NOT_FOUND,
+            'S0022' => DB_ERROR_NOSUCHFIELD,
             'S1009' => DB_ERROR_INVALID,
             'S1090' => DB_ERROR_INVALID,
             'S1C00' => DB_ERROR_NOT_CAPABLE
@@ -196,21 +199,6 @@ class DB_odbc extends DB_common
     }
 
     // }}}
-    // {{{ fetchRow()
-
-    function fetchRow($result, $fetchmode = DB_FETCHMODE_DEFAULT, $rownum=null)
-    {
-        if ($fetchmode == DB_FETCHMODE_DEFAULT) {
-            $fetchmode = $this->fetchmode;
-        }
-        $res = $this->fetchInto ($result, $arr, $fetchmode, $rownum);
-        if ($res !== DB_OK) {
-            return $res;
-        }
-        return $arr;
-    }
-
-    // }}}
     // {{{ fetchInto()
 
     function fetchInto($result, &$row, $fetchmode, $rownum=null)
@@ -218,17 +206,13 @@ class DB_odbc extends DB_common
         $row = array();
         if ($rownum !== null) {
             $rownum++; // ODBC first row is 1
-            if (!function_exists('version_compare') || version_compare(phpversion(), "4.0.5", "lt")) {
-                $cols = odbc_fetch_into($result, $rownum, &$row);
+            if (version_compare(phpversion(), '4.2.0', 'ge')) {
+                $cols = odbc_fetch_into($result, $row, $rownum);
             } else {
                 $cols = odbc_fetch_into($result, $rownum, $row);
             }
         } else {
-            if (!function_exists('version_compare') || version_compare(phpversion(), "4.0.5", "lt")) {
-                $cols = odbc_fetch_into($result, &$row);
-            } else {
-                $cols = odbc_fetch_into($result, $row);
-            }
+            $cols = odbc_fetch_into($result, $row);
         }
 
         if (!$cols) {
@@ -243,6 +227,9 @@ class DB_odbc extends DB_common
             for ($i = 0; $i < count($row); $i++) {
                 $colName = odbc_field_name($result, $i+1);
                 $a[$colName] = $row[$i];
+            }
+            if ($this->options['optimize'] == 'portability') {
+                $a = array_change_key_case($a, CASE_LOWER);
             }
             $row = $a;
         }
@@ -318,6 +305,30 @@ class DB_odbc extends DB_common
         return $nrows;
     }
 
+    // {{{ quote()
+    /**
+    * Quote the given string so it can be safely used within string delimiters
+    * in a query.
+    * @param $string mixed Data to be quoted
+    * @return mixed "NULL" string, quoted string or original data
+    */
+    function quote($str = null)
+    {
+        if (is_numeric($str)) {
+            return $str;
+        }
+        switch (strtolower(gettype($str))) {
+            case 'null':
+                return 'NULL';
+            case 'boolean':
+                return $str ? 'TRUE' : 'FALSE';
+            case 'string':
+            default:
+                $str = str_replace("'", "''", $str);
+                return "'$str'";
+        }
+    }
+
     // }}}
     // {{{ errorNative()
 
@@ -359,13 +370,17 @@ class DB_odbc extends DB_common
         $seqname = $this->getSequenceName($seq_name);
         $repeat = 0;
         do {
+            $this->pushErrorHandling(PEAR_ERROR_RETURN);
             $result = $this->query("update ${seqname} set id = id + 1");
+            $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
-                $result->getCode() == DB_ERROR_NOT_FOUND) {
+                $result->getCode() == DB_ERROR_NOSUCHTABLE) {
                 $repeat = 1;
+                $this->pushErrorHandling(PEAR_ERROR_RETURN);
                 $result = $this->createSequence($seq_name);
+                $this->popErrorHandling();
                 if (DB::isError($result)) {
-                    return $result;
+                    return $this->raiseError($result);
                 }
                 $result = $this->query("insert into ${seqname} (id) values(0)");
             } else {
@@ -374,7 +389,7 @@ class DB_odbc extends DB_common
         } while ($repeat);
 
         if (DB::isError($result)) {
-            return $result;
+            return $this->raiseError($result);
         }
 
         $result = $this->query("select id from ${seqname}");
@@ -382,12 +397,12 @@ class DB_odbc extends DB_common
             return $result;
         }
 
-        $row = $result->fetchRow(DB_FETCHMODE_ASSOC);
+        $row = $result->fetchRow(DB_FETCHMODE_ORDERED);
         if (DB::isError($row || !$row)) {
             return $row;
         }
 
-        return $row['id'];
+        return $row[0];
     }
 
     // }}}

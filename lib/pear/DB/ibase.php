@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,20 +16,29 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: ibase.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: ibase.php,v 1.3 2003-07-15 20:24:08 rossta Exp $
 //
 // Database independent query interface definition for PHP's Interbase
 // extension.
 //
+// Bugs:
+//  - If dbsyntax is not firebird, the limitQuery may fail
+//  - The palceholders '&' and '!' don't work here
 
 require_once 'DB/common.php';
 
 class DB_ibase extends DB_common
 {
+
+    // {{{ properties
+
     var $connection;
     var $phptype, $dbsyntax;
     var $autocommit = 1;
     var $manip_query = array();
+
+    // }}}
+    // {{{ constructor
 
     function DB_ibase()
     {
@@ -49,6 +58,7 @@ class DB_ibase extends DB_common
             -150 => DB_ERROR_ACCESS_VIOLATION,
             -151 => DB_ERROR_ACCESS_VIOLATION,
             -155 => DB_ERROR_NOSUCHTABLE,
+            88   => DB_ERROR_NOSUCHTABLE,
             -157 => DB_ERROR_NOSUCHFIELD,
             -158 => DB_ERROR_VALUE_COUNT_ON_ROW,
             -170 => DB_ERROR_MISMATCH,
@@ -61,6 +71,7 @@ class DB_ibase extends DB_common
             -219 => DB_ERROR_NOSUCHTABLE,
             -297 => DB_ERROR_CONSTRAINT,
             -530 => DB_ERROR_CONSTRAINT,
+            -607 => DB_ERROR_NOSUCHTABLE,
             -803 => DB_ERROR_CONSTRAINT,
             -551 => DB_ERROR_ACCESS_VIOLATION,
             -552 => DB_ERROR_ACCESS_VIOLATION,
@@ -69,6 +80,9 @@ class DB_ibase extends DB_common
             -924 => DB_ERROR_CONNECT_FAILED
         );
     }
+
+    // }}}
+    // {{{ connect()
 
     function connect($dsninfo, $persistent = false)
     {
@@ -79,7 +93,7 @@ class DB_ibase extends DB_common
         $user = $dsninfo['username'];
         $pw   = $dsninfo['password'];
         $dbhost = $dsninfo['hostspec'] ?
-                  ($dsninfo['hostspec'] . ':/' . $dsninfo['database']) :
+                  ($dsninfo['hostspec'] . ':' . $dsninfo['database']) :
                   $dsninfo['database'];
 
         $connect_function = $persistent ? 'ibase_pconnect' : 'ibase_connect';
@@ -109,8 +123,14 @@ class DB_ibase extends DB_common
             return $this->ibaseRaiseError(DB_ERROR_CONNECT_FAILED);
         }
         $this->connection = $conn;
+        if ($this->dsn['dbsyntax'] == 'firebird') {
+            $this->features['limit'] = 'alter';
+        }
         return DB_OK;
     }
+
+    // }}}
+    // {{{ disconnect()
 
     function disconnect()
     {
@@ -118,6 +138,9 @@ class DB_ibase extends DB_common
         $this->connection = null;
         return $ret;
     }
+
+    // }}}
+    // {{{ simpleQuery()
 
     function simpleQuery($query)
     {
@@ -136,6 +159,7 @@ class DB_ibase extends DB_common
         return DB::isManip($query) ? DB_OK : $result;
     }
 
+    // }}}
     // {{{ modifyLimitQuery()
 
     /**
@@ -155,7 +179,8 @@ class DB_ibase extends DB_common
     function modifyLimitQuery($query, $from, $count)
     {
         if ($this->dsn['dbsyntax'] == 'firebird') {
-            $from++; // SKIP starts from 1, ie SKIP 1 starts from the first record
+            //$from++; // SKIP starts from 1, ie SKIP 1 starts from the first record
+                           // (cox) Seems that SKIP starts in 0
             $query = preg_replace('/^\s*select\s(.*)$/is',
                                   "SELECT FIRST $count SKIP $from $1", $query);
         }
@@ -182,6 +207,7 @@ class DB_ibase extends DB_common
     }
 
     // }}}
+    // {{{ fetchInto()
 
     function fetchInto($result, &$ar, $fetchmode, $rownum = null)
     {
@@ -189,12 +215,16 @@ class DB_ibase extends DB_common
             return $this->ibaseRaiseError(DB_ERROR_NOT_CAPABLE);
         }
         if ($fetchmode & DB_FETCHMODE_ASSOC) {
-            $ar = get_object_vars(ibase_fetch_object($result));
+            if (function_exists('ibase_fetch_assoc')) {
+                $ar = @ibase_fetch_assoc($result);
+            } else {
+                $ar = get_object_vars(ibase_fetch_object($result));
+            }
             if ($ar && $this->options['optimize'] == 'portability') {
                 $ar = array_change_key_case($ar, CASE_LOWER);
             }
         } else {
-            $ar = ibase_fetch_row($result);
+            $ar = @ibase_fetch_row($result);
         }
         if (!$ar) {
             if ($errmsg = ibase_errmsg()) {
@@ -206,7 +236,10 @@ class DB_ibase extends DB_common
         return DB_OK;
     }
 
-    function freeResult()
+    // }}}
+    // {{{ freeResult()
+
+    function freeResult($result)
     {
         if (is_resource($result)) {
             return ibase_free_result($result);
@@ -219,11 +252,17 @@ class DB_ibase extends DB_common
         return true;
     }
 
+    // }}}
+    // {{{ freeQuery()
+
     function freeQuery($query)
     {
         ibase_free_query($query);
         return true;
     }
+
+    // }}}
+    // {{{ numCols()
 
     function numCols($result)
     {
@@ -234,26 +273,116 @@ class DB_ibase extends DB_common
         return $cols;
     }
 
+    // }}}
+    // {{{ prepare()
+
+
+    /**
+     * Prepares a query for multiple execution with execute().
+     * @param $query query to be prepared
+     *
+     * @return DB statement resource
+     */
     function prepare($query)
     {
+        $tokens = split('[\&\?]', $query);
+        $token = 0;
+        $types = array();
+        $qlen = strlen($query);
+        for ($i = 0; $i < $qlen; $i++) {
+            switch ($query[$i]) {
+                case '?':
+                    $types[$token++] = DB_PARAM_SCALAR;
+                    break;
+                case '&':
+                    $types[$token++] = DB_PARAM_OPAQUE;
+                    break;
+            }
+        }
+        $newquery = strtr($query, '&', '?');
         $this->last_query = $query;
-        $query = $this->modifyQuery($query);
-        $stmt = ibase_prepare($query);
-        $this->manip_query[(int)$stmt] = DB::isManip($query);
+        $newquery = $this->modifyQuery($newquery);
+        $stmt = ibase_prepare($this->connection, $newquery);
+        $this->prepare_types[(int)$stmt] = $types;
+        $this->manip_query[(int)$stmt]   = DB::isManip($query);
         return $stmt;
     }
 
-    function execute($stmt, $data = false)
+    // }}}
+    // {{{ execute()
+
+    /**
+     * Executes a DB statement prepared with prepare().
+     *
+     * @param $stmt a DB statement resource (returned from prepare())
+     * @param $data data to be used in execution of the statement
+     *
+     * @return int returns an oci8 result resource for successful
+     * SELECT queries, DB_OK for other successful queries.  A DB error
+     * code is returned on failure.
+     */
+    function &execute($stmt, $data = false)
     {
-        $result = ibase_execute($stmt, $data);
-        if (!$result) {
+        $types=&$this->prepare_types[$stmt];
+        if (($size = sizeof($types)) != sizeof($data)) {
+            return $this->raiseError(DB_ERROR_MISMATCH);
+        }
+        $pdata[0] = $stmt;
+        for ($j = 0; $j < $size; $j++) {
+            $i = $j + 1;
+            if (is_array($data)) {
+                $pdata[$i] = &$data[$j];
+            } else {
+                $pdata[$i] = &$data;
+            }
+            if ($types[$j] == DB_PARAM_OPAQUE) {
+                $fp = fopen($pdata[$i], 'r');
+                $pdata[$i] = '';
+                if ($fp) {
+                    while (($buf = fread($fp, 4096)) != false) {
+                        $pdata[$i] .= $buf;
+                    }
+                    fclose($fp);
+                }
+            }
+        }
+        $res = call_user_func_array('ibase_execute', $pdata);
+        if (!$res) {
             return $this->ibaseRaiseError();
         }
-        if ($this->autocommit) {
+        /* XXX need this?
+        if ($this->autocommit && $this->manip_query[(int)$stmt]) {
             ibase_commit($this->connection);
+        }*/
+        if ($this->manip_query[(int)$stmt]) {
+            return DB_OK;
+        } else {
+            return new DB_result($this, $res);
         }
-        return DB::isManip($this->manip_query[(int)$stmt]) ? DB_OK : new DB_result($this, $result);
     }
+
+    /**
+     * Free the internal resources associated with a prepared query.
+     *
+     * @param $stmt The interbase_query resource type
+     *
+     * @return bool TRUE on success, FALSE if $result is invalid
+     */
+    function freePrepared($stmt)
+    {
+        if (!is_resource($stmt)) {
+            return false;
+        }
+        ibase_free_query($stmt);
+        unset($this->prepare_tokens[(int)$stmt]);
+        unset($this->prepare_types[(int)$stmt]);
+        unset($this->manip_query[(int)$stmt]);
+        return true;
+    }
+
+
+    // }}}
+    // {{{ autoCommit()
 
     function autoCommit($onoff = false)
     {
@@ -261,21 +390,31 @@ class DB_ibase extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ commit()
+
     function commit()
     {
         return ibase_commit($this->connection);
     }
+
+    // }}}
+    // {{{ rollback()
 
     function rollback($trans_number)
     {
         return ibase_rollback($this->connection, $trans_number);
     }
 
+    // }}}
+    // {{{ transactionInit()
+
     function transactionInit($trans_args = 0)
     {
         return $trans_args ? ibase_trans($trans_args, $this->connection) : ibase_trans();
     }
 
+    // }}}
     // {{{ nextId()
     /**
      * Get the next value in a sequence.
@@ -308,7 +447,7 @@ class DB_ibase extends DB_common
             }
         } while ($repeat);
         if (DB::isError($result)) {
-            return $result;
+            return $this->raiseError($result);
         }
         $arr = $result->fetchRow(DB_FETCHMODE_ORDERED);
         $result->free();
@@ -523,7 +662,7 @@ class DB_ibase extends DB_common
          }
 
          // free the result only if we were called on a table
-         if (is_resource($id)) {
+         if (is_string($result)) {
              ibase_free_result($id);
          }
          return $res;
@@ -550,32 +689,49 @@ class DB_ibase extends DB_common
     // }}}
     // {{{ ibaseRaiseError()
 
-    function ibaseRaiseError($errno = null, $errmsg = null)
+    function ibaseRaiseError($db_errno = null, $native_errmsg = null)
     {
-        if ($errmsg === null)
-            $errmsg = ibase_errmsg();
+        if ($native_errmsg === null) {
+            $native_errmsg = ibase_errmsg();
+        }
         // memo for the interbase php module hackers: we need something similar
         // to mysql_errno() to retrieve error codes instead of this ugly hack
-        if (preg_match('/^([^0-9\-]+)([0-9\-]+)\s+(.*)$/', $errmsg, $m)) {
-            if ($errno === null) {
-                $ibase_errno = (int)$m[2];
+        if (preg_match('/^([^0-9\-]+)([0-9\-]+)\s+(.*)$/', $native_errmsg, $m)) {
+            $native_errno = (int)$m[2];
+        } else {
+            $native_errno = null;
+        }
+        // try to map the native error to the DB one
+        if ($db_errno === null) {
+            if ($native_errno) {
                 // try to interpret Interbase error code (that's why we need ibase_errno()
                 // in the interbase module to return the real error code)
-                switch ($ibase_errno) {
+                switch ($native_errno) {
                     case -204:
                         if (is_int(strpos($m[3], 'Table unknown'))) {
-                            $errno = DB_ERROR_NOSUCHTABLE;
+                            $db_errno = DB_ERROR_NOSUCHTABLE;
                         }
                     break;
                     default:
-                        $errno = $this->errorCode($ibase_errno);
+                        $db_errno = $this->errorCode($native_errno);
+                }
+            } else {
+                $error_regexps = array(
+                    '/[tT]able .* already exists/' => DB_ERROR_ALREADY_EXISTS,
+                    '/violation of FOREIGN KEY constraint/' => DB_ERROR_CONSTRAINT,
+                    '/conversion error from string/' => DB_ERROR_INVALID_NUMBER,
+                    '/arithmetic exception, numeric overflow, or string truncation/' => DB_ERROR_DIVZERO
+                );
+                foreach ($error_regexps as $regexp => $code) {
+                    if (preg_match($regexp, $native_errmsg, $m)) {
+                        $db_errno = $code;
+                        $native_errno = null;
+                        break;
+                    }
                 }
             }
-            $errmsg = $m[2] . ' ' . $m[3];
         }
-        
-        return $this->raiseError($errno, null, null, $errmsg,
-                        $this->last_query);
+        return $this->raiseError($db_errno, null, null, null, $native_errmsg);
     }
 
     // }}}

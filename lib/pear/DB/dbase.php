@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
 // | Author: Tomas V.V.Cox <cox@idecnet.com>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: dbase.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: dbase.php,v 1.3 2003-07-15 20:24:08 rossta Exp $
 //
 // Database independent query interface definition for PHP's dbase
 // extension.
@@ -62,6 +62,9 @@ class DB_dbase extends DB_common
         $this->errorcode_map = array();
     }
 
+    // }}}
+    // {{{ connect()
+
     function connect($dsninfo, $persistent = false)
     {
         if (!DB::assertExtension('dbase')) {
@@ -80,6 +83,9 @@ class DB_dbase extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ disconnect()
+
     function disconnect()
     {
         $ret = dbase_close($this->connection);
@@ -87,12 +93,18 @@ class DB_dbase extends DB_common
         return $ret;
     }
 
+    // }}}
+    // {{{ &query()
+
     function &query($query = null)
     {
         // emulate result resources
         $this->res_row[$this->result] = 0;
         return new DB_result($this, $this->result++);
     }
+
+    // }}}
+    // {{{ fetchInto()
 
     function fetchInto($res, &$row, $fetchmode, $rownum = null)
     {
@@ -110,14 +122,23 @@ class DB_dbase extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ numCols()
+
     function numCols($foo)
     {
         return dbase_numfields($this->connection);
     }
 
+    // }}}
+    // {{{ numRows()
+
     function numRows($foo)
     {
         return dbase_numrecords($this->connection);
     }
+
+    // }}}
+
 }
 ?>

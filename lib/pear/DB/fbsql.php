@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
 // | Author: Frank M. Kromann <frank@frontbase.com>                       |
 // +----------------------------------------------------------------------+
 //
-// $Id: fbsql.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: fbsql.php,v 1.3 2003-07-15 20:24:08 rossta Exp $
 //
 // Database independent query interface definition for PHP's FrontBase
 // extension.
@@ -106,7 +106,6 @@ class DB_fbsql extends DB_common
 
         $connect_function = $persistent ? 'fbsql_pconnect' : 'fbsql_connect';
 
-        ini_set('track_errors', true);
         if ($dbhost && $user && $pw) {
             $conn = @$connect_function($dbhost, $user, $pw);
         } elseif ($dbhost && $user) {
@@ -116,7 +115,6 @@ class DB_fbsql extends DB_common
         } else {
             $conn = false;
         }
-        ini_restore("track_errors");
         if (empty($conn)) {
             if (empty($php_errormsg)) {
                 return $this->raiseError(DB_ERROR_CONNECT_FAILED);
@@ -204,29 +202,6 @@ class DB_fbsql extends DB_common
     function nextResult($result)
     {
         return @fbsql_next_result($result);
-    }
-
-    // }}}
-    // {{{ fetchRow()
-
-    /**
-     * Fetch and return a row of data (it uses fetchInto for that)
-     * @param $result fbsql result identifier
-     * @param   $fetchmode  format of fetched row array
-     * @param   $rownum     the absolute row number to fetch
-     *
-     * @return  array   a row of data, or false on error
-     */
-    function fetchRow($result, $fetchmode = DB_FETCHMODE_DEFAULT, $rownum=null)
-    {
-        if ($fetchmode == DB_FETCHMODE_DEFAULT) {
-            $fetchmode = $this->fetchmode;
-        }
-        $res = $this->fetchInto ($result, $arr, $fetchmode, $rownum);
-        if ($res !== DB_OK) {
-            return $res;
-        }
-        return $arr;
     }
 
     // }}}
