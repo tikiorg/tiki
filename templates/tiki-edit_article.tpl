@@ -3,8 +3,8 @@
 {include file="tiki-preview_article.tpl"}
 {/if}
 <a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a><br/><br/>
-[<a class="link" href="tiki-list_articles.php">list articles</a>|
-<a class="link" href="tiki-view_articles.php">view articles</a>]
+[<a class="link" href="tiki-list_articles.php">{tr}list articles{/tr}</a>|
+<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>]
 <br/><br/>
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='tikieditarticle'>
 <input type="hidden" name="articleId" value="{$articleId}" />
