@@ -144,12 +144,15 @@ GGG *}
 {include file=categorize.tpl}
 
 <tr><td class="formcolor">{tr}Summary{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
-{include file=tiki-edit_help_tool.tpl}
+{* GGG <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+{include file=tiki-edit_help_tool.tpl} GGG *}
 </td>
 </tr>
 
-<tr><td class="formcolor">{tr}Details{/tr}<br/><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Details test test test{/tr}<br/><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
+<br /><br />{tr}Quicklinks{/tr}
+{include file=tiki-edit_help_tool.tpl}
+</td><td class="formcolor">
 <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
