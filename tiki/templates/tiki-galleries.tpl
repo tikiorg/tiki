@@ -1,8 +1,8 @@
 <a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Image Gallery{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="{$helpurl}ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
@@ -141,7 +141,7 @@
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
     <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src='img/icons/config.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' height="16" width="16" border='0' /></a>
-    <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='img/icons2/delete.gif' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+    &nbsp;&nbsp;<a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}"><img src='img/icons2/delete.gif' height="16" width="16" border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
   {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}

@@ -2,8 +2,8 @@
 
 {if $feature_help eq 'y'}
 <!-- the help link info -->
-<a href="http://tikiwiki.org/tiki-index.php?page=FAQ" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}FAQ{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<a href="{$helpurl}FAQ" target="tikihelp" class="tikihelp" title="{tr}FAQ{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
@@ -70,7 +70,7 @@
 <td  class="{cycle}">
    <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}"><img src='img/icons/config.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
    <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}"><img src='img/icons/question.gif' alt='{tr}questions{/tr}' title='{tr}questions{/tr}' border='0' /></a>
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
 </td>
 {/if}
 </tr>

@@ -3,7 +3,7 @@
   
 <!-- the help link info -->
 {if $feature_help eq 'y'}
-  <a href="http://tikiwiki.org/tiki-index.php?page=Mail-inDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Mail-in{/tr}">
+  <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}admin Webmail{/tr}">
   <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
 {/if}
 

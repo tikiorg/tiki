@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.50 2004-05-04 02:02:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.51 2004-06-06 08:39:55 damosoft Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
+<a href="{$helpurl}PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}admin groups{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
 {if $feature_help eq 'y'}</a>{/if}
 

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.13 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.14 2004-06-06 08:39:56 damosoft Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Tiki Shoutbox{/tr}">
+<a href="{$helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}admin Tiki Shoutbox{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

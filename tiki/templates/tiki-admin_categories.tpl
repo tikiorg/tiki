@@ -1,9 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.25 2004-03-31 07:38:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.26 2004-06-06 08:39:54 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
-{if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=CategoryAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin categories{/tr}">
+<!-- the help link info -->
+  
+      {if $feature_help eq 'y'}
+<a href="{$helpurl}CategoryAdmin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.14 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.15 2004-06-06 08:42:46 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,8 +138,12 @@ if (count($slides) < 2) {
 	array_unshift($slides, '');
 }
 
-if (!isset($_REQUEST["slide"])) {
+if (!isset($_REQUEST["slide"]) or $_REQUEST["slide"] < 0) {
 	$_REQUEST["slide"] = 0;
+}
+
+if (!isset($slides[$_REQUEST["slide"] + 1])) {
+	$_REQUEST["slide"] = count($slides) - 2;
 }
 
 $smarty->assign('prev_slide', $_REQUEST["slide"] - 1);

@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.23 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.24 2004-06-06 08:42:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.23 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.24 2004-06-06 08:42:45 damosoft Exp $
 //
 
 // Initialization
@@ -309,7 +309,7 @@ $trackers = $trklib->list_trackers(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('trackers', $trackers["data"]);
 
 
-$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user);
+$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user, '', '', 'n');
 $smarty->assign_by_ref('articles', $articles["data"]);
 
 $directories = $dirlib->dir_list_all_categories(0, -1, 'name_asc', $find_objects);

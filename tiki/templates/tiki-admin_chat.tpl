@@ -3,7 +3,7 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 <!-- link to tpl -->

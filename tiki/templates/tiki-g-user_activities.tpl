@@ -5,8 +5,8 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia User Activities{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />{/if}
+<a href="{$helpurl}GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 <!-- link to tpl -->

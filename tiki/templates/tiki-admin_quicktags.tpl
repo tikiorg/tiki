@@ -1,8 +1,8 @@
 <a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=QuickTags" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin QuickTags{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
+<a href="{$helpurl}QuickTags" target="tikihelp" class="tikihelp" title="{tr}admin QuickTags{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_quicktags.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin quicktags template{/tr}">

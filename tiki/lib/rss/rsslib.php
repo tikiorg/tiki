@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class RSSLib extends TikiLib {
+class RSSLib extends TikiDB {
 	function RSSLib($db) {
 		# this is probably uneeded now
 		if (!$db) {
@@ -170,9 +170,10 @@ class RSSLib extends TikiLib {
 	}
 
 	function refresh_rss_module($rssId) {
+		global $tikilib;
 		$info = $this->get_rss_module($rssId);
 		if ($info) {
-			$data = $this->rss_iconv($this->httpRequest($info['url']));
+			$data = $this->rss_iconv($tikilib->httpRequest($info['url']));
 			$now = date("U");
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
 			$result = $this->query($query,array((string)$data,(int) $now, (int) $rssId));

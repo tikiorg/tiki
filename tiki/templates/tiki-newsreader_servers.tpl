@@ -2,7 +2,7 @@
 <a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Newsreader" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Configure Newsreader{/tr}">
+<a href="{$helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Configure Newsreader{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

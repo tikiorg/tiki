@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.34 2004-05-30 02:53:03 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.35 2004-06-06 08:39:54 damosoft Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -201,7 +201,7 @@
         </td>
       </tr><tr>
         <td class="form"><label for="general-gzip">
-        {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
+        {if $feature_help eq 'y'}<a href="{$helpurl}Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
         {tr}Use gzipped output{/tr}
         {if $feature_help eq 'y'}</a>{/if}
         :</label>
@@ -288,6 +288,10 @@
         <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
         <td><input size="5" type="text" name="maxRecords" id="general-max_records"
                    value="{$maxRecords|escape}" />
+      </tr><tr>
+        <td class="form"><label for="general-helpurl">{tr}Help URL{/tr}:</label></td>
+        <td><input type="text" name="helpurl" id="general-helpurl" value="{$helpurl|escape}" size="40" /></td>
+
       </tr></table>
       <table class="admin"><tr>
         <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>

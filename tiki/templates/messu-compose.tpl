@@ -1,8 +1,8 @@
 <a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp">
-<img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
+<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-class LsAdminlib extends Tikilib {
+class LsAdminlib extends TikiLib {
 	function LsAdminlib($db) {
 		if (!$db) {
 			die ("Invalid db object passed to LsAdminlib constructor");

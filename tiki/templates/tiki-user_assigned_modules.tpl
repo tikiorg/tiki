@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-user_assigned_modules.php">{tr}User assigned modules{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserAssignedModules" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Assigned Modules{/tr}">
+<a href="{$helpurl}UserAssignedModules" target="tikihelp" class="tikihelp" title="{tr}User Assigned Modules{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

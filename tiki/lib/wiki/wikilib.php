@@ -8,7 +8,7 @@ if( !defined( 'PLUGINS_DIR' ) ) {
 	define('PLUGINS_DIR', 'lib/wiki-plugins');
 }
 
-class WikiLib extends TikiLib {
+class WikiLib extends TikiDB {
     function WikiLib($db) {
 	if (!$db) {
 	    die ("Invalid db object passed to WikiLib constructor");
@@ -18,17 +18,51 @@ class WikiLib extends TikiLib {
     }
 
     //Special parsing for multipage articles
-    function get_number_of_pages($data)
-    {
-	// <pre> handling and so-on was moved outwards.
+    function get_number_of_pages($data) {
+	global $userlib;
+	// Temporary remove <PRE></PRE> secions to protect
+	// from broke <PRE> tags and leave well known <PRE>
+	// behaviour (i.e. type all text inside AS IS w/o
+	// any interpretation)
+	$preparsed = array();
+
+	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
+	$idx = 0;
+
+	foreach (array_unique($preparse[2])as $pp) {
+	    $key = md5($userlib->genPass());
+
+	    $aux["key"] = $key;
+	    $aux["data"] = $pp;
+	    $preparsed[] = $aux;
+	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
+	    $idx = $idx + 1;
+	}
 
 	$parts = explode("...page...", $data);
 	return count($parts);
     }
 
-    function get_page($data, $i) 
-    {
-	// <pre> handling and so-on was moved outwards.
+    function get_page($data, $i) {
+	global $userlib;
+	// Temporary remove <PRE></PRE> secions to protect
+	// from broke <PRE> tags and leave well known <PRE>
+	// behaviour (i.e. type all text inside AS IS w/o
+	// any interpretation)
+	$preparsed = array();
+
+	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
+	$idx = 0;
+
+	foreach (array_unique($preparse[2])as $pp) {
+	    $key = md5($userlib->genPass());
+
+	    $aux["key"] = $key;
+	    $aux["data"] = $pp;
+	    $preparsed[] = $aux;
+	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
+	    $idx = $idx + 1;
+	}
 
 	// Get slides
 	$parts = explode("...page...", $data);
@@ -141,8 +175,9 @@ class WikiLib extends TikiLib {
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong
 	function wiki_rename_page($oldName, $newName) {
+		global $tikilib;
 		// if page already exists, stop here
-		if ($this->page_exists($newName)) {
+		if ($tikilib->page_exists($newName)) {
 			// if it is a case change of same page: allow it, else stop here
 			if (strcasecmp($oldName, $newName) <> 0) return false;
 		}
@@ -174,7 +209,7 @@ class WikiLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 		    $page = $res['fromPage'];
 	
-		    $info = $this->get_page_info($page);
+		    $info = $tikilib->get_page_info($page);
 		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
 		    $data = $info['data'];
 		    $oldName = quotemeta( $oldName );
@@ -182,7 +217,7 @@ class WikiLib extends TikiLib {
 		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
 		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    $this->query($query, array( $data,(int) strlen($data), $page));
-		    $this->invalidate_cache($page);
+		    $tikilib->invalidate_cache($page);
 		}
 
 		// correct toPage and fromPage in tiki_links
@@ -423,9 +458,10 @@ class WikiLib extends TikiLib {
     // Removes last version of the page (from pages) if theres some
     // version in the tiki_history then the last version becomes the actual version
     function remove_last_version($page, $comment = '') {
+	global $tikilib;
 	global $histlib;
 
-	$this->invalidate_cache($page);
+	$tikilib->invalidate_cache($page);
 	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
 	$result = $this->query($query, array( $page ) );
 
@@ -436,7 +472,7 @@ class WikiLib extends TikiLib {
 	    $histlib->use_version($res["pageName"], $res["version"]);
 	    $histlib->remove_version($res["pageName"], $res["version"]);
 	} else {
-	    $this->remove_all_versions($page);
+	    $tikilib->remove_all_versions($page);
 	}
 
 	$action = "Removed last version";

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.25 2004-01-30 04:30:32 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.26 2004-06-06 08:39:56 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}List Articles{/tr}">
+<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}List Articles{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

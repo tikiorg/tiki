@@ -18,8 +18,8 @@ function smarty_function_gallery($params, &$smarty)
     print('<td align=center>');
     print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'"><img alt="thumbnail" class="athumb" src="show_image.php?id='.$img['imageId'].'&amp;thumb=1" /></a><br/>');    
     print('<b>'.$img['name'].'</b><br>');
-    if ($showgalleryname == 1) { 
-    print('<small>From <a href="tiki-browse_gallery.php?galleryId='.$img['galleryId'].'">'.$img['gallery'].'</a></small>');
+    if ($showgalleryname == 1) {
+        print('<small>'. tra("From").' <a href="tiki-browse_gallery.php?galleryId='.$img['galleryId'].'">'.$img['gallery'].'</a></small>');
     } 
     print('</td></tr></table></center>');
 }    

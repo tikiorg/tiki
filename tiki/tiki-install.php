@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.58 2004-05-04 22:20:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.59 2004-06-06 08:42:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.58 2004-05-04 22:20:21 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.59 2004-06-06 08:42:45 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -163,6 +163,10 @@ class Smarty_TikiWiki extends Smarty {
 			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
 			SMARTY_DIR."plugins"
 		);
+                // we cannot use subdirs in safe mode
+                if(ini_get('safe_mode')) {
+                        $this->use_sub_dirs = false;
+                }
 	//$this->debugging = true;
 	//$this->debug_tpl = 'debug.tpl';
 	}
@@ -198,12 +202,16 @@ function check_session_save_path() {
 	global $errors;
 	if (ini_get('session.save_handler') == 'files') {
         	$save_path = ini_get('session.save_path');
-
-        	if (!is_dir($save_path)) {
-                	$errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
-        	} else if (!is_writeable($save_path)) {
-                	$errors .= "The directory '$save_path' is not writeable.\n";
-        	}
+		// check if we can check it. The session.save_path can be outside
+		// the open_basedir paths.
+		$open_basedir=ini_get('open_basedir');
+		if (empty($open_basedir)) {
+        		if (!is_dir($save_path)) {
+                		$errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
+        		} else if (!is_writeable($save_path)) {
+                		$errors .= "The directory '$save_path' is not writeable.\n";
+        		}
+		}
 
         	if ($errors) {
                 	$save_path = TikiInit::tempdir();

@@ -31,8 +31,7 @@
     // Pull out the script blocks
     preg_match_all("!<script[^>]+>.*?</script>!is", $source, $match);
     $_script_blocks = $match[0];
-    $source = preg_replace("!<script[^>]+>.*?</script>!is",
-    '@@@SMARTY:TRIM:SCRIPT@@@', $source);
+    $source = preg_replace("!<script[^>]+>.*?</script>!is", '@@@SMARTY:TRIM:SCRIPT@@@', $source);
 
     // pull out all html tags
     preg_match_all("'<[\/\!]*?[^<>]*?>'si", $source, $match);
@@ -47,7 +46,8 @@
     $wordArr = split(" ",addslashes($words));
     $i = 0;
     foreach($wordArr as $word) {
-			$source = preg_replace("'($word)'si", '<span style="color:black;background-color:'.$colorArr[$i].';">$1</span>', $source); 
+			$word = preg_quote($word);
+			$source = preg_replace('~('.$word.')~si', '<span style="color:black;background-color:'.$colorArr[$i].';">$1</span>', $source); 
 			$i++;
     }
 

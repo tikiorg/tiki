@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.55 2004-05-04 02:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.56 2004-06-06 08:39:55 damosoft Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
-{if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin users{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
+      {if $feature_help eq 'y'}
+<a href="{$helpurl}UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">

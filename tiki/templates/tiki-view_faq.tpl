@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-view_faq.php?faqId={$faqId}">{$faq_info.title}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=FAQ" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}view faq{/tr}">
+<a href="{$helpurl}FAQ" target="tikihelp" class="tikihelp" title="{tr}view faq{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}

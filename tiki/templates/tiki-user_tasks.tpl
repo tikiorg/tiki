@@ -2,7 +2,7 @@
 <a class="pagetitle" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}">{tr}Tasks{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserTasks" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Tasks{/tr}">
+<a href="{$helpurl}UserTasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

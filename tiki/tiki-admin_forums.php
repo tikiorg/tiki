@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.26 2004-05-04 14:07:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.27 2004-06-06 08:42:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,9 +98,9 @@ if (isset($_REQUEST["save"])) {
 
 
 	$fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"],
-		$_REQUEST['controlFlood'], $_REQUEST["floodInterval"], $_REQUEST["moderator"], $_REQUEST["mail"], $_REQUEST['useMail'],
-		$_REQUEST['usePruneUnreplied'], $_REQUEST["pruneUnrepliedAge"],
-		$_REQUEST['usePruneOld'], $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"],
+		$controlFlood, $_REQUEST["floodInterval"], $_REQUEST["moderator"], $_REQUEST["mail"], $useMail,
+		$usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"],
+		$usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"],
 		$_REQUEST["section"], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_pts'],
 		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'],
 		$_REQUEST['show_description'], $_REQUEST['inbound_pop_server'],

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.76 2004-05-05 23:56:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.77 2004-06-06 08:42:46 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,9 @@ ini_set('arg_separator.output', '&amp;');
 // URL session handling is not safe or pretty 
 // better avoid using trans_sid for security reasons
 ini_set('session.use_only_cookies', 1);  
-ini_set('url_rewriter.tags', ''); 
+// true, but you cannot change the url_rewriter.tags in safe mode ... 
+// its usually safe to leave it as is.
+//ini_set('url_rewriter.tags', ''); 
 
 // use shared memory for sessions (useful in shared space)
 // ini_set('session.save_handler', 'mm');

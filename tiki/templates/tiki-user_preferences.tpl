@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserPreferences" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Preferences{/tr}">
+<a href="{$helpurl}UserPreferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

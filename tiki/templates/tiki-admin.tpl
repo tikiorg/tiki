@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 <h2><a title="{tr}refresh{/tr}" class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a>
 {if $feature_help}
-<a title="{tr}help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=TikiAdminSettings" target="help"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a title="{tr}Help{/tr}" href="{$helpurl}TikiAdminSettings" target="help"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 </h2>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections

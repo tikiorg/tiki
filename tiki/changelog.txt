@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.156 2004-05-08 20:06:42 troworld Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.157 2004-06-06 08:42:45 damosoft Exp $
 
 All developers are invited to add relevant changes to this file as they
 apply them to the CVS source. You can optionally indicate an identifier
@@ -36,6 +36,8 @@ Version 1.8.3 - Polaris -
 * [FIX] error message on tiki-faq_questions was reporting no menu
 * [MOD] phplayers horizontal menu support added
 * [FIX] tiki-modules cannot be called directly
+* [MOD] Objects with set permissions show a green key icon instead
+        of ( ) around the yellow key icon.
 
 Version 1.8.2 - Polaris -
 <http://tikiwiki.org/ReleaseProcess182>

@@ -319,6 +319,22 @@ class FileGalLib extends TikiLib {
 
 		return $result;
 	}
+
+	function convert_error_to_string($error) {
+		switch($error) {
+		case 0: //no error; possible file attack!
+			return tra("There was a problem with your upload.");
+		case 1: //uploaded file exceeds the upload_max_filesize directive in php.ini
+		case 2: //uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form
+			return tra("The file you are trying to upload is too big.");
+		case 3: //uploaded file was only partially uploaded
+			return tra("The file you are trying to upload was only partially uploaded.");
+		case 4: //no file was uploaded
+			return tra("You must select a file for upload.");
+		default: //a default error, just in case!  :)
+			return tra("There was a problem with your upload.");
+		}
+	}
 }
 
 $filegallib = new FileGalLib($dbTiki);

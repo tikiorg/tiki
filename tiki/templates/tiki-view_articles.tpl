@@ -101,10 +101,10 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-    {if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
+    <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;comzone=show#comments" class="trailer">{if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
     {elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
     {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
-    {/if}
+    {/if}</a>
     </td>
   {/if}
 {/if}
@@ -114,7 +114,7 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
   <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
 {if $tiki_p_remove_article eq 'y'}
-  <a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+  &nbsp;&nbsp;<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}
 </td>
 </tr>

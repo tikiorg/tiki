@@ -18,7 +18,7 @@ class HotwordsLib extends TikiLib {
 	function list_hotwords($offset = 0, $maxRecords = -1, $sort_mode = 'word_desc', $find = '') {
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 			$mid = " where `word` like ?";
 			$bindvars = array($findesc);
 		} else {
