@@ -55,12 +55,7 @@
 
 </div> 
 
-<div align="center">
-	<small>{$babelfish_links}</small>
-</div>
-<div align="center">
-	{$babelfish_logo}
-</div>
+{include file="babelfish.tpl"}
 
 <div align="center">
 <small>{tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}</small>
