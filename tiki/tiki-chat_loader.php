@@ -26,7 +26,7 @@ if(!isset($_SESSION["lastMessage"])) {
   $lastMessage = $_SESSION["lastMessage"];
 }
 if(!$lastMessage) $lastMessage=0;
-print('<head>');
+print('<html><head>');
 //prune_users();
 //update_channel_ratio($channelId);
 if(isset($_REQUEST["channelId"])) {
@@ -72,14 +72,13 @@ if(count($messages)>0) {
   print("</script>");
 }
 
+print('</head>');
 
-?>
-</head>
-<?php
 print('<body onLoad="window.setInterval(\'location.reload()\','.$refresh.');">');
 if(isset($com)) {
 //print_r($messages);
 //print(htmlentities($com));
 }
+print('</body></html>');
+
 ?>
-</body>
