@@ -17,6 +17,7 @@ class RefererLib extends TikiLib {
 	}
 
 	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) {
+		$bindvars = array();
 		if ($find) {
 			$findesc = $this->qstr('%' . $find . '%');
 			$mid = " where (`referer` like ?)";
@@ -25,7 +26,7 @@ class RefererLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_referer_stats` $mid order by ".$this-convert_sortmode($sort_mode);;
+		$query = "select * from `tiki_referer_stats` $mid order by ".$this->convert_sortmode($sort_mode);;
 		$query_cant = "select count(*) from `tiki_referer_stats` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
