@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.32 2004-04-29 18:15:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.33 2004-05-06 02:48:11 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -131,12 +131,6 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showLastModif"] = 'n';
 	}
 
-	if (isset($_REQUEST["defaultOrderKey"]) 
-		&& $_REQUEST["defaultOrderKey"]) {
-		$tracker_options["defaultOrderKey"] = $_REQUEST["defaultOrderKey"];
-	} else {
-		$tracker_options["defaultOrderKey"] = '';
-	}
 
 	if (isset($_REQUEST["defaultOrderDir"])
 		&& ($_REQUEST["defaultOrderDir"] == 'asc' 
@@ -146,19 +140,9 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["defaultOrderDir"] = 'asc';
 	}
 
-	if (isset($_REQUEST["newItemStatus"]) 
-		&& $_REQUEST["newItemStatus"]) {
-		$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
-	} else {
-		$tracker_options["newItemStatus"] = 'o';
-	}
-
-	if (isset($_REQUEST["modItemStatus"]) 
-		&& $_REQUEST["modItemStatus"]) {
-		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
-	} else {
-		$tracker_options["modItemStatus"] = 'o';
-	}
+	$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
+	$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
+	$tracker_options["defaultOrderKey"] = $_REQUEST["defaultOrderKey"];
 
 	if (isset($_REQUEST["writerCanModify"]) 
 		&& ($_REQUEST["writerCanModify"] == 'on'
