@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.16 2004-04-03 09:36:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.17 2004-04-21 08:07:45 telenieko Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -347,6 +347,34 @@ if (isset($_REQUEST["auth_pear"])) {
 	$smarty->assign('auth_ldap_adminpass', $_REQUEST["auth_ldap_adminpass"]);
     }
 }
+
+if (isset($_REQUEST["auth_pam"])) {
+        check_ticket('admin-inc-login');
+    if (isset($_REQUEST["pam_create_user_tiki"]) && $_REQUEST["pam_create_user_tiki"] ==  "on") {
+        $tikilib->set_preference("pam_create_user_tiki", 'y');
+
+        $smarty->assign("pam_create_user_tiki", 'y');
+    } else {
+        $tikilib->set_preference("pam_create_user_tiki", 'n');
+
+        $smarty->assign("pam_create_user_tiki", 'n');
+    }
+    if (isset($_REQUEST["pam_skip_admin"]) && $_REQUEST["pam_skip_admin"] == "on") {
+        $tikilib->set_preference("pam_skip_admin", 'y');
+
+        $smarty->assign("pam_skip_admin", 'y');
+    } else {
+        $tikilib->set_preference("pam_skip_admin", 'n');
+
+        $smarty->assign("pam_skip_admin", 'n');
+    }
+    if (isset($_REQUEST["pam_service"])) {
+        $tikilib->set_preference("pam_service", $_REQUEST["pam_service"]);
+
+        $smarty->assign('pam_service', $_REQUEST["pam_service"]);
+    }
+}
+
 
 $smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
 $smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));
