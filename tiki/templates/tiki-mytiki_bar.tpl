@@ -72,8 +72,8 @@
 {/if}
 
 {if $feature_user_watches eq 'y'}
-<td valign="top"><a class="link" href="tiki-user_watches.php" title="{tr}MyWatches{/tr}">
-<img  border="0" src="img/mytiki/mywatches.gif" alt="{tr}MyWatches{/tr}" /><br/>
+<td valign="top"><a class="link" href="tiki-user_watches.php" title="{tr}My watches{/tr}">
+<img  border="0" src="img/mytiki/mywatches.gif" alt="{tr}My watches{/tr}" /><br/>
 </a></td>
 {/if}
 
