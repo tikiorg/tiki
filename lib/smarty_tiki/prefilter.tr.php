@@ -12,7 +12,7 @@ function _translate_lang($key) {
   global $language;
   global $lang_use_db;
   if ($lang_use_db!='y') {
-    include("lang/$language/language.php");
+    include_once("lang/$language/language.php");
     if(isset($lang[$key[2]])) {
         if ($key[1] == "{tr}") {
           return $lang[$key[2]];// no more possible translation in block.tr.php
@@ -33,8 +33,8 @@ function _translate_lang($key) {
     $content = $key[2];
     $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
     $result=$tikilib->query($query,array($content,$language));
-    if(!$result) { return $content; }
     $res=$result->fetchRow();
+    if(!$res) { return $content; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
