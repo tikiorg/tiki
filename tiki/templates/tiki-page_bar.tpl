@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.25 2003-11-18 23:59:25 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.26 2003-12-02 08:30:42 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -50,10 +50,12 @@
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <td><div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}undo{/tr}</a></div></td>
 {/if}
+{if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
 <td><div class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {elseif $structure eq 'y'}
 <td><div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}slides{/tr}</a></div></td>
+{/if}
 {/if}
 <td><div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div></td>
 {if $feature_wiki_discuss eq 'y'}

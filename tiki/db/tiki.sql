@@ -4084,6 +4084,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_right_column','y')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiSubmitNotice','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 
