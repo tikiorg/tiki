@@ -1014,6 +1014,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 }
 
 
-
+global $imagegallib;
 $imagegallib= new ImageGalsLib($dbTiki);
 ?>
