@@ -2626,7 +2626,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Your tikiaccount information for " => "Les informations de votre compte Tiki pour ",
 "You will receive an email with your password soon" => "Vous allez recevoir un email avec votre mot de passe",
 "Post recommendation at" => "Post recommendation at",
-" succesfully sent" => " envoyé avec succés",
+" successfully sent" => " envoyé avec succés",
 " not sent" => " pas envoyé",
 "No permission to upload zipped image packages" => "Aucun droit pour télécharger les packages d'images zippées",
 "Cannot read file" => "Ne peut pas lire le fichier",
