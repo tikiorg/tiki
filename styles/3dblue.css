@@ -498,7 +498,7 @@ TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forum
 }
 
 /* The table */
-table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
+table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.jukeboxlist, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
 	border-color:    #2270e5;
 	border-style:   solid;

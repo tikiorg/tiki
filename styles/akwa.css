@@ -288,7 +288,7 @@ input[type=submit]:hover { color: #000000; background-image: url(akwa/aqua-tab-a
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
-table.viewthread
+table.viewthread, table.jukeboxlist
 {  border: thin solid #999999; width: 100%; border-spacing: 0; border-collapse: separate;}
 
 
