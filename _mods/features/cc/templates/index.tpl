@@ -7,7 +7,7 @@
 <ul>
 <li>cc id: this is the codename used for the currency, preferably short and memorable.  Within a cc registry, cc ids are unique.</li>
 <li>cc name: a more freeform label to describe a currency, sometimes used in reports.</li>
-<li>description: a brief introduction about that - purpose, unit, limitations, values ....</li>
+<li>description: a brief introduction about this cc - purpose, unit, limitations, values ....</li>
 <!-- li>requires approval: do people need your agreement to register to use this currency?</li>  -->
 <li>listed publicly: set currency as visible or hidden in the public currency list.  Hiding gives no guarantee the id will not become known, but it helps preserve private groups from casual access.</li>
 <li>register owner: auto-register (or not) the currency owner.</li>
@@ -16,7 +16,7 @@
 <br>
 <h2><a href="cc.php?page=transactions&new">Add Transaction</a></h2>
 
-<p>The most common operation in the system is feeding the ledger. Parameters are :</p>
+<p>This is the most common operation in the system.  Parameters are :</p>
 <ul>
 <li>any useful text. </li>
 <li>account id to receive transfer. </li> 
