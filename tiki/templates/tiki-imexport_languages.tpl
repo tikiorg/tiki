@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a><br/><br/>
-[<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{tr}</a>
-|<a href="tiki-inexport_languages.php" class="link">{tr}Im- Export Languages{tr}</a>]
+[<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
+|<a href="tiki-inexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 
 <table width="100%">
 <tr>
@@ -26,7 +26,7 @@
   </div>
   <div class="simplebox">
   <table>
-  <tr><td align="center" colspan="2">Export</td></tr>
+  <tr><td align="center" colspan="2">{tr}Export{/tr}</td></tr>
   <tr><td  class="form">{tr}Select the language to Export{/tr}:</td><td>
         <select name="exp_language">
         {section name=ix loop=$languages}
