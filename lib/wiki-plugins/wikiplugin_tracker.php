@@ -9,7 +9,7 @@ function wikiplugin_tracker_help() {
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $dbTiki, $notificationlib, $user, $group;
+	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group;
 	//var_dump($_REQUEST);
 	extract ($params);
 
@@ -75,8 +75,14 @@ function wikiplugin_tracker($data, $params) {
 				} elseif ($f['type'] == 'a') {
 					$back.= "<tr><td>".$f['name']."</td><td>";
 					$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
-				} elseif ($f['type'] == 'd') {
-					$list = split(',',$f['options']);
+				} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g') {
+					if ($f['type'] == 'd') {
+						$list = split(',',$f['options']);
+					} elseif ($f['type'] == 'u') {
+						$list = $userlib->list_all_users();
+					} elseif ($f['type'] == 'g') {
+						$list = $userlib->list_all_groups();
+					}
 					$back.= "<tr><td>".$f['name']."</td><td>";
 					$back.= '<select name="track['.$f["fieldId"].']">';
 					foreach ($list as $item) {
