@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.48 2003-11-07 21:42:28 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.49 2003-11-10 14:01:35 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}
   <h1>
@@ -26,41 +26,27 @@
 	<td style="text-align:right;">
 
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
-	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}">
-        <img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' />
-      </a>
+	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 	{/if}
 	{if $cached_page eq 'y'}
-	  <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1">
-        <img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' />
-      </a>
+	  <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 	{/if}
 
-	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">
-      <img style="border: 0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' />
-    </a>
+	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
 
 	{if $feature_wiki_pdf eq 'y'}
-	  <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}">
-        <img style="border: 0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' />
-      </a>
+	  <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
 	{/if}
 
 	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-	  <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1">
-        <img style="border: 0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" />
-      </a>
+	  <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img style="border: 0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	{/if}
 
 	{if $user and $feature_user_watches eq 'y'}
 	  {if $user_watching_page eq 'n'}
-          <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add">
-          <img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' />
-        </a>
+          <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
 	  {else}
-	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove">
-          <img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' />
-        </a>
+	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 	  {/if}
 	{/if}
 	
