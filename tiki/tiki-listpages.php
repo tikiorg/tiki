@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.14 2004-07-15 16:39:02 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.15 2004-07-15 19:21:11 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,8 @@ if ($tiki_p_view != 'y') {
    then we check permission to delete pages.
    if so, we call histlib's method remove_all_versions for all the checked pages.
 */
-if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
+if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
+	if ($_REQUEST["submit_mult"] == "remove_pages") {
 	check_ticket('list-pages');
 
 	// Now check permissions to remove the selected pages
@@ -55,6 +56,54 @@ if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST[
 
 	foreach ($_REQUEST["checked"] as $deletepage) {
 		$histlib->remove_all_versions($deletepage);
+	}
+	} elseif ($_REQUEST['submit_mult'] == 'categorize') {
+		$categorize_mode = TRUE;
+		$smarty->assign('categorize_mode', 'y');
+		include_once ('lib/categories/categlib.php');
+		$categories = $categlib->list_categs();
+		$smarty->assign('categories', $categories);
+	}
+} elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'add') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+	$cat_type='wiki page';
+	foreach ($_REQUEST['checked'] as $page) {
+		$pageinfo = $tikilib->get_page_info($page);
+		$cat_objid = $pageinfo['pageName'];
+		$cat_desc = ($feature_wiki_description == 'y') ? $pageinfo['description'] : '';
+		$cat_name = $pageinfo['pageName'];
+		$cat_href="tiki-index.php?page=".$cat_objid;
+		if (!empty($_REQUEST["cat_categories"])) {
+			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+				if (!$catObjectId) {
+					// The object is not cateorized  
+					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+				}
+				$categlib->categorize($catObjectId, $cat_acat);
+			}
+		}
+	}
+} elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'remove') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+	$cat_type='wiki page';
+	foreach ($_REQUEST['checked'] as $page) {
+		$pageinfo = $tikilib->get_page_info($page);
+		$cat_objid = $pageinfo['pageName'];
+		if (!empty($_REQUEST["cat_categories"])) {
+			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+				if ($catObjectId) {
+					$categlib->remove_object_from_category($catObjectId, $cat_acat);
+				}
+			}
+		}
 	}
 }
 
@@ -95,6 +144,16 @@ $smarty->assign('find', $find);
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
+
+if (!empty($categorize_mode)) {
+	$arraylen = count($listpages['data']);
+	for ($i=0; $i<$arraylen; $i++) {
+		if (in_array($listpages['data'][$i]['pageName'], $_REQUEST["checked"])) {
+			$listpages['data'][$i]['checked'] = 'y';
+		}
+	}
+}
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
