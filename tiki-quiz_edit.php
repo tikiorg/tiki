@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.11 2004-05-26 20:52:36 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.12 2004-05-28 14:03:14 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -15,7 +15,8 @@
 		give the answers to another student during the grace period.  So when the student
 		takes the quiz, the system must issue a warning to the student about the expire date
 		if the date is less the the session timeout time away.)
-	(Quiz results are always stored.)
+	(Quiz results for students are always stored; quiz results for teachers 
+   (defined here as anyone with tiki_p_admin_quizzes) are never stored.)
 
 */
 
@@ -33,7 +34,8 @@ if ($feature_quizzes != 'y') {
 	die;
 }
 
-// quizId of 0 is used as a place holder; There should NOT be a row in the db with an id of zero.
+// quizId of 0 is used as a place holder; There should NEVER be a row in the 
+//   tiki_quizzes table with an id of zero.
 if(!isset($_REQUEST["quizId"])){
 	$_REQUEST["quizId"] = 0;
 }
@@ -84,6 +86,8 @@ if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST
 	die;
 }
 
+$quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
+
 function	fetchYNOption(&$quiz, $_REQUEST, $option){
 	if (isset($_REQUEST[$option]) && $_REQUEST[$option] == 'on'){
 		$quiz[$option] = 'y';
@@ -92,16 +96,98 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 	}
 }
 
+// Load the data from the 
+function quiz_data_load(){
+	global $_REQUEST;
+	global $dc;
+	$quiz_data = array();
+	foreach($_REQUEST as $key => $val){
+		if (preg_match("/^quiz_/",$key)){
+			$k = preg_replace("/^quiz_([.]*)/","\$1",$key);
+			$quiz_data[$k] = $val;
+		}
+	}
+	if ($quiz_data["online"] == "online"){
+		$quiz_data["online"] = "y";
+	}
+	else if ($quiz_data["online"] == "offline"){
+		$quiz_data["online"] = "n";
+	}
+
+  $quiz_data["datePub"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["publish_Hour"],
+    $quiz_data["publish_Minute"], 0, $quiz_data["publish_Month"], $quiz_data["publish_Day"], 
+    $quiz_data["publish_Year"]));
+
+  $quiz_data["dateExp"] = $dc->getServerDateFromDisplayDate(mktime($quiz_data["expire_Hour"],
+    $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], 
+    $quiz_data["expire_Year"]));
+ 
+	$fields = array('shuffleAnswers',
+									'shuffleQuestions',
+									'multiSession',
+									'additionalQuestions',
+									'limitDisplay',
+									'timeLimited',
+									'canRepeat',
+									'additionalQuestions',
+									'forum');
+	foreach ($fields as $field){
+		fetchYNOption(&$quiz_data, $quiz_data, $field);
+		// echo '$quiz_data["'.$field.'"] = '.$quiz_data[$field]."<br>";
+ 	}
+
+ 	return $quiz_data;
+}
+
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
 
-	echo __FILE__." line ".__LINE__."<br />";
-	foreach($_REQUEST as $key => $val){
-		if (preg_match("/^quiz_/",$key)){
-			echo $key." = ".$val."<br />";
-		}
+// 	echo __FILE__." line ".__LINE__."<br />";
+// 	foreach($_REQUEST as $key => $val){
+// 		if (preg_match("/^quiz_/",$key)){
+// 			echo $key." = ".$val."<br />";
+// 		}
+// 	}
+
+	$quiz_data = quiz_data_load();
+
+// 	foreach($quiz_data as $key => $val){
+// 		echo $key." = ".$val."<br />";
+// 	}
+
+	$quizNew = new Quiz;
+	$quizNew->data_load($quiz_data);
+
+	// echo __FILE__." line: ".__LINE__."<br />";
+
+	// if the id is 0, use just save the new data
+	// otherwise we compare the data to what was there before.
+	if ($quiz->id == 0 || ($quizNew != $quiz)){
+		$quizlib->quiz_store($quizNew);
+		// tell user changes were stored (new quiz stored with id of x or quiz x modified), return to list of admin quizzes
 	}
+	else {
+		// tell user no changes were stored, return to list of admin quizzes
+	}
+
+	// This way for including questions is was too complicated.  Need to think of a simpler way.
+ 	die;
+
+	echo "line: ".__LINE__."<br>";
+	echo "Sorry, this is only a prototype at present.<br>";
+
+
+	// Fixme, this doesn't work for a brand-new quiz because the quizId is zero!
+	if ($cat_objid != 0){
+		$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
+		$cat_name = $_REQUEST["name"];
+		$cat_desc = substr($_REQUEST["description"], 0, 200);
+		include_once ("categorize.php");
+	}
+
+
 	die;
+
 
 	// See tiki-edit_quiz_questions.php for how to get import the quiz questions.
 // if (isset($_REQUEST["import"])) {
@@ -123,108 +209,11 @@ if (isset($_REQUEST["save"])) {
 // 	$smarty->assign('questionId', 0);
 // }
 
-	// Fixme, this doesn't work for a brand-new quiz because the quizId is zero!
-	if ($cat_objid != 0){
-		$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
-		$cat_name = $_REQUEST["name"];
-		$cat_desc = substr($_REQUEST["description"], 0, 200);
-		include_once ("categorize.php");
-	}
-
-	echo "line: ".__LINE__."<br>";
-	echo "Sorry, this is only a prototype at present.<br>";
-
-	$quiz = array();
-
-	if (!isset($_REQUEST['online']) && !($_REQUEST["online"] =! "online" || $_REQUEST["online"] =! "offline")){
-		echo "line: ".__LINE__."<br>";
-		echo 'Invalid value for $_REQUEST["online"].  Is your tpl file correct?<br>';
-		die;
-	}
-	if ($_REQUEST["online"] == "online"){
-		$quiz["online"] = "y";
-	}
-	else if ($_REQUEST["online"] == "offline"){
-		$quiz["online"] = "n";
-	}
-
-	$quiz["name"] = $_REQUEST["name"];
-	$quiz["description"] = $_REQUEST["description"];
-
-  $quiz["datePub"] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"],
-    $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], 
-    $_REQUEST["publish_Year"]));
-
-  $quiz["dateExp"] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"],
-    $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], 
-    $_REQUEST["expire_Year"]));
- 
-	$fields = array('shuffleAnswers',
-									'shuffleQuestions',
-									'multiSession',
-									'additionalQuestions',
-									'limitDisplay',
-									'timeLimited',
-									'canRepeat',
-									'additionalQuestions',
-									'forum');
-	foreach ($fields as $field){
-		fetchYNOption(&$quiz, $_REQUEST, $field);
-		echo '$quiz["'.$field.'"] = '.$quiz[$field]."<br>";
- 	}
-
-	$quiz['questionsPerPage'] = $_REQUEST['questionsPerPage'];
-	echo '$quiz["questionsPerPage"] = '.$quiz["questionsPerPage"]."<br>";
-
-	$quiz['timeLimit'] = $_REQUEST['timeLimit'];
-	echo '$quiz["timeLimit"] = '.$quiz["timeLimit"]."<br>";
-
-	$quiz['repetitions'] = $_REQUEST['repetitions'];
-	echo '$quiz["repetitions"] = '.$quiz["repetitions"]."<br>";
-
-	$quiz['grading-method'] = $_REQUEST['grading-method'];
-	echo '$quiz["grading-method"] = '.$quiz["grading-method"]."<br>";
-
-	$quiz['showScore'] = $_REQUEST['showScore'];
-	echo '$quiz["showScore"] = '.$quiz["showScore"]."<br>";
-
-	$quiz['showCorrectAnswers'] = $_REQUEST['showCorrectAnswers'];
-	echo '$quiz["showCorrectAnswers"] = '.$quiz["showCorrectAnswers"]."<br>";
-
-	$quiz['publishStats'] = $_REQUEST['publishStats'];
-	echo '$quiz["publishStats"] = '.$quiz["publishStats"]."<br>";
-
-	$quiz['forumName'] = $_REQUEST['forumName'];
-	echo '$quiz["forumName"] = '.$quiz["forumName"]."<br>";
-
-
-	die;
-
 	// Have to parse the data and bail out if there is an error.
 	//
 	// Store the new or revised information
 	// If everything works, preview the quiz.
 	// 
-} else if ($_REQUEST["quizId"] == 0) { // When the quiz id is not indicated, create a new quiz
-	$quiz = new Quiz;
-
-	// scaffolding
-// 	echo "line ".__LINE__."<br>";
-// 	$lines = $quiz->show_html();
-// 	foreach ($lines as $line){
-// 		echo $line;
-// 	}
-// 	die;
-} else {
-	$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
-	echo "line ".__LINE__."<br>";
-	foreach ($quiz as $key => $val){
-		echo $key." = ".$val."<br>";
-	}
-	echo "publishDate = ".date("r",$quiz['publishDate'])."<br>";
-	echo "expireDate = ".date("r",$quiz['expireDate'])."<br>";
-	die;
-	$quizOld = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 }
 
 // Scaffolding
@@ -247,6 +236,7 @@ function setup_options(&$tpl){
 	global $smarty;
 	global $tikilib;
 	global $user;
+
 	$tpl['online_choices'] = array('online'  => 'Online',	'offline' => 'Offline');
 	
 	$optionsGrading = array();
@@ -268,7 +258,8 @@ function setup_options(&$tpl){
 	for ($i = 1; $i <= 20; $i++){
 		$mins[] = $i;
 	}
-	$smarty->assign('mins', $mins);
+	$tpl['mins'] = $mins;
+	//	$smarty->assign('mins', $mins);
 	
 	$repetitions = array();
 	$qpp = array();
@@ -278,18 +269,21 @@ function setup_options(&$tpl){
 		$repetitions[] = $i;
 	}
 	$repetitions[] = "unlimited";
-	$smarty->assign('repetitions', $repetitions);
+	$qpp[] = "unlimited";
+	$tpl['repetitions'] = $repetitions;
+	//	$smarty->assign('repetitions', $repetitions);
 	$tpl['qpp'] = $qpp;
-	$smarty->assign('qpp', $qpp);
+	//	$smarty->assign('qpp', $qpp);
 	
-	$smarty->assign('questionsPerPage', "Unlimited");
+	// $tpl['questionsPerPage'] = "Unlimited";
+	//	$smarty->assign('questionsPerPage', "Unlimited");
 	
 	// Additional data for smarty
 	$tzName = $tikilib->get_display_timezone($user);
 	if ($tzName == "Local"){
 		$tzName = "";
 	}
-	$smarty->assign('siteTimeZone', $tzName);
+	// $smarty->assign('siteTimeZone', $tzName);
 	$tpl['siteTimeZone'] = $tzName;
 }
 
@@ -301,7 +295,31 @@ ask_ticket('edit-quiz-question');
 
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
+
 // $smarty->display("tiki.tpl");
 $smarty->display("ggg-tiki.tpl");
+
+// Scraps
+// if ($_REQUEST["quizId"] == 0) { // When the quiz id is not indicated, create a new quiz
+// 	$quiz = new Quiz;
+
+// 	// scaffolding
+// // 	echo "line ".__LINE__."<br>";
+// // 	$lines = $quiz->show_html();
+// // 	foreach ($lines as $line){
+// // 		echo $line;
+// // 	}
+// // 	die;
+// } else {
+// 	$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
+// 	echo "line ".__LINE__."<br>";
+// 	foreach ($quiz as $key => $val){
+// 		echo $key." = ".$val."<br>";
+// 	}
+// 	echo "publishDate = ".date("r",$quiz['publishDate'])."<br>";
+// 	echo "expireDate = ".date("r",$quiz['expireDate'])."<br>";
+// 	die;
+// 	$quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
+// }
 
 ?>
