@@ -410,7 +410,7 @@
       <div class="separated"><a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a></div>
     {/if}
     {if $tiki_p_admin eq 'y'}
-    <div class="separated"><a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Wiki Import dump{/tr}</a></div>
+    <div class="separated"><a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Import PHPWiki Dump{/tr}</a></div>
     <div class="separated"><a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a></div>
     <div class="separated"><a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a></div>
     <div class="separated"><a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a></div>
