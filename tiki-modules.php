@@ -13,10 +13,10 @@ $now = date("U");
 if ($user != 'admin') {
 	$user_groups = $userlib->get_user_groups($user);
 } else {
-	$allgroups = $userlib->get_groups(0, -1, 'groupName_desc', '');
+	$allgroups = $userlib->list_all_groups();
 	$user_groups = array();
-	foreach ($allgroups["data"] as $grp) {
-		$user_groups[] = $grp["groupName"];
+	foreach ($allgroups as $grp) {
+		$user_groups[] = $grp;
 	}
 }
 
