@@ -20,7 +20,11 @@ if(isset($_REQUEST["drop"])) {
 }
 
 if(isset($_REQUEST["save"])) {
-	$_REQUEST["calendarId"] = $calendarlib->set_calendar($calendarId,$user,$_REQUEST["name"],$_REQUEST["description"],$_REQUEST["public"],$_REQUEST["visible"]);
+	$customflags["customlanguages"] = $_REQUEST["customlanguages"];
+	$customflags["customlocations"] = $_REQUEST["customlocations"];
+	$customflags["customcategories"] = $_REQUEST["customcategories"];
+	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
+	$_REQUEST["calendarId"] = $calendarlib->set_calendar($calendarId,$user,$_REQUEST["name"],$_REQUEST["description"],$customflags);
 }
 
 
@@ -30,15 +34,19 @@ if($_REQUEST["calendarId"]) {
   $info = Array();
   $info["name"]='';
   $info["description"]='';
-  $info["public"]='n';
-  $info["visible"]='y';
+  $info["customlanguages"]='n';
+  $info["customlocations"]='n';
+  $info["customcategories"]='n';
+  $info["custompriorities"]='n';
   $info["user"]="$user";
 }
 $smarty->assign('name',$info["name"]);
 $smarty->assign('description',$info["description"]);
-$smarty->assign('public',$info["public"]);
-$smarty->assign('visible',$info["visible"]);
 $smarty->assign('user',$info["user"]);
+$smarty->assign('customlanguages',$info["customlanguages"]);
+$smarty->assign('customlocations',$info["customlocations"]);
+$smarty->assign('customcategories',$info["customcategories"]);
+$smarty->assign('custompriorities',$info["custompriorities"]);
 $smarty->assign('calendarId',$_REQUEST["calendarId"]);
 
 if(!isset($_REQUEST["sort_mode"])) {

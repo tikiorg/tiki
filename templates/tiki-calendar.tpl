@@ -23,9 +23,7 @@
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}"><br/>
 </td>
 <td>
-{tr}Group Calendars{/tr} :
-</td>
-<td>
+{tr}Group Calendars{/tr} :<br/>
 {section name=lc loop=$listcals}
 <div style="background-color:#ffffff;" 
 onclick="document.getElementById('groupcal_{$listcals[lc].name}').checked=!document.getElementById('groupcal_{$listcals[lc].name}').checked;"
@@ -34,139 +32,27 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 ><input type="checkbox" name="calIds[]" value="{$listcals[lc].calendarId}" id="groupcal_{$listcals[lc].name}" {if $thiscal[lc]}checked="checked"{/if}
 onclick="this.checked=!this.checked;"/>
 {$listcals[lc].name} ({tr}groupe{/tr} {$listcals[lc].groupname})
+<div class="simplebox">
+tiki_p_view_calendar : {$tiki_p_view_calendar.$loopcal}<br/>
+tiki_p_admin_calendar : {$tiki_p_admin_calendar.$loopcal}<br/>
+tiki_p_change_events : {$tiki_p_change_events.$loopcal}<br/>
+tiki_p_add_events : {$tiki_p_add_events.$loopcal}<br/>
+</div>
 </div>
 {/section}
 </td>
 <td>
-{tr}Tools Calendars{/tr} :
-</td>
-<td>
-
-{if $feature_wiki eq 'y'}
+{tr}Tools Calendars{/tr} :<br/>
+{foreach from=$tikiItems key=ki item=vi}
+{if $vi.feature eq 'y' and $vi.right eq 'y'}
 <div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_wiki').checked=!document.getElementById('tikical_wiki').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
+onclick="document.getElementById('tikical_{$ki}').checked=!document.getElementById('tikical_{$ki}').checked;"
+onmouseout="this.style.backgroundColor='#ffffff';"  
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="wiki" id="tikical_wiki" {if $tikical.wiki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Wiki{/tr}</div>
+><input type="checkbox" name="tikicals[]" value="{$ki}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
+{$vi.label}</div>
 {/if}
-
-{if $feature_galleries eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_gal').checked=!document.getElementById('tikical_gal').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="gal" id="tikical_gal" {if $tikical.gal}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Image Gallery{/tr}</div>
-{/if}
-
-{if $feature_articles eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_art').checked=!document.getElementById('tikical_art').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="art" id="tikical_art" {if $tikical.art}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Articles{/tr}</div>
-{/if}
-
-{if $feature_blogs eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_blog').checked=!document.getElementById('tikical_blog').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="blog" id="tikical_blog" {if $tikical.blog}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Blogs{/tr}</div>
-{/if}
-
-{if $feature_forums eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_forum').checked=!document.getElementById('tikical_forum').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="forum" id="tikical_forum" {if $tikical.forum}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Forums{/tr}</div>
-{/if}
-
-{if $feature_directory eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_dir').checked=!document.getElementById('tikical_dir').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="dir" id="tikical_dir" {if $tikical.dir}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Directory{/tr}</div>
-{/if}
-
-{if $feature_file_galleries eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_fgal').checked=!document.getElementById('tikical_fgal').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="fgal" id="tikical_fgal" {if $tikical.fgal}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}File Gallery{/tr}</div>
-{/if}
-
-{if $feature_faqs eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_faq').checked=!document.getElementById('tikical_faq').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="faq" id="tikical_faq" {if $tikical.faq}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}FAQs{/tr}</div>
-{/if}
-
-{if $feature_quizzes eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_quiz').checked=!document.getElementById('tikical_quiz').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="quiz" id="tikical_quiz" {if $tikical.quiz}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Quizzes{/tr}</div>
-{/if}
-
-{if $feature_trackers eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_track').checked=!document.getElementById('tikical_track').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="track" id="tikical_track" {if $tikical.track}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Trackers{/tr}</div>
-{/if}
-
-{if $feature_surveys eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_surv').checked=!document.getElementById('tikical_surv').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="surv" id="tikical_surv" {if $tikical.surv}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Survey{/tr}</div>
-{/if}
-
-{if $feature_newsletters eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_nl').checked=!document.getElementById('tikical_nl').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="nl" id="tikical_nl" {if $tikical.nl}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Newsletter{/tr}</div>
-{/if}
-
-{if $feature_eph eq 'y'}
-<div style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_eph').checked=!document.getElementById('tikical_eph').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="eph" id="tikical_eph" {if $tikical.eph}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Ephemerides{/tr}</div>
-{/if}
-{if $feature_charts eq 'y'}
-<div 
-style="background-color:#ffffff;" 
-onclick="document.getElementById('tikical_chart').checked=!document.getElementById('tikical_chart').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
-onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="chart" id="tikical_chart" {if $tikical.chart}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{tr}Charts{/tr}</div>
-{/if}
+{/foreach}
 
 </td>
 </form>
@@ -195,7 +81,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 </div>
 </td></tr></table>
 </div>
-<div align="center" style="font-size:10px;">
+<div align="center" style="font-size:10px;height:16px;">
 <span style="float:right;">
 {tr}today{tr}: <a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{$now|tiki_long_date}</a>
 </span>
@@ -208,10 +94,13 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 <a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
 <a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
 </span>
+<a href="tiki-calendar.php?display=table" title="{tr}table view{/tr}"><img src="img/icons/ico_table.gif" width="16" height="16" border="0" hspace="0" vspace="0" alt="{tr}table view{/tr}" align="middle"></a>
+<a href="tiki-calendar.php?display=list" title="{tr}list view{/tr}"><img src="img/icons/ico_ulist.gif" width="16" height="16" border="0" hspace="0" vspace="0" alt="{tr}list view{/tr}" align="middle"></a>
 {tr}browse by{/tr}
-<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}">{tr}day{/tr}</a>
+<!-- <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}">{tr}day{/tr}</a> -->
 <a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}">{tr}week{/tr}</a>
 <a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}">{tr}month{/tr}</a>
+<br/>
 </div>
 </td></tr>
 
@@ -244,7 +133,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 </div>
 {section name=items loop=$cell[w][d].items}
 <div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}">
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$cell[w][d].items[items].descriptionbody"} 
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$cell[w][d].items[items].over"} 
 class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
@@ -262,11 +151,14 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 
 {if $editmode}
 <h2>{tr}Edit Calendar Item{/tr} : <span style="font-size:80%;">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
+
+{if $calitemId}
 <div class="mini">
 <span style="color:#666666;">{tr}Created{/tr}:</span> {$created|tiki_long_date} {$created|tiki_long_time} 
 <span style="color:#666666;">{tr}Modified{/tr}:</span> {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} 
 <span style="color:#666666;">{tr}by{/tr}:</span> {$lastUser} 
 </div>
+{/if}
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
@@ -287,6 +179,8 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <br/>
 {tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people.{/tr}<br/>
 </td></tr>
+
+{if $customcategories eq 'y'}
 <tr><td class="form">{tr}Category{/tr}</td><td class="form">
 <select name="categoryId">
 {section name=t loop=$listcat}
@@ -301,6 +195,9 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <span class="mini">( {$categoryName})</span>
 {/if}
 </td></tr>
+{/if}
+
+{if $customlocations eq 'y'}
 <tr><td class="form">{tr}Location{/tr}</td><td class="form">
 <select name="locationId">
 {section name=l loop=$listloc}
@@ -315,7 +212,9 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <span class="mini">( {$locationName} )</span>
 {/if}
 </td></tr>
+{/if}
 
+{if $customparticipants eq 'y'}
 <tr><td class="form">{tr}Organized by{/tr}</td><td class="form">
 <input type="text" name="organizers" value="{$organizers}" id="organizers">
 {tr}comma separated usernames{/tr}
@@ -353,6 +252,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
  {tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
 {/if}
 </td></tr>
+{/if}
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
 {html_select_date time=$start prefix="start_" field_order=DMY}
@@ -376,6 +276,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 {if $url}<span class="mini">( <a href="{$url}">{$url}</a> )</span>{/if}
 </td></tr>
 
+{if $custompriorities eq 'y'}
 <tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
 <select name="priority">
 <option value="1" {if $priority eq 1}selected="selected"{/if} class="calprio1">1</option>
@@ -390,6 +291,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 </select>
 {if $priority}<span class="mini">( <span class="calprio{$priority}">{$priority}</span> )</span>{/if}
 </td></tr>
+{/if}
 
 <tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
 <select name="status">
@@ -400,6 +302,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 {if $calitemId}<span class="Cal{$status}"><span class="mini">( {$status} )</span></span>{/if}
 </td></tr>
 
+{if $customlanguages eq 'y'}
 <tr><td class="formcolor">{tr}Language{/tr}</td><td class="formcolor">
 <select name="lang">
 {section name=ix loop=$languages}
@@ -408,12 +311,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 </select>
 {if $lang}<span class="mini">( {$lang} )</span>{/if}
 </td></tr>
-
-<tr><td class="formcolor">{tr}Public{/tr}</td><td class="formcolor">
-<input type=radio name=public value="y" {if $public eq 'y'}checked="checked"{/if}> {tr}Yes{/tr}
-<input type=radio name=public value="n" {if $public eq 'n'}checked="checked"{/if}> {tr}No{/tr}
-{if $public}<span class="mini">( {$public} )</span>{/if}
-</td></tr>
+{/if}
 
 <tr><td class="formcolor"></td><td class="formcolor">
 {if $calitemId}<input type="submit" name="copy" value="{tr}duplicate{/tr}" />{/if}
