@@ -12,6 +12,7 @@ class CalendarLib extends TikiLib {
 
 	function list_calendars($offset=0,$maxRecords=-1,$sort_mode='created desc',$find='',$hide=1)
 	{
+		$res = array();
 		$vis = '';
 		$sort_mode = str_replace("_"," ",$sort_mode);
 		if ($find) {
@@ -61,20 +62,20 @@ class CalendarLib extends TikiLib {
 		return $users;
 	}
 
-	function set_calendar($calendarId,$user,$group,$name,$description,$public,$visible)
+	function set_calendar($calendarId,$user,$name,$description,$public,$visible)
 	{
 		$name = addslashes(strip_tags($name));
 		$description = addslashes(strip_tags($description));
 		$now = time();
 		if ($calendarId > 0) {
 			// modification of a calendar
-			$query = "update tiki_calendars set name='$name', groupname='$group', description='$description', ";
+			$query = "update tiki_calendars set name='$name', user='$user', description='$description', ";
 			$query.= "lastmodif=$now, public='$public', visible='$visible' where calendarId=$calendarId";
 			$result = $this->query($query);
 		} else {
 			// create a new calendar
-			$query = "insert into tiki_calendars (name,groupname,description,created,lastmodif,public,visible) ";
-			$query.= "values ('$name','$group','$description',$now,$now,'$public','$visible')";
+			$query = "insert into tiki_calendars (name,user,description,created,lastmodif,public,visible) ";
+			$query.= "values ('$name','$user','$description',$now,$now,'$public','$visible')";
 			$result = $this->query($query);
 			$calendarId = mysql_insert_id();
 		}

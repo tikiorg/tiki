@@ -12,7 +12,16 @@ if($tiki_p_admin != 'y') {
 if(!isset($_REQUEST["calendarId"])) {
   $_REQUEST["calendarId"] = 0;
 }
-$smarty->assign('calendarId',$_REQUEST["calendarId"]);
+
+
+if(isset($_REQUEST["drop"])) {
+  $calendarlib->drop_calendar($_REQUEST["drop"]);
+	$_REQUEST["calendarId"] = 0;
+}
+
+if(isset($_REQUEST["save"])) {
+	$_REQUEST["calendarId"] = $calendarlib->set_calendar($calendarId,$user,$_REQUEST["name"],$_REQUEST["description"],$_REQUEST["public"],$_REQUEST["visible"]);
+}
 
 
 if($_REQUEST["calendarId"]) {
@@ -23,24 +32,14 @@ if($_REQUEST["calendarId"]) {
   $info["description"]='';
   $info["public"]='n';
   $info["visible"]='y';
-  $info["groupname"]='';
   $info["user"]="$user";
 }
 $smarty->assign('name',$info["name"]);
 $smarty->assign('description',$info["description"]);
 $smarty->assign('public',$info["public"]);
 $smarty->assign('visible',$info["visible"]);
-$smarty->assign('groupname',$info["groupname"]);
 $smarty->assign('user',$info["user"]);
-
-
-if(isset($_REQUEST["drop"])) {
-  $calendarlib->drop_calendar($_REQUEST["drop"]);
-}
-
-if(isset($_REQUEST["save"])) {
-	$calId = $calendarlib->set_calendar($calendarId,$user,$_REQUEST["groupname"],$_REQUEST["name"],$_REQUEST["description"],$_REQUEST["public"],$_REQUEST["visible"]);
-}
+$smarty->assign('calendarId',$_REQUEST["calendarId"]);
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'name_desc'; 
@@ -61,9 +60,6 @@ $calendars = $calendarlib->list_calendars(0,-1,$sort_mode,$find,0);
 $smarty->assign_by_ref('calendars',$calendars);
 
 $groups = $userlib->get_groups();
-
-$smarty->assign_by_ref('groups',$groups["data"]);
-
 
 $cat_type='calendar';
 $cat_objid = $_REQUEST["calendarId"];
