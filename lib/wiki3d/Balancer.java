@@ -43,16 +43,11 @@ class Balancer implements Runnable {
 
 					for (int j = 0; j < this.c.graph.size(); j++) {
 						Node node1 = (Node) this.c.graph.elementAt(j);
-						if (node1.visible()) {
-							for (int k = j + 1; k < this.c.graph.size(); k++) {
-								Node node2 = (Node) this.c.graph.elementAt(k);
-								if (node2.visible()) {
-									SpeedVector sp =
-										node1.getForceFromNode(node2);
-									node1.addSpeed(sp);
-									node2.addSpeed(sp.reverse());
-								}
-							}
+						for (int k = j + 1; k < this.c.graph.size(); k++) {
+							Node node2 = (Node) this.c.graph.elementAt(k);
+							SpeedVector sp = node1.getForceFromNode(node2);
+							node1.addSpeed(sp);
+							node2.addSpeed(sp.reverse());
 						}
 					}
 				}

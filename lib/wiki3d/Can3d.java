@@ -17,18 +17,17 @@ public class Can3d
 	extends Applet
 	implements MouseListener, MouseMotionListener {
 	boolean isStandalone = false;
-	boolean painted = true;
+	
 	Thread t;
 	float xfac;
 	boolean focussed = false;
-	Face face;
-	ObjectVertex ob;
+	
+	Vertex ob;
 	Cursor cur;
 	boolean rotate = true; //used to track if in rotation mode or
 	// not
 	Rectangle r = new Rectangle(); //
-	String ps;
-	Matrix3D imat = new Matrix3D();
+	
 	Matrix3D amat = new Matrix3D();
 	//matrix used to acculumate rotations and use for transforming the face.
 	Matrix3D tmat = new Matrix3D();
@@ -69,11 +68,11 @@ public class Can3d
 			new Vertex(Config.originx, Config.originy, Config.originz);
 		//origin for the graph
 		ob =
-			new ObjectVertex(Config.facesize, Config.facesize, Config.facesize);
+			new Vertex(Config.facesize, Config.facesize, Config.facesize);
 
 		ob.setOrigin(Config.faceoriginx, Config.faceoriginy, 0);
 
-		ObjectVertex.setCamera(
+		Vertex.setCamera(
 			Config.faceoriginx,
 			Config.faceoriginy,
 			Config.camposz);
@@ -82,10 +81,7 @@ public class Can3d
 
 		graph = new Graph();
 
-		ps =
-			"<graph node=\"My Graph\"><link name=\"vt\"><action label=\"heard about that\" url=\"www.visualthearus.com\"/><action label=\"my thearasus\" url= \"www.myhome.com\"/></link><link name=\"hi click me for fun\"><action label=\"The last action\" url=\"www.thelast.com\"/></link><link name=\"see these also\"><action label=\"Me first\" url=\"www.greaturl.com\"/><action label=\"Me second\" url=\"www.greaturl.com\"/></link></graph>";
-
-		face = new Face(Config.facesize * 2);
+		
 
 		tmat.xrot(Config.initrotx); //initial rotation of the face
 		// and graph
@@ -98,7 +94,7 @@ public class Can3d
 
 		Node.setFOV(Config.fieldOfView);
 
-		ObjectVertex.setFOV(Config.fieldOfView);
+		Vertex.setFOV(Config.fieldOfView);
 
 		Camera.ZC = Config.camposz;
 
@@ -107,8 +103,8 @@ public class Can3d
 		Camera.YC = Config.faceoriginy;
 
 		r.setBounds(
-			ObjectVertex.origin.x - Config.faceadjust,
-			ObjectVertex.origin.y - Config.faceadjust,
+			Vertex.origin.x - Config.faceadjust,
+			Vertex.origin.y - Config.faceadjust,
 			Config.controlwidth,
 			Config.controlwidth);
 
@@ -132,6 +128,7 @@ public class Can3d
 
 		} catch (Exception e) {
 			url = "http://c3po.kriconet.com.br/tiki-dev/tikiwiki/tiki-wiki3d_xml.php";
+		
 		};
 
 		resize(
@@ -187,15 +184,12 @@ public class Can3d
 
 		if (graph.contains(e.getX(), e.getY())) {
 			graph.focus = graph.focus;
-		
-
 		}
 	}
 
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
-		int y = e.getY();
-		System.out.println("mouse pressed");
+		int y = e.getY();		
 
 		if (graph.contains(x, y)) {
 			setCursor(cur);
@@ -214,10 +208,7 @@ public class Can3d
 		int x = e.getX();
 		int y = e.getY();
 		if (graph.contains(x, y)) {
-			setCursor(cur);
-			if (painted) {
-				painted = false;
-			}
+			setCursor(cur);			
 		} else {
 			setCursor(Cursor.getDefaultCursor());
 		}
@@ -237,20 +228,13 @@ public class Can3d
 			graph.focus.releasePosition();
 		}
 		setCursor(Cursor.getDefaultCursor());
-		if (painted) {
-			painted = false;
-			repaint();
-		}
+		
 
 	}
 
 	public void mouseEntered(MouseEvent e) {
 
-		if (painted) {
-			painted = false;
-			repaint();
-
-		}
+		
 
 	}
 
@@ -265,43 +249,11 @@ public class Can3d
 		int x = e.getX();
 		int y = e.getY();
 		if (!focussed) {
-			float xtheta = (prevy - y) * 360.0f / getSize().width * scalex;
+			float xtheta = (y - prevy) * 360.0f / getSize().width * scalex;
 			float ytheta = (x - prevx) * 360.0f / getSize().height * scaley;
-
-			if (xtheta > Config.thetamax)
-				xtheta = Config.thetamax;
-			else if (xtheta < -Config.thetamax)
-				xtheta = -Config.thetamax;
-			else if (xtheta > 0 && xtheta < Config.thetamin)
-				xtheta = Config.thetamin;
-			else if (xtheta < 0 && xtheta > -Config.thetamin)
-				xtheta = -Config.thetamin;
-
-			if (ytheta > Config.thetamax)
-				ytheta = Config.thetamax;
-			else if (ytheta < -Config.thetamax)
-				ytheta = -Config.thetamax;
-			else if (ytheta > 0 && ytheta < Config.thetamin)
-				ytheta = Config.thetamin;
-			else if (ytheta < 0 && ytheta > Config.thetamin)
-				ytheta = -Config.thetamin;
-
-			tmat.unit();
-			tmat.xrot(-xtheta);
-			tmat.yrot(-ytheta);
-			amat.mult(tmat);
-			tmat.unit();
-			tmat.xrot(-xtheta / Config.gearing);
-			tmat.yrot(-ytheta / Config.gearing);
-
-			tmmat.mult(tmat);
-			if (painted) {
-				painted = false;
-				//setCursor(Cursor.getDefaultCursor());
-				//   focussed=false;
-				repaint();
-
-			}
+			
+			graph.rotate(xtheta, ytheta);			
+			
 			prevx = x;
 			prevy = y;
 			e.consume();
@@ -315,29 +267,18 @@ public class Can3d
 			} else
 				graph.focus.change(-dx, -dy, 0);
 
-			if (painted) {
-				painted = false;
-				repaint();
-			}
+	
 			prevx = x;
 			prevy = y;
 			e.consume();
 
 		}
 	}
+	
 	private synchronized void setPainted() {
-		painted = true;
 		notifyAll();
 	}
-	private synchronized void waitPainted() {
-		while (!painted) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-			}
-		}
-		painted = false;
-	}
+
 
 	public void paint(Graphics g1) {
 		Graphics2D g = (Graphics2D) g1;
@@ -346,7 +287,7 @@ public class Can3d
 			Config.viewstarty,
 			Config.viewwidth,
 			Config.viewheight);
-		if (face != null) {
+		if (graph.face != null) {
 
 			try {
 
@@ -370,29 +311,20 @@ public class Can3d
 			} catch (NullPointerException ne) {
 				System.out.println("ne1");
 			}
-			if (!focussed) {
-				graph.transform(tmmat);
-				face.transform(amat);
-			} else {
-				graph.focus.transform();
-				graph.focus.proj();
-				//cv.focus.transform();
-				//cv.focus.transform(imat);
-				imat.unit();
-			}
+				graph.transform();				
 
-			if (bi != null) {
+				if (bi != null) {
 				bg.setStroke(new BasicStroke(1.0f));
 
 				bg.setColor(getBackground());
 				bg.fillRect(0, 0, getSize().width, getSize().height);
 				graph.paint(bg);
-				//if(rotate)
-				face.paint(bg);
-
+				
+				graph.face.paint(bg);
+				
 				bg.draw3DRect(
-					ObjectVertex.origin.x - Config.faceadjust,
-					ObjectVertex.origin.y - Config.faceadjust,
+					Vertex.origin.x - Config.faceadjust,
+					Vertex.origin.y - Config.faceadjust,
 					Config.controlwidth,
 					Config.controlwidth,
 					true);
@@ -402,11 +334,11 @@ public class Can3d
 				g.drawImage(bi, 0, 0, this);
 			} else {
 				graph.paint(g);
-				face.paint(g);
+				graph.face.paint(g);
 				g.setColor(Config.facecolorblue);
 				g.draw3DRect(
-					ObjectVertex.origin.x - Config.faceadjust,
-					ObjectVertex.origin.y - Config.faceadjust,
+					Vertex.origin.x - Config.faceadjust,
+					Vertex.origin.y - Config.faceadjust,
 					Config.controlwidth,
 					Config.controlwidth,
 					true);
@@ -417,10 +349,7 @@ public class Can3d
 
 		}
 	}
-	synchronized public boolean painted() {
-		return painted;
 
-	}
 
 	public void update(Graphics g) {
 		if (bi == null)
@@ -431,7 +360,7 @@ public class Can3d
 	//Get Applet information
 
 	public String getAppletInfo() {
-		return "Applet Information";
+		return "Morcego rulez!";
 	}
 	//Get parameter info
 

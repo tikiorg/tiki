@@ -46,42 +46,10 @@ public class Navigator implements Runnable {
 		changed = true;
 	}
 
-	public void mapNodeDistances(Node node) {
-		if (!node.passed) {
-			node.passed = true;
-
-			Set linkSet = node.links.keySet();
-			/*
-			 * if (node.distanceFromCenter < Config.navigationDepth) {
-			 * 
-			 * for (Iterator it = linkSet.iterator(); it.hasNext();) { String
-			 * neighbourName = (String) it.next();
-			 * 
-			 * if (Node.fromString(neighbourName) == null) { Node neighbourNode =
-			 * xmlReader.getNode(neighbourName); graph.add(neighbourNode); } } }
-			 */
-			// Maybe old node cleaning here later
-
-			for (Iterator it = linkSet.iterator(); it.hasNext();) {
-				Node neighbour = Node.fromString((String) it.next());
-				if (neighbour != null && !neighbour.passed) {
-					neighbour.distanceFromCenter = node.distanceFromCenter + 1;
-				}
-			}
-
-			for (Iterator it = linkSet.iterator(); it.hasNext();) {
-				Node neighbour = Node.fromString((String) it.next());
-				if (neighbour != null && !neighbour.passed) {
-					mapNodeDistances(neighbour);
-				}
-			}
-		}
-	}
-
 	/**
 	 *  
 	 */
-	public void clearMappingTrail() {
+	private void clearMappingTrail() {
 		for (Enumeration e = graph.elements(); e.hasMoreElements();) {
 			Node node = (Node) e.nextElement();
 			node.passed = false;

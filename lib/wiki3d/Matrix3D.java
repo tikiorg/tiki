@@ -3,8 +3,6 @@ public class Matrix3D {
 	public float xx = 1.0f, xy, xz, xo = 0;
 	public float yx, yy = 1.0f, yz, yo = 0;
 	public float zx, zy, zz = 1.0f, zo = 0;
-	public float prevx, prevy, prevz;
-	int xstep = 1, ystep = 1, zstep = 1;
 
 	public static int fieldOfView = Config.fieldOfView;
 	
@@ -17,7 +15,6 @@ public class Matrix3D {
 		ymin = Config.ymin,
 		zmin = Config.zmin;
 	
-	boolean makereturnx = false, makereturny = false, makereturnz = false;
 	//xo,yo,zo position of the camera with respect of world coordinate
 	
 	/** Create a new unit matrix */
@@ -27,73 +24,8 @@ public class Matrix3D {
 		yy = 1.0f;
 		zz = 1.0f;
 	}
-	/** Scale by f in all dimensions */
-
-	public void setParam(
-		int iFOV,
-		int initposcamerax,
-		int initposcameray,
-		int initposcameraz,
-		int iymax,
-		int iymin,
-		int ixmax,
-		int ixmin,
-		int izmax,
-		int izmin,
-		int screenwidth,
-		int screenheight,
-		float scalez,
-		float scalex,
-		float scaley,
-		float scale,
-		boolean autoscale) {
-		fieldOfView = iFOV;
-		xo = initposcamerax;
-		yo = initposcameray;
-		zo = initposcameraz;
-		xmin = ixmin;
-		xmax = ixmax;
-		ymin = iymin;
-		ymax = iymax;
-		zmin = izmin;
-		zmax = izmax;
-
-		if (autoscale) {
-			xf = screenwidth / ((float) (xmax - xmin));
-			yf = screenheight / ((float) (ymax - ymin));
-			zf = scalez;
-			f = Math.min(xf, yf);
-		} else {
-			f = scale;
-			xf = scalex;
-			yf = scaley;
-			zf = scalez;
-
-		}
-		if (f != 0) {
-			xf = f;
-			yf = f;
-			zf = f;
-		}
-	}
-
-	public void scale() {
-		xx *= f;
-		xy *= f;
-		xz *= f;
-		xo *= f;
-		yx *= f;
-		yy *= f;
-		yz *= f;
-		yo *= f;
-		zx *= f;
-		zy *= f;
-		zz *= f;
-		zo *= f;
-	}
-
 	/** Scale along each axis independently */
-	public void scale3() {
+	public void scaleAxis() {
 		xx *= xf;
 		xy *= xf;
 		xz *= xf;
@@ -106,59 +38,6 @@ public class Matrix3D {
 		zy *= zf;
 		zz *= zf;
 		zo *= zf;
-	}
-	/** Translate the origin */
-	public void fixpoint() {
-		prevx = xo;
-		prevy = yo;
-		prevz = zo;
-		makereturnx = true;
-		makereturny = true;
-		makereturnz = true;
-
-	}
-	public boolean tracepath() {
-		int dx, dy, dz;
-		if (Math.abs(prevx - xo) < xstep)
-			makereturnx = false;
-		if (prevx - xo > xstep)
-			dx = xstep;
-		else
-			dx = -xstep;
-		if (Math.abs(prevy - yo) < ystep)
-			makereturny = false;
-		if (prevy - yo > ystep)
-			dy = ystep;
-		else
-			dy = -ystep;
-		if (Math.abs(prevz - zo) < zstep)
-			makereturnz = false;
-		if (prevz - zo > zstep)
-			dz = zstep;
-		else
-			dz = -zstep;
-		//if(!makereturnx&&!makereturny&&!makereturnz)
-		{
-			//System.out.println("removedxoyozo"+xo+"y"+yo+"z"+zo);
-
-			//return false;
-		}
-		//else
-		{
-			//x=x+dx;
-			//y=y+dy;
-			//z=z+dz;
-
-			xo += dx;
-			yo += dy;
-			zo += dz;
-			return true;
-			//mat.translate(dx,dy,dz);
-			//System.out.println("x"+x+"y"+y+"z"+z);
-
-		}
-		//mat.translate(dx,dy,dz);
-
 	}
 	public void translate(float x, float y, float z) {
 		xo += x;
@@ -215,7 +94,8 @@ public class Matrix3D {
 		zy = Nzy;
 		zz = Nzz;
 	}
-	/** rotate theta degrees about the z axis */
+	/** rotate theta degrees about the z axis
+	 * Is this necessary?? */
 	public void zrot(double theta) {
 		theta *= (Math.PI / 180);
 		double ct = Math.cos(theta);
@@ -289,17 +169,8 @@ public class Matrix3D {
 		zx = 0;
 		zy = 0;
 		zz = 1;
-		scale3();
+		scaleAxis();
 	}
-	public static float findzcomp(Vertex v1, Vertex v2, Vertex v3) {
-		float z = v1.X * v3.X + v1.Y * v3.Y + v1.Z * v3.Z;
-
-		//float z=v1.Y*v2.X-v2.Y*v2.X;
-
-		return z;
-
-	}
-
 	public void transform(Vertex v1) {
 		float lxx = xx, lxy = xy, lxz = xz, lxo = xo;
 		float lyx = yx, lyy = yy, lyz = yz, lyo = yo;
