@@ -1,11 +1,10 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.17 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.18 2003-08-13 09:58:38 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-session_start();
 
 require_once ("db/tiki-db.php");
 
