@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.22 2004-01-03 00:28:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.23 2004-01-08 18:40:18 ggeller Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -100,6 +100,26 @@
   {/if}
   </div>
 {/if}
+
+{if $feature_homework eq 'y'}
+  <div class="separator">
+    <a class='separator' href="javascript:toggle('homeworkmenu');">::</a>
+    <a class='separator' href='tiki-index.php'>{tr}Homework{/tr}</a>
+  </div>
+  {if $tiki_p_hw_teacher eq 'y'}
+    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
+      &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+    </div>
+  {elseif $tiki_p_hw_student eq 'y'}
+    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
+      &nbsp;<a href="tiki-hw_student_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_student_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+    </div>
+  {/if}
+{/if}
+
 {if $feature_galleries eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('galmenu');">::</a>
