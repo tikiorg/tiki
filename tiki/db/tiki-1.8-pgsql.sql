@@ -3941,7 +3941,7 @@ DROP TABLE "users_grouppermissions";
 CREATE TABLE "users_grouppermissions" (
   "groupName" varchar(30) NOT NULL default '',
   "permName" varchar(30) NOT NULL default '',
-  "value" char(1) NOT NULL default '',
+  "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
 ) ;
 
