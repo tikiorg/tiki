@@ -138,7 +138,7 @@ class FaqLib extends TikiLib {
 
 			$result = $this->query($query,array($faqId));
 			$query = "delete from `tiki_faq_questions` where `faqId`=? and question=?";
-			$result = $this->query($query,array($faqId,$question));
+			$result = $this->query($query,array($faqId,$question),-1,-1,false);
 			$query = "insert into tiki_faq_questions(faqId,question,answer)
                 		values(?,?,?)";
 			$result = $this->query($query,array($faqId,$question,$answer));
@@ -157,7 +157,7 @@ class FaqLib extends TikiLib {
 		} else {
 			$now = date("U");
 			$query = "delete from `tiki_faqs`where `title`=?";
-			$result = $this->query($query,array($title));
+			$result = $this->query($query,array($title),-1,-1,false);
 			$query = "insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`questions`,`canSuggest`)
                 		values(?,?,?,?,?,?)";
 			$result = $this->query($query,array($title,$description,$now,0,0,$canSuggest));
