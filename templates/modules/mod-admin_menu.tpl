@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.17 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.18 2003-10-02 04:47:38 dheltzel Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="<a class='flip' href="javascript:flip('adminmnu');">{tr}Admin Menu{/tr}</a>" module_name="admin_menu"}
+{include file="modules/module-title.tpl" module_title="{tr}Admin Menu{/tr}" module_name="admin_menu"}
 </div>
 <div id='adminmnu' class="box-data">
 {if $tiki_p_admin eq 'y' or 
