@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once("lib/imagegals/imagegallib.php");
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -57,7 +58,7 @@ if($tiki_p_view_image_gallery != 'y') {
 
 if($_REQUEST["galleryId"]!=0) {
 // To browse the gallery the user has to be admin, the owner or the gallery has to be public
-$gal_info = $tikilib->get_gallery($_REQUEST["galleryId"]);
+$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 /*
@@ -79,7 +80,7 @@ $smarty->assign_by_ref('owner',$gal_info["user"]);
 $smarty->assign_by_ref('public',$gal_info["public"]);
 $smarty->assign_by_ref('galleryId',$_REQUEST["galleryId"]);
 
-$tikilib->add_gallery_hit($_REQUEST["galleryId"]);
+$imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 
 if(isset($_REQUEST["remove"])) {
   // To remove an image the user must be the owner or admin
@@ -88,7 +89,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_image($_REQUEST["remove"]);
+  $imagegallib->remove_image($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["rebuild"])) {
@@ -98,7 +99,7 @@ if(isset($_REQUEST["rebuild"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->rebuild_thumbnails($_REQUEST["rebuild"]);
+  $imagegallib->rebuild_thumbnails($_REQUEST["rebuild"]);
 }
 
 if(isset($_REQUEST["rotateright"])) {
@@ -108,7 +109,7 @@ if(isset($_REQUEST["rotateright"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die; 
   }
-  $tikilib->rotate_right_image($_REQUEST["rotateright"]);
+  $imagegallib->rotate_right_image($_REQUEST["rotateright"]);
 }
 
 if(isset($_REQUEST["rotateleft"])) {
@@ -118,7 +119,7 @@ if(isset($_REQUEST["rotateleft"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die; 
   }
-  $tikilib->rotate_left_image($_REQUEST["rotateleft"]);
+  $imagegallib->rotate_left_image($_REQUEST["rotateleft"]);
 }
 
 $smarty->assign('system','n');
@@ -132,8 +133,8 @@ if($_REQUEST["galleryId"]==0) {
   $info["description"]='System Gallery';
   $smarty->assign('system','y');
 } else {
-  $info = $tikilib->get_gallery($_REQUEST["galleryId"]);
-  $nextscaleinfo = $tikilib->get_gallery_next_scale($_REQUEST["galleryId"]);
+  $info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+  $nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
 
 if(!isset($info["maxRows"])) $info["maxRows"]=10;
@@ -190,7 +191,7 @@ if(isset($_REQUEST["find"])) {
   $_REQUEST["find"] = '';
 }
 
-$images = $tikilib->get_images($offset,$maxRecords,$sort_mode,$find,$_REQUEST["galleryId"]);
+$images = $imagegallib->get_images($offset,$maxRecords,$sort_mode,$find,$_REQUEST["galleryId"]);
 $cant_pages = ceil($images["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

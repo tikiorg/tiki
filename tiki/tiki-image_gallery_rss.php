@@ -2,6 +2,7 @@
 
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once("lib/imagegals/imagegallib.php");
 
 if($rss_image_gallery != 'y') {
  die;
@@ -19,8 +20,8 @@ $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
 
 $now = date("U");
-$changes = $tikilib->get_images( 0,$max_rss_image_gallery,'created_desc', '', $_REQUEST["galleryId"]);
-$info = $tikilib->get_gallery($_REQUEST["galleryId"]);
+$changes = $imagegallib->get_images( 0,$max_rss_image_gallery,'created_desc', '', $_REQUEST["galleryId"]);
+$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
 $galleryname = $info["name"];
 $gallerydesc = $info["description"];
 //print_r($changes);die;

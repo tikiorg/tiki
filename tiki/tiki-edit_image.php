@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once("lib/imagegals/imagegallib.php");
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -60,7 +61,7 @@ if (isset($_REQUEST["editimage"])) {
   }
 
   
-  $gal_info = $tikilib->get_gallery($_REQUEST["galleryId"]);
+  $gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
   if($gal_info["thumbSizeX"]==0) $gal_info["thumbSizeX"]=80;
   if($gal_info["thumbSizeY"]==0) $gal_info["thumbSizeY"]=80;  
   // Check the user to be admin or owner or the gallery is public
@@ -71,7 +72,7 @@ if (isset($_REQUEST["editimage"])) {
   }
   $error_msg='';
 
-  if ($tikilib->edit_image($_REQUEST['edit'],$_REQUEST['name'],$_REQUEST['description'])) {
+  if ($imagegallib->edit_image($_REQUEST['edit'],$_REQUEST['name'],$_REQUEST['description'])) {
     $smarty->assign('show','y');
   } else {
     $smarty->assign('msg',tra("Failed to edit the image"));
@@ -80,7 +81,7 @@ if (isset($_REQUEST["editimage"])) {
   }
 }
 
-$info = $tikilib->get_image($_REQUEST["edit"]);
+$info = $imagegallib->get_image($_REQUEST["edit"]);
 $smarty->assign('show','n');
 $smarty->assign_by_ref('imageId',$_REQUEST['edit']);
 $smarty->assign_by_ref('galleryId',$info['galleryId']);
