@@ -1,11 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.4 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.5 2003-11-23 03:53:04 zaufi Exp $ *}
 
 {if $feature_search eq 'y'}
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="{tr}Search{/tr}" module_name="search_new"}
-</div>
-<div class="box-data">
+{tiki module title="{tr}Search{/tr}" name="search_new"}
     <form class="forms" method="get" action="tiki-searchindex.php">
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
     <select name="where">
@@ -39,6 +35,5 @@
     </select>
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/> 
     </form>
-</div>
-</div>
+{/tikimodule}
 {/if}

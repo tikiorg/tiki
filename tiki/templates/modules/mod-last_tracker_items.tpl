@@ -1,11 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_tracker_items.tpl,v 1.5 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_tracker_items.tpl,v 1.6 2003-11-23 03:53:04 zaufi Exp $ *}
 
 {if $feature_trackers eq 'y'}
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="{tr}Last Items{/tr}" module_name="last_tracker_items"}
-</div>
-<div class="box-data">
+{tikimodule title="{tr}Last Items{/tr}" name="last_tracker_items"}
 <table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modLastItems}
 <tr>{if $nonums != 'y'}<td class="module" >{$smarty.section.ix.index_next})</td>{/if}
@@ -18,6 +14,5 @@
 </a></td></tr>
 {/section}
 </table>
-</div>
-</div>
+{/tikimodule}
 {/if}
