@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.7 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.8 2004-03-16 01:31:17 aurel42 Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,7 @@ $path = $dirlib->dir_get_category_path_browse($_REQUEST["parent"]);
 $smarty->assign_by_ref('path', $path);
 
 // Now get the sub categories from this parent category
-$categs = $dirlib->dir_list_categories($_REQUEST['parent'], 0, -1, 'name_desc', '');
+$categs = $dirlib->dir_list_categories($_REQUEST['parent'], 0, -1, 'name_asc', '');
 
 for ($i = 0; $i < count($categs['data']); $i++) {
 	$categs['data'][$i]['subcats'] = array();
@@ -140,7 +140,7 @@ $section = 'directory';
 include_once('tiki-section_options.php');
 
 // Related categs
-$related = $dirlib->dir_list_related_categories($_REQUEST['parent'], 0, -1, 'name_desc', '');
+$related = $dirlib->dir_list_related_categories($_REQUEST['parent'], 0, -1, 'name_asc', '');
 $smarty->assign_by_ref('related', $related['data']);
 
 $stats = $dirlib->dir_stats();
