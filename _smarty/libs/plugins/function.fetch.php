@@ -27,9 +27,9 @@ function smarty_function_fetch($params, &$smarty)
     }
 
     $content = '';
-    if ($smarty->security && !preg_match('!^(http|https|ftp)://!i', $params['file'])) {
+    if ($smarty->security && !preg_match('!^(http|ftp)://!i', $params['file'])) {
         $_params = array('resource_type' => 'file', 'resource_name' => $params['file']);
-        require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.is_secure.php');
+        require_once(SMARTY_CORE_DIR . 'core.is_secure.php');
         if(!smarty_core_is_secure($_params, $smarty)) {
             $smarty->_trigger_fatal_error('[plugin] (secure mode) fetch \'' . $params['file'] . '\' is not allowed');
             return;
@@ -47,7 +47,7 @@ function smarty_function_fetch($params, &$smarty)
         }
     } else {
         // not a local file
-        if(preg_match('!^https?://!i',$params['file'])) {
+        if(preg_match('!^http://!i',$params['file'])) {
             // http fetch
             if($uri_parts = parse_url($params['file'])) {
                 // set defaults
@@ -64,8 +64,11 @@ function smarty_function_fetch($params, &$smarty)
                 } else {
                     $port = $uri_parts['port'];
                 }
-                if(empty($uri_parts['user'])) {
-                    $user = '';
+                if(!empty($uri_parts['user'])) {
+                    $user = $uri_parts['user'];
+                }
+                if(!empty($uri_parts['pass'])) {
+                    $pass = $uri_parts['pass'];
                 }
                 // loop through parameters, setup headers
                 foreach($params as $param_key => $param_value) {
