@@ -1,4 +1,6 @@
-<div class="simplebox">{tr}Tip{/tr}: {tr}look under "Articles" on the left menu for links to{/tr} "<a class="link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div><br />
+{if $feature_help eq "y"}
+<div class="simplebox">{tr}Tip{/tr}: {tr}look under "Articles" on the application menu for links to{/tr} "<a class="link" href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>" {tr}and{/tr} "<a class="link" href="tiki-article_types.php">{tr}Admin types{/tr}</a>".</div><br />
+{/if}
 <div class="cbox">
   <div class="cbox-title">{tr}Article/CMS settings{/tr}</div>
   <div class="cbox-data">

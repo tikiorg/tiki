@@ -1,4 +1,6 @@
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove FAQs, look for "Admin FAQs" under "FAQs" on the left menu, or{/tr} <a class="link" href="tiki-list_faqs.php">{tr}click here{/tr}</a>.</div><br />
+{if $feature_help eq "y"}
+<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="link" href="tiki-list_faqs.php">{tr}click here{/tr}</a>.</div><br />
+{/if}
 <div class="cbox">
   <div class="cbox-title">{tr}FAQs settings{/tr}</div>
   <div class"cbox-data">

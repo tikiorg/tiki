@@ -12,7 +12,7 @@
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <tr>
-<td align="right" colspan="2">
+<td align="right" colspan="{if $feature_multilingual eq "y"}3{else}2{/if}">
 {$display_catpath}
 </td>
 </tr>
@@ -28,6 +28,7 @@
 </td>
 {if $print_page ne 'y'}
 
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
 <td style="text-align:right;">
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
@@ -93,7 +94,6 @@
 </form>
 {/if}
 </td>
-{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
 </tr>
 {/if}
 </table>

@@ -82,7 +82,7 @@ fields[{$c}] = '{$fid}'
 {/if}
 {/foreach}
 </script>
-<select name="filterfield" onChange="multitoggle(fields,this.options[selectedIndex].value);">
+<select name="filterfield" onchange="multitoggle(fields,this.options[selectedIndex].value);">
 <option value="">{tr}Choose a filter{/tr}</option>
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
@@ -190,7 +190,6 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <img src="{$items[user].field_values[ix].value}" alt="" />
 
 {elseif $items[user].field_values[ix].type eq 'm'}
-{* Here we don't mailto the address so as far as I understood the code, if we reach here we are becoming a link to view_item.php *}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
 
 {else}
@@ -338,9 +337,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}" id="cat{$iu.categId}"><label for="cat{$iu.categId}">{$iu.name}</label></td>{cycle name=2_$fca}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}" id="cat{$iu.categId}" /><label for="cat{$iu.categId}">{$iu.name}</label></td>{cycle name=2_$fca}
 {/foreach}
-</table>
+</tr></table>
 
 {elseif $fields[ix].type eq 'i'}
 <input type="file" name="{$fields[ix].ins_id}"/>

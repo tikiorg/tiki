@@ -15,6 +15,16 @@
           <td><input type="checkbox" name="feature_search_fulltext"
                 {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
+	<td>
+{if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
+                        {tr}Search stats{/tr}
+                        {if $feature_help eq 'y'}</a>{/if}
+                        :</td>
+        <td><input type="checkbox" name="feature_search_stats"
+            {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
+	</td>
+	</tr><tr>
+
           <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
         </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>

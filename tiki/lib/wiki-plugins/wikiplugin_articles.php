@@ -1,5 +1,5 @@
 <?php
-// Includes a wiki page in another
+// Includes articles listing in a wiki page
 // Usage:
 // {ARTICLES(max=>3,topic=>topicId)}{ARTICLES}
 //
@@ -31,10 +31,18 @@ function wikiplugin_articles($data,$params) {
 	}
 
 	$now = date("U");
+	
+	include_once("lib/commentslib.php");
+	$commentslib = new Comments($dbTiki);
+	
 	$listpages = $tikilib->list_articles(0, $max, 'publishDate_desc', '', $now, 'admin', '', $topic);
   
 	for ($i = 0; $i < count($listpages["data"]); $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+		$comments_prefix_var='article:';
+		$comments_object_var=$listpages["data"][$i]["articleId"];
+		$comments_objectId = $comments_prefix_var.$comments_object_var;
+		$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 		//print_r($listpages["data"][$i]['title']);
 	}
 	require_once ('lib/articles/artlib.php');

@@ -1,4 +1,6 @@
-<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove image galleries, go to "Image Galleries" on the left menu, or{/tr} <a class="link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div><br />
+{if $feature_help eq "y"}
+<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove image galleries, go to "Image Galleries" on the application menu, or{/tr} <a class="link" href="tiki-galleries.php">{tr}click here{/tr}</a>.</div><br />
+{/if}
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
 <div class="cbox-data">

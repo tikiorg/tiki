@@ -28,21 +28,58 @@ class ScoreLib extends TikiLib {
 
 	// All event types, for administration
 	function get_all_events() {
-		$query = "select * from `tiki_score` order by `category`, `ord`";
+
+		$query = "select * from `tiki_score`";
 		$result = $this->query($query,array());
-		$ranking = array();
+		$index = array();
 		while ($res = $result->fetchRow()) {
-	    $ranking[] = $res;
+		    $index[$res['event']] = $res;
 		}
-		return $ranking;
+
+		// load $events
+		require('lib/score/events.php');
+
+		$event_list = array();
+		foreach ($events as $event_data) {
+		    $features = preg_split('/(\s|,)+/',$event_data[0]);
+		    $show = true;
+		    foreach ($features as $feature) {
+			if (!empty($feature)) {
+			    global $$feature;
+			    if ($$feature != 'y') {
+				$show = false;
+			    }
+			}
+		    }
+		    if ($show) {
+			$event = array('category'    => $event_data[1],
+				       'event'       => $event_data[2],
+				       'description' => $event_data[3],
+				       'score'       => $event_data[4],
+				       'expiration'  => $event_data[5]);
+
+			$event_name = $event_data[2];
+			if (isset($index[$event_name])) {
+			    $event['score']       = $index[$event_name]['score'];
+			    $event['expiration']  = $index[$event_name]['expiration'];
+			}
+
+			$event_list[] = $event;
+		    }
+		}
+
+		return $event_list;
 	}
 
 	// Read information from admin and updates event's punctuation
 	function update_events($events) {
-		foreach ($events as $event_name => $event) {
-	    $query = "update `tiki_score` set `score`=?, `expiration`=? where `event`=?";
-	    $this->query($query,array((int) $event['score'], $event['expiration'], $event_name));
-		}
+	    foreach ($events as $event_name => $event) {
+		$query = "delete from `tiki_score` where `event`=?";
+		$this->query($query, array($event_name));
+
+		$query = "insert into `tiki_score` (`event`,`score`,`expiration`) values (?,?,?)";
+		$this->query($query,array($event_name, (int) $event['score'], $event['expiration']));
+	    }
 	}
 
 }

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.55 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.56 2004-06-28 16:16:30 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -656,13 +656,9 @@
         <td><input type="checkbox" name="contact_anon"
             {if $contact_anon eq 'y'}checked="checked"{/if}/></td>            
         <td>&nbsp;</td>
-	<td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
-			{tr}Search stats{/tr}
-			{if $feature_help eq 'y'}</a>{/if}
-			:</td>
-        <td><input type="checkbox" name="feature_search_stats"
-            {if $feature_search_stats eq 'y'}checked="checked"{/if}/></td>
+	<td class="form">&nbsp;
+			</td>
+        <td>&nbsp;</td>
 
         </tr><tr>
 
