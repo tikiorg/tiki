@@ -33,7 +33,7 @@
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$users}
-<option value="{$users[ux].user|escape}" {if $ins_fields[ix].value eq $users[ux].user}selected="selected"{/if}>{$users[ux].user}</option>
+<option value="{$users[ux]|escape}" {if $ins_fields[ix].value eq $users[ux]}selected="selected"{/if}>{$users[ux]}</option>
 {/section}
 </select>
 {/if}
