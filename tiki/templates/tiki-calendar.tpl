@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.42 2004-04-20 00:28:24 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.43 2004-04-30 09:34:55 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -7,18 +7,20 @@
 {/if}
 <br /><br />
 
+{if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false}
-<div class="tabs">
-<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Calendar{/tr}</span>
+<div id="page-bar">
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
 {if $modifiable}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Edit/Create{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Filter{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
 </div>
+{/if}
 
 {* ----------------------------------- *}
 {cycle name=content values="1,2,3" print=false advance=false}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <div class="tabrow">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap">
@@ -133,7 +135,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {* ----------------------------------- *}
 
 {if $modifiable}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {* ······························· *}{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
 
@@ -322,7 +324,7 @@ align       : "bR"
 <ul>
 {foreach name=licals item=k from=$listcals}
 {if $infocals.$k.tiki_p_add_events eq 'y'}
-<li>{tr}in{/tr} <a href="tiki-calendar.php?calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
+<li>{tr}in{/tr} <a href="tiki-calendar.php?calendarId={$k}&amp;todate={$focusdate}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
 {/if}
 {/foreach}
 </ul>
@@ -333,7 +335,7 @@ align       : "bR"
 
 {* ----------------------------------- *}
 
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <form class="box" method="get" action="tiki-calendar.php" name="f">
 <table border="0" >
 <tr>
