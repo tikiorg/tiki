@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.13 2004-01-15 22:16:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.14 2004-02-27 01:56:04 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (get_magic_quotes_gpc()) {
 // let smarty define SMARTY_DIR so it's an absolute path :
 // define('SMARTY_DIR', 'lib/smarty/');
 
-require_once ( 'lib/smarty/Smarty.class.php');
+require_once ( 'lib/smarty/libs/Smarty.class.php');
 
 class Smarty_TikiWiki extends Smarty {
 	
@@ -44,7 +44,7 @@ class Smarty_TikiWiki extends Smarty {
 		$this->caching = 0;
 		$this->assign('app_name', 'TikiWiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
-			dirname(SMARTY_DIR)."/smarty_tiki",
+			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
 			SMARTY_DIR."plugins"
 		);
 	}
