@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.13 2003-08-30 13:01:00 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.14 2003-09-07 20:46:39 lueders Exp $
 
 function chgArtType() {
 	if (document.getElementById('articletype').value == 'Article') {
@@ -82,11 +82,11 @@ function setCaretToPos (textarea, pos) {
   setSelectionRange(textarea, pos, pos);
 }
 function insertAt(elementId, replaceString) {
-  //inserts given text at selection or cursor position  
+  //inserts given text at selection or cursor position
   textarea = document.getElementById(elementId);
   var toBeReplaced = /text|page|area_name/;//substrings in replaceString to be replaced by the selection if a selection was done
   if (textarea.setSelectionRange) {
-    //Mozilla    
+    //Mozilla
     var selectionStart = textarea.selectionStart;
     var selectionEnd = textarea.selectionEnd;
     if (selectionStart != selectionEnd) { // has there been a selection
@@ -104,7 +104,7 @@ function insertAt(elementId, replaceString) {
     }
   }
   else if (document.selection) {
-    //IE    
+    //IE
     textarea.focus();
     var range = document.selection.createRange();
     if (range.parentElement() == textarea) {
@@ -116,12 +116,12 @@ function insertAt(elementId, replaceString) {
       }
 	else {
 		range.text = replaceString;
-	}	
+	}
     }
   }
   else {
     //alert("don't know yet how to handle insert" + document);
-	}  
+	}
 }
 
 function setUserModuleFromCombo(id) {
@@ -369,3 +369,30 @@ function go(o) {
 
 	return false;
 }
+
+
+// function:	targetBlank
+// desc:	opens a new window, XHTML-compliant replacement of the "TARGET" tag
+// added by: 	Ralf Lueders (lueders@lrconsult.com)
+// date:	Sep 7, 2003
+// params:	url: the url for the new window
+//		mode='nw': new, full-featured browser window
+//		mode='popup': new windows, no features & buttons
+
+function targetBlank(url,mode) {
+  var features = 'menubar=yes,toolbar=yes,location=yes,directories=yes,fullscreen=no,titlebar=yes,hotkeys=yes,status=yes,scrollbars=yes,resizable=yes';
+  switch (mode) {
+    // new full-equipped browser window
+    case 'nw':
+      break;
+    // new popup-window
+    case 'popup':
+      features = 'menubar=no,toolbar=no,location=no,directories=no,fullscreen=no,titlebar=no,hotkeys=no,status=no,scrollbars=yes,resizable=yes';
+      break;
+    default:
+      break;
+   }
+   blankWin = window.open(url,'_blank',features);
+}
+
+
