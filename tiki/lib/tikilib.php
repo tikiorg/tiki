@@ -656,7 +656,7 @@ function get_user_items($user) {
     $items = array();
 
     $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif";
-		$query = " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
+		$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
     $result = $this->query($query,array('u','o',$user));
     $ret = array();
 
@@ -684,7 +684,7 @@ function get_user_items($user) {
 
     foreach ($groups as $group) {
 	$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
-	$query.= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
+	$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
 	$result = $this->query($query,array('g','o',$group));
 
 	while ($res = $result->fetchRow()) {
