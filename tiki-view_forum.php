@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.40 2003-11-12 20:02:10 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.41 2003-11-13 09:49:16 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -690,12 +690,13 @@ if (!isset($_REQUEST['time_control']))
 $_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
-$comments_coms = $commentslib->get_forum_topics($forumId, $comments_offset,
-		$_REQUEST['comments_maxComments'],
+$comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'],
+		$comments_offset, $_REQUEST['comments_maxComments'],
 		$_REQUEST['comments_sort_mode']);
 
 // Get the last "n" comments to this forum
-$last_comments = $commentslib->get_last_forum_posts($forumId, $forum_info['forum_last_n']);
+$last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'],
+		$forum_info['forum_last_n']);
 $smarty->assign_by_ref('last_comments',$last_comments);
 $comments_cant = $commentslib->count_comments($comments_objectId);
 $smarty->assign('comments_cant', $comments_cant);
