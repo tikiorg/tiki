@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.10 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_trackers.php,v 1.11 2004-06-14 02:11:45 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,12 +70,7 @@ for ($i = 0; $i < count($channels["data"]); $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {
 		$channels["data"][$i]["individual"] = 'y';
 
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["trackerId"], 'tracker', 'tiki_p_view_trackers')
-		   or $userlib->object_has_permission($user, $channels["data"][$i]["trackerId"], 'tracker', 'tiki_p_create_tracker_items')) {
-			$channels["data"][$i]["individual_tiki_p_view_trackers"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_view_trackers"] = 'n';
-		}
+		$channels["data"][$i]["individual_tiki_p_view_trackers"] = 'y';
 
 		if ($tiki_p_admin == 'y'
 			|| $userlib->object_has_permission($user, $channels["data"][$i]["trackerId"], 'tracker', 'tiki_p_admin_trackers')) {

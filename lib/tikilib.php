@@ -579,10 +579,40 @@ class TikiLib extends TikiDB {
 
 	$list = array();
 	while ($res = $result->fetchRow()) {
-	    $qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
-	    $res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
-	    $ret[] = $res;
-	    $list[$res['trackerId']] = $res['name'];
+
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['trackerId'], 'tracker')) {
+	    // tracker permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no tracker permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $res['trackerId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+		
+		if ($add) {
+		    $qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
+		    $res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
+		    $ret[] = $res;
+		    $list[$res['trackerId']] = $res['name'];
+		}
 	}
 
 	$retval = array();
