@@ -46,11 +46,16 @@ if(isset($_REQUEST['reply'])||isset($_REQUEST['replyall'])) {
 
 if(isset($_REQUEST['group'])) {
   if($_REQUEST['group']=='all') {
-    $all_users = $userlib->get_users(0,-1,'login_desc','');
+    $a_all_users = $userlib->get_users(0,-1,'login_desc','');
+    $all_users = array();
+    foreach($a_all_users['data'] as $a_user) {
+    	$all_users[]=$a_user['user'];
+    }
   } else {
     $all_users = $userlib->get_group_users($_REQUEST['group']);
   }
 }
+
 
 
 if(isset($_REQUEST['send'])) {
@@ -64,7 +69,7 @@ if(isset($_REQUEST['send'])) {
     die;
   }
     
-  
+
   // Remove invalid users from the to, cc and bcc fields
   $users = Array();
   foreach($all_users as $a_user) {
@@ -83,7 +88,7 @@ if(isset($_REQUEST['send'])) {
   }
     
   $users = array_unique($users);
-  
+
   // Validation: either to, cc or bcc must have a valid user
   if(count($users)>0) {
     $message.=tra("Message will be sent to: ").implode(',',$users)."<br/>";

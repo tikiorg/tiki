@@ -31,7 +31,7 @@
 <tr>
 {if $smarty.section.changes.index % 2}
 <td class="listgalidodd">{$images[changes].imageId}&nbsp;</td>
-<td class="listgalnameodd"><a class="imagename" href="tiki-browse_image.php?imageId={$images[changes].imageId}">{$images[changes].name}</a>&nbsp;
+<td class="listgalnameodd"><a class="imagename" href="tiki-browse_image.php?galleryId={$images[changes].galleryId}&amp;imageId={$images[changes].imageId}">{$images[changes].name}</a>&nbsp;
 {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
@@ -42,7 +42,7 @@
 <td class="listgalfilesizeodd">{$images[changes].filesize}&nbsp;</td>
 {else}
 <td class="listgalideven">{$images[changes].imageId}&nbsp;</td>
-<td class="listgalnameeven"><a class="imagename" href="tiki-browse_image.php?imageId={$images[changes].imageId}">{$images[changes].name}</a>&nbsp;
+<td class="listgalnameeven"><a class="imagename" href="tiki-browse_image.php?galleryId={$images[changes].galleryId}&amp;imageId={$images[changes].imageId}">{$images[changes].name}</a>&nbsp;
 {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
