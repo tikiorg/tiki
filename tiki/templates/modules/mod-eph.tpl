@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-title">
-{tr}Ephemerides{/tr}
+<a class="cboxtlink" href="tiki-eph.php">{tr}Ephemerides{/tr}</a>
 </div>
 <div class="box-data">
 {if $modephdata}
