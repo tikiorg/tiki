@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.52 2004-02-19 05:23:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.53 2004-02-20 06:14:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -199,8 +199,8 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 		if ($fields["data"][$i]["options"] == 1 and !$writerfield) {
 			$writerfield = $fid;
-			$listfields[$fid]['name'] = $fields["data"][$i]["name"];
-			$listfields[$fid]['type'] = 'u';
+			//$listfields[$fid]['name'] = $fields["data"][$i]["name"];
+			//$listfields[$fid]['type'] = 'u';
 		} elseif (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
@@ -215,8 +215,8 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 		if ($fields["data"][$i]["options"] == 1 and !$writergroupfield) {
 			$writergroupfield = $fid;
-			$listfields[$fid]['name'] = $fields["data"][$i]["name"];
-			$listfields[$fid]['type'] = 'g';
+			//$listfields[$fid]['name'] = $fields["data"][$i]["name"];
+			//$listfields[$fid]['type'] = 'g';
 		} elseif (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
@@ -320,8 +320,10 @@ if ($user) {
 if (isset($_REQUEST["save"])) {
 	if ($tiki_p_create_tracker_items == 'y') {
 		check_ticket('view-trackers');
-		if (!isset($tracker_info['newItemStatus'])) $tracker_info['newItemStatus'] = 'o';
-		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $tracker_info['newItemStatus']);
+		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+			$_REQUEST["status"] = '';
+		}
+		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 		$smarty->assign('itemId', '');
 		
@@ -358,6 +360,12 @@ if (!isset($_REQUEST["sort_mode"])) {
 	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
+}
+$sorts = split('_',$sort_mode);
+if (is_array($sorts) and isset($sorts[1]) and $listfields["{$sorts[1]}"]['type'] == 'n') {
+	$numsort = true;
+} else {
+	$numsort = false;
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
@@ -414,7 +422,7 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
 //var_dump($items);die();
 
 $cant_pages = ceil($items["cant"] / $maxRecords);

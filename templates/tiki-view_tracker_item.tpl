@@ -48,7 +48,7 @@
 <table class="normal">
 
 {elseif $ins_fields[ix].type ne 'x'}
-{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
+{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$ins_fields[ix].name}</td><td>
@@ -95,16 +95,15 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 't'}
-{if $ins_fields[ix].options_array[2]}
-{$ins_fields[ix].value} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]|escape}</span>
-{else}
+{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'n'}
+{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]|escape}&nbsp;</span>{/if}
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
 {else}
 {$ins_fields[ix].value|default:"&nbsp;"}
 {/if}
-{/if}
+{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]|escape}</span>{/if}
+
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
@@ -233,7 +232,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 
 <table class="normal">
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" />
-{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+{if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
@@ -253,7 +252,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
 {else}
-{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
+{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$ins_fields[ix].name}</td><td nowrap="nowrap">
@@ -307,8 +306,14 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </table>
 
 {elseif $ins_fields[ix].type eq 't'}
+{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}"{/if} />
-{if $ins_fields[ix].options_array[2]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>{/if}
+{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
+
+{elseif $ins_fields[ix].type eq 'n'}
+{if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}"{/if} />
+{if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
 
 {elseif $ins_fields[ix].type eq 'a'}
 <textarea name="ins_{$ins_fields[ix].id}" id="area_{$ins_fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
@@ -343,7 +348,7 @@ align       : "bR"
 {literal} } );{/literal}
 </script>
 {/if}
-{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1')
+{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1')
  and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
