@@ -32,7 +32,9 @@ function refresh_search_index() {
 }
 
 function random_refresh_index_forum() {
-
+  //find random forum comment
+  global $tikilib;
+  
 }
 
 function random_refresh_index_trackers() {
