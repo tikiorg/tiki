@@ -1328,7 +1328,7 @@ class Comments extends TikiLib {
 	return $data;
     }
     
-    function parse_quote(&$data) {
+    function parse_quote(&$data, $quote_parsed = FALSE) {
     	global $tikilib;
     	
 	    // Find the plugins
@@ -1384,10 +1384,11 @@ class Comments extends TikiLib {
 
 		    if (file_exists($php_name)) {
 				include_once ($php_name);
+				$quote_parsed = TRUE;
 
 				$ret = $func_name($plugin_data, $arguments);
 				
-				$this->parse_quote($ret);
+				$this->parse_quote($ret, $quote_parsed);
 
 				// Replace plugin section with its output in data
 				$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
@@ -1396,6 +1397,10 @@ class Comments extends TikiLib {
 			$i--;
 
 	    } // while
+	    
+	    if (!$quote_parsed) {
+	    	$data = nl2br($data);
+	    }
    	
     	return $data;
     }
