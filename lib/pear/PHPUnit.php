@@ -12,7 +12,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: PHPUnit.php,v 1.1 2003-04-09 00:03:15 lrargerich Exp $
+// $Id: PHPUnit.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
 //
 
 require_once 'PHPUnit/TestCase.php';

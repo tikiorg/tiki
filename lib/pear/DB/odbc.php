@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@fast.no>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: odbc.php,v 1.1 2003-04-09 00:03:16 lrargerich Exp $
+// $Id: odbc.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
 //
 // Database independent query interface definition for PHP's ODBC
 // extension.

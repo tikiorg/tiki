@@ -16,7 +16,7 @@
 // | Author: Anders Johannsen <anders@johannsen.com>                      |
 // +----------------------------------------------------------------------+
 //
-define('CMD_RCSID', '$Id: CMD.php,v 1.1 2003-04-09 00:03:15 lrargerich Exp $');
+define('CMD_RCSID', '$Id: CMD.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $');
 
 /**
  * The Cmd:: class implements an abstraction for various ways 
@@ -25,7 +25,7 @@ define('CMD_RCSID', '$Id: CMD.php,v 1.1 2003-04-09 00:03:15 lrargerich Exp $');
  * register_shutdown_function() or as a detached process using nohup).
  *
  * @author  Anders Johannsen <anders@johannsen.com>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  **/
 
 require_once 'PEAR.php';
