@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.5 2003-12-18 19:41:52 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.6 2003-12-19 10:41:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,12 +59,17 @@ function cache_templates($path,$newlang) {
 		while (false !== ($file = readdir($dir))) {
 			$a=explode(".",$file);
 			$ext=strtolower(end($a));
-			if (substr($file,0,1) == "." or $file == 'CVS' or $ext!="tpl") continue;
+			if (substr($file,0,1) == "." or $file == 'CVS') continue;
 			if (is_dir($path."/".$file)) {
 				cache_templates($path."/".$file,$newlang);
 			} else {
-				//todo: check if template is compiled already
-				$smarty->fetch($file);
+				if ($ext=="tpl") {
+					if (strpos($path,"/styles/")!=FALSE) {
+						$file=substr($path."/".$file,10);
+					}
+					//todo: check if template is compiled already
+					$smarty->fetch($file);
+				}
 			}
 		}
 		closedir($dir);
