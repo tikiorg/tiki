@@ -1,4 +1,6 @@
-<?php echo  '<?xml version="1.0" encoding="UTF-8"?>'; ?>
+<?php // -*- coding:utf-8 -*-
+echo  '<?xml version="1.0" encoding="UTF-8"?>';
+?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -37,76 +39,76 @@ cellpadding="0">
             <select name="a"
 onchange="handleListChange(this)">
               <option value="a" selected> a </option>
-              <option value="¿"> ¿ </option>
-              <option value="‡"> ‡ </option>
-              <option value="¡"> ¡ </option>
-              <option value="·"> · </option>
-              <option value="¬"> ¬ </option>
-              <option value="‚"> ‚ </option>
-              <option value="√"> √ </option>
-              <option value="„"> „ </option>
-              <option value="ƒ"> ƒ </option>
-              <option value="‰"> ‰ </option>
-              <option value="≈"> ≈ </option>
-              <option value="Â"> Â </option>
+              <option value="√Ä"> √Ä </option>
+              <option value="√†"> √† </option>
+              <option value="√Å"> √Å </option>
+              <option value="√°"> √° </option>
+              <option value="√Ç"> √Ç </option>
+              <option value="√¢"> √¢ </option>
+              <option value="√É"> √É </option>
+              <option value="√£"> √£ </option>
+              <option value="√Ñ"> √Ñ </option>
+              <option value="√§"> √§ </option>
+              <option value="√Ö"> √Ö </option>
+              <option value="√•"> √• </option>
             </select>
           </td>
           <td align="center"> 
             <select name="e"
 onchange="handleListChange(this)">
               <option value="e" selected> e </option>
-              <option value="»"> » </option>
-              <option value="Ë"> Ë </option>
-              <option value="…"> … </option>
-              <option value="È"> È </option>
-              <option value=" ">   </option>
-              <option value="Í"> Í </option>
-              <option value="À"> À </option>
-              <option value="Î"> Î </option>
+              <option value="√à"> √à </option>
+              <option value="√®"> √® </option>
+              <option value="√â"> √â </option>
+              <option value="√©"> √© </option>
+              <option value="√ä"> √ä </option>
+              <option value="√™"> √™ </option>
+              <option value="√ã"> √ã </option>
+              <option value="√´"> √´ </option>
             </select>
           </td>
           <td align="center"> 
             <select name="i"
 onchange="handleListChange(this)">
               <option value="i" selected> i </option>
-              <option value="Ã"> Ã </option>
-              <option value="Ï"> Ï </option>
-              <option value="Õ"> Õ </option>
-              <option value="Ì"> Ì </option>
-              <option value="Œ"> Œ </option>
-              <option value="Ó"> Ó </option>
-              <option value="œ"> œ </option>
-              <option value="Ô"> œ </option>
+              <option value="√å"> √å </option>
+              <option value="√¨"> √¨ </option>
+              <option value="√ç"> √ç </option>
+              <option value="√≠"> √≠ </option>
+              <option value="√é"> √é </option>
+              <option value="√Æ"> √Æ </option>
+              <option value="√è"> √è </option>
+              <option value="√Ø"> √è </option>
             </select>
           </td>
           <td align="center"> 
             <select name="o"
 onchange="handleListChange(this)">
               <option value="o" selected> o </option>
-              <option value="“"> “ </option>
-              <option value="Ú"> Ú </option>
-              <option value="”"> ” </option>
-              <option value="Û"> Û </option>
-              <option value="‘"> ‘ </option>
-              <option value="Ù"> Ù </option>
-              <option value="’"> ’ </option>
-              <option value="ı"> ı </option>
-              <option value="÷"> ÷ </option>
-              <option value="ˆ"> ˆ </option>
+              <option value="√í"> √í </option>
+              <option value="√≤"> √≤ </option>
+              <option value="√ì"> √ì </option>
+              <option value="√≥"> √≥ </option>
+              <option value="√î"> √î </option>
+              <option value="√¥"> √¥ </option>
+              <option value="√ï"> √ï </option>
+              <option value="√µ"> √µ </option>
+              <option value="√ñ"> √ñ </option>
+              <option value="√∂"> √∂ </option>
             </select>
           </td>
           <td align="center"> 
             <select name="u"
 onchange="handleListChange(this)">
               <option value="u" selected> u </option>
-              <option value="Ÿ"> Ÿ </option>
-              <option value="˘"> ˘ </option>
-              <option value="⁄"> ⁄ </option>
-              <option value="˙"> ˙ </option>
-              <option value="€"> € </option>
-              <option value="˚"> ˚ </option>
-              <option value="‹"> ‹ </option>
-              <option value="¸"> ¸ </option>
+              <option value="√ô"> √ô </option>
+              <option value="√π"> √π </option>
+              <option value="√ö"> √ö </option>
+              <option value="√∫"> √∫ </option>
+              <option value="√õ"> √õ </option>
+              <option value="√ª"> √ª </option>
+              <option value="√ú"> √ú </option>
+              <option value="√º"> √º </option>
             </select>
           </td>
           <td align="center"> 
@@ -114,22 +116,21 @@ onchange="handleListChange(this)">
 onchange="handleListChange(this)">
               <option value="misc" selected> Other
 </option>
-              <option value="¢"> ¢ </option>
-              <option value="£"> £ </option>
-              <option value="§"> § </option>
-              <option value="•"> • </option>
-              <option value="∆"> ∆ </option>
-              <option value="Ê"> Ê </option>
-              <option value="ﬂ"> ﬂ </option>
-              <option value="«"> « </option>
-              <option value="Á"> Á </option>
-              <option value="—"> — </option>
-              <option value="Ò"> Ò </option>
-              <option value="˝"> ˝ </option>
-              <option value="ˇ"> ˇ </option>
-              <option value="ø"> ø </option>
-              <option value="°"> ° </option>
-            </select>
+              <option value="¬¢"> ¬¢ </option>
+              <option value="¬£"> ¬£ </option>
+              <option value="¬§"> ¬§ </option>
+              <option value="¬•"> ¬• </option>
+              <option value="√Ü"> √Ü </option>
+              <option value="√¶"> √¶ </option>
+              <option value="√ü"> √ü </option>
+              <option value="√á"> √á </option>
+              <option value="√ß"> √ß </option>
+              <option value="√ë"> √ë </option>
+              <option value="√±"> √± </option>
+              <option value="√Ω"> √Ω </option>
+              <option value="√ø"> √ø </option>
+              <option value="¬ø"> ¬ø </option>
+             </select>
           </td>
         </tr>
       </table>
