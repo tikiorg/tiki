@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.23 2004-01-20 17:20:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.24 2004-01-21 05:02:23 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -238,7 +238,7 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-$items = $trklib->list_tracker_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $fields, $_REQUEST["status"]);
+$items = $trklib->list_tracker_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $fields, $_REQUEST["status"],$initial);
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
