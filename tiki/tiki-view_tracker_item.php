@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.16 2003-12-17 12:17:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.17 2003-12-17 19:10:41 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,6 +134,9 @@ if ($_REQUEST["itemId"]) {
 		$name = $fields["data"][$i]["name"];
 		$ins_name = 'ins_' . $name;
 		$ins_fields["data"][$i]["value"] = $info["$name"];
+		if ($fields["data"][$i]["type"] == 'a') {
+			$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+		}
 	}
 }
 

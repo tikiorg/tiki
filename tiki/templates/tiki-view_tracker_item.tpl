@@ -38,6 +38,8 @@
 <td>
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
 {$ins_fields[ix].value|date_format:$daformat}
+{elseif $ins_fields[ix].type eq 'a'}
+{$ins_fields[ix].pvalue}
 {else}
 {$ins_fields[ix].value}
 {/if}
