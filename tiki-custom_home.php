@@ -4,6 +4,7 @@ require_once('tiki-setup.php');
 
 
 /*
+hfd
 require_once "lib/NNTP.php";
 $nntp = new Net_NNTP;
 $ret = $nntp->connect("news.php.net");

@@ -89,6 +89,11 @@ if($offset>0) {
 $smarty->assign_by_ref('channels',$channels["data"]);
 
 
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
+
 $smarty->assign('mid','tiki-newsreader_servers.tpl');
 $smarty->display('tiki.tpl');
 ?>

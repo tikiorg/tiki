@@ -1,4 +1,6 @@
 <a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a><br/><br/>
+{include file=tiki-mytiki_bar.tpl}
+<br/><br/>
 <table>
 <tr>
   <td>

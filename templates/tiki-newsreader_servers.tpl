@@ -1,7 +1,7 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a><br/><br/>
+{include file=tiki-mytiki_bar.tpl}
 <h3>{tr}Select a news server to browse{/tr}</h3>
-
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -27,6 +27,7 @@
 {/section}
 </table>
 <div class="mini">
+<div align="center">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-newsreader_servers.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -42,6 +43,7 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
+</div>
 </div>
 
 
