@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.6 2003-10-21 22:54:14 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.7 2003-11-14 23:34:23 ohertel Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -92,9 +92,12 @@ form {
  border: dashed 0.2em #abcdef;
  margin: 0.2em;
 }
-.box-title {
+div.box-title {
  background: #abcdef;
  text-align: center;
+}
+div.box-title table {
+    width: 100%;
 }
 .box-data {}
 /*

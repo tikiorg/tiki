@@ -134,7 +134,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.box-title {
+div.box-title {
 	background-color: #9cba00;
 	border-bottom: 1px solid #84aa00;
 	color: white;
@@ -149,6 +149,23 @@ div.box {
 	padding-right: 0px;
 	text-align: center;
 	width: 170px;
+	text-decoration: none;
+}
+
+/* make linked box titles white colored */
+div.box-title * a {
+	color: white;
+	text-decoration: none;
+}
+
+/* make linked box titles white colored */
+div.box-title a {
+	color: white;
+	text-decoration: none;
+}
+
+div.box-title table {
+    width: 100%;
 }
 
 /* And this is the data */
@@ -432,14 +449,6 @@ input {
    as the wiki page listing, last changes, listings in admin screens, etc.
  */
 
-/* Cells where nothing is specified */
-TD {
-	color: black;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	vertical-align: top;
-}
-
 /* Cells in forms without background color (inside a div for example) */
 TD.form {
 	color: black;
@@ -483,7 +492,7 @@ TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfga
 }
 
 TD.button {
-	background-color: #9cba00;
+	background-color: #f2f6e5;
 	color: white;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -1121,8 +1130,8 @@ div.articletitle {
 	border-bottom: 0px #84aa00;
 	padding-left: 0.8em;
 	padding-right: 0.8em;
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
+	padding-top: 0.0em;
+	padding-bottom: 0.4em;
 	margin-top: 5px;
 	width: 98%;
 	clear: both;
@@ -1144,7 +1153,7 @@ div.articleheading {
 }
 
 div.articletrailer {
-	background-color: white;
+	background-color: #f2f6e5;
 	border: 1px solid #84aa00;
 	border-bottom: 1px solid #84aa00;
 	border-top: 1px solid #84aa00;
@@ -1871,6 +1880,7 @@ textarea.tshoutbox {
 {
 width:100%;
 }
+
 .Cal0, .Cal1, .Cal2 {
 	border-top: 1px dashed #cccccc;
 	color: #425262;
@@ -2336,7 +2346,7 @@ div.tree {
 }
 /* Root of tree (outer div) */
 div.tree#top {
-	border: 1px outset #00E000;
+	border: 1px outset #84aa00;
 	padding: 10px 1.5em 20px 1.5em;
 }
 
@@ -2357,7 +2367,7 @@ a.tikihelp, a.tikihelp:visited {
 }
 
 a.tikihelp:hover {
-	color: #224466;
+	color: #9cba00;
 	border: inherit;
 	background-color: inherit;
 	font-size: inherit;

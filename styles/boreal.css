@@ -126,7 +126,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.box-title {
+div.box-title {
 	background-image:    url(boreal/menucap.png);
 	border-bottom:   1px solid #444444;
 	color:   white;
@@ -138,6 +138,10 @@ div.box {
 	padding-right:   0px;
 	margin-bottom:   1px;
 	width:   170px;
+}
+
+div.box-title table {
+    width: 100%;
 }
 
 /* And this is the data */
