@@ -1,6 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-site_header.tpl,v 1.1 2005-02-10 10:16:39 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-site_header.tpl,v 1.2 2005-02-12 22:57:15 michael_davey Exp $ *}
 {* Template for TikiWiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
+
+{*if $feature_sitesearch eq 'y'*}
+<div id="sitesearchbar">
+{include
+    file="tiki-searchindex.tpl"
+    searchNoResults="false"
+    searchStyle="menu"
+    searchOrientation="horiz"
+}
+</div>     
+{* search the site *}
+{*/if*}           
+
 {if $feature_siteloc eq 'y' or $feature_page_title eq 'y'}
 <div id="sitelocbar">
 {tr}Breadcrumbs : {/tr}<a href="./" accesskey="1">{$siteTitle}</a>
@@ -33,10 +46,4 @@
 	{eval var=$sitenav_code}
 </div>
 {* site navigation bar *}
-{/if}
-{if $feature_sitesearch eq 'y'}
-<div id="sitesearchbar">
-{tr}Search : {/tr}
-</div>
-{* search the site *}
 {/if}
