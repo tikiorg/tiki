@@ -16,7 +16,7 @@
     {$description}
   </div>
 
-  <h3>Gallery Images</h3>
+  <h3>{tr}Gallery Images{/tr}</h3>
 <div align="center">
 <table class="listgallery">
 <tr>
