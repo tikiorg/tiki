@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.3 2004-04-01 05:20:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.4 2004-06-20 15:06:22 mose Exp $
 
 class LogsLib extends TikiLib {
 	
@@ -59,7 +59,7 @@ class LogsLib extends TikiLib {
 		}
 		$query = "select `logId`,`loguser`,`logtype`,`logmessage`,`logtime`,`logip`,`logclient` ";
 		$query.= " from `tiki_logs` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_systemlog` $mid";
+		$query_cant = "select count(*) from `tiki_logs` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
