@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.88 2004-06-16 06:14:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.89 2004-06-20 09:58:57 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -178,7 +178,7 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
     $picname = $_FILES['picfile1']['name'];
 
     move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
-    $_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=$wiki_up/$picname}";
+    $_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$picname}";
   }
 }
 /**
