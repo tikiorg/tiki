@@ -25,7 +25,7 @@
 <td class="heading">&nbsp;</td>
 <td class="heading" width="80%"><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading" width="10%"><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}start{/tr}</a></td>
-<td style="text-align:right;" class="heading" width="10%"><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'percentage_desc'}priority_asc{else}priority_desc{/if}">{tr}priority{/tr}</a></td>
+<td style="text-align:right;" class="heading" width="10%"><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'priority_desc'}priority_asc{else}priority_desc{/if}">{tr}priority{/tr}</a></td>
 <td style="text-align:right;" class="heading" width="10%"><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'percentage_desc'}percentage_asc{else}percentage_desc{/if}">{tr}completed{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
