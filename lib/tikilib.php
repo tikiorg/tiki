@@ -605,18 +605,37 @@ $ret[] = $res;
 	$retval["cant"] = $cant;
 	return $retval;
 }
+
 /* experimental shared */
 function get_item_id($trackerId,$fieldId,$value) {
 	$query = "select distinct ttif.`itemid` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
 	$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
-	$itemId = $this->getOne($query,array((int) $trackerId,$fieldId,$value));
+	$itemId = $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
 	return $itemId;
+}
+
+/* experimental shared */
+function get_item_value($trackerId,$itemId,$fieldId) {
+	$query = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+	$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=?";
+	return $this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
+}
+
+/* experimental shared */
+function get_items_list($trackerId,$fieldId,$value) {
+	$query = "select distinct ttif.`itemid` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+	$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
+	$result = $this->query($query,array((int) $trackerId,(int)$fieldId,$value));
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res['itemid'];
+	}
+	return $ret;
 }
 
 /* experimental shared */
 function list_trackeritems($trackerId, $offset, $maxRecords, $sort_mode, $filterfield='', $filtervalue='', $status = '', $initial = '') {
 	$filters = array();
-
 	
 	$mid = " where tti.`trackerId`=? ";
 	$bindvars = array((int) $trackerId);
@@ -656,7 +675,7 @@ function list_trackeritems($trackerId, $offset, $maxRecords, $sort_mode, $filter
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
-
+	$opts = $optsl = array();
 	while ($res = $result->fetchRow()) {
 		$fields = array();
 		$opts = array();
@@ -666,7 +685,7 @@ function list_trackeritems($trackerId, $offset, $maxRecords, $sort_mode, $filter
 			where ttif.`fieldId`=ttf.`fieldId` and `isTblVisible`=? and`itemId`=? order by `position` asc";
 		$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
 		$pass = true;
-
+		$last = array();
 		$kx = "";
 		while ($res2 = $result2->fetchRow()) {
 			// Check if the field is visible!
@@ -678,19 +697,33 @@ function list_trackeritems($trackerId, $offset, $maxRecords, $sort_mode, $filter
 					}
 				}
 			}
+			$res2["links"] = array();
+			$res2["linkId"] = '';
+			$res2["trackerId"] = 0;
 			if ($res2["type"] == 'r') {
 				if (!$opts) {
 					$opts = split(',',$res2['options']);
 				}
 				$res2["linkId"] = $this->get_item_id($opts[0],$opts[1],$res2["value"]);
 				$res2["trackerId"] = $opts[0];
-			} else {
-				$res2["linkId"] = '';
-				$res2["trackerId"] = 0;
+			} elseif ($res2["type"] == 'l') {
+				if (!$optsl) {
+					$optsl = split(',',$res2['options']);
+				}
+				$res2["links"] = array();
+				$lst = $last[$optsl[2]];
+				if ($lst) {
+					$links = $this->get_items_list($optsl[0],$optsl[1],$lst);
+					foreach ($links as $link) {
+						$res2["links"][$link] = $this->get_item_value($optsl[0],$link,$optsl[3]);
+					}
+					$res2["trackerId"] = $optsl[0];
+				}
 			}
 			if ($res2["name"] == $csort_mode) {
 				$kx = $res2["value"].$itid;
 			}
+			$last[$fieldId] = $res2["value"];
 			$fields[] = $res2;
 		}
 		$res["field_values"] = $fields;

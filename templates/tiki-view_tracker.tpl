@@ -116,9 +116,16 @@ $fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"u
 {/if}
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isTblVisible eq 'y'}
-{if $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
+
+{if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
-{if $items[user].field_values[ix].linkId ne '' and $items[user].field_values[ix].trackerId}
+{foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{/foreach}
+</td>
+{elseif $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
+<td class="auto">
+{if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
 <a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].field_values[ix].linkId}" class="link">
 {elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}
 <a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}{section name=mix loop=$fields}{if 
