@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.33 2004-01-29 03:12:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.34 2004-01-29 06:33:58 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	
 	$ins_id = 'ins_' . $fid;
 	$fields["data"][$i]["ins_id"] = $ins_id;
+	$fields["data"][$i]["id"] = $fid;
 	
 	$filter_id = 'filter_' . $fid;
 	$fields["data"][$i]["filter_id"] = $filter_id;
@@ -87,9 +88,12 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	
 	} elseif ($fields["data"][$i]["type"] == 'e') {
 		include_once('lib/categories/categlib.php');
-		$k = $ins_fields["data"][$i]["options"];
-		$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-	
+		$k = $fields["data"][$i]["options"];
+		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+		if (isset($_REQUEST["$ins_id"]) && is_array($_REQUEST["$ins_id"])) {
+			
+		}
+		$ins_fields["data"][$i]["value"] = '';
 	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
@@ -177,7 +181,7 @@ if (isset($_REQUEST["save"])) {
 	if ($tiki_p_create_tracker_items == 'y') {
 		check_ticket('view-trackers');
 		// Save here the values for this item
-		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields);
+		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, 'p');
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 		$smarty->assign('itemId', '');
 	}

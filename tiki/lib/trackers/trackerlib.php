@@ -270,21 +270,24 @@ class TrackerLib extends TikiLib {
 		$the_data = '';
 
 		for ($i = 0; $i < count($ins_fields["data"]); $i++) {
-			$fieldId = $ins_fields["data"][$i]["fieldId"];
-			$value = $ins_fields["data"][$i]["value"];
-			if (isset($ins_fields["data"][$i]["name"])) {
-				$name = $ins_fields["data"][$i]["name"];
+			if ($ins_fields["data"][$i]["type"] == 'e') {
 			} else {
-				$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
-			}
-			$the_data .= "$name = $value\n";
+				$fieldId = $ins_fields["data"][$i]["fieldId"];
+				$value = $ins_fields["data"][$i]["value"];
+				if (isset($ins_fields["data"][$i]["name"])) {
+					$name = $ins_fields["data"][$i]["name"];
+				} else {
+					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
+				}
+				$the_data .= "$name = $value\n";
 
-			if ($itemId) {
-				$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
-				$this->query($query,array($value,(int) $itemId,(int) $fieldId));
-			} else {
-				$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-				$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
+				if ($itemId) {
+					$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
+					$this->query($query,array($value,(int) $itemId,(int) $fieldId));
+				} else {
+					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+					$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
+				}
 			}
 		}
 		include_once('lib/notifications/notificationlib.php');	
