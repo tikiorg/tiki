@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.23 2004-02-08 11:40:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.24 2004-02-19 17:34:18 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,7 @@ if (isset($_REQUEST["newuser"])) {
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
 					setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {
 					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to create new %s with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
 				}
