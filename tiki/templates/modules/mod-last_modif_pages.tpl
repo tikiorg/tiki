@@ -12,12 +12,12 @@
       </td>
       <td class="module">&nbsp;
        <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}" 
-			 {if strlen($modLastModif[ix].pageName) gt $maxlen}title="{$modLastModif[ix].pageName}"{/if}>
-				{if $maxlen > 0}
-        {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
-				{else}
-				{$modLastModif[ix].pageName}
-				{/if}
+       {if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}title="{$modLastModif[ix].pageName}"{/if}>
+        {if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}
+         {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
+        {else}
+         {$modLastModif[ix].pageName}
+        {/if}
        </a>
       </td>
      </tr>
