@@ -44,7 +44,7 @@
 	<tr>
 		<td width='33%'>
 			{if $struct.prev_page}
-				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.prev_page}&structID={$key}">&lt;&lt; 
+				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt; 
 					{if $struct.prev_page_alias}
 						{$struct.prev_page_alias}
 					{else}
@@ -62,7 +62,7 @@
 		</td>
 		<td align='right' width='33%'>
 			{if $struct.next_page}
-				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.next_page}&structID={$key}">
+				<a class="tocnavlink" href="tiki-index_p.php?page={$struct.next_page}&amp;structID={$key}">
 					{if $struct.next_page_alias}
 						{$struct.next_page_alias}
 					{else}
