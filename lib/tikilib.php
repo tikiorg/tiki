@@ -5242,6 +5242,7 @@ function format_language_list($languages) {
 function get_locale($user = false) {
 # TODO move to admin preferences screen
     static $locales = array(
+      'cs' => 'cs_CZ',
 	    'de' => 'de_DE',
 	    'dk' => 'da_DK',
 	    'en' => 'en_US',
