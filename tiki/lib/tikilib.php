@@ -2842,11 +2842,11 @@ function remove_user($user) {
 }
 
 function user_exists($user) {
-    $query = "select `login` from `users_users` where `login`=?";
+    $query = "select count(*) from `users_users` where `login`=?";
 
-    $result = $this->query($query, array($user));
+    $result = $this->getOne($query, array($user));
 
-    if ($result->numRows())
+    if ($result)
 	return true;
 
     return false;
@@ -3352,12 +3352,12 @@ function set_user_preference($user, $name, $value) {
 }
 
 function validate_user($user, $pass) {
-    $query = "select `user`  from `tiki_users`
+    $query = "select count(*) from `tiki_users`
 	where `user`=? and `password`=?";
 
-    $result = $this->query($query, array( $user, $pass ) );
+    $result = $this->getOne($query, array( $user, $pass ) );
 
-    if ($result->numRows()) {
+    if ($result) {
 	$t = date("U");
 
 	$query = "update `tiki_users` set `lastLogin`=?
