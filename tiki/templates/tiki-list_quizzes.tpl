@@ -72,7 +72,7 @@ Fatal error: Call to a member function on a non-object in /var/www/html/tikiwiki
 {*
 here's the bit on the adm and stats, it would be nice if there was a direct link to edit here
 *}
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')} (<a class="link" href="tiki-edit_quiz.php?quidIz={$channels[user].quizId}"><small>adm</small></a>){/if}
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')} (<a class="link" href="tiki-edit_quiz.php?quizId={$channels[user].quizId}"><small>adm</small></a>){/if}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')} (<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}"><small>stats</small></a>){/if}
 </td>
 <td class="even">{$channels[user].description}</td>
