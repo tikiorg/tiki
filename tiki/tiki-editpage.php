@@ -91,6 +91,14 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
   }
 } 
       
+// Upload pictures here
+if($feature_wiki_pictures == 'y' && $tiki_p_upload_picture == 'y') {
+  if(isset($_FILES['picfile1'])&&is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
+    $picname = $_FILES['picfile1']['name'];
+    move_uploaded_file($_FILES['picfile1']['tmp_name'],'img/wiki_up/'.$picname);
+    $_REQUEST["edit"]=$_REQUEST["edit"]."{picture file=img/wiki_up/$picname}";
+  }	
+}
 
 
 

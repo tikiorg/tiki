@@ -14,6 +14,9 @@ if($tiki_p_admin != 'y') {
 if(isset($_REQUEST["rmvorphimg"])) {
   $tikilib->remove_orphan_images();
 }
+if(isset($_REQUEST["rmvunusedpic"])) {
+  $tikilib->remove_unused_pictures();	
+}
 
 if(isset($_REQUEST["layout_ss"])) {
  if(isset($_REQUEST["layout_section"]) && $_REQUEST["layout_section"]=="on") {
@@ -572,6 +575,14 @@ if(isset($_REQUEST["wikifeatures"])) {
   } else {
     $tikilib->set_preference("feature_wiki_comments",'n');
     $smarty->assign("feature_wiki_comments",'n');
+  }
+  
+  if(isset($_REQUEST["feature_wiki_pictures"]) && $_REQUEST["feature_wiki_pictures"]=="on") {
+    $tikilib->set_preference("feature_wiki_pictures",'y'); 
+    $smarty->assign("feature_wiki_pictures",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_pictures",'n');
+    $smarty->assign("feature_wiki_pictures",'n');
   }
   
   if(isset($_REQUEST["feature_wiki_description"]) && $_REQUEST["feature_wiki_description"]=="on") {

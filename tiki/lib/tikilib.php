@@ -4440,7 +4440,29 @@ class TikiLib {
     }
   }
   
-  
+  function remove_unused_pictures()
+  {
+    $query = "select data from tiki_pages";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $pictures=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
+      preg_match_all("/\{picture file=([^\}]+)\}/",$res["data"],$pics);
+      foreach(array_unique($pics[1]) as $pic) {
+      	$pictures[]=$pic;
+      }
+    }
+    $h = opendir("img/wiki_up");
+    while (($file = readdir($h)) !== false) {
+      if(is_file("img/wiki_up/$file")&&($file!='license.txt')) {
+        $filename="img/wiki_up/$file";
+        if(!in_array($filename,$pictures)) {
+          @unlink($filename);
+        }
+      }
+    }  
+    closedir($h);
+  }
 
   function remove_orphan_images()
   {
@@ -5605,7 +5627,7 @@ class TikiLib {
               imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
             } else {
               $t = imagecreate($tw,$ty);
-              $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+              $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
             }
             // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
             //$tmpfname = 'temp.jpg';
@@ -7960,6 +7982,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $tiki_p_admin_drawings;
     global $tiki_p_edit_drawings;
     global $feature_hotwords_nw;
+    global $feature_wiki_pictures;
+    global $tiki_p_upload_picture;
     
     if($feature_hotwords_nw == 'y') {
       $hotw_nw = "target='_blank'";
@@ -8007,6 +8031,22 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       
     }
     
+    // Now search for images uploaded by users
+    if($feature_wiki_pictures=='y') {
+      preg_match_all("/\{picture file=([^\}]+)\}/",$data,$pics);
+      for($i=0;$i<count($pics[0]);$i++) {
+        // Check if the image exists
+        $name=$pics[1][$i];
+        if(file_exists($name)) {
+          // Replace by the img tag to show the image	
+         $repl = "<img src='$name?nocache=1' alt='$name' />";
+        } else {
+          $repl=tra('picture not found');		
+        }
+        // Replace by $repl
+        $data = str_replace($pics[0][$i],$repl,$data);
+      }
+    }
     
     
     $data = stripslashes($data);
@@ -8185,8 +8225,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
-      if($this->page_exists($pages[1][$i])) {
-        $repl = "<a href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[2][$i]."</a>";
+      if($desc = $this->page_exists_desc($pages[1][$i])) {
+        $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[2][$i]."</a>";
       } else {
         $repl = $pages[2][$i]."<a href='tiki-editpage.php?page=".$pages[1][$i]."' class='wiki'>?</a>";
       } 
@@ -8199,8 +8239,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // New syntax for wiki pages ((name)) Where name can be anything
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page) {
-      if($this->page_exists($page)) {
-        $repl = "<a href='tiki-index.php?page=$page' class='wiki'>$page</a>";
+      if($desc = $this->page_exists($page)) {
+        $repl = "<a title='$desc' href='tiki-index.php?page=$page' class='wiki'>$page</a>";
       } else {
         $repl = "$page<a href='tiki-editpage.php?page=$page' class='wiki'>?</a>";
       } 
