@@ -265,8 +265,12 @@ function sql_error($query, $values, $result) {
 
 	trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
 	// only for debugging.
+	echo "Values: <br>";
 	print_r($values);
-	//echo "<br/>";
+	if($result===false) echo "<br>\$result is false";
+	if($result===null) echo "<br>\$result is null";
+	if(empty($result)) echo "<br>\$result is empty";
+	// end only for debugging
 	die;
 }
 
@@ -3429,7 +3433,7 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
 	return false;
 
 	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) ";
-		$query.= " values(?,?,?,?,?,?,?,?,?,?)";
+		$query.= " values(?,?,?,?,?,?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		$name,
 		(int)$hits,
