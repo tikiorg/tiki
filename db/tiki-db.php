@@ -3,7 +3,7 @@
 require_once('DB.php');
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
-$pass_tiki   = '';
+$pass_tiki   = 'seldon';
 $dbs_tiki    = 'tiki';
 
 /*

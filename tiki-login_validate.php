@@ -3,7 +3,7 @@
 require_once('tiki-setup.php');
 
 $isvalid = false;
-$isvalid = $userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"]);
+$isvalid = $userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],'','');
 if($isvalid) {
   session_register("user",$_REQUEST["user"]);
   $user = $_REQUEST["user"];
