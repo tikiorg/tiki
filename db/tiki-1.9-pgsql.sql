@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.11 2004-03-12 01:36:09 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.12 2004-03-19 19:08:13 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -5456,6 +5456,7 @@ CREATE TABLE "tiki_jukebox_tracks" (
 -- Homework tables start
 --
 -- Created Feb 22, 2004
+-- Revised Mar 19, 2004
 --
 
 DROP TABLE "hw_actionlog";
@@ -5474,46 +5475,36 @@ CREATE TABLE "hw_actionlog" (
 DROP TABLE "hw_assignments";
 
 CREATE TABLE "hw_assignments" (
-  "articleId" serial,
+  "assignmentId" serial,
   "title" varchar(80) default NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL,
-  "topicId" bigint default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" bigint default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" bigint default NULL,
-  "image_x" smallint default NULL,
-  "image_y" smallint default NULL,
-  "image_data" bytea,
-  "publishDate" bigint default NULL,
-  "expireDate" bigint default NULL,
-  "created" bigint default NULL,
+  "teacherName" varchar(40) NOT NULL default '',
+  "created" bigint NOT NULL default '0',
+  "dueDate" bigint default NULL,
+  "modified" bigint NOT NULL default '0',
   "heading" text,
   "body" text,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "reads" bigint default NULL,
-  "votes" integer default NULL,
-  "points" bigint default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
-  PRIMARY KEY ("articleId")
-
-
-
-
+  "deleted" smallint NOT NULL default '0',
+  PRIMARY KEY ("assignmentId")
 
 ) ;
 
-CREATE  INDEX "hw_assignments_title" ON "hw_assignments"("title");
-CREATE  INDEX "hw_assignments_heading" ON "hw_assignments"("heading");
-CREATE  INDEX "hw_assignments_body" ON "hw_assignments"("body");
-CREATE  INDEX "hw_assignments_reads" ON "hw_assignments"("reads");
-CREATE  INDEX "hw_assignments_ft" ON "hw_assignments"("title","heading","body");
+CREATE  INDEX "hw_assignments_dueDate" ON "hw_assignments"("dueDate");
+
+DROP TABLE "hw_grading_queue";
+
+CREATE TABLE "hw_grading_queue" (
+  "id" bigserial,
+  "status" smallint default NULL,
+  "submissionDate" bigint default NULL,
+  "userLogin" varchar(40) NOT NULL default '',
+  "userIp" varchar(15) default NULL,
+  "pageId" bigint default NULL,
+  "pageDate" bigint default NULL,
+  "pageVersion" bigint default NULL,
+  "assignmentId" bigint default NULL,
+  PRIMARY KEY ("id")
+) ;
+
 
 DROP TABLE "hw_grading_queue";
 
