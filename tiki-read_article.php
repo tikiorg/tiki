@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.26 2004-05-12 13:15:28 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.27 2004-05-15 23:51:26 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if (isset($_REQUEST["articleId"])) {
 		die;
 	}
 
-	$smarty->assign('title', $article_data["title"]);
+	$smarty->assign('arttitle', $article_data["title"]);
 	$smarty->assign('topline', $article_data["topline"]);
 	$smarty->assign('show_topline', $article_data["show_topline"]);
 	$smarty->assign('subtitle', $article_data["subtitle"]);
