@@ -24,7 +24,7 @@ public class Navigator implements Runnable {
 	private boolean changed;
 
 	public Navigator(Graph g, XmlReader xr) {
-		graph = g;
+		graph = g;		
 		xmlReader = xr;
 		changed = false;
 	}
@@ -62,7 +62,7 @@ public class Navigator implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		// TODO Auto-generated method stub
+
 		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
 
 		while (true) {
@@ -115,7 +115,7 @@ public class Navigator implements Runnable {
 				if (!passedNodes.contains(nodeName)) {
 					passedNodes.add(nodeName);
 
-					Node node = Node.fromString(nodeName);
+					Node node = graph.nodeFromName(nodeName);
 					if (node == null) {
 						node = xmlReader.getNode(nodeName);
 						graph.add(node);

@@ -6,9 +6,11 @@ import java.net.URL;
 public class XmlReader {
 
 	public String url;
+	public Graph graph;
 
-	public XmlReader(String url) {
+	public XmlReader(String url, Graph graph) {
 		this.url = url;
+		this.graph = graph;
 	}
 
 	public Node getNode(String nodeName) {
@@ -19,7 +21,7 @@ public class XmlReader {
 		nodeName = s.substring(++j, k);
 		//parentNode = new Node(nodeName);
 		//graph.add(parentNode);
-		Node node = new Node(nodeName);
+		Node node = new Node(nodeName, graph);
 		
 		
 		while ((i = s.indexOf("link", ++j)) > 0) {
