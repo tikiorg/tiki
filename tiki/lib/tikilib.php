@@ -4263,6 +4263,7 @@ function parse_data($data) {
       $text = explode("|", $pages[5][$i]);
 
       if ($desc = $this->page_exists_desc($pages[1][$i])) {
+		$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
     $uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]);
 
     $repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '</a>';
@@ -4305,6 +4306,7 @@ function parse_data($data) {
 
   if ($repl2) {
       if ($desc = $this->page_exists_desc($page_parse)) {
+				$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
     $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
       } else {
     $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
@@ -4322,40 +4324,44 @@ function parse_data($data) {
     if ($feature_wikiwords == 'y') {
   // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 		if ($feature_wikiwords_usedash == 'y') {
-	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+			preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
 		} else {
-	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+			preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
 		}
-  $words = $this->get_hotwords();
-  foreach (array_unique($pages[2])as $page_parse) {
-      if (!array_key_exists($page_parse, $words)) {
-    if ($desc = $this->page_exists_desc($page_parse)) {
-        $repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-# doesn't exist, and the language is english
-        $plural_tmp = $page_parse;
-# Plurals like policy / policies
-        $plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-# Plurals like address / addresses
-        $plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-# Plurals like box / boxes
-        $plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-# Others, excluding ending ss like address(es)
-        $plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-        if($desc = $this->page_exists_desc($plural_tmp)) {
-//      $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
-      $repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
-        } else {
-      $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
-        }
-    } else {
-        $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
-    }
+		$words = $this->get_hotwords();
+		foreach (array_unique($pages[2])as $page_parse) {
+			if (!array_key_exists($page_parse, $words)) {
+				if ($desc = $this->page_exists_desc($page_parse)) {
+					$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+					$repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+				} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
+					# Link plural topic names to singular topic names if the plural
+					# doesn't exist, and the language is english
+					$plural_tmp = $page_parse;
+					# Plurals like policy / policies
+					$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+					# Plurals like address / addresses
+					$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+					# Plurals like box / boxes
+					$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+					# Others, excluding ending ss like address(es)
+					$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+					if($desc = $this->page_exists_desc($plural_tmp)) {
+						$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+						// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
+						$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
+					} else {
+						$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
+					}
+				} else {
+					$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
+				}
 
-    $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
-    //$data = str_replace($page_parse,$repl,$data);
-      }
-  }
-    }
+				$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
+				//$data = str_replace($page_parse,$repl,$data);
+			}
+		}
+	}
 
     // This protects ))word((, I think?
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
