@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/formula/wiki-plugins/wikiplugin_formula.php,v 1.1 2004-05-09 22:56:17 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/formula/wiki-plugins/wikiplugin_formula.php,v 1.2 2004-06-14 04:04:51 ggeller Exp $
  * Tiki-Wiki plugin formula
  *  
  * This plugin will try to render a formula written with LaTeX syntax
@@ -30,6 +30,18 @@ function wikiplugin_formula_help() {
 }
 
 function wikiplugin_formula($data, $params) {
+	# This function is disabled as shipped.
+  # You must edit this file to enable Tiki's FORMULA Plugin.
+  # The problem is that, for example, {FORMULA()}\input{/etc/passwd}{FORMULA} shows the contents of /etc/passwd.
+  # TeX also has "\write18", "\include", and "\usepackage" functions which might cause similar problems.
+  # If you want to rewrite this function to be more secure, you might start by looking at MediaWiki's TeX pluggin.
+  # If your Linux system is physically secure, not on a network, and used only by you, it is probably safe to run this pluggin as-is.
+  # Comment out the following four lines to enable this function.
+	$html= "<i>";
+	$html .= "The Tiki formula plugin is disabled due to security issues.  You must edit lib/wiki-plugins/wikiplugin_formula.php to enable the formula plugin.";
+	$html .= "</i>";
+	return $html;
+
 	extract ($params);
 
 	$data=trim($data);
@@ -93,7 +105,6 @@ function wikiplugin_formula($data, $params) {
  			"\" alt=\"" .$data. "\" ".
  			"align=\"middle\">";
  	}
-
 	return $html;
 
 }
