@@ -1,9 +1,13 @@
 {php}
 include("lib/class_calendar.php");
 //if(!isset($_SESSION["thedate"])) {
-  $day = date("d");
-  $mon = date("m");
-  $year = date("Y");
+  $date = $tikilib->get_site_date(date('U'), $user);
+print get_class($date);
+print_r(get_class_methods(get_class($date)));
+
+#  $day = $date->getDay();
+#  $mon = $date->getMonth();
+#  $year = $date->getYear();
 //}
 //if(isset($_SESSION["thedate"])) {
 //  $day=date("d",$_SESSION["thedate"]);
@@ -20,7 +24,10 @@ if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
 }
 
-$thedate = mktime(23,59,59,$mon,$day,$year);
+$thedate = $tikilib->make_time(23, 59, 59, $mon, $day, $year,
+  $tikilib->get_display_timezone($user));
+
+#$thedate = $tikilib->mktime(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
 // The format is S M T W T F S

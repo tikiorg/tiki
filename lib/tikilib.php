@@ -8438,11 +8438,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   	$date->setDay($day);
   	$date->setYear($year);
 #$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
-print "<pre> make_time() start";
-print_r($date);
+#print "<pre> make_time() start";
+#print_r($date);
   	if ($timezone_id)
   		$date->setTZbyID($timezone_id);
-print_r($date);
+#print_r($date);
 #$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
 #print $rv;
   	return $date->getTime();
