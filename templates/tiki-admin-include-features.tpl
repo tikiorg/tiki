@@ -347,6 +347,34 @@
 
       </tr><tr>      
 
+      </tr><tr>
+        <td class="form" colspan=2>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="form">
+
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Babelfish" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Babelfish Translation URLs{/tr}">{/if}
+        		{tr}Show Babelfish Translation URLs{/tr}
+        		{if $feature_babelfish eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_babelfish"
+            {if $feature_babelfish eq 'y'}checked="checked"{/if}/></td>
+
+      </tr><tr>      
+
+      </tr><tr>
+        <td class="form" colspan=2>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="form">
+
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Babelfish" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Babelfish Translation Logo{/tr}">{/if}
+        		{tr}Show Babelfish Translation Logo{/tr}
+        		{if $feature_babelfish_logo eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_babelfish_logo"
+            {if $feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
+
+      </tr><tr>      
+
         <td class="heading" colspan=5 
             align="center">{tr}Content Features{/tr}</td>
       </tr><tr>

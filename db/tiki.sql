@@ -3540,6 +3540,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_default_or
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_article_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_articles','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_babelfish','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_babelfish_logo','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_backlinks','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_banners','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_banning','n');
