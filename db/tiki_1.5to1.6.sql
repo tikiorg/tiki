@@ -1,6 +1,20 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
-drop table if exists tiki_minical;
+drop table if exists tiki_minical_topics;
+create table tiki_minical_topics(
+  user varchar(200),
+  topicId integer(12) not null auto_increment,
+  name varchar(250),
+  filename varchar(200),
+  filetype varchar(200),
+  filesize varchar(200),
+  data longblob,  
+  path varchar(250),
+  isIcon char(1),
+  primary key(topicId)
+);
+
+drop table if exists tiki_minical_events;
 create table tiki_minical_events(
   user varchar(200),
   eventId integer(12) not null auto_increment,
@@ -10,6 +24,7 @@ create table tiki_minical_events(
   end integer(14),
   security char(1),
   duration integer(3),
+  topicId integer(12),
   primary key(eventId)
 );
 

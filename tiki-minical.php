@@ -15,7 +15,7 @@ if(!$user) {
 }
 
 
-//if($tiki_p_usermenu != 'y') {
+//if($tiki_p_minical != 'y') {
 //  $smarty->assign('msg',tra("Permission denied to use this feature"));
 //  $smarty->display("styles/$style_base/error.tpl");
 //  die;  
@@ -25,9 +25,13 @@ if(!$user) {
 if(!isset($_REQUEST["eventId"])) $_REQUEST["eventId"]=0;
 
 if(isset($_REQUEST['remove'])) {
-//  foreach(array_keys($_REQUEST["menu"]) as $men) {      	
-    $minicallib->minical_remove_event($user, $_REQUEST['remove']);
-//  }
+  $minicallib->minical_remove_event($user, $_REQUEST['remove']);
+}
+
+if(isset($_REQUEST['delete'])) {
+  foreach(array_keys($_REQUEST["event"]) as $ev) {      	
+    $minicallib->minical_remove_event($user, $ev);
+  }
 }
 
 if(isset($_SESSION['thedate'])) {
@@ -35,16 +39,14 @@ if(isset($_SESSION['thedate'])) {
 } else {
   $pdate = date("U");
 }
+
 $yesterday = $pdate - 60*60*24;
 $tomorrow = $pdate + 60*60*24;
 $smarty->assign('yesterday',$yesterday);
 $smarty->assign('tomorrow',$tomorrow);
-
-
 $smarty->assign('day',date("d",$pdate));
 $smarty->assign('mon',date("m",$pdate));
 $smarty->assign('year',date("Y",$pdate));
-
 $pdate_h = mktime(date("G"),date("i"),date("s"),date("m",$pdate),date("d",$pdate),date("Y",$pdate));
 $smarty->assign('pdate',$pdate);
 $smarty->assign('pdate_h',$pdate_h);
@@ -60,7 +62,7 @@ if($_REQUEST["eventId"]) {
   $info['title']='';
   $info['description']='';
   $info['start']=mktime(date("H"),date("i"),date("s"),date("m",$pdate),date("d",$pdate),date("Y",$pdate));
-  $info['duration']=1;
+  $info['duration']=60*60;
 }
 $smarty->assign('ev_pdate',$ev_pdate);
 $smarty->assign('ev_pdate_h',$ev_pdate_h);
@@ -68,12 +70,12 @@ $smarty->assign('ev_pdate_h',$ev_pdate_h);
 
 if(isset($_REQUEST['save'])) {
   $start = mktime($_REQUEST['Time_Hour'],$_REQUEST['Time_Minute'],0,$_REQUEST['Date_Month'],$_REQUEST['Date_Day'],$_REQUEST['Date_Year']);
-  $minicallib->minical_replace_event($user,$_REQUEST["eventId"],$_REQUEST["title"],$_REQUEST["description"],$start,$_REQUEST['duration']);
+  $minicallib->minical_replace_event($user,$_REQUEST["eventId"],$_REQUEST["title"],$_REQUEST["description"],$start,($_REQUEST['duration_hours']*60*60)+($_REQUEST['duration_minutes']*60));
   $info=Array();
   $info['title']='';
   $info['description']='';
   $info['start']=mktime(date("h"),date("i"),date("s"),date("m",$pdate),date("d",$pdate),date("Y",$pdate));  
-  $info['duration']=1;
+  $info['duration']=60*60;
   $_REQUEST["eventId"]=0;
 }
 $smarty->assign('eventId',$_REQUEST["eventId"]);
@@ -115,12 +117,68 @@ if($_REQUEST['view']=='weekly') {
 	$slot_end = $slot_start + 60*60*24*7-1;
 }
 
-$smarty->assign('slot_start',$slot_start);
-$smarty->assign('slot_end',$slot_end);
+if($_REQUEST['view']=='daily' || $_REQUEST['view']=='weekly') {
+  $smarty->assign('slot_start',$slot_start);
+  $smarty->assign('slot_end',$slot_end);
+  $events = $minicallib->minical_events_by_slot($user,$slot_start,$slot_end,$interval);
+  $smarty->assign_by_ref('slots',$events);
+}
 
-$events = $minicallib->minical_events_by_slot($user,$slot_start,$slot_end,$interval);
-//print_r($events);
-$smarty->assign_by_ref('slots',$events);
+// List view
+if($_REQUEST['view']=='list') {
+	if(!isset($_REQUEST["sort_mode"])) {
+	  $sort_mode = 'start_desc'; 
+	} else {
+	  $sort_mode = $_REQUEST["sort_mode"];
+	} 
+	
+	if(!isset($_REQUEST["offset"])) {
+	  $offset = 0;
+	} else {
+	  $offset = $_REQUEST["offset"]; 
+	}
+	$smarty->assign_by_ref('offset',$offset);
+	
+	if(isset($_REQUEST["find"])) {
+	  $find = $_REQUEST["find"];  
+	} else {
+	  $find = ''; 
+	}
+	$smarty->assign('find',$find);
+	
+	$smarty->assign_by_ref('sort_mode',$sort_mode);
+	if(isset($_SESSION['thedate'])) {
+	 $pdate = $_SESSION['thedate'];
+	} else {
+	 $pdate = date("U");
+	}
+	$channels = $minicallib->minical_list_events($user,$offset,$maxRecords,$sort_mode,$find);
+	
+	$cant_pages = ceil($channels["cant"] / $maxRecords);
+	$smarty->assign_by_ref('cant_pages',$cant_pages);
+	$smarty->assign('actual_page',1+($offset/$maxRecords));
+	if($channels["cant"] > ($offset+$maxRecords)) {
+	  $smarty->assign('next_offset',$offset + $maxRecords);
+	} else {
+	  $smarty->assign('next_offset',-1); 
+	}
+	// If offset is > 0 then prev_offset
+	if($offset>0) {
+	  $smarty->assign('prev_offset',$offset - $maxRecords);  
+	} else {
+	  $smarty->assign('prev_offset',-1); 
+	}
+	$smarty->assign_by_ref('channels',$channels["data"]);
+}
+
+$hours=range(0,23);
+$smarty->assign('hours',$hours);
+$minutes=range(0,59);
+$smarty->assign('minutes',$minutes);
+$duration_hours = $info['duration']/(60*60);
+$duration_minutes = $info['duration']%(60*60);
+$smarty->assign('duration_hours',$duration_hours);
+$smarty->assign('duration_minutes',$duration_minutes);
 
 
 include_once('tiki-mytiki_shared.php');

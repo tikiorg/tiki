@@ -15,11 +15,12 @@ if(!$user) {
 }
 
 
-//if($tiki_p_usermenu != 'y') {
+//if($tiki_p_minical != 'y') {
 //  $smarty->assign('msg',tra("Permission denied to use this feature"));
 //  $smarty->display("styles/$style_base/error.tpl");
 //  die;  
 //}
+
 
 if(isset($_REQUEST['save'])) {
   $tikilib->set_user_preference($user,'minical_interval',$_REQUEST['minical_interval']);
@@ -53,6 +54,35 @@ $smarty->assign('minical_end_hour',$minical_end_hour);
 
 $hours=range(0,23);
 $smarty->assign('hours',$hours);
+
+if(isset($_REQUEST['removetopic'])) {
+  $minicallib->minical_remove_topic($user,$_REQUEST['removetopic']);
+}
+
+// Process upload here
+if(isset($_REQUEST['addtopic'])) {
+	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	  $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+	  $data = '';
+	  while(!feof($fp)) {
+	      $data .= fread($fp,8192*16);
+	  }
+	  fclose($fp);
+	  $size = $_FILES['userfile1']['size'];
+	  $name = $_FILES['userfile1']['name'];
+	  $type = $_FILES['userfile1']['type'];
+	} else {
+	  $size=0;
+	  $name='';
+	  $type='';
+	  $data='';
+	}
+	$minicallib->minical_upload_topic($user,$_REQUEST['name'],$name,$type,$size, $data,$_REQUEST['path']);
+}
+$topics = $minicallib->minical_list_topics($user,0,-1,'name_asc','');
+$smarty->assign('topics',$topics['data']);
+$smarty->assign('cols',4);
+
 
 include_once('tiki-mytiki_shared.php');
 

@@ -873,7 +873,6 @@ include_once("tiki-modules.php");
 $smarty->assign('beingEdited','n');
 
 
-
 if($feature_warn_on_edit == 'y') {
   // Check if the page is being edited
   if(isset($_REQUEST["page"])) {
@@ -885,9 +884,9 @@ if($feature_warn_on_edit == 'y') {
   //print($GLOBALS["HTTP_REFERER"]);
   // IF isset the referer and if the referer is editpage then unset taking the pagename from the
   // query or homepage if not query
-  if(isset($GLOBALS["HTTP_REFERER"])) {
-    if(strstr($GLOBALS["HTTP_REFERER"],'tiki-editpage')) {
-      $purl = parse_url($GLOBALS["HTTP_REFERER"]);
+  if(isset($HTTP_SERVER_VARS["HTTP_REFERER"])) {
+    if(strstr($HTTP_SERVER_VARS["HTTP_REFERER"],'tiki-editpage')) {
+      $purl = parse_url($HTTP_SERVER_VARS["HTTP_REFERER"]);
       if(!isset($purl["query"])) {
         $purl["query"]='';
       }
@@ -909,7 +908,6 @@ if($feature_warn_on_edit == 'y') {
     if(!isset($purlquery["page"])) {
       $purlquery["page"]='HomePage';
     }
-  
     $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
     
   } 
@@ -966,8 +964,8 @@ $smarty->assign('allowMsgs',$allowMsgs);
 
 if($feature_referer_stats != 'y') {
 // Referer tracking
-if(isset($GLOBALS["HTTP_REFERER"])) {
-  $pref = parse_url($GLOBALS["HTTP_REFERER"]);
+if(isset($HTTP_SERVER_VARS["HTTP_REFERER"])) {
+  $pref = parse_url($HTTP_SERVER_VARS["HTTP_REFERER"]);
   if(!strstr($_SERVER["SERVER_NAME"],$pref["host"])) {
     $tikilib->register_referer($pref["host"]);
   }

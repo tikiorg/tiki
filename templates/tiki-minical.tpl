@@ -5,7 +5,8 @@
 [<a class="link" href="#add">{tr}Add{/tr}</a>]
 [<a class="link" href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a>]
 [<a class="link" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a> | 
-<a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a>]
+<a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a>|
+<a class="link" href="tiki-minical.php?view=list">{tr}List{/tr}</a>]
 <br/><br/>
 
 <!-- Time here -->
@@ -29,7 +30,7 @@
     	</td>
     	<td>
     	{section name=jj loop=$slots[ix].events}
-    	<a title="{$slots[ix].events[jj].start|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}">{$slots[ix].events[jj].title}</a>
+    	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}">{$slots[ix].events[jj].title}</a>
     	[<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
     	<br/>
     	{/section}
@@ -71,12 +72,68 @@
 </table>
 {/if}
 
+{if $view eq 'list'}
+<table class="findtable">
+<tr><td class="findtable">{tr}Find{/tr}</td>
+   <td class="findtable">
+   <form method="get" action="tiki-minical.php">
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="view" value="{$view}" />
+   </form>
+   </td>
+</tr>
+</table>
+<form action="tiki-minical.php" method="post">
+<input type="hidden" name="view" value="{$view}" />
+<table class="normal">
+<tr>
+<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}start{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'duration_desc'}duration_asc{else}duration_desc{/if}">{tr}duration{/tr}</a></td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=user loop=$channels}
+<tr>
+<td class="{cycle advance=false}">
+<input type="checkbox" name="event[{$channels[user].eventId}]" />
+</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].title}</a></td>
+<td class="{cycle advance=false}">{$channels[user].start|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{math equation="x / 3600" x=$channels[user].duration format="%d"} {tr}h{/tr} {math equation="(x % 3600) / 60" x=$channels[user].duration} {tr}mins{/tr}</td>
+</tr>
+{/section}
+</table>
+</form>
+<div class="mini">
+<div align="center">
+{if $prev_offset >= 0}
+[<a class="prevnext" href="tiki-minical.php?view={$view}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+{/if}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{if $next_offset >= 0}
+&nbsp;[<a class="prevnext" href="tiki-minical.php?view={$view}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+{/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-minical.php?vew={$view}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+</div>
+</div>
+{/if}
+
 <a name="add"></a>
-<h3>{tr}Add an event{/tr}</h3>
+<h3>{tr}Add or edit event{/tr}</h3>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="eventId" value="{$eventId}" />
-<input type="hidden" name="duration" value="2" />
-<input type="hidden" name="description" value="dummy" />
+<input type="hidden" name="view" value="{$view}" />
+<input type="hidden" name="duration" value="60*60" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Title{/tr}</td>
       <td class="formcolor"><input type="text" name="title" value="{$info.title}" /><input type="submit" name="save" value="{tr}save{/tr}" /></td>
@@ -87,6 +144,25 @@
   	  {html_select_date time=$ev_pdate}
   	  {html_select_time time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
+  </tr>
+  <tr>
+  	  <td class="formcolor">{tr}Duration{/tr}</td>
+  	  <td class="formcolor">
+	  <select name="duration_hours">
+	  {html_options output=$hours values=$hours selected=$duration_hours}
+	  </select>{if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
+ 	  <select name="duration_minutes">
+	  {html_options output=$minutes values=$minutes selected=$duration_minutes}
+	  </select> {tr}minutes{/tr}
+
+  	  </td>
+  	  
+  </tr>
+  <tr>
+  	  <td class="formcolor">{tr}Description{/tr}</td>
+  	  <td class="formcolor">
+  	  <textarea name="description" rows="5" cols="80">{$info.description}</textarea>
+      </td>
   </tr>
 </table>
 </form>

@@ -46,4 +46,56 @@
 </tr>	
 </table>
 </form>
+
+<h3>{tr}Admin topics{/tr}</h3>
+<form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
+<table class="normal">
+<tr>
+  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
+</tr>
+<tr>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"></td>
+</tr>
+<tr>
+  <td class="formcolor">{tr}Or enter path{/tr}:</td><td class="formcolor"><input type="text" name="path" /></td>
+</tr>
+<tr>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">
+	<input type="submit" name="addtopic" value="{tr}add topic{/tr}" />
+  </td>
+</table>
+</form>
+<div class="simplebox">
+<table width="100%">
+<tr>
+{section name=numloop loop=$topics}
+        <td>
+        {if $topics[numloop].isIcon eq 'y'}
+        <img src="{$topics[numloop].path}" alt="{tr}topic image{/tr}" />
+        {else}
+        <img src="tiki-view_minical_topic.php?topicId={$topics[numloop].topicId}" alt="{tr}topic image{/tr}" />
+        {/if}
+        {$topics[numloop].name}
+        [<a class="link" href="tiki-minical_prefs.php?removetopic={$topics[numloop].topicId}">x</a>]
+        </td>
+        {* see if we should go to the next row *}
+        {if not ($smarty.section.numloop.rownum mod $cols)}
+                {if not $smarty.section.numloop.last}
+                        </tr><tr>
+                {/if}
+        {/if}
+        {if $smarty.section.numloop.last}
+                {* pad the cells not yet created *}
+                {math equation = "n - a % n" n=$cols a=$data|@count assign="cells"}
+                {if $cells ne $cols}
+                {section name=pad loop=$cells}
+                        <td>&nbsp;</td>
+                {/section}
+                {/if}
+                </tr>
+        {/if}
+    {/section}
+</table>
+</div>
  
