@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIRS="backups dump img/wiki img/wiki_up modules/cache temp templates_c"
+DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c"
 USER=yourlogin
 GROUP=nobody
 
