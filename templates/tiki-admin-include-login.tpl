@@ -200,3 +200,34 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 </div>
 </div>
+
+<div class="cbox">
+<div class="cbox-title">{tr}Secondary Validation (External XML Source) WORK IN PROGRESS, DON'T USE{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php?page=login" method="post">
+<table class="admin">
+<tr><td class="form">{tr}Enable secondary validation through external XML source?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_enabled" {if $auth_ext_xml_enabled eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_create_user_tiki" {if $auth_ext_xml_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Delete user if permission denied (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_delete_user_tiki" {if $auth_ext_xml_delete_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Determine if user is an admin (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_manage_admin" {if $auth_ext_xml_manage_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_skip_admin" {if $auth_ext_xml_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}External XML source URL{/tr}:</td><td><input type="text" name="auth_ext_xml_url" value="{$auth_ext_xml_url|escape}" size="50" /></td></tr>
+<tr><td class="form" colspan="2">
+	<div class="simplebox">&lt;<b>ELname</b> <b>ATname</b>="<b><i>ATvalue</i></b>"&gt; <b><i>ELvalue</i></b> &lt;/<b>ELname</b>&gt;
+	<br />where <b>EL</b> = element and <b>AT</b> = attribute</div>
+</td></tr>
+<tr><td class="form">{tr}Expected login permission ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element" value="{$auth_ext_xml_login_element|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected login permission ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element_value" value="{$auth_ext_xml_login_element_value|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected login permission ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute" value="{$auth_ext_xml_login_attribute|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected login permission ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute_value" value="{$auth_ext_xml_login_attribute_value|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected admin permission ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_admin_element" value="{$auth_ext_xml_admin_element|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected admin permission ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_admin_element_value" value="{$auth_ext_xml_admin_element_value|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected admin permission ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_admin_attribute" value="{$auth_ext_xml_admin_attribute|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected admin permission ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_admin_attribute_value" value="{$auth_ext_xml_admin_attribute_value|escape}" size="20" /></td></tr>
+<tr><td colspan="2" class="button"><input type="submit" name="auth_ext_xml" value="{tr}Change Secondary Validation preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+</div>
