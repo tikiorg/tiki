@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.47 2004-02-12 13:37:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.48 2004-02-12 14:00:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,6 @@ $smarty->assign('defaultvalues', $defaultvalues);
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
-$smarty->assign('tracker_info', $tracker_info);
 
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);
@@ -91,8 +90,13 @@ foreach ($status_raw as $let=>$sta) {
 		$status_types["$let"] = $sta;
 	}
 }
-
 $smarty->assign('status_types', $status_types);
+
+if (count($status_types) == 1) {
+	$tracker_info["showStatus"] = 'n';
+}
+
+$smarty->assign('tracker_info', $tracker_info);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;

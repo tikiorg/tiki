@@ -602,8 +602,8 @@ class TrackerLib extends TikiLib {
 	
 	function status_types() {
 		$status['o'] = array('label'=>tra('open'),'perm'=>'tiki_p_view_trackers','image'=>'img/icons2/status_open.gif');
-		$status['p'] = array('label'=>tra('pending'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons2/status_pending.gif');
-		$status['c'] = array('label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_pending','image'=>'img/icons2/status_closed.gif');
+		$status['p'] = array('label'=>tra('pending'),'perm'=>'tiki_p_view_trackers_pending','image'=>'img/icons2/status_pending.gif');
+		$status['c'] = array('label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons2/status_closed.gif');
 		return $status;
 	}
 }
