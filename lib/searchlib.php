@@ -78,7 +78,7 @@ class SearchLib extends TikiLib {
 			$qwords = $this->db->quote($words);
 
 			global $feature_search_mysql4_boolean;
-			if ($feature_search_mysql4_boolean) {
+			if ($feature_search_mysql4_boolean == 'y') {
 				$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords;
 				global $db_tiki;
 				if ($db_tiki='mysql') {
