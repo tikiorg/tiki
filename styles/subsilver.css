@@ -1076,6 +1076,12 @@ td.forumstableinfoodd { font-family: Verdana, Arial, Helvetica, sans-serif; font
 a.forumname		{ text-decoration: none; color : #006699; }
 a.forumname:hover{ text-decoration: underline; }
 
+a.forumnameread
+{ font-size: 12px ; letter-spacing: 1px; color : #006699; text-decoration: none;}
+a.forumnameread:hover
+{ text-decoration: underline; }
+
+
 /* If the user can admin the forum then a small link with admin is displayed */
 .admlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : #00639C;}
 .admlink:active { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : #00639C;}

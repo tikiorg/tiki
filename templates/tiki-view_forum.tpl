@@ -36,6 +36,10 @@
 </tr>
 </table>
 
+{if $unread > 0}
+	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/></a>
+{/if}
+
 {if $was_queued eq 'y'}
 <div class="wikitext">
 <small>{tr}Your message has been queued for approval, the message will be posted after
@@ -328,7 +332,7 @@ a moderator approves it.{/tr}</small>
   
   <td class="topictitle{cycle advance=false}">
   <table width="100%"><tr><td>
-  <a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
   <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
   {/if}

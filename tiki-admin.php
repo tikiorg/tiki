@@ -807,6 +807,58 @@ if(isset($_REQUEST["filegalcomprefs"])) {
   }
 }
 
+if(isset($_REQUEST["filegallistprefs"])) {
+  if(isset($_REQUEST["fgal_list_name"])) {
+    $tikilib->set_preference("fgal_list_name",'y');
+    $smarty->assign('fgal_list_name','y');
+  } else {
+    $tikilib->set_preference("fgal_list_name",'n');
+    $smarty->assign('fgal_list_name','n');
+  }
+  if(isset($_REQUEST["fgal_list_description"])) {
+    $tikilib->set_preference("fgal_list_description",'y');
+    $smarty->assign('fgal_list_description','y');
+  } else {
+    $tikilib->set_preference("fgal_list_description",'n');
+    $smarty->assign('fgal_list_description','n');
+  }
+  if(isset($_REQUEST["fgal_list_created"])) {
+    $tikilib->set_preference("fgal_list_created",'y');
+    $smarty->assign('fgal_list_created','y');
+  } else {
+    $tikilib->set_preference("fgal_list_created",'n');
+    $smarty->assign('fgal_list_created','n');
+  }
+  if(isset($_REQUEST["fgal_list_lastmodif"])) {
+    $tikilib->set_preference("fgal_list_lastmodif",'y');
+    $smarty->assign('fgal_list_lastmodif','y');
+  } else {
+    $tikilib->set_preference("fgal_list_lastmodif",'n');
+    $smarty->assign('fgal_list_lastmodif','n');
+  }
+  if(isset($_REQUEST["fgal_list_user"])) {
+    $tikilib->set_preference("fgal_list_user",'y');
+    $smarty->assign('fgal_list_user','y');
+  } else {
+    $tikilib->set_preference("fgal_list_user",'n');
+    $smarty->assign('fgal_list_user','n');
+  }
+  if(isset($_REQUEST["fgal_list_files"])) {
+    $tikilib->set_preference("fgal_list_files",'y');
+    $smarty->assign('fgal_list_files','y');
+  } else {
+    $tikilib->set_preference("fgal_list_files",'n');
+    $smarty->assign('fgal_list_files','n');
+  }
+  if(isset($_REQUEST["fgal_list_hits"])) {
+    $tikilib->set_preference("fgal_list_hits",'y');
+    $smarty->assign('fgal_list_hits','y');
+  } else {
+    $tikilib->set_preference("fgal_list_hits",'n');
+    $smarty->assign('fgal_list_hits','n');
+  }
+}
+
 if(isset($_REQUEST["articlecomprefs"])) {
   if(isset($_REQUEST["article_comments_per_page"])) {
     $tikilib->set_preference("article_comments_per_page",$_REQUEST["article_comments_per_page"]);

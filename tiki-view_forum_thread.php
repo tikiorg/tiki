@@ -34,6 +34,7 @@ include_once("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
+$commentslib->mark_comment($user,$_REQUEST['forumId'],$_REQUEST["comments_parentId"]);
 
 $forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
@@ -563,6 +564,13 @@ if($tiki_p_admin_forum == 'y') {
 	$topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
 	$smarty->assign_by_ref('topics',$topics);
 }
+
+$smarty->assign('unread',0);
+if($user && $feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
+
 
 if($tiki_p_admin_forum == 'y') {
 	$smarty->assign('queued',$commentslib->get_num_queued($comments_objectId));

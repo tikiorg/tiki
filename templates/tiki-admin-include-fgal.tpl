@@ -51,6 +51,44 @@
 </form>
 </div>
 
+<div class="simplebox">
+{tr}Gallery listing configuration{/tr}
+<form method="post" action="tiki-admin.php#fgal">
+<table>
+<tr>
+	<td class="form">{tr}Name{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_name" {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}Description{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_descripton" {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}Created{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_created" {if $fgal_list_created eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}Last modified{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_lastmodif" {if $fgal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}User{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_user" {if $fgal_list_user eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}Files{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_files" {if $fgal_list_files eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="form">{tr}Hits{/tr}</td>
+	<td class="form"><input type="checkbox" name="fgal_list_hits" {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
+</tr>
+
+<tr><td align="center" colspan="2"><input type="submit" name="filegallistprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+
     <div class="simplebox">
     {tr}File galleries comments settings{/tr}
     <form method="post" action="tiki-admin.php#fgal">

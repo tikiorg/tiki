@@ -303,6 +303,11 @@ a.tablename:active,a.galname:active, .a.imagename:active, a.blogname:active, a.f
 a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
 { text-decoration: underline; }
 
+a.forumnameread
+{ font-size: 12px ; letter-spacing: 1px; color : black; text-decoration: none;}
+a.forumnameread:hover
+{ text-decoration: underline; }
+
 
 /* Links in table headings */
 .tableheading,.gallistheading, .listgalheading, .bloglistheading, .llisfgalheading,

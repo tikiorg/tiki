@@ -58,7 +58,7 @@ $messulib->flag_message($_SESSION['user'], $_REQUEST['msgId'], 'isRead', 'y');
 
 // Get the message and assign its data to template vars
 $msg = $messulib->get_message($_SESSION['user'],$_REQUEST['msgId']);
-$smarty->assign_by_ref('msg',$msg);
+$smarty->assign('msg',$msg);
 
 $section='user_messages';
 include_once('tiki-section_options.php');

@@ -195,6 +195,11 @@ a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumn
 a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
 { text-decoration: none; color: #white; }
 
+a.forumnameread
+{ font-size: 12px ; letter-spacing: 1px; color : white; text-decoration: none;}
+a.forumnameread:hover
+{ text-decoration: underline; }
+
 
 /* Links in table headings */
 .tableheading,.gallistheading, .listgalheading, .bloglistheading, .llisfgalheading,

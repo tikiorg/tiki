@@ -434,6 +434,15 @@ $smarty->assign('gal_list_user','y');
 $smarty->assign('gal_list_imgs','y');
 $smarty->assign('gal_list_visits','y');
 
+$smarty->assign('fgal_list_name','y');
+$smarty->assign('fgal_list_description','y');
+$smarty->assign('fgal_list_created','y');
+$smarty->assign('fgal_list_lastmodif','y');
+$smarty->assign('fgal_list_user','y');
+$smarty->assign('fgal_list_files','y');
+$smarty->assign('fgal_list_hits','y');
+
+
 $blog_list_title = 'y';
 $blog_list_description = 'y';
 $blog_list_created = 'y';
