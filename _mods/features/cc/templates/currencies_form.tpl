@@ -1,23 +1,23 @@
 {if $info and ($tiki_p_cc_admin eq 'y' or $info.owner eq $user)}
 <a href="cc.php?page={$page}" class="pagetitle">Modify a Currency</a>
 <br /><br />
+{else}
+<a href="cc.php?page={$page}" class="pagetitle">Create a new Currency</a>
+<br /><br />
+{/if}
 
 <FORM action="cc.php?page={$page}" method='post'>
-{else}
-<a href="cc.php?page=newcc" class="pagetitle">Create a new Currency</a>
-<br /><br />
-
-<FORM action="cc.php?page=newcc" method='post'>
-{/if}
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">List Currencies</a></span>
 <span class="button2"><a href="cc.php?page=my_cc" class="linkbut">My Currencies</a></span>
 <br /><br />
+
+{if $msg}<div class="simplebox">{$msg}</div>{/if}
 
 <table class="formcolor">
 
 <tr class="formrow">
 <td>Currency id</td>
-<td><input type='text' name='id' value="{$info.id}" /></td>
+<td><input type='text' name='cc_id' value="{$info.id}" /></td>
 </tr>
 
 <tr class="formrow">
@@ -47,6 +47,17 @@
 </select>
 </td>
 </tr>
+
+{if !$info}
+<tr class="formrow">
+<td>Register Owner</td>
+<td><select name='listed'>
+<option value='y'>{tr}Yes{/tr}</option>
+<option value='n'>{tr}No{/tr}</option>
+</select>
+</td>
+</tr>
+{/if}
 
 {if $tiki_p_cc_admin eq 'y'}
 <tr class="formrow">

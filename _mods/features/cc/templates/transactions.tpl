@@ -4,6 +4,8 @@
 {if $ccid}in <b>{$ccid}</b>{/if}
 <br />
 
+{if $msg}<div class="simplebox">{$msg}</div>{/if}
+
 <table class="normal">
 <tr class="heading">
 <th><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=tr_date_{if $sort_mode eq 'tr_date_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}Date{/tr}</a></th>

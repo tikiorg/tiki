@@ -13,7 +13,7 @@ class CcLib extends UsersLib {
 
 	function CcLib($dbTiki) { 
 		$this->db = $dbTiki;
-		$this->date = date("YmdHis");
+		$this->date = date("U");
 	}
 
 	function user_infos($user) {
@@ -42,6 +42,7 @@ class CcLib extends UsersLib {
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			$res['age'] = $this->date - $res['last_tr_date'];
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -76,6 +77,7 @@ class CcLib extends UsersLib {
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			$res['age'] = $this->date - $res['tr_date'];
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -84,7 +86,7 @@ class CcLib extends UsersLib {
 		return $retval;
 	}
 
-	function get_currencies($offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false) {
+	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false) {
 		$query = 'select * from `cc_cc`';
 		$query_cant = 'select count(*) from `cc_cc`';
 		$bindvars = $mid = array();
@@ -95,6 +97,10 @@ class CcLib extends UsersLib {
 		if ($owner) {
 			$mid[] = "`owner_id`=?";
 			$bindvars[] = $owner;
+		}
+		if (!$all) {
+			$mid[] = "`listed`=?";
+			$bindvars[] = 'y';
 		}
 		$order = " order by ".$this->convert_sortmode($sort_mode);
 		if (count($mid)) {
@@ -118,19 +124,21 @@ class CcLib extends UsersLib {
 		return $this->getOne('select count(*) from `cc_cc` where `id`=?',array($id));
 	}
 
-	function replace_currency($owner,$id,$name,$description,$approval,$seq=false) {
+	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$register_owner=false,$seq=false) {
 		if ($seq) {
-			$query = "update `cc_cc` set `id`=?,`cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=? where `seq`=?";
-			$this->query($query,array($id,$name,$description,$owner,$approval,$seq));
+			$query = "update `cc_cc` set `id`=?,`cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=? where `seq`=?";
+			$this->query($query,array($id,$name,$description,$owner,$approval,$listed,$seq));
 			return true;
 		} else {
 			if ($this->is_currency($id)) {
 				$this->msg = "That currency already exists.";
 				return false;
 			} else {
-				$query = "insert into `cc_cc`(`id`,`cc_name`,`cc_description`,`owner_id`,`requires_approval`) values(?,?,?,?,?)";
-				$this->query($query,array($id,$name,$description,$owner,$approval));
-				$this->register_cc($id,$owner);
+				$query = "insert into `cc_cc`(`id`,`cc_name`,`cc_description`,`owner_id`,`requires_approval`,`listed`) values(?,?,?,?,?,?)";
+				$this->query($query,array($id,$name,$description,$owner,$approval,$listed));
+				if ($register_owner) {
+					$this->register_cc($id,$owner);
+				}
 				return true;
 			}
 		}

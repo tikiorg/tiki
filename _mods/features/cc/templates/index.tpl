@@ -1,5 +1,7 @@
 <h2>Community Currencies Guidelines</h2>
 
+{if $msg}<div class="simplebox">{$msg}</div>{/if}
+
 <h2><a href="cc.php?page=newcc">Create Currency</a></h2><ul>
 <li>Anyone is able to create his own currency. To do so, you'll have to provide the following information:</li><ol>
 <li>Currency id: that's the codename for the currency, usually short and in one word. Currencies ids are reputed unique accross the currency server.</li>

@@ -1,9 +1,11 @@
 <a href="cc.php?page={$page}{if $userid}&amp;user={$userid}{/if}" class="pagetitle">List of currencies</a>
 <br /><br />
 {if $tiki_p_cc_create eq 'y' or $tiki_p_cc_admin eq 'y'}
-<span class="button2"><a href="cc.php?page=newcc" class="linkbut">Create new currency</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;new" class="linkbut">Create new currency</a></span>
 <br /><br />
 {/if}
+
+{if $msg}<div class="simplebox">{$msg}</div>{/if}
 
 <table class="normal">
 <tr class="heading">
@@ -26,10 +28,10 @@
 {if $ccuser.registered_cc.$ccid}
 <td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$thelist[i].id}">Unregister</a></td>
 {else}
-<td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">Register</a></td>
+<td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">{tr}Register{/tr}</a></td>
 {/if}
 {if $tiki_p_cc_admin eq 'y'}
-<td><a href="cc.php?page={$page}&amp;cc_id={$thelist[i].id}">Edit</a></td>
+<td><a href="cc.php?page={$page}&amp;cc_id={$thelist[i].id}">{tr}Edit{/tr}</a></td>
 {/if}
 <td>{$thelist[i].id}</td>
 <td>{$thelist[i].cc_name}</td>
