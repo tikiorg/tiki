@@ -400,7 +400,7 @@ class TrackerLib extends TikiLib {
 		return $res;
     }
 
-	function get_tracker_item($itemid) {
+    function get_tracker_item($itemid) {
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 
 		$result = $this->query($query,array((int) $itemid));
@@ -419,9 +419,32 @@ class TrackerLib extends TikiLib {
 		}
 
 		return $res;
-	}
+    }
 
-	function get_item_id($trackerId,$fieldId,$value) {
+    function get_tracker_item_hash($itemid) {
+		$query = "select * from `tiki_tracker_items` where `itemId`=?";
+
+		$result = $this->query($query,array((int) $itemid));
+
+		if (!$result->numrows())
+			return false;
+
+		$res = $result->fetchrow();
+		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldid`=ttf.`fieldid` and `itemId`=?";
+		$result = $this->query($query,array((int) $itemid));
+		$fields = array();
+
+		while ($res2 = $result->fetchrow()) {
+			$id = $res2["name"];
+			$res["$id"] = $res2["value"];
+		}
+
+		return $res;
+    }
+
+    
+    
+    function get_item_id($trackerId,$fieldId,$value) {
 		$query = "select distinct ttif.`itemId` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
 		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
 		$ret = $this->getOne($query,array((int) $trackerId,(int)$fieldId,$value));
