@@ -56,7 +56,7 @@ class NlLib extends TikiLib {
 		global $sender_email;
 		$info = $this->get_newsletter($nlId);
 		$smarty->assign('info', $info);
-		$code = $this->genRandomString($sender_email);
+		$code = $this->genRandomString($email);
 		$now = date("U");
 		if ($info["validateAddr"] == 'y') {
 			// Generate a code and store it and send an email  with the
@@ -284,8 +284,7 @@ class NlLib extends TikiLib {
 		$bindvars = array((int)$nlId);
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `nlId`=? and (`name` like ? or `description` like ?)";
-			$bindvars[] = $findesc;
+			$mid = " where `nlId`=? and `email` like ?";
 			$bindvars[] = $findesc;
 		} else {
 			$mid = " where `nlId`=? ";
@@ -307,7 +306,7 @@ class NlLib extends TikiLib {
 	}
 
 	function get_unsub_msg($nlId, $email, $lang) {
-		global $smarty, $language;
+		global $smarty, $language,$userlib;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 
 		$foo = str_replace('send_newsletters', 'newsletters', $foo);
@@ -317,7 +316,7 @@ class NlLib extends TikiLib {
 		$user = $userlib->get_user_by_email($email);
 		$lg = !$user? $language: $this->get_user_preference($user, "language", $language);
 		$msg = $smarty->fetchLang($lg, 'mail/newsletter_unsubscribe.tpl');
-		$msg = '<br /><br />' . $msg . ": <a href='$url_unsub'>$url_unsub</a>";
+		$msg = "<br />\n--\n<br />" . $msg . ":\n<br />:  <a href='$url_unsub'>$url_unsub</a>";
 		return $msg;
 	}
 

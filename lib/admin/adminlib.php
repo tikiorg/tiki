@@ -46,12 +46,13 @@ class AdminLib extends TikiLib {
 
 	function replace_dsn($dsnId, $dsn, $name) {
 		// Check the name
-		$bindvars=array($name,$dsnId);
 		if ($dsnId) {
-			$query = "update `tiki_dsn` set `dsn`='$dsn',`name`=? where `dsnId`=?";
+			$query = "update `tiki_dsn` set `name`=?,`dsn`=? where `dsnId`=?";
+			$bindvars=array($name,$dsn,$dsnId);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$query = "delete from `tiki_dsn`where `name`=? and `dsn`=?";
+			$bindvars=array($name,$dsn);
 			$result = $this->query($query,$bindvars);
 			$query = "insert into `tiki_dsn`(`name`,`dsn`)
                 		values(?,?)";

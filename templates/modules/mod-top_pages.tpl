@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_pages.tpl,v 1.10 2003-11-24 01:37:55 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_pages.tpl,v 1.11 2004-09-19 19:37:13 mose Exp $ *}
 
 {if $feature_wiki eq 'y'}
    {if $nonums eq 'y'}
@@ -11,7 +11,7 @@
   <table  border="0" cellpadding="0" cellspacing="0">
   {section name=ix loop=$modTopPages}
      <tr>{if $nonums != 'y'}<td class="module" valign='top'>{$smarty.section.ix.index_next})</td>{/if}
-     <td class="module"><a class="linkmodule" href="tiki-index.php?page={$modTopPages[ix].pageName}">{$modTopPages[ix].pageName}</a></td></tr>
+     <td class="module"><a class="linkmodule" href="tiki-index.php?page={$modTopPages[ix].pageName|escape:'url'}">{$modTopPages[ix].pageName}</a></td></tr>
   {/section}
   </table>
   {/tikimodule}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.24 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.25 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,21 +97,24 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
+$smarty->assign_by_ref('find', $find);
 
 if (isset($_REQUEST["type"])) {
 	$type = $_REQUEST["type"];
 } else {
 	$type = '';
 }
+$smarty->assign_by_ref('type', $type);
 
 if (isset($_REQUEST["topic"])) {
 	$topic = $_REQUEST["topic"];
 } else {
 	$topic = '';
 }
+$smarty->assign_by_ref('topic', $topic);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y');
+$listpages = $tikilib->list_articles($offest, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y');
 if ($feature_multilingual == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
@@ -129,6 +132,23 @@ for ($i = 0; $i < $temp_max; $i++) {
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
+$cant_pages = ceil($listpages["cant"] / $maxArticles);
+$smarty->assign_by_ref('cant_pages', $cant_pages);
+$smarty->assign('actual_page', 1 + ($offset / $maxArticles));
+$smarty->assign('maxArticles', $maxArticles);
+
+if ($listpages["cant"] > ($offset + $maxArticles)) {
+	$smarty->assign('next_offset', $offset + $maxArticles);
+} else {
+	$smarty->assign('next_offset', -1);
+}
+
+// If offset is > 0 then prev_offset
+if ($offset > 0) {
+	$smarty->assign('prev_offset', $offset - $maxArticles);
+} else {
+	$smarty->assign('prev_offset', -1);
+}
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);

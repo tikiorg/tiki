@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_forum_attachment.php,v 1.8 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_forum_attachment.php,v 1.9 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,9 +12,10 @@ require_once ('tiki-setup_base.php');
 
 include_once ('lib/commentslib.php');
 
-if ($tiki_p_forum_attach != 'y') {
-	die;
-}
+// roysinn: shouldn't need attach permission for download . . .
+//if ($tiki_p_forum_attach != 'y') {
+//	die;
+//}
 
 if (!isset($_REQUEST["attId"])) {
 	die;

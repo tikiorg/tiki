@@ -731,7 +731,8 @@ function get_included_groups($group) {
 	$result = $this->query($query, array((int)$user));
 	$res = $result->fetchRow();
 	$res["groups"] = $this->get_user_groups($res['login']);
-	$res["age"] = date('U') - $res['registrationDate'];
+	if (isset($res['registrationDate']))
+		$res["age"] = date('U') - $res['registrationDate'];
 	return $res;
     }
 

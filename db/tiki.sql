@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-09-15 03:22:45 $
+# $Date: 2004-09-19 19:36:25 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1404,7 +1404,7 @@ CREATE TABLE tiki_forums_reported (
 # Table structure for table tiki_galleries
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:59 PM
+# Last update: Sep 18, 2004 at 11:56 PM
 # Last check: Jul 03, 2003 at 07:42 PM
 #
 
@@ -1416,6 +1416,7 @@ CREATE TABLE tiki_galleries (
   created int(14) default NULL,
   lastModif int(14) default NULL,
   visible char(1) default NULL,
+  geographic char(1) default NULL,
   theme varchar(60) default NULL,
   user varchar(200) default NULL,
   hits int(14) default NULL,
@@ -1568,7 +1569,7 @@ CREATE TABLE tiki_html_pages_dynamic_zones (
 # Table structure for table tiki_images
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:29 PM
+# Last update: Sep 18, 2004 at 08:29 PM
 # Last check: Jul 03, 2003 at 07:42 PM
 #
 
@@ -1578,6 +1579,8 @@ CREATE TABLE tiki_images (
   galleryId int(14) NOT NULL default '0',
   name varchar(200) NOT NULL default '',
   description text,
+  lat float default NULL,
+  lon float default NULL,
   created int(14) default NULL,
   user varchar(200) default NULL,
   hits int(14) default NULL,

@@ -20,6 +20,7 @@ include_once ("lib/webmail/class.rc4crypt.php");
 
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
+include_once ('lib/wiki/wikilib.php');
 /*
 That parsing is now integrated in demime
 function mailin_parse_output(&$obj, &$parts, $i) {
@@ -73,6 +74,42 @@ function mailin_parse_output(&$obj, &$parts, $i) {
   }
 }
 */
+function check_attachments(&$output, &$out, $page, $user) {
+  global  $wikilib;
+  $cnt = 0;
+  if (!isset($output["parts"]))
+	return;
+  for ($it = 0; $it < count($output["parts"]); $it++)
+  {
+    if (isset($output["parts"][$it]["d_parameters"]["filename"]))
+    {
+      $attachmentPart = $output["parts"][$it];
+      $fileName = $attachmentPart["d_parameters"]["filename"];
+	if (isset($attachmentPart["ctype_primary"]))
+		$fileType = $attachmentPart["ctype_primary"] ."/". $attachmentPart["ctype_secondary"];
+	else
+	      $fileType="";
+      $fileData = $attachmentPart["body"];
+      $fileSize = strlen($fileData);
+      $wikilib->wiki_attach_file($page, $fileName, $fileType, $fileSize, $fileData, "attached by mail", $user, "");
+      $cnt++;
+    }
+  }
+  $out .= $cnt;
+  $out .= " attachment(s) added<br/>";
+}
+function get_body($output) {
+	if (isset($output['text'][0]))
+		$body = $output["text"][0];
+	elseif (isset($output['parts'][0]) && isset($output['parts'][0]["text"][0]))
+		$body = $output['parts'][0]["text"][0];
+	elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]["text"][0]))
+		$body = $output['parts'][0]['parts'][0]["text"][0];
+	else
+		$body = '';
+	return $body;
+
+}
 // The mailin script is used to get / set wiki pages using an email account
 
 // Get a list of ACTIVE emails accounts configured for mailin procedures
@@ -98,7 +135,10 @@ foreach ($accs['data'] as $acc) {
     $aux["msgid"] = $i;
     $aux["realmsgid"] = $pop3->GetMessageID($i);
     $message = $pop3->GetMessage($i);
-    $content .= "Reading a request.<br />From: " . $aux["sender"]["email"] . "<br />Subject: " . $aux["subject"] . "<br />";
+    $output = mime::decode($message['full']);
+        //mailin_parse_output($output, $parts, 0);
+
+    $content .= "Reading a request.<br />From: " . $aux["sender"]["email"] . "<br />Subject: " . $output['header']['subject'] . "<br />";
 
     $content .= "sender email: " . $aux["sender"]["email"] . "<br />";
     $aux["sender"]["user"] = $userlib->get_user_by_email($aux["sender"]["email"]);
@@ -109,9 +149,13 @@ foreach ($accs['data'] as $acc) {
       $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["sender"]["email"] . "<br />";
       $mail = new TikiMail();
       $mail->setFrom($acc["account"]);
-      $mail->setSubject(tra('Tiki mail-in auto-reply'));
+      $c = $tikilib->get_preference("default_mail_charset", "utf8");
+      $mail->setHeadCharset($c);
+      $mail->setTextCharset($c);
+      $l = $tikilib->get_preference("language", "en");
+      $mail->setSubject(tra('Tiki mail-in auto-reply', $l));
       $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
-      $mail->setText("Sorry, you can't use this feature.");
+      $mail->setText(tra("Sorry, you can't use this feature.", $l));
       $res = $mail->send(array($aux["sender"]["email"]), 'mail');
       $content .= "Response sent<br />";
     } else {
@@ -121,21 +165,13 @@ foreach ($accs['data'] as $acc) {
       if (empty($aux["sender"]["name"]))
         $aux["sender"]["name"] = $aux["sender"]["email"];
   
-      // Now determine account type
       if ($acc['type'] == 'article-put') {
         // This is used to CREATE articles
-        $title = trim($aux['subject']);
+        $title = trim($output['header']['subject']);
   
-        $full = $message['full'];
-  
-        $output = mime::decode($full);
-        //mailin_parse_output($output, $parts, 0);
-  
-        if (isset($output['text'][0])) {
-          $msgbody = $output["text"][0];
-          if (isset($acc['discard_after'])) {
+        $msgbody = get_body($output);
+        if ($msgbody && isset($acc['discard_after'])) {
              $msgbody = preg_replace("/".$acc['discard_after'].".*$/s", "", $msgbody);
-          }
         }
         
         $heading = $msgbody;
@@ -178,52 +214,52 @@ foreach ($accs['data'] as $acc) {
 			$content .= "Article: $title has been created<br />";
 		}
 
-      }
-  
-      if ($acc['type'] == 'wiki-get') {
+      } else {
+         if ($acc['type'] == 'wiki') {
+           $p_page = trim($output['header']['subject']);
+           $parts = explode(':', $p_page);
+           if (!isset($parts[1])) {
+             $parts[1] = $parts[0];
+             $parts[0] = 'GET';
+           }
+           $method = $parts[0];
+           $page = $parts[1];
+         } else {
+           $page = trim($output['header']['subject']);
+         }
+
+      if ($acc['type'] == 'wiki-get' || ($acc['type'] == 'wiki' && $method == "GET")) {
         // A wiki-get account sends a copy of the page to the sender
         // and also sends the source of the page
-        $page = trim($aux['subject']);
-  
         $mail = new TikiMail();
         $mail->setFrom($acc["account"]);
-        $mail->setSubject($page);
+        $c = $tikilib->get_preference("default_mail_charset", "utf8");
+        $mail->setHeadCharset($c);
+        $mail->setHtmlCharset($c); 
+        $mail->setTextCharset($c);
+        $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
   
         if ($tikilib->page_exists($page)) {
+          $mail->setSubject($page);
           $info = $tikilib->get_page_info($page);
-  
           $data = $tikilib->parse_data($info["data"]);
-          // Now we should attach the source here
           $mail->addAttachment($info['data'], 'source.txt', 'plain/txt');
+          $mail->setHTML($data, strip_tags($data));
         } else {
-          $data = 'Page not found';
+          $l = $tikilib->get_preference("language", "en");
+          $mail_data = $smarty->fetchLang($l, "mail/mailin_reply_subject.tpl");
+          $mail->setSubject($mail_data.$page);
         }
-  
-        $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
-        $mail->setHTML($data, strip_tags($data));
         $res = $mail->send(array($aux["sender"]["email"]), 'mail');
         $content .= "Response sent<br />";
-      // Send the email
       }
   
-      if ($acc['type'] == 'wiki-put') {
+      elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
         // This is used to UPDATE wiki pages
-        $page = trim($aux['subject']);
+    
+        $body = get_body($output);
   
-        $full = $message["full"];
-  
-        $output = mime::decode($full);
-//        mailin_parse_output($output, $parts, 0);
-  
-        if (isset($output["text"][0])) {
-          $body = $output["text"][0];
-				} elseif (isset($output['parts'][0]["text"][0])) {
-          $body = $output['parts'][0]["text"][0];
-				} else {
-					$body = '';
-				}
-  
-        if (isset($acc['discard_after']) && !empty($body)) {
+        if (isset($acc['discard_after']) && $body) {
            $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
         }
         if (!empty($body)) {
@@ -239,23 +275,16 @@ foreach ($accs['data'] as $acc) {
             $content .= "Page: $page has been updated";
           }
         }
+      check_attachments($output, $content, $page, $aux["sender"]["user"]);
       }
   
-      if ($acc['type'] == 'wiki-append') {
+      elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
         // This is used to UPDATE wiki pages
-        $page = trim($aux['subject']);
   
-        $full = $message["full"];
-  
-        $output = mime::decode($full);
-        //mailin_parse_output($output, $parts, 0);
-  
-        if (isset($output["text"][0])) {
-          $body = $output["text"][0];
-          if (isset($acc['discard_after'])) {
+        $body = get_body($output);
+        if ($body && isset($acc['discard_after'])) {
               $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
           }
-        }
   
         if (isset($body)) {
           if (!$tikilib->page_exists($page)) {
@@ -265,97 +294,42 @@ foreach ($accs['data'] as $acc) {
               0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
           } else {
             $info = $tikilib->get_page_info($page);
-  
-            $tikilib->update_page($page, $info['data'] . $body,
-              "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+            if ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki' && $method == "APPEND")
+                  $body = $info['data'] . $body;
+            else
+                  $body = $body . $info['data'];
+            $tikilib->update_page($page, $body,
+              "Updated from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
             $content .= "Page: $page has been updated";
           }
         }
+      check_attachments($output, $content, $page, $aux["sender"]["user"]);
       }
-  
-      if ($acc['type'] == 'wiki') {
-        // This is used to GET/SET wiki pages depending on the body
-        $p_page = trim($aux['subject']);
-  
-        $parts = explode(':', $p_page);
-  
-        if (!isset($parts[1])) {
-          $parts[1] = $parts[0];
-  
-          $parts[0] = 'GET';
-        }
-  
-        $method = $parts[0];
-        $page = $parts[1];
-        $full = $message["full"];
-  
-        $output = mime::decode($full);
-        //mailin_parse_output($output, $parts, 0);
-  
-        if (isset($output["text"][0]))
-          $body = $output["text"][0];
-  
-        if ($method == 'PUT') {
-          if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br />";
-  
-            $tikilib->create_page($page,
-              0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-          } else {
-            $tikilib->update_page($page, $body, "Created from " . $acc["account"], $aux["sender"]["user"],
-              '0.0.0.0', '');
-  
-            $content .= "Page: $page has been updated";
-          }
-        } elseif ($method == 'GET') {
+
+      else {
           $mail = new TikiMail();
   
           $mail->setFrom($acc["account"]);
-          $mail->setSubject($page);
-  
-          if ($tikilib->page_exists($page)) {
-            $info = $tikilib->get_page_info($page);
-  
-            $data = $tikilib->parse_data($info["data"]);
-            // Now we should attach the source here
-            $mail->addAttachment($data, $page . '.html', 'plain/html');
-  
-            $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
-            $mail->setHTML($info['data'], strip_tags($data));
-            $res = $mail->send(array($aux["sender"]["email"]), 'mail');
-            $content .= "Response sent<br />";
-          } else {
-            $data = 'Page not found';
-          }
-        } elseif ($method == 'APPEND' || $method == 'PREPEND') {
-          if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br />";
-  
-            $tikilib->create_page($page,
-              0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-          } else {
-            $info = $tikilib->get_page_info($page);
-  
-            $tikilib->update_page($page, ($method=='APPEND' ? $info['data'] . $body : $body . $info['data']),
-              "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
-            $content .= "Page: $page has been updated";
-          }
-        } else {
-          $mail = new TikiMail();
-  
-          $mail->setFrom($acc["account"]);
-          $mail->setSubject(tra('Tiki mail-in instructions'));
+          $c = $tikilib->get_preference("default_mail_charset", "utf8");
+          $mail->setHeadCharset($c);
+          $mail->setTextCharset($c);
+          $l = $tikilib->get_preference("language", "en");
+          $mail_data = $smarty->fetchLang($l, "mail/mailin_help_subject.tpl");
+          $mail->setSubject($mail_data);
           $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
-          $mail->setText("Use the subject to indicate the operation to apply:\nGET:WikiName to get a wiki page\nPUT:WikiName to update/create a wiki page (use the body for the page data)\nAPPEND:WikiName to append data to a Wiki page (use the body for the data to add)");
+          $smarty->assign('subject', $output['header']['subject']);
+          $mail_data = $smarty->fetchLang($l, "mail/mailin_help.tpl");
+          $mail->setText($mail_data);
           $res = $mail->send(array($aux["sender"]["email"]), 'mail');
         }
       }
     }//end if($cantUseMailIn)
     // Remove the email from the pop3 server
-    //$pop3->DeleteMessage($i);
+    $pop3->DeleteMessage($i);
   }//end for ($i = 1; $i <= $mailsum; $i++)
 
   $pop3->close();
+//echo $content;
 }//end foreach ($accs['data'] as $acc) {
 
 ?>

@@ -86,6 +86,10 @@
       <tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
       <tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
       <tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
+      {if $feature_maps eq 'y'}
+  		<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="odd">{$lat|escape}</td></tr>
+  		<tr><td class="even">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="even">{$lon|escape}</td></tr>
+  		{/if}
       <tr><td class="odd">{tr}Author{/tr}:</td><td class="odd">{$image_user}</td></tr>
       {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
         <tr><td class="even">{tr}Move image{/tr}:</td><td class="odd">

@@ -4,7 +4,7 @@
 {/if}
 {if $presend eq 'y'}
 <div class="wikitext">{$subject}</div>
-<div class="wikitext">{$data}</div>
+<div class="wikitext">{$dataparsed}</div>
 {tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}
 <form method="post" action="tiki-send_newsletters.php">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
@@ -17,7 +17,7 @@
 {if $preview eq 'y'}
 <br />
 <div class="wikitext">{$info.subject}</div>
-<div class="wikitext">{$info.data}</div>
+<div class="wikitext">{$info.dataparsed}</div>
 {if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
@@ -42,7 +42,6 @@
 </select>
 </td></tr>
 {/if}
-{if $nlId}
 <tr><td class="formcolor">{tr}Data{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}</td>
 <td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
@@ -50,9 +49,6 @@
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
-{else}
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Next{/tr}" /></td></tr>
-{/if}
 </table>
 </form>
 {/if}
@@ -87,8 +83,8 @@
 <td class="odd">{$channels[user].users}</td>
 <td class="odd">{$channels[user].sent|tiki_short_datetime}</td>
 <td class="odd">
-   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>
+<a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$nlId}&amp;remove={$channels[user].editionId}">{tr}remove{/tr}</a>
+<a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$nlId}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>
 </td>
 </tr>
 {/section}

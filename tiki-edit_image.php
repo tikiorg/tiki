@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.11 2004-09-08 19:51:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.12 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,11 +99,13 @@ if (isset($_REQUEST["editimage"])) {
 
 	$error_msg = '';
 
-	if ($imagegallib->edit_image($_REQUEST['edit'], $_REQUEST['name'], $_REQUEST['description'])) {
+	if ($imagegallib->edit_image($_REQUEST['edit'], $_REQUEST['name'], $_REQUEST['description'],$_REQUEST['lat'],$_REQUEST['lon'])) {
 		$smarty->assign('show', 'y');
 		$cat_type = 'image';
 		$cat_objid = $_REQUEST["edit"];
 		$cat_desc = $_REQUEST['description'];
+		$cat_lat = $_REQUEST['lat'];
+		$cat_lon = $_REQUEST['lon'];
 		$cat_name = $_REQUEST['name'];
 		$cat_href = "tiki-browse_image.php?imageId=".$cat_objid;
 		include_once("categorize.php");
@@ -122,6 +124,8 @@ $smarty->assign_by_ref('imageId', $_REQUEST['edit']);
 $smarty->assign_by_ref('galleryId', $info['galleryId']);
 $smarty->assign_by_ref('name', $info['name']);
 $smarty->assign_by_ref('description', $info['description']);
+$smarty->assign_by_ref('lat', $info['lat']);
+$smarty->assign_by_ref('lon', $info['lon']);
 
 $cat_type = 'image';
 $cat_objid = $_REQUEST["edit"];

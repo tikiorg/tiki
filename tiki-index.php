@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.129 2004-09-16 07:48:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.130 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -503,7 +503,7 @@ if($feature_user_watches == 'y') {
     if($user && isset($_REQUEST['watch_event'])) {
 	check_ticket('index');
 	if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('Wiki page'),$page,"tiki-index.php?page=$page");
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Wiki page',$page,"tiki-index.php?page=$page");
 	} else {
 	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 	}

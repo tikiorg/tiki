@@ -646,7 +646,7 @@ $lang=Array(
 "Thursday" => "Donnerstag",
 "Friday" => "Freitag",
 "Saturday" => "Samstag",
-"The passwords didn't match" => "Die Pa&szlig;w&ouml;rter stimmen nicht &uuml;berein",
+"The passwords did not match" => "Die Pa&szlig;w&ouml;rter stimmen nicht &uuml;berein",
 "You can not use the same password again" => "Dasselbe Pa&szlig;wort noch einmal ist nicht erlaubt",
 "Invalid old password" => "Ung&uuml;ltiges altes Pa&szlig;wort",
 "Password must contain both letters and numbers" => "Pa&szlig;wort muss sowohl Buchstaben als auch Zahlen enthalten",
@@ -3914,7 +3914,18 @@ $lang=Array(
 "You can include the image in a tiki page using one of these lines" => "Das Bild kann mit den folgenden Zeilen in eine Wikiseite eingebunden werden",
 "browse image" => "Bild betrachten",
 "Request friendship from this user" => "Diesen Benutzer um Freundschaft bitten",
-
+"Perform action with checked:" => "Aktion auf alle markierten ausf&uuml;hren",
+"select all" => "alle ausw&auml;hlen",
+"assign to groups" => "zu Gruppen hinzuf&uuml;gen",
+"set default groups" => "Standardgruppen setzen",
+"manage group assignments" => "Gruppenzuordnungen bearbeiten",
+"Assign selected to" => "Markierte hinzuf&uuml;gen zu",
+"Remove selected from" => "Markierte l&ouml;schen aus",
+"the following groups:" => "den folgenden Gruppen:",
+"Set the default group of the selected users to" => "Setzt die Standardgruppe der markierten Benutzer auf",
+"Public users not logged" => "unbekannte, nicht eingeloggte Benutzer",
+"Users logged into the system" => "eingeloggte Benutzer",
+"Please create a directory named \$map_path to hold your map files." => "Bitte ein Verzeichnis \$map_path f&uuml;r die Kartendaten anlegen.",
 /*
 "Best language" => "", // ############################################
 "Max. number of words containing a syllable"

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.64 2004-09-08 19:53:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.65 2004-09-19 19:37:11 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -174,7 +174,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
-(<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}">assign {$userinfo.login} to groups</a>)
+(<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}">{tr}assign to groups{/tr}: {$userinfo.login}</a>)
 {else}
 <h2>{tr}Add a new user{/tr}</h2>
 {/if}

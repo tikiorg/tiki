@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.8 2004-09-15 10:35:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.9 2004-09-19 19:37:09 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -95,7 +95,8 @@ function wikiplugin_category($data, $params) {
 		"survey" => "Surveys",
 		"tracker" => "Trackers",
 		"user" => "Users",
-		"wiki page" => "Wiki"
+		"wiki page" => "Wiki",
+		'image' => 'Image'
 	);
 
 	// string given back to caller

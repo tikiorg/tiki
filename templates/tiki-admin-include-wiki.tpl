@@ -332,7 +332,7 @@
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/>{else}{tr}Not Installed{/tr}{/if}</td></tr>
     <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Warn on edit conflict{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Edit idle timeout{/tr}:</td><td>
+    <tr><td class="form">{tr}Edit idle timeout{/tr}:</td><td class="form">
     <select name="warn_on_edit_time">
     <option value="1" {if $warn_on_edit_time eq 1}selected="selected"{/if}>1</option>
     <option value="2" {if $warn_on_edit_time eq 2}selected="selected"{/if}>2</option>

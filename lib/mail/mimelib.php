@@ -34,7 +34,7 @@ class mime {
 			$hdr_value = trim(substr($line, strpos($line, ':')+1));
 			if (substr($hdr_value,0,1) == ' ') $hdr_value = substr($hdr_value, 1);
 			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
-			while (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $input, $matches)) {
+			if (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $line, $matches)) {
 				list(,$encoded,$charset,$encoding,$text) = $matches;
 				switch ($encoding) {
 				case 'B':
@@ -123,7 +123,7 @@ class mime {
 				}
 				$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 				$back['body'] = mime::decodeBody($body, $encoding);
-				if ($back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) == "iso-8859-1") { 
+				if ($back['ctype_parameters'] and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == "iso-8859-1")) { 
 					$back[$type][] = utf8_encode($back['body']);
 				} elseif ($back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
 					$back[$type][] = mb_convert_encoding($back['body'],"utf-8", $back['ctype_parameters']['charset']);
@@ -159,11 +159,11 @@ class mime {
 				break;
 			}
 		} else {
-			$ctype = explode('/', $default_ctype);
-			$back['ctype_primary'] = $ctype[0];
-			$back['ctype_secondary'] = $ctype[1];
 			$back['body'] = mime::decodeBody($body);
 		}
+		$ctype = explode('/', $default_ctype);
+		$back['ctype_primary'] = $ctype[0];
+		$back['ctype_secondary'] = $ctype[1];
 
 		return $back;
 	}

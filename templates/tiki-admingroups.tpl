@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.56 2004-09-15 17:02:02 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.57 2004-09-19 19:37:11 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -78,7 +78,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="{cycle}">
 <td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
 <td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}edit{/tr}">{$users[user].groupName}</a></td>
-<td>{$users[user].groupDesc}</td>
+<td>{tr}{$users[user].groupDesc}{/tr}</td>
 <td>
 {section name=ix loop=$users[user].included}
 {$users[user].included[ix]}<br />

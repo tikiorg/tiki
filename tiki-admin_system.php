@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.17 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.18 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,6 +108,7 @@ if (isset($_GET['do'])) {
 
 if (isset($_GET['compiletemplates'])) {
 	$ctempl = 'templates';
+	cache_templates($ctempl,$_GET['compiletemplates']);
 	if ($tikidomain) {
 		$ctempl.= "/$tikidomain";
 	}

@@ -90,7 +90,15 @@ class MultilingualLib extends TikiLib {
 	 * @return if long id true: array(objId, objName, lang, langLongFormat)
 	 */
 	function getTranslations($type, $objId, $objName, $objLang, $long=false) {
-		$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+		if ($type == 'wiki page') {
+			$query = "select t2.`objId`, t2.`lang`, p.`pageName`as objName from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_pages` as p where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and p.`page_id`=t2.`objId";
+		}
+		elseif ($long) {
+			$query = "select t2.`objId`, t2.`lang`, a.`title` as objName from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2, `tiki_articles` as a where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=? and a.`articleId`=t2.`objId`";
+		}
+		else {
+			$query = "select t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+		}
 		$result = $this->query($query, array($type, $objId));
 		$ret = array();
 		if ($long) {
@@ -99,12 +107,6 @@ class MultilingualLib extends TikiLib {
 			while ($res = $result->fetchRow()) {
 				$l = $this->format_language_list(array($res['lang']));
 				$res['langName'] = $l[0]['name'];
-				if ($type == 'wiki page')
-					$res['objName'] = $this->get_page_name_from_id($res['objId']);
-				else {
-					$info = $this->get_article($res['objId']);
-					$res['objName'] = $info['title'];
-				}
 				$ret[] = $res;
 			}
 		}
@@ -171,10 +173,12 @@ class MultilingualLib extends TikiLib {
 		global $user, $language, $tikilib;
 		$langs = array();
 
-		$langs[] = $langContext;
-		if (strchr($langContext, "-")) // add en if en-uk
-			$langs[] = $this->rootLang($langContext);
-
+		if ($langContext) {
+			$langs[] = $langContext;
+			if (strchr($langContext, "-")) // add en if en-uk
+				$langs[] = $this->rootLang($langContext);
+		}
+		
 		if ($language && !in_array($language, $langs)) {
 			$langs[] = $language;
 			$l = $this->rootLang($language);
@@ -193,6 +197,7 @@ class MultilingualLib extends TikiLib {
 				}
 			}
 		}
+
 		$l = $tikilib->get_preference("language", "en");
 		if (!in_array($l, $langs)) {
 			$langs[] = $l; // site language
@@ -215,7 +220,8 @@ class MultilingualLib extends TikiLib {
 			return $listObjs;
 		$langs = $this->preferedLangs($langContext);
 //echo "<pre>";print_r($langs);echo "</pre>";
-		for ($i = 0; $i < count($listObjs); ++$i) {
+		$max = count($listObjs);
+		for ($i = 0; $i < $max; ++$i) {
 			if (!isset($listObjs[$i]) || !isset($listObjs[$i]['lang']))
 				continue; // previously withdrawn or no language
 			if ($type == 'wiki page')
@@ -227,7 +233,7 @@ class MultilingualLib extends TikiLib {
 			$trads = $this->getTrads($type, $objId);
 			if (!$trads)
 				continue;
-			for ($j = $i + 1; $j < count($listObjs); ++$j) {
+			for ($j = $i + 1; $j < $max; ++$j) {
 				if (!isset($listObjs[$j]))
 					continue;
 				if ($type == 'wiki page')
