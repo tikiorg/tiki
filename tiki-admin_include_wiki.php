@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.39 2004-07-30 18:18:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.40 2004-07-30 18:27:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -126,18 +126,30 @@ if (isset($_REQUEST['staticwiki'])) {
 
 // rebuild all static html pages
 if (isset($_REQUEST['rebuildstatic']) && $_REQUEST['rebuildstatic'] == 'y') {
-	check_ticket('admin-inc-wiki');
-	global $staticlib;
-	include_once('lib/static/staticlib.php');
-	$staticlib->rebuild_all_pages();
+	$area = "rebuildstatic";
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		global $staticlib;
+		include_once('lib/static/staticlib.php');
+		$staticlib->rebuild_all_pages();
+	} else {
+		$confirmation = tra('Click here to (re)build all static pages');
+		key_get($area, $confirmation);
+	}
 }
 
 // purge ghost static html pages
 if (isset($_REQUEST['purgestatic']) && $_REQUEST['purgestatic'] == 'y') {
-	check_ticket('admin-inc-wiki');
-	global $staticlib;
-	include_once('lib/static/staticlib.php');
-	$staticlib->purge_ghost_pages();
+	$area = "purgestatic";
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		global $staticlib;
+		include_once('lib/static/staticlib.php');
+		$staticlib->purge_ghost_pages();
+	} else {
+		$confirmation = tra('Click here to purge ghost static pages');
+		key_get($area, $confirmation);
+	}
 }
 
 if (isset($_REQUEST["setwikiregex"])) {
