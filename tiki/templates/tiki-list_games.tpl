@@ -12,7 +12,7 @@
 <input name="userfile1" type="file"></td></tr>
 <tr><td class="formcolor">{tr}Thumbnail (if the game is foo.swf the thumbnail must be named foo.swf.gif or foo.swf.png or foo.swf.jpg){/tr}:</td><td class="formcolor">
 <input name="userfile2" type="file"></td></tr>
-<tr><td class="formcolor">{tr}description{/tr}</td>
+<tr><td class="formcolor">{tr}description{/tr}:</td>
     <td class="formcolor"><textarea name="description" rows="4" cols="40">{$data}</textarea></td>
 </tr>
     <td class="formcolor">&nbsp;</td>
@@ -42,8 +42,8 @@
 <a href="tiki-list_games.php?game={$games[ix].game}"><img border='0' src="games/thumbs/{$games[ix].game}" /></a>
 {if $tiki_p_admin_games eq 'y'}
 <div align="center"><small>
-[<a href="tiki-list_games.php?remove={$games[ix].game}" class="link">x</a>
-|<a href="tiki-list_games.php?edit={$games[ix].game}" class="link">edit</a>]
+[<a href="tiki-list_games.php?remove={$games[ix].game}" class="link">{tr}x{/tr}</a>
+|<a href="tiki-list_games.php?edit={$games[ix].game}" class="link">{tr}edit{/tr}</a>]
 </small></div>
 {/if}
 </td><td class="even" width="83%">
