@@ -731,8 +731,9 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 		$http_login_url .= ':' . $http_port;
 	$http_login_url .= $http_prefix . $tikiIndex;
 	if (SID)
-		$http_login_url .= '?' . SID;    $edit_data = htmlentities($_REQUEST["edit"], ENT_QUOTES);
-
+		$http_login_url .= '?' . SID;
+		
+	$edit_data = htmlentities(isset($_REQUEST["edit"]) ? $_REQUEST["edit"] : '', ENT_QUOTES);
 
 	$https_login_url = 'https://' . $https_domain;
 	if ($https_port != 443)

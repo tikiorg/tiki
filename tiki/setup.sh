@@ -33,17 +33,14 @@ then
 	mkdir -p templates_c
 fi
 
-
 chown -R $1 modules/cache 
 chown -R $1 templates_c
 chown -R $1 img/wiki_up
 chown -R $1 img/wiki
 
-
-
 if [ -n "$2" ];
 then
 	chgrp -R $2 modules/cache templates_c
-	chmod -R g+w modules/cache templates_c
 fi
 
+chmod -R 02775 modules/cache templates_c
