@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.15 2003-10-17 19:05:26 rlpowell Exp $
+/* $Id: wikiplugin_module.php,v 1.16 2004-01-13 14:27:14 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -37,7 +37,7 @@ function wikiplugin_module($data, $params) {
 	extract ($params);
 
 	if (!isset($align)) {
-		$align = 'left';
+		$align = 'nofloat';
 	}
 
 	if (!isset($max)) {
@@ -113,10 +113,15 @@ function wikiplugin_module($data, $params) {
 	}
 
 	if ($out) {
-		if ($np) {
-  		    $data = "<div style='float:$align;'>~np~$out~/np~</div>".$data;
+		if ($align != 'nofloat') {
+			$data = "<div style='float:$align;'>";
 		} else {
-			$data = "<div style='float:$align;'>$out</div>" . $data;
+			$data = "<div>";
+		}	
+		if ($np) {
+  		$data.= "~np~$out~/np~</div>".$data;
+		} else {
+			$data.= "$out</div>" . $data;
 		}
 	} else {
         // \todo Baad practice to use hardcoded style!! ;]
