@@ -4595,7 +4595,7 @@ class TikiLib extends TikiDB {
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
 	     global $histlib; include_once ("lib/wiki/histlib.php");
-	    $old_version = $histlib->get_page_latest_version($pageName, $old_data);
+	    $old_version = $histlib->get_page_latest_version($pageName);
 	   
 	    if (!$minor && $pageName != 'SandBox') {
 		// Archive current version
