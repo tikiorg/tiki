@@ -2,15 +2,13 @@
 
 function smarty_modifier_userlink($other_user,$class='link')
 {
-    global $tikilib, $userlib, $scorelib, $user, $feature_score, $feature_friends;
+    global $tikilib, $userlib, $user, $feature_score, $feature_friends;
     
     $star = '';
 
     if ($feature_score == 'y') {
-	require_once('lib/score/scorelib.php');
-
 	$info = $userlib->get_user_info($other_user);
-	$star = $scorelib->get_star($info['score']);
+	$star = $tikilib->get_star($info['score']);
     }
 
     $friend = "";
