@@ -4961,8 +4961,6 @@ class TikiLib extends TikiDB {
 			    }
 			    $liclose='';
 			}
-			$liclose='';
-		    }
 		    if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
 			$data .= array_shift($listbeg);
 			$listyle = '';
@@ -5046,56 +5044,6 @@ class TikiLib extends TikiDB {
 			// Leave line unchanged... tiki-index.php will split wiki here
 			$line = "...page...";
 		    } else {
-			// This is not a list item - close open lists,
-			// but not paragraph or div's. If we are
-			// closing a list, there really shouldn't be a
-			// paragraph open anyway.
-			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
-			// Get count of (possible) header signs at start
-			$hdrlevel = $this->how_many_at_start($line, '!');
-			// If 1st char on line is '!' and its count less than 6 (max in HTML)
-			if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
-			    // Close open paragraph (lists already closed above)
-			    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 1);
-			    // Close lower level divs if opened
-			    for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
-
-			    // Remove possible hotwords replaced :)
-			    //   Umm, *why*?  Taking this out lets page
-			    //   links in headers work, which can be nice.
-			    //   -rlpowell
-			    // $line = strip_tags($line);
-
-			    // OK. Parse headers here...
-			    $anchor = '';
-			    $aclose = '';
-			    $addremove = 0;
-
-			    // May be special signs present after '!'s?
-			    $divstate = substr($line, $hdrlevel, 1);
-			    if ($divstate == '+' || $divstate == '-') {
-				// OK. Must insert flipper after HEADER, and then open new div...
-				$thisid = 'id' . microtime() * 1000000;
-				$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-				$aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-				array_unshift($divdepth, $hdrlevel);
-				$addremove = 1;
-			    }
-			    // Is any {maketoc} present on page?
-			    if (count($tocs[0]) > 0) {
-				// OK. Must insert <a id=...> before HEADER and collect TOC entry
-				$thisid = 'id' . microtime() * 1000000;
-				array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-				$anchor = "<a id='$thisid'>";
-				$aclose = '</a>' . $aclose;
-			    }
-			    $line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
-			} elseif (!strcmp($line, "...page...")) {
-			    // Close open paragraph, lists, and div's
-			    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
-			    // Leave line unchanged... tiki-index.php will split wiki here
-			    $line = "...page...";
-			} else {
 			    /** Usual paragraph.  
 			     *
 			     * If the
