@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/module.tpl,v 1.3 2004-01-13 18:52:44 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/module.tpl,v 1.4 2004-01-18 00:45:14 musus Exp $ *}
 {* Module layout with controls *}
 
 <div class="module">
