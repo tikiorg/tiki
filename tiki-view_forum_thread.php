@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.68 2004-06-29 21:21:49 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.69 2004-06-29 22:08:32 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,17 +42,32 @@ if (!isset($_REQUEST['topics_offset'])) {
 if(!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode'])) {
     $_REQUEST['topics_sort_mode'] = $comments_default_ordering;
     $smarty->assign('topics_sort_mode_param', NULL);
+    $smarty->assign('comments_sort_mode_param', NULL);
 } else {
 	$topics_sort_mode_param = '&topics_sort_mode=' . $_REQUEST['topics_sort_mode'];
+	$comments_sort_mode_param = '&comments_sort_mode=' . $_REQUEST['topics_sort_mode'];
 	$smarty->assign('topics_sort_mode_param', htmlspecialchars($topics_sort_mode_param));
+	$smarty->assign('comments_sort_mode_param', htmlspecialchars($comments_sort_mode_param));
 }
 
-if (!isset($_REQUEST['topics_find'])) {
-    $_REQUEST['topics_find'] = '';
+if (empty($_REQUEST['topics_find'])) {
+	$_REQUEST['topics_find'] = NULL;
+	$smarty->assign('topics_find_param', NULL);
+	$smarty->assign('comments_find_param', NULL);
+} else {
+	$topics_find_param = '&topics_find=' . $_REQUEST['topics_find'];
+	$comments_find_param = '&comments_find=' . $_REQUEST['topics_find'];
+	$smarty->assign('topics_find_param', htmlspecialchars($topics_find_param));
+	$smarty->assign('comments_find_param', htmlspecialchars($comments_find_param));
 }
+$smarty->assign('topics_find', $_REQUEST['topics_find']);
 
 if(!isset($_REQUEST['topics_threshold']) || empty($_REQUEST['topics_threshold'])) {
     $_REQUEST['topics_threshold'] = 0;
+    $smarty->assign('topics_threshold_param', NULL);
+} else {
+	$topics_threshold_param = '&topics_threshold=' . $_REQUEST['topics_threshold'];
+	$smarty->assign('topics_threshold_param', htmlspecialchars($topics_threshold_param));
 }
 
 if (isset($_REQUEST["quote"]) &&
