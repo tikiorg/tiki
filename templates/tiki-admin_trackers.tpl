@@ -163,7 +163,7 @@ src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channel
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="3">
 <div id="attachmentsconf" style="display:{if $useAttachments eq 'y'}block{else}none{/if};">
-{tr}Attachement display options (Use numbers to order items, 0 will not be displayed, and negative values will be displayed in a popup){/tr}<br />
+{tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}<br />
 <table width="100%"><tr>
 <td>{tr}name{/tr}</td>
 <td>{tr}date{/tr}</td>
