@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.197 2004-02-09 19:19:42 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.198 2004-02-20 19:10:20 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -510,6 +510,8 @@ $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description', $feature_wiki_description);
 $feature_wiki_pictures = 'n';
 $smarty->assign('feature_wiki_pictures', $feature_wiki_pictures);
+$feature_wiki_pictures_new = 'n';
+$smarty->assign('feature_wiki_pictures_new', $feature_wiki_pictures_new);
 $feature_wikiwords = 'y';
 $smarty->assign('feature_wikiwords', $feature_wikiwords);
 $feature_wiki_plurals = 'y';
