@@ -24,9 +24,8 @@ function smarty_modifier_tiki_date_format($string, $format = "%b %e, %Y", $defau
     // strftime doesn't do translations right
 	//return strftime($format, $disptime);
 
-	global $user_language; //$user_language = $tikilib->->get_user_preference($user, 'language', $user_language);
 	global $language; //$language = $tikilib->get_preference("language", "en");
-	if ($tikilib->get_preference("language", "en") != $user_language && $tra_format) {
+	if ($tikilib->get_preference("language", "en") != $language && $tra_format) {
 		$format = $tra_format;
 	}
 
