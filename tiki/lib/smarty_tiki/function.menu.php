@@ -1,16 +1,21 @@
 <?php
 function smarty_function_menu($params, &$smarty)
 {
-    global $tikilib;
+    global $tikilib, $user;
     extract($params);
     // Param = zone
 
-    if (empty($id)) {
-        $smarty->trigger_error("assign: missing id");
-        return;
-    }
     $smarty->caching = true;
-    if (true || !$smarty->is_cached('tiki-user_menu.tpl', "$id")) {
+
+    if ($user) {
+	$groups = $tikilib->get_user_groups($user);
+	sort($groups, SORT_STRING);
+	$cache_id = "$id:" . implode(":", $groups);
+    } else {
+	$cache_id = $id;
+    }
+
+    if (!$smarty->is_cached('tiki-user_menu.tpl', "$cache_id")) {
        $menu_info = $tikilib->get_menu($id);
        $channels = $tikilib->list_menu_options($id,0,-1,'position_asc','');
 
@@ -36,12 +41,10 @@ function smarty_function_menu($params, &$smarty)
        }
        $smarty->assign('channels',$sorted_channels);
        
-       //       $smarty->assign('channels',$channels['data']);
-
        $smarty->assign('menu_info',$menu_info);
        
     }
-    $smarty->display('tiki-user_menu.tpl', "$id");
+    $smarty->display('tiki-user_menu.tpl', "$cache_id");
     $smarty->caching = false;
 }
 
