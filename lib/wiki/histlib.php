@@ -30,9 +30,9 @@ class HistLib extends TikiLib {
 		$this->invalidate_cache($page);
 		
 		// Store the current page in tiki_history before rolling back
-		if ($page != 'Sandbox') {
+		if ($page != 'SandBox') {
 			$info = $this->get_page_info($page);
-			$old_version = $this->get_page_latest_version($page) + 1;
+			$old_version = $this->get_page_latest_version($page);
 		    $lastModif = $info["lastModif"];
 		    $user = $info["user"];
 		    $ip = $info["ip"];
@@ -136,7 +136,9 @@ class HistLib extends TikiLib {
 		$ret = array();
 		
 		if ($res = $result->fetchRow()) {
-			$ret = $res['version'];
+			$ret = $res['version'] + 1;
+		} elseif ($this->page_exists($page)) {
+			$ret =  1;
 		} else {
 			$ret = FALSE;
 		}
