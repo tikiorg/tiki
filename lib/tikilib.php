@@ -6198,14 +6198,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     } else {
       // Store data in directory
       $fhash = md5($filename);    
-      @$fw = fopen($gal_use_dir.$fhash,"w");
+      @$fw = fopen($gal_use_dir.$fhash,"wb");
       if(!$fw) {
         return false;
       } 
       fwrite($fw,$data);
       fclose($fw);
       
-      @$fw = fopen($gal_use_dir.$fhash.'.thumb',"w");
+      @$fw = fopen($gal_use_dir.$fhash.'.thumb',"wb");
       if(!$fw) {
         return false;
       } 
