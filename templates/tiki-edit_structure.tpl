@@ -8,7 +8,6 @@
 <input type="hidden" name="structID" value="{$structID|escape}" />
 
 <h2>{tr}Modify Structure{/tr}</h2>
-<br/>
 <table class="normal">
   <tr>
   <td class="formcolor">{tr}In parent page{/tr}</td>
@@ -74,11 +73,6 @@
 </ul>
 {/if}
 
-<br/>
-<h2>{tr}Modify Structure Layout{/tr}</h2>
-<table class="normal">
-  <tr><td class="formcolor">Coming Soon</td></tr>
-</table>
 <br/>
 <h2>{tr}Structure Layout{/tr}</h2>
 

@@ -159,8 +159,8 @@ class StructLib extends TikiLib {
       		if (!empty($pageAlias)) {
         		$html .= "&nbsp(" . $pageAlias . ")";
       		}
-      		$html .= "</a>&nbsp;[<a class='link' href='tiki-edit_structure.php&structID=" . urlencode($structID). "&amp;remove=$upage'>x</a>]";
-			$html .= "&nbsp;[<a class='link' href='tiki-index.php?page=$upage&structID=$structID'>" . tra("view"). "</a>|<a  class='link' href='tiki-editpage.php?page=$upage&structID=$structID'>" . tra("edit"). "</a>]";
+      		$html .= "</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structID=" . urlencode($structID). "&amp;remove=$upage'>x</a>]";
+			$html .= "&nbsp;[<a class='link' href='tiki-index.php?page=$upage&amp;structID=$structID'>" . tra("view"). "</a>|<a  class='link' href='tiki-editpage.php?page=$upage&structID=$structID'>" . tra("edit"). "</a>]";
 			//$prev = $this->get_prev_page($res["page"]);
 			//$next = $this->get_next_page($res["page"]);
 			//$html.=" prev: $prev next: $next ";
