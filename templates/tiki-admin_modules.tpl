@@ -1,6 +1,26 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.15 2003-08-11 18:32:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.16 2003-08-15 01:36:51 dgdaniels Exp $ *}
 
-<a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin modules{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin modules tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+<br/><br/>
 [<a class="link" href="#assign">{tr}assign module{/tr}</a>|
 <a class="link" href="#leftmod">{tr}left modules{/tr}</a>|
 <a class="link" href="#rightmod">{tr}right modules{/tr}</a>|
