@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.69 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.70 2004-04-04 03:07:54 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,7 +68,7 @@ if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     die;
 }
 
-// Now if the user is the moderator then give hime forum admin privs
+// Now if the user is the moderator then give him forum admin privs
 if ($user) {
     if ($forum_info["moderator"] == $user) {
 	$tiki_p_admin_forum = 'y';
@@ -530,7 +530,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
     }
 }
 
-$smarty->assign('last_forum_visit', $_SESSION["last_forum_visit"]);
+if ($user) {
+	$userinfo = $userlib->get_user_info($user);
+	$smarty->assign_by_ref('userinfo',$userinfo);
+}
 
 if ($_REQUEST["comments_threadId"] > 0) {
     $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
