@@ -1,6 +1,12 @@
 #!/bin/sh
 
-DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c"
+# $CVSHeader$
+
+# Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c var var/log var/log/ircbot"
 USER=yourlogin
 GROUP=nobody
 
