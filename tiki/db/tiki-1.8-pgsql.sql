@@ -2460,6 +2460,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" bigint default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
+	page_size bigint unsigned default 0
   PRIMARY KEY ("pageName")
 
 
@@ -2853,9 +2854,33 @@ CREATE TABLE "tiki_rss_modules" (
   "url" varchar(255) NOT NULL default '',
   "refresh" integer default NULL,
   "lastUpdated" bigint default NULL,
+  "showTitle" char(1) default 'n',
+  "showPubDate" char(1) default 'n',
   "content" bytea,
   PRIMARY KEY ("rssId")
 )   ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_rss_feeds`
+--
+-- Creation: Oct 14, 2003 at 20:34 PM
+-- Last update: Oct 14, 2003 at 20:34 PM
+--
+
+DROP TABLE "tiki_rss_feeds";
+
+
+CREATE TABLE "tiki_rss_feeds" (
+  "name" varchar(30) NOT NULL default '',
+  "rssVer" char(1) NOT NULL default '1',
+  "refresh" integer default NULL,
+  "lastUpdated" bigint default NULL,
+  "cache" bytea,
+  PRIMARY KEY ("name"," rssVer")
+) ;
 
 
 -- --------------------------------------------------------
@@ -3438,11 +3463,6 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "position" char(1) default NULL,
   "ord" smallint default NULL,
   "type" char(1) default NULL,
-  "title" varchar(40) default NULL,
-  "cache_time" bigint default NULL,
-  "rows" smallint default NULL,
-  "groups" text,
-  "params" varchar(250) default NULL,
   "user" varchar(200) NOT NULL default '',
   PRIMARY KEY ("name","user")
 ) ;
@@ -4496,7 +4516,7 @@ CREATE TABLE "users_users" (
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator',md5('adminadmin'));
+INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72');
 
 
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
@@ -4536,6 +4556,27 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_title','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_topic','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_author','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_date','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_img','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_reads','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_size','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_title','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_topic','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('auth_create_user_auth','n');

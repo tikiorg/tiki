@@ -2900,6 +2900,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" numeric(14,0) default NULL NULL,
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
+	page_size numeric(10,0) unsigned default 0
   PRIMARY KEY ("pageName")
 
 
@@ -3364,9 +3365,37 @@ rssId numeric(8 ,0) identity,
   "url" varchar(255) default '' NOT NULL,
   "refresh" numeric(8,0) default NULL NULL,
   "lastUpdated" numeric(14,0) default NULL NULL,
+  "showTitle" char(1) default 'n',
+  "showPubDate" char(1) default 'n',
   "content" image default '',
   PRIMARY KEY ("rssId")
 )   
+go
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_rss_feeds`
+--
+-- Creation: Oct 14, 2003 at 20:34 PM
+-- Last update: Oct 14, 2003 at 20:34 PM
+--
+
+-- DROP TABLE "tiki_rss_feeds"
+go
+
+
+
+CREATE TABLE "tiki_rss_feeds" (
+  "name" varchar(30) default '' NOT NULL,
+  "rssVer" char(1) default '1' NOT NULL,
+  "refresh" numeric(8,0) default NULL NULL,
+  "lastUpdated" numeric(14,0) default NULL NULL,
+  "cache" image default '',
+  PRIMARY KEY ("name"," rssVer")
+) 
 go
 
 
@@ -4051,11 +4080,6 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "position" char(1) default NULL NULL,
   "ord" numeric(4,0) default NULL NULL,
   "type" char(1) default NULL NULL,
-  "title" varchar(40) default NULL NULL,
-  "cache_time" numeric(14,0) default NULL NULL,
-  "rows" numeric(4,0) default NULL NULL,
-  "groups" text default '',
-  "params" varchar(250) default NULL NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("name","user")
 ) 
@@ -5511,7 +5535,7 @@ go
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator','93715224f66e1e1d0b075c76f808a47e')
+INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72')
 go
 
 
@@ -5575,6 +5599,41 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_topic','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_author','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_date','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_img','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_reads','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_size','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_title','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_topic','y')
 go
 
 
@@ -6679,12 +6738,12 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forums','10')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forums','10')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10')
 go
 
 

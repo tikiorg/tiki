@@ -1,7 +1,7 @@
 <?php
 
 // read file
-$file="../tiki-mysql3.sql";
+$file="../tiki-1.8-mysql.sql";
 @$fp = fopen($file,"r");
 if(!$fp) echo "Error opening $file";
 $data = '';
@@ -49,7 +49,7 @@ function parse($stmt)
   $stmt=preg_replace("/TYPE=MyISAM/","",$stmt);
   $stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
   //sybase cannot DROP TABLE IF EXISTS
-  $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
+  $stmt=preg_replace("/DROP TABLE IF EXISTS/","-- DROP TABLE",$stmt);
   //auto_increment things
   $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) NOT NULL auto_increment/","$1 numeric($2 ,0) identity",$stmt);
   // integer types
