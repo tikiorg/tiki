@@ -11,8 +11,23 @@
 </tr>
 </table>
 <div align="center">
+<form name="checkform" method="POST" action="{$smarty.server.PHP_SELF}">
+<input type="hidden" name="offset" value="{$offset}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode}" />
 <table class="normal">
 <tr>
+{*  at the moment, the only working option to use the checkboxes for is deleting pages.
+    so for now the checkboxes are visible iff $tiki_p_remove is set. Other applications make 
+    sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here:
+*}    
+{if $tiki_p_remove eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
+  {assign var='checkboxes_on' value='y'}
+{else}
+  {assign var='checkboxes_on' value='n'}
+{/if}
+{if $checkboxes_on eq 'y'}
+  <td class="heading">&nbsp;</td>
+{/if}
 {if $wiki_list_name eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
 {/if}
@@ -54,6 +69,9 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
+{if $checkboxes_on eq 'y'}
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName}"/></td>
+{/if}
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>
 	{if $tiki_p_edit eq 'y'}
@@ -115,7 +133,38 @@
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
+{if $checkboxes_on eq 'y'}
+  <script type="text/javascript" language="javascript">
+  <!--
+  // check / uncheck all.
+  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
+  // for now those people just have to check every single box
+  document.write("<tr><td><input name=\"switcher\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form.name,'checked[]','switcher')\"/></td>");
+  document.write("<td colspan=\"15\">{tr}all{/tr}</td></tr>");
+  //-->                     
+  </script>
+{/if}
 </table>
+{if $checkboxes_on eq 'y'} {* what happens to the checked items? *}
+  <p align="left"> {*on the left to have it close to the checkboxes*}
+  <select name="submit_mult" onchange="this.form.submit();">
+    <option value="" selected="selected">{tr}with checked{/tr}:</option>
+    {if $tiki_p_remove eq 'y'} 
+      <option value="remove_pages" >{tr}remove{/tr}</option>
+    {/if}
+    {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
+  </select>                
+  <script type="text/javascript" language="javascript">
+  <!--
+  // Fake js to allow the use of the <noscript> tag (so non-js-users kenn still submit)
+  //-->
+  </script>
+  <noscript>
+    <input type="submit" value="{tr}ok{/tr}" />
+  </noscript>
+  </p>
+{/if}
+</form>
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
