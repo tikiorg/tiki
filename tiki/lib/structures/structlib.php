@@ -340,6 +340,12 @@ class StructLib extends TikiLib {
 		}
 	}
 
+	function get_parent_page($page) {
+		// Try to get the parent of this page
+		$parent = $this->getOne("select `parent` from `tiki_structures` where `page`=?",array($page));
+		return ($parent);
+	}
+
 	// Return an array of subpages
 	function get_pages($page) {
 
@@ -383,7 +389,7 @@ class StructLib extends TikiLib {
 		}
 
 		$ret = array_unique($ret);
-		//print_r($ret);print("<br/>");   
+		//print_r($ret);print("<br/>");
 		return $ret;
 	}
 
