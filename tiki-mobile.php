@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.6 2003-11-08 14:50:21 nhuffschmid Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.7 2003-11-15 22:37:04 nhuffschmid Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 include_once ("lib/hawhaw/hawtikilib.php");
 
 $TikiPage = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
+$TikiPage->enable_session();
 
 if ($_REQUEST['content'] == "about") {
 	// show info about hawiki
