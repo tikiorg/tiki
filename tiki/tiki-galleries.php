@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.23 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.24 2004-06-14 01:32:35 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -253,12 +253,7 @@ for ($i = 0; $i < count($galleries["data"]); $i++) {
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'image gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';
 
-		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'image gallery',
-			'tiki_p_view_image_gallery')) {
-			$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = 'y';
-		} else {
-			$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = 'n';
-		}
+		$galleries["data"][$i]["individual_tiki_p_view_image_gallery"] = 'y';
 
 		if ($userlib->object_has_permission($user, $galleries["data"][$i]["galleryId"], 'image gallery', 'tiki_p_upload_images')) {
 			$galleries["data"][$i]["individual_tiki_p_upload_images"] = 'y';
