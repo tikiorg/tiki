@@ -141,6 +141,10 @@ for($i=0;$i<count($questions["data"]);$i++) {
 
 $smarty->assign_by_ref('questions',$questions["data"]);
 
+$section='quizzes';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-take_quiz.tpl');
 $smarty->display('tiki.tpl');

@@ -55,6 +55,10 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 $chatusers = $tikilib->get_chat_users($channelId);
 $smarty->assign_by_ref('chatusers',$chatusers);
 
+$section='chat';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-chatroom.tpl');
 $smarty->display('tiki.tpl');

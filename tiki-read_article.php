@@ -82,7 +82,8 @@ if($feature_article_comments == 'y') {
   include_once("comments.php");
 }
 
-
+$section='cms';
+include_once('tiki-section_options.php');
 
 // Display the Index Template
 $smarty->assign('mid','tiki-read_article.tpl');

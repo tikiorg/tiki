@@ -191,6 +191,9 @@ if($feature_image_galleries_comments == 'y') {
   include_once("comments.php");
 }
 
+$section='galleries';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-browse_gallery.tpl');

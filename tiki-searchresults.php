@@ -8,6 +8,10 @@ if($feature_search != 'y') {
   die;  
 }
 
+if($feature_search_stats == 'y') {
+  $tikilib->register_search($_REQUEST["words"]);
+}
+
 if(!isset($_REQUEST["where"])) {
   $where = 'pages';
 } else {

@@ -118,6 +118,10 @@ $smarty->assign_by_ref('listpages',$listpages["data"]);
 $topics = $tikilib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
 
+$section='cms';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-list_articles.tpl');
 $smarty->display('tiki.tpl');

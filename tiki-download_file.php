@@ -1,7 +1,6 @@
 <?php
 // Initialization
-require_once('tiki-setup.php');
-
+require_once('tiki-setup_base.php');
 /*
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -16,6 +15,10 @@ if(!isset($_REQUEST["fileId"])) {
   die;
 }
 $info = $tikilib->get_file($_REQUEST["fileId"]);
+
+$fgal_use_db=$tikilib->get_preference('fgal_use_db','y');
+$fgal_use_dir=$tikilib->get_preference('fgal_use_dir','');
+
 
 $_REQUEST["galleryId"] = $info["galleryId"];
 

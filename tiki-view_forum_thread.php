@@ -264,6 +264,9 @@ if($comments_offset>0) {
 $smarty->assign('comments_coms',$comments_coms["data"]);
 /******************************/
 
+$section='forums';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_forum_thread.tpl');

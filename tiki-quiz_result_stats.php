@@ -67,6 +67,10 @@ $smarty->assign_by_ref('result',$result);
 $questions = $tikilib->get_user_quiz_questions($_REQUEST["userResultId"]);
 $smarty->assign('questions',$questions);
 
+$section='quizzes';
+include_once('tiki-section_options.php');
+
+
 $smarty->assign('mid','tiki-quiz_result_stats.tpl');
 $smarty->display('tiki.tpl');
 ?>

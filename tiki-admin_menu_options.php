@@ -42,10 +42,13 @@ $smarty->assign('position',$info["position"]);
 
 if(isset($_REQUEST["remove"])) {
   $tikilib->remove_menu_option($_REQUEST["remove"]);
+  $maxPos = $tikilib->get_max_option($_REQUEST["menuId"]);
+   $smarty->assign('position',$maxPos+1);
 }
 
 if(isset($_REQUEST["save"])) {
    $tikilib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"],$_REQUEST["position"]);
+   $smarty->assign('position',$_REQUEST["position"]+1);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

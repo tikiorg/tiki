@@ -84,7 +84,10 @@ $foo1=str_replace("tiki-view_banner","display_banner",$foo["path"]);
 
 
 $fp=fopen('http://'.$_SERVER["SERVER_NAME"].$foo1."?id=$bannerId","r");
-$raw = fread($fp,999999);
+$raw='';
+while(!feof($fp)) {
+$raw .= fread($fp,8192);
+}
 fclose($fp);
 $smarty->assign_by_ref('raw',$raw);
 

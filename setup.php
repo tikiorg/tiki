@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("db/tiki-db.php");
+
 error_reporting(E_ALL);
 
 

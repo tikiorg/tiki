@@ -44,7 +44,7 @@ if(isset($_REQUEST["save"])) {
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'title_desc'; 
+  $sort_mode = 'pollId_asc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 

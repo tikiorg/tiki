@@ -153,6 +153,9 @@ if(isset($_REQUEST["game"])) {
  $smarty->assign('play','y');
 }
 
+$section='games';
+include_once('tiki-section_options.php');
+
 // Display the template
 $smarty->assign('mid','tiki-list_games.tpl');
 $smarty->display('tiki.tpl');

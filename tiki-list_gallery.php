@@ -180,6 +180,10 @@ if($offset>0) {
 
 $smarty->assign_by_ref('images',$images["data"]);
 
+$section='galleries';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-list_gallery.tpl');
 $smarty->display('tiki.tpl');

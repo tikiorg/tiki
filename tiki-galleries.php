@@ -243,6 +243,9 @@ $cat_type='image gallery';
 $cat_objid = $_REQUEST["galleryId"];
 include_once("categorize_list.php");
 
+$section='galleries';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-galleries.tpl');

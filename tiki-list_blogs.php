@@ -52,7 +52,7 @@ if(isset($_REQUEST["remove"])) {
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'created_desc'; 
+  $sort_mode = $blog_list_order;
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 
@@ -131,6 +131,10 @@ if($offset>0) {
 
 $smarty->assign_by_ref('listpages',$listpages["data"]);
 //print_r($listpages["data"]);
+
+$section='blogs';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_blogs.tpl');

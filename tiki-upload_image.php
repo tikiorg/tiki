@@ -85,12 +85,42 @@ if(isset($_REQUEST["upload"])) {
   } else {
     // We process here file uploads
     if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-      $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
-      $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
-      fclose($fp);
+    
+       if(!empty($gal_match_regex)) {
+         if(!preg_match("/$gal_match_regex/",$_FILES['userfile1']['name'],$reqs)) {
+           $smarty->assign('msg',tra('Invalid imagename (using filters for filenames)'));
+           $smarty->display('error.tpl');
+           die;  	
+         }
+       }
+       if(!empty($gal_nmatch_regex)) {
+          if(preg_match("/$gal_nmatch_regex/",$_FILES['userfile1']['name'],$reqs)) {
+           $smarty->assign('msg',tra('Invalid imagename (using filters for filenames)'));
+           $smarty->display('error.tpl');
+           die;  	
+         }
+       }
       $type = $_FILES['userfile1']['type'];
       $size = $_FILES['userfile1']['size'];
       $name = $_FILES['userfile1']['name'];
+      
+      // Check for a zip file.....
+      
+      if(substr($name,strlen($name)-3)=='zip') {
+        if($tiki_p_batch_upload_images == 'y') {
+        $tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user);
+        header("location: tiki-browse_gallery.php?galleryId=".$_REQUEST["galleryId"]);
+        } else {
+           $smarty->assign('msg',tra('No permission to upload zipped image packages'));
+           $smarty->display('error.tpl');
+           die;  	
+        }
+      }
+    
+      $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+      $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
+      fclose($fp);
+      
     } else {
       $error_msg=tra("cannot process upload");
     }
@@ -121,18 +151,10 @@ if(isset($_REQUEST["upload"])) {
         $img = imagecreatefromstring($data);
         $size_x = imagesx($img);
         $size_y = imagesy($img);
-        // Create thumbnail here 
-        // Use the gallery preferences to get the data
-        
-        // The following lines were removed by evanb
-        //        $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
-        //        $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $size_x, $size_y);
-        // The following lines added by evanb
-          if ($size_x > $size_y)
+        if ($size_x > $size_y)
           $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
         else
           $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
-
         $tw = ((int)($size_x / $tscale));
         $ty = ((int)($size_y / $tscale));
         if (chkgd2()) {
@@ -142,8 +164,6 @@ if(isset($_REQUEST["upload"])) {
           $t = imagecreate($tw,$ty);
           $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
         }
-
-        
         // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
         //$tmpfname = 'temp.jpg';
         $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
@@ -156,6 +176,7 @@ if(isset($_REQUEST["upload"])) {
         $t_pinfo = pathinfo($tmpfname);
         $t_type = $t_pinfo["extension"];
         $t_type='image/'.$t_type;
+                
         $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
       } else {
         $tmpfname='';
@@ -172,6 +193,13 @@ if(isset($_REQUEST["upload"])) {
       }
       $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
     }
+    
+    if(!$imageId) {
+       $smarty->assign('msg',tra('Upload failed'));
+       $smarty->display('error.tpl');
+       die;  	
+    }
+    
     $smarty->assign_by_ref('imageId',$imageId);
     // Now that the image was inserted we can display the image here.
     $smarty->assign('show','y');
@@ -221,6 +249,10 @@ for($i=0;$i<count($galleries["data"]);$i++) {
   }
 }
 $smarty->assign_by_ref('galleries',$galleries["data"]);
+
+$section='galleries';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-upload_image.tpl');

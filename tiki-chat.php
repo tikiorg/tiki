@@ -14,6 +14,10 @@ if($tiki_p_chat!='y') {
 $channels = $tikilib->list_active_channels(0,-1,'name_desc','');
 $smarty->assign('channels',$channels["data"]);
 
+$section='chat';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-chat.tpl');
 $smarty->display('tiki.tpl');

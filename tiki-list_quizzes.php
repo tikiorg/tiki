@@ -90,6 +90,9 @@ if($offset>0) {
 
 $smarty->assign_by_ref('channels',$channels["data"]);
 
+$section='quizzes';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_quizzes.tpl');

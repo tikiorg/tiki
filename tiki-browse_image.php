@@ -129,6 +129,10 @@ $smarty->assign_by_ref('image_user',$info["user"]);
 $galleries = $tikilib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 
+$section='galleries';
+include_once('tiki-section_options.php');
+
+
 // Display the template
 $smarty->assign('mid','tiki-browse_image.tpl');
 $smarty->display('tiki.tpl');
