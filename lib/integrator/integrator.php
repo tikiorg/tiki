@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.5 2003-10-15 16:10:36 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.6 2003-10-17 14:48:43 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -123,10 +123,10 @@ class TikiIntegrator extends TikiLib
         {
             // simple str_replace rule
             if ($rule["casesense"] == 'y')
-              $data = str_replace($rule["srch"], $repl, $data);
+              $d = str_replace($rule['srch'], $repl, $d);
             else
               // \todo Hmmm... where is str_ireplace() ???
-              $data = str_replace($rule["srch"], $repl, $data);
+              $d = str_replace($rule["srch"], $repl, $d);
         }
         return $d;
     }
