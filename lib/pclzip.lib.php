@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/lib/pclzip.lib.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/lib/pclzip.lib.php,v 1.4 2003-05-07 06:59:46 lechuckdapirate Exp $
 
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Zip Module 1.2
@@ -399,7 +399,7 @@ if (defined("PCL_ZIP"))
       // ----- Call the extracting fct
       if (($v_result = $this->privExtractByIndex($p_list, "$p_index", $p_path, $p_remove_path)) != 1)
       {
-        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
+//        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
       }
     }
@@ -410,7 +410,7 @@ if (defined("PCL_ZIP"))
       // ----- Call the extracting fct
       if (($v_result = $this->privExtractByIndex($p_list, $p_index, $p_path, $p_remove_path)) != 1)
       {
-        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
+//        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
       }
     }
@@ -422,7 +422,7 @@ if (defined("PCL_ZIP"))
       PclErrorLog(-3, "Invalid variable type $p_index");
 
       // ----- Return
-      TrFctEnd(__FILE__, __LINE__, PclErrorCode(), PclErrorString());
+//      TrFctEnd(__FILE__, __LINE__, PclErrorCode(), PclErrorString());
       return 0;
     }
 
@@ -461,7 +461,7 @@ if (defined("PCL_ZIP"))
       // ----- Call the delete fct
       if (($v_result = $this->privDeleteByIndex("$p_index", $p_list)) != 1)
       {
-        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
+//        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
       }
     }
@@ -472,7 +472,7 @@ if (defined("PCL_ZIP"))
       // ----- Call the delete fct
       if (($v_result = $this->privDeleteByIndex($p_index, $p_list)) != 1)
       {
-        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
+//        TrFctEnd(__FILE__, __LINE__, 0, PclErrorString());
         return(0);
       }
     }
@@ -484,7 +484,7 @@ if (defined("PCL_ZIP"))
       PclErrorLog(-3, "Invalid variable type $p_index");
 
       // ----- Return
-      TrFctEnd(__FILE__, __LINE__, PclErrorCode(), PclErrorString());
+//      TrFctEnd(__FILE__, __LINE__, PclErrorCode(), PclErrorString());
       return 0;
     }
 
