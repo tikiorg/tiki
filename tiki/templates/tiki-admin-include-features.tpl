@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.22 2003-10-16 01:25:06 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.23 2003-11-02 16:22:05 dgdaniels Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -399,8 +399,16 @@
             {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td>
 
         <td>&nbsp;</td>
-
-        <td class="form"></td>
+{*new view tpl feature}
+        <td class="form">
+            	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=TikiTemplateEditing" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}AutoLinks{/tr}">{/if}
+        		{tr}Tiki Template Viewing{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_view_tpl"
+            {if $feature_view_tpl eq 'y'}checked="checked"{/if}/></td>
+        
+        </td>
 
       </tr>
 
