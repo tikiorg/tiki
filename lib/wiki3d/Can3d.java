@@ -13,7 +13,7 @@ public class Can3d
 	boolean painted = true;
 	Thread t;
 	float xfac;
-	AnimationThread a;
+	BalanceThread balancing;
 	boolean focussed = false;
 	Face face;
 	ObjectVertex ob;
@@ -40,7 +40,7 @@ public class Can3d
 	BufferedImage bi;
 	int XO, YO;
 	//Graph cv;
-	Vertexes cv;
+	Vertexes vertexes;
 	//stores all the nodes links actions which are latter used for display
 	XmlReader xr;
 	Graphics2D bg;
@@ -61,11 +61,11 @@ public class Can3d
 
 		ob.setOrigin(Config.faceoriginx, Config.faceoriginy, 0);
 
-		ob.setCamera(Config.faceoriginx, Config.faceoriginy, Config.camposz);
+		ObjectVertex.setCamera(Config.faceoriginx, Config.faceoriginy, Config.camposz);
 
 		// ObjectVertex.origin=new Vertex(400,450,0);
 
-		cv = new Vertexes();
+		vertexes = new Vertexes();
 
 		ps =
 			"<graph node=\"My Graph\"><link name=\"vt\"><action label=\"heard about that\" url=\"www.visualthearus.com\"/><action label=\"my thearasus\" url= \"www.myhome.com\"/></link><link name=\"hi click me for fun\"><action label=\"The last action\" url=\"www.thelast.com\"/></link><link name=\"see these also\"><action label=\"Me first\" url=\"www.greaturl.com\"/><action label=\"Me second\" url=\"www.greaturl.com\"/></link></graph>";
@@ -81,9 +81,9 @@ public class Can3d
 
 		mmat.mult(tmat); //accumulated in graph
 
-		CanvaxVertex.setFOV(Config.FOV);
+		CanvaxVertex.setFOV(Config.fieldOfView);
 
-		ob.setFOV(Config.FOV);
+		ObjectVertex.setFOV(Config.fieldOfView);
 
 		Camera.ZC = Config.camposz;
 
@@ -167,8 +167,8 @@ public class Can3d
 			ps = st.toString();
 		}
 
-		xr = new XmlReader(ps, cv);
-		cv.initpos();
+		xr = new XmlReader(ps, vertexes);
+		vertexes.initpos();
 		bi =
 			new BufferedImage(
 				Config.windowwidth,
@@ -180,8 +180,8 @@ public class Can3d
 			Config.viewstarty,
 			Config.viewwidth,
 			Config.viewheight);
-		a = new AnimationThread(this);
-		Thread t = new Thread(a);
+		balancing = new BalanceThread(this);
+		Thread t = new Thread(balancing);
 		t.start();
 
 		//CanvaxVertex.setanimator(a);
@@ -201,23 +201,20 @@ public class Can3d
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		a.stopanimate();
-
-		/*
-		 * if(e.isMetaDown()) rotate=!rotate; else if(e.isShiftDown()) {
-		 * animate=true; } else if(e.isAltDown()) animate=false;
-		 */
-		//else
-		if (cv.contains(e.getX(), e.getY())) {
-			cv.focus = cv.focus.getElement();
-			if (cv.focus.type() == 'a') {
-				System.out.println(
-					"open the web page " + ((Action) cv.focus).getLabel());
+		
+		if (vertexes.contains(e.getX(), e.getY())) {
+			vertexes.focus = vertexes.focus.getElement();
+			if (vertexes.focus.type() == 'a') {
 				this.getAppletContext().showDocument(
-					((Action) cv.focus).getURL(),
-					((Action) cv.focus).getLabel());
+					((Action) vertexes.focus).getURL(),
+					((Action) vertexes.focus).getLabel());
 
+			} else {
+			   // here goes navigation through nodes, later
 			}
+			System.out.println("mouse clicked");
+			
+			
 
 		}
 	}
@@ -225,34 +222,30 @@ public class Can3d
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		a.stopanimate();
-		if (cv.contains(x, y)) //prev containsd
+		System.out.println("mouse pressed");
+		
+		if (vertexes.contains(x, y)) 
 			{
 			setCursor(cur);
-			cv.focus.fixpos();
-			a.add(cv.focus);
+			vertexes.focus.fixPosition();
 			focussed = true;
 		}
 		prevx = x;
 		prevy = y;
 		e.consume();
 	}
+	
 	public void mouseMoved(MouseEvent e) {
 
 		int x = e.getX();
 		int y = e.getY();
-		if (cv.contains(x, y)) {
+		if (vertexes.contains(x, y)) {
 			setCursor(cur);
 			if (painted) {
 				painted = false;
-				//setCursor(Cursor.getDefaultCursor());
-				//   focussed=false;
-				//repaint(); 
-
 			}
 		} else {
 			setCursor(Cursor.getDefaultCursor());
-
 		}
 
 		prevx = x;
@@ -264,17 +257,13 @@ public class Can3d
 	public void mouseReleased(MouseEvent e) {
 
 		if (focussed) {
-			a.animate();
 			focussed = false;
-
+			vertexes.focus.releasePosition();
 		}
 		setCursor(Cursor.getDefaultCursor());
 		if (painted) {
 			painted = false;
-			//setCursor(Cursor.getDefaultCursor());
-			//   focussed=false;
 			repaint();
-
 		}
 
 	}
@@ -283,8 +272,6 @@ public class Can3d
 
 		if (painted) {
 			painted = false;
-			//setCursor(Cursor.getDefaultCursor());
-			//   focussed=false;
 			repaint();
 
 		}
@@ -296,7 +283,7 @@ public class Can3d
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		a.stopanimate();
+		balancing.stopanimate();
 		//notifyAll();
 
 		//EventQueue aq=Toolkit.getDefaultToolkit().getSystemEventQueue();
@@ -350,28 +337,19 @@ public class Can3d
 			prevy = y;
 			e.consume();
 
-		} else // if(cv.contains(x,y))
+		} else 
 			{
 			int dy = y - prevy;
 			int dx = x - prevx;
-			// cv.focus.mat.must();
+			
 			if (e.isAltDown()) {
-				cv.focus.mat.translate(0, 0, dx + dy);
+				CanvaxVertex.mat.translate(0, 0, dx + dy);
 			} else
-				cv.focus.change(-dx, -dy, 0);
-			//cv.focus.mat.translate(-dx,-dy,0);
-			//setCursor(cur);
-			//  focussed=true;
-			// mmat.unit();
-			// mmat.translate(dx,dy,0);
-			//imat.mult(mmat);
-			//cv.focus.mat.mult(imat);
-
+				vertexes.focus.change(-dx, -dy, 0);
+			
 			if (painted) {
 				painted = false;
 				repaint();
-				//   animate=an;
-
 			}
 			prevx = x;
 			prevy = y;
@@ -425,12 +403,11 @@ public class Can3d
 				System.out.println("ne1");
 			}
 			if (!focussed) {
-				cv.transform(tmmat);
-				//cv.proj();
+				vertexes.transform(tmmat);				
 				face.transform(amat);
 			} else {
-				cv.focus.transform();
-				cv.focus.proj();
+				vertexes.focus.transform();
+				vertexes.focus.proj();
 				//cv.focus.transform();
 				//cv.focus.transform(imat);
 				imat.unit();
@@ -441,7 +418,7 @@ public class Can3d
 
 					bg.setColor(getBackground());
 					bg.fillRect(0, 0, getSize().width, getSize().height);
-					cv.paint(bg);
+					vertexes.paint(bg);
 					//if(rotate)
 					face.paint(bg);
 
@@ -456,7 +433,7 @@ public class Can3d
 
 					g.drawImage(bi, 0, 0, this);
 				} else {
-					cv.paint(g);
+					vertexes.paint(g);
 					face.paint(g);
 					g.setColor(Config.facecolorblue);
 					g.draw3DRect(

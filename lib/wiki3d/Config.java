@@ -25,7 +25,7 @@ static int originz=0;//
 static int faceoriginx=400,faceoriginy=400,camposz=500;//origin of navigator and z position of the viewer .
 static int facesize=30;//size of the navigator
 static float initroty=20,initrotx=20;//initial rotation of the navigator
-static int FOV=200;//field of view
+static int fieldOfView=200;//field of view
 static int faceadjust=50;//to adjust the position of the navigator box
 static int controlwidth=100;//width of the navigator box
 static int windowwidth=600;//
@@ -52,6 +52,7 @@ static int zstep=1;
 static int balanceSpeedFactor=1;
 
 static int nodeDistance = 200;
+public static int minimumBallSize = 2;
 
 
 

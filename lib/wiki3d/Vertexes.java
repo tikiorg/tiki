@@ -53,21 +53,6 @@ public class Vertexes extends Vector {
 
 	}
 
-	public boolean containsd(int x, int y) {
-		int i = 0;
-
-		while (i < count) {
-			if (((CanvaxVertex) elementAt(i)).containsd(x, y)) {
-				focus = (CanvaxVertex) elementAt(i);
-				//focus=focus.getElement();
-				return true;
-			}
-			i++;
-		}
-		return false;
-
-	}
-
 	synchronized public void paint(Graphics g) {
 		//orders the vertexes in increasing order of Z (world coordinate)and
 		// paints
