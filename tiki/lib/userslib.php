@@ -234,6 +234,11 @@ class UsersLib extends TikiDB {
 	$create_tiki = ($tikilib->get_preference("auth_create_user_tiki", "n") == "y");
 	$create_auth = ($tikilib->get_preference("auth_create_user_auth", "n") == "y");
 	$skip_admin = ($tikilib->get_preference("auth_skip_admin", "n") == "y");
+	
+	// see if we are to use CAS
+	$auth_cas = ($tikilib->get_preference('auth_method', 'tiki') == 'cas');
+	$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
+	$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
 
 	// first attempt a login via the standard Tiki system
 	$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
@@ -252,7 +257,7 @@ class UsersLib extends TikiDB {
 	}
 
 	// if we aren't using LDAP this will be quick
-	if ((!$auth_pear && !$auth_pam) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin)) && $user == "admin")) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin)) || ($auth_cas && $cas_skip_admin) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)
 		return $this->update_lastlogin($user);
@@ -314,6 +319,59 @@ class UsersLib extends TikiDB {
 	    }
 	    // if the user was logged into PAM and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userPAM && $userTikiPresent)
+			return $this->update_lastlogin($user);
+	}
+
+	// next see if we need to check CAS
+	elseif ($auth_cas) {
+		$result = $this->validate_user_cas();
+		switch ($result) {
+		case USER_VALID:
+			$userCAS = true;
+
+			break;
+		case PASSWORD_INCORRECT:
+			$userCAS = false;
+
+			break;
+		}
+
+    	// start off easy
+	    // if the user verified in Tiki and by CAS, log in
+	    if ($userCAS && $userTiki) {
+			return $this->update_lastlogin($user);
+	    }
+	    // if the user wasn't found in either system, just fail
+	    elseif (!$userTikiPresent && !$userCAS) {
+			return false;
+	    }
+	    // if the user was authenticated by CAS but not found in Tiki
+	    elseif ($userCAS && !$userTikiPresent) {
+			// see if we can create a new account
+			if ($cas_create_tiki) {
+			    // need to make this better! *********************************************************
+			    $result = $this->add_user($user, $pass, '');
+
+			    // if it worked ok, just log in
+			    if ($result == USER_VALID)
+					// before we log in, update the login counter
+					return $this->update_lastlogin($user);
+			    // if the server didn't work, do something!
+			    elseif ($result == SERVER_ERROR) {
+					// check the notification status for this type of error
+					return false;
+			    }
+			    // otherwise don't log in.
+			    else
+					return false;
+			}
+			// otherwise
+			else
+			    // just say no!
+			    return false;
+	    }
+	    // if the user was authenticated by CAS and found in Tiki (no password in Tiki user table necessary)
+	    elseif ($userCAS && $userTikiPresent)
 			return $this->update_lastlogin($user);
 	}
 
@@ -488,7 +546,7 @@ class UsersLib extends TikiDB {
 	$hash2 = md5($user.$pass);
 	$hash3 = md5($pass);
 
-	// next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
+	// next verify the password with 2 hashes methods, the old one (pass?)) and the new one (login.pass;email)
 	if ($feature_challenge == 'n' || empty($response)) {
 	    $query
 		= "select `login` from `users_users` where " . $this->convert_binary(). " `login` = ? and (`hash`=? or `hash`=? or `hash`=?)";
