@@ -675,7 +675,7 @@ div.commentspost {
 }
 
 /* Help box*/
-div.commentsedithelp {  background: white;  border: 1px solid black;  font-size: smaller;  width: 97%;}
+div.commentsedithelp {  background: white;  border: 1px solid black;  font-size: smaller;  width: 99%;}
 
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar {
@@ -753,6 +753,8 @@ td.pollr {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-siz
 
 /* Title for the forums page */
 div.forumspagetitle {  margin-top: 10px;  margin-bottom: 40px;}
+
+table.threads { width: 97%;}
 
 td.viewthreadl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; width: 30%;vertical-align: top;}
 td.viewthreadr { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; vertical-align: top;}
