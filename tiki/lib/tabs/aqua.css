@@ -3,7 +3,7 @@
 div.tabs {
 	white-space: nowrap;
 	font-family: Tahoma, Geneva, Arial, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: normal;
 	cursor: default !important;
 	font-weight: 700 !important;
@@ -27,10 +27,10 @@ div.tabs {
 	
 .tab {
 	font-family: Arial, sans-serif;
-	background-image: url(../../img/aqua/aqua-tab.png);
+	background-image: url(aqua-tab.png);
 	border: 1px solid #999999;
 	padding: 2px 10px 0px 10px;
-	color: #000000;
+	color: #424242;
 	z-index: 100;
 	border-bottom-width: 0;
 	-moz-border-radius: 4px 4px 0px 0px;
@@ -49,7 +49,7 @@ div.tabs {
 	}
 
 .tabActive { 
-	background-image: url(../../img/aqua/aqua-tab-active.png);
+	background-image: url(aqua-tab-active.png);
 	border-top: 1px solid #000195;
 	border-left: 1px solid #000195;
 	border-right: 1px solid #000195;
