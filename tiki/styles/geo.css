@@ -499,7 +499,7 @@ TD {
 Cells in forms without background color 
 (inside a div for example) 
 */
-.form {
+.form td {
 	font-size:    11px;
 	vertical-align:   top;
 	text-align:   left;
@@ -508,7 +508,12 @@ Cells in forms without background color
 /* 
 Cells in forms using a background color 
 */
-.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td {
 	background:    #d1d2a9;
 	font-size:   11px;
 	vertical-align:   top;
@@ -613,7 +618,7 @@ table.findtable {
 	padding-bottom:   10px;
 }
 
-td.findtable {
+.findtable td {
 	font-size: 11px;
 }
 

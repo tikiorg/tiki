@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.40 2004-02-21 16:27:12 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.41 2004-02-25 00:11:29 musus Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -552,7 +552,7 @@ table.findtable {
 	width: 100%;
 }
 
-td.findtable {
+.findtable td {
 	font-size: 11px;
 }
 

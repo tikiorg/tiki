@@ -435,7 +435,7 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-.form {
+.form td {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -443,7 +443,12 @@ TD {
 	text-align:   left;
 }
 /* Cells in forms using a background color */
-.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td {
 	color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color:   #b5c1cc;
@@ -571,7 +576,7 @@ table.findtable {
 	padding-bottom:   10px;
 }
 
-td.findtable {
+.findtable td {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 }
