@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.28 2004-03-07 23:12:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.29 2004-05-01 09:42:50 damosoft Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
@@ -361,6 +361,23 @@
   </div>
 {/if}
 
+{if $feature_jukebox eq 'y'}
+  <div class="separator">
+  <a class="separator" href="javascript:icntoggle('jukeboxmenu');">::</a>
+  <a href="tiki-jukebox_albums.php" class="separator">{tr}Jukebox{/tr}</a>
+  </div>
+  <div id="jukeboxmenu" style="{$mnu_jukeboxmenu}">
+  {if $tiki_p_jukebox_genres eq 'y'}
+  &nbsp;<a href="tiki-jukebox_genres.php" class="linkmenu">{tr}Genres Admin{/tr}</a><br />
+  {/if}
+  {if $tiki_p_jukebox_tracks eq 'y'}
+  &nbsp;<a href="tiki-jukebox_tracks.php" class="linkmenu">{tr}Tracks{/tr}</a><br />
+  {/if}
+  {if $tiki_p_jukebox_admin eq 'y'}
+  &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
