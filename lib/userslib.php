@@ -366,6 +366,27 @@ class UsersLib {
     $this->assign_user_to_group($user,'Registered');
     return true;
   }
+
+  function change_user_email($user,$email)
+  {
+    $query = "update users_users set email='$email' where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+  }
+  
+  function get_user_password($user) 
+  {
+    $query = "select password from users_users where login='$user'";
+    $pass = $this->db->getOne($query);
+    return $pass;
+  }
+  
+  function change_user_password($user,$pass)
+  {
+    $query = "update users_users set password='$pass' where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+  }
   
   function add_group($group,$desc)
   {

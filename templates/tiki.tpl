@@ -7,21 +7,22 @@
   <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-      <td width="150px" valign="top"><div id="left">
+      <td id="leftcolumn">
       {section name=homeix loop=$left_modules}
       {$left_modules[homeix].data}
       {/section}
-      </div></td>
-      <td valign="top"><div id="center">{include file=$mid}
+      </td>
+      <td id="centercolumn"><div id="tiki-center">{include file=$mid}
       {if $show_page_bar eq 'y'}
       {include file="tiki-page_bar.tpl}
       {/if}
-      </div></td>
-      <td width="150px" valign="top"><div id="right">
+      </div>
+      </td>
+      <td id="rightcolumn"><div id="right">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}
       {/section}
-      </div></td>
+      </td>
     </tr>
     </table>
   </div>

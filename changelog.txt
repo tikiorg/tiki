@@ -1,0 +1,31 @@
+Version 0.95 -Shaula-
+
+* [NEW FEATURE] User preferences screen where users can set-up personal info, choose a theme
+  and they can also view their pages/blogs/articles.
+* [FIX] Changed several layout problems specific to some browsers, fixed layout now
+  whould work ok with mozilla, IE and Netscape
+* [CHANGE] Re-designed the admin screen to make it modular and clear
+* [CHANGE] Allow HTML is now turned on unless checked out ir the user has tiki_p_allow_HTML permission
+* [FIX] Fixed bugs in the modules administration screen that prevented editing & removing user modules
+* [FIX] Fixed a bug with -=titlebars=- in  wiki pages, now they work using the titlebar style from CSS
+* [NEW FEATURE] Added featured links as a feature that can be disabled from the admin screen
+* Modules for galleries and images are now not shown if the image galleries feature is disabled
+* [FIX] Fixed several bugs regarding the appearance of ' characters in pages
+* [NEW FEATURE] Added and option in the admin screen to turn off caching external pages 
+* [NEW FEATURE] Added and option in the admin screen to turn off caching external images
+* [NEW FEATURE] Added the option to set-up modules for specific groups
+* [NEW FEATURE] Added an option in the admin screen to show modules to all users ignoring groups 
+* [NEW FEATURE] Added hotwords allowing you to make some words appear as a link to a URL
+* [NEW FEATURE] Added an option to turn on/off hotwords from the admins screen
+* [NEW FEATURE] Added a SandBox a wikipage where no versions are stored to be used as a practice page
+* [NEW FEATURE] Added an option to turn on/off the SandBox
+* [FIX] Changed thumbnail generation to a new bicubic funcion producing better quality thumbnails (Jen Jensen)
+* [FIX] Fixed a bug when links contain a question mark "?"
+* [FIX] Fixed a bug when uploading images without entering any data
+* [FIX] Fixed a bug with thumbnails
+* [FIX] Fixed errors with unescaped characters in Wiki pages 
+
+
+Version 0.9 -Spica-
+
+* First release of this application.

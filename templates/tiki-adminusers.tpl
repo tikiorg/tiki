@@ -31,7 +31,9 @@
 {/section}
 </td>
 <td class="odd"><a class="link" href="tiki-adminusers.php?action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a>
-                                   <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a></td>
+                                   <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a>
+                                   <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a>
+                                   </td>
 </tr>
 {else}
 <tr>
@@ -44,7 +46,8 @@
 {/section}
 </td>
 <td class="even"><a class="link" href="tiki-adminusers.php?action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a>
-                 <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a></td>
+                 <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a>
+                 <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a></td>
 </tr>
 {/if}
 {/section}

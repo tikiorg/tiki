@@ -16,8 +16,642 @@ class TikiLib {
     die;
   }
   
+  /* Hot words methods */
+  function get_hotwords()
+  {
+    $query = "select * from tiki_hotwords";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $ret= Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	$ret[$res["word"]]=$res["url"];
+    }	
+    return $ret;
+  }
+  
+  function list_hotwords($offset = 0,$maxRecords = -1,$sort_mode = 'word_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where word like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    $query = "select * from tiki_hotwords $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_hotwords";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;  	
+  }
+  
+  function add_hotword($word,$url)
+  {
+    $word=addslashes($word);
+    $url=addslashes($url);
+    $query = "replace into tiki_hotwords(word,url) values('$word','$url')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;	
+  }
+  
+  function remove_hotword($word)
+  {
+    $query = "delete from tiki_hotwords where word='$word'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);    	
+  }
+  
+  /* BLOG METHODS */
+  function list_blogs($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where title like '%".$find."%' or description like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    $query = "select * from tiki_blogs $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_blogs";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+
+  function add_blog_hit($blogId)
+  {
+    $query = "update tiki_blogs set hits = hits+1 where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+   
+  function replace_blog($title,$description,$user,$public,$maxPosts,$blogId)
+  { 
+    $title = addslashes($title);
+    $description = addslashes($description);
+    $now = date("U");
+    if($blogId) {
+      $query = "update tiki_blogs set title='$title',description='$description',user='$user',public='$public',lastModif=$now,maxPosts=$maxPosts where blogId=$blogId";
+    } else {
+      $query = "insert into tiki_blogs(created,lastModif,title,description,user,public,posts,maxPosts,hits)
+                       values($now,$now,'$title','$description','$user','$public',0,$maxPosts,0)";
+    }
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "select max(blogId) from tiki_blogs where lastModif=$now";
+    $id=$this->db->getOne($query);
+    return $id;
+  }
+  
+  function get_blog($blogId)
+  {
+    $query = "select * from tiki_blogs where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    if($result->numRows()) {
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    } else {
+      return false;
+    }
+    return $res;
+  }
+  
+  function list_blog_posts($blogId, $offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='', $date='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where blogId=$blogId and data like '%".$find."%' ";  
+    } else {
+      $mid="where blogId=$blogId "; 
+    }
+    if($date) {
+      $mid.=" and  created<=$date ";
+    }
+    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_blog_posts where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function blog_post($blogId,$data,$user)
+  {
+    // update tiki_blogs and call activity functions
+    $data=addslashes($data);
+    $now = date("U");
+    $query = "insert into tiki_blog_posts(blogId,data,created,user) values($blogId,'$data',$now,'$user')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
+    $id = $this->db->getOne($query);
+    $query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $this->add_blog_activity($blogId);
+    return $id;
+  }
+  
+  function list_user_blogs($user,$include_public=false)
+  {
+    $query = "select * from tiki_blogs where user='$user'";
+    if($include_public) {
+      $query.=" or public='y'";
+    }
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res;
+    }
+    return $ret; 
+  }
+  
+  function remove_blog($blogId)
+  {
+    $query = "delete from tiki_blogs where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "delete from tiki_blog_posts where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function remove_post($postId)
+  {
+    $query = "select blogId from tiki_blog_posts where postId=$postId";
+    $blogId = $this->db->getOne($query);
+    $query = "delete from tiki_blog_posts where postId=$postId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function get_post($postId)
+  {
+    $query = "select * from tiki_blog_posts where postId=$postId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    if($result->numRows()) {
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    } else {
+      return false;
+    }
+    return $res;
+  }
+  
+  function update_post($postId,$data,$user)
+  { 
+    $data = addslashes($data);
+    $query = "update tiki_blog_posts set data='$data',user='$user' where postId=$postId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+  }
+  
+  function list_posts($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where data like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_blog_posts";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $blogId=$res["blogId"];
+      $query = "select title from tiki_blogs where blogId=$blogId";
+      $res["blogTitle"]=$this->db->getOne($query);
+      $res["size"]=strlen($res["data"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function list_user_posts($user,$offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='') 
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where user=$user and data like '%".$find."%' ";  
+    } else {
+      $mid=' where user=$user '; 
+    }
+    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_blog_posts";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  
+  function add_blog_activity($blogId)
+  {
+    
+    //Caclulate activity, update tiki_blogs and purge activity table
+    $today = mktime(0,0,0,date("m"),date("d"),date("Y"));
+    $day0 = $today - (24*60*60);
+    $day1 = $today - (2*24*60*60);
+    $day2 = $today - (3*24*60*60);
+    // Purge old activity
+    $query="delete from tiki_blog_activity where day<$day2";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    // Register new activity
+    $query = "select * from tiki_blog_activity where blogId=$blogId and day=$today";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    if($result->numRows()) {
+      $query = "update tiki_blog_activity set posts=posts+1 where blogId=$blogId and day=$today";
+    } else {
+      $query = "insert into tiki_blog_activity(blogId,day,posts) values($blogId,$today,1)";
+    }
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    // Calculate activity
+    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$today";
+    $vtoday = $this->db->getOne($query);
+    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day0";
+    $day0 = $this->db->getOne($query);
+    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day1";
+    $day1 = $this->db->getOne($query);
+    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day2";
+    $day2 = $this->db->getOne($query);
+    $activity = (2 * $vtoday) + ($day0) + (0.5 * $day1) + (0.25 * $day2);
+    // Update tiki_blogs with activity information
+    $query = "update tiki_blogs set activity=$activity where blogId=$blogId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  
+  /* CMS functions -ARTICLES- & -SUBMISSIONS- */
+  function list_articles($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where title like '%".$find."%' or heading like '%".$find."%' or body like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    if($date) {
+      if($mid) {
+        $mid.=" and  publishDate<=$date ";
+      } else {
+        $mid=" where publishDate<=$date ";
+      } 
+    }
+    $query = "select * from tiki_articles $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_articles";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      if(empty($res["body"])) {
+        $res["isEmpty"] = 'y'; 
+      } else {
+        $res["isEmpty"] = 'n'; 
+      }
+      if(strlen($res["image_data"])>0) {
+        $res["hasImage"] = 'y';
+      } else {
+        $res["hasImage"] = 'n';
+      }
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function list_submissions($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where title like '%".$find."%' or heading like '%".$find."%' or body like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    if($date) {
+      if($mid) {
+        $mid.=" and  publishDate<=$date ";
+      } else {
+        $mid=" where publishDate<=$date ";
+      } 
+    }
+    $query = "select * from tiki_submissions $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_submissions";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      if(empty($res["body"])) {
+        $res["isEmpty"] = 'y'; 
+      } else {
+        $res["isEmpty"] = 'n'; 
+      }
+      if(strlen($res["image_data"])>0) {
+        $res["hasImage"] = 'y';
+      } else {
+        $res["hasImage"] = 'n';
+      }
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+
+  function get_article($articleId) 
+  {
+    $query = "select * from tiki_articles where articleId=$articleId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    if($result->numRows()) {
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    } else {
+      return false;
+    }
+    return $res;
+  }
+  
+  function get_submission($subId) 
+  {
+    $query = "select * from tiki_submissions where subId=$subId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    if($result->numRows()) {
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    } else {
+      return false;
+    }
+    return $res;
+  }
+  
+  function approve_submission($subId) 
+  {
+    $data = $this->get_submission($subId);
+    if(!$data) return false;
+    $this->replace_article ($data["title"],$data["authorName"],$data["topicId"],$data["useImage"],$data["image_name"],$data["image_size"],$data["image_type"],$data["image_data"],$data["heading"],$data["body"],$data["publishDate"],$data["author"],0);  
+    $this->remove_submission($subId);
+  }
+  
+  function add_article_hit($articleId)
+  {
+    $query = "update tiki_articles set reads=reads+1 where articleId=$articleId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    return true;
+  }
+
+  function remove_article($articleId)
+  {
+    if($articleId) {
+      $query = "delete from tiki_articles where articleId=$articleId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+      return true;
+    }
+  }
+  
+  function remove_submission($subId)
+  {
+    if($subId) {
+      $query = "delete from tiki_submissions where subId=$subId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+      return true;
+    }
+  }
+  
+  function replace_article ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$articleId,$image_x,$image_y)
+  {
+    $title = addslashes($title);
+    $heading = addslashes($heading);
+    $authorName = addslashes($authorName);
+    $imgdata = addslashes($imgdata);
+    $imgname = addslashes($imgname);
+    $body = addslashes($body);
+    $hash = md5($title.$heading.$body);
+    $now = date("U");
+
+    $query = "select name from tiki_topics where topicId = $topicId";
+    $topicName = $this->db->getOne($query);
+    $size = strlen($body);
+
+    if($articleId) {
+      // Update the article
+      $query = "update tiki_articles set
+                title = '$title',
+                authorName = '$authorName',
+                topicId = $topicId,
+                topicName = '$topicName',
+                size = $size,
+                useImage = '$useImage',
+                image_name = '$imgname',
+                image_type = '$imgtype',
+                image_size = '$imgsize',
+                image_data = '$imgdata',
+                image_x = $image_x,
+                image_y = $image_y,
+                heading = '$heading',
+                body = '$body',
+                publishDate = $publishDate,
+                created = $now,
+                author = '$user' 
+                where articleId = $articleId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+    } else {
+      // Insert the article
+      $query = "insert into tiki_articles(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y)
+                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y)";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+    }
+    $query = "select max(articleId) from tiki_articles where created = $now and title='$title' and hash='$hash'";
+    $id=$this->db->getOne($query);
+    return $id;
+  }
+  
+  function replace_submission ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$subId)
+  {
+    $title = addslashes($title);
+    $heading = addslashes($heading);
+    $authorName = addslashes($authorName);
+    $imgdata = addslashes($imgdata);
+    $imgname = addslashes($imgname);
+    $body = addslashes($body);
+    $hash = md5($title.$heading.$body);
+    $now = date("U");
+
+    $query = "select name from tiki_topics where topicId = $topicId";
+    $topicName = $this->db->getOne($query);
+    $size = strlen($body);
+
+    if($subId) {
+      // Update the article
+      $query = "update tiki_submissions set
+                title = '$title',
+                authorName = '$authorName',
+                topicId = $topicId,
+                topicName = '$topicName',
+                size = $size,
+                useImage = '$useImage',
+                image_name = '$imgname',
+                image_type = '$imgtype',
+                image_size = '$imgsize',
+                image_data = '$imgdata',
+                heading = '$heading',
+                body = '$body',
+                publishDate = $publishDate,
+                created = $now,
+                author = '$user' 
+                where subId = $subId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+    } else {
+      // Insert the article
+      $query = "insert into tiki_submissions(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName)
+                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName')";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);                     
+    }
+    $query = "select max(subId) from tiki_submissions where created = $now and title='$title' and hash='$hash'";
+    $id=$this->db->getOne($query);
+    return $id;
+  }
+  
+  /* CMS functions -TOPICS -*/
+  function add_topic($name,$imagename,$imagetype,$imagesize,$imagedata)
+  {
+    $now=date("U");
+    $imagename=addslashes($imagename);
+    $name=addslashes($name);
+    $imagedata=addslashes($imagedata);
+    $query = "insert into tiki_topics(name,image_name,image_type,image_size,image_data,active,created)
+                     values('$name','$imagename','$imagetype',$imagesize,'$imagedata','y',$now)";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    $query = "select max(topicId) from tiki_topics where created=$now and name='$name'";
+    $topicId = $this->db->getOne($query);
+    return $topicId;
+  }
+  
+  function remove_topic($topicId)
+  {
+    $query = "delete from tiki_topics where topicId=$topicId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    return true;
+  }
+  
+  function activate_topic($topicId)
+  {
+    $query = "update tiki_topics set active='y' where topicId=$topicId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+  }
+  
+  function deactivate_topic($topicId)
+  {
+    $query = "update tiki_topics set active='n' where topicId=$topicId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+  }
+  
+  function get_topic_image($topicId) 
+  {
+    $query = "select image_name,image_size,image_type,image_data from tiki_topics where topicId=$topicId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function get_topic($topicId)
+  {
+    $query = "select topicId,name,image_name,image_size,image_type from tiki_topics where topicId=$topicId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function list_topics()
+  {
+    $query = "select topicId,name,image_name,image_size,image_type from tiki_topics order by name";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
+  function list_active_topics()
+  {
+    $query = "select * from tiki_topics where active='y'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);                     
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
   function add_featured_link($url,$title,$description='') 
   {
+    $title=addslashes($title);
+    $url=addslashes($url);
+    $description=addslashes($description);
     $query = "replace tiki_featured_links(url,title,description) values('$url','$title','$description')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
@@ -44,6 +678,8 @@ class TikiLib {
   
   function capture_images($data)
   {
+    $cacheimages = $this->get_preference("cacheimages",'y');
+    if($cacheimages != 'y') return $data;	
     preg_match_all("/src=\"([^\"]+)\"/",$data,$reqs1);
     preg_match_all("/src=\'([^\']+)\'/",$data,$reqs2);
     preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$data,$reqs3);
@@ -69,7 +705,7 @@ class TikiLib {
           $size = strlen($data);
           $url = $img;
           
-          if(fcuntion_exists("ImageCreateFromString")&&defined(IMG_PNG)&&(!strstr($type,"gif"))) {
+          if(fcuntion_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
             // Now create image and thumbnail
             $img = imagecreatefromstring($data);
             $size_x = imagesx($img);
@@ -129,6 +765,9 @@ class TikiLib {
 
   function replace_user_module($name,$title,$data)
   {
+    $name = addslashes($name);
+    $title = addslashes($title);
+    $data = addslashes($data);
     if( (!empty($name)) && (!empty($title)) && (!empty($data)) ) {
       $query = "replace into tiki_user_modules(name,title,data) values('$name','$title','$data')";
       $result = $this->db->query($query);
@@ -137,12 +776,14 @@ class TikiLib {
     }
   }
   
-  function assign_module($name,$title,$position,$order,$cache_time=0,$rows=10)
+  function assign_module($name,$title,$position,$order,$cache_time=0,$rows=10,$groups)
   {
+    $name = addslashes($name);
+    $groups = addslashes($groups);
     $query = "delete from tiki_modules where name='$name'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
-    $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows) values('$name','$title','$position',$order,$cache_time,$rows)";
+    $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups) values('$name','$title','$position',$order,$cache_time,$rows,'$groups')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -154,6 +795,13 @@ class TikiLib {
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    if($res["groups"]) {
+      $grps = unserialize($res["groups"]);
+      $res["module_groups"]='';
+      foreach($grps as $grp) {
+      	$res["module_groups"].=" $grp ";
+      }
+    }
     return $res;
   }
   
@@ -191,11 +839,20 @@ class TikiLib {
   
   function get_assigned_modules($position)
   {
-    $query = "select name,title,position,ord,cache_time,rows from tiki_modules where position='$position' order by ord asc";
+    $query = "select name,title,position,ord,cache_time,rows,groups from tiki_modules where position='$position' order by ord asc";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      if($res["groups"]) {
+        $grps = unserialize($res["groups"]);
+        $res["module_groups"]='';
+        foreach($grps as $grp) {
+      	  $res["module_groups"].=" $grp ";
+        }
+      } else {
+      	$res["module_groups"]='&nbsp;';
+      }
       $ret[] = $res;
     }
     return $ret;
@@ -232,6 +889,7 @@ class TikiLib {
   
   function remove_user_module($name)
   {
+    $this->unassign_module($name);
     $query = " delete from tiki_user_modules where name='$name'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
@@ -266,6 +924,8 @@ class TikiLib {
 
   function cache_links($links)
   {
+    $cachepages = $this->get_preference("cachepages",'y');
+    if($cachepages != 'y') return false;	
     foreach($links as $link) {
       if(!$this->is_cached($link)) {
         $this->cache_url($link);
@@ -275,9 +935,11 @@ class TikiLib {
   
   function get_links($data)
   {
-    preg_match_all("/\[([^\|\]]+)/",$data,$r1);
-    $res = $r1[1];
-    $links = array_unique($res);
+    $links = Array();
+    if(preg_match_all("/\[([^\|\]]+)/",$data,$r1)) {
+      $res = $r1[1];
+      $links = array_unique($res);
+    }
     return $links;
   }
   
@@ -315,13 +977,34 @@ class TikiLib {
 
   function cache_url($url)
   {
+    $url=addslashes($url);
     // This function stores a cached representation of a page in the cache
     // Check if the URL is not already cached
-    if($this->is_cached($url)) return false;
+    //if($this->is_cached($url)) return false;
     $fp = fopen($url,"r");
     if(!$fp) return false;
     $data = fread($fp,999999);
     fclose($fp);
+    
+    // Check for META tags with equiv
+    /*
+    print("Len: ".strlen($data)."<br/>");
+    
+    preg_match_all("/\<meta([^\>\<\n\t]+)/i",$data,$reqs);
+    foreach($reqs[1] as $meta)
+    {
+      print("Un meta: $meta<br/>");
+      if(stristr($meta,'refresh')) {
+        print("Es refresh<br/>");
+        preg_match("/url=([^ \"\'\n\t]+)/i",$meta,$urls);	
+        if(strlen($urls[1])) {
+          $urli=$urls[1];	
+          print("URL: $urli<br/>");	
+        }
+      }	
+    }
+    print("pepe");
+    */
     $data = addslashes($data);
     $refresh = date("U");
     $query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
@@ -386,19 +1069,64 @@ class TikiLib {
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;                        
   }
+
+  function ImageCopyResampleBicubic (&$dst_img, &$src_img, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h)
+/*
+port to PHP by John Jensen July 10 2001 (updated 4/21/02) -- original code (in C, for the PHP GD Module) by jernberg@fairytale.se
+*/
+{
+$palsize = ImageColorsTotal ($src_img);
+for ($i = 0; $i < $palsize; $i++) { // get palette.
+$colors = ImageColorsForIndex ($src_img, $i);
+ImageColorAllocate ($dst_img, $colors['red'], $colors['green'], $colors['blue']);
+}
+
+$scaleX = ($src_w - 1) / $dst_w;
+$scaleY = ($src_h - 1) / $dst_h;
+
+$scaleX2 = (int) ($scaleX / 2);
+$scaleY2 = (int) ($scaleY / 2);
+
+for ($j = $src_y; $j < $dst_h; $j++) {
+$sY = (int) ($j * $scaleY);
+$y13 = $sY + $scaleY2;
+
+for ($i = $src_x; $i < $dst_w; $i++) {
+$sX = (int) ($i * $scaleX);
+$x34 = $sX + $scaleX2;
+
+$color1 = ImageColorsForIndex ($src_img, ImageColorAt ($src_img, $sX, $y13));
+$color2 = ImageColorsForIndex ($src_img, ImageColorAt ($src_img, $sX, $sY));
+$color3 = ImageColorsForIndex ($src_img, ImageColorAt ($src_img, $x34, $y13));
+$color4 = ImageColorsForIndex ($src_img, ImageColorAt ($src_img, $x34, $sY));
+
+$red = ($color1['red'] + $color2['red'] + $color3['red'] + $color4['red']) / 4;
+$green = ($color1['green'] + $color2['green'] + $color3['green'] + $color4['green']) / 4;
+$blue = ($color1['blue'] + $color2['blue'] + $color3['blue'] + $color4['blue']) / 4;
+
+ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorClosest ($dst_img, $red, $green, $blue));
+}
+}
+}
     
-  function rebuild_thumbnails($galleryId) 
+   function rebuild_thumbnails($galleryId)
   {
+    if(!function_exists("ImageCreateFromString")) return false;
     $gal_info = $this->get_gallery($galleryId);
     $query = "select * from tiki_images where galleryId=$galleryId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      if(!strstr($res["name"],"gif")) {
       $img = imagecreatefromstring($res["data"]);
+      $res["xsize"]=imagesx($img);
+      $res["ysize"]=imagesy($img);
       // Rebuild the thumbnail for this image
       $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
-      imagecopyresized ( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $res["xsize"], $res["ysize"]);
-      $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
+      print("From: ".$res["xsize"]."x".$res["ysize"]." to: ".$gal_info["thumbSizeX"]."x".$gal_info["thumbSizeY"]."<br/>");
+      //imagecopyresized ( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $res["xsize"], $res["ysize"]);
+       $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $res["xsize"], $res["ysize"]);
+      $tmpfname = tempnam ("/tmp", "FOO").'.jpg';
       imagejpeg($t,$tmpfname);
       // Now read the information
       $fp = fopen($tmpfname,"r");
@@ -410,12 +1138,15 @@ class TikiLib {
       $t_type='image/'.$t_type;
       $imageId = $res["imageId"];
       $t_data = addslashes($t_data);
-      $query2 = "update tiki_images set t_data='$t_data', t_type='$t_type' where imageId=$imageId";  
+      $query2 = "update tiki_images set t_data='$t_data', t_type='$t_type' where imageId=$imageId";
       $result2 = $this->db->query($query2);
       if(DB::isError($result2)) $this->sql_error($query2,$result2);
+      }
     }
     return true;
   }
+
+
   
   function insert_image($galleryId,$name,$description,$filename, $filetype, $data, $size, $xsize, $ysize, $user,$t_data,$t_type) 
   {
@@ -634,6 +1365,8 @@ class TikiLib {
   // table preserving the state of the wiki under a tag name.
   function create_tag($tagname,$comment='') 
   {
+    $tagname = addslashes($tagname);
+    $comment = addslashes($comment);
     $query = "select * from tiki_pages";
     $result=$this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
@@ -846,6 +1579,9 @@ class TikiLib {
 
   function add_user($user, $pass, $email) 
   {
+    $user = addslashes($user);
+    $pass = addslashes($pass);
+    $email = addslashes($email);
     if(user_exists($user)) return false;  
     $query = "insert into tiki_users(user,password,email) values('$user','$pass','$email')";
     $result = $this->db->query($query);
@@ -1101,7 +1837,32 @@ class TikiLib {
 
   function set_preference($name, $value) 
   {
+    $name = addslashes($name);
+    $value = addslashes($value);
     $query = "replace into tiki_preferences(name,value) values('$name','$value')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    return true;  
+  }
+
+  function get_user_preference($user, $name, $default='') 
+  {
+    $query = "select value from tiki_user_preferences where prefName='$name' and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    if($result->numRows()) {
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      return $res["value"];
+    } else {
+      return $default; 
+    } 
+  }
+
+  function set_user_preference($user, $name, $value) 
+  {
+    $name = addslashes($name);
+    $value = addslashes($value);
+    $query = "replace into tiki_user_preferences(user,prefName,value) values('$user','$name','$value')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;  
@@ -1268,6 +2029,9 @@ class TikiLib {
 
   function create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0') 
   {
+    $name = addslashes($name);
+    $data = addslashes($data);
+    $comment = addslashes($comment);
     if($this->page_exists($name)) return false;
     $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip')";
     $result = $this->db->query($query);
@@ -1277,10 +2041,12 @@ class TikiLib {
       $this->replace_link($name,$a_page);
     }
     // Update the log
-    $action = "Created";
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$name',$lastModif,'$user','$ip','$comment')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    if($name != 'SandBox') {
+      $action = "Created";
+      $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$name',$lastModif,'$user','$ip','$comment')";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);
+    }
     return true;
   }
 
@@ -1321,6 +2087,16 @@ class TikiLib {
 
   function parse_data($data) 
   {
+    global $feature_hotwords;
+    global $cachepages;
+    if($feature_hotwords == 'y') {
+      $words = $this->get_hotwords();
+      foreach($words as $word=>$url) {
+      	//print("Replace $word by $url<br/>");
+        $data  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" target='_blank'>$word</a> ",$data);	
+      }
+    }	
+    
     //$data = strip_tags($data);
     // tables
     preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
@@ -1395,17 +2171,21 @@ class TikiLib {
     }
     
     $links = $this->get_links($data);
-    
+        
     foreach($links as $link) {
-      if($this->is_cached($link)) {
+      if($this->is_cached($link) && $cachepages == 'y') {
         $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
         $link2 = str_replace("/","\/",$link);
+        $link2 = str_replace("?","\?",$link2);
+        $link2 = str_replace("&","\&",$link2);
         $pattern = "/\[$link2\|([^\]]+)\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a> $cosa",$data);
         $pattern = "/\[$link2\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a> $cosa",$data);
       } else {
         $link2 = str_replace("/","\/",$link);
+        $link2 = str_replace("?","\?",$link2);
+        $link2 = str_replace("&","\&",$link2);
         $pattern = "/\[$link2\|([^\]]+)\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
         $pattern = "/\[$link2\]/";
@@ -1413,7 +2193,8 @@ class TikiLib {
       }
     }
     
-    
+    // Title bars
+    $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
     
     // Now tokenize the expression and process the tokens
     /* Use tab and newline as tokenizing characters as well  */
@@ -1507,6 +2288,8 @@ class TikiLib {
 
   function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip) 
   {
+    $edit_data = addslashes($edit_data);
+    $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
     $t = date("U");
     // Get this page information
@@ -1520,8 +2303,10 @@ class TikiLib {
     $data = addslashes($info["data"]);
     $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data) 
               values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    if($pageName != 'SandBox') {              
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);
+    }
     // Update the pages table with the new version of this page            
     $version += 1;
     $edit_data = addslashes($edit_data);
@@ -1534,22 +2319,23 @@ class TikiLib {
       $this->replace_link($pageName,$page);
     }
     // Update the log
-    $action = "Updated";
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName',$t,'$edit_user','$edit_ip','$edit_comment')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    // If we have too many versions then
-    $maxversions = $this->get_preference("maxVersions",0);
-    if($maxversions) {
-      $query = "select pageName,version from tiki_history where pageName='$pageName' order by lastModif desc limit $maxversions,-1"; 
+    if($pageName != 'SandBox') {              
+      $action = "Updated";
+      $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName',$t,'$edit_user','$edit_ip','$edit_comment')";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
-      $toelim = $result->numRows();
-      while($res= $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $page = $res["pageName"];
-        $version = $res["version"];
-        $query = "delete from tiki_history where pageName='$pageName' and version='$version'";
-        $this->db->query($query);
+      $maxversions = $this->get_preference("maxVersions",0);
+      if($maxversions) {
+        $query = "select pageName,version from tiki_history where pageName='$pageName' order by lastModif desc limit $maxversions,-1"; 
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query,$result);
+        $toelim = $result->numRows();
+        while($res= $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+          $page = $res["pageName"];
+          $version = $res["version"];
+          $query = "delete from tiki_history where pageName='$pageName' and version='$version'";
+          $this->db->query($query);
+        }
       }
     }
   }

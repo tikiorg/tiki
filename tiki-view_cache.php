@@ -31,7 +31,6 @@ if(!isset($_REQUEST["cacheId"])) {
 // Get a list of last changes to the Wiki database
 $info = $tikilib->get_cache($_REQUEST["cacheId"]);
 $smarty->assign_by_ref('info',$info);
-
 $smarty->assign('mid','tiki-view_cache.tpl');
 $smarty->display('tiki-view_cache.tpl');
 ?>

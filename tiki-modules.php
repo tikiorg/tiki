@@ -3,6 +3,19 @@
 clearstatcache();
 $now=date("U");
 
+if($user != 'admin') {
+  $user_groups = $userlib->get_user_groups($user);
+  } else {
+  $allgroups = $userlib->get_groups(0,-1,'groupName_desc',''); 	
+  $user_groups = Array();
+  foreach($allgroups["data"] as $grp) {
+    $user_groups[]=$grp["groupName"];	
+  }
+}
+
+
+
+
 // Now get left modules from the assigned modules
 $left_modules = $tikilib->get_assigned_modules('l');
 // Now get right modules from the assigned modules
@@ -11,6 +24,24 @@ $right_modules = $tikilib->get_assigned_modules('r');
 
 for($i=0;$i<count($left_modules);$i++) {
     $r=&$left_modules[$i];
+    
+    $pass = 'y';
+    if($modallgroups != 'y') {
+      // Check for the right groups
+      if($r["groups"]) {
+        $module_groups = unserialize($r["groups"]);
+      } else {
+        $module_groups = Array();	
+      }
+      $pass = 'n';
+      foreach($module_groups as $mod_group) {
+        if(in_array($mod_group,$user_groups)) {
+          $pass = 'y';	
+        }	
+      }
+    }
+
+    if($pass == 'y') {
     $cachefile = 'modules/cache/mod-'.$r["name"].'.tpl.cache';       
     $phpfile = 'modules/mod-'.$r["name"].'.php';
     $template= 'modules/mod-'.$r["name"].'.tpl';
@@ -56,11 +87,29 @@ for($i=0;$i<count($left_modules);$i++) {
       fclose($fp);
       $r["data"] = $data;
     }
+    }
 }
 
 
 for($i=0;$i<count($right_modules);$i++) {
     $r=&$right_modules[$i];
+    $pass = 'y';
+    if($modallgroups != 'y') {
+      // Check for the right groups
+      if($r["groups"]) {
+        $module_groups = unserialize($r["groups"]);
+      } else {
+        $module_groups = Array();	
+      }
+      $pass = 'n';
+      foreach($module_groups as $mod_group) {
+        if(in_array($mod_group,$user_groups)) {
+          $pass = 'y';	
+        }	
+      }
+    }
+    
+    if($pass == 'y'){
     $cachefile = 'modules/cache/mod-'.$r["name"].'.tpl.cache';       
     $phpfile = 'modules/mod-'.$r["name"].'.php';
     $template= 'modules/mod-'.$r["name"].'.tpl';
@@ -100,6 +149,7 @@ for($i=0;$i<count($right_modules);$i++) {
       $data = fread($fp,filesize($cachefile));
       fclose($fp);
       $r["data"] = $data;
+    }
     }
 }
 

@@ -25,8 +25,8 @@
 <tr>
 <td class="even">{$user_modules[user].name}</td>
 <td class="even">{$user_modules[user].title}</td>
-<td class="even"><a class="link" href="tiki-admin_modules.php?action=remove&amp;module={$user_modules[user].name}">{tr}delete{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?action=edit&amp;modules={$user_modules[user].name}">{tr}edit{/tr}</a>
+<td class="even"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}">{tr}assign{/tr}</a></td>
 </tr>
 {/if}
@@ -42,29 +42,36 @@
 
 <form method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td>Module Name</td><td>
+<tr><td>{tr}Module Name{/tr}</td><td>
 <select name="assign_name">
 {section name=ix loop=$all_modules}
 <option value="{$all_modules[ix]}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<!--<tr><td>Title</td><td><input type="text" name="assign_title" value="{$assign_title}"></td></tr>-->
-<tr><td>Position</td><td>
+<!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title}"></td></tr>-->
+<tr><td>{tr}Position{/tr}</td><td>
 <select name="assign_position">
 <option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>left</option>
 <option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>right</option>
 </select>
 </td></tr>
-<tr><td>Order</td><td>
+<tr><td>{tr}Order{/tr}</td><td>
 <select name="assign_order">
 {section name=ix loop=$orders}
 <option value="{$orders[ix]}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td>Cache Time(secs)</td><td><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
-<tr><td>Rows</td><td><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
+<tr><td>{tr}Cache Time{/tr}(secs)</td><td><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
+<tr><td>{tr}Rows{/tr}</td><td><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
+<tr><td>{tr}Groups{/tr}</td><td>
+<select multiple="multiple" name="groups[]">
+{section name=ix loop=$groups}
+<option value="{$groups[ix].groupName}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
+{/section}
+</select>
+</td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="assign" value="assign"></td></tr>
 </table>
 </form>
@@ -80,6 +87,7 @@
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
+<td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$left}
@@ -90,6 +98,7 @@
 <td class="odd">{$left[user].ord}</td>
 <td class="odd">{$left[user].cache_time}</td>
 <td class="odd">{$left[user].rows}</td>
+<td class="odd">{$left[user].module_groups}</td>
 <td class="odd">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
@@ -103,6 +112,7 @@
 <td class="even">{$left[user].ord}</td>
 <td class="even">{$left[user].cache_time}</td>
 <td class="even">{$left[user].rows}</td>
+<td class="even">{$left[user].module_groups}</td>
 <td class="even">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
@@ -126,6 +136,7 @@
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
+<td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$right}
@@ -136,6 +147,7 @@
 <td class="odd">{$right[user].ord}</td>
 <td class="odd">{$right[user].cache_time}</td>
 <td class="odd">{$right[user].rows}</td>
+<td class="odd">{$right[user].module_groups}</td>
 <td class="odd">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
@@ -149,6 +161,7 @@
 <td class="even">{$right[user].ord}</td>
 <td class="even">{$right[user].cache_time}</td>
 <td class="even">{$right[user].rows}</td>
+<td class="odd">{$right[user].module_groups}</td>
 <td class="even">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
