@@ -3609,8 +3609,15 @@ class TikiLib extends TikiDB {
 			    $repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new").'" />';
 		    } else {
 			$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
+			
+			global $tiki_p_edit;
+			if ($tiki_p_edit == 'y') {
+				$create_page_link = '<a href="'.$uri_ref.'" title="'.tra("Create page:")." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
+			} else {
+				$create_page_link = '';
+			}
 
-		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:")." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
+		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . $create_page_link;
 		    }
 
 		    $data = preg_replace($pattern, "$repl", $data);
@@ -3649,7 +3656,13 @@ class TikiLib extends TikiDB {
 			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
 			}
 		    } else {
-		  $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
+				global $tiki_p_edit;
+				if ($tiki_p_edit == 'y') {
+					$create_page_link = '<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
+				} else {
+					$create_page_link = '';
+				}
+		  $repl = $page_parse.$create_page_link;
 		    }
 
 		    $page_parse_pq = preg_quote($page_parse, "/");
@@ -3696,10 +3709,22 @@ class TikiLib extends TikiDB {
 				// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 				$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 			    } else {
-			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+					global $tiki_p_edit;
+					if ($tiki_p_edit == 'y') {
+						$create_page_link = '<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+					} else {
+						$create_page_link = '';
+					}
+			    $repl = $page_parse.$create_page_link;
 			    }
 			} else {
-			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+				global $tiki_p_edit;
+				if ($tiki_p_edit == 'y') {
+					$create_page_link = '<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
+				} else {
+					$create_page_link = '';
+				}
+			    $repl = $page_parse.$create_page_link;
 			}
 
 			$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
