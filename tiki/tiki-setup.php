@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.117 2003-08-07 10:39:55 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.118 2003-08-07 19:42:24 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -871,7 +871,7 @@ $anonCanEdit = $tikilib->get_preference("anonCanEdit", 'n');
 $modallgroups = $tikilib->get_preference("modallgroups", 'y');
 $change_language = $tikilib->get_preference("change_language", 'y');
 $change_theme = $tikilib->get_preference("change_theme", 'y');
-$tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
+//$tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 $cachepages = $tikilib->get_preference("cachepages", 'y');
 $cacheimages = $tikilib->get_preference("cacheimages", 'y');
 $allowRegister = $tikilib->get_preference("allowRegister", 'n');
@@ -950,7 +950,7 @@ $smarty->assign('proxy_port', $proxy_port);
 $smarty->assign('registerPasscode', $registerPasscode);
 $smarty->assign('useRegisterPasscode', $useRegisterPasscode);
 
-$smarty->assign('tikiIndex', $tikiIndex);
+//$smarty->assign('tikiIndex', $tikiIndex);
 $smarty->assign('maxArticles', $maxArticles);
 $smarty->assign('popupLinks', $popupLinks);
 $smarty->assign('modallgroups', $modallgroups);
@@ -1110,6 +1110,18 @@ if (!file_exists("templates_c/" . $tikidomain . "preferences.php")) {
 } else {
 	include_once ("templates_c/" . $tikidomain . "preferences.php");
 }
+
+$useGroupHome = $tikilib->get_preference("useGroupHome",'n');
+if($useGroupHome == 'y' and isset($user)) {
+	$group = $userlib->get_user_default_group($user);
+	$groupHome = $userlib->get_group_home($group);
+	if ($groupHome) {
+		$tikiIndex = $groupHome;
+	}
+} else {
+	$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
+}
+$smarty->assign('tikiIndex',$tikiIndex);
 
 $user_dbl = 'y';
 

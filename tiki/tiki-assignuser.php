@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.4 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.5 2003-08-07 19:42:24 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,10 @@ if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'removegroup') {
 		$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 	}
+}
+
+if(isset($_REQUEST['set_default'])) {
+	$userlib->set_default_group($_REQUEST['login'],$_REQUEST['defaultgroup']);
 }
 
 $user_info = $userlib->get_user_info($assign_user);

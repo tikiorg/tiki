@@ -704,6 +704,30 @@ class UsersLib extends TikiLib {
 			return $this->usergroups_cache[$user];
 		}
 	}
+	
+	function get_user_default_group($user) {
+		$query = "select default_group from users_users where login='$user'";
+		$result = $this->query($query);
+		if($result->numRows()) {
+			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$ret = $res['default_group'];
+		} else {
+			$ret ='';
+		}
+		return $ret;
+	}
+  
+	function get_group_home($group) {
+		$query = "select groupHome from users_groups where groupName='$group'";
+		$result = $this->query($query);
+		if($result->numRows()) {
+			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$ret = $res['groupHome'];
+		} else {
+			$ret ='';
+		}
+		return $ret;
+	}
 
 	function get_group_users($group) {
 		$query = "select `login`  from `users_users` uu,users_usergroups ug where `uu`.userId=ug.userId and groupName='$group'";
@@ -732,6 +756,19 @@ class UsersLib extends TikiLib {
 		$groups = $this->get_user_groups($user);
 		$res["groups"] = $groups;
 		return $res;
+	}
+
+	function set_default_group($user,$group) {
+		$groupesc=$this->qstr($group);
+		$query = "update users_users set default_group=$groupesc where login='$user'";
+		$this->query($query);
+	}
+  
+	function batch_set_default_group($group) {
+		$users = $this->get_group_users($group);
+		foreach ($users as $user) {
+		$this->set_default_group($user,$group);
+		}
 	}
 
 	function change_permission_level($perm, $level) {
@@ -1097,22 +1134,22 @@ class UsersLib extends TikiLib {
 		));
 	}
 
-	function add_group($group, $desc) {
+	function add_group($group, $desc, $home) {
 		if ($this->group_exists($group))
 			return false;
 
 		$group = addslashes($group);
 		$desc = addslashes($desc);
-		$query = "insert into users_groups(groupName, groupDesc) values('$group','$desc')";
+		$query = "insert into users_groups(groupName, groupDesc, groupHome) values('$group','$desc', '$home')";
 		$result = $this->query($query);
 		return true;
 	}
 
-	function change_group($olgroup, $group, $desc) {
+	function change_group($olgroup,$group,$desc,$home) {
 		if (!$this->group_exists($olgroup))
-			return $this->add_group($group, $desc);
+			return $this->add_group($group, $desc, $home);
 
-		$query = "update `users_groups` set `groupName`='$group', groupDesc='$desc' where `groupName`='$olgroup'";
+		$query = "update `users_groups` set `groupName`='$group', groupDesc='$desc', groupHome='$home' where `groupName`='$olgroup'";
 		$result = $this->query($query);
 		$query = "update `users_usergroups` set `groupName`='$group' where `groupName`='$olgroup'";
 		$result = $this->query($query);
