@@ -131,7 +131,7 @@ class tiki extends Wollabot_Module {
 		if (method_exists($this,$help)) {
 			return $this->$help('help',1);
 		} else {
-			return "[!T help] who stats rpage art dir";
+			return "[!T help] who stats rpage art dir find";
 		}
 	}
 
