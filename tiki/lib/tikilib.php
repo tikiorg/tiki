@@ -4655,7 +4655,7 @@ function add_pageview() {
 		    if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki">' . $wexs[1] . '</a>';
+			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
 			$data = preg_replace($pattern, "$wkurl", $data);
 			$repl2 = false;
 		    }
@@ -4706,7 +4706,7 @@ function add_pageview() {
 		    if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki">' . $wexs[1] . '</a>';
+			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
 			$data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
 			$repl2 = false;
 		    }
@@ -4846,6 +4846,7 @@ function add_pageview() {
 	foreach ($links as $link)
 	{
 	    $target = '';
+	    $class = 'class="wiki"';
 
 	    if ($this->get_preference('popupLinks', 'n') == 'y')
 	    {
@@ -4858,6 +4859,8 @@ function add_pageview() {
 	    if (strstr($link, $_SERVER["SERVER_NAME"]))
 	    {
 		$target = '';
+	    } else {
+	    	$class = 'class="wiki external"';
 	    }
 
 	    if (!strstr($link, '//'))
@@ -4879,11 +4882,11 @@ function add_pageview() {
 		//$link2 = str_replace("&","\&",$link2);
 		$link2 = str_replace("/", "\/", preg_quote($link));
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>", $data);
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a> $cosa", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a> $cosa", $data);
 		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a> $cosa", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a> $cosa", $data);
 	    } else {
 		//$link2 = str_replace("/","\/",$link);
 		//$link2 = str_replace("?","\?",$link2);
@@ -4891,9 +4894,9 @@ function add_pageview() {
 		$link2 = str_replace("/", "\/", preg_quote($link));
 
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>", $data);
 		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>", $data);
 	    }
 
 	}
