@@ -184,6 +184,12 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("style",$_REQUEST["style"]); 
     $smarty->assign_by_ref('style',$_REQUEST["style"]);
   }
+  
+  if(isset($_REQUEST["slide_style"])) {
+    $tikilib->set_preference("slide_style",$_REQUEST["slide_style"]); 
+    $smarty->assign_by_ref('slide_style',$_REQUEST["slide_style"]);
+  }
+  
   if(isset($_REQUEST["siteTitle"])) {
     $tikilib->set_preference("siteTitle",$_REQUEST["siteTitle"]); 
     $smarty->assign_by_ref('siteTitle',$_REQUEST["siteTitle"]);
@@ -209,6 +215,14 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("modallgroups",'n');
     $smarty->assign('modallgroups','n');
+  }
+  
+  if(isset($_REQUEST["feature_obzip"]) && $_REQUEST["feature_obzip"]=="on") {
+    $tikilib->set_preference("feature_obzip",'y'); 
+    $smarty->assign('feature_obzip','y');
+  } else {
+    $tikilib->set_preference("feature_obzip",'n');
+    $smarty->assign('feature_obzip','n');
   }
   
  
@@ -1152,6 +1166,16 @@ while($file=readdir($h)) {
 }
 closedir($h);
 $smarty->assign_by_ref('styles',$styles);
+
+$slide_styles=Array();
+$h=opendir("styles/slideshows");
+while($file=readdir($h)) {
+  if(strstr($file,"css")) {
+    $slide_styles[]=$file;
+  }
+}
+closedir($h);
+$smarty->assign_by_ref('slide_styles',$slide_styles);
 
 $languages=Array();
 $h=opendir("lang/");

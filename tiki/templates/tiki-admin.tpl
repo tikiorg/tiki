@@ -125,6 +125,7 @@
 </td></tr>
 <tr><td class="form">{tr}Use URI as Home Page{/tr}:</td><td><input type="checkbox" name="useUrlIndex" {if $useUrlIndex eq 'y'}checked="checked"{/if}/><input type="text" name="urlIndex" value="{$urlIndex}"/></td></tr>
 <tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use gzipped output{/tr}:</td><td><input type="checkbox" name="feature_obzip" {if $feature_obzip eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external images{/tr}:</td><td><input type="checkbox" name="cacheimages" {if $cacheimages eq 'y'}checked="checked"{/if}/></td></tr>
@@ -138,6 +139,12 @@
         <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select></td></tr>
+<tr><td class="form">{tr}Slideshows theme{/tr}:</td><td>
+        <select name="slide_style">
+        {section name=ix loop=$slide_styles}
+        <option value="{$slide_styles[ix]}" {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>{$slide_styles[ix]}</option>
+        {/section}
+        </select></td></tr>        
 <tr><td class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}

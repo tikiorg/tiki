@@ -136,14 +136,6 @@ div.cbox-data {
 /* Some boxes are identified by an ID, for example the  boxes in the main application menu, we set display to
    none to make the menu appear collapsed initially, change this to 'block' if you want it to be extended fully */
 
-/* Boxes */
-#admmnu { display: none;}   
-#wikimenu { display: none;}
-#faqsmenu { display: none;}
-#galmenu { display: none;}
-#cmsmenu { display: none;}
-#blogmenu { display: none;}
-#filegalmenu { display: none;}
 
 /* Menus */
 /* Separators are used to sepparate menu areas in the application menu and user created menus*/
@@ -769,7 +761,7 @@ td.threadseparator { background-color: #EEEEEE; height: 5px;}
 
 #forumpost { display: none;}   
 #forumpostopen { display: block;}   
-#formenu { display: none;}
+
 
 div.forumtoolbar {  background: #395AAD;   width: 98%;  margin-bottom: 20px;  border: 0px;}
 
@@ -876,7 +868,7 @@ div.faqanswer {
 
 /***************************************************** QUIZZES **************************************************************/
 
-#quizmenu { display: none;}
+
 
 div.questionblock {
   border: 1px solid black;
@@ -942,5 +934,3 @@ textarea.tshoutbox{
 	font-family: verdana, tahoma, arial, helvetica, sans-serif;
 	font-size: 10px;
 }
-#trkmenu { display: none;}
-#srvmenu { display: none;}
