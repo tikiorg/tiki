@@ -106,7 +106,7 @@ class CcLib extends UsersLib {
 
 	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false) {
 		$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
-		$query_cant = 'select count(*) from `cc_cc`';
+		$query_cant = 'select count(*) from `cc_cc` as cc';
 		$bindvars = $mid = array();
 		if ($find) {
 			$mid[] = "cc.`cc_name`=?";
@@ -125,11 +125,12 @@ class CcLib extends UsersLib {
 		$midc[] = "ccl.`approved`=?";
 		$bindvarsc[] = 'y';
 		$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
-		if (count($midc)) {
-			$midc = " where ". implode(' and ',$midc);
+		if (count($mid)) {
+			$mid = " where ". implode(' and ',$mid);
 		} else {
-			$midc = '';
+			$mid = '';
 		}
+		$midc = " where ". implode(' and ',$midc);
 		$result = $this->query($query.$midc.$order,$bindvarsc,$max,$offset);	
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
