@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.7 2003-10-29 23:31:31 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.8 2003-12-07 15:59:59 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -24,8 +24,8 @@ function wikiplugin_box($data, $params) {
 	$bg   = (isset($bg))    ? " background:$bg;" : "";
     $al   = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
     
-	$begin  = "<table$al$w><tr><td$w><div class=cbox".(strlen($bg) > 0 ? " style='$bg'" : "").">";
-    $begin .= "<div class=cbox-title>$title</div><div class=cbox-data".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
+	$begin  = "<table$al$w><tr><td$w><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+    $begin .= "<div class='cbox-title'>$title</div><div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
 	$end = "</div></div></td></tr></table>";
     // Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
     if (substr($data, 1) != "\n") $data = "\n".$data;
