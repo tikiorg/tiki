@@ -87,7 +87,7 @@
       <select name="editorGroup">
         <option value="">{tr}None{/tr}</option>
         {section name=ux loop=$groups}
-        <option value="{$groups[ux].groupName|escape}" {if $editorGroup eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
+        <option value="{$groups[ux]|escape}" {if $editorGroup eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
         {/section}
       </select>
     </td>

@@ -698,6 +698,21 @@ function get_included_groups($group) {
 	return $retval;
     }
 	
+	function list_all_users() {
+		global $cachelib;
+		if (!$cachelib->isCached("userslist")) {
+			$users = array();
+			$result = $this->query("select `login`,`userId` from `users_users` order by `login`", array());
+			while ($res = $result->fetchRow()) {
+				$users["{$res['userId']}"] = $res['login'];
+			}
+			$cachelib->cacheItem("userslist",serialize($users));
+			return $users;
+		} else {
+			return unserialize($cachelib->getCached("userslist"));
+		}
+	}
+
 	function list_all_groups() {
 		global $cachelib;
 		if (!$cachelib->isCached("groupslist")) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.27 2004-01-02 23:19:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.28 2004-01-29 02:29:23 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -247,17 +247,19 @@ for ($i = 1; $i < 50; $i++) {
 
 $smarty->assign_by_ref('orders', $orders);
 
-$groups = $userlib->get_groups(0, -1, 'groupName_desc', '');
-
-for ($i = 0; $i < count($groups["data"]); $i++) {
-	if (in_array($groups["data"][$i]["groupName"], $module_groups)) {
-		$groups["data"][$i]["selected"] = 'y';
+$groups = $userlib->list_all_groups();
+$allgroups = array();
+for ($i = 0; $i < count($groups); $i++) {
+	if (in_array($groups[$i], $module_groups)) {
+		$allgroups[$i]["groupName"] = $groups[$i];
+		$allgroups[$i]["selected"] = 'y';
 	} else {
-		$groups["data"][$i]["selected"] = 'n';
+		$allgroups[$i]["groupName"] = $groups[$i];
+		$allgroups[$i]["selected"] = 'n';
 	}
 }
 
-$smarty->assign_by_ref("groups", $groups["data"]);
+$smarty->assign_by_ref("groups", $allgroups);
 $galleries = $tikilib->list_galleries(0, -1, 'lastModif_desc', $user, '');
 $smarty->assign('galleries', $galleries["data"]);
 $polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
