@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.194 2004-05-03 14:44:21 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.195 2004-05-05 00:12:58 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -3896,7 +3896,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
 
 # Homework permissions - ggeller
-INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
+INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
@@ -4457,11 +4457,12 @@ CREATE TABLE tiki_jukebox_tracks (
 # Homework tables start
 #
 # Created Feb 22, 2004
-# Revised Mar 19, 2004
+# Revised May 04, 2004
 #
 
 DROP TABLE IF EXISTS hw_actionlog;
-CREATE TABLE hw_actionlog (
+DROP TABLE IF EXISTS tiki_hw_actionlog;
+CREATE TABLE tiki_hw_actionlog (
   action varchar(255) NOT NULL default '',
   lastModif int(14) NOT NULL default '0',
   pageId int(14) default NULL,
@@ -4472,7 +4473,8 @@ CREATE TABLE hw_actionlog (
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_assignments;
-CREATE TABLE hw_assignments (
+DROP TABLE IF EXISTS tiki_hw_assignments;
+CREATE TABLE tiki_hw_assignments (
   assignmentId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
   teacherName varchar(40) NOT NULL default '',
@@ -4487,7 +4489,8 @@ CREATE TABLE hw_assignments (
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_grading_queue;
-CREATE TABLE hw_grading_queue (
+DROP TABLE IF EXISTS tiki_hw_grading_queue;
+CREATE TABLE tiki_hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
   submissionDate int(14) default NULL,
@@ -4501,7 +4504,8 @@ CREATE TABLE hw_grading_queue (
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_grading_queue;
-CREATE TABLE hw_grading_queue (
+DROP TABLE IF EXISTS tiki_hw_grading_queue;
+CREATE TABLE tiki_hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
   submissionDate int(14) default NULL,
@@ -4515,7 +4519,8 @@ CREATE TABLE hw_grading_queue (
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_history;
-CREATE TABLE hw_history (
+DROP TABLE IF EXISTS tiki_hw_history;
+CREATE TABLE tiki_hw_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
   lastModif int(14) NOT NULL default '0',
@@ -4527,7 +4532,8 @@ CREATE TABLE hw_history (
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_pages;
-CREATE TABLE hw_pages (
+DROP TABLE IF EXISTS tiki_hw_pages;
+CREATE TABLE tiki_hw_pages (
   id int(14) NOT NULL auto_increment,
   assignmentId int(14) NOT NULL default '0',
   studentName varchar(200) NOT NULL default '',
