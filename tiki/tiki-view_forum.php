@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.56 2004-01-28 14:38:02 hsaelens Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.57 2004-01-30 22:22:29 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -195,6 +195,31 @@ $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 // Process a post form here 
 $smarty->assign('warning', 'n');
 
+
+// Here we send the user to the right thread/topic if it already exists;
+// this is used for the 'discuss' tab.
+if (isset($_REQUEST["comments_postComment"])) 
+{
+    // Check if the thread/topic already existis
+    $threadId = $commentslib->check_for_topic(
+	    $_REQUEST["comments_title"],
+	    $_REQUEST["comments_data"]
+	    );
+
+    // If it does, send the user there with no delay.
+    if ( $threadId )
+    {
+	// If the samely titled comment already
+	// exists, go straight to it.
+	$url = 'tiki-view_forum_thread.php?comments_parentId=' 
+	    . urlencode( $threadId )
+	    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='
+	    . urlencode( $_REQUEST["forumId"]);
+	header('location: ' . $url);
+	exit;
+    }
+}
+
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
@@ -221,6 +246,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
+		    print("<p>queued.\n");
 		    $smarty->assign('was_queued', 'y');
 
 		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
@@ -232,7 +258,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
 			    || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
 			if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-	check_ticket('view-forum');
+			    check_ticket('view-forum');
 			    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 			    $data = '';
@@ -320,40 +346,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				    $_REQUEST['comment_topicsmiley']
 				    );
 
-			// Check if the thread was successfully
-			// created.
-			if ( ! $threadId )
+			if( $threadId ) 
 			{
-			    // The thread *WAS* *NOT* successfully
-			    // created.
-
-			    // Call post_new_comment again, but this
-			    // time ask it to return the threadId if the
-			    // same comment already exists. -rlpowell
-			    $getold =
-				$commentslib->post_new_comment(
-					$comments_objectId,
-					0, $user, $_REQUEST["comments_title"],
-					($_REQUEST["comments_data"]),
-					$message_id,
-					'', // in_reply_to
-					$_REQUEST["comment_topictype"],
-					$_REQUEST["comment_topicsummary"],
-					$_REQUEST['comment_topicsmiley'], true
-					);
-
-			    if ( $getold )
-			    {
-				// If the samely titled comment already
-				// exists, go straight to it.
-				$url = 'tiki-view_forum_thread.php?comments_parentId=' 
-				    . urlencode( $getold )
-				    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='
-				    . urlencode( $_REQUEST["forumId"]);
-				header('location: ' . $url);
-				exit;
-			    }
-			} else {
 			    // The thread *WAS* successfully
 			    // created.
 

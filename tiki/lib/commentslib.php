@@ -306,7 +306,7 @@ class Comments extends TikiLib {
 			'forum:' . $forumId, 0,
 			$userName, $title, 
 			"Use this thread to discuss the [tiki-index.php?page=$title|$title] page.",
-			'',$temp_msid
+			$temp_msid
 			);
 	    }
 
@@ -1449,6 +1449,16 @@ class Comments extends TikiLib {
 		return false;
 	    }
 	}
+
+	$threadId = $this->getOne("select `threadId` from
+		`tiki_comments` where `hash`=?", array( $hash ) );
+	return $threadId;
+    }
+
+    // Check if a particular topic exists.
+    function check_for_topic( $title, $data )
+    {
+	$hash = md5($title . $data);
 
 	$threadId = $this->getOne("select `threadId` from
 		`tiki_comments` where `hash`=?", array( $hash ) );
