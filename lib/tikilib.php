@@ -4773,13 +4773,13 @@ if (count($anch))
 
 	    $rssdata = $rsslib->get_rss_module_content($id);
 	    $items = $rsslib->parse_rss_data($rssdata);
-	    $repl = '';
+	    $repl = '<ul>';
 
 	    for ($j = 0; $j < count($items) && $j < $max; $j++) {
 		$repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a></li>';
 	    }
 
-	    $repl = '<ul>' . $repl . '</ul>';
+	    $repl .= '</ul>';
 	    $data = str_replace($rsss[0][$i], $repl, $data);
 	}
     }
