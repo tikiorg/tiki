@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.5 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.6 2003-08-22 00:04:29 lueders Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,8 @@ if (isset($_REQUEST["create"])) {
 
 	if (!(empty($_REQUEST['name']))) {
 		$structlib->s_create_page($_REQUEST["page"], $_REQUEST["after"], $_REQUEST["name"]);
+		$userlib->copy_object_permissions($_REQUEST["page"],$_REQUEST["name"],'wiki page');
+
 	} else {
 		$after = $_REQUEST['after'];
 
