@@ -1,0 +1,3 @@
+If you want to use one or many of these plugins just
+copy the php file to the lib/wiki-plugins directory and
+the plugin will be activated.
