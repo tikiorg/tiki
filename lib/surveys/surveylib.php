@@ -9,9 +9,11 @@ class SurveyLib extends TikiLib {
   
   function add_survey_hit($surveyId)
   {
-    $now=date("U"); 	 
-    $query = "update tiki_surveys set taken=taken+1, lastTaken=$now where surveyId=$surveyId";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $now=date("U"); 	 
+      $query = "update tiki_surveys set taken=taken+1, lastTaken=$now where surveyId=$surveyId";
+      $result = $this->query($query);
+    }
   }
   
   function register_survey_text_option_vote($questionId,$value)

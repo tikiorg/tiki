@@ -500,15 +500,19 @@ class DirLib extends TikiLib {
   // Site hit
   function dir_add_site_hit($siteId)
   {
-    $query = "update tiki_directory_sites set hits=hits+1 where siteId=$siteId";
-    $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_directory_sites set hits=hits+1 where siteId=$siteId";
+      $this->query($query);
+    }
   }  
   
   // Category hit
   function dir_add_category_hit($categId)
   {
-    $query = "update tiki_directory_categories set hits=hits+1 where categId=$categId";
-    $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_directory_categories set hits=hits+1 where categId=$categId";
+      $this->query($query);
+    }
   }
    
   // Search

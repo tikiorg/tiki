@@ -12,13 +12,15 @@ class GameLib extends TikiLib {
   
   function add_game_hit($game)
   {
-    $cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
-    if($cant) {
-      $query = "update tiki_games set hits = hits+1 where gameName='$game'";
-    } else {
-      $query = "insert into tiki_games(gameName,hits,points,votes) values('$game',1,0,0)";
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
+      if($cant) {
+        $query = "update tiki_games set hits = hits+1 where gameName='$game'";
+      } else {
+        $query = "insert into tiki_games(gameName,hits,points,votes) values('$game',1,0,0)";
+      }
+      $result = $this->query($query);
     }
-    $result = $this->query($query);
   }
   
   function get_game_hits($game)

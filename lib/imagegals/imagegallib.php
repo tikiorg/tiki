@@ -363,15 +363,19 @@ class ImageGalsLib extends TikiLib {
 
   function add_image_hit($id)
   {
-    $query = "update tiki_images set hits=hits+1 where imageId=$id";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_images set hits=hits+1 where imageId=$id";
+      $result = $this->query($query);
+    }
     return true;
   }
 
   function add_gallery_hit($id)
   {
-    $query = "update tiki_galleries set hits=hits+1 where galleryId=$id";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_galleries set hits=hits+1 where galleryId=$id";
+      $result = $this->query($query);
+    }
     return true;
   }
 

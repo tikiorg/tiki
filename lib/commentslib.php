@@ -565,17 +565,21 @@ class Comments extends TikiLib {
   
   function forum_add_hit($forumId)
   {
-    $query = "update tiki_forums set hits=hits+1 where forumId=$forumId";
-    $result = $this->query($query);
-    $this->forum_prune($forumId);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_forums set hits=hits+1 where forumId=$forumId";
+      $result = $this->query($query);
+      $this->forum_prune($forumId);
+    }
     return true;
   }
   
   function comment_add_hit($threadId)
   {
-    $query = "update tiki_comments set hits=hits+1 where threadId=$threadId";
-    $result = $this->query($query);
-    //$this->forum_prune($forumId);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_comments set hits=hits+1 where threadId=$threadId";
+      $result = $this->query($query);
+      //$this->forum_prune($forumId);
+    }
     return true;
   }
   
