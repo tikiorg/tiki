@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.5 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.6 2003-10-07 20:19:23 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,6 +33,14 @@ $smarty->assign('nlId', $_REQUEST["nlId"]);
 
 $newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '');
 $smarty->assign('newsletters', $newsletters["data"]);
+
+$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
+// $nl_info["name"] = '';
+// $nl_info["description"] = '';
+// $nl_info["allowUserSub"] = 'y';
+// $nl_info["allowAnySub"] = 'n';
+// $nl_info["unsubMsg"] = 'y';
+// $nl_info["validateAddr"] = 'y';
 
 if (!isset($_REQUEST["editionId"]))
 	$_REQUEST["editionId"] = 0;
@@ -100,7 +108,11 @@ if (isset($_REQUEST["send"])) {
 		$to_array = array();
 
 		$to_array[] = $email;
-		$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email);
+		if ($nl_info["unsubMsg"] = 'y') {
+			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email);
+		} else {
+			$unsubmsg = ' ';
+		}
 		$mail->setHeadCharset("utf-8");
 		$mail->setTextCharset("utf-8");
 		$mail->setHtmlCharset("utf-8");

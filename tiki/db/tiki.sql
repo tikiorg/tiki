@@ -1934,7 +1934,10 @@ CREATE TABLE tiki_newsletters (
   lastSent int(14) default NULL,
   editions int(10) default NULL,
   users int(10) default NULL,
+  allowUserSub char(1) default 'y',
   allowAnySub char(1) default NULL,
+  unsubMsg char(1) default 'y',
+  validateAddr char(1) default 'y',
   frequency int(14) default NULL,
   PRIMARY KEY  (nlId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

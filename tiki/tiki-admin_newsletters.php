@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.4 2003-10-07 20:19:23 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,8 +62,10 @@ if ($_REQUEST["nlId"]) {
 
 	$info["name"] = '';
 	$info["description"] = '';
+	$info["allowUserSub"] = 'y';
 	$info["allowAnySub"] = 'n';
-	$info["frequency"] = 7 * 24 * 60 * 60;
+	$info["unsubMsg"] = 'y';
+	$info["validateAddr"] = 'y';
 }
 
 $smarty->assign('info', $info);
@@ -73,14 +75,31 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	if (isset($_REQUEST["allowUserSub"]) && $_REQUEST["allowUserSub"] == 'on') {
+		$_REQUEST["allowUserSub"] = 'y';
+	} else {
+		$_REQUEST["allowUserSub"] = 'n';
+	}
+
 	if (isset($_REQUEST["allowAnySub"]) && $_REQUEST["allowAnySub"] == 'on') {
 		$_REQUEST["allowAnySub"] = 'y';
 	} else {
 		$_REQUEST["allowAnySub"] = 'n';
 	}
 
-	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowAnySub"],
-		$_REQUEST["frequency"]);
+	if (isset($_REQUEST["unsubMsg"]) && $_REQUEST["unsubMsg"] == 'on') {
+		$_REQUEST["unsubMsg"] = 'y';
+	} else {
+		$_REQUEST["unsubMsg"] = 'n';
+	}
+
+	if (isset($_REQUEST["validateAddr"]) && $_REQUEST["validateAddr"] == 'on') {
+		$_REQUEST["validateAddr"] = 'y';
+	} else {
+		$_REQUEST["validateAddr"] = 'n';
+	}
+
+	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"]);
 	/*
 	$cat_type='newsletter';
 	$cat_objid = $sid;
@@ -91,8 +110,11 @@ if (isset($_REQUEST["save"])) {
 	*/
 	$info["name"] = '';
 	$info["description"] = '';
+	$info["allowUserSub"] = 'y';
 	$info["allowAnySub"] = 'n';
-	$info["frequency"] = 7 * 24 * 60 * 60;
+	$info["unsubMsg"] = 'y';
+	$info["validateAddr"] = 'y';
+	//$info["frequency"] = 7 * 24 * 60 * 60;
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
 }
@@ -142,6 +164,7 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 // Fill array with possible number of questions per page
+/*
 $freqs = array();
 
 for ($i = 0; $i < 90; $i++) {
@@ -152,7 +175,7 @@ for ($i = 0; $i < 90; $i++) {
 }
 
 $smarty->assign('freqs', $freqs);
-
+*/
 /*
 $cat_type='newsletter';
 $cat_objid = $_REQUEST["nlId"];
