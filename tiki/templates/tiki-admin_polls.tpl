@@ -1,4 +1,27 @@
-<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Polls" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin polls{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin polls tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+
+<br /><br />
 [<a href="tiki-admin_polls.php?setlast=1" class="link">{tr}Set last poll as current{/tr}</a>|
 <a href="tiki-admin_polls.php?closeall=1" class="link">{tr}Close all polls but last{/tr}</a>|
 <a href="tiki-admin_polls.php?activeall=1" class="link">{tr}Activate all polls{/tr}</a>]
