@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.16 2003-12-08 15:12:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.17 2003-12-08 15:15:59 sylvieg Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -79,7 +79,7 @@
       <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" />
     </td>
   </tr><tr>
-    <td class="formcolor">{tr}<span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">Regex modifiers{/tr}</span></td>
+    <td class="formcolor"><span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">{tr}Regex modifiers{/tr}</span></td>
     <td class="formcolor">
       <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
     </td>
