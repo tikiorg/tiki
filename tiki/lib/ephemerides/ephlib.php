@@ -11,85 +11,96 @@ class EphLib extends TikiLib {
 	}
 
 	function get_eph($ephId) {
-		$query = "select * from tiki_eph where ephId='$ephId'";
+		if (! $ephId) {
+			return;
+		}
 
-		$result = $this->query($query);
+		$query = "select * from `tiki_eph` where `ephId` = ?";
+
+		$result = $this->query($query, array($ephId));
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 		return $res;
 	}
 
 	function replace_eph($ephId, $title, $filename, $filetype, $filesize, $data, $date, $textdata) {
-		$title = addslashes($title);
-
-		$filename = addslashes($filename);
-		$data = addslashes($data);
-		$textdata = addslashes($textdata);
 		$now = date("U");
 
 		if ($ephId) {
 			if ($data) {
-				$query = "update tiki_eph set
-  		title='$title',
-  		filename = '$filename',
-  		filetype = '$filetype',
-  		filesize = '$filesize',
-		data = '$data',  		
-		publish = '$date',
-		textdata = '$textdata'
-		where ephId=$ephId";
+				$query = "update `tiki_eph` set
+					`title` = ?,
+					`filename` = ?,
+					`filetype` = ?,
+					`filesize` = ?,
+					`data` = ?,
+					`publish` = ?,
+					`textdata` = ?
+						where `ephId` = ?";
 
-				$this->query($query);
+				$this->query($query, array($title, $filename,
+							$filetype, $filesize,
+							$data, $date,
+							$textdata, $ephId));
 			} else {
 				$query
-					= "update tiki_eph set
-  		title='$title',
-		publish = '$date',
-		textdata = '$textdata'
-		where ephId=$ephId";
+					= "update `tiki_eph` set
+						`title` = ?,
+						`publish` = ?,
+						`textdata` = ?
+							where `ephId` = ?";
 
-				$this->query($query);
+				$this->query($query, array($title, $date,
+							$textdata, $ephId));
 			}
 		} else {
-			$query = "insert into tiki_eph(title,filename,filetype,filesize,data,hits,publish,textdata)
-    	values('$title','$filename','$filetype','$filesize','$data',0,$date,'$textdata')";
+			$query = "insert into `tiki_eph`(`title`, `filename`,
+				`filetype`, `filesize`, `data`, `hits`,
+				`publish`, `textdata`)
+					values(?, ?, ?, ?, ?, ?, ?, ?)";
 
-			$this->query($query);
+			$this->query($query, array($title, $filename, $filetype,
+						$filesize, $data, 0, $date,
+						$textdata));
 		}
 	}
 
 	function remove_eph($ephId) {
-		$query = "delete from tiki_eph where ephId=$ephId";
+		$query = "delete from `tiki_eph` where `ephId` = ?";
 
-		$this->query($query);
+		$this->query($query, array($ephId));
 	}
 
 	function list_eph($offset, $maxRecords, $sort_mode, $find, $date = 0) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
+		$sort_mode = $this->convert_sortmode($sort_mode);
 
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (filename like $findesc or title like $findesc)";
+			$findesc = '%' . $find . '%';
+			$mid = " where (`filename` like ? or `title` like ?)";
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
 		} else {
 			$mid = "";
 		}
 
 		if ($date) {
 			if ($mid) {
-				$mid .= " and publish=$date ";
+				$mid .= " and `publish` = ? ";
 			} else {
-				$mid = " where publish=$date ";
+				$mid = " where `publish` = ? ";
 			}
+			$bindvars[] = $date;
 		}
 
-		$query = "select ephId,textdata,title,filename,filetype,filesize,publish,hits from tiki_eph $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_eph $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
-		$ret = array();
+		$query = "select `ephId`, `textdata`, `title`, `filename`,
+				`filetype`, `filesize`, `publish`, `hits`
+					from `tiki_eph` $mid
+					order by $sort_mode";
+		$query_cant = "select count(*) from `tiki_eph` $mid";
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 
+		$ret = array();
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$ret[] = $res;
 		}
