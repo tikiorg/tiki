@@ -73,6 +73,9 @@ function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
 
 /*shared*/
 function get_dsn_by_name($name) {
+		if ($name == 'local') {
+			return true;
+		}
     return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
 }
 

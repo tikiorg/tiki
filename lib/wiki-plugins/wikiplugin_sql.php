@@ -1,6 +1,6 @@
 <?php
 function wikiplugin_sql_help() {
-	return tra("Run a sql query").":<br />~np~{SQL db=>}".tra("sql query")."{SQL}~/np~";
+	return tra("Run a sql query").":<br />~np~{SQL(db=>dsn)}".tra("sql query")."{SQL}~/np~";
 }
 
 function wikiplugin_sql($data, $params) {
@@ -20,22 +20,24 @@ function wikiplugin_sql($data, $params) {
 	}
 
 	$ret = '';
-	$dsn = $tikilib->get_dsn_by_name($db);
-	$dbPlugin = DB::connect($dsn);
-
-	if (DB::isError($dbPlugin)) {
-		return ($dbPlugin->getMessage());
+	if ($db == 'local') {
+		$result = $tikilib->query($data,array());
+	} else {
+		$dsn = $tikilib->get_dsn_by_name($db);
+		$dbPlugin = DB::connect($dsn);
+		if (DB::isError($dbPlugin)) {
+			return ($dbPlugin->getMessage());
+		}
+		@$result = $dbPlugin->query($data);
+		if (DB::isError($result)) {
+			return $result->getMessage();
+		}
 	}
-
-	@$result = $dbPlugin->query($data);
-
-	if (DB::isError($result))
-		return $result->getMessage();
 
 	$first = true;
 	$class = 'even';
 
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	while ($res = $result->fetchRow()) {
 		if ($first) {
 			$ret .= "<div align='center'><table class='normal'><tr>";
 
