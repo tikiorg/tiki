@@ -16,7 +16,7 @@ if (isset($_REQUEST["css"])) {
 }
 
 // date format for RDF 2.0
-$datenow = htmlspecialchars(gmdate('D, d M Y H:i:s T', $chg["$dateId"]));
+$datenow = htmlspecialchars(gmdate('D, d M Y H:i:s T', date("U")));
 if ($rss_version < 2) {
 	// date format for RDF 1.0
 	$datenow = htmlspecialchars($tikilib->iso_8601(date("U")));
