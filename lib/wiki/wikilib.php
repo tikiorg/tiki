@@ -206,16 +206,6 @@ class WikiLib extends TikiLib {
 		$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
 		$this->query($query, array( $newName, $oldName ));
 	
-		// tiki_structures change page and parent
-		$query = "update `tiki_structures` set `page`=? where `page`=?";
-		$this->query($query, array( $newName, $oldName ));
-		$query = "update `tiki_structures` set `parent`=? where `parent`=?";
-		$this->query($query, array( $newName, $oldName ));
-	
-		// user_bookmarks_urls (url)
-	
-		// user notes (data)
-	
 		// Build objectId using 'wiki page' and the name
 		$oldId = 'wiki page' + md5($oldName);
 		$newId = 'wiki page' + md5($newName);
@@ -242,12 +232,6 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newId, $newName, $oldId ) );
 	
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
-		$this->query($query, array( $newName, $oldName ) );
-	
-		//update structures
-		$query = "update `tiki_structures` set `page`=? where `page`=?";
-		$this->query($query, array( $newName, $oldName ) );
-		$query = "update `tiki_structures` set `parent`=? where `parent`=?";
 		$this->query($query, array( $newName, $oldName ) );
 	
 		return true;
