@@ -16,10 +16,13 @@ class Cachelib {
 
   function Cachelib() {
 	global $tikidomain;
+	if (!empty($tikidomain) and substr($tikidomain,-1,1) != '/') {
+		$tikidomain.= '/';
+	}
 	$this->folder = "temp/".$tikidomain."cache";
-    if(!file_exists($this->folder)) {
-  	    // NO, this does _not_ create a world writeable directory. mkdir will '&' current mask (default 0022) with 0777 to give you '0755'. Older versions of php 4.1 (4.1.2 for sure) had the mask as a required paramter.
-  	    mkdir($this->folder, 0777);
+    if(!is_dir($this->folder)) {
+  		mkdir($this->folder);
+			@chmod($this->folder,"0777");
     }
   }
 	
@@ -27,7 +30,7 @@ class Cachelib {
   {
 	$cache_folder = $this->folder;
 	$key = md5($key);
-	$fw = fopen("$cache_folder/$key","w");
+	$fw = fopen($this->folder."/$key","w");
 	fwrite($fw,$data);
 	fclose($fw);
 	return true;
@@ -37,7 +40,7 @@ class Cachelib {
   {
 	$cache_folder = $this->folder;
 	$key = md5($key);
-	return file_exists("$cache_folder/$key");
+	return file_exists($this->folder."/$key");
   }
 	
   function getCached($key)
@@ -45,7 +48,7 @@ class Cachelib {
 	$cache_folder = $this->folder;
 	$key = md5($key);
 	$fw = fopen("$cache_folder/$key","r");
-	$data = fread($fw,filesize("$cache_folder/$key"));
+	$data = fread($fw,filesize($this->folder."/$key"));
 	fclose($fw);
 	return $data;
   }
@@ -54,7 +57,7 @@ class Cachelib {
   {
 	$cache_folder = $this->folder;
 	$key = md5($key);
-	@unlink("$cache_folder/$key");
+	@unlink($this->folder."/$key");
   }
 }
 
