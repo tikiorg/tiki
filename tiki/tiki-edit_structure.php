@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.16 2003-11-29 21:26:26 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.17 2003-12-03 10:37:03 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,7 +111,7 @@ if (isset($_REQUEST["find_objects"])) {
 $smarty->assign('find_objects', $find_objects);
 
 // Get all wiki pages for the dropdown menu
-$listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
+$listpages = $tikilib->list_pages(0, 50, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 
