@@ -2317,11 +2317,27 @@ function add_pageview() {
 	while ($res = $result->fetchRow()) {
 
 	    $add = TRUE;
+	    global $feature_categories;
 
 	    if ($userlib->object_has_one_permission($res["topicId"], 'topic')) {
+	    // topic permissions override category permissions
 			if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
 			    $add = FALSE;
 			}
+	    } elseif (!$userlib->user_has_permission($user, 'tiki_p_admin')  && $feature_categories == 'y') {
+	    	// no topic permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'article', $res['articleId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
 	    }
 	    // no need to do all of the following if we are not adding this article to the array
 	    if ($add) {
