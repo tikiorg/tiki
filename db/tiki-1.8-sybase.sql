@@ -362,6 +362,7 @@ go
 CREATE TABLE "tiki_articles" (
 articleId numeric(8 ,0) identity,
   "title" varchar(80) default NULL NULL,
+  "state" char(1) default 's',
   "authorName" varchar(60) default NULL NULL,
   "topicId" numeric(14,0) default NULL NULL,
   "topicName" varchar(40) default NULL NULL,
@@ -427,6 +428,7 @@ CREATE TABLE "tiki_article_types" (
   "show_pubdate" varchar(1) default 'y',
   "show_expdate" varchar(1) default NULL NULL,
   "show_reads" varchar(1) default 'y',
+  "show_size" varchar(1) default 'y',
   PRIMARY KEY ("type")
 )  
 go
@@ -603,6 +605,7 @@ CREATE TABLE "tiki_blog_posts" (
 postId numeric(8 ,0) identity,
   "blogId" numeric(8,0) default '0' NOT NULL,
   "data" text default '',
+	data_size numeric(11,0) NOT NULL unsigned default '0',
   "created" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   "trackbacks_to" text default '',
@@ -2756,7 +2759,7 @@ CREATE TABLE "tiki_modules" (
   "position" char(1) default NULL NULL,
   "ord" numeric(4,0) default NULL NULL,
   "type" char(1) default NULL NULL,
-  "title" varchar(40) default NULL NULL,
+  "title" varchar(255) default NULL NULL,
   "cache_time" numeric(14,0) default NULL NULL,
   "rows" numeric(4,0) default NULL NULL,
   "params" varchar(255) default NULL NULL,
@@ -5279,6 +5282,11 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki')
+go
+
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_userfiles', 'Can upload personal files', 'registered', 'user')
 go
 
@@ -5562,7 +5570,7 @@ CREATE TABLE "users_users" (
 userId numeric(8 ,0) identity,
   "email" varchar(200) default NULL NULL,
   "login" varchar(40) default '' NOT NULL,
-  "password" varchar(30) default '' NOT NULL,
+  "password" varchar(30) default '',
   "provpass" varchar(30) default NULL NULL,
   "realname" varchar(80) default NULL NULL,
   "default_group" varchar(255) default '',
@@ -6893,6 +6901,41 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_blogs','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_default_version','2')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_language','en-us')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_editor','')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_publisher','')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_webmaster','')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_creator','')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_css','y')
 go
 
 
