@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.2 2004-04-23 23:15:10 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.3 2004-04-24 05:30:40 ggeller Exp $
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
@@ -323,4 +323,4 @@ f.writelines(lout)
 f.close
 
 #  8. Restart apache
-os.system("apachectl graceful")
+os.system("/usr/sbin/apachectl graceful")
