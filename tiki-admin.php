@@ -242,6 +242,14 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign('cacheimages','n');
   }
   
+  if(isset($_REQUEST["direct_pagination"]) && $_REQUEST["direct_pagination"]=="on") {
+    $tikilib->set_preference("direct_pagination",'y'); 
+    $smarty->assign('direct_pagination','y');
+  } else {
+    $tikilib->set_preference("direct_pagination",'n');
+    $smarty->assign('direct_pagination','n');
+  }
+  
   if(isset($_REQUEST["count_admin_pvs"]) && $_REQUEST["count_admin_pvs"]=="on") {
     $tikilib->set_preference("count_admin_pvs",'y'); 
     $smarty->assign('count_admin_pvs','y');
