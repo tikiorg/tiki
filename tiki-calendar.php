@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.27 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.28 2004-01-15 09:56:26 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -451,7 +451,7 @@ $smarty->assign('now', mktime(0, 0, 0, date('m'), date('d'), date('Y')));
 $weekdays = range(0, 6);
 
 $d = 60 * 60 * 24;
-$currentweek = date("W", $focusdate + $d) - 1;
+$currentweek = date("W", $focusdate);
 $wd = date('w', $focusdate);
 
 #if ($wd == 0) $w = 7;
@@ -459,33 +459,55 @@ $wd = date('w', $focusdate);
 
 // calculate timespan for sql query
 if ($_SESSION['CalendarViewMode'] == 'month') {
-	$firstweek = date("W", mktime(0, 0, 0, $focus_month, 2, $focus_year)) - 1;
-	$lastweek = date("W", mktime(0, 0, 0, $focus_month + 1, 1, $focus_year)) - 1;
-
-	if ($lastweek < $firstweek) {
-		$lastweek += 52;
-		$currentweek += 52;
-	}
-
-	$viewstart = mktime(0, 0, 0, 1, (7 * $firstweek) - 2, $focus_year);
-	$viewend = mktime(0, 0, -1, 1, (7 * $lastweek + 1) + 6, $focus_year);
-	$numberofweeks = $lastweek - $firstweek;
+   $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
+   $TmpWeekday = date("w",$viewstart);
+   // move viewstart back to Sunday....
+   $viewstart -= $TmpWeekday * $d;
+   // this is the last day of $focus_month
+   $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
+   $TmpWeekday = date("w", $viewend);
+   $viewend += (6 - $TmpWeekday) * $d;
+   $viewend -= 1;
+   // ISO weeks --- kinda mangled because ours begin on Sunday...
+   $firstweek = date("W", $viewstart + $d);
+   $lastweek = date("W", $viewend);
+   $numberofweeks = $lastweek - $firstweek;
 } elseif ($_SESSION['CalendarViewMode'] == 'week') {
-	$firstweek = $currentweek;
-	$lastweek = $currentweek;
-	$viewstart = $focusdate - ($wd * $d);
-	$viewend = $viewstart + ((7 * $d) - 1);
-	$numberofweeks = 0;
+   $firstweek = $currentweek;
+   $lastweek = $currentweek;
+   // start by putting $viewstart at midnight starting focusdate
+   $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+   // then back up to the preceding Sunday;
+   $viewstart -= $wd * $d;
+   // then go to the end of the week for $viewend
+   $viewend = $viewstart + ((7 * $d) - 1);
+   $numberofweeks = 0;
 } else {
-	$firstweek = $currentweek;
-	$lastweek = $currentweek;
-	$viewstart = $focusdate;
-	$viewend = $focusdate + ($d - 1);
-	$weekdays = array(date('w', $focusdate));
-	$numberofweeks = 0;
-	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
-	$smarty->assign('hours', $hours);
+   $firstweek = $currentweek;
+   $lastweek = $currentweek;
+   $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+   $viewend = $viewstart + ($d - 1);
+   $weekdays = array(date('w',$focusdate));
+   $numberofweeks = 0;
 }
+// untested (by me, anyway!) function grabbed from the php.net site:
+// [2004/01/05:rpg]
+function m_weeks($y, $m){
+  // monthday array
+  $monthdays = array(1=>31, 3=>31, 4=>30, 5=>31, 6=>30,7=>31,
+               8=>31, 9=>30, 10=>31, 11=>30, 12=>31);
+  // weekdays remaining in a week starting on 7 - Sunday...(could be changed)
+  $weekdays = array(7=>7, 1=>6, 2=>5, 3=>4, 4=>3, 5=>2, 6=>1);
+  $date = mktime( 0, 0, 0, $m, 1, $y);
+  $leap = date("L", $date);
+  // if it is a leap year set February to 29 days, otherwise 28
+  $monthdays[2] = ($leap ? 29 : 28);
+  // get the weekday of the first day of the month
+  $wn = strftime("%u",$date);
+  $days = $monthdays[$m] - $weekdays[$wn];
+  return (ceil($days/7) + 1);
+}
+
 
 $smarty->assign('viewstart', $viewstart);
 $smarty->assign('viewend', $viewend);
@@ -516,19 +538,21 @@ if ($_SESSION['CalendarViewTikiCals']) {
 	$listtikievents = array();
 }
 
+define("weekInSeconds", 604800);
+
+// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 for ($i = 0; $i <= $numberofweeks; $i++) {
 	$wee = $firstweek + $i;
 
 	$weeks[] = $wee;
 
+   // $startOfWeek is a unix timestamp
+   $startOfWeek = $viewstart + $i * weekInSeconds;
+
 	foreach ($weekdays as $w) {
 		$leday = array();
-
-		// hrum. -2 and -1 are black magic. please exorcize if you can
-		$dday = mktime(0, 0, 0, 1, (7 * ($wee)) + $w - 2, $focus_year);
-		$ddayend = mktime(0, 0, 0, 1, (7 * ($wee)) + $w - 1, $focus_year);
+	        $dday = $startOfWeek + $d * $w;
 		$cell[$i][$w]['day'] = $dday;
-
 		if (isset($listevents["$dday"])) {
 			$e = 0;
 

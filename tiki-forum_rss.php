@@ -3,22 +3,18 @@
   require_once('lib/tikilib.php');
 
 if ($rss_forum != 'y') {
-	$smarty -> assign('msg', tra("This feature is disabled"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: rss disabled
+        $errmsg=tra("rss feed disabled");
+        require_once ('tiki-rss_error.php');
 }
 
 if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
-	$smarty -> assign('msg', tra("Permission denied you can not view this section"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: permission denied
+        $errmsg=tra("Permission denied you cannot view this section");
+        require_once ('tiki-rss_error.php');
 }
 
 if(!isset($_REQUEST["forumId"])) {
-	$smarty -> assign('msg', tra("No forumId specified"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: object not found
-  die;
+        $errmsg=tra("No forumId specified");
+        require_once ('tiki-rss_error.php');
 }
 
 $feed = "forum";

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.10 2003-11-23 19:44:46 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.11 2004-01-15 09:56:29 redflo Exp $ *}
 
 {if $feature_galleries eq 'y'}
   {tikimodule title="{tr}Top Images{/tr}" name="top_images_th"}
@@ -8,7 +8,7 @@
        <tr>
        <td align="center">
        <a class="linkmodule" href="tiki-browse_image.php?imageId={$modTopImages[ix].imageId}">
-       <img alt="image" src="show_image.php?id={$modTopImages[ix].imageId}" height="50" width="90" />
+       <img alt="image" src="show_image.php?id={$modTopImages[ix].imageId}&amp;thumb=1" />
        </a>
        </td></tr>
        </table>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.45 2003-11-24 05:56:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.46 2004-01-15 09:56:29 redflo Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -258,7 +258,7 @@ a moderator approves it.{/tr}</small>
 <!-- TOOLBAR -->
   <div class="forumtoolbar">
   <form method="post" action="tiki-view_forum_thread.php">
-  <input type="hidden" name="forumId" value="{$forum_info.forumId|escape}" />    
+  <input type="hidden" name="forumId" value="{$forum_info.forumId|escape}" />
   <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
   <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
@@ -349,7 +349,6 @@ a moderator approves it.{/tr}</small>
 
 	</tr>
 </table>
-{/if}
 {/if}
 
 <table class="normal" >
@@ -504,11 +503,12 @@ a moderator approves it.{/tr}</small>
 {/section}
 {/if}
   </div>
+{/if}
   <br/>
   </div>
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
 
-<table >  
+<table >
 <tr>
 <td style="text-align:left;">
 <form id='time_control' method="post" action="tiki-view_forum_thread.php">

@@ -6175,6 +6175,24 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('sender_email','');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('email_encoding','utf-8');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_length','100');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_syll_age','48');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('short_date_format','%a %d of %b, %Y');
 
 

@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.101 2004-01-09 19:47:45 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.102 2004-01-15 09:56:27 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -383,18 +383,6 @@ ALTER TABLE `tiki_comments` ADD `comment_rating` TINYINT( 2 ) ;
 CREATE INDEX `hash` on `tiki_comments`(`hash`);
 CREATE INDEX `in_reply_to` on `tiki_comments`(`in_reply_to`);
 
-# \todo rename to tiki_sessions
-# \todo lower case these field names, postgres dislikes non-lowercase fields
-# \todo remove UNSIGNED attribute, it is a mysql specific construct
-
-CREATE TABLE /* IF NOT EXISTS */ sessions (
-       SESSKEY CHAR(32) NOT NULL, 
-       EXPIRY INT(11) UNSIGNED NOT NULL, 
-       DATA TEXT NOT NULL, 
-       PRIMARY KEY (SESSKEY),  
-       KEY (EXPIRY) 
-);
-
 CREATE TABLE /* IF NOT EXISTS */ tiki_download (
   id int(11) NOT NULL auto_increment,
   object varchar(255) NOT NULL default '',
@@ -407,7 +395,7 @@ CREATE TABLE /* IF NOT EXISTS */ tiki_download (
   KEY userId (userId),
   KEY type (type),
   KEY date (date)
-);  
+);
 
 ALTER TABLE `tiki_pages` ADD `wiki_cache` int(10) default 0 AFTER `cache` ;
 
@@ -578,14 +566,16 @@ CREATE TABLE tiki_searchindex(
 #
 # session stored in db
 #
-CREATE TABLE sessions(
-  SESSKEY varchar(32) NOT NULL default '',
-  EXPIRY int(11) unsigned NOT NULL default '0',
-  DATA text NOT NULL,
-  PRIMARY KEY (SESSKEY),
-  KEY (EXPIRY)
-) TYPE=MyISAM;
+DROP TABLE IF EXISTS sessions;
 
+CREATE TABLE sessions(
+  SESSKEY char(32) NOT NULL,
+  EXPIRY int(11) unsigned NOT NULL,
+  EXPIREREF varchar(64),
+  DATA text NOT NULL,
+  PRIMARY KEY  (SESSKEY),
+  KEY EXPIRY (EXPIRY)
+) TYPE=MyISAM;
 
 # 
 # Changing language code from 'sp' to 'es'
@@ -885,8 +875,14 @@ CREATE TABLE tiki_searchsyllable(
 # added on 2004-01-02 by xenfasa (typo in file name)
 UPDATE tiki_menu_options set `url`='tiki-browse_categories.php' where `url`='tiki-categories.php';
 
-#added 2004-01-07 sylvie (only because it is in tiki.sql)
-ALTER TABLE `sessions`ADD `EXPIREREF` VARCHAR(64) AFTER `EXPIRY`;
-
-# added on 2003-01-08 by Chealer9 (typo reported by xenfasa)
+# added on 2004-01-08 by Chealer9 (typo reported by xenfasa)
 UPDATE tiki_menu_options set `url`='tiki-article_types.php' where `url`='tiki-articles_types.php';
+
+# added on 2004-01-10 by redflo: new search settings for optimal tuning
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_refresh_rate','5');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_min_wordlength','3');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_max_syllwords','100');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_lru_purge_rate','5');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_lru_length','100');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_syll_age','48');
+

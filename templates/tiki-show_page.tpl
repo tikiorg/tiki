@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.59 2003-12-29 15:12:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.60 2004-01-15 09:56:29 redflo Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -25,7 +25,6 @@
   {/if}
   {if $print_page ne 'y'}
 	<td style="text-align:right;">
-
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 	{/if}
@@ -50,20 +49,26 @@
 	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 	  {/if}
 	{/if}
-	
+    </td>
 	{if $feature_backlinks eq 'y' and $backlinks}
-	  <select name="page" onchange="go(this)">
-	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+      <td style="text-align:right;">
+      <form href="tiki-index.php">
+	  <select name="page" onchange="page.form.submit()">
+	    <option value="{$page}">{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
-		  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 		{/section}
 	  </select>
+      </form>
+      </td>
 	{/if}
 	{if count($showstructs) ne 0}
-	  <select name="page" onchange="go(this)">
-	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
+  	  <td style="text-align:right;">
+      <form href="tiki-index.php">
+	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
+	    <option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
-		  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
+		  <option value="{$showstructs[struct].req_page_ref_id}">
 {if $showstructs[struct].page_alias} 
 {$showstructs[struct].page_alias}
 {else}
@@ -71,6 +76,8 @@
 {/if}</option>
 		{/section}
 	  </select>
+      </form>
+      </td>
 	{/if}
 	</td>
   {else}

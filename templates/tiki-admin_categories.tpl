@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.17 2004-01-09 19:47:48 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.18 2004-01-15 09:56:29 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -122,15 +122,15 @@
       <tr>
         <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
         <td class="heading"><a class="tableheading" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-        <td class="heading">&nbsp;</td>
+        <td class="heading">{tr}delete{/tr}</td>
       </tr>
       {section name=ix loop=$objects}
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{$objects[ix].type}</td>
-        <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}"> 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this category?{/tr}')" 
-title="{tr}Click here to delete this category{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>]</td>
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Delete item from category?{/tr}">
+<!--onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this category?{/tr}')"-->
+<img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a></td>
       </tr>
       {/section}
       </table>

@@ -7974,6 +7974,36 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_length','100')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_syll_age','48')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('short_date_format','%a %d of %b, %Y')
 go
 
