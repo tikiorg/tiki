@@ -19,10 +19,10 @@ if(isset($_REQUEST["newgroup"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;
   } else {
-    $userlib->add_group($_REQUEST["name"],$_REQUEST["desc"]);
+    $userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]));
     if (isset($_REQUEST["include_groups"])) {
       foreach($_REQUEST["include_groups"] as $include) {
-        $userlib->group_inclusion($_REQUEST["name"],$include);
+        $userlib->group_inclusion(addslashes($_REQUEST["name"]),$include);
       }
     }
   }
