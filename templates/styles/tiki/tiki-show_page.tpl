@@ -229,7 +229,10 @@
 </div>
 {/if}
 
+{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+{/if}
+
 {if $wiki_extras eq 'y'}
 <br />
 {if $feature_wiki_attachments eq 'y'}

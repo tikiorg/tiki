@@ -1,5 +1,5 @@
 -- $Rev$
--- $Date: 2004-07-20 19:58:57 $
+-- $Date: 2004-07-23 16:35:31 $
 -- $Author: teedog $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1175,7 +1175,7 @@ DROP TABLE "tiki_dynamic_variables";
 
 CREATE TABLE "tiki_dynamic_variables" (
   "name" varchar(40) NOT NULL,
-  "DATA" text,
+  "data" text,
   PRIMARY KEY ("name")
 );
 
@@ -2106,7 +2106,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)',"javascript:toggle('debugconsole')",40,'feature_debug_console','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
@@ -3230,7 +3230,7 @@ CREATE TABLE "tiki_sheet_layout" (
   "end" bigint default NULL,
   "headerRow" smallint NOT NULL default '0',
   "footerRow" smallint NOT NULL default '0',
-  "className" varchar(64) default NULL,
+  "className" varchar(64) default NULL
 ) ;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
@@ -3247,7 +3247,7 @@ CREATE TABLE "tiki_sheet_values" (
   "calculation" varchar(255) default NULL,
   "width" smallint NOT NULL default '1',
   "height" smallint NOT NULL default '1',
-  "format" varchar(255) default NULL,
+  "format" varchar(255) default NULL
 ) ;
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
@@ -4631,6 +4631,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_author', 'Can view wiki page authors', 'basic', 'wiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
 

@@ -116,9 +116,11 @@
 {$footnote}
 </div>
 {/if}
-
+{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: <b>{$lastModif|tiki_long_date}</b> {$lastModif|tiki_long_time} {tr}by{/tr} {$lastUser|userlink}
 </p>
+{/if}
+
 {if $wiki_feature_copyrights  eq 'y'}
 {if $wikiLicensePage == $page}
 {if $tiki_p_edit_copyrights eq 'y'}
