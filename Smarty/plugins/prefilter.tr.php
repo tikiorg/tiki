@@ -1,7 +1,9 @@
 <?php
 function smarty_prefilter_tr($source) {
   // Now replace the matched language strings with the entry in the file
-  $return = preg_replace_callback('/\{tr\}([^\{]+)\{\/tr\}/', '_translate_lang', $source);
+//  $return = preg_replace_callback('/\{tr\}([^\{]+)\{\/tr\}/', '_translate_lang', $source);
+// correction in order to match when a variable is inside {tr} tags. Example: {tr}The newsletter was sent to {$sent} email addresses{/tr}
+  $return = preg_replace_callback('/\{tr\}(.+?)\{\/tr\}/', '_translate_lang', $source);
   return $return;
 }
 
