@@ -106,8 +106,9 @@ if ($user) {
 					} else {
 						$seq = false;
 					}
-					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$seq)) {
-						$smarty->assign('msg',$cclib->msg);
+// approval					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$seq)) {
+					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],'n',$_REQUEST['listed'],$seq)) {
+											$smarty->assign('msg',$cclib->msg);
 					} else {
 						if ($seq) {
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." modified.");
