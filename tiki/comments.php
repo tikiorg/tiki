@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.39 2004-07-13 20:37:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.40 2004-07-13 21:05:37 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -180,7 +180,6 @@ if ($tiki_p_post_comments == 'y') {
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
 			$message_id, $in_reply_to );
-		if ($object[0] != "forum") $_REQUEST["comments_parentId"] = 0; // to display all the comments
 	    } else {
 		if ($tiki_p_edit_comments == 'y') {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
