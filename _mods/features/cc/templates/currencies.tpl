@@ -21,10 +21,7 @@
 {/if}
 <table class="normal">
 <tr class="heading">
-<th>&nbsp;</th>
-{if $tiki_p_cc_admin eq 'y'}
-<th>&nbsp;</th>
-{/if}
+<th colspan="2">&nbsp;</th>
 <th><a class="tableheading" href="cc.php?page={$page}&amp;sort_mode=id_{if $sort_mode eq 'id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Id{/tr}</a></th>
 <th><a class="tableheading" href="cc.php?page={$page}&amp;sort_mode=cc_name_{if $sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
 <th><a class="tableheading" href="cc.php?page={$page}&amp;sort_mode=cc_description_{if $sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
@@ -37,14 +34,16 @@
 {foreach key=ccid item=it from=$thelist}
 <tr class="{cycle}">
 {if $ccuser.registered_cc.$ccid.approved eq 'y'}
-<td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$thelist[i].id}">Unregister</a></td>
+<td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$it.id}">Unregister</a></td>
 {elseif $ccuser.registered_cc.$ccid.approved eq 'c'}
-<td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">Reregister</a></td>
+<td><a href="cc.php?page={$page}&amp;register={$it.id}">Reregister</a></td>
 {else}
-<td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">{tr}Register{/tr}</a></td>
+<td><a href="cc.php?page={$page}&amp;register={$it.id}">{tr}Register{/tr}</a></td>
 {/if}
-{if $tiki_p_cc_admin eq 'y'}
-<td><a href="cc.php?page={$page}&amp;cc_id={$thelist[i].id}">{tr}Edit{/tr}</a></td>
+{if $tiki_p_cc_admin eq 'y' or $it.owner_id eq $user}
+<td><a href="cc.php?page={$page}&amp;cc_id={$it.id}">{tr}Edit{/tr}</a></td>
+{else}
+<td>&nbsp;</td>
 {/if}
 <td>{$it.id}</td>
 <td>{$it.cc_name}</td>

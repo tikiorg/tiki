@@ -14,6 +14,24 @@ class CcLib extends UsersLib {
 	function CcLib($dbTiki) { 
 		$this->db = $dbTiki;
 		$this->date = date("U");
+		$this->logfile = "mods/features/cc/cc.log.php";
+		$this->initlog();
+	}
+
+	function initlog() {
+		if (!is_file($this->logfile)) {
+			$fp = fopen($this->logfile,'w');
+			if ($fp) {
+				fputs($fp,"<? header('Location: index.php'); die(); ?>\n");
+				fclose($fp);
+			}
+		}
+	}
+
+	function tracklog($msg) {
+		$fp = fopen($this->logfile,'a');
+		fputs($fp,$msg."\n");
+		fclose($fp);
 	}
 
 	function user_infos($user) {
@@ -124,10 +142,13 @@ class CcLib extends UsersLib {
 		return $this->getOne('select count(*) from `cc_cc` where `id`=?',array($id));
 	}
 
-	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$register_owner=false,$seq=false) {
+	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$seq=false) {
+		global $user;
 		if ($seq) {
-			$query = "update `cc_cc` set `id`=?,`cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=? where `seq`=?";
-			$this->query($query,array($id,$name,$description,$owner,$approval,$listed,$seq));
+			$query = "update `cc_cc` set `cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=? where `seq`=?";
+			$this->query($query,array($name,$description,$owner,$approval,$listed,$seq));
+			$this->tracklog("$user changed $id");
+			var_dump($this);
 			return true;
 		} else {
 			if ($this->is_currency($id)) {
@@ -136,9 +157,6 @@ class CcLib extends UsersLib {
 			} else {
 				$query = "insert into `cc_cc`(`id`,`cc_name`,`cc_description`,`owner_id`,`requires_approval`,`listed`) values(?,?,?,?,?,?)";
 				$this->query($query,array($id,$name,$description,$owner,$approval,$listed));
-				if ($register_owner) {
-					$this->register_cc($id,$owner);
-				}
 				return true;
 			}
 		}

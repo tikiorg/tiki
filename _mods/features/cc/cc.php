@@ -62,7 +62,6 @@ if ($user) {
 				if ($from and $to) {
 					$cclib->record_transaction($cc_id,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
 					$_GET = array();
-					$page = 'my_tr';
 				} else {
 					$_REQUEST['new'] = true;
 				}
@@ -96,23 +95,22 @@ if ($user) {
 					} else {
 						$owner = $user;
 					}
-					if (isset($_REQUEST['register_owner']) and $_REQUEST['register_owner'] == 'y') {
-						$register_owner = true;
-					} else {
-						$register_owner = false;
-					}
 					if (isset($info['seq'])) {
 						$seq = $info['seq'];
 					} else {
 						$seq = false;
 					}
-					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$register_owner,$seq)) {
+					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$seq)) {
 						$smarty->assign('msg',$cclib->msg);
 					} else {
 						if ($seq) {
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." modified.");
 						} else {
+							if (isset($_REQUEST['register_owner']) and $_REQUEST['register_owner'] == 'y') {
+								$cclib->register_cc($_REQUEST['cc_id'],$owner);
+							}
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." created.");
+							$ccuser = $cclib->user_infos($user);
 						}
 						$thelist = $cclib->get_currencies(true,0,-1,'cc_name_asc','',$owner);
 						$smarty->assign('thelist', $thelist['data']);
