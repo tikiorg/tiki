@@ -60,7 +60,7 @@
 
 </td>
 
-<td class="{cycle advance=false}">{$lastchanges[changes].action}</td>
+<td class="{cycle advance=false}">{tr}{$lastchanges[changes].action}{/tr}</td>
 <td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
 <td class="{cycle}">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
