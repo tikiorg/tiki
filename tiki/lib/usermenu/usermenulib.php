@@ -86,7 +86,7 @@ class UserMenuLib extends TikiLib {
 		$now = date("U");
 
 		if ($menuId) {
-			$query = "update `tiki_user_menus` set `cg`=?, `position`=?, `url`=?, `mode`=? where `user`=? and `menuId`=?";
+			$query = "update `tiki_user_menus` set `name`=?, `position`=?, `url`=?, `mode`=? where `user`=? and `menuId`=?";
 
 			$this->query($query,array($name,$position,$url,$mode,$user,$menuId));
 			return $menuId;
