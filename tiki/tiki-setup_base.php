@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+<?php 
 
 require_once("setup.php");
 require_once("lib/tikilib.php");
@@ -152,5 +152,46 @@ if($tiki_p_admin_cms == 'y') {
 }
 
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
+
+$style = $tikilib->get_preference("style", 'jalist2.css');
+$smarty->assign('style',$style);
+
+$slide_style = $tikilib->get_preference("slide_style",'slidestyle.css');
+$smarty->assign('slide_style',$slide_style);
+
+$feature_userPreferences = $tikilib->get_preference("feature_userPreferences",'n');
+$change_language = $tikilib->get_preference("change_language",'y');
+$change_theme = $tikilib->get_preference("change_theme",'y');
+
+$language = $tikilib->get_preference('language','en');
+
+if($feature_userPreferences == 'y') {
+  // Check for FEATURES for the user
+  $user_style = $tikilib->get_preference("style", 'jalist2.css');
+  if($user) {
+    if($change_theme == 'y') {
+      $user_style = $tikilib->get_user_preference($user,'theme',$style);
+      if($user_style) {
+        $style = $user_style;
+      }
+    }
+    if($change_language == 'y') {
+      $user_language = $tikilib->get_user_preference($user,'language',$language);
+      if($user_language) {
+        $language = $user_language;
+      }
+    }
+  }
+  $smarty->assign('style',$style);
+  $smarty->assign('language',$language);
+}
+
+$stlstl=explode('.',$style);
+$style_base = $stlstl[0];
+
+global $lang;
+include_once('lang/'.$language.'/language.php');
+
+
 
 ?>

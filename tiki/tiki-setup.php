@@ -561,35 +561,6 @@ if(!file_exists('templates_c/preferences.php')) {
   include_once('templates_c/preferences.php');
 }
 
-$style = $tikilib->get_preference("style", 'subsilver.css');
-$smarty->assign('style',$style);
-
-$slide_style = $tikilib->get_preference("slide_style",'slidestyle.css');
-$smarty->assign('slide_style',$slide_style);
-
-if($feature_userPreferences == 'y') {
-  // Check for FEATURES for the user
-  $user_style = $tikilib->get_preference("style", 'subsilver.css');
-  if($user) {
-    $user_style = $tikilib->get_user_preference($user,'theme',$style);
-    if($user_style) {
-      $style = $user_style;
-    }
-    $user_language = $tikilib->get_user_preference($user,'language',$language);
-    if($user_language) {
-      $language = $user_language;
-    }
-  }
-  $smarty->assign('style',$style);
-  $smarty->assign('language',$language);
-}
-
-$stlstl=explode('.',$style);
-$style_base = $stlstl[0];
-
-global $lang;
-include_once('lang/'.$language.'/language.php');
-
 
 
 

@@ -257,7 +257,7 @@
  $tiki_p_admin_shoutbox eq 'y'
  }
  
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin{/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
+  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
   <div id='admmnu' style="{$mnu_admmnu}">
 
     {if $tiki_p_admin eq 'y'}

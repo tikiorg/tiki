@@ -4075,7 +4075,7 @@ class TikiLib {
       $res["future"] = $this->getOne($query);
       $query = "select max(publishDate) from tiki_programmed_content where contentId=$id and publishDate<=$now";
       $res["actual"] = $this->getOne($query);
-      $query = "select min(publishDate) from tiki_programmed_content where contentId=$id and publishDate:$now";
+      $query = "select min(publishDate) from tiki_programmed_content where contentId=$id and publishDate=$now";
       $res["next"] = $this->getOne($query);
       $query = "select count(*) from tiki_programmed_content where contentId = $id and publishdate<$now";
       $res["old"] = $this->getOne($query);
@@ -5489,6 +5489,7 @@ class TikiLib {
 
   function is_user_module($name)
   {
+    $name=addslashes($name);
     $query = "select name from tiki_user_modules where name='$name'";
     $result = $this->query($query);
     return $result->numRows();
@@ -5496,6 +5497,7 @@ class TikiLib {
 
   function remove_user_module($name)
   {
+    $name=addslashes($name);
     $this->unassign_module($name);
     $query = " delete from tiki_user_modules where name='$name'";
     $result = $this->query($query);
@@ -5504,6 +5506,7 @@ class TikiLib {
 
   function get_user_module($name)
   {
+    $name=addslashes($name);
     $query = "select * from tiki_user_modules where name='$name'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -7541,6 +7544,17 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $noparsed[]=$aux;
       $data=str_replace("~np~$np~/np~",$key,$data);
     }
+    
+    // Now replace a TOC
+    preg_match_all("/\{toc\}/",$data,$tocs);
+    if(count($tocs[0])>0) {
+      include_once("lib/structures/structlib.php");
+      if($structlib->page_is_in_structure($page)) {
+        $html='';
+        $toc=$structlib->get_subtree_toc($page,$page,$html);
+        $data=str_replace('{toc}',$html,$data);
+      }
+    }
 
     // Now search for plugins
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
@@ -7573,16 +7587,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     }
     
-    // Now replace a TOC
-    preg_match_all("/\{toc\}/",$data,$tocs);
-    if(count($tocs[0])>0) {
-      include_once("lib/structures/structlib.php");
-      if($structlib->page_is_in_structure($page)) {
-        $html='';
-        $toc=$structlib->get_subtree_toc($page,$page,$html);
-        $data=str_replace('{toc}',$html,$data);
-      }
-    }
+    
     
     // Now search for images uploaded by users
     if($feature_wiki_pictures=='y') {
