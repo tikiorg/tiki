@@ -65,7 +65,7 @@ Register an existing unlisted currency
 <td>&nbsp;</td>
 {/if}
 <td>{$it.id}</td>
-<td>{$it.cc_name}</td>
+<td><a href="cc.php?page=currencies&amp;cc_id={$it.id}&view=1">{$it.cc_name}</a></td>
 <td>{$it.cc_description}</td>
 <td>{$it.owner_id|userlink}</td>
 <td align=center>{$it.requires_approval}</td>
