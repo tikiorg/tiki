@@ -13,9 +13,9 @@ if(!isset($_REQUEST["blogId"])) {
 $foo1=str_replace("tiki-blog_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-blog_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-blog_rss","tiki-view_blog",$foo["path"]);
-$home = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
-$img = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo2;
-$read = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo3;
+$home = httpPrefix().$foo1;
+$img = httpPrefix().$foo2;
+$read = httpPrefix().$foo3;
 $title = $tikilib->get_preference("title","pepe");
 $now = date("U");
 $changes = $tikilib->list_blog_posts($_REQUEST["blogId"], 0,$max_rss_blog,'created_desc', '', $now);

@@ -13,9 +13,9 @@ if(!isset($_REQUEST["galleryId"])) {
 $foo1=str_replace("tiki-file_gallery_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-file_gallery_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-file_gallery_rss","tiki-download_file",$foo["path"]);
-$home = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
-$img = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo2;
-$read = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo3;
+$home = httpPrefix().$foo1;
+$img = httpPrefix().$foo2;
+$read = httpPrefix().$foo3;
 
 $now = date("U");
 $changes = $tikilib->get_files( 0,10,'created_desc', '', $_REQUEST["galleryId"]);

@@ -288,7 +288,7 @@ function getUserBlogs($params) {
  
  $blogs = $tikilib->list_user_blogs($username,true);
  $foo = parse_url($_SERVER["REQUEST_URI"]);
- $foo1=httpScheme().'://'.$_SERVER["SERVER_NAME"].str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
+ $foo1=httpPrefix().str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
 
  foreach($blogs as $blog) {
    $myStruct=new xmlrpcval(array("blogName" => new xmlrpcval($blog["title"]),

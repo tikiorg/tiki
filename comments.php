@@ -47,7 +47,7 @@ if(!isset($comments_parsed["query"])) {
   $comments_parsed["query"]='';
 }
 parse_str($comments_parsed["query"],$comments_query);
-$comments_father=httpScheme().'://'.$comments_server.$comments_parsed["path"];
+$comments_father=httpPrefix().$comments_parsed["path"];
 $comments_complete_father = $comments_father;
 
 /*
