@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.39 2004-04-10 04:46:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.40 2004-05-13 18:31:57 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -403,7 +403,15 @@ $smarty->assign('publishDate', $publishDate);
 $smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($publishDate));
 $smarty->assign('expireDate', $expireDate);
 $smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($expireDate));
-$smarty->assign('siteTimeZone', $dc->getTzName());
+
+// In 1.9 all times in the db are UTC.
+// We have no way of knowing what the userss Local time zone is.
+$display_timezone = $tikilib->get_user_preference($user, 'display_timezone');
+if ($display_timezone == "Local"){
+	$smarty->assign('siteTimeZone', "");
+} else {
+	$smarty->assign('siteTimeZone', "$display_timezone");
+}
 
 include_once("textareasize.php");
 
