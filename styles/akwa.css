@@ -1943,6 +1943,7 @@ div#rules-copy-panel {
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
 	z-index : 200;
+	width: 100%;
 }
 
 /* trackers specific style */

@@ -1,7 +1,7 @@
-<span class="pagetitle">{tr}Member list{/tr}</span>
+<span class="pagetitle">{tr}User List{/tr}</span>
 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}MemberList" target="tikihelp" class="tikihelp" title="{tr}Member List{/tr}">
+<a href="{$helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <br /><br />
@@ -9,7 +9,6 @@
 <a class="userlink" href="tiki-edit_user.php">{tr}create new user{/tr}</a>
 {/if} 
 <br /><br />
-<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -21,6 +20,7 @@
    </td>
 </tr>
 </table>
+<br />
 <table class="userlist">
 <tr>
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Login{/tr}</a></td>
@@ -45,7 +45,7 @@
 {/section}
 </table>
 <br />
-<div class="mini">
+<div class="mini" align="center">
 {if $prev_offset >= 0}
 [<a class="userprevnext" href="tiki-list_users.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -61,5 +61,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

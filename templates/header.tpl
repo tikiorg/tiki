@@ -23,11 +23,11 @@
 {/if}
 
 {* --- tikiwiki block --- *}
+<script type="text/javascript" src="lib/tiki-dynamic-js.php"></script>
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {if $feature_wiki_jstooltips eq 'y'}
 	{popup_init src="lib/overlib.js"}
 {/if}
-<script type="text/javascript" src="lib/tiki-dynamic-js.php"></script>
 <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 <link rel="icon" href="favicon.png" />
 {include file="bidi.tpl"}

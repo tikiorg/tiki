@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.8 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.9 2004-07-11 10:27:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,18 +25,23 @@ $max_file_size=ini_get("upload_max_filesize");
 $smarty->assign('max_file_size', $max_file_size);
 
 if (isset($_REQUEST["dir"])) {
-  $dir=realpath($map_path.$_REQUEST["dir"]);
-  $directory_path=$dir;
-  $dir="/".substr($dir,strlen($map_path));
-  if (substr($dir,0,5)!=="/data") {
-    $directory_path=$map_path."/data";
-    $dir="/data";
+	$_REQUEST["dir"] = preg_replace('~\.\.~','',$_REQUEST["dir"]);
+	$_REQUEST["dir"] = preg_replace('~/+~','/',$_REQUEST["dir"]);
+  $directory_path = $map_path.$_REQUEST["dir"];
+  $dir = $_REQUEST["dir"];
+	$basedir = dirname($_REQUEST["dir"]);
+  if (substr($dir,0,5) != "/data") {
+    $directory_path = $map_path."/data";
+    $dir = "/data";
+		$basedir = '/';
   }
 } else {
   $directory_path=$map_path."/data";
   $dir="/data";
+	$basedir = '/';
 }
 $smarty->assign('dir', $dir);	
+$smarty->assign('basedir', $basedir);	
 
 //Do we have a file to upload?
 if (isset($_REQUEST["upload"])) {
@@ -166,7 +171,7 @@ $h = opendir($directory_path);
 
 while (($file = readdir($h)) !== false) {
   // Ignore hidden files
-  if(!preg_match("/^\./", $file)){
+  if(!preg_match("/^(\.|CVS)/", $file)){
     // Put dirs in $dirs[] and files in $files[]
     if(is_dir($directory_path."/".$file)){
       $dirs[] = $file;
@@ -176,11 +181,6 @@ while (($file = readdir($h)) !== false) {
   }
 }
 closedir ($h);
-
-if($dir!=="/data") {
-  $dirs[]="..";
-}
-$dirs[]=".";
 
 // if $dirs[] exists, sort it and print all elements in it.
 if(is_array($dirs)){

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.56 2004-07-01 21:07:53 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.57 2004-07-11 10:27:48 damosoft Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -2763,6 +2763,7 @@ div#loadstats {
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 /* trackers specific style */

@@ -1,4 +1,5 @@
 <?PHP
+global $smarty;
 $feature_bidi = 'y';
 $smarty->assign('feature_bidi', $feature_bidi);
 

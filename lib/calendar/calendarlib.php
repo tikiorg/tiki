@@ -614,6 +614,31 @@ class CalendarLib extends TikiLib {
 		}
 		return $res;
 	}
+	
+	// Returns the last $maxrows of modified events for an
+	// optional $calendarId
+	function last_modif_events($maxrows = -1, $calendarId = 0) {
+		
+		if ($calendarId > 0) {
+			$cond = "where `calendarId` = ? ";
+			$bindvars = array($calendarId);
+		} else {
+			$cond = '';
+			$bindvars = array();
+		}
+				
+		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` ".$cond."order by ".$this->convert_sortmode('lastModif_desc');
+	
+		$result = $this->query($query,$bindvars,$maxrows,0);
+		
+		$ret = array();
+		
+		while ($res = $result->fetchRow()) {
+		    $ret[] = $res;
+		}
+		
+		return $ret;
+	}
 }
 
 $calendarlib = new CalendarLib($dbTiki);

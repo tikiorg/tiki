@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.27 2004-06-21 13:46:40 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.28 2004-07-11 10:27:49 damosoft Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -45,6 +45,20 @@
   &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User processes{/tr}</a><br />  
   &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User activities{/tr}</a><br />  
   &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br />  
+  </div>
+{/if}
+{if $feature_friends eq 'y'}
+  <div class="separator">
+    <a class='separator' href="javascript:toggle('friendsmenu');"><img src="styles/neat/linkOpaque.gif" border="0" />&nbsp;</a>
+    <a class='separator' href='tiki-list_users.php'>{tr}Community{/tr}</a>
+  </div>
+  <div id="friendsmenu" style="{$mnu_friendsmenu}">
+    {if $tiki_p_list_users eq 'y'}
+      &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}User List{/tr}</a><br />
+    {/if}
+    {if $feature_friends eq 'y'}
+      &nbsp;<a href="tiki-friends.php" class="linkmenu">{tr}Friendship Network{/tr}</a><br />
+    {/if}
   </div>
 {/if}
 {if $feature_wiki eq 'y'}

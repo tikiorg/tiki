@@ -2,10 +2,10 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+ header("location: index.php");
 }
 
-function smarty_modifier_userlink($user,$class='link',$idletime='not_set')
+function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 {
     global $tikilib, $userlib, $user, $feature_score, $feature_friends;
     
@@ -22,7 +22,7 @@ function smarty_modifier_userlink($user,$class='link',$idletime='not_set')
 	if ($tikilib->verify_friendship($user, $other_user)) {
 	    $friend = '&nbsp;<img src="img/icons/ico_friend.gif" width="7" height="10" alt="'.tra("Friend").'" />&nbsp;';
 	}
-    }
+    } 
     
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
 		if (is_numeric($idletime)) {

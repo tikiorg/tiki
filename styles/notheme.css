@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.16 2004-07-01 21:07:52 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.17 2004-07-11 10:27:48 damosoft Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -78,6 +78,7 @@
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 /* trackers specific style */

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.39 2004-06-27 03:05:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.40 2004-07-11 10:27:49 damosoft Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -55,7 +55,7 @@
 </div>
   <div id="friendsmenu" style="{$mnu_friendsmenu}">
   {if $tiki_p_list_users eq 'y'}
-    &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}Member list{/tr}</a><br />
+    &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}User List{/tr}</a><br />
   {/if}
   {if $feature_friends eq 'y'}
     &nbsp;<a href="tiki-friends.php" class="linkmenu">{tr}Friendship Network{/tr}</a><br />

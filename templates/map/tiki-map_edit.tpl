@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.10 2004-06-23 22:34:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.11 2004-07-11 10:27:48 damosoft Exp $ *}
 
-<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
+<a href="http://mapserver.gis.umn.edu/doc42/mapfile-reference.html">http://mapserver.gis.umn.edu/doc42/mapfile-reference.html</a><br /><br />
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles{/tr}:</h3>
