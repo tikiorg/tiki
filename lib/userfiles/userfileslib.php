@@ -79,7 +79,7 @@ class UserFilesLib extends TikiLib {
 			@unlink ($uf_use_dir . $path);
 		}
 
-		$query = "delete from `tiki_userfiles` where `user`=? and fileId=?";
+		$query = "delete from `tiki_userfiles` where `user`=? and `fileId`=?";
 		$this->query($query,array($user,(int) $fileId));
 	}
 }
