@@ -62,6 +62,9 @@
   {if $feature_usermenu eq 'y'}
      &nbsp;<a href="tiki-usermenu.php" class="linkmenu">{tr}User menu{/tr}</a><br/>    
   {/if}
+  {if $feature_minical eq 'y'}
+     &nbsp;<a href="tiki-minical.php" class="linkmenu">{tr}Calendar{/tr}</a><br/>    
+  {/if}
   </div>
 {/if}
 

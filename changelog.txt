@@ -1,8 +1,10 @@
 Version 1.6 -Tau Ceti-
 
-* [NEW] Alternative syntax for tables, you can sepparate rows using line 
-  returns instead of ||. You have to select which syntax to use in the admin 
-  screen.
+* [NEW] Themes can redefine ANY template of Tiki, just create the template in the
+  templates/styles/name directory and Tiki will use that file. If the file is not
+  there it will default to the templates directory. 
+* [NEW] Alternative syntax for tables, you can sepparate rows using line returns 
+  instead of ||. You have to select which syntax to use in the admin screen.
 * [NEW] Admin menu submit buttons now get back to the admin section where the
   submited information was found.
 * [NEW] User menus, the user can add items to the application menu, an option 
