@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.18 2004-02-28 22:17:48 techtonik Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.19 2004-02-29 14:12:27 techtonik Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,9 +85,15 @@ $smarty->assign_by_ref('games', $games);
 // 2. Play games and count times game was played //
 $smarty->assign('play', 'n');
 
+// preventive measures: if user refreshes page with game - game hits must stay the same
+if(!isset($_REQUEST["game"]) && isset($_SESSION["currentgame"])) unset($_SESSION["currentgame"]);
+
 if(isset($_REQUEST["game"])) {
- $gamelib->add_game_hit($_REQUEST["game"]);
  $game = basename( $_REQUEST["game"] );
+ if (!isset($_SESSION["currentgame"]) || !in_array($game,$_SESSION["currentgame"]) ) {
+     $gamelib->add_game_hit($game);
+     $_SESSION["currentgame"][] = $game;
+ }
  $parts=explode('.',$game);
  $source='games/flash/'.$parts[0].'.'.$parts[1];
  if (is_file($source))
