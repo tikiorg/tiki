@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.123 2003-10-30 03:33:02 dheltzel Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.124 2003-10-31 16:12:36 redflo Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -15,9 +15,10 @@ Use the following tags to distinguish changes :
 Please wrap your lines to 80 characters and indent them with spaces only.
 ------------------
 
-Version 1.8 --
+Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+- (rc1) ------------------------------------------------------------
 * [MOD] tiki-install.php now tries to create the dirs it needs. Less need to run
   setup.sh
 * [NEW] Installation profiles allow for a pre-configured site at install time.
