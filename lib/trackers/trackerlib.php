@@ -342,7 +342,7 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $now,(int) $trackerId));
 
 		if ($itemId) {
-			$query = "update `tiki_tracker_items` set `status`=?,lastModif=? where `itemId`=?";
+			$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
 
 			$result = $this->query($query,array($status,(int) $now,(int) $itemId));
 		} else {
