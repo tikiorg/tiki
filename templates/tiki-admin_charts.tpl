@@ -76,9 +76,10 @@
 		<td class="formcolor">
 			<select name="frequency">
 				<option value="0" {if $info.frequency eq "0"}selected="selected"{/if}>{tr}Realtime{/tr}</option>
-				<option value="1" {if $info.frequency eq "1"}selected="selected"{/if}>{tr}Daily{/tr}</option>
-				<option value="7" {if $info.frequency eq "7"}selected="selected"{/if}>{tr}Weekly{/tr}</option>
-				<option value="30" {if $info.frequency eq "30"}selected="selected"{/if}>{tr}Monthly{/tr}</option>
+				<option value="300" {if $info.frequency eq "300"}selected="selected"{/if}>{tr}Each 5 minutes{/tr}</option>
+				<option value="86400" {if $info.frequency eq "86400"}selected="selected"{/if}>{tr}Daily{/tr}</option>
+				<option value="604800" {if $info.frequency eq "604800"}selected="selected"{/if}>{tr}Weekly{/tr}</option>
+				<option value="2592000" {if $info.frequency eq "2592000"}selected="selected"{/if}>{tr}Monthly{/tr}</option>
 			</select>
 		</td>
 	</tr>	
@@ -99,9 +100,10 @@
 		<td class="formcolor">
 			<select id='selva' name="voteAgainAfter" {literal}onChange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal} >
 				<option value="0" {if $info.voteAgainAfter eq "0"}selected="selected"{/if}>{tr}Anytime{/tr}</option>
-				<option value="1" {if $info.voteAgainAfter eq "1"}selected="selected"{/if}>{tr}1 day{/tr}</option>
-				<option value="7" {if $info.voteAgainAfter eq "7"}selected="selected"{/if}>{tr}1 week{/tr}</option>
-				<option value="30" {if $info.voteAgainAfter eq "30"}selected="selected"{/if}>{tr}1 month{/tr}</option>			
+				<option value="300" {if $info.voteAgainAfter eq "300"}selected="selected"{/if}>{tr}5 minutes{/tr}</option>
+				<option value="86400" {if $info.voteAgainAfter eq "86400"}selected="selected"{/if}>{tr}1 day{/tr}</option>
+				<option value="604800" {if $info.voteAgainAfter eq "604800"}selected="selected"{/if}>{tr}1 week{/tr}</option>
+				<option value="2592000" {if $info.voteAgainAfter eq "2592000"}selected="selected"{/if}>{tr}1 month{/tr}</option>			
 			</select>
 		</td>
 	</tr>	
