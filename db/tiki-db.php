@@ -37,4 +37,10 @@ if (DB::isError($dbTiki)) {
   die ($dbTiki->getMessage());
 } 
 
+// Forget db info so that malicious PHP may not get password etc.
+$host_tiki   = NULL;
+$user_tiki   = NULL;
+$pass_tiki   = NULL;
+$dbs_tiki    = NULL;
+
 ?>
