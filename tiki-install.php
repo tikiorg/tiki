@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.46 2004-01-08 23:35:11 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.47 2004-01-09 00:17:38 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.46 2004-01-08 23:35:11 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.47 2004-01-09 00:17:38 wolff_borg Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -17,52 +17,6 @@ define('SMARTY_DIR', "lib/smarty/");
 require_once (SMARTY_DIR . 'Smarty.class.php');
 
 $commands = array();
-
-function process_sql_file2($file) {
-	global $dbTiki;
-	global $succcommands;
-	global $failedcommands;
-	global $smarty;
-
-	if(!isset($succcommands)) {
-	  $succcommands=array();
-	  $failedcommands=array();
-	}
-
-	$command = '';
-	$fp = fopen("db/$file", "r");
-
-	while(!feof($fp)) {
-		$command .= fread($fp, 4096);
-	}
-	$command = preg_replace("/#.*\n/", "", $command);
-	
-	$statements=preg_split("((;\n))", $command, -1, PREG_SPLIT_NO_EMPTY);
-
-	require_once('lib/tikidblib.php');
-	$dbTiki = &ADONewConnection($db_tiki);
-	$tikidb = new TikiDB($dbTiki);
-
-	foreach ($statements as $statement) {
-		
-		if (trim($statement)) {
-			$statement .= ";";
-//			$tikidb->convert_query($statement);
-//			echo "$statement</br>";
-			$result = $tikidb->queryError($statement, $error);
-print_r($result);
-			if (isset($error)) {
-				//echo "Error: $error<br>";
-				$failedcommands[] = "Command: ".$statement."\nMessage: ".$error."\n\n";
-			} else {
-				$succcommands[] = $statement;
-			}
-		}
-	}
-
-	$smarty->assign_by_ref('succcommands', $succcommands);
-	$smarty->assign_by_ref('failedcommands', $failedcommands);
-}
 
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
@@ -574,21 +528,16 @@ if (isset($_REQUEST['install_pkg'])) {
 		die("Error : ".$archive->errorInfo(true));
 	}
 	else {
-
 		if (isset($_REQUEST['runScript'])) {
 			$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
 			if (is_file("db/".$pkg_sql_install_file)) {
-				// print "Running ".$pkg_sql_install_file."<br>";
 				print "Running ".$pkg_sql_install_file."<br>";
-				process_sql_file2 ($pkg_sql_install_file);
+				process_sql_file ($pkg_sql_install_file,$db_tiki);
 			}
 		}
 		print "The application in <b>".$_REQUEST['pkgs']."</b> was installed successfully";
 	}
 	$smarty->assign('packages', 'y');
-	$smarty->assign('install_pkg', 'y');
-	$smarty->assign('pkg_sql_install_file', $pkg_sql_install_file);
-	$smarty->assign('pkg_name', $_REQUEST['pkgs']);
 }
 
 // This is used to remove files that were installed into the Tiki file structure by the install_pkg prcess
@@ -598,7 +547,7 @@ if (isset($_REQUEST['remove_pkg'])) {
 		$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
 		if (is_file("db/".$pkg_sql_remove_file)) {
 			print "Running ".$pkg_sql_remove_file."<br>";
-			process_sql_file2 ($pkg_sql_remove_file);
+			process_sql_file ($pkg_sql_remove_file,$db_tiki);
 		}
 	}
 
@@ -663,23 +612,24 @@ $smarty->assign('files', $files);
 //Load packages
 // the packages are only mysql-safe at this time, also they only show up if a zip file exists in $package_dir
 $smarty->assign('pkg_available', 'n');
-$pkgs = array();
-$h = opendir($package_dir);
+if ($db_tiki == "mysql") {
+	$pkgs = array();
+	$h = opendir($package_dir);
 
-while ($file = readdir($h)) {
-	if (strstr($file, '.zip')) {
-		// Assign the filename of the pkgs to the name field
-		$pkg1 = array("name" => $file);
-		$pkg1["desc"] = basename($file,".zip");
-		// Assign the record to the pkgs array
-		$pkgs[] = $pkg1;
-		$smarty->assign('pkg_available', 'y');
+	while ($file = readdir($h)) {
+		if (strstr($file, '.zip')) {
+			// Assign the filename of the pkgs to the name field
+			$pkg1 = array("name" => $file);
+			$pkg1["desc"] = basename($file,".zip");
+			// Assign the record to the pkgs array
+			$pkgs[] = $pkg1;
+			$smarty->assign('pkg_available', 'y');
+		}
 	}
+
+	closedir ($h);
+	sort($pkgs);
 }
-
-closedir ($h);
-sort($pkgs);
-
 $smarty->assign('pkgs', $pkgs);
 
 // If no admin account then allow the creation of an admin account
