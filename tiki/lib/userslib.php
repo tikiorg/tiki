@@ -717,13 +717,13 @@ class UsersLib extends TikiLib {
     }
 
     function remove_group($group) {
-	$query = "delete from `users_groups` where `groupName` = '$group'";
-
-	$result = $this->query($query);
-	$query = "delete from `tiki_group_inclusion` where `groupName` = '$group' or includeGroup='$group'";
-	$result = $this->query($query);
-	$query = "delete from `users_grouppermissions` where `groupName`='$group'";
-	$result = $this->query($query);
+	$query = "delete from `users_groups` where `groupName` = ?";
+	$result = $this->query($query, array($group));
+	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or
+		includeGroup = ?";
+	$result = $this->query($query, array($group, $group));
+	$query = "delete from `users_grouppermissions` where `groupName` = ?";
+	$result = $this->query($query, array($group));
 	return true;
     }
 
@@ -753,8 +753,8 @@ class UsersLib extends TikiLib {
     }
 
     function get_user_default_group($user) {
-	$query = "select default_group from users_users where login='$user'";
-	$result = $this->query($query);
+	$query = "select `default_group` from `users_users` where `login` = ?";
+	$result = $this->query($query, array($user));
 	if($result->numRows()) {
 	    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 	    $ret = $res['default_group'];
@@ -796,9 +796,9 @@ class UsersLib extends TikiLib {
     }
 
     function set_default_group($user,$group) {
-	$groupesc=$this->qstr($group);
-	$query = "update users_users set default_group=$groupesc where login='$user'";
-	$this->query($query);
+	$query = "update `users_users` set `default_group` = ?
+		where `login` = ?";
+	$this->query($query, array($group, $user));
     }
 
     function batch_set_default_group($group) {
@@ -809,16 +809,14 @@ class UsersLib extends TikiLib {
     }
 
     function change_permission_level($perm, $level) {
-	$level = addslashes($level);
-
-	$query = "update `users_permissions` set `level`='$level' where `permName`='$perm'";
-	$this->query($query);
+	$query = "update `users_permissions` set `level` = ?
+		where `permName` = ?";
+	$this->query($query, array($level, $perm));
     }
 
     function assign_level_permissions($group, $level) {
-	$query = "select `permName`  from `users_permissions` where `level`='$level'";
-
-	$result = $this->query($query);
+	$query = "select `permName` from `users_permissions` where `level` = ?";
+	$result = $this->query($query, array($level));
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -827,9 +825,9 @@ class UsersLib extends TikiLib {
     }
 
     function remove_level_permissions($group, $level) {
-	$query = "select `permName`  from `users_permissions` where `level`='$level'";
+	$query = "select `permName` from `users_permissions` where `level` = ?";
 
-	$result = $this->query($query);
+	$result = $this->query($query, array($level));
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -838,13 +836,15 @@ class UsersLib extends TikiLib {
     }
 
     function create_dummy_level($level) {
-	$query = "replace into users_permissions(permName,permDesc,type,level) values('','','','$level')";
-
-	$this->query($query);
+	$query = "delete from `users_permissions` where `permName` = ?";
+	$result = $this->query($query, array(''));
+	$query = "insert into `users_permissions`(`permName`, `permDesc`,
+		`type`, `level`) values('','','',?)";
+	$this->query($query, array($level));
     }
 
     function get_permission_levels() {
-	$query = "select distinct (level) from users_permissions";
+	$query = "select distinct(level) from `users_permissions`";
 
 	$result = $this->query($query);
 	$ret = array();
@@ -857,9 +857,8 @@ class UsersLib extends TikiLib {
     }
 
     function get_userid_info($user) {
-	$query = "select * from `users_users` where `userId`='$user'";
-
-	$result = $this->query($query);
+	$query = "select * from `users_users` where `userId` = ?";
+	$result = $this->query($query, array($user));
 	$res = $result->fetchRow();
 	$aux = array();
 
@@ -886,8 +885,6 @@ class UsersLib extends TikiLib {
 	}
 
 	if ($find) {
-	    $findesc = $this->qstr('%' . $find . '%');
-
 	    if ($mid) {
 		$mid .= " and `permName` like '%?%'";
 
@@ -943,10 +940,12 @@ class UsersLib extends TikiLib {
     }
 
     function assign_permission_to_group($perm, $group) {
-	$group = addslashes($group);
-
-	$query = "replace into users_grouppermissions(groupName,permName) values('$group','$perm')";
-	$result = $this->query($query);
+	$query = "delete from `users_grouppermissions` where `groupName` = ?
+		and permName = ?";
+	$result = $this->query($query, array($group, $perm));
+	$query = "insert into `users_grouppermissions`(`groupName`, `permName`)
+		values(?, ?)";
+	$result = $this->query($query, array($group, $perm));
 	return true;
     }
 
@@ -1002,9 +1001,9 @@ class UsersLib extends TikiLib {
     }
 
     function remove_permission_from_group($perm, $group) {
-	$query = "delete from `users_grouppermissions` where `permName`='$perm' and groupName= '$group'";
-
-	$result = $this->query($query);
+	$query = "delete from `users_grouppermissions` where `permName` = ?
+		and groupName = ?";
+	$result = $this->query($query, array($perm, $group));
 	return true;
     }
 
@@ -1127,9 +1126,9 @@ class UsersLib extends TikiLib {
     }
 
     function get_user_hash($user) {
-	$query = "select `hash`  from `users_users` where " . $this->convert_binary(). " `login`='$user'";
-
-	$pass = $this->getOne($query);
+	$query = "select `hash`  from `users_users` where " .
+		$this->convert_binary(). " `login` = ?";
+	$pass = $this->getOne($query, array($user));
 	return $pass;
     }
 
@@ -1151,13 +1150,14 @@ class UsersLib extends TikiLib {
 
     function renew_user_password($user) {
 	$pass = $this->genPass();
-	$query = "select email from users_users where login='$user'";
-	$email = $this->getOne($query);
+	$query = "select `email` from `users_users` where `login` = ?";
+	$email = $this->getOne($query, array($user));
 	$hash = md5($user . $pass . $email);
 	// Note that tiki-generated passwords are due inmediatley
 	$now = date("U");
-	$query = "update `users_users` set `password`='$pass', hash='$hash',pass_due=$now where " . $this->convert_binary(). " `login`='$user'";
-	$result = $this->query($query);
+	$query = "update `users_users` set `password` = ?, `hash` = ?,
+		`pass_due` = ? where ".$this->convert_binary()." `login` = ?";
+	$result = $this->query($query, array($pass, $hash, $now, $user));
 	return $pass;
     }
 
@@ -1165,8 +1165,8 @@ class UsersLib extends TikiLib {
 	global $pass_due;
 
 	global $feature_clear_passwords;
-	$query = "select email from users_users where login='$user'";
-	$email = $this->getOne($query);
+	$query = "select `email` from `users_users` where `login` = ?";
+	$email = $this->getOne($query, array($user));
 	$hash = md5($user . $pass . $email);
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
@@ -1188,7 +1188,8 @@ class UsersLib extends TikiLib {
 	if ($this->group_exists($group))
 	    return false;
 
-	$query = "insert into users_groups(groupName, groupDesc, groupHome) values( ?, ?, ?)";
+	$query = "insert into `users_groups`(`groupName`, `groupDesc`,
+		`groupHome`) values( ?, ?, ?)";
 	$result = $this->query($query, array($group, $desc, $home) );
 	return true;
     }
@@ -1197,20 +1198,34 @@ class UsersLib extends TikiLib {
 	if (!$this->group_exists($olgroup))
 	    return $this->add_group($group, $desc, $home);
 
-	$query = "update `users_groups` set `groupName`='$group', groupDesc='$desc', groupHome='$home' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `users_usergroups` set `groupName`='$group' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `users_grouppermissions` set `groupName`='$group' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `users_objectpermissions` set `groupName`='$group' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `tiki_group_inclusion` set `groupName`='$group' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `tiki_newsreader_marks` set `groupName`='$group' where `groupName`='$olgroup'";
-	$result = $this->query($query);
-	$query = "update `tiki_modules` set `groups`=replace(groups,'$olgroup','$group') where `groups` like '%$olgroup%'";
-	$result = $this->query($query);
+	$query = "update `users_groups` set `groupName` = ?, `groupDesc` = ?,
+		`groupHome` = ? where `groupName` = ?";
+	$result = $this->query($query, array($group, $desc, $home, $olgroup));
+
+	$query = "update `users_usergroups` set `groupName` = ? where
+		`groupName` = ?";
+	$result = $this->query($query, array($group, $olgroup));
+
+	$query = "update `users_grouppermissions` set `groupName` = ? where
+		`groupName` = ?";
+	$result = $this->query($query, array($group, $olgroup));
+
+	$query = "update `users_objectpermissions` set `groupName` = ?
+		where `groupName` = ?";
+	$result = $this->query($query, array($group, $olgroup));
+
+	$query = "update `tiki_group_inclusion` set `groupName` = ?
+		where `groupName` = ?";
+	$result = $this->query($query, array($group, $olgroup));
+
+	$query = "update `tiki_newsreader_marks` set `groupName` = ?
+		where `groupName` = ?";
+	$result = $this->query($query, array($group, $olgroup));
+
+	$query = "update `tiki_modules` set `groups`=replace(`groups`, ?, ?)
+		where `groups` like ?";
+	$result = $this->query($query, array($olgroup, $group,
+				'%'.$olgroup.'%'));
 	return true;
     }
 
@@ -1218,42 +1233,53 @@ class UsersLib extends TikiLib {
 	if (!$this->group_exists($group))
 	    return false;
 
-	$query = "delete from `tiki_group_inclusion` where `groupName`='$group'";
-	$result = $this->query($query);
+	$query = "delete from `tiki_group_inclusion` where `groupName` = ?";
+	$result = $this->query($query, array($group));
 	return true;
     }
 
     function set_user_fields($u) {
 	global $feature_clear_passwords;
 
+	$q = array();
+	$bindvars = array();
+
 	if (@$u['password']) {
 	    if ($feature_clear_passwords == 's') {
-		$q[] = "password='" . addslashes(strip_tags($u['password'])). "'";
+		$q[] = "`password` = ?";
+		$bindvars[] = strip_tags($u['password']);
 	    }
 
 	    // I don't think there are currently cases where login and email are undefined
 	    $hash = md5($u['login'] . $u['password'] . $u['email']);
-	    $q[] = "hash='$hash'";
+	    $q[] = "`hash` = ?";
+	    $bindvars[] = $hash;
 	}
 
 	if (@$u['email']) {
-	    $q[] = "email='" . addslashes(strip_tags($u['email'])). "'";
+	    $q[] = "`email` = ?";
+	    $bindvars[] = strip_tags($u['email']);
 	}
 
 	if (@$u['realname']) {
-	    $q[] = "realname='" . addslashes(strip_tags($u['realname'])). "'";
+	    $q[] = "`realname` = ?";
+	    $bindvars[] = strip_tags($u['realname']);
 	}
 
 	if (@$u['homePage']) {
-	    $q[] = "homePage='" . addslashes(strip_tags($u['homePage'])). "'";
+	    $q[] = "`homePage` = ?";
+	    $bindvars[] = strip_tags($u['homepage']);
 	}
 
 	if (@$u['country']) {
-	    $q[] = "country='" . addslashes(strip_tags($u['country'])). "'";
+	    $q[] = "`country` = ?";
+	    $bindvars[] = strip_tags($u['country']);
 	}
 
-	$query = "update users_users set " . implode(",", $q). " where " . $this->convert_binary(). " `login`='{$u['login']}'";
-	$result = $this->query($query);
+	$query = "update `users_users` set " . implode(",", $q). " where " .
+		$this->convert_binary(). " `login` = ?";
+	$bindvars[] = $u['login'];
+	$result = $this->query($query, $bindvars);
 	return $result;
     }
 }
