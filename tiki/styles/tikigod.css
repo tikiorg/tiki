@@ -15,6 +15,10 @@ body {
 	margin-right:   0px;
 }
 
+a img {
+	border: 0;
+}
+
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
 	height:   100%;
