@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.17 2004-04-19 00:51:21 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.18 2004-04-19 00:59:53 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.17 2004-04-19 00:51:21 franck Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.18 2004-04-19 00:59:53 franck Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -19,6 +19,7 @@ include_once ("lib/imagegals/imagegallib.php");
 // option to resize the image dynamically creating a thumbnail on the fly.
 // you have to check if the user has permission to see this gallery
 if (!isset($_REQUEST["id"]) && !isset($_REQUEST["name"])) {
+   header("HTTP/1.0 404 Not Found");
 	die;
 }
 
@@ -85,6 +86,7 @@ if ($userlib->object_has_one_permission($galleryId, 'image gallery')) {
 }
 
 if ($tiki_p_view_image_gallery!='y') {
+   header("HTTP/1.0 404 Not Found");
 	die;
 }
 
