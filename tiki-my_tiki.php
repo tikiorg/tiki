@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.12 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.13 2004-05-30 05:10:57 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,6 +86,7 @@ $smarty->assign('minPrio', $minPrio);
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
 
+/*
 $styles = array();
 $h = opendir("styles/");
 
@@ -95,8 +96,10 @@ while ($file = readdir($h)) {
 	}
 }
 
-closedir ($h);
-$smarty->assign_by_ref('styles', $styles);
+closedir ($h);*/
+
+//Is this needed?
+$smarty->assign_by_ref('styles', $tikilib->list_styles());
 
 $languages = array();
 $h = opendir("lang/");

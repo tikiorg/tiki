@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.26 2004-05-30 02:52:56 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.27 2004-05-30 05:10:57 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,27 +134,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
     $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
 
-// Get list of available styles
-$sty = array();
-$h = opendir("styles/");
-while ($file = readdir($h)) {
-	if (strstr($file, "css") and substr($file,0,1) != '.') {
-		$sty["$file"] = 1;
-	}
-}
-closedir($h);
-if ($tikidomain) {
-	$h = opendir("styles/$tikidomain");
-	while ($file = readdir($h)) {
-  	if (strstr($file, ".css") and substr($file,0,1) != '.') {
-	    $sty["$file"] = 1;
-		} 
-	} 
-	closedir($h);				
-}
-$styles = array_keys($sty);
-sort($styles);
-$smarty->assign_by_ref( "styles", $styles );
+$smarty->assign_by_ref( "styles", $tikilib->list_styles());
 
 // Get list of available slideshow styles
 $slide_styles = array();
