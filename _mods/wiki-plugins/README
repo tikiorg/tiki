@@ -1,4 +1,4 @@
-$Header: /cvsroot/tikiwiki/_mods/wiki-plugins/README,v 1.1 2004-05-09 22:56:16 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/wiki-plugins/README,v 1.2 2004-10-18 10:57:17 damosoft Exp $
 
 TikiWiki wiki-plugins Collection
 -------------------------------------------
@@ -26,3 +26,4 @@ Templates Index
 ---------------
 
 /formula/ - Renders formulas
+/redirect/ - Wiki Plugin that does a rather nasty redirect via Location:
