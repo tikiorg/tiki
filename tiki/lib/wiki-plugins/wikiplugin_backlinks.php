@@ -4,7 +4,7 @@
     * List all pages which link to specific pages (same as tiki-backlinks.php)
     *
     */
-    include "pluginslib.php";
+    include "lib/wiki/pluginslib.php";
     /**
     * Create a list of backlinks to a page
     * @param string not used
@@ -36,7 +36,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.2 $");
+                "\$Revision: 1.3 $");
         }
         function run ($data, $params) {
             global $wikilib;
