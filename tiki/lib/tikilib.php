@@ -39,43 +39,132 @@ class TikiLib {
     // to show queries to tune use queries like this one:
     // select `qcount` *qtime , qtext from `tiki_querystats` order by 1 ;
     /*
-       function query($query,$reporterrors=true) {
+    // Queries the database, *returning* an error if one occurs, rather
+    // than exiting while printing the error.
+    // -rlpowell
+    function queryError( $query, &$error, $values = null, $numrows = -1,
+            $offset = -1 )
+    {
+        $this->convert_query($query);
+
     //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
-    $result = $this->db->query($query);
+
+        if ($numrows == -1 && $offset == -1)
+            $result = $this->db->Execute($query, $values);
+        else
+            $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
-    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
-    $qresult=$this->db->query($querystat);
-    if(DB::isError($qresult)) {
-    $querystat="update `tiki_querystats` set `qcount`=qcount+1, `qtime`=qtime+$qdiff where `qtext`='".addslashes($query)."'";
-    $qresult=$this->db->query($querystat);
-    }
-    return $result;
+    $qresult=$this->db->Execute($querystat);
+    if(!$qresult) {
+    $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+    $qresult=$this->db->Execute($querystat);
     }
 
-    function getOne($query,$reporterrors=true) {
+        if (!$result )
+        {
+            $error = $this->db->ErrorMsg();
+            $result=false;
+        }
+
+        //count the number of queries made
+        $this->num_queries++;
+
+        return $result;
+    }
+
+    // Queries the database reporting an error if detected
+    // 
+    function query($query, $values = null, $numrows = -1,
+            $offset = -1, $reporterrors = true )
+    {
+        $this->convert_query($query);
+
+        //echo "query: $query <br/>";
+        //echo "<pre>";
+        //print_r($values);
+        //echo "\n";
     //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
-    $result = $this->db->getOne($query);
+
+        if ($numrows == -1 && $offset == -1)
+            $result = $this->db->Execute($query, $values);
+        else
+            $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
-    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
-    $qresult=$this->db->query($querystat);
-    if(DB::isError($qresult)) {
-    $querystat="update `tiki_querystats` set `qcount`=qcount+1, `qtime`=qtime+$qdiff where `qtext`='".addslashes($query)."'";
-    $qresult=$this->db->query($querystat);
-    }
-    return $result;
+    $qresult=$this->db->Execute($querystat);
+    if(!$qresult) {
+    $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+    $qresult=$this->db->Execute($querystat);
     }
 
-     */
+
+        //print_r($result);
+        //echo "\n</pre>\n";
+        if (!$result )
+        {
+            if ($reporterrors)
+            {
+                $this->sql_error($query, $values, $result);
+            }
+        }
+
+
+        //count the number of queries made
+        $this->num_queries++;
+
+        return $result;
+    }
+
+    // Gets one column for the database.
+    function getOne($query, $values = null, $reporterrors = true) {
+        $this->convert_query($query);
+
+        //echo "<pre>";
+        //echo "query: $query \n";
+        //print_r($values);
+        //echo "\n";
+    //for performance stats
+    list($micro,$sec)=explode(' ',microtime());
+    $query_start=$sec+$micro;
+
+        $result = $this->db->SelectLimit($query, 1, 0, $values);
+    list($micro,$sec)=explode(' ',microtime());
+    $query_stop=$sec+$micro;
+    $qdiff=$query_stop-$query_start;
+    $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
+    $qresult=$this->db->Execute($querystat);
+    if(!$qresult) {
+    $querystat="update `tiki_querystats` set `qcount`=`qcount`+1, `qtime`=`qtime`+$qdiff where `qtext`='".addslashes($query)."'";
+    $qresult=$this->db->Execute($querystat);
+    }
+
+        //echo "\n</pre>\n";
+        if (!$result && $reporterrors)
+            $this->sql_error($query, $values, $result);
+
+        $res = $result->fetchRow();
+
+        //count the number of queries made
+        $this->num_queries++;
+
+        if ($res === false)
+            return (NULL); //simulate pears behaviour
+
+        list($key, $value) = each($res);
+        return $value;
+    }
+
+    */
 
     // Use ADOdb->qstr() for 1.8
     function qstr($str) {
