@@ -26,7 +26,7 @@ class ShoutboxLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			if (!$res["user"])
-				$res["user"] = 'Anonymous';
+				$res["user"] = tra('Anonymous');
 
 			$res["message"] = htmlspecialchars($res["message"]);
 			$ret[] = $res;
