@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tests.php,v 1.5 2003-12-19 15:11:59 epolidor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tests.php,v 1.6 2003-12-20 01:10:42 epolidor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
