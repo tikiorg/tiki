@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.4 2003-08-02 21:52:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.5 2003-08-04 04:29:51 zaufi Exp $
  *
  * Define styles for: Categories
  *
@@ -74,11 +74,6 @@ div#categorizator
 }
 
 /* Categories lists below WikiPages */
-div.wikitext + div.catlist
-{
-  margin-top: 10px;
-  border: 1px solid red;
-}
 div.catlists
 {
   margin: 10px 0px 0px 0px;

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-categories.css,v 1.3 2003-08-03 18:53:16 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-categories.css,v 1.4 2003-08-04 04:30:10 zaufi Exp $
  *
  * Define styles for: Categories
  *
@@ -70,12 +70,6 @@ div.tree#top
   padding: 10px 1em 20px 1em;
 }
 
-div.wikitext + div.catlist
-{
-  margin-top: 10px;
-  border: 1px solid red;
-}
-
 /* Categories lists below WikiPages */
 div.catlists
 {
@@ -85,7 +79,6 @@ div.catlists
   padding: 0px;
   border: 1px outset WindowFrame;
 }
-
 div.catlists div.cbox-title
 {
   font-variant: small-caps;
