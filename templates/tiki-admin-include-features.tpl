@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.50 2004-06-14 05:44:34 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.51 2004-06-16 22:31:11 luciash Exp $ *}
 
-{* this the very top most box of the feature section in tiki-admin.php?page=features,
+{* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
  *}
@@ -28,7 +28,7 @@
 				:</td>
         <td ><input type="checkbox" name="feature_wiki"
             {if $feature_wiki eq 'y'}checked="checked"{/if}/></td>
-{* here's the blank cell *}
+{* here is the blank cell *}
         <td >&nbsp;</td>
 {* here is the beginning of the new cell for blogs followed by a check box cell *}
 				<td class="form" >
@@ -254,7 +254,7 @@
         <td><input type="checkbox" name="feature_minical"
             {if $feature_minical eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-{* here's the categories option *}
+{* here is the categories option *}
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if}
         		{tr}Categories{/tr}
@@ -462,6 +462,17 @@
 
 
       </tr>
+			<tr>
+				<td class="form">
+	      	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=TikiSiteIdentity" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Site Logo and Identity{/tr}">{/if}{tr}Site Logo and Identity{/tr}{if $feature_help eq 'y'}</a>{/if}&nbsp;:
+				</td>
+        <td>
+					<input type="checkbox" name="feature_siteidentity" {if $feature_siteidentity eq 'y'}checked="checked"{/if}/>
+				</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
 
 
 
