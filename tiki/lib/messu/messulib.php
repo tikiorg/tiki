@@ -21,7 +21,7 @@ class Messu extends Tikilib {
 	}
 
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority) {
-		global $smarty, $userlib, $sender_email;
+		global $smarty, $userlib, $sender_email, $language;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -49,13 +49,12 @@ class Messu extends Tikilib {
 			$smarty->assign('mail_subject', stripslashes($subject));
 			$smarty->assign('mail_body', stripslashes($body));
 			$mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
-			$email = $userlib->get_user_email($user);
+			$email = $userlib->get_user_email($user); echo "eeee";
 			if ($email) {
 				$mailCharset = $this->get_user_preference($user, 'mailCharset', 'utf-8');
 				$mail = new htmlMimeMail();
 				$mail->setFrom($sender_email);
-				// TODO: tra must be done in the user language
-				$mail->setSubject(encodeString(tra("New message arrived from "). $_SERVER["SERVER_NAME"], $mailCharset));
+				$mail->setSubject(encodeString(tra("New message arrived from ", $this->get_user_preference($user, 'language', $language)). $_SERVER["SERVER_NAME"], $mailCharset));
 				$mail->setHeadCharset($mailCharset);
 				$mail->setText(encodeString($mail_data, $mailCharset));
 				$mail->setTextCharset($mailCharset);
