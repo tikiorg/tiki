@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.10 2003-10-19 13:44:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,21 +30,21 @@ if ($tiki_p_messages != 'y') {
 	die;
 }
 
-$maxRecords = $messulib->get_user_preference($_SESSION['user'], 'maxRecords', 20);
+$maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$parts = explode('_', $_REQUEST['action']);
 
-		$messulib->flag_message($_SESSION['user'], $msg, $parts[0], $parts[1]);
+		$messulib->flag_message($user, $msg, $parts[0], $parts[1]);
 	}
 }
 
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
-		$messulib->delete_message($_SESSION['user'], $msg);
+		$messulib->delete_message($user, $msg);
 	}
 }
 
