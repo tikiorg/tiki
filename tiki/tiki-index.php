@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.105 2004-06-13 02:42:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.106 2004-06-13 04:45:50 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,22 +96,25 @@ require_once('tiki-pagesetup.php');
 if ($feature_categories == 'y') {
 	// Check to see if page is categorized
 	$objId = urldecode($page);
-	$is_categorized = $categlib->is_categorized('wiki page',$objId);
 
-	if ($is_categorized) {
-		$parents = $categlib->get_object_categories('wiki page',$objId);
-		require_once('tiki-categsetup.php');
-		// Only consider parent category permissions if child object has no permissions
-		if (!$object_has_perms && $tiki_p_view_categories != 'y') {
-			if (!isset($user)){
-				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-				$smarty->assign('errortitle',tra("Please login"));
-		    } else {
-				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-	    	} 
-		    $smarty->display("error.tpl");
-		    die;  
-		}
+	$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
+   	if ($perms_array) {
+   		$is_categorized = TRUE; // this var is used below
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	} else {
+   		$is_categorized = FALSE; // this var is used below
+   	}
+	if ($tiki_p_admin != 'y' && !$object_has_perms && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
 	}
 }
 
