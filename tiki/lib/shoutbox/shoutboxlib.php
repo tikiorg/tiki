@@ -18,7 +18,7 @@ class ShoutboxLib extends TikiLib {
 			$bindvars = array();
 		}
 
-		$query = "select * from `tiki_shoutbox` $mid order by ".$this-convert_sortmode($sort_mode);
+		$query = "select * from `tiki_shoutbox` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_shoutbox` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
