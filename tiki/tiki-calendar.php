@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.32 2004-04-19 12:38:41 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.33 2004-04-20 00:28:23 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -464,37 +464,27 @@ $wd = date('w', $focusdate);
 #$wd--;
 
 // calculate timespan for sql query
-if ($_SESSION['CalendarViewMode'] == 'quarter') {
+if ($_SESSION['CalendarViewMode'] == 'month' ||
+	 $_SESSION['CalendarViewMode'] == 'quarter' ||
+	 $_SESSION['CalendarViewMode'] == 'semester' ||
+	 $_SESSION['CalendarViewMode'] == 'year'	) {
    $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
    $daystart=$viewstart;
    $TmpWeekday = date("w",$viewstart);
    // move viewstart back to Sunday....
    $viewstart -= $TmpWeekday * $d;
    // this is the last day of $focus_month
-   $viewend = mktime(0,0,0,$focus_month + 3, 0, $focus_year);
-   $dayend=$viewend;
-   $TmpWeekday = date("w", $viewend);
-   $viewend += (6 - $TmpWeekday) * $d;
-   $viewend -= 1;
-   // ISO weeks --- kinda mangled because ours begin on Sunday...
-   $firstweek = date("W", $viewstart + $d);
-   $lastweek = date("W", $viewend);
-   if ($lastweek < $firstweek) {
-	   if ($currentweek < $firstweek) {
-		   $firstweek -= 52;
-	   } else {
-		   $lastweek += 52;
-	   }
+   if ($_SESSION['CalendarViewMode'] == 'month') {
+     $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
+   } elseif ($_SESSION['CalendarViewMode'] == 'quarter') {
+     $viewend = mktime(0,0,0,$focus_month + 3, 0, $focus_year);
+   } elseif ($_SESSION['CalendarViewMode'] == 'semester') {
+     $viewend = mktime(0,0,0,$focus_month + 6, 0, $focus_year);
+   } elseif ($_SESSION['CalendarViewMode'] == 'year') {
+     $viewend = mktime(0,0,0,$focus_month + 12, 0, $focus_year);
+   } else {
+     $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
    }
-   $numberofweeks = $lastweek - $firstweek;
-} elseif ($_SESSION['CalendarViewMode'] == 'month') {
-   $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
-   $daystart=$viewstart;
-   $TmpWeekday = date("w",$viewstart);
-   // move viewstart back to Sunday....
-   $viewstart -= $TmpWeekday * $d;
-   // this is the last day of $focus_month
-   $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
    $dayend=$viewend;
    $TmpWeekday = date("w", $viewend);
    $viewend += (6 - $TmpWeekday) * $d;
