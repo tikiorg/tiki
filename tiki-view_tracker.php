@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.22 2004-01-20 09:03:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.23 2004-01-20 17:20:55 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -215,6 +215,14 @@ if (!isset($_REQUEST["offset"])) {
 }
 
 $smarty->assign_by_ref('offset', $offset);
+
+if (isset($_REQUEST["initial"])) {
+	$initial = $_REQUEST["initial"];
+} else {
+	$initial = '';
+}
+$smarty->assign('initial', $initial);
+$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
