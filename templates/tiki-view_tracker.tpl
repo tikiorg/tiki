@@ -42,7 +42,7 @@
 </td>
 {/if}
 {section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y'}
+{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
 {/if}
 {/section}
@@ -63,7 +63,7 @@
 {section name=user loop=$items}
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td style="text-align:center;"  class="third">
+<td class="third">
 {if $items[user].status eq 'o'}
 <img src='img/icons/ofo.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
 {else}
@@ -88,13 +88,15 @@
 {/if}
 </td>
 {else}
+{if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="{cycle advance=false}">
-{if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime}
-{else}
-{$items[user].field_values[ix].value}
-{/if}
 </td>
+{elseif $items[user].field_values[ix].type ne 'x'}
+<td class="{cycle advance=false}">
+{$items[user].field_values[ix].value}
+</td>
+{/if}
 {/if}
 {/if}
 {/section}
@@ -223,8 +225,10 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 <h3>{tr}Insert new item{/tr}</h3>
 <table class="normal">
 {section name=ix loop=$ins_fields}
+{if $ins_fields[ix].type ne 'x'}
 <tr><td class="formcolor">{$ins_fields[ix].name}</td>
 <td class="formcolor">
+{/if}
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
@@ -233,6 +237,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/section}
 </select>
 {/if}
+
 {if $ins_fields[ix].type eq 'g'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
@@ -241,18 +246,23 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/section}
 </select>
 {/if}
+
 {if $ins_fields[ix].type eq 'i'}
 <input type="file" name="ins_{$ins_fields[ix].name}"/>
 {/if}
+
 {if $ins_fields[ix].type eq 't'}
 <input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
 {/if}
+
 {if $ins_fields[ix].type eq 'a'}
 <textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
 {/if}
+
 {if $ins_fields[ix].type eq 'f'}
 {html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
 {/if}
+
 {if $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].name}">
 {section name=jx loop=$ins_fields[ix].options_array}
@@ -260,11 +270,30 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/section}
 </select>
 {/if}
+
 {if $ins_fields[ix].type eq 'c'}
 <input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
 {/if}
-</td>
-</tr>
+
+{if $ins_fields[ix].type eq 'j'}
+<input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].name}" />
+<span id="disp_{$ins_fields[ix].name}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<script type="text/javascript">
+{literal}Calendar.setup( { {/literal}
+date        : "{$ins_fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}",      // initial date
+inputField  : "ins_{$ins_fields[ix].name}",      // ID of the input field
+ifFormat    : "%s",    // the date format
+displayArea : "disp_{$ins_fields[ix].name}",       // ID of the span where the date is to be shown
+daFormat    : "{$daformat}",  // format of the displayed date
+showsTime   : true,
+singleClick : true,
+align       : "bR"
+{literal} } );{/literal}
+</script>
+{/if}
+{if $ins_fields[ix].type ne 'x'}
+</td></tr>
+{/if}
 {/section}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>

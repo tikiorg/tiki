@@ -33,11 +33,17 @@
 <h3>{tr}View item{/tr}</h3>
 <table class="normal">
 {section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
+{if $ins_fields[ix].type ne 'x'}
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
+<td>
+{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
+{$ins_fields[ix].value|date_format:$daformat}
+{else}
 {$ins_fields[ix].value}
+{/if}
 </td>
 </tr>
+{/if}
 {/section}
 </table>
 </div>
@@ -110,11 +116,11 @@
 <td class="{cycle}" align="right" nowrap="nowrap">
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
-<a class="tablename" href="#" onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return true;">more</a>
+<a class="tablename" href="#" onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return true;">{tr}More Info{/tr}</a>
 {/if}
-<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename|iconify}</a>
+<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{tr}Download{/tr}</a>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[{tr}erase{/tr}]</a>
 {/if}
 </td>
 </tr>
@@ -138,14 +144,15 @@
 <input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
 <table class="normal">
-<tr><td class="formcolor">{tr}Status{/tr}</td>
-<td class="formcolor">
+<tr><td class="third">{tr}Status{/tr}</td>
+<td class="third">
 <select name="status">
 <option value="o" {if $item_info.status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
 <option value="c" {if $item_info.status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
 {section name=ix loop=$ins_fields}
+{if $ins_fields[ix].type ne 'x'}
 <tr><td class="formcolor">{$ins_fields[ix].name}</td>
 <td class="formcolor">
 {if $ins_fields[ix].type eq 'u'}
@@ -183,12 +190,54 @@
 {if $ins_fields[ix].type eq 'c'}
 <input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
 {/if}
-</td>
-</tr>
+{if $ins_fields[ix].type eq 'j'}
+<input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$end}" id="ins_{$ins_fields[ix].name}" />
+<span id="disp_{$ins_fields[ix].name}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<script type="text/javascript">
+{literal}Calendar.setup( { {/literal}
+date        : "{$ins_fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}",      // initial date
+inputField  : "ins_{$ins_fields[ix].name}",      // ID of the input field
+ifFormat    : "%s",    // the date format
+displayArea : "disp_{$ins_fields[ix].name}",       // ID of the span where the date is to be shown
+daFormat    : "{$daformat}",  // format of the displayed date
+showsTime   : true,
+singleClick : true,
+align       : "bR"
+{literal} } );{/literal}
+</script>
+{/if}
+
+</td></tr>
+
+{else}
+
+{capture name=trkaction}
+{if $ins_fields[ix].options_array[1] eq 'post'}
+<form action="{$ins_fields[ix].options_array[2]}" method="post" target="_blank">
+{else}
+<form action="{$ins_fields[ix].options_array[2]}" method="get" target="_blank">
+{/if}
+<table class="normal">
+{section name=tl loop=$ins_fields[ix].options_array}
+{assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
+<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$item_info.$valvar|escape}" />
 {/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
 </table>
 </form>
+{/capture}
+
+{/if}
+
+{/section}
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" />
+</td></tr>
+</table>
+</form>
+{if $smarty.capture.trkaction ne ''}
+<h3>{tr}Special Operations{/tr}</h3>
+{$smarty.capture.trkaction}
+{/if}
 </div>
 {/if}
 

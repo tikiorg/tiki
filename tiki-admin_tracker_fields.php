@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.10 2003-12-08 09:07:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.11 2003-12-17 12:17:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,7 @@ if (isset($_REQUEST["save"])) {
 		$isTblVisible = 'n';
 	}
 
-	$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
+	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
 	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain,
 		$isTblVisible, $_REQUEST["position"], $_REQUEST["options"]);
 	$smarty->assign('fieldId', 0);

@@ -442,7 +442,6 @@ class TrackerLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res["options_array"] = split(',', $res["options"]);
-
 			$ret[] = $res;
 		}
 
