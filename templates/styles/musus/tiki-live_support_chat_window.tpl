@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-    <link rel="StyleSheet" href="styles/{$style}" type="text/css" />
+    <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
     {include file="bidi.tpl"}
     <title>Live support:{$role} window</title>
     {literal}
@@ -26,7 +26,7 @@
 	{/if}
 		<table>
 			<tr>
-				<td valign="top" style="text-align:center;">{$req_info.operator|avatarize}<br />
+				<td  valign="top" style="text-align:center;">{$req_info.operator|avatarize}<br />
 					<b>{$req_info.operator}</b>
 				</td>
 				<td valign="top" >
@@ -37,13 +37,14 @@
 		</table>
 	{elseif $role eq 'operator'}
 	  	<input type="hidden" id="username" value="{$req_info.operator|escape}" />
+
 		{if $req_info.tiki_user}
 			<table>
 			<tr>
-				<td valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br />
+				<td  valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br />
 					<b>{$req_info.tiki_user}</b>
 				</td>
-				<td valign="top">
+				<td valign="top" >
 					{tr}Chat started{/tr}<br />
 					<i>{$req_info.reason}</i>
 				</td>
@@ -77,7 +78,7 @@
 				<td valign="top">
 					<i>{$req_info.reason}</i>
 				</td>
-				<td style="text-align:center;" valign="top">
+				<td  style="text-align:center;" valign="top">
 					<b>{tr}Operator:{/tr}</b><br />
 					{$req_info.operator|avatarize}<br />
 					<b>{$req_info.operator}</b>				
@@ -85,15 +86,16 @@
 			</tr>
 		</table>
 	{/if}
-  	<iframe name="chat_data" src="tiki-live_support_chat_frame.php" width="290" height="300" scrolling="yes"></iframe>
+  	<iframe name='chat_data' src='tiki-live_support_chat_frame.php' width="290" height="300" scrolling="yes">
+  	</iframe>
   	{literal}
   	<input type="text" id="data" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
   	<input type="button" value="send" onClick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
   	{/literal}
-  	<script language="Javascript" type="text/javascript">
+  	<script language='Javascript' type='text/javascript'>
         /* Activate polling of requests */
         var last_event=0;
         event_poll();
     </script>
   </body>
-</html>
+</html>  

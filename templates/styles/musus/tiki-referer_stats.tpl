@@ -24,7 +24,7 @@
 
 
 <br /><br />
-<a href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
+<a class="link" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
 
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -39,7 +39,7 @@
 </table>
 
 
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}term{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>

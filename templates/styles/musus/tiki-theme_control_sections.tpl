@@ -25,32 +25,32 @@
 5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br />
 </div>
 <br /><br />
-<a class="linkbut" href="tiki-theme_control_objects.php">{tr}Control by Object{/tr}</a>
 <a class="linkbut" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>
+<a class="linkbut" href="tiki-theme_control_objects.php">{tr}Control by Objects{/tr}</a>
 <h2>{tr}Assign themes to sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}Section{/tr}</td>
-  <td>{tr}Theme{/tr}</td>
-  <td>&nbsp;</td>
+  <td class="formcolor">{tr}Section{/tr}</td>
+  <td class="formcolor">{tr}Theme{/tr}</td>
+  <td class="formcolor">&nbsp;</td>
 </tr>
 <tr>
-  <td>
+  <td class="formcolor">
     <select name="section">
       {section name=ix loop=$sections}
       <option value="{$sections[ix]|escape}">{$sections[ix]}</option>
       {/section}
     </select>
   </td>
-  <td>
+  <td class="formcolor">
     <select name="theme">
       {section name=ix loop=$styles}
       <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
-  <td>
+  <td class="formcolor">
     <input type="submit" name="assign" value="{tr}assign{/tr}" />
   </td>
 </tr>
@@ -59,7 +59,7 @@
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}section{/tr}</a></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-print_multi_pages.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-print_multi_pages.tpl,v 1.2 2004-02-01 07:49:56 musus Exp $ *}
 
 {include file="header.tpl"}
 <div id="tiki-clean">

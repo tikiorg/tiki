@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-received_articles.tpl,v 1.3 2004-01-17 01:22:25 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-received_articles.tpl,v 1.4 2004-02-01 07:47:06 musus Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
@@ -49,19 +49,19 @@
 <input type="hidden" name="created" value="{$created|escape}" />
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
-<table>
-<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="title" value="{$title|escape}" /></td></tr>
-<tr><td>{tr}Author Name{/tr}:</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
+<table class="normal">
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 
-<tr><td>{tr}Type{/tr}</td><td>
+<tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
 {/section}
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php">{tr}Admin types{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
-<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td>{tr}Rating{/tr}</td><td>
+<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -88,29 +88,29 @@
 
 
 
-<tr><td>{tr}Use Image{/tr}:</td><td>
+<tr><td class="formcolor">{tr}Use Image{/tr}:</td><td class="formcolor">
 <select name="useImage">
 <option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td>{tr}Image x size{/tr}:</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
-<tr><td>{tr}Image y size{/tr}:</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
-<tr><td>{tr}Image name{/tr}:</td><td>{$image_name}</td></tr>
-<tr><td>{tr}Image size{/tr}:</td><td>{$image_size}</td></tr>
+<tr><td class="formcolor">{tr}Image x size{/tr}:</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Image y size{/tr}:</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Image name{/tr}:</td><td class="formcolor">{$image_name}</td></tr>
+<tr><td class="formcolor">{tr}Image size{/tr}:</td><td class="formcolor">{$image_size}</td></tr>
 {if $useImage eq 'y'}
-<tr><td>{tr}Image{/tr}:</td><td>
+<tr><td class="formcolor">{tr}Image{/tr}:</td><td class="formcolor">
 <img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}" />
 </td></tr>
 {/if}
-<tr><td>{tr}Created{/tr}:</td><td>{$created|tiki_short_datetime}</td></tr>
-<tr><td>{tr}Publishing date{/tr}:</td><td>
+<tr><td class="formcolor">{tr}Created{/tr}:</td><td class="formcolor">{$created|tiki_short_datetime}</td></tr>
+<tr><td class="formcolor">{tr}Publishing date{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
-<tr><td>{tr}Heading{/tr}:</td><td><textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea></td></tr>
-<tr><td>{tr}Heading{/tr}:</td><td><textarea rows="25" cols="40" name="body">{$body|escape}</textarea></td></tr>
-<tr><td >&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
-<tr><td>{tr}Accept Article{/tr}</td><td>
+<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="25" cols="40" name="body">{$body|escape}</textarea></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Accept Article{/tr}</td><td class="formcolor">
 {tr}Topic{/tr}:<select name="topic">
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
@@ -133,7 +133,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
@@ -153,10 +153,10 @@
 <td class="odd">{$channels[user].receivedFromSite}</td>
 <td class="odd">{$channels[user].receivedFromUser}</td>
 <td class="odd">
-   <a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
-   <a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
-   <!--<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
-   <!--<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
+   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
 </td>
 </tr>
 {else}
@@ -169,10 +169,10 @@
 <td class="even">{$channels[user].receivedFromSite}</td>
 <td class="even">{$channels[user].receivedFromUser}</td>
 <td class="even">
-   <a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
-   <a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
-   <!--<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
-   <!--<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
+   <a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedArticleId}">{tr}view{/tr}</a>-->
+   <!--<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedArticleId}">{tr}accept{/tr}</a>-->
 </td>
 </tr>
 {/if}

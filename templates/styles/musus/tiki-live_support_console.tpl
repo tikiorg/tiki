@@ -20,7 +20,7 @@
   {/literal}
    	<input type="hidden" id="user" value="{$user|escape}" />
   	<input type="hidden" id="status" value="online" />
-	<table >
+	<table class="normal" >
 		<tr>
 			<td class="heading">{tr}Operator{/tr}: {$user}</td>
 			<td class="heading">{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></td>
@@ -41,7 +41,7 @@
 			sound();
 		</script>
     {/if}
-	<table id='reqs'>
+	<table id='reqs' class="normal">
 		<tr>
 			<td class="heading">{tr}User{/tr}</td>
 			<td class="heading">{tr}Reason{/tr}</td>
@@ -56,8 +56,8 @@
 			<td class="{cycle advance=false}">{$requests[ix].timestamp|tiki_short_time}</td>
 			<td class="{cycle}">
 		    {if $status eq 'online'}
-				<a {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
-				<a {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=observer" width="300" height="450"}>{tr}Join{/tr}</a>
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=observer" width="300" height="450"}>{tr}Join{/tr}</a>
 			{else}
 				&nbsp;
 			{/if}

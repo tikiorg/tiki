@@ -4,21 +4,21 @@
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
-<h2>{tr}Create/edit options for question{/tr}: <a href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
+<h2>{tr}Create/edit options for question{/tr}: <a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
 <form action="tiki-edit_question_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
-<table>
-<tr><td>{tr}Option{/tr}:</td><td><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
-<tr><td>{tr}Points{/tr}:</td><td><input type="text" name="points" value="{$points|escape}" /></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table class="normal">
+<tr><td class="formcolor">{tr}Option{/tr}:</td><td class="formcolor"><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Points{/tr}:</td><td class="formcolor"><input type="text" name="points" value="{$points|escape}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>Options</h2>
-<div align="center">
+<div  align="center">
 <table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
+   <td class="findtable">
    <form method="get" action="tiki-edit_question_options.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -28,32 +28,32 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
-<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></th>
-<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}text{/tr}</a></th>
-<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></th>
-<th>{tr}action{/tr}</th>
+<td class="heading"><a class="tableheading" href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}text{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></td>
+<td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
-<tr class="odd">
-<td>{$channels[user].optionId}</td>
-<td>{$channels[user].optionText}</td>
-<td>{$channels[user].points}</td>
-<td>
-   <a href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
-   <a href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
+<tr>
+<td class="odd">{$channels[user].optionId}</td>
+<td class="odd">{$channels[user].optionText}</td>
+<td class="odd">{$channels[user].points}</td>
+<td class="odd">
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {else}
-<tr class="even">
-<td>{$channels[user].optionId}</td>
-<td>{$channels[user].optionText}</td>
-<td>{$channels[user].points}</td>
-<td>
-   <a href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
-   <a href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
+<tr>
+<td class="even">{$channels[user].optionId}</td>
+<td class="even">{$channels[user].optionText}</td>
+<td class="even">{$channels[user].points}</td>
+<td class="even">
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-edit_question_options.php?questionId={$questionId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {/if}
@@ -77,3 +77,4 @@
 {/if}
 </div>
 </div>
+

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-show_page.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-show_page.tpl,v 1.2 2004-02-01 07:49:56 musus Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -25,7 +25,6 @@
   {/if}
   {if $print_page ne 'y'}
 	<td style="text-align:right;">
-
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 	{/if}
@@ -50,20 +49,26 @@
 	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 	  {/if}
 	{/if}
-	
+    </td>
 	{if $feature_backlinks eq 'y' and $backlinks}
-	  <select name="page" onchange="go(this)">
-	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+      <td style="text-align:right;">
+      <form method="tiki-index.php">
+	  <select name="page" onchange="page.form.submit()">
+	    <option value="{$page}">{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
-		  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 		{/section}
 	  </select>
+      </form>
+      </td>
 	{/if}
-	{if count($showstructs) ne 0}
-	  <select name="page" onchange="go(this)">
-	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
+	{if count($showstructs) > 1}
+  	  <td style="text-align:right;">
+      <form method="tiki-index.php">
+	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
+	    <option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
-		  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
+		  <option value="{$showstructs[struct].req_page_ref_id}">
 {if $showstructs[struct].page_alias} 
 {$showstructs[struct].page_alias}
 {else}
@@ -71,8 +76,10 @@
 {/if}</option>
 		{/section}
 	  </select>
+      </form>
+      </td>
 	{/if}
-	</td>
+{*	</td>  *}
   {else}
     <td>&nbsp;</td>
   {/if}
@@ -90,21 +97,21 @@
    				title='{$prev_info.page_alias}'
    			{else}
    				title='{$prev_info.pageName}'
-   			{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
+   			{/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>{/if}
 	{if $parent_info}
    	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}' 
         {if $parent_info.page_alias}
    	      title='{$parent_info.page_alias}'
         {else}
    	      title='{$parent_info.pageName}'
-        {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
+        {/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>{/if}
    	{if $next_info and $next_info.page_ref_id}
       <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
 		  {if $next_info.page_alias}
 			  title='{$next_info.page_alias}'
 		  {else}
 			  title='{$next_info.pageName}'
-		  {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>
+		  {/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>
 	{/if}
 	{if $home_info}
    	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
@@ -171,5 +178,5 @@
 {/if}
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
-  {$display_catobjects}
+<div class="catblock">{$display_catobjects}</div>
 {/if}

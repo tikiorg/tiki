@@ -8,17 +8,14 @@
 </table>
 <br />
 {tr}Total{/tr}: {$poll_info.votes} {tr}votes{/tr}<br /><br />
-<a href="tiki-old_polls.php">{tr}Other Polls{/tr}</a><br /><br />
+<a href="tiki-old_polls.php" class="link">{tr}Other Polls{/tr}</a><br /><br />
 </div>
 {if $feature_poll_comments eq 'y'}
 {if $tiki_p_read_comments eq 'y'}
 <div id="page-bar">
-<table>
-<tr><td>
-<div class="button2">
+<span class="button2">
 <a href="javascript:toggle('comzone');" class="linkbut">{$comments_cant} {tr}comments{/tr}</a>
-</div>
-</td></tr></table>
+</span>
 </div>
 {include file=comments.tpl}
 {/if}

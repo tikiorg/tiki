@@ -3,7 +3,7 @@
      <tr>
           <td><a href="javascript:insertAt('{$area_name}','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="{tr}big grin{/tr}" title="{tr}big grin{/tr}" border="0" /></a></td>
           <td><a href="javascript:insertAt('{$area_name}','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="{tr}confused{/tr}" title="{tr}confused{/tr}" border="0" /></a></td>
-          <td><a href="javascript:insertAt('{$area_name}','(:cool:)');"><img src="img/smiles/icon_cool.gif" alt="{tr}cool{/tr}" title="{tr}cool{/tr} border="0" /></a></td>
+          <td><a href="javascript:insertAt('{$area_name}','(:cool:)');"><img src="img/smiles/icon_cool.gif" alt="{tr}cool{/tr}" title="{tr}cool{/tr}" border="0" /></a></td>
           <td><a href="javascript:insertAt('{$area_name}','(:cry:)');"><img src="img/smiles/icon_cry.gif" alt="{tr}cry{/tr}" title="{tr}cry{/tr}" border="0" /></a></td>
           <td><a href="javascript:insertAt('{$area_name}','(:eek:)');"><img src="img/smiles/icon_eek.gif" alt="{tr}eek{/tr}" title="{tr}eek{/tr}" border="0" /></a></td>
           <td><a href="javascript:insertAt('{$area_name}','(:evil:)');"><img src="img/smiles/icon_evil.gif" alt="{tr}evil{/tr}" title="{tr}evil{/tr}" border="0" /></a></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-edit_topic.tpl,v 1.3 2004-01-17 01:19:09 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-edit_topic.tpl,v 1.4 2004-02-01 07:45:21 musus Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -14,19 +14,19 @@
 <h3>{tr}Edit a topic{/tr}</h3>
 
 <form enctype="multipart/form-data" action="tiki-edit_topic.php" method="post">
- <table>
-<tr><td>{tr}Topic Name{/tr}</td>
-    <td>
+ <table class="normal">
+<tr><td class="formcolor">{tr}Topic Name{/tr}</td>
+    <td class="formcolor">
       <input type="hidden" name="topicid" value="{$topic_info.topicId}" />
       <input type="text" name="name" value="{$topic_info.name}" />
     </td>
 </tr>
-<tr><td>{tr}Upload Image{/tr}</td>
-    <td>
+<tr><td class="formcolor">{tr}Upload Image{/tr}</td>
+    <td class="formcolor">
       <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
       <input name="userfile1" type="file">
     </td>
 </tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="edittopic" value="{tr}edit{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}edit{/tr}" /></td></tr>
 </table>
 </form>

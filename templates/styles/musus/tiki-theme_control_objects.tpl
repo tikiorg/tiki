@@ -25,7 +25,7 @@
 5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br />
 </div>
 <br /><br />
-<a class="linkbut" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
+<a class="linkbut" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>
  <a class="linkbut" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>
 <h2>{tr}Assign themes to objects{/tr}</h2>
 <form id='objform' action="tiki-theme_control_objects.php" method="post">
@@ -35,28 +35,28 @@
 {/section}
 </select>
 <!--<input type="submit" name="settype" value="{tr}set{/tr}" />-->
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}Object{/tr}</td>
-  <td>{tr}Theme{/tr}</td>
-  <td>&nbsp;</td>
+  <td class="formcolor">{tr}Object{/tr}</td>
+  <td class="formcolor">{tr}Theme{/tr}</td>
+  <td class="formcolor">&nbsp;</td>
 </tr>
 <tr>
-  <td>
+  <td class="formcolor">
     <select name="objdata">
       {section name=ix loop=$objects}
       <option value="{$objects[ix].objId|escape}|{$objects[ix].objName}">{$objects[ix].objName}</option>
       {/section}
     </select>
   </td>
-  <td>
+  <td class="formcolor">
     <select name="theme">
       {section name=ix loop=$styles}
       <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
-  <td>
+  <td class="formcolor">
     <input type="submit" name="assign" value="{tr}assign{/tr}" />
   </td>
 </tr>
@@ -77,7 +77,7 @@
 </table>
 <form action="tiki-theme_control_objects.php" method="post">
 <input type="hidden" name="type" value="{$type|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>

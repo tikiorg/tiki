@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-directory_browse.tpl,v 1.2 2004-01-16 19:33:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-directory_browse.tpl,v 1.3 2004-02-01 07:45:21 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br /><br />
 {* The navigation bar *}

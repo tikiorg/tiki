@@ -1,8 +1,8 @@
 <h2>{tr}Banner stats{/tr}</h2>
-<a href="tiki-list_banners.php">{tr}List banners{/tr}</a><br /><br />
+<a class="link" href="tiki-list_banners.php">{tr}List banners{/tr}</a><br /><br />
 {if $tiki_p_admin_banners eq 'y'}
-<a href="tiki-edit_banner.php?bannerId={$bannerId}">{tr}Edit{/tr}</a><br /><br />
-<a href="tiki-edit_banner.php">{tr}Create new banner{/tr}</a><br /><br />
+<a class="link" href="tiki-edit_banner.php?bannerId={$bannerId}">{tr}Edit{/tr}</a><br /><br />
+<a class="link" href="tiki-edit_banner.php">{tr}Create new banner{/tr}</a><br /><br />
 {/if}
 <h3>{tr}Banner Information{/tr}</h3>
 <div class="simplebox">
@@ -46,7 +46,8 @@
 {if $useDates eq 'y'}
 <tr>
   <td>{tr}Use dates{/tr}:</td>
-  <td>{tr}From{/tr}: {$fromDate|tiki_short_date} {tr}to{/tr}: {$toDate|tiki_short_date}</td>
+  <td>{tr}From{/tr}: {$fromDate|tiki_short_date} {tr}to{/tr}: {$toDate|tiki_short_date}
+  </td>
 </tr>
 {/if}
 <tr>

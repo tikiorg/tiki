@@ -1,10 +1,10 @@
 <a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
 <br /><br />
 {cycle values="odd,even" print=false}
-<table>
+<table class="normal">
 <tr>
 	<td  class="{cycle advance=false}">{tr}Chart{/tr}</td>
-	<td class="{cycle }"><b><a href="tiki-view_chart.php?chartId={$chart_info.chartId}">{$chart_info.title}</a></b></td>
+	<td class="{cycle }"><b><a class="link" href="tiki-view_chart.php?chartId={$chart_info.chartId}">{$chart_info.title}</a></b></td>
 </tr>
 <tr>
 	<td  class="{cycle advance=false}">{tr}Item{/tr}</td>

@@ -28,7 +28,7 @@
 </tr>
 </table>
 <div  align="center">
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}Last updated{/tr}</a></td>
@@ -37,13 +37,13 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;<a href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a class="link" href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].refresh|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;<a target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}view{/tr}</a>&nbsp;<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}view{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
 {else}
-<td class="even">&nbsp;<a href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
+<td class="even">&nbsp;<a class="link" href="{$listpages[changes].url}">{$listpages[changes].url}</a>&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].refresh|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;<a target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}view{/tr}</a>&nbsp;<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
+<td class="even">&nbsp;<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">{tr}view{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">{tr}remove{/tr}</a>&nbsp;<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}">{tr}refresh{/tr}</a>&nbsp;</td>
 </tr>
 {/if}
 {sectionelse}

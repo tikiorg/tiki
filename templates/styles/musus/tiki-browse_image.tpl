@@ -74,7 +74,7 @@
   
 {if ($popup == "")  }
 	  <br /><br />
-      <table>
+      <table class="normal">
       <tr><td class="odd">{tr}Image Name{/tr}:</td><td class="odd">{$name}</td></tr>
       <tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
       <tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
@@ -96,7 +96,7 @@
       {/if}
     </table>
 <br /><br />    
-  <table>
+  <table class="normal">
   <tr>
   	<td class="even">
   	<small>

@@ -1,16 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_modules.tpl,v 1.3 2004-01-16 19:33:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_modules.tpl,v 1.4 2004-02-01 07:43:28 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
-
 <!-- the help link info -->
   
-{if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin modules{/tr}"><img src='img/icons/help.gif' alt='help' /></a>{/if}
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin modules{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin modules tpl{/tr}"><img src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin modules tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- begin -->
 
@@ -31,25 +32,28 @@ have turned off the option 'display modules to all groups always'
 from Admin->General
 {/tr}
 </div>
-<br /><br />
-<table>
+<br />
+<br />
+<table class="normal">
 <caption>{tr}User Modules{/tr}</caption>
 <tr>
-<th>{tr}name{/tr}</th>
-<th>{tr}title{/tr}</th>
-<th>{tr}action{/tr}</th>
+<td class="heading">{tr}name{/tr}</td>
+<td class="heading">{tr}title{/tr}</td>
+<td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$user_modules}
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title}</td>
-<td class="{cycle}"><a href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
-             <a href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
-             <a href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a></td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a></td>
 </tr>
 {sectionelse}
-<tr><td colspan="6"><b>{tr}No records found{/tr}</b></td></tr>
+<tr><td colspan="6">
+<b>{tr}No records found{/tr}</b>
+</td></tr>
 {/section}
 </table>
 <br />
@@ -65,8 +69,8 @@ from Admin->General
 {$preview_data}
 {/if}
 <form method="post" action="tiki-admin_modules.php#assign">
-<table>
-<tr><td>{tr}Module Name{/tr}</td><td>
+<table class="normal">
+<tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
 {section name=ix loop=$all_modules}
 <option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
@@ -74,23 +78,23 @@ from Admin->General
 </select>
 </td></tr>
 <!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title|escape}"></td></tr>-->
-<tr><td>{tr}Position{/tr}</td><td>
+<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
 <select name="assign_position">
 <option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}left{/tr}</option>
 <option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}right{/tr}</option>
 </select>
 </td></tr>
-<tr><td>{tr}Order{/tr}</td><td>
+<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
 <select name="assign_order">
 {section name=ix loop=$orders}
 <option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td>{tr}Cache Time{/tr} ({tr}seconds{/tr})</td><td><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
-<tr><td>{tr}Rows{/tr}</td><td><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
-<tr><td>{tr}Parameters{/tr}</td><td><input type="text" name="assign_params" value="{$assign_params|escape}" /></td></tr>
-<tr><td>{tr}Groups{/tr}</td><td>
+<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
@@ -98,7 +102,7 @@ from Admin->General
 </select>
 </td></tr>
 {if $user_assigned_modules eq 'y'}
-<tr><td>{tr}Visibility{/tr}</td><td>
+<tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
 <select name="assign_type">
 <option value="d" {if $assign_type eq 'd'}selected="selected"{/if}>{tr}Displayed for the eligible users with no personal assigned modules{/tr}</option>
 <option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</option>
@@ -107,13 +111,13 @@ from Admin->General
 </select>
 </td></tr>
 {/if}
-<tr><td>&nbsp;</td><td><input type="submit" name="preview" value="{tr}preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
 </table>
 </form>
 <br />
 <h3>{tr}Assigned Modules{/tr}</h3>
 <a name="leftmod"></a>
-<table>
+<table class="normal">
 <caption>{tr}Left Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
@@ -134,10 +138,10 @@ from Admin->General
 <td class="{cycle advance=false}">{$left[user].rows}</td>
 <td class="{cycle advance=false}">{$left[user].module_groups}</td>
 <td class="{cycle}">
-             <a href="tiki-admin_modules.php?edit_assign={$left[user].name}#assign">{tr}edit{/tr}</a>
-             <a href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
-             <a href="tiki-admin_modules.php?moddown={$left[user].name}">{tr}down{/tr}</a>
-             <a href="tiki-admin_modules.php?unassign={$left[user].name}#leftmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}#assign">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name}">{tr}down{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name}#leftmod">{tr}x{/tr}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -148,7 +152,7 @@ from Admin->General
 <br />
 <br />
 <a name="rightmod"></a>
-<table>
+<table class="normal">
 <caption>{tr}Right Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
@@ -169,10 +173,10 @@ from Admin->General
 <td class="{cycle advance=false}">{$right[user].rows}</td>
 <td class="{cycle advance=false}">{$right[user].module_groups}</td>
 <td class="{cycle}">
-             <a href="tiki-admin_modules.php?edit_assign={$right[user].name}#assign">{tr}edit{/tr}</a>
-             <a href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
-             <a href="tiki-admin_modules.php?moddown={$right[user].name}">{tr}down{/tr}</a>
-             <a href="tiki-admin_modules.php?unassign={$right[user].name}#rightmod">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}#assign">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name}">{tr}down{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name}#rightmod">{tr}x{/tr}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -182,7 +186,7 @@ from Admin->General
 </table>
 <br />
 <a name="editcreate"></a>
-<table><tr><td valign="top">
+<table class="normal"><tr><td valign="top" class="odd">
 {if $um_name eq ''}
 <h3>{tr}Create new user module{/tr}
 {else}
@@ -197,29 +201,36 @@ from Admin->General
 {if $um_name ne ''}
 <a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
 {/if}
-<form name="editusr" method="post" action="tiki-admin_modules.php">
+<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td>{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
-<tr><td>{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
-<tr><td>{tr}Data{/tr}</td><td>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
+<tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
+<tr><td class="form">{tr}Data{/tr}</td><td>
+
 
 <textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data|escape}</textarea>
+
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/dialog.js"></script>
-	<style type="text/css">@import url(lib/htmlarea/htmlarea.css);</style>
+	<style type="text/css">
+		@import url(lib/htmlarea/htmlarea.css);
+	</style>
 	<script defer='defer'>(new HTMLArea(document.forms['editusr']['um_data'])).generate();</script>
 {/if}
+
 </td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{tr}create/edit{/tr}" /></td></tr>
 </table>
 </form>
-</td><td valign="top">
+</td><td valign="top" class="even">
 <h3>{tr}Objects that can be included{/tr}</h3>
 <table>
 <tr>
-  <td>{tr}Available polls{/tr}:</td>
+  <td class="form">
+    {tr}Available polls{/tr}:
+  </td>
   <td>
     <select name="polls" id='list_polls'>
     {section name=ix loop=$polls}
@@ -227,11 +238,15 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_polls');">{tr}use poll{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}use poll{/tr}</a>
+  </td>
 </tr>
 
 <tr>
-  <td>{tr}Random image from{/tr}:</td>
+  <td class="form">
+   {tr}Random image from{/tr}:
+  </td>
   <td>
    <select name="galleries" id='list_galleries'>
    <option value="{literal}{{/literal}gallery id=-1 showgalleryname=1{literal}}{/literal}">{tr}All galleries{/tr}</option>
@@ -239,11 +254,16 @@ from Admin->General
    <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId} showgalleryname=0{literal}}{/literal}">{$galleries[ix].name}</option>
    {/section}
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_galleries');">{tr}use gallery{/tr}</a></td>
+  <td class="form">
+   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}use gallery{/tr}</a>
+  </td>
 </tr>
 
+
 <tr>
-  <td>{tr}Dynamic content blocks{/tr}:</td>
+  <td class="form">
+    {tr}Dynamic content blocks{/tr}:
+  </td>
   <td>
     <select name="contents" id='list_contents'>
     {section name=ix loop=$contents}
@@ -251,10 +271,14 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_contents');">{tr}use dynamic  content{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}use dynamic  content{/tr}</a>
+  </td>
 </tr>
 <tr>
-  <td>{tr}RSS modules{/tr}:</td>
+  <td class="form">
+    {tr}RSS modules{/tr}:
+  </td>
   <td>
     <select name="rsss" id='list_rsss'>
     {section name=ix loop=$rsss}
@@ -262,10 +286,15 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_rsss');">{tr}use rss module{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}use rss module{/tr}</a>
+  </td>
 </tr>
+
 <tr>
-  <td>{tr}Menus{/tr}:</td>
+  <td class="form">
+    {tr}Menus{/tr}:
+  </td>
   <td>
     <select name="menus" id='list_menus'>
     {section name=ix loop=$menus}
@@ -273,12 +302,16 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_menus');">{tr}use menu{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}use menu{/tr}</a>
+  </td>
 </tr>
 
 {if $feature_phplayers eq "y"}
 <tr>
-  <td>{tr}phpLayersMenus{/tr}:</td>
+  <td class="form">
+    {tr}phpLayersMenus{/tr}:
+  </td>
   <td>
     <select name="phpmenus" id='list_phpmenus'>
     {section name=ix loop=$menus}
@@ -286,11 +319,16 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}use phplayermenu{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}use phplayermenu{/tr}</a>
+  </td>
 </tr>
+                                                                                                                                                                           
 {/if}
 <tr>
-  <td>{tr}Banner zones{/tr}:</td>
+  <td class="form">
+    {tr}Banner zones{/tr}:
+  </td>
   <td>
     <select name="banners" id='list_banners'>
     {section name=ix loop=$banners}
@@ -298,7 +336,9 @@ from Admin->General
     {/section}
     </select>
   </td>
-  <td><a href="javascript:setUserModuleFromCombo('list_banners');">{tr}use banner zone{/tr}</a></td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}use banner zone{/tr}</a>
+  </td>
 </tr>
 </table>
 </td></tr></table>

@@ -31,7 +31,7 @@
 
 <br /><br />
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Add or edit a process{/tr} <a href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
+<h3>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
 </h3>
 {if $pid > 0}
 {include file=tiki-g-proc_bar.tpl}
@@ -51,31 +51,31 @@
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 	<tr>
-		<td>{tr}Process Name{/tr}</td>
-		<td><input type="text" maxlength="80" name="name" value="{$info.name|escape}" /> {tr}ver:{/tr}{$info.version}</td>
+		<td class="formcolor">{tr}Process Name{/tr}</td>
+		<td class="formcolor"><input type="text" maxlength="80" name="name" value="{$info.name|escape}" /> {tr}ver:{/tr}{$info.version}</td>
 	</tr>
 	<tr>
-	 	<td>{tr}Description{/tr}</td>
-	 	<td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
+	 	<td class="formcolor">{tr}Description{/tr}</td>
+	 	<td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
 	</tr>
 	<tr>
-		<td><a {popup text="$is_active_help"}>{tr}is active?{/tr}</a></td>
-		<td><input type="checkbox" name="isActive" {if $info.isActive eq 'y'}checked="checked"{/if} /></td>
+		<td class="formcolor"><a {popup text="$is_active_help"}>{tr}is active?{/tr}</a></td>
+		<td class="formcolor"><input type="checkbox" name="isActive" {if $info.isActive eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>&nbsp;</td>
-		<td><input type="submit" name="save" value="{if $pid > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
+		<td class="formcolor">&nbsp;</td>
+		<td class="formcolor"><input type="submit" name="save" value="{if $pid > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
 	</tr>
 </table>
 </form>
 
 <h3>{tr}Or upload a process using this form{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-g-admin_processes.php" method="post">
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}Upload file{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -108,7 +108,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="x " /></td>
 <td  class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
@@ -124,7 +124,7 @@
 		<input type="checkbox" name="process[{$items[ix].pId}]" />
 	</td>
 	<td class="{cycle advance=false}">
-	  <a href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid={$items[ix].pId}">{$items[ix].name}</a>
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid={$items[ix].pId}">{$items[ix].name}</a>
 	</td>
 	<td style="text-align:right;" class="{cycle advance=false}">
 	  {$items[ix].version}
@@ -146,12 +146,12 @@
 	</td>
 
 	<td class="{cycle}">
-	  <a href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
-	  <a href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
-	  <a href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br />
-	  <a href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br />
-	  <a href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}save{/tr}</a><br />
-	  <a href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br />
+	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}save{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
 	</td>
 </tr>
 {sectionelse}

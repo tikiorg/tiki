@@ -8,7 +8,7 @@
   <input type="hidden" name="to" value="{$contact_user|escape}" />
   <table class="normalnoborder">
   <tr>
-    <td>{tr}Priority{/tr}:</td><td>
+    <td class="form">{tr}Priority{/tr}:</td><td class="form">
     <select name="priority">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
       <option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -20,10 +20,10 @@
     </td>
   </tr>
   <tr>
-    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="80" maxlength="255"/></td>
+    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="" size="80" maxlength="255"/></td>
   </tr>
-  <tr><td>&nbsp;</td>
-      <td><textarea rows="20" cols="80" name="body"></textarea></td>
+  <tr><td class="form">&nbsp;</td>
+      <td class="form"><textarea rows="20" cols="80" name="body"></textarea></td>
   </tr>
 </table>
 </form>

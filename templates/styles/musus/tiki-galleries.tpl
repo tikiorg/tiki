@@ -30,21 +30,21 @@
 {/if}
 <form action="tiki-galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-<table>
-<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}"/></td></tr>
-<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-<!--<tr><td>{tr}Theme{/tr}:</td><td><select name="theme">
+<table class="normal">
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<!--<tr><td class="formcolor">{tr}Theme{/tr}:</td><td class="formcolor"><select name="theme">
        <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
        <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
        </select></td></tr>-->
 {if $tiki_p_admin_galleries eq 'y'}       
-<tr><td>{tr}Gallery is visible to non-admin users?{/tr}</td><td><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
+<tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
 {/if}
-<tr><td>{tr}Max Rows per page{/tr}:</td><td><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
-<tr><td>{tr}Images per row{/tr}:</td><td><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
-<tr><td>{tr}Thumbnails size X{/tr}:</td><td><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
-<tr><td>{tr}Thumbnails size Y{/tr}:</td><td><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>      
-<tr><td>{tr}Available scales{/tr}:</td><td>
+<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>      
+<tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 {section  name=scales loop=$scaleinfo}
 {tr}Remove{/tr}:<input type="checkbox" name="{$scaleinfo[scales].xsize|escape}x{$scaleinfo[scales].ysize}" />
 {$scaleinfo[scales].xsize}x{$scaleinfo[scales].ysize}<br />
@@ -52,10 +52,10 @@
 {tr}No scales available{/tr}
 {/section}
 </td></tr>
-<tr><td>{tr}Add scaled images size X x Y{/tr}:</td><td><input type="text" name="scaleSizeX" size=4 />x<input type="text" name="scaleSizeY" size=4 /></td></tr>
+<tr><td class="formcolor">{tr}Add scaled images size X x Y{/tr}:</td><td class="formcolor"><input type="text" name="scaleSizeX" size=4 />x<input type="text" name="scaleSizeY" size=4 /></td></tr>
 {include file=categorize.tpl}
-<tr><td>{tr}Other users can upload images to this gallery{/tr}:</td><td><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+<tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -85,7 +85,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 {if $gal_list_name eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>

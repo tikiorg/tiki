@@ -57,7 +57,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td  class="heading" >{tr}Activities{/tr}</td>
@@ -67,13 +67,13 @@
 {section name=ix loop=$items}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a href="tiki-g-user_activities.php?filter_process={$items[ix].pId}">{$items[ix].procname} {$items[ix].version}</a>
+	  <a class="link" href="tiki-g-user_activities.php?filter_process={$items[ix].pId}">{$items[ix].procname} {$items[ix].version}</a>
 	</td>
 	<td class="{cycle advance=false}" style="text-align:right;">
-		<a href="tiki-g-user_activities.php?filter_process={$items[ix].pId}">{$items[ix].activities}</a>
+		<a class="link" href="tiki-g-user_activities.php?filter_process={$items[ix].pId}">{$items[ix].activities}</a>
 	</td>
 	<td class="{cycle}" style="text-align:right;">
-		<a href="tiki-g-user_instances.php?filter_process={$items[ix].pId}">{$items[ix].instances}</a>
+		<a class="link" href="tiki-g-user_instances.php?filter_process={$items[ix].pId}">{$items[ix].instances}</a>
 	</td>
 </tr>
 {sectionelse}

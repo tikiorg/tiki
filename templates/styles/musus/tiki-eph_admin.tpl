@@ -23,14 +23,14 @@
 <br /><br />
 
 
-<table>
+<table class="normal">
 <tr>
-	<td>
+	<td class="formcolor">
 	<!-- Calendar -->
 	  {include file=modules/mod-calendar.tpl}
 	</td>
 	
-	<td>
+	<td class="formcolor">
 	<!-- Form to upload/edit -->
 	  <b>{$pdate|tiki_long_date}</b>
 	  <form enctype="multipart/form-data" action="tiki-eph_admin.php" method="post">
@@ -38,22 +38,22 @@
 		<input type="hidden" name="day" value="{$day|escape}" />
 		<input type="hidden" name="mon" value="{$mon|escape}" />
 		<input type="hidden" name="year" value="{$year|escape}" />
-		<table>
+		<table class="normal">
 		<tr>
-			<td>{tr}Title{/tr}</td>
-			<td><input size="20" type="text" name="title" value="{$info.title|escape}" /></td>
+			<td class="formcolor">{tr}Title{/tr}</td>
+			<td class="formcolor"><input size="20" type="text" name="title" value="{$info.title|escape}" /></td>
 		</tr>
 		<tr>
-			<td>{tr}Text{/tr}</td>
-			<td><textarea rows="5" cols="20" name="textdata">{$info.textdata|escape}</textarea></td>
+			<td class="formcolor">{tr}Text{/tr}</td>
+			<td class="formcolor"><textarea rows="5" cols="20" name="textdata">{$info.textdata|escape}</textarea></td>
 		
 		</tr>
 		<tr>
-		  <td>{tr}Upload image{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="8" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+		  <td class="formcolor">{tr}Upload image{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="8" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 		</tr>
 		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+			<td class="formcolor">&nbsp;</td>
+			<td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
 		</tr>
 		</table>
 		</form>
@@ -65,7 +65,7 @@
 <h3>{tr}All ephemerides{/tr}</h3>
 <a class="linkbut" href="tiki-eph.php">{tr}Browse{/tr}</a>
 <form action="tiki-eph_admin.php" method="post">
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
@@ -77,7 +77,7 @@
 <td class="{cycle advance=false}">
 <input type="checkbox" name="ephitem[{$channels[user].ephId}]" />
 </td>
-<td class="{cycle advance=false}"><a href="tiki-eph_admin.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;ephId={$channels[user].ephId}">{$channels[user].title}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-eph_admin.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;ephId={$channels[user].ephId}">{$channels[user].title}</a></td>
 <td class="{cycle advance=false}">
 	<table>
 	<tr>

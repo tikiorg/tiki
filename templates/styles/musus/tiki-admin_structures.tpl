@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_structures.tpl,v 1.3 2004-01-16 19:33:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_structures.tpl,v 1.4 2004-02-01 07:43:28 musus Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info -->
@@ -17,10 +17,10 @@
 <!-- beginning of next bit -->
 
 <h2>{tr}Structures{/tr}</h2>
-<table>
+<table class="normal">
 <tr>
-  <th>{tr}Structure ID{/tr}</th>
-  <th>&nbsp;</th>
+  <td class="heading">{tr}Structure ID{/tr}</td>
+  <td  class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
@@ -34,40 +34,59 @@
   </a>
   </td>
   <td class="{cycle}">
-  <a href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/export.gif' alt="{tr}export pages{/tr}" title="{tr}export pages{/tr}" border='0' /></a>
-  <a href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/expand.gif' alt="{tr}dump tree{/tr}" title="{tr}dump tree{/tr}" border='0' /></a>
-  <a href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons2/delete.gif' alt="{tr}remove{/tr}" title="{tr}remove{/tr}" border='0' /></a>
-  <a href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="img/icons/whelp.gif" alt="{tr}create webhelp{/tr}" title="{tr}create webhelp{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/export.gif' alt="{tr}export pages{/tr}" title="{tr}export pages{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/expand.gif' alt="{tr}dump tree{/tr}" title="{tr}dump tree{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons2/delete.gif' alt="{tr}remove{/tr}" title="{tr}remove{/tr}" border='0' /></a>
+  <a class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}"><img src="img/icons/whelp.gif" alt="{tr}create webhelp{/tr}" title="{tr}create webhelp{/tr}" border='0' /></a>
   {if $channels[ix].webhelp eq 'y'} 
-  <a href="whelp/{$channels[ix].pageName}/index.html"><img src="img/icons/whelp_toc.gif" alt="{tr}view webhelp{/tr}" title="{tr}view webhelp{/tr}" border='0' /></a>
+  <a class="link" href="whelp/{$channels[ix].pageName}/index.html"><img src="img/icons/whelp_toc.gif" alt="{tr}view webhelp{/tr}" title="{tr}view webhelp{/tr}" border='0' /></a>
   {/if}
   </td>
 </tr>
 {/section}
 </table>
+
+<div class="mini">
+      {if $prev_offset >= 0}
+        [<a class="galprevnext" href="tiki-admin_structures.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp; 
+      {/if}
+      {tr}Page{/tr}: {$actual_page}/{$cant_pages}
+      {if $next_offset >= 0}
+      &nbsp;[<a class="galprevnext" href="tiki-admin_structures.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+      {/if}
+      {if $direct_pagination eq 'y'}
+<br />
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-admin_structures.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+  </div>
+
 {if $askremove eq 'y'}
 <br />
-<a href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br />
-<a href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
+<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br />
+<a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
 {/if}
 
 <h2>{tr}Create new structure{/tr}</h2>
 <small>{tr}Use single spaces to indent structure levels{/tr}</small>
 <form action="tiki-admin_structures.php" method="post">
-<table>
+<table class="normal">
 <tr>
-   <td>{tr}Structure ID{/tr}:</td>
-   <td><input type="text" name="name" /></td>
-   <td>{tr}Alias{/tr}:</td>
-   <td><input type="text" name="alias" /></td>
+   <td class="formcolor">{tr}Structure ID{/tr}:</td>
+   <td class="formcolor"><input type="text" name="name" /></td>
+   <td class="formcolor">{tr}Alias{/tr}:</td>
+   <td class="formcolor"><input type="text" name="alias" /></td>
 </tr>    
 <tr>
-   <td>{tr}tree{/tr}:<br />(optional)</td>
-   <td colspan=3><textarea rows="5" cols="60" name="tree" /></td>
+   <td class="formcolor">{tr}tree{/tr}:<br />(optional)</td>
+   <td colspan=3 class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
 </tr>    
 <tr>
-   <td>&nbsp;</td>
-   <td colspan=3><input type="submit" value="{tr}create new structure{/tr}" name="create" /></td>
+   <td class="formcolor">&nbsp;</td>
+   <td colspan=3 class="formcolor"><input type="submit" value="{tr}create new structure{/tr}" name="create" /></td>
 </tr>
 </table>
 </form>
