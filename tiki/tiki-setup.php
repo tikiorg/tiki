@@ -231,6 +231,9 @@ $feature_bot_bar = 'y';
 $feature_blogposts_comments = 'n';
 $smarty->assign('feature_blogposts_comments',$feature_blogposts_comments);
 
+$feature_messages = 'n';
+$smarty->assign('feature_messages',$feature_messages);
+
 $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description',$feature_wiki_description);
 $feature_wiki_pictures = 'n';
@@ -865,6 +868,12 @@ if(count($query)>0) {
 }
 $ownurl_father=$father;
 $smarty->assign('ownurl',httpPrefix().$_SERVER["REQUEST_URI"]);
+
+$allowMsgs = 'n';
+if($user) {
+  $allowMsgs = $tikilib->get_user_preference($user,'allowMsgs','y');
+} 
+$smarty->assign('allowMsgs',$allowMsgs);
 
 if($feature_referer_stats != 'y') {
 // Referer tracking

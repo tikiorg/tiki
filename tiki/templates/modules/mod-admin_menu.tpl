@@ -8,6 +8,7 @@
  $tiki_p_admin_categories eq 'y' or
  $tiki_p_admin_banners eq 'y' or
  $tiki_p_edit_templates eq 'y' or
+ $tiki_p_admin_mailin eq 'y' or
  $tiki_p_admin_dynamic eq 'y' or
  $tiki_p_admin_dynamic eq 'y' or
  $tiki_p_edit_content_templates eq 'y' or
@@ -50,6 +51,9 @@
     {/if}
     {if $tiki_p_edit_cookies eq 'y'}
       &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_mailin eq 'y'}
+      &nbsp;<a href="tiki-admin_mailin.php" class="linkmenu">{tr}Mail-in{/tr}</a><br/>
     {/if}
     {if $tiki_p_edit_content_templates eq 'y'}
       &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br/>

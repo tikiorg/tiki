@@ -64,11 +64,18 @@
   </select>
   </td>
   </tr>
+  <tr><td class="form">{tr}User information{/tr}:</td><td>
+  <select name="user_information">
+    <option value='private' {if $user_information eq 'private'}selected="selected"{/if}>{tr}private{/tr}</option>
+    <option value='public' {if $user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
+  </select>
+  </td></tr>
 
   <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
   </table>
   </form>
   </div>
+    
   <div class="simplebox">
   {tr}Change your password{/tr}<br/>
   <form action="tiki-user_preferences.php" method="post">
@@ -97,6 +104,60 @@
   </td>
 </tr>
 </table>
+
+{if $feature_messages eq 'y'}
+    <div class="cbox">
+      <div class="cbox-title">{tr}User Messages{/tr}</div>
+      <div class="cbox-data">
+        <div class="simplebox">
+        <form action="tiki-user_preferences.php" method="post">
+<table class="normal">
+<tr>
+  <td class="form">Messages per page</td>
+  <td class="form">
+    <select name="mess_maxRecords">
+      <option value="2" {if $mess_maxRecords eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $mess_maxRecords eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $mess_maxRecords eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $mess_maxRecords eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $mess_maxRecords eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $mess_maxRecords eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $mess_maxRecords eq 50}selected="selected"{/if}>50</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class="form">Allow messages from other users</td>
+  <td class="form"><input type="checkbox" name="allowMsgs" {if $allowMsgs eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr>
+  <td class="form">Send me an email for messages with priority equal or greater than:</td>
+  <td class="form">
+    <select name="minPrio">
+      <option value="1" {if $minPrio eq 1}selected="selected"{/if}>1</option>
+      <option value="2" {if $minPrio eq 2}selected="selected"{/if}>2</option>
+      <option value="3" {if $minPrio eq 3}selected="selected"{/if}>3</option>
+      <option value="4" {if $minPrio eq 4}selected="selected"{/if}>4</option>
+      <option value="5" {if $minPrio eq 5}selected="selected"{/if}>5</option>
+      <option value="6" {if $minPrio eq 6}selected="selected"{/if}>none</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class="form">&nbsp;</td>
+  <td class="form"><input type="submit" name="messprefs" value="set" /></td>
+</tr>
+</table>
+</form>
+
+        </div>
+      </div>
+    </div>
+  
+  {/if}
+
+  
+
 <br/>
   <div class="cbox">
   <div class="cbox-title">{tr}User Pages{/tr}</div>

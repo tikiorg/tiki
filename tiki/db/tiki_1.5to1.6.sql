@@ -1,5 +1,53 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+### Inter-user messages
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can boradcast messages');
+
+drop table if exists messu_messages;
+create table messu_messages(
+  msgId integer(14) not null auto_increment,
+  user varchar(200) not null,
+  user_from varchar(200) not null,
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255),
+  body text,
+  hash char(32),
+  date integer(14),
+  isRead char(1),
+  isReplied char(1),
+  isFlagged char(1),
+  priority integer(2),
+  primary key(msgId)
+);
+
+
+alter table tiki_sessions add user varchar(200);
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_mailin','tiki','Can admin mail-in accounts');
+
+### Mailin
+drop table if exists tiki_mailin_accounts;
+create table tiki_mailin_accounts (
+  accountId integer(12) not null auto_increment,
+  user varchar(200) not null,
+  account varchar(50) not null,
+  pop varchar(255),
+  port integer(4),
+  username varchar(100),
+  pass varchar(100),
+  active char(1),
+  type varchar(40),
+  smtp varchar(255),
+  useAuth char(1),
+  smtpPort integer(4),
+  primary key(accountId)
+);
+
+
 ### Tiki structures permissions
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_structures','wiki','Can create and edit structures');
 

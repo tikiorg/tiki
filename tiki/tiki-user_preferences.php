@@ -58,12 +58,13 @@ if(isset($_REQUEST["prefs"])) {
   }
   if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
   if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
-  
+    
   if(isset($_REQUEST['display_timezone'])) {
     $tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
     $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
   }
   $tikilib->set_user_preference($userwatch,'country',$_REQUEST["country"]);
+  $tikilib->set_user_preference($userwatch,'user_information',$_REQUEST['user_information']);
   header("location: tiki-user_preferences.php?view_user=$userwatch");
   die;
 }
@@ -100,6 +101,25 @@ if(isset($_REQUEST["chgpswd"])) {
   
   $userlib->change_user_password($userwatch,$_REQUEST["pass1"]);
 }
+
+if(isset($_REQUEST['messprefs'])) {
+  $tikilib->set_user_preference($userwatch,'mess_maxRecords',$_REQUEST['mess_maxRecords']);
+  $tikilib->set_user_preference($userwatch,'minPrio',$_REQUEST['minPrio']);
+  if(isset($_REQUEST['allowMsgs'])&&$_REQUEST['allowMsgs']=='on') {
+    $tikilib->set_user_preference($userwatch,'allowMsgs','y');
+  } else {
+    $tikilib->set_user_preference($userwatch,'allowMsgs','n');
+  }
+  
+}
+
+$mess_maxRecords = $tikilib->get_user_preference($userwatch,'mess_maxRecords',20);
+$smarty->assign('mess_maxRecords',$mess_maxRecords);
+$allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
+$smarty->assign('allowMsgs',$allowMsgs);
+$minPrio = $tikilib->get_user_preference($userwatch,'minPrio',6);
+$smarty->assign('minPrio',$minPrio);
+
 
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo',$userinfo);
@@ -165,6 +185,9 @@ $smarty->assign_by_ref('homePage',$homePage);
 
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar',$avatar);
+
+$user_information = $tikilib->get_user_preference($userwatch,'user_information','public');
+$smarty->assign('user_information',$user_information);
 
 $timezone_options = $tikilib->get_timezone_list(true);
 $smarty->assign_by_ref('timezone_options',$timezone_options);
