@@ -157,6 +157,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 </table>
 
 {if $editmode and $tiki_p_add_events}
+{if $calendarId}
 <h2>{tr}Edit Calendar Item{/tr} : <span style="font-size:80%;">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
 
 {if $calitemId}
@@ -329,4 +330,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 </td></tr>
 </table>
 </form>
+{elseif $editmode and $tiki_p_add_events}
+<h1>{tr}You should first ask that a calendar is created, so you can create events attached to it.{/tr}</h1>
+{/if}
 {/if}
