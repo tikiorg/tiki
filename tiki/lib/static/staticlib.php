@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.2 2004-07-23 22:26:18 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.3 2004-07-29 21:14:01 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,10 +89,40 @@ class StaticLib extends TikiLib {
 	
 	function rename_page($oldpagename, $newpagename) {
 		
+		global $tikidomain;
+		$static_path = "static";
+		if ($tikidomain) {
+			$dump_path .= "/$tikidomain";
+		}
+		$oldfilename = $static_path . '/' . $oldpagename . '.html';
+		$newfilename = $static_path . '/' . $newpagename . '.html';
+		
+		// rename file
+		@rename($oldfilename, $newfilename);
+		
+		// update new page
+		$this->update_page($newpagename);
+		
 	}
 	
 	function remove_page($pagename) {
+
+		global $tikidomain, $wikilib;
+		$static_path = "static";
+		if ($tikidomain) {
+			$dump_path .= "/$tikidomain";
+		}
+		$filename = $static_path . '/' . $pagename . '.html';
 		
+		// delete file
+		@unlink($filename);
+
+		// update pages that link to the removed page
+		$backlinks = $wikilib->get_backlinks($pagename);
+		foreach ($backlinks as $backlink) {
+			$this->update_page($backlink['fromPage']);
+		}
+
 	}
 	
 	function rebuild_all_pages() {
@@ -137,5 +167,6 @@ class StaticLib extends TikiLib {
 
 }
 
+global $dbTiki;
 $staticlib = new StaticLib($dbTiki);
 ?>

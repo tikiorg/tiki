@@ -2428,6 +2428,16 @@ class TikiLib extends TikiDB {
 	    $query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
 	    $this->query($query,array('wiki_page_changed', $page));
 
+		// remove static html page if necessary
+		global $feature_wiki_realtime_static;
+		if ($feature_wiki_realtime_static == 'y') {
+			global $staticlib;
+			if (!is_object($staticlib)) {
+				require_once('lib/static/staticlib.php');
+			}
+			$staticlib->remove_page($page);
+		}
+
 	    return true;
 	}
 
