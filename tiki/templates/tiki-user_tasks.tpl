@@ -51,7 +51,7 @@
 </tr>
 {/section}
 <tr>
-	<td class="heading" colspan="16" style="text-align:center;">
+	<td class="formcolor" colspan="16" style="text-align:center;">
 		<input type="submit" name="update" value="{tr}update{/tr}" />
 	</td>
 </tr>
