@@ -6,7 +6,6 @@ function refresh_search_index() {
 
   // check if we have to run. Run every n-th click:
   global $search_refresh_rate;
-  global $tikilib;
   //$search_refresh_rate=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
@@ -41,7 +40,7 @@ function refresh_search_index() {
     }
     global $feature_galleries;
     if ($feature_galleries == 'y') {
-      $fpd=fopen($tikilib->get_preference('tmpDir', TikiInit::tempDir())."/tikidebug",'a');fwrite($fpd,"f_gal on\n");fclose($fpd);
+      $fpd=fopen(TikiInit::tempDir()."/tikidebug",'a');fwrite($fpd,"f_gal on\n");fclose($fpd);
       $locs[]="random_refresh_imggals";
       $locs[]="random_refresh_img";
     }
