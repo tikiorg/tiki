@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.26 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.27 2004-03-31 09:56:57 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,6 +85,7 @@ if (isset($_REQUEST["remove"])) {
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
 		$trklib->remove_tracker_field($_REQUEST["remove"],$_REQUEST["trackerId"]);
+		$logslib->add_log('admintrackerfields','removed tracker field '.$_REQUEST["remove"].' from tracker '.$tracker_info['name']);
 	} else {
 		key_get($area);
 	}
@@ -132,6 +133,7 @@ if (isset($_REQUEST["save"])) {
 	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
 	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
 		$isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"]);
+	$logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('type', '');

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.26 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.27 2004-03-31 10:03:36 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.26 2004-03-28 07:32:23 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.27 2004-03-31 10:03:36 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -117,6 +117,7 @@ if ($isvalid) {
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
+		$logslib->add_log('login','logged from '.$url);		
 		if ($url == $tikiIndex && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$group = $userlib->get_user_default_group($user);
     			$groupHome = $userlib->get_group_home($group);
@@ -140,6 +141,7 @@ if ($isvalid) {
 				$cookie_path = $tikilib->get_preference('cookie_path', '/');
 				$cookie_domain = $tikilib->get_preference('cookie_domain', $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']));
 				setcookie($user_cookie_site, $hash, time() + $remembertime, $cookie_path, $cookie_domain);
+				$logslib->add_log('login',"got a cookie for $remembertime seconds");		
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.11 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.12 2004-03-31 09:55:35 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,15 +95,19 @@ $buf = '';
 if (isset($_GET['do'])) {
 	if ($_GET['do'] == 'templates_c') {
 		erase_dir_content("templates_c/$tikidomain");
+		$logslib->add_log('system','erased templates_c content');
 	} elseif ($_GET['do'] == 'temp_cache') {
 		erase_dir_content("temp/cache/$tikidomain");
+		$logslib->add_log('system','erased temp/cache content');
 	} elseif ($_GET['do'] == 'modules_cache') {
 		erase_dir_content("modules/cache/$tikidomain");
+		$logslib->add_log('system','erased modules/cache content');
 	}
 }
 
 if (isset($_GET['compiletemplates'])) {
 	cache_templates('templates',$_GET['compiletemplates']);
+	$logslib->add_log('system','compiled templates');
 }
 
 $languages = array();

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.17 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.18 2004-03-31 10:02:42 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,10 @@ if (isset($_REQUEST['allper'])) {
 	check_ticket('admin-perms');
 	if ($_REQUEST['oper'] == 'assign') {
 		$userlib->assign_level_permissions($group, $_REQUEST['level']);
+		$logslib->add_log('perms',"assigned all perms level ".$_REQUEST['level']." to group $group");
 	} else {
 		$userlib->remove_level_permissions($group, $_REQUEST['level']);
+		$logslib->add_log('perms',"unassigned all perms level ".$_REQUEST['level']." from group $group");
 	}
 }
 
@@ -51,6 +53,7 @@ if (isset($_REQUEST["action"])) {
 	check_ticket('admin-perms');
 	if ($_REQUEST["action"] == 'assign') {
 		$userlib->assign_permission_to_group($_REQUEST["perm"], $group);
+		$logslib->add_log('perms',"assigned perm ".$_REQUEST['perm']." to group $group");
 	}
 
 	if ($_REQUEST["action"] == 'remove') {
@@ -58,6 +61,7 @@ if (isset($_REQUEST["action"])) {
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 			key_check($area);
 			$userlib->remove_permission_from_group($_REQUEST["permission"], $group);
+			$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");
 		} else {
 			key_get($area);
 		}
@@ -102,6 +106,7 @@ $smarty->assign('type', $_REQUEST["type"]);
 if (isset($_REQUEST["createlevel"])) {
 	check_ticket('admin-perms');
 	$userlib->create_dummy_level($_REQUEST['level']);
+	$logslib->add_log('perms',"created level ".$_REQUEST['level']);
 }
 
 if (isset($_REQUEST['update'])) {
@@ -114,6 +119,7 @@ if (isset($_REQUEST['update'])) {
 		} else {
 			$userlib->remove_permission_from_group($per, $group);
 		}
+		$logslib->add_log('perms',"changed perms for group $group");
 	}
 }
 
