@@ -1,7 +1,6 @@
 <?php
 
-include_once('lib/webmail/htmlMimeMail.php');
-include_once('lib/webmail/encodestring.php');
+include_once('lib/webmail/tikimaillib.php');
 
 class Messu extends Tikilib {
 	var $db;
@@ -41,23 +40,21 @@ class Messu extends Tikilib {
 		$machine = httpPrefix(). $foo["path"];
 
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
-			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-			$smarty->assign('mail_machine', $machine);
-			$smarty->assign('mail_date', date("U"));
-			$smarty->assign('mail_user', stripslashes($user));
-			$smarty->assign('mail_from', stripslashes($from));
-			$smarty->assign('mail_subject', stripslashes($subject));
-			$smarty->assign('mail_body', stripslashes($body));
-			$mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
-			$email = $userlib->get_user_email($user); echo "eeee";
+			$email = $userlib->get_user_email($user);
 			if ($email) {
-				$mailCharset = $this->get_user_preference($user, 'mailCharset', 'utf-8');
-				$mail = new htmlMimeMail();
-				$mail->setFrom($sender_email);
-				$mail->setSubject(encodeString(tra("New message arrived from ", $this->get_user_preference($user, 'language', $language)). $_SERVER["SERVER_NAME"], $mailCharset));
-				$mail->setHeadCharset($mailCharset);
-				$mail->setText(encodeString($mail_data, $mailCharset));
-				$mail->setTextCharset($mailCharset);
+				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+				$smarty->assign('mail_machine', $machine);
+				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_user', stripslashes($user));
+				$smarty->assign('mail_from', stripslashes($from));
+				$smarty->assign('mail_subject', stripslashes($subject));
+				$smarty->assign('mail_body', stripslashes($body));
+				$mail = new TikiMail($user);
+				$lg = $this->get_user_preference($user, 'language', $language);
+				$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
+				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
+				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');
+				$mail->setText($mail_data);
 				if (!$mail->send(array($email), 'mail'))
 					return false; //TODO echo $mail->errors;
 			}

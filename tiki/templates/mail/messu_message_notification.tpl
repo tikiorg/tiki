@@ -2,8 +2,8 @@
 
 {tr}A new message was posted to you at {$mail_machine}{/tr}
 
-From    :   {$mail_from}
-Subject :   {$mail_subject}
-Date    :   {$mail_date|date_format:"%a %b %Y [%H:%I]"}
+{tr}From:{/tr} {$mail_from}
+{tr}Subject:{/tr} {$mail_subject}
+{tr}Date:{/tr} {$mail_date|tiki_long_datetime}
 
 {$mail_body}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.10 2004-03-11 18:39:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.11 2004-03-16 16:16:39 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
-include_once ('lib/webmail/htmlMimeMail.php');
+include_once ('lib/webmail/tikimaillib.php');
 
 if ($feature_newsletters != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
@@ -102,26 +102,21 @@ if (isset($_REQUEST["send"])) {
 	check_ticket('send-newsletter');
 	$subscribers = $nllib->get_subscribers($_REQUEST["nlId"]);
 
-	$mail = new htmlMimeMail();
-	$mail->setFrom('noreply@noreply.com');
-	$mail->setSubject($_REQUEST["subject"]);
-	$mail->setHeadCharset("utf-8");
+	$mail = new TikiMail();
+	$txt = strip_tags($_REQUEST["data"]); //TODO: be able to have a different text
 	$sent = 0;
+	$unsubmsg = '';
 
 	foreach ($subscribers as $email) {
-		$to_array = array();
-
-		$to_array[] = $email;
-		if ($nl_info["unsubMsg"] = 'y') {
-			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email);
-		} else {
-			$unsubmsg = ' ';
-		}
-		$mail->setTextCharset("utf-8");
-		$mail->setHtmlCharset("utf-8");
-		$mail->setFrom($sender_email);
-		$mail->setHTML($_REQUEST["data"] . $unsubmsg, strip_tags($_REQUEST["data"]));
-		if ($mail->send($to_array, 'mail'))
+		$userEmail = $userlib->get_user_by_email($email);
+		$mail->setUser($userEmail);
+		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
+		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
+		if ($nl_info["unsubMsg"] = 'y')
+			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail);
+		$mail->setHtml($_REQUEST["data"] . $unsubmsg, $txt.$unsubmsg);
+		$mail->buildMessage();
+		if ($mail->send(array($email)))
 			$sent++;
 	}
 
