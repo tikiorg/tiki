@@ -55,3 +55,9 @@
 </tr>
 </table>
 
+<div align="center">
+	<small>{$babelfish_links}</small>
+</div>
+<div align="center">
+	{$babelfish_logo}
+</div>
