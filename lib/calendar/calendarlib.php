@@ -236,8 +236,10 @@ class CalendarLib extends TikiLib {
 					break;
 
 				case "forum":
-					$query = "select c.commentDate as created, c.threadId as threadId, c.userName as user, c.title as name, f.name as forum, f.forumId as forumId ";
-					$query.= "from tiki_comments as c left join tiki_forums as f on c.object=md5(concat('forum',f.forumId)) where (c.commentDate>$tstart and c.commentDate<$tstop)";
+					// have to fix that query. tehre is distinction to do beetween comments and forum item ?
+					$query = "select c.commentDate as created, c.threadId as threadId, c.userName as user, c.title as name, f.name as forum, f.forumId as forumid ";
+					$query.= "from tiki_comments as c left join tiki_forums as f on c.object=md5(concat('forum',f.forumId)) ";
+					$query.= "where f.forumId != '' and (c.commentDate>$tstart and c.commentDate<$tstop)";
 					$result = $this->query($query);
 					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 						$dstart = mktime(0,0,0,date("m",$res['created']),date("d",$res['created']),date("Y",$res['created']));
@@ -248,7 +250,7 @@ class CalendarLib extends TikiLib {
 							"prio" => "",
 							"time" => $tstart,
 							"type" => "forum",
-							"url" => "tiki-view_forum.php?forumId=".$res["forumId"],
+							"url" => "tiki-view_forum.php?forumId=".$res["forumid"],
 							"name" => $res["name"],
 							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["forum"])."</b>",
 							"description" => "<i>".tra("by")." ".$res["user"]."</i>"
