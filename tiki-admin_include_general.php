@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.23 2004-05-05 18:26:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.24 2004-05-07 21:41:34 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,28 +133,35 @@ elseif (isset($_REQUEST["newadminpass"])) {
 }
 
 // Get list of available styles
-$styles = array();
+$sty = array();
 $h = opendir("styles/");
-
 while ($file = readdir($h)) {
-    if (strstr($file, "css")) {
-        $styles[] = $file;
-    }
+	if (strstr($file, "css") and substr($file,0,1) != '.') {
+		$sty["$file"] = 1;
+	}
 }
-closedir( $h );
+closedir($h);
+if ($tikidomain) {
+	$h = opendir("styles/$tikidomain");
+	while ($file = readdir($h)) {
+  	if (strstr($file, ".css") and substr($file,0,1) != '.') {
+	    $sty["$file"] = 1;
+		} 
+	} 
+	closedir($h);				
+}
+$styles = array_keys($sty);
 sort($styles);
 $smarty->assign_by_ref( "styles", $styles );
 
 // Get list of available slideshow styles
 $slide_styles = array();
 $h = opendir("styles/slideshows");
-
 while ($file = readdir($h)) {
     if (strstr($file, "css")) {
         $slide_styles[] = $file;
     }
 }
-
 closedir ($h);
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
