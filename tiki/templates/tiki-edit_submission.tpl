@@ -107,7 +107,7 @@
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Publish/Event Date{/tr}</td><td class="formcolor">
 {html_select_date time=$publishDateSite end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
