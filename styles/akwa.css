@@ -1,4 +1,4 @@
-/* TIKIWIKI CSS - WINXP FILE */
+#7FFFD4#7FFFD4/* TIKIWIKI CSS - WINXP FILE */
 
 /* MAIN TAGS 
 
@@ -1961,3 +1961,6 @@ div#rules-copy-panel {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex; background-color : #DCDCDC; margin : 1ex; border : 1px dashed #adacaf; }
