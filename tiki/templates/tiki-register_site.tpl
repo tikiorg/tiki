@@ -25,7 +25,8 @@
   {tr}Error{/tr}
   </div>
   <div class="cbox-data">
-  {tr}You dont have permission to use this feature{/tr}
+  {tr}You don't have permission to use this feature{/tr}
+  {tr}Please register{/tr}
   </div>
   {else}
   {tr}Register this site at tikiwiki.org{/tr}
