@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.11 2003-10-17 15:26:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.12 2003-10-17 20:56:37 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
+include_once ('lib/userprefs/scrambleEmail.php');
 
 if (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
@@ -101,28 +102,10 @@ $display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone'
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 
 $userinfo = $userlib->get_user_info($userwatch);
-$email_isPublic = $tikilib->get_user_preference($userwatch,'email is public');
-if ($email_isPublic == 'y') {
-	switch ($tikilib->get_user_preference($userwatch, 'scrambling method', 'unicode')) {
-	case 'strtr':
-		$trans = array(
-			"@" => tra("(AT)"),
-			"." => tra("(DOT)")
-		);
-
-		$userinfo['email'] = strtr($userinfo['email'], $trans);
-		break;
-	default:
-		$encoded = '';
-
-		for ($i = 0; $i < strlen($userinfo['email']); $i++) {
-			$encoded .= '&#' . ord($userinfo['email'][$i]). ';';
-		}
-
-		$userinfo['email'] = $encoded;
-	}
+$email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public');
+if ($email_isPublic != 'n') {
+	$userinfo['email'] = scrambleEmail($userinfo['email'], $email_isPublic);
 }
-
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
 
