@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.29 2004-04-14 18:19:36 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.30 2004-06-15 05:06:27 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,11 +17,11 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
-  //smarty is not there - we need setup
-  require_once('tiki-setup.php');
-  $smarty->assign('msg',tra("This script cannot be called directly"));
-  $smarty->display("error.tpl");
-  die;
+    //smarty is not there - we need setup
+    require_once('tiki-setup.php');
+    $smarty->assign('msg',tra("This script cannot be called directly"));
+    $smarty->display("error.tpl");
+    die;
 }
 
 
@@ -36,7 +36,7 @@ if (!isset($comments_default_ordering)) {
 }
 
 if (!isset($_REQUEST["comment_rating"])) {
-$_REQUEST["comment_rating"] = '';
+    $_REQUEST["comment_rating"] = '';
 }
 
 $comments_aux = array();
@@ -67,7 +67,13 @@ if (!isset($_REQUEST['comments_threshold'])) {
 
 $smarty->assign('comments_threshold', $_REQUEST['comments_threshold']);
 // This sets up comments father as the father
-$comments_parsed = parse_url($_SERVER["REQUEST_URI"]);
+$comments_parsed = parse_url(httpPrefix().$_SERVER["REQUEST_URI"]);
+/*
+   print "<pre>";
+   print_r( $comments_parsed );
+   print_r( $_SERVER["REQUEST_URI"] );
+   print "</pre>";
+ */
 
 if (!isset($comments_parsed["query"])) {
     $comments_parsed["query"] = '';
@@ -92,7 +98,8 @@ $comments_complete_father = $comments_father;
  */
 $comments_complete_father = $comments_father . $comments_t_query;
 
-//print("Father: $comments_complete_father<br/>");
+//print("Complete Father: $comments_complete_father<br/>");
+//print("Father: $comments_father<br/>");
 if (strstr($comments_complete_father, "?")) {
     $comments_complete_father .= '&amp;';
 } else {
@@ -145,53 +152,81 @@ if ($tiki_p_post_comments == 'y') {
 	    $_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
 
 	    if ($_REQUEST["comments_threadId"] == 0) {
+		if (isset($_REQUEST["quote"]) &&
+			$_REQUEST["quote"] )
+		{
+		    $quote_info = $commentslib->get_comment($_REQUEST["quote"]);
+		    $in_reply_to = $quote_info["message_id"];
+
+		    // Don't carry the quote value through
+		    // after this.
+		    $smarty->clear_assign('quote');
+		    $quote = 0;
+		    $_REQUEST["quote"] = 0;
+		} else {
+		    $in_reply_to = '';
+		}
 		$message_id = '';
 		$commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"],
 			$user,
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
-			$message_id );
+			$message_id, $in_reply_to );
 	    } else {
 		if ($tiki_p_edit_comments == 'y') {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
-			$_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
+			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
 		}
+	    }
+
+	    $object = explode(':', $comments_objectId );
+
+	    if( $object[0] == 'forum' )
+	    {
+		// Deal with mail notifications.
+		include_once('lib/notifications/notificationemaillib.php');
+		sendForumEmailNotification('forum_post_thread',
+			$_REQUEST['comments_parentId'], $forum_info,
+			$_REQUEST["comments_title"], $_REQUEST["comments_data"], $user,
+			$thread_info['title'], $message_id, $in_reply_to);
+
+		$commentslib->register_forum_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
 	    }
 	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y') && (isset($_REQUEST["page"]))) {
 		include_once ('lib/webmail/tikimaillib.php');
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 		$isBuilt = false;
 		foreach ($nots as $not) {
-			if ($wiki_watch_editor != 'y' && $not['user'] == $user)
-				break;
-			if (!$isBuilt) {
-				$isBuilt = true;
-				$smarty->assign('mail_page', $_REQUEST["page"]);
-				$smarty->assign('mail_date', date("U"));
-				$smarty->assign('mail_user', $user);
-				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
-				$smarty->assign('mail_hash', $not['hash']);
-				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = httpPrefix(). dirname( $foo["path"] );
-				$smarty->assign('mail_machine', $machine);
-				$parts = explode('/', $foo['path']);
+		    if ($wiki_watch_editor != 'y' && $not['user'] == $user)
+			break;
+		    if (!$isBuilt) {
+			$isBuilt = true;
+			$smarty->assign('mail_page', $_REQUEST["page"]);
+			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_title', $_REQUEST["comments_title"]);
+			$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
+			$smarty->assign('mail_hash', $not['hash']);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = httpPrefix(). dirname( $foo["path"] );
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
 
-				if (count($parts) > 1)
-				    unset ($parts[count($parts) - 1]);
+			if (count($parts) > 1)
+			    unset ($parts[count($parts) - 1]);
 
-				$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
-				$mail = new TikiMail();
-			}
- 			global $language;// TODO: optimise by grouping user by language
-			$languageEmail = $tikilib->get_user_preference($not['user'], "language", $language);
-			$mail->setUser($not['user']);
-			$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
-			$mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
-			$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment.tpl');
-			$mail->setText($mail_data);
-			$mail->buildMessage();
-			$mail->send(array($not['email']));
+			$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+			$mail = new TikiMail();
+		    }
+		    global $language;// TODO: optimise by grouping user by language
+		    $languageEmail = $tikilib->get_user_preference($not['user'], "language", $language);
+		    $mail->setUser($not['user']);
+		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
+		    $mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
+		    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment.tpl');
+		    $mail->setText($mail_data);
+		    $mail->buildMessage();
+		    $mail->send(array($not['email']));
 		}
 	    }
 
@@ -229,7 +264,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 } elseif ($_REQUEST["comments_reply_threadId"] > 0) {
     // Replies to comments. TODO: optionally qouting the content of comment data into the reply
     $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
-    
+
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
 } else {
     $smarty->assign('comment_title', '');
@@ -238,16 +273,16 @@ if ($_REQUEST["comments_threadId"] > 0) {
 }
 
 if ($tiki_p_remove_comments == 'y') {
-	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-		$area = 'delcomment';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-			key_check($area);
-			$comments_show = 'y';
-			$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-		} else {
-			key_get($area);
-		}
+    if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
+	$area = 'delcomment';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	    key_check($area);
+	    $comments_show = 'y';
+	    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
+	} else {
+	    key_get($area);
 	}
+    }
 }
 
 $smarty->assign('comment_preview', 'n');
@@ -269,6 +304,13 @@ if (!isset($_REQUEST["comments_maxComments"])) {
     $comments_show = 'y';
 }
 
+if (!isset($_REQUEST["comments_style"])) {
+    // TODO: Make this an option.
+    $_REQUEST["comments_style"] = 'commentStyle_threaded';
+} else {
+    $comments_show = 'y';
+}
+
 if (!isset($_REQUEST["comments_sort_mode"])) {
     $_REQUEST["comments_sort_mode"] = $comments_default_ordering;
 } else {
@@ -283,6 +325,7 @@ if (!isset($_REQUEST["comments_commentFind"])) {
 
 $smarty->assign('comments_maxComments', $_REQUEST["comments_maxComments"]);
 $smarty->assign('comments_sort_mode', $_REQUEST["comments_sort_mode"]);
+$smarty->assign('comments_style', $_REQUEST["comments_style"]);
 $smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
 $smarty->assign('comments_show', $comments_show);
 
@@ -302,10 +345,9 @@ if (!isset($_REQUEST["comments_parentId"])) {
 }
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
-//$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
-$comments_coms = $commentslib->get_comments($comments_objectId, 0,
+$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
-	$_REQUEST['comments_threshold']);
+	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"]);
 $comments_cant = $commentslib->count_comments($comments_objectId);
 $smarty->assign('comments_below', $comments_coms["below"]);
 $smarty->assign('comments_cant', $comments_cant);
@@ -315,9 +357,15 @@ $smarty->assign('comments_cant', $comments_cant);
 //print "</pre>";
 // Offset management
 $comments_maxRecords = $_REQUEST["comments_maxComments"];
-$comments_cant_pages = ceil($comments_coms["cant"] / $comments_maxRecords);
+if( $comments_maxRecords != 0 )
+{
+    $comments_cant_pages = ceil($comments_coms["cant"] / $comments_maxRecords);
+    $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
+} else {
+    $comments_cant_pages = 1;
+    $smarty->assign('comments_actual_page', 1 );
+}
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
-$smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 
 if ($comments_coms["cant"] > ($comments_offset + $comments_maxRecords)) {
     $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);

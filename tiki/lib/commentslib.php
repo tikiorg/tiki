@@ -1119,33 +1119,132 @@ class Comments extends TikiLib {
 	$cant = $this->getOne($query, $object );
 	return $cant;
     }
-    function get_comment_replies($id, $sort_mode, $offset, $max, $threshold = 0) {
-	$query = "select
-	    `threadId`,`title`,`userName`,`points`,`commentDate`,`parentId`, `data`
-	    from `tiki_comments` where `parentId`=? and `average`>=?
-	    order by " .
-	    $this->convert_sortmode($sort_mode);
+    function get_comment_replies($id, $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold = 0, $find = '', $message_id = "", $forum = 0 )
+    {
+	$retval = array();
+
+	if( $maxRecords <= 0 && $orig_maxRecords != 0)
+	{
+	    $retval['numReplies'] = 0;
+	    $retval['totalReplies'] = 0;
+	    return $retval;
+	}
+
+	if( $forum )
+	{
+	    $real_id = $message_id;
+	} else {
+	    $real_id = (int) $id;
+	}
+
+	$query = "select `threadId`, `title`, `userName`, `points`,
+	`commentDate`, `parentId`, `message_id`, `data` from `tiki_comments`";
+
+	if( $forum )
+	{
+	    $query = $query . " where `in_reply_to`=? and `average`>=? ";
+	} else {
+	    $query = $query . " where `parentId`=? and `average`>=? ";
+	}
+
+	if ($find)
+	{
+	    $findesc = '%' . $find . '%';
+
+	    $query = $query . " and (`title` like ? or `data` like ?) ";
+	    $bind=array($real_id, (int) $threshold, $findesc, $findesc);
+	} else {
+	    $bind=array($real_id, (int) $threshold );
+	}
+
+	$query = $query . " order by " . $this->convert_sortmode($sort_mode);
+
 	if($sort_mode != 'commentDate_desc') {
 	    $query.=",`commentDate` desc";
 	}
 
-	$result = $this->query($query,array((int) $id,(int) $threshold),$max,$offset);
-	$retval = array();
-	$retval["numReplies"] = $result->numRows();
+	$result = $this->query($query,$bind);
+
+
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
 	    $res['parsed'] = $this->parse_comment_data($res['data']);
+
+	    /* Trim to maxRecords, including replies! */
+	    if( $offset >= 0  && $orig_offset != 0 )
+	    {
+		$offset = $offset - 1;
+	    }
+	    $maxRecords = $maxRecords - 1;
+
+	    if( $offset >= 0 && $orig_offset != 0)
+	    {
+		$res['doNotShow'] = 1;
+	    }
+
+	    if( $maxRecords <= 0 && $orig_maxRecords != 0)
+	    {
+		$ret[] = $res;
+		break;
+	    }
+
+	    if( $forum )
+	    {
+		$res['replies_info'] =
+		    $this->get_comment_replies($res['parentId'],
+			    $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find,
+			    $res['message_id'], $forum);
+	    } else {
+		$res['replies_info'] =
+		    $this->get_comment_replies($res['threadId'],
+			    $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find);
+	    }
+
+	    if( $offset >= 0  && $orig_offset != 0 )
+	    {
+		$offset = $offset - $res['replies_info']['totalReplies'];
+	    }
+	    $maxRecords = $maxRecords - $res['replies_info']['totalReplies'];
+
+	    if( $offset >= 0 && $orig_offset != 0)
+	    {
+		$res['doNotShow'] = 1;
+	    }
+
+	    if( $maxRecords <= 0 && $orig_maxRecords != 0)
+	    {
+		$ret[] = $res;
+		break;
+	    }
+
 	    $ret[] = $res;
 	}
 
-	for ($i = 0; $i < $retval["numReplies"]; $i++) {
-	    $ret[$i]['replies'] =
-		$this->get_comment_replies($ret[$i]['threadId'],
-			$sort_mode, 0, $max, $threshold);
+	$retval['replies'] = $ret;
+
+	$retval['numReplies'] = count( $ret );
+	$retval['totalReplies'] = $this->total_replies( $ret, count( $ret ) );
+
+	return $retval;
+    }
+
+    function total_replies( $reply_array, $seed = 0 )
+    {
+	$retval = $seed;
+
+	foreach ( $reply_array as $key=>$res )
+	{
+	    if( is_array( $res ) && array_key_exists( 'replies_info', $res ) )
+	    {
+		if( array_key_exists( 'numReplies', $res['replies_info'] ) )
+		{
+		    $retval = $retval + $res['replies_info']['numReplies'];
+		}
+		$retval = $retval + $this->total_replies( $res['replies_info']['replies'] );
+	    }
 	}
 
-	$retval["replies"] = $ret;
 	return $retval;
     }
 
@@ -1155,9 +1254,9 @@ class Comments extends TikiLib {
 	for ($i = 0; $i < $reps; $i++) {
 	    $replies['replies'][$i]['level'] = $level;
 	    $rep_flat[] = &$replies['replies'][$i];
-	    if (isset($replies['replies'][$i]['replies'])) {
+	    if (isset($replies['replies'][$i]['replies_info'])) {
 		$this->flatten_comment_replies(
-			$replies['replies'][$i]['replies'],
+			$replies['replies'][$i]['replies_info'],
 			$rep_flat, $level + 1);
 	    }
 	}
@@ -1222,9 +1321,15 @@ class Comments extends TikiLib {
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
-	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0)
+	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded')
     {
-			global $userlib;
+	global $userlib;
+	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
+	$maxRecords = $offset + $maxRecords;
+
+	$orig_maxRecords = $maxRecords;
+	$orig_offset = $offset;
+
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -1275,10 +1380,23 @@ class Comments extends TikiLib {
 	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
 	}
 
-	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	if( $object[0] == "forum" && $style != 'commentStyle_plain' )
+	{
+	    $temp_query = "CREATE TEMPORARY TABLE temp_tk select distinct `message_id` from `tiki_comments`";
+	    $result = $this->query($temp_query);
+
+	    $query = "select `tiki_comments`.* from `tiki_comments` 
+		left outer join `temp_tk` on `in_reply_to` = temp_tk.`message_id`
+		$mid 
+		and (`in_reply_to` = \"\" or `in_reply_to` is null or temp_tk.message_id is null)
+		$time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	} else {
+	    $query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	}
+
 	//print("$query<br/>");
 	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
-	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
+	$result = $this->query($query,array_merge($bind_mid,$bind_time));
 	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 	$ret = array();
 	$logins = array();
@@ -1331,6 +1449,17 @@ class Comments extends TikiLib {
 	}
 
 	foreach ( $ret as $key=>$res ) {
+	    if( $offset > 0  && $orig_offset != 0 )
+	    {
+		$ret[$key]['doNotShow'] = 1;
+	    }
+
+	    if( $maxRecords <= 0  && $orig_maxRecords != 0 )
+	    {
+		array_splice( $ret, $key );
+		break;
+	    }
+
 	    $ret[$key]['user_posts'] = isset($user_info[$res['userName']]['posts']) ? $user_info[$res['userName']]['posts'] : 0;
 	    $ret[$key]['user_level'] = isset($user_info[$res['userName']]['level']) ? $user_info[$res['userName']]['level'] : 0;
 	    $ret[$key]['user_online'] = isset($user_info[$res['userName']]['online']) ? 'y' : 'n';
@@ -1354,8 +1483,37 @@ class Comments extends TikiLib {
 
 	    $ret[$key]["parsed"] = $this->parse_comment_data($res["data"]);
 
-	    // Get the replies
-	    $ret[$key]['replies'] = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
+	    /* Trim to maxRecords, including replies! */
+	    if( $offset >= 0  && $orig_offset != 0 )
+	    {
+		$offset = $offset - 1;
+	    }
+	    $maxRecords = $maxRecords - 1;
+
+	    if( !( $maxRecords <= 0  && $orig_maxRecords != 0 ) )
+	    {
+		// Get the replies
+		if( $object[0] == "forum" )
+		{
+		    // For plain style, don't handle replies at all.
+		    if( $style == 'commentStyle_plain' )
+		    {
+			$ret[$key]['replies_info']['numReplies'] = 0;
+			$ret[$key]['replies_info']['totalReplies'] = 0;
+		    } else {
+			$ret[$key]['replies_info'] = $this->get_comment_replies($res["parentId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find, $res["message_id"], 1);
+		    }
+		} else {
+		    $ret[$key]['replies_info'] = $this->get_comment_replies($res["threadId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find );
+		}
+
+		/* Trim to maxRecords, including replies! */
+		if( $offset >= 0  && $orig_offset != 0 )
+		{
+		    $offset = $offset - $ret[$key]['replies_info']['totalReplies'];
+		}
+		$maxRecords = $maxRecords - $ret[$key]['replies_info']['totalReplies'];
+	    }
 
 	    if (empty($res["data"])) {
 		$ret[$key]["isEmpty"] = 'y';
@@ -1386,7 +1544,7 @@ class Comments extends TikiLib {
 
 	$msgs = count($retval['data']);
 	for ($i = 0; $i < $msgs; $i++) {
-	    $r = &$retval['data'][$i]['replies'];
+	    $r = &$retval['data'][$i]['replies_info'];
 	    $retval['data'][$i]['replies_flat'] = array();
 	    $rf = &$retval['data'][$i]['replies_flat'];
 	    $this->flatten_comment_replies($r, $rf);
@@ -1442,7 +1600,6 @@ class Comments extends TikiLib {
 	    $summary = '', $smiley = '', $getold = false
 	    )
     {
-	//print "msid: $message_id, $in_reply_to.\n";
 	if (!$userName) {
 	    $_SESSION["lastPost"] = date("U");
 	}
@@ -1531,7 +1688,8 @@ class Comments extends TikiLib {
 		"@" . $_SERVER["SERVER_NAME"];
 	}
 
-	if (!$result->numRows()) {
+	if (!$result->numRows())
+	{
 	    $now = (int) date("U");
 
 	    // Break out the type and object parameters.
@@ -1657,7 +1815,7 @@ class Comments extends TikiLib {
 function compare_replies($ar1, $ar2) {
     if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
 	    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
-	return $ar1["replies"]["numReplies"] - $ar2["replies"]["numReplies"];
+	return $ar1["replies_info"]["numReplies"] - $ar2["replies_info"]["numReplies"];
     } else {
 	return $ar1['type'] == 's' ? -1 : 1;
     }
@@ -1675,7 +1833,7 @@ function compare_lastPost($ar1, $ar2) {
 function r_compare_replies($ar1, $ar2) {
     if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
 	    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
-	return $ar2["replies"]["numReplies"] - $ar1["replies"]["numReplies"];
+	return $ar2["replies_info"]["numReplies"] - $ar1["replies_info"]["numReplies"];
     } else {
 	return $ar1['type'] == 's' ? -1 : 1;
     }
