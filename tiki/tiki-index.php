@@ -99,7 +99,7 @@ $smarty->assign('page_user',$info['user']);
 if( 
     ($tiki_p_admin_wiki == 'y') 
     || 
-    ($user and ($tiki_p_lock == 'y') and ($feature_wiki_userlock == 'y'))
+    ($user and ($tiki_p_lock == 'y') and ($feature_wiki_usrlock == 'y'))
    ) {
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {

@@ -143,8 +143,8 @@
 </td></tr>
 <tr><td class="form">{tr}OS{/tr}</td><td>
 <select name="system_os">
-<option value="unix" {if $system_os eq 'unix'}selected="selected"{/if}>{tr}Unix{/tr}</option>
-<option value="windows" {if $system_os eq 'windows'}selected="selected"{/if}>{tr}Windows{/tr}</option>
+<option value="unix" {if $system_os eq 'unix'}selected="selected"{/if}>{tr}Use external mail validation{/tr}</option>
+<option value="windows" {if $system_os eq 'windows'}selected="selected"{/if}>{tr}Dont use external mail validation{/tr}</option>
 <option value="unknown" {if $system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
 </select>
 </td></tr>
