@@ -171,7 +171,7 @@ class TikiLib {
       }
       $type = "image/".substr($file,strlen($file)-3);
 
-      $fp = fopen('temp/'.$file,"r");
+      $fp = fopen('temp/'.$file,"rb");
       $data = fread($fp,filesize('temp/'.$file));
       fclose($fp);
       $size=filesize('temp/'.$file);
@@ -197,7 +197,7 @@ class TikiLib {
         $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
         imagejpeg($t,$tmpfname);
         // Now read the information
-        $fp = fopen($tmpfname,"r");
+        $fp = fopen($tmpfname,"rb");
         $t_data = fread($fp, filesize($tmpfname));
         fclose($fp);
         unlink($tmpfname);
@@ -2149,7 +2149,7 @@ class TikiLib {
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);  
     
-    @$fp = fopen($filename,"r");
+    @$fp = fopen($filename,"rb");
     if(!$fp) return false; 
     while(!feof($fp)) {
       $rlen = fread($fp,4);
@@ -5732,24 +5732,36 @@ class TikiLib {
           $url = $img;
           
           if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
-            // Now create image and thumbnail
+            
             $img = imagecreatefromstring($data);
             $size_x = imagesx($img);
             $size_y = imagesy($img);
-            // Create thumbnail here 
-            // Use the gallery preferences to get the data
-            $t = imagecreate(100,100);
-            imagecopyresized ( $t, $img, 0,0,0,0, 100,100, $size_x, $size_y);
+            if ($size_x > $size_y)
+              $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
+            else
+              $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
+            $tw = ((int)($size_x / $tscale));
+            $ty = ((int)($size_y / $tscale));
+            if (chkgd2()) {
+              $t = imagecreatetruecolor($tw,$ty);
+              imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+            } else {
+              $t = imagecreate($tw,$ty);
+              $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+            }
+            // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
+            //$tmpfname = 'temp.jpg';
             $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
             imagejpeg($t,$tmpfname);
             // Now read the information
-            $fp = fopen($tmpfname,"r");
+            $fp = fopen($tmpfname,"rb");
             $t_data = fread($fp, filesize($tmpfname));
             fclose($fp);
             unlink($tmpfname);
             $t_pinfo = pathinfo($tmpfname);
             $t_type = $t_pinfo["extension"];
             $t_type='image/'.$t_type;
+                                    
             $imageId = $this->insert_image(0,'','',$name, $type, $data, $size, $size_x, $size_y, 'admin',$t_data,$t_type);
             //print("Imagen generada en $imageId<br/>");
           } else {
@@ -6184,7 +6196,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       if(!strstr($res["name"],"gif")) {
       if($res["path"]) {
         $res["data"]='';
-        $fp=fopen($gal_use_dir.$res["path"],"r");
+        $fp=fopen($gal_use_dir.$res["path"],"rb");
         if(!$fp) die;
         while(!feof($fp)) {
           $res["data"].=fread($fp,8192*16);
@@ -6229,7 +6241,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       
       imagejpeg($t,$tmpfname);
       // Now read the information
-      $fp = fopen($tmpfname,"r");
+      $fp = fopen($tmpfname,"rb");
       $t_data = fread($fp, filesize($tmpfname));
       fclose($fp);
       unlink($tmpfname);

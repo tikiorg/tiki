@@ -146,7 +146,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('publishDate',$publishDate);
   // Parse the information of an uploaded file and use it for the preview
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-    $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+    $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
     $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
     fclose($fp);
     $imgtype = $_FILES['userfile1']['type'];
@@ -237,7 +237,7 @@ if(isset($_REQUEST["save"])) {
   $imgsize=$_REQUEST["image_size"];
   
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-    $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+    $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
     $imgdata = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
     fclose($fp);
     $imgtype = $_FILES['userfile1']['type'];

@@ -20,7 +20,7 @@ if($feature_articles != 'y') {
 
 if(isset($_REQUEST["addtopic"])) {
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-    $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+    $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
     $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
     fclose($fp);
     $imgtype = $_FILES['userfile1']['type'];

@@ -100,7 +100,7 @@ if(isset($_REQUEST["upload"])) {
            die;  	
          }
        }
-       $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+       $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
        $data = '';
        $fhash='';
        if($fgal_use_db == 'n') {

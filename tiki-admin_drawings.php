@@ -15,6 +15,11 @@ if($tiki_p_admin_drawings != 'y') {
   die;  
 }
 
+if(isset($_REQUEST["remove"])) {
+  @unlink("img/wiki/".$_REQUEST["remove"].".gif");
+  @unlink("img/wiki/".$_REQUEST["remove"].".draw");
+  @unlink("img/wiki/".$_REQUEST["remove"].".map");
+}
 
 $pars=parse_url($_SERVER["REQUEST_URI"]);
     $pars_parts=split('/',$pars["path"]);
