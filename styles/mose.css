@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.50 2004-05-03 15:34:35 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.51 2004-05-05 22:36:58 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -197,7 +197,7 @@ TD#centercolumn {
 	background:   #EFEFE7;
 	vertical-align:   top;
 	border-top:   1px solid #5A4A39;
-	padding-top: 10px;
+	padding: 10px 25px 0px 25px;
 }
 
 /* 
@@ -205,8 +205,6 @@ centercolumn
 */
 DIV#tiki-center {
 	vertical-align:   top;
-	margin-left:    25px;
-	margin-right:   25px;
 }
 
 div#debugconsole {
@@ -484,8 +482,11 @@ div.simplebox {
 	background:   #EFEFE7;
 	font-size:   11px;
 }
-
+/*
+MSIE inheritence pb
+*/
 .form {
+	font-size: 11px;
 }
 
 /* 
@@ -1180,6 +1181,7 @@ div.articleheading {
 	border-bottom:   0px;
 	font-size:   11px;
 	clear:   both;
+
 }
 
 div.articletrailer {
@@ -1195,6 +1197,15 @@ div.articletrailer {
 	font-size:   9px;
 	text-align:   right;
 	clear:   both;
+}
+/*
+ MSIE inheritence pb + box model bug
+*/
+div.articletrailer {
+	width: 100%;
+}
+.articletrailer{
+	font-size: 9px;
 }
 
 /* Text in the article heading */
