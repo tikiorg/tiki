@@ -140,14 +140,14 @@ class TikiMail {
 	}
 	
 	/* 
-	* mailbox_expugne()
-	*   expugne deleted messages from mailbox.
+	* mailbox_expunge()
+	*   expunge deleted messages from mailbox.
 	*/
-	function mailbox_expugne() {
+	function mailbox_expunge() {
 		if($this->state == 'new' || $this->connection == 0) {
 			return false;
 		}
-		imap_expugne($this->connection);
+		imap_expunge($this->connection);
 		return true;
 	}
 	
