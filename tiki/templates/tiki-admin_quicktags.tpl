@@ -35,7 +35,7 @@
 <tr>
 <td class="{cycle advance=false}">{$quicktags[tag].taglabel}</td>
 <td class="{cycle advance=false}">{$quicktags[tag].taginsert}</td>
-<td class="{cycle advance=false}">{$quicktags[tag].tagicon}</td>
+<td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].tagicon}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}">{tr}edit{/tr}</a>
