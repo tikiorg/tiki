@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.62 2003-08-21 22:37:20 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.63 2003-08-21 22:58:49 redflo Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -51,9 +51,6 @@
   {/if}
   {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
      &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}Messages{/tr}</a><br /> 
-  {/if}
-  {if $feature_userPreferences eq 'y'}
-      &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />
   {/if}
   {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
       &nbsp;<a href="tiki-user_tasks.php" class="linkmenu">{tr}Tasks{/tr}</a><br />
