@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.69 2004-04-09 03:00:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.70 2004-04-09 10:49:21 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ $patterns['int']   = "/^[0-9]*$/"; // *Id, offset,
 $patterns['char']  = "/^[-_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";&#]*$/"; // find, and such extended chars
 
-$patterns['vars']  = "/^[-_a-zA-Z0-9\/]*$/"; // for variable keys
+$patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 
 $vartype['offset'] = 'int';
 $vartype['thresold'] = 'int';
@@ -133,8 +133,8 @@ function varcheck($array) {
 varcheck($_REQUEST);
 
 // rebuild $_REQUEST after sanity check
-//unset($_REQUEST);
-//$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
+unset($_REQUEST);
+$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
 
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {
