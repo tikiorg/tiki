@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.219 2004-05-06 02:09:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.220 2004-05-06 09:23:54 lfagundes Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -935,6 +935,22 @@ $smarty->assign('article_comments_per_page', $article_comments_per_page);
 $smarty->assign('feature_warn_on_edit', $feature_warn_on_edit);
 $smarty->assign('warn_on_edit_time', $warn_on_edit_time);
 
+$wiki_feature_3d = 'n';
+$wiki_3d_width = 500;
+$wiki_3d_height = 500;
+$wiki_3d_navigation_depth = 1;
+$wiki_3d_feed_animation_interval = 500;
+$wiki_3d_existing_page_color = "#00CC55";
+$wiki_3d_missing_page_color = "#BB0000";
+
+$smarty->assign('wiki_feature_3d', $wiki_feature_3d);
+$smarty->assign('wiki_3d_width', $wiki_3d_width);
+$smarty->assign('wiki_3d_height', $wiki_3d_height);
+$smarty->assign('wiki_3d_navigation_depth', $wiki_3d_navigation_depth);
+$smarty->assign('wiki_3d_feed_animation_interval', $wiki_3d_feed_animation_interval);
+$smarty->assign('wiki_3d_existing_page_color', $wiki_3d_existing_page_color);
+$smarty->assign('wiki_3d_missing_page_color', $wiki_3d_missing_page_color);
+
 // Other preferences
 $popupLinks = $tikilib->get_preference("popupLinks", 'n');
 $anonCanEdit = $tikilib->get_preference("anonCanEdit", 'n');
@@ -1752,3 +1768,4 @@ if ($feature_search == 'y') {
 }
 
 ?>
+
