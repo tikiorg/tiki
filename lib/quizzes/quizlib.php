@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.28 2004-05-21 20:43:15 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.29 2004-05-24 20:53:06 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -757,7 +757,7 @@ class Quiz {
 
 	function Quiz(){
 		$this->id = 0;
-		$this->version = 0;
+		$this->version = 1;
 		$this->timestamp = date('U');
 		$this->online = 'n';
 		$this->studentAttempts = 0;
@@ -765,8 +765,8 @@ class Quiz {
 		$this->description = "";
 		$this->datePub = mktime(0, 0, 0, 1, 1,  date("Y"));
 		$this->dateExp = mktime(0, 0, 0, 1, 1,  date("Y")+10);
-		$this->shuffleQuestions = "n";
-		$this->shuffleAnswers = "n";
+		$this->shuffleQuestions = "y";
+		$this->shuffleAnswers = "y";
 		$this->limitDisplay = "y";
 		$this->questionsPerPage = 1;
 		$this->timeLimited = "n";
