@@ -1,7 +1,7 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 
 $lang=Array(
-"categorize" => "categoria",
+"categorize" => "categorizar",
 "Set prefs" => "Definir prefs",
 "creation date" => "data de criação",
 "last modification time" => "data da última modificação",
@@ -11,12 +11,12 @@ $lang=Array(
 "Set home forum" => "Definir o fórum inicial",
 "LDAP Group Attribute" => "Atributo do Grupo do LDAP",
 "Feed" => "Fonte",
-"enable/disable" => "habilitar/desabilitar",
-"Max number of items" => "Número máximo de ítens",
+"enable/disable" => "activar/desactivar",
+"Max number of items" => "Número máximo de itens",
 "Set feeds" => "Definir fontes",
 "Create TAR dump" => "Criar exportação TAR",
 "Create HTML dump" => "Criar exportação HTML",
-"Download last TAR dump" => "Baixar a última exportação TAR",
+"Download last TAR dump" => "Descarregar a última exportação TAR",
 "Access HTML dump" => "Acessar a exportação HTML",
 "Wiki Page Names" => "Nomes de páginas Wiki",
 "full" => "completo",
