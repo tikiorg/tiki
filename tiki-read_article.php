@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.34 2004-06-13 04:35:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.35 2004-06-13 04:45:50 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,11 +41,14 @@ if (!isset($_REQUEST["articleId"])) {
 if ($feature_categories == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
    	if ($perms_array) {
+   		$is_categorized = TRUE; // this var is used below
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
     	}
+   	} else {
+   		$is_categorized = FALSE; // this var is used below
    	}
-	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y' && $tiki_p_admin != 'y') {
+	if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
@@ -176,8 +179,9 @@ if ($feature_article_comments == 'y') {
 	include_once ("comments.php");
 }
 
-$objId = $_REQUEST['articleId'];
-$is_categorized = $categlib->is_categorized('article',$objId);
+//$objId = $_REQUEST['articleId'];
+//$is_categorized = $categlib->is_categorized('article',$objId);
+// $is_categorized should have been set above
 
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
