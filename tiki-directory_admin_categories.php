@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.7 2003-10-25 11:28:10 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,12 @@ include_once('lib/directory/dirlib.php');
 
 if ($feature_directory != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
-
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_directory_cats != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
@@ -147,7 +145,7 @@ $smarty->assign_by_ref('items', $items["data"]);
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
-$categs = $dirlib->dir_get_all_categories(0, -1, 'name asc', $find);
+$categs = $dirlib->dir_get_all_categories(0, -1, 'name_asc', $find);
 $smarty->assign('categs', $categs);
 
 $cat_type = 'directory';
