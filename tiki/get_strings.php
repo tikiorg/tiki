@@ -4,6 +4,8 @@
  * \brief Update the language.php files
  * \param lang the abbrevaitaion of the language - if no parameter all the languages are processed
  */
+/// known bug: keeps collecting "\n for rows" and "...snippet of code.\n..."
+
 require_once('tiki-setup.php');
 
 if($tiki_p_admin != 'y') {
@@ -16,7 +18,7 @@ if (isset ($_REQUEST["lang"])) {
   $languages[] = $_REQUEST["lang"];
 }
 else {
-  $languages = Array('cn','de','dk','en','fr','he','it','nl','no','pl','ru','sp','sw','tw');
+  $languages = Array('cn','de','da','en','fr','he','it','nl','no','pl','ru','sp','sw','tw');
 }    	
 print("Languages:");
 foreach($languages as $sel) {
@@ -78,7 +80,8 @@ $nbTrads=count($lang);
 $fw = fopen("lang/$sel/new_language.php",'w+');
 print("&lt;?php\n<br/>\$lang=Array(\n<br/>");
 // the generated comment coding:utf-8 is for the benefit of emacs
-fwrite($fw,"<?php\n// -*- coding:utf-8 -*-\n\$lang=Array(\n");
+// The comment must be on the very first line in the file.
+fwrite($fw,"<?php // -*- coding:utf-8 -*-\n\$lang=Array(\n");
 foreach($files as $file) {
   $fp = fopen($file,"r");
   $data = fread($fp,filesize($file));
@@ -100,6 +103,8 @@ foreach($files as $file) {
        }
      }
   }
+/// (?s) for multiline
+/// known bug: collects also the function xxxtra("xx") - needs only to collect hawtra("xxx") and tra("xxx")
   preg_match_all("/(?s)tra[ \t]*\( *\"([^\"]+)\"[ \t]*\)/",$data,$words);
   foreach(array_unique($words[1]) as $word) {
     if (!isset($used[$word]))
