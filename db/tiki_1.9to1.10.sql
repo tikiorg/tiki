@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.5 2004-07-15 21:32:58 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.6 2004-07-16 20:51:01 giottomx Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -21,6 +21,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pageid','n
 # Tables of the Opinion-Network
 #
 
+DROP TABLE IF EXISTS tiki_opnet_question;
 CREATE TABLE tiki_opnet_question (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 which_formtype INT(10) NOT NULL,
@@ -28,25 +29,30 @@ question_str VARCHAR( 100 ) NOT NULL ,
 PRIMARY KEY ( id ) 
 );
 
+DROP TABLE IF EXISTS tiki_opnet_formtype;
 CREATE TABLE tiki_opnet_formtype (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 name VARCHAR( 30 ) NOT NULL ,
+timestamp DATE NOT NULL,
 PRIMARY KEY ( id ) 
 );
 
+DROP TABLE IF EXISTS tiki_opnet_answer;
 CREATE TABLE tiki_opnet_answer (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 id_question INT( 10 ) NOT NULL ,
 id_filledform INT( 10 ) NOT NULL ,
-value INT( 10 ) NOT NULL ,
+value TEXT NOT NULL ,
 PRIMARY KEY ( id ) 
 );
 
+DROP TABLE IF EXISTS tiki_opnet_filledform;
 CREATE TABLE tiki_opnet_filledform (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 who INT( 10 ) NOT NULL ,
 about_who INT( 10 ) NOT NULL ,
 which_form INT( 10 ) NOT NULL ,
+timestamp DATE NOT NULL,
 PRIMARY KEY ( id ) 
 );
 
