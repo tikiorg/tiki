@@ -36,8 +36,9 @@
 // --------------------------------------------------------------------------------
 
 // ----- Look for double include
-if (!defined("PCLTRACE_LIB"))
-{
+if (defined("PCLTRACE_LIB"))
+  return
+  
   define( "PCLTRACE_LIB", 1 );
 
   // ----- Version
@@ -482,6 +483,4 @@ if (!defined("PCLTRACE_LIB"))
   }
   // --------------------------------------------------------------------------------
 
-// ----- End of double include look
-}
 ?>

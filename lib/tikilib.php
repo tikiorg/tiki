@@ -9242,5 +9242,8 @@ function chkgd2() {
   return false;
 }
 
+function httpScheme() {
+	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
+}
 
 ?>

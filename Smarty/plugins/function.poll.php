@@ -1,4 +1,7 @@
 <?php
+
+require_once('lib/tikilib.php'); # httpScheme()
+
 function smarty_function_poll($params, &$smarty)
 {
     global $tikilib;
@@ -11,7 +14,7 @@ function smarty_function_poll($params, &$smarty)
     if($id) {
       $menu_info = $tikilib->get_poll($id);
       $channels = $tikilib->list_poll_options($id,0,-1,'pollId_asc','');
-      $smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+      $smarty->assign('ownurl',httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels["data"]);
       $smarty->display('tiki-poll.tpl');

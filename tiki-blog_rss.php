@@ -1,5 +1,7 @@
 <?
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
+
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 if($rss_blog != 'y') {
@@ -11,9 +13,9 @@ if(!isset($_REQUEST["blogId"])) {
 $foo1=str_replace("tiki-blog_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-blog_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-blog_rss","tiki-view_blog",$foo["path"]);
-$home = 'http://'.$_SERVER["SERVER_NAME"].$foo1;
-$img = 'http://'.$_SERVER["SERVER_NAME"].$foo2;
-$read = 'http://'.$_SERVER["SERVER_NAME"].$foo3;
+$home = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
+$img = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo2;
+$read = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo3;
 $title = $tikilib->get_preference("title","pepe");
 $now = date("U");
 $changes = $tikilib->list_blog_posts($_REQUEST["blogId"], 0,$max_rss_blog,'created_desc', '', $now);

@@ -543,14 +543,14 @@ if(isset($_REQUEST["pollVote"])) {
   header("location: tiki-poll_results.php?pollId=$pollId");
 }
 
-$ownurl = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$ownurl = httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 $server = $_SERVER["SERVER_NAME"];
 $parsed=parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($parsed["query"])) {
   $parsed["query"]='';
 }
 parse_str($parsed["query"],$query);
-$father='http://'.$server.$parsed["path"];
+$father=httpScheme().'://'.$server.$parsed["path"];
 if(count($query)>0) {
   $first=1;
   foreach($query as $name => $val) {
@@ -566,7 +566,7 @@ if(count($query)>0) {
   $father.='?';
 }
 $ownurl_father=$father;
-$smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+$smarty->assign('ownurl',httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 
 if($feature_referer_stats != 'y') {
 // Referer tracking

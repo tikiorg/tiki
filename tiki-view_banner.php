@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
 
 if($feature_banners != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -83,7 +84,7 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-view_banner","display_banner",$foo["path"]);
 
 
-$fp=fopen('http://'.$_SERVER["SERVER_NAME"].$foo1."?id=$bannerId","r");
+$fp=fopen(httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1."?id=$bannerId","r");
 $raw='';
 while(!feof($fp)) {
 $raw .= fread($fp,8192);

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
 
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
 if($feature_banners != 'y') {
@@ -121,7 +122,7 @@ if(isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
     $smarty->assign('zone','');
   }
   if(substr($_REQUEST["url"],0,4)!='http') {
-    $_REQUEST["url"]='http://'.$_REQUEST["url"];
+    $_REQUEST["url"]=httpScheme().'://'.$_REQUEST["url"];
   }
   $smarty->assign('url',$_REQUEST["url"]);
   if(isset($_REQUEST["use"])) {
