@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.14 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.15 2003-09-25 19:41:54 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -11,6 +11,10 @@
   </div>
 {/if}
 <br />
+
+<p>{tr}For more information, please see <a
+href="http://www.tikiwiki.org/tiki-index.php?page=WikiSyntax">WikiSyntax</a>
+on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
 
 <table width=100%>
 <tr><td width=20%><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
