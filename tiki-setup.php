@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.237 2004-06-13 01:38:59 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.238 2004-06-19 08:08:04 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -29,7 +29,7 @@ class TikiSetup extends TikiInit {
 
         \static
     */
-    function check() {
+    function check($tikidomain='') {
         static $checked;
 
         if ($checked) {
@@ -109,10 +109,10 @@ class TikiSetup extends TikiInit {
         # 'var/log/irc',
         );
         foreach ($dirs as $dir) {
-            if (!is_dir("$docroot/$dir")) {
-                $errors .= "The directory '$docroot/$dir' does not exist.\n";
-            } else if (!is_writeable("$docroot/$dir")) {
-                $errors .= "The directory '$docroot/$dir' is not writeable by $wwwuser.\n";
+            if (!is_dir("$docroot/$dir/$tikidomain")) {
+                $errors .= "The directory '$docroot/$dir/$tikidomain' does not exist.\n";
+            } else if (!is_writeable("$docroot/$dir/$tikidomain")) {
+                $errors .= "The directory '$docroot/$dir/$tikidomain' is not writeable by $wwwuser.\n";
             }
         }
 
@@ -135,10 +135,12 @@ class TikiSetup extends TikiInit {
 <pre>
 $errors
 ";
-
+						if ($tikidomain) {
+							$install_link = '?multi='.urlencode($tikidomain);
+						}
             if (!TikiSetup::isWindows()) {
                 print "You may either chmod the directories above manually to 777, or run one of the sets of commands below.
-<b><a href='tiki-install.php'>Proceed to the Tiki installer</a></b> after you run the commands below.
+<b><a href='tiki-install.php$install_link'>Proceed to the Tiki installer</a></b> after you run the commands below.
 
 If you cannot become root, and are NOT part of the group $wwwgroup:
     \$ bash
@@ -181,7 +183,7 @@ to delete them for you if needed.
     }
 }
 
-TikiSetup::check();
+TikiSetup::check($tikidomain);
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
 

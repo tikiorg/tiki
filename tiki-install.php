@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.61 2004-06-18 22:28:17 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.62 2004-06-19 08:08:04 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.61 2004-06-18 22:28:17 teedog Exp $
-error_reporting (E_ERROR);
+error_reporting (E_ALL);
+
 session_start();
 
 include_once("lib/init/initlib.php");
@@ -92,24 +92,27 @@ function process_sql_file($file,$db_tiki) {
 }
 
 function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.9") {
-	$db_tiki=addslashes($db_tiki);
-	$host_tiki=addslashes($host_tiki);
-	$user_tiki=addslashes($user_tiki);
-	$pass_tiki=addslashes($pass_tiki);
-	$dbs_tiki=addslashes($dbs_tiki);
-	$fw = fopen('db/local.php', 'w');
-	$filetowrite="<?php\n\$db_tiki='".$db_tiki."';\n";
-	$filetowrite.="\$dbversion_tiki='".$dbversion_tiki."';\n";
-	$filetowrite.="\$host_tiki='".$host_tiki."';\n";
-	$filetowrite.="\$user_tiki='".$user_tiki."';\n";
-	$filetowrite.="\$pass_tiki='".$pass_tiki."';\n";
-	$filetowrite.="\$dbs_tiki='".$dbs_tiki."';\n";
-	$filetowrite.="?>";
-        fwrite($fw, $filetowrite);
-	fclose ($fw);
+	global $local;
+	if ($dbs_tiki and $user_tiki) {
+		$db_tiki=addslashes($db_tiki);
+		$host_tiki=addslashes($host_tiki);
+		$user_tiki=addslashes($user_tiki);
+		$pass_tiki=addslashes($pass_tiki);
+		$dbs_tiki=addslashes($dbs_tiki);
+		$fw = fopen($local, 'w');
+		$filetowrite="<?php\n\$db_tiki='".$db_tiki."';\n";
+		$filetowrite.="\$dbversion_tiki='".$dbversion_tiki."';\n";
+		$filetowrite.="\$host_tiki='".$host_tiki."';\n";
+		$filetowrite.="\$user_tiki='".$user_tiki."';\n";
+		$filetowrite.="\$pass_tiki='".$pass_tiki."';\n";
+		$filetowrite.="\$dbs_tiki='".$dbs_tiki."';\n";
+		$filetowrite.="?>";
+		fwrite($fw, $filetowrite);
+		fclose ($fw);
+	}
 }
 
-function create_dirs(){
+function create_dirs($domain=''){
 	$dirs=array(
 		'backups',
 		'db',
@@ -128,6 +131,7 @@ function create_dirs(){
 
 	$ret = "";
   foreach ($dirs as $dir) {
+		$dir = $dir.'/'.$domain;
 		// Create directories as needed
 		if (!is_dir($dir)) {
 			@mkdir($dir,02775);
@@ -390,38 +394,38 @@ function load_sql_scripts() {
 }
 
 function check_password() {
-	global $logged;
-	global $dbTiki;
+	global $logged, $dbTiki, $multi;
 
-        $logged = 'n';
+	$logged = 'n';
+	$pass = $_REQUEST['pass'];
+	$query = "select email from users_users where lower(login) = 'admin'";
+	$result = $dbTiki->Execute($query);
 
-        $pass = $_REQUEST['pass'];
+	if (!$result->numRows()) {
+		$logged = 'n';
+		$_SESSION["install-logged-$multi"] = '';
+		return array('num'=>1,'mes'=>"No admin account set.");
+	} else {
+		$res = $result->fetchRow();
+		$hash = md5('admin' . $pass . $res['email']);
+		$hash2 = md5('admin' . $pass);
+		$hash3 = md5($pass);
+		// next verify the password with 2 hashes methods, the old one (pass�)) and the new one (login.pass;email)
+		$query = "select login from users_users where lower(login) = 'admin' and (hash='$hash' or hash='$hash2' or hash='$hash3')";
+		$result = $dbTiki->Execute($query);
 
-        // first verify that the user exists
-        $query = "select email from users_users where lower(login) = 'admin'";
-        $result = $dbTiki->Execute($query);
-
-        if (!$result->numRows()) {
-                $logged = 'n';
-        } else {
-                $res = $result->fetchRow();
-
-                $hash = md5('admin' . $pass . $res['email']);
-                $hash2 = md5($pass);
-                $hash3 = md5('admin' . $pass);
-                // next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
-                // 6/18/04 terence added hash3 user.pass
-                $query = "select login from users_users where lower(login) = 'admin' and hash in ('$hash', '$hash2', '$hash3')";
-                $result = $dbTiki->Execute($query);
-
-                if ($result->numRows()) {
-                        $logged = 'y';
-
-                        $_SESSION['install-logged'] = 'y';
-                }
-        }
+		if ($result->numRows()) {
+			$logged = 'y';
+			$_SESSION["install-logged-$multi"] = 'y';
+			return array('num'=>0,'mes'=>"admin logged in.");
+		} else {
+			return array('num'=>1,'mes'=>"Incorrect password");
+		}
+	}
 }
 
+// -------------------------------------------------------------------------------------
+// end of functions .. now starts the processing
 
 // After install. This should remove this script.
 if (isset($_REQUEST['kill'])) {
@@ -429,27 +433,50 @@ if (isset($_REQUEST['kill'])) {
 	die;
 }
 
+if (is_file('db/virtuals.inc')) {
+	$virtuals = array_map('trim',file('db/virtuals.inc'));
+	foreach ($virtuals as $v) {
+		if ($v) {
+			if (is_file("db/$v/local.php") and is_readable("db/$v/local.php")) {
+				$virt[$v] = 'y';
+			} else {
+				$virt[$v] = 'n';
+			}
+		}
+	}
+} else {
+	$virt = false;
+	$virtuals = false;
+}
+
+if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$virtuals)) {
+	$local = 'db/'.$_REQUEST['multi'].'/local.php';
+	$multi = $_REQUEST['multi'];
+} else {
+	$local = 'db/local.php';
+	$multi = '';
+}
 
 // Init smarty
 $smarty = new Smarty_TikiWiki();
 //$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
-$smarty->assign('style', 'default.css');
 $smarty->assign('mid', 'tiki-install.tpl');
+$smarty->assign('style', 'moreneat.css');
+$smarty->assign('virt',$virt);
+$smarty->assign('multi', $multi);
 
 // Tiki Database schema version
 $tiki_version = '1.9';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL 3.x', 'MySQL 4.0.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase','SQLLite','MSSQL');
+$dbservers = array('MySQL', 'PostgeSQL 7.2+', 'Oracle', 'Sybase','SQLLite','MSSQL');
 
 $dbtodsn = array(
-	"MySQL 3.x" => "mysql",
-	"MySQL 4.0.x" => "mysql",
+	"MySQL" => "mysql",
 	"PostgeSQL 7.2+" => "pgsql",
-	"Oracle 8i" => "oci8",
-	"Oracle 9i" => "oci8",
+	"Oracle" => "oci8",
 	"Sybase" => "sybase",
 	"SQLLite" => "sqlite",
 	"MSSQL" => "mssql"
@@ -458,6 +485,7 @@ $dbtodsn = array(
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
+$logged = false;
 
 // changed to path_translated 28/4/04 by damian
 // for IIS compatibilty
@@ -467,7 +495,7 @@ check_session_save_path();
 
 get_webserver_uid();
 
-$errors .= create_dirs();
+$errors .= create_dirs($multi);
 
 if ($errors) {
 	error_and_exit();
@@ -492,12 +520,12 @@ include_once ('adodb.inc.php');
 
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
-if (!file_exists('db/local.php')) {
+if (!file_exists($local)) {
 	$dbcon = false;
 	$smarty->assign('dbcon', 'n');
 } else {
 	// include the file to get the variables
-	include ('db/local.php');
+	include ($local);
 
 	if (!isset($db_tiki)) {
 		//upgrade from 1.7.X
@@ -520,9 +548,9 @@ if (!file_exists('db/local.php')) {
 		$dbTiki = &ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-			// echo $dbTiki->ErrorMsg();
 			$dbcon = false;
 			$smarty->assign('dbcon', 'n');
+			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
 		} else {
 			$dbcon = true;
 			if (!isset($_REQUEST['reset'])) {
@@ -566,124 +594,34 @@ if (isset($_SESSION['install-logged'])) {echo '$_SESSION[install-logged] is set<
 echo "admin_acc=$admin_acc<br>";
 */
 
-if ((!$dbcon or 
-	($_REQUEST['resetdb']=='y' && 
-		($admin_acc=='n' || (isset($_SESSION['install-logged']) && $_SESSION['install-logged']=='y'))
-	)
-     ) && isset($_REQUEST['dbinfo'])) {
-	write_local_php($dbtodsn[$_REQUEST['db']],$_REQUEST['host'],
-		$_REQUEST['user'],$_REQUEST['pass'],$_REQUEST['name']);
-	include ('db/local.php');
-	$dbTiki = &ADONewConnection($db_tiki);
+if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' && 
+		($admin_acc=='n' || (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"]=='y'))
+	)) && isset($_REQUEST['dbinfo'])) {
+	
+	$dbTiki = &ADONewConnection($dbtodsn[$_REQUEST['db']]);
 
-	if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-		$dbcon = false;
-
-		$smarty->assign('dbcon', 'n');
-	} else {
-		$dbcon = true;
-
-		$smarty->assign('dbcon', 'y');
+	if (isset($_REQUEST['name']) and $_REQUEST['name']) {
+		if (!@$dbTiki->Connect($_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name'])) {
+			$dbcon = false;
+			$smarty->assign('dbcon', 'n');
+			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
+		} else {
+			$dbcon = true;
+			$smarty->assign('dbcon', 'y');
+			write_local_php($dbtodsn[$_REQUEST['db']],$_REQUEST['host'], $_REQUEST['user'],$_REQUEST['pass'],$_REQUEST['name']);
+		}
 	}
 }
 
 if (isset($_REQUEST['restart'])) {
-	$_SESSION['install-logged'] = '';
+	$_SESSION["install-logged-$multi"] = '';
 }
-
-// Tiki Package feature
-// Written by dheltzel 12/4/2003 - status: experimental
-include ('db/local.php');
-include_once ('lib/pclzip.lib.php');
-
-if (isset($_REQUEST['packages']))
-	$smarty->assign('packages', 'y');
-
-// This is the directory where it looks for the package files. If no .zip files are in this dir, the Installer will be disabled.
-$package_dir = "packages/";
-// This is the suffix it uses to look for an install SQL script
-$pkg_sql_install_suf = "_install.sql";
-// This is the suffix it uses to look for a remove SQL script
-$pkg_sql_remove_suf = "_remove.sql";
-
-// This is used to install files into the Tiki file structure from a zip file
-/* Disabled during 1.8 release preparation. Needs check if admin is logged in!
-if (isset($_REQUEST['install_pkg'])) {
-	$archive = new PclZip($package_dir.$_REQUEST['pkgs']);
-
-	if ($archive->extract() == 0) {
-		die("Error : ".$archive->errorInfo(true));
-	}
-	else {
-		if (isset($_REQUEST['runScript'])) {
-			$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
-			if (is_file("db/".$pkg_sql_install_file)) {
-				print "Running ".$pkg_sql_install_file."<br />";
-				process_sql_file ($pkg_sql_install_file,$db_tiki);
-			}
-		}
-		print "The application in <b>".$_REQUEST['pkgs']."</b> was installed successfully";
-	}
-	$smarty->assign('packages', 'y');
-}
-
-// This is used to remove files that were installed into the Tiki file structure by the install_pkg prcess
-if (isset($_REQUEST['remove_pkg'])) {
-	$archive = new PclZip($package_dir.$_REQUEST['pkgs']);
-	if (isset($_REQUEST['runScript'])) {
-		$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
-		if (is_file("db/".$pkg_sql_remove_file)) {
-			print "Running ".$pkg_sql_remove_file."<br />";
-			process_sql_file ($pkg_sql_remove_file,$db_tiki);
-		}
-	}
-
-	// Read Archive contents
-	$ziplist = $archive->listContent();
-	if ($ziplist) {
-		for ($i = 0; $i < sizeof($ziplist); $i++) {
-			$file = $ziplist["$i"]["filename"];
-			unlink($file);
-			print $file." removed<br />";
-		}
-	}
-	else {
-		print "Nothing to remove for ".$_REQUEST['pkgs']."<br />";
-	}
-	$smarty->assign('packages', 'y');
-}
-*/
 
 //Load Profiles
 load_profiles();
 
 //Load SQL scripts
 load_sql_scripts();
-
-/* disabled due to 1.8 release preparation
-//Load packages
-// the packages are only mysql-safe at this time, also they only show up if a zip file exists in $package_dir
-$smarty->assign('pkg_available', 'n');
-if ($db_tiki == "mysql") {
-	$pkgs = array();
-	$h = opendir($package_dir);
-
-	while ($file = readdir($h)) {
-		if (strstr($file, '.zip')) {
-			// Assign the filename of the pkgs to the name field
-			$pkg1 = array("name" => $file);
-			$pkg1["desc"] = basename($file,".zip");
-			// Assign the record to the pkgs array
-			$pkgs[] = $pkg1;
-			$smarty->assign('pkg_available', 'y');
-		}
-	}
-
-	closedir ($h);
-	sort($pkgs);
-}
-$smarty->assign('pkgs', $pkgs);
-*/
 
 // If no admin account then allow the creation of an admin account
 if ($admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
@@ -692,8 +630,7 @@ if ($admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
 		//$query = "delete from users_users where login='admin'";
 		//$dbTiki->Execute($query);
 		$pass1 = addslashes($_REQUEST['pass1']);
-		$query = "insert into users_users(login,password,hash) 
-    values('admin','$pass1','$hash')";
+		$query = "insert into users_users(login,password,hash) values('admin','$pass1','$hash')";
 		$dbTiki->Execute($query);
 		$admin_acc = 'y';
 	}
@@ -704,20 +641,18 @@ $smarty->assign('admin_acc', $admin_acc);
 // Since we do have an admin account the user must login to 
 // use the install script
 if (isset($_REQUEST['login'])) {
-	check_password();
+	$tikifeedback[] = check_password();
 }
 
 // If no admin account then we are logged
 if ($admin_acc=='n') {
-	$logged = 'y';
-
-	$_SESSION['install-logged'] = 'y';
+	$_SESSION["install-logged-$multi"] = 'y';
 }
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
-if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
+if (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y') {
 	$smarty->assign('logged', 'y');
 
 	if (isset($_REQUEST['scratch'])) {
@@ -736,10 +671,10 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 		$smarty->assign('dbdone', 'y');
 	}
 }
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->display("tiki.tpl");
 
 //print "<hr>";
 //setup_help();
-
 ?>

@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.27 2004-06-06 08:42:45 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.28 2004-06-19 08:08:04 mose Exp $
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,21 +103,24 @@ fi
 
 if [ -n "$1" ]; then
 	VIRTUALS=$@
+	touch db/virtuals.inc
 fi
 
 # Create directories as needed
-for dir in $DIRS
-do
+for dir in $DIRS; do
 	if [ ! -d $dir ]; then
 		echo Creating directory "$dir"
 		mkdir -p $dir
 	fi
-        for vdir in $VIRTUALS; do
-                if [ ! -d "$dir/$vdir" ]; then
+	for vdir in $VIRTUALS; do
+		if [ ! -d "$dir/$vdir" ]; then
 			echo Creating directory "$dir/$vdir"
-                        mkdir -p "$dir/$vdir"
-                fi
-        done
+			mkdir -p "$dir/$vdir"
+		fi
+		echo $vdir >> db/virtuals.inc
+		cat db/virtuals.inc | sort | uniq > db/virtuals.inc_new
+		rm -f db/virtuals.inc && mv db/virtuals.inc_new db/virtuals.inc
+	done
 done
 
 # Set ownerships of the directories
