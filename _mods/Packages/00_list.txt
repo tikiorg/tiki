@@ -18,3 +18,6 @@
 'themes','zaksworld','1.3','This is the theme in action at Zaks site','GNU/LGPL'
 'themes','ztheme','1.3','Simple theme, conservative colors. Designed for easy \"readability\" and use.','GNU/LGPL'
 'wikiplugins','svg','1.3','Wiki Plugin to include SVG file.','GNU/LGPL'
+'services','mailman','1.6','Plugin to enable integrated mailman multi-list panel, using iframe','GNU/LGPL'
+'wikiplugins','ebay','1.1','Currently only works with ebay.co.uk','GNU/LGPL'
+'wikiplugins','scroll','1.1','no description','GNU/LGPL'
