@@ -3,7 +3,7 @@
 {else}
 <div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
 <div class="bloginfo">
-{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />
+{tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
 {tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />
 <table >
 <tr>
@@ -61,11 +61,11 @@
 <span class="posthead">
 {if $use_title eq 'y'}
 	{$listpages[ix].title}<br />
-	<small> {tr}posted by{/tr} {$listpages[ix].user}  
+	<small> {tr}posted by{/tr} {$listpages[ix].user|userlink}  
 	{if $show_avatar eq 'y'}
        {$listpages[ix].avatar}
      {/if} 
-	 on {$listpages[ix].created|tiki_short_datetime}</small>
+	 {tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
 	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user} 
 	{if $show_avatar eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.22 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.23 2004-05-03 17:22:30 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 } else {
 	$heading = '<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>' . "\n";
 	$heading .= '<div class="bloginfo">' . "\n";
-	$heading .= '{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />' . "\n";
+	$heading .= '{tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />' . "\n";
 	$heading .= '{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />' . "\n";
 	$heading .= '<table><tr><td>' . "\n";
 	$heading .= '({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})</td>' . "\n";
