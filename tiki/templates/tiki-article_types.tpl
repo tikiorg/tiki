@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.9 2003-11-19 16:42:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.10 2003-11-23 05:10:45 dheltzel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -14,7 +14,24 @@
 
 <!--- beginning of next bit --->
 <br />
+<b>{tr}Name{/tr}</b> - Shows up in the drop down list of article types<br />
+<b>{tr}Rate{/tr}</b> - Allow ratings by the author<br />
+<b>{tr}Show before publish date{/tr}</b> - non-admins can view before the publish date<br />
+<b>{tr}Show after expire date{/tr}</b> - non-admins can view after the expire date<br />
+<b>{tr}Heading only{/tr}</b> - No article body, heading only<br />
+<b>{tr}Comments{/tr}</b> - Allow comments for this type<br />
+<b>{tr}Comment Can Rate Article{/tr}</b> - Allow comments to include a rating value<br />
+<b>{tr}Show image{/tr}</b> - Show topic or own image<br />
+<b>{tr}Show avatar{/tr}</b> - Show author's avatar<br />
+<b>{tr}Show author{/tr}</b> - Show author name<br />
+<b>{tr}Show publish date{/tr}</b> - Show publish date<br />
+<b>{tr}Show expire date{/tr}</b> - Show expire date<br />
+<b>{tr}Show reads{/tr}</b> - Show the number of times the article was read<br />
+<b>{tr}Show size{/tr}</b> - Show the size of the article<br />
+<b>{tr}Creator can edit{/tr}</b> - The person who submits an article of this type can edit it<br />
+<b>{tr}Delete{/tr}</b> - Delete this type<br />
 <h3>{tr}List of types{/tr}</h3>
+<form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
 <tr>
 <td class="heading">{tr}Name{/tr}</td>
@@ -32,54 +49,36 @@
 <td class="heading">{tr}Show reads{/tr}</td>
 <td class="heading">{tr}Show size{/tr}</td>
 <td class="heading">{tr}Creator can edit{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<td class="heading">{tr}Delete{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}
+<input type="hidden" name="type_array[{$types[user].type}]" />
 <tr>
 <td class="{cycle advance=false}">{$types[user].type}</td>
-<td class="{cycle advance=false}">{if $types[user].use_ratings eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_pre_publ eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_post_expire eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].heading_only eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].allow_comments eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].comment_can_rate_article eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_image eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_avatar eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_author eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_pubdate eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_expdate eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_reads eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].show_size eq 'y'}y{/if}</td>
-<td class="{cycle advance=false}">{if $types[user].creator_edit eq 'y'}y{/if}</td>
+<td class="{cycle advance=false}"><input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_pre_publ[{$types[user].type}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_post_expire[{$types[user].type}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="heading_only[{$types[user].type}]" {if $types[user].heading_only eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="allow_comments[{$types[user].type}]" {if $types[user].allow_comments eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="comment_can_rate_article[{$types[user].type}]" {if $types[user].comment_can_rate_article eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_image[{$types[user].type}]" {if $types[user].show_image eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_avatar[{$types[user].type}]" {if $types[user].show_avatar eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_author[{$types[user].type}]" {if $types[user].show_author eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_pubdate[{$types[user].type}]" {if $types[user].show_pubdate eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_expdate[{$types[user].type}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_reads[{$types[user].type}]" {if $types[user].show_reads eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_size[{$types[user].type}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle}">
-<a class="link" href="tiki-article_types.php?remove={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
+<a class="link" href="tiki-article_types.php?remove_type={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
 </td>
 </tr>
 {/section}
 </table>
-<h3>{tr}Create a new type{/tr}</h3>
+<br />
+<input type="submit" name="update_type" value="{tr}save{/tr}" /><br />
+<br />
+<input type="text" name="new_type" /><input type="submit" name="add_type" value="{tr}Create a new type{/tr}" />
 
-<form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
- <table class="normal">
-<tr><td class="formcolor">{tr}Type Name{/tr}</td><td class="formcolor"><input type="text" name="type" /></td></tr>
-<tr><td class="formcolor">{tr}Use Ratings{/tr}</td><td class="formcolor"><input type="checkbox" name="use_ratings" {if $use_ratings eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show before publish date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_pre_publ" {if $show_pre_publ eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show after expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_post_expire" {if $show_post_expire eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show heading only{/tr}</td><td class="formcolor"><input type="checkbox" name="heading_only" {if $heading_only eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Allow comments{/tr}</td><td class="formcolor"><input type="checkbox" name="allow_comments" {if $allow_comments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Comment can rate Article{/tr}</td><td class="formcolor"><input type="checkbox" name="comment_can_rate_article" {if $comment_can_rate_article eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show image{/tr}</td><td class="formcolor"><input type="checkbox" name="show_image" {if $show_image eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show avatar{/tr}</td><td class="formcolor"><input type="checkbox" name="show_avatar" {if $show_avatar eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show author{/tr}</td><td class="formcolor"><input type="checkbox" name="show_author" {if $show_author eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show publish date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_pubdate" {if $show_pubdate eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_expdate" {if $show_expdate eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show reads{/tr}</td><td class="formcolor"><input type="checkbox" name="show_reads" {if $show_reads eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show size{/tr}</td><td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Creator can edit{/tr}</td><td class="formcolor"><input type="checkbox" name="creator_edit" {if $creator_edit eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtype" value="{tr}save{/tr}" /></td></tr>
-</table>
 </form>
-<br />
-<b>Note:</b> To change the settings for an existing type, create a new type with the same name and the correct settings. Type names are case sensitive.
-<br />
