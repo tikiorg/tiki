@@ -139,7 +139,7 @@
       </td>
       </tr><tr>
         <td class="form">{tr}Max average server load threshold in the last minute{/tr}:</td>
-        <td><input type="text" name="load_threshold" value="{$load_threshold}" size="10" /></td>
+        <td><input type="text" name="load_threshold" value="{$load_threshold}" size="5" /></td>
       </tr><tr>
       	<td class="form">{tr}Message to display when server is too busy{/tr}:</td>
         <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
@@ -237,7 +237,7 @@
         <td><input type="text" name="proxy_host" value="{$proxy_host|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Proxy port{/tr}:</td>
-        <td><input size=5 type="text" name="proxy_port" value="{$proxy_port|escape}" /></td>
+        <td><input size="5" type="text" name="proxy_port" value="{$proxy_port|escape}" /></td>
       </tr><tr>
         <td class="form">{tr}Maximum number of records in listings{/tr}:</td>
         <td><input size="5" type="text" name="maxRecords"
