@@ -9,7 +9,7 @@
 <tr><td>
 <form id='formread' action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId|escape}" />
-<select name="parse_mode" onChange="javascript:document.getElementById('formread').submit();">
+<select name="parse_mode" onchange="javascript:document.getElementById('formread').submit();">
 <option value="raw" {if $parse_mode eq 'raw'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 <option value="wiki"{if $parse_mode eq 'wiki'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
 <option value="template"{if $parse_mode eq 'template'}selected="selected"{/if}>{tr}Template{/tr}</option>

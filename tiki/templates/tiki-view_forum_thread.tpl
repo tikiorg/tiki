@@ -517,7 +517,7 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <small>{tr}Show posts{/tr}:</small>
-    <select name="time_control" onChange="javascript:document.getElementById('time_control').submit();">
+    <select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
     	<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
     	<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
     	<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
@@ -529,7 +529,7 @@ a moderator approves it.{/tr}</small>
 {if $feature_forum_quickjump eq 'y'}
 <form id='quick' method="post" action="tiki-view_forum.php">
 <small>{tr}Jump to forum{/tr}:</small>
-<select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
+<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
 {section name=ix loop=$all_forums}
 <option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
 {/section}

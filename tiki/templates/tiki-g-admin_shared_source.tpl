@@ -17,7 +17,7 @@ Errors:<br/>
 <tr>
   <td class="formcolor">{tr}select source{/tr}</td>
   <td class="formcolor">
-		<select name="activityId" onChange="document.getElementById('editsource').submit();">
+		<select name="activityId" onchange="document.getElementById('editsource').submit();">
 		<option value="" {if $activityId eq 0}selected="selected"{/if}>{tr}Shared code{/tr}</option>
 		{section loop=$items name=ix}
 		<option value="{$items[ix].activityId|escape}" {if $activityId eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
