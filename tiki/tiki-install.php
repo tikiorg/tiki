@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.30 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.31 2003-11-21 17:01:31 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.30 2003-11-17 15:44:29 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.31 2003-11-21 17:01:31 redflo Exp $
+error_reporting (E_ERROR);
 session_start();
 
 // Define and load Smarty components
@@ -21,8 +22,10 @@ function process_sql_file($file,$db_tiki) {
 	global $succcommands;
 	global $failedcommands;
 	global $smarty;
-	$succcommands=array();
-	$failedcommands=array();
+	if(!isset($succcommands)) {
+	  $succcommands=array();
+	  $failedcommands=array();
+	}
 
 	$command = '';
 	$fp = fopen("db/$file", "r");
