@@ -7,5 +7,6 @@ change it use it do it !
 
 chouette on peut rigoler alors !
 
+Test for beerlounge. Greets from munich to berlin :-)
 
 this is musus, performing his first commit (hopefully)! :)
