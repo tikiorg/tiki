@@ -38,6 +38,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Set features" => "Valider les fonctionnalités",
 "Change admin password" => "Modifier le mot de passe de l'administrateur",
 "Again" => "Encore",
+"Repeat password" => "Encore",
 "change" => "modifier",
 "name" => "nom",
 "desc" => "desc",

@@ -42,6 +42,7 @@ $lang=Array(
 "Set features" => "Ustaw dodatki",
 "Change admin password" => "Zmień hasło administratora",
 "Again" => "Ponownie",
+"Repeat password" => "Ponownie",
 "change" => "zmień",
 "name" => "nazwa",
 "desc" => "opis",
