@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.33 2004-06-14 05:44:35 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.34 2004-06-14 06:07:35 lfagundes Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -51,7 +51,7 @@
 {if $feature_friends eq 'y'}
 <div class="separator">
 <a class='separator' href="javascript:toggle('friendsmenu');">::</a>
-<a class='separator' href='tiki-community.php'>{tr}Community{/tr}</a>
+<a class='separator' href='tiki-list_users.php'>{tr}Community{/tr}</a>
 </div>
   <div id="friendsmenu" style="{$mnu_friendsmenu}">
   {if $tiki_p_list_users eq 'y'}

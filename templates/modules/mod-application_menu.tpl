@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.100 2004-06-14 05:44:34 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.101 2004-06-14 06:07:33 lfagundes Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -105,7 +105,7 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('friendsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="friendsmenuicn" alt="{tr}FriendsMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('friendsmenu');">[-]</a>{/if}
-  <a class="separator" href="tiki-community.php">{tr}Community{/tr}</a>
+  <a class="separator" href="tiki-list_users.php">{tr}Community{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('friendsmenu');">[+]</a>{/if}
   </div>
   <div id="friendsmenu" style="{$mnu_friendsmenu}">
