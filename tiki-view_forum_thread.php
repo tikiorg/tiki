@@ -161,7 +161,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
         if($commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
           //Replace things between square brackets by links
           $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
-          if($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon')) {
+          if(($tiki_p_forum_autoapp != 'y') && ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon'))) {
  			$smarty->assign('was_queued','y');
  			$commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,$_REQUEST["comments_parentId"],$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],'','','',$thread_info['title']);
 	      } else { 

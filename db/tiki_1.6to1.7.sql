@@ -1,3 +1,15 @@
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_autoapp','forums','Auto approve forum posts','admin');
+
+drop table if exists tiki_user_postings;
+create table  tiki_user_postings(
+	user varchar(200) not null,
+	posts integer(12),
+	last integer(14),
+	first integer(14),
+	level integer(8),
+	primary key(user)
+);
+
 alter table tiki_forums add moderator_group varchar(200);
 update tiki_forums set moderator_group='';
 

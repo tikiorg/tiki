@@ -185,14 +185,6 @@ $smarty->assign('popup','');
 $smarty->assign('popupsize','');
 $winxsize = 0; $winysize = 0;
 
-// now set it if needed
-if (isset($_REQUEST['popup']) and ($_REQUEST['popup'])) {
-	$smarty->assign('popup','y');
-	$smarty->assign('feature_top_bar','n');
-	$smarty->assign('feature_left_column','n');
-	$smarty->assign('feature_right_column','n');
-	$smarty->assign('feature_bot_bar','n');
-}
 
 // Calculate PopUp Window size for the popup link
 $winx = $info['xsize']; if ($winx < 320) { $winx = 320; }
@@ -212,6 +204,14 @@ if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
 }
 
+// now set it if needed
+if (isset($_REQUEST['popup']) and ($_REQUEST['popup'])) {
+	$smarty->assign('popup','y');
+	$smarty->assign('feature_top_bar','n');
+	$smarty->assign('feature_left_column','n');
+	$smarty->assign('feature_right_column','n');
+	$smarty->assign('feature_bot_bar','n');
+}
 
 // Display the template
 $smarty->assign('mid','tiki-browse_image.tpl');

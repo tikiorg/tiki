@@ -443,13 +443,17 @@ class Comments extends TikiLib {
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $res["parsed"] = $this->parse_comment_data($res["data"]);
     
-    $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+    $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
     if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
 
       $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
     } else {
       $res['user_email']='';
     }
+    $res['user_online']='n';
+    if($res['userName']) {
+    	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
+    } 
     
     return $res;
   }
@@ -573,12 +577,17 @@ class Comments extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
-      $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+      $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
       if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
       	$res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
       } else {
       	$res['user_email']='';
       }
+      $res['user_online']='n';
+      if($res['userName']) {
+    	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
+      } 
+
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
@@ -618,8 +627,12 @@ class Comments extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
-      $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+      $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
       $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+      $res['user_online']='n';
+      if($res['userName']) {
+    	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
+      } 
 
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
@@ -725,6 +738,44 @@ class Comments extends TikiLib {
   	$summary = addslashes($summary);    
     if(!$userName) {
       $userName = tra('Anonymous');
+    } else {
+      $now = date("U");
+      if($this->db->getOne("select count(*) from tiki_user_postings where user='$userName'")) {
+        $query = "update tiki_user_postings set last=$now, posts = posts + 1 where user='$userName'";
+        $this->query($query);
+      } else {
+        $posts = $this->db->getOne("select count(*) from tiki_comments where userName='$userName'");
+        if(!$posts) $posts=1;
+      	$query = "insert into tiki_user_postings(user,first,last,posts) values('$userName',$now,$now,$posts)";
+      	$this->query($query);
+      }
+      // Calculate max
+      $max = $this->getOne("select max(posts) from tiki_user_postings");
+      $min = $this->getOne("select min(posts) from tiki_user_postings");
+      if($min==0) $min=1;
+      $ids = $this->getOne("select count(*) from tiki_user_postings");
+      $tot = $this->getOne("select sum(posts) from tiki_user_postings");
+      $average = $tot/$ids;
+      $range1 = ($min+$average)/2;
+      $range2 = ($max+$average)/2;
+      
+      $posts = $this->db->getOne("select posts from tiki_user_postings where user='$userName'");
+      
+      if ($posts == $max) {
+        $level = 5;
+      }  elseif($posts > $range2) {
+      	$level = 4;
+      } elseif($posts>$average) {
+      	$level = 3;
+      } elseif($posts>$range1) {
+      	$level = 2;
+      } else {
+      	$level = 1;
+      }
+      
+      $query = "update tiki_user_postins set level=$level where user='$userName'";
+      $this->query($query);
+     
     }
     $hash=md5($title.$data);
     $query = "select threadId from tiki_comments where hash='$hash'";

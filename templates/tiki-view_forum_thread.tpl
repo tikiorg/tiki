@@ -21,7 +21,6 @@ a moderator approves it.{/tr}</small>
   {if $forum_info.ui_avatar eq 'y'}
   {$thread_info.userName|avatarize}<br/>
   {/if}
-  <b>{tr}author{/tr}</b>:<br/>
   {$thread_info.userName|userlink}
   {if $forum_info.ui_flag eq 'y'}
   <br/>{$thread_info.userName|countryflag}
@@ -29,11 +28,9 @@ a moderator approves it.{/tr}</small>
   {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
   <br/><small>posts:{$thread_info.user_posts}</small>
   {/if}
-<!--
-  {if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
-  {mailto address="$thread_info.user_email" encode="javascript" text="email" extra='class="link"'}
+  {if $thread_info.userName and $forum_info.ui_online eq 'y' and $thread_info.user_online eq 'y'}
+  <br/><small>now online</small>
   {/if}
--->
   </div>
   </td>
   <td class="viewthreadr" width="85%">
@@ -316,13 +313,15 @@ a moderator approves it.{/tr}</small>
   {if $forum_info.ui_avatar eq 'y'}
   {$comments_coms[ix].userName|avatarize}<br/>
   {/if}
-  <b>{tr}author{/tr}</b>
   <br/>{$comments_coms[ix].userName|userlink}
   {if $forum_info.ui_flag eq 'y'}
   <br/>{$comments_coms[ix].userName|countryflag}
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_posts eq 'y'}
   <br/><small>posts:{$comments_coms[ix].user_posts}</small>
+  {/if}
+  {if $comments_coms[ix].userName and $forum_info.ui_online eq 'y' and $comments_coms[ix].user_online eq 'y'}
+  <br/><small>now online</small>
   {/if}
 
   </div>
