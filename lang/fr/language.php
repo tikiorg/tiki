@@ -3767,8 +3767,8 @@ $lang=Array(
 "Hi" => "Bonjour",
 "someone from" => "Quelqu'un de",
 "requested a reminder of the password for the" => "a demandé de vous renvoyer votre mot de passe",
-"since this is your registered email address we inform that the" => "Comme c'est votre adresse électronique d'inscription, nous vous informons que",
-"password for this account is" => "le mot de passe pour ce compte est",
+"since this is your registered email address we inform that the" => "comme c'est votre adresse électronique d'inscription, nous vous informons que",
+"password for this account is" => "le mot de passe temporaire pour ce compte est :",
 "A new article was submitted by {\$mail_user} to {\$mail_site} at {\$mail_date|tiki_short_datetime}" => "Un nouvel article a été publié par {\$mail_user} sur {\$mail_site} à {\$mail_date|tiki_short_datetime}",
 "You can edit the submission following this link:" => "Vous pouvez voir la publication en suivant le lien :",
 "Heading:" => "En-tête :",
@@ -4100,5 +4100,6 @@ $lang=Array(
 "Wiki page %s changed" => "La page Wiki %s a été modifiée",
 "Does your mail reader need a special charset" => "Votre lecteur de messages a-t-il besoin d'un jeu de caractères particulier",
 "New blog post: %s" => "Nouvel article dans le blogue : %s",
+"Your Tiki account information for %s" =>  "Les informations de votre compte Tiki sur %s",
 "###end###"=>"###end###");
 ?>

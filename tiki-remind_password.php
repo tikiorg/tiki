@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.12 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.13 2004-03-18 19:28:26 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,14 +28,18 @@ if (isset($_REQUEST["remind"])) {
 		}
 
 		$email = $tikilib->get_user_email($_REQUEST["username"]);
+		$languageEmail = $tikilib->get_user_preference($_REQUEST["username"], "language", $language);
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_user', $_REQUEST["username"]);
 		$smarty->assign('mail_same', $feature_clear_passwords);
 		$smarty->assign('mail_pass', $pass);
-		$mail_data = $smarty->fetch('mail/password_reminder.tpl');
-		$tmp = tra("Your Tiki account information for");
-		$tmp .= " " . $_SERVER["SERVER_NAME"];
-		@mail($email, $tmp, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		$mail_data = $smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl');
+		$mail = new TikiMail($_REQUEST["username"]);
+		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
+		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));
+		$mail->send(array($email));
+
+		//@mail($email, $tmp, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 		// Just show "success" message and no form
 		$smarty->assign('showmsg', 'y');
 		$smarty->assign('showfrm', 'n');
