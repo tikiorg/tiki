@@ -16,9 +16,11 @@ function smarty_function_sameurl($params, &$smarty)
       		} else {
         		$sep='&amp;';
       		}	
+      		if(!is_array($name)&&!is_array($val)) {
  	        if(!in_array($name,$sets)) {
         		$data.=$sep.urlencode($name).'='.urlencode($val);
         		$sets[]=$name;
+      		}
       		}
 
     	}
@@ -34,10 +36,11 @@ function smarty_function_sameurl($params, &$smarty)
       if(isset($$name)) {
         $val = $$name;
       }
-
+      if(!is_array($name)&&!is_array($val)) {
       if(!in_array($name,$sets)) {
         $data.=$sep.urlencode($name).'='.urlencode($val);
         $sets[]=$name;
+      }
       }
     }
     print($data);

@@ -17,6 +17,11 @@ if($tiki_p_blog_post != 'y') {
   die;  
 }
 
+$smarty->assign('wysiwyg','n');
+if(isset($_REQUEST['wysiwyg'])&&$_REQUEST['wysiwyg']=='y') {
+  $smarty->assign('wysiwyg','y');
+}
+
 if(isset($_REQUEST["blogId"])) {
   $blogId = $_REQUEST["blogId"];
   $blog_data = $tikilib->get_blog($_REQUEST["blogId"]);

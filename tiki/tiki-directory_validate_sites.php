@@ -16,7 +16,7 @@ if($tiki_p_validate_links != 'y') {
 }
 
 
-if(isset($_REQUEST["validate"])) {
+if(isset($_REQUEST["validate"])&&isset($_REQUEST['sites'])) {
   foreach(array_keys($_REQUEST["sites"]) as $siteId) {   
     $dirlib->dir_validate_site($siteId);
   }
@@ -27,7 +27,7 @@ if(isset($_REQUEST["remove"])) {
 }
 
 
-if(isset($_REQUEST["del"])) {
+if(isset($_REQUEST["del"])&&isset($_REQUEST['sites'])) {
   foreach(array_keys($_REQUEST["sites"]) as $siteId) {   
     $dirlib->dir_remove_site($siteId);
   }

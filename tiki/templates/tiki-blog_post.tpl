@@ -1,14 +1,20 @@
 {popup_init src="lib/overlib.js"}
+<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}">{tr}Edit Post{/tr}</a><br/><br/>
+{if $wysiwyg eq 'n'}
+		[<a class="link" href="{sameurl wysiwyg='y'}">{tr}Use wysiwyg editor{/tr}</a>]
+{else}
+		[<a class="link" href="{sameurl wysiwyg='n'}">{tr}Use normal editor{/tr}</a>]
+{/if}
 {if $preview eq 'y'}
 {include file=tiki-preview_post.tpl}
 {/if}
-<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}">{tr}Edit Post{/tr}</a><br/><br/>
 [{if $blogId > 0 }
 <a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>|
 {/if}
 <a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
 <br/><br/>
-<form method="post" action="tiki-blog_post.php">
+<form name='blogpost' method="post" action="tiki-blog_post.php">
+<input type="hidden" name="wysiwyg" value="{$wysiwyg}" />
 <input type="hidden" name="postId" value="{$postId}" />
 <table class="editblogform">
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
@@ -56,7 +62,20 @@
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
-<tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform"><textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">{$data}</textarea></td></tr>
+<tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
+<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">
+{$data}
+</textarea>
+{if $wysiwyg eq 'y'}
+	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
+	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
+	<script type="text/javascript" src="lib/htmlarea/dialog.js"></script>
+	<style type="text/css">
+		@import url(lib/htmlarea/htmlarea.css);
+	</style>
+	<script defer='defer'>(new HTMLArea(document.forms['blogpost']['data'])).generate();</script>
+{/if}
+</td></tr>
 </td></tr>
 {if $blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>

@@ -193,12 +193,34 @@ from Admin->General
 <br/>
 <a name="editcreate"></a>
 <table class="normal"><tr><td valign="top" class="odd">
-<h3>{tr}Edit/Create user module{/tr}</h3>
-<form method="post" action="tiki-admin_modules.php">
+<h3>{tr}Edit/Create user module{/tr} 
+	{if $wysiwyg eq 'n'}
+		<a class="link" href="{sameurl wysiwyg='y'}">{tr}Use wysiwyg editor{/tr}</a>
+	{else}
+		<a class="link" href="{sameurl wysiwyg='n'}">{tr}Use normal editor{/tr}</a>
+	{/if}
+	
+</h3>
+<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
 <tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name}" /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title}" /></td></tr>
-<tr><td class="form">{tr}Data{/tr}</td><td><textarea id='usermoduledata' name="um_data" rows="10" cols="25">{$um_data}</textarea></td></tr>
+<tr><td class="form">{tr}Data{/tr}</td><td>
+
+
+<textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data}</textarea>
+
+{if $wysiwyg eq 'y'}
+	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
+	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
+	<script type="text/javascript" src="lib/htmlarea/dialog.js"></script>
+	<style type="text/css">
+		@import url(lib/htmlarea/htmlarea.css);
+	</style>
+	<script defer='defer'>(new HTMLArea(document.forms['editusr']['um_data'])).generate();</script>
+{/if}
+
+</td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{tr}create/edit{/tr}" /></td></tr>
 </table>
 </form>
