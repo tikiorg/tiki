@@ -208,10 +208,10 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
 <tr><td class="form">{tr}Enable secondary validation through external XML source?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_enabled" {if $auth_ext_xml_enabled eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_create_user_tiki" {if $auth_ext_xml_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Delete user if permission denied (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_delete_user_tiki" {if $auth_ext_xml_delete_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Determine if user is an admin (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_manage_admin" {if $auth_ext_xml_manage_admin eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_skip_admin" {if $auth_ext_xml_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Pass a CAS Proxy Ticket to XML source (if using CAS auth)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_cas_proxy" {if $auth_ext_xml_cas_proxy eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}External XML source URL{/tr}:</td><td><input type="text" name="auth_ext_xml_url" value="{$auth_ext_xml_url|escape}" size="50" /></td></tr>
 <tr><td class="form" colspan="2">
 	<div class="simplebox">&lt;<b>ELname</b> <b>ATname</b>="<b><i>ATvalue</i></b>"&gt; <b><i>ELvalue</i></b> &lt;/<b>ELname</b>&gt;

@@ -439,7 +439,13 @@ class UsersLibAdmin extends UsersLib {
                 phpCAS::setDebug();
 
                 // initialize phpCAS
+                $auth_ext_xml_enabled = $tikilib->get_preference('auth_ext_xml_enabled', 'n');
+                $auth_ext_xml_cas_proxy = $tikilib->get_preference('auth_ext_xml_cas_proxy', 'n');
+                if ($auth_ext_xml_enabled == 'y' && $auth_ext_xml_cas_proxy == 'y') {
+                	phpCAS::proxy($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+                } else {
                 phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+                }
 
                 // check CAS authentication
                 phpCAS::authenticateIfNeeded();
@@ -605,7 +611,22 @@ class UsersLibAdmin extends UsersLib {
 	
 	function validate_user_external_xml($user) {
 		require_once('lib/xml/xmlparserlib.php');
-		$parser = new XMLParser('$xmloutput', 'url', 1);
+		
+		global $auth_ext_xml_url;
+		if ($tikilib->get_preference('auth_method', 'tiki') == 'cas' && $tikilib->get_preference('auth_ext_xml_', 'tiki') == 'cas') {
+			include_once('CAS/CAS.php');
+			$service = $auth_ext_xml_url;
+			phpCAS::serviceWeb($service,$err_code,$xmloutput);
+		} else {
+			$handle = fopen($auth_ext_xml_url, "rb");
+			$xmloutput = '';
+			while (!feof($handle)) {
+				$xmloutput .= fread($handle, 8192);
+			}
+			fclose($handle);
+		}
+		
+		$parser = new XMLParser('$xmloutput', 'raw', 1);
 		$tree = $parser->getTree();
 
 		global $auth_ext_xml_login_isvalid, $auth_ext_xml_login_isadmin;
@@ -619,9 +640,9 @@ class UsersLibAdmin extends UsersLib {
 				global $auth_ext_xml_admin_element, $auth_ext_xml_admin_element_value, $auth_ext_xml_admin_attribute, $auth_ext_xml_admin_attribute_value;
 				if (array_key_exists($auth_ext_xml_login_element, $value)) {
 					foreach ($value[$auth_ext_xml_login_element] as $node) {
-						if (empty($auth_ext_xml_login_attribute_value) ||
+						if (empty($auth_ext_xml_login_attribute) || empty($auth_ext_xml_login_attribute_value) ||
 							(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
-							if (empty($auth_ext_xml_login_element_value) || (isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
+							if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) || (isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
 								$auth_ext_xml_login_isvalid = true;
 								break 1;
 							}
@@ -631,6 +652,11 @@ class UsersLibAdmin extends UsersLib {
 			}
 		}
 		array_walk_recursive($tree, "walk");
+		
+		global $user, $auth_ext_xml_delete_user_tiki;
+		if (!$auth_ext_xml_login_isvalid && $auth_ext_xml_delete_user_tiki == 'y' && $this->user_exists($user)) {
+			$this->remove_user($user);
+		}
 		
 		return $auth_ext_xml_login_isvalid;
 	}
