@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.34 2004-07-12 22:00:36 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.35 2004-07-14 20:27:36 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -348,6 +348,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	$tikilib->set_preference("warn_on_edit_time", $_REQUEST["warn_on_edit_time"]);
 	$smarty->assign('warn_on_edit_time', $_REQUEST["warn_on_edit_time"]);
 	
+	global $feature_wiki_dblclickedit;
+	$feature_wiki_dblclickedit = $_REQUEST["feature_wiki_dblclickedit"];
 	$tikilib->set_preference("feature_wiki_dblclickedit", $_REQUEST["feature_wiki_dblclickedit"]);
 	$smarty->assign('feature_wiki_dblclickedit', $_REQUEST["feature_wiki_dblclickedit"]);
 
