@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.6 2003-10-19 15:09:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.7 2003-10-19 16:41:06 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -24,8 +24,8 @@
   <tr><td class="formcolor"><span title="{tr}Human readable repository name{/tr}">{tr}Name{/tr}</span></td>
     <td class="formcolor"><input type="text" name="name" value="{$name|escape}" title="{tr}Human readable repository name{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}Path to repository (local filesystem relative web root){/tr}">{tr}Path{/tr}</td>
-    <td class="formcolor"><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem relative web root){/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}">{tr}Path{/tr}</td>
+    <td class="formcolor"><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}" /></td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</td>
     <td class="formcolor"><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" /></td>
