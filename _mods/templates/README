@@ -1,0 +1,30 @@
+$Header: /cvsroot/tikiwiki/_mods/templates/README,v 1.1 2004-05-09 23:04:38 damosoft Exp $
+
+TikiWiki User Contributed Templates Collection
+-------------------------------------------
+
+These templates are bundled seperately and offer alternative layouts to the
+default TikiWiki templates.
+Also, you may want to license your template differently.
+
+If no license reference is found in your themes README, lets assume its 
+the same as TikiWiki, thats LGPL.
+
+Remember to include your contact details.
+
+Please note the following desired format:
+
+/templategroup/README
+
+/templategroup/templates/
+* This contains everything that needs to be copied to your sites /templates/ 
+  folder or even better /templates/styles/theme/.
+
+The idea being you can just cp -R /templategroup* /tikiroot/....../
+
+Templates Index
+---------------
+
+directory_browse - bobzim's alternative directory listing
+sdl_collection - sdl's collection of consistent_templates
+sdl_menu - sdl's revised menu with img icon - + toggle
