@@ -224,11 +224,9 @@ class DirLib extends TikiLib {
 		$mid = " where `isValid`=? ";
 		if ($find) {
 			$findesc = '%'.$find.'%';
-			$mid = " and (`name` like ? or `description` like ?)";
+			$mid .= " and (`name` like ? or `description` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
-		} else {
-			$mid = "";
 		}
 
 		$query = "select * from `tiki_directory_sites` $mid order by ".$this->convert_sortmode($sort_mode);
