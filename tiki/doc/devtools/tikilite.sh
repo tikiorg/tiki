@@ -98,6 +98,7 @@ echo "Removing Styles except default..."
 find styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 find styles/ -type f -name "*.css" | grep -v $THEME_DEF | xargs -- rm -f
 find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
+rm -rf styles/README.matrix-theme
 
 echo "Removing IRC..."
 rm -rf var/log/irc
