@@ -1,7 +1,7 @@
 {if count($showstructs) ne 0}
-<tr>
-	<td class="formcolor">{tr}Structures:{/tr}</td>
-	<td class="formcolor">
+<tr class="formcolor">
+	<td>{tr}Structures:{/tr}</td>
+	<td>
   [ <a class="link" href="javascript:show('showstructs');">{tr}show structures{/tr}</a>
   | <a class="link" href="javascript:hide('showstructs');">{tr}hide structures{/tr}</a> ]
 	<div id="showstructs" style="display:none;">
