@@ -30,8 +30,8 @@
 <div align="center">
 {$upload_name} ({$upload_size} bytes)<br/>
 <div class="wikitext">
-{tr}You can download this file using{/tr}: <a class="link" href="http://{$url_browse}?fileId={$fileId}">http://{$url_browse}?fileId={$fileId}</a><br/><br/>
-{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="2">&lt;a href="http://{$url_browse}?id={$fileId}"&gt;{$upload_name} ({$upload_size} bytes)&lt;/a&gt;</textarea>
+{tr}You can download this file using{/tr}: <a class="link" href="{$url_browse}?fileId={$fileId}">{$url_browse}?fileId={$fileId}</a><br/><br/>
+{tr}You can include the file in an HTML/Tiki page using{/tr}: <textarea cols="60" rows="2">&lt;a href="{$url_browse}?id={$fileId}"&gt;{$upload_name} ({$upload_size} bytes)&lt;/a&gt;</textarea>
 </div>
 </div>
 {/if}

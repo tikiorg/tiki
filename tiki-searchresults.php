@@ -9,7 +9,7 @@ if($feature_search != 'y') {
 }
 
 if($feature_search_stats == 'y') {
-  $tikilib->register_search($_REQUEST["words"]);
+  $tikilib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
 
 if(!isset($_REQUEST["where"])) {
@@ -66,12 +66,14 @@ if(!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset',$offset);
 
+$fulltext = $feature_search_fulltext == 'y';
+
 // Build the query using words
 if( (!isset($_REQUEST["words"])) || (empty($_REQUEST["words"])) ) {
-  $results = $tikilib->$find_where(' ',$offset,$maxRecords);
+  $results = $tikilib->$find_where(' ',$offset,$maxRecords,$fulltext);
   $smarty->assign('words','');
 } else {
-  $results = $tikilib->$find_where($_REQUEST["words"],$offset,$maxRecords);
+  $results = $tikilib->$find_where($_REQUEST["words"],$offset,$maxRecords,$fulltext);
   $smarty->assign('words',$_REQUEST["words"]);
 }
 

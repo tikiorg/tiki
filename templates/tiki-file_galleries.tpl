@@ -31,7 +31,7 @@
 {if $galleryId>0}
 {if $edited eq 'y'}
 <div class="wikitext">
-{tr}You can access the file gallery using the following URL{/tr}: <a class="fgallink" href="http://{$url}?galleryId={$galleryIdl}">http://{$url}?galleryId={$galleryId}</a>
+{tr}You can access the file gallery using the following URL{/tr}: <a class="fgallink" href="{$url}?galleryId={$galleryIdl}">{$url}?galleryId={$galleryId}</a>
 </div>
 {/if}
 {/if}

@@ -972,6 +972,10 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_search",'n');
   }
 
+  $b = (isset($_REQUEST["feature_search_fulltext"]) && $_REQUEST["feature_search_fulltext"]=="on") ? 'y' : 'n';
+  $tikilib->set_preference("feature_search_fulltext", $b); 
+  $smarty->assign("feature_search_fulltext", $b);
+
   if(isset($_REQUEST["feature_edit_templates"]) && $_REQUEST["feature_edit_templates"]=="on") {
     $tikilib->set_preference("feature_edit_templates",'y'); 
     $smarty->assign("feature_edit_templates",'y');

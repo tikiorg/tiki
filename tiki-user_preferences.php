@@ -36,8 +36,8 @@ $smarty->assign('userwatch',$userwatch);
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-user_preferences","tiki-editpage",$foo["path"]);
 $foo2=str_replace("tiki-user_preferences","tiki-index",$foo["path"]);
-$smarty->assign('url_edit',$_SERVER["SERVER_NAME"].$foo1);
-$smarty->assign('url_visit',$_SERVER["SERVER_NAME"].$foo2);
+$smarty->assign('url_edit',httpPrefix().$foo1);
+$smarty->assign('url_visit',httpPrefix().$foo2);
 
 
 if(isset($_REQUEST["prefs"])) {

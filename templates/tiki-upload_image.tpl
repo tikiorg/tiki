@@ -32,12 +32,12 @@
 <h2>{tr}Upload succesful!{/tr}</h2>
 <h3>{tr}The following image was succesfully uploaded{/tr}:</h3>
 <div align="center">
-<img src="http://{$url_show}?id={$imageId}" /><br/>
+<img src="{$url_show}?id={$imageId}" /><br/>
 <b>{tr}Thumbnail{/tr}:</b><br/>
-<img src="http://{$url_show}?id={$imageId}&thumb=1" /><br/><br/>
+<img src="{$url_show}?id={$imageId}&thumb=1" /><br/><br/>
 <div class="wikitext">
-{tr}You can view this image in your browser using{/tr}: <a class="link" href="http://{$url_browse}?imageId={$imageId}">http://{$url_browse}?imageId={$imageId}</a><br/><br/>
-{tr}You can include the image in an HTML/Tiki page using{/tr}:  <textarea rows="2" cols="60">&lt;img src="http://{$url_show}?id={$imageId}" /&gt;</textarea>
+{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br/><br/>
+{tr}You can include the image in an HTML/Tiki page using{/tr}:  <textarea rows="2" cols="60">&lt;img src="{$url_show}?id={$imageId}" /&gt;</textarea>
 </div>
 </div>
 {/if}

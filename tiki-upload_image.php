@@ -18,8 +18,8 @@ if($tiki_p_upload_images != 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-upload_image","tiki-browse_image",$foo["path"]);
 $foo2=str_replace("tiki-upload_image","show_image",$foo["path"]);
-$smarty->assign('url_browse',$_SERVER["SERVER_NAME"].$foo1);
-$smarty->assign('url_show',$_SERVER["SERVER_NAME"].$foo2);
+$smarty->assign('url_browse',httpPrefix().$foo1);
+$smarty->assign('url_show',httpPrefix().$foo2);
 
 
 
