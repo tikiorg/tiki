@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.8 2004-02-19 17:42:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.9 2004-02-19 17:44:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,12 +44,13 @@ if (isset($_REQUEST["action"])) {
 		$smarty->assign('msg', tra("You have to indicate a group"));
 		$smarty->display("error.tpl");
 		die;
-	} elseif (!$userlib->group_exists($_REQUEST["group"])) {
-		$smarty->assign('msg', tra("This group is invalid"));
-		$smarty->display("error.tpl");
-		die;
-	} 
+	}
 	if ($_REQUEST["action"] == 'assign') {
+		if (!$userlib->group_exists($_REQUEST["group"])) {
+			$smarty->assign('msg', tra("This group is invalid"));
+			$smarty->display("error.tpl");
+			die;
+		} 
 		$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 	} elseif ($_REQUEST["action"] == 'removegroup') {
 		$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
