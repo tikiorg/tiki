@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.10 2003-12-18 09:35:25 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.11 2003-12-18 09:49:08 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -25,6 +25,7 @@ body {
 }
 TD {
 	vertical-align: top;
+	text-align: left;
 }
 FORM {
 	margin: 0px;
@@ -170,7 +171,6 @@ div.box-data {
 }
 TD.module {
 	color: black;
-	vertical-align: top;
 }
 .linkmodule {
 	color: #1c60a8;
@@ -276,21 +276,6 @@ div.simplebox {
 	padding: 10px;
 	border: 1px solid #999999;
 }
-TD.form {
-	color: black;
-	text-align: left;
-}
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
-	background-color: #FFF7E6;
-	color: black;
-	text-align: left;
-}
-tr.formcolor { 
-	background-color: #FFF7E6;
-}
-tr.formcolor:hover { 
-	background-color: #eee7d6;
-}
 TABLE.normal, table.listgallery, table.creategalform, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
 	border: 1px solid #ccc7b6;
@@ -321,7 +306,6 @@ a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumn
 }
 a.forumnameread {
 	color: black;
-	text-decoration: none;
 }
 .tableheading, .gallistheading, .listgalheading, .bloglistheading, .llisfgalheading, .llistfileslink, .llistart, .lforumheading {
 	color: #ffffff;
@@ -355,19 +339,14 @@ td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listf
 td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd, td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
 td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd, td.topicauthorodd {
 	background-color: #eee7d6;
-	vertical-align: top;
-	text-align: left;
 }
 			
 TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven, td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven, td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven, td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven, td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven, td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven {
 	background-color: #ddd7c6;
-	color: Black;
-	text-align: left;
 }
 TD.third {
 	color: Black;
 	background-color: #FFF7E6;
-	text-align: left;
 }
 .pagetitle, .forumspagetitle {
 	font-weight: bold;
@@ -1627,11 +1606,11 @@ div#loadstats {
 	margin-top: 3px;
 }
 .tocnav {
-	background-color: #ededed;
 	margin-bottom: 16px;
 }
 .tocnav table {
 	width: 100%;
+	background-color: #ededed;
 }
 .tocnav a {
 	font-size: 90%;
