@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.25 2004-01-26 23:08:59 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.26 2004-03-17 16:52:10 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
 
 
 require_once ('lib/tikilib.php'); # httpScheme()
+require_once ('lib/webmail/tikimaillib.php');
 
 if (!isset($comments_per_page)) {
     $comments_per_page = 10;
@@ -159,25 +160,38 @@ if ($tiki_p_post_comments == 'y') {
 	    }
 	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y') && (isset($_REQUEST["page"]))) {
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
+		$isBuilt = false;
 		foreach ($nots as $not) {
-			if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
-			$smarty->assign('mail_page', $_REQUEST["page"]);
-			$smarty->assign('mail_date', date("U"));
-			$smarty->assign('mail_user', $user);
-			$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-			$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
-			$smarty->assign('mail_hash', $not['hash']);
-			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = httpPrefix(). dirname( $foo["path"] );
-			$smarty->assign('mail_machine', $machine);
-			$parts = explode('/', $foo['path']);
+			if ($wiki_watch_editor != 'y' && $not['user'] == $user)
+				break;
+			if (!$isBuilt) {
+				$isBuilt = true;
+				$smarty->assign('mail_page', $_REQUEST["page"]);
+				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
+				$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
+				$smarty->assign('mail_hash', $not['hash']);
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = httpPrefix(). dirname( $foo["path"] );
+				$smarty->assign('mail_machine', $machine);
+				$parts = explode('/', $foo['path']);
 
-			if (count($parts) > 1)
-			    unset ($parts[count($parts) - 1]);
+				if (count($parts) > 1)
+				    unset ($parts[count($parts) - 1]);
 
-			$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
-			$mail_data = $smarty->fetch('mail/user_watch_wiki_page_comment.tpl');
-			@mail($not['email'], tra('Wiki page'). ' ' . $_REQUEST["page"] . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+				$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+				$mail = new TikiMail();
+			}
+ 			global $language;// TODO: optimise by grouping user by language
+			$languageEmail = $tikilib->get_user_preference($not['user'], "language", $language);
+			$mail->setUser($not['user']);
+			$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
+			$mail->setSubject(sprintf($mail_data, $_REQUEST["page"]));
+			$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_comment.tpl');
+			$mail->setText($mail_data);
+			$mail->buildMessage();
+			$mail->send(array($not['email']));
 		}
 	    }
 
