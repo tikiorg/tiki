@@ -314,7 +314,9 @@ function parse_output(&$obj, &$parts,$i) {
 
 
 // Pro
+// Check if the page has changed
 if(isset($_REQUEST["save"])) {
+if((md5($info["data"]) != md5($_REQUEST["edit"])) ) {
   $page = $_REQUEST["page"];
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $edit = $_REQUEST["edit"];  
@@ -347,8 +349,11 @@ if(isset($_REQUEST["save"])) {
   
   header("location: tiki-index.php?page=$page");
   die;
+} else {
+  header("location: tiki-index.php?page=$page");
+  die;
 }
-
+}
 
 if($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki',0,-1,'name_asc','');
