@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.15 2003-08-15 22:28:01 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.16 2003-10-14 12:07:01 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.15 2003-08-15 22:28:01 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.16 2003-10-14 12:07:01 redflo Exp $
 session_start();
 
 // Define and load Smarty components
@@ -15,7 +15,7 @@ require_once (SMARTY_DIR . 'Smarty.class.php');
 
 $commands = array();
 
-function process_sql_file($file) {
+function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
 
 	global $commands;
@@ -26,7 +26,15 @@ function process_sql_file($file) {
 	while(!feof($fp)) {
 		$command.= fread($fp,4096);
 	}
-	$statements=split(";",$command);
+	
+	switch ($db_tiki) {
+	  case "sybase":
+	    $statements=preg_split("/^go$/",$command);
+	    break;
+	  default:
+	    $statements=split(";",$command);
+	    break;
+	}
 	foreach ($statements as $statement) {
 		$result = $dbTiki->query($statement);
 
@@ -525,13 +533,13 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 	$smarty->assign('logged', 'y');
 
 	if (isset($_REQUEST['scratch'])) {
-		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql');
+		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql',$db_tiki);
 
 		$smarty->assign('dbdone', 'y');
 	}
 
 	if (isset($_REQUEST['update'])) {
-		process_sql_file ($_REQUEST['file']);
+		process_sql_file ($_REQUEST['file'],$db_tiki);
 
 		$smarty->assign('dbdone', 'y');
 	}
