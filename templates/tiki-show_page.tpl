@@ -43,11 +43,6 @@
 	<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 	{/if}
 
-
-	{if $feature_backlinks eq 'y'}
-	<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
-	{/if}
-
 	{if $cached_page eq 'y'}
 	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 	{/if}
@@ -69,6 +64,16 @@
 			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	{/if}
+	
+	{if $feature_backlinks eq 'y' and $backlinks}
+		<select name=page onchange="go(this)">
+			<option value="tiki-index.php?page={$page|escape:"url"}">Backlinks...</option>
+			{section name=back loop=$backlinks}
+			<option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+			{/section}
+		</select>
+	{/if}
+
 	</td>
 {/if}
 

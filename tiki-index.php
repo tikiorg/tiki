@@ -52,6 +52,9 @@ if(isset($_REQUEST["copyrightpage"])) {
   $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
 }
 
+// Get the backlinks for the page "page"
+$backlinks = $wikilib->get_backlinks($page);
+$smarty->assign_by_ref('backlinks', $backlinks);
 
 // Get page data, if available
 $info = $tikilib->get_page_info($page);
