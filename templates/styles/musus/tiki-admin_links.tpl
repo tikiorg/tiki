@@ -3,7 +3,7 @@
 <!-- the help link info -->
   
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin featured links{/tr}"><img alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin featured links{/tr}">{$helpIcon $helpIconDesc}</a>{/if}
 
 <!-- link to tpl -->
 

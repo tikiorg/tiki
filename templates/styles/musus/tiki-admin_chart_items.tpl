@@ -16,15 +16,15 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 	<tr>
-		<td>{tr}Title{/tr}</td>
+		<td><label>{tr}Title{/tr}</label></td>
 		<td><input type="text" maxlength="250" name="title" value="{$info.title|escape}" /></td>
 	</tr>
 	<tr>
-		<td>{tr}Description{/tr}</td>
+		<td><label>{tr}Description{/tr}</label></td>
 		<td><textarea rows="4" cols="40" name="description">{$info.description|escape}</textarea></td>
 	</tr>
 	<tr>
-		<td>{tr}URL{/tr}</td>
+		<td><label>{tr}URL{/tr}</label></td>
 		<td><input type="text" maxlength="250" name="URL" value="{$info.URL|escape}" /></td>
 	</tr>
 	<tr>
@@ -39,7 +39,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="chartId" value="{$chartId|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
+<label>{tr}Find{/tr}:</label><input size="8" type="text" name="find" value="{$find|escape}" />
 </form>
 
 <form action="tiki-admin_chart_items.php" method="post">
@@ -69,18 +69,18 @@
 
 <div class="mini" align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}prev{/tr}</a>] 
 {/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
 </div>

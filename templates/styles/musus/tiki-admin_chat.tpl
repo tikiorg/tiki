@@ -1,27 +1,21 @@
 <a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a>
-
 <!-- the help link info -->
-
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
-
 <!-- link to tpl -->
-
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
-
 <!-- begin -->
-
 <h2>{tr}Create/edit channel{/tr}</h2>
 <form action="tiki-admin_chat.php" method="post">
 <input type="hidden" name="channelId" value="{$channelId|escape}" />
 <table>
-<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-<tr><td>{tr}Active{/tr}:</td><td><input type="checkbox" name="active" {if $active eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Refresh rate{/tr}:</td><td>
+<tr><td><label>{tr}Name{/tr}:</label></td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td><label>{tr}Description{/tr}:</label></td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td><label>{tr}Active{/tr}:</label></td><td><input type="checkbox" name="active" {if $active eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td><label>{tr}Refresh rate{/tr}:</label></td><td>
 <select name="refresh">
 <option value="500" {if $refresh eq 500}selected="selected"{/if}>{tr}Half a second{/tr}</option>
 <option value="1000" {if $refresh eq 1000}selected="selected"{/if}>1 {tr}second{/tr}</option>
@@ -68,9 +62,9 @@
 <td>{$channels[user].active}</td>
 <td>{$channels[user].refresh}</td>
 <td>
-   &nbsp;&nbsp;<a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
+     <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
-title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>  
    <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
@@ -81,9 +75,9 @@ title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" sr
 <td>{$channels[user].active}</td>
 <td>{$channels[user].refresh}</td>
 <td>
-   &nbsp;&nbsp;<a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
+     <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
-title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>  
    <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
@@ -92,11 +86,11 @@ title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" sr
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_chat.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_chat.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_chat.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admin_chat.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

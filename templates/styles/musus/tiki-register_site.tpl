@@ -3,20 +3,16 @@
   {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
   <table>
   <tr>
-    <td>{tr}Name{/tr}:</td>
-    <td>{$info.name}</td>
+    <td>{tr}Name{/tr}:</td><td>{$info.name}</td>
   </tr>
   <tr>
-    <td>{tr}Description{/tr}:</td>
-    <td>{$info.description}</td>
+    <td>{tr}Description{/tr}:</td><td>{$info.description}</td>
   </tr>
   <tr>
-    <td>{tr}URL{/tr}:</td>
-    <td>{$info.url}</td>
+    <td>{tr}URL{/tr}:</td><td>{$info.url}</td>
   </tr>
   <tr>
-    <td>{tr}Country{/tr}:</td>
-    <td>{$info.country}</td>
+    <td>{tr}Country{/tr}:</td><td>{$info.country}</td>
   </tr></table>
 {else}
 <div class="tiki">

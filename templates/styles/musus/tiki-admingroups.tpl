@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admingroups.tpl,v 1.3 2004-01-18 00:45:14 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admingroups.tpl,v 1.4 2004-01-26 03:50:20 musus Exp $ *}
 <a class="pagetitle" title="" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
 <a class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}" href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp">
-<img src="img/icons/help.gif" alt="{tr}help{/tr}" />{/if}
+{$helpIcon $helpIconDesc}{/if}
 {if $feature_help eq 'y'}</a>{/if}
 
 {if $feature_view_tpl eq 'y'}

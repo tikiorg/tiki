@@ -1,8 +1,6 @@
 <a class="pagetitle" href="tiki-config_pdf.php">{tr}Create PDF{/tr}</a><br /><br />
 <div class="tiki">
-<div class="tiki-title">
-{tr}PDF Settings{/tr}
-</div>
+<div class="tiki-title">{tr}PDF Settings{/tr}</div>
 <div class="tiki-content">
 <form method="post" action="tiki-config_pdf.php">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -24,9 +22,7 @@
 <br />
 
 <div class="tiki">
-<div class="tiki-title">
-{tr}Filter{/tr}
-</div>
+<div class="tiki-title">{tr}Filter{/tr}</div>
 <div class="tiki-content">
 <form action="tiki-config_pdf.php" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -46,9 +42,7 @@
 <br />
 
 <div class="tiki">
-<div class="tiki-title">
-{tr}Select Wiki Pages{/tr}
-</div>
+<div class="tiki-title">{tr}Select Wiki Pages{/tr}</div>
 <div class="tiki-content">
 <br />
 <form action="tiki-config_pdf.php" method="post">
@@ -86,9 +80,7 @@
 </div>
 
 <div class="tiki">
-<div class="tiki-title">
-{tr}Create PDF{/tr}
-</div>
+<div class="tiki-title">{tr}Create PDF{/tr}</div>
 <div class="tiki-content" align="center">
 <form action="tiki-export_pdf.php" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -105,5 +97,4 @@
 </form>
 </div>
 </div>
-
 <br />

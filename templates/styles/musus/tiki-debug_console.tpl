@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-debug_console.tpl,v 1.2 2004-01-17 01:10:25 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-debug_console.tpl,v 1.3 2004-01-26 04:01:03 musus Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
@@ -51,6 +51,5 @@
     {$tabs[i].tab_code}
 </div><!-- Tab: {$tabs[i].tab_id} -->
 {/section}
-
 </div><!-- debug console -->
 {/if}

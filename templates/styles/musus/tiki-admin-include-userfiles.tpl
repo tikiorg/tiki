@@ -11,9 +11,9 @@
 					<input type="radio" id="userfiles-db" value="y" {if $uf_use_db eq 'y'}checked="checked"{/if}/></td>
 				</tr>
 				<tr><td><label for="userfiles-dir">{tr}Use a directory to store userfiles{/tr}:</label></td><td>
-					<input type="radio" id="userfiles-dir" value="n" {if $uf_use_db eq 'n'}checked="checked"{/if}/>&nbsp;
+					<input type="radio" id="userfiles-dir" value="n" {if $uf_use_db eq 'n'}checked="checked"{/if}/> 
 					<label for="userfiles-path">{tr}Path{/tr}:</label><br />
-					<input type="text" id="userfiles-path" value="{$uf_use_dir|escape}" size="50" /> </td>
+					<input type="text" id="userfiles-path" value="{$uf_use_dir|escape}" size="50" /></td>
 				</tr>
 				<tr>
 					<td colspan="2" class="button"><input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" /></td>

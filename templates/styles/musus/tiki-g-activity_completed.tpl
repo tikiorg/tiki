@@ -1,16 +1,15 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1>{tr}Activity completed{/tr}</h1>
-{include file=tiki-g-user_bar.tpl}
+{include file="tiki-g-user_bar.tpl"}
 <br /><br />
 <table>
-<tr>
-	<td class="odd">{tr}Process{/tr}
-	<td class="odd">{$procname} {$procversion}</td>
+<tr class="odd">
+	<td>{tr}Process{/tr}</td>
+	<td>{$procname} {$procversion}</td>
 </tr>
-<tr>
-	<td class="odd">{tr}Activity{/tr}
-	<td class="odd">{$actname}</td>
+<tr class="even">
+	<td>{tr}Activity{/tr}</td>
+	<td>{$actname}</td>
 </tr>
 </table>
- 

@@ -7,8 +7,6 @@
 {include file=tiki-poll.tpl}
 </div>
 </div>
-<br /><a href="tiki-old_polls.php">{tr}Other Polls{/tr}</a><br /><br />
+<br /><a title="" href="tiki-old_polls.php">{tr}Other Polls{/tr}</a><br /><br />
 </div>
 <br />
-
-

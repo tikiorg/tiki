@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_integrator.tpl,v 1.2 2004-01-13 19:39:52 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_integrator.tpl,v 1.3 2004-01-26 03:49:10 musus Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
@@ -20,33 +20,33 @@
 <form action="tiki-admin_integrator.php" method="post">
 <input type="hidden" name="repID" value="{$repID|escape}" />
 <table>
-  <tr><td>{tr}Name{/tr}</span></td>
+  <tr><td><label>{tr}Name{/tr}</label></td>
     <td><input type="text" name="name" value="{$name|escape}" title="{tr}Human readable repository name{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Path{/tr}</td>
+    <td><label>{tr}Path{/tr}</label></td>
     <td><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}" /></td>
   </tr><tr>
-    <td>{tr}Start page{/tr}</td>
+    <td><label>{tr}Start page{/tr}</label></td>
     <td><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" /></td>
   </tr><tr>
-    <td>{tr}CSS file{/tr}</td>
+    <td><label>{tr}CSS file{/tr}</label></td>
     <td><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Visible{/tr}</td>
+    <td><label>{tr}Visible{/tr}</label></td>
     <td><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Cacheable{/tr}</td>
+    <td><label>{tr}Cacheable{/tr}</label></td>
     <td><input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Are files from repository can be cached{/tr}" />
       {if isset($repID) and $repID ne '0'}
-        &nbsp;&nbsp;
+          
         <a href="tiki-admin_integrator.php?action=clear&amp;repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">{tr}Clear cache{/tr}</a>
       {/if}
     </td>
   </tr><tr>
-    <td>{tr}Cache expiration{/tr}</td>
+    <td><label>{tr}Cache expiration{/tr}</label></td>
     <td><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Description{/tr}</td>
+    <td><label>{tr}Description{/tr}</label></td>
     <td><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td></td>

@@ -12,10 +12,6 @@
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- beginning of next bit -->
-
-
-
-
 <br /><br />
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 <br /><br />
