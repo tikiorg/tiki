@@ -14,21 +14,13 @@ class UserPrefsLib extends TikiLib {
 		$avatarData = addslashes($avatarData);
 
 		$avatarName = addslashes($avatarName);
-		$query = "update users_users set
-      avatarType = '$type',
-      avatarLibName = '$avatarLibName',
-      avatarName = '$avatarName',
-      avatarSize = '$avatarSize',
-      avatarFileType = '$avatarType',
-      avatarData = '$avatarData'
-      where login='$user'";
-		$result = $this->query($query);
+		$query = "update `users_users` set `avatarType` = ?, `avatarLibName` = ?, `avatarName` = ?, `avatarSize` = ?, `avatarFileType` = ?, `avatarData` = ?  where `login`=?";
+		$result = $this->query($query,array($type,$avatarLibName,$avatarName,$avatarSize,$avatarType,$avatarData,$user));
 	}
 
 	function get_user_avatar_img($user) {
-		$query = "select * from users_users where login='$user'";
-
-		$result = $this->query($query);
+		$query = "select * from `users_users` where `login`=?";
+		$result = $this->query($query,array($user));
 
 		if (!$result->numRows())
 			return false;
