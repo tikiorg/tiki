@@ -17,10 +17,8 @@
 // {GAUGE(perc=>true,value=>35,bgcolor=>#EEEEEE,height=>20)}happy users over total{GAUGE}
 
 function wikiplugin_gauge($data,$params) {
-  
   extract($params);
-  
-  
+    
   if(!isset($max)) {$max=100;}
   if(!isset($value)) {
     return ("<b>missing value parameter for plugin</b><br/>");  	
