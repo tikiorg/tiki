@@ -3967,3 +3967,35 @@ INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|f
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
 
+#
+# Table structures for table 'tiki_quicktags'
+# 
+DROP TABLE IF EXISTS tiki_quicktags;
+CREATE TABLE `tiki_quicktags` (
+  `tagId` int(4) unsigned NOT NULL auto_increment,
+  `taglabel` varchar(255) default NULL,
+  `taginsert` varchar(255) default NULL,
+  `tagicon` varchar(255) default NULL,
+  PRIMARY KEY  (`tagId`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__test__','images/ed_format_bold.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('underline','===text===','images/ed_format_underline.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('external link','[http://example.com|text]','images/ed_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('wiki link','((text))','images/ed_copy.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('heading1','!text','images/ed_custom.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('box','^text^','images/ed_about.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('rss feed','{rss id= }','images/ico_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic content','{content id= }','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('tagline','{cookie}','images/footprint.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('hr','---','images/ed_hr.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('center text','::text::','images/ed_align_center.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
+
+

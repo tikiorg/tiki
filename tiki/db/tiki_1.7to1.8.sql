@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.69 2003-11-18 14:45:20 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.70 2003-11-19 05:08:19 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -600,4 +600,32 @@ UPDATE tiki_user_preferences SET value = 'es' WHERE value='sp' and prefName='lan
 
 # added on 2003-11-18 by mose
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('shoutbox_autolink', 'n');
+
+# added on 2003-11-19 by mose per dgd wish
+CREATE TABLE `tiki_quicktags` (
+  `tagId` int(4) unsigned NOT NULL auto_increment,
+  `taglabel` varchar(255) default NULL,
+  `taginsert` varchar(255) default NULL,
+  `tagicon` varchar(255) default NULL,
+  PRIMARY KEY  (`tagId`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__test__','images/ed_format_bold.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('underline','===text===','images/ed_format_underline.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('external link','[http://example.com|text]','images/ed_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('wiki link','((text))','images/ed_copy.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('heading1','!text','images/ed_custom.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('box','^text^','images/ed_about.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('rss feed','{rss id= }','images/ico_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic content','{content id= }','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('tagline','{cookie}','images/footprint.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('hr','---','images/ed_hr.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('center text','::text::','images/ed_align_center.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
 
