@@ -431,7 +431,7 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+.form {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -439,7 +439,7 @@ TD.form {
 	text-align:   left;
 }
 /* Cells in forms using a background color */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background:   #e0e0e0;
@@ -698,7 +698,7 @@ div.searchdate {
 }
 
 /* Warning background/color */
-span.warn {
+.attention {
 	color: red;
 }
 

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.36 2004-02-01 21:42:24 musus Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.37 2004-02-03 02:12:38 musus Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -458,13 +458,13 @@ div.simplebox {
 	font-size:   11px;
 }
 
-TD.form {
+.form {
 }
 
 /* 
 Cells in forms using a background color 
 */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	background:   #DED6C6;
 }
 
@@ -685,7 +685,7 @@ prev & next buttons in pagination
 /* 
 Warning background/color 
 */
-span.warn {
+.attention {
 	color: red;
 }
 
