@@ -26,10 +26,10 @@ class tiki extends Wollabot_Module {
 	
 	function tiki() {
 		$this->bind_prefix('tiki_do','!T ');
+		$this->bind_prefix('tiki_do','!tiki ');
 	}
 
 	function tiki_do($params) {
-		global $tikilib;
 
 		if (substr($params['channel'],0,1) == '#') {
 			$target = $params['channel'];
@@ -40,34 +40,51 @@ class tiki extends Wollabot_Module {
 		}
 		array_shift($params["message_exploded"]);
 		$command = array_shift($params["message_exploded"]);
+		$method = "tiki_$command";
 		$arg = array_shift($params["message_exploded"]);
 		$args = $params["message_exploded"];
 		
-		switch ($command) {
-			case 'rpage':
-				list($page) = $tikilib->get_random_pages("1");
-				$this->send_privmsg($target, $who."Want a page . try that one : http://tikiwiki.org/tiki-index.php?page=$page");
-				break;
-			
-			case 'who':
-				$users = $tikilib->get_online_users();
-				foreach ($users as $u) {
-					$all[] = $u['user'];
-				}
-				$this->send_privmsg($target, $who."There is ".count($users)." users online right now on tw.o (".implode(', ',$all).")");
-				break;
-
-			case 'stats':
-				global $statslib;
-				$i = $statslib->site_stats();
-				$this->send_privmsg($target, $who."Since ".date("Y-m-d",$i["started"])." we got ".$i["pageviews"]." page viewed on tw.o.");
-				break;
-
-			default :
-				$this->send_privmsg($target, $who."use a command like 'who', 'stats' or 'rpage'");
+		if (!is_callable('tiki',$method)) {
+			$method = 'tiki_help';
 		}
-		
+		$back = $this->$method();
+		$this->wollabot->print_log("$who asks $command on $target and gets $back");
+		$this->send_privmsg($target, $who.$back);
 	}
+
+
+	function tiki_rpage() {
+		global $tikilib;
+		list($page) = $tikilib->get_random_pages("1");
+		return "Want a page ? Try that one : http://tikiwiki.org/$page !";
+	}
+
+	function tiki_who() {
+		global $tikilib;
+		$users = $tikilib->get_online_users();
+		foreach ($users as $u) {
+			$all[] = $u['user'];
+		}
+		$count = count($users);
+		if ($count == 0) {
+			return "There is nobody known right now on tw.o";			 
+		} elseif ($count == 1) {
+			return "There is someone right now on tw.o (".$all[0].")";			 
+		} else {
+			return "There is ".count($users)." known users right now on tw.o (".implode(', ',$all).")";			 
+		}
+	}
+	
+	function tiki_stats() {
+		global $statslib;
+		$i = $statslib->site_stats();
+		return "Since ".date("Y-m-d",$i["started"])." (".$i["days"]." days) we got ".$i["pageviews"]." page viewed on tw.o (".round($i["ppd"])." per day).";
+	}
+
+	function tiki_help() {
+		return "help <item> for more info : who stats rpage.";
+	}
+
 }
 
 $wollabot->register_module("tiki");
