@@ -111,7 +111,7 @@ if(isset($_REQUEST["action"])) {
     $userlib->remove_user($_REQUEST["user"]); 
   } 
   if($_REQUEST["action"]=='removegroup') {
-    $userlib->remove_user_from_group($_REQUEST["ruser"],$_REQUEST["group"]); 
+    $userlib->remove_user_from_group($_REQUEST["user"],$_REQUEST["group"]); 
   }
 }
 
