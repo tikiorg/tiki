@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.13 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.14 2004-01-04 09:12:03 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,6 +59,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["position"] = 1;
 	$info["type"] = 'o';
 	$info["isMain"] = 'n';
+	$info["isSearchable"] = 'y';
 	$info["isTblVisible"] = 'y';
 }
 
@@ -67,6 +68,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('options', $info["options"]);
 $smarty->assign('position', $info["position"]);
 $smarty->assign('isMain', $info["isMain"]);
+$smarty->assign('isSearchable', $info["isSearchable"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
 
 
@@ -83,6 +85,12 @@ if (isset($_REQUEST["save"])) {
 		$isMain = 'n';
 	}
 
+	if (isset($_REQUEST["isSearchable"]) && $_REQUEST["isSearchable"] == 'on') {
+		$isSearchable = 'y';
+	} else {
+		$isSearchable = 'n';
+	}
+
 	if (isset($_REQUEST["isTblVisible"]) && $_REQUEST["isTblVisible"] == 'on') {
 		$isTblVisible = 'y';
 	} else {
@@ -90,7 +98,7 @@ if (isset($_REQUEST["save"])) {
 	}
 
 	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
-	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain,
+	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
 		$isTblVisible, $_REQUEST["position"], $_REQUEST["options"]);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');

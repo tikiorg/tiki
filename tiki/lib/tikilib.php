@@ -567,9 +567,11 @@ function list_trackers($offset, $maxRecords, $sort_mode, $find) {
 		while ($res = $result->fetchRow()) {
 			// Tracker fields are automatically counted when adding/removing fields to trackers
 			$ret[] = $res;
+			$list[$res['trackerId']] = $res['name'];
 		}
 
 		$retval = array();
+		$retval["list"] = $list;
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
@@ -4652,7 +4654,7 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     global $wiki_watch_comments;
     global $wiki_watch_editor;
     global $sender_email;
-    include_once ('lib/notifications/notificationlib.php');
+    //include_once ('lib/notifications/notificationlib.php');
     include_once ("lib/commentslib.php");
 
     $commentslib = new Comments($dbTiki);
@@ -4685,10 +4687,10 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 	$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
 	    values(?,?,?,?,?,?,?,?)";
 
+# echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 	if ($pageName != 'SandBox') {
 	    $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 	}
-
 	// Update the pages table with the new version of this page
 
 	$emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName);
