@@ -1,4 +1,6 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.2 2003-01-04 19:34:15 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.3 2003-05-11 15:06:23 lrargerich Exp $
+
+include_once('tiki-setup.php');
 
 if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])) {
   $size = $_FILES['filepath']['size'];
@@ -9,21 +11,24 @@ if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])
  
  $name=substr($name,$pos);
  $fw=fopen($name,"wb");
- $fz=fopen('img/wiki/pepe'.'.foo',"wb");
  
+ 
+ // Now check if the filename already exists
+ // if the filename exists save it as a hash and insert a record in
+ // the history 
  
  @$fp = fopen($_FILES['filepath']['tmp_name'],"rb");
- fwrite($fz,"$name-$size-$type\n");
+ 
  
  while(!feof($fp)) {
    $data=fread($fp,8192*16);
    fwrite($fw,$data);
-   fwrite($fz,$data);
+
  }
  
  fclose($fp);
  fclose($fw); 
- close($fz);
+
  
 }  
 

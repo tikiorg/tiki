@@ -4296,6 +4296,7 @@ class TikiLib {
     global $smarty;
     global $dbTiki;
     global $notificationlib;
+    global $feature_user_watches;
     include_once('lib/notifications/notificationlib.php');
     $this->invalidate_cache($pageName);
     // Collect pages before modifying edit_data (see update of links below)

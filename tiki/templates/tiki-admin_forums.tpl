@@ -130,7 +130,12 @@
 </tr>
 <tr>
 	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
-	<td class="formcolor"><input type="text" name="inbound_address" value="{$inbound_address}" /></td>
+	<td class="formcolor">
+		{tr}POP3 server{/tr}:<input type="text" name="inbound_pop_server" value="{$inbound_pop_server}" />
+		{tr}port{/tr}: <input type="text" name="inbound_pop_port" value="{$inbound_pop_port}" size="4" /><br/>
+		{tr}User{/tr}: <input type="text" name="inbound_pop_user" value="{$inbound_pop_user}" /><br/>
+		{tr}Password{/tr}: <input type="text" name="inbound_pop_password" value="{$inbound_pop_password}"
+	</td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Use topic smileys{/tr}</td>

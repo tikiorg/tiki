@@ -64,7 +64,10 @@ if($_REQUEST["forumId"]) {
   $info["show_description"]='n';
   
   $info["outbound_address"]='';
-  $info["inbound_address"]='';
+  $info["inbound_pop_server"]='';
+  $info["inbound_pop_port"]=110;
+  $info["inbound_pop_user"]='';
+  $info["inbound_pop_password"]='';
   $info["topic_summary"]='n';
   $info["topic_smileys"]='n';
   $info["ui_avatar"]='y';
@@ -102,7 +105,10 @@ $smarty->assign('topics_list_replies',$info['topics_list_replies']);
 $smarty->assign('show_description',$info['show_description']);
 
 $smarty->assign('outbound_address',$info['outbound_address']);
-$smarty->assign('inbound_address',$info['inbound_address']);
+$smarty->assign('inbound_pop_server',$info['inbound_pop_server']);
+$smarty->assign('inbound_pop_port',$info['inbound_pop_port']);
+$smarty->assign('inbound_pop_user',$info['inbound_pop_user']);
+$smarty->assign('inbound_pop_password',$info['inbound_pop_password']);
 $smarty->assign('topic_smileys',$info['topic_smileys']);
 $smarty->assign('topic_summary',$info['topic_summary']);
 $smarty->assign('ui_avatar',$info['ui_avatar']);
@@ -175,7 +181,7 @@ if(isset($_REQUEST["save"])) {
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
   $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads'],$_REQUEST['show_description'],
-  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_level'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group'],$_REQUEST['forum_password'],$_REQUEST['forum_use_password']);                         
+  $_REQUEST['inbound_pop_server'],$_REQUEST['inbound_pop_port'],$_REQUEST['inbound_pop_user'],$_REQUEST['inbound_pop_password'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_level'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group'],$_REQUEST['forum_password'],$_REQUEST['forum_use_password']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -202,7 +208,11 @@ if(isset($_REQUEST["save"])) {
   $info["topics_list_replies"]='y';
   $info["show_description"]='n';
   $info["outbound_address"]='';
-  $info["inbound_address"]='';
+  $info["inbound_pop_servers"]='';
+  $info["inbound_pop_port"]=110;
+  $info["inbound_pop_user"]='';
+  $info["inbound_pop_password"]='';
+
   $info["topic_summary"]='n';
   $info["topic_smileys"]='n';
   $info["ui_avatar"]='y';
@@ -244,7 +254,11 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('threadOrdering',$info["threadOrdering"]);
   $smarty->assign('pruneMaxAge',$info["pruneMaxAge"]);
   $smarty->assign('outbound_address',$info['outbound_address']);
-  $smarty->assign('inbound_address',$info['inbound_address']);
+  $smarty->assign('inbound_pop_server',$info['inbound_pop_server']);
+  $smarty->assign('inbound_pop_port',$info['inbound_pop_port']);
+  $smarty->assign('inbound_pop_user',$info['inbound_pop_user']);
+  $smarty->assign('inbound_pop_password',$info['inbound_pop_password']);
+
   $smarty->assign('topic_smileys',$info['topic_smileys']);
   $smarty->assign('topic_summary',$info['topic_summary']);
   $smarty->assign('ui_avatar',$info['ui_avatar']);
