@@ -321,15 +321,15 @@ TD.formcolor, td.galform , td.editblogform, td.editfgalform, TD.comform,td.forum
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
-table.viewthread
+table.viewthread, table.jukeboxlist
 {  border-color: #5A4A39;  border-style: solid;  border-width: 1px;  width: 97%;}
 
 
 TABLE.normalnoborder {  width: 97%;}
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, 
-td.listfilesheading, td.listartheading, td.forumheading, td.thead
+TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
+td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color: #EDE7E9; font-size: 11px; font-weight : bold;
@@ -350,11 +350,11 @@ TD.button
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
-a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumname
+a.tablename, a.galname, a.imagename, a.jukeboxname, a.blogname, a.fgalname, a.artname, a.forumname
 { font-weight: bold; font-size: 12px ; letter-spacing: 1px; color : black; text-decoration: none;}
-a.tablename:active,a.galname:active, .a.imagename:active, a.blogname:active, a.fgalname:active,a.artname:active,a.forumname:active
+a.tablename:active,a.galname:active, .a.imagename:active, a.jukeboxname:active, a.blogname:active, a.fgalname:active,a.artname:active,a.forumname:active
 { text-decoration: none; color : black; text-decoration: none;}
-a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
+a.tablename:hover, a.galname:hover, a.imagename:hover, a.jukeboxname:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
 { text-decoration: underline; }
 
 a.forumnameread
@@ -402,7 +402,9 @@ td.listfgalactionsodd, td.listfilesnameodd,td.listfilesdescriptionodd,td.listfil
 td.listfilesfilesizeodd,td.listfilescreatedodd,td.listfilesdlsodd,td.listfilesnameodd,td.listfilesuserodd,td.listfilesactionsodd,
 td.listarttitleodd,td.listarttopicodd,td.listartpublishDateodd,td.listartauthorodd,td.listartreadsodd,td.listarthasimageodd,
 td.listartuseimageodd,td.listartactionsodd,td.listartsizeodd,td.forumstableodd,td.forumstableinfoodd,td.topictitleodd,
-td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd
+td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd, td.jukeboxlistnameodd, 
+td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd, 
+td.jukeboxlistvisitsodd
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : Black; background-color: #EFEFEF; vertical-align: top; text-align: left;}
 
 /* Even rows in several listings */
@@ -416,7 +418,9 @@ td.listfgalactionseven,td.listfilesnameeven ,td.listfilesdescriptioneven,td.list
 td.listfilesfilesizeeven,td.listfilescreatedeven,td.listfilesdlseven,td.listfilesnameeven,td.listfilesusereven,td.listfilesactionseven,
 td.listarttitleeven,td.listarttopiceven,td.listartpublishDateeven,td.listartauthoreven,td.listartreadseven,td.listarthasimageeven,
 td.listartuseimageeven,td.listartactionseven,td.listartsizeeven,td.forumstableeven,td.forumstableinfoeven,td.topictitleeven,
-td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven
+td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven, td.jukeboxlistnameeven, 
+td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven, 
+td.jukeboxlistvisitseven
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #EDE7E9; color : #000066; vertical-align: top; text-align: left;}
 
 TD.third {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : Black; background-color: #CCCCCC; vertical-align: top; text-align: left;}
@@ -433,13 +437,13 @@ H2 { font-weight: bold; font-size: 22px; font-family: "Trebuchet MS",Verdana, Ar
 H3 { font-weight: bold; font-size: 20px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; color : #000066;}
 
 /* Links where no special link style apply (usually with the general application background) */
-.link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
+.link, .gallink, .jukeboxlink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
 .admlink,.forumbutlink
 {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #000066; text-decoration: underline;}
-.link:active, .gallink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active,.commentslink:active,
+.link:active, .gallink:active, .jukeboxlink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active,.commentslink:active,
 .admlink:active,.forumbutlink:active
 {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #000066; text-decoration: underline;}
-.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover,.commentslink:hover,
+.link:hover, .gallink:hover, .bloglink:hover, .jukeboxlink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover,.commentslink:hover,
 .admlink:hover,.forumbutlink:hover
 {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: underline;}
 
@@ -450,11 +454,11 @@ div.searchdate { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; fon
 .mini {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 9px;color : Black;}
 
 /* prev & next buttons in pagination */
-.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext
+.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext, .jukeboxprevnext
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 12px; color : black;}
-.prevnext:active, .galprevnext:active, .blogprevnext:active, .fgalprevnext:active, .artprevnext:active, .forumprevnext:active
+.prevnext:active, .galprevnext:active, .blogprevnext:active, .fgalprevnext:active, .artprevnext:active, .forumprevnext:active, .jukeboxprevnext:active
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 12px; color : black;}
-.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover
+.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover, .jukeboxprevnext:hover
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 12px; color : black;background-color: #EFEFEF;}
 
 /* Warning background/color */
