@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.34 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.35 2004-06-13 20:05:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,6 +47,23 @@ if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
 				$smarty->assign("$permName", 'n');
 			}
 		}
+	}
+} elseif ($feature_categories == 'y') {
+	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $_REQUEST['blogId']);
+   	if ($perms_array) {
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	}
+	if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
 	}
 }
 
