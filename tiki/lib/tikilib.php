@@ -4831,6 +4831,9 @@ function add_pageview() {
 		$target = 'target="_blank"';
 	    }
 
+		if (isset($_SERVER['SERVER_NAME'])) {
+			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+		}
 	    if (strstr($link, $_SERVER["SERVER_NAME"]))
 	    {
 		$target = '';
