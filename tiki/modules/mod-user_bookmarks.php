@@ -1,6 +1,8 @@
 <?php
 require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/bookmarks/bookmarklib.php');
+include_once("lib/imagegals/imagegallib.php");
+
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 if(isset($setup_parsed_uri["query"])) {
   parse_str($setup_parsed_uri["query"],$setup_query_data);
