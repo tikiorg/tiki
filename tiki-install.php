@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.34 2003-12-04 21:43:57 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.35 2003-12-05 03:05:21 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.34 2003-12-04 21:43:57 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.35 2003-12-05 03:05:21 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -173,40 +173,50 @@ if (isset($_REQUEST['kill'])) {
 	die;
 }
 
+// Tiki Applications feature
+// Written by dheltzel
+$app_repository = "app_repos/";
+$app_sql_install_suf = "_install.sql";
+$app_sql_remove_suf = "_remove.sql";
+
 // This is used to install files into the Tiki file structure from a zip file
 if (isset($_REQUEST['install_app'])) {
-	include_once ('lib/pclzip.lib.php');
-	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
-	// Read Archive contents
-	$ziplist = $archive->listContent();
+include_once ('lib/pclzip.lib.php');
+	$archive = new PclZip($app_repository.$_REQUEST['apps']);
 
-	if ($ziplist) {
-		for ($i = 0; $i < sizeof($ziplist); $i++) {
-			$file = $ziplist["$i"]["filename"];
-		}
-	}
 	if ($archive->extract() == 0) {
 		die("Error : ".$archive->errorInfo(true));
 	}
 	else {
+		$app_sql_install_file = "db/".basename($_REQUEST['apps'],".zip").$app_sql_install_suf;
+		print "install SQL: ".$app_sql_install_file."<br>";
+		if (is_file($app_sql_install_file)) {
+			print "Need to run: ".$app_sql_install_file."<br>";
+		}
 		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
 	}
 }
 
 // This is used to remove files that were installed into the Tiki file structure by the install_app prcess
 if (isset($_REQUEST['remove_app'])) {
-	include_once ('lib/pclzip.lib.php');
-	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
+include_once ('lib/pclzip.lib.php');
+	$archive = new PclZip($app_repository.$_REQUEST['apps']);
+	$app_sql_remove_file = "db/".basename($_REQUEST['apps'],".zip").$app_sql_remove_suf;
+	if (is_file($app_sql_remove_file)) {
+		print "Need to run: ".$app_sql_remove_file."<br>";
+	}
+
 	// Read Archive contents
 	$ziplist = $archive->listContent();
-
 	if ($ziplist) {
 		for ($i = 0; $i < sizeof($ziplist); $i++) {
 			$file = $ziplist["$i"]["filename"];
 			unlink($file);
-			print "$file";
-			print "<br>";
+			print $file." removed<br>";
 		}
+	}
+	else {
+		print "Nothing to remove for ".$_REQUEST['apps']."<br>";
 	}
 }
 
@@ -214,7 +224,7 @@ $smarty = new Smarty_TikiWiki();
 //$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('style', 'default.css');
-$smarty->assign('mid', 'tiki-install-dh.tpl');
+$smarty->assign('mid', 'tiki-install.tpl');
 
 $tiki_version = '1.8';
 $smarty->assign('tiki_version', $tiki_version);
@@ -587,7 +597,7 @@ $smarty->assign('files', $files);
 // the applications are only mysql-safe at this time, so make other DB's only show the default, which is empty
 if ($db_tiki == "mysql") {
 	$apps = array();
-	$h = opendir('app_repos/');
+	$h = opendir($app_repository);
 
 	while ($file = readdir($h)) {
 		if (strstr($file, '.zip')) {
@@ -602,7 +612,7 @@ if ($db_tiki == "mysql") {
 	closedir ($h);
 	sort($apps);
 } else {
-	$app1 = array("name" => "_default.prf");
+	$app1 = array("name" => "none");
 	$apps[] = $app1;
 }
 $smarty->assign('apps', $apps);
