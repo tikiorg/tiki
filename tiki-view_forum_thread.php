@@ -123,6 +123,7 @@ if($tiki_p_admin_forum == 'y') {
 
 $smarty->assign_by_ref('forum_info',$forum_info);
 $thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
+//print_r($thread_info);
 $smarty->assign_by_ref('thread_info',$thread_info);
 
 
@@ -161,6 +162,14 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
         if($commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
           //Replace things between square brackets by links
           $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
+          
+          if($forum_info['forum_use_password'] == 'a' && $_REQUEST['password']!=$forum_info['forum_password']) {
+            $smarty->assign('msg',tra("Wrong password. Cannot post comment"));
+		    $smarty->display("styles/$style_base/error.tpl");
+		    die;
+          }
+
+          
           if(($tiki_p_forum_autoapp != 'y') && ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon'))) {
  			$smarty->assign('was_queued','y');
  			$commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,$_REQUEST["comments_parentId"],$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],'','','',$thread_info['title']);
@@ -170,7 +179,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 	            $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
 	            
 	            if($feature_user_watches == 'y') {
-				    $nots = $this->get_event_watches('forum_post_thread',$_REQUEST['forumId']);
+				    $nots = $commentslib->get_event_watches('forum_post_thread',$_REQUEST['forumId']);
 					foreach($nots as $not) {
 				  	  $smarty->assign('mail_forum',$forum_info["name"]);
 		              $smarty->assign('mail_title',$_REQUEST["comments_title"]);

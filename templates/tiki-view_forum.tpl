@@ -103,7 +103,7 @@ a moderator approves it.{/tr}</small>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
       
-      {if $feature_smileys eq 'y'}<td rowspan="4" class="forumform">
+      {if $feature_smileys eq 'y'}<td rowspan="5" class="forumform">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
@@ -138,6 +138,14 @@ a moderator approves it.{/tr}</small>
       </td>
       {/if}
     </tr>
+    {if $forum_info.forum_use_password ne 'n'}
+    <tr>
+    	<td class='forumform'>{tr}Password{/tr}</td>
+    	<td class='forumform'>
+    		<input type="password" name="password" />
+    	</td>
+    </tr>
+    {/if}
     <tr>
       <td class="forumform">{tr}Type{/tr}</td>
       <td class="forumform">

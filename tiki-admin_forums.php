@@ -70,10 +70,13 @@ if($_REQUEST["forumId"]) {
   $info["ui_avatar"]='y';
   $info["ui_flag"]='y';
   $info["ui_posts"]='n';
+  $info['ui_level']='n';
   $info["ui_email"]='n';
   $info["ui_online"]='n';
   $info["approval_type"]='all_posted';
   $info["moderator_group"]='';
+  $info['forum_password']='';
+  $info['forum_use_password']='n';
           
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -105,10 +108,13 @@ $smarty->assign('topic_summary',$info['topic_summary']);
 $smarty->assign('ui_avatar',$info['ui_avatar']);
 $smarty->assign('ui_flag',$info['ui_flag']);
 $smarty->assign('ui_posts',$info['ui_posts']);
+$smarty->assign('ui_level',$info['ui_level']);
 $smarty->assign('ui_email',$info['ui_email']);
 $smarty->assign('ui_online',$info['ui_online']);
 $smarty->assign('approval_type',$info['approval_type']);
 $smarty->assign('moderator_group',$info['moderator_group']);
+$smarty->assign('forum_password',$info['forum_password']);
+$smarty->assign('forum_use_password',$info['forum_use_password']);
 
 $smarty->assign('topics_list_reads',$info['topics_list_reads']);
 $smarty->assign('topics_list_pts',$info['topics_list_pts']);
@@ -159,6 +165,7 @@ if(isset($_REQUEST["save"])) {
   $_REQUEST['ui_flag']=isset($_REQUEST['ui_flag'])?'y':'n';
   $_REQUEST['ui_email']=isset($_REQUEST['ui_email'])?'y':'n';
   $_REQUEST['ui_posts']=isset($_REQUEST['ui_posts'])?'y':'n';
+  $_REQUEST['ui_level']=isset($_REQUEST['ui_level'])?'y':'n';
   $_REQUEST['ui_online']=isset($_REQUEST['ui_online'])?'y':'n';
   
   $_REQUEST['topics_list_pts']=isset($_REQUEST['topics_list_pts'])?'y':'n';
@@ -168,7 +175,7 @@ if(isset($_REQUEST["save"])) {
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
   $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads'],$_REQUEST['show_description'],
-  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group']);                         
+  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_level'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group'],$_REQUEST['forum_password'],$_REQUEST['forum_use_password']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -201,10 +208,13 @@ if(isset($_REQUEST["save"])) {
   $info["ui_avatar"]='y';
   $info["ui_flag"]='y';
   $info["ui_posts"]='n';
+  $info['ui_level']='n';
   $info["ui_email"]='n';
   $info["ui_online"]='n';
   $info["approval_type"]='all_posted';
   $info["moderator_group"]='';
+  $info['forum_password']='';
+  $info['forum_use_password']='n';
 
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -240,10 +250,13 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('ui_avatar',$info['ui_avatar']);
   $smarty->assign('ui_flag',$info['ui_flag']);
   $smarty->assign('ui_posts',$info['ui_posts']);
+  $smarty->assign('ui_level',$info['ui_level']);
   $smarty->assign('ui_email',$info['ui_email']);
   $smarty->assign('ui_online',$info['ui_online']);
   $smarty->assign('approval_type',$info['approval_type']);  
   $smarty->assign('moderator_group',$info['moderator_group']);
+  $smarty->assign('forum_password',$info['forum_password']);
+  $smarty->assign('forum_use_password',$info['forum_password']);
 
 
 }

@@ -154,6 +154,13 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
           $_REQUEST["comment_topictype"]='n';
         }
         
+        
+        if($forum_info['forum_use_password'] != 'n' && $_REQUEST['password']!=$forum_info['forum_password']) {
+            $smarty->assign('msg',tra("Wrong password. Cannot post comment"));
+		    $smarty->display("styles/$style_base/error.tpl");
+		    die;
+        }
+        
         if( ($tiki_p_forum_autoapp != 'y') && ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon'))) {
  			$smarty->assign('was_queued','y');
  			$commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,0,$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsmiley'],$_REQUEST["comment_topicsummary"],$_REQUEST["comments_title"]);
@@ -171,7 +178,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	          }
 	          // Check if the user is monitoring this post
 			  if($feature_user_watches == 'y') {
-			    $nots = $this->get_event_watches('forum_post_topic',$_REQUEST['forumId']);
+			    $nots = $commentslib->get_event_watches('forum_post_topic',$_REQUEST['forumId']);
 				foreach($nots as $not) {
 			  	  $smarty->assign('mail_forum',$forum_info["name"]);
 	              $smarty->assign('mail_title',$_REQUEST["comments_title"]);

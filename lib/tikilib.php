@@ -165,11 +165,11 @@ class TikiLib {
 
   /*shared*/ function get_event_watches($event,$object)
   {
-   
+	   
+    $ret = Array();
     $query = "select * from tiki_user_watches where event='$event' and object='$object'";
     $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $ret = Array();
+    if(!$result->numRows()) return $ret;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
     }
