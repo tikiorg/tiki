@@ -139,6 +139,7 @@ create table tiki_user_notes(
   name varchar(255),
   lastModif integer(14),
   data text,
+  size integer(14),
   primary key(noteId)
 );
 

@@ -1,6 +1,7 @@
 <?php
 require_once('tiki-setup.php');
 include_once('lib/notepad/notepadlib.php');
+include_once('lib/userfiles/userfileslib.php');
 
 if($feature_notepad != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -20,6 +21,25 @@ if($tiki_p_notepad != 'y') {
   die;  
 }
 
+// Process upload here
+if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+ $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+ $data = '';
+ while(!feof($fp)) {
+   $data .= fread($fp,8192*16);
+ }
+ fclose($fp);
+ if(strlen($data)>1000000) {
+  $smarty->assign('msg',tra("File is too big"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+ }
+ $size = $_FILES['userfile1']['size'];
+ $name = $_FILES['userfile1']['name'];
+ $type = $_FILES['userfile1']['type'];
+ $notepadlib->replace_note($user,0,$name,$data);  
+}
+
 
 
 
@@ -28,6 +48,16 @@ if(isset($_REQUEST["delete"])) {
     $notepadlib->remove_note($user, $note);
   }
 }
+
+$quota = $userfileslib->userfiles_quota($user);
+$limit = $userfiles_quota * 1024 * 1000;
+if($limit==0) $limit=999999999;
+$percentage = ($quota/$limit)*100;
+$cellsize = round($percentage/100*200);
+$percentage = round($percentage);
+$smarty->assign('cellsize',$cellsize);
+$smarty->assign('percentage',$percentage);
+
 
 
 if(!isset($_REQUEST["sort_mode"])) {

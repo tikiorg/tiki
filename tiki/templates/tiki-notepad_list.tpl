@@ -1,11 +1,34 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
-<a class="link" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a>
-<br/><br/>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
+<br/>
+<div align="center">
+<table border='0' cellpadding='0' cellspacing='0'>
+	<tr>
+		<td>
+			<table border='0' height='20' cellpadding='0' cellspacing='0' 
+			       width='200' style='background-color:#666666;'>
+				<tr>
+					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<small>{$percentage}%</small>
+		</td>
+	</tr>
+	<tr>
+		<td colspan='2'>
+			<small>{tr}quota{/tr}</small>
+		</td>
+	</tr>
+</table>
+</div>
+<br/>
+<table>
+<tr><td class="findtable">
+   <td><a class="link" href="tiki-notepad_write.php">[{tr}Write a note{/tr}]</a></td>
    <td class="findtable">
    <form method="get" action="tiki-notepad_list.php">
      <input type="text" name="find" value="{$find}" />
@@ -16,10 +39,9 @@
 </tr>
 </table>
 <form action="tiki-notepad_list.php" method="post">
-<input type="submit" name="delete" value="{tr}delete{/tr}" />
 <table class="normal">
 <tr>
-<td class="heading">&nbsp;</td>
+<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 <td class="heading" >{tr}Size{/tr}</td>
@@ -30,7 +52,8 @@
 <td class="{cycle advance=false}">
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
+(<a href="tiki-notepad_get?noteId={$channels[user].noteId}" class="link">save</a>)</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td class="{cycle}">{$channels[user].size|kbsize}</td>
 </tr>
@@ -57,4 +80,16 @@
 </div>
 </div>
 
-
+<h3>{tr}Upload file{/tr}</h3>
+<form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
+<table class="normal">
+<!--
+<tr>
+  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
+</tr>
+-->
+<tr>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+</tr>
+</table>
+</form>
