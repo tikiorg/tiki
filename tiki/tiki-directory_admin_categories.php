@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.8 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.9 2003-11-17 17:08:24 awcolley Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -151,6 +151,10 @@ $smarty->assign('categs', $categs);
 $cat_type = 'directory';
 $cat_objid = $_REQUEST['categId'];
 include_once("categorize_list.php");
+
+// This page should be displayed with Directory section options
+$section='directory';
+include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_admin_categories.tpl');
