@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/quizzes/quizlib.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -40,15 +40,15 @@ if(!isset($_REQUEST["quizId"])) {
   die;
 }
 $smarty->assign('quizId',$_REQUEST["quizId"]);
-$quiz_info=$tikilib->get_quiz($_REQUEST["quizId"]);
+$quiz_info=$quizlib->get_quiz($_REQUEST["quizId"]);
 $smarty->assign('quiz_info',$quiz_info);
 
 if(isset($_REQUEST["remove"]) && $tiki_p_admin_quizzes=='y') {
-  $tikilib->remove_quiz_stat($_REQUEST["remove"]);
+  $quizlib->remove_quiz_stat($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["clear"]) && $tiki_p_admin_quizzes=='y') {
-  $tikilib->clear_quiz_stats($_REQUEST["clear"]);
+  $quizlib->clear_quiz_stats($_REQUEST["clear"]);
 }
 
 
@@ -74,7 +74,7 @@ $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$channels = $tikilib->list_quiz_stats($_REQUEST["quizId"],$offset,$maxRecords,$sort_mode,$find);
+$channels = $quizlib->list_quiz_stats($_REQUEST["quizId"],$offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
@@ -95,7 +95,7 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 
 //Get all the statistics for this quiz
-$questions = $tikilib->list_quiz_question_stats($_REQUEST["quizId"],0,-1,'position_desc','');
+$questions = $quizlib->list_quiz_question_stats($_REQUEST["quizId"],0,-1,'position_desc','');
 $smarty->assign_by_ref('questions',$questions);
 
 $section='quizzes';

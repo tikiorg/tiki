@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -43,10 +44,10 @@ if($tiki_p_view_trackers != 'y') {
     die;
 }
 
-$tracker_info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info',$tracker_info);
 
-$fields = $tikilib->list_tracker_fields($_REQUEST["trackerId"],0,-1,'fieldId_asc','');
+$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"],0,-1,'fieldId_asc','');
 $ins_fields=$fields;
 
 for($i=0;$i<count($fields["data"]);$i++ ) {
@@ -90,7 +91,7 @@ for($i=0;$i<count($fields["data"]);$i++ ) {
 
 if($tiki_p_admin_trackers == 'y') {
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_tracker_item($_REQUEST["remove"]);
+  $trklib->remove_tracker_item($_REQUEST["remove"]);
 }
 }
 
@@ -121,7 +122,7 @@ if($user) {
 
 if(!isset($_REQUEST["save"])) {
 if($_REQUEST["itemId"]) {
-  $info = $tikilib->get_tracker_item($_REQUEST["itemId"]);
+  $info = $trklib->get_tracker_item($_REQUEST["itemId"]);
   for($i=0;$i<count($fields["data"]);$i++ ) {
     $name=$fields["data"][$i]["name"];
     $ins_name='ins_'.$name;
@@ -135,7 +136,7 @@ if($_REQUEST["itemId"]) {
 if($tiki_p_create_tracker_items == 'y') {
 if(isset($_REQUEST["save"])) {
   // Save here the values for this item
-  $tikilib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields);
+  $trklib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields);
   for($i=0;$i<count($fields["data"]);$i++ ) {
     $name=$fields["data"][$i]["name"];
     $ins_name='ins_'.$name;
@@ -173,7 +174,7 @@ $smarty->assign_by_ref('sort_mode',$sort_mode);
 if(!isset($_REQUEST["status"])) $_REQUEST["status"]='';
 $smarty->assign('status',$_REQUEST["status"]);
 
-$items=$tikilib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$_REQUEST["status"]);
+$items=$trklib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$_REQUEST["status"]);
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

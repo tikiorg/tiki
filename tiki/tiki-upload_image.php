@@ -109,7 +109,9 @@ if(isset($_REQUEST["upload"])) {
       if(substr($name,strlen($name)-3)=='zip') {
         if($tiki_p_batch_upload_images == 'y') {
         $tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user);
+        
         header("location: tiki-browse_gallery.php?galleryId=".$_REQUEST["galleryId"]);
+        
         } else {
            $smarty->assign('msg',tra('No permission to upload zipped image packages'));
            $smarty->display("styles/$style_base/error.tpl");

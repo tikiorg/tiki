@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 
 /*
 if($tiki_p_admin != 'y') {
@@ -45,7 +46,7 @@ $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$channels = $tikilib->list_surveys($offset,$maxRecords,$sort_mode,$find);
+$channels = $srvlib->list_surveys($offset,$maxRecords,$sort_mode,$find);
 
 for($i=0;$i<count($channels["data"]);$i++) {
   if($userlib->object_has_one_permission($channels["data"][$i]["surveyId"],'survey')) {

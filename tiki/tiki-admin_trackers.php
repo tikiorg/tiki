@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -26,7 +27,7 @@ if($userlib->object_has_one_permission($_REQUEST["trackerId"],'tracker')) {
 }
 
 if($_REQUEST["trackerId"]) {
-  $info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+  $info = $trklib->get_tracker($_REQUEST["trackerId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -46,7 +47,7 @@ $smarty->assign('useComments',$info["useComments"]);
 $smarty->assign('useAttachments',$info["useAttachments"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_tracker($_REQUEST["remove"]);
+  $trklib->remove_tracker($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -76,7 +77,7 @@ if(isset($_REQUEST["save"])) {
      $showLastModif='n';
    }
 
-  $tikilib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"],$showCreated,$showLastModif,$useComments,$useAttachments,$showStatus);
+  $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"],$showCreated,$showLastModif,$useComments,$useAttachments,$showStatus);
   $smarty->assign('trackerId',0);
   $smarty->assign('name','');
   $smarty->assign('description','');
@@ -103,7 +104,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_trackers($offset,$maxRecords,$sort_mode,$find);
+$channels = $trklib->list_trackers($offset,$maxRecords,$sort_mode,$find);
 
 for($i=0;$i<count($channels["data"]);$i++) {
   if($userlib->object_has_one_permission($channels["data"][$i]["trackerId"],'tracker')) {

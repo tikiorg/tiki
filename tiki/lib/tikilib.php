@@ -20,6 +20,158 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
+  
+  /* Shared listing functions used for modules */
+  function compute_quiz_stats()
+  {
+    $query = "select quizId from tiki_user_quizzes";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $quizId = $res["quizId"];
+      $quizName = $this->db->getOne("select name from tiki_quizzes where quizId=$quizId");
+      $timesTaken = $this->db->getOne("select count(*) from tiki_user_quizzes where quizId=$quizId");
+      $avgpoints = $this->db->getOne("select avg(points) from tiki_user_quizzes where quizId=$quizId");
+      $maxPoints = $this->db->getOne("select max(maxPoints) from tiki_user_quizzes where quizId=$quizId");
+      $avgavg = $avgpoints/$maxPoints*100;
+      $avgtime = $this->db->getOne("select avg(timeTaken) from tiki_user_quizzes where quizId=$quizId");
+      $query2 = "replace into tiki_quiz_stats_sum(quizId,quizName,timesTaken,avgpoints,avgtime,avgavg)
+      values($quizId,'$quizName',$timesTaken,$avgpoints,$avgtime,$avgavg)";
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+    }
+  }
+  
+  function list_quizzes($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=" "; 
+    }
+    $query = "select * from tiki_quizzes $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_quizzes $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["questions"]=$this->db->getOne("select count(*) from tiki_quiz_questions where quizId=".$res["quizId"]);
+      $res["results"]=$this->db->getOne("select count(*) from tiki_quiz_results where quizId=".$res["quizId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find)
+  {
+    $this->compute_quiz_stats();
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+    $mid="  (quizName like '%".$find."%'";  
+    } else {
+      $mid="  "; 
+    }
+    $query = "select * from tiki_quiz_stats_sum $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_quiz_stats_sum $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+    
+  function list_surveys($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=" "; 
+    }
+    $query = "select * from tiki_surveys $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_surveys $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["questions"]=$this->db->getOne("select count(*) from tiki_survey_questions where surveyId=".$res["surveyId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
+  {
+    $filters=Array();
+    if($fields) {
+      for($i=0;$i<count($fields["data"]);$i++) {
+        $fieldId=$fields["data"][$i]["fieldId"];
+        $type=$fields["data"][$i]["type"];
+        $value=$fields["data"][$i]["value"];
+        $aux["value"]=$value;
+        $aux["type"]=$type;
+        $filters[$fieldId]=$aux;
+      }
+    }
+    
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    $mid=" where trackerId=$trackerId "; 
+    if($status) {
+      $mid.=" and status='$status' ";
+    }
+    $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_tracker_items $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $fields=Array();
+      $itid=$res["itemId"];
+      $query2="select ttif.fieldId,name,value,type,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $pass=true;
+      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+        // Check if the field is visible!
+        $fieldId=$res2["fieldId"];
+        if(count($filters)>0) {
+          if($filters["$fieldId"]["value"]) {
+            if($filters["$fieldId"]["type"]=='a' || $filters["$fieldId"]["type"]=='t' ) {
+              if(!strstr($res2["value"],$filters["$fieldId"]["value"])) $pass=false;
+            } else {
+              if($res2["value"]!=$filters["$fieldId"]["value"]) $pass=false;
+            }
+          }
+        }
+        $fields[]=$res2;
+      }
+      $res["field_values"]=$fields;
+      $res["comments"]=$this->db->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
+      if($pass) $ret[] = $res;
+    }
+    //$ret=$this->sort_items_by_condition($ret,$sort_mode);
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  /* End of shared listing functions */
 
   function Rfc2822DateTime ($time = false) {
     if ($time === false)
@@ -142,316 +294,7 @@ class TikiLib {
   
   
   
-  /* Surveys */
-  function add_survey_hit($surveyId)
-  {
-    $now=date("U"); 	 
-    $query = "update tiki_surveys set taken=taken+1, lastTaken=$now where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);	
-  }
   
-  function register_survey_text_option_vote($questionId,$value)
-  {
-    $value=addslashes($value);  	 
-    $cant = $this->db->getOne("select count(*) from tiki_survey_question_options where qoption='$value'");	
-    if($cant) {
-      $query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and	qoption='$value'";
-    } else {
-      $query = "insert into tiki_survey_question_options(questionId,qoption,votes)
-                values($questionId,'$value',1)";
-                	
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function register_survey_rate_vote($questionId,$rate)
-  {
-    $query = "update tiki_survey_questions set votes=votes+1, value=value+$rate where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "update tiki_survey_questions set average=value/votes where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    	
-  }
-  
-  function register_survey_option_vote($questionId,$optionId)
-  {
-    
-    $query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and optionId=$optionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function clear_survey_stats($surveyId)
-  {
-    $query = "update tiki_surveys set taken=0 where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "select * from tiki_survey_questions where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove all the options for each question
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
-      $questionId = $res["questionId"];
-      $query2 = "update tiki_survey_question_options set average=0, votes=0 where questionId=$questionId";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-    }
-    $query = "update tiki_survey_questions set value=0,votes=0 where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function replace_survey($surveyId,$name,$description,$status)
-  {
-    $name = addslashes($name);
-    $description = addslashes($description);
-    if($surveyId) {
-      // update an existing quiz
-      $query = "update tiki_surveys set 
-      name = '$name',
-      description = '$description',
-      status = '$status'
-      where surveyId = $surveyId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      // insert a new quiz
-      $now = date("U");
-      $query = "insert into tiki_surveys(name,description,status,created,taken,lastTaken)
-      values('$name','$description','$status',$now,0,$now)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $queryid = "select max(surveyId) from tiki_surveys where created=$now";
-      $quizId = $this->db->getOne($queryid);  
-    }
-    return $surveyId;
-  }
-
-  function replace_survey_question($questionId,$question,$type,$surveyId,$position,$options)
-  {
-    $question = addslashes($question);
-    $options = addslashes($options);
-    if($questionId) {
-      // update an existing quiz
-      $query = "update tiki_survey_questions set 
-      type='$type',
-      position = $position,
-      question = '$question',
-      options = '$options'
-      where questionId = $questionId and surveyId=$surveyId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      // insert a new question
-      $now = date("U");
-      $query = "insert into tiki_survey_questions(question,type,surveyId,position,votes,value,options)
-      values('$question','$type',$surveyId,$position,0,0,'$options')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $queryid = "select max(questionId) from tiki_survey_questions where question='$question' and type='$type'";
-      $questionId = $this->db->getOne($queryid);
-    }
-    // Now process the question options
-    if(!empty($options)) {
-      $options = split(',',$options);
-    } else {
-      $options=Array();
-    }
-    $query = "select optionId,qoption from tiki_survey_question_options where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $ret=Array();
-    
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      if(!in_array($res["qoption"],$options)) {
-        $query2 = "delete from tiki_survey_question_options where questionId=$questionId and optionId='".$res["optionId"]."'";
-        $result2 = $this->db->query($query2);
-        if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      } else {
-        // Since it is in the array removeit from the array
-        $idx = array_search($res["qoption"],$options);
-        unset($options[$idx]);
-      }
-    }
-    foreach($options as $option) {
-      $query = "insert into tiki_survey_question_options (questionId,qoption,votes)
-      values($questionId,'$option',0)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    }
-    return $questionId;
-  }
-
-  function get_survey($surveyId) 
-  {
-    $query = "select * from tiki_surveys where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function get_survey_question($questionId) 
-  {
-    $query = "select * from tiki_survey_questions where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res2 = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $query = "select * from tiki_survey_question_options where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $ret = Array();
-    $votes = 0;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
-      $ret[]=$res;
-      $votes += $res["votes"];
-    }
-    $res2["ovotes"]=$votes;
-    $res2["qoptions"]=$ret;
-    return $res2;
-  }
-   
-  function list_surveys($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
-    } else {
-      $mid=" "; 
-    }
-    $query = "select * from tiki_surveys $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_surveys $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["questions"]=$this->db->getOne("select count(*) from tiki_survey_questions where surveyId=".$res["surveyId"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-
-  function list_survey_questions($surveyId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where surveyId=$surveyId and (question like '%".$find."%'";  
-    } else {
-      $mid=" where surveyId=$surveyId "; 
-    }
-    $query = "select * from tiki_survey_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_survey_questions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $questionId=$res["questionId"];
-      $res["options"]=$this->db->getOne("select count(*) from tiki_survey_question_options where questionId=".$res["questionId"]);
-      $query2 = "select * from tiki_survey_question_options where questionId=$questionId";
-      if($res["type"]=='r') {
-        $maxwidth=5;
-      } else {
-        $maxwidth=10;
-      }
-      $res["width"]=$res["average"]*200 / $maxwidth;
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $ret2 = Array();
-      $votes=0;
-      $total_votes = $this->db->getOne("select sum(votes) from tiki_survey_question_options where questionId=$questionId");
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) { 
-        if($total_votes) {
-          $average = $res2["votes"]/$total_votes;	
-        } else {
-          $average = 0;	
-        }
-        $votes += $res2["votes"];
-        $res2["average"]=$average;
-        $res2["width"]=$average*200;
-        $ret2[]=$res2;
-      }
-      $res["qoptions"]=$ret2;
-      $res["ovotes"]=$votes;
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function list_all_questions($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where (question like '%".$find."%'";  
-    } else {
-      $mid=" "; 
-    }
-    $query = "select * from tiki_survey_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_survey_questions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["options"]=$this->db->getOne("select count(*) from tiki_survey_question_options where questionId=".$res["questionId"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  
-  function remove_survey_question($questionId)
-  {
-    $query = "delete from tiki_survey_questions where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove all the options for the question
-    $query = "delete from tiki_survey_question_options where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return true;    
-  }
-    
-  function remove_survey($surveyId)
-  {
-    $query = "delete from tiki_surveys where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "select * from tiki_survey_questions where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove all the options for each question
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
-      $questionId = $res["questionId"];
-      $query2 = "delete from tiki_survey_question_options where questionId=$questionId";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-    }
-    // Remove all the questions
-    $query = "delete from tiki_survey_questions where surveyId=$surveyId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->remove_object('survey',$surveyId);
-    return true;    
-  }
-  /* Surveys */
 
   /* Sections for forums */
   function get_forum_sections()
@@ -708,567 +551,7 @@ class TikiLib {
   /* Webmail */
 
   
-  /* Tiki tracker construction options */
-  // Return an array with items assigned to the user or a user group
-  function get_user_items($user)
-  {
-    $items = Array();
-    $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $itemId=$res["itemId"];
-      $trackerId=$res["trackerId"];
-      // Now get the isMain field for this tracker
-      $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
-      // Now get the field value
-      $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-      $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-      $aux["trackerId"]=$trackerId;
-      $aux["itemId"]=$itemId;
-      $aux["value"]=$value;
-      $aux["name"]=$tracker;
-      if(!in_array($itemId,$items)) {
-        $ret[]=$aux;
-        $items[]=$itemId;
-      }
-    }
-    
-    $groups = $this->get_user_groups($user);
-    
-    foreach($groups as $group) {
-      $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query,$result);
-      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $itemId=$res["itemId"];
-        $trackerId=$res["trackerId"];
-        // Now get the isMain field for this tracker
-        $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
-        // Now get the field value
-        $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-        $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-        $aux["trackerId"]=$trackerId;
-        $aux["itemId"]=$itemId;
-        $aux["value"]=$value;
-        $aux["name"]=$tracker;
-        if(!in_array($itemId,$items)) {
-          $ret[]=$aux;
-          $items[]=$itemId;
-        }
-      }
-    
-    }
-    
-    return $ret;
-  }
   
-  
-  function add_item_attachment_hit($id) 
-  {
-    $query = "update tiki_tracker_item_attachments set downloads=downloads+1 where attId=$id";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    return true;                        
-  }
-  
-  function get_item_attachment_owner($attId)
-  {
-    return $this->db->getOne("select user from tiki_tracker_item_attachments where attId=$attId");
-  }
-  
-  function list_item_attachments($itemId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where itemId=$itemId and (filename like '%".$find."%')";  
-    } else {
-      $mid=" where itemId=$itemId "; 
-    }
-    $query = "select user,attId,itemId,filename,filesize,filetype,downloads,created,comment from tiki_tracker_item_attachments $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_item_attachments $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function item_attach_file($itemId,$name,$type,$size, $data, $comment, $user,$fhash)
-  {
-    $data = addslashes($data);
-    $name = addslashes($name);
-    $comment = addslashes(strip_tags($comment));
-    $now = date("U");
-    $query = "insert into tiki_tracker_item_attachments(itemId,filename,filesize,filetype,data,created,downloads,user,comment,path)
-    values($itemId,'$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function get_item_attachment($attId)
-  {
-    $query = "select * from tiki_tracker_item_attachments where attId=$attId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function remove_item_attachment($attId)
-  {
-    global $t_use_dir;
-    $path = $this->db->getOne("select path from tiki_tracker_item_attachments where attId=$attId");
-    if($path) {
-      @unlink($t_use_dir.$path);
-    }
-    $query = "delete from tiki_tracker_item_attachments where attId='$attId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  
-  function replace_item_comment($commentId,$itemId,$title,$data,$user)
-  {
-    global $smarty;
-    $title=addslashes(strip_tags($title));
-    $data=addslashes(strip_tags($data,"<a>"));
-    if($commentId) {
-      $query = "update tiki_tracker_item_comments set title='$title', data='$data', user='$user' where commentId=$commentId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);  
-    } else {
-      $now = date("U");
-      $query = "insert into tiki_tracker_item_comments(itemId,title,data,user,posted) values ($itemId,'$title','$data','$user',$now)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $commentId=$this->db->getOne("select max(commentId) from tiki_tracker_item_comments where posted=$now and title='$title' and itemId=$itemId");
-    }
-    $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
-    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
-    $emails=array_merge($emails,$emails2);
-    $smarty->assign('mail_date',date("U"));
-    $smarty->assign('mail_user',$user);
-    $smarty->assign('mail_action','New comment added for item:'.$itemId.' at tracker '.$trackerName);
-    $smarty->assign('mail_data',$title."\n\n".$data);
-    foreach ($emails as $email) {      
-      $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
-    }
-    return $commentId;
-  }
-  
-  function remove_item_comment($commentId)
-  {
-    $query = "delete from tiki_tracker_item_comments where commentId=$commentId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function list_item_comments($itemId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
-    } else {
-      $mid=""; 
-    }
-    $query = "select * from tiki_tracker_item_comments where itemId=$itemId $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_item_comments where itemId=$itemId $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["parsed"]=nl2br($res["data"]);
-      $ret[] = $res;
-      
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function get_item_comment($commentId)
-  {
-    $query = "select * from tiki_tracker_item_comments where commentId=$commentId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
-  {
-    $filters=Array();
-    if($fields) {
-      for($i=0;$i<count($fields["data"]);$i++) {
-        $fieldId=$fields["data"][$i]["fieldId"];
-        $type=$fields["data"][$i]["type"];
-        $value=$fields["data"][$i]["value"];
-        $aux["value"]=$value;
-        $aux["type"]=$type;
-        $filters[$fieldId]=$aux;
-      }
-    }
-    
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    $mid=" where trackerId=$trackerId "; 
-    if($status) {
-      $mid.=" and status='$status' ";
-    }
-    $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_items $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $fields=Array();
-      $itid=$res["itemId"];
-      $query2="select ttif.fieldId,name,value,type,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $pass=true;
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        // Check if the field is visible!
-        $fieldId=$res2["fieldId"];
-        if(count($filters)>0) {
-          if($filters["$fieldId"]["value"]) {
-            if($filters["$fieldId"]["type"]=='a' || $filters["$fieldId"]["type"]=='t' ) {
-              if(!strstr($res2["value"],$filters["$fieldId"]["value"])) $pass=false;
-            } else {
-              if($res2["value"]!=$filters["$fieldId"]["value"]) $pass=false;
-            }
-          }
-        }
-        $fields[]=$res2;
-      }
-      $res["field_values"]=$fields;
-      $res["comments"]=$this->db->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
-      if($pass) $ret[] = $res;
-    }
-    //$ret=$this->sort_items_by_condition($ret,$sort_mode);
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function list_all_tracker_items($offset,$maxRecords,$sort_mode,$fields)
-  {
-    $filters=Array();
-    for($i=0;$i<count($fields["data"]);$i++) {
-      $fieldId=$fields["data"][$i]["fieldId"];
-      $type=$fields["data"][$i]["type"];
-      $value=$fields["data"][$i]["value"];
-      $aux["value"]=$value;
-      $aux["type"]=$type;
-      $filters[$fieldId]=$aux;
-    }
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    $mid='';
-    $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_items $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $fields=Array();
-      $itid=$res["itemId"];
-      $query2="select ttif.fieldId,value,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $pass=true;
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        // Check if the field is visible!
-        $fieldId=$res2["fieldId"];
-        if($filters["$fieldId"]["value"]) {
-          if($filters["$fieldId"]["type"]=='a' || $filters["$fieldId"]["type"]=='t' ) {
-            if(!strstr($res2["value"],$filters["$fieldId"]["value"])) $pass=false;
-          } else {
-            if($res2["value"]!=$filters["$fieldId"]["value"]) $pass=false;
-          }
-        }
-        $fields[]=$res2;
-      }
-      $res["field_values"]=$fields;
-      $res["comments"]=$this->db->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
-      if($pass) $ret[] = $res;
-    }
-    //$ret=$this->sort_items_by_condition($ret,$sort_mode);
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function get_tracker_item($itemId)
-  {
-    $query = "select * from tiki_tracker_items where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $query = "select * from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $fields=Array();
-    while($res2 = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $name=$res2["name"];
-      $res["$name"]=$res2["value"];
-    }
-    
-    return $res;
-  }
-
-  function replace_item($trackerId,$itemId,$ins_fields,$status='o')
-  {
-    global $user;
-    global $smarty;
-    $now = date("U");
-    $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    if($itemId) {
-      $query="update tiki_tracker_items set status='$status',lastModif=$now where itemId=$itemId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      $query="replace into tiki_tracker_items(trackerId,created,lastModif,status) values($trackerId,$now,$now,'$status')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $new_itemId=$this->db->getOne("select max(itemId) from tiki_tracker_items where created=$now and trackerId=$trackerId");
-    }
-    $the_data = '';
-    for($i=0;$i<count($ins_fields["data"]);$i++) {
-      $name=$ins_fields["data"][$i]["name"];
-      $fieldId=$ins_fields["data"][$i]["fieldId"];
-      $value=$ins_fields["data"][$i]["value"];
-      // Now check if the item is 0 or not
-      $the_data.="$name = $value\n";
-      if($itemId) {
-        $query = "update tiki_tracker_item_fields set value='$value' where itemId=$itemId and fieldId=$fieldId";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query, $result);
-      } else {
-        // We add an item
-        $query="update tiki_trackers set items=items+1 where trackerId=$trackerId";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query, $result);
-        $query = "replace into tiki_tracker_item_fields(itemId,fieldId,value) values($new_itemId,$fieldId,'$value')";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query, $result);
-      }
-    }
-    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
-    $emails=array_merge($emails,$emails2);
-    $smarty->assign('mail_date',date("U"));
-    $smarty->assign('mail_user',$user);
-    $smarty->assign('mail_action','New item added or modified:'.$itemId.' at tracker '.$trackerName);
-    $smarty->assign('mail_data',$the_data);
-    foreach ($emails as $email) {      
-      $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
-    }
-    if(!$itemId) $itemId=$new_itemId;
-    return $itemId;
-  }
-  
-  function remove_tracker_item($itemId)
-  {
-    $now = date("U");
-    $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
-    $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query="update tiki_trackers set items=items-1 where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query="delete from tiki_tracker_item_fields where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query ="delete from tiki_tracker_items where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query ="delete from tiki_tracker_item_comments where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-  }
-
-  // List the available trackers
-  function list_trackers($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
-    } else {
-      $mid=""; 
-    }
-    $query = "select * from tiki_trackers $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_trackers $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      // Tracker fields are automatically counted when adding/removing fields to trackers
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  // Lists all the fields for an existing tracker
-  function list_tracker_fields($trackerId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where trackerId=$trackerId and (name like '%".$find."%')";  
-    } else {
-      $mid=" where trackerId=$trackerId "; 
-    }
-    $query = "select * from tiki_tracker_fields $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_fields $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["options_array"]=split(',',$res["options"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  // Inserts or updates a tracker  
-  function replace_tracker($trackerId, $name, $description,$showCreated,$showLastModif,$useComments,$useAttachments,$showStatus)
-  {
-    $description = addslashes($description);
-    $name = addslashes($name);
-        
-    if($trackerId) {
-      $query = "update tiki_trackers set name='$name',description='$description', useAttachments='$useAttachments',useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif',showStatus='$showStatus' where trackerId=$trackerId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      $now = date("U");
-      $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments,useAttachments,showStatus)
-                values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments','$useAttachments','$showStatus')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $trackerId=$this->db->getOne("select max(trackerId) from tiki_trackers where name='$name' and created=$now");
-    }
-    
-    return $trackerId;
-  }
-  
-  
-  // Adds a new field to a tracker or modifies an existing field for a tracker
-  function replace_tracker_field($trackerId,$fieldId, $name, $type, $isMain, $isTblVisible,$options)
-  {
-    $name = addslashes($name);
-    $options = addslashes($options);
-    // Check the name
-    
-    if($fieldId) {
-      $query = "update tiki_tracker_fields set name='$name',type='$type',isMain='$isMain',isTblVisible='$isTblVisible',options='$options' where fieldId=$fieldId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      $query = "replace into tiki_tracker_fields(trackerId,name,type,isMain,isTblVisible,options)
-                values($trackerId,'$name','$type','$isMain','$isTblVisible','$options')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $fieldId=$this->db->getOne("select max(fieldId) from tiki_tracker_fields where trackerId=$trackerId and name='$name'");
-    }
-    return $fieldId;
-  }
-  
-  
-  function remove_tracker($trackerId) 
-  {
-    // Remove the tracker
-    $query = "delete from tiki_trackers where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove the fields
-    $query = "delete from tiki_tracker_fields where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove the items (Remove fields for each item for this tracker)
-    $query = "select itemId from tiki_tracker_items where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query2="delete from tiki_tracker_item_fields where itemId=".$res["itemId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $query2="delete from tiki_tracker_item_comments where itemId=".$res["itemId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-    }
-    $query = "delete from tiki_tracker_items where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->remove_object('tracker',$trackerId);
-    return true;
-  }
-  
-  function remove_tracker_field($fieldId) 
-  {
-    $query = "delete from tiki_tracker_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_tracker_item_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return true;
-  }
-  
-  function get_tracker($trackerId)
-  {
-    $query = "select * from tiki_trackers where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function get_tracker_field($fieldId)
-  {
-    $query = "select * from tiki_tracker_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  /* End of tiki tracker construction functions */  
   
   /* Referer stats */
   function register_referer($referer)
@@ -1407,9 +690,11 @@ class TikiLib {
     $files=Array();
     $h = opendir("temp");
     $gal_info = $this->get_gallery($galleryId);
+    
     while (($file = readdir($h)) !== false) {
-    if( $file!='.' && $file!='..' && $file!='license.txt' ) {
+    if( $file!='.' && $file!='..' && is_file("temp/$file") && $file!='license.txt' ) {
       $files[]=$file;
+      
       // check filters
       $upl=1;
       if(!empty($gal_match_regex)) {
@@ -1419,11 +704,13 @@ class TikiLib {
         if(preg_match("/$gal_nmatch_regex/",$file,$reqs)) $upl=0;
       }
       $type = "image/".substr($file,strlen($file)-3);
-
+      $exp=substr($file,strlen($file)-3,3);
+      
       $fp = fopen('temp/'.$file,"rb");
       $data = fread($fp,filesize('temp/'.$file));
       fclose($fp);
       $size=filesize('temp/'.$file);
+      
       if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
         $img = imagecreatefromstring($data);
         $size_x = imagesx($img);
@@ -1453,12 +740,15 @@ class TikiLib {
         $t_pinfo = pathinfo($tmpfname);
         $t_type = $t_pinfo["extension"];
         $t_type='image/'.$t_type;
+        
         $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
       } else {
         $tmpfname='';
         $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, 0, 0, $user,'','');
       }
+      
       unlink('temp/'.$file);
+      
     }
   }  
   closedir($h);
@@ -1968,587 +1258,6 @@ class TikiLib {
   }
   // templates ////
   
-  // Functions for Quizzes ////
-  function get_user_quiz_result($userResultId)
-  {
-    $query = "select * from tiki_user_quizzes where userResultId=$userResultId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  
-  function compute_quiz_stats()
-  {
-    $query = "select quizId from tiki_user_quizzes";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $quizId = $res["quizId"];
-      $quizName = $this->db->getOne("select name from tiki_quizzes where quizId=$quizId");
-      $timesTaken = $this->db->getOne("select count(*) from tiki_user_quizzes where quizId=$quizId");
-      $avgpoints = $this->db->getOne("select avg(points) from tiki_user_quizzes where quizId=$quizId");
-      $maxPoints = $this->db->getOne("select max(maxPoints) from tiki_user_quizzes where quizId=$quizId");
-      $avgavg = $avgpoints/$maxPoints*100;
-      $avgtime = $this->db->getOne("select avg(timeTaken) from tiki_user_quizzes where quizId=$quizId");
-      $query2 = "replace into tiki_quiz_stats_sum(quizId,quizName,timesTaken,avgpoints,avgtime,avgavg)
-      values($quizId,'$quizName',$timesTaken,$avgpoints,$avgtime,$avgavg)";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-    }
-  }
-  
-  function list_quiz_question_stats($quizId)
-  {
-    $query = "select distinct(tqs.questionId) from tiki_quiz_stats tqs,tiki_quiz_questions tqq where tqs.questionId=tqq.questionId and tqs.quizId = $quizId order by position desc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $question = $this->db->getOne("select question from tiki_quiz_questions where questionId=".$res["questionId"]);
-      $total_votes = $this->db->getOne("select sum(votes) from tiki_quiz_stats where quizId=$quizId and questionId=".$res["questionId"]);
-      $query2 = "select tqq.optionId,votes,optionText from tiki_quiz_stats tqq,tiki_quiz_question_options tqo where tqq.optionId=tqo.optionId and tqq.questionId=".$res["questionId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $options = Array();
-      while($res = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $opt=Array();
-        $opt["optionText"]=$res["optionText"];
-        $opt["votes"]=$res["votes"];
-        $opt["avg"]=$res["votes"]/$total_votes*100;
-        $options[]=$opt;
-      }
-      
-      $ques=Array();
-      $ques["options"]=$options;
-      $ques["question"]=$question;
-      $ret[]=$ques;
-    }
-    return $ret;
-  }
-  
-  function get_user_quiz_questions($userResultId)
-  {
-    $query = "select distinct(tqs.questionId) from tiki_user_answers tqs,tiki_quiz_questions tqq where tqs.questionId=tqq.questionId and tqs.userResultId = $userResultId order by position desc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $question = $this->db->getOne("select question from tiki_quiz_questions where questionId=".$res["questionId"]);
-      $query2 = "select tqq.optionId,tqo.points,optionText from tiki_user_answers tqq,tiki_quiz_question_options tqo where tqq.optionId=tqo.optionId and tqq.userResultId=$userResultId and tqq.questionId=".$res["questionId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-      $options = Array();
-      while($res = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $opt=Array();
-        $opt["optionText"]=$res["optionText"];
-        $opt["points"]=$res["points"];
-        $options[]=$opt;
-      }
-      
-      $ques=Array();
-      $ques["options"]=$options;
-      $ques["question"]=$question;
-      $ret[]=$ques;
-    }
-    return $ret;
-  }
-  
-  function remove_quiz_stat($userResultId)
-  {
-    $query = "select quizId,user from tiki_user_quizzes where userResultId=$userResultId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $user = $res["user"];
-    $quizId = $res["quizId"];
-    
-    $query = "delete from tiki_user_taken_quizzes where user='$user' and quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    $query = "delete from tiki_user_quizzes where userResultId=$userResultId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_user_answers where userResultId=$userResultId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function clear_quiz_stats($quizId)
-  {
-    
-    $query = "delete from tiki_user_taken_quizzes where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    $query = "delete from tiki_quiz_stats_sum where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    $query = "delete from tiki_quiz_stats where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    $query = "delete from tiki_user_quizzes where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    $query = "delete from tiki_user_answers where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  
-  function list_quiz_stats($quizId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $this->compute_quiz_stats();
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where quizId=$quizId";  
-    } else {
-      $mid="  where quizId=$quizId"; 
-    }
-    $query = "select * from tiki_user_quizzes $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_user_quizzes $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["avgavg"]=$res["points"]/$res["maxPoints"]*100;
-      $hasDet = $this->db->getOne("select count(*) from tiki_user_answers where userResultId=".$res["userResultId"]);
-      if($hasDet) {
-        $res["hasDetails"]='y';
-      } else {
-        $res["hasDetails"]='n';
-      }
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  
-  
-  function list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find)
-  {
-    $this->compute_quiz_stats();
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid="  (quizName like '%".$find."%'";  
-    } else {
-      $mid="  "; 
-    }
-    $query = "select * from tiki_quiz_stats_sum $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_stats_sum $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function register_user_quiz_answer($userResultId,$quizId,$questionId,$optionId)
-  {
-    $query = "insert into tiki_user_answers(userResultId,quizId,questionId,optionId)
-    values($userResultId,$quizId,$questionId,$optionId)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function register_quiz_stats($quizId,$user,$timeTaken,$points,$maxPoints,$resultId)
-  {
-    $now = date("U");
-    $query = "insert into tiki_user_quizzes(user,quizId,timestamp,timeTaken,points,maxPoints,resultId)
-    values('$user',$quizId,$now,$timeTaken,$points,$maxPoints,$resultId)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $queryId = $this->db->getOne("select max(userResultId) from tiki_user_quizzes where timestamp=$now and quizId=$quizId");
-    return $queryId;
-  }
-  
-  function register_quiz_answer($quizId,$questionId,$optionId)
-  {
-    $cant = $this->db->getOne("select count(*) from tiki_quiz_stats where quizId=$quizId and questionId=$questionId and optionId=$optionId");
-    if($cant) {
-      $query = "update tiki_quiz_stats set votes=votes+1 where quizId=$quizId and questionId=$questionId and optionId=$optionId";
-    } else {
-      $query = "insert into tiki_quiz_stats(quizId,questionId,optionId,votes)
-      values($quizId,$questionId,$optionId,1)";
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
-    return true;
-  }
-  
-  function calculate_quiz_result($quizId,$points)
-  {
-    $query = "select * from tiki_quiz_results where fromPoints<=$points and toPoints>=$points and quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function user_has_taken_quiz($user,$quizId)
-  {
-    $cant = $this->db->getOne("select count(*) from tiki_user_taken_quizzes where user='$user' and quizId=$quizId");
-    return $cant;
-  }
-  
-  function user_takes_quiz($user,$quizId)
-  {
-    $query = "replace into tiki_user_taken_quizzes(user,quizId) values('$user',$quizId)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-  }
-  
-  function replace_quiz_result($resultId,$quizId,$fromPoints,$toPoints,$answer)
-  {
-    $answer = addslashes($answer);
-    if($resultId) {
-      // update an existing quiz
-      $query = "update tiki_quiz_results set 
-      fromPoints = $fromPoints,
-      toPoints = $toPoints,
-      quizId = $quizId,
-      answer = '$answer'
-      where resultId = $resultId";
-    } else {
-      // insert a new quiz
-      $now = date("U");
-      $query = "insert into tiki_quiz_results(quizId,fromPoints,toPoints,answer)
-      values($quizId,$fromPoints,$toPoints,'$answer')";
-      $queryid = "select max(resultId) from tiki_quiz_results where fromPoints=$fromPoints and toPoints=$toPoints and quizId=$quizId";
-      $quizId = $this->db->getOne($queryid);  
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return $quizId;
-  }
-  
-  function get_quiz_result($resultId)
-  {
-    $query = "select * from tiki_quiz_results where resultId=$resultId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function remove_quiz_result($resultId)
-  {
-    $query = "delete from tiki_quiz_results where resultId=$resultId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return true;    
-  }
-  
-  function list_quiz_results($quizId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where quizId=$quizId and (question like '%".$find."%'";  
-    } else {
-      $mid=" where quizId=$quizId "; 
-    }
-    $query = "select * from tiki_quiz_results $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_results $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function replace_quiz($quizId,$name,$description,$canRepeat,$storeResults,$questionsPerPage,$timeLimited,$timeLimit)
-  {
-    $name = addslashes($name);
-    $description = addslashes($description);
-    if($quizId) {
-      // update an existing quiz
-      $query = "update tiki_quizzes set 
-      name = '$name',
-      description = '$description',
-      canRepeat = '$canRepeat',
-      storeResults = '$storeResults',
-      questionsPerPage = $questionsPerPage,
-      timeLimited = '$timeLimited',
-      timeLimit = $timeLimit
-      where quizId = $quizId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      // insert a new quiz
-      $now = date("U");
-      $query = "insert into tiki_quizzes(name,description,canRepeat,storeResults,questionsPerPage,timeLimited,timeLimit,created,taken)
-      values('$name','$description','$canRepeat','$storeResults',$questionsPerPage,'$timeLimited',$timeLimit,$now,0)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $queryid = "select max(quizId) from tiki_quizzes where created=$now";
-      $quizId = $this->db->getOne($queryid);  
-    }
-    return $quizId;
-  }
-
-  function replace_quiz_question($questionId,$question,$type,$quizId,$position)
-  {
-    $question = addslashes($question);
-    if($questionId) {
-      // update an existing quiz
-      $query = "update tiki_quiz_questions set 
-      type='$type',
-      position = $position,
-      question = '$question'
-      where questionId = $questionId and quizId=$quizId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      // insert a new quiz
-      $now = date("U");
-      $query = "insert into tiki_quiz_questions(question,type,quizId,position)
-      values('$question','$type',$quizId,$position)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $queryid = "select max(questionId) from tiki_quiz_questions where question='$question' and type='$type'";
-      $questionId = $this->db->getOne($queryid);
-    }
-    
-    return $questionId;
-  }
-
-  function replace_question_option($optionId,$option,$points,$questionId)
-  {
-    $option = addslashes($option);
-    // validating the points value
-    if ((!is_numeric($points)) || ($points == "")) $points = 0;
-
-    if($optionId) {
-      // update an existing quiz
-      $query = "update tiki_quiz_question_options set 
-      points=$points,
-      option = '$option'
-      where optionId = $optionId and questionId=$questionId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-    } else {
-      // insert a new quiz
-      $now = date("U");
-      $query = "insert into tiki_quiz_question_options(optionText,points,questionId)
-      values('$option',$points,$questionId)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $queryid = "select max(optionId) from tiki_quiz_questions where optionText='$option' and questionId=$questionId";
-      $optionId = $this->db->getOne($queryid);
-    }
-    
-    return $optionId;
-  }
-
-
-  function get_quiz($quizId) 
-  {
-    $query = "select * from tiki_quizzes where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function get_quiz_question($questionId) 
-  {
-    $query = "select * from tiki_quiz_questions where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function get_quiz_question_option($optionId) 
-  {
-    $query = "select * from tiki_quiz_question_options where optionId=$optionId";
-    $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  
-  function list_quizzes($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
-    } else {
-      $mid=" "; 
-    }
-    $query = "select * from tiki_quizzes $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quizzes $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["questions"]=$this->db->getOne("select count(*) from tiki_quiz_questions where quizId=".$res["quizId"]);
-      $res["results"]=$this->db->getOne("select count(*) from tiki_quiz_results where quizId=".$res["quizId"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-
-  function list_quiz_questions($quizId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where quizId=$quizId and (question like '%".$find."%'";  
-    } else {
-      $mid=" where quizId=$quizId "; 
-    }
-    $query = "select * from tiki_quiz_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_questions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["options"]=$this->db->getOne("select count(*) from tiki_quiz_question_options where questionId=".$res["questionId"]);
-      $res["maxPoints"]=$this->db->getOne("select max(points) from tiki_quiz_question_options where questionId=".$res["questionId"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function list_all_questions($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where (question like '%".$find."%'";  
-    } else {
-      $mid=" "; 
-    }
-    $query = "select * from tiki_quiz_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_questions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["options"]=$this->db->getOne("select count(*) from tiki_quiz_question_options where questionId=".$res["questionId"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-  
-  function list_quiz_question_options($questionId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-    $mid=" where questionId=$questionId and (option '%".$find."%'";  
-    } else {
-      $mid=" where questionId=$questionId "; 
-    }
-    $query = "select * from tiki_quiz_question_options $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_question_options $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function remove_quiz_question($questionId)
-  {
-    $query = "delete from tiki_quiz_questions where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove all the options for the question
-    $query = "delete from tiki_quiz_question_options where questionId=$questionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return true;    
-  }
-  
-  function remove_quiz_question_option($optionId)
-  {
-    $query = "delete from tiki_quiz_question_options where optionId=$optionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    return true;    
-  }
-
-  function remove_quiz($quizId)
-  {
-    $query = "delete from tiki_quizzes where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "select * from tiki_quiz_questions where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Remove all the options for each question
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
-      $questionId = $res["questionId"];
-      $query2 = "delete from tiki_quiz_question_options where questionId=$questionId";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
-    }
-    // Remove all the questions
-    $query = "delete from tiki_quiz_questions where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_quiz_results where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_quiz_stats where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_user_quizzes where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "delete from tiki_user_answers where quizId=$quizId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->remove_object('quiz',$quizId);
-    return true;    
-  }
-  
-  // Function for Quizzes end ////
   
   
   function add_game_hit($game)

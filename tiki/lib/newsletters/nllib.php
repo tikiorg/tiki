@@ -1,25 +1,14 @@
 <?php
  
-class NlLib {
-  var $db;  // The PEAR db object used to access the database
-  var $tikilib; // The tikilib object
+class NlLib extends TikiLib {
   
-  function NlLib($db,$tikilib) 
+  function NlLib($db) 
   {
     if(!$db) {
       die("Invalid db object passed to UsersLib constructor");  
     }
     $this->db = $db;  
-    $this->tikilib = $tikilib;
   }
-  
-  function sql_error($query, $result) 
-  {
-    trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
-    die;
-  }
-  
-  
    
   function replace_newsletter($nlId,$name,$description,$allowAnySub,$frequency)
   {
@@ -298,5 +287,5 @@ class NlLib {
   
 }
 
-$nllib= new NlLib($dbTiki,$tikilib);
+$nllib= new NlLib($dbTiki);
 ?>

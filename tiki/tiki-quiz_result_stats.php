@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/quizzes/quizlib.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -42,7 +43,7 @@ if($tiki_p_view_user_results != 'y') {
 
 
 $smarty->assign('quizId',$_REQUEST["quizId"]);
-$quiz_info=$tikilib->get_quiz($_REQUEST["quizId"]);
+$quiz_info=$quizlib->get_quiz($_REQUEST["quizId"]);
 $smarty->assign('quiz_info',$quiz_info);
 
 if(!isset($_REQUEST["resultId"])) {
@@ -58,13 +59,13 @@ if(!isset($_REQUEST["userResultId"])) {
   die;
 }
 $smarty->assign('userResultId',$_REQUEST["userResultId"]);
-$ur_info = $tikilib->get_user_quiz_result($_REQUEST["userResultId"]);
+$ur_info = $quizlib->get_user_quiz_result($_REQUEST["userResultId"]);
 $smarty->assign('ur_info',$ur_info);
 
-$result = $tikilib->get_quiz_result($resultId);
+$result = $quizlib->get_quiz_result($resultId);
 $smarty->assign_by_ref('result',$result);
 
-$questions = $tikilib->get_user_quiz_questions($_REQUEST["userResultId"]);
+$questions = $quizlib->get_user_quiz_questions($_REQUEST["userResultId"]);
 $smarty->assign('questions',$questions);
 
 $section='quizzes';

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -26,7 +27,7 @@ if(!isset($_REQUEST["trackerId"])) {
 
 
 $smarty->assign('trackerId',$_REQUEST["trackerId"]);
-$tracker_info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info',$tracker_info);
 
 if(!isset($_REQUEST["fieldId"])) {
@@ -36,7 +37,7 @@ $smarty->assign('fieldId',$_REQUEST["fieldId"]);
 
 
 if($_REQUEST["fieldId"]) {
-  $info = $tikilib->get_tracker_field($_REQUEST["fieldId"]);
+  $info = $trklib->get_tracker_field($_REQUEST["fieldId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -52,7 +53,7 @@ $smarty->assign('isMain',$info["isMain"]);
 $smarty->assign('isTblVisible',$info["isTblVisible"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_tracker_field($_REQUEST["remove"]);
+  $trklib->remove_tracker_field($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -66,7 +67,7 @@ if(isset($_REQUEST["save"])) {
    } else {
      $isTblVisible='n';
    }
-   $tikilib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"],$isMain, $isTblVisible,$_REQUEST["options"]);
+   $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"],$isMain, $isTblVisible,$_REQUEST["options"]);
    $smarty->assign('fieldId',0);
    $smarty->assign('name','');
 }
@@ -92,7 +93,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_tracker_fields($_REQUEST["trackerId"],0,-1,$sort_mode,$find);
+$channels = $trklib->list_tracker_fields($_REQUEST["trackerId"],0,-1,$sort_mode,$find);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

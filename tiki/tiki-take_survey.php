@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -33,7 +34,7 @@ if($userlib->object_has_one_permission($_REQUEST["surveyId"],'survey')) {
 }
 
 $smarty->assign('surveyId',$_REQUEST["surveyId"]);
-$survey_info=$tikilib->get_survey($_REQUEST["surveyId"]);
+$survey_info=$srvlib->get_survey($_REQUEST["surveyId"]);
 
 
 if($tiki_p_take_survey != 'y') {
@@ -55,11 +56,11 @@ if($tikilib->user_has_voted($user,'survey'.$_REQUEST["surveyId"])) {
 }
 }
 
-$tikilib->add_survey_hit($_REQUEST["surveyId"]);
+$srvlib->add_survey_hit($_REQUEST["surveyId"]);
 
 $smarty->assign('survey_info',$survey_info);
 
-$questions = $tikilib->list_survey_questions($_REQUEST["surveyId"],0,-1,'position_asc','');
+$questions = $srvlib->list_survey_questions($_REQUEST["surveyId"],0,-1,'position_asc','');
 $smarty->assign_by_ref('questions',$questions["data"]);
 
 if(isset($_REQUEST["ans"])) {
@@ -73,17 +74,17 @@ if(isset($_REQUEST["ans"])) {
         //print_r($ids);
         // Now for each of the options we increase the number of votes
         foreach($ids as $optionId) {
-          $tikilib->register_survey_option_vote($questionId,$optionId);
+          $srvlib->register_survey_option_vote($questionId,$optionId);
         }
       } else {
       	$value = $_REQUEST["question_".$questionId];
       	//print("value: $value<br/>");
       	if($question["type"]=='r' || $question["type"]=='s') {
-      	  $tikilib->register_survey_rate_vote($questionId,$value);	
+      	  $srvlib->register_survey_rate_vote($questionId,$value);	
       	} elseif ($question["type"]=='t') {
-      	  $tikilib->register_survey_text_option_vote($questionId,$value);	
+      	  $srvlib->register_survey_text_option_vote($questionId,$value);	
       	} else {
-      	  $tikilib->register_survey_option_vote($questionId,$value);	
+      	  $srvlib->register_survey_option_vote($questionId,$value);	
       	}
       }
     }	
