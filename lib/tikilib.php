@@ -4410,18 +4410,18 @@ class TikiLib {
     static $timezone_options;
 
     if (!$timezone_options) {
-    $timezone_options = array();
-    if ($use_default)
-      $timezone_options['default'] = '-- Use Default Time Zone --';
-    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
-      $offset = $tz['offset'];
-      $absoffset = abs($offset /= 60000);
-      $plusminus = $offset < 0 ? '-' : '+';
-      $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
-      $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
-      $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+      $timezone_options = array();
+      if ($use_default)
+        $timezone_options['default'] = '-- Use Default Time Zone --';
+      foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
+        $offset = $tz['offset'];
+        $absoffset = abs($offset /= 60000);
+        $plusminus = $offset < 0 ? '-' : '+';
+        $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
+        $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
+        $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+      }
     }
-  }
 
     return $timezone_options;
   }
@@ -4515,69 +4515,73 @@ class TikiLib {
 
   */
   function get_site_date($timestamp, $user = false) {
-  static $localed = false;
+    static $localed = false;
 
-  if (!$localed) {
-    # breaks the RFC 2822 code
-#   @setlocale(LC_TIME, $tikilib->get_locale($user));
-    $localed = true;
-  }
+Debug::d('get_site_date()');
 
-  $original_tz = date('T', $timestamp);
+    if (!$localed) {
+      $this->set_locale($user);
+      $localed = true;
+    }
 
-#$rv = "\n<pre>\n";
-#$rv .= strftime($format, $timestamp);
-#$rv .= " =timestamp\n";
-#$rv .= strftime('%Z', $timestamp);
-#$rv .= " =strftime('%Z')\n";
-#$rv .= date('T', $timestamp);
-#$rv .= " =date('T')\n";
+    $original_tz = date('T', $timestamp);
 
-  $date =& new Date($timestamp);
+    $rv = strftime($format, $timestamp);
+    $rv .= " =timestamp\n";
+    $rv .= strftime('%Z', $timestamp);
+    $rv .= " =strftime('%Z')\n";
+    $rv .= date('T', $timestamp);
+    $rv .= " =date('T')\n";
 
-# Calling new Date() changes the timezone of the $timestamp var!
-# so we only change the timezone to UTC if the original TZ wasn't UTC
-# to begin with.
-# This seems really buggy, but I don't have time to delve into right now.
+    $date =& new Date($timestamp);
 
-#$rv .= date('T', $timestamp);
-#$rv .= " =date('T')\n";
+    # Calling new Date() changes the timezone of the $timestamp var!
+    # so we only change the timezone to UTC if the original TZ wasn't UTC
+    # to begin with.
+    # This seems really buggy, but I don't have time to delve into right now.
 
-#$rv .= $date->format($format);
-#$rv .= " =new Date()\n";
+    $rv .= date('T', $timestamp);
+    $rv .= " =date('T')\n";
 
-#$rv .= date('T', $timestamp);
-#$rv .= " =date('T')\n";
+    $rv .= $date->format($format);
+    $rv .= " =new Date()\n";
 
-  if ($original_tz == 'UTC') {
-    $date->setTZbyID('UTC');
-#$rv .= $date->format($format);
-#$rv .= " =setTZbyID('UTC')\n";
-  }
+    $rv .= date('T', $timestamp);
+    $rv .= " =date('T')\n";
 
-  $tz_id = $this->get_display_timezone($user);
-  if ($date->tz->getID() != $tz_id) {
-    # let's convert to the displayed timezone
-    $date->convertTZbyID($tz_id);
-#$rv .= $date->format($format);
-#$rv .= " =convertTZbyID($tz_id)\n";
-  }
+    if ($original_tz == 'UTC') {
+      $date->setTZbyID('UTC');
+      $rv .= $date->format($format);
+      $rv .= " =setTZbyID('UTC')\n";
+    }
 
-#return $rv;
+    $tz_id = $this->get_display_timezone($user);
+    if ($date->tz->getID() != $tz_id) {
+      # let's convert to the displayed timezone
+      $date->convertTZbyID($tz_id);
+      $rv .= $date->format($format);
+      $rv .= " =convertTZbyID($tz_id)\n";
+    }
 
-# if ($format == "%b %e, %Y")
-#   $format = $tikilib->get_short_date_format();
+	Debug::d($rv);
+
+    #return $rv;
+
+    # if ($format == "%b %e, %Y")
+    #   $format = $tikilib->get_short_date_format();
     return $date;
   }
 
   # TODO rename to server_time_to_site_time()
 
   function get_site_time($timestamp, $user = false) {
+#print "<pre>get_site_time()</pre>";
     $date = $this->get_site_date($timestamp, $user);
     return $date->getTime();
   }
 
   function date_format($format, $timestamp, $user = false) {
+#print "<pre>date_format()</pre>";
     $date = $this->get_site_date($timestamp, $user);
     return $date->format($format);
   }
@@ -4663,26 +4667,26 @@ class TikiLib {
   function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
     global $user; # ugh!
 
-  if ($year <= 69)
-    $year += 2000;
-  if ($year <= 99)
-    $year += 1900;
+    if ($year <= 69)
+      $year += 2000;
+    if ($year <= 99)
+      $year += 1900;
 
-  $date = new Date();
+    $date = new Date();
     $date->setHour($hour);
     $date->setMinute($minute);
     $date->setSecond($second);
     $date->setMonth($month);
     $date->setDay($day);
     $date->setYear($year);
-#$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
-#print "<pre> make_time() start";
-#print_r($date);
+    #$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+    #print "<pre> make_time() start";
+    #print_r($date);
     if ($timezone_id)
       $date->setTZbyID($timezone_id);
-#print_r($date);
-#$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
-#print $rv;
+    #print_r($date);
+    #$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+    #print $rv;
     return $date->getTime();
   }
 
@@ -4692,26 +4696,26 @@ class TikiLib {
   function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
     global $user; # ugh!
 
-  if ($year <= 69)
-    $year += 2000;
-  if ($year <= 99)
-    $year += 1900;
+    if ($year <= 69)
+      $year += 2000;
+    if ($year <= 99)
+      $year += 1900;
 
-  $date = new Date();
+    $date = new Date();
     $date->setHour($hour);
     $date->setMinute($minute);
     $date->setSecond($second);
     $date->setMonth($month);
     $date->setDay($day);
     $date->setYear($year);
-#print "<pre> make_server_time() start\n";
-#print_r($date);
+    #print "<pre> make_server_time() start\n";
+    #print_r($date);
     if ($timezone_id)
       $date->setTZbyID($timezone_id);
-#print_r($date);
-  $date->convertTZbyID($this->get_server_timezone());
-#print_r($date);
-#print "make_server_time() end\n</pre>";
+    #print_r($date);
+    $date->convertTZbyID($this->get_server_timezone());
+    #print_r($date);
+    #print "make_server_time() end\n</pre>";
 
     return $date->getTime();
   }
@@ -4725,27 +4729,36 @@ class TikiLib {
 
   function get_rfc2822_datetime($timestamp = false, $user = false) {
     if (!$timestamp)
-        $timestamp = time();
+      $timestamp = time();
 
-    # can't be localized!
-    #return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
-    return $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user) .
-      $this->get_rfc2822_timezone_offset($timestamp, $user);
+    # rfc2822 requires dates to be en formatted
+    $saved_locale = @setlocale(0);
+    @setlocale('en_US');
+    #was return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
+    $rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user) .
+    $this->get_rfc2822_timezone_offset($timestamp, $user);
+
+    # switch back to the 'saved' locale
+    if ($saved_locale)
+      @setlocale($saved_locale);
+
+    return $rv;
   }
 
   function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
     if ($time === false)
-        $time = time();
+      $time = time();
     $secs = $this->date_format('%Z', $time, $user);
     if ($secs < 0) {
-        $sign = '-';
-        $secs = -$secs;
+      $sign = '-';
+      $secs = -$secs;
     }
     else {
-        $sign = '+';
+      $sign = '+';
     }
     $colon = $no_colon ? '' : ':';
     $mins = intval(($secs + 30) / 60);
+
     return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
   }
 
@@ -4759,22 +4772,45 @@ class TikiLib {
           $language = $this->get_preference('language', 'en');
       } else
         $language = $this->get_preference('language', 'en');
-  }
+    }
 
     return $language;
   }
 
   function get_locale($user = false) {
+    # TODO move to admin preferences screen
+    static $locales = array(
+      'de' => 'de_DE',
+      'dk' => 'da_DK',
+      'en' => 'en_US',
+      'fr' => 'fr_FR',
+      'he' => 'he_IL', # hebrew
+      'it' => 'it_IT', # italian
+      'pl' => 'pl_PL', # polish
+      'po' => 'po',
+      'ru' => 'ru_RU',
+      'sp' => 'es_ES',
+      'sw' => 'sw_SW',	# swahili
+      'tw' => 'tw_TW',
+    );
+    if (!$locale) {
+      if (isset($locales[$this->get_language($user)]))
+        $locale = $locales[$this->get_language($user)];
+#print "<pre>get_locale(): locale=$locale\n</pre>";
+    }
+    
+    return $locale;
+  }
+
+  function set_locale($user = false) {
     static $locale = false;
 
-    static $locales = array(
-      'en' => 'en_US',
-      'de' => 'de_DE',
-      'fr' => 'fr_FR',
-      'sp' => 'es_ES',
-    );
-    if (!$locale)
-      $locale = $locales[$this->get_language($user)];
+    if (!$locale) {
+      # breaks the RFC 2822 code
+      $locale = @setlocale(LC_TIME, $this->get_locale($user));
+#print "<pre>set_locale(): locale=$locale\n</pre>";
+    }
+
     return $locale;
   }
 
@@ -4861,5 +4897,13 @@ function httpPrefix() {
   return $rv;
 }
 
+class Debug {
+	function d($m) {
+		if (!isset($REQUEST['_d']))
+			return;
+
+		echo "\n<pre>\n",$m,"\n</pre>\n";
+	}
+}
 
 ?>

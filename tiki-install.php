@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.3 2003-05-01 18:06:50 rossta Exp $
+
 session_start();
 // Define and load Smarty components
 define('SMARTY_DIR',"Smarty/");

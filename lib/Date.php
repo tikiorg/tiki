@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Date.php,v 1.2 2003-02-25 23:25:09 rossta Exp $
+// $Id: Date.php,v 1.3 2003-05-01 18:06:51 rossta Exp $
 //
 // Date Class
 //
@@ -112,6 +112,10 @@ class Date
             $this->setDate($date);
         } elseif (preg_match('/\d{14}/',$date)) {
             $this->setDate($date,DATE_FORMAT_TIMESTAMP);
+        } elseif (preg_match('/\d{4}-\d{2}-\d{2}/', $date)) {
+            $this->setDate($date.' 00:00:00');
+        } elseif (preg_match('/\d{8}/',$date)) {
+            $this->setDate($date.'000000',DATE_FORMAT_TIMESTAMP);
         } else {
             $this->setDate($date,DATE_FORMAT_UNIXTIME);
         }

@@ -1,0 +1,103 @@
+# $Header$
+
+<FilesMatch "\.(bak|inc|lib|sh|sql|tpl)$">
+	order deny,allow
+	deny from all
+</FilesMatch>
+
+<FilesMatch "^\.#">
+	order deny,allow
+	deny from all
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+	RewriteRule	/articles$	/tiki-view_articles.php	[L]
+
+	RewriteRule	/article(.*)$	/tiki-read_article.php?articleId=$1	[L]
+	RewriteRule	/article/(.*)$	/tiki-read_article.php?articleId=$1	[L]
+
+	RewriteRule	/blogs$	/tiki-list_blogs.php	[L]
+
+	RewriteRule	/blog(.*)$	/tiki-view_blog.php?blogId=$1	[L]
+	RewriteRule	/blog/(.*)$	/tiki-view_blog.php?blogId=$1	[L]
+
+	RewriteRule	/categories$	/tiki-browse_categories.php	[L]
+
+	RewriteRule	/charts$	/tiki-list_charts.php	[L]
+
+	RewriteRule	/chart(.*)$	/tiki-view_chart.php?chartId=$1	[L]
+	RewriteRule	/chart/(.*)$	/tiki-view_chart.php?chartId=$1	[L]
+
+	RewriteRule	/chat$	/tiki-chat.php	[L]
+
+	RewriteRule	/contact$	/tiki-contact.php	[L]
+
+	RewriteRule	/directories$	/tiki-directory_browse.php	[L]
+
+	RewriteRule	/directory(.*)$	/tiki-directory_browse.php?parent=$1	[L]
+	RewriteRule	/directory/(.*)$	/tiki-directory_browse.php?parent=$1	[L]
+
+	RewriteRule	/eph$		/tiki-eph.php	[L]
+	RewriteRule	/ephemerides$		/tiki-eph.php	[L]
+
+	RewriteRule	/ephemerides(.*)$	/tiki-directory_browse.php?parent=$1	[L]
+	RewriteRule	/ephemerides/(.*)$	/tiki-directory_browse.php?parent=$1	[L]
+
+	RewriteRule	/faqs$	/tiki-list_faqs.php	[L]
+
+	RewriteRule	/faq(.*)$	/tiki-view_faq.php?faqId=$1	[L]
+	RewriteRule	/faq/(.*)$	/tiki-view_faq.php?faqId=$1	[L]
+
+	RewriteRule	/files$	/tiki-file_galleries.php [L]
+
+	RewriteRule	/file(.*)$	/tiki-list_file_gallery.php?galleryId=$1 [L]
+	RewriteRule	/file/(.*)$	/tiki-list_file_gallery.php?galleryId=$1 [L]
+
+	RewriteRule	/forums$	/tiki-forums.php [L]
+
+	RewriteRule	/forum(.*)$	/tiki-view_forum.php?forumId=$1	[L]
+	RewriteRule	/forum/(.*)$	/tiki-view_forum.php?forumId=$1	[L]
+
+	RewriteRule	/images$	/tiki-galleries.php	[L]
+
+	RewriteRule	/image(.*)$	/tiki-browse_gallery.php?galleryId=$1	[L]
+	RewriteRule	/image/(.*)$	/tiki-browse_gallery.php?galleryId=$1	[L]
+
+	RewriteRule	/galleries$	/tiki-galleries.php	[L]
+
+	RewriteRule	/gallery(.*)$	/tiki-browse_gallery.php?galleryId=$1	[L]
+	RewriteRule	/gallery/(.*)$	/tiki-browse_gallery.php?galleryId=$1	[L]
+
+	RewriteRule	/games$	/tiki-list_games.php	[L]
+
+	RewriteRule	/mytiki$	/tiki-my_tiki.php	[L]
+
+	RewriteRule	/newsletters$	/tiki-newsletters.php [L]
+
+	RewriteRule	/newsletter(.*)$	/tiki-newsletters.php?nlId=$1&info=1 [L]
+	RewriteRule	/newsletter/(.*)$	/tiki-newsletters.php?nlId=$1&info=1 [L]
+
+	RewriteRule	/quizzes$	/tiki-list_quizzes.php	[L]
+
+	RewriteRule	/quiz(.*)$	/tiki-take_quiz.php?quizId=$1	[L]
+	RewriteRule	/quiz/(.*)$	/tiki-take_quiz.php?quizId=$1	[L]
+
+	RewriteRule	/stats$	/tiki-stats.php	[L]
+
+	RewriteRule	/surveys$	/tiki-list_surveys.php	[L]
+
+	RewriteRule	/survey(.*)$	/tiki-take_survey.php?surveyId=$1	[L]
+	RewriteRule	/survey/(.*)$	/tiki-take_survey.php?surveyId=$1	[L]
+
+	RewriteRule	/trackers$	/tiki-list_trackers.php	[L]
+
+	RewriteRule	/tracker(.*)$	/tiki-view_tracker.php?trackerId=$1	[L]
+	RewriteRule	/tracker/(.*)$	/tiki-view_tracker.php?trackerId=$1	[L]
+
+	RewriteRule	/page/(.*)$	/tiki-index.php?page=$1	[L]
+	RewriteRule	/wiki/(.*)$	/tiki-index.php?page=$1	[L]
+
+	# todo add support for all characters allowed in a Wiki name
+	# make sure this is the last rule!
+	RewriteRule	/([A-Za-z0-9]+)$	/tiki-index.php?page=$1 [L]
+</IfModule>

@@ -14,14 +14,35 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: Config.php,v 1.1 2003-04-25 18:43:51 lrargerich Exp $
+// $Id: Config.php,v 1.2 2003-05-01 18:06:53 rossta Exp $
 //
+
+if(!function_exists('array_change_key_case')) {
+        defined('CASE_UPPER') ||
+         define('CASE_UPPER', 1);
+
+        defined('CASE_LOWER') ||
+         define('CASE_LOWER', 0);
+
+        function array_change_key_case($thisarray,$case = CASE_LOWER) {
+                foreach ($thisarray as $key => $val) {
+                        if ($case == CASE_UPPER) {
+                                unset($thisarray[$key]);
+                                $thisarray[strtoupper($key)] = $val;
+                        } else {
+                                unset($thisarray[$key]);
+                                $thisarray[strtolower($key)] = $val;
+                        }
+                        return $thisarray;
+                }
+        }
+}
 
 /**
 * phpOpenTracker Configuration Container
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_Config {
