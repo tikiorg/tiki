@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.34 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.35 2004-06-24 23:01:43 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -149,7 +149,7 @@ if ($tiki_p_post_comments == 'y') {
 	$comments_show = 'y';
 
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
-	    if (!isset($_REQUEST["comments_parentId"])) {
+	    if (empty($_REQUEST["comments_parentId"])) {
 		$_REQUEST["comments_parentId"] = 0;
 	    }
 
@@ -157,8 +157,8 @@ if ($tiki_p_post_comments == 'y') {
 	    $_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
 
 	    if ($_REQUEST["comments_threadId"] == 0) {
-		if (isset($_REQUEST["comments_reply_threadId"]) &&
-			$_REQUEST["comments_reply_threadId"] )
+		if( isset($_REQUEST["comments_reply_threadId"]) &&
+			!empty($_REQUEST["comments_reply_threadId"]) )
 		{
 		    $reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
 		    $in_reply_to = $reply_info["message_id"];
@@ -168,7 +168,11 @@ if ($tiki_p_post_comments == 'y') {
 		$message_id = '';
 
 		$object = explode(':', $comments_objectId );
-		if( $object[0] == 'forum' && isset( $_REQUEST["comments_grandParentId"] ) )
+		if( $object[0] == 'forum' && 
+		    isset( $_REQUEST["comments_grandParentId"] ) && 
+		    !empty( $_REQUEST["comments_grandParentId"] ) && 
+		    $_REQUEST["comments_grandParentId"] != 0 
+		)
 		{
 		    $parent_id = $_REQUEST["comments_grandParentId"];
 		} else {
@@ -356,6 +360,12 @@ if (!isset($_REQUEST["comments_parentId"])) {
 }
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
+
+$forum_check = explode(':', $comments_objectId );
+if( $forum_check[0] == 'forum' )
+{
+    $smarty->assign('forumId', $forum_check[1]);
+}
 
 if( isset( $_REQUEST["comments_grandParentId"] ) )
 {
