@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">Item information</a>
+<a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
 <br/><br/>
 {cycle values="odd,even" print=false}
 <table class="normal">
