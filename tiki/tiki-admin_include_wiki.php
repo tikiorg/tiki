@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.35 2004-07-14 20:27:36 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.36 2004-07-23 22:05:47 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,6 +101,17 @@ if (isset($_REQUEST["wikidiscussprefs"])) {
 		$wiki_forum_id = $tikilib->getOne("select `forumId` from `tiki_forums` where `name`=?",array($_REQUEST["wiki_forum"]));
 		$tikilib->set_preference('wiki_forum_id', $wiki_forum_id);
 		$smarty->assign('wiki_forum_id', $wiki_forum_id);
+	}
+}
+
+if (isset($_REQUEST['staticwiki'])) {
+	check_ticket('admin-inc-wiki');
+	if (!empty($_REQUEST['feature_wiki_realtime_static']) && $_REQUEST['feature_wiki_realtime_static'] == 'enabled') {
+		$tikilib->set_preference('feature_wiki_realtime_static', 'y');
+		$smarty->assign('feature_wiki_realtime_static', 'y');
+	} else {
+		$tikilib->set_preference('feature_wiki_realtime_static', 'n');
+		$smarty->assign('feature_wiki_realtime_static', 'n');
 	}
 }
 

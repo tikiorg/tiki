@@ -112,7 +112,24 @@
     </tr></table>
     </form>
     </div>
-  
+
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php?page=wiki">
+    <table class="admin"><tr>
+    <td colspan="2" class="form">{tr}Real-time Static Wiki Pages{/tr}</td></tr><tr><td class="form">
+    {tr}If enabled, wiki pages will be created as static HTML pages in /static/ in addition to the normal tiki-index.php pages. (Do not use; work in progress){/tr}
+    </td></tr><tr><td>
+    <select name="feature_wiki_realtime_static">
+    <option value='disabled' {if $feature_wiki_realtime_static neq 'y'}selected="selected"{/if}>{tr}disabled{/tr}</option>
+    <option value='enabled' {if $feature_wiki_realtime_static eq 'y'}selected="selected"{/if}>{tr}enabled{/tr}</option>
+    </select>
+    </td>
+    </tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="staticwiki" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
     <div class="simplebox">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>

@@ -1,11 +1,11 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.28 2004-06-19 08:08:04 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.29 2004-07-23 22:05:47 teedog Exp $
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-DIRS="backups db dump img/wiki img/wiki_up modules/cache temp temp/cache templates_c templates styles"
+DIRS="backups db dump img/wiki img/wiki_up modules/cache temp temp/cache templates_c templates styles static static/styles"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"

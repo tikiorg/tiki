@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.96 2004-07-22 00:06:48 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.97 2004-07-23 22:05:42 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -700,6 +700,14 @@ if (isset($_REQUEST["save"])) {
       */
       $t = date("U");
       $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang);
+      global $feature_wiki_realtime_static;
+      if ($feature_wiki_realtime_static == 'y') {
+      	  global $staticlib;
+      	  if (!is_object($staticlib)) {
+		      require_once('lib/static/staticlib.php');
+      	  }
+	      $staticlib->create_page($_REQUEST['page']);
+      }
       if ($wiki_watch_author == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
       }
@@ -714,6 +722,14 @@ if (isset($_REQUEST["save"])) {
         $minor=false;
       }
       $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang);
+      global $feature_wiki_realtime_static;
+      if ($feature_wiki_realtime_static == 'y') {
+      	  global $staticlib;
+      	  if (!is_object($staticlib)) {
+		      require_once('lib/static/staticlib.php');
+      	  }
+	      $staticlib->update_page($_REQUEST['page']);
+      }
     }
     //Page may have been inserted from a structure page view
   	if (isset($_REQUEST['current_page_id']) ) {
