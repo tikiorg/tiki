@@ -42,9 +42,6 @@ class UserMenuLib extends TikiLib {
 	}
 
 	function list_usermenus($user, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
