@@ -402,6 +402,21 @@ class StructLib extends TikiLib {
 		return $ret;
 	}
 
+	// Return all the pages belonging to the structure in an array ordered from first 
+	// to last page.
+	function get_structure_pages_ordered($page) {
+		$ret = array($page);
+		$query = "select `page` from `tiki_structures` where `parent`=? order by pos asc";
+		$result = $this->query($query,array($page));
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res["page"];
+			$ret2 = $this->get_structure_pages($res["page"]);
+			$ret = array_unique(array_merge($ret, $ret2));
+		}
+		$ret = array_unique($ret);
+		return $ret;
+	}
+	
 	function list_structures($offset, $maxRecords, $sort_mode, $find) {
 
 		if ($find) {
