@@ -99,7 +99,8 @@ class RSSLib extends TikiLib {
 
 		// set "y" if title should be shown:
 		$anew["isTitle"]=$showTitle;
-		$anew["title"] = $title[1];
+		$anew["title"] = "";
+		if (isset($title[1])) { $anew["title"] = $title[1]; }
 		$anew["link"] = "";
 		if (isset($link[1])) { $anew["link"] = $link[1]; }
 		$news[] = $anew;
@@ -112,7 +113,7 @@ class RSSLib extends TikiLib {
 		// get data from all items:
 		for ($it = 0; $it < count($items[1]); $it++) {
 		
-			preg_match_all("/<title>(.*?)<\/title>/i", $items[0][$it], $titles);
+			preg_match_all("/<title>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/i", $items[0][$it], $titles);//Some feeds like to enclose data in CDATA-tags.
 	 		preg_match_all("/<link>(.*?)<\/link>/i", $items[0][$it], $links);
 			if (count($links[1])<1)
 		 		preg_match_all("/<link.*?href=\"(.*?)\".*?>/i", $items[0][$it], $links);
@@ -124,7 +125,8 @@ class RSSLib extends TikiLib {
 			if (count($pubdate[1])<1)				
 				preg_match_all("/<issued>(.*?)<\/issued>/i", $items[0][$it], $pubdate);
 
-				$anew["title"] = $titles[1][0];
+				$anew["title"] = '';
+				if (isset($titles[2][0])) { $anew["title"] = $titles[2][0]; } //Because of the CDATA-matching, the index is off by 1.
 				$anew["link"] = '';
 				if (isset($links[1][0])) {
 					$anew["link"] = $links[1][0];
