@@ -1,11 +1,11 @@
 <?php
 
-include_once ('lib/diff.php');
+include_once (TIKI_LIB_PATH.'/diff.php');
 
-require_once ('lib/pear/Date.php');
-include_once ('lib/pear/HTTP/Request.php');
-require_once ('lib/tikidate.php');
-require_once ('lib/tikidblib.php');
+require_once (TIKI_LIB_PATH.'/pear/Date.php');
+include_once (TIKI_LIB_PATH.'/pear/HTTP/Request.php');
+require_once (TIKI_LIB_PATH.'/tikidate.php');
+require_once (TIKI_LIB_PATH.'/tikidblib.php');
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 

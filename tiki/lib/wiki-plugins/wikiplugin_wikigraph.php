@@ -3,9 +3,9 @@
 // Renders a graph
 // Usage
 // {WIKIGRAPH(level=>n)}page{WIKIGRAPH}
-include_once ('lib/wiki/wikilib.php');
+include_once (TIKI_LIB_PATH.'/wiki/wikilib.php');
 
-include_once ("lib/graphviz/GraphViz.php");
+include_once (TIKI_LIB_PATH.'/graphviz/GraphViz.php');
 
 function wikiplugin_wikigraph_help() {
 	$back = tra("Renders a graph, with linked pages navigation visually figured.\n");

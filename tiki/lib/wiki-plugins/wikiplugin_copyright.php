@@ -1,9 +1,9 @@
 <?php
 
-require_once ('lib/tikilib.php');
+//require_once ('lib/tikilib.php');
 
-require_once ('tiki-setup.php');
-require_once ("lib/copyrights/copyrightslib.php");
+//require_once ('tiki-setup.php');
+require_once (TIKI_LIB_PATH."/copyrights/copyrightslib.php");
 
 // Insert copyright notices
 // Usage:

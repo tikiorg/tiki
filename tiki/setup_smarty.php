@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.9 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.10 2004-01-06 20:46:54 gravesweeper Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 
 require_once ("db/tiki-db.php");
-require_once("lib/tikiticketlib.php");
+require_once(TIKI_LIB_PATH."/tikiticketlib.php");
 
 error_reporting (E_ALL);
 // Set the separator for PHP generated tags to be &amp; instead of &
@@ -32,13 +32,13 @@ if (get_magic_quotes_gpc()) {
 // let smarty define SMARTY_DIR so it's an absolute path :
 // define('SMARTY_DIR', 'lib/smarty/');
 
-require_once ('lib/smarty/Smarty.class.php');
+require_once ( TIKI_LIB_PATH.'/smarty/Smarty.class.php');
 
 class Smarty_TikiWiki extends Smarty {
 	
 	function Smarty_TikiWiki($tikidomain = "") {
-		$this->template_dir = "templates/";
-		$this->compile_dir = "templates_c/$tikidomain";
+		$this->template_dir = TIKI_TEMPLATES_PATH;
+		$this->compile_dir = TIKI_PATH."/templates_c/$tikidomain";
 		$this->config_dir = "configs/";
 		$this->cache_dir = "cache/$tikidomain";
 		$this->caching = 0;
@@ -53,8 +53,8 @@ class Smarty_TikiWiki extends Smarty {
 		global $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
+			if (file_exists(TIKI_STYLES_PATH."/$style_base/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = TIKI_STYLES_PATH."/$style_base/".$params['smarty_include_tpl_file'];
 			}
 		}
 		return parent::_smarty_include($params);
@@ -64,7 +64,7 @@ class Smarty_TikiWiki extends Smarty {
 		global $language, $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+			if (file_exists(TIKI_STYLES_PATH."/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}

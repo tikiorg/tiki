@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.185 2004-01-04 06:15:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.186 2004-01-06 20:46:54 gravesweeper Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,9 +19,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
   die("This script cannot be called directly");
 }
 
-
-include_once("lib/init/initlib.php");
-
+include_once($DOCUMENT_ROOT."/lib/init/setup_inc.php");
+include_once(TIKI_LIB_PATH."/init/initlib.php");
 
 class TikiSetup extends TikiInit {
 
@@ -45,9 +44,8 @@ class TikiSetup extends TikiInit {
         	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
         }
         else{
-        	$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+        	$docroot = $_SERVER['DOCUMENT_ROOT'];
         }
-        
 
         if (ini_get('session.save_handler') == 'files') {
             $save_path = ini_get('session.save_path');
@@ -106,11 +104,10 @@ class TikiSetup extends TikiInit {
         # 'var/log',
         # 'var/log/irc',
         );
-
         foreach ($dirs as $dir) {
-            if (!is_dir($dir)) {
+            if (!is_dir("$docroot/$dir")) {
                 $errors .= "The directory '$docroot/$dir' does not exist.\n";
-            } else if (!is_writeable($dir)) {
+            } else if (!is_writeable("$docroot/$dir")) {
                 $errors .= "The directory '$docroot/$dir' is not writeable by $wwwuser.\n";
             }
         }
@@ -175,6 +172,8 @@ to delete them for you if needed.
 
             exit;
         }
+		
+	
     }
 }
 
@@ -244,6 +243,7 @@ if ($load = @file('/proc/loadavg')) {
         }
     }
 }
+
 
 // The votes array stores the votes the user has made
 if (!isset($_SESSION["votes"])) {
@@ -1568,6 +1568,15 @@ if (count($query) > 0) {
 $ownurl_father = $father;
 $smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
 
+// load lib configs
+if ($libdir = opendir(TIKI_LIB_PATH)) {
+	while (FALSE !== ($libname = readdir($libdir))) {
+		$configIncFile = TIKI_LIB_PATH.'/'.$libname.'/setup_inc.php';
+		if (is_dir( TIKI_LIB_PATH.'/'.$libname ) && file_exists( $configIncFile )) {
+			include_once( $configIncFile );
+		}
+	}
+}
 
 $allowMsgs = 'n';
 

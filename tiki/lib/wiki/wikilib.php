@@ -1,6 +1,8 @@
 <?php
 
-define('PLUGINS_DIR', 'lib/wiki-plugins');
+if( !defined( 'PLUGINS_DIR' ) ) {
+	define('PLUGINS_DIR', TIKI_LIB_PATH.'/wiki-plugins');
+}
 
 class WikiLib extends TikiLib {
     function WikiLib($db) {
@@ -493,6 +495,7 @@ class WikiLib extends TikiLib {
 }
 
 global $wikilib;
+global $dbTiki;
 $wikilib = new WikiLib($dbTiki);
 
 ?>

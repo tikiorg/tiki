@@ -1,5 +1,5 @@
 <?php
-include_once('lib/usermodules/usermoduleslib.php');
+include_once(TIKI_LIB_PATH.'/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
 	function ModLib($db) {

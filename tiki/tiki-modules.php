@@ -1,11 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.25 2003-11-24 00:31:07 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.26 2004-01-06 20:46:54 gravesweeper Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-include_once ('lib/usermodules/usermoduleslib.php');
+include_once (TIKI_LIB_PATH.'/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
 
 clearstatcache();
@@ -87,7 +87,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
 
         $phpfile = 'modules/mod-' . $r["name"] . '.php';
         $template = 'modules/mod-' . $r["name"] . '.tpl';
-        $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
+        $nocache = TIKI_TEMPLATES_PATH.'/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
         if (!$r["rows"])
@@ -103,17 +103,14 @@ for ($i = 0; $i < count($left_modules); $i++) {
             //print("Refrescar cache<br/>");
             $r["data"] = '';
 
-            if (file_exists($phpfile)) {
+            if (file_exists(TIKI_TEMPLATES_PATH."/$phpfile")) {
                 //print("Haciendo el include<br/>");
                 // If we have a php file then use it!
-                include_once ($phpfile);
+                include_once (TIKI_TEMPLATES_PATH."/$phpfile");
             }
 
-            // If there's a template we use it
-            $template_file = 'templates/' . $template;
-
-            //print("Template file: $template_file<br/>");
-            if (file_exists($template_file)) {
+            //print("Template file: $template<br/>");
+            if (file_exists(TIKI_TEMPLATES_PATH."/$template")) {
                 //print("FETCH<br/>");
                 $data = $smarty->fetch($template);
             } else {
@@ -125,7 +122,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
                     $smarty->assign_by_ref('user_title', $info["title"]);
                     $smarty->assign_by_ref('user_data', $info["data"]);
                     $smarty->assign_by_ref('user_module_name', $info["name"]);
-                    $data = $smarty->fetch('modules/user_module.tpl');
+                    $data = $smarty->fetch(TIKI_TEMPLATES_PATH.'/modules/user_module.tpl');
                 }
             }
 
@@ -192,11 +189,11 @@ for ($i = 0; $i < count($right_modules); $i++) {
     }
 
     if ($pass == 'y') {
-        $cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
+        $cachefile = TIKI_MODULES_PATH.'/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 
-        $phpfile = 'modules/mod-' . $r["name"] . '.php';
-        $template = 'modules/mod-' . $r["name"] . '.tpl';
-        $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
+        $phpfile = TIKI_TEMPLATES_PATH.'/modules/mod-' . $r["name"] . '.php';
+        $template = TIKI_TEMPLATES_PATH.'/modules/mod-' . $r["name"] . '.tpl';
+        $nocache = TIKI_TEMPLATES_PATH.'/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         if (!$r["rows"])
             $r["rows"] = 10;
@@ -215,11 +212,8 @@ for ($i = 0; $i < count($right_modules); $i++) {
                 include_once ($phpfile);
             }
 
-            // If there's a template we use it
-            $template_file = 'templates/' . $template;
-
-            //print("Template file: $template_file<br/>");
-            if (file_exists($template_file)) {
+            //print("Template file: $template<br/>");
+            if (file_exists($template)) {
                 //print("FETCH<br/>");
                 $data = $smarty->fetch($template);
             } else {
@@ -230,7 +224,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
                     // Ahora usar el template de user
                     $smarty->assign_by_ref('user_title', $info["title"]);
                     $smarty->assign_by_ref('user_data', $info["data"]);
-                    $data = $smarty->fetch('modules/user_module.tpl');
+                    $data = $smarty->fetch(TIKI_TEMPLATES_PATH.'/modules/user_module.tpl');
                 }
             }
 
