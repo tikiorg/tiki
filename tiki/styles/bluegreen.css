@@ -1099,6 +1099,81 @@ background-color: #FFCC77;
 content: "X ";
 background-color: #eeeeaa;
 }
+/* misc cal styles */
+.caltitle
+{
+font-weight: bold;
+color: #425262;
+}
+.caltab
+{
+padding-left: 10px;
+padding-right: 10px;
+border: 1px solid #666666;
+border-bottom: 2px solid #aeaeae;
+margin-right: 6px;
+}
+a.caltab
+{
+text-decoration: none;
+font-weight: bold;
+font-size: 11px;
+background-color: #CAD2D5;
+color: #000000;
+}
+a.caltab:hover
+{
+background-color: #ededed;
+border-bottom: 2px solid #dedede;
+}
+
+.caltabon
+{
+padding-left: 10px;
+padding-right: 10px;
+background-color: #ffffff;
+border: 1px solid #666666;
+border-bottom: 2px solid #FFFFFF;
+margin-right: 6px;
+color: #000000;
+}
+a.caltabon
+{
+text-decoration: none;
+font-weight: bold;
+font-size: 11px;
+}
+a.caltabon:hover
+{
+background-color: none;
+}
+div#tab, div#tabcal, div#tabnav
+{
+margin-top: 10px;
+margin-left: 30px;
+}
+div#tab
+{
+margin-bottom: 1px;
+}
+div.tabcal, div.tabnav
+{
+padding: 10px;
+background-color: #ffffff;
+border: 1px solid #666666;
+border-bottom: 1px solid #aeaeae;
+font-size: 11px;
+}
+/* checkboxes background is required for rollover display */
+.calcheckbox
+{
+background-color: #ffffff;
+}
+.caltoggle
+{
+font-size: 9px;
+margin-bottom: 7px;
+}
 
 .Calwiki
 {

@@ -970,7 +970,111 @@ content: "X ";
 background-color: #eeeeaa;
 }
 
+/* misc cal styles */
+.caltitle
+{
+font-weight: bold;
+color: #ffffff;
+}
+.caltab
+{
+padding-left: 10px;
+padding-right: 10px;
+border: 1px solid #aeaeae;
+border-bottom: 2px solid #666666;
+margin-right: 6px;
+}
+a.caltab
+{
+text-decoration: none;
+font-weight: bold;
+font-size: 11px;
+color: #ffffff;
+}
+a.caltab:hover
+{
+background-color: #444444;
+border-bottom: 2px solid #444444;
+}
 
+.caltabon
+{
+padding-left: 10px;
+padding-right: 10px;
+background-color: #000000;
+border: 1px solid #666666;
+border-bottom: 2px solid #000000;
+margin-right: 6px;
+}
+a.caltabon
+{
+text-decoration: none;
+font-weight: bold;
+font-size: 11px;
+color: #ffffff;
+}
+a.caltabon:hover
+{
+background-color: none;
+}
+div#tab, div#tabcal, div#tabnav
+{
+margin-top: 10px;
+margin-left: 30px;
+color: #ffffff;
+}
+div#tab
+{
+margin-bottom: 1px;
+color: #ffffff;
+}
+div.tabcal, div.tabnav
+{
+color: #ffffff;
+padding: 10px;
+background-color: #000000;
+border: 1px solid #666666;
+border-bottom: 1px solid #aeaeae;
+font-size: 11px;
+}
+/* checkboxes background is required for rollover display */
+.calcheckbox
+{
+background-color: #000000;
+color: #ffffff;
+}
+.caltoggle
+{
+font-size: 9px;
+margin-bottom: 7px;
+}
+/* style of the popup background in case of transparent styles */
+#opaque
+{
+background-color: #000000;
+}
+.calfocus
+{
+font-size:7px;
+background-color: none;
+color: #ffffff;
+}
+.calfocus a
+{
+text-decoration: none;
+color: #dedede;
+}
+.calfocuson
+{
+font-size:7px;
+background-color: #003366;
+color: #ffffff;
+}
+.calfocuson a 
+{
+text-decoration: none;
+color: #ffffff;
+}
 
 .Calwiki
 {
@@ -1241,6 +1345,7 @@ font-family: monospace;
 
 .viewmodeon
 {
+background-color: #444444;
 color: #ffffff;
 text-decoration: none;
 padding-left: 10px;
@@ -1249,8 +1354,7 @@ padding-right: 10px;
 
 .viewmodeoff
 {
-background-color: #FFFFFF;
-color: #000000;
+color: #ffffff;
 text-decoration: none;
 padding-left: 10px;
 padding-right: 10px;
@@ -1258,7 +1362,7 @@ padding-right: 10px;
 
 .viewmodeoff:hover
 {
-background-color: #FFFF00;
+background-color: #003366;
 color: #000000;
 }
 .calweb
