@@ -4068,46 +4068,6 @@ function parse_data($data) {
     // Center text
     $data = preg_replace("/::([^\:]+)::/", "<div align=\"center\">$1</div>", $data);
 
-    // Links to internal pages
-    // If they are parenthesized then don't treat as links
-    // Prevent ))PageName(( from being expanded	\"\'
-    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-    if ($feature_wikiwords == 'y') {
-	// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-	$words = $this->get_hotwords();
-	foreach (array_unique($pages[2])as $page_parse) {
-	    if (!array_key_exists($page_parse, $words)) {
-		if ($desc = $this->page_exists_desc($page_parse)) {
-		    $repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-		} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
-# Link plural topic names to singular topic names if the plural
-# doesn't exist, and the language is english
-		    $plural_tmp = $page_parse;
-# Plurals like policy / policies
-		    $plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-# Plurals like address / addresses
-		    $plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-# Plurals like box / boxes
-		    $plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-# Others, excluding ending ss like address(es)
-		    $plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-		    if($desc = $this->page_exists_desc($plural_tmp)) {
-			$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
-		    } else {
-			$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
-		    }
-		} else {
-		    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
-		}
-
-		$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
-		//$data = str_replace($page_parse,$repl,$data);
-	    }
-	}
-    }
-
-    $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 
@@ -4198,6 +4158,48 @@ function parse_data($data) {
 	    $data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 	}
     }
+
+    // Links to internal pages
+    // If they are parenthesized then don't treat as links
+    // Prevent ))PageName(( from being expanded	\"\'
+    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
+    if ($feature_wikiwords == 'y') {
+	// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+	$words = $this->get_hotwords();
+	foreach (array_unique($pages[2])as $page_parse) {
+	    if (!array_key_exists($page_parse, $words)) {
+		if ($desc = $this->page_exists_desc($page_parse)) {
+		    $repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+		} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
+# Link plural topic names to singular topic names if the plural
+# doesn't exist, and the language is english
+		    $plural_tmp = $page_parse;
+# Plurals like policy / policies
+		    $plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+# Plurals like address / addresses
+		    $plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+# Plurals like box / boxes
+		    $plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+# Others, excluding ending ss like address(es)
+		    $plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+		    if($desc = $this->page_exists_desc($plural_tmp)) {
+			$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
+		    } else {
+			$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
+		    }
+		} else {
+		    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
+		}
+
+		$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
+		//$data = str_replace($page_parse,$repl,$data);
+	    }
+	}
+    }
+
+    // This protects ))word((, I think?
+    $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
 
     // reinsert hash-replaced links into page
     foreach ($noparsedlinks as $np) {
@@ -4802,10 +4804,10 @@ function get_pages($data) {
     global $feature_wikiwords;
 
     if ($feature_wikiwords == 'y') {
-	preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-
 	preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages2);
 	preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages3);
+
+	preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
 	$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
     } else {
 	preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
