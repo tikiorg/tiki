@@ -206,29 +206,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </tr>
 {/section}
 </table>
-{if $cant_pages > 1 or $initial}
-<br />
-<div align="center" class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{section 
-name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{section 
-name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}next{/tr}</a>]
-{/if}
-{if $direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{section 
-name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-{/if}
+{include file="tiki-pagination.tpl"}
 </div>
 {/if}
 
