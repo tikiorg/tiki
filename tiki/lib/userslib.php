@@ -118,6 +118,33 @@ class UsersLib extends TikiLib {
 	}
 	return true;
     }
+    
+    // assign permissions for an individual object according to the global permissions for that object type
+    function inherit_global_permissions($objectId, $objectType) {
+    	global $cachelib;
+    	
+		// check for annoying cases where some tables in the DB use singular and others use plural
+    	if ($objectType == 'category') {
+    		$objectType2 = 'categories';
+    	} else {
+    		$objectType2 = $objectType;
+    	}
+    	
+		$groups = $this->get_groups();
+		if (!$cachelib->isCached($objectType2 . "_permission_names")) {
+			$perms = $this->get_permissions(0, -1, 'permName_desc', $objectType2);
+			$cachelib->cacheItem($objectType2 . "_permission_names",serialize($perms));
+		} else {
+			$perms = unserialize($cachelib->getCached($objectType2 . "_permission_names"));
+		}
+		foreach ($groups['data'] as $group) {
+			foreach ($perms['data'] as $perm) {
+				if (in_array($perm['permName'], $group['perms'])) {
+					$this->assign_object_permission($group['groupName'], $objectId, $objectType, $perm['permName']);
+				}
+			}
+		}
+    }
 
     function get_object_permissions($objectId, $objectType) {
 	$objectId = md5($objectType . $objectId);

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.47 2004-06-18 20:29:07 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.48 2004-06-21 00:43:37 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -172,7 +172,10 @@ class CategLib extends TikiLib {
 		global $cachelib;
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId,0));
+		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
+		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->invalidate('allcategs');
+		return $id;
 	}
 
 	function is_categorized($type, $objId) {

@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.26 2004-06-13 23:02:00 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.27 2004-06-21 00:43:38 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.26 2004-06-13 23:02:00 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.27 2004-06-21 00:43:38 teedog Exp $
 //
 
 // Initialization
@@ -156,7 +156,26 @@ if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["na
 	if ($_REQUEST["categId"]) {
 		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
 	} else {
-		$categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
+		$newcategId = $categlib->add_category($_REQUEST["parentId"], $_REQUEST["name"], $_REQUEST["description"]);
+		if (isset($_REQUEST['assign_perms'])) {
+			if ($_REQUEST['parentId'] == 0) {
+				$userlib->inherit_global_permissions($newcategId, 'category');
+			} else {
+				$newcategpath = $categlib->get_category_path($newcategId);
+				$numcats = count($newcategpath);
+				$inherit_from_parent = FALSE;
+				for ($i=$numcats-2; $i>=0; $i--) {
+					if ($userlib->object_has_one_permission($newcategpath[$i]['categId'], 'category')) {
+						$userlib->copy_object_permissions($newcategpath[$i]['categId'], $newcategId, 'category');
+						$inherit_from_parent = TRUE;
+						break 1;
+					}
+				}
+				if (!$inherit_from_parent) {
+					$userlib->inherit_global_permissions($newcategId, 'category');
+				}
+			}
+		}
 	}
 
 	$info["name"] = '';
@@ -233,6 +252,8 @@ $smarty->assign('catree', $catree);
 // var_dump($catree); 
 
 // ---------------------------------------------------
+
+$smarty->assign('assign_perms', 'checked');
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
