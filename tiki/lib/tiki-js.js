@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.26 2003-11-21 11:45:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.27 2003-11-22 13:26:24 sylvieg Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -452,19 +452,15 @@ function confirmTheLink(theLink, theMsg)
 function textareaSize(elementId, height, width, formId) {
 	textarea = document.getElementById(elementId);
 	form = document.getElementById(formId);
-	if (textarea && textarea.rows + height > 5) {
+	if (textarea && height != 0 && textarea.rows + height > 5) {
 		textarea.rows += height;
 		if (form.rows)
 			form.rows.value = textarea.rows;
 	}
-	if (textarea && textarea.cols + width > 10) {
+	if (textarea && width != 0 && textarea.cols + width > 10) {
 		 textarea.cols += width;
 		if (form.cols)
 			form.cols.value = textarea.cols;
-		pattern = new RegExp("&cols=[0-9]*");
-		url = location.href.replace(pattern, ""); 
-		url = url + "&cols="+textarea.cols;
-		location.replace(url);
 	}
 }
 
