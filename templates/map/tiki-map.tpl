@@ -1,7 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.14 2004-04-15 03:48:07 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.15 2004-04-15 05:49:45 franck Exp $ *}
+
+<script src="lib/map/map.js" />
 
 <div align="center">
-   <form action="tiki-map.phtml" method="get">
+   <form name="frmmap" action="tiki-map.phtml" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
 	  <table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
@@ -16,8 +18,49 @@
 		<tr><td>
 		  <img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
 		</td></tr>
-		<tr><td align="center">	  
-		  <select name="zoom" size="1">
+		<tr><td align="center">	
+		{if $zoom eq -4}
+		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="{tr}Zoom out x4{/tr}" border="1">
+		{else}  
+		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="{tr}Zoom out x4{/tr}">
+		{/if}
+		{if $zoom eq -3}
+		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="{tr}Zoom out x3{/tr}" border="1">
+		{else}  
+		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="{tr}Zoom out x3{/tr}">
+		{/if}
+		{if $zoom eq -2}
+		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="{tr}Zoom out x2{/tr}" border="1">
+		{else}
+		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="{tr}Zoom out x2{/tr}">
+		{/if}
+		{if $zoom eq 0}
+		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="{tr}Query{/tr}" border="1">
+		{else}
+		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="{tr}Query{/tr}">
+		{/if}
+		{if $zoom eq 1}
+		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="{tr}Pan{/tr}" border="1">
+		{else}
+		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="{tr}Pan{/tr}">
+		{/if}
+		{if $zoom eq 2}
+		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="{tr}Zoom in x2{/tr}" border="1">
+		{else}
+		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="{tr}Zoom in x2{/tr}">
+		{/if}
+		{if $zoom eq 3}
+		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="{tr}Zoom in x3{/tr}" border="1">
+		{else}
+		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="{tr}Zoom in x3{/tr}">
+		{/if}
+		{if $zoom eq 4}
+		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="{tr}Zoom in x4{/tr}" border="1">
+		{else}
+		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="{tr}Zoom in x4{/tr}">
+		{/if}
+		&nbsp;
+		  <select name="zoom" size="1" onchange="cbzoomchange()">
 		  {html_options values=$zoom_values selected=$zoom output=$zoom_display}
 		  </select>
 		  <select name="size" size="1">
