@@ -16,28 +16,8 @@
 <tr><td class="form">{tr}Create a group for each user <br />(with the same
 name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Use tracker for more user informations{/tr}:</td><td><input type="checkbox" name="userTracker" {if $userTracker eq 'y'}checked="checked"{/if} 
-onChange="toggle('usertracker');"/>
-<div id="usertracker"{if $userTracker ne 'y'} style="display:none;"{else}style="display:block;"{/if}>
-<select name="eligibleUserTrackers[]" size="5" multiple="multiple">
-<option value="" style="font-style: italic;">{tr}Choose eligible trackers{/tr}</option>
-{foreach key=kt item=it from=$listTrackers}
-<option value="{$kt}"{if $eligibleUserTrackers.$kt} selected="selected"{/if}>{$it}</option>
-{/foreach}
-</select>
-</div>
-</td></tr>
-<tr><td class="form">{tr}Use tracker for more group informations{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $groupTracker eq 'y'}checked="checked"{/if}
-onChange="toggle('grouptracker');"/>
-<div id="grouptracker"{if $groupTracker ne 'y'} style="display:none;"{else}style="display:block;"{/if}>
-<select name="eligibleGroupTrackers[]" size="5" multiple="multiple">
-<option value="" style="font-style: italic;">{tr}Choose eligible trackers{/tr}</option>
-{foreach key=kt item=it from=$listTrackers}
-<option value="{$kt}"{if $eligibleGroupTrackers.$kt} selected="selected"{/if}>{$it}</option>
-{/foreach}
-</select>
-</div>
-</td></tr>
+<tr><td class="form">{tr}Use tracker for more user informations{/tr}:</td><td><input type="checkbox" name="userTracker" {if $userTracker eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Use tracker for more group informations{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $groupTracker eq 'y'}checked="checked"{/if} /></td></tr>
 
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode|escape}"/></td></tr>
 <tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")) print(tra(" - Php GD library required")); {/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>

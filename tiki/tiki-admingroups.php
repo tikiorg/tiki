@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.27 2004-01-28 12:43:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.28 2004-02-14 01:00:11 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,8 +22,6 @@ list($ag_utracker,$ag_gtracker) = array(0,0);
 if (isset($groupTracker) and $groupTracker  == 'y') {
 	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
-	$smarty->assign('eligibleUserTrackers', array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
-	$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
 	$smarty->assign('trackers', $trackers);
 
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {

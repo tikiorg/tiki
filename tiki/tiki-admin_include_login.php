@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.11 2004-02-09 19:19:42 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.12 2004-02-14 01:00:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,26 +34,14 @@ if (isset($_REQUEST["loginprefs"])) {
 		
 	if (isset($_REQUEST["userTracker"]) && $_REQUEST["userTracker"] == "on") {
 		$tikilib->set_preference("userTracker", 'y');
-		if (isset($_REQUEST["eligibleUserTrackers"])) {
-			$tikilib->set_preference("eligibleUserTrackers", implode(',',$_REQUEST["eligibleUserTrackers"]));
-		} else {
-			$tikilib->set_preference("eligibleUserTrackers", '');
-		}
 	} else {
 		$tikilib->set_preference("userTracker", 'n');
-		$tikilib->set_preference("eligibleUserTrackers", '');
 	}
 
 	if (isset($_REQUEST["groupTracker"]) && $_REQUEST["groupTracker"] == "on") {
 		$tikilib->set_preference("groupTracker", 'y');
-		if (isset($_REQUEST["eligibleGroupTrackers"])) {
-			$tikilib->set_preference("eligibleGroupTrackers", implode(',',$_REQUEST["eligibleGroupTrackers"]));
-		} else {
-			$tikilib->set_preference("eligibleGroupTrackers", '');
-		}
 	} else {
 		$tikilib->set_preference("groupTracker", 'n');
-		$tikilib->set_preference("eligibleGroupTrackers", '');
 	}
 
     if (isset($_REQUEST["allowRegister"]) && $_REQUEST["allowRegister"] == "on") {
@@ -353,9 +341,7 @@ if (isset($_REQUEST["auth_pear"])) {
 }
 
 $smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
-$smarty->assign("eligibleUserTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
 $smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));
-$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
 
 $listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
 $smarty->assign("listTrackers",$listTrackers['list']);
