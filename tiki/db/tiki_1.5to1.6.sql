@@ -1,4 +1,10 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
+alter table users_permissions add level varchar(80);
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered);
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_tasks','user','Can use tasks','registered);
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_notepad','user','Can use the notepad','registered);
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_newsreader','user','Can use the newsreader','registered);
 
 drop table if exists tiki_userfiles;
 create table tiki_userfiles(
@@ -11,6 +17,7 @@ create table tiki_userfiles(
   data longblob,
   hits integer(8),
   isFile char(1),
+  path varchar(255),
   created integer(14),
   primary key(fileId)
 );
@@ -77,9 +84,9 @@ create table tiki_user_tasks(
 
 ### Inter-user messages
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast_all','messu','Can broadcast messages to all user');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_messages','messu','Can use the messaging system','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast_all','messu','Can broadcast messages to all user','admin');
 
 drop table if exists messu_messages;
 create table messu_messages(
@@ -137,13 +144,15 @@ alter table tiki_pages add cache_timestamp integer(14);
 
 ### DIRECTORIES BEGIN
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory','directory','Can admin the directory');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_directory','directory','Can use the directory');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories');
-REPLACE INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_validate_links','directory','Can validate submited links');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory','directory','Can admin the directory','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_directory','directory','Can use the directory','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories','editor');
+REPLACE INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_validate_links','directory','Can validate submited links','editor');
+
+
 
 
 drop table if exists tiki_directory_categories;
@@ -312,7 +321,7 @@ create fulltext index ft on tiki_blog_posts (data);
 
 ### FULLTEXT SEARCH END
 
-alter table users_permissions add level varchar(80);
+
 ## LEVELS
 ## 1-anonymous users
 ## 2-registered users

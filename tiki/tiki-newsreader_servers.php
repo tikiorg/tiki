@@ -15,6 +15,13 @@ if($feature_newsreader != 'y') {
   die;  
 }
 
+if($tiki_p_newsreader != 'y') {
+  $smarty->assign('msg',tra("Permission denied to use this feature"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
+
 if(!isset($_REQUEST["serverId"])) $_REQUEST["serverId"]=0;
 
 

@@ -74,7 +74,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 if(!isset($_REQUEST["type"])) {
-  $_REQUEST["type"]='';
+  $_REQUEST["type"]='tiki';
 } 
 $smarty->assign('type',$_REQUEST["type"]);
 

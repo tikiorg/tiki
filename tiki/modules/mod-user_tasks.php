@@ -1,5 +1,5 @@
 <?php
-if($user && $feature_tasks == 'y') {
+if($user && $feature_tasks == 'y' && $tiki_p_tasks == 'y') {
   if(isset($_SESSION['thedate'])) {
     $pdate = $_SESSION['thedate'];
   } else {

@@ -14,7 +14,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="features"></a>
 <div class="cbox">
@@ -115,7 +116,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
@@ -248,7 +250,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}User registration and login{/tr}</div>
@@ -321,7 +324,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
@@ -520,7 +524,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
@@ -596,7 +601,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}File galleries{/tr}</div>
@@ -669,7 +675,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
@@ -733,7 +740,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
@@ -774,7 +782,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
@@ -856,7 +865,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
@@ -918,7 +928,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}FAQs settings{/tr}</div>
@@ -962,7 +973,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Trackers{/tr}</div>
@@ -993,7 +1005,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="webmail"></a>
 <div class="cbox">
@@ -1033,7 +1046,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="directory"></a>
 <div class="cbox">
@@ -1069,6 +1083,41 @@
 </div>
 </div>
 
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
+]
+<a name="userfiles"></a>
+<div class="cbox">
+	<div class="cbox-title">{tr}User files{/tr}</div>
+		<div class="cbox-data">
+			<div class="simplebox">
+				<form action="tiki-admin.php" method="post">
+				<table width="100%">
+				<tr><td class="form">{tr}Quota (Mb){/tr}</td><td>
+				<input type="text" name="userfiles_quota" value="{$userfiles_quota}" />
+				</td></tr>
+  				<tr><td class="form">{tr}Use database to store userfiles{/tr}:</td><td><input type="radio" name="uf_use_db" value="y" {if $uf_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+    			<tr><td class="form">{tr}Use a directory to store userfiles{/tr}:</td><td><input type="radio" name="uf_use_db" value="n" {if $uf_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="uf_use_dir" value="{$uf_use_dir}" /> </tr>
+    			<tr><td align="center" colspan="2"><input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" /></td></tr>				</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <a name="rss"></a>
@@ -1086,7 +1135,8 @@
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
 <a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}</a>
+<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>

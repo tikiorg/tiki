@@ -14,11 +14,14 @@
 
 <form method="get" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group}" />
+<input type="hidden" name="type" value="{$type}" />
 {tr}Create level:{/tr}<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
+</form>
 <br/>
 <br/>
 <form method="get" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group}" />
+<input type="hidden" name="type" value="{$type}" />
 <select name="oper">
 <option value="assign">{tr}assign{/tr}</option>
 <option value="remove">{tr}remove{/tr}</option>
@@ -48,6 +51,7 @@
 
 <form name="tiki-assignpermission.php" method="get">
 <input type="hidden" name="group" value="{$group}" />
+<input type="hidden" name="type" value="{$type}" />
 <input type="submit" name="update" value="{tr}update{/tr}" />
 <table class="normal">
 <tr>
@@ -88,7 +92,7 @@
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'permName_desc'}permName_asc{else}permName_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading">{tr}level{/tr}</td>
-<td class="heading">{tr}assgn{/tr}</td>
+<!--<td class="heading">{tr}assgn{/tr}</td>-->
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}permDesc_asc{else}permDesc_desc{/if}">{tr}desc{/tr}</a></td>
 <!-- <td class="heading">{tr}action{/tr}</td> -->
@@ -100,7 +104,7 @@
 <td class="odd"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="odd">{$perms[user].permName}</td>
 <td class="odd"><select name="level[{$perms[user].permName}]"><select name="level">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<td class="odd">{$perms[user].hasPerm}</td>
+<!--<td class="odd">{$perms[user].hasPerm}</td>-->
 <td class="odd">{$perms[user].type}</td>
 <td class="odd">{$perms[user].permDesc}</td>
 <!--
@@ -117,7 +121,7 @@
 <td class="even"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="even">{$perms[user].permName}</td>
 <td class="even"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<td class="even">{$perms[user].hasPerm}</td>
+<!--<td class="even">{$perms[user].hasPerm}</td>-->
 <td class="even">{$perms[user].type}</td>
 <td class="even">{$perms[user].permDesc}</td>
 <!--

@@ -4,6 +4,30 @@
 <br/><br/>
 <h3>{tr}User Files{/tr}</h3>
 
+<div align="center">
+<table border='0' cellpadding='0' cellspacing='0'>
+	<tr>
+		<td>
+			<table border='0' height='20' cellpadding='0' cellspacing='0' 
+			       width='200' style='background-color:white;'>
+				<tr>
+					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+		<td>
+			<small>{$percentage}%</small>
+		</td>
+	</tr>
+	<tr>
+		<td colspan='2'>
+			<small>{tr}quota{/tr}</small>
+		</td>
+	</tr>
+</table> 
+</div>
+
 <form action="tiki-userfiles.php" method="post">
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <table class="normal">
@@ -56,7 +80,7 @@
 </tr>
 -->
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 </tr>
 </table>
 </form>

@@ -10,14 +10,19 @@ class UserFilesLib extends TikiLib {
     $this->db = $db;  
   }
   
-  function upload_userfile($user,$name,$filename,$filetype,$filesize,$data)
+  function userfiles_quota($user)
+  {
+    return $this->getOne("select sum(filesize) from tiki_userfiles where user='$user'");
+  }
+  
+  function upload_userfile($user,$name,$filename,$filetype,$filesize,$data,$path)
   {
     $name = addslashes($name);
     $filename = addslashes($filename);
     $data = addslashes($data);
     $now = date("U");
-    $query = "insert into tiki_userfiles(user,name,filename,filetype,filesize,data,created,hits)
-    values('$user','$name','$filename','$filetype','$filesize','$data',$now,0)";
+    $query = "insert into tiki_userfiles(user,name,filename,filetype,filesize,data,created,hits,path)
+    values('$user','$name','$filename','$filetype','$filesize','$data',$now,0,'$path')";
     $this->query($query);
   }
   
@@ -55,6 +60,11 @@ class UserFilesLib extends TikiLib {
    
   function remove_userfile($user,$fileId)
   {
+    global $uf_use_dir;
+    $path = $this->getOne("select path from tiki_userfiles where user='$user' and fileId=$fileId");
+    if($path) {
+      @unlink($uf_use_dir.$path);
+    }
     $query = "delete from tiki_userfiles where user='$user' and fileId=$fileId";
     $this->query($query);  	
   }
