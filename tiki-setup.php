@@ -242,6 +242,7 @@ $feature_gal_rankings = 'y';
 $feature_wiki_rankings = 'y';
 $feature_wiki_undo = 'n';
 $feature_wiki_multiprint = 'n';
+$feature_wiki_pdf = 'n';
 $feature_forum_rankings = 'y';
 $feature_forum_parse = 'n';
 $feature_forum_quickjump = 'n';

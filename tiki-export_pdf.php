@@ -15,11 +15,23 @@ if(isset($_REQUEST["page"])) {
 } else {die;}
 
 if(!$tikilib->page_exists($page)) {
+  $smarty->assign('msg',tra("Page cannot be found"));
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
 //Permissions
 if($tiki_p_view != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;
+}
+
+//feature
+$feature_wiki_pdf=$tikilib->get_preference('feature_wiki_pdf','n');
+if($feature_wiki_pdf != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -27,7 +39,15 @@ if($tiki_p_view != 'y') {
 $info = $tikilib->get_page_info($page);
 $data=$tikilib->parse_data($info["data"]);
 $pdflib->insert_html($data);
-$pdflib->ezStream();
-//  header("Content-type: application/pdf");
-//  header( "Content-Disposition: inline; filename=$page.pdf" );
+$pdfdebug=false;
+if($pdfdebug) {
+  $pdfcode = $pdflib->output(1);
+  $pdfcode = str_replace("\n","\n<br>",htmlspecialchars($pdfcode));
+  echo '<html>';
+  echo trim($pdfcode);
+  echo '</body>';
+} else {  
+$hopts=Array('Content-Disposition'=> $page);
+$pdflib->ezStream($hopts);
+}
 ?>

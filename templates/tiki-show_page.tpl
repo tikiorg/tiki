@@ -32,6 +32,10 @@
 
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
 
+{if $feature_wiki_pdf eq 'y'}
+<a title="{tr}create pdf{/tr}" href="tiki-export_pdf.php?page={$page}"><img border="0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
+{/if}
+
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}

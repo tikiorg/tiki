@@ -1265,6 +1265,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_multiprint",'n');
     $smarty->assign("feature_wiki_multiprint",'n');
   }
+
+  if(isset($_REQUEST["feature_wiki_pdf"]) && $_REQUEST["feature_wiki_pdf"]=="on") {
+    $tikilib->set_preference("feature_wiki_pdf",'y');
+    $smarty->assign("feature_wiki_pdf",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_pdf",'n');
+    $smarty->assign("feature_wiki_pdf",'n');
+  }
   
   if(isset($_REQUEST["feature_ranking"]) && $_REQUEST["feature_ranking"]=="on") {
     $tikilib->set_preference("feature_ranking",'y'); 
@@ -2008,7 +2016,7 @@ if(isset($_REQUEST["createtag"])) {
       $smarty->display("styles/$style_base/error.tpl");
       die;  
   }
-  $tikilib->create_tag($_REQUEST["tagname"]);  
+  $adminlib->create_tag($_REQUEST["tagname"]);  
 }
 if(isset($_REQUEST["restoretag"])) {
   // Check existance
