@@ -3179,7 +3179,12 @@ class TikiLib {
     */
 
 
-
+    // 26-Jun-2003, by zaufi
+    //
+    // {maketoc} --> create TOC from '!', '!!', '!!!' in current document
+    //
+    preg_match_all("/\{maketoc\}/",$data,$tocs);
+    $anch=array();
 
     // Now tokenize the expression and process the tokens
     // Use tab and newline as tokenizing characters as well  ////
@@ -3233,7 +3238,7 @@ class TikiLib {
                    &&!($litype=='*'&&!strstr(current($listbeg),'</ul>')
                     || $litype=='#'&&!strstr(current($listbeg),'</ol>'))) {
                     $thisid='id'.microtime()*1000000;
-                    $data.='<br><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
+                    $data.='<br/><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
                     $listyle=' id="'.$thisid.'" style="display:'.($listate=='+'?'block':'none').';"';
                     $addremove=1;
                   }
@@ -3249,7 +3254,7 @@ class TikiLib {
               $listate=substr($line,$listlevel,1);
               if(($listate=='+'||$listate=='-')) {
                 $thisid='id'.microtime()*1000000;
-                $data.='<br><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
+                $data.='<br/><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
                 $listyle=' id="'.$thisid.'" style="display:'.($listate=='+'?'block':'none').';"';
                 $addremove=1;
               }
@@ -3268,18 +3273,21 @@ class TikiLib {
               if(substr(current($listbeg),0,5) != '</li>') {
                 array_unshift($listbeg,'</li>'.array_shift($listbeg));
                 $liclose='<li>';
-              } else $liclose='<br>';
+              } else $liclose='<br/>';
             } else $liclose='';
             $line=$liclose.substr($line,count($listbeg));
-          } elseif(substr($line,0,3)=='!!!') {
-            $line = '<h3>'.substr($line,3).'</h3>';
-          } elseif(substr($line,0,2)=='!!') {
-            $line = '<h2>'.substr($line,2).'</h2>';
-          } elseif(substr($line,0,1)=='!') {
-            $line = '<h1>'.substr($line,1).'</h1>';
           } else {
             while(count($listbeg)) $data.=array_shift($listbeg);
-            $line.='<br/>';
+            $hdrlevel=$this->how_many_at_start($line,'!');
+            if($litype=='!'&&$hdrlevel>0&&$hdrlevel<=6) {
+                $anchor=''; $aclose='';
+	        if(count($tocs[0])>0) {
+                  $thisid='id'.microtime()*1000000;
+	          array_push($anch,str_repeat("*",$hdrlevel)." <a href='#$thisid'>".substr($line,$hdrlevel).'</a>');
+                  $anchor="<a name='$thisid'>"; $aclose='</a>';
+	        }
+                $line = $anchor."<h$hdrlevel>".substr($line,$hdrlevel)."</h$hdrlevel>".$aclose;
+            } else $line.='<br/>';
           }
         }
       }
@@ -3288,6 +3296,18 @@ class TikiLib {
 
     // Close lists may remains opened
     while(count($listbeg)) $data.=array_shift($listbeg);
+
+    // 26-Jun-2003, by zaufi
+    // Replace {maketoc} from collected list of headers
+    //
+    $html='';
+    foreach($anch as $tocentry) {
+      $html.=$tocentry."\n"; 
+    }
+    if(count($anch)) {
+      $html=$this->parse_data($html);
+      $data=str_replace("{maketoc}",$html,$data);
+    }
     
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
@@ -3309,7 +3329,6 @@ class TikiLib {
         $data = str_replace($rsss[0][$i],$repl,$data);
       }
     }
-
 
 
     // Close BiDi DIVs if any
