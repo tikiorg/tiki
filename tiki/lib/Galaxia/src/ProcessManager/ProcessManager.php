@@ -582,13 +582,13 @@ class ProcessManager extends BaseManager {
    {
     
      // Create in processes a directory with this name
-     mkdir("lib/Galaxia/processes/$name");
-	 mkdir("lib/Galaxia/processes/$name/graph");
-	 mkdir("lib/Galaxia/processes/$name/code");
-	 mkdir("lib/Galaxia/processes/$name/compiled");
-	 mkdir("lib/Galaxia/processes/$name/code/activities");
-     mkdir("lib/Galaxia/processes/$name/code/templates");
-     mkdir("templates/$name");
+     mkdir("lib/Galaxia/processes/$name",0770);
+	 mkdir("lib/Galaxia/processes/$name/graph",0770);
+	 mkdir("lib/Galaxia/processes/$name/code",0770);
+	 mkdir("lib/Galaxia/processes/$name/compiled",0770);
+	 mkdir("lib/Galaxia/processes/$name/code/activities",0770);
+     mkdir("lib/Galaxia/processes/$name/code/templates",0770);
+     mkdir("templates/$name",0770);
 	 // Create shared file
 	 $fp = fopen("lib/Galaxia/processes/$name/code/shared.php","w");
 	 fwrite($fp,'<'.'?'.'php'."\n".'?'.'>');
