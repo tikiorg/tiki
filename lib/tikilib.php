@@ -737,10 +737,11 @@ class TikiLib extends TikiDB {
     //shared
     // \todo remove all hardcoded html in get_user_avatar()
     function get_user_avatar($user, $float = "") {
+    	global $userlib;
 	if (empty($user))
 	    return '';
 
-	if (!$this->user_exists($user)) {
+	if (!$userlib->user_exists($user)) {
 	    return '';
 	}
 
