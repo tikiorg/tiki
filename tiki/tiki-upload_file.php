@@ -137,7 +137,6 @@ if(isset($_REQUEST["upload"])) {
 		  	if(isset($data)) {
 		     	$fileId = $filegallib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
 		      	if(!$fileId) {
-						$errors[] = sprintf("%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>",$_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
 			     	$errors[] = tra('Upload was not successful (maybe a duplicate file)'.': '.$name);
 		      	} 
 		      	if(count($errors)==0) {
