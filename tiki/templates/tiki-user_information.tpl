@@ -8,6 +8,9 @@
   <div class="simplebox">
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
+{if $feature_score eq 'y'}
+  <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
+{/if}
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
 {if $email_isPublic neq 'n'}  
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
@@ -20,16 +23,19 @@
   <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
-  <tr><td class="form" colspan="2">
-{if $user}
+{if $feature_friends && $user ne $userwatch}
   {if $friend}
-    <img src="img/icons/ico_friend.png">Este usuario es su amigo
+  <tr><td class="form" colspan="2">
+    <img src="img/icons/ico_friend.png">{tr}This user is your friend{/tr}
+  </td></tr>  
   {else}
-    <img src="img/icons/ico_not_friend.png">Este usuario no es su amigo.
-    <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">Agregar como amigo</a>
+  <tr><td class="form">
+    <img src="img/icons/ico_not_friend.png">{tr}This user is not your friend{/tr}
+  </td><td>
+    <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Add as friend{/tr}</a>
+  </td></tr>  
   {/if}
 {/if}
-  </td></tr>  
   </table>
   </form>
   </div>

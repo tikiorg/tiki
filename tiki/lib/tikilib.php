@@ -2193,19 +2193,21 @@ function add_pageview() {
 
 	if($find) {
 	    $findesc = $this->qstr('%'.$find.'%');
-	    $mid=" and (u.login like $findesc or u.realName like $findesc) ";
+	    $mid=" and (u.login like $findesc or p.value like $findesc) ";
 	} else {
 	    $mid='';
 	}
 
 	$user = addslashes($user);
 
-	$query = "select u.* from tiki_friends as f, users_users as u where u.login=f.friend and f.user='$user' and f.user <> f.friend $mid order by $sort_mode limit $offset, $maxRecords";
-	$query_cant = "select count(*) from tiki_friends as f, users_users as u where u.login=f.friend and f.user='$user' $mid";
+	// TODO: same as list_users
+	$query = "select u.*, p.value as realName from tiki_friends as f, users_users as u left join tiki_user_preferences p on u.login=p.user and p.prefName = 'realName' where u.login=f.friend and f.user='$user' and f.user <> f.friend $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from tiki_friends as f, users_users as u left join tiki_user_preferences p on u.login=p.user and p.prefName = 'realName' where u.login=f.friend and f.user='$user' $mid";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
 	$ret = Array();
 	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $res['realname'] = $this->get_user_preference($res['login'], 'realName');
 	    $ret[] = $res;
 	}
 	$retval = Array();
@@ -2220,7 +2222,7 @@ function add_pageview() {
 	global $userlib;
 
 	if ($user == $friend) {
-	    return 1;
+	    return 0;
 	}
 
 	$user = addslashes($user);
@@ -2233,20 +2235,22 @@ function add_pageview() {
 	
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'realName', $find = '')
     {
-	global $user, $userlib;
+	global $user;
 
 	if($find) {
 	    $findesc = $this->qstr('%'.$find.'%');
-	    $mid=" where (login like $findesc or realName like $findesc) ";
+	    $mid=" where (login like $findesc or p.value like $findesc) ";
 	} else {
 	    $mid='';
 	}
 
+	$sort_mode = $this->convert_sortmode($sort_mode);
 
-	$sort_mode = preg_replace('/_(asc|desc)$/',' $1',$sort_mode);
-
-	$query = "select u.*, f.user is not null as friend from users_users as u left join tiki_friends as f on u.login=f.friend and f.user='".addslashes($user)."' $mid order by $sort_mode limit $offset, $maxRecords";
-	$query_cant = "select count(*) from users_users $mid";
+	// TODO: This is lousy, later we have to configure what fields would be fetched
+	// but how to get preferences avoiding the join, sort by any field and paginate without
+	// loading all user list in memory?
+	$query = "select u.*, f.user is not null as friend, p.value as realName from users_users as u left join tiki_friends as f on u.login=f.friend and f.user='".addslashes($user)."' left join tiki_user_preferences p on u.login=p.user and p.prefName='realName' $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from users_users u left join tiki_user_preferences p on u.login=p.user and p.prefName='realName' $mid";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
 	$ret = Array();
@@ -3854,6 +3858,12 @@ function add_pageview() {
 	    $foo = parse_url($_SERVER["REQUEST_URI"]);
 	    $machine = httpPrefix(). dirname( $foo["path"] );
 	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
+	}
+	
+	global $scorelib, $feature_score;
+	if ($feature_score == 'y') {
+	    require_once('lib/score/scorelib.php');
+	    $scorelib->score_event($user, 'wiki_new');
 	}
 
 	return true;

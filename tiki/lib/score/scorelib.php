@@ -35,33 +35,33 @@ class ScoreLib extends TikiLib {
 	    $expire = $event['expiration'];
 	    $event_id = $event_type . '_' . $id;
 
-	    $query = "select * from users_score where user='$user' and event_id='$event_id' and (not $expire || expire > now())";
-	    if ($this->db->getOne($query)) {
+	    $query = "select * from tiki_users_score where user='$user' and event_id='$event_id' and (not $expire || expire > now())";
+	    if ($this->getOne($query)) {
 		return;
 	    }
 
-	    $query = "replace into users_score (user, event_id, score, expire) values ('$user', '$event_id', $score, now() + interval $expire minute)";
-	    $this->db->query($query);
+	    $query = "replace into tiki_users_score (user, event_id, score, expire) values ('$user', '$event_id', $score, now() + interval $expire minute)";
+	    $this->query($query);
 	}
 
 	$query = "update users_users set score = score + $score where login='$user'";
 	$event['id'] = $id; // just for debug
 
-	$this->db->query($query);
+	$this->query($query);
 	return;	
     }
 
     // All information about an event type
     function get_event($event) {
 	$query = "select * from tiki_score where event='$event'";
-	$result = $this->db->query($query);
+	$result = $this->query($query);
 	return $result->fetchRow(DB_FETCHMODE_ASSOC);
     }
 
     // User's general classification on site
     function user_position($user) {
-	$score = $this->db->getOne("select score from users_users where login='$user'");
-	return $this->db->getOne("select count(*)+1 from users_users where score > $score and login <> 'admin'");
+	$score = $this->getOne("select score from users_users where login='$user'");
+	return $this->getOne("select count(*)+1 from users_users where score > $score and login <> 'admin'");
     }
 
 
@@ -73,7 +73,7 @@ class ScoreLib extends TikiLib {
 	// admin doesn't go on ranking
 	$query = "select userId, login, score from users_users where login <> 'admin' order by score desc limit $start, $limit";
 
-	$result = $this->db->query($query);
+	$result = $this->query($query);
 	$ranking = array();
 
 	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -85,13 +85,13 @@ class ScoreLib extends TikiLib {
 
     // Number of users that go on ranking
     function count_users() {
-	return $this->db->getOne("select count(*) from users_users where score>0 and login<>'admin'");
+	return $this->getOne("select count(*) from users_users where score>0 and login<>'admin'");
     }
 
     // All event types, for administration
     function get_all_events() {
 	$query = "select * from tiki_score order by category, ord";
-	$result = $this->db->query($query);
+	$result = $this->query($query);
 	$ranking = array();
 	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 	    $ranking[] = $res;
@@ -103,12 +103,37 @@ class ScoreLib extends TikiLib {
     function update_events($events) {
 	foreach ($events as $event_name => $event) {
 	    $query = sprintf("update tiki_score set score=%f, expiration=%f where event='%s'", $event['score'], $event['expiration'], addslashes($event_name));
-	    $this->db->query($query);
+	    $this->query($query);
 	}
     }
 
+    function get_star($score) {
+	$star = '';
+
+	$star_colors = array(0 => 'grey',
+			     100 => 'blue',
+			     500 => 'green',
+			     1000 => 'yellow',
+			     2500 => 'orange',
+			     5000 => 'red',
+			     10000 => 'purple');
+	
+	foreach ($star_colors as $boundary => $color) {
+	    if ($score >= $boundary) {
+		$star = 'star_'.$color.'.gif';
+	    }
+	}
+                                                                                                                                            
+	if (!empty($star)) {
+	    $alt = sprintf(tra("%d points"), $score);
+	    $star = "<img src=\"images/$star\" alt=\"$alt\">&nbsp;";
+	}
+
+	return $star;
+    }
 }
 
+global $dbTiki;
 $scorelib = new ScoreLib($dbTiki);
 
 ?>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.32 2004-06-11 18:44:08 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.33 2004-06-14 05:44:35 lfagundes Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -490,6 +490,9 @@
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br/>
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br/>
 		&nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
+    {/if}
+    {if $feature_score eq 'y' && ($tiki_p_admin_score eq 'y' || $tiki_p_admin eq 'y')}
+      &nbsp;<a href="tiki-admin_score.php" class="linkmenu">{tr}Score{/tr}</a><br />
     {/if}
 		{/sortlinks}
   </div>

@@ -46,7 +46,6 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-
 $listusers = $tikilib->list_users($offset,$maxRecords,$sort_mode,$find);
 
 // If there're more records then assign next_offset
