@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.11 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.12 2003-08-07 19:42:24 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
 {if $groupname eq ''}
@@ -11,6 +11,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$groupname|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc">{$groupdesc|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}HomePage{/tr}:</td><td class="formcolor"><input type="text" name="home" size="40" value="{$grouphome|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
 <select name="include_groups[]" multiple="multiple" size="4">
 {section name=ix loop=$users}
@@ -20,6 +21,7 @@
 </select>
 </td></tr>
 {if $group ne ''}
+<tr><td  class="formcolor">{tr}Set as default for all in group{/tr}:</td><td class="formcolor"><input type="checkbox" name="batch_set_default"></td></tr>
 <tr><td  class="formcolor">&nbsp;
 <input type="hidden" name="olgroup" value="{$group|escape}">
 </td><td  class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

@@ -27,7 +27,14 @@
             {/section}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr></td></tr><tr>
+      </tr><tr><td colspan=2><hr></td></tr>      
+      <tr>
+        <td class="form">{tr}Use group homepages{/tr}:</td>
+        <td><input type="checkbox" name="useGroupHome"
+              {if $useGroupHome eq 'y'}checked="checked"{/if}/>
+        </td>
+      </tr>  
+      <tr>
         <td class="form">{tr}Use URI as Home Page{/tr}:</td>
         <td><input type="checkbox" name="useUrlIndex"
               {if $useUrlIndex eq 'y'}checked="checked"{/if}/>

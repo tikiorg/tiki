@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.8 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.9 2003-08-07 19:42:24 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,8 +28,7 @@ if (isset($_REQUEST["newgroup"])) {
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
 	} else {
-		$userlib->add_group(addslashes($_REQUEST["name"]), addslashes($_REQUEST["desc"]));
-
+		$userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$_REQUEST["home"]);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -44,7 +43,7 @@ if (isset($_REQUEST["newgroup"])) {
 
 // modification
 if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
-	$userlib->change_group(addslashes($_REQUEST["olgroup"]), addslashes($_REQUEST["name"]), addslashes($_REQUEST["desc"]));
+	$userlib->change_group(addslashes($_REQUEST["olgroup"]),addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$_REQUEST["home"]);
 
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 
@@ -55,7 +54,9 @@ if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
 			}
 		}
 	}
-
+	if (isset($_REQUEST['batch_set_default']) and $_REQUEST['batch_set_default'] == 'on') {
+		$userlib->batch_set_default_group($_REQUEST["name"]);
+	}
 	$_REQUEST["group"] = $_REQUEST["name"];
 }
 
@@ -101,11 +102,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find);
 
 $inc = array();
-list($groupname, $groupdesc, $groupperms) = array(
-	'',
-	'',
-	''
-);
+list($groupname,$groupdesc,$grouphome,$groupperms) = array('','','','');
 
 if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
@@ -115,6 +112,9 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 
 	if (isset($re["groupDesc"]))
 		$groupdesc = $re["groupDesc"];
+
+	if(isset($re["groupHome"]))
+		$grouphome = $re["groupHome"];
 
 	$groupperms = $re["perms"];
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
@@ -136,6 +136,7 @@ $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);
 $smarty->assign('groupdesc', $groupdesc);
+$smarty->assign('grouphome',$grouphome);
 $smarty->assign('groupperms', $groupperms);
 
 $cant_pages = ceil($users["cant"] / $maxRecords);
