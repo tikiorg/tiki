@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.28 2004-05-31 12:23:03 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.29 2004-06-01 12:11:09 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2741,6 +2741,7 @@ CREATE TABLE tiki_sessions (
 # --------------------------------------------------------
 
 # Tables for TikiSheet
+DROP TABLE IF EXISTS tiki_sheet_layout;
 CREATE TABLE tiki_sheet_layout (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
@@ -2751,6 +2752,7 @@ CREATE TABLE tiki_sheet_layout (
   UNIQUE KEY sheetId (sheetId,begin)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_sheet_values;
 CREATE TABLE tiki_sheet_values (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
@@ -2765,6 +2767,7 @@ CREATE TABLE tiki_sheet_values (
   KEY sheetId_2 (sheetId,rowIndex,columnIndex)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_sheets;
 CREATE TABLE tiki_sheets (
   sheetId int(8) NOT NULL auto_increment,
   title varchar(200) NOT NULL default '',
@@ -2804,6 +2807,21 @@ CREATE TABLE tiki_shoutbox_words (
 # --------------------------------------------------------
 
 #
+# Table structure for table `tiki_structure_versions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_structure_versions;
+CREATE TABLE tiki_structure_versions (
+  structure_id int(14) NOT NULL auto_increment,
+  version int(14) default NULL,
+  PRIMARY KEY  (structure_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
 # Table structure for table `tiki_structures`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
@@ -2813,8 +2831,10 @@ CREATE TABLE tiki_shoutbox_words (
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
   page_ref_id int(14) NOT NULL auto_increment,
+  structure_id int(14) NOT NULL,
   parent_id int(14) default NULL,
   page_id int(14) NOT NULL,
+  page_version int(8) default NULL,
   page_alias varchar(240) NOT NULL default '',
   pos int(4) default NULL,
   PRIMARY KEY  (page_ref_id),
@@ -4130,6 +4150,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_allowhtml','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');
@@ -4145,7 +4166,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','o
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
@@ -4193,7 +4213,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login_required','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_port','443');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_prefix','/');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_default_orderin','points_desc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_default_order','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('keep_versions','1');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
@@ -4317,6 +4337,9 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');

@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.18 2004-05-05 13:55:08 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.19 2004-06-01 12:11:10 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4121,6 +4121,10 @@ go
 -- --------------------------------------------------------
 
 -- Tables for TikiSheet
+-- DROP TABLE "tiki_sheet_layout"
+go
+
+
 CREATE TABLE "tiki_sheet_layout" (
   "sheetId" numeric(8,0) default '0' NOT NULL,
   "begin" numeric(10,0) default '0' NOT NULL,
@@ -4135,6 +4139,10 @@ go
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin")
 go
+
+-- DROP TABLE "tiki_sheet_values"
+go
+
 
 CREATE TABLE "tiki_sheet_values" (
   "sheetId" numeric(8,0) default '0' NOT NULL,
@@ -4156,6 +4164,10 @@ CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","ro
 go
 CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex")
 go
+
+-- DROP TABLE "tiki_sheets"
+go
+
 
 CREATE TABLE "tiki_sheets" (
 sheetId numeric(8 ,0) identity,
@@ -4211,6 +4223,27 @@ go
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tiki_structure_versions`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 03, 2003 at 07:42 PM
+--
+
+-- DROP TABLE "tiki_structure_versions"
+go
+
+
+CREATE TABLE "tiki_structure_versions" (
+structure_id numeric(14 ,0) identity,
+  "version" numeric(14,0) default NULL NULL,
+  PRIMARY KEY ("structure_id")
+)   
+go
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tiki_structures`
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
@@ -4223,8 +4256,10 @@ go
 
 CREATE TABLE "tiki_structures" (
 page_ref_id numeric(14 ,0) identity,
+  "structure_id" numeric(14,0) NOT NULL,
   "parent_id" numeric(14,0) default NULL NULL,
   "page_id" numeric(14,0) NOT NULL,
+  "page_version" numeric(8,0) default NULL NULL,
   "page_alias" varchar(240) default '' NOT NULL,
   "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("page_ref_id")
@@ -6863,6 +6898,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml'
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_open_as_structure','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n')
 go
 
@@ -7111,7 +7150,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('https_prefix','/')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_orderin','points_desc')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_order','points_desc')
 go
 
 
@@ -7604,6 +7643,18 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_detect_language','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a:0:{}')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}')
 go
 
 
