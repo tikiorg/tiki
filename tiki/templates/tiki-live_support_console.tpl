@@ -14,29 +14,55 @@
 	{/literal}
 	{$trl}
   </head>
+  {literal}
   <body>
-  	{$user}
+  {/literal}
+   	<input type="hidden" id="user" value="{$user}" />
+  	<input type="hidden" id="status" value="online" />
+	<table class="normal" width="100%">
+		<tr>
+			<td class="heading">{tr}Operator{/tr}: {$user}</td>
+			<td class="heading">{tr}Status{/tr}: <b>{$status}</b></td>
+			<td class="heading" style="text-align:right;">    
+				{if $status eq 'offline'}
+    				<a href="tiki-live_support_console.php?status=online" class="tableheading">{tr}be online{/tr}</a>
+    			{else}
+    				<a href="tiki-live_support_console.php?status=offline" class="tableheading">{tr}be offline{/tr}</a>
+    		{/if}
+		</td>
+		</tr>
+	</table>
+
+    {if count($requests) > 0}
+    <h3>{tr}Support requests{/tr}</h3>
+    {if $new_requests eq 'y'}
+    	NEW!
+    {/if}
 	<table id='reqs' class="normal">
 		<tr>
-			<td class="heading">Id</td>
-			<td class="heading">User</td>
-			<td class="heading">Reason</td>
+			<td class="heading">{tr}User{/tr}</td>
+			<td class="heading">{tr}Reason{/tr}</td>
+			<td class="heading">{tr}Requested{/tr}</td>
 			<td class="heading">&nbsp;</td>
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section loop=$requests name=ix}
 		<tr>
-			<td class="{cycle advance=false}">{$requests[ix].reqId}</td>
 			<td class="{cycle advance=false}">{$requests[ix].user}</td>
 			<td class="{cycle advance=false}">{$requests[ix].reason}</td>
+			<td class="{cycle advance=false}">{$requests[ix].timestamp|tiki_short_time}</td>
 			<td class="{cycle}">
-			<a class="link" {jspopup href="tiki-live_support_operator.php?reqId=$requests[ix].reqId" width="300" height="450"}>Accept</a>
+		    {if $status eq 'online'}
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
+			{else}
+				&nbsp;
+			{/if}
 			</td>
 		</tr>
 		{/section}
 	</table>
+	{/if}
     <script>
-        /* Activate polling of requests */
         var last_req={$last};
     	console_poll();
     </script>
