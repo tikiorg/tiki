@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a><br /><br />
 <a class="linkbut" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>
-<br/><br/>
+<br /><br />
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -85,7 +85,7 @@
 &nbsp;[<a class="prevnext" href="tiki-list_submissions.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_submissions.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

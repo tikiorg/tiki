@@ -19,13 +19,13 @@
 
 
 
-<br/><br/>
+<br /><br />
 <a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
 <a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
-<br/><br/>
+<br /><br />
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$info.name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br/><br/>
+<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$info.name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
 <form action="tiki-admin_newsletters.php" method="post">
 <input type="hidden" name="nlId" value="{$info.nlId|escape}" />
@@ -101,7 +101,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -17,7 +17,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 
 <form method="post" action="tiki-import_phpwiki.php">
 <table class="normal">
@@ -39,7 +39,7 @@
 </tr>
 </table>
 </form>
-<br/><br/>
+<br /><br />
 {if $result eq 'y'}
 <table class="normal">
 <tr>
@@ -58,5 +58,5 @@
 </tr>
 {/section}
 </table>
-<br/><br/>
+<br /><br />
 {/if}

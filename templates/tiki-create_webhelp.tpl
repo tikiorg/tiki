@@ -1,9 +1,9 @@
 <a href="tiki-create_webhelp.php" class="pagetitle">{tr}Create WebHelp{/tr}</a>
 <!-- the help link info -->
-<br/><br/>
+<br /><br />
 
 {if  $generated eq 'y'}
-<a class="link" href="whelp/{$dir}/index.html">{tr}You can browse the generated WebHelp here{/tr}</a><br/><br/>
+<a class="link" href="whelp/{$dir}/index.html">{tr}You can browse the generated WebHelp here{/tr}</a><br /><br />
 {/if}
 <form method="post" action="tiki-create_webhelp.php">
 <table class="normal">

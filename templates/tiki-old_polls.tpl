@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-old_polls.php">{tr}Polls{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-old_polls.php">{tr}Polls{/tr}</a><br /><br />
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -44,7 +44,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-old_polls.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -54,7 +54,7 @@
 &nbsp;[<a class="prevnext" href="tiki-old_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-old_polls.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

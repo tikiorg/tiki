@@ -1,9 +1,9 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Select news group{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Select news group{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 [<a class="link" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>]
-<br/><br/>
+<br /><br />
 <table class="normal">
 <tr>
   <td class="heading">{tr}Group{/tr}</td>
@@ -19,4 +19,4 @@
 </tr>
 {/foreach}
 </table>
-<br/><br/>
+<br /><br />

@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.8 2003-11-18 21:25:17 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.9 2004-01-30 08:49:22 damosoft Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
 <div id="tiki-main">
   <div class="articletitle">
-    <span class="titlea">{$title}</span><br/>
+    <span class="titlea">{$title}</span><br />
     <span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span>
-    <br/>
+    <br />
   </div>
   <div class="articleheading">
     <table  cellpadding="0" cellspacing="0">

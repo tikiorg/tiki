@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a><br /><br />
 {if $tiki_p_view_quiz_stats eq 'y'}
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a><br/><br/>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a><br /><br />
 {/if}
 <table class="normal">
 <tr>
@@ -35,7 +35,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -46,7 +46,7 @@
 &nbsp;[<a class="prevnext" href="tiki-list_quizzes.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_quizzes.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

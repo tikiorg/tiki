@@ -7,7 +7,7 @@
 <a class="linkbut" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}Weeks{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
 <a class="linkbut" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
-<br/><br/>
+<br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -25,7 +25,7 @@
 {/if}   
 </tr>
 </table>
-<br/>
+<br />
 {if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}
@@ -70,7 +70,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini" align="center">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-lastchanges.php?find={$find}&amp;days={$days}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -80,7 +80,7 @@
 &nbsp;[<a class="prevnext" href="tiki-lastchanges.php?find={$find}&amp;days={$days}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-lastchanges.php?find={$find}&amp;days={$days}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

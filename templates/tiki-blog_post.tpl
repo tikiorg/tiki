@@ -42,7 +42,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 </td></tr>
 {/if}
 <tr><td class="editblogform">{tr}Data{/tr}
-{if $wysiwyg eq 'n'}<br/><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}
+{if $wysiwyg eq 'n'}<br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}
 <br /><br />{tr}Quicklinks{/tr}<br />
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}

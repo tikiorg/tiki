@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.8 2004-01-25 01:31:45 halon Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.9 2004-01-30 08:49:21 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -16,7 +16,7 @@
 
 
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 
 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.12 2004-01-25 02:23:24 lueders Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.13 2004-01-30 08:49:22 damosoft Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: {$page}</h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -44,5 +44,5 @@
 </form>
 <h3>{tr}Notifications{/tr}:</h3>
 {section name=ix loop=$emails}
-{$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br/>
+{$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br />
 {/section}

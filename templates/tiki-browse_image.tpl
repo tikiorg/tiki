@@ -6,7 +6,7 @@
 
 {if ($popup == "")  }
   <a class="pagetitle" href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}">{tr}Browsing Image{/tr}: {$name}</a>
-  <br/><br/>
+  <br /><br />
     <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}return to gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
       <a class="linkbut" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}">{tr}edit image{/tr}</a>
@@ -73,7 +73,7 @@
 
   
 {if ($popup == "")  }
-	  <br/><br/>
+	  <br /><br />
       <table class="normal">
       <tr><td class="odd">{tr}Image Name{/tr}:</td><td class="odd">{$name}</td></tr>
       <tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
@@ -95,12 +95,12 @@
         </td></tr>
       {/if}
     </table>
-<br/><br/>    
+<br /><br />    
   <table class="normal">
   <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this image in your browser using{/tr}: <a class="gallink" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br/>
+    {tr}You can view this image in your browser using{/tr}: <a class="gallink" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br />
     </small>
     </td>
   </tr>

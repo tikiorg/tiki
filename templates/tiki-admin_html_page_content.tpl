@@ -3,11 +3,11 @@
 
 
 
-<br/>
-<h2>{tr}Page{/tr}: {$pageName}</h2><br/><br/>
+<br />
+<h2>{tr}Page{/tr}: {$pageName}</h2><br /><br />
 <a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
 <a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>]
-<a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a><br/><br/>
+<a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a><br /><br />
 
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>
@@ -98,7 +98,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_html_page_content.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_html_page_content.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

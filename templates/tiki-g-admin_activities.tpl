@@ -1,12 +1,12 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a><br /><br />
 {include file=tiki-g-proc_bar.tpl}
 
 {if count($errors) > 0}
 <div class="wikitext">
-Errors:<br/>
+Errors:<br />
 {section name=ix loop=$errors}
-<small>{$errors[ix]}</small><br/>
+<small>{$errors[ix]}</small><br />
 {/section}
 </div>
 {/if}
@@ -52,7 +52,7 @@ Errors:<br/>
     <table class="normal">
 		<tr>
 			<td class="formcolor">
-				{tr}Add transition from:{/tr}<br/>
+				{tr}Add transition from:{/tr}<br />
 				<select name="add_tran_from[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
 				<option value="{$items[ix].activityId|escape}" {if $items[ix].from eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
@@ -60,7 +60,7 @@ Errors:<br/>
 				</select>
 			</td>
 			<td class="formcolor">
-				{tr}Add transition to:{/tr}<br/>
+				{tr}Add transition to:{/tr}<br />
 				<select name="add_tran_to[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
 				<option value="{$items[ix].activityId|escape}" {if $items[ix].to eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
@@ -76,7 +76,7 @@ Errors:<br/>
   <td class="formcolor">{tr}roles{/tr}</td>
   <td class="formcolor">
   {section name=ix loop=$roles}
-  {$roles[ix].name}[<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br/>
+  {$roles[ix].name}[<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br />
   {sectionelse}
   {tr}No roles associated to this activity{/tr}
   {/section}
@@ -213,7 +213,7 @@ Errors:<br/>
 	<td class="{cycle}">
 	<a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}">{tr}code{/tr}</a>
 	{if $items[ix].isInteractive eq 'y'}
-	<br/><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}&amp;template=1">{tr}template{/tr}</a>
+	<br /><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}&amp;template=1">{tr}template{/tr}</a>
 	{/if}
 	</td>
 </tr>

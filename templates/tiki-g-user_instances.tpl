@@ -20,7 +20,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 {include file=tiki-g-user_bar.tpl}
 <h3>{tr}List of processes{/tr} ({$cant})</h3>
 
@@ -194,7 +194,7 @@
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

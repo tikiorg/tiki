@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a><br /><br />
 {if $tiki_p_create_blogs eq 'y'}
 <a class="linkbut" href="tiki-edit_blog.php">{tr}create new blog{/tr}</a>
 {/if}

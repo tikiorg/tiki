@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a><br /><br />
 <table >
 <tr>
   <td valign="top">
@@ -72,4 +72,4 @@
 </tr>  
 {/if}
 </table>
-<br/><br/>  
+<br /><br />  

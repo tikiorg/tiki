@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a><br /><br />
 
 <div class="cbox">
 <div class="cbox-title">
@@ -8,11 +8,11 @@
 <form action="tiki-print_pages.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
-{tr}filter{/tr}:<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br/>
+{tr}filter{/tr}:<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
 </form>
 </div>
 </div>
-<br/>
+<br />
 
 
 <div class="cbox">
@@ -43,5 +43,5 @@
 </form>
 </div>
 </div>
-<br/>
+<br />
 

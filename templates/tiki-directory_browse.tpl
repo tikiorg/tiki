@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.10 2003-11-21 11:42:01 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.11 2004-01-30 08:49:21 damosoft Exp $ *}
 
-<a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br /><br />
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
-<br/><br/>
+<br /><br />
 {* The category path *}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
-<br/><br/>
+<br /><br />
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -25,8 +25,8 @@
 </div>
 
 {if count($categs)}
-<br/><br/>
-<b>{tr}Subcategories{/tr}</b><br/>
+<br /><br />
+<b>{tr}Subcategories{/tr}</b><br />
 {* The table with the subcategories *}
 <div class="dircategs">
 <table  >
@@ -36,7 +36,7 @@
         {if $categs[numloop].showCount eq 'y'}
         ({$categs[numloop].sites})
         {/if}
-        <br/>
+        <br />
         {* Now display subcats if any *}
         {section name=ix loop=$categs[numloop].subcats}
         {if $categs[numloop].childrenType ne 'd'}
@@ -69,10 +69,10 @@
 </table>
 </div>
 {/if}
-<br/>
+<br />
 {* The links *}
 {if $categ_info.allowSites eq 'y' and count($items) > 0}
-<b>{tr}Links{/tr}</b><br/>
+<b>{tr}Links{/tr}</b><br />
 <div class="dirlistsites">
 <form method="post" action="tiki-directory_browse.php">
 <input type="hidden" name="parent" value="{$parent|escape}" />
@@ -88,15 +88,15 @@
 </select>
 <input type="submit" name="xx" value="{tr}sort{/tr}" />
 </form>
-<br/>
+<br />
 {section name=ix loop=$items}
 <div class="dirsite">
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
 <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">{tr}edit{/tr}</a>]{/if} 
 {if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}cache{/tr}</a>){/if}
-<br/>
-<span class="dirsitedesc">{$items[ix].description}</span><br/>
+<br />
+<span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
 <span class="dirsitecats">
 {tr}categories{/tr}:
@@ -104,12 +104,12 @@
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a>
 {/section}
-</span><br/>
+</span><br />
 <span class="dirsitetrail">{tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits}</span>
 </div>
 {/section}
 </div>
-<br/>
+<br />
 {* next and prev links *}
 <div align="center">
 <div class="mini">
@@ -121,7 +121,7 @@
 &nbsp;[<a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -134,9 +134,9 @@
 
 {if count($related)>0}
 <div class="dirrelated">
-{tr}Related categories{/tr}<br/><br/>
+{tr}Related categories{/tr}<br /><br />
 {section name=ix loop=$related}
-<a class="dirlink" href="tiki-directory_browse.php?parent={$related[ix].relatedTo}">{$related[ix].path}</a><br/>
+<a class="dirlink" href="tiki-directory_browse.php?parent={$related[ix].relatedTo}">{$related[ix].path}</a><br />
 {/section}
 </div>
 {/if}

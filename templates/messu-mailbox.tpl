@@ -11,7 +11,7 @@
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-<br/><br/>
+<br /><br />
 
 <form action="messu-mailbox.php" method="get">
 <label for="mess-mailmessages">{tr}Messages{/tr}:</label>
@@ -35,7 +35,7 @@
 <input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 <input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
-<br/>
+<br />
 
 <form action="messu-mailbox.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -76,7 +76,7 @@
   {/section}
 </table>
 </form>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}

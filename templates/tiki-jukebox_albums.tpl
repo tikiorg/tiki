@@ -1,11 +1,14 @@
-<a class="pagetitle" href="tiki-jukebox_albums.php">{tr}Jukebox Albums{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-jukebox_albums.php">{tr}Jukebox Albums{/tr}</a><br /><br />
 {if $tiki_p_jukebox_tracks eq 'y'}
 <a class="linkbut" href="tiki-jukebox_albums.php?edit_mode=1?albumId=0">{tr}create new album{/tr}</a>
+{/if}
+{if $tiki_p_jukebox_genres eq 'y'}
+ <a class="linkbut" href="tiki-jukebox_genres.php">{tr}Admin Genres{/tr}</a>
 {/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=jukebox"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
-<br/><br/>
+<br /><br />
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
@@ -27,7 +30,7 @@
 </table>
 </form>
 </div>
-<br/>
+<br />
 {if $albumId>0}
 {if $edited eq 'y'}
 <div class="wikitext">
@@ -86,7 +89,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="jukeboxprevnext" href="tiki-jukebox_albums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -96,7 +99,7 @@
 &nbsp;[<a class="jukeboxprevnext" href="tiki-jukebox_albums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-jukebox_albums.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
