@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.82 2003-11-24 02:23:55 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.83 2003-11-25 11:40:01 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -142,7 +142,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_live_su
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_menusfolderstyle', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_messages', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_minical', 'n');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_modulecontrols', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_modulecontrols', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_newsletters', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_newsreader', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_notepad', 'n');
@@ -822,5 +822,8 @@ UPDATE tiki_menu_options SET url = 'tiki-edit_submission.php' WHERE url = 'tiki-
 
 # added on 2003-11-24 by mose (strange alien typo field no idea why it was there)
 ALTER TABLE `tiki_charts` DROP `hist`;
+
+# added on 2003-11-25 by mose (phplayers pref)
+INSERT INTO tiki_preferences (name, value) VALUES ('feature_phplayers', 'n');
 
 
