@@ -74,7 +74,7 @@ if(isset($_REQUEST["register"])) {
     }
   }
   
-  if($validateUsers) {
+  if($validateUsers=='y') {
     $ret = $tikilib->SnowCheckMail($_REQUEST["email"]);
     if(!$ret[0]) {
       $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
