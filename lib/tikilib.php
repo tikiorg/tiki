@@ -8855,15 +8855,11 @@ function r_compare_changed($ar1, $ar2) {
   return $ar2["lastChanged"] - $ar1["lastChanged"];
 }
 
+
 function chkgd2() {
   if(isset($_SESSION['havegd2'])) {
-  $havegd2 = $_SESSION['havegd2'];
+    $havegd2 = $_SESSION['havegd2'];
   } else {
-  $havegd2 = 'no';
-  }
-  if ($havegd2 == 'yes') { return true; }
-  if ($havegd2 == 'no') { return false; }
-
   ob_start();
   phpinfo();
   $phpinfo = ob_get_contents();
@@ -8875,7 +8871,11 @@ function chkgd2() {
 
   $_SESSION['havegd2'] = 'no';
   return false;
+  }
+  if ($havegd2 == 'yes') { return true; }
+  if ($havegd2 == 'no') { return false; }
 }
+
 
 function httpScheme() {
 	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
