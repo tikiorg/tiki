@@ -610,7 +610,6 @@ class UsersLibAdmin extends UsersLib {
 
 	
 	function validate_user_external_xml($user) {
-//		require_once('xml/xmlparserlib.php');
 		
 		global $auth_ext_xml_url;
 		if ($this->get_preference('auth_method', 'tiki') == 'cas' && $this->get_preference('auth_ext_xml_enabled', 'n') == 'y' && $this->get_preference('auth_ext_xml_cas_proxy', 'n') == 'y') {
@@ -643,6 +642,7 @@ class UsersLibAdmin extends UsersLib {
 			}
 		}
 		
+		global $auth_ext_xml_manage_group;
 		if ($auth_ext_xml_login_isvalid == 'y' && $auth_ext_xml_manage_group == 'y') {
 			$groups = $this->get_groups();
 			$group_arraylen = count($groups['data']);
