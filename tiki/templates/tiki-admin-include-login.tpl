@@ -167,8 +167,33 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="pam_skip_admin" {if $pam_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})<td><td><input type="text" name="pam_service" value="{$pam_service|escape}"/></td></tr>
+<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})<td><input type="text" name="pam_service" value="{$pam_service|escape}"/></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_pam" value="{tr}Change preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+
+<div class="cbox">
+<div class="cbox-title">{tr}CAS (Central Authentication Service){/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php?page=login" method="post">
+<table class="admin">
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="cas_create_user_tiki" {if $cas_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="cas_skip_admin" {if $cas_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}CAS server version{/tr}:<td>
+<select name="cas_version">
+<option value="none" {if $cas_version neq "1" && $cas_version neq "2"} selected="selected"{/if}></option>
+<option value="1" {if $cas_version eq "1"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
+<option value="2" {if $cas_version eq "2"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="form">{tr}CAS server hostname{/tr}:</td><td><input type="text" name="cas_hostname" value="{$cas_hostname|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}CAS server port{/tr}:</td><td><input type="text" name="cas_port" size="5" value="{$cas_port|escape}" /></td></tr>
+<tr><td class="form">{tr}CAS server path{/tr}:</td><td><input type="text" name="cas_hostname" value="{$cas_path|escape}" size="50" /></td></tr>
+<tr><td colspan="2" class="button"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>

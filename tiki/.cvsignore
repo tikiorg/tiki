@@ -5,3 +5,4 @@ var
 .htaccess
 phpmyadmin
 tiki-emptycache.php
+project.index
