@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.40 2004-04-14 18:19:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.41 2004-04-14 18:37:45 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -91,7 +91,7 @@
   {* if a reply to it is being composed * }
   {* The $parent_com is only set in this case *}
   {if $parent_com}
-{tr}comment this{/tr}
+{tr}reply{/tr}
   <table class="normal">
   <tr>
   	<td class="odd">
