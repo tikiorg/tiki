@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.7 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.8 2003-08-09 22:24:59 zaufi Exp $
  *
  */
 
@@ -9,16 +9,16 @@
 
 /* This div encloses the whole Tiki application */
 div#tiki-main {
-	height:    100%;
-	width:   100%;
-	margin:   0px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
 }
 
 /* This is the header */
 div#tiki-top {
-	text-align:    right;
-	position:   absolute;
-	right:   200px;
+	text-align: right;
+	position: absolute;
+	right: 200px;
 }
 
 /* This is the middle */
@@ -28,41 +28,41 @@ div#tiki-mid {
 
 /* And this is the footer with table inside */
 div#tiki-bot {
-	margin-top:    10px;
-	height:   100px;
-	text-align:   center;
+	margin-top: 10px;
+	height: 100px;
+	text-align: center;
 }
 
 div#tiki-bot > table {
-	visibility:    hidden;
-	width:   100%;
+	visibility: hidden;
+	width: 100%;
 }
 
 div#tiki-bot > table td {
-	vertical-align:    middle;
-	font-family:   "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   12px;
+	vertical-align: middle;
+	font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 div#tiki-bot:hover > table {
-	visibility:    visible;
-	width:   100%;
-	font-size:   small;
+	visibility: visible;
+	width: 100%;
+	font-size: small;
 }
 
 /* The three columns (now divs) */
 div#leftcolumn {
-	position:    absolute;
-	left:   5px;
-	top:   5px;
-	width:   180px;
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	width: 180px;
 }
 
 div#rightcolumn {
-	position:    absolute;
-	right:   5px;
-	top:   5px;
-	width:   180px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	width: 180px;
 }
 
 /* And this is what lies inside the centercolumn
@@ -70,8 +70,8 @@ div#rightcolumn {
  *       Look into tiki.tpl for details...
  */
 div#tiki-center {
-	padding-left:    2px;
-	padding-right:   2px;
-	color:   #00E000;
-	width:   auto;
+	padding-left: 2px;
+	padding-right: 2px;
+	color: #00E000;
+	width: auto;
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.l.css,v 1.8 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.l.css,v 1.9 2003-08-09 22:24:59 zaufi Exp $
  *
  * Backgrounds for light version of 'Matrix' theme
  *
@@ -11,7 +11,10 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-td.formcolor, td.even, td.heading, td.button {
+td.formcolor,
+td.even,
+td.heading,
+td.button {
 	background: #507050;
 }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.l.css,v 1.7 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.l.css,v 1.8 2003-08-09 22:24:59 zaufi Exp $
  *
  * Backgrounds for light version of 'Matrix' theme
  *
@@ -19,7 +19,8 @@ div.messureadhead td[style = "font-weight:bold;"] {
 	background: #507050;
 }
 
-div.shoutboxmsg, div.messureadhead td[style = "font-weight:bold;"] + td {
+div.shoutboxmsg,
+div.messureadhead td[style = "font-weight:bold;"] + td {
 	background: #404040;
 }
 

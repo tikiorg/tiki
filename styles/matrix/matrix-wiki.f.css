@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.4 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.5 2003-08-09 22:24:59 zaufi Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -11,8 +11,19 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-div.wikitext, div.titlebar, td.wikicell, div.wiki-edithelp, div.tocnav, TD.comform, div.commentsedithelp, div.commentstoolbar,
-	div.commentscomment > div.commentheader, div.codelisting, td.userstoryid, td.userstorystatus, td.userstorytitle {
+div.wikitext,
+div.titlebar,
+td.wikicell,
+div.wiki-edithelp,
+div.tocnav,
+td.comform,
+div.commentsedithelp,
+div.commentstoolbar,
+div.commentscomment > div.commentheader,
+div.codelisting,
+td.userstoryid,
+td.userstorystatus,
+td.userstorytitle {
 	background: url(img/ltgreen.png) repeat;
 }
 

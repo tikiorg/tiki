@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.9 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.10 2003-08-09 22:24:59 zaufi Exp $
  *
  * General HTML redefinitions
  * There is no Tiki related things -- just pure HTML redefinitions
@@ -20,79 +20,79 @@
  * Document defaults
  */
 body {
-	color:    #00B000;
-	background-color:   #001000;
-	background-image:   url(img/matrix.jpg);
-	background-attachment:   fixed;
-	margin-top:   0px;
-	margin-left:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
-	font-family:   Verdana, Arial, Helvetica, sans-serif;
-	font-size:   11px;
+	color: #00B000;
+	background-color: #001000;
+	background-image: url(img/matrix.jpg);
+	background-attachment: fixed;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
 a, a:visited, a.link, a.link:visited, :link, :link:visited {
-	color:    #00E000;
-	text-decoration:   none;
+	color: #00E000;
+	text-decoration: none;
 }
 
 a:visited:hover, a:hover, a.link:visited:hover, a.link:hover, :link:visited:hover, :link:hover {
-	color:    #00F000;
-	text-decoration:   underline;
+	color: #00F000;
+	text-decoration: underline;
 }
 
 a.link:active, a:active, :link:active {
-	color:    #00E000;
-	text-decoration:   none;
+	color: #00E000;
+	text-decoration: none;
 }
 
 hr {
-	color:    #00A000;
-	border:   1px outset green;
+	color: #00A000;
+	border: 1px outset green;
 }
 
 h1 {
-	font-family:    "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	font-size:   30px;
-	text-transform:   uppercase;
+	font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	text-transform: uppercase;
 }
 
 h2 {
-	font-family:    "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	font-variant:   small-caps;
-	font-size:   25px;
+	font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-variant: small-caps;
+	font-size: 25px;
 }
 
 h3 {
-	font-family:    "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	font-variant:   small-caps;
-	font-size:   20px;
+	font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-variant: small-caps;
+	font-size: 20px;
 }
 
 /* Description on wiki pages */
 small {
-	font-family:    "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   12px;
+	font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
 form {
-	margin:    0px;
-	padding:   0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 /* General form elements */
 input, textarea, select {
-	color:    #001000;
-	background:   #D8DFC8;
-	font:   normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color: #001000;
+	background: #D8DFC8;
+	font: normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 }
 
 /* Warning background/color */
 span.warn {
-	color:    red;
-	background:   #900000;
+	color: red;
+	background: #900000;
 }
 
 /* Code fragments */

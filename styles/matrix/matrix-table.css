@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.8 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.9 2003-08-09 22:24:59 zaufi Exp $
  *
  */
 
@@ -13,8 +13,8 @@
 
 /* The table */
 table.normal {
-	width:    100%;
-	border:   1px outset #00A000;
+	width: 100%;
+	border: 1px outset #00A000;
 }
 
 table.normalnoborder {
@@ -22,8 +22,8 @@ table.normalnoborder {
 }
 /* Do not show border if normaltab inside a simplebox */
 div.simplebox table.normal {
-	width:    100%;
-	border:   none;
+	width: 100%;
+	border: none;
 }
 
 /* Cells where nothing is specified */
@@ -33,36 +33,36 @@ td {
 
 /* Cells in forms without background color (inside a div for example) */
 td.form {
-	font-family:    "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	vertical-align:   top;
+	font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	vertical-align: top;
 }
 /* Cells in forms using a background color */
 td.formcolor {
-	color:    #001000;
-	font-family:   "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	text-align:   left;
-	vertical-align:   top;
-	border:   1px outset #00A000;
+	color: #001000;
+	font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-align: left;
+	vertical-align: top;
+	border: 1px outset #00A000;
 }
 
 /* Table headings */
 td.heading {
-	color:    #001000;
-	font-family:   Verdana, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	font-weight:   bold;
-	border:   1px outset #00A000;
-	height:   25px;
-	padding-left:   2px;
-	padding-right:   5px;
-	vertical-align:   middle;
+	color: #001000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	border: 1px outset #00A000;
+	height: 25px;
+	padding-left: 2px;
+	padding-right: 5px;
+	vertical-align: middle;
 }
 
 td.button {
-	text-align:    center;
-	vertical-align:   middle;
+	text-align: center;
+	vertical-align: middle;
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
@@ -78,8 +78,8 @@ a.tablename:hover {
 }
 
 .tableheading:visited:hover, .tableheading:visited {
-	text-decoration:    none;
-	color:   #00B000;
+	text-decoration: none;
+	color: #00B000;
 }
 
 /*
@@ -87,8 +87,8 @@ a.tablename:hover {
  *form is displayed in a table with the following style
  */
 table.findtable {
-	width:    100%;
-	margin-bottom:   20px;
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 td.findtitle {
@@ -96,13 +96,13 @@ td.findtitle {
 
 /* Tables odd rows */
 td.odd {
-	color:    lightgreen;
-	border:   1px outset #00A000;
+	color: lightgreen;
+	border: 1px outset #00A000;
 }
 
 td.even {
-	color:    lightgreen;
-	border:   1px outset #00A000;
+	color: lightgreen;
+	border: 1px outset #00A000;
 }
 /* currently unused as `grep` shows */
 td.third {
@@ -113,10 +113,10 @@ td.third {
  * Currently in Attachments and comments only.
  */
 caption {
-	color:    #00E000;
-	font-family:   Verdana, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	font-weight:   bold;
-	text-align:   right;
-	vertical-align:   middle;
+	color: #00E000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: right;
+	vertical-align: middle;
 }
