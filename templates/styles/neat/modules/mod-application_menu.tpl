@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.24 2004-05-06 00:24:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.25 2004-06-11 18:44:09 lfagundes Exp $ *}
 
-{tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
+{tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}home{/tr}</a><br />
 {if $feature_chat eq 'y'}
