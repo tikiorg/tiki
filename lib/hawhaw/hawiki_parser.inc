@@ -1,7 +1,7 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 19. September 2003
+// Last modified: 17. October 2003
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
@@ -217,6 +217,16 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     {
       $po["page"]  = $link[0]; // no extra labelling of link required
       $po["label"] = $link[0];
+    }
+    
+    if (count($link) > 2)
+    {
+      // hawhaw voice specific enhancement (not part of TikiWiki syntax!)
+      if (preg_match("/^dtmf=([0-9\*#])$/", $link[2], $matches))
+      {
+        // forced assignment of given dtmf key to linked wiki page
+        $po["dtmf"] = $matches[1];
+      }
     }
 
     $po["token"] = HAWIKI_TOKEN_WIKINAME;
