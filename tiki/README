@@ -1,0 +1,27 @@
+This directory contains source code to 
+
+    Tiki! The wiki with lot of features!
+
+You will need to set the proper directory ownership permissions before
+you can use tiki.
+
+To set the rights, type:
+
+su -c './setup.sh <user>'
+
+where <user> is the user the web server runs as.
+
+In most cases, this will be 'nobody':
+
+su -c './setup.sh nobody'
+
+In Debian, it is usually 'www-data'.
+
+For security, or other purposes, you may wish the set the user *and* group.
+To do this, type:
+
+su -c './setup.sh <user> <group>'
+
+For example:
+
+su -c './setup.sh mylogin www-data'
