@@ -44,7 +44,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr>
-<td class="{cycle advance=false}">{$items[ix].chat_started|date_format:"%d %b [%H:%M]"}</td>
+<td class="{cycle advance=false}">{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
 <td class="{cycle advance=false}">{$items[ix].tiki_user}</td>
 <td class="{cycle advance=false}">{$items[ix].reason}</td>
 <td class="{cycle advance=false}">{$items[ix].operator}</td>
