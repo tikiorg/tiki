@@ -319,7 +319,7 @@ CREATE TABLE tiki_article_types (
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
   creator_edit varchar(1) default NULL,
-  comment_rating varchar(1) default NULL,
+  comment_can_rate_article char(1) default NULL
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
@@ -857,6 +857,7 @@ CREATE TABLE tiki_comments (
   smiley varchar(80) default NULL,
   message_id varchar(250) default NULL,
   in_reply_to varchar(250) default NULL,
+  comment_rating tinyint(2) default NULL,  
   PRIMARY KEY  (threadId),
   KEY title (title),
   KEY data (data(255)),
