@@ -278,7 +278,7 @@ class ActivityManager extends BaseManager {
     
     if(!$this->_node_in_list($start_node,$nodes)) {
       // Start node is NOT reachable from the end node
-      $errors[] = tra('End activity is not reachable from start activty');
+      $errors[] = tra('End activity is not reachable from start activity');
     }
     
     //Rule 3: interactive activities must have a role
