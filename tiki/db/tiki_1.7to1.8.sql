@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.43 2003-10-22 12:09:19 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.44 2003-10-23 04:07:25 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -474,3 +474,5 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki');
 
+ALTER TABLE tiki_received_articles ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
+ALTER TABLE tiki_submissions ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
