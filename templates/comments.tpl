@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.35 2004-02-05 11:44:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.36 2004-03-19 21:03:12 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -208,7 +208,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
     {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="link" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
     {/if}
-    <form method="post" action="{$comments_father}">
+    <form method="post" action="{$comments_father}" id='editpostform'>
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
@@ -266,7 +266,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
     </tr>
     {/if}
     <tr>
-      <td class="formcolor"><label for="editpost">{tr}Comment{/tr}</label></td>
+      <td class="formcolor"><label for="editpost">{tr}Comment{/tr}</label><br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpostform'}<br /><br /></td>
       <td class="formcolor"><textarea id="editpost" name="comments_data" rows="6" cols="80">{$comment_data|escape}</textarea></td>
     </tr>
     </table>
