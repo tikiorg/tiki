@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.61 2003-08-18 08:42:25 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.62 2003-08-21 22:37:20 redflo Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -51,6 +51,9 @@
   {/if}
   {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
      &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}Messages{/tr}</a><br /> 
+  {/if}
+  {if $feature_userPreferences eq 'y'}
+      &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />
   {/if}
   {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
       &nbsp;<a href="tiki-user_tasks.php" class="linkmenu">{tr}Tasks{/tr}</a><br />
@@ -460,6 +463,7 @@
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('admmnu');">[+]</a>{/if}
   </div>
   <div id="admmnu" style="{$mnu_admmnu}">
+  {sortlinks}
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
 	{/if}
@@ -532,6 +536,7 @@
       &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}DSN{/tr}</a><br />
       &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
     {/if}
+    {/sortlinks}
   </div>
 {/if}
 
