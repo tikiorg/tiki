@@ -389,17 +389,17 @@
     {if $attach1}
     <tr><td class="formcolor">{tr}Attachment 1{/tr}</td><td class="formcolor">{$attach1} <input type="submit" name="remove_attach1" value="{tr}remove{/tr}" /></td></tr>
     {else}
-    <tr><td class="formcolor">{tr}Attachment 1{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile1" type="file"></td></tr>
+    <tr><td class="formcolor">{tr}Attachment 1{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile1" type="file" /></td></tr>
     {/if}
     {if $attach2}
     <tr><td class="formcolor">{tr}Attachment 2{/tr}</td><td class="formcolor">{$attach2} <input type="submit" name="remove_attach2" value="{tr}remove{/tr}" /></td></tr>
     {else}
-    <tr><td class="formcolor">{tr}Attachment 2{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile2" type="file"></td></tr>
+    <tr><td class="formcolor">{tr}Attachment 2{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile2" type="file" /></td></tr>
     {/if}
     {if $attach3}
     <tr><td class="formcolor">{tr}Attachment 3{/tr}</td><td class="formcolor">{$attach3} <input type="submit" name="remove_attach3" value="{tr}remove{/tr}" /></td></tr>
     {else}
-    <tr><td class="formcolor">{tr}Attachment 3{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile3" type="file"></td></tr>
+    <tr><td class="formcolor">{tr}Attachment 3{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000" /><input name="userfile3" type="file" /></td></tr>
     {/if}
     <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="attached" value="{tr}done{/tr}" /></td></tr>
     </table>

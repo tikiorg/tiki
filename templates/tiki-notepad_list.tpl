@@ -101,7 +101,7 @@
 </tr>
 -->
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 </tr>
 </table>
 </form>

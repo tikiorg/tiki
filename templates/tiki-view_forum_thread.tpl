@@ -251,7 +251,7 @@ a moderator approves it.{/tr}</small>
     <tr>
 	  <td class="forumform">{tr}Attach file{/tr}</td>
 	  <td class="forumform">
-	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input name="userfile1" type="file" />
+	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
