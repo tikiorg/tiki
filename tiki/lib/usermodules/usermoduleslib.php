@@ -1,9 +1,10 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.13 2003-08-14 00:33:22 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.14 2003-08-14 14:13:40 zaufi Exp $
  *
  * \brief Manage user assigned modules
  */
+include_once ('lib/debug/debugger.php');
 
 /**
  * \brief Class to manage user assigned modules
@@ -45,7 +46,6 @@ class UserModulesLib extends TikiLib {
 
 	function set_column_user_module($name, $user, $position) {
 		$query = "update `tiki_user_assigned_modules` set `position`='$position' where `name`='$name' and user='$user'";
-
 		$result = $this->query($query);
 	}
 
@@ -257,11 +257,20 @@ class UserModulesLib extends TikiLib {
         {
             // Swap 2 adjacent modules
             $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
-  	        $r = $this->query($query, array($swap['ord'], $name, $user));
+  	        $this->query($query, array($swap['ord'], $name, $user));
             $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
-  	        $r = $this->query($query, array($cur['ord'], $swap['name'], $user));
+  	        $this->query($query, array($cur['ord'], $swap['name'], $user));
         }
  	}
+    /// Toggle module position
+    function move_module($name, $user)
+    {
+        // Get current position
+	    $query = "select `position` from `tiki_user_assigned_modules` where `name`=? and user=?";
+    	$r = $this->query($query, array($name, $user));
+        $res = $r->fetchRow();
+        $this->set_column_user_module($name, $user, ($res['position'] == 'r' ? 'l' : 'r'));
+    }
 	/// Add a module to all the user who have assigned module and who don't have already this module
 	function add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type) {
 		// for the user who already has this module, update only the type

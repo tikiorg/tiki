@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.6 2003-08-14 00:38:24 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.7 2003-08-14 14:14:22 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,8 +17,7 @@ global $smarty;
 $check_req = (isset($_REQUEST["mc_unassign"])
            || isset($_REQUEST["mc_up"])
            || isset($_REQUEST["mc_down"])
-           || isset($_REQUEST["mc_left"])
-           || isset($_REQUEST["mc_right"]));
+           || isset($_REQUEST["mc_move"]));
 
 if ($tiki_p_configure_modules != 'y' && $check_req) {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
@@ -49,10 +48,8 @@ if ($check_req) {
 		$usermoduleslib->swap_up_user_module($_REQUEST["mc_up"], $user);
 	elseif (isset($_REQUEST["mc_down"]))
 		$usermoduleslib->swap_down_user_module($_REQUEST["mc_down"], $user);
-	elseif (isset($_REQUEST["mc_left"]))
-		$usermoduleslib->set_column_user_module($_REQUEST["mc_left"], $user, 'l');
-	elseif (isset($_REQUEST["mc_right"]))
-		$usermoduleslib->set_column_user_module($_REQUEST["mc_right"], $user, 'r');
+	elseif (isset($_REQUEST["mc_move"]))
+		$usermoduleslib->move_module($_REQUEST["mc_move"], $user);
 	else
 		$usermoduleslib->unassign_user_module($_REQUEST["mc_unassign"], $user);
 }
