@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.47 2004-04-29 22:31:46 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.48 2004-04-30 09:01:57 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -105,6 +105,10 @@ DIV#tiki-main {
 	width: 100%;
 }
 
+#tiki-top table {
+	width: 100%;
+}
+
 #tiki-top a.linkh {
 	color:    #FFFFFF;
 	font-weight:   bold;
@@ -112,6 +116,26 @@ DIV#tiki-main {
 	text-decoration:   none;
 	padding-left:   4px;
 	padding-right:   4px;
+}
+#tiki-top a.linkh:hover {
+	background-color : #000000;
+	color : #FFFF99;
+}
+
+#tiki-top .left {
+	background-color:    #000000;
+	color :   #FFFFFF;
+	width : 180px;
+	text-align : left;
+	padding-left : 2px;
+}
+
+#tiki-top .right {
+	background-color:    #000000;
+	color :   #FFFFFF;
+	width : 180px;
+	text-align : right;
+	padding-right : 2px;
 }
 
 #tiki-top .center {
@@ -123,7 +147,7 @@ DIV#tiki-main {
 	color:   #FFFFFF;
 	padding-left:   6px;
 	padding-right:   6px;
-	padding-bottom:   2px;
+	padding-bottom:   1px;
 }
 
 #tiki-top .link:hover {
