@@ -7,13 +7,13 @@
 <br/><br/>
 <table>
 <tr><td>
-<form action="tiki-notepad_read.php" method="post">
+<form id='formread' action="tiki-notepad_read.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId}" />
-<select name="parse_mode">
+<select name="parse_mode" onChange="javascript:document.getElementById('formread').submit();">
 <option value="raw" {if $parse_mode eq 'raw'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 <option value="wiki"{if $parse_mode eq 'wiki'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
 </select>
-<input type="submit" name="setpm" value="{tr}set{/tr}" />
+<!--<input type="submit" name="setpm" value="{tr}set{/tr}" />-->
 </form>
 </td>
 <td>
@@ -28,10 +28,6 @@
 <input type="submit" name="write" value="{tr}edit{/tr}" />
 </form>
 </td></tr></table>
-<table class="normal">
-<tr>
-  <td class="formcolor">
+  <div class="wikitext">
   {$info.parsed}
-  </td>
-</tr>
-</table>
+  </div>

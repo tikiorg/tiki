@@ -54,7 +54,7 @@
     &nbsp;<a href="tiki-webmail.php" class="linkmenu">{tr}Webmail{/tr}</a><br/>  
   {/if}
   {if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-    &nbsp;<a href="tiki-user_notepad.php" class="linkmenu">{tr}Notepad{/tr}</a><br/>  
+    &nbsp;<a href="tiki-notepad_list.php" class="linkmenu">{tr}Notepad{/tr}</a><br/>  
   {/if}
   {if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
     &nbsp;<a href="tiki-userfiles.php" class="linkmenu">{tr}My files{/tr}</a><br/>  

@@ -9,6 +9,13 @@ class WikiLib extends TikiLib {
     }
     $this->db = $db;  
   }
+  
+  function save_notepad($user,$title,$data)
+  {
+    $data = addslashes($data);
+    $title = addslashes($data);
+    
+  }
 
   // Methods to cache and handle the cached version of wiki pages
   // to prevent parsing large pages.

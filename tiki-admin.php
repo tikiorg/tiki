@@ -771,6 +771,15 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_footnotes",'n');
   }
   
+  if(isset($_REQUEST["feature_wiki_notepad"]) && $_REQUEST["feature_wiki_notepad"]=="on") {
+    $tikilib->set_preference("feature_wiki_notepad",'y'); 
+    $smarty->assign("feature_wiki_notepad",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_notepad",'n');
+    $smarty->assign("feature_wiki_notepad",'n');
+  }
+
+  
   $tikilib->set_preference('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
   $smarty->assign('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
   

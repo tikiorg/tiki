@@ -1,7 +1,18 @@
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a></h1>{/if}
+<table width="100%">
+<tr>
+<td>
 {if $feature_wiki_description}
 <small>{$description}</small>
 {/if}
+</td>
+<td style="text-align:right;">
+{if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+<a href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+{/if}
+</td>
+</tr>
+</table>
 {if $cached_page eq 'y'}
 <small> (cached) [<a class="linkmodule" href="tiki-index.php?page={$page}&amp;refresh=1">refresh</a>]</small>
 {/if}
