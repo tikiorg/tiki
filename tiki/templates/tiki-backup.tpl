@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-backup.php">Backups</a><br/><br/>
-<h2>{tr}List of available backups</h2>
+<h2>{tr}List of available backups{/tr}</h2>
 
 <table class="normal">
 <tr>
@@ -36,17 +36,14 @@
 {if $restore eq 'y'}
 <div class="simplebox">
 <strong>{tr}Restoring a backup{/tr}</strong><br/>
-<small><strong>{tr}Warning!{/tr}: </strong><i>{tr}Restoring a backup destoys all the data in your Tiki database.
-All your tables will be replaced with the information in the backup.{/tr}</i></small><br/><br/>
+<small><strong>{tr}Warning!{/tr}: </strong><i>{tr}Restoring a backup destoys all the data in your Tiki database. All your tables will be replaced with the information in the backup.{/tr}</i></small><br/><br/>
 <a href="tiki-backup.php?rrestore={$restorefile}" class="link">{tr}Click here to confirm restoring{/tr}</a>
 </div>
 <br/>
 {/if}
 <div class="simplebox">
 <strong>{tr}Create new backup{/tr}</strong><br/>
-<small><i>{tr}Creating backups may take a long time. If the process is not completed you will
-see a blank screen. If so you need to increment the maximum script execution time
-from your php.ini file{/tr}</i></small><br/><br/>
+<small><i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i></small><br/><br/>
 <a href="tiki-backup.php?generate=1" class="link">{tr}Click here to create a new backup{/tr}</a>
 </div>
 <br/>

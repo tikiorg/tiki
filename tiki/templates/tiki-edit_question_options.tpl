@@ -4,7 +4,7 @@
 |<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 |<a class="link" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
 |<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
-<h2>{tr}Create/edit options for question: <a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a>{/tr}</h2>
+<h2>{tr}Create/edit options for question{/tr}: <a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
 <form action="tiki-edit_question_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId}" />
 <input type="hidden" name="questionId" value="{$questionId}" />

@@ -48,8 +48,7 @@
 </form>
 {if $remove eq 'y'}
 <br/>
-{tr}You will remove {$removepage} and its subpages from the structure, now you have
-two options:{/tr}
+{tr}You will remove{/tr} {$removepage} {tr}and its subpages from the structure, now you have two options:{/tr}
 <ul>
 <li><a class="link" href="tiki-edit_structure.php?structure={$structure}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
 <li><a class="link" href="tiki-edit_structure.php?structure={$structure}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>

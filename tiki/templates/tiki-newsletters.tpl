@@ -1,7 +1,6 @@
 <a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a><br/><br/>
 {if $subscribed eq 'y'}
-{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription.
-No newsletters will be sent to you until the subscription is confirmed.{/tr}<br/><br/>
+{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}<br/><br/>
 {/if}
 {if $unsub eq 'y'}
 {tr}Your email address was removed from the list of subscriptors.{/tr}<br/><br/>

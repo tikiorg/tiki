@@ -4,7 +4,7 @@
 |<a class="link" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a>
 |<a class="link" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a>
 |<a class="link" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a>]<br/><br/>
-<h2>{tr}Create/edit questions for survey: <a href="tiki-admin_survey.php?surveyId={$survey_info.surveyId}" class="pagetitle">{$survey_info.name}</a>{/tr}</h2>
+<h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_survey.php?surveyId={$survey_info.surveyId}" class="pagetitle">{$survey_info.name}</a></h2>
 <form action="tiki-admin_survey_questions.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId}" />
 <input type="hidden" name="questionId" value="{$questionId}" />
