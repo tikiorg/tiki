@@ -366,21 +366,22 @@ class UsersLib extends TikiLib {
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options, "", false, $user, $pass);
-	// turn off the error message
-	$a->setShowLogin(false);
-	$a->start();
-	$status = "";
 
 	// check if the login correct
-	if ($a->getAuth())
-	    $status = USER_VALID;
+	$a->login();
+	switch ($a->getStatus()) {
+		case AUTH_LOGIN_OK:
+			return USER_VALID;
 
-	// otherwise use the error status given back
-	else
-	    $status = $a->getStatus();
+		case AUTH_USER_NOT_FOUND:
+			return USER_NOT_FOUND;
 
+		case AUTH_WRONG_LOGIN:
+			return PASSWORD_INCORRECT;
 
-	return $status;
+		default:
+			return SERVER_ERROR;
+	}
     }
 
     // validate the user in the Tiki database
