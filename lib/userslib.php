@@ -911,5 +911,33 @@ class UsersLib extends TikiLib {
     $result = $this->query($query);
     return true;
   }
+  
+  function set_user_fields($u) {
+  global $feature_clear_passwords;
+  	if (@$u['password']) {
+  		if ($feature_clear_passwords == 's') {
+  			$q[]="password='".addslashes(strip_tags($u['password']))."'";
+  		}
+  		$hash = md5($u['password']);
+  		$q[]="hash='$hash'";
+  	}
+  	if (@$u['email']) {
+  		$q[]="email='".addslashes(strip_tags($u['email']))."'";
+  	}
+  	if (@$u['realname']) {
+  		$q[]="realname='".addslashes(strip_tags($u['realname']))."'";
+  	}
+  	if (@$u['homePage']) {
+  		$q[]="homePage='".addslashes(strip_tags($u['homePage']))."'";
+  	}
+  	if (@$u['country']) {
+  		$q[]="country='".addslashes(strip_tags($u['country']))."'";
+  	}
+  	$query = "update users_users set ".implode(",",$q)." where binary login='{$u['login']}'";
+  	$result = $this->query($query);
+  	return $result;
+  }
+  
+  
 }  
 ?>
