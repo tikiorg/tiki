@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.12 2004-07-30 22:31:50 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.13 2004-08-03 20:01:12 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -242,20 +242,6 @@ class StaticLib extends TikiLib {
 			copy("styles/$style", $style_path);
 		}
 		
-		if (!$rebuildall) {
-			// restore the permissions for the user since we have finished building the static page
-			global $user;
-			$smarty->assign('user', $user);
-			$perms = $userlib->get_user_permissions($user);
-			foreach ($perms as $perm) {
-			    $smarty->assign("$perm", 'y');
-			    $$perm = 'y';
-			}
-			if ($user == 'admin') {
-				$tiki_p_admin = 'y';
-			}
-			include('tiki-modules.php');
-		}
 		return TRUE;
 		
 	}
@@ -301,22 +287,6 @@ class StaticLib extends TikiLib {
 			$this->update_page($page['pageName'], $rebuildall);
 		}
 		
-		// restore the permissions for the user since we have finished building the static page
-		global $user, $smarty;
-		$smarty->assign('user', $user);
-		global $userlib;
-		include_once('lib/userslib.php');
-		$perms = $userlib->get_user_permissions($user);
-		foreach ($perms as $perm) {
-		    $smarty->assign("$perm", 'y');
-		    $$perm = 'y';
-		}
-		if ($user == 'admin') {
-			$tiki_p_admin = 'y';
-		}
-		global $user_assigned_modules, $modallgroups, $modseparateanon, $tikidomain, $language;
-		$tikilib = $this;
-		include('tiki-modules.php');
 		return TRUE;
 		
 	}
