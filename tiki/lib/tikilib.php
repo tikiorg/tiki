@@ -1899,10 +1899,10 @@ function register_user_vote($user, $id) {
     // If user is not logged in then register in the session
     if (!$user) {
 	$_SESSION["votes"][] = $id;
-    } else {
-	$query = "delete from tiki_user_votings where user=? and id=?";
+	} else {
+	$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
 	$result = $this->query($query,array($user,(int)$id));
-	$query = "insert into tiki_user_votings(user,id) values(?,?)";
+	$query = "insert `into tiki_user_votings`(`user`,`id`) values(?,?)";
 	$result = $this->query($query,array($user,(int)$id));
     }
 }
@@ -2103,7 +2103,7 @@ function semaphore_set($semName) {
     //	$cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
     $query = "delete from `tiki_semaphores` where `semName`=?";
     $this->query($query,array($semName));
-    $query = "insert into tiki_semaphores(semName,timestamp,user) values(?,?,?)";
+    $query = "insert into `tiki_semaphores`(`semName`,`timestamp`,`user`) values(?,?,?)";
     $result = $this->query($query,array($semName,(int)$now,$user));
     return $now;
 }
@@ -2624,21 +2624,22 @@ function is_cached($url) {
 }
 
 function list_cache($offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
 
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
+	$findesc = '%' . $find . '%';
 
-	$mid = " where (`url` like $findesc) ";
+	$mid = " where (`url` like ?) ";
+	$bindvars=array($findesc);
     } else {
 	$mid = "";
+	$bindvars=array();
     }
 
-    $query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from `tiki_link_cache` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = array();
+	$query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_link_cache` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
 
     while ($res = $result->fetchRow()) {
 	$ret[] = $res;
@@ -2693,7 +2694,7 @@ function get_cache($cacheId) {
 
 function vote_page($page, $points) {
     $query = "update `pages`
-	set `points`=points+$points, `votes`=votes+1
+	set `points`=`points`+$points, `votes`=`votes`+1
 	where `pageName`=?";
     $result = $this->query($query, array( $page ));
 }
@@ -2730,7 +2731,7 @@ function get_top_pages($limit) {
 function get_random_pages($n) {
     $query = "select count(*) from `tiki_pages`";
 
-    $cant = $this->getOne($query);
+	$cant = $this->getOne($query,array());
 
     // Adjust the limit if there are not enough pages
     if ($cant < $n)
@@ -2796,20 +2797,20 @@ function cache_url($url) {
 // Removes all the versions of a page and the page itself
 /*shared*/
 function remove_all_versions($page, $comment = '') {
-    $this->invalidate_cache($page);
-    $query = "delete from `tiki_pages` where `pageName` = ?";
-    $result = $this->query($query, array( $page ) );
-    $query = "delete from `tiki_history` where `pageName` = ?";
-    $result = $this->query($query, array( $page ) );
-    $query = "delete from `tiki_links` where `fromPage` = ?";
-    $result = $this->query($query, array( $page ) );
-    $action = "Removed";
-    $t = date("U");
-    $query = "insert into
-	`tiki_actionlog`(action,pageName,lastModif,user,ip,comment)
-	values(?,?,?,'admin',?,?)";
-    $result = $this->query($query, array(
-		$action,$page,$t,$_SERVER["REMOTE_ADDR"],$comment
+	$this->invalidate_cache($page);
+	$query = "delete from `tiki_pages` where `pageName` = ?";
+	$result = $this->query($query, array( $page ) );
+	$query = "delete from `tiki_history` where `pageName` = ?";
+	$result = $this->query($query, array( $page ) );
+	$query = "delete from `tiki_links` where `fromPage` = ?";
+	$result = $this->query($query, array( $page ) );
+	$action = "Removed";
+	$t = date("U");
+	$query = "insert into
+	`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`)
+	values(?,?,?,?,?,?)";
+	$result = $this->query($query, array(
+		$action,$page,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment
 		) );
     $this->remove_object('wiki page', $page);
     $this->remove_from_structure($page);
@@ -3214,11 +3215,11 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'user_desc') {
 	$maxRecords = -1;
     }
 
-    // Return an array of users indicating name, email, last changed pages, versions, lastLogin
-    $query = "select `user` , `email`, `lastLogin` from `tiki_users` order by $sort_mode limit $offset,$maxRecords";
-    $cant = $this->getOne("select count(*) from `tiki_users`");
-    $result = $this->query($query);
-    $ret = array();
+	// Return an array of users indicating name, email, last changed pages, versions, lastLogin
+	$query = "select `user` , `email`, `lastLogin` from `tiki_users` order by ".$this->convert_sortmode($sort_mode);
+	$cant = $this->getOne("select count(*) from `tiki_users`",array());
+	$result = $this->query($query,array(),$maxRecords,$offset);
+	$ret = array();
 
     while ($res = $result->fetchRow()) {
 	$aux = array();
@@ -3228,9 +3229,9 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'user_desc') {
 	$aux["email"] = $res["email"];
 	$aux["lastLogin"] = $res["lastLogin"];
 	// Obtain lastChanged
-	$aux["versions"] = $this->getOne("select count(*) from `tiki_pages` where `user`='$user'");
+	$aux["versions"] = $this->getOne("select count(*) from `tiki_pages` where `user`=?",array($user));
 	// Obtain versions
-	$aux["lastChanged"] = $this->getOne("select count(*) from `tiki_history` where `user`='$user'");
+	$aux["lastChanged"] = $this->getOne("select count(*) from `tiki_history` where `user`=?",array($user));
 	$ret[] = $aux;
     }
 
@@ -3338,12 +3339,16 @@ function get_user_preference($user, $name, $default = '') {
 function set_user_preference($user, $name, $value) {
     global $user_preferences;
 
-    $user_preferences[$user][$name] = $value;
-    $query = "replace into
-	tiki_user_preferences(user,prefName,value)
+	$user_preferences[$user][$name] = $value;
+	$query = "delete from `tiki_user_preferences`where `user`=? and `prefName`=?";
+	$bindvars=array($user,$name);
+	$result = $this->query($query, $bindvars, -1,-1,false);
+	$query = "insert into
+	`tiki_user_preferences`(`user`,`prefName`,`value`)
 	values(?, ?, ?)";
-    $result = $this->query($query, array($user,$name,$value) );
-    return true;
+	$bindvars[]=$value;
+	$result = $this->query($query, $bindvars);
+	return true;
 }
 
 function validate_user($user, $pass) {
@@ -3512,10 +3517,10 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
 }
 
 function get_user_pages($user, $max, $who='user') {
-    $query = "select `pageName` from `tiki_pages` where `$who`='$user' limit 0,$max";
+	$query = "select `pageName` from `tiki_pages` where `$who`=?";
 
-    $result = $this->query($query);
-    $ret = array();
+	$result = $this->query($query,array($user),$max);
+	$ret = array();
 
     while ($res = $result->fetchRow()) {
 	$ret[] = $res;
@@ -3525,10 +3530,10 @@ function get_user_pages($user, $max, $who='user') {
 }
 
 function get_user_galleries($user, $max) {
-    $query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`='$user' limit 0,$max";
+	$query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`=?";
 
-    $result = $this->query($query);
-    $ret = array();
+	$result = $this->query($query,array($user),$max);
+	$ret = array();
 
     while ($res = $result->fetchRow()) {
 	$ret[] = $res;
@@ -3789,9 +3794,11 @@ function replace_hotwords($line, $words) {
 
 //Updates a dynamic variable found in some object
 /*Shared*/ function update_dynamic_variable($name,$value) {
-    $query = "replace into tiki_dynamic_variables(name,data) values(?,?)";
-    $this->query($query,Array($name,$value));
-    return true;
+	$query = "delete from `tiki_dynamic_variables` where `name`=?";
+	$this->query($query,array($name),-1,-1,false);
+	$query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
+	$this->query($query,Array($name,$value));
+	return true;
 }
 
 //PARSEDATA
@@ -3967,9 +3974,9 @@ function parse_data($data) {
 	// Now replace each dynamic variable by a pair composed of the
 	// variable value and a text field to edit the variable. Each 
 	foreach($dvars as $dvar) {
-	    $query = "select data from `tiki_dynamic_variables` where `name`=?";
-	    $result = $this->query($query,Array($dvar));
-	    if($result->numRows()) {
+		$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
+		$result = $this->query($query,Array($dvar));
+		if($result->numRows()) {
 		$value = $result->fetchRow();
 		$value = $value["data"];
 	    } else {
@@ -4085,8 +4092,8 @@ function parse_data($data) {
 	    if (count($wexs) == 2) {
 		$wkname = $wexs[0];
 
-		if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`='$wkname'") == 1) {
-		    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`='$wkname'");
+		if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
 		    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki">' . $wexs[1] . '</a>';
 		    $data = preg_replace($pattern, "$wkurl", $data);
@@ -4135,8 +4142,8 @@ function parse_data($data) {
 	    if (count($wexs) == 2) {
 		$wkname = $wexs[0];
 
-		if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`='$wkname'") == 1) {
-		    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`='$wkname'");
+		if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
 		    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki">' . $wexs[1] . '</a>';
 		    $data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
