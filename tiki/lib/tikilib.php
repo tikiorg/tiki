@@ -5467,11 +5467,13 @@ function add_pageview() {
 		    values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
 		$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		/* the following doesn't work because tiki dies if the above query fails
 		if (!$result) {
 			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
 			$result = $this->query($query2,array($pageName,(int) $version));
 			$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		}
+		*/
 	    }
 
 	    //  Deal with mail notifications.
