@@ -550,6 +550,7 @@ class Comments extends TikiLib {
 	$query = "select * from `tiki_comments` $mid order by ".$this->convert_sortmode($sort_mode);
 	$result = $this->query($query, $bind_mid, $maxRecords, 0);
 
+	$ret = array();
 	while ($res = $result->fetchRow()) {
 	    $ret[] = $res;
 	}
