@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.12 2004-06-17 20:00:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.13 2004-06-17 20:35:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,10 @@ if (isset($_REQUEST["new_acc"])) {
 	$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
 		$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
 		$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"]);
-	$_REQUEST["accountId"] = 0;
+//	$_REQUEST["accountId"] = 0;
+	$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s saved"),$_REQUEST["account"]));
+} else {
+	$smarty->assign('confirmation', 0);
 }
 
 if (isset($_REQUEST["remove"])) {
@@ -84,6 +87,11 @@ if (isset($_REQUEST["mailin_autocheck"]) ) {
     $tikilib->set_preference("mailin_autocheckFreq", $_REQUEST["mailin_autocheckFreq"]);
     $mailin_autocheck = $_REQUEST["mailin_autocheck"];
     $mailin_autocheckFreq = $_REQUEST["mailin_autocheckFreq"];
+    if ($mailin_autocheck == 'y') {
+	    $tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in accounts set to be checked every %s minutes"),$mailin_autocheckFreq));
+    } else {
+    	$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Automatic Mail-in accounts checking disabled")));
+    }
   }
 }
 $smarty->assign('mailin_autocheck',$mailin_autocheck);
@@ -97,6 +105,8 @@ $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 $types = $artlib->list_types();
 $smarty->assign_by_ref('types', $types);
+
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 ask_ticket('admin-mailin');
 

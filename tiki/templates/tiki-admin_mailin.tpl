@@ -16,8 +16,6 @@
 <!-- begin -->
 <br /><br />
 
-
-
 <table class="normal">
   <tr>
     <td class="heading" width="25%">
@@ -40,7 +38,11 @@
     </tr>
   {/section}
 </table>
-<br /><br />
+<br />
+{if $tikifeedback}
+{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+{/if}
+<br />
 
 <h3>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h3>
 <form action="tiki-admin_mailin.php" method="post">
