@@ -1,4 +1,4 @@
-# slashdot-like profile
+# Slashdot profile
 REPLACE INTO tiki_preferences VALUES ('allowRegister','y');
 REPLACE INTO tiki_preferences VALUES ('cacheimages','n');
 REPLACE INTO tiki_preferences VALUES ('cachepages','n');
@@ -18,7 +18,6 @@ REPLACE INTO tiki_preferences VALUES ('feature_page_title','n');
 REPLACE INTO tiki_preferences VALUES ('feature_poll_comments','y');
 REPLACE INTO tiki_preferences VALUES ('feature_polls','y');
 REPLACE INTO tiki_preferences VALUES ('feature_search_stats','y');
-REPLACE INTO tiki_preferences VALUES ('feature_server_name','linux2');
 REPLACE INTO tiki_preferences VALUES ('feature_stats','y');
 REPLACE INTO tiki_preferences VALUES ('feature_submissions','y');
 REPLACE INTO tiki_preferences VALUES ('feature_usermenu','y');
@@ -37,13 +36,6 @@ REPLACE INTO tiki_preferences VALUES ('forgotPass','y');
 REPLACE INTO tiki_preferences VALUES ('load_threshold','3');
 REPLACE INTO tiki_preferences VALUES ('maxArticles','20');
 REPLACE INTO tiki_preferences VALUES ('popupLinks','y');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_creator','');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_css','y');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_default_version','2');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_editor','');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_language','en-us');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_publisher','');
-REPLACE INTO tiki_preferences VALUES ('rssfeed_webmaster','');
 REPLACE INTO tiki_preferences VALUES ('session_db','n');
 REPLACE INTO tiki_preferences VALUES ('session_lifetime','');
 REPLACE INTO tiki_preferences VALUES ('short_date_format','%b %d, %Y');
