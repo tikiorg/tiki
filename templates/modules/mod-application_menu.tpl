@@ -9,15 +9,13 @@
 &nbsp;<a href="tiki-chat.php" class="linkmenu">{tr}chat{/tr}</a><br/>
 {/if}
 {/if}
+
 {if $user}
 {if $feature_userPreferences eq 'y' and $user}
   &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}user preferences{/tr}</a><br/>
 {/if}
-<!--
-{if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
-  &nbsp;<a href="tiki-user_bookmarks.php" class="linkmenu">{tr}user bookmarks{/tr}</a><br/>
 {/if}
--->
+
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
   &nbsp;<a href="tiki-stats.php" class="linkmenu">{tr}stats{/tr}</a><br/>
 {/if}
@@ -30,7 +28,7 @@
   &nbsp;<a href="tiki-list_games.php" class="linkmenu">{tr}games{/tr}</a><br/>
 {/if}
 
-{/if}
+
 {if $feature_wiki eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>Wiki</a> <a class='separator' href="javascript:show('wikimenu');">[+]</a></div>
   <div id="wikimenu">
@@ -56,7 +54,7 @@
   {if $feature_wiki_multiprint eq 'y'}
     &nbsp;<a href="tiki-print_pages.php" class="linkmenu">{tr}print{/tr}</a><br/>
   {/if}
-  {if $tiki_p_send_pages eq 'y'}
+  {if $tiki_p_send_pages eq 'y' and $feature_comm eq 'y'}
     &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}send{/tr}</a><br/>
   {/if}
   {if $tiki_p_admin_received_pages eq 'y'}
@@ -99,8 +97,11 @@
     &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View submissions{/tr}</a><br/>
     {/if}
   {/if}
-  {if $tiki_p_send_articles eq 'y'}
+  {if $tiki_p_send_articles eq 'y' and $feature_comm eq 'y'}
     &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}send{/tr}</a><br/>
+  {/if}
+  {if $tiki_p_admin_received_articles eq 'y'}
+    &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}received articles{/tr}</a><br/>
   {/if}
   </div>
 {/if}

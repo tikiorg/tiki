@@ -7,7 +7,7 @@ if($tiki_p_admin != 'y') {
 
 // Cambiar lo que busca segun sea .php o .tpl
 
-$languages = Array('en','fr','sp','de','po');
+$languages = Array('en','fr','sp','de','pl');
 
 $files = Array();
   
@@ -100,7 +100,7 @@ foreach($lang as $key=>$val) {
 }
 fwrite($fw,'"'.'##end###'.'" => "'.'###end###'.'");'."\n".'?>'."\n");  
 fclose($fw);
-unlink("lang/$sel/old.php");
+@unlink("lang/$sel/old.php");
 rename("lang/$sel/language.php","lang/$sel/old.php");
 rename("lang/$sel/new_language.php","lang/$sel/language.php");
 }

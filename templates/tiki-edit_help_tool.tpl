@@ -16,4 +16,4 @@
 <a class="link" href="javascript:setSomeElement('{$area_name}','~~color:text~~');">col</a>|
 <!--<a class="link" href="javascript:setSomeElement('{$area_name}','{literal}{{/literal}img src=?nocache=1 width= height= align= desc= link= }');">img nc</a>|-->
 <a class="link" href="javascript:setSomeElement('{$area_name}','{literal}{{/literal}img src= width= height= align= desc= link= }');">img</a>]
-[<a class="link" href="#" onClick="javascript:window.open('templates/tiki-special_chars.html','','menubar=no,width=252,height=25');">chars</a>]
+[<a class="link" href="#" onClick="javascript:window.open('templates/tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');">chars</a>]

@@ -1,50 +1,89 @@
-<h1>Tiki 1.2 Home</h1>
-<div align="center">
-<table width="96%" border="0">
+<table width="99%" border="0">
 <tr>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-view_articles.php"><img alt="articles" src="img/custom/article4.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>ARTICLES</b></small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-chat.php"><img alt="chat" src="img/custom/chat.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>CHAT</b></small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-file_galleries.php"><img alt="files" src="img/custom/filegal.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>FILES</b></small>
-  </td>
-</tr>
-<tr>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-forums.php"><img alt="forums" src="img/custom/forums3.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>FORUMS</b></small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <img alt="tiki" src="img/tiki.jpg" width="79" height="58" border="0" /></a><br/>
-  <small><b>TIKI 1.2</small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-galleries.php"><img alt="galleries" src="img/custom/galleries5.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>IMAGE GALLERIESS</b></small>
-  </td>
-</tr>
-<tr>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-list_blogs.php"><img alt="galleries" src="img/custom/weblog3.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>BLOGS</b></small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-index.php"><img alt="wiki" src="img/custom/wiki5.jpeg" width="119" height="88" border="0" /></a><br/>
-  <small><b>WIKI</b></small>
-  </td>
-  <td width="33%" height="180" valign="middle" align="center">
-  <a href="tiki-user_preferences.php"><img alt="prefs" src="img/custom/users.jpg" width="119" height="88" border="0" /></a><br/>
-  <small><b>USER PREFERENCES</b></small>
-  </td>
-</tr>
-
-
-</table>
-
+<td width="45%">
+<div class="cbox">
+<div class="cbox-title">
+What is Tiki?
 </div>
+<div class="cbox-data">
+Tiki is a powerful Content Management System easy to customize and
+configure designed to create Portals, community sites, intranets,
+and general web applications.
+</div>
+</div>
+</td>
+<td style="padding-right: 5px;">
+<div class="cbox">
+<div class="cbox-title">News</div>
+<div class="cbox-data">
+{content id=1}
+</div>
+</div>
+</td>
+</tr>
+</table>
+<div class="cbox">
+<div class="cbox-title">
+Download!
+</div>
+<div class="cbox-data">
+Our last stable release is Tiki 1.3 -Pollux- you can download
+Tiki from <a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
+</div>
+</div>
+
+<div class="cbox">
+<div class="cbox-title">
+Join us!
+</div>
+<div class="cbox-data">
+If you want to contribute with this project join our
+<a class="link" href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
+</div>
+</div>
+<div class="cbox">
+<div class="cbox-title">
+Some of the many features in Tiki
+</div>
+<div class="cbox-data">
+<ul>
+<li>A wiki system where users can edit pages using a powerful syntax</li>
+<li>Articles, reviews, topics and user submissions</li>
+<li>Forums</li>
+<li>Weblogs</li>
+<li>Image galleries</li>
+<li>File galleries</li>
+<li>Chatrooms</li>
+<li>FAQs</li>
+<li>Games</li>
+<li>Polls</li>
+<li>Send and receive objects to/from other Tiki sites</li>
+<li>Powerful permission system with users/groups for all the sections and features</li>
+</ul>
+</div>
+</div>
+
+<div class="cbox">
+<div class="cbox-title">
+Testing Tiki
+</div>
+<div class="cbox-data">
+<ol>
+<li>May be you want to start reading the tiki <a href="tiki-view_faq.php?faqId=1" class="link">FAQ</a></li>
+<li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>
+<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply an existing topic if you want</li>
+<li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php?galleryId=2" class="link">uploading images</a> to our public gallery</li>
+<li>You can download some tiki-add-ons from the <a href="tiki-list_file_gallery.php?galleryId=1" class="link">tiki-add-ons file gallery</a></li>
+<li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
+<li>You can enter the <a href="tiki-chat.php" class="link">chatrooms</a> to test our chatting system maybe you should invite a friend to test it</li>
+<li>From the <a href="tiki-list_games.php" class="link">games</a> section you can play some flash games</li>
+<li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users
+such as steting user preferences, user bookmarks or configuring modules</li>
+<li>If you are curious visit the <a href="tiki-stats.php" class="link">stats</a> page</li>
+<li>The <a href="tiki-view_articles.php" class="link">articles</a> section will show a demo article that you can read and comment</li>
+<li>If you want to test editing an article or review you can <a href="tiki-edit_submission.php" class="link">write a submission</a></li>
+<li>From the <a href="tiki-list_blogs.php" class="link">weblogs</a> section you can create a weblog and test writing to your weblog</li>
+</ol>
+</div>
+</div>
+

@@ -41,7 +41,7 @@ body {
 DIV#tiki-main {  background: white;  height: 100%;  width: 100%;  margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px; }
 
 /* This is the header */
-DIV#tiki-top {  background: #EFEFEF; color: black; height: 11px;  padding-right: 0px;  width: 100%; }
+DIV#tiki-top {  background: #EFEFEF; color: black; padding-right: 0px;  width: 100%; }
 
 /* This is the middle */
 DIV#tiki-mid {  background: white;  height: auto;  padding-bottom: 0px; }

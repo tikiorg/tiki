@@ -5,7 +5,7 @@
  * Author:      Monte Ohrt <monte@ispi.net>
  *              Andrei Zmievski <andrei@php.net>
  *
- * Version:     2.3.0
+ * Version:     2.3.1
  * Copyright:   2001,2002 ispi of Lincoln, Inc.
  *
  * This library is free software; you can redistribute it and/or
@@ -171,7 +171,7 @@ class Smarty
     var $_conf_obj             = null;       // configuration object
     var $_config               = array();    // loaded configuration settings
     var $_smarty_md5           = 'f8d698aea36fcbead2b9d5359ffca76f'; // md5 checksum of the string 'Smarty'
-    var $_version              = '2.3.0';    // Smarty version number
+    var $_version              = '2.3.1';    // Smarty version number
     var $_extract              = false;      // flag for custom functions
     var $_inclusion_depth      = 0;          // current template inclusion depth
     var $_compile_id           = null;       // for different compiled templates
@@ -931,7 +931,7 @@ function _generate_debug_output() {
                 } else {
                     // compile template
                     $this->_compile_template($tpl_file, $template_source, $template_compiled);
-                    $this->_write_compiled_template($compile_path, $template_compiled);
+                    $this->_write_compiled_template($compile_path, $template_compiled, $template_timestamp);
                     return true;
                 }
             }
@@ -942,7 +942,7 @@ function _generate_debug_output() {
                 return false;
             }
             $this->_compile_template($tpl_file, $template_source, $template_compiled);
-            $this->_write_compiled_template($compile_path, $template_compiled);
+            $this->_write_compiled_template($compile_path, $template_compiled, $template_timestamp);
             return true;
         }
     }
@@ -961,10 +961,11 @@ function _generate_debug_output() {
     Function:   _write_compiled_template
     Purpose:
 \*======================================================================*/
-    function _write_compiled_template($compile_path, $template_compiled)
+    function _write_compiled_template($compile_path, $template_compiled, $template_timestamp)
     {
         // we save everything into $compile_dir
         $this->_write_file($compile_path, $template_compiled, true);
+        touch($compile_path, $template_timestamp);
         return true;
     }
 
@@ -1514,7 +1515,7 @@ function _run_insert_handler($args)
 \*======================================================================*/
     function _rm_auto($auto_base, $auto_source = null, $auto_id = null, $exp_time = null)
     {
-        if (!is_dir($auto_base))
+        if (!@is_dir($auto_base))
           return false;
 
 		if(!isset($auto_id) && !isset($auto_source)) {
@@ -1523,7 +1524,7 @@ function _run_insert_handler($args)
         	$tname = $this->_get_auto_filename($auto_base, $auto_source, $auto_id);
 			
 			if(isset($auto_source)) {
-				$res = @unlink($tname);
+				$res = $this->_unlink($tname);
 			} elseif ($this->use_sub_dirs) {
 				$res = $this->_rmdir($tname, 1, $exp_time);
 			} else {
@@ -1554,7 +1555,7 @@ function _run_insert_handler($args)
 
         	while ($entry = readdir($handle)) {
             	if ($entry != '.' && $entry != '..') {
-                	if (is_dir($dirname . DIR_SEP . $entry)) {
+                	if (@is_dir($dirname . DIR_SEP . $entry)) {
                     	$this->_rmdir($dirname . DIR_SEP . $entry, $level + 1, $exp_time);
                 	}
                 	else {
@@ -1583,10 +1584,10 @@ function _run_insert_handler($args)
     {
 		if(isset($exp_time)) {
 			if(time() - filemtime($resource) >= $exp_time) {
-				unlink($resource);
+				@unlink($resource);
 			}
 		} else {			
-			unlink($resource);
+			@unlink($resource);
 		}
     }
 	
@@ -1597,15 +1598,39 @@ function _run_insert_handler($args)
     function _create_dir_structure($dir)
     {
         if (!@file_exists($dir)) {
-            $dir_parts = preg_split('!\\'.DIR_SEP.'+!', $dir, -1, PREG_SPLIT_NO_EMPTY);
-            $new_dir = ($dir{0} == DIR_SEP) ? DIR_SEP : '';
-            foreach ($dir_parts as $dir_part) {
-                $new_dir .= $dir_part;
-                if (!file_exists($new_dir) && !mkdir($new_dir, 0771)) {
+            $_dir_parts = preg_split('!\\'.DIR_SEP.'+!', $dir, -1, PREG_SPLIT_NO_EMPTY);
+            $_new_dir = ($dir{0} == DIR_SEP) ? DIR_SEP : '';
+			
+			// do not attempt to test or make directories outside of open_basedir
+			$_open_basedir_ini = ini_get('open_basedir');
+			if(!empty($_open_basedir_ini)) {
+				$_use_open_basedir = true;
+            	$_open_basedir_sep = (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? ';' : ':';
+            	$_open_basedirs = explode($_open_basedir_sep, $_open_basedir_ini);
+			} else {					
+				$_use_open_basedir = false;
+			}
+
+            foreach ($_dir_parts as $_dir_part) {
+                $_new_dir .= $_dir_part;
+
+                if ($_use_open_basedir) {
+                    $_make_new_dir = false;
+                    foreach ($_open_basedirs as $_open_basedir) {
+                        if (substr($_new_dir.'/', 0, strlen($_open_basedir)) == $_open_basedir) {
+                            $_make_new_dir = true;
+                            break;
+                        }
+                    }
+                } else {
+                	$_make_new_dir = true;					
+				}
+
+                if ($_make_new_dir && !@file_exists($_new_dir) && !@mkdir($_new_dir, 0771)) {
                     $this->trigger_error("problem creating directory \"$dir\"");
                     return false;
                 }
-                $new_dir .= DIR_SEP;
+                $_new_dir .= DIR_SEP;
             }
         }
     }

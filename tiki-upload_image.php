@@ -123,8 +123,29 @@ if(isset($_REQUEST["upload"])) {
         $size_y = imagesy($img);
         // Create thumbnail here 
         // Use the gallery preferences to get the data
-        $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
-        $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $size_x, $size_y);
+        
+        // The following lines were removed by evanb
+        //        $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
+        //        $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $size_x, $size_y);
+        // The following lines added by evanb
+        if ($size_x > $size_y)
+          $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
+        else
+          $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
+
+        $tw = ((int)($size_x / $tscale));
+        $ty = ((int)($size_y / $tscale));
+        /*
+        if (function_exists("imagecreatetruecolor") and function_exists("imagecopyresampled")) {
+          $t = imagecreatetruecolor($tw,$ty);
+          imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+        } else {
+        */
+          $t = imagecreate($tw,$ty);
+          $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+        /*}*/
+        // end of evanb changes
+        
         // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
         //$tmpfname = 'temp.jpg';
         $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     

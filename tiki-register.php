@@ -43,16 +43,16 @@ if(isset($_REQUEST["register"])) {
   
   // Check the mode
   if($validateUsers == 'y') {
-    $apass = substr(md5($tikilib->genPass()),0,25);
+    $apass = addslashes(substr(md5($tikilib->genPass()),0,25));
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine ='http://'.$_SERVER["SERVER_NAME"].$foo1;
-
-    $message = tra('Hi')." ".$_REQUEST["name"]." ".tra('you are about to be a registered user in')." ".$_SERVER["SERVER_NAME"]." ";
-    $message .="<a href='".$machine."?user=".$_REQUEST["name"]."&pass=".$apass."'>".tra('use this link to login for the first time')."</a>";
+    $message = tra('Hi')." ".$_REQUEST["name"]." ".tra('you are about to be a registered user in')." ".$_SERVER["SERVER_NAME"]." \n";
+    $message .= tra('use this link to login for the first time')."\n";
+    $message .=$machine."?user=".$_REQUEST["name"]."&pass=".$apass;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
     // Send the mail
-    @mail($_REQUEST["email"], tra('your reistration information for')." ".$_SERVER["SERVER_NAME"],$message);
+    @mail($_REQUEST["email"], tra('your registration information for')." ".$_SERVER["SERVER_NAME"],$message);
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
     $smarty->assign('showmsg','y');
   } else {

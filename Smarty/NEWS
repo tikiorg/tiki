@@ -1,3 +1,43 @@
+Version 2.3.1
+-------------
+
+    - added optgroup support to html_options (Monte, Robert
+      Amos)
+    - set mtime on compile files so they match source
+      files (Monte, Peter Bowen)
+    - added proper support for open_basedir setting
+      (Monte, Alessandro Astarita)
+    - added strip variable modifier, updated docs (Monte)
+    - fixed access to $smarty.x variables as arrays. (Andrei)
+    - fixed errors with example setup docs (Monte, Matthew
+      Hagerty)
+    - added textformat block function (Monte)
+
+Version 2.3.0
+-------------
+
+    - added assign_by_ref() and append_by_ref() functions
+      (Bob Silva, Monte)
+    - changed default warning type for plugin errors from
+      E_USER_WARNING to E_USER_ERROR (Monte)
+    - added $all_extra, $hour_extra, $minute_extra,
+      $second_extra and $meridian_extra parameters to
+      html_select_time function (Rainer Collet, Monte)
+    - update debug console to print objects (Simon Willison,
+      Monte)
+    - fix Config_File class to not error when there are no
+      sections (Peter Kmet, Monte)
+    - add default modifier logic (Monte)
+    - updated popup_init to be xhtml compliant (Tom Oram, Monte)
+    - fix filename bug with windows (Gary Loescher, Monte)
+    - add ability to supply expire time in seconds when clearing
+      cache or compile files (Monte)
+    - add {debug} plugin to distribution (Monte)
+    - fixed bug with insert tags, loading from "script" attribute
+      when caching is enabled (Monte)
+    - fix bug with debug_tpl file path with Windows (.SMK., Monte)
+    - fix append() function with string/array problem (Monte)
+
 Version 2.2.0
 -------------
 

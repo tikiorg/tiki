@@ -79,7 +79,8 @@ function sendArticle($params) {
  $pp=$params->getParam(16);$body =$pp->scalarval();
  $pp=$params->getParam(17);$hash =$pp->scalarval();
  $pp=$params->getParam(18);$author =$pp->scalarval();
-  
+ $pp=$params->getParam(19);$type =$pp->scalarval(); 
+ $pp=$params->getParam(20);$rating =$pp->scalarval(); 
  // 
  if(!$userlib->validate_user($username,$password)) {
    return new xmlrpcresp(0, 101, "Invalid username or password");
@@ -96,7 +97,7 @@ function sendArticle($params) {
  $heading = base64_decode($heading);
  $body = base64_decode($body);
   
- $tikilib->receive_article($site,$username,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author);
+ $tikilib->receive_article($site,$username,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author,$type,$rating);
  
  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }

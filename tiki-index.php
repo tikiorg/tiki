@@ -102,7 +102,7 @@ if($info["flag"] == 'L') {
 
 // If not locked and last version is user version then can undo
 $smarty->assign('canundo','n');	
-if($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove_page=='y') )) {
+if($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y') )) {
    $smarty->assign('canundo','y');	
 }
 if($tiki_p_admin_wiki == 'y') {
@@ -111,7 +111,7 @@ if($tiki_p_admin_wiki == 'y') {
 
 // Process an undo here
 if(isset($_REQUEST["undo"])) {
-if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove_page=='y')) )) {
+if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
   // Remove the last version	
   $tikilib->remove_last_version($page);
   // If page was deleted then re-create

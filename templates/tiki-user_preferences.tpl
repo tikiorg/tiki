@@ -10,6 +10,7 @@
   <div class="cbox-data">
   <div class="simplebox">
   <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch}" />
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td></tr>
@@ -25,7 +26,7 @@
         <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$userinfo.realName}" /></td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
@@ -36,7 +37,7 @@
   <option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
   </select>
   </td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$userinfo.homePage}" /></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
   {if $feature_wiki eq 'y'}
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$user}">{tr}edit{/tr}</a>{/tr})</td></tr>
   {/if}
@@ -47,6 +48,7 @@
   <div class="simplebox">
   {tr}Change your password{/tr}<br/>
   <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch}" />
   <table>
   <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
   <tr><td>{tr}New password{/tr}:</td><td><input type="password" name="pass1" /></td></tr>

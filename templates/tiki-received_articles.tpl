@@ -39,6 +39,40 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
 <tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName}" /></td></tr>
+
+<tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
+<select id='articletype' name='type' onChange='javascript:chgArtType();'>
+<option value='Article' {if $type eq 'Article'}sselected="selected"{/if}>{tr}Article{/tr}</option>
+<option value='Review' {if $type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
+</select>
+</select></td></tr>
+<tr id='isreview' {if $type eq 'Article'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<select name='rating'>
+<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
+<option value="9.5" {if $rating eq 9.5}selected="selected"{/if}>9.5</option>
+<option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
+<option value="8.5" {if $rating eq 8.5}selected="selected"{/if}>8.5</option>
+<option value="8" {if $rating eq 8}selected="selected"{/if}>8</option>
+<option value="7.5" {if $rating eq 7.5}selected="selected"{/if}>7.5</option>
+<option value="7" {if $rating eq 7}selected="selected"{/if}>7</option>
+<option value="6.5" {if $rating eq 6.5}selected="selected"{/if}>6.5</option>
+<option value="6" {if $rating eq 6}selected="selected"{/if}>6</option>
+<option value="5.5" {if $rating eq 5.5}selected="selected"{/if}>5.5</option>
+<option value="5" {if $rating eq 5}selected="selected"{/if}>5</option>
+<option value="4.5" {if $rating eq 4.5}selected="selected"{/if}>4.5</option>
+<option value="4" {if $rating eq 4}selected="selected"{/if}>4</option>
+<option value="3.5" {if $rating eq 3.5}selected="selected"{/if}>3.5</option>
+<option value="3" {if $rating eq 3}selected="selected"{/if}>3</option>
+<option value="2.5" {if $rating eq 2.5}selected="selected"{/if}>2.5</option>
+<option value="2" {if $rating eq 2}selected="selected"{/if}>2</option>
+<option value="1.5" {if $rating eq 1.5}selected="selected"{/if}>1.5</option>
+<option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
+<option value="0.5" {if $rating eq 0.5}selected="selected"{/if}>0.5</option>
+</select>
+</td></tr>
+
+
+
 <tr><td class="formcolor">{tr}Use Image{/tr}:</td><td class="formcolor">
 <select name="useImage">
 <option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
@@ -97,7 +131,9 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">{$channels[user].receivedArticleId}</td>
-<td class="odd">{$channels[user].title}</td>
+<td class="odd">{$channels[user].title}
+{if $channels[user].type eq 'Review'}(r){/if}
+</td>
 <td class="odd">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
 <td class="odd">{$channels[user].receivedFromSite}</td>
 <td class="odd">{$channels[user].receivedFromUser}</td>
@@ -111,7 +147,9 @@
 {else}
 <tr>
 <td class="even">{$channels[user].receivedArticleId}</td>
-<td class="even">{$channels[user].title}</td>
+<td class="even">{$channels[user].title}
+{if $channels[user].type eq 'Review'}(r){/if}
+</td>
 <td class="even">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
 <td class="even">{$channels[user].receivedFromSite}</td>
 <td class="even">{$channels[user].receivedFromUser}</td>

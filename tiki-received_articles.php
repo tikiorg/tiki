@@ -45,6 +45,8 @@ if($_REQUEST["receivedArticleId"]) {
   $info["hash"]='';
   $info["author"]='';
   $info["topic"]=1;
+  $info["type"]='Article';
+  $info["rating"]=5;
 }
 $smarty->assign('view','n');
 if(isset($_REQUEST["view"])) {
@@ -65,7 +67,9 @@ if(isset($_REQUEST["accept"])) {
     $_REQUEST["image_y"],
     $publishDate,
     $_REQUEST["heading"],
-    $_REQUEST["body"]
+    $_REQUEST["body"],
+    $_REQUEST["type"],
+    $_REQUEST["rating"]
   );
   $tikilib->accept_article($_REQUEST["receivedArticleId"],$_REQUEST["topic"]);
   $smarty->assign('preview','n');
@@ -90,6 +94,8 @@ if(isset($_REQUEST["preview"])) {
   $info["heading"]=$_REQUEST["heading"];
   $info["body"]=$_REQUEST["body"];
   $info["topic"]=$_REQUEST["topic"];
+  $info["type"]=$_REQUEST["type"];
+  $info["rating"]=$_REQUEST["rating"];
 }
 $smarty->assign('topic',$info["topic"]);
 $smarty->assign('title',$info["title"]);
@@ -103,6 +109,8 @@ $smarty->assign('publishDate',$info["publishDate"]);
 $smarty->assign('created',$info["created"]);
 $smarty->assign('heading',$info["heading"]);
 $smarty->assign('body',$info["body"]);
+$smarty->assign('type',$info["type"]);
+$smarty->assign('rating',$info["rating"]);
 
 // Assign parsed
 $smarty->assign('parsed_heading',$tikilib->parse_data($info["heading"]));
