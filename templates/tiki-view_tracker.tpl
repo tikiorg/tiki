@@ -70,16 +70,16 @@
 {if $fields[ix].type eq 'u'}
 <select name="{$fields[ix].id|escape}]">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-{section name=ux loop=$users}
-<option value="{$users[ux]|escape}">{$users[ux]}</option>
-{/section}
+{foreach key=id item=one from=$users}
+<option value="{$one|escape}">{$one}</option>
+{/foreach}
 </select>
 {/if}
 {if $fields[ix].type eq 'g'}
 <select name="{$fields[ix].id|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
+<option value="{$groups[ux]|escape}">{$groups[ux]}</option>
 {/section}
 </select>
 {/if}
@@ -269,16 +269,16 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {if $fields[ix].type eq 'u'}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
-{section name=ux loop=$users}
-<option value="{$users[ux]|escape}">{$users[ux]}</option>
-{/section}
+{foreach key=id item=one from=$users}
+<option value="{$one|escape}">{$one}</option>
+{/foreach}
 </select>
 
 {elseif $fields[ix].type eq 'g'}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
+<option value="{$groups[ux]|escape}">{$groups[ux]}</option>
 {/section}
 </select>
 
