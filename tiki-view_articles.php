@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.22 2004-06-16 19:33:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.23 2004-07-22 13:08:27 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,6 +112,10 @@ if (isset($_REQUEST["topic"])) {
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y');
+if ($feature_multilingual == 'y') {
+	include_once("lib/multilingual/multilinguallib.php");
+	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
+}
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

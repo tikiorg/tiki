@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.24 2004-05-25 00:56:17 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.25 2004-07-22 13:08:46 mose Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -47,7 +47,8 @@ on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
 <tr><td><strong>{tr}Insert Module Output{/tr}:</strong></td><td> {tr}{literal}{MODULE(module=>some_module)}text{MODULE}{/literal}  can be used to insert the output of module "some_module" into your Wiki page. See <a href="http://tikiwiki.org/tiki-index.php?page=PluginModule">PluginModule</a> for more information. {/tr}</td></tr>
 <tr><td><strong>{tr}Rendering Program Code{/tr}:</strong></td><td> {tr}{literal}{CODE()}some code{CODE} {/literal} will render "some code" as program code. This plugin has other options; see <a href="http://tikiwiki.org/tiki-index.php?page=PluginCode">PluginCode</a>.{/tr}</td></tr>
 <tr><td><strong>{tr}Direction{/tr}:</strong></td><td>"{literal}{r2l}{/literal}", "{literal}{l2r}{/literal}", "{literal}{rm}{/literal}", "{literal}{lm}{/literal}"</td></tr>
-<tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{toc}{/literal}", "{tr}{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on ! headings,{/tr} "{literal}{cookie}{/literal}"</td></tr>
+<tr><td><strong>{tr}Table of contents{/tr}</strong></td><td>{tr}"{literal}{toc}{/literal}", "{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on structures (toc) or ! headings(maketop){/tr}</td></tr>
+<tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{cookie}{/literal}"</td></tr>
 </table>
 </div>
 

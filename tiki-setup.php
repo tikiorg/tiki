@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.252 2004-07-14 20:08:08 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.253 2004-07-22 13:08:27 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1416,96 +1416,96 @@ if (!strstr($_SERVER["REQUEST_URI"], 'tiki-login')) {
 
 $smarty->assign('mnu_dirmenu', 'display:none;');
 
-if (isset($_COOKIE["dirmenu"])) {
-    if ($_COOKIE["dirmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["dirmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["dirmenu"] == 'o') {
         $smarty->assign('mnu_dirmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_nlmenu', 'display:none;');
 
-if (isset($_COOKIE["nlmenu"])) {
-    if ($_COOKIE["nlmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["nlmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["nlmenu"] == 'o') {
         $smarty->assign('mnu_nlmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_chartmenu', 'display:none;');
 
-if (isset($_COOKIE["chartmenu"])) {
-    if ($_COOKIE["chartmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["chartmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["chartmenu"] == 'o') {
         $smarty->assign('mnu_chartmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_ephmenu', 'display:none;');
 
-if (isset($_COOKIE["ephmenu"])) {
-    if ($_COOKIE["ephmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["ephmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["ephmenu"] == 'o') {
         $smarty->assign('mnu_ephmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_mymenu', 'display:none;');
 
-if (isset($_COOKIE["mymenu"])) {
-    if ($_COOKIE["mymenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["mymenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["mymenu"] == 'o') {
         $smarty->assign('mnu_mymenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_workflow', 'display:none;');
 
-if (isset($_COOKIE["wfmenu"])) {
-    if ($_COOKIE["wfmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["wfmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["wfmenu"] == 'o') {
         $smarty->assign('mnu_workflow', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_usrmenu', 'display:none;');
 
-if (isset($_COOKIE["usrmenu"])) {
-    if ($_COOKIE["usrmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["usrmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["usrmenu"] == 'o') {
         $smarty->assign('mnu_usrmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_friendsmenu', 'display:none;');
 
-if (isset($_COOKIE["friendsmenu"])) {
-    if ($_COOKIE["friendsmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["friendsmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["friendsmenu"] == 'o') {
         $smarty->assign('mnu_friendsmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_wikimenu', 'display:none;');
 
-if (isset($_COOKIE["wikimenu"])) {
-    if ($_COOKIE["wikimenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["wikimenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["wikimenu"] == 'o') {
         $smarty->assign('mnu_wikimenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_homeworkmenu', 'display:none;');
 
-if (isset($_COOKIE["homeworkmenu"])) {
-    if ($_COOKIE["homeworkmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["homeworkmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["homeworkmenu"] == 'o') {
         $smarty->assign('mnu_homeworkmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_srvmenu', 'display:none;');
 
-if (isset($_COOKIE["srvmenu"])) {
-    if ($_COOKIE["srvmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["srvmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["srvmenu"] == 'o') {
         $smarty->assign('mnu_srvmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_trkmenu', 'display:none;');
 
-if (isset($_COOKIE["trkmenu"])) {
-    if ($_COOKIE["trkmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["trkmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["trkmenu"] == 'o') {
         $smarty->assign('mnu_trkmenu', 'display:block;');
     }
 }
@@ -1513,86 +1513,86 @@ if (isset($_COOKIE["trkmenu"])) {
 // Jukebox menu added 18-jan-04 damian aka damosoft
 $smarty->assign('mnu_jukeboxmenu', 'display:none;');
 
-if (isset($_COOKIE["jukeboxmenu"])) {
-    if ($_COOKIE["jukeboxmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["jukeboxmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["jukeboxmenu"] == 'o') {
         $smarty->assign('mnu_jukeboxmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_quizmenu', 'display:none;');
 
-if (isset($_COOKIE["quizmenu"])) {
-    if ($_COOKIE["quizmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["quizmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["quizmenu"] == 'o') {
         $smarty->assign('mnu_quizmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_formenu', 'display:none;');
 
-if (isset($_COOKIE["formenu"])) {
-    if ($_COOKIE["formenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["formenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["formenu"] == 'o') {
         $smarty->assign('mnu_formenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_admmnu', 'display:none;');
 
-if (isset($_COOKIE["admmnu"])) {
-    if ($_COOKIE["admmnu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["admmnu"])) {
+    if ($_SESSION['tiki_cookie_jar']["admmnu"] == 'o') {
         $smarty->assign('mnu_admmnu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_faqsmenu', 'display:none;');
 
-if (isset($_COOKIE["faqsmenu"])) {
-    if ($_COOKIE["faqsmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["faqsmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["faqsmenu"] == 'o') {
         $smarty->assign('mnu_faqsmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_galmenu', 'display:none;');
 
-if (isset($_COOKIE["galmenu"])) {
-    if ($_COOKIE["galmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["galmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["galmenu"] == 'o') {
         $smarty->assign('mnu_galmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_cmsmenu', 'display:none;');
 
-if (isset($_COOKIE["cmsmenu"])) {
-    if ($_COOKIE["cmsmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["cmsmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["cmsmenu"] == 'o') {
         $smarty->assign('mnu_cmsmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_blogmenu', 'display:none;');
 
-if (isset($_COOKIE["blogmenu"])) {
-    if ($_COOKIE["blogmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["blogmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["blogmenu"] == 'o') {
         $smarty->assign('mnu_blogmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_filegalmenu', 'display:none;');
 
-if (isset($_COOKIE["filegalmenu"])) {
-    if ($_COOKIE["filegalmenu"] == 'o') {
+if (isset($_SESSION['tiki_cookie_jar']["filegalmenu"])) {
+    if ($_SESSION['tiki_cookie_jar']["filegalmenu"] == 'o') {
         $smarty->assign('mnu_filegalmenu', 'display:block;');
     }
 }
 
 $smarty->assign('mnu_mapsmenu','display:none;');
-if(isset($_COOKIE["mapsmenu"])) {
-  if($_COOKIE["mapsmenu"]=='o') {
+if(isset($_SESSION['tiki_cookie_jar']["mapsmenu"])) {
+  if($_SESSION['tiki_cookie_jar']["mapsmenu"]=='o') {
     $smarty->assign('mnu_mapsmenu','display:block;');
   }
 }
 
 $smarty->assign('mnu_layermenu','display:none;');
-if(isset($_COOKIE["layermenu"])) {
-  if($_COOKIE["layermenu"]=='o') {
+if(isset($_SESSION['tiki_cookie_jar']["layermenu"])) {
+  if($_SESSION['tiki_cookie_jar']["layermenu"]=='o') {
       $smarty->assign('mnu_layermenu','display:block;');
   }
 }

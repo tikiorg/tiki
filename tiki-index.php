@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.121 2004-07-20 19:51:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.122 2004-07-22 13:08:26 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,11 +32,23 @@ if(!isset($_SESSION["thedate"])) {
 if (isset($_REQUEST["page_id"])) {
 	$_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
 }
+
 if (!isset($_REQUEST["page"])) {
-    $_REQUEST["page"] = $wikiHomePage;
-    if(!$tikilib->page_exists($wikiHomePage)) {
-	$tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
-    }
+	if ($useGroupHome == 'y') { 
+		$group = $userlib->get_user_default_group($user);
+		$groupHome = $userlib->get_group_home($group);
+		if ($groupHome) {
+			$_REQUEST["page"] = $groupHome;
+		} else {
+			$_REQUEST["page"] = $wikiHomePage;
+		}
+	} else {
+		$_REQUEST["page"] = $wikiHomePage;
+	}
+	if(!$tikilib->page_exists($wikiHomePage)) {
+		$tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
+	}
+
 }
 $page = $_REQUEST["page"];
 

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-07-20 19:51:56 $
-# $Author: teedog $
+# $Date: 2004-07-22 13:08:28 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1072,7 +1072,7 @@ CREATE TABLE tiki_dsn (
 DROP TABLE IF EXISTS tiki_dynamic_variables;
 CREATE TABLE tiki_dynamic_variables (
   name varchar(40) NOT NULL,
-  DATA text,
+  data text,
   PRIMARY KEY  (name)
 );
 
@@ -1913,7 +1913,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)',"javascript:toggle('debugconsole')",40,'feature_debug_console','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered');

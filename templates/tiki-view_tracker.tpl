@@ -117,7 +117,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
-{section name=ix loop=$fields}
+{section name=ix loop=$listfields}
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
@@ -311,6 +311,8 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {foreach key=id item=one from=$users}
 {if $fields[ix].value}
 <option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
+{elseif $user}
+<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one}</option>
 {else}
 <option value="{$one|escape}">{$one}</option>
 {/if}

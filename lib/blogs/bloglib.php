@@ -419,11 +419,47 @@ class BlogLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
 
-			$title = $this->getOne($query2,array($res["blogId"]));
-			$res["blogtitle"] = $title;
-			$ret[] = $res;
+		    $add = TRUE;
+		    global $feature_categories;
+		    global $userlib;
+		    global $user;
+		    global $tiki_p_admin;
+	
+		    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['blogId'], 'blog')) {
+		    // quiz permissions override category permissions
+				if (!$userlib->object_has_permission($user, $res['blogId'], 'blog', 'tiki_p_read_blog'))
+				{
+				    $add = FALSE;
+				}
+		    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    	// no quiz permissions so now we check category permissions
+		    	global $categlib;
+				if (!is_object($categlib)) {
+					include_once('lib/categories/categlib.php');
+				}
+		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
+		    	if ($perms_array) {
+		    		$is_categorized = TRUE;
+			    	foreach ($perms_array as $perm => $value) {
+			    		$$perm = $value;
+			    	}
+		    	} else {
+		    		$is_categorized = FALSE;
+		    	}
+	
+		    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    		$add = FALSE;
+		    	}
+		    }
+
+			if ($add) {
+				$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
+				$title = $this->getOne($query2,array($res["blogId"]));
+				$res["blogtitle"] = $title;
+			    $ret[] = $res;
+			}
 		}
 
 		$retval = array();

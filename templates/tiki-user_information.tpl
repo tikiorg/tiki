@@ -7,7 +7,7 @@
   <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
+  <tr><td class="form">{tr}User{/tr}:</td><td>{$userinfo.login}</td></tr>
 {if $feature_score eq 'y'}
   <tr><td class="form">{tr}Score{/tr}:</td><td>{$userinfo.score|star}{$userinfo.score}</td></tr>
 {/if}
@@ -20,10 +20,10 @@
   <tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
   <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
-	{if $feature_wiki_userpage eq 'y'}
+  <tr><td class="form">{tr}Homepage{/tr}:</td><td>{$homePage}</td></tr>
+{if $feature_wiki eq 'y' && $feature_wiki_userpage eq 'y'}
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a></td></tr>
-	{/if}
+{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
 {if $feature_friends eq 'y' && $user ne $userwatch}
   {if $friend}
@@ -32,7 +32,7 @@
   </td></tr>  
   {else}
   <tr><td class="form">&nbsp;</td><td class="form">
-    <img src="img/icons/ico_not_friend.png">{tr}This user is not your friend{/tr} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship{/tr}</a>
+    <img src="img/icons/ico_not_friend.png"> <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship from this user{/tr}</a>
   </td></tr>  
   {/if}
 {/if}
