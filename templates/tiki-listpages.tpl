@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.28 2004-07-19 21:42:33 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.29 2004-08-02 20:06:34 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -16,12 +16,13 @@
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="max_records" value="{$maxRecords}" />
    </form>
    </td>
 </tr>
 
-<form method="post" action="tiki-listpages.php">
-<tr><td colspan="2">Show
+<tr><td colspan="2"><form method="post" action="tiki-listpages.php">
+Show
 <select name="max_records" onchange="this.form.submit();">
 <option value="10" {if $maxRecords eq 10}selected {/if}>10</option>
 <option value="20" {if $maxRecords eq 20}selected {/if}>20</option>
@@ -33,7 +34,9 @@
 <option value="1000" {if $maxRecords eq 500}selected {/if}>1000</option>
 {/if}
 </select>
-per page</td></tr>
+per page
+<input type="hidden" name="find" value="{$find|escape}" /></form>
+</td></tr>
 
 </table>
 {if $rename_mode neq 'y'}
@@ -199,6 +202,8 @@ per page</td></tr>
   <noscript>
 *}
 <input type="submit" value="{tr}ok{/tr}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="max_records" value="{$maxRecords}" />
 {*</noscript>*}
   {elseif $categorize_mode eq 'y'}
   <select name="categorization">
@@ -210,6 +215,8 @@ per page</td></tr>
   	<br /><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" /> <a class="link" href="tiki-admin_categories.php?parentId={$categories[ix].categId}" title="{tr}edit{/tr}">{$categories[ix].categpath}</a>
   {/section}
   <br /><input type="submit" value="{tr}ok{/tr}" />
+  <input type="hidden" name="find" value="{$find|escape}" />
+  <input type="hidden" name="max_records" value="{$maxRecords}" />
   {/if}
 
   </p>
@@ -238,6 +245,8 @@ per page</td></tr>
 <form name="renameform" method="post" action="{$smarty.server.PHP_SELF}">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="max_records" value="{$maxRecords}" />
 <table class="normal">
 <tr><td class="heading">{tr}Rename from{/tr}</td>
 <td class="heading">{tr}to{/tr}</td></tr>
