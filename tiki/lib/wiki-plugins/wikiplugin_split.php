@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.16 2004-03-07 23:12:09 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.17 2004-04-27 04:21:17 franck Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -15,7 +15,7 @@
  */
 
 function wikiplugin_split_help() {
-	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1])}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
+	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>80|20)}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
 }
 
 /*
@@ -54,6 +54,27 @@ function wikiplugin_split($data, $params) {
         return $data;
 
 	$columnSize = floor(100 / $maxcols);
+	
+	// if the user specify row size in %
+
+
+	if (isset($colsize)) {
+	   $fixedsize=true;
+		$tdsize= explode("|", $colsize);
+		$tdtotal=0;
+		for ($i=0;$i<$maxcols;$i++) {
+		  if (!isset($tdsize[$i])) {
+		    $tdsize[$i]=0;
+		  }
+		  $tdtotal+=$tdsize[$i];
+		}
+		for ($i=0;$i<$maxcols;$i++) {
+		  $tdsize[$i]=floor($tdsize[$i]/$tdtotal*100);
+		}		
+	} else {
+		$tdsize=array_fill(0,$maxcols,$columnSize);	
+	}
+	
 	$result = '<table border="0"'.($fixedsize ? ' width="100%"' : '').'>';
 
     // Attention: Dont forget to remove leading empty line in section ...
@@ -71,7 +92,7 @@ function wikiplugin_split($data, $params) {
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
             // Add cell to table
-    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.'>'
+    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$tdsize[$idx-2].'%"' : '').$colspan.'>'
 				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
 				."\n"
 				// now prepend any carriage return and newline char with br
