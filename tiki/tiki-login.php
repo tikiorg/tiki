@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.32 2004-07-11 13:45:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.33 2004-07-13 17:04:29 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.32 2004-07-11 13:45:05 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.33 2004-07-13 17:04:29 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -121,8 +121,10 @@ if ($isvalid) {
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
 		$logslib->add_log('login','logged from '.$url);
-                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
-		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+//	this code doesn't work
+//                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
+//		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+		if (($url == $tikiIndex || basename($url) == $tikiIndex) && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$group = $userlib->get_user_default_group($user);
     			$groupHome = $userlib->get_group_home($group);
     			if ($groupHome) {
