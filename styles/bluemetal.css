@@ -338,7 +338,7 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
 }
 
 /* adding th so it doesn't mess up formatting as we transition to an accessible tiki */
-th.heading, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading 
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading 
 th.listfilesheading, th.listartheading, th.forumheading, th.thead
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
