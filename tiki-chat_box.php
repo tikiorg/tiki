@@ -1,5 +1,7 @@
 <?php
 include_once('tiki-setup.php');
+include_once('lib/chat/chatlib.php');
+
 if($feature_chat!='y') {
   die;  
 }
@@ -16,10 +18,10 @@ if(isset($_REQUEST["channelId"]) && isset($_REQUEST["nickname"])) {
     // Recognize a private message
     if(substr($data,0,1)==':') {
       preg_match("/:([^:]+):(.*)/",$data,$reqs);
-      $tikilib->send_private_message($_REQUEST["nickname"],$reqs[1],$reqs[2]);  
+      $chatlib->send_private_message($_REQUEST["nickname"],$reqs[1],$reqs[2]);  
     } else {
       if($_REQUEST["channelId"]) {
-        $tikilib->send_message($_REQUEST["nickname"],$_REQUEST["channelId"],$data);  
+        $chatlib->send_message($_REQUEST["nickname"],$_REQUEST["channelId"],$data);  
       } 
     }
   }

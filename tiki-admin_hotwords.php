@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/hotwords/hotwordlib.php');
 
 if($feature_hotwords != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -19,11 +20,11 @@ if($user != 'admin') {
 
 // Process the form to add a user here
 if(isset($_REQUEST["add"])) {
-  $tikilib->add_hotword($_REQUEST["word"],$_REQUEST["url"]);
+  $hotwordlib->add_hotword($_REQUEST["word"],$_REQUEST["url"]);
 }
 
 if(isset($_REQUEST["remove"])&&!empty($_REQUEST["remove"])) {
-  $tikilib->remove_hotword($_REQUEST["remove"]);
+  $hotwordlib->remove_hotword($_REQUEST["remove"]);
 }
 
 
@@ -52,7 +53,7 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-$words = $tikilib->list_hotwords($offset,$maxRecords,$sort_mode,$find);
+$words = $hotwordlib->list_hotwords($offset,$maxRecords,$sort_mode,$find);
 $cant_pages = ceil($words["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

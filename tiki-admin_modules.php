@@ -3,6 +3,8 @@ require_once('tiki-setup.php');
 include_once('lib/menubuilder/menulib.php');
 include_once('lib/rss/rsslib.php');
 include_once('lib/polls/polllib.php');
+include_once('lib/banners/bannerlib.php');
+include_once('lib/dcs/dcslib.php');
 
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
@@ -185,13 +187,13 @@ $galleries = $tikilib->list_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign('galleries',$galleries["data"]);
 $polls = $polllib->list_active_polls(0,-1,'publishDate_desc','');
 $smarty->assign('polls',$polls["data"]);
-$contents = $tikilib->list_content(0,-1,'contentId_desc','');
+$contents = $dcslib->list_content(0,-1,'contentId_desc','');
 $smarty->assign('contents',$contents["data"]);
 $rsss = $rsslib->list_rss_modules(0,-1,'name_desc','');
 $smarty->assign('rsss',$rsss["data"]);
 $menus = $menulib->list_menus(0,-1,'menuId_desc','');
 $smarty->assign('menus',$menus["data"]);
-$banners = $tikilib->list_zones();
+$banners = $bannerlib->list_zones();
 $smarty->assign('banners',$banners["data"]);
 $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');

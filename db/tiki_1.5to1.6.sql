@@ -1,5 +1,20 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+drop table if exists tiki_userfiles;
+create table tiki_userfiles(
+  user varchar(200) not null,
+  fileId integer(12) not null auto_increment,
+  name varchar(200),
+  filename varchar(200),
+  filetype varchar(200),
+  filesize varchar(200),
+  data longblob,
+  hits integer(8),
+  isFile char(1),
+  created integer(14),
+  primary key(fileId)
+);
+
 drop table if exists tiki_user_notes;
 create table tiki_user_notes(
   user varchar(200) not null,

@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/banners/bannerlib.php');
 
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
 if($feature_banners != 'y') {
@@ -17,7 +18,7 @@ if($tiki_p_admin_banners != 'y') {
 }
 
 if(isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"]>0) {
-  $info = $tikilib->get_banner($_REQUEST["bannerId"]);
+  $info = $bannerlib->get_banner($_REQUEST["bannerId"]);
   if(!$info) {
     $smarty->assign('msg',tra("Banner not found"));
     $smarty->display("styles/$style_base/error.tpl");
@@ -98,7 +99,7 @@ if(isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"]>0) {
 }
 
 if(isset($_REQUEST["removeZone"])) {
-  $tikilib->banner_remove_zone($_REQUEST["removeZone"]);
+  $bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
 }
 
 // Now assign if the set button was pressed
@@ -187,7 +188,7 @@ if(isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
   }
   $smarty->assign('bannerId',$_REQUEST["bannerId"]);
   if(isset($_REQUEST["create_zone"])) {
-    $tikilib->banner_add_zone($_REQUEST["zoneName"]);
+    $bannerlib->banner_add_zone($_REQUEST["zoneName"]);
   }
   
   // If we have an upload then process the upload and setup the data in a field
@@ -223,7 +224,7 @@ if(isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
      }
   }
   if(!isset($_REQUEST["create_zone"])) {
-    $bannerId = $tikilib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '', '', $_REQUEST["use"], $_REQUEST["imageData"],$_REQUEST["imageType"],$_REQUEST["imageName"],
+    $bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '', '', $_REQUEST["use"], $_REQUEST["imageData"],$_REQUEST["imageType"],$_REQUEST["imageName"],
                           $_REQUEST["HTMLData"], $_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, 
                           $Dmon, $Dtue, $Dwed, $Dthu, $Dfri, $Dsat, $Dsun,
                           $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["zone"]);
@@ -232,7 +233,7 @@ if(isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 }
 
 
-$zones = $tikilib->banner_get_zones();
+$zones = $bannerlib->banner_get_zones();
 $smarty->assign_by_ref('zones',$zones);
 $clients = $userlib->get_users(0,-1,'login_desc', '');
 $smarty->assign_by_ref('clients',$clients["data"]);

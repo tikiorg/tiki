@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/dcs/dcslib.php');
 
 if($feature_dynamic_content != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -23,13 +24,13 @@ if(!isset($_REQUEST["contentId"])) {
 
 $smarty->assign('contentId',$_REQUEST["contentId"]);
 $smarty->assign('pId',0);
-$info = $tikilib->get_content($_REQUEST["contentId"]);
+$info = $dcslib->get_content($_REQUEST["contentId"]);
 $smarty->assign('description',$info["description"]);
 
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_programmed_content($_REQUEST["remove"]);  
+  $dcslib->remove_programmed_content($_REQUEST["remove"]);  
 }
 
 $now = date("U");
@@ -40,7 +41,7 @@ $smarty->assign('actual','');
 
 if(isset($_REQUEST["save"])) {
   $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,$_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $id=$tikilib->replace_programmed_content($_REQUEST["pId"],$_REQUEST["contentId"],$publishDate,$_REQUEST["data"]);
+  $id=$dcslib->replace_programmed_content($_REQUEST["pId"],$_REQUEST["contentId"],$publishDate,$_REQUEST["data"]);
   $smarty->assign('data',$_REQUEST["data"]);
   $smarty->assign('publishDate',$publishDate);
   $smarty->assign('pId',$id);
@@ -48,15 +49,15 @@ if(isset($_REQUEST["save"])) {
 }
 
 if(isset($_REQUEST["edit"])) {
-  $info = $tikilib->get_programmed_content($_REQUEST["edit"]);
-  $actual = $tikilib->get_actual_content_date($_REQUEST["contentId"]);
+  $info = $dcslib->get_programmed_content($_REQUEST["edit"]);
+  $actual = $dcslib->get_actual_content_date($_REQUEST["contentId"]);
   $smarty->assign('actual',$actual);
   $smarty->assign('data',$info["data"]);
   $smarty->assign('publishDate',$info["publishDate"]);
   $smarty->assign('pId',$info["pId"]);
 }
 
-$actual = $tikilib->get_actual_content_date($_REQUEST["contentId"]);
+$actual = $dcslib->get_actual_content_date($_REQUEST["contentId"]);
 $smarty->assign('actual',$actual);
 
 
@@ -93,7 +94,7 @@ $smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
 
-$listpages = $tikilib->list_programmed_content($_REQUEST["contentId"],$offset,$maxRecords,$sort_mode,$find);
+$listpages = $dcslib->list_programmed_content($_REQUEST["contentId"],$offset,$maxRecords,$sort_mode,$find);
 
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);

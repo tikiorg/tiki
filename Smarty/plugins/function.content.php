@@ -1,4 +1,5 @@
 <?php
+include_once('lib/dcs/dcslib.php');
 function smarty_function_content($params, &$smarty)
 {
     global $tikilib;
@@ -9,7 +10,7 @@ function smarty_function_content($params, &$smarty)
         $smarty->trigger_error("assign: missing 'zone' parameter");
         return;
     }
-    $data = $tikilib->get_actual_content($id);
+    $data = $dcslib->get_actual_content($id);
     print($data);
 }
 

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/dcs/dcslib.php');
 
 if($feature_dynamic_content != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,7 +16,7 @@ if($tiki_p_admin_dynamic != 'y') {
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_contents($_REQUEST["remove"]);  
+  $dcslib->remove_contents($_REQUEST["remove"]);  
 }
 
 
@@ -24,12 +25,12 @@ $smarty->assign('contentId',0);
 
 if(isset($_REQUEST["save"])) {
   $smarty->assign('description',$_REQUEST["description"]);
-  $id = $tikilib->replace_content($_REQUEST["contentId"],$_REQUEST["description"]);
+  $id = $dcslib->replace_content($_REQUEST["contentId"],$_REQUEST["description"]);
   $smarty->assign('contentId',$id);
 }
 
 if(isset($_REQUEST["edit"])) {
-  $info = $tikilib->get_content($_REQUEST["edit"]);
+  $info = $dcslib->get_content($_REQUEST["edit"]);
   $smarty->assign('contentId',$info["contentId"]);
   $smarty->assign('description',$info["description"]);
 }
@@ -66,7 +67,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_content($offset,$maxRecords,$sort_mode,$find);
+$listpages = $dcslib->list_content($offset,$maxRecords,$sort_mode,$find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

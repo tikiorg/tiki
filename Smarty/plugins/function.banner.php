@@ -1,4 +1,6 @@
 <?php
+include_once('lib/banners/bannerlib.php');
+
 function smarty_function_banner($params, &$smarty)
 {
     global $tikilib;
@@ -9,7 +11,7 @@ function smarty_function_banner($params, &$smarty)
         $smarty->trigger_error("assign: missing 'zone' parameter");
         return;
     }
-    $banner = $tikilib->select_banner($zone);
+    $banner = $bannerlib->select_banner($zone);
     print($banner);
 }
 

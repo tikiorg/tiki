@@ -1,6 +1,8 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/chat/chatlib.php');
+
 if($feature_chat!='y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -11,7 +13,7 @@ if($tiki_p_chat!='y') {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-$channels = $tikilib->list_active_channels(0,-1,'name_desc','');
+$channels = $chatlib->list_active_channels(0,-1,'name_desc','');
 $smarty->assign('channels',$channels["data"]);
 
 $section='chat';

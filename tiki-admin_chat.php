@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/chat/chatlib.php');
 
 if($tiki_p_admin_chat != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -14,7 +15,7 @@ if(!isset($_REQUEST["channelId"])) {
 $smarty->assign('channelId',$_REQUEST["channelId"]);
 
 if($_REQUEST["channelId"]) {
-  $info = $tikilib->get_channel($_REQUEST["channelId"]);
+  $info = $chatlib->get_channel($_REQUEST["channelId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -28,7 +29,7 @@ $smarty->assign('active',$info["active"]);
 $smarty->assign('refresh',$info["refresh"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_channel($_REQUEST["remove"]);
+  $chatlib->remove_channel($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -37,7 +38,7 @@ if(isset($_REQUEST["save"])) {
   } else {
     $active = 'n';
   }
-  $tikilib->replace_channel($_REQUEST["channelId"], $_REQUEST["name"], $_REQUEST["description"], 0, 'n', $active,$_REQUEST["refresh"]);
+  $chatlib->replace_channel($_REQUEST["channelId"], $_REQUEST["name"], $_REQUEST["description"], 0, 'n', $active,$_REQUEST["refresh"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -62,7 +63,7 @@ $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$channels = $tikilib->list_channels($offset,$maxRecords,$sort_mode,$find);
+$channels = $chatlib->list_channels($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
