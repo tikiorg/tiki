@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.23 2004-09-21 21:05:43 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.24 2004-09-21 23:41:15 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,10 @@ require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 
-if (!$user) {
-  $smarty->assign('msg', tra("You must be logged in to view user information"));
+// admin can alway view user information.
+// others can only view user information if they have the correct permission.
+if ($user != "admin" && !($tiki_p_view_user_information == 'y')) {
+  $smarty->assign('msg', tra("You don't have permission to view user information (tiki_p_view_user_information)"));
   $smarty->display("error.tpl");
   die;
 }
