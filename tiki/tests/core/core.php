@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.1 2003-08-22 19:04:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.2 2003-08-24 00:42:17 zaufi Exp $
  *
  * \brief Main file
  *
@@ -10,6 +10,7 @@
 // Include core subsystems
 require_once('database.php');
 require_once('extensions.php');
+require_once('acl_tree.php');
 
 // Some defines
 define('TIKI_HARDCODED_CONFIG_FILE', 'tiki-hardcoded-config.php');
@@ -33,8 +34,9 @@ class TikiCore
     {
         $this->initialize();                            // Run init scripts
         // Init core subsystems
-        $sys_db     = new TikiCoreDatabase($dbTiki);
-        $sys_extmgr = new TikiCoreExtensions();
+        $this->sys_db     = new TikiCoreDatabase($dbTiki);
+        $this->sys_extmgr = new TikiCoreExtensions();
+        $this->sys_objmgr = new TikiCoreObjectsManagement();
     }
     /// Run init.scripts
     function initialize()
@@ -66,43 +68,92 @@ class TikiCore
      */
     function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true)
     {
-        return $sys_db->query($query, $values, $numrows, $offset, $reporterrors);
+        return $this->sys_db->query($query, $values, $numrows, $offset, $reporterrors);
     }
     function getOne($query, $values = null, $reporterrors = true)
     {
-        return $sys_db->getOne($query, $values, $reporterrors);
+        return $this->sys_db->getOne($query, $values, $reporterrors);
     }
     /*
      * Extensions Management Subsystem API calls
      */
     function installed_extensions()
     {
-        return $sys_extmgr->installed_extensions();
+        return $this->sys_extmgr->installed_extensions();
     }
     function enabled_extensions($user)
     {
-        return $sys_extmgr->enabled_extensions($user);
+        return $this->sys_extmgr->enabled_extensions($user);
     }
     function search_extensions()
     {
-        return $sys_extmgr->search_extensions();
+        return $this->sys_extmgr->search_extensions();
     }
     function install_extension($extension)
     {
-        return $sys_extmgr->install_extension($extension);
+        return $this->sys_extmgr->install_extension($extension);
     }
     function uninstall_extension($extension)
     {
-        return $sys_extmgr->uninstall_extension($extension);
+        return $this->sys_extmgr->uninstall_extension($extension);
     }
     function is_installed($extension)
     {
-        return $sys_extmgr->is_installed($extension);
+        return $this->sys_extmgr->is_installed($extension);
     }
     function is_enabled($extension, $user)
     {
-        return $sys_extmgr->is_enabled($extension, $user);
+        return $this->sys_extmgr->is_enabled($extension, $user);
     }
+    /*
+     * Object Types API
+     */
+    function register_object_type($objtype, $name, $description)
+    {
+        return $this->sys_objmgr->register_object_type($objtype, $name, $description);
+    }
+    function get_object_types_list()
+    {
+        return $this->sys_objmgr->get_object_types_list()
+    }
+    function is_registered($objtype)
+    {
+        return $this->sys_objmgr->is_registered($objtype)
+    }
+    /*
+     * Objects Management API
+     */
+    function add_object($objid, $objtype, $parentobjid, $parentobjtype)
+    {
+        return $this->sys_objmgr->add_object($objid, $objtype, $parentobjid, $parentobjtype)
+    }
+    function remove_object($objid, $objtype)
+    {
+        return $this->sys_objmgr->remove_object($objid, $objtype)
+    }
+    function get_parent_object($objid, $objtype)
+    {
+        return $this->sys_objmgr->get_parent_object($objid, $objtype)
+    }
+    function set_parent_object($objid, $objtype, $parentobjid, $parentobjtype)
+    {
+        return $this->sys_objmgr->set_parent_object($objid, $objtype, $parentobjid, $parentobjtype)
+    }
+    function get_child_objects_list($objid, $objtype)
+    {
+        return $this->sys_objmgr->get_child_objects_list($objid, $objtype)
+    }
+    /*
+     * Permissions (Rights) Management API
+     */
+    // === ONE BIG QUESTION WHAT AND HOW TO IMPLEMENT ===
+    function add_acl()   {}
+    function del_acl()   {}
+    function checl_acl() {}
 }
+
+// Create instance of Tiki core
+global $core;
+$core = new TikiCore();
 
 ?>
