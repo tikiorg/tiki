@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.99 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.100 2004-06-17 21:44:39 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/admin/adminlib.php');
 
+$tikifeedback = array();
+
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
@@ -19,16 +21,20 @@ if ($tiki_p_admin != 'y') {
 }
 
 function simple_set_toggle($feature) {
-	global $_REQUEST, $tikilib, $smarty;
-
+	global $_REQUEST, $tikilib, $smarty, $tikifeedback, $$feature;
+	
 	if (isset($_REQUEST[$feature]) && $_REQUEST[$feature] == "on") {
-		$tikilib->set_preference($feature, 'y');
-
-		$smarty->assign($feature, 'y');
+		if (isset($$feature) && $$feature != 'y') {
+			$tikilib->set_preference($feature, 'y');
+			$smarty->assign($feature, 'y');
+			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
+		}
 	} else {
-		$tikilib->set_preference($feature, 'n');
-
-		$smarty->assign($feature, 'n');
+		if (isset($$feature) && $$feature != 'n') {
+			$tikilib->set_preference($feature, 'n');
+			$smarty->assign($feature, 'n');
+			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
+		}
 	}
 }
 
@@ -125,6 +131,8 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_jukebox.php');
 	}
 }
+
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin.tpl');
