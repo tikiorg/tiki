@@ -15,16 +15,16 @@
 
 <!-- beginning of next bit -->
 
-<br/><br/>
+<br /><br />
 <div class="simplebox">
-<b>{tr}Theme is selected as follows{/tr}:</b><br/>
-1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br/>
-2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br/>
-3. {tr}If not then a theme for the section is used{/tr}<br/>
-4. {tr}If none of the above was selected the user theme is used{/tr}<br/>
-5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br/>
+<b>{tr}Theme is selected as follows{/tr}:</b><br />
+1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br />
+2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br />
+3. {tr}If not then a theme for the section is used{/tr}<br />
+4. {tr}If none of the above was selected the user theme is used{/tr}<br />
+5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br />
 </div>
-<br/><br/>
+<br /><br />
 <a class="linkbut" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
  <a class="linkbut" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>
 <h2>{tr}Assign themes to objects{/tr}</h2>
@@ -107,7 +107,7 @@
 &nbsp;[<a class="prevnext" href="tiki-theme_control_objects.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-theme_control_objects.php?tasks_useDates={$tasks_useDates}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -16,9 +16,9 @@
 <tr>
   <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Information{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}User Information{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
@@ -144,9 +144,9 @@
   <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
   <!--
-  <div class="cbox">
-  <div class="cbox-title">{tr}Configure this page{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}Configure this page{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
  
   </div>
@@ -157,9 +157,9 @@
 </table>
 
 {if $feature_messages eq 'y'}
-    <div class="cbox">
-      <div class="cbox-title">{tr}User Messages{/tr}</div>
-      <div class="cbox-data">
+    <div class="tiki">
+      <div class="tiki-title">{tr}User Messages{/tr}</div>
+      <div class="tiki-content">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
@@ -212,9 +212,9 @@
 
 
 {if $feature_tasks eq 'y'}
-    <div class="cbox">
-      <div class="cbox-title">{tr}User Tasks{/tr}</div>
-      <div class="cbox-data">
+    <div class="tiki">
+      <div class="tiki-title">{tr}User Tasks{/tr}</div>
+      <div class="tiki-content">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
@@ -253,9 +253,9 @@
 
 <br />
 
-    <div class="cbox">
-      <div class="cbox-title">{tr}My Tiki{/tr}</div>
-      <div class="cbox-data">
+    <div class="tiki">
+      <div class="tiki-title">{tr}My Tiki{/tr}</div>
+      <div class="tiki-content">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">

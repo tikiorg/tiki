@@ -1,8 +1,8 @@
-<a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a><br /><br />
 [<a href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
  |<a href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a> 
  |<a href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>
-]<br/><br/>
+]<br /><br />
 <table>
 <tr>
   <th colspan="2">{tr}Newsletter{/tr}</td>
@@ -68,7 +68,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>&nbsp;

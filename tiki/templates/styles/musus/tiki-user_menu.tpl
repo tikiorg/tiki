@@ -17,7 +17,7 @@
 {assign var=opensec value='y'}
 <div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {else}
-<div>&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div>&nbsp;<a href="{$chdata.url|escape}" class="menu-title">{tr}{$chdata.name}{/tr}</a></div>
 {/if}
 {/foreach}
 {if $opensec eq 'y'}</div>{/if}
@@ -27,7 +27,7 @@
 {if $chdata.type eq 's'}
 <div class="separator"><a class='separator' href="{$chdata.url|escape}">{tr}{$chdata.name}{/tr}</a></div>
 {else}
-<div>&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div>&nbsp;<a href="{$chdata.url|escape}" class="menu-title">{tr}{$chdata.name}{/tr}</a></div>
 {/if}
 {/foreach}
 {/if}

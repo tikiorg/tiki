@@ -17,8 +17,8 @@
 
 
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
-<a class="linkbut" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br/><br/>
+<br /><br />
+<a class="linkbut" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br /><br />
 <h2>{tr}User assigned modules{/tr}</h2>
 <table >
 <tr>
@@ -90,7 +90,7 @@
 </table>
 
 {if $canassign eq 'y'}
-<br/>
+<br />
 <form action="tiki-user_assigned_modules.php" method="post">
 <h2>{tr}Assign module{/tr}</h2>
 <table class="normal">

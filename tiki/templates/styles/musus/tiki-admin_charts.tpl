@@ -16,7 +16,7 @@
 
 <!-- beginning of next bit -->
 
-<br/><br/>
+<br /><br />
 <h2>{tr}Add or edit a chart{/tr} <a href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a></h2>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="chartId" value="{$info.chartId|escape}" />
@@ -164,7 +164,7 @@
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

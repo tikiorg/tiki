@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
-<br/><br/>
+<br /><br />
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}Instance{/tr}: {$ins_info.instanceId} (Process: {$proc_info.name} {$proc_info.version})</h3>
 <form action="tiki-g-admin_instance.php" method="post">

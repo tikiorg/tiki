@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-received_articles.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
-<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-received_articles.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
+<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Received Articles{/tr}">
@@ -15,7 +15,7 @@
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">
-<span class="titlea">{$title}</span><br/>
+<span class="titlea">{$title}</span><br />
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
 </div>
 <div class="articleheading">
@@ -178,7 +178,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-received_articles.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -188,7 +188,7 @@
 &nbsp;[<a class="prevnext" href="tiki-received_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-received_articles.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -6,9 +6,9 @@
 <tr>
   <td valign="top">
   <form action="tiki-edit_languages.php" method="post">
-  <div class="cbox">
-  <div class="cbox-title">{tr}Edit and create languages{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}Edit and create languages{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
   <table>
   <tr><td align="center" colspan=3>{tr}Create Language{/tr}</td></tr>

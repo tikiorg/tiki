@@ -19,18 +19,18 @@
     <td class="formcolor">{$info.country}</td>
   </tr></table>
 {else}
-<div class="cbox">
-  <div class="cbox-title">
+<div class="tiki">
+  <div class="tiki-title">
   {if $tiki_p_admin ne 'y'}
   {tr}Error{/tr}
   </div>
-  <div class="cbox-data">
+  <div class="tiki-content">
   {tr}You dont have permission to use this feature{/tr}
   </div>
   {else}
   {tr}Register this site at tikiwiki.org{/tr}
   </div>
-  <div class="cbox-data">
+  <div class="tiki-content">
   <table><tr><td>
     <div class="simplebox">
     <b>{tr}Read this first!{/tr}</b><br /><br />

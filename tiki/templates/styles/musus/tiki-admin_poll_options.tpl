@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">{tr}Admin Polls{/tr}: {$menu_info.title}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">{tr}Admin Polls{/tr}: {$menu_info.title}</a><br /><br />
 <a href="tiki-admin_polls.php" class="linkbut">{tr}List polls{/tr}</a>
 <a href="tiki-admin_polls.php?pollId={$pollId}" class="linkbut">{tr}Edit this poll{/tr}</a>
 <h2>{tr}Preview poll{/tr}</h2>
@@ -6,7 +6,7 @@
 <div class="tiki-title">{$menu_info.name}</div>
 <div class="tiki-content">{include file=tiki-poll.tpl}</div>
 </div>
-<br/>
+<br />
 
 <h2>{tr}Edit or add poll options{/tr}</h2>
 <form action="tiki-admin_poll_options.php" method="post">
@@ -59,7 +59,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_poll_options.php?find={$find}&amp;pollId={$pollId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -69,7 +69,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_poll_options.php?find={$find}&amp;pollId={$pollId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_poll_options.php?find={$find}&amp;pollId={$pollId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

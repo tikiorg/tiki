@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a><br /><br />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
@@ -30,7 +30,7 @@
 &nbsp;[<a class="prevnext" href="tiki-list_trackers.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_trackers.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

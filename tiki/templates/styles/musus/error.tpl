@@ -16,9 +16,9 @@
 		</div>
 	{/if}
 	<div id="tiki-center"><br />
-		<div class="cbox">
-			<div class="cbox-title">{tr}Error{/tr}</div>
-			<div class="cbox-data">
+		<div class="tiki">
+			<div class="tiki-title">{tr}Error{/tr}</div>
+			<div class="tiki-content">
 				{$msg}<br /><br />
 				{if $page and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}
 					<a href="tiki-editpage.php?page={$page}">{tr}Create this page{/tr}</a><br /><br />

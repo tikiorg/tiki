@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.2 2004-01-16 19:33:59 musus Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -51,7 +51,7 @@
 {if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}</td>
+<tr><td class="formcolor">{tr}Edit{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}</td>
 <td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

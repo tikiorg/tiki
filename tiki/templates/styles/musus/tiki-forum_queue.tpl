@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Message queue for{/tr}: {$forum_info.name}</a>
-<br/><br/>
+<br /><br />
 <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
@@ -139,10 +139,10 @@
 		{/if}
 		<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title}</a></b>
 		by {$items[ix].user} on {$items[ix].timestamp|tiki_short_datetime}
-		<br/>
+		<br />
 		{if $items[ix].parentId eq 0 and $forum_info.topic_summary eq 'y'}
 			{if strlen($items[ix].summary) > 0}
-				<i>{$items[ix].summary}</i><br/>
+				<i>{$items[ix].summary}</i><br />
 			{else}
 				<i>{tr}no summary{/tr}</i>
 			{/if}
@@ -150,13 +150,13 @@
 		<hr/>
 		{$items[ix].parsed}
 		  {if count($items[ix].attachments) > 0}
-		    <br/>
+		    <br />
 			{section name=iz loop=$items[ix].attachments}
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
 				<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
 				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
-				<br/>
+				<br />
 			{/section}
   		  {/if}
 
@@ -191,7 +191,7 @@
 &nbsp;[<a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

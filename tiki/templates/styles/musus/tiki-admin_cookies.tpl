@@ -13,7 +13,7 @@
 
 <!-- begin -->
 
-<br/>
+<br />
 <h2>{tr}Create/edit cookies{/tr}</h2>
 <form action="tiki-admin_cookies.php" method="post">
 <input type="hidden" name="cookieId" value="{$cookieId|escape}" />
@@ -32,10 +32,10 @@
 <tr><td>&nbsp;</td><td><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>
 </form>
-<br/>
+<br />
 
 <h2>{tr}Cookies{/tr}</h2>
-<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a><br/><br/>
+<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a><br /><br />
 <div  align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
@@ -89,7 +89,7 @@ title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src
 &nbsp;[<a class="prevnext" href="tiki-admin_cookies.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_cookies.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -1,10 +1,10 @@
-<a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a><br /><br />
 <table >
 <tr>
   <td valign="top">
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Information{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}User Information{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
@@ -32,9 +32,9 @@
 {/if}
 <tr>
   <td valign="top">
-  <div class="cbox">
-  <div class="cbox-title">{tr}Send me a message{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}Send me a message{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
   <form method="post" action="tiki-user_information.php" name="f">
   <input type="hidden" name="to" value="{$userwatch|escape}" />
@@ -72,4 +72,4 @@
 </tr>  
 {/if}
 </table>
-<br/><br/>  
+<br /><br />  

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_modules.tpl,v 1.2 2004-01-13 19:04:18 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_modules.tpl,v 1.3 2004-01-16 19:33:59 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 
@@ -14,7 +14,7 @@
 
 <!-- begin -->
 
-<br/><br/>
+<br /><br />
 <a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
 <a class="linkbut" href="#leftmod">{tr}left modules{/tr}</a>
 <a class="linkbut" href="#rightmod">{tr}right modules{/tr}</a>
@@ -25,7 +25,7 @@
 {tr}
 <b>Note 1</b>: if you allow your users to configure modules then assigned
 modules won't be reflected in the screen until you configure them
-from MyTiki->modules.<br/>
+from MyTiki->modules.<br />
 <b>Note 2</b>: If you assign modules to groups make sure that you
 have turned off the option 'display modules to all groups always'
 from Admin->General
@@ -52,7 +52,7 @@ from Admin->General
 <tr><td colspan="6"><b>{tr}No records found{/tr}</b></td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <a name="assign"></a>
 {if $assign_name eq ''}
 <h3>{tr}Assign new module{/tr}</h3>
@@ -110,7 +110,7 @@ from Admin->General
 <tr><td>&nbsp;</td><td><input type="submit" name="preview" value="{tr}preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
 </table>
 </form>
-<br/>
+<br />
 <h3>{tr}Assigned Modules{/tr}</h3>
 <a name="leftmod"></a>
 <table>
@@ -180,7 +180,7 @@ from Admin->General
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <a name="editcreate"></a>
 <table><tr><td valign="top">
 {if $um_name eq ''}

@@ -14,23 +14,23 @@
 
 <!-- beginning of next bit -->
 
-<br/><br/>
+<br /><br />
 {if $msg}
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Transmission results{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 {$msg}
 </div>
 </div>
 {/if}
-<br/>
-<div class="cbox">
-<div class="cbox-title">
+<br />
+<div class="tiki">
+<div class="tiki-title">
 {tr}Send objects to this site{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <form method="post" action="tiki-send_objects.php">
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
@@ -44,28 +44,28 @@
 </form>
 </div>
 </div>
-<br/>
+<br />
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Filter{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <form action="tiki-send_objects.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
-{tr}filter{/tr}:<input type="text" name="find" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br/>
+{tr}filter{/tr}:<input type="text" name="find" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
 </form>
 </div>
 </div>
-<br/>
+<br />
 
 {if $tiki_p_send_pages eq 'y'}
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Send Wiki Pages{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <div class="simplebox">
 <b>{tr}Pages{/tr}</b>: 
 {section name=ix loop=$sendpages}
@@ -92,14 +92,14 @@
 </div>
 {/if}
 
-<br/>
+<br />
 
 {if $tiki_p_send_articles eq 'y'}
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Send Articles{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <div class="simplebox">
 <b>{tr}Articles{/tr}</b>: 
 {section name=ix loop=$sendarticles}

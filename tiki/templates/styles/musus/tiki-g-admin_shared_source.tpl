@@ -1,11 +1,11 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_shared_source.php?pid={$pid}">{tr}Admin process sources{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-g-admin_shared_source.php?pid={$pid}">{tr}Admin process sources{/tr}</a><br /><br />
 {include file=tiki-g-proc_bar.tpl}
 {if count($errors) > 0}
 <div class="wikitext">
-Errors:<br/>
+Errors:<br />
 {section name=ix loop=$errors}
-<small>{$errors[ix]}</small><br/>
+<small>{$errors[ix]}</small><br />
 {/section}
 </div>
 {/if}

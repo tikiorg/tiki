@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map_edit.tpl,v 1.1 2004-01-07 04:26:34 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map_edit.tpl,v 1.2 2004-01-16 19:36:45 musus Exp $ *}
 
-<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br /><br />
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles{/tr}:</h3>
@@ -63,7 +63,7 @@
 {/if}
 {/if}
 {if $mode eq 'editing'}
-<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br/>
+<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br />
 <form action="tiki-map_edit.php" method="post">
 <textarea name="data" rows="25" cols="80">{$data|escape}</textarea>
 <input type="hidden" name="mapfile" value="{$mapfile}" />
@@ -74,12 +74,12 @@
 &nbsp&nbsp&nbsp
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 {/if}
-  <br/>
+  <br />
   <table class="normal">
   <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this map in your browser using{/tr}: <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br/>
+    {tr}You can view this map in your browser using{/tr}: <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br />
     </small>
     </td>
   </tr>
