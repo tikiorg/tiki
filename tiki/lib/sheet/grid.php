@@ -1,5 +1,9 @@
 <?php
 
+require_once( "PEAR.php" );
+require_once( "lib/sheet/Excel/OLE.php" );
+require_once( "lib/sheet/Excel/reader.php" );
+
 // Constants {{{1
 
 /*
@@ -103,7 +107,8 @@ class TikiSheet
 	{
 		return array(
 			'TikiSheetSerializeHandler',
-			'TikiSheetCSVHandler'
+			'TikiSheetCSVHandler',
+			'TikiSheetExcelHandler'
 		);
 	}// }}}2
 	
@@ -754,34 +759,6 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		$total = array();
-
-		foreach( $sheet->dataGrid as $row )
-			if( is_array( $row ) )
-				$total[] = implode( ",", $row );
-
-		if( is_array( $total ) )
-			$total = implode( "\n", $total );
-
-		if( $this->file == "php://stdout" )
-		{
-			echo $total;
-
-			return true;
-		}
-		else
-		{
-			if( $file = @fopen( $this->file, "w" ) )
-			{
-				if( !@fwrite( $file, $total ) )
-					return false;
-
-				@fclose( $file );
-				return true;
-			}
-			else
-				return false;
-		}
 	}
 
 	// name {{{2
@@ -944,6 +921,85 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		return "0.1-beta";
 	}
 } // }}}1
+
+/** TikiSheetExcelHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetExcelHandler extends TikiSheetDataHandler
+{
+	var $file;
+	
+	/** Constructor {{{2
+	 * Initializes the the serializer on a file.
+	 * @param $file The file path to save or load from.
+	 */
+	function TikiSheetExcelHandler( $file )
+	{
+		$this->file = $file;
+	}
+
+	// _load {{{2
+	function _load( &$sheet )
+	{
+		$document = &new Spreadsheet_Excel_Reader();
+
+		if( !$document->read( $this->file ) )
+			return false;
+
+		$data = $document->sheets[0];
+
+		if( is_array( $data['cells'] ) )
+			foreach( $data['cells'] as $row=>$cols )
+			{
+				if( is_array( $cols ) )
+					foreach( $cols as $col=>$value )
+					{
+						$sheet->initCell( $row - 1, $col - 1 );
+						
+						$info = $data['cellsInfo'][$row][$col];
+
+						if( !isset( $info['rowspan'] ) )
+							$height = 1;
+						else
+							$height = $info['rowspan'];
+						
+						if( !isset( $info['colspan'] ) )
+							$width = 1;
+						else
+							$width = $info['colspan'];
+
+						$sheet->setValue( $value );
+						$sheet->setSize( $width, $height );
+					}
+			}
+
+		return true;
+	}
+
+	// _save {{{2
+	function _save( &$sheet )
+	{
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "MS Excel File";
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "0.1-dev";
+	}
+ } // }}}1
 
 /** TikiSheetOutputHandler {{{1
  * Class to output the data sheet as a standard HTML table.
