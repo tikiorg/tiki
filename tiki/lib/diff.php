@@ -956,8 +956,8 @@ class WikiDiffFormatter
 			'a' => $this->adds_prefix,
 			'd' => $this->deletes_prefix);
 	$color = array('c' => '#ffffff',
-		       'a' => '#ffcccc',
-		       'd' => '#ccffcc');
+		       'a' => '#ccffcc',
+		       'd' => '#ffcccc');
 
 	for (reset($hunks); $hunk = current($hunks); next($hunks))
 	  {
@@ -966,10 +966,10 @@ class WikiDiffFormatter
 		                            $this->context_prefix, '#ffffff');
 	    if (!empty($hunk['d']))
 		$html .= $this->_emit_lines($hunk['d'],
-		                            $this->deletes_prefix, '#ccffcc');
+		                            $this->deletes_prefix, '#ffcccc');
 	    if (!empty($hunk['a']))
 		$html .= $this->_emit_lines($hunk['a'],
-		                            $this->adds_prefix, '#ffcccc');
+		                            $this->adds_prefix, '#ccffcc');
 	  }
 
 	$html .= "</table></td></tr></table></td></tr>\n";
