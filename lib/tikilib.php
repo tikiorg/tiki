@@ -4503,7 +4503,7 @@ function add_pageview() {
 		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
 		} else {
-		    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
+		    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
 		}
 
 		$page_parse_pq = preg_quote($page_parse, "/");
