@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.7 2004-07-11 13:45:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.8 2004-07-15 22:55:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,7 +119,7 @@ function newPost($params) {
 			return new xmlrpcresp(0, 101, "User is not allowed to post");
 		}
 
-		$blog_info = $tikilib->get_blog($blogid);
+		$blog_info = $bloglib->get_blog($blogid);
 
 		if ($blog_info["public"] != 'y') {
 			if ($username != $blog_info["user"]) {
@@ -350,7 +350,11 @@ function getUserBlogs($params) {
 
 	$arrayVal = array();
 
-	$blogs = $tikilib->list_user_blogs($username, true);
+	global $bloglib;
+	if (!is_object($bloglib)) {
+		include_once('lib/blogs/bloglib.php');
+	}
+	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
 	$foo1 = httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
 

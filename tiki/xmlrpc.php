@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.20 2004-07-11 13:45:05 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.21 2004-07-15 22:55:16 teedog Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -278,7 +278,11 @@ function getUserBlogs($params) {
  
  $arrayVal=Array();
  
- $blogs = $tikilib->list_user_blogs($username,true);
+	global $bloglib;
+	if (!is_object($bloglib)) {
+		include_once('lib/blogs/bloglib.php');
+	}
+ $blogs = $bloglib->list_user_blogs($username,true);
  $foo = parse_url($_SERVER["REQUEST_URI"]);
  $foo1=httpPrefix().str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
  foreach($blogs as $blog) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.8 2004-05-15 22:40:27 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_blogs.php,v 1.9 2004-07-15 22:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,7 +61,11 @@ if (isset($_REQUEST["blogcomprefs"])) {
 }
 ask_ticket('admin-inc-blogs');
 
-$blogs = $tikilib->list_blogs(0, -1, 'created_desc', '');
+global $bloglib;
+if (!is_object($bloglib)) {
+	include_once('lib/blogs/bloglib.php');
+}
+$blogs = $bloglib->list_blogs(0, -1, 'created_desc', '');
 $smarty->assign_by_ref('blogs', $blogs["data"]);
 
 ?>

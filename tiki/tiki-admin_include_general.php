@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.31 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.32 2004-07-15 22:55:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -216,7 +216,11 @@ $smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $home
 $smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $home_file_gallery);
 
 if ($home_blog) {
-    $hbloginfo = $tikilib->get_blog($home_blog);
+	global $bloglib;
+	if (!is_object($bloglib)) {
+		include_once('lib/blogs/bloglib.php');
+	}
+    $hbloginfo = $bloglib->get_blog($home_blog);
 
     $smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
 } else {

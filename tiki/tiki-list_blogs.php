@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.21 2004-06-19 09:53:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.22 2004-07-15 22:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ if($tiki_p_view != 'y') {
 if (isset($_REQUEST["remove"])) {
 
 	// Check if it is the owner
-	$data = $tikilib->get_blog($_REQUEST["remove"]);
+	$data = $bloglib->get_blog($_REQUEST["remove"]);
 
 	if ($data["user"] != $user) {
 		if ($tiki_p_blog_admin != 'y') {
@@ -99,7 +99,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_blogs($offset, $maxRecords, $sort_mode, $find);
+$listpages = $bloglib->list_blogs($offset, $maxRecords, $sort_mode, $find);
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

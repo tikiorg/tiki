@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.13 2004-05-30 05:10:57 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.14 2004-07-15 22:55:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,7 +117,11 @@ $smarty->assign_by_ref('languages', $languages);
 $who='user';
 if (isset($_REQUEST["by"]) && ($_REQUEST["by"]=='creator')) $who = 'creator';
 $user_pages = $tikilib->get_user_pages($userwatch,-1, $who);
-$user_blogs = $tikilib->list_user_blogs($userwatch,false);
+global $bloglib;
+if (!is_object($bloglib)) {
+	include_once('lib/blogs/bloglib.php');
+}
+$user_blogs = $bloglib->list_user_blogs($userwatch,false);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
 $smarty->assign_by_ref('user_blogs', $user_blogs);

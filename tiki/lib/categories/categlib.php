@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.54 2004-07-15 22:09:07 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.55 2004-07-15 22:55:20 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -505,8 +505,12 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('blog', $blogId);
 
 		if (!$catObjectId) {
+			global $bloglib;
+			if (!is_object($bloglib)) {
+				include_once('lib/blogs/bloglib.php');
+			}
 			// The page is not cateorized
-			$info = $this->get_blog($blogId);
+			$info = $bloglib->get_blog($blogId);
 
 			$href = 'tiki-view_blog.php?blogId=' . $blogId;
 			$catObjectId = $this->add_categorized_object('blog', $blogId, $info["description"], $info["title"], $href);

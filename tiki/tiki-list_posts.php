@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_posts.php,v 1.11 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_posts.php,v 1.12 2004-07-15 22:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_posts($offset, $maxRecords, $sort_mode, $find);
+$listpages = $bloglib->list_posts($offset, $maxRecords, $sort_mode, $find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
