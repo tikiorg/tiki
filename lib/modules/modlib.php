@@ -152,10 +152,12 @@ class ModLib extends TikiLib {
 
 	function clear_cache() {
 		global $tikidomain;
-		$h = opendir("modules/cache/$tikidomain");
+		$dircache = "modules/cache";
+		if ($tikidomain) { $dircache.= "/$tikidomain"; }
+		$h = opendir($dircache);
 		while (($file = readdir($h)) !== false) {
 			if (substr($file, 0, 3) == 'mod') {
-				$file = "modules/cache/$tikidomain" . $file;
+				$file = "$dircache/$file";
 				unlink ($file);
 			}
 		}
