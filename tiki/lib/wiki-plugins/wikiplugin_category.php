@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.7 2004-08-26 19:24:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.8 2004-09-15 10:35:38 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -13,12 +13,14 @@
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
  *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
+ *	title=>y|n|title		# is the category name displayed ? if 'n', it is not, if 'y' (default), it is displayed, if a text is given, it will replace the name of the category
  * )}
  * {CATEGORY}
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki ,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki
+	,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n,title=>0|1|text)}{CATEGORY}~/np~";
 }
 
 function in_multi_array($needle, $haystack) {
@@ -73,6 +75,7 @@ function wikiplugin_category($data, $params) {
 		"quiz" => "quiz",
 		"survey" => "survey",
 		"tracker" => "tracker",
+		"user" => "user",
 		"wiki page" => "wiki"
 	);
 
@@ -91,6 +94,7 @@ function wikiplugin_category($data, $params) {
 		"quiz" => "Quizzes",
 		"survey" => "Surveys",
 		"tracker" => "Trackers",
+		"user" => "Users",
 		"wiki page" => "Wiki"
 	);
 
@@ -117,8 +121,6 @@ function wikiplugin_category($data, $params) {
 
 	// array with items to be displayed
 	$listcat = array();
-	// title of categories
-	$title = '';
 
 	// TODO: allow 'find' and 'maxRecords'
 	$find = "";
@@ -130,18 +132,33 @@ function wikiplugin_category($data, $params) {
 	$types = (isset($types)) ? "+" . strtolower($types) : "*";
 
 	$typesallowed = split("\+", $types); // create array of types the user allowed to be displayed
+	
+	if (!isset($title)) {
+		$title = 'n';
+	}
+	if ($title == 'y') {
+		$showtitle = true;
+		$titlecateg = true;
+	} elseif ($title == 'n') {
+		$showtitle = false;
+		$titlecateg = false;
+	} else {
+		$showtitle = true;
+		$titlecateg = false;
+	}
+	$title = '';
 
 	foreach ($catids as $id) {
 		// get data of category
 		$cat = $categlib->get_category($id);
 
-		// store name of category
-		if ($count != 0) {
-			$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-		} else {
-			$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+		if ($showtitle and $titlecateg) {
+			if ($count != 0) {
+				$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+			} else {
+				$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+			}
 		}
-
 		// keep track of how many categories there are for split mode off
 		$count++;
 
