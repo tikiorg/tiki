@@ -15,7 +15,12 @@ if (isset($_REQUEST["css"])) {
 	$rss_use_css = true;
 }
 
-$datenow = htmlspecialchars($tikilib->iso_8601(date("U")));
+// date format for RDF 2.0
+$datenow = htmlspecialchars(gmdate('D, d M Y H:i:s T', $chg["$dateId"]));
+if ($rss_version < 2) {
+	// date format for RDF 1.0
+	$datenow = htmlspecialchars($tikilib->iso_8601(date("U")));
+}
 
 $url = $_SERVER["REQUEST_URI"];
 $url = substr($url, 0, strpos($url."?", "?")); // strip all parameters from url
