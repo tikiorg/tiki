@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.1 2004-04-30 23:53:01 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.2 2004-05-01 21:11:27 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -71,7 +71,6 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 		die;
 	}
 
-	header( "Content-Type: application/octet-stream" );
 	$handler = &new $handler( "php://stdout" );
 	$grid->export( $handler );
 
