@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.10 2003-08-21 00:51:21 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.11 2003-11-18 14:45:19 mose Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -12,6 +12,15 @@
 {/if}
 
 <br /><br />
+{if $tiki_p_admin_shoutbox eq 'y'}
+<h2>{tr}Change shoutbox general settings{/tr}</h2>
+<form action="tiki-shoutbox.php" method="post">
+<table class="normal">
+<tr><td class="odd">{tr}auto-link urls{/tr}</td><td class="odd"><input type="checkbox" name="shoutbox_autolink" value="on"{if $shoutbox_autolink eq 'y'} checked="checked"{/if}></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" /></td></tr>
+</table>
+</form>
+{/if}
 
 {if $tiki_p_post_shoutbox eq 'y'}
 <h2>{tr}Post or edit a message{/tr}</h2>

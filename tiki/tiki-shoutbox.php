@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.7 2003-11-18 14:45:20 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,6 +53,10 @@ $smarty->assign('user', $info["user"]);
 if ($tiki_p_admin_shoutbox == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		$shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
+	} elseif (isset($_REQUEST["shoutbox_admin"])) {
+		$shoutbox_autolink = (isset($_REQUEST["shoutbox_autolink"])) ? 'y' : 'n';
+		$tikilib->set_preference('shoutbox_autolink',$shoutbox_autolink);
+		$smarty->assign('shoutbox_autolink',$shoutbox_autolink);
 	}
 }
 

@@ -3853,6 +3853,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('email_encoding','utf-8');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_date_format','%a %d of %b, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:%M %Z');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('shoutbox_autolink','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('slide_style','slidestyle.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','moreneat.css');

@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.68 2003-11-15 22:27:58 xenfasa Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.69 2003-11-18 14:45:20 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -597,3 +597,7 @@ UPDATE tiki_menu_languages SET language = 'es' WHERE language='sp';
 UPDATE tiki_untranslated SET lang = 'es' WHERE lang='sp';
 UPDATE tiki_preferences SET value = 'es' WHERE value='sp' and name='language';
 UPDATE tiki_user_preferences SET value = 'es' WHERE value='sp' and prefName='language';
+
+# added on 2003-11-18 by mose
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('shoutbox_autolink', 'n');
+
