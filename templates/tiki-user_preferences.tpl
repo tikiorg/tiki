@@ -19,26 +19,22 @@
 
 {if $feature_tabs eq 'y'}
 
-{cycle name=tabs values="1,2,3,4,5,6,7" print=false advance=false}
+{cycle name=tabs values="1,2,3" print=false advance=false}
 <div id="page-bar">
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}Personal information{/tr}</a></span>
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}Administrative info{/tr}</a></span>
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}General preferences{/tr}</a></span>
-{if $feature_messages eq 'y'}
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}User Messsages{/tr}</a></span>
-{/if}
-{if $feature_tasks eq 'y'}
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}User Tasks{/tr}</a></span>
-{/if}
-  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}My Tiki{/tr}</a></span>
+ <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Personal Information{/tr}</a></span>
+ <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}General preferences{/tr}</a></span>
+ <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Other preferences{/tr}</a></span>
 </div>
 
-{cycle name=content values="1,2,3,4,5,6,7" print=false advance=false}
+{cycle name=content values="1,2,3" print=false advance=false}
 
 {/if}
 
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
+  <div class="cbox">
+  <div class="cbox-title">{tr}Personal information{/tr}</div>
+  <div class="cbox-data">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
@@ -81,33 +77,17 @@
   <tr><td colspan="2" class="button"><input type="submit" name="info" value="{tr}Change information{/tr}" /></td></tr>
   </table>
   </form>
+  </div>
+  </div>
 
 </div>
 
 
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
-{tr}Leave fields blank to keep current information{/tr}
-  <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table class="admin">
-  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-{if $auth_method neq 'cas'}
-  <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
-  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
-  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
-    <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
-  {/if}
-{/if}
-  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}change administrative info{/tr}"></td></tr>
-  </table>
-  </form>
-
-</div>
-
-
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
-
+  <div class="cbox">
+  <div class="cbox-title">{tr}Preferences{/tr}</div>
+  <div class="cbox-data">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
@@ -121,7 +101,7 @@
    {/section}
   </select>
 {else}
-  {tr}Unavailable - please set your e-mail at "Administrative info"{/tr}
+  {tr}Unavailable - please set your e-mail below{/tr}
 {/if}
   </td></tr>
   <tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
@@ -191,15 +171,38 @@
   <tr><td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
   </table>
   </form>
+  </div>
+  </div>
+
+  <div class="cbox">
+  <div class="cbox-data">
+{tr}Leave fields blank to keep current information{/tr}
+  <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <table class="admin">
+  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+{if $auth_method neq 'cas'}
+  <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
+  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
+  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
+    <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
+  {/if}
+{/if}
+  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}Change administrative info{/tr}"></td></tr>
+  </table>
+  </form>
+  </div>
+  </div>
 
 </div>
 
 
-
-{if $feature_messages eq 'y'}
-
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
+{if $feature_messages eq 'y'}
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Messages{/tr}</div>
+  <div class="cbox-data">
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
 <tr>
@@ -238,18 +241,16 @@
 </tr>
 </table>
 </form>
-
+</div>
 </div>
 
   {/if}
 
-  
-
-
 {if $feature_tasks eq 'y'}
 
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
-
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Tasks{/tr}</div>
+  <div class="cbox-data">
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
 <tr>
@@ -280,13 +281,13 @@
 </form>
 
 </div>
+</div>
 
   {/if}
 
-
-
-
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+  <div class="cbox">
+  <div class="cbox-title">{tr}My Tiki{/tr}</div>
+  <div class="cbox-data">
 
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
@@ -306,6 +307,9 @@
 </tr>
 </table>
 </form>
+
+</div>
+</div>
 
 </div>
 
