@@ -15,4 +15,7 @@ Add a value in first check when you create a new admin page. *}
 {if $include != "list-sections"}
   {include file="tiki-admin-include-anchors.tpl"}
 {/if}
+{if $tikifeedback}
+{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+{/if}
 {include file="tiki-admin-include-$include.tpl"}
