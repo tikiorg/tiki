@@ -7406,7 +7406,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result = $this->query($query);
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    if(!$res["description"]) $res["description"]='no description';
+    if(!$res["description"]) $res["description"]=tra('no description');
     return $res["description"];
   }
 
@@ -7510,7 +7510,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $feature_hotwords_nw;
     global $feature_wiki_pictures;
     global $tiki_p_upload_picture;
-    global $page;
+    //global $page; // GS
     global $dbTiki;
     global $structlib;
         
