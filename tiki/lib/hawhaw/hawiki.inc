@@ -62,6 +62,16 @@ function HAWIKI_error($error_msg)
 }
 
 
+function reconvert_html_entities($string)
+{
+  // convert html entities like &uuml; back to ü
+
+  $trans = get_html_translation_table(HTML_ENTITIES);
+  $trans = array_flip ($trans);
+  return(strtr($string, $trans));
+}
+
+
 class HAWIKI_page
 {
   var $deck;          // HAW_deck object
@@ -581,7 +591,7 @@ class HAWIKI_page
     //        HAWIKI_NAVLINK_BOTTOM (link is created at bottom of wiki page)
     //        HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM (top AND bottom)
 
-    $arr["label"] = $label;
+    $arr["label"] = reconvert_html_entities($label);
     $arr["url"]   = $url;
     $arr["pos"]   = $pos;
 
