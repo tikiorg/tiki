@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.119 2004-07-17 12:49:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.120 2004-07-19 17:13:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,8 @@ if($wiki_creator_admin == 'y') {
     }
 }
 
+require_once('tiki-pagesetup.php');
+
 $objId = urldecode($page);
 if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	// Check to see if page is categorized
@@ -146,7 +148,6 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	$is_categorized = FALSE;
 }
 
-require_once('tiki-pagesetup.php');
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
