@@ -2502,6 +2502,7 @@ INSERT INTO tiki_preferences VALUES ('siteTitle','Stemmin\' the Tide!');
 INSERT INTO tiki_preferences VALUES ('useRegisterPasscode','n');
 INSERT INTO tiki_preferences VALUES ('registerPasscode','');
 INSERT INTO tiki_preferences VALUES ('validateUsers','n');
+INSERT INTO tiki_preferences VALUES ('eponymousGroups','n');
 INSERT INTO tiki_preferences VALUES ('forgotPass','n');
 INSERT INTO tiki_preferences VALUES ('feature_shoutbox','y');
 INSERT INTO tiki_preferences VALUES ('feature_quizzes','y');

@@ -6881,6 +6881,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n')
+go
+
+
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('warn_on_edit_time','2')
 go
