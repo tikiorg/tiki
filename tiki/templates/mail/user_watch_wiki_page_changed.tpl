@@ -3,7 +3,7 @@
 {$mail_machine}?page={$mail_page}
 {tr}Comment:{/tr} {$mail_comment}
 
-{tr}Diff:{/tr} {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page}&diff2={$mail_last_version}
+{tr}Diff:{/tr} {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page}&amp;diff2={$mail_last_version}
 
 {tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}

@@ -12,7 +12,7 @@
 
 {tr}You can view a diff back to the previous version by following
 this link:
-    {$mail_machine}/tiki-pagehistory.php?page={$mail_page}&diff2={$mail_last_version}{/tr}
+    {$mail_machine}/tiki-pagehistory.php?page={$mail_page}&amp;diff2={$mail_last_version}{/tr}
 
 
 {tr}Comment:{/tr} {$mail_comment}
