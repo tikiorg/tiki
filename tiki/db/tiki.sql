@@ -3507,7 +3507,7 @@ CREATE TABLE users_users (
   userId int(8) NOT NULL auto_increment,
   email varchar(200) default NULL,
   login varchar(40) NOT NULL default '',
-  password varchar(30) NOT NULL default '',
+  password varchar(30) default '',
   provpass varchar(30) default NULL,
   realname varchar(80) default NULL,
   default_group varchar(255),

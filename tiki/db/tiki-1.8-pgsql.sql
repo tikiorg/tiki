@@ -309,6 +309,7 @@ DROP TABLE "tiki_articles";
 CREATE TABLE "tiki_articles" (
   "articleId" serial,
   "title" varchar(80) default NULL,
+  "state" char(1) default 's',
   "authorName" varchar(60) default NULL,
   "topicId" bigint default NULL,
   "topicName" varchar(40) default NULL,
@@ -365,6 +366,7 @@ CREATE TABLE "tiki_article_types" (
   "show_pubdate" varchar(1) default 'y',
   "show_expdate" varchar(1) default NULL,
   "show_reads" varchar(1) default 'y',
+  "show_size" varchar(1) default 'y',
   PRIMARY KEY ("type")
 )  ;
 
@@ -513,6 +515,7 @@ CREATE TABLE "tiki_blog_posts" (
   "postId" serial,
   "blogId" integer NOT NULL default '0',
   "data" text,
+	data_size bigint NOT NULL unsigned default '0',
   "created" bigint default NULL,
   "user" varchar(200) default NULL,
   "trackbacks_to" text,
@@ -2332,7 +2335,7 @@ CREATE TABLE "tiki_modules" (
   "position" char(1) default NULL,
   "ord" smallint default NULL,
   "type" char(1) default NULL,
-  "title" varchar(40) default NULL,
+  "title" varchar(255) default NULL,
   "cache_time" bigint default NULL,
   "rows" smallint default NULL,
   "params" varchar(255) default NULL,
@@ -4350,6 +4353,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_eph_admin', 'Can admin ephemerides', 'editors', 'tiki');
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki');
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_userfiles', 'Can upload personal files', 'registered', 'user');
 
 
@@ -4531,7 +4537,7 @@ CREATE TABLE "users_users" (
   "userId" serial,
   "email" varchar(200) default NULL,
   "login" varchar(40) NOT NULL default '',
-  "password" varchar(30) NOT NULL default '',
+  "password" varchar(30) default '',
   "provpass" varchar(30) default NULL,
   "realname" varchar(80) default NULL,
   "default_group" varchar(255),
@@ -5340,6 +5346,27 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_blog','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_blogs','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_default_version','2');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_language','en-us');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_editor','');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_publisher','');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_webmaster','');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_creator','');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_css','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_file_galleries','y');

@@ -259,6 +259,7 @@ DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
   articleId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
+  state char(1) default 's',
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,
@@ -306,6 +307,7 @@ CREATE TABLE tiki_article_types (
   show_pubdate varchar(1) default 'y',
   show_expdate varchar(1) default NULL,
   show_reads varchar(1) default 'y',
+  show_size varchar(1) default 'y',
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
@@ -426,6 +428,7 @@ CREATE TABLE tiki_blog_posts (
   postId int(8) NOT NULL auto_increment,
   blogId int(8) NOT NULL default '0',
   data text,
+	data_size int(11) NOT NULL unsigned default '0',
   created int(14) default NULL,
   user varchar(200) default NULL,
   trackbacks_to text,
@@ -1911,7 +1914,7 @@ CREATE TABLE tiki_modules (
   position char(1) default NULL,
   ord int(4) default NULL,
   type char(1) default NULL,
-  title varchar(40) default NULL,
+  title varchar(255) default NULL,
   cache_time int(14) default NULL,
   rows int(4) default NULL,
   params varchar(255) default NULL,
@@ -3424,6 +3427,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_usermenu', 'Can create items in personal menu', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_eph_admin', 'Can admin ephemerides', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_userfiles', 'Can upload personal files', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks', 'Can use tasks', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
@@ -3503,7 +3507,7 @@ CREATE TABLE users_users (
   userId int(8) NOT NULL auto_increment,
   email varchar(200) default NULL,
   login varchar(40) NOT NULL default '',
-  password varchar(30) NOT NULL default '',
+  password varchar(30) default '',
   provpass varchar(30) default NULL,
   realname varchar(80) default NULL,
   default_group varchar(255),
@@ -3790,6 +3794,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rnd_num_reg','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_articles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blog','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blogs','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forums','y');
