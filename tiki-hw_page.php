@@ -1,5 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.2 2004-02-06 19:49:08 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.3 2004-02-22 14:56:50 ggeller Exp $
+
+// 20040207 - Fix typo in error message
 
 // Initialization
 
@@ -72,7 +74,7 @@ if(isset($_REQUEST["assignmentId"]) && $_REQUEST["assignmentId"] != "") {
   $assignmentId = $_REQUEST["assignmentId"];
 }
 else{
-  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", \ 
+  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
     ".tra("Error: No")." assignmentId ".tra("specified."));
   $smarty->display("error.tpl");
   die;  
