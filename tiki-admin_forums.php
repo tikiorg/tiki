@@ -61,6 +61,18 @@ if($_REQUEST["forumId"]) {
   $info["threadOrdering"]='commentDate_desc';
   $info["usePruneUnreplied"]='n';
   $info["topics_list_replies"]='y';
+  $info["show_description"]='n';
+  
+  $info["outbound_address"]='';
+  $info["inbound_address"]='';
+  $info["topic_summary"]='n';
+  $info["topic_smileys"]='n';
+  $info["ui_avatar"]='y';
+  $info["ui_flag"]='y';
+  $info["ui_posts"]='n';
+  $info["ui_email"]='n';
+  $info["ui_online"]='n';
+          
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
   $info["topics_list_lastpost"]='y';
@@ -82,6 +94,18 @@ $smarty->assign('topicsPerPage',$info["topicsPerPage"]);
 $smarty->assign('mail',$info["mail"]);
 $smarty->assign('useMail',$info["useMail"]);
 $smarty->assign('topics_list_replies',$info['topics_list_replies']);
+$smarty->assign('show_description',$info['show_description']);
+
+$smarty->assign('outbound_address',$info['outbound_address']);
+$smarty->assign('inbound_address',$info['inbound_address']);
+$smarty->assign('topic_smileys',$info['topic_smileys']);
+$smarty->assign('topic_summary',$info['topic_summary']);
+$smarty->assign('ui_avatar',$info['ui_avatar']);
+$smarty->assign('ui_flag',$info['ui_flag']);
+$smarty->assign('ui_posts',$info['ui_posts']);
+$smarty->assign('ui_email',$info['ui_email']);
+$smarty->assign('ui_online',$info['ui_online']);
+
 $smarty->assign('topics_list_reads',$info['topics_list_reads']);
 $smarty->assign('topics_list_pts',$info['topics_list_pts']);
 $smarty->assign('topics_list_lastpost',$info['topics_list_lastpost']);
@@ -123,13 +147,24 @@ if(isset($_REQUEST["save"])) {
   $_REQUEST['vote_threads']=isset($_REQUEST['vote_threads'])?'y':'n';	
   $_REQUEST['topics_list_reads']=isset($_REQUEST['topics_list_reads'])?'y':'n';
   $_REQUEST['topics_list_replies']=isset($_REQUEST['topics_list_replies'])?'y':'n';
+  $_REQUEST['show_description']=isset($_REQUEST['show_description'])?'y':'n';
+  
+  $_REQUEST['topic_summary']=isset($_REQUEST['topic_summary'])?'y':'n';
+  $_REQUEST['topic_smileys']=isset($_REQUEST['topic_smileys'])?'y':'n';
+  $_REQUEST['ui_avatar']=isset($_REQUEST['ui_avatar'])?'y':'n';
+  $_REQUEST['ui_flag']=isset($_REQUEST['ui_flag'])?'y':'n';
+  $_REQUEST['ui_email']=isset($_REQUEST['ui_email'])?'y':'n';
+  $_REQUEST['ui_posts']=isset($_REQUEST['ui_posts'])?'y':'n';
+  $_REQUEST['ui_online']=isset($_REQUEST['ui_online'])?'y':'n';
+  
   $_REQUEST['topics_list_pts']=isset($_REQUEST['topics_list_pts'])?'y':'n';
   $_REQUEST['topics_list_lastpost']=isset($_REQUEST['topics_list_lastpost'])?'y':'n';
   $_REQUEST['topics_list_author']=isset($_REQUEST['topics_list_author'])?'y':'n';
 
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
-  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads']);                         
+  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads'],$_REQUEST['show_description'],
+  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_email'],$_REQUEST['ui_online']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -153,7 +188,18 @@ if(isset($_REQUEST["save"])) {
   $info["usePruneOld"]='n';
   $info["pruneMaxAge"]= 60*60*24*30;
   $info["forumId"] = 0;
-   $info["topics_list_replies"]='y';
+  $info["topics_list_replies"]='y';
+  $info["show_description"]='n';
+  $info["outbound_address"]='';
+  $info["inbound_address"]='';
+  $info["topic_summary"]='n';
+  $info["topic_smileys"]='n';
+  $info["ui_avatar"]='y';
+  $info["ui_flag"]='y';
+  $info["ui_posts"]='n';
+  $info["ui_email"]='n';
+  $info["ui_online"]='n';
+
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
   $info["topics_list_lastpost"]='y';
@@ -169,6 +215,7 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('mail',$info["mail"]);
   $smarty->assign('useMail',$info["useMail"]);
   $smarty->assign('topics_list_replies',$info['topics_list_replies']);
+  $smarty->assign('show_description',$info['show_description']);
   $smarty->assign('topics_list_reads',$info['topics_list_reads']);
   $smarty->assign('topics_list_pts',$info['topics_list_pts']);
   $smarty->assign('topics_list_lastpost',$info['topics_list_lastpost']);
@@ -180,6 +227,16 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('topicOrdering',$info["topicOrdering"]);
   $smarty->assign('threadOrdering',$info["threadOrdering"]);
   $smarty->assign('pruneMaxAge',$info["pruneMaxAge"]);
+  $smarty->assign('outbound_address',$info['outbound_address']);
+  $smarty->assign('inbound_address',$info['inbound_address']);
+  $smarty->assign('topic_smileys',$info['topic_smileys']);
+  $smarty->assign('topic_summary',$info['topic_summary']);
+  $smarty->assign('ui_avatar',$info['ui_avatar']);
+  $smarty->assign('ui_flag',$info['ui_flag']);
+  $smarty->assign('ui_posts',$info['ui_posts']);
+  $smarty->assign('ui_email',$info['ui_email']);
+  $smarty->assign('ui_online',$info['ui_online']);
+
 
 }
 

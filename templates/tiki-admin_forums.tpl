@@ -8,6 +8,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Show description{/tr}:</td><td class="formcolor"><input type="checkbox" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Prevent flooding{/tr}:</td><td class="formcolor"><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
 {tr}Minimum time between posts{/tr}: 
 <select name="floodInterval">
@@ -50,6 +51,7 @@
 <tr><td class="formcolor">{tr}Default ordering for threads{/tr}:</td><td class="formcolor">
 <select name="threadOrdering">
 <option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
+<option value="commentDate_asc" {if $topicOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
 <option value="average_desc" {if $topicOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
 <option value="title_desc" {if $topicOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
 <option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
@@ -105,6 +107,46 @@
 	<td class="formcolor">{tr}Threads can be voted{/tr}</td>
 	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
 </tr>
+<tr>
+	<td class="formcolor">{tr}Forward messages to this forum to this email{/tr}</td>
+	<td class="formcolor"><input type="text" name="outbound_address" value="{$outbound_address}" /></td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
+	<td class="formcolor"><input type="text" name="inbound_address" value="{$inbound_address}" /></td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Use topic smileys{/tr}</td>
+	<td class="formcolor"><input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if} /></td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Show topic summary{/tr}</td>
+	<td class="formcolor"><input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if} /></td>
+</tr>
+
+<tr>
+	<td class="formcolor">{tr}User information display{/tr}</td>
+	<td class="formcolor">
+	<table>
+	<tr>
+		<td>{tr}avatar{/tr}</td>
+		<td>{tr}flag{/tr}</td>
+		<td>{tr}posts{/tr}</td>
+		<td>{tr}email{/tr}</td>
+		<td>{tr}online{/tr}</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="ui_posts" {if $ui_posts eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="ui_email" {if $ui_email eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="ui_online" {if $ui_online eq 'y'}checked="checked"{/if} /></td>
+	</tr>		
+	</table>
+	</td>
+</tr>
+
+
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -148,7 +190,7 @@
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
-   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}permissions{/tr}' title='{tr}permissions{/tr}' /></a>
+   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' title='{tr}permissions{/tr}' /></a>
 {/if}
 </td>
 </tr>

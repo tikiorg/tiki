@@ -1,7 +1,7 @@
-<div class="forumspagetitle">
-<a href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
-</div>
-<br/>
+<a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
+<br/><br/>
+<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread?forumId={$forumId}&amp;parentId={$parentId}">{$thread_info.title}</a>
+<br/><br/>
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
 {else}
