@@ -187,7 +187,7 @@
   {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
   </td>
-  <td class="topictitleeven"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}
+  <td class="topictitleeven"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $tiki_p_admin_forum eq 'y'}
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">{tr}edit{/tr}</a>
