@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.12 2004-02-09 18:20:22 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.13 2004-03-27 21:24:51 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -207,6 +207,7 @@ div.box-title table {
 #rules-copy-panel {
     display: none;
 }
+
 /* for tabs */
 div.tabs {
 	font-size: 11px;
@@ -276,4 +277,8 @@ a.removeTab{
 /* Warning color */
 .attention {
 	color: red;
+}
+
+TABLE.admin {
+  width: 100%;
 }

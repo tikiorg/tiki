@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/function.js_maxlength.php,v 1.2 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/function.js_maxlength.php,v 1.3 2004-03-27 21:23:52 mose Exp $
 /**
  * \brief Smarty {js_maxlength} function handler
  *
@@ -10,6 +10,16 @@
  * TODO would be great if it worked with array arguments
  *
  */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
+  //smarty is not there - we need setup
+  require_once('tiki-setup.php');
+  $smarty->assign('msg',tra("This script cannot be called directly"));
+  $smarty->display("error.tpl");
+  die;
+}
+
 
 function smarty_function_js_maxlength($params, &$smarty) {
 	extract($params); // textarea=string maxlength=num

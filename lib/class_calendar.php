@@ -28,6 +28,12 @@
 // buildMinBox($name,$h)                  : Builds a select box for minutes
 // buildIntBox($name,$min,$max,$inter,$def=0) : Generic Select box indicating minimum, maximum, interval and default values
 // buildIntBoxMul($name,$min,$max,$inter,$def=0,$cu=0) : Idem but allowing multiple selections
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 class Calendar {
 	var $lan;
 

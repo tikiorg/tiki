@@ -4107,5 +4107,9 @@ $lang=Array(
 "Manage attachement preferences" => "Configurer les fichiers joints",
 "Change all to db" => "Les mettre tous dans la base de données",
 "Change all to file" => "Les mettre tout en fichier",
+"Php error reporting level for non-admin:" => "Niveau de rapport d'erreurs PHP pour les non admin",
+"No error reporting" => "Rapport d'erreurs désactivé",
+"Report all PHP errors" => "Toutes les errreurs PHP sont rapportées",
+"Report all errors except notices" =>"Toutes les errreurs sauf les notices sont rapportées",
 "###end###"=>"###end###");
 ?>

@@ -1,12 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.6 2004-03-08 02:38:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.7 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 include "lib/trackers/trackerlib.php";
+
 
 if (isset($_REQUEST["trkset"])) {
 	check_ticket('admin-inc-trackers');

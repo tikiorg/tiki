@@ -1944,4 +1944,7 @@ a.removeTab{
 	clear:both;
 	}
 	
-
+/* Table Admin width */
+TABLE.admin {
+  width: 100%;
+}

@@ -7,6 +7,11 @@
 // You may copy this code freely under the conditions of the GPL.
 //
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 // FIXME: possibly remove assert()'s for production version?
 
 // PHP3 does not have assert()

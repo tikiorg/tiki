@@ -1,8 +1,12 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.5 2004-01-26 23:10:35 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.6 2004-03-27 21:24:03 mose Exp $
 //
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 class TikiDB {
 // Database access functions

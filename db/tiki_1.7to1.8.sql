@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.104 2004-02-24 21:51:58 wolff_borg Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.105 2004-03-27 21:23:53 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -886,4 +886,10 @@ INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_max_syllwo
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_lru_purge_rate','5');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_lru_length','100');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('search_syll_age','48');
+
+# added on 2004-03-18 by baptiste (adding anonymous posts discard possibility to mail-in feature)
+ALTER TABLE tiki_mailin_accounts ADD anonymous CHAR(1) NOT NULL DEFAULT 'y';
+
+# added on 2004-03-26 by baptiste (adding attachments handling to the mail-in feature)
+ALTER TABLE tiki_mailin_accounts ADD attachments CHAR(1) NOT NULL DEFAULT 'n';
 

@@ -1,5 +1,15 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
+  //smarty is not there - we need setup
+  require_once('tiki-setup.php');
+  $smarty->assign('msg',tra("This script cannot be called directly"));
+  $smarty->display("error.tpl");
+  die;
+}
+
+
 // $Header:
 
 echo '<html><body><pre><p>';

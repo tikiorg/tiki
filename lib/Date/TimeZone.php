@@ -17,10 +17,15 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.6 2003-07-07 20:44:43 awcolley Exp $
+// $Id: TimeZone.php,v 1.7 2004-03-27 21:24:05 mose Exp $
 //
 // Date_TimeZone Class
 //
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 /**
  * TimeZone representation class, along with time zone information data.

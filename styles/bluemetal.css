@@ -1,5 +1,5 @@
 /* Default style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
-   every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
+	 every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
    adapt to produce a new theme. Good luck!
 */
 
@@ -1959,4 +1959,9 @@ a.phplm	{
 }
 a.phplm:hover	{
 	background-color: #dedede;
+}
+
+/* Table Admin width */
+TABLE.admin {
+  width: 100%;
 }

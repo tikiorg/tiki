@@ -1,10 +1,15 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.24 2004-03-07 23:12:08 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.25 2004-03-27 21:24:32 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
  */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 include_once ('lib/tikilib.php');
 
@@ -35,12 +40,14 @@ class TikiIntegrator
     /// Add/Update
 function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $exp, $descr) {
 	global $tikilib;
+	$parms = array($name, $path, $start, $css, $vis, $cacheable, $exp, $descr);
 	if (strlen($repID) == 0 || $repID == 0) {
 		$query = "insert into `tiki_integrator_reps` (`name`,`path`,`start_page`,`css_file`, `visibility`,`cacheable`,`expiration`,`description`) values(?,?,?,?,?,?,?,?)";
 	} else {
 		$query = "update `tiki_integrator_reps` set `name`=?,`path`=?,`start_page`=?,`css_file`=?,`visibility`=?,`cacheable`=?,`expiration`=?,`description`=? where `repID`=?";
+		$parms[] = (int) $repID;
 	}
-	$result = $tikilib->query($query, array($name, $path, $start, $css, $vis, $cacheable, $exp, $descr,(int) $repID));
+	$result = $tikilib->query($query, $parms);
 	// Invalidate cached repository if needed
 	if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID)) {
 		unset($this->c_rep);

@@ -1,5 +1,10 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 include_once ('lib/diff.php');
 
 require_once ('lib/pear/Date.php');
@@ -5549,9 +5554,9 @@ function format_language_list($languages) {
         // Sort the languages by their name in the current locale
         usort($formatted, array('TikiLib', 'formatted_language_compare'));
         return $formatted;
-        }
+}
 
-        function get_language($user = false) {
+function get_language($user = false) {
         static $language = false;
 
         if (!$language) {
@@ -5563,9 +5568,8 @@ function format_language_list($languages) {
             } else
           $language = $this->get_preference('language', 'en');
         }
-
         return $language;
-        }
+}
 
 function get_locale($user = false) {
 # TODO move to admin preferences screen

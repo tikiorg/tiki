@@ -1771,14 +1771,14 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 .catname {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   green;
+	color:   black;
 	text-decoration:   none;
 }
 
 .catname:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   green;
+	color:   black;
 	text-decoration:   none;
 }
 
@@ -2662,7 +2662,7 @@ div.tree {
 }
 /* Root of tree (outer div) */
 div.tree#top {
-	border:    1px outset #00E000;
+/*	border:    1px outset #00E000; */
 	padding:   10px 1.5em 20px 1.5em;
 }
 
@@ -2698,6 +2698,7 @@ a.tikihelp:hover {
 div#rules-copy-panel {
     display: none;
 }
+
 /* for tabs */
 div.tabs {
 	font-size: 11px;
@@ -2763,5 +2764,8 @@ a.removeTab{
 #clear {
 	clear:both;
 	}
-	
 
+/* Admin area */
+TABLE.admin {
+  width: 100%;
+}

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.172 2004-03-24 13:46:45 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.173 2004-03-27 21:23:53 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -1848,6 +1848,7 @@ CREATE TABLE tiki_mailin_accounts (
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
   anonymous char(1) NOT NULL default 'y',
+  attachments char(1) NOT NULL default 'n',
   PRIMARY KEY  (accountId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

@@ -4,6 +4,15 @@
 * Project........: HTML Mime Mail class
 * Last Modified..: 15 July 2002
 */
+
+// This looks like a demo file, but it causes errors when you call it,
+// so ive included the die here as well - Damian
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 error_reporting (E_ALL);
 
 include ('htmlMimeMail.php');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_irc.php,v 1.9 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_irc.php,v 1.10 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,6 @@
 # \TODO max lines = 20/50/100/all
 # \TODO refresh = 10/30/60/never
 
-#error_reporting(E_ALL);
 require_once ('tiki-setup.php');
 
 require_once ('lib/irc/irclib.php');

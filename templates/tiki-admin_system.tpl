@@ -25,7 +25,7 @@
 <td>({$tempcache.cant} {tr}files{/tr} / {$tempcache.total|kbsize})</td>
 </tr>
 </table>
-
+<br />
 <table class="normal">
 <tr><td colspan="3" class="heading">{tr}Templates compiler{/tr}</td></tr>
 {foreach key=key item=item from=$templates}

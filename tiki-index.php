@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.90 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.91 2004-03-27 21:23:52 mose Exp $
 
 // Initialization
 
@@ -421,7 +421,6 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 	require_once("lib/hawhaw/hawiki_cfg.inc");
 	require_once("lib/hawhaw/hawiki_parser.inc");
 	require_once("lib/hawhaw/hawiki.inc");
-	error_reporting(E_ALL & ~E_NOTICE);
 	$myWiki = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=");
 
 	$myWiki->set_navlink(tra("Home Page"), "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);

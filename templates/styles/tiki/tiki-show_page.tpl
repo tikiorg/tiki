@@ -272,7 +272,7 @@
 {/if}
 {if $print_page eq 'y'}
 <div class="editdate" align="center">
-<p>{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}
+<p>{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page={$page|escape:"url"}
 </p>
 </div>
 {/if}

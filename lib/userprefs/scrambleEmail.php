@@ -1,5 +1,5 @@
 <?php
-// 	$Header: /cvsroot/tikiwiki/tiki/lib/userprefs/scrambleEmail.php,v 1.1 2003-10-17 20:56:37 sylvieg Exp $
+// 	$Header: /cvsroot/tikiwiki/tiki/lib/userprefs/scrambleEmail.php,v 1.2 2004-03-27 21:24:47 mose Exp $
 /**
 *	scramble an email with a method
 *	@param string email emil to be scrambled
@@ -8,6 +8,12 @@
 * 	@param string method=x: mr@tw.org -> mr@xxxxxx
 *	@return string scrambled email
 */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 function scrambleEmail($email, $method='unicode') {
 	switch ($method) {
 	case 'strtr':

@@ -1,5 +1,10 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 /* Task properties:
    user, taskId, title, description, date, status, priority, completed, percentage
 */
@@ -23,15 +28,23 @@ class FaqLib extends TikiLib {
 		$result = $this->query($query,array($faqId,$question,$answer,$user,$now));
 	}
 
-	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find) {
-		
+	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find, $faqId) {
 		$bindvars=array();
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " where (`question` like ? or `answer` like ?)";
-			$bindvars[]=$findesc;
-			$bindvars[]=$findesc;
+		if ($find || $faqId) {
+			$mid = " where ";
+			if ($find) {
+				$findesc = '%' . $find . '%';
+				$mid .= "(`question` like ? or `answer` like ?)";
+				$bindvars[]=$findesc;
+				$bindvars[]=$findesc;
+				if ($faqId) {
+					$mid .= " and ";
+				}
+			}
+			if ($faqId) {
+				$mid .= "`faqId`=?";
+				$bindvars[]=$faqId;
+			}
 		} else {
 			$mid = "";
 		}

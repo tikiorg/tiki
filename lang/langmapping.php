@@ -4,6 +4,11 @@
 * PLEASE : translators, please, update this file with your language name in your own language
 **/
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 $langmapping = array(
     'br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
     'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese")        ),

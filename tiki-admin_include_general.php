@@ -1,10 +1,16 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.18 2004-01-30 07:45:00 btodoroff Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.19 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 
 // Handle Update
@@ -42,6 +48,7 @@ if (isset($_REQUEST["prefs"])) {
         "sender_email",
         "email_encoding",
         "system_os",
+        "error_reporting_level",
         "urlIndex",
         "proxy_host",
         "proxy_port",

@@ -13,8 +13,13 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.4 2003-06-19 21:09:08 awcolley Exp $
+// $Id: GraphViz.php,v 1.5 2004-03-27 21:24:30 mose Exp $
 //
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 /**
 * PEAR::Image_GraphViz
