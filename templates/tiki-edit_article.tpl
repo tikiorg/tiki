@@ -114,12 +114,12 @@
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 <tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
-{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time time=$publishDateSite display_seconds=false}
+{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
 <tr><td class="formcolor">{tr}Expiration Date{/tr}</td><td class="formcolor">
-{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time time=$expireDateSite display_seconds=false}
+{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
