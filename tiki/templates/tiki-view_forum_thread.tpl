@@ -1,5 +1,11 @@
 <a class="pagetitle" href="tiki-view_forum.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 <br/><br/>
+{if $was_queued eq 'y'}
+<div class="wikitext">
+<small>{tr}Your message has been queued for approval, the message will be posted after
+a moderator approves it.{/tr}</small>
+</div>
+{/if}
 <a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <br/><br/>
 {if $openpost eq 'y'}
@@ -23,15 +29,43 @@
   {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
   <br/><small>posts:{$thread_info.user_posts}</small>
   {/if}
-  <!--
-  {if $thread_info.userName and $forum_info.ui_email eq 'y'}  
+<!--
+  {if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
   {mailto address="$thread_info.user_email" encode="javascript" text="email" extra='class="link"'}
   {/if}
-  -->
+-->
   </div>
   </td>
   <td class="viewthreadr" width="85%">
-  <b>{$thread_info.title}</b><br/><br/>
+  <table width="100%">
+  <tr>
+  	<td>
+  		<b>{$thread_info.title}</b>
+  	</td>
+  	<td style="text-align:right;">
+	  
+	  {if $tiki_p_admin_forum eq 'y'}
+	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_threadId={$thread_info.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
+	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_remove=1&amp;comments_threadId={$thread_info.threadId}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
+	     class="admlink"><img src='img/icons/trash.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+	  {/if}     
+	  
+	  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject=Re:{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+	  {/if}
+	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;savenotepad={$thread_info.threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+	  {/if}
+
+	  {if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
+		  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+	  {/if}
+
+  	</td>
+  </tr>
+  </table>
+  <br/><br/>
   {$thread_info.parsed}
   <br/><br/>
   <table width="100%" border="1" style="border: 1px solid black;">
@@ -230,6 +264,45 @@
   </div>
 <!-- TOOLBAR ENDS -->
 
+<form method="post" action="tiki-view_forum_thread.php">
+    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
+    <input type="hidden" name="forumId" value="{$forumId}" />
+{if $tiki_p_admin_forum eq 'y'}
+<table class="normal">
+	<tr>
+		<td colspan="3" class="heading">{tr}Moderator actions{/tr}</td>
+	</tr>
+	<tr>
+		<td class="odd">
+			<input type="submit" name="delsel" value="{tr}delete selected{/tr}" />
+		</td>
+		<td class="odd">
+			{tr}Move to topic:{/tr}
+			<select name="moveto">
+			{section name=ix loop=$topics}
+				{if $topics[ix].threadId ne $comments_parentId}
+					<option value="{$topics[ix].threadId}">{$topics[ix].title}</option>
+				{/if}
+			{/section}
+			</select>
+			<input type="submit" name="movesel" value="{tr}move{/tr}" />
+		</td>
+		<td style="text-align:right;" class="odd">
+			<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a></small>
+		</td>
+
+	</tr>
+</table>
+{/if}
+
 <table class="threads" >
 <tr>
   <td class="forumheading">{tr}author{/tr}</td>
@@ -262,6 +335,10 @@
   	</td>
   	<td style="text-align:right;">
 	  {if $tiki_p_admin_forum eq 'y'}
+		<input type="checkbox" name="forumthread[]" value="{$comments_coms[ix].threadId}"  {if $smarty.request.forumthread and in_array($comments_coms[ix].threadId,$smarty.request.forumthread)}checked="checked"{/if} />
+	  {/if}	
+
+	  {if $tiki_p_admin_forum eq 'y'}
 	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
@@ -275,6 +352,12 @@
 	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;savenotepad={$comments_coms[ix].threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	  {/if}
+
+	  {if $comments_coms[ix].userName and $forum_info.ui_email eq 'y' and strlen($comments_coms[ix].user_email) > 0}  
+		  <a href="mailto:{$comments_coms[ix].user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+	  {/if}
+
+
 	</td>
   </tr>
   </table>
@@ -311,6 +394,8 @@
 </tr>
 {/section}
 </table>
+</form>
+
 <br/>
   <div align="center">
   <div class="mini">
@@ -332,5 +417,21 @@
   </div>
   <br/>
   </div>
-  {$comments_below} {tr}Comments below your current threshold{/tr}
+<small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
   
+{if $feature_forum_quickjump eq 'y'}
+<form id='quick' method="post" action="tiki-view_forum.php">
+<table width="100%">
+<tr>
+<td style="text-align:right;">
+<small>{tr}Jump to forum{/tr}:</small>
+<select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
+{section name=ix loop=$all_forums}
+<option value="{$all_forums[ix].forumId}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+{/section}
+</select>
+</td>
+</tr>
+</table>
+</form>
+{/if}

@@ -36,6 +36,14 @@
 </tr>
 </table>
 
+{if $was_queued eq 'y'}
+<div class="wikitext">
+<small>{tr}Your message has been queued for approval, the message will be posted after
+a moderator approves it.{/tr}</small>
+</div>
+{/if}
+
+
 {if $tiki_p_forum_post_topic eq 'y'}
   {if $comment_preview eq 'y'}
   <br/><br/>
@@ -142,18 +150,20 @@
       <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
       {/if}
       </select>
+      {if $forum_info.topic_smileys eq 'y'}
       <select name="comment_topicsmiley">
-      <option value="">{tr}no feeling{/tr}</option>
-      <option value="icon_frown.gif">{tr}frown{/tr}</option>
-      <option value="icon_exclaim.gif">{tr}exclaim{/tr}</option>
-      <option value="icon_idea.gif">{tr}idea{/tr}</option>
-      <option value="icon_mad.gif">{tr}mad{/tr}</option>      
-      <option value="icon_neutral.gif">{tr}neutral{/tr}</option>      
-      <option value="icon_question.gif">{tr}question{/tr}</option>      
-      <option value="icon_sad.gif">{tr}sad{/tr}</option>      
-      <option value="icon_smile.gif">{tr}happy{/tr}</option>
-      <option value="icon_wink.gif">{tr}wink{/tr}</option>
+      <option value="" {if $comment_topicsmiley eq ''}selected="selected"{/if}>{tr}no feeling{/tr}</option>
+      <option value="icon_frown.gif" {if $comment_topicsmiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
+      <option value="icon_exclaim.gif" {if $comment_topicsmiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
+      <option value="icon_idea.gif" {if $comment_topicsmiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
+      <option value="icon_mad.gif" {if $comment_topicsmiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>      
+      <option value="icon_neutral.gif" {if $comment_topicsmiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>      
+      <option value="icon_question.gif" {if $comment_topicsmiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>      
+      <option value="icon_sad.gif" {if $comment_topicsmiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>      
+      <option value="icon_smile.gif" {if $comment_topicsmiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
+      <option value="icon_wink.gif" {if $comment_topicsmiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
       </select>
+      {/if}
       </td>
     </tr>
     {if $forum_info.topic_summary eq 'y'}
@@ -181,8 +191,73 @@
 
 <br/>
 {/if}
+
+
+<form method="post" action="tiki-view_forum.php">
+    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
+    <input type="hidden" name="forumId" value="{$forumId}" />
 <table class="forumstable">
+{if $tiki_p_admin_forum eq 'y'}
 <tr>
+	<td class="forumheading" colspan='18'>moderator actions</td>
+</tr>
+<tr>	
+	<td class="forumodd" colspan="6">
+	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected topics{/tr}' />
+	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
+	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}lock{/tr}' title='{tr}lock selected topics{/tr}' />
+	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected topics{/tr}' />
+	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
+	</td>
+	<td style="text-align:right;" class="forumodd" colspan="2">
+	<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a></small>
+	</td>
+</tr>
+{if $smarty.request.movesel_x} 
+<tr>
+	<td class="forumodd" colspan="18">
+	{tr}Move to{/tr}:
+	<select name="moveto">
+		{section name=ix loop=$all_forums}
+			{if $all_forums[ix].forumId ne $forumId}
+				<option value="{$all_forums[ix].forumId}">{$all_forums[ix].name}</option>
+			{/if}
+		{/section}
+	</select>
+	<input type='submit' name='movesel' value='{tr}move{/tr}' />
+	
+	</td>
+</tr>
+{/if}
+{if $smarty.request.splitsel_x} 
+<tr>
+	<td class="forumodd" colspan="18">
+	{tr}Merge into topic{/tr}:
+	<select name="mergetopic">
+		{section name=ix loop=$comments_coms}
+			{if in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}
+				<option value="{$comments_coms[ix].threadId}">{$comments_coms[ix].title}</option>
+			{/if}
+		{/section}
+	</select>
+	<input type="submit" name="mergesel" value="{tr}merge{/tr}" />
+	</td>
+</tr>
+{/if}
+
+<tr id='moveop' style="display:none;">
+	<td class="forumodd" colspan="18">
+		move
+	</td>
+</tr>
+{/if}
+<tr>
+  {if $tiki_p_admin_forum eq 'y'}
+  <td width="2%" class="forumheading">&nbsp;</td>
+  {/if}
   <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
   {if $forum_info.topic_smileys eq 'y'}
   <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}mot{/tr}</a></td>
@@ -212,6 +287,12 @@
 {assign var="newtopic" value=""}
 {/if}
 <tr>
+  {if $tiki_p_admin_forum eq 'y'}
+  <td width="2%" class="topictitle{cycle advance=false}">
+  	
+	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId}"  {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
+  </td>
+  {/if}	
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
   {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="folder" />{/if}
   {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="announce" />{/if}
@@ -273,7 +354,7 @@
 </tr>
 {/section}
 </table>
-
+</form>
 <br/>
   <div align="center">
   <div class="mini">

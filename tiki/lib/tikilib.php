@@ -163,6 +163,19 @@ class TikiLib {
 	return $res;    
   }
 
+  /*shared*/ function get_event_watches($event,$object)
+  {
+   
+    $query = "select * from tiki_user_watches where event='$event' and object='$object'";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+	return $ret;    
+  }
+
 
   /*shared*/ function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
   {
@@ -4333,9 +4346,10 @@ class TikiLib {
         $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
         @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);
       }
-      if($user) {
-        $not = $this->get_user_event_watches($user,'wiki_page_changed',$pageName);
-		if($not) {
+      if($feature_user_watches == 'y') {
+        $nots = $this->get_event_watches('wiki_page_changed',$pageName);
+        
+		foreach($nots as $not) {
 			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
 	        $smarty->assign('mail_page',$pageName);
 	        $smarty->assign('mail_date',date("U"));

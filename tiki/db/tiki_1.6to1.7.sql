@@ -1,15 +1,22 @@
+alter table tiki_forums add moderator_group varchar(200);
+update tiki_forums set moderator_group='';
+
+
 drop table if exists tiki_forums_queue;
 create table tiki_forums_queue(
 	qId integer(14) not null auto_increment,
 	object char(32),
 	parentId integer(14),
+	forumId integer(14),
 	timestamp integer(14),
 	user varchar(200),
 	title varchar(240),
 	data text,
 	type varchar(60),
+	hash char(32),
 	topic_smiley varchar(80),
-	summery varchar(240),
+	topic_title varchar(240),
+	summary varchar(240),
 	primary key(qId)
 );
 

@@ -15,7 +15,9 @@
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td></tr>
+  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td>
+  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td><input type="checkbox" name="email_isPublic" {if $email_isPublic eq 'y'}checked="checked"{/if} /></td></tr>
+  </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td>
   <img alt="flag" src="img/flags/{$country}.gif" />
   <select name="country">

@@ -315,10 +315,14 @@ if($feature_user_watches == 'y') {
 }
 
 
+$sameurl_elements=Array('pageName','page');
+
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->display("styles/$style_base/tiki.tpl");
+
+// xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 
 ?>

@@ -29,13 +29,22 @@
 </select>
 <input name="new_section" type="text" />
 </td></tr>
-<tr><td class="formcolor">{tr}Moderator{/tr}:</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Moderator user{/tr}:</td><td class="formcolor">
 <select name="moderator">
 {section name=ix loop=$users}
 <option value="{$users[ix].user}" {if $moderator eq $users[ix].user}selected="selected"{/if}>{$users[ix].user}</option>
 {/section}
 </select>
 </td></tr>
+<tr><td class="formcolor">{tr}Moderator group{/tr}:</td><td class="formcolor">
+<select name="moderator_group">
+<option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+{section name=ix loop=$groups}
+<option value="{$groups[ix].groupName}" {if $moderator_group eq $groups[ix].groupName}selected="selected"{/if}>{$groups[ix].groupName}</option>
+{/section}
+</select>
+</td></tr>
+
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
 <select name="topicOrdering">

@@ -73,6 +73,7 @@ if($_REQUEST["forumId"]) {
   $info["ui_email"]='n';
   $info["ui_online"]='n';
   $info["approval_type"]='all_posted';
+  $info["moderator_group"]='';
           
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -107,6 +108,7 @@ $smarty->assign('ui_posts',$info['ui_posts']);
 $smarty->assign('ui_email',$info['ui_email']);
 $smarty->assign('ui_online',$info['ui_online']);
 $smarty->assign('approval_type',$info['approval_type']);
+$smarty->assign('moderator_group',$info['moderator_group']);
 
 $smarty->assign('topics_list_reads',$info['topics_list_reads']);
 $smarty->assign('topics_list_pts',$info['topics_list_pts']);
@@ -166,7 +168,7 @@ if(isset($_REQUEST["save"])) {
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
   $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads'],$_REQUEST['show_description'],
-  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type']);                         
+  $_REQUEST['inbound_address'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -202,6 +204,7 @@ if(isset($_REQUEST["save"])) {
   $info["ui_email"]='n';
   $info["ui_online"]='n';
   $info["approval_type"]='all_posted';
+  $info["moderator_group"]='';
 
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -240,6 +243,7 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('ui_email',$info['ui_email']);
   $smarty->assign('ui_online',$info['ui_online']);
   $smarty->assign('approval_type',$info['approval_type']);  
+  $smarty->assign('moderator_group',$info['moderator_group']);
 
 
 }
@@ -320,6 +324,9 @@ if($offset>0) {
 }
 
 $smarty->assign_by_ref('channels',$channels["data"]);
+
+$groups = $userlib->get_groups(0,-1,'groupName_asc','');
+$smarty->assign_by_ref('groups',$groups['data']);
 
 $cat_type='forum';
 $cat_objid = $_REQUEST["forumId"];

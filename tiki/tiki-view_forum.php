@@ -53,9 +53,15 @@ if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 
 
 // Now if the user is the moderator then give hime forum admin privs
-if($forum_info["moderator"]==$user) {
-  $tiki_p_admin_forum = 'y';
-  $smarty->assign('tiki_p_admin_forum','y');
+if($user) {
+	if($forum_info["moderator"]==$user) {
+	  $tiki_p_admin_forum = 'y';
+	  $smarty->assign('tiki_p_admin_forum','y');
+	} elseif(in_array($forum_info['moderator_group'],$userlib->get_user_groups($user))) {
+	  $tiki_p_admin_forum = 'y';
+	  $smarty->assign('tiki_p_admin_forum','y');
+	}
+	
 }
 
 
@@ -71,6 +77,44 @@ if($tiki_p_admin_forum == 'y') {
 }
 
 
+if($tiki_p_admin_forum == 'y') {
+	if(isset($_REQUEST['delsel_x'])) {
+	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+	    $commentslib->remove_comment($topic);
+	    $commentslib->register_remove_post($forumId, 0);
+	  }
+	}
+	
+	if(isset($_REQUEST['locksel_x'])) {
+	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+	    $commentslib->lock_comment($topic);
+	  }
+	}
+	
+	if(isset($_REQUEST['unlocksel_x'])) {
+	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+	    $commentslib->unlock_comment($topic);
+	  }
+	}
+	
+	if(isset($_REQUEST['movesel'])) {
+	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+	    // To move a topic you just have to change the object
+	    $obj = 'forum'.$_REQUEST['moveto'];
+	    $commentslib->set_comment_object($topic,$obj);
+	  }
+	}
+	
+	if(isset($_REQUEST['mergesel'])) {
+	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+	    // To move a topic you just have to change the object
+	    if($topic != $_REQUEST['mergetopic']) {
+			$commentslib->set_parent($topic,$_REQUEST['mergetopic']);
+		}
+	  }
+	}
+
+}
 
 $smarty->assign_by_ref('forum_info',$forum_info);
 
@@ -109,35 +153,45 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
         if($tiki_p_admin_forum != 'y') {
           $_REQUEST["comment_topictype"]='n';
         }
-        if($_REQUEST["comments_threadId"]==0) {
-          if($forum_info["useMail"]=='y') {
-              $smarty->assign('mail_forum',$forum_info["name"]);
-              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
-              $smarty->assign('mail_date',date("u"));
-              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
-              $smarty->assign('mail_author',$user);
-              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
-          }
-          // Check if the user is monitoring this post
-		  if($feature_user_watches && $user && $watch = $tikilib->get_user_event_watches($user,'forum_post_topic',$_REQUEST['forumId'])) {          
-		  	  $smarty->assign('mail_forum',$forum_info["name"]);
-              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
-              $smarty->assign('mail_date',date("u"));
-              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
-              $smarty->assign('mail_author',$user);
-              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-              @mail($tikilib->get_user_email($user), tra('Tiki email notification'),$mail_data);
-		  }
-		  if(!isset($_REQUEST['comment_topicsummary'])) $_REQUEST['comment_topicsummary']='';          
-		  if(!isset($_REQUEST['comment_topicsmiley'])) $_REQUEST['comment_topicsmiley']='';          
-          $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST["comment_topicsummary"],$_REQUEST['comment_topicsmiley']);
-          $commentslib->register_forum_post($_REQUEST["forumId"],0);
-        } else {
-          if($tiki_p_admin_forum == 'y') {
-            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsummary'],$_REQUEST['comment_topicsmiley']);
-          }
-        }
+        
+        if($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon')) {
+ 			$smarty->assign('was_queued','y');
+ 			$commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,0,$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsmiley'],$_REQUEST["comment_topicsummary"],$_REQUEST["comments_title"]);
+        } else { 
+        	$smarty->assign('was_queued','n');
+ 	        if($_REQUEST["comments_threadId"]==0) {
+	          if($forum_info["useMail"]=='y') {
+	              $smarty->assign('mail_forum',$forum_info["name"]);
+	              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
+	              $smarty->assign('mail_date',date("u"));
+	              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
+	              $smarty->assign('mail_author',$user);
+	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
+	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
+	          }
+	          // Check if the user is monitoring this post
+			  if($feature_user_watches == 'y') {
+			    $nots = $this->get_event_watches('forum_post_topic',$_REQUEST['forumId']);
+				foreach($nots as $not) {
+			  	  $smarty->assign('mail_forum',$forum_info["name"]);
+	              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
+	              $smarty->assign('mail_date',date("u"));
+	              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
+	              $smarty->assign('mail_author',$user);
+	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
+	              @mail($not['email'], tra('Tiki email notification'),$mail_data);
+	            }
+			  }
+			  if(!isset($_REQUEST['comment_topicsummary'])) $_REQUEST['comment_topicsummary']='';          
+			  if(!isset($_REQUEST['comment_topicsmiley'])) $_REQUEST['comment_topicsmiley']='';          
+	          $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST["comment_topicsummary"],$_REQUEST['comment_topicsmiley']);
+	          $commentslib->register_forum_post($_REQUEST["forumId"],0);
+	        } else {
+	          if($tiki_p_admin_forum == 'y') {
+	            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsummary'],$_REQUEST['comment_topicsmiley']);
+	          }
+	        }
+	    }
       } else {
         $smarty->assign('msg',tra("Please wait 2 minutes between posts"));
         $smarty->display("styles/$style_base/error.tpl");
@@ -174,8 +228,8 @@ if($_REQUEST["comments_threadId"]>0) {
   $smarty->assign('comment_title',$comment_info["title"]);
   $smarty->assign('comment_data',$comment_info["data"]);
   $smarty->assign('comment_topictype',$comment_info["type"]);
-  $smarty->assign('comment_summary',$comment_info["summary"]);
-  $smarty->assign('comment_smiley',$comment_info["smiley"]);
+  $smarty->assign('comment_topicsummary',$comment_info["summary"]);
+  $smarty->assign('comment_topicsmiley',$comment_info["smiley"]);
 } else {
   $smarty->assign('comment_title',isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
   $smarty->assign('comment_data',isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
@@ -191,8 +245,8 @@ if($_REQUEST["comments_threadId"]>0) {
     $smarty->assign('comment_data','');
   }
   $smarty->assign('comment_topictype','n');
-  $smarty->assign('comment_summary','');
-  $smarty->assign('comment_smiley','');
+  $smarty->assign('comment_topicsummary','');
+  $smarty->assign('comment_topicsmiley','');
 }
 
 
@@ -299,7 +353,7 @@ if($feature_user_watches == 'y') {
 	}
 }
 
-if($feature_forum_quickjump == 'y') {
+if($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 	$all_forums = $commentslib->list_forums(0,-1,'name_asc','');
 	for($i=0;$i<count($all_forums["data"]);$i++) {
 	  if($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"],'forum')) {
@@ -313,6 +367,10 @@ if($feature_forum_quickjump == 'y') {
 	  }
 	}
 	$smarty->assign('all_forums',$all_forums['data']);
+}
+
+if($tiki_p_admin_forum == 'y') {
+	$smarty->assign('queued',$commentslib->get_num_queued($comments_objectId));
 }
 
 // Display the template

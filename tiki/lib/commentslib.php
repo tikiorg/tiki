@@ -15,6 +15,112 @@ class Comments extends TikiLib {
   }
   
   /* Functions for the forums */
+  
+  /* queue management */
+  
+  function replace_queue($qId,$forumId,$object,$parentId,$user,$title,$data,$type='n',$topic_smiley='',$summary='',$topic_title='') 
+  {
+  	// timestamp
+  	$hash = md5($object);
+  	$title =  addslashes($title);
+  	$topic_title =  addslashes($topic_title);  	
+  	$data = addslashes($data);
+  	$summary = addslashes($summary);
+  	$hash2 = md5($title.$data);
+  	if($qId==0 && $this->getOne("select count(*) from tiki_forums_queue where hash='$hash2'")) return false;
+  	$now = date("U");
+  	if($qId) {
+  	  $query = "update tiki_forums_queue set
+  	    object = '$hash',
+  	    parentId=$parentId,
+  	    user='$user',
+  	    title='$title',
+  	    data='$data',
+  	    forumId='$forumId',
+  	    type='$type',
+  	    hash='$hash2',
+  	    topic_title='$topic_title',
+  	    topic_smiley='$topic_smiley',
+  	    summary = '$summary',
+  	    timestamp = $now
+  	    where qId=$qId
+  	  ";
+  	  $this->query($query);
+  	} else {
+  	  $query = "insert into tiki_forums_queue(object,parentId,user,title,data,type,topic_smiley,summary,timestamp,topic_title,hash,forumId)
+  	  values('$hash',$parentId,'$user','$title','$data','$type','$topic_smiley','$summary',$now,'$topic_title','$hash2',$forumId)";
+  	  $this->query($query);
+  	}
+  	return true;
+  }
+  
+  function get_num_queued($object)
+  {
+    $hash = md5($object);
+	return $this->getOne("select count(*) from tiki_forums_queue where object='$hash'");  	
+  }
+  
+  function list_forum_queue($object,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and title like '%".$find."%' or data like '%".$find."%'";  
+    } else {
+      $mid=""; 
+    }
+    $hash = md5($object);
+    $query = "select * from tiki_forums_queue where object='$hash' $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_forums $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $now = date("U");
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	$res['parsed']=$this->parse_comment_data($res['data']);
+        $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+
+  
+  function queue_get($qId)
+  {
+  	$query = "select * from tiki_forums_queue where qId=$qId";
+  	$result = $this->query($query);
+  	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+  	return $res;
+  }
+  
+  function remove_queued($qId)
+  {
+  	$query = "delete from tiki_forums_queue where qId=$qId";
+  	$this->query($query);
+  }
+  
+  //Approve queued message -> post as new comment
+  //post_new_comment($objectId,$parentId,$userName, $title, $data,$type='n',$summary='',$smiley='')
+  function approve_queued($qId)
+  {
+  	$info = $this->queue_get($qId);
+	$this->post_new_comment('forum'.$info['forumId'],$info['parentId'],$info['user'], $info['title'], $info['data'],$info['type'],$info['summary'],$info['topic_smiley']);
+	$this->remove_queued($qId);
+  }
+	
+  function get_forum_topics($forumId)
+  {
+  	$hash = md5('forum'.$forumId);
+  	$query = "select * from tiki_comments where object='$hash' and parentId=0";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+            $ret[] = $res;
+    }	
+    return $ret;
+  }		
      
   function replace_forum($forumId, $name, $description, $controlFlood,$floodInterval, 
                          $moderator, $mail, $useMail,
@@ -26,9 +132,11 @@ class Comments extends TikiLib {
                          $inbound_address,$outbound_address,
                          $topic_smileys, $topic_summary,
                          $ui_avatar, $ui_flag, $ui_posts, $ui_email, $ui_online,
-                         $approval_type)
+                         $approval_type,
+                         $moderator_group)
   {
     $name = addslashes($name);
+    $moderator_group = addslashes($moderator_group);
     $description = addslashes($description);
     $section = addslashes($section);
     $inbound_address = addslashes($inbound_address);
@@ -61,6 +169,7 @@ class Comments extends TikiLib {
                 ui_email = '$ui_email',
                 ui_online = '$ui_online',
                 approval_type = '$approval_type',
+                moderator_group = '$moderator_group',
                 topics_list_pts = '$topics_list_pts',
                 topics_list_lastpost = '$topics_list_lastpost',
                 topics_list_author = '$topics_list_author',
@@ -78,7 +187,7 @@ class Comments extends TikiLib {
                 topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
                 inbound_address,outbound_address,
                 topic_smileys,topic_summary,
-                ui_avatar,ui_flag,ui_posts,ui_email,ui_online,approval_type) 
+                ui_avatar,ui_flag,ui_posts,ui_email,ui_online,approval_type,moderator_group) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
@@ -87,7 +196,7 @@ class Comments extends TikiLib {
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
                         '$inbound_address','$outbound_address',
                         '$topic_smileys','$topic_summary',
-                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online','$approval_type') ";
+                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online','$approval_type','$moderator_group') ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
@@ -333,8 +442,15 @@ class Comments extends TikiLib {
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $res["parsed"] = $this->parse_comment_data($res["data"]);
+    
     $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
-    $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+    if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
+
+      $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+    } else {
+      $res['user_email']='';
+    }
+    
     return $res;
   }
 
@@ -458,7 +574,11 @@ class Comments extends TikiLib {
       // Get the last reply
       $tid = $res["threadId"];
       $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
-      $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+      if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
+      	$res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+      } else {
+      	$res['user_email']='';
+      }
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
@@ -557,7 +677,32 @@ class Comments extends TikiLib {
     return $retval;
   }
   
+  function lock_comment($threadId)
+  {
+  	$query = "update tiki_comments set type='l' where threadId=$threadId";
+  	$this->query($query);
+  }	 
   
+  function set_comment_object($threadId,$object)
+  {
+  	$hash = md5($object);
+  	$query = "update tiki_comments set object='$hash' where threadId=$threadId or parentId=$threadId";
+  	$this->query($query);
+  } 
+  
+  function set_parent($threadId,$parentId)
+  {
+    $query = "update tiki_comments set parentId=$parentId where threadId=$threadId";
+  	$this->query($query);
+  } 
+
+
+  function unlock_comment($threadId)
+  {
+  	$query = "update tiki_comments set type='n' where threadId=$threadId";
+  	$this->query($query);
+  }	  
+
 
   function update_comment($threadId,$title,$data,$type='n',$summary='',$smiley='') 
   {
@@ -591,6 +736,8 @@ class Comments extends TikiLib {
                           values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type','$summary','$smiley')";
       
       $result = $this->query($query);
+    } else {
+      return false;	
     }
     return true;                      
   }
