@@ -2299,6 +2299,8 @@ class TikiLib {
 				$res["hasImage"] = 'n';
 			}
 
+			$res['count_comments'] = 0;
+
 			if ($add) {
 				$ret[] = $res;
 			}
