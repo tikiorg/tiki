@@ -73,7 +73,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		}
 	}
 }
-/** \brief send the email notifications dealing with the forum changes to
+/** \brief send the email notifications dealing with wiki page  changes to
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
@@ -143,5 +143,53 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			$mail->send(array($not['email']));
 		}
 	}
+}
+/** \brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email 
+  * \param $list : emails list or (users, email) list
+  * \param $type: type of the list element =  'email'|'watch'
+  * \param $subjectTpl: subject template file or null (ex: "submission_notifcation.tpl")
+  * \param $subjectParam: le param to be inserted in the subject or null
+  * \param $txtTpl : texte template file (ex: "submission_notifcation.tpl")
+  * \ $smarty is supposed to be already built to fit $txtTpl
+  * \return the nb of sent emails
+  */
+function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl) {
+	global $smarty, $tikilib, $userlib;
+	include_once('lib/webmail/tikimaillib.php');
+	$mail = new TikiMail();
+	$sent = 0;
+	$defaultLanguage = $tikilib->get_preference("language", "en");
+	$languageEmail = $defaultLanguage;
+	foreach ($list as $elt) {
+		if ($type == "watch") {
+			$email = $elt['email'];
+			$userEmail = $elt['user'];
+			$smarty->assign('mail_hash', $elt['hash']);
+		}	
+		else {
+			$email = $elt;
+			$userEmail = $userlib->get_user_by_email($email);
+		}
+		if ($userEmail) {
+			$mail->setUser($userEmail);
+			$languageEmail = $tikilib->get_user_preference($userEmail, "language", $defaultLanguage);
+		}
+		else
+			$languageEmail = $defaultLanguage;
+		if ($subjectTpl) {
+			$mail_data = $smarty->fetchLang($languageEmail, "mail/".$subjectTpl);
+			if ($subjectParam)
+				$mail_data = sprintf($mail_data, $subjectParam);
+			$mail_data = ereg_replace("\%[sd]", "", $mail_data);// partial cleaning if param not supply and %s in text
+			$mail->setSubject($mail_data);
+		}
+		else
+			$mail->setSubject($subjectParam);
+		$mail->setText($smarty->fetchLang($languageEmail, "mail/".$txtTpl));
+		$mail->buildMessage();
+		if ($mail->send(array($email)))
+			$sent++;
+	}
+return $sent;		
 }
 ?>

@@ -1,1 +1,1 @@
-{tr}New blog post: %s{/tr}
+{tr}New blog post at %s{/tr}

@@ -184,10 +184,10 @@ class ArtLib extends TikiLib {
 		$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
 		$id = $this->getOne($query,array((int) $now,$title,$hash));
 		$emails = $notificationlib->get_mail_events('article_submitted', '*');
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = httpPrefix(). $foo["path"];
-
-		foreach ($emails as $email) {
+		if (count($emails)) {
+			include_once("lib/notifications/notificationemaillib.php");
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = httpPrefix(). $foo["path"];
 			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 			$smarty->assign('mail_user', $user);
@@ -197,9 +197,7 @@ class ArtLib extends TikiLib {
 			$smarty->assign('mail_date', date("U"));
 			$smarty->assign('mail_machine', $machine);
 			$smarty->assign('mail_subId', $id);
-			$mail_data = $smarty->fetch('mail/submission_notification.tpl');
-			@mail($email, tra('New article submitted at '). $_SERVER["SERVER_NAME"], $mail_data,
-				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			sendEmailNotification($emails, "email", "submission_notification_subject.tpl", $_SERVER["SERVER_NAME"], "submission_notification.tpl");
 		}
 
 		return $id;
