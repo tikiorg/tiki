@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.102 2004-06-08 17:41:55 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.103 2004-06-08 18:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,7 +100,7 @@ if ($is_categorized) {
 	$parents = $categlib->get_object_categories('wiki page',$objId);
 	require_once('tiki-categsetup.php');
 	// Only consider parent category permissions if child object has no permissions
-	if (!$has_object_perms && $tiki_p_view_categories != 'y') {
+	if (!$object_has_perms && $tiki_p_view_categories != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
