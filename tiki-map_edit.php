@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.4 2003-08-08 04:48:15 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.5 2003-08-26 05:51:32 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,9 +118,8 @@ if ($tiki_p_map_edit != 'y') {
 }
 
 $smarty->assign('mode', $mode);
-$smarty->assign('mode', $mode);
 
-// Get templates from the templates directory
+// Get mapfiles from the mapfiles directory
 $files = array();
 $h = opendir($map_path);
 

@@ -246,6 +246,7 @@
   <div id="mapsmenu" style="{$mnu_mapsmenu}">
   {if $tiki_p_map_edit eq 'y'}
   &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a><br />
+  &nbsp;<a href="tiki-map_upload.php" class="linkmenu">{tr}Layer Management{/tr}</a><br />
   {/if}
   </div>
 {/if}
