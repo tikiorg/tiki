@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.9 2003-11-23 04:01:52 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.10 2003-11-23 19:44:46 gmuslera Exp $ *}
 
 {if $feature_galleries eq 'y'}
-  {tikimodule file="module-title.tpl" module_title="{tr}Top Images{/tr}" module_name="top_images_th"}
+  {tikimodule title="{tr}Top Images{/tr}" name="top_images_th"}
   {section name=ix loop=$modTopImages}
     {if $smarty.section.ix.index < 5}
        <table  cellpadding="0" cellspacing="0">

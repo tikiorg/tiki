@@ -1,10 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.15 2003-11-20 23:49:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.16 2003-11-23 19:44:47 gmuslera Exp $ *}
 
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" module_name="application_menu"}
-</div>
-<div id='mainmenu' class="box-data">
+{tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 <div class="separated"><a href="{$tikiIndex}" class="linkmenu">{tr}home{/tr}</a></div>
 
@@ -442,7 +438,5 @@
   </div>
   
 {/if}
- 
 
-</div>
-</div>
+{/tikimodule} 
