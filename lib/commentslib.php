@@ -803,20 +803,21 @@ class Comments extends TikiLib {
     }
 
     function list_forums_by_section($section, $offset, $maxRecords, $sort_mode, $find) {
-	$sort_mode = str_replace("_", " ", $sort_mode);
 
 	if ($find) {
-	    $findesc = $this->qstr('%' . $find . '%');
+	    $findesc = '%' . $find . '%';
 
-	    $mid = " where `section`='$section' name like $findesc or description like $findesc";
+	    $mid = " where `section`=? and `name` like ? or `description` like ?";
+	    $bindvars=array($section,$findesc,$findesc);
 	} else {
-	    $mid = " where `section`='$section' ";
+	    $mid = " where `section`=? ";
+	    $bindvars=array($section);
 	}
 
-	$query = "select * from `tiki_forums` $mid order by $sort_mode limit $offset,$maxRecords";
-	$query_cant = "select count(*) from tiki_forums";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$query = "select * from `tiki_forums` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_forums`";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,array());
 	$now = date("U");
 	$ret = array();
 
@@ -832,7 +833,7 @@ class Comments extends TikiLib {
 	    }
 
 	    // Now select users
-	    $query = "select distinct(username) from `tiki_comments`
+	    $query = "select distinct(`username`) from `tiki_comments`
 	    where `object`=? and `objectType` = 'forum'";
 	    $result2 = $this->query($query, array( $res["forumId"] ));
 	    $res["users"] = $result2->numRows();
@@ -843,7 +844,7 @@ class Comments extends TikiLib {
 		$res["users_per_day"] = 0;
 	    }
 
-	    $query2 = "select * from tiki_comments,`tiki_forums` where
+	    $query2 = "select * from `tiki_comments`,`tiki_forums` where
 		`object`=`forumId` and `objectType` = 'forum' and
 		`commentDate` = ?";
 	    $result2 = $this->query($query2, array($res["lastPost"]));
@@ -860,7 +861,7 @@ class Comments extends TikiLib {
 
     function user_can_edit_post( $user, $threadId )
     {
-	$result = $this->getOne( "select `userName` from tiki_comments
+	$result = $this->getOne( "select `userName` from `tiki_comments`
 		where `threadId` = ?", array( $threadId ) );
 
 	if( $result == $user )
