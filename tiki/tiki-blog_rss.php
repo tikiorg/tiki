@@ -31,10 +31,10 @@ print('>');
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns="http://purl.org/rss/1.0/">
 <channel rdf:about="<?php echo $home?>">
-  <title>Tiki RSS feed for the weblog: <?php echo $blogtitle?></title>
+  <title>Tiki RSS feed for the weblog: <?php echo htmlspecialchars($blogtitle);?></title>
   <link><?php echo $home?></link>
   <description>
-    <?php echo $blogdesc?>
+    <?php echo htmlspecialchars($blogdesc);?>
   </description>
   <image rdf:resource="<?php echo $img?>" />
   <items>
@@ -47,7 +47,7 @@ print('>');
           $tikilib->date_format($tikilib->get_long_datetime_format(),$chg["created"]).'</title>'."\n");
           print('<link>'.$read.'?blogId='.$_REQUEST["blogId"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
-          print('<description>'.$chg["data"].'</description>'."\n");
+          print('<description>'.htmlspecialchars($chg["data"]).'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

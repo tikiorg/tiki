@@ -99,6 +99,7 @@ if(!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$
 }
 $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 // Process a post form here 
+$smarty->assign('warning','n');
 if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
   if(isset($_REQUEST["comments_postComment"])) {
     if( (!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) ){
@@ -142,6 +143,11 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
         $smarty->display("styles/$style_base/error.tpl");
         die;  
       }
+    } else {
+      //User didn't give title or data.
+      // give him a chance to correct this
+      $smarty->assign('openpost','y');
+      $smarty->assign('warning','y');
     }
   }
 }
@@ -171,8 +177,19 @@ if($_REQUEST["comments_threadId"]>0) {
   $smarty->assign('comment_summary',$comment_info["summary"]);
   $smarty->assign('comment_smiley',$comment_info["smiley"]);
 } else {
-  $smarty->assign('comment_title','');
-  $smarty->assign('comment_data','');
+  $smarty->assign('comment_title',isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
+  $smarty->assign('comment_data',isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
+  $smarty->assign('comment_topictype',isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
+  if (isset($REQUEST["comments_title"])) {
+    $smarty->assign('comment_title',$_REQUEST["comments_title"]);
+  } else {
+    $smarty->assign('comment_title','');
+  }
+  if (isset($REQUEST["comments_data"])) {
+    $smarty->assign('comment_data',$_REQUEST["comments_data"]);
+  } else {
+    $smarty->assign('comment_data','');
+  }
   $smarty->assign('comment_topictype','n');
   $smarty->assign('comment_summary','');
   $smarty->assign('comment_smiley','');
@@ -257,7 +274,6 @@ if($comments_offset>0) {
   $smarty->assign('comments_prev_offset',-1); 
 }
 $smarty->assign('comments_coms',$comments_coms["data"]);
-/******************************/
 
 $section='forums';
 include_once('tiki-section_options.php');
@@ -267,6 +283,7 @@ if($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["forumId"];
 	include('tiki-tc.php');
 }
+
 
 if($feature_user_watches == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {

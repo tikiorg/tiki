@@ -212,7 +212,7 @@ if($tiki_p_admin_cms == 'y') {
 
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 
-$style = $tikilib->get_preference("style", 'jalist2.css');
+$style = $tikilib->get_preference("style", 'elegant.css');
 $smarty->assign('style',$style);
 
 $slide_style = $tikilib->get_preference("slide_style",'slidestyle.css');
@@ -226,7 +226,7 @@ $language = $tikilib->get_preference('language','en');
 
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
-  $user_style = $tikilib->get_preference("style", 'jalist2.css');
+  $user_style = $tikilib->get_preference("style", 'elegant.css');
   if($user) {
     if($change_theme == 'y') {
       $user_style = $tikilib->get_user_preference($user,'theme',$style);

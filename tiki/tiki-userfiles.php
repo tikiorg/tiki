@@ -70,7 +70,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
 }
 
 // Process removal here
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["userfile"])) {
   foreach(array_keys($_REQUEST["userfile"]) as $file) {      	
     $userfileslib->remove_userfile($user, $file);
   }

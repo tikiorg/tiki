@@ -75,17 +75,6 @@ class DCSLib extends TikiLib {
     return $res["data"];
   }
   
-  function get_actual_content($contentId)
-  {
-    $data ='';
-    $now = date("U");
-    $query = "select max(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate<=$now";
-    $res = $this->getOne($query);
-    if(!$res) return '';
-    $query = "select data from tiki_programmed_content where contentId=$contentId and publishDate=$res";
-    $data = $this->getOne($query);
-    return $data;
-  }
   
   function get_next_content($contentId)
   {

@@ -279,7 +279,12 @@ if(isset($_REQUEST["save"])) {
   $body = $imagegallib->capture_images($body);
   $heading = $imagegallib->capture_images($heading);
   // If page exists
-  assert($_REQUEST["topicId"]);
+  if(!isset($_REQUEST["topicId"])) {
+    $smarty->assign('msg',tra("You have to create a topic first"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+  }
+
 
   $tikilib->replace_submission(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr>'),
                             $_REQUEST["authorName"],

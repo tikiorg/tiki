@@ -354,7 +354,7 @@ class Comments extends TikiLib {
   
     
   function get_comment_replies($id,$sort_mode,$offset,$max,$threshold=0) {
-    $query = "select threadId,title,userName,points,commentDate,parentId from tiki_comments where average>=$threshold and parentId=$id order by $sort_mode,commentDate desc limit $offset,$max";
+    $query = "select threadId,title,userName,points,commentDate,parentId from tiki_comments where parentId=$id and average>=$threshold order by $sort_mode,commentDate desc limit $offset,$max";
     $result = $this->query($query);
     $retval=Array();
     $retval["numReplies"]=$result->numRows();
@@ -442,9 +442,9 @@ class Comments extends TikiLib {
     $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold";
     $below = $this->getOne($query);
     if($find) {
-      $mid=" where type='s' and average>=$threshold and object='$hash' and parentId=$parentId and (title like '%".$find."%' or data like '%".$find."%') ";  
+      $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold and (title like '%".$find."%' or data like '%".$find."%') ";  
     } else {
-      $mid=" where type='s' and average>=$threshold and object='$hash' and parentId=$parentId "; 
+      $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold "; 
     }
     $query = "select * from tiki_comments $mid $extra order by $sort_mode,threadId limit $offset,$maxRecords";
     //print("$query<br/>");
@@ -481,9 +481,9 @@ class Comments extends TikiLib {
     // Now the non-sticky
     $ret = Array();
     if($find) {
-      $mid=" where type<>'s' and average>=$threshold and object='$hash' and parentId=$parentId and (title like '%".$find."%' or data like '%".$find."%') ";  
+      $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold and (title like '%".$find."%' or data like '%".$find."%') ";  
     } else {
-      $mid=" where type<>'s' and average>=$threshold and object='$hash' and parentId=$parentId "; 
+      $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold "; 
     }
     $query = "select * from tiki_comments $mid order by $sort_mode limit $offset,$maxRecords";
     //print("$query<br/>");

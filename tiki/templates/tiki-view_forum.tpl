@@ -64,6 +64,13 @@
   </div>
   {/if}
 
+  {if $warning eq 'y'}
+  <br/><br/>
+  <div class="commentsedithelp"><br/><b>{tr}You have to enter a title and text{/tr}!</b><br/><br/>
+  </div>
+  <br/>
+  {/if}
+
 <div id='{$postclass}'>
   <br/>
   {if $comments_threadId > 0}
@@ -212,7 +219,6 @@
   {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
   </td>
-  
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
   	{if strlen($comments_coms[ix].smiley) > 0}

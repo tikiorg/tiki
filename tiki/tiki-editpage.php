@@ -229,6 +229,8 @@ if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
   $_REQUEST["preview"]=1;
 }
 
+
+
 if(isset($_REQUEST["edit"])) {
   
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
@@ -247,6 +249,7 @@ if(isset($_REQUEST["edit"])) {
     $edit_data = ''; 
   }
 }
+
 $smarty->assign('commentdata','');
 if(isset($_REQUEST["comment"])) {
   $smarty->assign_by_ref('commentdata',$_REQUEST["comment"]); 
@@ -281,7 +284,6 @@ if(isset($_REQUEST["spellcheck"])&&$_REQUEST["spellcheck"]=='on') {
   $smarty->assign('spellcheck','n');
 }
 }
-
 $smarty->assign_by_ref('parsed',$parsed);
 
 $smarty->assign('preview',0);

@@ -397,13 +397,13 @@ create index ti_cr on tiki_images (created);
 create index ti_hi on tiki_images (hits);
 create index ti_us on tiki_images (user);
 create index t_i_d_it on tiki_images_data (imageId,type);
+create index tc_pi on tiki_comments(parentId);
 
 # Optimization of others -- try yourself
 #create index tg_u on tiki_galleries (user);
 #create index ti_p_hi on tiki_pages (hits);
 #create index ti_p_lm on tiki_pages (lastModif);
 #create index up_t on users_permissions(type);
-#create index tc_pi on tiki_comments(parentId);
 #create index tf_n on tiki_forums(name);
 #create index tf_lp on tiki_forums(lastPost);
 #create index tf_h on tiki_forums(hits);

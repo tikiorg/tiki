@@ -114,11 +114,13 @@ class WebMailLib extends TikiLib {
   }
   
   function remove_webmail_message($current,$user,$msgid) {
+    $msgid=addslashes($msgid);
     $query = "delete from tiki_webmail_messages where accountId=$current and mailId='$msgid' and user='$user'";
     $result = $this->query($query);
   }
   
   function replace_webmail_message($current,$user,$msgid)   {
+    $msgid=addslashes($msgid);
     $query = "select count(*) from tiki_webmail_messages where accountId=$current and mailId='$msgid' and user='$user'";
     
     if($this->getOne($query)==0) {
@@ -130,6 +132,7 @@ class WebMailLib extends TikiLib {
   
   function set_mail_flag($current,$user,$msgid,$flag,$value)
   {
+    $msgid=addslashes($msgid);
     $query = "update tiki_webmail_messages set $flag='$value' where accountId=$current and mailId='$msgid' and user='$user'";
     $result = $this->query($query);
     return true;
@@ -138,6 +141,7 @@ class WebMailLib extends TikiLib {
   
   function get_mail_flags($current,$user,$msgid) 
   {
+    $msgid=addslashes($msgid);
     $query = "select isRead,isFlagged,isReplied from tiki_webmail_messages where accountId=$current and mailId='$msgid' and user='$user'";
     $result = $this->query($query);
     if(!$result->numRows()) {

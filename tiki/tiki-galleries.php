@@ -154,7 +154,7 @@ if(isset($_REQUEST["edit"])) {
   if (isset($_REQUEST["scaleSizeX"]) && is_numeric($_REQUEST["scaleSizeX"])
       && isset($_REQUEST["scaleSizeY"]) && is_numeric($_REQUEST["scaleSizeY"]))
    {
-     $imagegallib->add_gallery_scale($_REQUEST["galleryId"],$_REQUEST["scaleSizeX"],
+     $imagegallib->add_gallery_scale($gid,$_REQUEST["scaleSizeX"],
                        $_REQUEST["scaleSizeY"]);
    }
   #remove scales

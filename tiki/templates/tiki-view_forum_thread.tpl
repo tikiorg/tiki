@@ -13,7 +13,9 @@
   <td class="viewthreadl" width="15%">
   {$thread_info.userName|avatarize}<br/>
   <b>{tr}author{/tr}</b>:<br/>
-  <a class="link" href="tiki-user_information.php?view_user={$thread_info.userName}">{$thread_info.userName}</a><br/>{$thread_info.userName|countryflag}
+  
+  {$thread_info.userName|userlink}
+  <br/>{$thread_info.userName|countryflag}
   </td>
   <td class="viewthreadr" width="85%">
   <b>{$thread_info.title}</b><br/><br/>
@@ -226,7 +228,7 @@
   <td  class="threads{cycle advance=false}l" width="15%">
   <div align="center">
   {$comments_coms[ix].userName|avatarize}<br/>
-  <b>{tr}author{/tr}</b><br/><a class="link" href="tiki-user_information.php?view_user={$comments_coms[ix].userName}">{$comments_coms[ix].userName}</a><br/>{$comments_coms[ix].userName|countryflag}
+  <b>{tr}author{/tr}</b><br/>{$comments_coms[ix].userName|userlink}<br/>{$comments_coms[ix].userName|countryflag}
   </div>
   </td>
   <td  class="threads{cycle}r" width="85%">

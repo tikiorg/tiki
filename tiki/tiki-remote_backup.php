@@ -6,11 +6,12 @@
 die;
 
 require_once('tiki-setup.php');
+include_once('lib/backups/backupslib.php');
 if(isset($_REQUEST["generate"])) {
     if(isset($_REQUEST["my_word"]) &&
        $_REQUEST["my_word"] == "YOUR PASSWORD FOR BACKUPS HERE" ) {
         $filename = md5($tikilib->genPass()).'.sql';
-        $tikilib->backup_database("backups/$filename");
+        $backuplib->backup_database("backups/$filename");
         echo "Done";
     }
 }

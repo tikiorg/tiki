@@ -17,8 +17,22 @@ class ImageGalsLib extends TikiLib {
 	preg_match("/[0-9]+\.[0-9]+/",$this->gdinfo["GD Version"],$gdversiontmp);
 	$this->gdversion=$gdversiontmp[0];
       } else {
-        // I have no experience ... maybe someone knows better
-        $this->gdversion="1.0";
+        //next try
+	ob_start();
+	phpinfo(INFO_MODULES);
+	if(preg_match('/GD Version.*2.0/', ob_get_contents())) {
+	  $this->gdversion="2.0";
+	} else {
+	  // I have no experience ... maybe someone knows better
+	  $this->gdversion="1.0";
+        }
+	$this->gdinfo["JPG Support"]=preg_match('/JPG Support.*enabled/', ob_get_contents());
+	$this->gdinfo["PNG Support"]=preg_match('/PNG Support.*enabled/', ob_get_contents());
+	$this->gdinfo["GIF Create Support"]=preg_match('/GIF Create Support.*enabled/', ob_get_contents());
+	$this->gdinfo["WBMP Support"]=preg_match('/WBMP Support.*enabled/', ob_get_contents());
+	$this->gdinfo["XBM Support"]=preg_match('/XBM Support.*enabled/', ob_get_contents());
+	ob_end_clean();
+
       }
     } else {
       $this->havegd = false;
@@ -36,9 +50,21 @@ class ImageGalsLib extends TikiLib {
 
    //$this->uselib = "gd";
    $this->uselib = $this->get_preference('gal_use_lib', 'gd');
+   if ($this->uselib == "imagick") {
+     $this->canrotate=true;
+   } else {
+     $this->canrotate=false;
+   }
 
+   //Fallback to GD
+   if ($this->uselib == "imagick" && $this->haveimagick == false) {
+     $this->uselib = "gd";
+     $this->set_preference('gal_use_lib', 'gd');
+   }
   }
-  
+  // Features
+
+  function canrotate() { return $this->canrotate; }
   //
   // Wrappers
   //
@@ -60,6 +86,9 @@ class ImageGalsLib extends TikiLib {
 
   function readimagefromstring()
   { 
+    if(!isset($this->image)) {
+      return false;
+    }
     if ($this->uselib == "imagick") {
       $this->imagehandle=imagick_blob2image($this->image);
     } else if ($this->uselib == "gd") {
@@ -155,7 +184,6 @@ class ImageGalsLib extends TikiLib {
   // resize Image
   function resizeImage($newx,$newy)
   {
-
     if (!isset($this->imagehandle)) {$this->readimagefromstring();}
     if (!isset($this->xsize)) {$this->getimageinfo();}
     if ($this->xsize * $this->ysize == 0) $this->repairimageinfo();
@@ -186,6 +214,9 @@ class ImageGalsLib extends TikiLib {
     $this->writeimagetostring();
     // reget sizes
     $this->getimageinfo();
+    //set new sizes
+    $this->xsize=$newx;
+    $this->ysize=$newy;
     return true;
   }
 
@@ -193,6 +224,7 @@ class ImageGalsLib extends TikiLib {
   // bbx and bby give the boundary box
   function rescaleImage($bbx,$bby)
   {
+
     if (!isset($this->imagehandle)) {$this->readimagefromstring();}
     if (!isset($this->xsize)) {$this->getimageinfo();}
     if ($this->xsize * $this->ysize == 0) $this->repairimageinfo();
@@ -202,14 +234,16 @@ class ImageGalsLib extends TikiLib {
     } else {
       $tscale = ((int)$this->ysize / $bby);
     }
-    $newx=((int)($this->xsize / $tscale));
-    $newy=((int)($this->ysize / $tscale));
+    $newx=round($this->xsize / $tscale);
+    $newy=round($this->ysize / $tscale);
     return $this->resizeImage($newx,$newy);
   }
 
   function rotateimage($angle)
   {
     if ($this->uselib == "imagick") {
+      //Imagick and GD have different opinion what is 90 degree. right or left?
+      imagick_rotate($this->imagehandle,-$angle);
     } else if ($this->uselib == "gd") {
       if ($this->gdversion>2.0){ //I know, it's PHP <= 4.3.0. It destroys images if u try to rotate them
         $this->imagehandle=imagerotate($this->imagehandle,$angle,0);
@@ -217,6 +251,10 @@ class ImageGalsLib extends TikiLib {
     }
     // update the $this->image
     $this->writeimagetostring();
+    //get new sizex,sizey
+    $this->oldxsize=$this->xsize;
+    $this->oldysize=$this->ysize;
+    $this->getimageinfo();
   }
 
   // function to determine supported image types
@@ -227,11 +265,12 @@ class ImageGalsLib extends TikiLib {
       //imagick can read everything ... we assume
       return true;
     } else if ($this->uselib == "gd") {
-      if ($this->gdversion>=2.0) {
         switch($imagetype) {
           case 'jpeg':
+          case 'pjpeg':
 	  case 'jpg':
 	  case 'image/jpeg':
+	  case 'image/pjpeg':
 	  case 'image/jpg':
 	    return ($this->gdinfo["JPG Support"]);
 	    break;
@@ -254,20 +293,6 @@ class ImageGalsLib extends TikiLib {
 	  default:
 	    return false;
 	    break;
-	}
-      } else {
-        //gdversion <2.0 only jpg?
-        switch($imagetype) {
-          case 'jpeg':
-          case 'jpg':
-          case 'image/jpeg':
-          case 'image/jpg':
-            return true;
-            break;
-          default:
-            return false;
-            break;
-        }
       }
     }
   }
@@ -387,7 +412,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $gal_use_dir;
     global $gal_use_db;
 
-    $size=sizeof($this->image);
+    $size=strlen($this->image);
     $fhash="";
 
     if($gal_use_db == 'y') {
@@ -409,7 +434,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         default:
           $ext='';
         }
-      $fhash = md5($this->filename).$ext; //Path+extension
+      $fhash = $this->path.$ext; //Path+extension
       @$fw = fopen($gal_use_dir.$fhash,"wb");
       if(!$fw) {
         return false;
@@ -418,20 +443,29 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       fclose($fw);
       $data='';
     }
-    $this->filename=$this->xsize."x".$this->ysize."_".$this->filename; // rebuild filename for downloading images
+    $this->filename=$this->xsize."x".$this->ysize."_".$this->name; // rebuild filename for downloading images
     // insert data
+    $fn=addslashes($this->filename);
     if ($overwrite) {
         //overwrites all except the colums of the primary key
+        //if there is no oldxsize, we use xsize
+        if (!isset($this->oldxsize)) {
+	  $this->oldxsize=$this->xsize;
+	  $this->oldysize=$this->ysize;
+        }
         $query = "update tiki_images_data set filetype='$this->filetype',
-				filename='$this->filename',data='$data',
-				filesize=$size where
+				filename='$fn',data='$data',
+				filesize=$size ,xsize=$this->xsize, 
+				ysize=$this->ysize
+			where
 			imageId=$this->imageId and type='$this->type' and
-			xsize=$this->xsize and ysize=$this->ysize";
+			xsize=$this->oldxsize and ysize=$this->oldysize";
     } else {
     	$query = "insert into tiki_images_data(imageId,xsize,ysize,
                                 type,filesize,filetype,filename,data)
-                        values ($this->imageId,$this->xsize,$this->ysize,'$this->type',$size,
-                                '$this->filetype','$this->filename','$data')";
+                        values ($this->imageId,$this->xsize,$this->ysize,
+				'$this->type',$size,
+                                '$this->filetype','$fn','$data')";
     }
     $result = $this->query($query);
     return true;
@@ -481,8 +515,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         die;
       }
     }
-    $this->xsize=$xsize;
-    $this->ysize=$ysize;
 
     // we always rescale to jpegs.
     $t_type='image/jpeg';
@@ -495,8 +527,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $this->store_image_data();
 
     //return new size
-    $newsize["xsize"]=$xsize;
-    $newsize["ysize"]=$ysize;
+    $newsize["xsize"]=$this->xsize;
+    $newsize["ysize"]=$this->ysize;
     return $newsize;
   }
 
@@ -506,13 +538,41 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $gal_use_db;
 
     // rewritten by flo
-    $query = "select imageId from tiki_images where galleryId=$galleryId";
+    $query = "select imageId, path from tiki_images where galleryId=$galleryId";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $query2="delete from tiki_images_data where imageId=".$res["imageId"]." and type='t'";
       $result2 = $this->query($query2);
+      if(strlen($res["path"])>0){
+        $ftn=$gal_use_dir.$res["path"].".thumb";
+        if(file_exists($ftn)) {
+          unlink($ftn);
+	}
+      }
     }
     return true;
+  }
+
+  function rebuild_scales($galleryId,$imageId=-1)
+  {
+    // doesn't really rebuild, it deletes the schales and thumbs for 
+    // automatic rebuild
+    // give either a galleryId for rebuild complete gallery or
+    // a imageId for a image rebuild
+    if($imageId==-1) {
+      //gallery mode
+      //mysql does'nt have subqueries. Bad.
+      $query1="select imageId from tiki_images where galleryId=$galleryId";
+      $result1=$this->query($query1);
+      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        $query2="delete from tiki_images_data where ImageId=".$res["imageId"]." and not type='o'";
+	$result2 = $this->query($query2);
+      }
+    } else {
+      //image mode
+      $query="delete from tiki_images_data where ImageId=$ImageId and not type='o'";
+      $result = $this->query($query);
+    }
   }
 
   function edit_image($id,$name,$description) {
@@ -523,31 +583,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return true;
   }
 
-  function get_random_image($galleryId = -1)
-  {
-    $whgal = "";
-    if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
-    $query = "select count(*) from tiki_images" . $whgal;
-    $cant = $this->getOne($query);
-    $pick = rand(0,$cant-1);
-    $ret = Array();
-    $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
-    $result=$this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $ret["galleryId"] = $res["galleryId"];
-    $ret["imageId"] = $res["imageId"];
-    $ret["name"] = $res["name"];
-    $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
-    $ret["gallery"] = $this->getOne($query);
-    return($ret);
-  }
-
+ 
 
   function insert_image($galleryId,$name,$description,$filename, $filetype, &$data, $size, $xsize, $ysize, $user,$t_data,$t_type)
   {
     global $gal_use_db;
     global $gal_use_dir;
     $name = addslashes(strip_tags($name));
+    $filename = addslashes($filename);
     $description = addslashes(strip_tags($description));
     $now = date("U");
     $path='';
@@ -610,7 +653,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $gal_use_db;
     $this->get_image($id);
 
-    $this->rotateimage();
+    $this->rotateimage($angle);
     $this->store_image_data(true);
     // delete all scaled images. Will be rebuild when requested
     $query = "delete from tiki_images_data where imageId=$id and type !='o'";
@@ -702,14 +745,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   }
 
-  function get_gallery($id)
-  {
-    $query = "select * from tiki_galleries where galleryId='$id'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
   function move_image($imgId,$galId)
   {
     $query = "update tiki_images set galleryId=$galId where imageId=$imgId";
@@ -745,9 +780,18 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // Add an option to stablish Image size (x,y)
   function get_image($id,$itype='o',$xsize=0,$ysize=0)
   {
+
     global $gal_use_db;
     global $gal_use_dir;
     $mid="";
+
+    if ($itype=='t') {
+      $galid=$this->get_gallery_from_image($id);
+      $galinfo=$this->get_gallery_info($galid);
+      $xsize=$galinfo["thumbSizeX"];
+      $ysize=$galinfo["thumbSizeY"];
+    }
+
     if ($xsize!=0) {$mid="and d.xsize=$xsize ";}
     if ($ysize!=0) {$mid.="and d.ysize=$ysize ";}
     if ($xsize!=0 && $ysize==$xsize)
@@ -764,6 +808,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
                      i.imageId='$id' and d.imageId=i.imageId
                      and d.type='$itype'
                      $mid";
+
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 
@@ -793,7 +838,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     // get image data from fs
 
-    if ($res["data"]=='' )
+    if ($res["data"] == '' ) 
     {
       switch ($itype) {
         case 't':
@@ -819,7 +864,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $this->image=$res["data"];
     }
 
-    if(!isset($this->imagehandle)) $this->readimagefromstring($res["data"]);
+    if(!isset($this->imagehandle)) $this->readimagefromstring();
     return $res;
   }
 

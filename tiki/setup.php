@@ -66,7 +66,7 @@ class Smarty_Sterling extends Smarty {
 
 $smarty = new Smarty_Sterling();
 $smarty->load_filter('pre','tr');
-$smarty->load_filter('output','trimwhitespace');
+//$smarty->load_filter('output','trimwhitespace');
 
 // Count number of online users using:
 // print($GLOBALS["PHPSESSID"]);

@@ -48,7 +48,7 @@
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.2 $
+* @version $Revision: 1.3 $
 * @package Mail
 */
 
@@ -117,8 +117,8 @@ class Mail_mimeDecode extends PEAR{
     {
 
         $this->_crlf = $crlf;
-        list($header, $body) = $this->_splitBodyHeader($input);
 
+        list($header, $body) = $this->_splitBodyHeader($input);
         $this->_input          = $input;
         $this->_header         = $header;
         $this->_body           = $body;
@@ -308,13 +308,15 @@ class Mail_mimeDecode extends PEAR{
      */
     function _splitBodyHeader($input)
     {
-
         $pos = strpos($input, $this->_crlf . $this->_crlf);
         if ($pos === false) {
+          $this->_crlf="\n";
+          $pos = strpos($input, $this->_crlf . $this->_crlf);
+          if ($pos === false) {
             $this->_error = 'Could not split header and body';
             return false;
+          }
         }
-
         $header = substr($input, 0, $pos);
         $body   = substr($input, $pos+(2*strlen($this->_crlf)));
 

@@ -336,6 +336,19 @@ class TikiLib {
 
     return $ret;
   }
+  
+  /*shared*/ function get_actual_content($contentId)
+  {
+    $data ='';
+    $now = date("U");
+    $query = "select max(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate<=$now";
+    $res = $this->getOne($query);
+    if(!$res) return '';
+    $query = "select data from tiki_programmed_content where contentId=$contentId and publishDate=$res";
+    $data = $this->getOne($query);
+    return $data;
+  }
+  
 
   /*shared*/ function get_quiz($quizId) 
   {
@@ -550,6 +563,33 @@ class TikiLib {
     $query = "select * from tiki_wiki_attachments where attId=$attId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
+  /*shared*/ function get_random_image($galleryId = -1)
+  {
+    $whgal = "";
+    if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
+    $query = "select count(*) from tiki_images" . $whgal;
+    $cant = $this->getOne($query);
+    $pick = rand(0,$cant-1);
+    $ret = Array();
+    $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
+    $result=$this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $ret["galleryId"] = $res["galleryId"];
+    $ret["imageId"] = $res["imageId"];
+    $ret["name"] = $res["name"];
+    $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
+    $ret["gallery"] = $this->getOne($query);
+    return($ret);
+  }
+
+  /*shared*/   function get_gallery($id)
+  {
+    $query = "select * from tiki_galleries where galleryId='$id'";
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -1312,7 +1352,7 @@ class TikiLib {
 //    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
     $query = "delete from tiki_semaphores where semName='$semName'";
     $this->query($query);
-    $query = "insert into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
+    $query = "replace into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
     $result = $this->query($query);
     return $now;
   }
@@ -1893,6 +1933,9 @@ class TikiLib {
     $groups = addslashes($groups);
     $query = "delete from tiki_modules where name='$name'";
     $result = $this->query($query);
+    //check for valid values
+    $cache_time=is_int($cache_time) ? $cache_time : 0 ;
+    $rows=is_int($rows) ? $rows : 10 ;
     $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params')";
     $result = $this->query($query);
     return true;
@@ -2833,12 +2876,12 @@ class TikiLib {
 
   function get_user_password($user)
   {
-    return $this->getOne("select password from users_users where login='$user'");
+    return $this->getOne("select password from users_users where binary login='$user'");
   }
 
   function get_user_email($user)
   {
-    return $this->getOne("select email from users_users where login='$user'");
+    return $this->getOne("select email from users_users where binary login='$user'");
   }
 
   function get_user_info($user)
@@ -3475,12 +3518,14 @@ class TikiLib {
     global $structlib;
     global $user;
 
+	
+
 	// Process pre_handlers here
 	foreach($this->pre_handlers as $handler) {
 	  $data = $handler($data);
 	}
 	
-	
+
 	
     $preparsed=Array();
     
@@ -3543,7 +3588,12 @@ class TikiLib {
         $skip = false;
       }
     }
+
     $data = $new_data;
+
+
+	//Note \x characters are automatically escaped
+	//$data = preg_replace("/\\./","$1",$data);
 
     if($feature_hotwords_nw == 'y') {
       $hotw_nw = "target='_blank'";
@@ -3551,7 +3601,7 @@ class TikiLib {
       $hotw_nw = '';
     }
 
-    
+
 
 
     // Now replace a TOC
@@ -3597,9 +3647,8 @@ class TikiLib {
         if(file_exists($php_name)) {
           include_once($php_name);
           $ret = $func_name($plugin_data,$arguments);
+          $ret = $this->parse_data($ret);
           $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
-          // Re-entrant plugins
-          $data = $this->parse_data($data);
           
         }
       }
@@ -3609,8 +3658,7 @@ class TikiLib {
     //unset($smc);
     if($feature_wiki_tables != 'new') {
 	    // New syntax for tables
-	    if (preg_match_all("/\|\|(.*?)\|\|/", $data, $tables)) {
-
+	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
 	     $maxcols = 1;
 	      $cols = array();
 	      for($i = 0; $i < count($tables[0]); $i++) {
@@ -3700,17 +3748,22 @@ class TikiLib {
     }
 
 
+	
 	// Replace Hotwords
-    $data = stripslashes($data);
+    //$data = stripslashes($data);
     if($feature_hotwords == 'y') {
       $words = $this->get_hotwords();
       foreach($words as $word=>$url) {
         //print("Replace $word by $url<br/>");
+
         $data  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
-        $data  = preg_replace("/^$word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
+        $data  = preg_replace("/([^A-Za-z0-9])$word /i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
+        $data  = preg_replace("/ $word([^A-Za-z0-9])/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$data);
+
       }
     }
 
+	
     //$data = strip_tags($data);
     // BiDi markers
     $bidiCount = 0;
@@ -3801,7 +3854,6 @@ class TikiLib {
     //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
     // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
     preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
-    //print_r($pages);
     foreach(array_unique($pages[2]) as $page_parse) {
       if($desc = $this->page_exists_desc($page_parse)) {
         $repl = "<a title='".$desc."' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
@@ -3811,6 +3863,8 @@ class TikiLib {
       $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
       //$data = str_replace($page_parse,$repl,$data);
     }
+
+
 
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
@@ -3967,8 +4021,8 @@ class TikiLib {
       }
     }
     // Title bars
-    $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
-
+    //$data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
+    $data = preg_replace("/-=(.+?)=-/","<div class='titlebar'>$1</div>",$data);
 
 
 
@@ -4125,6 +4179,8 @@ class TikiLib {
       }
       $data.=$line;
     }
+
+
     
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
@@ -4154,9 +4210,11 @@ class TikiLib {
       $data.="</div>";
     }
 
+
     foreach($noparsed as $np) {
       $data = str_replace($np["key"],$np["data"],$data);
     }
+    
 
     foreach($preparsed as $pp) {
       $data = str_replace($pp["key"],"<pre>".$pp["data"]."</pre>",$data);
@@ -4166,7 +4224,6 @@ class TikiLib {
 	foreach($this->pos_handlers as $handler) {
 	  $data = $handler($data);
 	}
-
     return $data;
   }
 

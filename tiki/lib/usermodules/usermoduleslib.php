@@ -116,7 +116,7 @@ class UserModulesLib extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $mod_ok=0;
       // The module must not be assigned
-      $isas = $this->getOne("select count(*) from tiki_user_assigned_modules where name='".$res["name"]."'");
+      $isas = $this->getOne("select count(*) from tiki_user_assigned_modules where name='".$res["name"]."' and user='" . $user . "'");
       if(!$isas) {
         if($res["groups"] && $modallgroups!='y' && $user!='admin') {
           $groups = unserialize($res["groups"]);

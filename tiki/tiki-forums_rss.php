@@ -37,12 +37,12 @@ print('>');
       <?php
         
         foreach($changes["data"] as $chg) {
-          print('<rdf:li resource="'.$read.'?parentId='.$chg["threadId"].'">'."\n");
-          print('<title>'.$chg["title"].': '.
+          print('<rdf:li resource="'.$read.'?forumId='.$chg["threadId"].'">'."\n");
+          print('<title>'.htmlspecialchars($chg["title"]).': '.
           	$tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]).'</title>'."\n");
-          print('<link>'.$read.'?parentId='.$chg["threadId"].'</link>'."\n");
+          print('<link>'.$read.'?forumId='.$chg["threadId"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]);
-          print('<description>'.$chg["data"].'</description>'."\n");
+          print('<description>'.htmlspecialchars($chg["data"]).'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

@@ -27,6 +27,8 @@
 {else}
 <td><div class="button2"><a href="tiki-index.php?page={$page}&amp;action=lock" class="linkbut">{tr}lock{/tr}</a></div></td>
 {/if}
+{/if}
+{if $tiki_p_admin_wiki eq 'y'}
 <td><div class="button2"><a href="tiki-pagepermissions.php?page={$page}" class="linkbut">{tr}perms{/tr}</a></div></td>
 {/if}
 {/if}

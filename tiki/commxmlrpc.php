@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.7 2003-03-21 14:42:42 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.8 2003-05-04 21:10:32 lrargerich Exp $
 
 include_once('db/tiki-db.php');
 include_once('lib/tikilib.php');
@@ -28,7 +28,8 @@ $s=new xmlrpc_server( $map );
 /* Validates the user and returns user information */
 function sendPage($params) {
  // Get the page and store it in received_pages
- global $tikilib,$userlib;
+ global $tikilib,$userlib,$commlib;
+
  $pp=$params->getParam(0); $site=$pp->scalarval();
  $pp=$params->getParam(1); $username=$pp->scalarval();
  $pp=$params->getParam(2); $password=$pp->scalarval();
@@ -37,6 +38,7 @@ function sendPage($params) {
  $pp=$params->getParam(5); $comment=$pp->scalarval();
  $pp=$params->getParam(6); $description=$pp->scalarval(); 
  // 
+
  if(!$userlib->validate_user($username,$password,'','')) {
    return new xmlrpcresp(0, 101, "Invalid username or password");
  }
@@ -47,21 +49,13 @@ function sendPage($params) {
  }  
  // Store the page in the tiki_received_pages_table
  $data = base64_decode($data);
- 
  $commlib->receive_page($pageName,$data,$comment,$site,$username,$description);
- /*
- if () {                                 
-     return new xmlrpcresp(new xmlrpcval(1,"boolean"));
- } else {
-    return new xmlrpcresp(0, 101, "Invalid username or password");
- } 
- */
  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
 
 function sendArticle($params) {
  // Get the page and store it in received_pages
- global $tikilib,$userlib;
+ global $tikilib,$userlib,$commlib;
  $pp=$params->getParam(0); $site=$pp->scalarval();
  $pp=$params->getParam(1); $username=$pp->scalarval();
  $pp=$params->getParam(2); $password=$pp->scalarval();
@@ -103,6 +97,4 @@ function sendArticle($params) {
  
  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
-
- 
 ?>

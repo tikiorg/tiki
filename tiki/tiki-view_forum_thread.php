@@ -134,7 +134,10 @@ $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
   if($thread_info["type"]<>'l' || $tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST["comments_postComment"])) {
-      if( (!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) ){
+      if( !empty($_REQUEST["comments_data"]) ){
+        if( empty($_REQUEST["comments_title"]) ){
+	  $_REQUEST["comments_title"] = tra('Re:').$thread_info["title"];
+	  }
         if($commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
           //Replace things between square brackets by links
           $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
@@ -189,7 +192,7 @@ if($_REQUEST["comments_threadId"]>0) {
   $smarty->assign('comment_title',$comment_info["title"]);
   $smarty->assign('comment_data',$comment_info["data"]);
 } else {
-  $smarty->assign('comment_title','');
+  $smarty->assign('comment_title',tra('Re:').$thread_info["title"]);
   $smarty->assign('comment_data','');
 }
 

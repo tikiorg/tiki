@@ -50,10 +50,10 @@ class SurveyLib extends TikiLib {
     // Remove all the options for each question
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
       $questionId = $res["questionId"];
-      $query2 = "update tiki_survey_question_options set average=0, votes=0 where questionId=$questionId";
+      $query2 = "update tiki_survey_question_options set votes=0 where questionId=$questionId";
       $result2 = $this->query($query2);
     }
-    $query = "update tiki_survey_questions set value=0,votes=0 where surveyId=$surveyId";
+    $query = "update tiki_survey_questions set average=0,value=0,votes=0 where surveyId=$surveyId";
     $result = $this->query($query);
   }
   

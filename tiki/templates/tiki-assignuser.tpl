@@ -4,9 +4,13 @@
 <tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
 <tr><td class="even">{tr}Email{/tr}:</td><td class="odd">{$user_info.email}</td></tr>
 <tr><td class="even">{tr}Groups{/tr}:</td><td class="odd">
-{section name=grp loop=$user_info.groups}
-{$user_info.groups[grp]}{if $user_info.groups[grp] != "Anonymous"}(<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;group={$user_info.groups[grp]}">x</a>){/if}&nbsp;&nbsp;
-{/section}
+{foreach from=$user_info.groups item=grp}
+{$grp}
+{if $grp != "Anonymous"}
+(<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;grou
+p={$grp}">x</a>)
+{/if}&nbsp;&nbsp;
+{/foreach}
 </td></tr>
 </table>
 </div>

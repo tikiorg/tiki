@@ -80,7 +80,7 @@ $smarty->assign('section',$_REQUEST["section"]);
 if(isset($_REQUEST["add_contacts"])) {    
   if(isset($_REQUEST["add"])) {      
     foreach(array_keys($_REQUEST["add"]) as $i) {        
-      $webmaillib->replace_contact(0, $addFirstName[$i], $addLastName[$i], $addemail[$i], $addNickname[$i],$user)  ;
+      $webmaillib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i], $_REQUEST["addNickname"][$i],$user)  ;
     }
   }
 } 
@@ -199,7 +199,15 @@ if($_REQUEST["section"]=='mailbox') {
   $smarty->assign('current',$current);  
   // Now get messages from mailbox  
   $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);  
-  $pop3->Open();  
+  
+  $pop3->exit = false; //new
+  $pop3->Open();
+  if ($pop3->has_error) { //new
+    echo '<b><br><center><a href="tiki-webmail.php?section=settings">Click here for settings.</a></center></b>';
+    die;
+  }
+
+  
   if(isset($_REQUEST["delete"])) {    
     if(isset($_REQUEST["msg"])) {      
       // Now we can delete the messages      
@@ -300,6 +308,9 @@ if($_REQUEST["section"]=='mailbox') {
         if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
         if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
         $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
+        if(empty($aux["subject"])) {
+          $aux["subject"]='['.tra('No subject').']';
+        }
         $aux["subject"]=htmlspecialchars($aux["subject"]);    
       
     }    

@@ -43,7 +43,7 @@ print('>');
           $tikilib->date_format($tikilib->get_short_datetime_format(), $chg["created"]).'</title>'."\n");
           print('<link>'.$read.'?blogId='.$chg["blogId"].'</link>'."\n");
           $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
-          print('<description>'.$chg["data"].'</description>'."\n");
+          print('<description>'.htmlspecialchars($chg["data"]).'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
       ?>

@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/commcenter/commlib.php');
+include_once('lib/wiki/wikilib.php');
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));

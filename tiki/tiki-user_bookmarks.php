@@ -87,7 +87,7 @@ if(isset($_REQUEST["addurl"])) {
     $smarty->assign('urlurl','');
 }
 if(isset($_REQUEST["removeurl"])) {
-  $tikilib->remove_url($_REQUEST["removeurl"],$user);
+  $bookmarklib->remove_url($_REQUEST["removeurl"],$user);
 }
 
 

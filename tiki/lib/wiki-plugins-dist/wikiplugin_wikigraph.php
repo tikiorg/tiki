@@ -11,6 +11,7 @@ function wikiplugin_wikigraph($data,$params) {
   global $wikilib;
   extract($params);
   if(!isset($level)) $level=0;
+  if($level>5) $level=5;
   if(empty($data)) $data=$page;
   $mapname=md5(uniqid("."));
   $ret='';

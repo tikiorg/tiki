@@ -1,13 +1,13 @@
 <?php
 // Initialization
 require_once('tiki-setup_base.php');
-
+require_once('lib/webmail/webmaillib.php');
 
 require ("lib/webmail/mimeDecode.php");
 require ("lib/webmail/pop3.php");
 
 
-$current=$tikilib->get_current_webmail_account($user);
+$current=$webmaillib->get_current_webmail_account($user);
 $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);
 $pop3->Open();
 $message = $pop3->GetMessage($_REQUEST["msgid"]) ;

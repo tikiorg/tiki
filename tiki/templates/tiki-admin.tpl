@@ -1,6 +1,5 @@
 {popup_init src="lib/overlib.js"}
 <h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
-
 {if $smarty.get.page == "features"}
   {include file="tiki-admin-include-anchors.tpl"}
   {include file="tiki-admin-include-features.tpl"}
@@ -54,4 +53,3 @@
 {/if}
 
 <br/><br/>
-

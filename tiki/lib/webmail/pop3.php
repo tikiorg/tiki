@@ -34,6 +34,7 @@ class POP3{
         var $greeting = "";
         var $state="DISCONNECTED";
         var $must_update=0;
+        var $dummy= "";
 
         function POP3($hostname,$user,$password,$apop="") {
                 $this->hostname = $hostname;
@@ -49,11 +50,11 @@ class POP3{
         	 echo "<b>Error:</b> $error\n";
                  echo "</center>\n";
                  $this->CloseConnection();
-                 if ($this->exit) exit;
+                 //if ($this->exit) exit;
                  
         }
 	
-        function POP3Command($command, $result="") {
+        function POP3Command($command, &$result) {
                 if ($this->DEBUG) echo "<b>Sending Command: </b>".$command."<br>";flush();
                 @fputs($this->connection, "$command\r\n");
                 $result = @fgets($this->connection, 100);
@@ -69,7 +70,7 @@ class POP3{
                  if ($this->DEBUG) echo "<b>Openning Connection to: </b>".$this->hostname."<br>";flush();
                  if($this->hostname=="")
                            $this->AddError("You must specified a valid hostname");
-                   $this->connection = fsockopen($this->hostname,$this->port, &$errno, &$errstr);
+                   $this->connection = fsockopen($this->hostname,$this->port, $errno, $errstr);
                 if ($this->DEBUG) echo "<b>Connection opened </b><br>";flush();
                    if (!($this->connection)) :
                            if ($errno == 0)
@@ -109,7 +110,7 @@ class POP3{
                   if($this->state=="DISCONNECTED")
                            $this->AddError("no connection was opened");
                   if($this->must_update)
-                           $this->POP3Command("QUIT");
+                           $this->POP3Command("QUIT",$this->dummy);
                   $this->CloseConnection();
                   $this->state="DISCONNECTED";
                   return true;
@@ -122,10 +123,10 @@ class POP3{
                   if($this->state!="AUTHORIZATION")
                            $this->AddError("connection is not in AUTHORIZATION state");
                   if($this->apop) :
-                           $this->POP3Command("APOP $this->user ".md5($this->greeting.$this->password));
+                           $this->POP3Command("APOP $this->user ".md5($this->greeting.$this->password),$this->dummy);
                   else :
-                          $this->POP3Command("USER $this->user");
-                          $this->POP3Command("PASS $this->password");
+                          $this->POP3Command("USER $this->user",$this->dummy);
+                          $this->POP3Command("PASS $this->password",$this->dummy);
                   endif;
                   $this->state="TRANSACTION";
          }
@@ -136,10 +137,11 @@ class POP3{
         function Stats($msg=""){
                   if($this->state!="TRANSACTION")
                            $this->AddError("connection is not in TRANSACTION state");
+	          if (!isset($result)) $result='';
                   if ($msg == "") :
-                          $this->POP3Command("STAT", &$result);
+                          $this->POP3Command("STAT", $result);
                   else :
-                          $this->POP3Command("LIST $msg", &$result);
+                          $this->POP3Command("LIST $msg", $result);
                   endif;
                   $p = explode(" ", $result);
                   $stat["message"] = $p[1];
@@ -148,7 +150,7 @@ class POP3{
          }
 
         function GetHeaders($message=1) {
-                $this->POP3Command("TOP $message 0");
+                $this->POP3Command("TOP $message 0",$this->dummy);
                 for ($headers="";;) {
                         $line = fgets($this->connection, 100);
                           if (trim($line) == "." OR feof($this->connection)) {
@@ -161,11 +163,11 @@ class POP3{
 
         function GetMessageID($message="") {
                 if ($message) :
-                        $this->POP3Command("UIDL $message", &$result);
+                        $this->POP3Command("UIDL $message", $result);
                         $id = explode (" ", $result);
                         return ereg_replace("[<>]","",$id[2]);
                 else :
-                        $this->POP3Command("UIDL") ;
+                        $this->POP3Command("UIDL",$this->dummy) ;
                         while (!feof($this->connection)) :
                                 $line = fgets($this->connection, 100);
                                 if (trim($line) == ".") {
@@ -183,7 +185,7 @@ class POP3{
         function GetMessage($msg=1) {
                 $i = 0;
                 $messagebody='';
-                $this->POP3Command("RETR $msg");
+                $this->POP3Command("RETR $msg",$this->dummy);
                 for ($m="";;) {
                         $line = fgets($this->connection, 100);
                         if (trim($line) == "." OR feof($this->connection)) {
@@ -207,7 +209,7 @@ class POP3{
                 $list = array();
                 $list["has_attachment"] = false;
                 $list["size"] = '';
-                $this->POP3Command("RETR $msg");
+                $this->POP3Command("RETR $msg",$this->dummy);
                 for ($m="";;) {
                         $line = fgets($this->connection, 100);
                         $list["size"] += strlen($line);
@@ -242,7 +244,7 @@ class POP3{
                   if($this->state!="TRANSACTION")
                            $this->AddError("connection is not in TRANSACTION state");
                   $aux='DELE '.$message;
-                  $this->POP3Command($aux);
+                  $this->POP3Command($aux,$this->dummy);
                   $this->must_update=1;
                   return true;
          }
@@ -250,7 +252,7 @@ class POP3{
          function ResetDeletedMessages() {
                   if($this->state!="TRANSACTION")
                            $this->AddError("connection is not in TRANSACTION state");
-                  $this->POP3Command("RSET");
+                  $this->POP3Command("RSET",$this->dummy);
                   $this->must_update=0;
                   return("");
          }
@@ -258,7 +260,7 @@ class POP3{
          function NOOP() {
                   if($this->state!="TRANSACTION")
                            $this->AddError("connection is not in TRANSACTION state");
-                  $this->POP3Command("NOOP");
+                  $this->POP3Command("NOOP",$this->dummy);
                   return("");
           }
 };

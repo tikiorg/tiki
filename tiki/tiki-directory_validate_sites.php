@@ -34,6 +34,7 @@ if(isset($_REQUEST["del"])&&isset($_REQUEST['sites'])) {
 }
 
 
+
 // Listing: invalid sites
 // Pagination resolution
 if(!isset($_REQUEST["sort_mode"])) {  $sort_mode = 'created_desc'; } else {  $sort_mode = $_REQUEST["sort_mode"];} 
