@@ -31,7 +31,7 @@ function smarty_block_tr($params, $content, &$smarty)
     if(DB::isError($result)) { echo $content ; return; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
-      if ($record_untranslated==true) {
+      if ($record_untranslated=='y') {
         $query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
         //No eror checking here
         $tikilib->db->query($query);
