@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.3 2003-10-16 15:42:45 luciash Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.4 2003-10-16 20:33:35 luciash Exp $ *}{include file="header.tpl"}
 {* Main template for TikiWiki layout *}
 <div id="main">
   {if $feature_top_bar eq 'y'}
@@ -54,7 +54,8 @@
   </div><!-- div id="tiki-mid" -->
 
   {if $feature_bot_bar eq 'y'}
-    <div id="bottom" {$add_style}>
+    <div id="bottom">
+      <br class="clear" />
       {include file="tiki-bot_bar.tpl"}
     </div><!-- bottom -->
   {/if}
