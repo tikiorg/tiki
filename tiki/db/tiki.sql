@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-03-18 11:28:49 $
+# $Date: 2005-04-05 16:57:21 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3753,7 +3753,7 @@ CREATE TABLE tiki_user_tasks_history (
 DROP TABLE IF EXISTS tiki_user_tasks;
 CREATE TABLE tiki_user_tasks (
   taskId integer(14) NOT NULL auto_increment,        -- task id
-  last_version integer(4) NOT NULL DEFAULT 0,        -- last version of the task starting with 0
+  last_version integer(4) NOT NULL DEFAULT '0',        -- last version of the task starting with 0
   user varchar(200) NOT NULL,                        -- task user
   creator varchar(200) NOT NULL,                     -- username of creator
   public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
