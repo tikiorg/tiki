@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.4 2003-10-17 16:10:17 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.5 2003-10-19 13:20:19 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -9,6 +9,9 @@
   <table><tr>
     <td><div class="button2">
       <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
+    </div></td>
+    <td><div class="button2">
+      <a href="tiki-admin_integrator.php" class="linkbut">{tr}new repository{/tr}</a>
     </div></td>
   </tr></table>
 </div>

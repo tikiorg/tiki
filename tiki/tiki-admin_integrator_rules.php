@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.6 2003-10-18 23:17:00 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.7 2003-10-19 13:20:18 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -19,20 +19,24 @@ if ($tiki_p_admin != 'y')
 
 
 // Setup local variables from request or set default values
-$repID       = isset($_REQUEST["repID"])       ? $_REQUEST["repID"]       :  0;
-$ruleID      = isset($_REQUEST["ruleID"])      ? $_REQUEST["ruleID"]      :  0;
-$ord         = isset($_REQUEST["ord"])         ? $_REQUEST["ord"]         :  0;
-$srcrep      = isset($_REQUEST["srcrep"])      ? $_REQUEST["srcrep"]      :  0;
-$srch        = isset($_REQUEST["srch"])        ? $_REQUEST["srch"]        : '';
-$repl        = isset($_REQUEST["repl"])        ? $_REQUEST["repl"]        : '';
-$description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
-$rxmod       = isset($_REQUEST["rxmod"])       ? $_REQUEST["rxmod"]       : '';
-$file        = isset($_REQUEST["file"])        ? $_REQUEST["file"]        : '';
-$type        = isset($_REQUEST["type"])        ? ($_REQUEST["type"]      == 'on' ? 'y' : 'n')  : 'n';
-$casesense   = isset($_REQUEST["casesense"])   ? ($_REQUEST["casesense"] == 'on' ? 'y' : 'n')  : 'n';
-$code        = isset($_REQUEST["code"])        ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
-$html        = isset($_REQUEST["html"])        ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
-$all         = isset($_REQUEST["all"])         ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
+$repID       = (isset ($_REQUEST["repID"])
+             && strlen($_REQUEST["repID"])  > 0) ? $_REQUEST["repID"]       :  0;
+$ruleID      = (isset ($_REQUEST["ruleID"])
+             && strlen($_REQUEST["ruleID"]) > 0) ? $_REQUEST["ruleID"]      :  0;
+$ord         = (isset ($_REQUEST["ord"])
+             && strlen($_REQUEST["ord"])    > 0) ? $_REQUEST["ord"]         :  0;
+$srcrep      = (isset ($_REQUEST["srcrep"])
+             && strlen($_REQUEST["srcrep"]) > 0) ? $_REQUEST["srcrep"]      :  0;
+$srch        = isset($_REQUEST["srch"])          ? $_REQUEST["srch"]        : '';
+$repl        = isset($_REQUEST["repl"])          ? $_REQUEST["repl"]        : '';
+$description = isset($_REQUEST["description"])   ? $_REQUEST["description"] : '';
+$rxmod       = isset($_REQUEST["rxmod"])         ? $_REQUEST["rxmod"]       : '';
+$file        = isset($_REQUEST["file"])          ? $_REQUEST["file"]        : '';
+$type        = isset($_REQUEST["type"])          ? ($_REQUEST["type"]      == 'on' ? 'y' : 'n')  : 'n';
+$casesense   = isset($_REQUEST["casesense"])     ? ($_REQUEST["casesense"] == 'on' ? 'y' : 'n')  : 'n';
+$code        = isset($_REQUEST["code"])          ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
+$html        = isset($_REQUEST["html"])          ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
+$all         = isset($_REQUEST["all"])           ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
 
 if (!isset($_REQUEST["repID"]) || $repID <= 0)
 {
@@ -49,7 +53,8 @@ if (isset($_REQUEST["save"]))
 {
     // ... and all mandatory paramaters r OK
     if (strlen($srch)  > 0)
-        $integrator->add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $casesense, $rxmod, $description);
+        $integrator->add_replace_rule($repID, $ruleID, $ord, $srch, $repl,
+                                      $type, $casesense, $rxmod, $description);
     else
     {
         $smarty->assign('msg',tra("Search is mandatory field"));
@@ -122,6 +127,7 @@ if (isset($_REQUEST["action"]))
         {
             $rule = $integrator->get_rule($ruleID);
             $smarty->assign('ruleID', $rule["ruleID"]);
+            $smarty->assign('ord', $rule["ord"]);
             $smarty->assign('srch', $rule["srch"]);
             $smarty->assign('repl', $rule["repl"]);
             $smarty->assign('type', $rule["type"]);
