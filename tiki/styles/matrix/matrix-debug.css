@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.2 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.3 2003-07-15 17:24:39 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -21,7 +21,8 @@ div#debugconsole
   padding: 5px;
   margin: 5px;
   border: 1px ridge #00A000;
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
 /* Permissions in table */
