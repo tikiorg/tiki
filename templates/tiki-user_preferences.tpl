@@ -11,7 +11,12 @@
 {/if}
 
 {include file=tiki-mytiki_bar.tpl}
-<br /><br />
+<br />
+{if $tikifeedback}
+<div class="simplebox highlight">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
+{else}
+<br />
+{/if}
 <table class="admin">
 <tr>
   <!--The line below was <td valign="top" > for no real reason-->
@@ -161,7 +166,7 @@
   </select>
   </td></tr>
   {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Use dbl click to edit pages{/tr}:</td>
+  <tr><td class="form">{tr}Use double-click to edit pages{/tr}:</td>
   <td class="form">
   <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
   </td>
