@@ -225,6 +225,26 @@ class ArtLib extends TikiLib {
 		return true;
 	}
 
+	function replace_topic_name($topicId, $name) {
+		$query = "update `tiki_topics` set `name` = ? where
+			`topicId` = ?";
+		$result = $this->query($query, array($name, $topicId));
+
+		return true;
+	}
+
+	function replace_topic_image($topicId, $imagename, $imagetype,
+			$imagesize, $imagedata) {
+		$topicId = (int)$topicId;
+		$query = "update `tiki_topics` set `image_name` = ?,
+			`image_type` = ?, `image_size` = ?,  `image_data` = ? 
+				where `topicId` = ?";
+		$result = $this->query($query, array($imagename, $imagetype,
+					$imagesize, $imagedata, $topicId));
+
+		return true;
+	}
+
 	function activate_topic($topicId) {
 		$query = "update `tiki_topics` set `active`=? where `topicId`=?";
 
