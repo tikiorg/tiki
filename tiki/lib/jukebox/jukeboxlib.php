@@ -17,7 +17,8 @@ class JukeboxLib extends TikiLib {
 		$now = date("U");
 
 		if (!$albumId) {
-			$query = "insert into `tiki_jukebox-albums` ()";
+			$query = "insert into `tiki_jukebox-albums` (`title`, `description`, `created`, `lastModif`, `user`, `visits`, `public`, `genreId`) values (?,?,?,?,?,?,?,?)";
+			$result = $this->query($query, array($title, $description, $now, $now, $user, 0, 'y', $genreId));
 		} else {
 			$query = "update `tiki_jukebox-albums` set `genreName`=?, `genreDescription`=?, `lastModif`=?, `user`=?";
 		}
