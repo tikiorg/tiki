@@ -47,7 +47,7 @@ REPLACE INTO tiki_preferences VALUES ('use_load_threshold','n');
 REPLACE INTO tiki_preferences VALUES ('user_assigned_modules','y');
 REPLACE INTO tiki_preferences VALUES ('warn_on_edit_time','30');
 REPLACE INTO tiki_preferences VALUES ('wiki_creator_admin','y');
-REPLACE INTO users_groups VALUES ('admins','Site Administrators');
+REPLACE INTO users_groups VALUES ('admins','Site Administrators',NULL);
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_admin','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_admin_banners','');
 REPLACE INTO users_grouppermissions VALUES ('admins','tiki_p_admin_categories','');
