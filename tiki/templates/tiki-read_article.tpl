@@ -41,7 +41,7 @@
 </table>
 </div>
 <div class="articletrailer">
-<table ><tr><td>
+<table class="wikitopline"><tr><td>
 ({$size} bytes)
 </td>
 <td style="text-align:right;">
