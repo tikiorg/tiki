@@ -117,30 +117,30 @@ class QuizLib extends TikiLib {
 		$query = "delete from `tiki_user_answers` where `quizId`=?";
 		$result = $this->query($query,$bindvars);
 	}
-	//TODO: db dbstraction: continue here
 	function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find) {
 		$this->compute_quiz_stats();
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where `quizId`=$quizId";
+			//isnt that superflous? hmm.
+			$findesc = '%' . $find . '%';
+			
+			$mid = " where `quizId`=?";
+			$bindvars=array($quizId);
 		} else {
-			$mid = "  where `quizId`=$quizId";
+			$mid = " where `quizId`=?";
+			$bindvars=array($quizId);
 		}
 
-		$query = "select * from `tiki_user_quizzes` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_user_quizzes` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_quizzes` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$res["avgavg"] = ($res["maxPoints"] != 0) ? $res["points"] / $res["maxPoints"] * 100 : 0.0;
 
-			$hasDet = $this->getOne("select count(*) from `tiki_user_answers` where `userResultId`=" . $res["userResultId"]);
+			$hasDet = $this->getOne("select count(*) from `tiki_user_answers` where `userResultId`=?",array($res["userResultId"]));
 
 			if ($hasDet) {
 				$res["hasDetails"] = 'y';
@@ -158,10 +158,10 @@ class QuizLib extends TikiLib {
 	}
 
 	function register_user_quiz_answer($userResultId, $quizId, $questionId, $optionId) {
-		$query = "insert into `tiki_user_answers`(userResultId,quizId,questionId,optionId)
-    values($userResultId,$quizId,$questionId,$optionId)";
+		$query = "insert into `tiki_user_answers`(`userResultId`,`quizId`,`questionId`,`optionId`)
+    values(?,?,?,?)";
 
-		$result = $this->query($query);
+		$result = $this->query($queryi,array($userResultId,$quizId,$questionId,$optionId));
 	}
 
 	function register_quiz_stats($quizId, $user, $timeTaken, $points, $maxPoints, $resultId) {
@@ -171,34 +171,36 @@ class QuizLib extends TikiLib {
 		if (!$resultId)
 			$resultId = 0;
 
-		$query = "insert into `tiki_user_quizzes`(user,quizId,timestamp,timeTaken,points,maxPoints,resultId)
-    values('$user',$quizId,$now,$timeTaken,$points,$maxPoints,$resultId)";
-		$result = $this->query($query);
-		$queryId = $this->getOne("select max(userResultId) from `tiki_user_quizzes` where `timestamp`=$now and quizId=$quizId");
+		$query = "insert into `tiki_user_quizzes`(`user`,`quizId`,`timestamp`,`timeTaken`,`points`,`maxPoints`,`resultId`)
+    values(?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($user,$quizId,$now,$timeTaken,$points,$maxPoints,$resultId));
+		$queryId = $this->getOne("select max(`userResultId`) from `tiki_user_quizzes` where `timestamp`=? and `quizId`=?",array($now,$quizId));
 		return $queryId;
 	}
 
 	function register_quiz_answer($quizId, $questionId, $optionId) {
 		$cant = $this->getOne(
-			"select count(*) from `tiki_quiz_stats` where `quizId`=$quizId and questionId=$questionId and optionId=$optionId");
+			"select count(*) from `tiki_quiz_stats` where `quizId`=? and `questionId`=? and `optionId`=?",array($quizId,$questionId,$optionId));
 
 		if ($cant) {
 			$query
-				= "update `tiki_quiz_stats` set `votes`=votes+1 where `quizId`=$quizId and questionId=$questionId and optionId=$optionId";
+				= "update `tiki_quiz_stats` set `votes`=`votes`+1 where `quizId`=? and `questionId`=? and `optionId`=?";
+			$bindvars=array($quizId,$questionId,$optionId);
 		} else {
-			$query = "insert into `tiki_quiz_stats`(quizId,questionId,optionId,votes)
-      values($quizId,$questionId,$optionId,1)";
+			$query = "insert into `tiki_quiz_stats`(`quizId`,`questionId`,`optionId`,`votes`)
+      				values(?,?,?,?)";
+			$bindvars=array($quizId,$questionId,$optionId,1);
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 
 		return true;
 	}
 
 	function calculate_quiz_result($quizId, $points) {
-		$query = "select * from `tiki_quiz_results` where `fromPoints`<=$points and toPoints>=$points and quizId=$quizId";
+		$query = "select * from `tiki_quiz_results` where `fromPoints`<=? and `toPoints`>=? and `quizId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($points,$points,$quizId));
 
 		if (!$result->numRows())
 			return 0;
@@ -208,46 +210,50 @@ class QuizLib extends TikiLib {
 	}
 
 	function user_has_taken_quiz($user, $quizId) {
-		$cant = $this->getOne("select count(*) from `tiki_user_taken_quizzes` where `user`='$user' and quizId=$quizId");
+		$cant = $this->getOne("select count(*) from `tiki_user_taken_quizzes` where `user`=? and `quizId`=?",array($user,$quizId));
 
 		return $cant;
 	}
 
 	function user_takes_quiz($user, $quizId) {
-		$query = "replace into tiki_user_taken_quizzes(user,quizId) values('$user',$quizId)";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_user_taken_quizzes` where `user`=? and `quizId`=?";
+		$bindvars=array($user,$quizId,-1,-1,false);
+		$result = $this->query($query,$bindvars);
+		$query = "insert into `tiki_user_taken_quizzes`(`user`,`quizId`) values(?,?)";
+		$result = $this->query($query,$bindvars);
 	}
 
 	function replace_quiz_result($resultId, $quizId, $fromPoints, $toPoints, $answer) {
-		$answer = addslashes($answer);
 
 		if ($resultId) {
 			// update an existing quiz
-			$query = "update tiki_quiz_results set 
-      fromPoints = $fromPoints,
-      toPoints = $toPoints,
-      quizId = $quizId,
-      answer = '$answer'
-      where `resultId` = $resultId";
+			$query = "update `tiki_quiz_results` set 
+      `fromPoints` = ?,
+      `toPoints` = ?,
+      `quizId` = ?,
+      `answer` = ?
+      where `resultId` = ?";
+      			$bindvars=array($fromPoints,$toPoints,$quizId,$answer,$resultId);
+			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into `tiki_quiz_results`(quizId,fromPoints,toPoints,answer)
-      values($quizId,$fromPoints,$toPoints,'$answer')";
-			$queryid = "select max(resultId) from `tiki_quiz_results` where `fromPoints`=$fromPoints and toPoints=$toPoints and quizId=$quizId";
-			$quizId = $this->getOne($queryid);
+			$query = "insert into `tiki_quiz_results`(`quizId`,`fromPoints`,`toPoints`,`answer`)
+      				values(?,?,?,?)";
+			$bindvars=array($quizId,$fromPoints,$toPoints,$answer);
+			$result = $this->query($query,$bindvars);
+			$queryid = "select max(`resultId`) from `tiki_quiz_results` where `fromPoints`=? and `toPoints`=? and `quizId`=?";
+			$quizId = $this->getOne($queryid,array($fromPoints,$toPoints,$quizId));
 		}
 
-		$result = $this->query($query);
 		return $quizId;
 	}
 
 	function get_quiz_result($resultId) {
-		$query = "select * from `tiki_quiz_results` where `resultId`=$resultId";
+		$query = "select * from `tiki_quiz_results` where `resultId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($resultId));
 
 		if (!$result->numRows())
 			return false;
@@ -257,27 +263,28 @@ class QuizLib extends TikiLib {
 	}
 
 	function remove_quiz_result($resultId) {
-		$query = "delete from `tiki_quiz_results` where `resultId`=$resultId";
+		$query = "delete from `tiki_quiz_results` where `resultId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($resultId));
 		return true;
 	}
 
 	function list_quiz_results($quizId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where `quizId`=$quizId and (question like $findesc";
+			$mid = " where `quizId`=? and `question` like ? ";
+			$bindvars=array($quizId,$findesc);
 		} else {
-			$mid = " where `quizId`=$quizId ";
+			$mid = " where `quizId`=? ";
+			$bindvars=array($quizId);
 		}
 
-		$query = "select * from `tiki_quiz_results` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_quiz_results` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_results` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -291,65 +298,61 @@ class QuizLib extends TikiLib {
 	}
 
 	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $questionsPerPage, $timeLimited, $timeLimit) {
-		$name = addslashes($name);
-
-		$description = addslashes($description);
-
 		if ($quizId) {
 			// update an existing quiz
-			$query = "update tiki_quizzes set 
-      name = '$name',
-      description = '$description',
-      canRepeat = '$canRepeat',
-      storeResults = '$storeResults',
-      questionsPerPage = $questionsPerPage,
-      timeLimited = '$timeLimited',
-      timeLimit = $timeLimit
-      where `quizId` = $quizId";
-
-			$result = $this->query($query);
+			$query = "update `tiki_quizzes` set 
+      `name` = ?,
+      `description` = ?,
+      `canRepeat` = ?,
+      `storeResults` = ?,
+      `questionsPerPage` = ?,
+      `timeLimited` = ?,
+      `timeLimit` =? 
+      where `quizId` = ?";
+			$bindvars=array($name,$description,$canRepeat,$storeResults,$questionsPerPage,$timeLimited,$timeLimit,$quizId);
+			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into `tiki_quizzes`(name,description,canRepeat,storeResults,questionsPerPage,timeLimited,timeLimit,created,taken)
-      values('$name','$description','$canRepeat','$storeResults',$questionsPerPage,'$timeLimited',$timeLimit,$now,0)";
-			$result = $this->query($query);
-			$queryid = "select max(quizId) from `tiki_quizzes` where `created`=$now";
-			$quizId = $this->getOne($queryid);
+			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`)
+      values(?,?,?,?,?,?,?,?,?)";
+      			$bindvars=array($name,$description,$canRepeat,$storeResults,(int) $questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
+			$result = $this->query($query,$bindvars);
+			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
+			$quizId = $this->getOne($queryid,array((int) $now));
 		}
 
 		return $quizId;
 	}
 
 	function replace_quiz_question($questionId, $question, $type, $quizId, $position) {
-		$question = addslashes($question);
-
 		if ($questionId) {
 			// update an existing quiz
-			$query = "update tiki_quiz_questions set 
-      type='$type',
-      position = $position,
-      question = '$question'
-      where `questionId` = $questionId and quizId=$quizId";
+			$query = "update `tiki_quiz_questions` set 
+      `type`=?,
+      `position` = ?,
+      `question` = ?
+      where `questionId` = ? and `quizId`=?";
 
-			$result = $this->query($query);
+			$bindvars=array($type,$position,$question,$questionId,$quizId);
+			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into `tiki_quiz_questions`(question,type,quizId,position)
-      values('$question','$type',$quizId,$position)";
-			$result = $this->query($query);
-			$queryid = "select max(questionId) from `tiki_quiz_questions` where `question`='$question' and type='$type'";
-			$questionId = $this->getOne($queryid);
+			$query = "insert into `tiki_quiz_questions`(`question`,`type`,`quizId`,`position`)
+      values(?,?,?,?)";
+      			$bindvars=array($question,$type,$quizId,$position);
+			$result = $this->query($query,$bindvars);
+			$queryid = "select max(`questionId`) from `tiki_quiz_questions` where `question`=? and type=?";
+			$questionId = $this->getOne($queryid,array($question,$type));
 		}
 
 		return $questionId;
 	}
 
 	function replace_question_option($optionId, $option, $points, $questionId) {
-		$option = addslashes($option);
 
 		// validating the points value
 		if ((!is_numeric($points)) || ($points == ""))
@@ -357,30 +360,31 @@ class QuizLib extends TikiLib {
 
 		if ($optionId) {
 			// update an existing quiz
-			$query = "update tiki_quiz_question_options set 
-      points=$points,
-      optionText = '$option'
-      where `optionId` = $optionId and questionId=$questionId";
+			$query = "update `tiki_quiz_question_options` set 
+      `points`=?,
+      `optionText` = ?
+      where `optionId` = ? and `questionId`=?";
+      			$bindvars=array($points,$option,$optionId,$questionId);
 
-			$result = $this->query($query);
+			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into `tiki_quiz_question_options`(optionText,points,questionId)
-      values('$option',$points,$questionId)";
-			$result = $this->query($query);
-			$queryid = "select max(optionId) from `tiki_quiz_question_options` where `optionText`='$option' and questionId=$questionId";
-			$optionId = $this->getOne($queryid);
+			$query = "insert into `tiki_quiz_question_options`(`optionText`,`points`,`questionId`)
+      values(?,?,?)";
+			$result = $this->query($query,array($option,$points,$questionId));
+			$queryid = "select max(`optionId`) from `tiki_quiz_question_options` where `optionText`=? and `questionId`=?";
+			$optionId = $this->getOne($queryid,array($option,$questionId));
 		}
 
 		return $optionId;
 	}
 
 	function get_quiz_question($questionId) {
-		$query = "select * from `tiki_quiz_questions` where `questionId`=$questionId";
+		$query = "select * from `tiki_quiz_questions` where `questionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($questionId));
 
 		if (!$result->numRows())
 			return false;
@@ -390,9 +394,9 @@ class QuizLib extends TikiLib {
 	}
 
 	function get_quiz_question_option($optionId) {
-		$query = "select * from `tiki_quiz_question_options` where `optionId`=$optionId";
+		$query = "select * from `tiki_quiz_question_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 
 		if (!$result->numRows())
 			return false;
@@ -402,28 +406,29 @@ class QuizLib extends TikiLib {
 	}
 
 	function list_quiz_questions($quizId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where `quizId`=$quizId and (question like $findesc";
+			$mid = " where `quizId`=? and `question` like ? ";
+			$bindvars=array($quizId,$findesc);
 		} else {
-			$mid = " where `quizId`=$quizId ";
+			$mid = " where `quizId`=? ";
+			$bindvars=array($quizId);
 		}
 
-		$query = "select * from `tiki_quiz_questions` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_quiz_questions` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_questions` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$res["options"]
-				= $this->getOne("select count(*) from `tiki_quiz_question_options` where `questionId`=" . $res["questionId"]);
+				= $this->getOne("select count(*) from `tiki_quiz_question_options` where `questionId`=?",array($res["questionId"]));
 
 			$res["maxPoints"]
-				= $this->getOne("select max(points) from `tiki_quiz_question_options` where `questionId`=" . $res["questionId"]);
+				= $this->getOne("select max(`points`) from `tiki_quiz_question_options` where `questionId`=?",array($res["questionId"]));
 			$ret[] = $res;
 		}
 
@@ -434,25 +439,26 @@ class QuizLib extends TikiLib {
 	}
 
 	function list_all_questions($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (question like $findesc";
+			$mid = " where `question` like ? ";
+			$bindvars=array($findesc);
 		} else {
 			$mid = " ";
+			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_quiz_questions` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_quiz_questions` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_questions` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$res["options"]
-				= $this->getOne("select count(*) from `tiki_quiz_question_options` where `questionId`=" . $res["questionId"]);
+				= $this->getOne("select count(*) from `tiki_quiz_question_options` where `questionId`=?",array($res["questionId"]));
 
 			$ret[] = $res;
 		}
@@ -464,20 +470,21 @@ class QuizLib extends TikiLib {
 	}
 
 	function list_quiz_question_options($questionId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where `questionId`=$questionId and (option $findesc";
+			$mid = " where `questionId`=? and `option` ? ";
+			$bindvars=array($questionId,$findesc);
 		} else {
-			$mid = " where `questionId`=$questionId ";
+			$mid = " where `questionId`=? ";
+			$bindvars=array($questionId);
 		}
 
-		$query = "select * from `tiki_quiz_question_options` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_quiz_question_options` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_question_options` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -491,48 +498,48 @@ class QuizLib extends TikiLib {
 	}
 
 	function remove_quiz_question($questionId) {
-		$query = "delete from `tiki_quiz_questions` where `questionId`=$questionId";
+		$query = "delete from `tiki_quiz_questions` where `questionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($questionId));
 		// Remove all the options for the question
-		$query = "delete from `tiki_quiz_question_options` where `questionId`=$questionId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_quiz_question_options` where `questionId`=?";
+		$result = $this->query($query,array($questionId));
 		return true;
 	}
 
 	function remove_quiz_question_option($optionId) {
-		$query = "delete from `tiki_quiz_question_options` where `optionId`=$optionId";
+		$query = "delete from `tiki_quiz_question_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 		return true;
 	}
 
 	function remove_quiz($quizId) {
-		$query = "delete from `tiki_quizzes` where `quizId`=$quizId";
+		$query = "delete from `tiki_quizzes` where `quizId`=?";
 
-		$result = $this->query($query);
-		$query = "select * from `tiki_quiz_questions` where `quizId`=$quizId";
-		$result = $this->query($query);
+		$result = $this->query($query,array($quizId));
+		$query = "select * from `tiki_quiz_questions` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
 
 		// Remove all the options for each question
 		while ($res = $result->fetchRow()) {
 			$questionId = $res["questionId"];
 
-			$query2 = "delete from `tiki_quiz_question_options` where `questionId`=$questionId";
-			$result2 = $this->query($query2);
+			$query2 = "delete from `tiki_quiz_question_options` where `questionId`=?";
+			$result2 = $this->query($query2,array($questionId));
 		}
 
 		// Remove all the questions
-		$query = "delete from `tiki_quiz_questions` where `quizId`=$quizId";
-		$result = $this->query($query);
-		$query = "delete from `tiki_quiz_results` where `quizId`=$quizId";
-		$result = $this->query($query);
-		$query = "delete from `tiki_quiz_stats` where `quizId`=$quizId";
-		$result = $this->query($query);
-		$query = "delete from `tiki_user_quizzes` where `quizId`=$quizId";
-		$result = $this->query($query);
-		$query = "delete from `tiki_user_answers` where `quizId`=$quizId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_quiz_questions` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
+		$query = "delete from `tiki_quiz_results` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
+		$query = "delete from `tiki_quiz_stats` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
+		$query = "delete from `tiki_user_quizzes` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
+		$query = "delete from `tiki_user_answers` where `quizId`=?";
+		$result = $this->query($query,array($quizId));
 		$this->remove_object('quiz', $quizId);
 		return true;
 	}
