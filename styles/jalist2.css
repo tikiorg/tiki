@@ -173,6 +173,26 @@ TD.module {
 	color:   black;
 	text-align:   left;
 }
+/* style for rss lists in modules or in wiki */
+.rsslist {
+  background-color: #ffffff;
+  margin: 0;
+  margin-right: 10px;
+  padding: 1px;
+  border: 1px solid #dadac9;
+}
+.rssitem {
+  padding: 1px 6px 1px 6px;
+  border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+  border-top: 0;
+}
+.rssdate {
+  color: #999999;
+  font-style: italic;
+}
+
 
 /* Links in modules */
 .separator, .bannertext, .linkmenu, .linkmodule {
@@ -686,7 +706,6 @@ div.wikitext {
 p.editdate {
 	color:    black;
 	font-size:   smaller;
-	margin-bottom:   -1ex;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 

@@ -67,7 +67,9 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?section=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
-[<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename">{tr}edit{/tr}</a>]
+[<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this contact?{/tr}')" 
+title="Click here to delete this contact"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="Click here to edit this menu"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>]
 </td>
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
 <td class="{cycle}">{$accounts[ix].user}</td>
@@ -277,7 +279,9 @@
 <td class="{cycle advance=false}">{$channels[user].firstName}</td>
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
-[<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}">x</a>]
+[<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this contact?{/tr}')" 
+title="{tr}Click here to delete this contact{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 </tr>

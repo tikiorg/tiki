@@ -82,8 +82,10 @@
 <td class="odd">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}"> 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
+title="Click here to delete this HTML page"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="Click here to edit this HTML page"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>
@@ -94,8 +96,10 @@
 <td class="even">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
+title="Click here to delete this HTML page"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="Click here to edit this HTML page"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>

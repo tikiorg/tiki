@@ -171,7 +171,7 @@
 	<td>
 	  {section loop=$structure_path name=ix}
 	    {if $structure_path[ix].parent_id}->{/if}
-	    <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
+	    <a class="tocnavlink" href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
 	    {if $structure_path[ix].page_alias}
 		{$structure_path[ix].page_alias}
 	    {else}

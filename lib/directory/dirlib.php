@@ -101,7 +101,7 @@ class DirLib extends TikiLib {
 		$bindvars = array();
 		if ($find) {
 			$findesc = '%'.$find.'%';
-			$mid = " and (`name` like ? or `description` like ?)";
+			$mid = " where (`name` like ? or `description` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		} else {
@@ -147,6 +147,7 @@ class DirLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res["cats"] = $this->dir_get_site_categories($res["siteId"]);
+			$res["description"] = $this->parse_data($res["description"]);
 			$ret[] = $res;
 		}
 		$retval = array();

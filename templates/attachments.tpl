@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.9 2003-12-23 10:28:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.10 2003-12-28 11:41:38 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -49,7 +49,6 @@
 </table>
 {/if}{* Generate table if view ... attached files > 0 *}
 
-
 {* It is allow to attach files or current user have admin rights *}
 
 {if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
@@ -58,9 +57,9 @@
 <table class="normal">
 <tr>
  <td class="formcolor">
-   {tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />&nbsp;
-                        <input  size="16 " name="userfile1" type="file" />
-   {tr}comment{/tr}:    <input type="text" name="attach_comment" size="42" maxlength="250"/>
+   <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+                        <input size="16 " name="userfile1" type="file" />
+   <label for="attach-comment">{tr}comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250"/>
                         <input type="submit" name="attach" value="{tr}attach{/tr}"/>
  </td>
 </tr>

@@ -52,7 +52,7 @@ DIV#tiki-top a {
 
 /* This is the middle */
 DIV#tiki-mid {
-	background:    #EFEFE7;
+	background-color:    #EFEFE7;
 	height:   auto;
 	padding-bottom:   0px;
 }
@@ -61,7 +61,7 @@ DIV#tiki-mid {
 DIV#tiki-bot {
 	padding-top:    10px;
 	margin-top:   0px;
-	background:   #B5C6DE;
+	background-color:   #B5C6DE;
 	padding-bottom:   15px;
 }
 
@@ -70,20 +70,20 @@ TD#leftcolumn {
 	padding-left:    2px;
 	padding-right:   2px;
 	vertical-align:   top;
-	background:   #7B99CD;
+	background-color:   #7B99CD;
 	width:   180px;
 }
 
 TD#rightcolumn {
 	padding-left:    2px;
 	vertical-align:   top;
-	background:   #7B99CD;
+	background-color:   #7B99CD;
 	width:   180px;
 }
 
 TD#centercolumn {
 	padding-right:    12px;
-	background:   #CDD2E6;
+	background-color:   #CDD2E6;
 	vertical-align:   top;
 	width:   100%;
 }
@@ -212,7 +212,7 @@ TD.module {
 
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {
-	background:    white;
+	background-color:    white;
 	margin-left:   4px;
 	margin-right:   4px;
 	margin-top:   4px;
@@ -264,7 +264,7 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data {
 	overflow:    hidden;
-	background:   white;
+	background-color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -279,7 +279,7 @@ div.cbox-data {
 /* Menus */
 /* Separators are used to separate menu areas in the application menu and user created menus*/
 div.separator {
-	background:    #3D59AB;
+	background-color:    #3D59AB;
 	color:   white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -310,6 +310,28 @@ div.separator {
 	font-size:   11px;
 	color:   #00FFFF;
 	text-decoration:   none;
+}
+/* style for rss lists in modules or in wiki */
+.rsslist {
+  background-color: #ffffff;
+  margin: 0;
+  margin-right: 10px;
+  padding: 1px;
+  border: 1px solid #dadac9;
+}
+.rssitem {
+  padding: 1px 6px 1px 6px;
+  border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+  border-top: 0;
+}
+.rssdate {
+  color: #999999;
+  font-style: italic;
+}
+.rsslink {
+	color: #3D59AB;
 }
 
 /* Links to extend/collapse menus */
@@ -399,7 +421,7 @@ div.simplebox {
 	padding-right:   2px;
 	color:   black;
 	border:   1px solid #000080;
-	background:   white;
+	background-color:   white;
 	width:   98%;
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -448,7 +470,7 @@ TD.form {
 TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
 	color:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background:   #7B99CD/*#7B99CD*/;
+	background-color:   #7B99CD/*#7B99CD*/;
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
@@ -704,7 +726,7 @@ span.warn {
 
 /***********************************************  THE WIKI ***********************************************************/
 div.titlebar {
-	background:    #101080;
+	background-color:    #101080;
 	color:   white;
 	border:   1px solid white;
 	padding-left:   1px;
@@ -727,7 +749,7 @@ DIV#page-bar {
 	font-size:   10px;
 	color:   Black;
 	font-weight:   bold;
-	background:   white;
+	background-color:   white;
 	border:   1px solid black;
 	padding-left:   0.1em;
 	padding-right:   0.1em;
@@ -741,14 +763,14 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background:   white;
+	background-color:   white;
 	text-decoration:   none;
 }
 
 .linkbut:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background:   white;
+	background-color:   white;
 	color:   black;
 	text-decoration:   none;
 }
@@ -757,13 +779,13 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background:   #3959AC;
+	background-color:   #3959AC;
 	text-decoration:   underline;
 }
 
 /* When a cached version of an external link is displayed */
 div.cache {
-	background:    #EFEFEF;
+	background-color:    #EFEFEF;
 	border:   1px solid black;
 	padding-left:   0.1em;
 	padding-right:   0.1em;
@@ -815,7 +837,7 @@ td.wikicell {
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	background:    white;
+	background-color:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	border:   1px solid black;
@@ -848,13 +870,12 @@ div.wikitext {
 p.editdate {
 	color:    black;
 	font-size:   smaller;
-	margin-bottom:   -1ex;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	font-size:   smaller;
 	padding:   6pt;
@@ -865,7 +886,7 @@ div.wiki-edithelp {
 /* Gallery description */
 div.galdesc {
 	color:    white;
-	background:   #3959AC;
+	background-color:   #3959AC;
 	border:   1px solid white;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -878,18 +899,18 @@ div.galdesc {
 
 /* Container for the whole gallery */
 div.browsegallery {
-	background:    #EFEFFF;
+	background-color:    #EFEFFF;
 	width:   100%;
 }
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows are shown inside oddthumb tds */
 TD.oddthumb {
-	background: #4284B5;
+	background-color: #4284B5;
 }
 
 TD.eventhumb {
-	background: #B5C6DE;
+	background-color: #B5C6DE;
 }
 
 /* Gallery Title */
@@ -960,7 +981,7 @@ td.imageinfo {
 
 /* The whole container for the browse image screen (may be useful for a fancy background) */
 div.browseimage {
-	background:    #EFEFFF;
+	background-color:    #EFEFFF;
 	width:   100%;
 }
 
@@ -1055,7 +1076,7 @@ span.posthead {
 /* The post body */
 div.postbody {
 	overflow:    hidden;
-	background:   white;
+	background-color:   white;
 	border:   1px solid black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -1083,7 +1104,7 @@ div.blogtitle {
 
 /* The weblog information */
 div.bloginfo {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1097,7 +1118,7 @@ div.bloginfo {
 
 /* Weblog description */
 div.blogdesc {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1111,7 +1132,7 @@ div.blogdesc {
 
 /* Links to post/edit/rss feed for the webelog are contained inside this div */
 div.blogtools {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1128,7 +1149,7 @@ div.blogtools {
 /* Listing contents of a file gallery (listing files) */
 div.fgaldesc {
 	color:    white;
-	background:   #3959AC;
+	background-color:   #3959AC;
 	border:   1px solid white;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1160,7 +1181,7 @@ div.articletitle {
 
 /* The article heading */
 div.articleheading {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1173,7 +1194,7 @@ div.articleheading {
 }
 
 div.articletrailer {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	border-bottom:   1px solid black;
 	border-top:   thin solid blue;
@@ -1192,7 +1213,7 @@ div.articleheadingtext {
 
 /* The body */
 div.articlebody {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1289,7 +1310,7 @@ span.trailer {
 .changedate {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   8px;
-	background:   #395AAD;
+	background-color:   #395AAD;
 	color:   white;
 	font-weight:   bold;
 }
@@ -1297,7 +1318,7 @@ span.trailer {
 .date {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   9px;
-	background:   #395AAD;
+	background-color:   #395AAD;
 	color:   white;
 	font-weight:   bold;
 }
@@ -1340,7 +1361,7 @@ div.commentspost {
 
 /* Help box*/
 div.commentsedithelp {
-	background:    #4284B5;
+	background-color:    #4284B5;
 	color:   white;
 	border:   1px solid white;
 	font-size:   smaller;
@@ -1349,7 +1370,7 @@ div.commentsedithelp {
 
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar {
-	background:    #4284B5;
+	background-color:    #4284B5;
 	color:   white;
 	margin-bottom:   20px;
 	width:   97%;
@@ -1374,7 +1395,7 @@ div.commentscomment {
 }
 /* The header for a comment */
 div.commentheader {
-	background:    #395AAD;
+	background-color:    #395AAD;
 	border:   0px solid blue;
 	font-size:   11px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1422,7 +1443,7 @@ table.chatroom {
 
 td.chatchannels {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background:   #B5C6DE;
+	background-color:   #B5C6DE;
 	font-size:   11px;
 	color:   white;
 }
@@ -1433,7 +1454,7 @@ td.chatarea {
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background:   #FFFFFF;
+	background-color:   #FFFFFF;
 }
 
 table.chatform {
@@ -1447,7 +1468,7 @@ table.chatform {
 td.tdchatform {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background:   #EFEFEF;
+	background-color:   #EFEFEF;
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
@@ -1468,7 +1489,7 @@ span.chuser {
 
 /********************************************************** POLLS ********************************************************/
 div.pollresults {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	width:   98%;
 	margin-top:   5px;
@@ -1559,7 +1580,7 @@ td.threadseparator {
 }
 
 div.forumtoolbar {
-	background:    #395AAD;
+	background-color:    #395AAD;
 	width:   98%;
 	margin-bottom:   20px;
 	border:   0px;
@@ -1672,12 +1693,12 @@ table.subcats {
 	border-color:   black;
 	border-style:   solid;
 	border-width:   1px;
-	background:   #B5C6DE;
+	background-color:   #B5C6DE;
 }
 
 td.tdsubcat {
 	width:    25%;
-	background:   #B5C6DE;
+	background-color:   #B5C6DE;
 }
 
 /* Links to subcategories */
@@ -1719,7 +1740,7 @@ td.categobjectsnameeven, td.categobjectsnameodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   white;
-	background:   #4284B6;
+	background-color:   #4284B6;
 }
 
 td.categobjectsdataeven, td.categobjectsdataodd {
@@ -1753,7 +1774,7 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 /***************************************************** FAQS **************************************************************/
 /* The list of questions */
 div.faqlistquestions {
-	background:    #FFFFFF;
+	background-color:    #FFFFFF;
 	color:   black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -1765,7 +1786,7 @@ div.faqlistquestions {
 
 /* Container for question-answer block */
 div.faqqa {
-	background:    #FFFFFF;
+	background-color:    #FFFFFF;
 	color:   black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
@@ -1782,7 +1803,7 @@ div.faqquestion {
 	margin-bottom:    5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
-	background:   #395AAD;
+	background-color:   #395AAD;
 	color:   white;
 	width:   97%;
 }
@@ -1797,7 +1818,7 @@ div.faqanswer {
 /***************************************************** QUIZZES **************************************************************/
 div.questionblock {
 	border:    1px solid black;
-	background:   white;
+	background-color:   white;
 	margin-bottom:   10px;
 }
 
@@ -1816,7 +1837,7 @@ div.quizdescription {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	border:   1px solid black;
-	background:   white;
+	background-color:   white;
 	margin-bottom:   10px;
 }
 
@@ -1824,7 +1845,7 @@ div.quizanswer {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	border:   1px solid black;
-	background:   white;
+	background-color:   white;
 	margin-bottom:   10px;
 }
 
@@ -1833,7 +1854,7 @@ div.shoutboxmsg {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	border:   1px solid black;
-	background:   white;
+	background-color:   white;
 	margin-bottom:   0px;
 	padding-left:   2px;
 	padding-top:   1px;
@@ -1868,12 +1889,12 @@ textarea.tshoutbox {
 }
 
 .wiki-tr-a td {
-	background:    #ddd;
+	background-color:    #ddd;
 	border:   none;
 }
 
 .wiki-tr-b td {
-	background:    #efefef;
+	background-color:    #efefef;
 	border:   none;
 }
 
@@ -1905,7 +1926,7 @@ hr {
 div.tocnav {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   9px;
-	background:   #7B99CD;
+	background-color:   #7B99CD;
 	color:   white;
 	padding-bottom:   5px;
 	padding-top:   5px;

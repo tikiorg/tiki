@@ -311,6 +311,26 @@ div.separated a, div.separated a:visited {
 .linkmenu, .rsslink { }
 .linkmenu:active, .rsslink:active {  }
 .linkmenu:hover, .rsslink:hover {  }
+/* style for rss lists in modules or in wiki */
+.rsslist {
+  background-color: #ffffff;
+  margin: 0;
+  margin-right: 10px;
+  padding: 1px;
+  border: 1px solid #dadac9;
+}
+.rssitem {
+  padding: 1px 6px 1px 6px;
+  border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+  border-top: 0;
+}
+.rssdate {
+  color: #999999;
+  font-style: italic;
+}
+
 
 /* Links to extend/collapse menus */
 .separator { }

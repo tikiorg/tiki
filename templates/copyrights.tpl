@@ -7,13 +7,15 @@
     <input type="hidden" name="page" value="{$page|escape}"/>
     <input type="hidden" name="copyrightId" value="{$copyrights[i].copyrightId|escape}"/>
     <table border="0">
-      <tr><td class="formcolor">{tr}Title{/tr}:</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrights[i].title|escape}" /></td></tr>
-      <tr><td class="formcolor">{tr}Year{/tr}:</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrights[i].year|escape}" /></td></tr>
-      <tr><td class="formcolor">{tr}Authors{/tr}:</td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" value="{$copyrights[i].authors|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-title">{tr}Title{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" id="copyleft-title" value="{$copyrights[i].title|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-year">{tr}Year{/tr}:</label></td><td><input size="4" class="wikitext" type="text" name="copyrightYear" id="copyleft-year" value="{$copyrights[i].year|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-authors">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-authors" value="{$copyrights[i].authors|escape}" /></td></tr>
     </table>
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
-    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}">x</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this copyright?{/tr}')" 
+title="{tr}Click here to delete this copyright{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">up</a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">down</a>
     </form>
@@ -22,9 +24,9 @@
 <form action="copyrights.php?page={$page}">
 <tr><td class="formcolor">
     <table border="0">
-      <tr><td class="formcolor">{tr}Title{/tr}:</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrights[i].title|escape}" /></td></tr>
-      <tr><td class="formcolor">{tr}Year{/tr}:</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrights[i].year|escape}" /></td></tr>
-      <tr><td class="formcolor">{tr}Authors{/tr}:</td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" value="{$copyrights[i].authors|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-tit">{tr}Title{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" id="copyleft-tit" value="{$copyrights[i].title|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-yyyy">{tr}Year{/tr}:</label></td><td><input size="4" class="wikitext" type="text" name="copyrightYear" id="copyleft-yyyy" value="{$copyrights[i].year|escape}" /></td></tr>
+      <tr><td class="formcolor"><label for="copyleft-auth">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-auth" value="{$copyrights[i].authors|escape}" /></td></tr>
     </table><input type="hidden" name="page" value="{$page|escape}"/>
 </td><td class="formcolor"><input type="submit" name="addcopyright" value="{tr}add{/tr}"/> </td></tr>
 </form>

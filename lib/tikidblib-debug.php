@@ -173,9 +173,9 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
     // only for debugging.
     echo "Values: <br>";
     print_r($values);
@@ -188,9 +188,9 @@ function sql_error($query, $values, $result) {
 
 // functions to support DB abstraction
 function convert_query(&$query) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
+    switch ($ADODB_LASTDB) {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
 
@@ -232,9 +232,9 @@ function blob_encode(&$blob) {
 }
 
 function convert_sortmode($sort_mode) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
+    switch ($ADODB_LASTDB) {
         case "pgsql72":
             case "postgres7":
             case "oci8":
@@ -267,9 +267,9 @@ function convert_sortmode($sort_mode) {
 }
 
 function convert_binary() {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
+    switch ($ADODB_LASTDB) {
         case "pgsql72":
             case "oci8":
             case "postgres7":
@@ -287,8 +287,8 @@ function convert_binary() {
 }
 
 function sql_cast($var,$type) {
-    global $ADODB_Database;
-    switch ($ADODB_Database) {
+    global $ADODB_LASTDB;
+    switch ($ADODB_LASTDB) {
     case "sybase":
         switch ($type) {
                 case "int":

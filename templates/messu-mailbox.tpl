@@ -14,16 +14,16 @@
 <br/><br/>
 
 <form action="messu-mailbox.php" method="get">
-{tr}Messages{/tr}:
-<select name="flags">
+<label for="mess-mailmessages">{tr}Messages{/tr}:</label>
+<select name="flags" id="mess-mailmessages">
 <option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
 <option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
 <option value="isFlagged_y" {if $flag eq 'isFlagged' and $flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
 <option value="isFlagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
 <option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 </select>
-{tr}Priority{/tr}:
-<select name="priority">
+<label for="mess-mailprio">{tr}Priority{/tr}:</label>
+<select name="priority" id="mess-mailprio">
 <option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 <option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
 <option value="2" {if $priority eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
@@ -31,8 +31,8 @@
 <option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
 <option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 </select>
-{tr}Containing{/tr}:
-<input type="text" name="find" value="{$find|escape}" />
+<label for="mess-mailcont">{tr}Containing{/tr}:</label>
+<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 <input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
 <br/>
@@ -80,11 +80,11 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

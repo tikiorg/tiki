@@ -84,7 +84,9 @@
 {/if}
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
 {if $tiki_p_admin_trackers eq 'y'}
- [<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}">x</a>]
+ [<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker?{/tr}')" 
+title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>]
 {/if}
 </td>
 {else}
