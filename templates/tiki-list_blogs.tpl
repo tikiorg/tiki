@@ -32,7 +32,7 @@
 {if $blog_list_lastmodif eq 'y'}
 	<td class="bloglistheading"><a class="bloglistheading" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 {/if}
-{if $blog_list_user eq 'y'}
+{if $blog_list_user ne 'disabled'}
 	<td class="bloglistheading"><a class="bloglistheading" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $blog_list_posts eq 'y'}
@@ -61,15 +61,14 @@
 {if $blog_list_lastmodif eq 'y'}
 	<td class="bloglistlastModif{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
 {/if}
-{if $blog_list_user eq 'y'}
-	{if $blog_list_user eq 'link'}
-		<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
-	{elseif $blog_list_user eq 'avatar'}
-		<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|avatarize}&nbsp;</td>
-	{else}
-		<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
-	{/if}
-{/if}	
+{if $blog_list_user eq 'link'}
+	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
+{elseif $blog_list_user eq 'avatar'}
+	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|avatarize}&nbsp;<br />
+	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
+{elseif $blog_list_user eq 'text'}
+	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
+{/if}
 {if $blog_list_posts eq 'y'}
 	<td style="text-align:right;" class="bloglistposts{cycle advance=false}">&nbsp;{$listpages[changes].posts}&nbsp;</td>
 {/if}

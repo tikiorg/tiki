@@ -45,13 +45,6 @@
               <option value="activity_desc" {if $blog_list_order eq 'activity_desc'}selected="selected"{/if}>{tr}Activity (desc){/tr}</option>
               </select></td>
         </tr><tr>
-          <td class="form"><label for="blogs-listinguser">{tr}In blog listing show user as{/tr}:</label></td>
-          <td><select name="blog_list_user" id="blogs-listinguser">
-              <option value="text" {if $blog_list_user eq 'text'}selected="selected"{/if}>{tr}Plain text{/tr}</option>
-              <option value="link" {if $blog_list_user eq 'link'}selected="selected"{/if}>{tr}Link to user information{/tr}</option>
-              <option value="avatar" {if $blog_list_user eq 'avatar'}selected="selected"{/if}>{tr}User avatar{/tr}</option>
-              </select></td>
-        </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="blogfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
@@ -79,8 +72,12 @@
               {if $blog_list_lastmodif eq 'y'}checked="checked"{/if}></td>
         </tr><tr>
           <td class="form"><label for="blogs-user">{tr}User{/tr}</label></td>
-          <td class="form"><input type="checkbox" name="blog_list_user" id="blogs-user"
-              {if $blog_list_user eq 'y'}checked="checked"{/if}></td>
+          <td class="form"><select name="blog_list_user" id="blogs-listinguser">
+              <option value="disabled" {if $blog_list_user eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
+	      <option value="text" {if $blog_list_user eq 'text'}selected="selected"{/if}>{tr}Plain text{/tr}</option>
+              <option value="link" {if $blog_list_user eq 'link'}selected="selected"{/if}>{tr}Link to user information{/tr}</option>
+              <option value="avatar" {if $blog_list_user eq 'avatar'}selected="selected"{/if}>{tr}User avatar{/tr}</option>
+              </select></td>
         </tr><tr>
           <td class="form"><label for="blogs-posts">{tr}Posts{/tr}</label></td>
           <td class="form"><input type="checkbox" name="blog_list_posts" id="blogs-posts"
