@@ -33,7 +33,7 @@
     {$description}
   </div>
 
-  <h3>Gallery Files</h3>
+  <h3>{tr}Gallery Files{/tr}</h3>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -62,7 +62,7 @@
 	<td class="even" colspan="16">
 	
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
-	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected topics{/tr}' />
+	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected files{/tr}' />
 	
 	</td>
 </tr>
@@ -153,7 +153,7 @@
 {/if}
 	
 {if $gal_info.show_created eq 'y'}
-	<td class="listfilescreated{cycle advance=false}">{$images[changes].created|tiki_short_date}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
+	<td class="listfilescreated{cycle advance=false}">{$images[changes].created|tiki_short_date}{if $images[changes].user} {tr}by{/tr} {$images[changes].user}{/if}&nbsp;</td>
 {/if}
 
 {if $gal_info.show_dl eq 'y'}
