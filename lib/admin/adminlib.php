@@ -11,23 +11,24 @@ class AdminLib extends TikiLib {
 	}
 
 	function list_dsn($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		
+		$bindvars=array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (dsn like $findesc)";
+			$mid = " where (`dsn` like ?)";
+			$bindvars[]=$findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_dsn $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_dsn $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_dsn` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_dsn` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -38,23 +39,26 @@ class AdminLib extends TikiLib {
 	}
 
 	function replace_dsn($dsnId, $dsn, $name) {
-		$dsn = addslashes($dsn);
-
-		$name = addslashes($name);
 		// Check the name
+		$bindvars=array($name,$dsnId);
 		if ($dsnId) {
-			$query = "update tiki_dsn set dsn='$dsn',name='$name' where dsnId=$dsnId";
+			$query = "update `tiki_dsn` set `dsn`='$dsn',`name`=? where `dsnId`=?";
+			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "replace into tiki_dsn(dsn,name)
-                values('$dsn','$name')";
+			$query = "delete from `tiki_dsn`where `name`=? and `dsn`=?";
+			$result = $this->query($query,$bindvars);
+			$query = "insert into `tiki_dsn`(`name`,`dsn`)
+                		values(?,?)";
+			$result = $this->query($query,$bindvars);
 		}
 
-		$result = $this->query($query);
 		// And now replace the perm if not created
 		$perm_name = 'tiki_p_dsn_' . $name;
-		$query = "replace into users_permissions(permName,permDesc,type,level) values
-    ('$perm_name','Can use dsn $dsn','dsn','editor')";
-		$this->query($query);
+		$query = "delete from `users_permissions` where `permName`=?";
+		$this->query($query,array($perm_name));
+		$query = "insert into `users_permissions`(`permName`,`permDesc`,`type`,`level`) values
+    			(?,?,?,?)";
+		$this->query($query,array($perm_name,'Can use dsn $dsn','dsn','editor'));
 		return true;
 	}
 
@@ -62,43 +66,43 @@ class AdminLib extends TikiLib {
 		$info = $this->get_dsn($dsnId);
 
 		$perm_name = 'tiki_p_dsn_' . $info['name'];
-		$query = "delete from users_permissions where permName='$perm_name'";
-		$this->query($query);
-		$query = "delete from tiki_dsn where dsnId=$dsnId";
-		$this->query($query);
+		$query = "delete from `users_permissions` where `permName`=?";
+		$this->query($query,array($perm_name));
+		$query = "delete from `tiki_dsn` where `dsnId`=?";
+		$this->query($query,array($dsnId));
 		return true;
 	}
 
 	function get_dsn($dsnId) {
-		$query = "select * from tiki_dsn where dsnId=$dsnId";
+		$query = "select * from `tiki_dsn` where `dsnId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($dsnId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function list_extwiki($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars=array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (extwiki like $findesc)";
+			$mid = " where (`extwiki` like ? )";
+			$bindvars[]=$findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_extwiki $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_extwiki $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_extwiki` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_extwiki` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -109,23 +113,26 @@ class AdminLib extends TikiLib {
 	}
 
 	function replace_extwiki($extwikiId, $extwiki, $name) {
-		$extwiki = addslashes($extwiki);
-
-		$name = addslashes($name);
 		// Check the name
 		if ($extwikiId) {
-			$query = "update tiki_extwiki set extwiki='$extwiki',name='$name' where extwikiId=$extwikiId";
+			$query = "update `tiki_extwiki` set `extwiki`=?,`name`=? where `extwikiId`=?";
+			$result = $this->query($query,array($extwiki,$name,$extwikiId));
 		} else {
-			$query = "replace into tiki_extwiki(extwiki,name)
-                values('$extwiki','$name')";
+			$query = "delete from `tiki_extwiki` where `name`=? and `extwiki`=?";
+			$bindvars=array($name,$extwiki);
+			$result = $this->query($query,$bindvars);
+			$query = "insert into `tiki_extwiki`(`name`,`extwiki`)
+                		values(?,?)";
+			$result = $this->query($query,$bindvars);
 		}
 
-		$result = $this->query($query);
 		// And now replace the perm if not created
 		$perm_name = 'tiki_p_extwiki_' . $name;
-		$query = "replace into users_permissions(permName,permDesc,type,level) values
-    ('$perm_name','Can use extwiki $extwiki','extwiki','editor')";
-		$this->query($query);
+		$query = "delete from `users_permissions`where `permName`=?";
+		$this->query($query,array($perm_name));
+		$query = "insert into `users_permissions`(`permName`,`permDesc`,`type`,`level`) values
+    			(?,?,?,?)";
+		$this->query($query,array($perm_name,'Can use extwiki $extwiki','extwiki','editor'));
 		return true;
 	}
 
@@ -133,33 +140,33 @@ class AdminLib extends TikiLib {
 		$info = $this->get_extwiki($extwikiId);
 
 		$perm_name = 'tiki_p_extwiki_' . $info['name'];
-		$query = "delete from users_permissions where permName='$perm_name'";
-		$this->query($query);
-		$query = "delete from tiki_extwiki where extwikiId=$extwikiId";
-		$this->query($query);
+		$query = "delete from `users_permissions` where `permName`=?";
+		$this->query($query,array($perm_name));
+		$query = "delete from `tiki_extwiki` where `extwikiId`=?";
+		$this->query($query,array($extwikiId));
 		return true;
 	}
 
 	function get_extwiki($extwikiId) {
-		$query = "select * from tiki_extwiki where extwikiId=$extwikiId";
+		$query = "select * from `tiki_extwiki` where `extwikiId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($extwikiId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function remove_unused_pictures() {
 		global $tikidomain;
 
-		$query = "select data from tiki_pages";
-		$result = $this->query($query);
+		$query = "select `data` from `tiki_pages`";
+		$result = $this->query($query,array());
 		$pictures = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			preg_match_all("/\{picture file=([^\}]+)\}/", $res["data"], $pics);
 
 			foreach (array_unique($pics[1])as $pic) {
@@ -186,10 +193,10 @@ class AdminLib extends TikiLib {
 		$merge = array();
 
 		// Find images in tiki_pages
-		$query = "select data from tiki_pages";
-		$result = $this->query($query);
+		$query = "select `data` from `tiki_pages`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["data"], $reqs1);
 
 			preg_match_all("/src=\'([^\']+)\'/", $res["data"], $reqs2);
@@ -199,10 +206,10 @@ class AdminLib extends TikiLib {
 		}
 
 		// Find images in Tiki articles
-		$query = "select body from tiki_articles";
-		$result = $this->query($query);
+		$query = "select `body` from `tiki_articles`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["body"], $reqs1);
 
 			preg_match_all("/src=\'([^\']+)\'/", $res["body"], $reqs2);
@@ -212,10 +219,10 @@ class AdminLib extends TikiLib {
 		}
 
 		// Find images in tiki_submissions
-		$query = "select body from tiki_submissions";
-		$result = $this->query($query);
+		$query = "select `body` from `tiki_submissions`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["body"], $reqs1);
 
 			preg_match_all("/src=\'([^\']+)\'/", $res["body"], $reqs2);
@@ -225,10 +232,10 @@ class AdminLib extends TikiLib {
 		}
 
 		// Find images in tiki_blog_posts
-		$query = "select data from tiki_blog_posts";
-		$result = $this->query($query);
+		$query = "select `data` from `tiki_blog_posts`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			preg_match_all("/src=\"([^\"]+)\"/", $res["data"], $reqs1);
 
 			preg_match_all("/src=\'([^\']+)\'/", $res["data"], $reqs2);
@@ -247,10 +254,10 @@ class AdminLib extends TikiLib {
 			}
 		}
 
-		$query = "select imageId from tiki_images where galleryId=0";
-		$result = $this->query($query);
+		$query = "select `imageId` from `tiki_images` where `galleryId`=0";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$id = $res["imageId"];
 
 			if (!in_array($id, $positives)) {
@@ -260,31 +267,31 @@ class AdminLib extends TikiLib {
 	}
 
 	function tag_exists($tag) {
-		$query = "select distinct tagName from tiki_tags where tagName = '$tag'";
+		$query = "select distinct `tagName` from `tiki_tags` where `tagName` = ?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($tag));
 		return $result->numRows($result);
 	}
 
 	function remove_tag($tagname) {
 		global $wikiHomePage;
 
-		$query = "delete from tiki_tags where tagName='$tagname'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_tags` where `tagName`=?";
+		$result = $this->query($query,array($tagname));
 		$action = "removed tag: $tagname";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin' ,$_SERVER["REMOTE_ADDR"],''));
 		return true;
 	}
 
 	function get_tags() {
-		$query = "select distinct tagName from tiki_tags";
+		$query = "select distinct `tagName` from `tiki_tags`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res["tagName"];
 		}
 
@@ -296,25 +303,24 @@ class AdminLib extends TikiLib {
 	function create_tag($tagname, $comment = '') {
 		global $wikiHomePage;
 
-		$tagname = addslashes($tagname);
-		$comment = addslashes($comment);
-		$query = "select * from tiki_pages";
-		$result = $this->query($query);
+		$query = "select * from `tiki_pages`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$data = $this->qstr($res["data"]);
-
-			$pageName = $this->qstr($res["pageName"]);
-			$description = $this->qstr($res["description"]);
-			$query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('$tagname',$pageName," . $res["hits"] . ",$data," . $res["lastModif"] . ",'" . $res["comment"] . "'," . $res["version"] . ",'" . $res["user"] . "','" . $res["ip"] . "','" . $res["flag"] . "',$description)";
-			$result2 = $this->query($query);
+		while ($res = $result->fetchRow()) {
+			$data = $res["data"];
+			$pageName = $res["pageName"];
+			$description = $res["description"];
+			$query = "delete from `tiki_tags`where `tagName`=? and `pageName`=?";
+			$this->query($query,array($tagname,$pageName),-1,-1,false);
+			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)
+                		values(?,?,?,?,?,?,?,?,?,?,?)";
+			$result2 = $this->query($query,array($tagname,$pageName,$res["hits"],$data,$res["lastModif"],$res["comment"],$res["version"],$res["user"],$res["ip"],$res["flag"],$description));
 		}
 
 		$action = "created tag: $tagname";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment));
 		return true;
 	}
 
@@ -323,23 +329,25 @@ class AdminLib extends TikiLib {
 	function restore_tag($tagname) {
 		global $wikiHomePage;
 
-		$query = "update tiki_pages set cache_timestamp=0";
-		$this->query($query);
-		$query = "select * from tiki_tags where tagName='$tagname'";
-		$result = $this->query($query);
+		$query = "update `tiki_pages` set `cache_timestamp`=0";
+		$this->query($query,array());
+		$query = "select * from `tiki_tags` where `tagName`=?";
+		$result = $this->query($query,array($tagname));
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
+			$query="delete from `tiki_pages` where `pageName`=?";
+			$this->query($query,array($res["pageName"]),-1,-1,false);
 			$query
-				= "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('" . $res["pageName"] . "'," . $res["hits"] . ",'" . addslashes($res["data"]). "'," . $res["lastModif"] . ",'" . $res["comment"] . "'," . $res["version"] . ",'" . $res["user"] . "','" . $res["ip"] . "','" . $res["flag"] . "','" . $res["description"] . "')";
+				= "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)
+                		values(?,?,?,?,?,?,?,?,?,?)";
 
-			$result2 = $this->query($query);
+			$result2 = $this->query($query,array($res["pageName"],$res["hits"],$res["data"],$res["lastModif"],$res["comment"],$res["version"],$res["user"],$res["ip"],$res["flag"],$res["description"]));
 		}
 
 		$action = "recovered tag: $tagname";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],''));
 		return true;
 	}
 
@@ -352,10 +360,10 @@ class AdminLib extends TikiLib {
 		$tar = new tar();
 		$tar->addFile("styles/main.css");
 		// Foreach page
-		$query = "select * from tiki_pages";
-		$result = $this->query($query);
+		$query = "select * from `tiki_pages`";
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$pageName = $res["pageName"] . '.html';
 
 			$dat = $this->parse_data($res["data"]);
@@ -373,8 +381,8 @@ class AdminLib extends TikiLib {
 		unset ($tar);
 		$action = "dump created";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$wikiHomePage,$t,'admin',$_SERVER["REMOTE_ADDR"],''));
 	}
 }
 
