@@ -10,7 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 $langmapping = array(
-    'br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
     'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese")        ),
     'cs' => array(  'Český',      tra("Czech")        ),
     'da' => array(  'Dansk',        tra("Danish")       ),
@@ -28,6 +27,7 @@ $langmapping = array(
     'no' => array(  'Norwegian',    tra("Norwegian")    ),
     'pl' => array(  'Polish',       tra("Polish")       ),
     'pt' => array(  'Portuguese',       tra("Português")       ),
+    'pt-br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
     'ru' => array(  'Russian',      tra("Russian")      ),
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
     'sr' => array(   'Српски',  tra("Serbian")       ),
