@@ -89,6 +89,12 @@ class ImageGalsLib extends TikiLib {
     if(!isset($this->image)) {
       return false;
     }
+    //avoid error messages
+    if(isset($this->filetype)) {
+      if(!$this->issupported($this->filetype)) {
+        return false;
+      }
+    }
     if ($this->uselib == "imagick") {
       $this->imagehandle=imagick_blob2image($this->image);
     } else if ($this->uselib == "gd") {
