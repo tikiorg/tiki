@@ -13,35 +13,25 @@ if($feature_wiki != 'y') {
   die;  
 }
 
-
-//print($GLOBALS["HTTP_REFERER"]);
-
-// Create the HomePage if it doesn't exist
-if(!$tikilib->page_exists($wikiHomePage)) {
-  $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
-}
-
 if(!isset($_SESSION["thedate"])) {
   $thedate = date("U");
 } else {
   $thedate = $_SESSION["thedate"];
 }
 
-
-// Get the page from the request var or default it to HomePage
-if(!isset($_REQUEST["page"])) {
-  $page = $_REQUEST["page"]=$wikiHomePage;
-} else {
-  $page = $_REQUEST["page"];
+if (!isset($_REQUEST["page"])) {
+  $_REQUEST["page"] = $wikiHomePage;
+	if(!$tikilib->page_exists($wikiHomePage)) {
+		$tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
+	}
 }
+$page = $_REQUEST["page"];
 
 $smarty->assign('structure','n');
-//Has a structure page been requested  
+
 if (isset($_REQUEST["page_ref_id"])) {
   $page_ref_id = $_REQUEST["page_ref_id"];
-}
-else {
-  //if not then check if page is the head of a structure
+} else {
   $page_ref_id = $structlib->get_struct_ref_if_head($page);
 }
 if(isset($page_ref_id)) {
@@ -53,8 +43,8 @@ if(isset($page_ref_id)) {
  	$smarty->assign('prev_info', $navigation_info["prev"]);
  	$smarty->assign('parent_info', $navigation_info["parent"]);
  	$smarty->assign('home_info', $navigation_info["home"]);
-    $page = $page_info["pageName"];
-    $structure_path = $structlib->get_structure_path($page_ref_id);
+	$page = $page_info["pageName"];
+	$structure_path = $structlib->get_structure_path($page_ref_id);
  	$smarty->assign('structure_path', $structure_path);
 } else {
 	$page_ref_id = '';
@@ -236,11 +226,6 @@ if ($wiki_uses_slides == 'y') {
 	$smarty->assign('show_slideshow','n');
 }
 
-if(isset($_REQUEST['refresh'])) {
-	check_ticket('index');
-  $tikilib->invalidate_cache($page);	
-}
-
 if($feature_wiki_attachments == 'y') {
   if(isset($_REQUEST["removeattach"])) {
 		check_ticket('index');
@@ -289,17 +274,14 @@ if($feature_wiki_attachments == 'y') {
   $smarty->assign('atts_count',count($atts["data"]));
 }
 
-// Here's where the data is parsed
-// if using cache
-//
-// get cache information
-// if cache is valid then pdata is cache
-// else
-// pdata is parse_data 
-//   if using cache then update the cache
-// assign_by_ref
+if(isset($_REQUEST['refresh'])) {
+	check_ticket('index');
+  $tikilib->invalidate_cache($page);	
+}
+
+
 $smarty->assign('cached_page','n');
-if(isset($info['wiki_cache']) && $info['wiki_cache']>0) {$wiki_cache=$info['wiki_cache'];}
+if(isset($info['wiki_cache'])) {$wiki_cache=$info['wiki_cache'];}
 if($wiki_cache>0) {
  $cache_info = $wikilib->get_cache_info($page);
  $now = date('U');
