@@ -5,14 +5,14 @@ revision:
 1.3.7
 
 lastmodif:
-$Date: 2005-03-09 03:02:22 $
+$Date: 2005-03-09 12:51:05 $
 
 files: 
 features/cc/cc.php cc.php
 features/cc/ccsp.php ccsp.php
 features/cc/cc-admin.php cc-admin.php
-features/modules/mod-my_ledger.php modules/mod-my_ledger.php
-features/templates/modules/mod-my_ledger.tpl templates/modules/mod-my_ledger.tpl
+features/cc/modules/mod-my_ledger.php modules/mod-my_ledger.php
+features/cc/templates/modules/mod-my_ledger.tpl templates/modules/mod-my_ledger.tpl
 features/cc/lib/cclib.php lib/cc/cclib.php
 features/cc/templates/currencies.tpl templates/cc/currencies.tpl 
 features/cc/templates/currencies_form.tpl templates/cc/currencies_form.tpl
@@ -29,7 +29,7 @@ features/cc/img/transaction.png img/cc/transaction.png
 features/cc/img/unregister_c.png img/cc/unregister_c.png
 
 sql-install:
-create table if not exists cc_cc ( seq int not null primary key auto_increment, id varchar(255) not null unique, cc_name varchar(255) not null, cc_description text, owner_id varchar(255), cpun varchar(255) default '' not null,requires_approval char(1) not null, listed char(1) not null default 'n', primary key seq (seq), index ( id(16),cpun(16) ), index ( cc_name(6) ));
+create table if not exists cc_cc ( seq int not null auto_increment, id varchar(255) not null, cc_name varchar(255) not null, cc_description text, owner_id varchar(255), cpun varchar(255) default '' not null,requires_approval char(1) not null, listed char(1) not null default 'n', primary key seq (seq), index ( id(16),cpun(16) ), index ( cc_name(6) ));
 create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(255) null, cpun varchar(255) default '' not null, cc_id varchar(255) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date int(11), approved char(1), index ( acct_id ), index ( cc_id ), index ( last_tr_date));
 create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date int(11) not null, acct_id varchar(255) not null, cpun varchar(255) not null, cc_id varchar(255) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
 create table cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
