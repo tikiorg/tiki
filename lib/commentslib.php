@@ -1050,8 +1050,7 @@ class Comments extends TikiLib {
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords
-	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
-	    0, $id = 0)
+	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold = 0)
     {
 	$r1 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
 			$sort_mode, $find, $threshold, true, true);
