@@ -3,33 +3,21 @@ import java.util.*;
 import java.awt.*;
 
 public class Vertexes extends Vector {
-	CanvaxVertex focus;
-	static Node lastlink;
+	Node focus;
+	static Node lastNode;
 	int count;
 	public Vertexes() {
+		count=0;
 	}
 	public void change(int dx, int dy, int dz) {
 		int i = 0;
 		while (i < count)
-			 ((CanvaxVertex) elementAt(i++)).change(dx, dy, dz);
+			 ((Node) elementAt(i++)).change(dx, dy, dz);
 	}
 
-	public void add(CanvaxVertex v) {
+	public void add(Node v) {
 		addElement(v);
 		count = size();
-
-	}
-
-	public void initpos() {
-
-		float theta = (float) Math.PI * 2 / size();
-		float ttheta = (float) Math.random();
-		Enumeration e = elements();
-		while (e.hasMoreElements()) {
-			((CanvaxVertex) e.nextElement()).initpos(ttheta);
-			ttheta += theta;
-
-		}
 
 	}
 
@@ -39,11 +27,9 @@ public class Vertexes extends Vector {
 		int i = 0;
 
 		while (i < count) {
-			if (((CanvaxVertex) elementAt(i)).contains(x, y)) {
-				focus = ((CanvaxVertex) elementAt(i)).getElement();
-				if (focus.type() == 'l') {
-					lastlink = (Node) focus;
-				}
+			if (((Node) elementAt(i)).contains(x, y)) {
+				focus = ((Node) elementAt(i));
+				lastNode = (Node) focus;				
 				return true;
 			}
 			i++;
@@ -67,7 +53,7 @@ public class Vertexes extends Vector {
 		//object ps contains the value of Z for each vertex and the position
 		// of the vertex in the collection.
 		while (e.hasMoreElements()) {
-			ps[i] = new Pos(((CanvaxVertex) e.nextElement()).Z, i);
+			ps[i] = new Pos(((Node) e.nextElement()).Z, i);
 			i++;
 
 		}
@@ -91,8 +77,8 @@ public class Vertexes extends Vector {
 		//
 
 		for (i = 0; i < count; i++) {
-			((CanvaxVertex) elementAt(ps[i].pos)).paint(g);
-			// System.out.print(" "+ps[i].pos);
+			((Node) elementAt(ps[i].pos)).paint(g);
+			 //System.out.print(" "+ps[i].pos);
 
 		}
 		//System.out.println("\n "+z[0]+ " "+ z[1]+" "+z[2]);
@@ -105,16 +91,16 @@ public class Vertexes extends Vector {
 		// operate
 		//on each points.
 
-		CanvaxVertex.mat.unit();
-		CanvaxVertex.mat.mult(amat);
-		CanvaxVertex.mat.translate(
-			CanvaxVertex.origin.x,
-			CanvaxVertex.origin.y,
-			CanvaxVertex.origin.z);
+		Node.mat.unit();
+		Node.mat.mult(amat);
+		Node.mat.translate(
+			Node.origin.x,
+			Node.origin.y,
+			Node.origin.z);
 
 		Enumeration e = elements();
 		while (e.hasMoreElements()) {
-			CanvaxVertex cc = (CanvaxVertex) e.nextElement();
+			Node cc = (Node) e.nextElement();
 			cc.transform();
 			//first change to world coordinate and then projectto 2d
 			cc.proj();

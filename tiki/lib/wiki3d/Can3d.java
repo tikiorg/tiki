@@ -19,7 +19,7 @@ public class Can3d
 	ObjectVertex ob;
 	Cursor cur;
 	boolean rotate = true; //used to track if in rotation mode or
-									  // not
+	// not
 	Rectangle r = new Rectangle(); //
 	String ps;
 	Matrix3D imat = new Matrix3D();
@@ -35,7 +35,7 @@ public class Can3d
 	boolean animate = true;
 	int prevx, prevy;
 	float xtheta, ytheta; //the angle of the ratation for each
-								   // mouseevent
+	// mouseevent
 	float scalefudge = 1;
 	BufferedImage bi;
 	int XO, YO;
@@ -53,7 +53,7 @@ public class Can3d
 
 	public Can3d() {
 		cur = new Cursor(Cursor.HAND_CURSOR);
-		CanvaxVertex.origin =
+		Node.origin =
 			new Vertex(Config.originx, Config.originy, Config.originz);
 		//origin for the graph
 		ob =
@@ -61,7 +61,10 @@ public class Can3d
 
 		ob.setOrigin(Config.faceoriginx, Config.faceoriginy, 0);
 
-		ObjectVertex.setCamera(Config.faceoriginx, Config.faceoriginy, Config.camposz);
+		ObjectVertex.setCamera(
+			Config.faceoriginx,
+			Config.faceoriginy,
+			Config.camposz);
 
 		// ObjectVertex.origin=new Vertex(400,450,0);
 
@@ -73,7 +76,7 @@ public class Can3d
 		face = new Face(Config.facesize * 2);
 
 		tmat.xrot(Config.initrotx); //initial rotation of the face
-												// and graph
+		// and graph
 
 		tmat.yrot(Config.initroty);
 
@@ -81,7 +84,7 @@ public class Can3d
 
 		mmat.mult(tmat); //accumulated in graph
 
-		CanvaxVertex.setFOV(Config.fieldOfView);
+		Node.setFOV(Config.fieldOfView);
 
 		ObjectVertex.setFOV(Config.fieldOfView);
 
@@ -97,10 +100,7 @@ public class Can3d
 			Config.controlwidth,
 			Config.controlwidth);
 
-		//  xr=new XmlReader(ps,cv);
-
 	}
-	//Initialize the applet
 
 	public void init() {
 		try {
@@ -109,24 +109,12 @@ public class Can3d
 			e.printStackTrace();
 		}
 	}
-	//static {
-	//  try {
-	//    //UIManager.setLookAndFeel(new
-	// com.sun.java.swing.plaf.metal.MetalLookAndFeel());
-	//    //UIManager.setLookAndFeel(new
-	// com.sun.java.swing.plaf.motif.MotifLookAndFeel());
-	//    UIManager.setLookAndFeel(new
-	// com.sun.java.swing.plaf.windows.WindowsLookAndFeel());
-	//  }
-	//  catch (Exception e) {}
-	//}
-	//Component initialization
 
 	private void jbInit() throws Exception {
 		this.setSize(Config.windowwidth, Config.windowheight);
 		try {
 			ips = getParameter("url"); //reads from
-													// http://vt.php?node=someword
+			// http://vt.php?node=someword
 			String node = getParameter("node");
 			ips = ips + "?page=" + node;
 
@@ -168,7 +156,7 @@ public class Can3d
 		}
 
 		xr = new XmlReader(ps, vertexes);
-		vertexes.initpos();
+
 		bi =
 			new BufferedImage(
 				Config.windowwidth,
@@ -201,20 +189,19 @@ public class Can3d
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		
-		if (vertexes.contains(e.getX(), e.getY())) {
-			vertexes.focus = vertexes.focus.getElement();
-			if (vertexes.focus.type() == 'a') {
-				this.getAppletContext().showDocument(
-					((Action) vertexes.focus).getURL(),
-					((Action) vertexes.focus).getLabel());
 
-			} else {
-			   // here goes navigation through nodes, later
-			}
-			System.out.println("mouse clicked");
-			
-			
+		if (vertexes.contains(e.getX(), e.getY())) {
+			vertexes.focus = vertexes.focus;
+
+			/*
+			 * This code is here as an example on how to open an url and how to
+			 * catch a node click, to be used later if (vertexes.focus.type() ==
+			 * 'a') { this.getAppletContext().showDocument( ((Action)
+			 * vertexes.focus).getURL(), ((Action) vertexes.focus).getLabel()); }
+			 * else { // here goes navigation through nodes, later }
+			 * System.out.println("mouse clicked");
+			 *  
+			 */
 
 		}
 	}
@@ -223,9 +210,8 @@ public class Can3d
 		int x = e.getX();
 		int y = e.getY();
 		System.out.println("mouse pressed");
-		
-		if (vertexes.contains(x, y)) 
-			{
+
+		if (vertexes.contains(x, y)) {
 			setCursor(cur);
 			vertexes.focus.fixPosition();
 			focussed = true;
@@ -234,7 +220,7 @@ public class Can3d
 		prevy = y;
 		e.consume();
 	}
-	
+
 	public void mouseMoved(MouseEvent e) {
 
 		int x = e.getX();
@@ -337,16 +323,15 @@ public class Can3d
 			prevy = y;
 			e.consume();
 
-		} else 
-			{
+		} else {
 			int dy = y - prevy;
 			int dx = x - prevx;
-			
+
 			if (e.isAltDown()) {
-				CanvaxVertex.mat.translate(0, 0, dx + dy);
+				Node.mat.translate(0, 0, dx + dy);
 			} else
 				vertexes.focus.change(-dx, -dy, 0);
-			
+
 			if (painted) {
 				painted = false;
 				repaint();
@@ -403,7 +388,7 @@ public class Can3d
 				System.out.println("ne1");
 			}
 			if (!focussed) {
-				vertexes.transform(tmmat);				
+				vertexes.transform(tmmat);
 				face.transform(amat);
 			} else {
 				vertexes.focus.transform();
@@ -412,44 +397,40 @@ public class Can3d
 				//cv.focus.transform(imat);
 				imat.unit();
 			}
-			try {
-				if (bi != null) {
-					bg.setStroke(new BasicStroke(1.0f));
 
-					bg.setColor(getBackground());
-					bg.fillRect(0, 0, getSize().width, getSize().height);
-					vertexes.paint(bg);
-					//if(rotate)
-					face.paint(bg);
+			if (bi != null) {
+				bg.setStroke(new BasicStroke(1.0f));
 
-					bg.draw3DRect(
-						ObjectVertex.origin.x - Config.faceadjust,
-						ObjectVertex.origin.y - Config.faceadjust,
-						Config.controlwidth,
-						Config.controlwidth,
-						true);
-					bg.setColor(Config.facecolorblue);
-					bg.setColor(Config.facecolorblack);
+				bg.setColor(getBackground());
+				bg.fillRect(0, 0, getSize().width, getSize().height);
+				vertexes.paint(bg);
+				//if(rotate)
+				face.paint(bg);
 
-					g.drawImage(bi, 0, 0, this);
-				} else {
-					vertexes.paint(g);
-					face.paint(g);
-					g.setColor(Config.facecolorblue);
-					g.draw3DRect(
-						ObjectVertex.origin.x - Config.faceadjust,
-						ObjectVertex.origin.y - Config.faceadjust,
-						Config.controlwidth,
-						Config.controlwidth,
-						true);
+				bg.draw3DRect(
+					ObjectVertex.origin.x - Config.faceadjust,
+					ObjectVertex.origin.y - Config.faceadjust,
+					Config.controlwidth,
+					Config.controlwidth,
+					true);
+				bg.setColor(Config.facecolorblue);
+				bg.setColor(Config.facecolorblack);
 
-				}
+				g.drawImage(bi, 0, 0, this);
+			} else {
+				vertexes.paint(g);
+				face.paint(g);
+				g.setColor(Config.facecolorblue);
+				g.draw3DRect(
+					ObjectVertex.origin.x - Config.faceadjust,
+					ObjectVertex.origin.y - Config.faceadjust,
+					Config.controlwidth,
+					Config.controlwidth,
+					true);
 
-				setPainted();
-
-			} catch (NullPointerException eb) {
-				System.out.println("ee");
 			}
+
+			setPainted();
 
 		}
 	}

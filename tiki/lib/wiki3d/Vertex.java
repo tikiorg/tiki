@@ -1,5 +1,5 @@
 package wiki3d;
-import java.awt.*;
+import java.util.Vector;
 public class Vertex {
 	int x, y, z;
 	int u, v;
@@ -7,13 +7,21 @@ public class Vertex {
 	public static float FOV;
 	public static int XC, YC, ZC;
 	public static int xo, yo, zo;
+	public Vector links = new Vector();
+	
 	public Vertex(int x, int y, int z) {
 		this.x = x;
 		this.z = z;
 		this.y = y;
+		
+		//links = new Vector();
 
 	}
+	public void paint() {}
+	
 	public Vertex() {
+		//links = new Vector();
+
 	}
 	public void setOrigin(int x, int y, int z) {
 
@@ -27,10 +35,6 @@ public class Vertex {
 		YC = y;
 		ZC = z;
 
-	}
-	
-	public void paint(Graphics g) {
-		g.drawOval(u, v, 13, 13);
 	}
 	
 	public void setCamerapos(int x, int y, int z) {
@@ -57,5 +61,4 @@ public class Vertex {
 		return 'v'; //returns type of vertex ie graph/node...
 
 	}
-
 }
