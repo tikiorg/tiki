@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.60 2004-03-16 02:13:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.61 2004-03-16 02:40:57 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -252,7 +252,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		if ($fields["data"][$i]["type"] == 'a' and $fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
 		} elseif ($fields["data"][$i]["type"] == 'r')	{
-			if ($tiki_p_admin_tracker_items == 'y') {
+			if ($tiki_p_admin_trackers == 'y') {
 				$stt = 'poc';
 			} else {
 				$stt = 'o';
