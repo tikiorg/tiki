@@ -735,6 +735,19 @@ class Comments extends TikiLib {
 	return $retval;
     }
 
+    function user_can_edit_post( $user, $threadId )
+    {
+	$result = $this->getOne( "select `userName` from tiki_comments
+	where `threadId` = ?", array( $threadId ) );
+
+	if( $result == $user )
+	{
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+
     function user_can_post_to_forum($user, $forumId) {
 	// Check flood interval for the forum
 	$forum = $this->get_forum($forumId);
