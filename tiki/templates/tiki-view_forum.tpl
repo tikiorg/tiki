@@ -229,7 +229,7 @@ a moderator approves it.{/tr}</small>
 <table class="forumstable">
 {if $tiki_p_admin_forum eq 'y'}
 <tr>
-	<td class="forumheading" colspan='18'>moderator actions</td>
+	<td class="forumheading" colspan='18'>{tr}moderator actions{/tr}</td>
 </tr>
 <tr>	
 	<td class="odd" colspan="6">
