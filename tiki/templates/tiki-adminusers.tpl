@@ -13,8 +13,9 @@
 <br/><br/>
 {if (($added != "") || ($discarded != "")) }
 	<h3>{tr}Batch Upload Results{/tr}</h3>
-	Added users: {$added} - Rejected users: {$discarded}<br><br>
+	Added users: {$added}
 	{if ($discarded != "") }
+		 - Rejected users: {$discarded}<br><br>
 		<table class="normal">
 			<tr><td class="heading">Username</td><td class="heading">Reason</td></tr>
 			{section name=reject loop=$discardlist}

@@ -64,7 +64,7 @@ global $userlib, $smarty;
     	}
     }
     $smarty->assign('added',$added);
-    if (is_array($discarded)) { $smarty->assign('discarded',count($discarded)); }
+    if (@is_array($discarded)) { $smarty->assign('discarded',count($discarded)); }
    	$smarty->assign('discardlist',$discarded);
 }
 
