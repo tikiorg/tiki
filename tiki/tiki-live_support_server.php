@@ -46,11 +46,11 @@ if (isset($_REQUEST['set_operator_status'])) {
 
 if (isset($_REQUEST['operators_online'])) {
 	if ($lslib->operators_online()) {
-		header ("Content-type: image/gif");
+		header ("Content-type: image/png");
 
 		readfile ('img/icons/live-support-on.png');
 	} else {
-		header ("Content-type: image/gif");
+		header ("Content-type: image/png");
 
 		readfile ('img/icons/live-support-off.png');
 	}

@@ -100,6 +100,7 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 	}
 
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+
 // ADODB_FETCH_BOTH appears to be buggy for null values
 } else {
 	// Database connection for the tiki system

@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.132 2003-11-17 02:55:34 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.133 2003-11-18 18:20:17 lrargerich Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,9 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] WebHelp generation from Tiki structures, you can dump a structure to generate
+  a webhelp static version with search capabilities that can be distributed as a
+  standalone version of the selected tiki pages.
 * [NEW] Added 2 prefs cookie_domain and cookie_path for remember me cookie
 * [MOD] Modules for anonymous-only can now be hidden for registered users
 * [MOD] An alternative module-switch_lang2

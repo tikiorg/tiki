@@ -636,6 +636,11 @@ class StructLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			if(file_exists("whelp/".$res['pageName'].'/index.html')) {
+			  $res['webhelp']='y';
+			} else {
+			  $res['webhelp']='n';
+			}
 			$ret[] = $res;
 		}
 
@@ -654,6 +659,153 @@ class StructLib extends TikiLib {
   function set_page_alias($page_ref_id, $pageAlias) {
 		$query = "update `tiki_structures` set `page_alias`=? where `page_ref_id`=?";
 		$this->query($query, array($pageAlias, $page_ref_id));
+  }
+  
+  
+  
+  //This nifty function creates a static WebHelp version using a TikiStructure as 
+  //the base.
+  function structure_to_webhelp($page_ref_id, $dir, $top) {
+  	global $style_base;
+
+    //The first task is to convert the structure into an array with the
+    //proper format to produce a WebHelp project.
+	//We have to create something in the form
+	//$pages=Array('root'=>Array('pag1'=>'','pag2'=>'','page3'=>Array(...)));
+	//Where the name is the pageName|description and the other side is either ''
+	//when the page is a leaf or an Array of pages when the page is a folder
+	//Folders that are not TikiPages are known for having only a name instead
+	//of name|description
+	$tree = '$tree=Array('.$this->structure_to_tree($page_ref_id).');';
+	eval($tree);
+	//Now we have the tree in $tree!
+	$menucode="foldersTree = gFld(\"Index\", \"pages/$top.html\")\n";
+	$menucode.=$this->traverse($tree);
+	$base = "whelp/$dir";
+	copy("$base/menu/options.cfg","$base/menu/menuNodes.js");
+	$fw = fopen("$base/menu/menuNodes.js","a+");
+	fwrite($fw,$menucode);
+	fclose($fw);
+
+	$docs = Array();
+	$words = Array();
+	$index = Array();
+	$first=true;
+	$pages = $this->traverse2($tree);
+	// Now loop the pages
+	foreach($pages as $page)
+	{
+		$query = "select * from `tiki_pages` where `pageName`=?";
+  		$result = $this->query($query,array($page));
+		$res = $result->fetchRow();
+  		$docs[] = $res["pageName"]; 
+  		$pageName=$res["pageName"].'|'.$res["description"];
+  		$dat = $this->parse_data($res['data']);
+
+  		//Now dump the page
+  		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
+  		$dat = str_replace('?nocache=1','',$dat);
+  		$cs = '';
+  		$data = "<html><head><script src=\"../js/highlight.js\"></script><link rel=\"StyleSheet\"  href=\"../styles/$style_base.css\" type=\"text/css\" /><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <title>".$res["pageName"]."</title></head><body onLoad=\"doProc();\">$cs<div id='tiki-center'><div class='wikitext'>".$dat.'</div></div></body></html>';
+  		$fw=fopen("$base/pages/".$res['pageName'].'.html','wb+');
+  		fwrite($fw,$data);
+  		fclose($fw);
+  		unset($dat);
+
+  		$page_words = split("[^A-Za-z0-9\-_]",$res["data"]);
+  		foreach($page_words as $word) {
+    		$word=strtolower($word);
+    		if(strlen($word)>3 && preg_match("/^[A-Za-z][A-Za-z0-9\_\-]*[A-Za-z0-9]$/",$word)) {
+      		if(!in_array($word,$words)) {
+        		$words[] = $word;
+        		$index[$word]=Array();
+      		}
+      		if(!in_array($res["pageName"].'|'.$res["description"],$index[$word])) {
+        		$index[$word][] = $res["pageName"].'|'.$res["description"];
+      		}
+    		}
+  		}
+	}
+	sort($words);
+	$i=0;
+	$fw = fopen("$base/js/searchdata.js","w");
+	fwrite($fw,"keywords = new Array();\n");
+	foreach($words as $word) {
+  		fwrite($fw,"keywords[$i] = Array(\"$word\",Array(");
+  		$first=true;
+  		foreach($index[$word] as $doc) {
+    		if(!$first) {fwrite($fw,",");} else {$first=false;}
+    		fwrite($fw,'"'.$doc.'"');
+  		}
+  		fwrite($fw,"));\n");
+  		$i++;
+	}
+	fclose($fw);
+
+  }
+  
+  function structure_to_tree($page_ref_id) {
+	$query = "select * from `tiki_structures` ts,`tiki_pages` tp where tp.`page_id`=ts.`page_id` and `page_ref_id`=?";
+	$result = $this->query($query,array($page_ref_id));	
+	$res = $result->fetchRow();
+	if(empty($res['description'])) $res['description']=$res['pageName'];
+	$name = $res['description'].'|'.$res['pageName'];
+	$code = '';
+	$code.= "'$name'=>";
+	$query = "select * from `tiki_structures` ts, `tiki_pages` tp  where tp.`page_id`=ts.`page_id` and `parent_id`=?";
+	$result = $this->query($query,array($page_ref_id));	
+	if($result->numRows()) {
+		$code.="Array(";
+		$first = true;
+		while($res=$result->fetchRow()) {
+			if(!$first) {
+			  $code.=',';
+			} else {
+			  $first = false;
+			}
+			$code.=$this->structure_to_tree($res['page_ref_id']);	
+		} 
+		$code.=')';
+	} else {
+		$code.="''";
+	}
+    return $code;
+  }
+  
+  function traverse($tree,$parent='') {
+  $code='';
+  foreach($tree as $name => $node) {
+   list($name,$link) = explode('|',$name);
+   if(is_array($node)) {
+     //New folder node is parent++ folder parent is paren
+     $new = $parent . 'A';
+     $code.="foldersTree".$new."=insFld(foldersTree$parent,gFld(\"$name\",\"pages/$link.html\"));\n";
+     $code.=$this->traverse($node,$new);
+   } else {
+     $code.="insDoc(foldersTree$parent,gLnk(\"R\",\"$name\",\"pages/$link.html\"));\n";
+   }
+  }
+  return $code;
+  }
+
+  function traverse2($tree) {
+  $pages = Array();
+  foreach($tree as $name => $node) {
+   list($name,$link) = explode('|',$name);
+   if(is_array($node)) {
+     if(isset($name) && isset($link)) {
+        $pageName = $link;
+        $pages[] = $pageName;
+     }
+     $pages2 = $this->traverse2($node);
+     foreach($pages2 as $elem) {
+       $pages[] = $elem;
+     }
+   } else {
+     $pages[] = $link;
+   }
+  }
+  return $pages;
   }
 }
 
