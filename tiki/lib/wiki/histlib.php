@@ -125,7 +125,8 @@ class HistLib extends TikiLib {
 			$bindvars=array();
 		} else {
 			$findstr='%" . $findwhat . "%';
-			$where = " where `pageName` like ? or `user` like ? or `comment` like ? ";
+			$where = " where ta.`pageName` like ? or
+			ta.`user` like ? or ta.`comment` like ? ";
 			$bindvars=array($findstr,$findstr,$findstr);
 		}
 		// section added by ramiro_v on 11/03/2002 ends here
@@ -138,13 +139,28 @@ class HistLib extends TikiLib {
 			} else {
 				$where.="and ";
 			}
-			$where .= " `lastModif`>=? and `lastModif`<=? ";
+			$where .= " ta.`lastModif`>=? and ta.`lastModif`<=? ";
 			$bindvars[]=$fromTime;
 			$bindvars[]=$toTime;
 		}
 
-		$query = "select `action`, `lastModif`, `user`, `ip`, `pageName`,`comment` from `tiki_actionlog` " . $where . " order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_actionlog` " . $where;
+			if (!isset($where)) {
+				$where="where
+				ta.`lastModif` =
+				th.`lastModif`";
+			} else {
+				$where.="and
+				ta.lastModif =
+				th.`lastModif`";
+			}
+
+		$query = "select ta.`action`, ta.`lastModif`, ta.`user`,
+		ta.`ip`, ta.`pageName`,ta.`comment`, `version` from
+		`tiki_actionlog` ta, `tiki_history` th " .
+		$where . " order by
+		".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_actionlog`
+		ta, `tiki_history` th " . $where;
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -158,6 +174,7 @@ class HistLib extends TikiLib {
 			$r["ip"] = $res["ip"];
 			$r["pageName"] = $res["pageName"];
 			$r["comment"] = $res["comment"];
+			$r["version"] = $res["version"];
 			$ret[] = $r;
 		}
 
