@@ -1,5 +1,9 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Graphviz integration, a plugin can be used to visualize a navigable graph
+  of a subwiki indicating a page to start and depth level. Also included is
+  tiki-wiki_graph.php?page=Name&level=X to render the graph (non-navigable) as
+  an image anywhere in Tiki. 
 * [NEW] Users with the right permission can do "minor" edits on wiki pages
   minor edits are not reflected in the history nor are notified by
   email to users "watching" the page.

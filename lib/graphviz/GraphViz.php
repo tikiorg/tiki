@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.1 2003-04-02 18:58:57 lrargerich Exp $
+// $Id: GraphViz.php,v 1.2 2003-04-02 20:17:01 lrargerich Exp $
 //
 
 /**
@@ -422,7 +422,8 @@ class Image_GraphViz {
 
         if (!empty($parsedGraph)) {
             if (empty($file)) {
-                $file = tempnam('/tmp', 'graph_');
+                //$file = tempnam('/tmp', 'graph_');
+                $file = 'temp/'.md5(uniqid("."));
             }
 
             if ($fp = @fopen($file, 'w')) {

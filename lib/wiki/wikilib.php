@@ -14,13 +14,14 @@ class WikiLib extends TikiLib {
 	  $page=$str['name'];
 	  $graph->addNode("$page",array('URL'=>"tiki-index.php?page=$page",
 	  							    'label'=>"$page",
+/*	  							    'fontsize' => '10', */
 	  							    'shape' => 'box'
 	  							    )
 	                 );	
 	  //print("add node $page<br/>");
 	  foreach($str['pages'] as $neig) {
 	    $this->wiki_page_graph($neig, $graph);	
-	    $graph->addEdge(array($page => $neig['name']), array('color'=>'red'));	
+	    $graph->addEdge(array($page => $neig['name']), array('color'=>'black'));	
 	    //print("add edge $page to ".$neig['name']."<br/>");
 	  }
   }

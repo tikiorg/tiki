@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
+
 include_once('lib/wiki/wikilib.php');
 
 
