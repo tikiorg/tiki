@@ -43,10 +43,10 @@ class Messu extends Tikilib {
     if($this->get_user_preference($user,'minPrio',6)<=$priority) {
       $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
       $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_user',$user);
-      $smarty->assign('mail_from',$from);
-      $smarty->assign('mail_subject',$subject);
-      $smarty->assign('mail_body',$body);
+      $smarty->assign('mail_user',stripslashes($user));
+      $smarty->assign('mail_from',stripslashes($from));
+      $smarty->assign('mail_subject',stripslashes($subject));
+      $smarty->assign('mail_body',stripslashes($body));
       $mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
       $email = $userlib->get_user_email($user);
       if($email) {
