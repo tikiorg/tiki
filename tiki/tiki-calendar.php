@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.19 2003-12-01 14:45:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.20 2003-12-02 05:03:36 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,11 +47,6 @@ $listcals = $outsess;
 $smarty->assign('infocals', $infocals["data"]);
 $smarty->assign('listcals', $listcals);
 
-function dropthat($value) {
-	global $match;
-	return ($value != $match);
-}
-
 // set up list of groups 
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
@@ -59,21 +54,6 @@ if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUE
 	$_SESSION['CalendarViewGroups'] = $listcals;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
-}
-
-// drop those inhibited if any
-if (isset($_REQUEST["hidegroup"])and $_REQUEST["hidegroup"]) {
-	if (is_array($_REQUEST["hidegroup"])) {
-		foreach ($_REQUEST["hidegroup"] as $h) {
-			$match = $h;
-
-			$_SESSION['CalendarViewGroups'] = array_filter($_SESSION['CalendarViewGroups'], "dropthat");
-		}
-	} else {
-		$match = $_REQUEST["hidegroup"];
-
-		$_SESSION['CalendarViewGroups'] = array_filter($_SESSION['CalendarViewGroups'], "dropthat");
-	}
 }
 
 // setup list of tiki items displayed
@@ -85,20 +65,6 @@ if (isset($_REQUEST["tikicals"])and is_array($_REQUEST["tikicals"])and count($_R
 	$_SESSION['CalendarViewTikiCals'] = array();
 }
 
-// drop those inhibited if any
-if (isset($_REQUEST["hidetiki"])and $_REQUEST["hidetiki"]) {
-	if (is_array($_REQUEST["hidetiki"])) {
-		foreach ($_REQUEST["hidetiki"] as $h) {
-			$match = $h;
-
-			$_SESSION['CalendarViewTikiCals'] = array_filter($_SESSION['CalendarViewTikiCals'], "dropthat");
-		}
-	} else {
-		$match = $_REQUEST["hidetiki"];
-
-		$_SESSION['CalendarViewTikiCals'] = array_filter($_SESSION['CalendarViewTikiCals'], "dropthat");
-	}
-}
 
 // that should be a global array set up in tiki-setup.php
 $tikiItems = array(
@@ -176,11 +142,6 @@ $tikiItems = array(
 
 $smarty->assign('tikiItems', $tikiItems);
 
-// set up the default thing to display 
-if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
-	$_SESSION['CalendarViewTikiCals'] = array("wiki");
-}
-
 $smarty->assign('displayedcals', $_SESSION['CalendarViewGroups']);
 $smarty->assign('displayedtikicals', $_SESSION['CalendarViewTikiCals']);
 
@@ -202,6 +163,7 @@ foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
 	$tikical["$calt"] = 1;
 }
 
+$trunc = "12"; // put in a pref, number of chars displayed in cal cells
 $smarty->assign('tikical', $tikical);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
@@ -219,6 +181,7 @@ list($focus_day, $focus_month, $focus_year) = array(
 	date("m", $focusdate),
 	date("Y", $focusdate)
 );
+$focusdate = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
 
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
@@ -266,7 +229,6 @@ if (!isset($_REQUEST["status"]))
 
 if (isset($_REQUEST["copy"])and ($_REQUEST["copy"])) {
 	$_REQUEST["calitemId"] = 0;
-
 	$_REQUEST["save"] = true;
 }
 
@@ -566,6 +528,8 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 	}
 }
 
+$smarty->assign('trunc', $trunc); 
+$smarty->assign('daformat', $short_date_format); 
 $smarty->assign('currentweek', $currentweek);
 $smarty->assign('firstweek', $firstweek);
 $smarty->assign('lastweek', $lastweek);

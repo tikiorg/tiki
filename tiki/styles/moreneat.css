@@ -1202,15 +1202,22 @@ background-color: #ffffff;
 font-size: 9px;
 margin-bottom: 7px;
 }
-#opaque
+.opaque
 {
 background-color: #ffffff;
+width: auto;
+border: 1px solid #666666;
+padding: 1px; 
+}
+.opaque .box-title,
+.opaque, .box-data 
+{
+width: auto;
 }
 .calfocus
 {
 font-size: 8px;
-background-color: transparent;
-height: 32px;
+background-color: #e4e1d9;
 }
 .calfocus a
 {
@@ -1221,14 +1228,15 @@ color: #000000;
 {
 font-size: 8px;
 background-color: #f3e498;
-height: 32px;
 }
 .calfocuson a
 {
 text-decoration: none;
 color: #000000;
 }
-
+.calcontent {
+min-height: 60px;
+}
 
 .Calwiki
 {
