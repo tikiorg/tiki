@@ -1,10 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.22 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.23 2003-11-23 03:15:06 zaufi Exp $ *}
 
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="{tr}Admin Menu{/tr}" module_name="admin_menu"}
-</div>
-<div id='adminmnu' class="box-data">
+{tikimodule title="{tr}Admin Menu{/tr}" name="admin_menu"}
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
  $tiki_p_admin_categories eq 'y' or
@@ -87,6 +83,4 @@
     &nbsp;<a href="tiki-admin_code_syntax.php" class="linkmenu">{tr}Syntax highlighting{/tr}</a><br />
     {/if}
 {/if}
-
-</div>
-</div>
+{/tikimodule}

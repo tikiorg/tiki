@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.31 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.32 2003-11-23 03:15:06 zaufi Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -66,12 +66,8 @@ if (!strstr($father,"?")) {
   $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
 }
 {/php}
-<div class="box">
-<div class="box-title" style="margin:0px;">
-{include file="module-title.tpl" module_title="{tr}Calendar{/tr}-{tr}Filter{/tr}" module_name="calendar"}
-</div>
-<div class="box-data" style="margin:0px;padding-right:4px;">
 
+{tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar"}
     <table  border="0" cellspacing="0" cellpadding="0">
     <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
     <tr>
@@ -144,6 +140,4 @@ if (!strstr($father,"?")) {
       </td>
     </tr>
     </table>
-  </div>
-</div>
-
+{/tikimodule}

@@ -1,11 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.78 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.79 2003-11-23 03:15:06 zaufi Exp $ *}
 
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" module_name="application_menu"}
-</div>
+{tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
-<div id="mainmenu" class="box-data">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y'}
 {if $tiki_p_chat eq 'y'}
@@ -576,8 +572,7 @@
   {/if}
   </div>
 {/if}
-</div>
-</div>
+{/tikimodule}
 
 {if $feature_menusfolderstyle eq 'y'}
 <script type='text/javascript'>
