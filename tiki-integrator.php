@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.7 2003-10-29 23:51:58 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.8 2003-11-03 23:59:26 zaufi Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -42,21 +42,10 @@ if ((substr($file, 0, 7) != 'http://')
     die;
 }
 
-// Get file content to string
-//$php_errormsg = '';
-$data = @file_get_contents($file);
-if (isset($php_errormsg))
-    $data .= "ERROR: ".$php_errormsg;
-else
-{
-    // Now we need to hack this file by applying all configured rules...
-    $rules = $integrator->list_rules($repID);
-    if (is_array($rules))
-        foreach ($rules as $rule)
-            $data = $integrator->apply_rule($rep, $rule, $data);
-}
-// Display the template
+$data = $integrator->get_file($repID, $file, $rep["cacheable"], httpPrefix().$_SERVER["REQUEST_URI"]);
 $smarty->assign_by_ref('data', $data);
+
+// Display the template
 $smarty->assign('mid','tiki-integrator.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 

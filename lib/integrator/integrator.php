@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.13 2003-11-03 02:47:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.14 2003-11-04 00:03:32 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -30,7 +30,7 @@ class TikiIntegrator extends TikiLib
         return $ret;
     }
     /// Add/Update
-    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cachable, $descr)
+    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $descr)
     {
         $name  = addslashes($name);
         $path  = addslashes($path);
@@ -38,12 +38,12 @@ class TikiIntegrator extends TikiLib
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,cachable,description)
-                      values('$name','$path','$start','$css','$vis','$cachable','$descr')";
+            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,cacheable,description)
+                      values('$name','$path','$start','$css','$vis','$cacheable','$descr')";
         else
             $query = "update tiki_integrator_reps 
                       set name='$name',path='$path',start_page='$start',
-                      css_file='$css',visibility='$vis',cachable='$cachable',
+                      css_file='$css',visibility='$vis',cacheable='$cacheable',
                       description='$descr' where repID='$repID'";
         $result = $this->query($query);
         // Invalidate cached repository if needed
@@ -76,6 +76,8 @@ class TikiIntegrator extends TikiLib
         // Check if we remove cached repository
         if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
             unset($this->c_rep);
+        // Clear cached pages for this repository
+        $this->clear_cache($repID);
     }
     //\}
     /// Rules management
@@ -111,6 +113,8 @@ class TikiIntegrator extends TikiLib
                       type='$type',casesense='$case',rxmod='$rxmod',description='$descr'
                       where ruleID='$ruleID'";
         $result = $this->query($query);
+        // Clear cached pages for this repository
+        $this->clear_cache($repID);
     }
     /// Get one entry by ID
     function get_rule($ruleID)
@@ -124,6 +128,10 @@ class TikiIntegrator extends TikiLib
     /// Remove rule
     function remove_rule($ruleID)
     {
+        // Clear cached pages for this repository
+        $rule = $this->get_rule($ruleID);
+        $this->clear_cache($rule["repID"]);
+        // Remove rule
         $query = "delete from tiki_integrator_rules where ruleID=$ruleID";
         $result = $this->query($query);
     }
@@ -290,10 +298,12 @@ class TikiIntegrator extends TikiLib
         }
         return $data;
     }
-    /// Clear cache for given repository (specified by URL mask)
-    function clear_cache($urlmask)
+    /// Clear cache for given repository
+    function clear_cache($repID)
     {
-        $query = "delete from tiki_link_cache where url like '$urlmask'";
+        // Delete all cached URLs with word 'integrator' in a script
+        // name and 'repID' parameter equal to function arg...
+        $query = "delete from tiki_link_cache where url like '".httpPrefix()."/%integrator%.php?%repID=".$repID."%'";
         $result = $this->query($query);
     }
 }
