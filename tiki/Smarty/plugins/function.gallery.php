@@ -2,6 +2,8 @@
 function smarty_function_gallery($params, &$smarty)
 {
     global $tikilib;
+    global $dbTiki;
+    include_once('lib/imagegals/imagegallib.php');
     extract($params);
     // Param = id
 
@@ -9,7 +11,7 @@ function smarty_function_gallery($params, &$smarty)
         $smarty->trigger_error("assign: missing 'id' parameter");
         return;
     }
-    $img = $tikilib->get_random_image($id);
+    $img = $imagegallib->get_random_image($id);
     print('<center>');
     print('<table width="98%" border="0" cellpadding="0" cellspacing="0">');
     print('<tr>');
