@@ -194,8 +194,10 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
   }
   
-  $tikilib->set_preference('system_os',$_REQUEST['system_os']);
-  $smarty->assign('system_os',$_REQUEST['system_os']);
+  if(isset($_REQUEST["system_os")) {
+    $tikilib->set_preference('system_os',$_REQUEST['system_os']);
+    $smarty->assign('system_os',$_REQUEST['system_os']);
+  }
   
   if(!empty($_REQUEST["urlIndex"])&&isset($_REQUEST["useUrlIndex"])&&$_REQUEST["useUrlIndex"]=='on') {
     $_REQUEST["tikiIndex"]=$_REQUEST["urlIndex"];	
@@ -217,9 +219,12 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("siteTitle",$_REQUEST["siteTitle"]); 
     $smarty->assign_by_ref('siteTitle',$_REQUEST["siteTitle"]);
   }
-  $tikilib->set_preference('feature_server_name',$_REQUEST["feature_server_name"]);
-  $smarty->assign('feature_server_name',$_REQUEST["feature_server_name"]);
-  
+
+  if(isset($_REQUEST["feature_server_name"])) {
+    $tikilib->set_preference('feature_server_name',$_REQUEST["feature_server_name"]);
+    $smarty->assign('feature_server_name',$_REQUEST["feature_server_name"]);
+  }
+
   if(isset($_REQUEST["tmpDir"])) {
     $tikilib->set_preference("tmpDir",$_REQUEST["tmpDir"]);
     $smarty->assign_by_ref('tmpDir',$_REQUEST["tmpDir"]);
@@ -344,7 +349,9 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("useUrlIndex",'n');
   }
-  $tikilib->set_preference("urlIndex",$_REQUEST["urlIndex"]);
+  if(isset($_REQUEST["urlIndex"])) {
+    $tikilib->set_preference("urlIndex",$_REQUEST["urlIndex"]);
+  }
  
   
   if(isset($_REQUEST["maxRecords"])) {

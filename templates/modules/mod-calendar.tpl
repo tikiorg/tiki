@@ -36,7 +36,7 @@ parse_str($parsed["query"],$query);
 unset($query["day"]);
 unset($query["mon"]);
 unset($query["year"]);
-$father=httpPrefix().$parsed["path"];
+$father=$parsed["path"];
 if(count($query)>0) {
   $first=1;
   foreach($query as $name => $val) {
