@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.2 2004-03-17 17:06:45 mose Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.3 2004-03-18 02:34:18 mose Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
@@ -7,18 +7,22 @@
 require_once('tiki-setup.php');
 if($tiki_p_admin != 'y')   die("You need to be admin to run this script");
 $logfile = 'temp/tiki_parsed.txt';
+$logfilehtml = 'temp/tiki_parsed.html';
 
 function collect($dir) {
-  global $files,$dirs;
+  global $dirs;
   if (is_dir($dir) and is_dir("$dir/CVS")) {
 		$list = file("$dir/CVS/Entries");
 		foreach ($list as $l) {
+			// if (count($dirs) > 20) return true;
 			if (strstr($l,'/')) {
 				$s = split('/',rtrim($l));
 				$filepath = $dir.'/'.$s[1];
 				if ($s[0] == 'D') {
 					collect($filepath);
-					$dirs["$filepath"] = array('files'=>'');
+					
+					$dirs["$dir"][] = $s[1];
+					$dirs["$dir"]['FILES'] = array();
 				} else {
 					if (is_file($filepath)) {
 						$stat = stat($filepath);
@@ -31,6 +35,7 @@ function collect($dir) {
 						$files["$filepath"]["flags"] = $s[4]; 
 						$files["$filepath"]["tag"] = $s[5]; 
 						clearstatcache();
+						$dirs["$dir"]['FILES'] = $files;
 					}
 				}
 			}
@@ -38,85 +43,124 @@ function collect($dir) {
 	}
 }
 
-function echoline($fd, $outstring, $br=true) {
-	if ($br) $outstring = rtrim($outstring)."\n";
-  print(htmlspecialchars($outstring));
-  fwrite ($fd, $outstring);
+function echoline($fd, $fx, $outstring, $style='', $mod='', $br=true) {
+	if ($br) {
+		$br = "\n";
+	} else {
+		$br = '';
+	}
+  fwrite ($fd, $outstring.$br);
+	if ($mod == 'd') {
+		$outstring = date('D M d H:m:s Y',trim($outstring));
+	}
+	if ($style == 'eob') {
+		$htmlstring = "</div>";
+	} elseif ($style) {
+		if ($style == 'dir') {
+			$htmlstring = "<span class='$style' onclick=\"javascript:toggle('".$outstring."');\">". sprintf("    %-16s : ",$style). htmlspecialchars($outstring)."</span>";
+			$htmlstring.= "<div class='box' id='".$outstring."'>";
+			$br = '';
+		} else { 
+			$htmlstring = "<span class='$style'>". sprintf("    %-16s : ",$style). htmlspecialchars($outstring)."</span>";
+		}
+	} else {
+		$htmlstring = htmlspecialchars($outstring);
+	}
+  fwrite ($fx, $htmlstring.$br);
 }
+$display = 'none';
+if (isset($_REQUEST['all'])) $display = 'block';
 ?>
-<html><body><form><input type="submit" name="action" value="process" /></form>
-<a href="<? echo $logfile; ?>">last logfile</a>
-<pre style="padding:10px;border: 1px solid #666666;">
+<html><head><style>
+pre { padding : 10px; border: 1px solid #666666; background-color: #efefef; }
+.dir { font-weight : bold; background-color: #ffffff; cursor : pointer; }
+.box { padding : 10px; border : 1px solid #999999; background-color: #f6f6f6; display : <? echo $display ?>; }
+.file { font-weight : bold; }
+.php { background-color: #AACCFF; }
+.smarty { background-color: #FFccAA; }
+.other { background-color: #cccccc; }
+.image { background-color: #aaffcc; }
+.sub { padding-left : 20px; font-size : 80%; }
+.var { background-color: #FFFFAA; } 
+.url { background-color: #FFAAAA; } 
+.action { background-color: #AACCFF; } 
+.form { background-color: #AABBFF; } 
+.atime, .ctime, .mtime, .date { background-color: #dedede; } 
+.size, .rev, .tag { background-color: #ededed; } 
+</style><script type="text/javascript" src="lib/tiki-js.js"></script></head>
+<body><form action="parse_tiki.php" method="post"><input type="submit" name="action" value="process" /></form>
+<a href="<? echo $logfile; ?>">raw report</a>
+<pre>
 <?
-if (isset($_REQUEST['action'])) {
+if (isset($_POST['action'])) {
 	$files = $dirs = array();
 	collect('.');
   @unlink ($logfile);
   $fw = fopen($logfile,'w');
+  $fx = fopen($logfilehtml,'w');
 	foreach ($dirs as $dir=>$params) {
 		$dirname = basename($dir);
 		$path = dirname($dir);
-		echoline($fw, "DIR: $dir\n");
-	}
-  foreach ($files as $file=>$params) {
-    $fp = fopen ($file, "r");
-    $data = fread ($fp, filesize ($file));
-    fclose ($fp);
-    $requests = array();
-    $urls = array();
-    if (preg_match("/\.ph(p|tml)$/", $file)) {	
-      echoline($fw, "php file: $file");
-      $data = preg_replace ("/(?s)\/\*.*?\*\//", "", $data);  // C comments
-      $data = preg_replace ("/(?m)^\s*\/\/.*\$/", "", $data); // C++ comments
-      $data = preg_replace ("/(?m)^\s*\#.*\$/",   "", $data); // shell comments
-      $data = preg_replace('/(\r|\n)/', '', $data); // all one line
-      preg_match_all('/\$_(REQUEST|POST|GET|COOKIE|SESSION)\[([^\]]*)\]/', $data, $requests); // requests uses
-			for ($i=0;$i<count($requests[0]);$i++) {
-				echoline($fw,"used var : ".$requests[1][$i]." = ".$requests[2][$i]); 
+		echoline($fw,$fx,$dir,'dir');
+		echoline($fw,$fx,'');
+		if (isset($dirs["$dir"]['FILES'])) {
+			foreach ($dirs["$dir"]['FILES'] as $file=>$params) {
+				$fp = fopen ($file, "r");
+				$data = fread ($fp, filesize ($file));
+				fclose ($fp);
+				$requests = array();
+				$urls = array();
+				if (preg_match("/\.(tpl|ph(p|tml))$/", $file)) {
+					if (preg_match("/\.ph(p|tml)$/", $file)) {	
+						echoline($fw,$fx, $file,"file php");
+						$data = preg_replace ("/(?s)\/\*.*?\*\//", "", $data);  // C comments
+						$data = preg_replace ("/(?m)^\s*\/\/.*\$/", "", $data); // C++ comments
+						$data = preg_replace ("/(?m)^\s*\#.*\$/",   "", $data); // shell comments
+						$data = preg_replace('/(\r|\n)/', '', $data); // all one line
+						preg_match_all('/\$_(REQUEST|POST|GET|COOKIE|SESSION)\[([^\]]*)\]/', $data, $requests); // requests uses
+						for ($i=0;$i<count($requests[0]);$i++) {
+							echoline($fw,$fx,$requests[1][$i]." = ".$requests[2][$i],'sub var'); 
+						}
+					} elseif (preg_match ("/\.tpl$/", $file)) {
+						echoline($fw,$fx,$file,'file smarty');
+						$data = preg_replace('/(?s)\{\*.*?\*\}/', '', $data); // Smarty comment 
+						$data = preg_replace('/(\r|\n)/', '', $data); // all one line 
+					}
+					preg_match_all('/<(a[^>]*)>[^<]*<\/a>/im', $data, $urls); // href links
+					foreach ($urls[1] as $u) {
+						echoline($fw,$fx,$u,'sub url'); 
+					}
+					preg_match_all('/<(form[^>]*)>/', $data, $forms); // form uses
+					foreach ($forms[1] as $f) {
+						echoline($fw,$fx,$f,'sub action'); 
+					}
+					preg_match_all('/<((input|textarea|select)[^>]*)>/', $data, $elements); // form elements uses
+					for ($i=0;$i<count($elements[0]);$i++) {
+						echoline($fw,$fx,$elements[1][$i],'sub form'); 
+					}
+					echoline($fw,$fx,trim($params['atime']),'sub atime','d');
+					echoline($fw,$fx,trim($params['mtime']),'sub mtime','d');
+					echoline($fw,$fx,trim($params['ctime']),'sub ctime','d');
+					echoline($fw,$fx,trim($params['date']),'sub date');
+					echoline($fw,$fx,trim($params['size']),'sub size');
+					echoline($fw,$fx,trim($params['rev']),'sub rev');
+					echoline($fw,$fx,substr(trim($params['tag']),1),'sub tag');
+				} elseif (preg_match ("/\.(gif|jpg|png)$/i", $file)) {
+					echoline($fw,$fx,$file,'file image');
+				} else {
+					echoline($fw,$fx,$file,'file other');
+				}
+				echoline($fw,$fx,'');
+				flush();
 			}
-      preg_match_all('/<a[^>]*href=(\'|")([^\'"]*)(\'|")/im', $data, $urls); // href links
-			foreach ($urls[2] as $u) {
-				echoline($fw,"url = ".$u); 
-			}
-      preg_match_all('/<form[^>]*action=(\'|")([^\'"]*)(\'|")/', $data, $forms); // form uses
-			foreach ($forms[2] as $f) {
-				echoline($fw,"form action = ".$f); 
-			}
-      preg_match_all('/<(input|textarea|select)[^>]*name=(\'|")([^\'"]*)(\'|")/', $data, $elements); // form elements uses
-			for ($i=0;$i<count($elements[0]);$i++) {
-				echoline($fw,"form = ".$elements[1][$i]." = ".$elements[3][$i]); 
-			}
-    } elseif (preg_match ("/\.tpl$/", $file)) {
-      echoline($fw,"smarty file: $file\n");
-      $data = preg_replace('/(?s)\{\*.*?\*\}/', '', $data); // Smarty comment 
-      $data = preg_replace('/(\r|\n)/', '', $data); // all one line 
-      preg_match_all('/<a[^>]*href=(\'|")([^\'"]*)(\'|")/im', $data, $urls); // href links
-			foreach ($urls[2] as $u) {
-				echoline($fw,"url = ".$u); 
-			}
-      preg_match_all('/<form[^>]*action=(\'|")([^\'"]*)(\'|")/', $data, $forms); // form uses
-			foreach ($forms[2] as $f) {
-				echoline($fw,"form action = ".$f); 
-			}
-      preg_match_all('/<(input|textarea|select)[^>]*name=(\'|")([^\'"]*)(\'|")/', $data, $elements); // form elements uses
-			for ($i=0;$i<count($elements[0]);$i++) {
-				echoline($fw,"form = ".$elements[1][$i]." = ".$elements[3][$i]); 
-			}
-    } elseif (preg_match ("/\.(gif|jpg|png)$/i", $file)) {
-      echoline($fw, "image file: $file");
-		} else {
-      echoline($fw, "other file: $file");
 		}
-		echoline($fw, "    atime : ". date('D M d H:m:s Y',trim($params['atime'])));
-		echoline($fw, "    mtime : ". date('D M d H:m:s Y',trim($params['mtime'])));
-		echoline($fw, "    ctime : ". date('D M d H:m:s Y',trim($params['ctime'])));
-		echoline($fw, "    date  : ". trim($params['date']));
-		echoline($fw, "    size  : ". trim($params['size']));
-		echoline($fw, "    rev   : ". trim($params['rev']));
-		echoline($fw, "    tag   : ". substr(trim($params['tag']),1));
-		flush();
-  }
+		echoline($fw,$fx,'end of box','eob');
+	}
 	fclose($fw);
+	fclose($fx);
+}
+if (is_file($logfilehtml)) {
+	readfile($logfilehtml);
 }
 ?>
 </pre>
