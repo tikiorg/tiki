@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mailin.php,v 1.2 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mailin.php,v 1.3 2003-09-22 23:25:37 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -245,14 +245,14 @@ foreach ($accs['data'] as $acc) {
 					$data = $tikilib->parse_data($info["data"]);
 					// Now we should attach the source here
 					$mail->addAttachment($data, $page . '.html', 'plain/html');
+
+					$mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
+					$mail->setHTML($info['data'], strip_tags($data));
+					$res = $mail->send(array($aux["sender"]["email"]), 'mail');
+					print ("Response sent<br/>");
 				} else {
 					$data = 'Page not found';
 				}
-
-				$mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
-				$mail->setHTML($info['data'], strip_tags($data));
-				$res = $mail->send(array($aux["sender"]["email"]), 'mail');
-				print ("Response sent<br/>");
 			} elseif ($method == 'APPEND') {
 				if (!$tikilib->page_exists($page)) {
 					print ("Page: $page has been created");
