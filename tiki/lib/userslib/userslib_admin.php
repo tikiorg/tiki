@@ -647,8 +647,8 @@ class UsersLibAdmin extends UsersLib {
 			$groups = $this->get_groups();
 			$group_arraylen = count($groups['data']);
 			
-			for ($i=0; $i<$group_arraylen; $i++) {
-				$groupname = $groups['data'][$i]['groupName'];
+			for ($x=0; $x<$group_arraylen; $x++) {
+				$groupname = $groups['data'][$x]['groupName'];
 				$auth_ext_xml_manage_group = 'auth_ext_xml_manage_'. $groupname;
 				global $$auth_ext_xml_manage_group;
 				
@@ -664,8 +664,8 @@ class UsersLibAdmin extends UsersLib {
 					global $$auth_ext_xml_group_attribute_value;
 					$myElements =& $extxml->getElementsByPath($$auth_ext_xml_group_element);
 					$length = $myElements->getLength();
-					for ($i = 0; $i < $length; $i++) {
-						$currNode =& $myElements->item($i);
+					for ($y=0; $y<$length; $y++) {
+						$currNode =& $myElements->item($y);
 						if (empty($$auth_ext_xml_group_element_value) || $currNode->nodeValue == $$auth_ext_xml_group_element_value) {
 							if (empty($$auth_ext_xml_group_attribute) || empty($$auth_ext_xml_group_attribute) || $currNode->getAttribute($$auth_ext_xml_group_attribute) == $$auth_ext_xml_group_attribute_value) {
 								$group_member = true;
