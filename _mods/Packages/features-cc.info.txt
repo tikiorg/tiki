@@ -5,7 +5,7 @@ revision:
 1.3.7
 
 lastmodif:
-$Date: 2005-03-09 14:01:07 $
+$Date: 2005-03-11 01:24:40 $
 
 files: 
 features/cc/cc.php cc.php
@@ -16,6 +16,7 @@ features/cc/templates/modules/mod-my_ledger.tpl templates/modules/mod-my_ledger.
 features/cc/lib/cclib.php lib/cc/cclib.php
 features/cc/templates/currencies.tpl templates/cc/currencies.tpl 
 features/cc/templates/currencies_form.tpl templates/cc/currencies_form.tpl
+features/cc/templates/currency_admin.tpl templates/cc/currency_admin.tpl
 features/cc/templates/index.tpl templates/cc/index.tpl
 features/cc/templates/admin.tpl templates/cc/admin.tpl
 features/cc/templates/ledgers.tpl templates/cc/ledgers.tpl
@@ -33,8 +34,8 @@ sql-install:
 create table if not exists cc_cc ( seq int not null auto_increment, id varchar(255) not null, cc_name varchar(255) not null, cc_description text, owner_id varchar(255), cpun varchar(255) default '' not null,requires_approval char(1) not null, listed char(1) not null default 'n', primary key seq (seq), index ( id(16),cpun(16) ), index ( cc_name(6) ));
 create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(255) null, cpun varchar(255) default '' not null, cc_id varchar(255) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date int(11), approved char(1), index ( acct_id ), index ( cc_id ), index ( last_tr_date));
 create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date int(11) not null, acct_id varchar(255) not null, cpun varchar(255) not null, cc_id varchar(255) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
-create table cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
-create table cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
+create table if not exists cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
+create table if not exists cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cc','n');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_use', 'Can use community currencies', 'registered', 'cc');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_create', 'Can create new community currencies', 'registered', 'cc');
@@ -54,8 +55,8 @@ INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm
 
 sql-upgrade:
 : 1.3.7
-create table cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
-create table cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
+create table if not exists cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
+create table if not exists cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
 ALTER TABLE `cc_transaction` CHANGE `other_domain` `cpun` VARCHAR( 255 ) NOT NULL ;
 ALTER TABLE `cc_transaction` DROP `other_id` ;
 ALTER TABLE `cc_cc` ADD `cpun` VARCHAR( 255 ) NOT NULL AFTER `owner_id` ;
