@@ -6,22 +6,22 @@
 
 <div class="tabs">
 	{if $mytiki_pages eq 'y'}
-		<span id="tab1" class="tab tabActive">My Pages</span>
+		<span id="tab1" class="tab tabActive">{tr}My Pages{/tr}</span>
 	{/if}
 	{if $mytiki_gals eq 'y'}
-		<span id="tab2" class="tab">My galleries</span>
+		<span id="tab2" class="tab">{tr}My galleries{/tr}</span>
 	{/if}
 	{if $mytiki_items eq 'y'}
-		<span id="tab3" class="tab">My items</span>
+		<span id="tab3" class="tab">{tr}My items{/tr}</span>
 	{/if}
 	{if $mytiki_msgs eq 'y'}
-		<span id="tab4" class="tab">My messages</span>
+		<span id="tab4" class="tab">{tr}My messages{/tr}</span>
 	{/if}
 	{if $mytiki_tasks eq 'y'}
-		<span id="tab5" class="tab">My tasks</span>
+		<span id="tab5" class="tab">{tr}My tasks{/tr}</span>
 	{/if}
 	{if $mytiki_blogs eq 'y'}
-		<span id="tab6" class="tab">My blogs</span>
+		<span id="tab6" class="tab">{tr}My blogs{/tr}</span>
 	{/if}
 </div>
 
