@@ -349,7 +349,7 @@ class UsersLib extends TikiLib {
         return USER_NOT_FOUND;
 		
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $hash=md5($user.$pass);
+    $hash=md5($user.$pass.$res["email"]);
 		$hash2 = md5($pass);
     // next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
     if($feature_challenge=='n' || empty($response)) {
