@@ -1,21 +1,28 @@
-# mk_profile.sh - Generates a profile of all tiki preferences that differ from the default values
+# mk_profile.sh - Generates a profile of tiki settings that differ from the default values
 #
 # Written by Dennis Heltzel - 8/3/03
-# This script can generate SQL to make a default tiki install have the same preferences as an existing database
-# It uses dump_prefs.sql to generate a list of all prefs in the specified database, then compares it to the default values
-# in default-inserts.sql and filters the differences into a profile.sql file.
-# Depending on how your database is setup, you may need to alter the mysql command parameters.
+# This script can generate SQL to make a default tiki install have the same settings as an existing database
+# It uses an existing dump file to get a list of all settings, then compares it to the default values
+# in default-inserts.sql and filters the differences into a profile file.
+
+# Example usage:
+# mysqldump -u root -p tiki17 >tiki17-dump.sql
+# mk_profile.sh tiki17-dump.sql new_profile
+#
+# Output file will be called new_profile.prf, and can be added as a new profile by uploading to cvs.
 
 if [ -z "$1" ]
 then
-  echo "Usage: $0 <database name>"
+  echo "Usage: $0 <database dump file> <profile name>"
   exit 1
 fi
 
-DATABASE=$1
+DUMP_FILE=$1
+PROFILE_DUMP=$2.all
+PROFILE_FILE=$2.prf
 
-DUMP_FILE=$DATABASE-dump.sql
-PROFILE_FILE=$DATABASE.prf
-
-mysql -s -p $DATABASE <dump_prefs.sql |sort >$DUMP_FILE
-diff default-inserts.sql $DUMP_FILE|grep ">"|sed -e "s/> INSERT \/\* IGNORE \*\//REPLACE/" >$PROFILE_FILE
+grep "INSERT INTO tiki_preferences" $DUMP_FILE >$PROFILE_DUMP
+grep "INSERT INTO users_grouppermissions" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO users_groups" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO users_permissions" $DUMP_FILE >>$PROFILE_DUMP
+sort -u $PROFILE_DUMP|diff default-inserts.sql -|grep ">"|sed -e "s/> INSERT/REPLACE/" >$PROFILE_FILE
