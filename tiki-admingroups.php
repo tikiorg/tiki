@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.11 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.12 2003-12-15 00:08:03 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,11 +31,11 @@ if (isset($_REQUEST["newgroup"])) {
 		$smarty->display("error.tpl");
 		die;
 	} else {
-		$userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$ag_home);
+		$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
-					$userlib->group_inclusion(addslashes($_REQUEST["name"]), $include);
+					$userlib->group_inclusion($_REQUEST["name"], $include);
 				}
 			}
 		}
@@ -46,14 +46,14 @@ if (isset($_REQUEST["newgroup"])) {
 
 // modification
 if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
-	$userlib->change_group(addslashes($_REQUEST["olgroup"]),addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$ag_home);
+	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home);
 
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 
 	if (isset($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($_REQUEST["name"] != $include) {
-				$userlib->group_inclusion(addslashes($_REQUEST["name"]), $include);
+				$userlib->group_inclusion($_REQUEST["name"], $include);
 			}
 		}
 	}

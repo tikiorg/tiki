@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.33 2003-12-04 08:49:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.34 2003-12-15 00:08:03 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -297,6 +297,7 @@ if (isset($_REQUEST["save"])) {
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
+		@unlink("temp/article.$articleId");
 	}
 
 	// Parse $edit and eliminate image references to external URIs (make them internal)

@@ -377,21 +377,22 @@ class Comments extends TikiLib {
     }
 
     function list_forum_queue($object, $offset, $maxRecords, $sort_mode, $find) {
-	$sort_mode = str_replace("_", " ", $sort_mode);
 
 	if ($find) {
-	    $findesc = $this->qstr('%' . $find . '%');
+	    $findesc = '%' . $find . '%';
 
-	    $mid = " and title like $findesc or data like $findesc";
+	    $mid = " and `title` like $findesc or `data` like $findesc";
+	    $bindvars=array($findesc,$findesc,$object);
 	} else {
 	    $mid = "";
+	    $bindvars=array($object);
 	}
 
-	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by $sort_mode limit $offset,$maxRecords";
+	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_forums_queue` where `object`=? $mid";
 
-	$result = $this->query($query, array($object) );
-	$cant = $this->getOne($query_cant, array($object) );
+	$result = $this->query($query, $bindvars,$maxRecords,$offset );
+	$cant = $this->getOne($query_cant, $bindvars );
 	$now = date("U");
 	$ret = array();
 
@@ -409,20 +410,20 @@ class Comments extends TikiLib {
     }
 
     function queue_get($qId) {
-	$query = "select * from `tiki_forums_queue` where `qId`=$qId";
+	$query = "select * from `tiki_forums_queue` where `qId`=?";
 
-	$result = $this->query($query);
+	$result = $this->query($query,array((int) $qId));
 	$res = $result->fetchRow();
 	$res['attchments'] = $this->get_thread_attachments(0, $res['qId']);
 	return $res;
     }
 
     function remove_queued($qId) {
-	$query = "delete from `tiki_forums_queue` where `qId`=$qId";
+	$query = "delete from `tiki_forums_queue` where `qId`=?";
 
-	$this->query($query);
-	$query = "delete from `tiki_forum_attachments` where `qId`=$qId";
-	$this->query($query);
+	$this->query($query,array((int) $qId));
+	$query = "delete from `tiki_forum_attachments` where `qId`=?";
+	$this->query($query,array((int) $qId));
     }
 
     //Approve queued message -> post as new comment
@@ -629,13 +630,13 @@ class Comments extends TikiLib {
 			$name,  	
 			$description,
 			$controlFlood,
-			$floodInterval,
+			(int) $floodInterval,
 			$moderator,
 			$mail,
 			$useMail,
 			$section,
 			$usePruneUnreplied,
-			$pruneUnrepliedAge,
+			(int) $pruneUnrepliedAge,
 			$usePruneOld,
 			$vote_threads,
 			$topics_list_reads,
@@ -662,16 +663,16 @@ class Comments extends TikiLib {
 			$att,
 			$att_store,
 			$att_store_dir,
-			$att_max_size,
+			(int) $att_max_size,
 			$topics_list_pts,
 			$topics_list_lastpost,
 			$topics_list_author,
-			$topicsPerPage,
+			(int) $topicsPerPage,
 			$topicOrdering,
 			$threadOrdering,
-			$pruneMaxAge,
-			$forum_last_n,
-			$forumId
+			(int) $pruneMaxAge,
+			(int) $forum_last_n,
+			(int) $forumId
 			    )
 			    );
 	} else {
@@ -733,14 +734,14 @@ class Comments extends TikiLib {
     function remove_forum($forumId) {
 	$query = "delete from `tiki_forums` where `forumId`=?";
 
-	$result = $this->query($query, array( $forumId ) );
+	$result = $this->query($query, array((int) $forumId ) );
 	// Now remove all the messages for the forum
 
 	$query = "delete from `tiki_comments` where `object`=? and
 	`objectType` = 'forum'";
-	$result = $this->query($query, array( $forumId ) );
+	$result = $this->query($query, array( (string) $forumId ) );
 	$query = "delete from `tiki_forum_attachments` where `forumId`=?";
-	$this->query($query, array( $forumId ) );
+	$this->query($query, array((int) $forumId ) );
 	return true;
     }
 

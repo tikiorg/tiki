@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.21 2003-12-10 23:08:32 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.22 2003-12-15 00:08:04 redflo Exp $
  *
  * \brief Categiries support class
  *
@@ -81,7 +81,7 @@ class CategLib extends TikiLib {
 	function get_category($categId) {
 		$query = "select * from `tiki_categories` where `categId`=?";
 
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 
 		if (!$result->numRows())
 			return false;
@@ -94,10 +94,10 @@ class CategLib extends TikiLib {
 		// Delete the category
 		$query = "delete from `tiki_categories` where `categId`=?";
 
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 		// Remove objects for this category
 		$query = "select `catObjectId` from `tiki_category_objects` where `categId`=?";
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 
 		while ($res = $result->fetchRow()) {
 			$object = $res["catObjectId"];
@@ -107,9 +107,9 @@ class CategLib extends TikiLib {
 		}
 
 		$query = "delete from `tiki_category_objects` where `categId`=?";
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 		$query = "select `categId` from `tiki_categories` where `parentId`=?";
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 
 		while ($res = $result->fetchRow()) {
 			// Recursively remove the subcategory
@@ -121,12 +121,12 @@ class CategLib extends TikiLib {
 
 	function update_category($categId, $name, $description, $parentId) {
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
-		$result = $this->query($query,array($name,$parentId,$description,$categId));
+		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 	}
 
 	function add_category($parentId, $name, $description) {
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
-		$result = $this->query($query,array($name,$description,$parentId,0));
+		$result = $this->query($query,array($name,$description,(int) $parentId,0));
 	}
 
 	function is_categorized($type, $objId) {
@@ -152,24 +152,24 @@ class CategLib extends TikiLib {
 		$now = date("U");
 		$query = "insert into `tiki_categorized_objects`(`type`,`objId`,`description`,`name`,`href`,`created`,`hits`)
     values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($type,$objId,$description,$name,$href,$now,0));
+		$result = $this->query($query,array($type,(string) $objId,$description,$name,$href,(int) $now,0));
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `created`=? and `type`=? and `objId`=?";
-		$id = $this->getOne($query,array($now,$type,$objId));
+		$id = $this->getOne($query,array((int) $now,$type,(string) $objId));
 		return $id;
 	}
 
 	function categorize($catObjectId, $categId) {
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
-		$result = $this->query($query,array($catObjectId,$categId),-1,-1,false);
+		$result = $this->query($query,array((int) $catObjectId,(int) $categId),-1,-1,false);
 	        
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
-		$result = $this->query($query,array($catObjectId,$categId));
+		$result = $this->query($query,array((int) $catObjectId,(int) $categId));
 	}
 
 	function get_category_descendants($categId) {
 		$query = "select `categId` from `tiki_categories` where `parentId`=?";
 
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 		$ret = array($categId);
 
 		while ($res = $result->fetchRow()) {
@@ -196,7 +196,7 @@ class CategLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 			$des[]=$findesc;
 			$des[]=$findesc;
-			$mid = " and (name like ? or description like ?)";
+			$mid = " and (`name` like ? or `description` like ?)";
 		} else {
 			$mid = "";
 		}
@@ -229,11 +229,11 @@ class CategLib extends TikiLib {
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$bindvars=array($categId,$findesc,$findesc);
+			$bindvars=array((int) $categId,$findesc,$findesc);
 			$mid = " and (tbl2.`name` like ? or tbl2.`description` like ?)";
 		} else {
 			$mid = "";
-			$bindvars=array($categId);
+			$bindvars=array((int) $categId);
 		}
 
 		$query = "select tbl1.`catObjectId`,`categId`,`type`,`objId`,`description`,
@@ -279,7 +279,7 @@ class CategLib extends TikiLib {
 		// Get all the objects in a category
 		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=?";
 
-		$result = $this->query($query,array($categId));
+		$result = $this->query($query,array((int) $categId));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -295,12 +295,12 @@ class CategLib extends TikiLib {
 		$result = $this->query($query,array($catObjectId,$categId));
 		// If the object is not listed in any category then remove the object
 		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
-		$cant = $this->getOne($query,array($catObjectId));
+		$cant = $this->getOne($query,array((int) $catObjectId));
 
 		if (!$cant) {
 			$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 
-			$result = $this->query($query,array($catObjectId));
+			$result = $this->query($query,array((int) $catObjectId));
 		}
 	}
 

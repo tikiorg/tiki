@@ -17,6 +17,7 @@
 //   * The client chat window
 // Long includes and heavy operations should be avoided to maximize the
 // response time of this script which is critical.
+include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 
 include_once ('lib/live_support/lslib.php');

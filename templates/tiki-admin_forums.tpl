@@ -13,14 +13,9 @@
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- beginning of next bit -->
-
-
-
-
-
-
-
-
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}
 
 
 {if $forumId > 0}

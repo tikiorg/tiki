@@ -36,7 +36,7 @@
 <script language='Javascript' type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's'}{if $feature_menusfolderstyle eq 'y'}
-setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
 {/if}{/if}
 {/foreach}
 </script>

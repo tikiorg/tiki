@@ -36,7 +36,7 @@
   <td class="formcolor">
   <select name="after_ref_id">
   {section name=ix loop=$subpages}
-  <option value="{$subpages[ix].page_ref_id}" {if $max eq $subpages[ix].page_ref_id}selected="selected"{/if}>{$subpages[ix].pageName}</option>
+  <option value="{$subpages[ix].page_ref_id}" {if $insert_after eq $subpages[ix].page_ref_id}selected="selected"{/if}>{$subpages[ix].pageName}</option>
   {/section}
   </select>
   </td>

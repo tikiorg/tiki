@@ -30,8 +30,6 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 		}
 
 		$shout_father .= '&amp;';
-	} else {
-		$shout_father .= '?';
 	}
 
 	global $smarty;

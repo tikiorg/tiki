@@ -1,7 +1,7 @@
 <?php
 
 // HAWHAW function library for TikiWiki
-// Last modified: 3. December 2003
+// Last modified: 13. December 2003
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -16,12 +16,6 @@ function hawtra($string)
   // translate string with tiki-translator and do special character handling
   // e.g. Menu ==> Men&uuml; ==> Menü
   return(HAWIKI_specchar(tra($string)));
-}
-
-
-function HAWTIKI_date($timestamp)
-{
-  return(date(HAWIKI_DATETIME_FORMAT, $timestamp));
 }
 
 
@@ -45,6 +39,15 @@ function HAWTIKI_index($info)
   else
     $jinglearg = '';
 
+  // try to determine calling party number in case of voice browser request
+  if (!isset($_SESSION['calling_party_number']) &&
+      ereg("session.callerid=([^&]*)", $_SERVER['REQUEST_URI'], $matches))
+  {
+    // request from Voxeo voice browser
+    // ==> store calling party number in session
+    $_SESSION["calling_party_number"] = "(+) " . $matches[1];
+  }
+
   $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
 
   if ($_REQUEST['frame'] != 'no')
@@ -64,25 +67,6 @@ function HAWTIKI_index($info)
   $wikiPage->set_hawimconv("lib/hawhaw/hawimconv.php");
 
   $wikiPage->display();
-
-  die;
-}
-
-
-function HAWTIKI_view_blog_post($post_info)
-{
-  $page_prefix = sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-                         hawtra("posted on"), HAWTIKI_date($post_info['created']),
-                         hawtra("by"), $post_info['user']);
-
-  $blogPost = new HAWIKI_page($page_prefix . $post_info["data"],"tiki-index.php?mode=mobile&page=", $post_info["title"]);
-
-  $blogPost->set_navlink(tra("Return to blog"), "tiki-view_blog.php?mode=mobile&blogId=" . $post_info["blogId"], HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-  $blogPost->set_smiley_dir("img/smiles");
-  $blogPost->set_link_jingle("lib/hawhaw/link.wav");
-  $blogPost->set_hawimconv("lib/hawhaw/hawimconv.php");
-
-  $blogPost->display();
 
   die;
 }
@@ -123,45 +107,55 @@ function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
 
 function HAWTIKI_view_blog($listpages, $blog_data)
 {
-  $blogList = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
-  $blogList->enable_session();
-
-  $title = new HAW_text(HAWIKI_specchar($blog_data['title']), HAW_TEXTFORMAT_BOLD);
-  $blogList->add_text($title);
-
-  $linkset = new HAW_linkset();
-
-  for($i=0;$i<count($listpages['data']);$i++)
+  // determine title and url switch for navigation links
+  if ($_REQUEST['frame'] == 'no')
   {
-    $blog = $listpages['data'][$i];
-    // check for tiki_p_read_blog here
-    if (isset($blog['title']) && strlen($blog['title'])>0)
-      $label = $blog['title'];
-    else
-      $label = HAWTIKI_date($blog['created']);
-
-    $link = new HAW_link(HAWIKI_specchar($label),"tiki-view_blog_post.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&postId=" . $blog['postId']);
-    $linkset->add_link($link);
+    $framearg = '&frame=no';
+    $title = '';
+  }
+  else
+  {
+    $framearg = '';
+    $title = $blog_data['title'];
   }
 
-  $blogList->add_linkset($linkset);
+  // determine url switch for jingle playing at links
+  if ($_REQUEST['jingle'] == 'no')
+    $jinglearg = '&jingle=no';
+  else
+    $jinglearg = '';
 
-  $rule = new HAW_rule();
-  $blogList->add_rule($rule);
-
-  $blogs = new HAW_link(hawtra("Blogs"),"tiki-list_blogs.php?mode=mobile");
-  $blogList->add_link($blogs);
-
-  if (isset($_REQUEST['offset']) && ($_REQUEST['offset'] > 0))
+  $browser_detector = new HAW_deck(); // this deck is used for browser detection only!
+  if ($browser_detector->ml == HAW_WML)
   {
-    // previous posts are available
+    // display only one posting on WAP browsers
+    $max_posts = 1;
+  }
+  else
+  {
+    // display as much postings as administered by tiki
+    $max_posts = $blog_data['maxPosts'];
+  }
 
-    $offset = $_REQUEST['offset'] - $blog_data['maxPosts'];
-    if ($offset < 0)
-      $offset = 0;
+  $nonparsed_text = "";
 
-    $link = new HAW_link(hawtra("prev"),"tiki-view_blog.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&offset=" . $offset);
-    $blogList->add_link($link);
+  for ($i=0; ($i < $max_posts) && ($i < count($listpages['data'])); $i++)
+  {
+    // separate postings by horizontal bar
+    if ($i > 0)
+      $nonparsed_text .= "\n---\n";
+
+    // post title
+    if ($listpages['data'][$i]['title'])
+      $nonparsed_text .= "!" . $listpages['data'][$i]['title'] . "\n";
+
+    // post header
+    $nonparsed_text .= sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
+                               hawtra("posted on"), date(HAWIKI_DATETIME_LONG, $listpages['data'][$i]['created']),
+                               hawtra("by"), $listpages['data'][$i]['user']);
+
+    // post body
+    $nonparsed_text .= $listpages['data'][$i]['data'];
   }
 
   if (isset($_REQUEST['offset']))
@@ -169,16 +163,32 @@ function HAWTIKI_view_blog($listpages, $blog_data)
   else
     $offset = 0;
 
-  if ($offset + $blog_data['maxPosts'] < $blog_data['posts'])
+  if (($offset + $max_posts) < $blog_data['posts'])
   {
-    // next posts are available
+    // next posts are available ==> create link to continue
+    $offset += $max_posts;
 
-    $offset += $blog_data['maxPosts'];
-    $link = new HAW_link(hawtra("next"),"tiki-view_blog.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&offset=" . $offset);
-    $blogList->add_link($link);
+    $nonparsed_text .= sprintf("\n---\n[%s|%s]", "tiki-view_blog.php?mode=mobile$framearg$jinglearg&blogId=" . $_REQUEST['blogId'] . "&offset=" . $offset,
+                               hawtra("Continue"));
   }
 
-  $blogList->create_page();
+  $blog = new HAWIKI_page($nonparsed_text, "tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
+
+  if ($_REQUEST['frame'] != 'no')
+  {
+    // create standard hawiki deck with title and navigation links
+    $blog->set_navlink(tra('Blogs'), "tiki-list_blogs.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  }
+
+  if ($_REQUEST['jingle'] != 'no')
+  {
+    // play standard jingle before link text is spoken
+    $blog->set_link_jingle("lib/hawhaw/link.wav");
+  }
+
+  $blog->set_smiley_dir("img/smiles");
+  $blog->set_hawimconv("lib/hawhaw/hawimconv.php");
+  $blog->display();
 
   die;
 }
@@ -221,7 +231,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
     $title = new HAW_text(HAWIKI_specchar($article['title']), HAW_TEXTFORMAT_BOLD);
     $articleList->add_text($title);
 
-    $date = new HAW_text(HAWTIKI_date($article['created']));
+    $date = new HAW_text(date(HAWIKI_DATETIME_SHORT, $article['created']));
     $articleList->add_text($date);
 
     $author = new HAW_text(hawtra("By:") . HAWIKI_specchar($article['authorName']), HAW_TEXTFORMAT_SMALL | HAW_TEXTFORMAT_ITALIC);
@@ -252,7 +262,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
 function HAWTIKI_read_article($article_data, $pages)
 {
   $prefix = sprintf("__~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
-                    HAWTIKI_date($article_data['created']),
+                    date(HAWIKI_DATETIME_SHORT, $article_data['created']),
                     hawtra("By:"), $article_data['authorName']);
 
   $heading = sprintf("\n%s\n---\n", $article_data['heading']);
