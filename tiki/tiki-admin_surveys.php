@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.10 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.11 2004-06-04 02:41:42 dgdaniels Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,7 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 }
 
 if ($tiki_p_admin_surveys != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;
