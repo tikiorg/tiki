@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.14 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.15 2004-04-09 12:56:56 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,6 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/newsletters/nllib.php');
-include_once ('lib/webmail/tikimaillib.php');
 
 if ($feature_newsletters != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
@@ -103,6 +102,7 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign('emited', 'n');
 
 if (isset($_REQUEST["send"])) {
+	include_once ('lib/webmail/tikimaillib.php');
 	check_ticket('send-newsletter');
 	$subscribers = $nllib->get_subscribers($_REQUEST["nlId"]);
 
@@ -116,7 +116,7 @@ if (isset($_REQUEST["send"])) {
 		$mail->setUser($userEmail);
 		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
 		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
-		if ($nl_info["unsubMsg"] = 'y')
+		if ($nl_info["unsubMsg"] == 'y')
 			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail);
 		$mail->setHtml($_REQUEST["data"] . $unsubmsg, $txt.$unsubmsg);
 		$mail->buildMessage();
