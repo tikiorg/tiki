@@ -15,11 +15,11 @@
 {if $chart_info.frequency > 0}
     <br />
 	{if $prevPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}"><img border='0' src='img/icons/toleft.gif' alt='{tr}previous chart{/tr}' title='{tr}previous chart{/tr}' ></a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}"><img border='0' src='img/icons/toleft.gif' alt='{tr}previous chart{/tr}' title='{tr}previous chart{/tr}' /></a>
 	{/if}
 	<b>{tr}Chart created{/tr}: {$items[0].timestamp|tiki_long_datetime}</b>
 	{if $nextPeriod > 0}
-	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}"><img border='0' src='img/icons/toright.gif' alt='{tr}next chart{/tr}' title='{tr}next chart{/tr}' ></a>
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}"><img border='0' src='img/icons/toright.gif' alt='{tr}next chart{/tr}' title='{tr}next chart{/tr}' /></a>
 	{/if}
 {/if}
 <table class="normal">
