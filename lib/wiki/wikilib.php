@@ -10,6 +10,46 @@ class WikiLib extends TikiLib {
     $this->db = $db;  
   }
   
+  function wiki_page_graph(&$str, &$graph) {
+	  $page=$str['name'];
+	  $graph->addNode("$page",array('URL'=>"tiki-index.php?page=$page",
+	  							    'label'=>"$page",
+	  							    'shape' => 'box'
+	  							    )
+	                 );	
+	  //print("add node $page<br/>");
+	  foreach($str['pages'] as $neig) {
+	    $this->wiki_page_graph($neig, $graph);	
+	    $graph->addEdge(array($page => $neig['name']), array('color'=>'red'));	
+	    //print("add edge $page to ".$neig['name']."<br/>");
+	  }
+  }
+  
+  function get_graph_map($page, $level) {
+	$str = $this->wiki_get_link_structure($page,$level);
+	$graph = new Image_GraphViz();
+	$this->wiki_page_graph($str,$graph);
+	return $graph->map();
+  }
+  
+  function wiki_get_link_structure($page,$level)
+  {
+    $query = "select toPage from tiki_links where fromPage='$page'";
+    $result = $this->query($query);
+    $aux['pages']=Array();
+    $aux['name']=$page;
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	if($level) {
+    	  $aux['pages'][]=$this->wiki_get_link_structure($res['toPage'],$level-1);
+	} else {
+	  $inner['name']=$res['toPage'];	
+	  $inner['pages']=Array();
+	  $aux['pages'][]=$inner;
+	}
+    }	
+    return $aux;
+  }
+  
   // This method renames a wiki page
   // If you think this is easy you are very very wrong
   function wiki_rename_page($oldName,$newName)

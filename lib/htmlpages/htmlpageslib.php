@@ -72,7 +72,7 @@ class HtmlPagesLib extends TikiLib {
         $cosa = $this->get_html_page_content($pageName,$eds[1][$i]);
         $data=str_replace($eds[0][$i],'<span id="'.$eds[1][$i].'">'.$cosa["content"].'</span>',$data);
     }
-    $data=nl2br($data);
+    //$data=nl2br($data);
     return $data;
   }
   
