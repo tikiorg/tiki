@@ -103,6 +103,7 @@ TD#centercolumn {
 	background:   #ffffff;
 	vertical-align:   top;
         border: 1px solid #c4c4c4;
+	-moz-border-radius: 2em 2em 2em 2em;
 	width:   100%;
 }
 
@@ -825,7 +826,6 @@ div.wikitext {
 	background:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	border:   1px solid black;
 	padding-left:   1px;
 	padding-right:   1px;
 	padding-top:   1px;
