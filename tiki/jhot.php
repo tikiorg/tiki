@@ -1,6 +1,7 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.3 2003-05-11 15:06:23 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.4 2003-05-14 15:40:32 lrargerich Exp $
 
 include_once('tiki-setup.php');
+include_once('lib/drawings/drawlib.php');
 
 if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])) {
   $size = $_FILES['filepath']['size'];
@@ -8,26 +9,48 @@ if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])
   $type = $_FILES['filepath']['type'];
  
  $pos=strpos($name,'img/wiki/');
- 
  $name=substr($name,$pos);
- $fw=fopen($name,"wb");
+ 
+ $absolute_name = str_replace('img/wiki/','',$name); 
+ $absolute_name = str_replace('.gif','',$absolute_name); 
+ $absolute_name = str_replace('.pad_xml','',$absolute_name); 
+
+ $now = date("U");
  
  
- // Now check if the filename already exists
- // if the filename exists save it as a hash and insert a record in
- // the history 
+ if(strstr($name,'.gif')) {
+ 	$hash = $absolute_name.md5(uniqid('.')).'.gif';
+ }
  
+ if(strstr($name,'.pad_xml')) {
+ 	$hash = $absolute_name.md5(uniqid('.')).'.pad_xml';
+ } 
+
+
+ 
+ if(strstr($name,'.pad_xml')) {
+   $drawlib->update_drawing($absolute_name,$hash,$user);
+ } else {
+   $drawlib->set_drawing_gif($absolute_name,$hash);
+ }
+ 
+ 
+ 
+ @$fw=fopen("img/wiki/$hash","wb");
+ @$fw2=fopen($name,"wb");
  @$fp = fopen($_FILES['filepath']['tmp_name'],"rb");
  
  
  while(!feof($fp)) {
    $data=fread($fp,8192*16);
    fwrite($fw,$data);
+   fwrite($fw2,$data);
 
  }
  
  fclose($fp);
  fclose($fw); 
+ fclose($fw2);
 
  
 }  

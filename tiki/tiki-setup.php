@@ -786,8 +786,9 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 	$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 }
 
-$prefs = $tikilib->get_all_preferences();
+
 if(!file_exists('templates_c/preferences.php')) {
+  $prefs = $tikilib->get_all_preferences();
   $fw=fopen('templates_c/preferences.php',"wb");
   fwrite($fw,'<?php'."\n");
   foreach($prefs as $name => $val) {

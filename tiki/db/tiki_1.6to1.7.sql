@@ -5,8 +5,10 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_live
 drop table if exists tiki_drawings;
 create table tiki_drawings(
 	drawId integer(12) not null auto_increment,
+	version integer(8),
 	name varchar(250),
-	filename varchar(250),
+	filename_draw varchar(250),
+	filename_pad varchar(250),
 	timestamp integer(14),
 	user varchar(200),
 	primary key(drawId)
