@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.10 2003-11-13 10:49:03 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.11 2003-11-14 20:09:05 zaufi Exp $
  *
  */
 
@@ -44,7 +44,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.box-title {
+div.box-title {
 	margin-top: 4px;
 	margin-bottom: 6px;
 	font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -52,7 +52,9 @@ div.box {
 	text-align: center;
 	color: #00E000;
 }
-
+div.box-title table {
+    width: 100%;
+}
 /* And this is the data */
 div.box-data {
 	margin: 0px;
@@ -125,10 +127,6 @@ div.cbox-title {
 	padding-left: 20px;
 }
 
-/* And this is the data */
-div.cbox-data {
-}
-
 /* Links in cboxes */
 .cboxtlink, .cboxtlink:active {
 	color: #003000;
@@ -172,16 +170,4 @@ div.separator + div[id] {
 .separator, .separator:active, .separator:visited, .separator:hover {
 	color: #00E000;
 	text-decoration: none;
-}
-
-/* Links to extend/collapse menus */
-
-/* Links to collapse menus for example the main menu can be completely collapsed*/
-.flip {
-}
-
-.flip:active {
-}
-
-.flip:hover {
 }
