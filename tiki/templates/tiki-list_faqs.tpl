@@ -21,7 +21,7 @@
 {if $tiki_p_admin_faqs eq 'y'}
 {if $faqId > 0}
 <h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
-<a href="tiki-list_faqs.php">Create new FAQ</a>
+<a href="tiki-list_faqs.php">{tr}Create new FAQ{/tr}</a>
 {else}
 <h2>{tr}Create New FAQ:{/tr}</h2>
 {/if}
