@@ -2299,7 +2299,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)',\"javascript:toggle('debugconsole')\",40,'feature_debug_console','tiki_p_admin','');
 
 
 
@@ -2866,10 +2866,10 @@ CREATE TABLE "tiki_modules" (
 
 
 -- --------------------------------------------------------
-INSERT INTO tiki_modules(name,position,ord,cache_time) VALUES('login_box','r',1,0);
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time") VALUES ('login_box','r',1,0);
 
 
-INSERT INTO tiki_modules(name,position,ord,cache_time) VALUES('application_menu','l',1,0);
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time") VALUES ('application_menu','l',1,0);
 
 
 -- --------------------------------------------------------
