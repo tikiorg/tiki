@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.16 2003-08-15 01:36:51 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.17 2003-08-21 00:51:21 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info --->

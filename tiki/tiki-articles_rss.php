@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.12 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-articles_rss.php,v 1.13 2003-08-21 00:51:19 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,28 +9,31 @@ require_once ('tiki-setup.php');
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-if ($rss_articles != 'y') {
-	die;
-}
+  if($rss_articles != 'y') {
+   die;
+  }
 
-header ("content-type: text/xml");
-$foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1 = str_replace("tiki-articles_rss.php", $tikiIndex, $foo["path"]);
-$foo2 = str_replace("tiki-articles_rss.php", "img/tiki.jpg", $foo["path"]);
-$foo3 = str_replace("tiki-articles_rss.php", "tiki-read_article.php", $foo["path"]);
-$foo4 = str_replace("tiki-articles_rss.php", "lib/rss/rss-style.css", $foo["path"]);
-$home = httpPrefix(). $foo1;
-$img = httpPrefix(). $foo2;
-$read = httpPrefix(). $foo3;
-$css = httpPrefix(). $foo4;
+  if($tiki_p_read_article != 'y') {
+    $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+  
+  header("content-type: text/xml");
+  $foo = parse_url($_SERVER["REQUEST_URI"]);
+  $foo1=str_replace("tiki-articles_rss.php",$tikiIndex,$foo["path"]);
+  $foo2=str_replace("tiki-articles_rss.php","img/tiki.jpg",$foo["path"]);
+  $foo3=str_replace("tiki-articles_rss.php","tiki-read_article.php",$foo["path"]);
+  $foo4=str_replace("tiki-articles_rss.php","lib/rss/rss-style.css",$foo["path"]);
+  $home = httpPrefix().$foo1;
+  $img = httpPrefix().$foo2;
+  $read = httpPrefix().$foo3;
+  $css = httpPrefix().$foo4;
 
-$title = "Tiki RSS feed for articles";
-$desc = "Last articles.";
-$now = date("U");
-$changes = $tikilib->list_articles(0, $max_rss_articles, 'publishDate_desc', '', $now, $user);
-
-print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-print '<?xml-stylesheet href="' . $css . '" type="text/css"?>' . "\n";
+  $title = "Tiki RSS feed for articles";
+  $desc = "Last articles.";
+  $now = date("U");
+  $changes = $tikilib->list_articles(0,$max_rss_articles,'publishDate_desc', '', $now,$user);
 
 ?>
 

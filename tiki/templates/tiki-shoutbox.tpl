@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.9 2003-08-17 22:27:10 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.10 2003-08-21 00:51:21 redflo Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}

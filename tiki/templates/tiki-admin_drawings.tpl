@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.7 2003-08-15 04:16:30 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.8 2003-08-21 00:51:21 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 <!-- the help link info --->

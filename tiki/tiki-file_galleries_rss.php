@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.10 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.11 2003-08-21 00:51:20 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,26 +9,32 @@ require_once ('tiki-setup.php');
 
 require_once ('lib/tikilib.php'); # httpScheme()
 
-if ($rss_file_galleries != 'y') {
-	die;
-}
+  if($rss_file_galleries != 'y') {
+   die;
+  }
+  
+	if($tiki_p_view_file_gallery != 'y') {
+	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
 
-header ("content-type: text/xml");
-$foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1 = str_replace("tiki-file_galleries_rss.php", $tikiIndex, $foo["path"]);
-$foo2 = str_replace("tiki-file_galleries_rss.php", "img/tiki.jpg", $foo["path"]);
-$foo3 = str_replace("tiki-file_galleries_rss", "tiki-download_file.php", $foo["path"]);
-$foo4 = str_replace("tiki-file_galleries_rss.php", "lib/rss/rss-style.css", $foo["path"]);
-$home = httpPrefix(). $foo1;
-$img = httpPrefix(). $foo2;
-$read = httpPrefix(). $foo3;
-$css = httpPrefix(). $foo4;
-
-$title = $tikilib->get_preference("title", "Tiki RSS feed for file galleries");
-$title = "Tiki RSS feed for file galleries";
-$desc = "Last files uploaded to the file galleries.";
-$now = date("U");
-$changes = $tikilib->list_files(0, $max_rss_file_galleries, 'created_desc', '');
+  header("content-type: text/xml");
+  $foo = parse_url($_SERVER["REQUEST_URI"]);
+  $foo1=str_replace("tiki-file_galleries_rss.php",$tikiIndex,$foo["path"]);
+  $foo2=str_replace("tiki-file_galleries_rss.php","img/tiki.jpg",$foo["path"]);
+  $foo3=str_replace("tiki-file_galleries_rss","tiki-download_file.php",$foo["path"]);
+  $foo4=str_replace("tiki-file_galleries_rss.php","lib/rss/rss-style.css",$foo["path"]);
+  $home = httpPrefix().$foo1;
+  $img = httpPrefix().$foo2;
+  $read = httpPrefix().$foo3;
+  $css = httpPrefix().$foo4;
+  
+  $title = $tikilib->get_preference("title","Tiki RSS feed for file galleries");
+  $title = "Tiki RSS feed for file galleries";
+  $desc = "Last files uploaded to the file galleries.";
+  $now = date("U");
+  $changes = $tikilib->list_files(0,$max_rss_file_galleries,'created_desc', '');
 
 print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 print '<?xml-stylesheet href="' . $css . '" type="text/css"?>' . "\n";

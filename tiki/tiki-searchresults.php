@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.17 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.18 2003-08-21 00:51:20 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,57 +30,112 @@ if (!isset($_REQUEST["where"])) {
 	$where = $_REQUEST["where"];
 }
 
-$find_where = 'find_' . $where;
-$smarty->assign('where', $where);
-$smarty->assign('where2', tra($where));
+$find_where='find_'.$where;
+$smarty->assign('where',$where);
+$smarty->assign('where2',tra($where));
 
-if ($where == 'wikis' and $feature_wiki != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='wikis') {
+  if ($feature_wiki != 'y') {
+    $smarty->assign('msg',tra("This feature is disabled"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+  }
+  if($tiki_p_admin_wiki != 'y'  && $tiki_p_view != 'y') {
+    $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
 }
 
-if ($where == 'directory' and $feature_directory != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='directory') {
+	if ($feature_directory != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;
+	}
+  if($tiki_p_admin_directory != 'y' && $tiki_p_view_directory != 'y') {
+    $smarty->assign('msg',tra("Permission denied"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
 }
 
-if ($where == 'faqs' and $feature_faqs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='faqs') {
+	if ($feature_faqs != 'y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
+	if($tiki_p_admin_faqs != 'y' && $tiki_p_view_faqs != 'y') {
+		$smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+	}
 }
 
-if ($where == 'forums' and $feature_forums != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='forums') {
+	if ($feature_forums != 'y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+  	$smarty->display("styles/$style_base/error.tpl");
+  	die;
+	}
+  if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
+		$smarty->assign('msg',tra("You dont have permission to use this feature"));
+		$smarty->display("styles/$style_base/error.tpl");
+	  die;
+  }
 }
 
-if ($where == 'files' and $feature_file_galleries != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='files') {
+	if ($feature_file_galleries !='y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
+	if($tiki_p_view_file_gallery != 'y') {
+	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
 }
 
-if ($where == 'articles' and $feature_articles != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if($where=='articles') {
+	if ($feature_articles != 'y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
+	if($tiki_p_read_article != 'y') {
+	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;  
+	}
 }
 
-if (($where == 'galleries' || $where == 'images') and $feature_galleries != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+if (($where=='galleries' || $where=='images')) {
+	if ($feature_galleries != 'y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
+  if($tiki_p_view_image_gallery != 'y') {
+    $smarty->assign('msg',tra("Permission denied you can not view this section"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+}
 
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
+if(($where=='blogs' || $where=='posts')) {
+	if ($feature_blogs != 'y') {
+	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;
+	}
+	if($tiki_p_read_blog != 'y') {
+	  $smarty->assign('msg',tra("Permission denied you can not view this section"));
+	  $smarty->display("styles/$style_base/error.tpl");
+	  die;  
+	}
 }
 
 if (($where == 'blogs' || $where == 'posts') and $feature_blogs != 'y') {

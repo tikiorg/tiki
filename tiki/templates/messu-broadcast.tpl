@@ -9,6 +9,7 @@
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
+<br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 </br>

@@ -8,6 +8,59 @@ Version 1.8 --
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
 
 
+Version 1.7.1.1 -Eta Carinae-
+* [FIX] fixed a blocking bug that prevents wiki pages from being saved in some cases
+
+
+Version 1.7.1 -Eta Carinae-
+<http://tikiwiki.org/ReleaseProcess171>
+
+* [FIX] fixed bug where special chars in site search resulted in warning notices
+* [FIX] fixed smtp error on tiki-webmail.php
+* [NEW] language : ru, nl, da and de updated
+* [FIX] fixed bug with undefined variable and bugged form when creating a calendar
+* [FIX] fixed bug where users could not create file galleries even when granted tiki_p_create_file_galleries
+* [FIX] fixed bug where wiki quicklinks and quickhelp don't correspond to the wiki table syntax setting
+* [FIX] fixed 'quote' bug in debugger console command line
+* [FIX] fixed email-validator in case servers disallow identical FROM and TO addresses which may have prevented some users from registering
+* [FIX] the page description in category page will stay the page description (instead of the page data) after updating the page
+* [FIX] themes list is now sorted
+* [FIX] fixed bug where browsing to forum threads using the forum modules results in errors on subsequent forum actions
+* [NEW] updated to stable and official HAWHAW V5.1
+* [FIX] fixed bug where the lastLogin and currentLogin time stored in Tiki DB are always the same, the currentLogin time
+* [FIX] page names will now keeps the original capitalization even if linked to with another kind of capitalization
+* [FIX] inserted a lot of spaces to help give the site a consistant look
+* [FIX] fixed bug where hotwords at the beginning of a line don't work; fixed other strange behaviors
+* [FIX] allow user to confirm his email and bypass validation in case the mail server does not work with Tiki's validation methods
+* [FIX] fixed bug where user information and data was left in a dozen DB tables after the user is deleted
+* [FIX] fixed some Galaxia graphing problems due to typo's: /Processes/ should be /processes/
+* [FIX] fixed comments and attachment styles in geo and trollparty themes
+* [FIX] fixed display of categories in select : it now displays the full path
+* [FIX] fixed bug where SSL login sends user to a bad URL if tikiIndex is more than just a filename on the same Tiki site
+* [FIX] fixed bug where games did not load in tiki-list_games.php
+* [FIX] fixed a blocking bug occuring with Galaxia and php prior to 4.2
+* [FIX] fixed bug where auth failed when !$userTikiPresent && $userAuthPresent; should be !$userTikiPresent && !$userAuthPresent
+* [FIX] fixed bug where user cannot be created in Tiki even if authenticated via LDAP
+* [FIX] fixed bug with ext link caching when URL contains parameters
+* [FIX] fixed challenge/response auth; user now has to input their email; quick hack until tiki auth is overhauled for 1.8
+* [FIX] fixed bug where tiki-user_information.php?view_user=smith shows your personal theme rather than site theme if smith has not set a theme
+* [FIX] fixed PDF remove page bug
+* [FIX] fixed bug in img gal where thumbnails are not created when extensions are written in captial letters
+* [FIX] fixed bug where stylesheet is not used for blog_rss
+* [FIX] forum moderator and reply action toolbars are hidden if there are no replies
+* [FIX] performing moderator actions without selecting any replies no longer results in errors
+* [FIX] fixed broken filter function in Galaxia/workflow
+* [FIX] fixed erratic behavior of hotwords
+* [FIX] hotwords now take precedence over WikiWord? links
+* [FIX] Tiki no longer tries to cache URLs containing some common binary file extensions
+* [FIX] fixed bug where tiki was not displaying 'random_image' modules
+* [FIX] fixed bug where wiki edit preview screws up html special chars
+* [FIX] fixed bug "forum rss feed is a security hole", fixed for all rss feeds
+* [FIX] fixed bug "Tiki Forum RSS: Faulty tiki-forums_rss.php"
+* [FIX] fixed bug with wiki plugin parameter syntax => being encoded
+* [NEW] added TikiHelp? links to many pages
+
+
 Version 1.7 -Eta Carinae-
 <http://tikiwiki.org/tiki-index.php?page=ReleaseProcess1.7>
 
@@ -250,6 +303,7 @@ Version 1.7 -Eta Carinae-
 * [NEW] Default .htaccess contains many apache/mod_rewrite commands: 
   http://ex.com/tiki-index.php?page=HomePage => http://ex.com/HomePage,
   http://ex.com/tiki-view_blog.php?blogId=1  => http://ex.com/blog/1, etc.
+
 
 Version 1.6 -Tau Ceti-
 

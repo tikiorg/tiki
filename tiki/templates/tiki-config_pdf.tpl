@@ -72,11 +72,9 @@
 <input type="submit" name="clearpages" value="{tr}reset{/tr}" />
 </td><td class="normal" align="center">
 <select name="rempageName[]" size="10" multiple="multiple">
-{section name=ix loop=$convertpages}
-{if isset($convertpages[ix])}
-<option value="{$convertpages[ix]|escape}">{$convertpages[ix]}</option>
-{/if}
-{/section}
+{foreach from=$convertpages item=ix}
+<option value="{$ix|escape}">{$ix}</option>
+{/foreach}
 </select>
 </td></tr>
 </table>

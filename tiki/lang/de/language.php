@@ -317,7 +317,7 @@ $lang=Array(
 "completed" => "erledigt",
 "compose" => "Erstellen",
 "Compose" => "Erstellen",
-"coms" => "Coms",
+"coms" => "Kommentare",
 "Configure modules" => "Module konfigurieren",//perhaps not used
 "Configure news servers" => "Newsserver-Konfiguration",
 "Configure this page" => "Diese Seite konfigurieren",
@@ -1633,19 +1633,19 @@ $lang=Array(
 "User information" => "Benutzerangaben",
 "User Information" => "Benutzer-Information",
 "User Messages" => "Benutzer-Nachrichten",
-"User Modules" => "Benutzer Module",
-"User Notepad" => "Benutzer Notizblock",
-"User Pages" => "Benutzerseiten",
-"User Preferences Screen" => "Benutzereinstellungsseite",
+"User Modules" => "Benutzer-Module",
+"User Notepad" => "Benutzer-Notizblock",
+"User Pages" => "Benutzer-Seiten",
+"User Preferences Screen" => "Benutzer-Einstellungsseite",
 "user preferences" => "Benutzereinstellungen",//perhaps not used
 "User preferences" => "Benutzereinstellungen",
-"User prefs" => "Benutzereinst.",
+"User prefs" => "Benutzereinstellungen",
 "User registration and login" => "Benutzerregistrierung und -login",
 "user selector" => "Nutzerauswahl",
 "User Stats" => "Benutzer-Statistik",
 "User tasks" => "Benutzer-Aufgaben",
 "User Tasks" => "Benutzer-Aufgaben",
-"User versions" => "Benutzer Versionen",//perhaps not used
+"User versions" => "Benutzer-Versionen",//perhaps not used
 "user" => "Benutzer",
 "User" => "Benutzer",
 "User_versions_for" => "Benutzer_Versionen_fuer",
@@ -1752,7 +1752,7 @@ $lang=Array(
 "You can include the image in an HTML/Tiki page using" => "Sie k&ouml;nnen das Bild in eine HTML-/Tiki-Seite einf&uuml;gen",
 "You can view this image in your browser using" => "Sie k&ouml;nnen dieses Bild in Ihrem Browser betrachten",
 "You cannot admin blogs" => "Sie k&ouml;nnen Blogs nicht administrieren",
-"You cannot edit this page because it is a user personal page" => "Sie k&ouml;nnen diese Seite nicht bearbeiten, da es sich um eine pers&ouml;nliche Benutzerseite handelt.",
+"You cannot edit this page because it is a user personal page" => "Sie k&ouml;nnen diese Seite nicht bearbeiten, da es sich um eine pers&ouml;nliche Benutzer-Seite handelt.",
 "You cannot take this quiz twice" => "Sie k&ouml;nnen dieses Quiz nicht zweimal durchf&uuml;hren",
 "You cannot take this survey twice" => "Sie k&ouml;nnen nicht zweimal an dieser Umfrage teilnehmen",
 "You cant download files" => "Sie k&ouml;nnen keine Dateien herunterladen",//perhaps not used
@@ -1802,13 +1802,13 @@ $lang=Array(
 "min" => "Min.",
 "Edit this page" => "&Auml;ndere diese Seite",
 "
-\n<b>Note 1</b>: if you allow your users to configure modules then assigned
-\nmodules won't be reflected in the screen until you configure them
-\nfrom MyTiki->modules.<br/>
-\n<b>Note 2</b>: If you assign modules to groups make sure that you
-\nhave turned off the option 'display modules to all groups always'
-\nfrom Admin->General
-\n" => "
+<b>Note 1</b>: if you allow your users to configure modules then assigned
+modules won't be reflected in the screen until you configure them
+from MyTiki->modules.<br/>
+<b>Note 2</b>: If you assign modules to groups make sure that you
+have turned off the option 'display modules to all groups always'
+from Admin->General
+" => "
 \n<b>Bemerkung 1</b>: Wenn sie den Benutzern erlauben, Module zu konfigurieren, 
 \ndann werden die hier zugewiesenen Module f&uuml;r die Benuzer erst sichtbar,
 \nwenn sie sie in MeinTiki->Module konfigurieren.<br/>
@@ -2402,10 +2402,10 @@ $lang=Array(
 "All posted" => "All posted",  // TODO
 "Queue anonymous posts" => "Queue anonymous posts",  // TODO
 "Queue all posts" => "Queue all posts", // TODO
-"No attachments" => "Keine Anh&auml;nge",
-"Everybody can attach" => "Jeder darf Dateien anh&auml;ngen",
-"Only users with attach permission" => "Nur Benutzer mit Anhangserlaubnis",
-"Moderators and admin can attach" => "Nur Moderatoren und Admin",
+"No attachments" => "keine Anh&auml;nge",
+"Everybody can attach" => "jeder darf Dateien anh&auml;ngen",
+"Only users with attach permission" => "nur Benutzer mit Anhangserlaubnis",
+"Moderators and admin can attach" => "nur Moderatoren und Admin",
 "Store attachments in:" => "Anh&auml;nge speichern in:",
 "Database" => "Datenbank",
 "Directory (include trailing slash)" => "Verzeichnis (mit / abschlie&szlig;en!)",
@@ -3056,7 +3056,7 @@ $lang=Array(
 "Date and Time Format Help" => "Hilfe zum Datums- und Zeitformat",
 "unknown" => "unbekannt",
 "Assign new module" => "Neues Modul hinzuf&uuml;gen",
-"Create new user module" => "Neues Benutzermodul erstellen",
+"Create new user module" => "Neues Benutzer-Modul erstellen",
 "User can Configure Modules" => "Benutzer darf Module konfigurieren",
 "Add new category" => "Neue Kategorie hinzuf&uuml;gen",
 "Child categories" => "Unterkategorien",
@@ -3072,5 +3072,13 @@ $lang=Array(
 "Create new template" => "Neue Vorlage erstellen",
 "Create new HTML page" => "Neue HTML-Seite erstellen",
 "Path to where the dumped files are (relative to tiki basedir with trailing slash ex: dump/)" => "Verzeichnis, in dem die gesicherten Exporte liegen (relativ zum Tiki-Hauptverzeichnis mit abschlie&szlig;endem Slash, z.B. dump/)",
+"Create New Forum" => "Neues Forum erstellen",
+"Attachments" => "Anh&auml;nge",
+"Approval type" => "Best&auml;tigung n&ouml;tig f&uuml;r",
+"All posted" => "keine Nachricht",
+"Queue anonymous posts" => "anonyme Nachrichten",
+"Queue all posts" => "alle Nachrichten",
+"Edit this Forum:" => "Dieses Forum bearbeiten:",
+"Edit this user module:" => "Dieses Benutzer-Modul bearbeiten:",
 "##end###" => "###end###");
 ?>

@@ -1,42 +1,47 @@
 <?php
-
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.11 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_gallery_rss.php,v 1.12 2003-08-21 00:51:20 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-require_once ('tiki-setup.php');
 
-require_once ('lib/tikilib.php'); # httpScheme()
-include_once ("lib/imagegals/imagegallib.php");
+  require_once('tiki-setup.php');
+  require_once('lib/tikilib.php'); # httpScheme()
+  include_once("lib/imagegals/imagegallib.php");
 
-if ($rss_image_gallery != 'y') {
-	die;
-}
+  if($rss_image_gallery != 'y') {
+   die;
+  }
 
-if (!isset($_REQUEST["galleryId"])) {
-	die;
-}
+  if($tiki_p_view_image_gallery != 'y') {
+    $smarty->assign('msg',tra("Permission denied you can not view this section"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+  
+  if(!isset($_REQUEST["galleryId"])) {
+    die;
+  }
 
-header ("content-type: text/xml");
-$foo = parse_url($_SERVER["REQUEST_URI"]);
+  header("content-type: text/xml");
+  $foo = parse_url($_SERVER["REQUEST_URI"]);
+  
+  $foo1=str_replace("tiki-image_gallery_rss.php",$tikiIndex,$foo["path"]);
+  $foo2=str_replace("tiki-image_gallery_rss.php","img/tiki.jpg",$foo["path"]);
+  $foo3=str_replace("tiki-image_gallery_rss","tiki-browse_image",$foo["path"]);
+  $foo4=str_replace("tiki-image_gallery_rss.php","lib/rss/rss-style.css",$foo["path"]);
+  $home = httpPrefix().$foo1;
+  $img = httpPrefix().$foo2;
+  $read = httpPrefix().$foo3;
+  $css = httpPrefix().$foo4;
 
-$foo1 = str_replace("tiki-image_gallery_rss.php", $tikiIndex, $foo["path"]);
-$foo2 = str_replace("tiki-image_gallery_rss.php", "img/tiki.jpg", $foo["path"]);
-$foo3 = str_replace("tiki-image_gallery_rss", "tiki-browse_image", $foo["path"]);
-$foo4 = str_replace("tiki-image_gallery_rss.php", "lib/rss/rss-style.css", $foo["path"]);
-$home = httpPrefix(). $foo1;
-$img = httpPrefix(). $foo2;
-$read = httpPrefix(). $foo3;
-$css = httpPrefix(). $foo4;
-
-$now = date("U");
-$changes = $imagegallib->get_images(0, $max_rss_image_gallery, 'created_desc', '', $_REQUEST["galleryId"]);
-$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
-$galleryname = $info["name"];
-$gallerydesc = $info["description"];
-$title = "Tiki RSS feed for the image gallery:";
-$desc = "...";
+  $now = date("U");
+  $changes = $imagegallib->get_images( 0,$max_rss_image_gallery,'created_desc', '', $_REQUEST["galleryId"]);
+  $info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+  $galleryname = $info["name"];
+  $gallerydesc = $info["description"];
+  $title = "Tiki RSS feed for the image gallery:";
+  $desc = "...";
 
 print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 print '<?xml-stylesheet href="' . $css . '" type="text/css"?>' . "\n";

@@ -17,7 +17,7 @@ class GUI extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and ((name like '%".$find."%') or (description like '%".$find."%'))";
+      $mid=" and ((gp.name like '%".$find."%') or (gp.description like '%".$find."%'))";
     } else {
       $mid="";
     }
