@@ -59,7 +59,7 @@ if(isset($_REQUEST["upload"])) {
   }
 
   
-  $gal_info = $tikilib->get_gallery($_REQUEST["galleryId"]);
+  $gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
   if($gal_info["thumbSizeX"]==0) $gal_info["thumbSizeX"]=80;
   if($gal_info["thumbSizeY"]==0) $gal_info["thumbSizeY"]=80;  
   // Check the user to be admin or owner or the gallery is public
@@ -161,9 +161,7 @@ if(isset($_REQUEST["upload"])) {
   } else {
     $name=$_REQUEST["name"];
   }
-
   if(isset($data)) {
-    
     if(!$up_thumb) {
       if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
         $img = imagecreatefromstring($data);
@@ -180,7 +178,7 @@ if(isset($_REQUEST["upload"])) {
           imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
         } else {
           $t = imagecreate($tw,$ty);
-          $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+          $imagegallib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
         }
         // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
         //$tmpfname = 'temp.jpg';
@@ -194,11 +192,11 @@ if(isset($_REQUEST["upload"])) {
         $t_pinfo = pathinfo($tmpfname);
         $t_type = $t_pinfo["extension"];
         $t_type='image/'.$t_type;
-                
-        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
+
+        $imageId = $imagegallib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
       } else {
         $tmpfname='';
-        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, 0, 0, $user,'','');
+        $imageId = $imagegallib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, 0, 0, $user,'','');
       }
     } else {
       if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
@@ -210,7 +208,7 @@ if(isset($_REQUEST["upload"])) {
         $size_y = 0;
       }
 
-      $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
+      $imageId = $imagegallib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
     }
     
     if(!$imageId) {
@@ -234,9 +232,9 @@ if(isset($_REQUEST["galleryId"])) {
   $smarty->assign('galleryId','');
 }
 if($tiki_p_admin_galleries != 'y') {
-  $galleries = $tikilib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
+  $galleries = $imagegallib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
 } else {
-  $galleries = $tikilib->list_galleries(0,-1,'lastModif_desc', $user,'');
+  $galleries = $imagegallib->list_galleries(0,-1,'lastModif_desc', $user,'');
 }
 for($i=0;$i<count($galleries["data"]);$i++) {
   if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'image gallery')) {

@@ -82,7 +82,6 @@ if(isset($_REQUEST["find"])) {
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_articles(0,$maxArticles,$sort_mode,$find,$pdate,$user);
-
 for($i=0;$i<count($listpages["data"]);$i++) {
   $listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
 }

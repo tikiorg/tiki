@@ -3,7 +3,7 @@
 <form method="post" action="tiki-import_phpwiki.php">
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}Path to where the dumped files are{/tr}:</td>
+  <td class="formcolor">{tr}Path to where the dumped files are (relative to tiki basedir with trailing slahs ex: dump/){/tr}:</td>
   <td class="formcolor"><input type="text" name="path" /></td>
 </tr>
 <tr>

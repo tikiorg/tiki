@@ -5,6 +5,7 @@ function smarty_function_rss($params, &$smarty)
 {
     global $tikilib;
     global $dbTiki;
+    global $rsslib;
 	include_once('lib/rss/rsslib.php');
     extract($params);
     // Param = zone

@@ -4,6 +4,7 @@ require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 
+
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -35,7 +36,6 @@ if(!isset($_REQUEST["page"])) {
 if(!$tikilib->page_exists($wikiHomePage)) {
   $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization'); 
 }
-
 
 
 
@@ -90,7 +90,6 @@ $tikilib->add_hit($page);
 
 // Get page data
 $info = $tikilib->get_page_info($page);
-
 
 $smarty->assign('page_user',$info['user']);
 

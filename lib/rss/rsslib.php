@@ -171,5 +171,4 @@ class RSSLib extends TikiLib {
 
 $rsslib= new RSSLib($dbTiki);
 
-
 ?>

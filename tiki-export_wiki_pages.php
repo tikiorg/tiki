@@ -8,7 +8,7 @@ if(!isset($_REQUEST["page"])) {
   header("location: dump/export.tar");
 } else {
   if(isset($_REQUEST["all"])) $all=0; else $all=1;
-  $data = $tikilib->export_wiki_page($_REQUEST["page"],$all);
+  $data = $exportlib->export_wiki_page($_REQUEST["page"],$all);
   $page=$_REQUEST["page"];
   header("Content-type: application/unknown");
   header( "Content-Disposition: inline; filename=$page" );

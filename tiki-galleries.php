@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once("lib/imagegals/imagegallib.php");
 
 // Now check permissions to access this page
 /*
@@ -85,7 +86,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
   $smarty->assign('edited','y');
   if($_REQUEST["galleryId"]>0) {
     $info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
-    $scaleinfo = $tikilib->get_gallery_scale_info($_REQUEST["galleryId"]);
+    $scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
     //$smarty->assign_by_ref('theme',$info["theme"]);
     $smarty->assign_by_ref('name',$info["name"]);
     $smarty->assign_by_ref('description',$info["description"]);
@@ -147,22 +148,22 @@ if(isset($_REQUEST["edit"])) {
     $public ='n';
   }
   $smarty->assign_by_ref('public',$public);
-  $gid = $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public,$visible);
+  $gid = $imagegallib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public,$visible);
   
   #add scales
   if (isset($_REQUEST["scaleSizeX"]) && is_numeric($_REQUEST["scaleSizeX"])
       && isset($_REQUEST["scaleSizeY"]) && is_numeric($_REQUEST["scaleSizeY"]))
    {
-     $tikilib->add_gallery_scale($_REQUEST["galleryId"],$_REQUEST["scaleSizeX"],
+     $imagegallib->add_gallery_scale($_REQUEST["galleryId"],$_REQUEST["scaleSizeX"],
                        $_REQUEST["scaleSizeY"]);
    }
   #remove scales
-  $scaleinfo = $tikilib->get_gallery_scale_info($_REQUEST["galleryId"]);
+  $scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
   # loop though scales to determine if a scale has to be removed
   while (list ($num, $sci) = each ($scaleinfo)) {
     $sizestr=$sci["xsize"]."x".$sci["ysize"];
     if (isset($_REQUEST[$sizestr]) && $_REQUEST[$sizestr]=='on'){
-      $tikilib->remove_gallery_scale($_REQUEST["galleryId"],$sci["xsize"],$sci["ysize"]);
+      $imagegallib->remove_gallery_scale($_REQUEST["galleryId"],$sci["xsize"],$sci["ysize"]);
     }
   }
 
@@ -186,7 +187,7 @@ if(isset($_REQUEST["removegal"])) {
        die;  
      }
   }
-  $tikilib->remove_gallery($_REQUEST["removegal"]);
+  $imagegallib->remove_gallery($_REQUEST["removegal"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
