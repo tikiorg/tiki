@@ -7014,7 +7014,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function get_like_pages($page) 
   {
     preg_match_all("/([A-Z])([a-z]+)/",$page,$words);
-    $words=$words[0];
+    // Add support to ((x)) in either strict or full modes
+    preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/",$page,$words2);
+    $words=array_unique(array_merge($words[0], $words2[0]));
     $exps = Array();
     foreach($words as $word) {
       $exps[] = "pageName like '%$word%'";
