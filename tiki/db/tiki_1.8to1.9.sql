@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.32 2004-03-02 07:11:53 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.33 2004-03-10 13:49:13 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -243,4 +243,9 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 # added on 2004-03-02 by mose for more details in groups
 ALTER TABLE `users_groups` ADD `usersFieldId` INT( 11 ), ADD `groupFieldId` INT( 11 );
+
+# added on 2004-03-09 by mose for another option of tracker field
+ALTER TABLE `tiki_tracker_fields` ADD `isMandatory` varchar ( 1 ) DEFAULT 'n' NOT NULL ;
+UPDATE `tiki_tracker_fields` set `isMandatory`='y' where `isMandatory`='';
+
 

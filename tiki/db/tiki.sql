@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.167 2004-03-02 07:11:53 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.168 2004-03-10 13:49:13 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2992,6 +2992,7 @@ CREATE TABLE tiki_tracker_fields (
   isSearchable char(1) default NULL,
   isPublic char(1) NOT NULL default 'n',
   isHidden char(1) NOT NULL default 'n',
+  isMandatory char(1) NOT NULL default 'n',
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
