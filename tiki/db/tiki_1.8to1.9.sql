@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.24 2004-02-06 20:08:58 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.25 2004-02-06 23:48:12 lueders Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -125,7 +125,7 @@ CREATE TABLE tiki_jukebox_tracks (
 # added on 2004-01-22 by mose, changing trackers options
 CREATE TABLE tiki_tracker_options (
   trackerId int(12) NOT NULL default '0',
-  name varchar(80) default NULL,
+  name varchar(80) NOT NULL default '',
   value text default NULL,
   PRIMARY KEY (trackerId,name(30))
 ) TYPE=MyISAM ;
