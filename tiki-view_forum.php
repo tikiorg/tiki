@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.66 2004-03-18 22:21:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.67 2004-03-19 18:50:46 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -353,60 +353,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    // created.
 
 			    // Deal with mail notifications.
-
-			    // outbound_from is redundant with sender_email: can be merged to simplify
-			    $from = $forum_info["outbound_from"]? $forum_info["outbound_from"]: $sender_email;
-
-			    if ($forum_info["outbound_address"]) {
-				$cdata_data = $_REQUEST["comments_data"];
-
-				if (isset($_REQUEST["comments_topicssummary"]) &&
-					$_REQUEST["comments_topicssummary"] )
-				{
-				    $cadata_data = $_REQUEST["comments_topicssummary"] . $cdata_data;
-				}
-
-				if ($forum_info["outbound_address"]) {
-				    @mail(
-					    $forum_info["outbound_address"],
-					    $_REQUEST["comments_title"],
-					    $_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
-					    "From: " . $from. "\r\nContent-type: text/plain;charset=utf-8\r\n"
-					 );
-				}
-			    }
-
-			    if ($forum_info["useMail"] == 'y') {
-				$smarty->assign('mail_forum', $forum_info["name"]);
-
-				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				$smarty->assign('mail_date', date("U"));
-				$smarty->assign('mail_message', $_REQUEST["comments_data"]);
-				$smarty->assign('mail_author', $user);
-				$smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
-				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-				@mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
-					"From: " . $from . "\r\nContent-type: text/plain;charset=utf-8\r\n");
-			    }
-
-			    // Check if the user is monitoring this post
-			    if ($feature_user_watches == 'y') {
-				$nots = $commentslib->get_event_watches('forum_post_topic', $_REQUEST['forumId']);
-
-				foreach ($nots as $not) {
-				    $smarty->assign('mail_forum', $forum_info["name"]);
-
-				    $smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				    $smarty->assign('mail_date', date("U"));
-				    $smarty->assign('mail_message', $_REQUEST["comments_data"]);
-				    $smarty->assign('mail_author', $user);
-				    $smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
-				    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-				    @mail($not['email'], tra('Tiki email notification'), $mail_data,
-					    "From: ". $from . "\r\nContent-type: text/plain;charset=utf-8\r\n");
-				}
-			    }
-
+			    include_once('lib/notifications/notificationemaillib.php');
+			    sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"]);
 			}
 
 

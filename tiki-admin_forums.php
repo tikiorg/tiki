@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.21 2004-02-09 18:20:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.22 2004-03-19 18:54:43 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -226,7 +226,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'],
 		$_REQUEST['show_description'], $_REQUEST['inbound_pop_server'],
 		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], 
-		$_REQUEST['outbound_address'],
+		trim($_REQUEST['outbound_address']),
 		$_REQUEST['outbound_from'],
 		$_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'],
 		$_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'],
