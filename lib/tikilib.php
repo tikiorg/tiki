@@ -660,46 +660,7 @@ class TikiLib {
     $result = $this->query($query);
     return true;
   }
-
-  function get_attachment_owner($attId)
-  {
-    return $this->getOne("select user from tiki_wiki_attachments where attId=$attId");
-  }
-
-  function list_wiki_attachments($page,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where page='$page' and (filename like '%".$find."%')";
-    } else {
-      $mid=" where page='$page' ";
-    }
-    $query = "select user,attId,page,filename,filesize,filetype,downloads,created,comment from tiki_wiki_attachments $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_wiki_attachments $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function wiki_attach_file($page,$name,$type,$size, $data, $comment, $user,$fhash)
-  {
-    $data = addslashes($data);
-    $page = addslashes($page);
-    $name = addslashes($name);
-    $comment = addslashes(strip_tags($comment));
-    $now = date("U");
-    $query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path)
-    values('$page','$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
-    $result = $this->query($query);
-  }
-
+  
   function get_wiki_attachment($attId)
   {
     $query = "select * from tiki_wiki_attachments where attId=$attId";
@@ -707,17 +668,6 @@ class TikiLib {
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
-  }
-
-  function remove_wiki_attachment($attId)
-  {
-    global $w_use_dir;
-    $path = $this->getOne("select path from tiki_wiki_attachments where attId=$attId");
-    if($path) {
-      @unlink($w_use_dir.$path);
-    }
-    $query = "delete from tiki_wiki_attachments where attId='$attId'";
-    $result = $this->query($query);
   }
 
   // End File attachments functions for the wiki ////
@@ -1024,92 +974,9 @@ class TikiLib {
     }
   }
 
-  function add_suggested_faq_question($faqId,$question, $answer, $user)
-  {
-    $question = addslashes(strip_tags($question,'<a>'));
-    $answer = addslashes(strip_tags($answer,'<a>'));
-    $now= date("U");
-    $query = "insert into tiki_suggested_faq_questions(faqId,question,answer,user,created)
-    values($faqId,'$question','$answer','$user',$now)";
-    $result = $this->query($query);
-  }
-
-  function list_suggested_questions($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (question like '%".$find."%' or answer like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_suggested_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_suggested_faq_questions $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function get_suggested_question($sfqId)
-  {
-    $query = "select * from tiki_suggested_faq_questions where sfqId=$sfqId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function remove_suggested_question($sfqId)
-  {
-    $query = "delete from tiki_suggested_faq_questions where sfqId=$sfqId";
-    $result = $this->query($query);
-  }
-
-  function approve_suggested_question($sfqId)
-  {
-    $info = $this->get_suggested_question($sfqId);
-    $this->replace_faq_question($info["faqId"],0, $info["question"], $info["answer"]);
-    $this->remove_suggested_question($sfqId);
-  }
-
   // Templates ////
 
-  function list_all_templates($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (content like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select name,created,templateId from tiki_content_templates $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_content_templates $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query2= "select section from tiki_content_templates_sections where templateId=".$res["templateId"];
-      $result2 = $this->query($query2);
-      $sections = Array();
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $sections[] = $res2["section"];
-      }
-      $res["sections"]=$sections;
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_templates($section,$offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_templates($section,$offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1138,52 +1005,7 @@ class TikiLib {
     return $retval;
   }
 
-  function replace_template($templateId, $name, $content)
-  {
-    $name = addslashes($name);
-    $content = addslashes($content);
-    // Check the name
-    $now = date("U");
-    if($templateId) {
-      $query = "update tiki_content_templates set content='$content', name='$name', created=$now where templateId=$templateId";
-    } else {
-      $query = "replace into tiki_content_templates(content,name,created)
-                values('$content','$name',$now)";
-    }
-    $result = $this->query($query);
-    $id  = $this->getOne("select max(templateId) from tiki_content_templates where created=$now and name='$name'");
-    return $id;
-    return true;
-  }
-
-  function add_template_to_section($templateId,$section)
-  {
-    $query = "replace into tiki_content_templates_sections(templateId,section) values($templateId,'$section')";
-    $result = $this->query($query);
-  }
-
-  function remove_template_from_section($templateId,$section)
-  {
-    $query = "delete from tiki_content_templates_sections where templateId=$templateId and section='$section'";
-    $result = $this->query($query);
-  }
-
-  function template_is_in_section($templateId,$section)
-  {
-    $cant = $this->getOne("select count(*) from tiki_content_templates_sections where templateId=$templateId and section='$section'");
-    return $cant;
-  }
-
-  function remove_template($templateId)
-  {
-    $query = "delete from tiki_content_templates where templateId=$templateId";
-    $result = $this->query($query);
-    $query = "delete from tiki_content_templates_sections where templateId=$templateId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_template($templateId)
+  /*shared*/ function get_template($templateId)
   {
     $query = "select * from tiki_content_templates where templateId=$templateId";
     $result = $this->query($query);
@@ -1321,141 +1143,6 @@ class TikiLib {
     $result = $this->query($query);
   }
 
-  function wiki_stats()
-  {
-    $stats=Array();
-    $stats["pages"]=$this->getOne("select count(*) from tiki_pages");
-    $stats["versions"]=$this->getOne("select count(*) from tiki_history");
-    if($stats["pages"]) $stats["vpp"]=$stats["versions"]/$stats["pages"]; else $stats["vpp"]=0;
-    $stats["visits"]=$this->getOne("select sum(hits) from tiki_pages");
-    $or = $this->list_orphan_pages(0,-1, 'pageName_desc','');
-    $stats["orphan"]=$or["cant"];
-    $links = $this->getOne("select count(*) from tiki_links");
-    if($stats["pages"]) $stats["lpp"]=$links/$stats["pages"]; else $stats["lpp"]=0;
-    $stats["size"] = $this->getOne("select sum(length(data)) from tiki_pages");
-    if($stats["pages"]) $stats["bpp"]=$stats["size"]/$stats["pages"]; else $stats["bpp"]=0;
-    $stats["size"] = $stats["size"]/1000000;
-    return $stats;
-  }
-
-  function quiz_stats()
-  {
-    $this->compute_quiz_stats();
-    $stats=Array();
-    $stats["quizzes"]=$this->getOne("select count(*) from tiki_quizzes");
-    $stats["questions"]=$this->getOne("select count(*) from tiki_quiz_questions");
-    if($stats["quizzes"]) $stats["qpq"]=$stats["questions"]/$stats["quizzes"]; else $stats["qpq"]=0;
-    $stats["visits"]=$this->getOne("select sum(timesTaken) from tiki_quiz_stats_sum");
-    $stats["avg"]=$this->getOne("select avg(avgavg) from tiki_quiz_stats_sum");
-    $stats["avgtime"]=$this->getOne("select avg(avgtime) from tiki_quiz_stats_sum");
-    return $stats;
-  }
-
-  function image_gal_stats()
-  {
-    $stats=Array();
-    $stats["galleries"]=$this->getOne("select count(*) from tiki_galleries");
-    $stats["images"]=$this->getOne("select count(*) from tiki_images");
-    $stats["ipg"] = ($stats["galleries"]?$stats["images"]/$stats["galleries"]:0);
-    $stats["size"] = $this->getOne("select sum(filesize) from tiki_images_data where type='o'");
-    //$stats["bpi"] = ($stats["galleries"]?$stats["size"]/$stats["galleries"]:0);
-    $stats["bpi"] = ($stats["images"]?$stats["size"]/$stats["images"]:0);
-    $stats["size"] = $stats["size"]/1000000;
-    $stats["visits"] = $this->getOne("select sum(hits) from tiki_galleries");
-    return $stats;
-  }
-
-  function file_gal_stats()
-  {
-    $stats=Array();
-    $stats["galleries"]=$this->getOne("select count(*) from tiki_file_galleries");
-    $stats["files"]=$this->getOne("select count(*) from tiki_files");
-    $stats["fpg"] = ($stats["galleries"]?$stats["files"]/$stats["galleries"]:0);
-    $stats["size"] = $this->getOne("select sum(filesize) from tiki_files");
-    $stats["size"] = $stats["size"]/1000000;
-    $stats["bpf"] = ($stats["galleries"]?$stats["size"]/$stats["galleries"]:0);
-    $stats["visits"] = $this->getOne("select sum(hits) from tiki_file_galleries");
-    $stats["downloads"] = $this->getOne("select sum(downloads) from tiki_files");
-    return $stats;
-  }
-
-  function cms_stats()
-  {
-    $stats=Array();
-    $stats["articles"]=$this->getOne("select count(*) from tiki_articles");
-    $stats["reads"]=$this->getOne("select sum(reads) from tiki_articles");
-    $stats["rpa"]=($stats["articles"]?$stats["reads"]/$stats["articles"]:0);
-    $stats["size"] = $this->getOne("select sum(size) from tiki_articles");
-    $stats["bpa"]=($stats["articles"]?$stats["size"]/$stats["articles"]:0);
-    $stats["topics"]=$this->getOne("select count(*) from tiki_topics where active='y'");
-    return $stats;
-  }
-
-  function forum_stats()
-  {
-    $stats=Array();
-    $stats["forums"]=$this->getOne("select count(*) from tiki_forums");
-    $stats["topics"]=$this->getOne("select count(*) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0");
-    $stats["threads"]=$this->getOne("select count(*) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId<>0");
-    $stats["tpf"]=($stats["forums"]?$stats["topics"]/$stats["forums"]:0);
-    $stats["tpt"]=($stats["topics"]?$stats["threads"]/$stats["topics"]:0);
-    $stats["visits"]=$this->getOne("select sum(hits) from tiki_forums");
-    return $stats;
-  }
-
-  function blog_stats()
-  {
-    $stats=Array();
-    $stats["blogs"]=$this->getOne("select count(*) from tiki_blogs");
-    $stats["posts"]=$this->getOne("select count(*) from tiki_blog_posts");
-    $stats["ppb"]=($stats["blogs"]?$stats["posts"]/$stats["blogs"]:0);
-    $stats["size"]=$this->getOne("select sum(length(data)) from tiki_blog_posts");
-    $stats["bpp"]=($stats["posts"]?$stats["size"]/$stats["posts"]:0);
-    $stats["visits"]=$this->getOne("select sum(hits) from tiki_blogs");
-    return $stats;
-  }
-
-  function poll_stats()
-  {
-    $stats=Array();
-    $stats["polls"]=$this->getOne("select count(*) from tiki_polls");
-    $stats["votes"]=$this->getOne("select sum(votes) from tiki_poll_options");
-    $stats["vpp"]=($stats["polls"]?$stats["votes"]/$stats["polls"]:0);
-    return $stats;
-  }
-
-  function faq_stats()
-  {
-    $stats=Array();
-    $stats["faqs"]=$this->getOne("select count(*) from tiki_faqs");
-    $stats["questions"]=$this->getOne("select count(*) from tiki_faq_questions");
-    $stats["qpf"]=($stats["faqs"]?$stats["questions"]/$stats["faqs"]:0);
-    return $stats;
-  }
-
-  function user_stats()
-  {
-    $stats=Array();
-    $stats["users"]=$this->getOne("select count(*) from users_users");
-    $stats["bookmarks"]=$this->getOne("select count(*) from tiki_user_bookmarks_urls");
-    $stats["bpu"]=($stats["users"]?$stats["bookmarks"]/$stats["users"]:0);
-    return $stats;
-  }
-
-  function site_stats()
-  {
-    $stats=Array();
-    $stats["started"] = $this->getOne("select min(day) from tiki_pageviews");
-    $stats["days"]=$this->getOne("select count(*) from tiki_pageviews");
-    $stats["pageviews"]=$this->getOne("select sum(pageviews) from tiki_pageviews");
-    $stats["ppd"]=($stats["days"]?$stats["pageviews"]/$stats["days"]:0);
-    $stats["bestpvs"]=$this->getOne("select max(pageviews) from tiki_pageviews");
-    $stats["bestday"]=$this->getOne("select day from tiki_pageviews where pageviews=".$stats["bestpvs"]);
-    $stats["worstpvs"]=$this->getOne("select min(pageviews) from tiki_pageviews");
-    $stats["worstday"]=$this->getOne("select day from tiki_pageviews where pageviews=".$stats["worstpvs"]);
-    return $stats;
-  }
-
   function get_pv_chart_data($days)
   {
     $now = mktime(0,0,0,date("m"),date("d"),date("Y"));
@@ -1497,7 +1184,6 @@ class TikiLib {
     return $id;
   }
 
-  // not used anymore ??? in userslib!
   function get_user_groups($user)
   {
     $userid = $this->get_user_id($user);
@@ -1508,130 +1194,6 @@ class TikiLib {
       $ret[] = $res["groupName"];
     }
     $ret[] = "Anonymous";
-    return $ret;
-  }
-
-  function unassign_user_module($name,$user)
-  {
-    $query = "delete from tiki_user_assigned_modules where name='$name' and user='$user'";
-    $result = $this->query($query);
-  }
-
-  function up_user_module($name,$user)
-  {
-    $query = "update tiki_user_assigned_modules set ord=ord-1 where name='$name' and user='$user'";
-    $result = $this->query($query);
-  }
-
-  function down_user_module($name,$user)
-  {
-    $query = "update tiki_user_assigned_modules set ord=ord+1 where name='$name' and user='$user'";
-    $result = $this->query($query);
-  }
-
-  function set_column_user_module($name,$user,$position)
-  {
-    $query = "update tiki_user_assigned_modules set position='$position' where name='$name' and user='$user'";
-    $result = $this->query($query);
-  }
-
-  function assign_user_module($module,$position,$order,$user)
-  {
-    $query = "select * from tiki_modules where name='$module'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $query2 = "replace into tiki_user_assigned_modules(user,name,position,ord,type,title,cache_time,rows,groups)
-    values('$user','$module','$position',$order,'${res["type"]}','${res["title"]}','${res["cache_time"]}','${res["rows"]}','${res["groups"]}')";
-    $result2 = $this->query($query2);
-  }
-
-  function get_user_assigned_modules($user)
-  {
-
-    $query = "select * from tiki_user_assigned_modules where user='$user' order by position asc,ord asc";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-
-    return $ret;
-  }
-
-  function get_assigned_modules_user($user,$position)
-  {
-    $query = "select * from tiki_user_assigned_modules where user='$user' and position='$position' order by ord asc";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    return $ret;
-  }
-
-  function user_has_assigned_modules($user)
-  {
-    $query = "select name from tiki_user_assigned_modules where user='$user'";
-    $result = $this->query($query);
-    return $result->numRows();
-  }
-
-  // Creates user assigned modules copying from tiki_modules
-  function create_user_assigned_modules($user)
-  {
-    $query = "delete from tiki_user_assigned_modules where user='$user'";
-    $result = $this->query($query);
-    global $modallgroups;
-    $query = "select * from tiki_modules";
-    $result = $this->query($query);
-    $ret = Array();
-    $user_groups = $this->get_user_groups($user);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $mod_ok=0;
-      if($res["groups"] && $modallgroups!='y') {
-        $groups = unserialize($res["groups"]);
-        $ins = array_intersect($groups, $user_groups);
-        if(count($ins)>0) {
-          $mod_ok =1;
-        }
-      } else {
-          $mod_ok =1;
-      }
-      if($mod_ok) {
-        $query2 = "replace into tiki_user_assigned_modules(user,name,position,ord,type,title,cache_time,rows,groups,params)
-        values('$user','${res["name"]}','${res["position"]}','${res["ord"]}','${res["type"]}','${res["title"]}','${res["cache_time"]}','${res["rows"]}','${res["groups"]}','${res["params"]}')";
-        $result2 = $this->query($query2);
-      }
-    }
-  }
-
-  // Return the list of modules that CAN be assigned by the user (he may have assigned or not the modules)
-  function get_user_assignable_modules($user)
-  {
-    global $modallgroups;
-    $query = "select * from tiki_modules";
-    $result = $this->query($query);
-    $ret = Array();
-    $user_groups = $this->get_user_groups($user);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $mod_ok=0;
-      // The module must not be assigned
-      $isas = $this->getOne("select count(*) from tiki_user_assigned_modules where name='".$res["name"]."'");
-      if(!$isas) {
-        if($res["groups"] && $modallgroups!='y' && $user!='admin') {
-          $groups = unserialize($res["groups"]);
-          $ins = array_intersect($groups, $user_groups);
-          if(count($ins)>0) {
-            $mod_ok =1;
-          }
-        } else {
-            $mod_ok =1;
-        }
-        if($mod_ok) {
-          $ret[]=$res;
-        }
-      }
-    }
     return $ret;
   }
 
@@ -1778,7 +1340,7 @@ class TikiLib {
   // User bookmarks ////
 
   // Functions for FAQs ////
-  function list_faqs($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_faqs($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1800,118 +1362,8 @@ class TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
-
-  function list_faq_questions($faqId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where faqId=$faqId and (question like '%".$find."%' or answer like '%".$find."%')";
-    } else {
-      $mid=" where faqId=$faqId ";
-    }
-    $query = "select * from tiki_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_faq_questions $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res['parsed'] = $this->parse_data($res['answer']);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_all_faq_questions($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (question like '%".$find."%' or answer like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_faq_questions $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function add_faq_hit($faqId)
-  {
-    $query = "update tiki_faqs set hits=hits+1 where faqId=$faqId";
-    $result = $this->query($query);
-  }
-
-  function replace_faq($faqId, $title, $description,$canSuggest)
-  {
-    $description = addslashes($description);
-    $title = addslashes($title);
-    // Check the name
-
-    if($faqId) {
-      $query = "update tiki_faqs set title='$title',description='$description',canSuggest='$canSuggest' where faqId=$faqId";
-      $result = $this->query($query);
-    } else {
-      $now = date("U");
-      $query = "replace into tiki_faqs(title,description,created,hits,questions,canSuggest)
-                values('$title','$description',$now,0,0,'$canSuggest')";
-      $result = $this->query($query);
-      $faqId = $this->getOne("select max(faqId) from tiki_faqs where title='$title' and created=$now");
-    }
-    return $faqId;
-  }
-
-  function replace_faq_question($faqId,$questionId, $question, $answer)
-  {
-    $question = addslashes($question);
-    $answer = addslashes($answer);
-    // Check the name
-
-    if($questionId) {
-      $query = "update tiki_faq_questions set question='$question',answer='$answer' where questionId=$questionId";
-    } else {
-      $query = "update tiki_faqs set questions=questions+1 where faqId=$faqId";
-      $result = $this->query($query);
-      $query = "replace into tiki_faq_questions(faqId,question,answer)
-                values($faqId,'$question','$answer')";
-    }
-
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_faq($faqId)
-  {
-    $query = "delete from tiki_faqs where faqId=$faqId";
-    $result = $this->query($query);
-    $query = "delete from tiki_faq_questions where faqId=$faqId";
-    $result = $this->query($query);
-    // Remove comments and/or individual permissions for faqs
-    $this->remove_object('faq',$faqId);
-    return true;
-  }
-
-  function remove_faq_question($questionId)
-  {
-    $faqId=$this->getOne("select faqId from tiki_faq_questions where questionId=$questionId");
-    $query = "delete from tiki_faq_questions where questionId=$questionId";
-    $result = $this->query($query);
-    $query = "update tiki_faqs set questions=questions-1 where faqId=$faqId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_faq($faqId)
+  
+  /*shared */ function get_faq($faqId)
   {
     $query = "select * from tiki_faqs where faqId=$faqId";
     $result = $this->query($query);
@@ -1919,16 +1371,6 @@ class TikiLib {
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
-
-  function get_faq_question($questionId)
-  {
-    $query = "select * from tiki_faq_questions where questionId=$questionId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
   // End Faqs ////
 
   function genPass()
@@ -1944,140 +1386,6 @@ class TikiLib {
                 }
         }
         return $r;
-  }
-
-  function restore_database($filename)
-  {
-    // Get the password before it's too late
-    $query = "select hash from users_users where login='Admin'";
-    $pwd = $this->getOne($query);
-
-    // Before anything read tiki.sql from db and run it
-    $fp = fopen("db/tiki.sql","r");
-    $data = fread($fp,filesize("db/tiki.sql"));
-    fclose($fp);
-    // Drop all the tables
-    preg_match_all("/DROP ([^;]+);/i",$data,$reqs);
-    foreach($reqs[0] as $query)
-    {
-      //print("q: $query<br/>");
-      $result = $this->query($query);
-    }
-
-    // Create all the tables
-    preg_match_all("/create table ([^;]+);/i",$data,$reqs);
-    foreach($reqs[0] as $query)
-    {
-      //print("q: $query<br/>");
-      $result = $this->query($query);
-    }
-
-
-
-    $query = "update users_users set password = '$pwd' where login='admin'";
-    $result = $this->query($query);
-    @$fp = fopen($filename,"rb");
-    if(!$fp) return false;
-    while(!feof($fp)) {
-      $rlen = fread($fp,4);
-      if(feof($fp)) break;
-      $len = unpack("L",$rlen);
-      $len=array_pop($len);
-      //print("leer: $len bytes<br/>");
-      $line=fread($fp,$len);
-      $line=$this->RC4($pwd,$line);
-      // EXECUTE SQL SENTENCE HERE
-      //print("q: $line <br/>");
-      $result = $this->query($line);
-    }
-    fclose($fp);
-  }
-
-  function RC4($pwd, $data) {
-    $key[] = "";
-    $box[] = "";
-    $temp_swap = "";
-    $pwd_length = 0;
-    $pwd_length = strlen($pwd);
-    for ($i = 0; $i <= 255; $i++) {
-      $key[$i] = ord(substr($pwd, ($i % $pwd_length)+1, 1));
-      $box[$i] = $i;
-    }
-
-    $x = 0;
-    for ($i = 0; $i < 255; $i++) {
-      $x = ($x + $box[$i] + $key[$i]) % 256;
-      $temp_swap = $box[$i];
-      $box[$i] = $box[$x];
-      $box[$x] = $temp_swap;
-    }
-
-    $temp = "";
-    $k = "";
-    $cipherby = "";
-    $cipher = "";
-    $a = 0;
-    $j = 0;
-    for ($i = 0; $i < strlen($data); $i++) {
-      $a = ($a + 1) % 256;
-      $j = ($j + $box[$a]) % 256;
-      $temp = $box[$a];
-      $box[$a] = $box[$j];
-      $box[$j] = $temp;
-      $k = $box[(($box[$a] + $box[$j]) % 256)];
-      $cipherby = ord(substr($data, $i, 1)) ^ $k;
-      $cipher .= chr($cipherby);
-    }
-    return $cipher;
-  }
-
-  // Functions to backup the database (mysql?)
-  function backup_database($filename)
-  {
-    ini_set("max_execution_time", "3000");
-    $query = "select hash from users_users where login='Admin'";
-    $pwd = $this->getOne($query);
-    @$fp = fopen($filename,"w");
-    if(!$fp) return false;
-
-    $query = "show tables";
-    $result = $this->query($query);
-    $sql='';
-    $part = '';
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      list($key,$val)=each($res);
-      if(!strstr($val,'babl')){
-        // Now dump the table
-        $query2 = "select * from $val";
-        $result2 = $this->query($query2);
-        while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-          $sentence = "values(";
-          $first=1;
-          foreach($res2 as $field => $value) {
-            if($first) {
-              $sentence.="'".addslashes($value)."'";
-              $first =0;
-              $fields = '('.$field;
-            } else {
-              $sentence.=",'".addslashes($value)."'";
-              $fields .= ",$field";
-            }
-          }
-          $fields.= ')';
-          $sentence .= ")";
-          $part = "insert into $val $fields $sentence;";
-          $len = pack("L",strlen($part));
-          fwrite($fp,$len);
-          $part = $this->RC4($pwd,$part);
-          fwrite($fp,$part);
-        }
-      }
-
-    }
-    // And now print!
-
-    fclose($fp);
-    return true;
   }
 
   // Get a listing of orphan pages

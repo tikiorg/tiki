@@ -28,6 +28,57 @@ class WikiLib extends TikiLib {
     $result = $this->query($query);
     return true;
   }
+  
+  function get_attachment_owner($attId)
+  {
+    return $this->getOne("select user from tiki_wiki_attachments where attId=$attId");
+  }
+
+  function remove_wiki_attachment($attId)
+  {
+    global $w_use_dir;
+    $path = $this->getOne("select path from tiki_wiki_attachments where attId=$attId");
+    if($path) {
+      @unlink($w_use_dir.$path);
+    }
+    $query = "delete from tiki_wiki_attachments where attId='$attId'";
+    $result = $this->query($query);
+  }
+
+  function wiki_attach_file($page,$name,$type,$size, $data, $comment, $user,$fhash)
+  {
+    $data = addslashes($data);
+    $page = addslashes($page);
+    $name = addslashes($name);
+    $comment = addslashes(strip_tags($comment));
+    $now = date("U");
+    $query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path)
+    values('$page','$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
+    $result = $this->query($query);
+  }
+
+
+  function list_wiki_attachments($page,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where page='$page' and (filename like '%".$find."%')";
+    } else {
+      $mid=" where page='$page' ";
+    }
+    $query = "select user,attId,page,filename,filesize,filetype,downloads,created,comment from tiki_wiki_attachments $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_wiki_attachments $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
 
   
 }

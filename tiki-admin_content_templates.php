@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/templates/templateslib.php');
 
 if($tiki_p_edit_content_templates != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -15,22 +16,22 @@ $smarty->assign('templateId',$_REQUEST["templateId"]);
 
 if($_REQUEST["templateId"]) {
   $info = $tikilib->get_template($_REQUEST["templateId"]);
-  if($tikilib->template_is_in_section($_REQUEST["templateId"],'html')) {
+  if($templateslib->template_is_in_section($_REQUEST["templateId"],'html')) {
     $info["section_html"]='y';
   } else {
     $info["section_html"]='n';
   }
-  if($tikilib->template_is_in_section($_REQUEST["templateId"],'wiki')) {
+  if($templateslib->template_is_in_section($_REQUEST["templateId"],'wiki')) {
     $info["section_wiki"]='y';
   } else {
     $info["section_wiki"]='n';
   }
-  if($tikilib->template_is_in_section($_REQUEST["templateId"],'newsletters')) {
+  if($templateslib->template_is_in_section($_REQUEST["templateId"],'newsletters')) {
     $info["section_newsletters"]='y';
   } else {
     $info["section_newsletters"]='n';
   }
-  if($tikilib->template_is_in_section($_REQUEST["templateId"],'cms')) {
+  if($templateslib->template_is_in_section($_REQUEST["templateId"],'cms')) {
     $info["section_cms"]='y';
   } else {
     $info["section_cms"]='n';
@@ -48,11 +49,11 @@ $smarty->assign('info',$info);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_template($_REQUEST["remove"]);
+  $templateslib->remove_template($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["removesection"])) {
-  $tikilib->remove_template_from_section($_REQUEST["rtemplateId"],$_REQUEST["removesection"]);
+  $templateslib->remove_template_from_section($_REQUEST["rtemplateId"],$_REQUEST["removesection"]);
 }
 
 
@@ -89,7 +90,7 @@ if(isset($_REQUEST["preview"])) {
 }
 
 if(isset($_REQUEST["save"])) {
-  $tid = $tikilib->replace_template($_REQUEST["templateId"], $_REQUEST["name"],$_REQUEST["content"]);
+  $tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"],$_REQUEST["content"]);
 
   $smarty->assign("templateId",'0');
   $info["name"]='';
@@ -99,25 +100,25 @@ if(isset($_REQUEST["save"])) {
   $info["section_newsletters"]='n';
   $info["section_html"]='n';
   if(isset($_REQUEST["section_html"])&&$_REQUEST["section_html"]=='on') {
-     $tikilib->add_template_to_section($tid,'html');
+     $templateslib->add_template_to_section($tid,'html');
   }  else {
-     $tikilib->remove_template_from_section($tid,'html');
+     $templateslib->remove_template_from_section($tid,'html');
   }
 
   if(isset($_REQUEST["section_wiki"])&&$_REQUEST["section_wiki"]=='on') {
-    $tikilib->add_template_to_section($tid,'wiki');
+    $templateslib->add_template_to_section($tid,'wiki');
   }  else {
-    $tikilib->remove_template_from_section($tid,'wiki');
+    $templateslib->remove_template_from_section($tid,'wiki');
   }
   if(isset($_REQUEST["section_newsletters"])&&$_REQUEST["section_newsletters"]=='on') {
-    $tikilib->add_template_to_section($tid,'newsletters');
+    $templateslib->add_template_to_section($tid,'newsletters');
   }  else {
-    $tikilib->remove_template_from_section($tid,'newsletters');
+    $templateslib->remove_template_from_section($tid,'newsletters');
   }
   if(isset($_REQUEST["section_cms"])&&$_REQUEST["section_cms"]=='on') {
-    $tikilib->add_template_to_section($tid,'cms');
+    $templateslib->add_template_to_section($tid,'cms');
   }  else {
-    $tikilib->remove_template_from_section($tid,'cms');
+    $templateslib->remove_template_from_section($tid,'cms');
   }
 }
 
@@ -142,7 +143,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_all_templates($offset,$maxRecords,$sort_mode,$find);
+$channels = $templateslib->list_all_templates($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

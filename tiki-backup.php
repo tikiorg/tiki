@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/backups/backuplib.php');
 
 // Check for admin permission
 if($tiki_p_admin != 'y') {
@@ -11,7 +12,7 @@ if($tiki_p_admin != 'y') {
 
 if(isset($_REQUEST["generate"])) {
   $filename = md5($tikilib->genPass()).'.sql';
-  $tikilib->backup_database("backups/$filename");
+  $backuplib->backup_database("backups/$filename");
 }
 
 $smarty->assign('restore','n');
@@ -21,7 +22,7 @@ if(isset($_REQUEST["restore"])) {
 }
 
 if(isset($_REQUEST["rrestore"])) {
-  $tikilib->restore_database("backups/".$_REQUEST["rrestore"]);	
+  $backuplib->restore_database("backups/".$_REQUEST["rrestore"]);	
 }
 
 if(isset($_REQUEST["remove"])) {

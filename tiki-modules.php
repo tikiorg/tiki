@@ -1,4 +1,5 @@
 <?php
+include_once('lib/usermodules/usermoduleslib.php');
 
 clearstatcache();
 $now=date("U");
@@ -15,9 +16,9 @@ if($user != 'admin') {
 
 
 
-if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $tikilib->user_has_assigned_modules($user)) {
-  $left_modules = $tikilib->get_assigned_modules_user($user,'l');
-  $right_modules = $tikilib->get_assigned_modules_user($user,'r');
+if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
+  $left_modules = $usermoduleslib->get_assigned_modules_user($user,'l');
+  $right_modules = $usermoduleslib->get_assigned_modules_user($user,'r');
 } else {
   $left_modules = $tikilib->get_assigned_modules('l');
   $right_modules = $tikilib->get_assigned_modules('r');

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/stats/statslib.php');
 
 if($feature_stats != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -25,27 +26,27 @@ if(isset($_REQUEST["chart"])) {
   $smarty->assign($_REQUEST["chart"]."_chart",'y');
 }
 
-$wiki_stats =  $tikilib->wiki_stats();
+$wiki_stats =  $statslib->wiki_stats();
 $smarty->assign_by_ref('wiki_stats',$wiki_stats);
-$igal_stats = $tikilib->image_gal_stats();
+$igal_stats = $statslib->image_gal_stats();
 $smarty->assign_by_ref('igal_stats',$igal_stats);
-$fgal_stats = $tikilib->file_gal_stats();
+$fgal_stats = $statslib->file_gal_stats();
 $smarty->assign_by_ref('fgal_stats',$fgal_stats);
-$cms_stats = $tikilib->cms_stats();
+$cms_stats = $statslib->cms_stats();
 $smarty->assign_by_ref('cms_stats',$cms_stats);
-$forum_stats = $tikilib->forum_stats();
+$forum_stats = $statslib->forum_stats();
 $smarty->assign_by_ref('forum_stats',$forum_stats);
-$blog_stats = $tikilib->blog_stats();
+$blog_stats = $statslib->blog_stats();
 $smarty->assign_by_ref('blog_stats',$blog_stats);
-$poll_stats = $tikilib->poll_stats();
+$poll_stats = $statslib->poll_stats();
 $smarty->assign_by_ref('poll_stats',$poll_stats);
-$faq_stats = $tikilib->faq_stats();
+$faq_stats = $statslib->faq_stats();
 $smarty->assign_by_ref('faq_stats',$faq_stats);
-$user_stats = $tikilib->user_stats();
+$user_stats = $statslib->user_stats();
 $smarty->assign_by_ref('user_stats',$user_stats);
-$site_stats = $tikilib->site_stats();
+$site_stats = $statslib->site_stats();
 $smarty->assign_by_ref('site_stats',$site_stats);
-$quiz_stats = $tikilib->quiz_stats();
+$quiz_stats = $statslib->quiz_stats();
 $smarty->assign_by_ref('quiz_stats',$quiz_stats);
 
 
