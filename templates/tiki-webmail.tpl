@@ -5,22 +5,22 @@
 <tr>
   <td>
     <a class="link" href="tiki-webmail.php?section=settings">
-    <img border="0" src="img/webmail/settings.gif"><br />
+    <img border="0" src="img/webmail/settings.gif" alt='{tr}Settings{/tr}'/><br />
     {tr}settings{/tr}</a>
   </td>
   <td>
     <a class="link" href="tiki-webmail.php?section=mailbox">
-    <img border="0" src="img/webmail/mailbox.gif"><br />
+    <img border="0" src="img/webmail/mailbox.gif" alt='{tr}Mailbox{/tr}'/><br />
     {tr}mailbox{/tr}</a>
   </td>
   <td>
     <a class="link" href="tiki-webmail.php?section=compose">
-    <img border="0" src="img/webmail/compose.gif"><br />
+    <img border="0" src="img/webmail/compose.gif" alt='{tr}Compose{/tr}'/><br />
     {tr}compose{/tr}</a>
   </td>
   <td>
     <a class="link" href="tiki-webmail.php?section=contacts">
-    <img border="0" src="img/webmail/contact.gif"><br />
+    <img border="0" src="img/webmail/contact.gif" alt='{tr}Contact{/tr}'/><br />
     {tr}contacts{/tr}</a>
   </td>
 </tr>
@@ -111,14 +111,14 @@
 </td>
 <td style="background:{$class};">
 {if $list[ix].isFlagged eq 'y'}
-<img src="img/webmail/flagged.gif" />
+<img src="img/webmail/flagged.gif" alt='{tr}flagged{/tr}'/>
 {/if}
 {if $list[ix].isReplied eq 'y'}
-<img src="img/webmail/replied.gif" />
+<img src="img/webmail/replied.gif" alt='{tr}replied{/tr}'/>
 {/if}
 </td>
 <td style="background:{$class};">{$list[ix].sender.name}</td>
-<td style="background:{$class};"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" />{/if}</td>
+<td style="background:{$class};"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}clip{/tr}'/>{/if}</td>
 <td style="background:{$class};">{$list[ix].date}</td>
 <td align="right" style="background:{$class};">{$list[ix].size|kbsize}</td>
 </tr>

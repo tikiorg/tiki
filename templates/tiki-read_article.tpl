@@ -1,16 +1,16 @@
 <div class="articletitle">
 <span class="titlea">{$title}</span><br />
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
+<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
 </div>
 
 {if $type eq 'Review'}
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$rating}
-<img src="img/icons/blue.gif" />
+<img src="img/icons/blue.gif" alt=""/>
 {/repeat}
 {if $rating > $entrating}
-<img src="img/icons/bluehalf.gif" />
+<img src="img/icons/bluehalf.gif" alt=""/>
 {/if}
 ({$rating}/10)
 </div>
@@ -21,13 +21,13 @@
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>{if $isfloat eq 'n'}<td width="25%" valign="top">{else}<td valign="top">{/if}
 {if $useImage eq 'y'}
-{if $hasImage eq 'y'}
-<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
+  {if $hasImage eq 'y'}
+    <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
+  {else}
+    <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
+  {/if}
 {else}
-<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
-{/if}
-{else}
-<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
+  <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {/if}
 {if $isfloat eq 'n'}
 </td><td width="75%" valign="top">

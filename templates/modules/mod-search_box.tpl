@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.11 2003-08-10 22:52:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.12 2003-08-15 21:13:48 redflo Exp $ *}
 
 {if $feature_search eq 'y'}
 <div class="box">

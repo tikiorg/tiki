@@ -11,7 +11,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
 <tr>
-  <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border="0" src="img/icons/folderin.gif" /></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
+  <td class="{cycle advance=false}"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}"><img border="0" src="img/icons/folderin.gif" alt='{tr}Folder in{/tr}'/></a>&nbsp;{$folders[ix].name} ({$folders[ix].urls})</td>
   <td class="{cycle}">
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove folder{/tr}' border='0' /></a>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>

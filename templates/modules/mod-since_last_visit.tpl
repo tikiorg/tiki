@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.4 2003-08-13 22:46:11 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.5 2003-08-15 21:13:55 redflo Exp $ *}
 
 {if $user}
 <div class="box">
@@ -16,4 +16,3 @@
 </div>
 </div>
 {/if}
-

@@ -73,7 +73,9 @@
   <span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
 {/if}
 
-<span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{if $tiki_p_admin_wiki eq 'y'}
+        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{/if}
 
 {if $feature_wiki_discuss eq 'y'}
   <span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&comments_postComment=post&comments_title={$page|escape:"url"}&comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>

@@ -29,7 +29,7 @@
 00021 <span class="keywordflow">if</span>(!isset($_REQUEST['pid'])) $_REQUEST['pid'] = 0;
 00022 <span class="keywordflow">if</span>($_REQUEST[<span class="stringliteral">"pid"</span>]) {
 00023   $info = $processManager-&gt;get_process($_REQUEST[<span class="stringliteral">"pid"</span>]);
-00024   $info['graph']=<span class="stringliteral">"lib/Galaxia/Processes/"</span>.$info['normalized_name'].<span class="stringliteral">"/graph/"</span>.$info['normalized_name'].<span class="stringliteral">".png"</span>; 
+00024   $info['graph']=<span class="stringliteral">"lib/Galaxia/processes/"</span>.$info['normalized_name'].<span class="stringliteral">"/graph/"</span>.$info['normalized_name'].<span class="stringliteral">".png"</span>; 
 00025 } <span class="keywordflow">else</span> {
 00026   $info = Array(
 00027     'name' =&gt; '',

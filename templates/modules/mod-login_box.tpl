@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.16 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.17 2003-08-15 21:13:41 redflo Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -58,8 +58,8 @@
           <tr><td class="module">{tr}Remember me{/tr} <input type="checkbox" name="rme" value="on"/></td></tr>
           {/if}
           <tr>
-          {if $allowRegister eq 'y' and $forgotPass eq 'y'}
-            <td valign="bottom">[<a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a>|<a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a>]</td>
+          {if $forgotPass eq 'y' and $allowRegister eq 'y'}
+            <td valign="bottom">[ <a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a> ]</td>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y'}
             <td valign="bottom"><a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a></td>

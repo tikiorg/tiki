@@ -28,7 +28,8 @@
       <tr>
         <td width="50" height="350" valign="left">
           <!-- The cord -->
-          <img src="img/cord.png" USEMAP="#map" border="0" />
+          <img src="img/cord.png" USEMAP="#map" border="0" 
+		alt='{tr}The cord{/tr}'/>
         </td>
 	<td width="400" class="Main">
 	  <p />

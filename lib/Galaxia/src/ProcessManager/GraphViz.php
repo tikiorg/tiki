@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.2 2003-06-19 21:05:45 awcolley Exp $
+// $Id: GraphViz.php,v 1.3 2003-08-15 21:03:32 redflo Exp $
 //
 
 /**
@@ -446,7 +446,7 @@ class Process_GraphViz {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
 
-                $file = 'lib/Galaxia/Processes/'.$this->pid.'/graph/'.$this->pid;
+                $file = 'lib/Galaxia/processes/'.$this->pid.'/graph/'.$this->pid;
             if ($fp = @fopen($file, 'w')) {
                 @fputs($fp, $parsedGraph);
                 @fclose($fp);

@@ -36,7 +36,7 @@
 00028 $smarty-&gt;assign('pid',$_REQUEST['pid']);
 00029 
 00030 $proc_info = $processManager-&gt;get_process($_REQUEST['pid']);
-00031 $proc_info['graph']=<span class="stringliteral">"lib/Galaxia/Processes/"</span>.$proc_info['normalized_name'].<span class="stringliteral">"/graph/"</span>.$proc_info['normalized_name'].<span class="stringliteral">".png"</span>;
+00031 $proc_info['graph']=<span class="stringliteral">"lib/Galaxia/processes/"</span>.$proc_info['normalized_name'].<span class="stringliteral">"/graph/"</span>.$proc_info['normalized_name'].<span class="stringliteral">".png"</span>;
 00032 
 00033 
 00034 

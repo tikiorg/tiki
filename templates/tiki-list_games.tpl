@@ -39,7 +39,7 @@
 {section name=ix loop=$games}
 <table class="normal">
 <tr><td width="12%" class="even">
-<a href="tiki-list_games.php?game={$games[ix].game}"><img border='0' src="games/thumbs/{$games[ix].game}" /></a>
+<a href="tiki-list_games.php?game={$games[ix].game}"><img border='0' src="games/thumbs/{$games[ix].game}" alt=''/></a>
 {if $tiki_p_admin_games eq 'y'}
 <div align="center"><small>
 [<a href="tiki-list_games.php?remove={$games[ix].game}" class="link">{tr}x{/tr}</a>
