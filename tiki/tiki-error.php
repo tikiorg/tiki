@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-error.php,v 1.12 2005-03-12 16:48:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-error.php,v 1.13 2005-04-02 16:52:02 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,13 +12,19 @@ include_once('lib/wiki/wikilib.php');
 
 ask_ticket('error');
 
+$page='';
+$type='';
+
 if (isset( $feature_usability ) && $feature_usability == 'y' ) {
   if (!isset($_REQUEST["error"])) {
+/*
     if ( !empty($_REQUEST['page'])) {
       $page = $_REQUEST['page'];
       $_REQUEST["error"] = tra("Page") . " '".$page."' ".tra("cannot be found");
       $type="404";
-    } elseif ( ($_SERVER["REQUEST_URI"] && !(preg_match('/tiki-error.php/',$_SERVER["REQUEST_URI"])) ) ) {
+    } else
+*/
+    if ( ($_SERVER["REQUEST_URI"] && !(preg_match('/tiki-error.php/',$_SERVER["REQUEST_URI"])) ) ) {
       $page = $_SERVER["REQUEST_URI"];
       $page = substr($page,strrpos($page,'/')+1);
       $_REQUEST["error"] = tra("Page") . " '".$page."' ".tra("cannot be found");
