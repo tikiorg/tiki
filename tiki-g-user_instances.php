@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.6 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.7 2004-01-25 00:53:32 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,9 @@ if ($tiki_p_use_workflow != 'y') {
 	die;
 }
 
+$smarty->assign('tiki_p_abort_instance',$tiki_p_abort_instance);
+$smarty->assign('tiki_p_exception',$tiki_p_exception_instance);
+
 // Filtering data to be received by request and
 // used to build the where part of a query
 // filter_active, filter_valid, find, sort_mode,
@@ -34,13 +37,25 @@ if (isset($_REQUEST['send'])) {
 }
 
 if (isset($_REQUEST['abort'])) {
-	check_ticket('g-user-instances');
-	$GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    check_ticket('g-user-instances');
+    if ($tiki_p_abort_instance != 'y') {
+        $smarty->assign('msg', tra("You couldn't abort a instance"));
+
+        $smarty->display("error.tpl");
+        die;
+    }
+    $GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['exception'])) {
-	check_ticket('g-user-instances');
-	$GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
+    check_ticket('g-user-instances');
+    if ($tiki_p_exception_instance != 'y') {
+        $smarty->assign('msg', tra("You couldn't exception a instance"));
+
+        $smarty->display("error.tpl");
+        die;
+    }
+    $GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['grab'])) {
@@ -144,7 +159,7 @@ $sameurl_elements = array(
 	'filter_status',
 	'filter_act_status',
 	'filter_type',
-	'processId',
+	'pid',
 	'filter_process',
 	'filter_owner',
 	'filter_activity'
