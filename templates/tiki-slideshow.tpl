@@ -1,6 +1,6 @@
 <html>
   <head>
-  <link rel="stylesheet" href="styles/slidestyle.css">
+  <link rel="stylesheet" href="styles/slideshows/{$slide_style}">
   <title>{$slide_title}</title>
   </head>
   <body bgcolor="#7d554b">

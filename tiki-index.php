@@ -212,6 +212,6 @@ $smarty->assign('wiki_extras','y');
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

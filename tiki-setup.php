@@ -172,7 +172,8 @@ $feature_surveys = 'n';
 $smarty->assign('feature_surveys',$feature_surveys);
 $feature_webmail = 'n';
 $smarty->assign('feature_webmail',$feature_webmail);
-
+$feature_obzip = 'n';
+$smarty->assign('feature_obzip',$feature_obzip);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
@@ -453,6 +454,8 @@ if(!file_exists('templates_c/preferences.php')) {
 $style = $tikilib->get_preference("style", 'subsilver.css');
 $smarty->assign('style',$style);
 
+$slide_style = $tikilib->get_preference("slide_style",'slidestyle.css');
+$smarty->assign('slide_style',$slide_style);
 
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
@@ -470,6 +473,9 @@ if($feature_userPreferences == 'y') {
   $smarty->assign('style',$style);
   $smarty->assign('language',$language);
 }
+
+$stlstl=explode('.',$style);
+$style_base = $stlstl[0];
 
 global $lang;
 include_once('lang/'.$language.'/language.php');
@@ -493,6 +499,82 @@ if(!strstr($_SERVER["REQUEST_URI"],'tiki-login')) {
     $smarty->assign('challenge',$chall);
   }  
 }
+
+
+$smarty->assign('mnu_wikimenu','display:none;');
+if(isset($_COOKIE["wikimenu"])) {
+  if($_COOKIE["wikimenu"]=='o') {
+    $smarty->assign('mnu_wikimenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_srvmenu','display:none;');
+if(isset($_COOKIE["srvmenu"])) {
+  if($_COOKIE["srvmenu"]=='o') {
+    $smarty->assign('mnu_srvmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_trkmenu','display:none;');
+if(isset($_COOKIE["trkmenu"])) {
+  if($_COOKIE["trkmenu"]=='o') {
+    $smarty->assign('mnu_trkmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_quizmenu','display:none;');
+if(isset($_COOKIE["quizmenu"])) {
+  if($_COOKIE["quizmenu"]=='o') {
+    $smarty->assign('mnu_quizmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_formenu','display:none;');
+if(isset($_COOKIE["formenu"])) {
+  if($_COOKIE["formenu"]=='o') {
+    $smarty->assign('mnu_formenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_admmnu','display:none;');
+if(isset($_COOKIE["admmnu"])) {
+  if($_COOKIE["admmnu"]=='o') {
+    $smarty->assign('mnu_admmnu','display:block;');
+  }	
+}
+$smarty->assign('mnu_faqsmenu','display:none;');
+if(isset($_COOKIE["faqsmenu"])) {
+  if($_COOKIE["faqsmenu"]=='o') {
+    $smarty->assign('mnu_faqsmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_galmenu','display:none;');
+if(isset($_COOKIE["galmenu"])) {
+  if($_COOKIE["galmenu"]=='o') {
+    $smarty->assign('mnu_galmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_cmsmenu','display:none;');
+if(isset($_COOKIE["cmsmenu"])) {
+  if($_COOKIE["cmsmenu"]=='o') {
+    $smarty->assign('mnu_cmsmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_blogmenu','display:none;');
+if(isset($_COOKIE["blogmenu"])) {
+  if($_COOKIE["blogmenu"]=='o') {
+    $smarty->assign('mnu_blogmenu','display:block;');
+  }	
+}
+$smarty->assign('mnu_filegalmenu','display:none;');
+if(isset($_COOKIE["filegalmenu"])) {
+  if($_COOKIE["filegalmenu"]=='o') {
+    $smarty->assign('mnu_filegalmenu','display:block;');
+  }	
+}
+
+
+
+
+
+
+
+
 
 
 include_once("tiki-modules.php");
@@ -605,5 +687,8 @@ if($feature_stats == 'y') {
   }
 }
 
+if($feature_obzip == 'y') {
+  ob_start("ob_gzhandler");
+}
 
 ?>
