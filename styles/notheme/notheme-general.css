@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.3 2003-08-07 04:34:19 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.4 2003-08-08 04:55:08 zaufi Exp $
  *
  */
 
@@ -17,9 +17,9 @@
  * General HTML redefinitions
  */
 body {
-	color:    WindowText;
-	background:   Background;
-	margin:   0px;
+	color: WindowText;
+	background: Background;
+	margin: 0px;
 }
 
 hr {
@@ -48,8 +48,8 @@ small {
 
 /* Prevent forms from generating unwanted padding or margins */
 form {
-	margin:    0px;
-	padding:   0px;
+	margin: 0px;
+	padding: 0px;
 }
 
 /* Code fragments */
