@@ -3,6 +3,7 @@
 
 <a class="link" href="tiki-user_tasks.php?tasks_useDates=y">{tr}Use dates{/tr}</a>
 <a class="link" href="tiki-user_tasks.php?tasks_useDates=n">{tr}All tasks{/tr}</a>
+<br/><br/>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
