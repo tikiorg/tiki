@@ -12,6 +12,7 @@ if($user != 'admin') {
   }
 }
 
+
 if(!isset($_REQUEST["group"])) {
   $smarty->assign('msg',tra("Unknown group"));
   $smarty->display('error.tpl');

@@ -1,1 +1,1 @@
-This is Tiki v1.1 -Capella- (c) 2002 by Fwazonga Industries. 
+This is Tiki v1.2 -Antares- (c)2002 by Fwazonga Industries. 

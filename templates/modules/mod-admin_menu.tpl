@@ -1,9 +1,9 @@
 {if $tiki_p_admin eq 'y'}
-<div class="box">
-<div class="box-title">
+<div class="box" style="width:170px;">
+<div class="box-title" style="width:170px;">
 <a class='flip' href="javascript:flip('adminmenu');">{tr}Admin{/tr}</a>
 </div>
-<div id='adminmenu' class="box-data">
+<div id='adminmenu' class="box-data" style="width:170px;">
   <div class="button">&nbsp;<a href="tiki-admin.php" class="linkbut">{tr}Admin{/tr}</a></div>
   <div class="button">&nbsp;<a href="tiki-adminusers.php" class="linkbut">{tr}Users{/tr}</a></div>
   <div class="button">&nbsp;<a href="tiki-admingroups.php" class="linkbut">{tr}Groups{/tr}</a></div>

@@ -29,6 +29,37 @@ if(!isset($_REQUEST["galleryId"])) {
 }
 $smarty->assign('galleryId',$_REQUEST["galleryId"]);
 
+// This check should be done before checking individual permissions
+if($tiki_p_view_image_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+// Individual permissions are checked because we may be trying to edit the gallery
+
+// Check here for indivdual permissions the objectType is 'image galleries' and the id is galleryId
+$smarty->assign('individual','n');
+if($userlib->object_has_one_permission($_REQUEST["galleryId"],'image gallery')) {
+  $smarty->assign('individual','y');
+  if($tiki_p_admin != 'y') {
+    // Now get all the permissions that are set for this type of permissions 'image gallery'
+    $perms = $userlib->get_permissions(0,-1,'permName_desc','','image galleries');
+    foreach($perms["data"] as $perm) {
+      $permName=$perm["permName"];
+      if($userlib->object_has_permission($user,$_REQUEST["galleryId"],'image gallery',$permName)) {
+        $$permName = 'y';
+        $smarty->assign("$permName",'y');
+      } else {
+        $$permName = 'n';
+        $smarty->assign("$permName",'n');
+      }
+    }
+  }
+}
+
+
+
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"]=str_replace("tiki-galleries","tiki-browse_gallery",$foo["path"]);
 $smarty->assign('url',$_SERVER["SERVER_NAME"].$foo["path"]);
@@ -43,6 +74,7 @@ $smarty->assign('thumbSizeX',80);
 $smarty->assign('thumbSizeY',80);
 $smarty->assign('public','n');
 $smarty->assign('edited','n');
+$smarty->assign('visible','y');
 $smarty->assign('edit_mode','n');
 
 // If we are editing an existing gallery prepare smarty variables
@@ -60,6 +92,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
     $smarty->assign_by_ref('thumbSizeX',$info["thumbSizeX"]);
     $smarty->assign_by_ref('thumbSizeY',$info["thumbSizeY"]);
     $smarty->assign_by_ref('public',$info["public"]);
+    $smarty->assign_by_ref('visible',$info["visible"]);
   }
 }
 
@@ -94,13 +127,21 @@ if(isset($_REQUEST["edit"])) {
   $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
   $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
   $smarty->assign_by_ref('thumbSizeY',$_REQUEST["thumbSizeY"]);
+  if(isset($_REQUEST["visible"]) && $_REQUEST["visible"]=="on") {
+    $smarty->assign('visible','y');
+    $visible ='y';
+  } else {
+    $visible ='n';
+  }
+  $smarty->assign_by_ref('visible',$visible);
   if(isset($_REQUEST["public"]) && $_REQUEST["public"]=="on") {
     $smarty->assign('public','y');
     $public ='y';
   } else {
     $public ='n';
   }
-  $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public);
+  $smarty->assign_by_ref('public',$public);
+  $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public,$visible);
   $smarty->assign('edit_mode','n');
 }
 
@@ -137,6 +178,38 @@ $smarty->assign_by_ref('offset',$offset);
 // Get the list of libraries available for this user (or public galleries)
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
 $galleries = $tikilib->list_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
+for($i=0;$i<count($galleries["data"]);$i++) {
+  if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'image gallery')) {
+    $galleries["data"][$i]["individual"]='y';
+    
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'image gallery','tiki_p_view_image_gallery')) {
+      $galleries["data"][$i]["individual_tiki_p_view_image_gallery"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_view_image_gallery"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'image gallery','tiki_p_upload_images')) {
+      $galleries["data"][$i]["individual_tiki_p_upload_images"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_upload_images"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'image gallery','tiki_p_create_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_galleries"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_create_galleries"]='n';
+    }
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'image gallery','tiki_p_admin_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_galleries"]='y';
+      $galleries["data"][$i]["individual_tiki_p_upload_images"]='y';
+      $galleries["data"][$i]["individual_tiki_p_view_image_gallery"]='y';
+    } 
+    
+  } else {
+    $galleries["data"][$i]["individual"]='n';
+  }
+}
+
+
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($galleries["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

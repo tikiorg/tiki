@@ -1,21 +1,21 @@
-<h1><a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a></h1>
-<h3>Create or edit content block</h3><a class="wiki" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
+<a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a><br/><br/>
+<h3>Create or edit content block</h3><a class="link" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId}" />
-<table>
-<tr><td>Description:</td>
-<td>
+<table class="normal">
+<tr><td class="formcolor">{tr}Description{/tr}:</td>
+<td class="formcolor">
 <textarea rows="5" cols="40" name="description">{$description}</textarea>
 </td></tr>
-<tr><td colspan="2" align="center">
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
 <input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
 </form>
 <h3>{tr}Available content blocks{/tr}</h3>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
-<tr><td>Find</td>
-   <td>
+<table class="findtable">
+<tr><td class="findtable">Find</td>
+   <td class="findtable">
    <form method="get" action="tiki-list_contents.php">
      <input type="text" name="find" />
      <input type="submit" value="find" name="search" />
@@ -24,14 +24,14 @@
    </td>
 </tr>
 </table>
-<table  border="1" width="97%" cellpadding="0" cellspacing="0">
+<table class="normal">
 <tr>
-<td class="heading"><a class="link" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
-<td class="heading"><a class="link" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading">{tr}Current version{/tr}</td>
-<td class="heading">{tr}Next version{/tr}</td>
-<td class="heading">{tr}Programmed versions{/tr}</td>
-<td class="heading">{tr}Old versions{/tr}</td>
+<td class="heading"><a class="tableheading" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Desc{/tr}</a></td>
+<td class="heading">{tr}Current ver{/tr}</td>
+<td class="heading">{tr}Next ver{/tr}</td>
+<td class="heading">{tr}Versions{/tr}</td>
+<td class="heading">{tr}Old vers{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {section name=changes loop=$listpages}
@@ -39,8 +39,8 @@
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="odd">
@@ -51,13 +51,13 @@
 {else}
 <td class="even">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].contentId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit desc{/tr}</a>
+<a class="link" href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit{/tr}</a>
 <a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}">{tr}Program{/tr}</a>
 </td>
 {/if}
@@ -68,6 +68,7 @@
 </td></tr>
 {/section}
 </table>
+<br/>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}

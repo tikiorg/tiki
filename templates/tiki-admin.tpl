@@ -1,75 +1,128 @@
-<h2><a class="wiki" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
-
+<h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
+<a name="features"></a>
 <div class="cbox">
-<div class="cbox-title">Features</div>
+<div class="cbox-title">{tr}Features{/tr}</div>
 <div class="cbox-data">
+<table>
+<tr><td valign="top">
+<div class="simplebox">
+{tr}Tiki sections and features{/tr}
 <form action="tiki-admin.php" method="post">
 <table>
-<tr><td class="text">{tr}Wiki{/tr}:</td><td><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Search{/tr}:</td><td><input type="checkbox" name="feature_search" {if $feature_search eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Image Galleries{/tr}:</td><td><input type="checkbox" name="feature_galleries" {if $feature_galleries eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Featured links{/tr}:</td><td><input type="checkbox" name="feature_featuredLinks" {if $feature_featuredLinks eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Hotwords{/tr}:</td><td><input type="checkbox" name="feature_hotwords" {if $feature_hotwords eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}User preferences screen{/tr}:</td><td><input type="checkbox" name="feature_userPreferences" {if $feature_userPreferences eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Articles{/tr}:</td><td><input type="checkbox" name="feature_articles" {if $feature_articles eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Submissions{/tr}:</td><td><input type="checkbox" name="feature_submissions" {if $feature_submissions eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Blogs{/tr}:</td><td><input type="checkbox" name="feature_blogs" {if $feature_blogs eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}XMLRPC API{/tr}:</td><td><input type="checkbox" name="feature_xmlrpc" {if $feature_xmlrpc eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Banners{/tr}:</td><td><input type="checkbox" name="feature_banners" {if $feature_banners eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Edit templates{/tr}:</td><td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Dynamic content system{/tr}:</td><td><input type="checkbox" name="feature_dynamic_content" {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}File galleries{/tr}:</td><td><input type="checkbox" name="feature_file_galleries" {if $feature_file_galleries eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td align="center" class="text" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
+<tr><td class="form">{tr}Wiki{/tr}:</td><td><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Search{/tr}:</td><td><input type="checkbox" name="feature_search" {if $feature_search eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Image Galleries{/tr}:</td><td><input type="checkbox" name="feature_galleries" {if $feature_galleries eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Featured links{/tr}:</td><td><input type="checkbox" name="feature_featuredLinks" {if $feature_featuredLinks eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Hotwords{/tr}:</td><td><input type="checkbox" name="feature_hotwords" {if $feature_hotwords eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}User preferences screen{/tr}:</td><td><input type="checkbox" name="feature_userPreferences" {if $feature_userPreferences eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Articles{/tr}:</td><td><input type="checkbox" name="feature_articles" {if $feature_articles eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Submissions{/tr}:</td><td><input type="checkbox" name="feature_submissions" {if $feature_submissions eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Blogs{/tr}:</td><td><input type="checkbox" name="feature_blogs" {if $feature_blogs eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}XMLRPC API{/tr}:</td><td><input type="checkbox" name="feature_xmlrpc" {if $feature_xmlrpc eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Banners{/tr}:</td><td><input type="checkbox" name="feature_banners" {if $feature_banners eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Edit templates{/tr}:</td><td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Dynamic content system{/tr}:</td><td><input type="checkbox" name="feature_dynamic_content" {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}File galleries{/tr}:</td><td><input type="checkbox" name="feature_file_galleries" {if $feature_file_galleries eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Chat{/tr}:</td><td><input type="checkbox" name="feature_chat" {if $feature_chat eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Polls{/tr}:</td><td><input type="checkbox" name="feature_polls" {if $feature_polls eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Custom home{/tr}:</td><td><input type="checkbox" name="feature_custom_home" {if $feature_custom_home eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Forums{/tr}:</td><td><input type="checkbox" name="feature_forums" {if $feature_forums eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Communications (send/receive objects){/tr}:</td><td><input type="checkbox" name="feature_comm" {if $feature_comm eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Categories{/tr}:</td><td><input type="checkbox" name="feature_categories" {if $feature_categories eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
 </div>
+</td><td valign="top">
+<div class="simplebox">
+{tr}Layout options{/tr}
+<form action="tiki-admin.php" method="post">
+<table>
+<tr><td class="form">{tr}Left column{/tr}:</td><td><input type="checkbox" name="feature_left_column" {if $feature_left_column eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Right column{/tr}:</td><td><input type="checkbox" name="feature_right_column" {if $feature_right_column eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Top bar{/tr}:</td><td><input type="checkbox" name="feature_top_bar" {if $feature_top_bar eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Bottom bar{/tr}:</td><td><input type="checkbox" name="feature_bot_bar" {if $feature_bot_bar eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td align="center" class="form" colspan="2"><input type="submit" name="layout" value="{tr}Set features{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</td></tr></table>
+</div>
 </div>
 
+<a name="general"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">General preferences and settings</div>
+<div class="cbox-title">{tr}General preferences and settings{/tr}</div>
 <div class="cbox-data">
 <form action="tiki-admin.php" method="post">
 <div class="simplebox">
 <table>
-<tr><td class="text">{tr}Index page{/tr}:</td><td>
+<tr><td class="form">{tr}Index page{/tr}:</td><td>
 <select name="tikiIndex">
 <option value="tiki-index.php" {if $tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>Wiki</option>
 <option value="tiki-view_articles.php" {if $tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>Articles</option>
 <option value="{$home_blog_url}" {if $tikiIndex eq $home_blog_url}selected="selected"{/if}>Blog: {$home_blog_name}</option>
-<option value="{$home_gallery_url}" {if $tikiIndex eq $home_gallery_url}selected="selected"{/if}>Gallery: {$home_gal_name}</option>
+<option value="{$home_gallery_url}" {if $tikiIndex eq $home_gallery_url}selected="selected"{/if}>{tr}Image Gallery{/tr}: {$home_gal_name}</option>
+<option value="{$home_file_gallery_url}" {if $tikiIndex eq $home_file_gallery_url}selected="selected"{/if}>{tr}File Gallery{/tr}: {$home_fil_name}</option>
+<option value="{$home_forum_url}" {if $tikiIndex eq $home_forum_url}selected="selected"{/if}>{tr}Forum{/tr}: {$home_forum_name}</option>
+{if $feature_custom_home eq 'y'}
+<option value="tiki-custom_home.php" {if $tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
+{/if}
 </select>
 </td></tr>
-<tr><td class="text">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Use cache for external images{/tr}:</td><td><input type="checkbox" name="cacheimages" {if $cacheimages eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="text">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions}" /></td></tr>
-<tr><td class="text">{tr}Maximum number of records in listings{/tr}: </td><td><input size="5" type="text" name="maxRecords" value="{$maxRecords}" /></td></tr>
-<!--<tr><td class="text">{tr}Wiki_Tiki_Title{/tr}: </td><td><input type="text" size="5" name="title" value="{$title}" /></td></tr>-->
-<tr><td class="text">{tr}Theme{/tr}:</td><td>
+<tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use cache for external images{/tr}:</td><td><input type="checkbox" name="cacheimages" {if $cacheimages eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Maximum number of records in listings{/tr}: </td><td><input size="5" type="text" name="maxRecords" value="{$maxRecords}" /></td></tr>
+<!--<tr><td class="form">{tr}Wiki_Tiki_Title{/tr}: </td><td><input type="text" size="5" name="title" value="{$title}" /></td></tr>-->
+<tr><td class="form">{tr}Theme{/tr}:</td><td>
         <select name="style">
         {section name=ix loop=$styles}
         <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select></td></tr>
-<tr><td class="text">{tr}Language{/tr}:</td><td>
+<tr><td class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}
         <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
-<tr><td align="center" class="text" colspan="2"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </div>
+</form>
 <div class="simplebox">
 <table width="80%" cellpadding="0" cellspacing="0">
 <tr>
   <td>
   <form method="post" action="tiki-admin.php">
     <table>
-    <tr><td>{tr}Change admin password{/tr}:</td><td><input type="password" name="adminpass" /></td></tr>
-    <tr><td>{tr}Again{/tr}:</td><td><input type="password" name="again" /></td></tr>
+    <tr><td class="form">{tr}Change admin password{/tr}:</td><td><input type="password" name="adminpass" /></td></tr>
+    <tr><td class="form">{tr}Again{/tr}:</td><td><input type="password" name="again" /></td></tr>
     <tr><td>&nbsp;</td><td><input type="submit" name="newadminpass" value="{tr}change{/tr}" /></td></tr>
     </table>
   </form>
@@ -77,14 +130,25 @@
 </tr>
 </table>
 </div>
-<form>
 </div>
 </div>
 
+<a name="wiki"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">Wiki settings</div>
+<div class="cbox-title">{tr}Wiki settings{/tr}</div>
 <div class="cbox-data">
-    <table width="100%">
+    <table>
     <tr><td width="60%" valign="top">
     <div class="simplebox">
     {tr}Dumps{/tr}:<br/>
@@ -95,7 +159,7 @@
     <div class="simplebox">
     <form action="tiki-admin.php" method="post">
     {tr}Create a tag for the current wiki{/tr}<br/>
-    {tr}Tag Name{/tr}<input  maxlength="20" size="10" type="text" name="tagname"/><br/>
+    {tr}Tag Name{/tr}<input  maxlength="20" size="10" type="text" name="tagname"/>
     <input type="submit" name="createtag" value="{tr}create{/tr}"/>
     </form>
     </div>
@@ -109,7 +173,7 @@
           {sectionelse}
           <option value=''></option>
           {/section}
-          </select><br/>
+          </select>
     <input type="submit" name="restoretag" value="{tr}restore{/tr}"/>          
     </form>
     </div>
@@ -123,7 +187,7 @@
           {sectionelse}
           <option value=''></option>
           {/section}
-          </select><br/>
+          </select>
     <input type="submit" name="removetag" value="{tr}remove{/tr}"/>          
     </form>
     </div>    
@@ -133,8 +197,8 @@
     {tr}Wiki comments settings{/tr}
     <form method="post" action="tiki-admin.php">
     <table>
-    <tr><td class="text">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page}" /></td></tr>
-    <tr><td class="text">{tr}Comments default ordering{/tr}
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
     </td><td>
     <select name="wiki_comments_default_ordering">
     <option value="commentDate_desc" {if $wiki_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
@@ -153,18 +217,29 @@
     {tr}Wiki Features{/tr}:<br/>
     <form action="tiki-admin.php" method="post">
     <table width="100%">
-    <tr><td class="text">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Ranking{/tr}:</td><td><input type="checkbox" name="feature_ranking" {if $feature_ranking eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}History{/tr}:</td><td><input type="checkbox" name="feature_history" {if $feature_history eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}List pages{/tr}:</td><td><input type="checkbox" name="feature_listPages" {if $feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Like pages{/tr}:</td><td><input type="checkbox" name="feature_likePages" {if $feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_rankings" {if $feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="text">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" class="text" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
+    <!--<tr><td class="form">{tr}Ranking{/tr}:</td><td><input type="checkbox" name="feature_ranking" {if $feature_ranking eq 'y'}checked="checked"{/if}/></td></tr>-->
+    <tr><td class="form">{tr}History{/tr}:</td><td><input type="checkbox" name="feature_history" {if $feature_history eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}List pages{/tr}:</td><td><input type="checkbox" name="feature_listPages" {if $feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Like pages{/tr}:</td><td><input type="checkbox" name="feature_likePages" {if $feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_rankings" {if $feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    </table>
+    </form>
+    </div>
+    
+    <div class="simplebox">
+    Wiki History
+    <form action="tiki-admin.php" method="post">
+    <table>
+    <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions}" /></td></tr>
+    <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions}" /></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="wikisetprefs" value="{tr}Set{/tr}" /></td></tr>    
     </table>
     </form>
     </div>
@@ -173,20 +248,32 @@
 </div>
 </div>
 
+<a name="gal"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">Image galleries</div>
+<div class="cbox-title">{tr}Image galleries{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php" method="post">
 <table width="100%">
-<tr><td>{tr}Home Gallery (main gallery){/tr}</td><td>
+<tr><td class="form">{tr}Home Gallery (main gallery){/tr}</td><td>
 <select name="homeGallery">
 {section name=ix loop=$galleries}
 <option value="{$galleries[ix].galleryId}" {if $galleries[ix].galleryId eq $home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"(...)":true}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td align="center" class="text" colspan="2"><input type="submit" name="galset" value="{tr}Set prefs{/tr}" /></td></tr>    
+<tr><td align="center" colspan="2"><input type="submit" name="galset" value="{tr}Set prefs{/tr}" /></td></tr>    
 </table>
 </form>
 </div>
@@ -194,32 +281,63 @@
 {tr}Galleries features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
     <table width="100%">
-    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" class="text" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
 </div>
 <div class="simplebox">
 <a class="link" href="tiki-admin.php?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
+
+    <div class="simplebox">
+    {tr}Image galleries comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="image_galleries_comments_per_page" value="{$image_galleries_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="image_galleries_comments_default_ordering">
+    <option value="commentDate_desc" {if $image_galleries_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $image_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="imagegalcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
+
 </div>
 </div>
 
-
+<a name="fgal"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">File galleries</div>
+<div class="cbox-title">{tr}File galleries{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php" method="post">
 <table width="100%">
-<tr><td>{tr}Home Gallery (main gallery){/tr}</td><td>
+<tr><td class="form">{tr}Home Gallery (main gallery){/tr}</td><td>
 <select name="homeFileGallery">
 {section name=ix loop=$file_galleries}
 <option value="{$file_galleries[ix].galleryId}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"(...)":true}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td align="center" class="text" colspan="2"><input type="submit" name="filegalset" value="{tr}Set prefs{/tr}" /></td></tr>    
+<tr><td align="center" colspan="2"><input type="submit" name="filegalset" value="{tr}Set prefs{/tr}" /></td></tr>    
 </table>
 </form>
 </div>
@@ -227,51 +345,150 @@
 {tr}Galleries features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
     <table width="100%">
-    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" class="text" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_comments" {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
 </div>
+
+    <div class="simplebox">
+    {tr}File galleries comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="file_galleries_comments_per_page" value="{$file_galleries_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="file_galleries_comments_default_ordering">
+    <option value="commentDate_desc" {if $file_galleries_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $file_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="filegalcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
+
 </div>
 </div>
 
+<a name="cms"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">CMS settings</div>
+<div class="cbox-title">{tr}CMS settings{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 {tr}CMS features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
     <table width="100%">
-    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_cms_rankings" {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" class="text" colspan="2"><input type="submit" name="cmsfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_cms_rankings" {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_article_comments" {if $feature_article_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="cmsfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
 </div>
 <div class="simplebox">
 <form method="post" action="tiki-admin.php">
 <table>
-  <tr><td class="text">{tr}Maximum number of articles in home{/tr}: </td><td><input size="5" type="text" name="maxArticles" value="{$maxArticles}" /></td></tr>
+  <tr><td class="form">{tr}Maximum number of articles in home{/tr}: </td><td><input size="5" type="text" name="maxArticles" value="{$maxArticles}" /></td></tr>
   <tr><td align="center" colspan="2"><input type="submit" name="cmsprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
+
+    <div class="simplebox">
+    {tr}Article comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="article_comments_per_page" value="{$article_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="article_comments_default_ordering">
+    <option value="commentDate_desc" {if $article_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $article_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="articlecomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
 </div>
 </div>
 
+<a name="polls"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
 <div class="cbox">
-<div class="cbox-title">Blog settings</div>
+<div class="cbox-title">{tr}Poll settings{/tr}</div>
+<div class="cbox-data">
+    <div class="simplebox">
+    {tr}Poll comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_poll_comments" {if $feature_poll_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="poll_comments_per_page" value="{$poll_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="poll_comments_default_ordering">
+    <option value="commentDate_desc" {if $poll_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $poll_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="pollprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+</div>
+</div>
+
+
+<a name="blogs"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}Blog settings{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php" method="post">
 <table width="100%">
-<tr><td>{tr}Home Blog (main blog){/tr}</td><td>
+<tr><td class="form">{tr}Home Blog (main blog){/tr}</td><td>
 <select name="homeBlog">
 {section name=ix loop=$blogs}
 <option value="{$blogs[ix].blogId}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:20:"(...)":true}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td align="center" class="text" colspan="2"><input type="submit" name="blogset" value="{tr}Set prefs{/tr}" /></td></tr>    
+<tr><td align="center" colspan="2"><input type="submit" name="blogset" value="{tr}Set prefs{/tr}" /></td></tr>    
 </table>
 </form>
 </div>
@@ -279,15 +496,126 @@
 {tr}Blog features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
     <table width="100%">
-    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_blog_rankings" {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" class="text" colspan="2"><input type="submit" name="blogfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_blog_rankings" {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_blog_comments" {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="blogfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
 </div>
+
+    <div class="simplebox">
+    {tr}Blog comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="blog_comments_per_page" value="{$blog_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="blog_comments_default_ordering">
+    <option value="commentDate_desc" {if $blog_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $blog_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
 </div>
 </div>
 
+<a name="forums"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}Forums{/tr}</div>
+<div class="cbox-data">
+    {tr}Forums settings{/tr}
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Home Forum (main forum){/tr}</td><td>
+    <select name="homeForum">
+    {section name=ix loop=$forums}
+    <option value="{$forums[ix].forumId}" {if $forums[ix].forumId eq $home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"(...)":true}</option>
+    {/section}
+    </select>
+    </td></tr>
+        <tr><td align="center" colspan="2"><input type="submit" name="homeforumprefs" value="{tr}Set home forum{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_forum_rankings" {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Ordering for forums in the forum listing{/tr}
+    </td><td>
+    <select name="forums_ordering">
+    <option value="created_desc" {if $forums_ordering eq 'created_desc'}selected="selected"{/if}>{tr}Creation Date (desc){/tr}</option>
+    <option value="threads_desc" {if $forums_ordering eq 'threads_desc'}selected="selected"{/if}>{tr}Topics (desc){/tr}</option>
+    <option value="comments_desc" {if $forums_ordering eq 'comments_desc'}selected="selected"{/if}>{tr}Threads (desc){/tr}</option>
+    <option value="lastPost_desc" {if $forums_ordering eq 'lastPost_desc'}selected="selected"{/if}>{tr}Last post (desc){/tr}</option>
+    <option value="hits_desc" {if $forums_ordering eq 'hits_desc'}selected="selected"{/if}>{tr}Visits (desc){/tr}</option>
+    <option value="name_desc" {if $forums_ordering eq 'name_desc'}selected="selected"{/if}>{tr}Name (desc){/tr}</option>
+    <option value="name_asc" {if $forums_ordering eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="forumprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+</div>
+</div>    
 
-
+<a name="rss"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}RSS feeds{/tr}</div>
+<div class="cbox-data">
+    <table>
+    <tr>
+      <td valign="top">
+        <form action="tiki-admin.php" method="post">
+        <table>
+        <tr><td class="form">{tr}<b>Feed</b>{/tr}</td>
+            <td class="form">{tr}<b>enable/disable</b>{/tr}</td>
+            <td class="form">{tr}<b>Max number of items</b>{/tr}</td>
+        </tr>
+        <tr><td class="form">{tr}Feed for Articles{/tr}:</td><td><input type="checkbox" name="rss_articles" {if $rss_articles eq 'y'}checked="checked"{/if}/></td><td class="form"><input type="text" name="max_rss_articles" size="5" value="{$max_rss_articles}" /></td></tr>
+        <tr><td class="form">{tr}Feed for Weblogs{/tr}:</td><td><input type="checkbox" name="rss_blogs" {if $rss_blogs eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_blogs" size="5" value="{$max_rss_blogs}" /></td></tr>
+        <tr><td class="form">{tr}Feed for Image Galleries{/tr}:</td><td><input type="checkbox" name="rss_image_galleries" {if $rss_image_galleries eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_image_galleries" size="5" value="{$max_rss_image_galleries}" /></td></tr>
+        <tr><td class="form">{tr}Feed for File Galleries{/tr}:</td><td><input type="checkbox" name="rss_file_galleries" {if $rss_file_galleries eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_file_galleries" size="5" value="{$max_rss_file_galleries}" /></td></tr>
+        <tr><td class="form">{tr}Feed for the Wiki{/tr}:</td><td><input type="checkbox" name="rss_wiki" {if $rss_wiki eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_wiki" size="5" value="{$max_rss_wiki}" /></td></tr>
+        <tr><td class="form">{tr}Feed for individual Image Galleries{/tr}:</td><td><input type="checkbox" name="rss_image_gallery" {if $rss_image_gallery eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_image_gallery" size="5" value="{$max_rss_image_gallery}" /></td></tr>
+        <tr><td class="form">{tr}Feed for individual File Galleries{/tr}:</td><td><input type="checkbox" name="rss_file_gallery" {if $rss_file_gallery eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_file_gallery" size="5" value="{$max_rss_file_gallery}" /></td></tr>
+        <tr><td class="form">{tr}Feed for individual weblogs{/tr}:</td><td><input type="checkbox" name="rss_blog" {if $rss_blog eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_blog" size="5" value="{$max_rss_blog}" /></td></tr>
+        <tr><td align="center" colspan="3"><input type="submit" name="rss" value="{tr}Set feeds{/tr}" /></td></tr>    
+        </table>
+        </form>
+      </td>
+    </tr>
+    </table>
+</div>
+</div>
+<br/><br/>
 
 

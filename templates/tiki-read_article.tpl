@@ -33,3 +33,4 @@
 <div class="articlebody">
 {$parsed_body}
 </div>
+{include file=comments.tpl}

@@ -1,29 +1,29 @@
-<h2><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a></h2>
+<a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
 <h3>Add Hotword</h3>
 <form method="post" action="tiki-admin_hotwords.php">
-<table>
-<tr><td class="form">{tr}Word{/tr}</td><td class="form"><input type="text" name="word"></td></tr>
-<tr><td class="form">{tr}URL{/tr}</td><td class="form"><input type="text" name="url" /></td></tr>
-<tr><td class="form">&nbsp;</td><td class="form"><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
+<table class="normal">
+<tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word"></td></tr>
+<tr><td class="formcolor">{tr}URL{/tr}</td><td class="formcolor"><input type="text" name="url" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 <div  align="center">
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
-<tr><td>Find</td>
-   <td>
+<table class="findtable">
+<tr><td class="findtable">Find</td>
+   <td class="findtable">
    <form method="get" action="tiki-admin_hotwords.php">
      <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
 </tr>
 <br/><br/>
 </table>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
+<table class="normal">
 <tr>
-<td class="heading"><a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
-<td class="heading"><a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$words}

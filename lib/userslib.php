@@ -30,8 +30,10 @@ class UsersLib {
 
   function assign_object_permission($groupName,$objectId,$objectType,$permName)
   {
+    
     $objectId = md5($objectType.$objectId);
-    $query = "replace into users_objectPermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
+    
+    $query = "replace into users_objectpermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -42,7 +44,7 @@ class UsersLib {
     $groups = $this->get_user_groups($user);
     $objectId = md5($objectType.$objectId);
     foreach($groups as $groupName) {
-      $query = "select permName from users_objectPermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName = '$permName'";
+      $query = "select permName from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName = '$permName'";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
       if($result->numRows()) return true;
@@ -53,7 +55,7 @@ class UsersLib {
   function remove_object_permission($groupName,$objectId,$objectType,$permName)
   {
     $objectId = md5($objectType.$objectId);
-    $query = "delete from users_objectPermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName='$permName'";
+    $query = "delete from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName='$permName'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -62,7 +64,7 @@ class UsersLib {
   function get_object_permissions($objectId,$objectType)
   {
     $objectId = md5($objectType.$objectId);
-    $query = "select groupName,permName from users_objectPermissions where objectId='$objectId' and objectType='$objectType'";
+    $query = "select groupName,permName from users_objectpermissions where objectId='$objectId' and objectType='$objectType'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
@@ -74,8 +76,10 @@ class UsersLib {
   
   function object_has_one_permission($objectId,$objectType)
   {
+    
     $objectId = md5($objectType.$objectId);
-    $query = "select objectId,objectType from users_objectPermissions where objectId='$objectId' and objectType='$objectType'";
+    
+    $query = "select objectId,objectType from users_objectpermissions where objectId='$objectId' and objectType='$objectType'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return $result->numRows(); 
@@ -146,7 +150,7 @@ class UsersLib {
   function remove_user_from_group($user,$group) 
   {
     $userid = $this->get_user_id($user);
-    $query = "delete from users_userGroups where userId=$userid and groupName='$group'";
+    $query = "delete from users_usergroups where userId=$userid and groupName='$group'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
   }
@@ -206,7 +210,7 @@ class UsersLib {
   function get_user_groups($user) 
   {
     $userid = $this->get_user_id($user);
-    $query = "select groupName from users_userGroups where userId='$userid'";
+    $query = "select groupName from users_usergroups where userId='$userid'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
@@ -264,7 +268,7 @@ class UsersLib {
     } 
     
     $query = "select permName,type, permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from users_permissions";
+    $query_cant = "select count(*) from users_permissions $mid";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
     $cant = $this->db->getOne($query_cant);
@@ -284,7 +288,7 @@ class UsersLib {
   
   function get_group_permissions($group)
   {
-    $query = "select permName from users_groupPermissions where groupName='$group'";
+    $query = "select permName from users_grouppermissions where groupName='$group'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
@@ -296,7 +300,7 @@ class UsersLib {
   
   function assign_permission_to_group($perm,$group) 
   {
-    $query = "replace into users_groupPermissions(groupName,permName) values('$group','$perm')";
+    $query = "replace into users_grouppermissions(groupName,permName) values('$group','$perm')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;  
@@ -322,16 +326,16 @@ class UsersLib {
     // admin has all the permissions
     if($user=='admin') return true;
     // Get user_groups ?  
-    $groups = get_user_groups($user);
+    $groups = $this->get_user_groups($user);
     foreach ($groups as $group) {
-      if(group_has_permission($group,$perm)) return true;  
+      if($this->group_has_permission($group,$perm)) return true;  
     }
     return false;
   }
   
   function group_has_permission($group,$perm) 
   {
-    $query = "select groupName,permName from users_groupPermissions where groupName='$group' and permName='$perm'";
+    $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return $result->numRows();  
@@ -339,7 +343,7 @@ class UsersLib {
   
   function remove_permission_from_group($perm,$group) 
   {
-    $query = "delete from users_groupPermissions where permName='$perm' and groupName= '$group'";
+    $query = "delete from users_grouppermissions where permName='$perm' and groupName= '$group'";
     $result =  $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -359,7 +363,7 @@ class UsersLib {
   function assign_user_to_group($user,$group) 
   {
     $userid = $this->get_user_id($user);
-    $query = "replace into users_userGroups(userId,groupName) values($userid,'$group')";
+    $query = "replace into users_usergroups(userId,groupName) values($userid,'$group')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;  

@@ -1,12 +1,12 @@
-<h1><a  class="wiki" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a></h1>
-<a class="link" href="#assign">{tr}assign module{/tr}</a>
-<a class="link" href="#leftmod">{tr}left modules{/tr}</a>
-<a class="link" href="#rightmod">{tr}right modules{/tr}</a>
-<a class="link" href="#editcreate">{tr}edit/create{/tr}</a>
-<a class="link" href="tiki-admin_modules.php?clear_cache=1">{tr}clear cache{/tr}</a>
+<a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a><br/><br/>
+[<a class="link" href="#assign">{tr}assign module{/tr}</a>|
+<a class="link" href="#leftmod">{tr}left modules{/tr}</a>|
+<a class="link" href="#rightmod">{tr}right modules{/tr}</a>|
+<a class="link" href="#editcreate">{tr}edit/create{/tr}</a>|
+<a class="link" href="tiki-admin_modules.php?clear_cache=1">{tr}clear cache{/tr}</a>]
 <h3>{tr}User Modules{/tr}</h3>
 
-<table border="1" cellpadding="0" cellspacing="0" width="90%">
+<table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
@@ -41,8 +41,8 @@
 <h3>Assign module</h3>
 
 <form method="post" action="tiki-admin_modules.php">
-<table>
-<tr><td>{tr}Module Name{/tr}</td><td>
+<table class="normal">
+<tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
 {section name=ix loop=$all_modules}
 <option value="{$all_modules[ix]}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
@@ -50,37 +50,36 @@
 </select>
 </td></tr>
 <!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title}"></td></tr>-->
-<tr><td>{tr}Position{/tr}</td><td>
+<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
 <select name="assign_position">
 <option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>left</option>
 <option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>right</option>
 </select>
 </td></tr>
-<tr><td>{tr}Order{/tr}</td><td>
+<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
 <select name="assign_order">
 {section name=ix loop=$orders}
 <option value="{$orders[ix]}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td>{tr}Cache Time{/tr}(secs)</td><td><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
-<tr><td>{tr}Rows{/tr}</td><td><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
-<tr><td>{tr}Groups{/tr}</td><td>
+<tr><td class="formcolor">{tr}Cache Time{/tr}(secs)</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
+<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
+<tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="assign" value="assign"></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="assign" value="assign"></td></tr>
 </table>
 </form>
 <br/>
 <h3>Assigned Modules</h3>
 <a name="leftmod"></a>
 <h3>Left Modules</h3>
-
-<table border="1" cellpadding="0" cellspacing="0" width="90%">
+<table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <!--<td class="heading">{tr}title{/tr}</td>-->
@@ -129,7 +128,7 @@
 <a name="rightmod"></a>
 <h3>Right Modules</h3>
 
-<table border="1" cellpadding="0" cellspacing="0" width="90%">
+<table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <!--<td class="heading">{tr}title{/tr}</td>-->
@@ -177,12 +176,78 @@
 </table>
 <br/>
 <a name="editcreate"></a>
+<table class="normal"><tr><td valign="top" class="odd">
 <h3>Edit/Create user module</h3>
 <form method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td>Name</td><td><input type="text" name="um_name" value="{$um_name}" /></td></tr>
-<tr><td>Title</td><td><input type="text" name="um_title" value="{$um_title}" /></td></tr>
-<tr><td>Data</td><td><textarea name="um_data" rows="10" cols="40">{$um_data}</textarea></td></tr>
+<tr><td class="form">Name</td><td><input type="text" name="um_name" value="{$um_name}" /></td></tr>
+<tr><td class="form">Title</td><td><input type="text" name="um_title" value="{$um_title}" /></td></tr>
+<tr><td class="form">Data</td><td><textarea id='usermoduledata' name="um_data" rows="10" cols="25">{$um_data}</textarea></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{tr}create/edit{/tr}" /></td></tr>
 </table>
 </form>
+</td><td valign="top" class="even">
+<h3>{tr}Objects that can be included{/tr}</h3>
+<table>
+<tr>
+  <td class="form">
+    {tr}Available polls{/tr}:
+  </td>
+  <td>
+    <select name="polls" id='list_polls'>
+    {section name=ix loop=$polls}
+    <option value="{literal}{{/literal}poll id={$polls[ix].pollId}{literal}}{/literal}">{$polls[ix].title}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}use poll{/tr}</a>
+  </td>
+</tr>
+<tr>
+  <td class="form">
+    {tr}Dynamic content blocks{/tr}:
+  </td>
+  <td>
+    <select name="contents" id='list_contents'>
+    {section name=ix loop=$contents}
+    <option value="{literal}{{/literal}content id={$contents[ix].contentId}{literal}}{/literal}">{$contents[ix].description|truncate:20:"(...)":true}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');">{tr}use dynamic  content{/tr}</a>
+  </td>
+</tr>
+<tr>
+  <td class="form">
+    {tr}RSS modules{/tr}:
+  </td>
+  <td>
+    <select name="rsss" id='list_rsss'>
+    {section name=ix loop=$rsss}
+    <option value="{literal}{{/literal}rss id={$rsss[ix].rssId}{literal}}{/literal}">{$rsss[ix].name}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}use rss module{/tr}</a>
+  </td>
+</tr>
+<tr>
+  <td class="form">
+    {tr}Banner zones{/tr}:
+  </td>
+  <td>
+    <select name="banners" id='list_banners'>
+    {section name=ix loop=$banners}
+    <option value="{literal}{{/literal}banner zone={$banners[ix].zone}{literal}}{/literal}">{$banners[ix].zone}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');">{tr}use banner zone{/tr}</a>
+  </td>
+</tr>
+</table>
+</td></tr></table>

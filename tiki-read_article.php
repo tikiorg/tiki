@@ -57,6 +57,14 @@ if(isset($_REQUEST["articleId"])) {
   $smarty->assign('parsed_heading',$tikilib->parse_data($heading));
 }
 
+if($feature_article_comments == 'y') {
+  $comments_per_page = $article_comments_per_page;
+  $comments_default_ordering = $article_comments_default_ordering;
+  $comments_vars=Array('articleId');
+  $comments_prefix_var='article';
+  $comments_object_var='articleId';
+  include_once("comments.php");
+}
 
 
 

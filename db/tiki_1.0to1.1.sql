@@ -1,3 +1,9 @@
+update tiki_modules set name='last_modif_pages' where name='last_modif';
+update tiki_modules set name='last_image_galleries' where name = 'last_galleries';
+update tiki_modules set name='top_image_galleries' where name = 'top_galleries';
+update tiki_modules set name='user_image_galleries' where name = 'user_galleries';
+
+
 ## Table for user votings system
 # This table tracks which users voted what
 drop table if exists tiki_user_votings;
@@ -121,3 +127,61 @@ insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_dynam
 
 insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_banners','tiki','Administrator, can admin banners');
 ### end of changes
+
+
+DROP TABLE IF EXISTS tiki_zones;
+CREATE TABLE tiki_zones(
+  zone varchar(40) not null,
+  primary key(zone)
+);
+
+DROP TABLE IF EXISTS tiki_banners;
+CREATE TABLE tiki_banners (
+  bannerId integer(12) not null auto_increment,
+  client varchar(200) not null,
+  url varchar(255),
+  title varchar(255),
+  alt varchar(250),
+  which varchar(50),
+  imageData longblob,
+  imageType varchar(200),
+  imageName varchar(100),
+  HTMLData text,
+  fixedURLData varchar(255),
+  textData text,
+  fromDate integer(14),
+  toDate integer(14),
+  useDates char(1),
+  mon char(1),
+  tue char(1),
+  wed char(1),
+  thu char(1),
+  fri char(1),
+  sat char(1),
+  sun char(1),
+  hourFrom char(4),
+  hourTo char(4),
+  created integer(14),
+  maxImpressions integer(8),
+  impressions integer(8),
+  clicks integer(8),
+  zone varchar(40),
+  primary key(bannerId)
+);
+
+### Dynamic content system
+DROP TABLE IF EXISTS tiki_content;
+CREATE TABLE tiki_content(
+  contentId integer(8) not null auto_increment,
+  description text,
+  primary key(contentId)
+);
+
+DROP TABLE IF EXISTS tiki_programmed_content;
+CREATE TABLE tiki_programmed_content (
+  pId integer(8) not null auto_increment,
+  contentId integer(8) not null,
+  publishDate integer(14) not null,
+  data text,
+  primary key(pId)
+);

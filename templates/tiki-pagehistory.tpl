@@ -1,4 +1,4 @@
-<h2>{tr}History of{/tr}: <a href="tiki-index.php?page={$page}" class="wiki">{$page}</a></h2>
+<h1>{tr}History of{/tr}: <a href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a></h1>
 {if $preview}
 <h2>{tr}Version{/tr}: {$version}</h2>
 <div  class="wikitext">{$preview.data}</div>

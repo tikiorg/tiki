@@ -29,6 +29,21 @@ $map = array (
 
 $s=new xmlrpc_server( $map );
 
+function check_individual($user,$blogid,$permName) {
+  global $userlib;
+  // If the user is admin he can do everything
+  if($userlib->user_has_permission($user,'tiki_p_blog_admin')) return true;
+  // If no individual permissions for the object then ok
+  if(!$userlib->object_has_one_permission($blogid,'blog')) return true;
+  // If the object has individual permissions then check
+  // Now get all the permissions that are set for this type of permissions 'image gallery'
+  if($userlib->object_has_permission($user,$blogId,'blog',$permName)) {
+    return true;
+  } else {
+    return false;
+  }          
+}
+
 /* Validates the user and returns user information */
 function getUserInfo($params) {
  global $tikilib,$userlib;
@@ -64,14 +79,28 @@ function newPost($params) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
-  if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
-    return new xmlrpcresp(0, 101, "User is not allowed to post");
+  // Get individual permissions for this weblog if they exist
+  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
   }
   
-  // User ok and can submit then submit an article
+  // If the blog is not public then check if the user is the owner
+  if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
+    if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
+      return new xmlrpcresp(0, 101, "User is not allowed to post");
+    }
+    $blog_info = $tikilib->get_blog($blogid);
+    if($blog_info["public"]!='y') {
+      if($username != $blog_info["user"]) {
+        return new xmlrpcresp(0, 101, "User is not allowed to post");
+      }
+    }
+  }
+  
+  // User ok and can submit then submit the post
   $now=date("U");
   
-  $id = $tikilib->blog_post($blogid,$content,$user);
+  $id = $tikilib->blog_post($blogid,$content,$username);
    
   return new xmlrpcresp(new xmlrpcval("$id"));
 }
@@ -91,6 +120,10 @@ function editPost($params) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
+  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefor the user cannot edit a post");
+  }
+ 
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new xmlrpcresp(0, 101, "User is not allowed to post");
   }
@@ -103,13 +136,12 @@ function editPost($params) {
   
   if($post_data["user"]!=$username) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
-      return new xmlrpcresp(0, 101, "Permission denied to edit that post");
+      return new xmlrpcresp(0, 101, "Permission denied to edit that post since the post does not belong to the user");
     }
   }
  
-  // User ok and can submit then submit an article
   $now=date("U");
-  $id = $tikilib->update_post($postid,$content,$user);
+  $id = $tikilib->update_post($postid,$content,$username);
   return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
 
@@ -133,14 +165,14 @@ function deletePost($params) {
   if(!$post_data) {
     return new xmlrpcresp(0, 101, "Post not found");
   }
-  
+      
   if($post_data["user"]!=$username) {
     if(!$userlib->user_has_permission($username,'tiki_p_blog_admin')) {
       return new xmlrpcresp(0, 101, "Permission denied to edit that post");
     }
   }
  
-  // User ok and can submit then submit an article
+  
   $now=date("U");
   $id = $tikilib->remove_post($postid);
   return new xmlrpcresp(new xmlrpcval(1,"boolean"));
@@ -163,9 +195,17 @@ function getPost($params) {
   if(!$userlib->validate_user($username,$password)) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
+
+  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog");
+  }
  
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new xmlrpcresp(0, 101, "User is not allowed to post");
+  }
+
+  if(!$userlib->user_has_permission($username,'tiki_p_read_blog')) {
+      return new xmlrpcresp(0, 101, "Permission denied to read this blog");
   }
   
   // Now get the post information
@@ -201,7 +241,11 @@ function getRecentPosts($params) {
   if(!$userlib->validate_user($username,$password)) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
- 
+  
+  if(!check_individual($username,$blogid,'tiki_p_blog_post') ) {
+    return new xmlrpcresp(0, 101, "User is not allowed to post to this weblog due to individual restrictions for this weblog therefore the user cannot edit a post");
+  }
+  
   if(!$userlib->user_has_permission($username,'tiki_p_blog_post')) {
     return new xmlrpcresp(0, 101, "User is not allowed to post");
   }

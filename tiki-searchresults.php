@@ -14,8 +14,14 @@ if(!isset($_REQUEST["where"])) {
   $where = $_REQUEST["where"];
 }
 $find_where='find_'.$where;
+$smarty->assign('where',$where);
 
 if($where=='pages' and $feature_wiki != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+if($where=='forums' and $feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  

@@ -4,9 +4,11 @@
 {tr}Last changes{/tr}
 </div>
 <div class="box-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modLastModif}
-<div class="button">{$smarty.section.ix.index_next})<a class="linkbut" href="tiki-index.php?page={$modLastModif[ix].pageName}">{$modLastModif[ix].pageName}</a></div>
+<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td><td class="module">&nbsp;<a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName}">{$modLastModif[ix].pageName}</a></td></tr>
 {/section}
+</table>
 </div>
 </div>
 {/if}

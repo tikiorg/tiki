@@ -1,7 +1,7 @@
-<h1>Featured links</h1>
-<a class="link" href="tiki-admin_links.php?generate=1">Generate positions by hits</a>
+<a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a><br/><br/>
+<a class="link" href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a>
 <h3>List of featured links</h3>
-<table border="1" cellpadding="0" cellspacing="0" width="90%">
+<table class="normal">
 <tr>
 <td class="heading">{tr}url{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
@@ -38,18 +38,18 @@
 {/section}
 </table>
 <br/>
-<h3><a class="pagetitle" href="tiki-admin_links.php">Add Featured Link</a></h3>
+<h3>{tr}Add Featured Link{/tr}</h3>
 <form action="tiki-admin_links.php" method="post">
-<table>
+<table class="normal">
 {if $editurl eq 'n'}
-<tr><td>URL</td><td><input type="text" name="url" /></td></tr>
+<tr><td class="formcolor">URL</td><td class="formcolor"><input type="text" name="url" /></td></tr>
 {else}
-<tr><td>URL</td><td>{$editurl}
+<tr><td class="formcolor">URL</td><td class="formcolor">{$editurl}
 <input type="hidden" name="url" value="{$editurl}" />
 </td></tr>
 {/if}
-<tr><td>Title</td><td><input type="text" name="title" value="{$title}" /></td></tr>
-<tr><td>Position</td><td><input type="text" size="3" name="position" value="{$position}" /> (0 {tr}disables the link{/tr})</td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="add" value="add" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
+<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor"><input type="text" size="3" name="position" value="{$position}" /> (0 {tr}disables the link{/tr})</td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="add" /></td></tr>
 </table>
 </form>

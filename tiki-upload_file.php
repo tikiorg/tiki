@@ -2,13 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
-/*
+
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
+
 
 // Now check permissions to access this page
 if($tiki_p_upload_files != 'y') {
@@ -27,6 +27,34 @@ $smarty->assign('show','n');
 // Process an upload here
 if(isset($_REQUEST["upload"])) {
   // Check here if it is an upload or an URL
+  $smarty->assign('individual','n');
+  if($userlib->object_has_one_permission($_REQUEST["galleryId"],'file gallery')) {
+    $smarty->assign('individual','y');
+    if($tiki_p_admin != 'y') {
+      // Now get all the permissions that are set for this type of permissions 'file gallery'
+      $perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
+      foreach($perms["data"] as $perm) {
+        $permName=$perm["permName"];
+        if($userlib->object_has_permission($user,$_REQUEST["galleryId"],'file gallery',$permName)) {
+          $$permName = 'y';
+          $smarty->assign("$permName",'y');
+        } else {
+          $$permName = 'n';
+          $smarty->assign("$permName",'n');
+        }
+      }
+    }
+  }
+  if($tiki_p_admin_file_galleries == 'y') {
+      $tiki_p_upload_filesimages = 'y';
+  }
+
+  if($tiki_p_upload_files != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot upload images"));
+  $smarty->display('error.tpl');
+  die;  
+  }
+  
   $gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
   // Check the user to be admin or owner or the gallery is public
   if($tiki_p_admin_file_galleries!='y' && (!$user || $user!=$gal_info["user"]) && $gal_info["public"]!='y') {
@@ -98,7 +126,47 @@ if(isset($_REQUEST["galleryId"])) {
 } else {
   $smarty->assign('galleryId','');
 }
-$galleries = $tikilib->list_file_galleries(0,-1,'lastModif_desc', $user,'');
+if($tiki_p_admin_file_galleries != 'y') {
+  $galleries = $tikilib->list_visible_file_galleries(0,-1,'lastModif_desc', $user,'');
+} else {
+  $galleries = $tikilib->list_file_galleries(0,-1,'lastModif_desc', $user,'');
+}
+for($i=0;$i<count($galleries["data"]);$i++) {
+  if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'file gallery')) {
+    $galleries["data"][$i]["individual"]='y';
+    
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_view_file_gallery')) {
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_upload_files')) {
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_download_files')) {
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_create_file_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='n';
+    }
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_admin_file_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='y';
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='y';
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+    } 
+    
+  } else {
+    $galleries["data"][$i]["individual"]='n';
+  }
+}
+
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 
 // Display the template

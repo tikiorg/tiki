@@ -8,6 +8,12 @@ if($feature_wiki != 'y') {
   die;  
 }
 
+if($tiki_p_view != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {

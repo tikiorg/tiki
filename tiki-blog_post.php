@@ -18,6 +18,7 @@ if($tiki_p_blog_post != 'y') {
 
 if(isset($_REQUEST["blogId"])) {
   $blogId = $_REQUEST["blogId"];
+  $blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
 } else {
   $blogId = 0;
 }
@@ -35,14 +36,24 @@ $smarty->assign('created',date("U"));
 // If the articleId is passed then get the article data
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
+  
+   
   $data = $tikilib->get_post($_REQUEST["postId"]);
+  
+  // If the user owns the weblog then he can edit
+  $blog_data = $tikilib->get_blog($data["blogId"]);
+  if($user && $user=$blog_data["user"]) {
+    $data["user"] = $user;
+  } 
+  
   if($data["user"]!=$user || !$user) {
-    if($tiki_p_admin_blogs != 'y') {
+    if($tiki_p_blog_admin != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
       $smarty->display('error.tpl');
       die;  
     }
   }
+  
   $smarty->assign('data',$data["data"]);
   $smarty->assign('created',$data["created"]);
   $smarty->assign('parsed_data',$tikilib->parse_data($data["data"]));
@@ -56,6 +67,54 @@ if(isset($_REQUEST["preview"])) {
 }
 
 if(isset($_REQUEST["save"])) {
+  $smarty->assign('individual','n');
+  if($userlib->object_has_one_permission($_REQUEST["blogId"],'blog')) {
+    $smarty->assign('individual','y');
+    if($tiki_p_admin != 'y') {
+      // Now get all the permissions that are set for this type of permissions 'image gallery'
+      $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
+      foreach($perms["data"] as $perm) {
+        $permName=$perm["permName"];
+        if($userlib->object_has_permission($user,$_REQUEST["blogId"],'blog',$permName)) {
+          $$permName = 'y';
+          $smarty->assign("$permName",'y');
+        } else {
+          $$permName = 'n';
+          $smarty->assign("$permName",'n');
+        }
+      }
+    }
+  }
+  if($tiki_p_blog_admin == 'y') {
+    $tiki_p_create_blogs = 'y';
+    $smarty->assign('tiki_p_create_blogs','y');
+    $tiki_p_blog_post = 'y';
+    $smarty->assign('tiki_p_blog_post','y');
+    $tiki_p_read_blog = 'y';
+    $smarty->assign('tiki_p_read_blog','y');
+  }
+
+  if($tiki_p_blog_post != 'y') {
+    $smarty->assign('msg',tra("Permission denied you cannot post"));
+    $smarty->display('error.tpl');
+    die;  
+  }
+  
+  if($_REQUEST["postId"]>0) {
+    $data = $tikilib->get_post($_REQUEST["postId"]);
+    $blog_data = $tikilib->get_blog($data["blogId"]);
+    if($user && $user=$blog_data["user"]) {
+      $data["user"] = $user;
+    } 
+    if($data["user"]!=$user || !$user) {
+      if($tiki_p_blog_admin != 'y') {
+        $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
+        $smarty->display('error.tpl');
+        die;  
+      }
+    }
+  }
+
   $_REQUEST["data"] = $tikilib->capture_images($_REQUEST["data"]);
   if($_REQUEST["postId"]>0) {
     $tikilib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user);

@@ -14,6 +14,12 @@ if($feature_gal_rankings != 'y') {
   die;  
 }
 
+if($tiki_p_view_image_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 $allrankings = Array(
   Array( 'name'=> 'Top galleries', 'value'=> tra('gal_ranking_top_galleries')),
   Array( 'name'=> 'Top images', 'value'=>tra('gal_ranking_top_images')),

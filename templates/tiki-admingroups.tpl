@@ -1,8 +1,18 @@
-<h2>{tr}Admin groups{/tr}</h2>
+<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br/><br/>
+<h3>{tr}Add a new group{/tr}</h3>
+<form action="tiki-admingroups.php" method="post">
+<table class="normal">
+<tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
+<tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc"></textarea></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td  class="formcolor"><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td></tr>
+</table>
+</form>
+<br/><br/>
+<h3>{tr}List of existing groups{/tr}</h3>
 <div  align="center">
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
-<tr><td>Find</td>
-   <td>
+<table class="findtable">
+<tr><td class="findtable">Find</td>
+   <td class="findtable">
    <form method="get" action="tiki-admingroups.php">
      <input type="text" name="find" />
      <input type="submit" value="find" name="search" />
@@ -11,10 +21,10 @@
    </td>
 </tr>
 </table>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
+<table class="normal">
 <tr>
-<td class="heading"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}desc{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}desc{/tr}</a></td>
 <td class="heading">{tr}Permissions{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -48,6 +58,7 @@
 {/if}
 {/section}
 </table>
+<br/>
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admingroups.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -59,11 +70,3 @@
 </div>
 
 </div>
-<h3>{tr}Add a new group{/tr}</h3>
-<form action="tiki-admingroups.php" method="post">
-<table>
-<tr><td>{tr}Group{/tr}:</td><td><input type="text" name="name" /></td></tr>
-<tr><td>{tr}Desc{/tr}:</td><td><textarea rows="5" cols="20" name="desc"></textarea></td></tr>
-<tr><td colspan="2"><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td></tr>
-</table>
-</form>

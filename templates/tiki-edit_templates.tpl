@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-edit_templates.php?mode=listing">Edit templates</a></h1>
+<a class="pagetitle" href="tiki-edit_templates.php?mode=listing">Edit templates</a><br/><br/>
 {if $mode eq 'listing'}
 <h3>Available templates:</h3>
 <table border="1" cellpadding="0" cellspacing="0" width="97%">
@@ -21,7 +21,7 @@
 </table>
 {/if}
 {if $mode eq 'editing'}
-<h3>Editing</h3>
+<a class="link" href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br/>
 <form action="tiki-edit_templates.php" method="post">
 <textarea name="data" rows="20" cols="80">{$data}</textarea>
 <div align="center">

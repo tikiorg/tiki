@@ -21,7 +21,7 @@
 </table>
 </div>
 <div class="articletrailer">
-(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="link">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes
+(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes
 {if $tiki_p_edit_article eq 'y'}
 [<a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">Edit</a>] 
 {/if}

@@ -8,7 +8,6 @@ if($feature_blogs != 'y') {
   die;  
 }
 
-
 // Now check permissions to access this page
 if($tiki_p_create_blogs != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot create or edit blogs"));
@@ -21,6 +20,26 @@ if(isset($_REQUEST["blogId"])) {
 } else {
   $blogId = 0;
 }
+
+$smarty->assign('individual','n');
+if($userlib->object_has_one_permission($blogId,'blog')) {
+  $smarty->assign('individual','y');
+  if($tiki_p_admin != 'y') {
+    // Now get all the permissions that are set for this type of permissions 'image gallery'
+    $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
+    foreach($perms["data"] as $perm) {
+      $permName=$perm["permName"];
+      if($userlib->object_has_permission($user,$_REQUEST["blogId"],'blog',$permName)) {
+        $$permName = 'y';
+        $smarty->assign("$permName",'y');
+      } else {
+        $$permName = 'n';
+        $smarty->assign("$permName",'n');
+      }
+    }
+  }
+}
+
 
 $smarty->assign('blogId',$blogId);
 $smarty->assign('title','');

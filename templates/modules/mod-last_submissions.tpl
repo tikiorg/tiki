@@ -4,13 +4,15 @@
 {tr}Last submissions{/tr}
 </div>
 <div class="box-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modLastSubmissions}
 {if $tiki_p_edit_submission eq 'y'}
-<div class="button">{$smarty.section.ix.index_next})&nbsp;<a class="linkbut" href="tiki-edit_submission.php?subId={$modLastSubmissions[ix].subId}">{$modLastSubmissions[ix].title}</a></div>
+<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td><td class="module">&nbsp;<a class="linkmodule" href="tiki-edit_submission.php?subId={$modLastSubmissions[ix].subId}">{$modLastSubmissions[ix].title}</a></td></tr>
 {else}
-<div class="button">{$smarty.section.ix.index_next})&nbsp;{$modLastSubmissions[ix].title}</div>
+<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td>&nbsp;{$modLastSubmissions[ix].title}</td></tr>
 {/if}
 {/section}
+</table>
 </div>
 </div>
 {/if}

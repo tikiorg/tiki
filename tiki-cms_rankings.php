@@ -14,6 +14,12 @@ if($feature_cms_rankings != 'y') {
   die;  
 }
 
+if($tiki_p_read_article != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 $allrankings = Array(
   Array( 'name'=> 'Top articles', 'value'=> tra('cms_ranking_top_articles')),
   Array( 'name'=> 'Top authors', 'value'=>tra('cms_ranking_top_authors'))

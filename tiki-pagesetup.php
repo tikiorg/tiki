@@ -16,11 +16,11 @@ $ppps = Array(
 foreach($allperms as $vperm) {
   $perm=$vperm["permName"];
   if(in_array($perm,$ppps)) {
-    if($user != 'admin') {
+    if($tiki_p_admin != 'y') {
       // Check for individual permissions if this is a page
       if($check) {
-        if($userlib->object_has_one_permission($page,TIKI_PAGE_RESOURCE)) {
-          if($userlib->object_has_permission($user,$page,TIKI_PAGE_RESOURCE,$perm)) {
+        if($userlib->object_has_one_permission($page,'wiki page')) {
+          if($userlib->object_has_permission($user,$page,'wiki page',$perm)) {
             $$perm = 'y';
             $smarty->assign("$perm",'y');     
           } else {
