@@ -1,23 +1,34 @@
 <?php
 
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignments.php,v 1.3 2004-02-20 22:58:27 ggeller Exp $
+
 // Copyright (c) 2004, George Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+// Todo: 
+//   Show how many items are ready to grade
+//     if due date is passed.
+//     if items are available for grading.
+//     link to tiki-hw_teacher_grading_que.php?assignmentId=n
+//   Replace $listpages with $listassignments
+//   Change the table structure from the article stuff to assignment stuff
+//     expireDate => dueDate
+
 error_reporting(E_ALL);
+
+// require_once("doc/devtools/ggg-trace.php");
+// $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/articles/artlib.php');
-include_once("lib/commentslib.php");
+include_once("lib/commentslib.php");      // GGG remove later
 
 require_once("lib/homework/homeworklib.php");
 
 $homeworklib = new HomeworkLib($dbTiki);
-
-$commentslib = new Comments($dbTiki);
 
 if ($feature_homework != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_homework");
@@ -90,8 +101,6 @@ if (isset($_REQUEST["type"])) {
 	$type = '';
 }
 
-
-
 if (isset($_REQUEST["topic"])) {
 	$topic = $_REQUEST["topic"];
 } else {
@@ -108,22 +117,9 @@ for ($i = 0; $i < count($listpages["data"]); $i++) {
 	$comments_prefix_var='article:';
 	$comments_object_var=$listpages["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var.$comments_object_var;
-	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 }
 
-
-$topics = $artlib->list_topics();
-$smarty->assign_by_ref('topics', $topics);
-
-//      or ($listpages[ix].show_expdate eq 'y')
-
-// If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
-$section = 'cms';
-include_once ('tiki-section_options.php');
-
-// ask_ticket('view_article');
 
 // Display the template
 $smarty->assign('mid', 'tiki-hw_teacher_assignments.tpl');
