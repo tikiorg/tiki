@@ -1,36 +1,24 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.11 2003-08-15 18:03:30 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.12 2003-08-15 21:40:17 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
+<a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}List Articles{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-list_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list articles tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
-<!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
-
-
-<br/><br/>
-[{if $tiki_p_edit_article eq 'y'}<a class="link" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>|{/if}
-<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>]
+<br /><br />
+[
+{if $tiki_p_edit_article eq 'y'}
+  <a class="link" href="tiki-edit_article.php">{tr}edit new article{/tr}</a> |
+{/if}
+<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
+]
 <br/><br/>
 <div align="center">
 <table class="findtable">
