@@ -617,7 +617,7 @@ table.findtable {
 	padding-bottom:   10px;
 }
 
-td.findtable {
+.findtable td {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 }

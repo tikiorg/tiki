@@ -318,13 +318,23 @@ td {
 }
 
 /* Cells in forms without background color */
-.form {
+.form td {
 	color: #000000;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	vertical-align: middle;
 	text-align: left;
 }
+
+/* Cells in forms without background color */
+.formcolor td {
+	color: #000000;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	vertical-align: middle;
+	text-align: left;
+}
+
 /* Cells in forms using a background color */
 .imageinfo, 
 .formcolor, 
@@ -491,6 +501,10 @@ table.findtable {
 	font-size: 10px;
 	margin-bottom: 20px;
 	padding-bottom: 10px;
+}
+
+.findtable td {
+	color: #FFFFFF;
 }
 
 /* odd rows in data tables */
