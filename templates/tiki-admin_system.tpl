@@ -9,10 +9,11 @@
 <br/><br/>
 
 <div class="simplebox">
-<form action="tiki-admin_system.php" method="post">
-<strong>{tr}Empty templates_c{/tr}</strong>
-<input type="hidden" name="do" value="templates_c" />
-<input type="submit" name="action" value="Kill !"/>
-{$templates_c_size|kbsize}
-</form>
+<ul>
+<li><strong><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty templates_c/{/tr}</a></strong>
+({$templates_c_size|kbsize})</li>
+
+<li><strong><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty modules/cache/{/tr}</a></strong>
+({$modules_size|kbsize})</li>
+</ul>
 </div>

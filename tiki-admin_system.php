@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.1 2003-12-16 14:23:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.2 2003-12-16 14:42:59 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,14 +50,19 @@ $done = '';
 $output = '';
 $buf = '';
 
-if (isset($_POST['do'])) {
-	if ($_POST['do'] == 'templates_c') {
+if (isset($_GET['do'])) {
+	if ($_GET['do'] == 'templates_c') {
 		erase_all_dir('templates_c');
+	} elseif ($_GET['do'] == 'modules_cache') {
+		erase_all_dir('modules/cache');
 	}
 }
 
 $templates_c_size = du('templates_c');
 $smarty->assign('templates_c_size', $templates_c_size);
+
+$modules_size = du('modules/cache');
+$smarty->assign('modules_size', $modules_size);
 
 $smarty->assign('mid', 'tiki-admin_system.tpl');
 $smarty->display("tiki.tpl");
