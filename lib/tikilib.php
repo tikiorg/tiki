@@ -3192,10 +3192,12 @@ class TikiLib {
     $lines = explode("\n",$data);
     $data = '';
     $listbeg=array();
+    $divdepth=array();
     foreach ($lines as $line) {
 
       // If the first character is ' ' and we are not in pre then we are in pre
       if(substr($line,0,1)==' ') {
+        // This is not list item -- must close lists currently opened
 	while(count($listbeg)) $data.=array_shift($listbeg);
         // If the first character is space then
         // change spaces for &nbsp;
@@ -3218,6 +3220,7 @@ class TikiLib {
 
         // This line is parseable then we have to see what we have
         if(substr($line,0,3)=='---') {
+          // This is not list item -- must close lists currently opened
           while(count($listbeg)) $data.=array_shift($listbeg);
           $line='<hr/>';
         } else {
@@ -3267,9 +3270,10 @@ class TikiLib {
             if(substr(current($listbeg),0,5)!='</li>')
               array_unshift($listbeg,'</li>'.array_shift($listbeg));
 	  } elseif($litype=='+') {
+            // Must append paragraph for list item of given depth...
             $listlevel=$this->how_many_at_start($line,$litype);
-            if($listlevel<count($listbeg))
-              while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
+            // Close lists down to requested level
+            while($listlevel<count($listbeg)) $data.=array_shift($listbeg);
             if(count($listbeg)) {
               if(substr(current($listbeg),0,5) != '</li>') {
                 array_unshift($listbeg,'</li>'.array_shift($listbeg));
@@ -3278,17 +3282,46 @@ class TikiLib {
             } else $liclose='';
             $line=$liclose.substr($line,count($listbeg));
           } else {
+            // This is not list item -- must close lists currently opened
             while(count($listbeg)) $data.=array_shift($listbeg);
+            // Get count of (possible) header signs at start
             $hdrlevel=$this->how_many_at_start($line,'!');
+            // If 1st char on line is '!' and its count less than 6 (max in HTML)
             if($litype=='!'&&$hdrlevel>0&&$hdrlevel<=6) {
-                $anchor=''; $aclose='';
-	        if(count($tocs[0])>0) {
-                  $thisid='id'.microtime()*1000000;
-	          array_push($anch,str_repeat("*",$hdrlevel)." <a href='#$thisid'>".substr($line,$hdrlevel).'</a>');
-                  $anchor="<a name='$thisid'>"; $aclose='</a>';
-	        }
-                $line = $anchor."<h$hdrlevel>".substr($line,$hdrlevel)."</h$hdrlevel>".$aclose;
-            } else $line.='<br/>';
+              // OK. Parse headers here...
+              $anchor=''; $aclose=''; $addremove=0;
+              // Close lower level divs if opened
+              for(;current($divdepth)>=$hdrlevel;array_shift($divdepth)) $data.='</div>';
+              // May be spesial signs present after '!'s?
+              $divstate=substr($line,$hdrlevel,1);
+              if($divstate=='+'||$divstate=='-') {
+                // OK. Must insert flipper after HEADER, and then open new div...
+                $thisid='id'.microtime()*1000000;
+                $aclose='<a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($divstate=='-'?'+':'-').']</a>';
+                $aclose.='<div id="'.$thisid.'" style="display:'.($divstate=='+'?'block':'none').';">';
+                array_unshift($divdepth, $hdrlevel);
+                $addremove=1;
+              }
+              // Is any {maketoc} present on page?
+	      if(count($tocs[0])>0) {
+                // OK. Must insert <a id=...> before HEADER and collect TOC entry
+                $thisid='id'.microtime()*1000000;
+	        array_push($anch,str_repeat("*",$hdrlevel)." <a href='#$thisid'>".substr($line,$hdrlevel+$addremove).'</a>');
+                $anchor="<a id='$thisid'>"; $aclose='</a>'.$aclose;
+	      }
+              $line = $anchor."<h$hdrlevel>".substr($line,$hdrlevel+$addremove)."</h$hdrlevel>".$aclose;
+            } else {
+              if (!strcmp($line, "...page...")) {
+                // Close lists and divs currently opened
+                while(count($listbeg)) $data.=array_shift($listbeg);
+                while(count($divdepth)) {
+                  $data.='</div>';
+                  array_shift($divdepth);
+                }
+                // Leave line unchanged... tiki-index.php will split wiki here
+                $line="\n...page...\n";
+              } else $line.='<br/>';	// Usual paragraph.
+	    }
           }
         }
       }
@@ -3297,18 +3330,17 @@ class TikiLib {
 
     // Close lists may remains opened
     while(count($listbeg)) $data.=array_shift($listbeg);
+    // Close header divs may remains opened
+    for($i=1;$i<=count($divdepth);$i++) $data.='</div>';
 
     // 26-Jun-2003, by zaufi
     // Replace {maketoc} from collected list of headers
-    //
     $html='';
     foreach($anch as $tocentry) {
       $html.=$tocentry."\n"; 
     }
-    if(count($anch)) {
-      $html=$this->parse_data($html);
-      $data=str_replace("{maketoc}",$html,$data);
-    }
+    if(count($anch)) $html=$this->parse_data($html);
+    $data=str_replace("{maketoc}",$html,$data);
     
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
