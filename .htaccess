@@ -6,6 +6,11 @@
 #require valid-user
 #</LIMIT>
 
+# this can be required to force utf-8 charset by default
+#     AddDefaultCharset utf-8
+# alternatively you can just enable auto-detection
+#     AddDefaultCharset off
+
 <FilesMatch "\.(bak|inc|lib|sh|sql|tpl)$">
 	order deny,allow
 	deny from all
