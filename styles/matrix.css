@@ -1,15 +1,9 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.8 2003-10-07 23:30:03 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.9 2003-10-13 13:38:56 zaufi Exp $
  *
  * My first TIKI theme :)
  *
  */
-
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
 
 @import "matrix/matrix-general.css";
 @import "matrix/matrix-tc.css";

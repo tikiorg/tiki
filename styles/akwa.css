@@ -1,11 +1,5 @@
 /* TIKIWIKI CSS - WINXP FILE */
 
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
-
 /* MAIN TAGS */
 
 body {

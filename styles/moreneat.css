@@ -2,11 +2,6 @@
    every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
    adapt to produce a new theme
 */
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
 
 body {
   background-color: #E9ECEF;

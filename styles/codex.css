@@ -3,13 +3,6 @@
    adapt to produce a new theme. Good luck!
 */
 
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-
-@import "doxygen.css";
-
 body {
 	background-image:    url(codex/page_back.png);
 	margin-top:   0px;
