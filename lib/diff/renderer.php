@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.5 2004-07-08 12:50:37 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.6 2004-08-12 16:06:23 sylvieg Exp $
 
 /**
  * A class to render Diffs in different formats.
@@ -166,7 +166,7 @@ class Text_Diff_Renderer {
 
     function _context($lines)
     {
-        $this->_lines($lines);
+        $this->_lines($lines, '', "<br />");
     }
 
     function _added($lines)
