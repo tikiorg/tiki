@@ -1,5 +1,10 @@
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_charts','charts','Can admin charts','admin');
 
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_chart','charts','Can view charts','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_vote_chart','charts','Can vote','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_suggest_chart_item','charts','Can suggest items','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoval_chart_suggestions','charts','Autovalidate suggestions','editor');
+
 ## Change to track duplicate file uploads in file galleries
 alter table tiki_files add hash char(32);
 
@@ -91,16 +96,9 @@ create table tiki_charts_rankings(
   primary key(chartId,itemId,period)
 );
 
-drop table if exists tiki_charts_chart_votes;
-create table tiki_charts_chart_votes(
-  user varchar(200) not null,
-  chartId integer(14) not null,
-  timestamp integer(14),
-  primary key(user,chartId)
-);
 
-drop table if exists tiki_charts_item_votes;
-create table tiki_charts_item_votes(
+drop table if exists tiki_charts_votes;
+create table tiki_charts_votes(
   user varchar(200) not null,
   itemId integer(14) not null,
   timestamp integer(14),

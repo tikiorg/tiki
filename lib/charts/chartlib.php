@@ -49,16 +49,22 @@ class ChartLib extends TikiLib {
   
   function get_ranking($chartId,$period) 
   {
+  	global $user;
     $query = "select tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
     $result = $this->query($query);
 	$ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
-      if($res['lastPosition']) {
+      if($res['lastPosition'] != 0) {
       	$res['dif']=$res['position']-$res['position'];
+      	if($res['dif']==0) $res['dif']='-';
       } else {
       	$res['dif']='new';
       }
-      if($res['dif']==0) $res['dif']='-';
+      if($this->user_has_voted_item($user,$res['itemId'])) {
+      	$res['voted']='y';
+      } else {
+      	$res['voted']='n';
+      }
       $ret[]=$res;
     }
     return $ret;
@@ -67,18 +73,28 @@ class ChartLib extends TikiLib {
   function purge_user_votes($chartId,$again)
   {
     $now = date("U");
-    $query = "delete from tiki_charts_chart_votes where timestamp + $again < $now";
+    $query = "delete from tiki_charts_votes where timestamp + $again < $now";
     $this->query($query);
   }
   
   function user_has_voted_chart($user,$chartId)
   {
     if($user) {
-      return $this->getOne("select count(*) from tiki_charts_chart_votes where user='$user' and chartId=$chartId");
+      return $this->getOne("select count(*) from tiki_charts_votes where user='$user' and chartId=$chartId");
     } else {
 	  return isset($_SESSION['chart_votes']) && in_array($chartId,$_SESSION['chart_votes']);    
     }
   }
+  
+  function user_has_voted_item($user,$itemId)
+  {
+    if($user) {
+      return $this->getOne("select count(*) from tiki_charts_votes where user='$user' and itemId=$itemId");
+    } else {
+	  return isset($_SESSION['chart_item_votes']) && in_array($itemId,$_SESSION['chart_item_votes']);    
+    }
+  }
+
   
   function get_last_period($chartId) {
     if($this->ranking_exists($chartId)) {
