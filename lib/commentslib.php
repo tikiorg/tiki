@@ -1193,6 +1193,7 @@ class Comments extends TikiLib {
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0)
     {
+			global $userlib;
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -1304,7 +1305,7 @@ class Comments extends TikiLib {
 	    $ret[$key]['user_online'] = isset($user_info[$res['userName']]['online']) ? 'y' : 'n';
 
 	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') == 'y') {
-		$ret[$key]['user_email'] = $this->get_user_details('email', $res['userName']);  // note $this extends tikilib
+		$ret[$key]['user_email'] = $userlib->get_user_details('email', $res['userName']);  // note $this extends tikilib
 	    } else {
 		$ret[$key]['user_email'] = '';
 	    }
