@@ -1,4 +1,4 @@
-# $Id: .htaccess,v 1.6 2003/07/02 06:07:20 rossta Exp $
+# $Id: .htaccess,v 1.7 2003/07/13 00:13:13 rossta Exp $
 
 #AuthUserFile "C:/Program Files/Apache Group/Apache/bin/users"
 #AuthName EnterPassword
@@ -66,7 +66,9 @@
 	RewriteRule ^/forum/?([0-9]+)         /tiki-view_forum.php?forumId=$1           [QSA,L]
 	RewriteRule ^/gallery/?([0-9]+)       /tiki-browse_gallery.php?galleryId=$1     [QSA,L]
 	RewriteRule ^/image/?([0-9]+)         /tiki-browse_gallery.php?galleryId=$1     [QSA,L]
-	RewriteRule ^/irc/?([A-Za-z0-9]+)/([0-9]+) /tiki-view_irc.php?log=$2_$1.log     [QSA,L]
+	RewriteRule ^/irc/?([0-9]+)$          /tiki-view_irc.php?date=$1                [QSA,L]
+	RewriteRule ^/irc/?([A-Za-z0-9]+)$    /tiki-view_irc.php?channel=$1             [QSA,L]
+	RewriteRule ^/irc/?([A-Za-z0-9]+)/([0-9]+) /tiki-view_irc.php?channel=$1&date=$2 [QSA,L]
 	RewriteRule ^/newsletter/?([0-9]+)    /tiki-newsletters.php?nlId=$1             [QSA,L]
 	RewriteRule ^/page/([-_\+A-Za-z0-9]+) /tiki-index.php?page=$1                   [QSA,L]
 	RewriteRule ^/quiz/?([0-9]+)          /tiki-take_quiz.php?quizId=$1             [QSA,L]

@@ -7,6 +7,10 @@
 require_once('tiki-setup.php');
 require_once('lib/ircbot/ircbotlib.php');
 
+$r_log	= !empty($_REQUEST['log']) ? $_REQUEST['log'] : '';
+$r_channel	= !empty($_REQUEST['channel']) ? $_REQUEST['channel'] : '';
+$r_date		= !empty($_REQUEST['date']) ? $_REQUEST['date'] : '';
+
 $files = array();
 $d = opendir(TIKI_IRCBOT_LOG_DIR);
 while ($file = readdir($d)) {
@@ -14,6 +18,20 @@ while ($file = readdir($d)) {
 		continue;
 	list($date, $channel) = split('_', $file);
 	list($channel, $junk) = split('\.', $channel);
+
+	if (!$r_log) {
+		if ($r_channel && !$r_date && $r_channel == $channel) {
+			$r_log = $file;
+		}
+
+		if ($r_date && !$r_channel && $r_date == $date) {
+			$r_log = $file;
+		}
+
+		if ($r_channel && $r_date && $r_channel == $channel && $r_date == $date) {
+			$r_log = $file;
+		}
+	}
 	
 	$revdate = 1000000 - $date;
 
@@ -43,9 +61,7 @@ if ($irc_log_options) {
 	}
 }
 
-$irc_log_selected = !empty($_REQUEST['log'])
-	? $_REQUEST['log']
-	: $file;
+$irc_log_selected = $r_log ? $r_log : $file;
 
 $fullname = TIKI_IRCBOT_LOG_DIR . '/' . $irc_log_selected;
 
