@@ -5,7 +5,7 @@
 **/
 
 $langmapping = array(
-    'cn' => array(  'Simplified Chinese',      tra("Simplified Chinese")        ),
+    'cn' => array(  '简体中文',      tra("Simplified Chinese")        ),
     'cs' => array(  'Český',      tra("Czech")        ),
     'da' => array(  'Dansk',        tra("Danish")       ),
     'de' => array(  'Deutsch',      tra("German")       ),
@@ -23,7 +23,6 @@ $langmapping = array(
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
     'sr' => array(   'Serbian',  tra("Serbian")       ),
     'sv' => array(  'Swedish',      tra("Swedish")      ),
-    'tw' => array(  'Traditional Chinese',          tra("Traditional Chinese")          ),
-    'zh' => array(  'Chinese',      tra("Chinese")      )
+    'tw' => array(  '正體中文',          tra("Traditional Chinese")          )
 );
 ?>
