@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Forums: Breadcrumb added. Links to next/prev topic when browsing threads added.
+* [NEW] Forums: Topic summaries added and can be used (optional)
+* [NEW] Forums: Topic smileys can be used
+* [NEW] File galleries: you can edit the name/description of files (Joan)
 * [NEW] File galleries: duplicate uploads are prevented.
 * [NEW] Articles: topic or article image can 'float' around text optionally.
 * [NEW] Forums: columns to be listed in topic listing can be

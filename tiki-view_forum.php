@@ -134,7 +134,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
           $commentslib->register_forum_post($_REQUEST["forumId"],0);
         } else {
           if($tiki_p_admin_forum == 'y') {
-            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST['comment_summary'],$_REQUEST['comment_topicsmiley']);
+            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsummary'],$_REQUEST['comment_topicsmiley']);
           }
         }
       } else {

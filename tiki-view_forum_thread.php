@@ -80,6 +80,26 @@ if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     die;
 }
 
+  $next_thread = $commentslib->get_comments('forum'.$_REQUEST['forumId'],0,$_REQUEST['topics_offset']+1,1,$_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"],$_REQUEST['topics_threshold']);
+  if(count($next_thread['data'])) {
+  	$smarty->assign('next_topic',$next_thread['data'][0]['threadId']);
+  } else {
+  	$smarty->assign('next_topic',false);
+  }
+  $smarty->assign('topics_next_offset',$_REQUEST['topics_offset']+1);
+  $smarty->assign('topics_prev_offset',$_REQUEST['topics_offset']-1);
+
+// Use topics_offset, topics_find, topics_sort_mode to get the next and previous topics!
+	$prev_thread = $commentslib->get_comments('forum'.$_REQUEST['forumId'],0,$_REQUEST['topics_offset']-1,1,$_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"],$_REQUEST['topics_threshold']);
+	if(count($prev_thread['data'])) {
+	  $smarty->assign('prev_topic',$prev_thread['data'][0]['threadId']);
+	} else {
+	  $smarty->assign('prev_topic',false);
+	}
+
+
+
+
 
 $smarty->assign_by_ref('forum_info',$forum_info);
 $thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
