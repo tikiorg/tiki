@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.164 2004-02-24 21:51:58 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.165 2004-02-28 03:47:02 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -1787,6 +1787,28 @@ CREATE TABLE tiki_live_support_requests (
   chat_ended int(14) default NULL,
   PRIMARY KEY  (reqId)
 ) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_requests`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS `tiki_logs`;
+CREATE TABLE tiki_logs (
+  logId int(8) NOT NULL auto_increment,
+  logtype varchar(20) NOT NULL,
+  logmessage text NOT NULL,
+  loguser varchar(200) NOT NULL,
+  logip varchar(200) NOT NULL,
+  logclient text NOT NULL,
+  logtime int(14) NOT NULL,
+  PRIMARY KEY  (logId),
+  KEY logtype (logtype)
+) TYPE=MyISAM;
+
 # --------------------------------------------------------
 
 #

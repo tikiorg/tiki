@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.29 2004-02-24 21:51:58 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.30 2004-02-28 03:47:02 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -212,3 +212,19 @@ INSERT INTO tiki_score VALUES ('wiki_attach_file',3,0,'Wiki','Attach file',30);
 #
 # Score and karma tables end
 #
+
+# added on 2004-02-28 by mose for multi-purpose logging facility going with lib/logs/logslib.php
+
+CREATE TABLE tiki_logs (
+  logId int(8) NOT NULL auto_increment,
+  logtype varchar(20) NOT NULL,
+  logmessage text NOT NULL,
+  loguser varchar(200) NOT NULL,
+  logip varchar(200) NOT NULL,
+  logclient text NOT NULL,
+  logtime int(14) NOT NULL,
+  PRIMARY KEY  (logId),
+  KEY logtype (logtype)
+) TYPE=MyISAM;
+
+
