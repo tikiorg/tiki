@@ -1,9 +1,5 @@
 {if $feature_featuredLinks eq 'y'}
- <div class="box">
-  <div class="box-title">
-   {tr}Featured links{/tr}
-  </div>
-  <div class="box-data">
+  {tikimodule title="{tr}Featured links{/tr}" name="featured_links"}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$featuredLinks}
      {if $featuredLinks[ix].type eq 'f'}
@@ -25,6 +21,5 @@
      {/if}
     {/section}
    </table>
-  </div>
- </div>
+   {/tikimodule}
 {/if}
