@@ -81,8 +81,6 @@ class WikiLib extends TikiLib {
 	}
 
 	function get_creator($name) {
-		$name = addslashes($name);
-
 		return $this->getOne("select `creator` from `tiki_pages` where `pageName`=?", array($name));
 	}
 
@@ -172,17 +170,15 @@ class WikiLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$page = $res['fromPage'];
 
-			$page_as = addslashes($page);
 			$info = $this->get_page_info($page);
 			//$data=addslashes(str_replace($oldName,$newName,$info['data']));
 			$data = $info['data'];
 			$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 			$data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
-			$data = addslashes($data);
 			$query = "update `tiki_pages` set `data`=? where `pageName`=?";
 			$this->query($query, array(
 				$data,
-				$page_as
+				$page
 			));
 
 			$this->invalidate_cache($page);
@@ -276,7 +272,6 @@ class WikiLib extends TikiLib {
 	function update_cache($page, $data) {
 		$now = date('U');
 
-		$data = addslashes($data);
 		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
 		$result = $this->query($query, array( $data, $page ) );
 		return true;
@@ -300,11 +295,7 @@ class WikiLib extends TikiLib {
 	}
 
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
-		$data = addslashes($data);
-
-		$page = addslashes($page);
-		$name = addslashes($name);
-		$comment = addslashes(strip_tags($comment));
+		$comment = strip_tags($comment);
 		$now = date("U");
 		$query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path)
     values('$page','$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
