@@ -7,6 +7,8 @@ create table tiki_minical_events(
   title varchar(250),
   description text,
   start integer(14),
+  end integer(14),
+  security char(1),
   duration integer(3),
   primary key(eventId)
 );
