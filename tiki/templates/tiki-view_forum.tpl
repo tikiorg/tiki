@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.47 2003-11-24 04:57:25 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.48 2003-11-24 05:56:15 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br/><br/>
 {if $forum_info.show_description eq 'y'}
@@ -160,7 +160,7 @@ a moderator approves it.{/tr}</small>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareaSize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
       <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/></td>
     </tr>
