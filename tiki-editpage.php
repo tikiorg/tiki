@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.56 2003-11-11 10:01:17 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.57 2003-11-16 00:04:35 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -242,7 +242,7 @@ function walk_and_parse(&$c, &$src, &$p)
 }
 // Suck another page and append to the end of current
 include ('lib/htmlparser/htmlparser.inc');
-$repl = isset($_REQUEST["suck_url"]) ? $_REQUEST["suck_url"] : '';
+$suck_url = isset($_REQUEST["suck_url"]) ? $_REQUEST["suck_url"] : '';
 $parsehtml = isset ($_REQUEST["parsehtml"]) ? ($_REQUEST["parsehtml"] == 'on' ? 'y' : 'n')  : 'n';
 if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
 {
