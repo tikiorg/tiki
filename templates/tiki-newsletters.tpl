@@ -75,9 +75,9 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 {if $channels.individual ne 'y' or $channels.individual_tiki_p_subscribe_newsletters eq 'y'}
-<tr>
-<td class="{cycle advance=false}"><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">{$channels[user].name}</a></td>
-<td class="{cycle advance=false}">{$channels[user].description}</td>
+<tr class="{cycle}">
+<td><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">{$channels[user].name}</a></td>
+<td>{$channels[user].description}</td>
 </tr>
 {/if}
 {/section}
