@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.13 2003-08-21 00:51:21 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.14 2003-09-24 14:02:20 dheltzel Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -32,6 +32,7 @@
      <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
      <option value='Article' {if $find_type eq 'Article'}selected="selected"{/if}>{tr}Article{/tr}</option>
      <option value='Review' {if $find_type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
+     <option value='Event' {if $find_type eq 'Event'}selected="selected"{/if}>{tr}Event{/tr}</option>
      </select>
      <select name="topic">
      <option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all{/tr}</option>

@@ -38,9 +38,10 @@
 <select id='articletype' name='type' onChange='javascript:chgArtType();'>
 <option value='Article' {if $type eq 'Article'}sselected="selected"{/if}>{tr}Article{/tr}</option>
 <option value='Review' {if $type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
+<option value='Event' {if $type eq 'Event'}selected="selected"{/if}>{tr}Event{/tr}</option>
 </select>
 </select></td></tr>
-<tr id='isreview' {if $type eq 'Article'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
