@@ -477,6 +477,22 @@ if(isset($_REQUEST["trkset"])) {
   $smarty->assign('t_use_dir',$_REQUEST["t_use_dir"]);
 }
 
+if(isset($_REQUEST["directory"])) {
+  if(isset($_REQUEST["directory_validate_urls"]) && $_REQUEST["directory_validate_urls"]=="on") {
+    $tikilib->set_preference('directory_validate_urls','y');
+    $smarty->assign('directory_validate_urls','y');
+  } else {
+    $tikilib->set_preference('directory_validate_urls','n');
+    $smarty->assign('directory_validate_urls','n');
+  }
+  $tikilib->set_preference('directory_columns',$_REQUEST["directory_columns"]);
+  $tikilib->set_preference('directory_links_per_page',$_REQUEST["directory_links_per_page"]);
+  $tikilib->set_preference('directory_open_links',$_REQUEST["directory_open_links"]);
+  $smarty->assign('directory_columns',$_REQUEST['directory_columns']);
+  $smarty->assign('directory_links_per_page',$_REQUEST['directory_links_per_page']);
+  $smarty->assign('directory_open_links',$_REQUEST['directory_open_links']);
+}
+
 if(isset($_REQUEST["webmail"])) {
   if(isset($_REQUEST["webmail_view_html"]) && $_REQUEST["webmail_view_html"]=="on") {
     $tikilib->set_preference("webmail_view_html",'y'); 
@@ -674,6 +690,9 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_page_title",'n');
     $smarty->assign("feature_page_title",'n');
   }
+  
+  $tikilib->set_preference('wiki_cache',$_REQUEST["wiki_cache"]);
+  $smarty->assign('wiki_cache',$_REQUEST["wiki_cache"]);
   
   $tikilib->set_preference("warn_on_edit_time",$_REQUEST["warn_on_edit_time"]);
   $smarty->assign('warn_on_edit_time',$_REQUEST["warn_on_edit_time"]);

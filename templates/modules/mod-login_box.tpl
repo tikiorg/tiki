@@ -5,7 +5,12 @@
 <div class="box-data">
     {if $user}
       {tr}logged as{/tr}: {$smarty.session.user}<br/>
-      <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a>
+      <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br/>
+      {if $tiki_p_admin eq 'y'}
+        <form action="{$login_url}" method="post">
+        {tr}user{/tr}: <input type="text" name="username" size="8" /><input type="submit" name="su" value="set" />
+        </form>
+      {/if}
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}

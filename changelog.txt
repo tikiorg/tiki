@@ -1,5 +1,10 @@
 Version 1.6 -TBD-
 
+* [NEW] Directory feature added to Tiki. Links can be organized in categories, users can add links to be validated
+  by admin, many options for display and functionality.
+* [NEW] "su" option added to let admin login as any user once logged as admin, in this way he can configure or
+  fix a user problem without never asking for the user password.
+* [NEW] Country added to user preferences, the country flag is also displayed in forum posts of the user.
 * [NEW] Wiki structures. You can create structures of wiki pages and the new tag {toc} can be used to display
   a table of contents for the structure in a wiki page. When a page is part of a structure links to the next
   and previous page are provided as well as a link to the first page of the structure, where you should place

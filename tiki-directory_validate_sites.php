@@ -9,6 +9,13 @@ if($feature_directory != 'y') {
   die;  
 }
 
+if($tiki_p_validate_links != 'y') {
+  $smarty->assign('msg',tra("Permission denied"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
+
 if(isset($_REQUEST["validate"])) {
   foreach(array_keys($_REQUEST["sites"]) as $siteId) {   
     $dirlib->dir_validate_site($siteId);

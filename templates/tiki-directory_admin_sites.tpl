@@ -23,7 +23,7 @@
 <table class="normal">
   <tr>
     <td class="formcolor">{tr}Name{/tr}:</td>
-    <td class="formcolor"><input type="text" name="name" value="{$info.name}" />
+    <td class="formcolor"><input type="text" name="name" value="{$info.name}" /></td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Description{/tr}:</td>

@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
+include_once('lib/wiki/wikilib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -136,7 +137,28 @@ if(count($slides)>1) {
 } else {
 	$smarty->assign('show_slideshow','n');
 }
-$pdata = $tikilib->parse_data($info["data"]);
+
+// Here's where the data is parsed
+// if using cache
+//
+// get cache information
+// if cache is valid then pdata is cache
+// else
+// pdata is parse_data 
+//   if using cache then update the cache
+// assign_by_ref
+if($wiki_cache>0) {
+ $cache_info = $wikilib->get_cache_info($page);
+ $now = date('U');
+ if($cache_info['cache_timestamp']+$wiki_cache > $now) {
+   $pdata = $cache_info['cache'];
+ } else {
+   $pdata = $tikilib->parse_data($info["data"]);
+   $wikilib->update_cache($page,$pdata);
+ }
+} else {
+ $pdata = $tikilib->parse_data($info["data"]);
+}
 $smarty->assign_by_ref('parsed',$pdata);
 
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));

@@ -13,7 +13,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <a name="features"></a>
 <div class="cbox">
@@ -63,7 +64,7 @@
 <tr><td class="form">{tr}Surveys{/tr}:</td><td><input type="checkbox" name="feature_surveys" {if $feature_surveys eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Webmail{/tr}:</td><td><input type="checkbox" name="feature_webmail" {if $feature_webmail eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Newsletters{/tr}:</td><td><input type="checkbox" name="feature_newsletters" {if $feature_newsletters eq 'y'}checked="checked"{/if}/></td></tr>
-<!--<tr><td class="form">{tr}Directory{/tr}:</td><td><input type="checkbox" name="feature_directory" {if $feature_directory eq 'y'}checked="checked"{/if}/></td></tr>-->
+<tr><td class="form">{tr}Directory{/tr}:</td><td><input type="checkbox" name="feature_directory" {if $feature_directory eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -106,7 +107,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
@@ -224,7 +226,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}User registration and login{/tr}</div>
@@ -277,7 +280,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
@@ -428,6 +432,18 @@
     <tr><td class="form">{tr}Pictures{/tr}:</td><td><input type="checkbox" name="feature_wiki_pictures" {if $feature_wiki_pictures eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use page description{/tr}:</td><td><input type="checkbox" name="feature_wiki_description" {if $feature_wiki_description eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page title{/tr}:</td><td><input type="checkbox" name="feature_page_title" {if $feature_page_title eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Cache wiki pages{/tr}:</td><td>
+    <select name="wiki_cache">
+    <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
+    <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 minute</option>
+    <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 minutes</option>
+    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 minute</option>
+    <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 minutes</option>
+    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 minute</option>
+    <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 hour</option>
+    <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 hours</option>
+    </select> 
+    </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>
@@ -462,7 +478,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
@@ -537,7 +554,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}File galleries{/tr}</div>
@@ -609,7 +627,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
@@ -672,7 +691,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
@@ -712,7 +732,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
@@ -793,7 +814,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
@@ -854,7 +876,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}FAQs settings{/tr}</div>
@@ -897,7 +920,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Trackers{/tr}</div>
@@ -914,6 +938,22 @@
 </div>
 </div>
 
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
+]
 <a name="webmail"></a>
 <div class="cbox">
 <div class="cbox-title">{tr}Webmail{/tr}</div>
@@ -938,7 +978,55 @@
 </div>
 </div>
 
-
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
+]
+<a name="directory"></a>
+<div class="cbox">
+<div class="cbox-title">{tr}Directory{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td>{tr}Number of columns per page when listing categories{/tr}</td><td>
+    <select name="directory_columns">
+    <option value="1" {if $directory_columns eq 1}selected="selected"{/if}>1</option>
+    <option value="2" {if $directory_columns eq 2}selected="selected"{/if}>2</option>
+    <option value="3" {if $directory_columns eq 3}selected="selected"{/if}>3</option>
+    <option value="4" {if $directory_columns eq 4}selected="selected"{/if}>4</option>
+    <option value="5" {if $directory_columns eq 5}selected="selected"{/if}>5</option>
+    <option value="6" {if $directory_columns eq 6}selected="selected"{/if}>6</option>
+    </select>
+    </td></tr>
+<tr><td>{tr}Links per page{/tr}</td><td><input type="text" name="directory_links_per_page" value="{$directory_links_per_page}" />
+<tr><td>{tr}Validate URLs{/tr}</td><td><input type="checkbox" name="directory_validate_urls" {if $directory_validate_urls eq 'y'}checked="checked"{/if}></td></tr>
+</td></tr>    
+<tr><td>{tr}Method to open directory links{/tr}</td><td>
+<select name="directory_open_links">
+<option value="r" {if $directory_open_links eq 'r'}selected="selected"{/if}>{tr}replace current window{/tr}</option>
+<option value="n" {if $directory_open_links eq 'n'}selected="selected"{/if}>{tr}new window{/tr}</option>
+<option value="f" {if $directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
+</select>
+</td></tr>
+<tr><td align="center" colspan="2"><input type="submit" name="directory" value="{tr}Set prefs{/tr}" /></td></tr>    
+</table>
+</form>
+</div>
+</div>
+</div>
 
 
 
@@ -956,7 +1044,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>

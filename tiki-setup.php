@@ -217,6 +217,8 @@ $feature_cms_templates = 'n';
 
 $feature_warn_on_edit ='n';
 $warn_on_edit_time =2;
+$wiki_cache = 0;
+$smarty->assign('wiki_cache',$wiki_cache);
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
 $language = 'en';
@@ -256,6 +258,15 @@ $rss_file_gallery = 'n';
 $rss_blog = 'n';
 
 $count_admin_pvs='y';
+
+$directory_columns = 3;
+$directory_links_per_page = 20;
+$directory_open_links='n';
+$directory_validate_urls = 'n';
+$smarty->assign('directory_validate_urls',$directory_validate_urls);
+$smarty->assign('directory_columns',$directory_columns);
+$smarty->assign('directory_links_per_page',$directory_links_per_page);
+$smarty->assign('directory_open_links',$directory_open_links);
 
 $max_rss_forums = 10;
 $max_rss_forum = 10;
@@ -674,6 +685,14 @@ if(!strstr($_SERVER["REQUEST_URI"],'tiki-login')) {
     $_SESSION["challenge"]=$chall;
     $smarty->assign('challenge',$chall);
   }  
+}
+
+
+$smarty->assign('mnu_dirmenu','display:none;');
+if(isset($_COOKIE["dirmenu"])) {
+  if($_COOKIE["dirmenu"]=='o') {
+    $smarty->assign('mnu_dirmenu','display:block;');
+  }	
 }
 
 $smarty->assign('mnu_nlmenu','display:none;');

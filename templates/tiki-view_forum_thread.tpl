@@ -13,7 +13,7 @@
   <td class="viewthreadl" width="15%">
   {$thread_info.userName|avatarize}<br/>
   <b>{tr}author{/tr}</b>:<br/>
-  {$thread_info.userName}
+  {$thread_info.userName}<br/>{$thread_info.userName|countryflag}
   </td>
   <td class="viewthreadr" width="85%">
   <b>{$thread_info.title}</b><br/><br/>
@@ -212,7 +212,7 @@
   <td  class="threads{cycle advance=false}l" width="15%">
   <div align="center">
   {$comments_coms[ix].userName|avatarize}<br/>
-  <b>{tr}author{/tr}</b><br/>{$comments_coms[ix].userName}
+  <b>{tr}author{/tr}</b><br/>{$comments_coms[ix].userName}<br/>{$comments_coms[ix].userName|countryflag}
   </div>
   </td>
   <td  class="threads{cycle}r" width="85%">

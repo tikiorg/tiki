@@ -18,6 +18,14 @@
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
   <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td></tr>
+  <tr><td class="form">{tr}Country{/tr}:</td><td>
+  <img alt="flag" src="img/flags/{$country}.gif" />
+  <select name="country">
+  {section name=ix loop=$flags}
+  <option name="{$flags[ix]}" {if $country eq $flags[ix]}selected="selected"{/if}>{$flags[ix]}</option>
+  {/section}
+  </select>
+  </td></tr>
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td><select name="style">
         {section name=ix loop=$styles}
