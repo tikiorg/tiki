@@ -121,8 +121,8 @@ class RSSLib extends TikiLib {
 		}
 
 		xml_parser_free ($this->parser);
-		preg_match_all("/<title>(.*)<\/title>/", $this->buffer, $titles);
-		preg_match_all("/<link>(.*)<\/link>/", $this->buffer, $links);
+		preg_match_all("/<title>(.*?)<\/title>/", $this->buffer, $titles);
+		preg_match_all("/<link>(.*?)<\/link>/", $this->buffer, $links);
 
 		for ($i = 0; $i < count($titles[1]); $i++) {
 			$anew["title"] = $titles[1][$i];
