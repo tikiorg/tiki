@@ -1,3 +1,11 @@
+Version 1.6 -TBD-
+
+* [NEW] Wiki structures. You can create structures of wiki pages and the new tag {toc} can be used to display
+  a table of contents for the structure in a wiki page. When a page is part of a structure links to the next
+  and previous page are provided as well as a link to the first page of the structure, where you should place
+  the {toc} and other information.
+
+
 Version 1.5 -Regulus-
 
 * [FIX] Several Minor Typos (jaw959 et al.)
