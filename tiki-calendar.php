@@ -12,8 +12,7 @@ if($feature_calendar != 'y') {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-
-if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"])) {
+if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"]) and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
 } elseif (!isset($_SESSION['CalendarViewGroups'])) {
 	$_SESSION['CalendarViewGroups'] = $usercals;
@@ -21,7 +20,7 @@ if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
 }
 
-if(isset($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"])) {
+if(isset($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"]) and count($_REQUEST["tikicals"])) {
 	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
 } elseif (!isset($_SESSION['CalendarViewTikiCals'])) {
 	$_SESSION['CalendarViewTikiCals'] = array();
@@ -115,6 +114,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"])) {
 if (!isset($_REQUEST["calitemId"])) $_REQUEST["calitemId"] = 0;
 if (!isset($_REQUEST["locationId"])) $_REQUEST["locationId"] = 0;
 if (!isset($_REQUEST["categoryId"])) $_REQUEST["categoryId"] = 0;
+if (!isset($_REQUEST["status"])) $_REQUEST["status"] = 0;
 
 if (isset($_REQUEST["copy"]) and ($_REQUEST["copy"])) {
 	$_REQUEST["calitemId"] = 0;
@@ -122,8 +122,13 @@ if (isset($_REQUEST["copy"]) and ($_REQUEST["copy"])) {
 }
 
 if (isset($_REQUEST["save"]) and ($_REQUEST["save"])) {
+	if (!isset($_REQUEST["name"]) or !(trim($_REQUEST["name"]))) {
+		$_REQUEST["name"] = tra("event without name");
+	}
 	$_REQUEST["calitemId"] = $calendarlib->set_item($user,$_REQUEST["calitemId"],array(
-	"organizer" => $_REQUEST["organizer"],
+	"user" => $user,
+	"organizers" => $_REQUEST["organizers"],
+	"participants" => $_REQUEST["participants"],
 	"calendarId" => $_REQUEST["calendarId"],
 	"start" => mktime($_REQUEST["starth_Hour"],$_REQUEST["starth_Minute"],0,
 		$_REQUEST["start_Month"],$_REQUEST["start_Day"],$_REQUEST["start_Year"]),
@@ -138,7 +143,7 @@ if (isset($_REQUEST["save"]) and ($_REQUEST["save"])) {
 	"status" => $_REQUEST["status"],
 	"url" => $_REQUEST["url"],
 	"lang" => $_REQUEST["lang"],
-	"name" => addslashes(@$_REQUEST["name"]." "),
+	"name" => addslashes($_REQUEST["name"]),
 	"description" => addslashes(@$_REQUEST["description"]." ")
 	));
 }
@@ -155,12 +160,17 @@ if($_REQUEST["calitemId"]) {
 	$info = array();
 	$info["calitemId"] = "";
 	$info["calendarId"] = $defaultcalId;
-	$info["organizer"] = $user;
-	$info["participants"] = '';
+	$info["user"] = "";
+	$info["groupname"] = "";
+	$info["calname"] = "";
+	$info["organizers"] = $user.",";
+	$info["participants"] = $user.":0,";
 	$info["start"] = $focusdate + date("H")*60*60;
 	$info["end"] = $focusdate + (date("H")+2)*60*60;
 	$info["locationId"] = 0;
+	$info["locationName"] = '';
 	$info["categoryId"] = 0;
+	$info["categoryName"] = '';
 	$info["priority"] = 5;
 	$info["url"] = '';
 	$info["lang"] = $tikilib->get_user_preference($user,"language");
@@ -176,11 +186,16 @@ if (!isset($_REQUEST["calendarId"]) or !$_REQUEST["calendarId"]) {
 }
 $smarty->assign('calitemId',$info["calitemId"]);
 $smarty->assign('calendarId',$_REQUEST["calendarId"]);
-$smarty->assign('organizer',$info["organizer"]);
+$smarty->assign('organizers',$info["organizers"]);
+$smarty->assign('participants',$info["participants"]);
+$smarty->assign('groupname',$info["groupname"]);
+$smarty->assign('calname',$info["calname"]);
 $smarty->assign('start',$info["start"]);
 $smarty->assign('end',$info["end"]);
 $smarty->assign('locationId',$info["locationId"]);
+$smarty->assign('locationName',$info["locationName"]);
 $smarty->assign('categoryId',$info["categoryId"]);
+$smarty->assign('categoryName',$info["categoryName"]);
 $smarty->assign('priority',$info["priority"]);
 $smarty->assign('public',$info["public"]);
 $smarty->assign('url',$info["url"]);
@@ -189,15 +204,16 @@ $smarty->assign('name',$info["name"]);
 $smarty->assign('description',$info["description"]);
 $smarty->assign('created',$info["created"]);
 $smarty->assign('lastModif',$info["lastModif"]);
+$smarty->assign('lastUser',$info["user"]);
 $smarty->assign('status',$info["status"]);
 
 if(!isset($_REQUEST["editmode"])) $_REQUEST["editmode"]=0;
 $smarty->assign('editmode',$_REQUEST["editmode"]);
 
 if ($_REQUEST["editmode"]) {
-	$listcat[] = $calendarlib->list_categories($_REQUEST["calendarId"]);
+	$listcat = $calendarlib->list_categories($_REQUEST["calendarId"]);
 	$smarty->assign('listcat',$listcat);
-	$listloc[] = $calendarlib->list_locations($_REQUEST["calendarId"]);
+	$listloc = $calendarlib->list_locations($_REQUEST["calendarId"]);
 	$smarty->assign('listloc',$listloc);
 	$listpeople = $calendarlib->list_cal_users($_REQUEST["calendarId"]);
 	$smarty->assign('listpeople',$listpeople);

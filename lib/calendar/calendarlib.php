@@ -99,12 +99,14 @@ class CalendarLib extends TikiLib {
 	{
 		$where = array();
 		foreach ($calIds as $calendarId) {
-			$where[] = "calendarId=$calendarId";	
+			$where[] = "i.calendarId=$calendarId";	
 		}
 		$cond = "(".implode(" or ",$where).")";
 		#$cond.= " and (start>$tstart or end<$tstop)"; 
-		$cond.= " and ((start > $tstart or end < $tstop) or (start < $tstart and end < $tstop))"; 
-		$query = "select calitemId, name, description, start, end from tiki_calendar_items where ($cond) ";
+		$cond.= " and ((i.start > $tstart or i.end < $tstop) or (i.start < $tstart and i.end < $tstop))"; 
+		$query = "select i.calitemId as calitemId, i.name as name, i.description as description, i.start as start, i.end as end, ";
+		$query.= "i.url as url, i.status as status, i.priority  as priority, c.name as calname, i.calendarId as calendarId  ";
+		$query.= "from tiki_calendar_items as i left join tiki_calendars as c on i.calendarId=c.calendarId where ($cond) ";
 		$result = $this->query($query);
 		$ret = Array();
 		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -122,14 +124,27 @@ class CalendarLib extends TikiLib {
 				} else {
 					$head = " ... ".tra("continued")." ... ";
 				}
+				// have to extract all that in a template !!!
+				$notice = '<div class=box><div class=box-title>'.$head;
+				$notice.= "<span class=calprio".$res["priority"]." style=margin-left:7px;color:black;padding-left:5px;padding-right:5px>".$res["priority"]."</span>";
+				$notice.= '</div>';
+				$notice.= "<div class=box-title>".tra("in")." <b>".$res["calname"]."</b></div>";
+				$notice.= '<div class=box-data>';
+				$notice.= "<b>".$res["name"]."</b><br/>".str_replace("\n|\r","",$res["description"]);
+				$notice.= "<br/><i>... ".tra("Click to edit")."</i>";
+				$notice.= "</div>";
+				$notice.= "</div>";
 				$ret["$i"][] = array(
+					"result" => $res,
 					"calitemId" => $res["calitemId"],
 					"time" => $tstart,
-					"type" => "calitem",
+					"type" => (string) $res["status"],
+					"web" => $res["url"],
+					"prio" => $res["priority"],
 					"url" => "tiki-calendar.php?todate=$i&editmode=1&calitemId=".$res["calitemId"],
 					"name" => $res["name"],
 					"descriptionhead" => $head,
-					"descriptionbody" => "<b>".$res["name"]."</b><br/>".str_replace("\n|\r","",$res["description"])
+					"descriptionbody" => $notice
 				);
 			}
 		}
@@ -418,49 +433,87 @@ class CalendarLib extends TikiLib {
 	
 	function get_item($calitemId)
 	{
-		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.organizer as organizer, i.start as start, i.end as end, ";
+		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.user as user, i.start as start, i.end as end, t.groupname as groupname, t.name as calname, ";
 		$query.= "i.locationId as locationId, l.name as locationName, i.categoryId as categoryId, c.name as categoryName, i.priority as priority, i.public as public, ";
 		$query.= "i.status as status, i.url as url, i.lang as lang, i.name as name, i.description as description, i.created as created, i.lastModif as lastModif ";
 		$query.= "from tiki_calendar_items as i left join tiki_calendar_locations as l on i.locationId=l.callocId ";
-		$query.= "left join tiki_calendar_categories as c on i.categoryId=c.calcatId where calitemId=$calitemId";
+		$query.= "left join tiki_calendar_categories as c on i.categoryId=c.calcatId left join tiki_calendars as t on i.calendarId=t.calendarId where calitemId=$calitemId";
 		$result = $this->query($query);
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 		$query = "select username, role from tiki_calendar_roles where calitemId=$calitemId order by role";
 		$rezult = $this->query($query);
-		$truc = array();
+		$ppl = array();
+		$org = array();
 		while ($rez = $rezult->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$truc[] = $rez["username"].":".$rez["role"];
+			if ($rez["role"] == '6') {
+				$org[] = $rez["username"];
+			} elseif ($rez["username"]) {
+				$ppl[] = $rez["username"].":".$rez["role"];
+			}
 		}
-		$res["participants"] = implode(',',$truc);
+		$res["participants"] = implode(',',$ppl);
+		$res["organizers"] = implode(',',$org);
 		return $res;
 	}
 
 	function set_item($user,$calitemId,$data)
 	{
+		if (!$data["locationId"] and !$data["newloc"]) {
+			$data["newloc"] = tra("not specified");
+		}
 		if (trim($data["newloc"])) {
-			$query = "insert into tiki_calendar_locations (calendarId,name) values (".$data["calendarId"].",'".trim($data["newloc"])."')";
-			$resu = $this->query($query);
+			$query = "replace into tiki_calendar_locations (calendarId,name) values (".$data["calendarId"].",'".trim($data["newloc"])."')";
+			$this->query($query);
 			$data["locationId"] = mysql_insert_id();
 		}
+		if (!$data["locationId"] and !$data["newcat"]) {
+			$data["newcat"] = tra("not specified");
+		}
 		if (trim($data["newcat"])) {
-			$query = "insert into tiki_calendar_categories (calendarId,name) values (".$data["calendarId"].",'".trim($data["newcat"])."')";
-			$resus = $this->query($query);
+			$query = "replace into tiki_calendar_categories (calendarId,name) values (".$data["calendarId"].",'".trim($data["newcat"])."')";
+			$this->query($query);
 			$data["categoryId"] = mysql_insert_id();
 		}
+		$roles = array();
+		if ($data["organizers"]) {
+			$orgs = split(',',$data["organizers"]);
+			foreach ($orgs as $o) {
+				$roles['6'][] = trim($o);
+			}
+		}
+		if ($data["participants"]) {
+			$parts = split(',',$data["participants"]);
+			foreach ($parts as $pa) {
+				$p = split('\:',trim($pa));
+				if (isset($p[0]) and isset($p[1])) {
+					$roles["$p[1]"][] = trim($p[0]); 
+				}
+			}
+		}
 		if ($calitemId) {
-			$query = "update tiki_calendar_items set calendarId=".$data["calendarId"].", organizer='".$data["organizer"]."',";
-			$query.= "start=".$data["start"].",end=".$data["end"].",locationId=".$data["locationId"].",categoryId=".$data["categoryId"].",";
-			$query.= "public='".$data["public"]."',priority=".$data["priority"].",status=".$data["status"].",url='".$data["url"]."',";
-			$query.= "lang='".$data["lang"]."',name='".$data["name"]."',description='".$data["description"]."',lastmodif=now() where calitemId=$calitemId";
+			$query = "update tiki_calendar_items set calendarId=".$data["calendarId"].", user='$user',";
+			$query.= "start=".$data["start"].",end=".$data["end"].",locationId='".$data["locationId"]."',categoryId='".$data["categoryId"]."',";
+			$query.= "public='".$data["public"]."',priority=".$data["priority"].",status='".$data["status"]."',url='".$data["url"]."',";
+			$query.= "lang='".$data["lang"]."',name='".$data["name"]."',description='".$data["description"]."',lastmodif=".time()." where calitemId=$calitemId";
 			$result = $this->query($query);
 		} else {
-			$query = "insert into tiki_calendar_items (calendarId, organizer, start, end, locationId, categoryId, ";
+			$query = "insert into tiki_calendar_items (calendarId, user, start, end, locationId, categoryId, ";
 			$query.= " public, priority, status, url, lang, name, description, created, lastmodif) values (";
-			$query.= $data["calendarId"].",'".$data["organizer"]."',".$data["start"].",".$data["end"].",".$data["locationId"].",";
-			$query.= $data["categoryId"].",'".$data["public"]."',".$data["priority"].",".$data["status"].",'".$data["url"]."','";
-			$query.= $data["lang"]."','".$data["name"]."','".$data["description"]."',now(),now())";
+			$query.= $data["calendarId"].",'".$data["user"]."',".$data["start"].",".$data["end"].",'".$data["locationId"]."','";
+			$query.= $data["categoryId"]."','".$data["public"]."',".$data["priority"].",'".$data["status"]."','".$data["url"]."','";
+			$query.= $data["lang"]."','".$data["name"]."','".$data["description"]."',".time().",".time().")";
 			$result = $this->query($query);
 			$calitemId = mysql_insert_id();
+		}
+		if ($calitemId) {
+			$query = "delete from tiki_calendar_roles where calitemId=$calitemId";
+			$this->query($query);
+		}
+		foreach ($roles as $lvl=>$ro) {
+			foreach ($ro as $r) {
+				$query = "insert into tiki_calendar_roles (calitemId,username,role) values ($calitemId,'$r','$lvl')";
+				$this->query($query);
+			}
 		}
 		return $calitemId;
 	}
@@ -475,24 +528,26 @@ class CalendarLib extends TikiLib {
 
 	function list_locations($calendarId)
 	{
+		$res = array();
 		if ($calendarId > 0) {
-			$query = "select callocId, name from tiki_calendar_locations where calendarId=$calendarId";
+			$query = "select callocId as locationId, name from tiki_calendar_locations where calendarId=$calendarId";
 			$result = $this->query($query);
-			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-		} else {
-			$res = array();
+			while ($rez = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+				$res[] = $rez;
+			}
 		}
 		return $res;
 	}
 
 	function list_categories($calendarId)
 	{
+		$res = array();
 		if ($calendarId > 0) {
-			$query = "select calcatId, name from tiki_calendar_categories where calendarId=$calendarId";
+			$query = "select calcatId as categoryId, name from tiki_calendar_categories where calendarId=$calendarId";
 			$result = $this->query($query);
-			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-		} else {
-			$res = array();
+			while ($rez = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+				$res[] = $rez;
+			}
 		}
 		return $res;
 	}
