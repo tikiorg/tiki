@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.48 2003-10-14 08:51:04 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.49 2003-10-18 16:58:02 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -380,6 +380,12 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 if (isset($_REQUEST["save"])) {
+  // Check if all Request values are delivered, and if not, set them
+  // to avoid error messages. This can happen if some features are 
+  // disabled
+  if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
+  if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
+
   if(isset($_REQUEST['wiki_cache'])) {
     $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
   }
