@@ -110,7 +110,7 @@
       {/if}
     </tr>
     <tr>
-      <td class="comform">Comment</td>
+      <td class="comform">{tr}Comment{/tr}</td>
       <td class="comform"><textarea id="editpost" name="comments_data" rows="6" cols="62">{$comment_data}</textarea></td>
     </tr>
     </table>
@@ -181,7 +181,7 @@
   <td>
   <div class="commentheader">
   <span class="commentstitle">{$comments_coms[com].title}</span><br/>
-  {tr}by{/tr} {$comments_coms[com].userName} on {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
+  {tr}by{/tr} {$comments_coms[com].userName} {tr}on{/tr} {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
   </div>
   </td>
   <td valign="top" align="right" width="20%">
@@ -212,7 +212,7 @@
   <br/><br/>
   [<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
   {if $comments_parentId > 0}
-  |<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}">parent</a>
+  |<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}">{tr}parent{/tr}</a>
   {/if}
   ]
   {if $comments_coms[com].replies.numReplies > 0}
