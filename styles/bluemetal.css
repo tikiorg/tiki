@@ -2005,3 +2005,6 @@ TABLE.admin {
   margin: 2px;
   vertcal-align: middle;
 }
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
