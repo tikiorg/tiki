@@ -1267,7 +1267,7 @@ if(isset($_REQUEST["newadminpass"])) {
      $smarty->display("styles/$style_base/error.tpl");
      die;    
   }
-  $userlib->set_admin_pass($_REQUEST["adminpass"]);
+  $userlib->change_user_password('admin',$_REQUEST["adminpass"]);
 }
 
 if(isset($_REQUEST["dump"])) {
