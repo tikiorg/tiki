@@ -19,7 +19,9 @@
 <br />
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div class="tabs">
+{if $tiki_p_view_trackers eq 'y'}
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></span>
+{/if}
 {if $tiki_p_create_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Insert new item{/tr}</span>
 {/if}
@@ -28,6 +30,8 @@
 {cycle name=content values="1,2,3" print=false advance=false}
 
 {* -------------------------------------------------- tab with list --- *}
+{if $tiki_p_view_trackers eq 'y'}
+
 <div id="content{cycle name=content}" class="content">
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
@@ -214,6 +218,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 </div>
 {/if}
 </div>
+{/if}
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
