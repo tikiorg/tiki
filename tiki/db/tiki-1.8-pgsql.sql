@@ -321,6 +321,7 @@ CREATE TABLE "tiki_articles" (
   "image_y" smallint default NULL,
   "image_data" bytea,
   "publishDate" bigint default NULL,
+  "expireDate" bigint default NULL,
   "created" bigint default NULL,
   "heading" text,
   "body" text,
@@ -347,6 +348,40 @@ CREATE  INDEX "tiki_articles_reads" ON "tiki_articles"("reads");
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
 
 -- --------------------------------------------------------
+
+DROP TABLE "tiki_article_types";
+
+
+CREATE TABLE "tiki_article_types" (
+  "type" varchar(50) NOT NULL,
+  "use_ratings" varchar(1) default NULL,
+  "show_pre_publ" varchar(1) default NULL,
+  "show_post_expire" varchar(1) default 'y',
+  "heading_only" varchar(1) default NULL,
+  "allow_comments" varchar(1) default 'y',
+  "show_image" varchar(1) default 'y',
+  "show_avatar" varchar(1) default NULL,
+  "show_author" varchar(1) default 'y',
+  "show_pubdate" varchar(1) default 'y',
+  "show_expdate" varchar(1) default NULL,
+  "show_reads" varchar(1) default 'y',
+  PRIMARY KEY ("type")
+)  ;
+
+
+
+INSERT INTO "tiki_article_types" ("type") VALUES ('Article');
+
+
+INSERT INTO "tiki_article_types" ("type","use_ratings") VALUES ('Review','y');
+
+
+INSERT INTO "tiki_article_types" ("type","show_post_expire") VALUES ('Event','n');
+
+
+INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allow_comments") VALUES ('Classified','n','y','n');
+
+
 
 --
 -- Table structure for table `tiki_banners`
@@ -2876,7 +2911,7 @@ DROP TABLE "tiki_rss_feeds";
 CREATE TABLE "tiki_rss_feeds" (
   "name" varchar(30) NOT NULL default '',
   "rssVer" char(1) NOT NULL default '1',
-  "refresh" integer default NULL,
+  "refresh" integer default '300',
   "lastUpdated" bigint default NULL,
   "cache" bytea,
   PRIMARY KEY ("name"," rssVer")
@@ -4446,6 +4481,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
 
 
 
