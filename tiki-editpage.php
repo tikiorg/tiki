@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.79 2004-04-27 18:06:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.80 2004-05-01 01:27:02 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -517,12 +517,13 @@ if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
 } else {
   $smarty->assign('allowhtml','n');
 }
-if (isset($_REQUEST["lang"]))
+if (isset($_REQUEST["lang"])) {
   $pageLang = $_REQUEST["lang"];
-else if (isset($info["lang"])) 
+} elseif (isset($info["lang"])) {
   $pageLang = $info["lang"];
-else
+} else {
   $pageLang = "";
+}
 $smarty->assign('lang', $pageLang);
 
 $smarty->assign_by_ref('pagedata',htmldecode($edit_data));
