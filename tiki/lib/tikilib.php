@@ -629,22 +629,23 @@ class TikiLib {
     if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
     $query = "select count(*) from tiki_images" . $whgal;
     $cant = $this->getOne($query);
-		$ret = Array();
-		if ($cant) {
-			$pick = rand(0,$cant-1);
-			$query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
-			$result=$this->query($query);
-			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-			$ret["galleryId"] = $res["galleryId"];
-			$ret["imageId"] = $res["imageId"];
-			$ret["name"] = $res["name"];
-			$query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
-			$ret["gallery"] = $this->getOne($query);
-		} else {
-			$ret["galleryId"] = 0;
-			$ret["imageId"] = 0;
-			$ret["name"] = tra("No image yet, sorry.");
-		}
+    $ret = Array();
+    if ($cant) {
+      $pick = rand(0,$cant-1);
+      
+      $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
+      $result=$this->query($query);
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $ret["galleryId"] = $res["galleryId"];
+      $ret["imageId"] = $res["imageId"];
+      $ret["name"] = $res["name"];
+      $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
+      $ret["gallery"] = $this->getOne($query);
+    } else {
+      $ret["galleryId"] = 0;
+      $ret["imageId"] = 0;
+      $ret["name"] = tra("No image yet, sorry.");
+    }
     return($ret);
   }
 
@@ -2049,7 +2050,8 @@ class TikiLib {
 
   function add_user($user, $pass, $email)
   {
-		global $wikiHomePage;
+    global $wikiHomePage;
+
     $user = addslashes($user);
     $pass = addslashes($pass);
     $email = addslashes($email);
@@ -2589,6 +2591,132 @@ class TikiLib {
     }
   }
   
+  // This function replaces pre- and no-parsed sections with unique keys
+  // and saves the section contents for later reinsertion.
+  function parse_pp_np( &$data, &$preparsed, &$noparsed )
+  {
+    // Find all sections delimited by ~pp~ ... ~/pp~
+    // and replace them in the data stream with a unique key
+    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
+    foreach(array_unique($preparse[1]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace( "~pp~$pp~/pp~", $key, $data );
+    } 
+    // Temporary remove <pre> tags too
+    // TODO: Is this a problem if user insert <PRE> but after parsing
+    //       will get <pre> (lowercase)?? :)
+    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/",$data,$preparse);
+    $idx=0;
+    foreach(array_unique($preparse[2]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
+      $idx=$idx+1;
+    }
+
+    // Find all sections delimited by ~np~ ... ~/np~
+    $new_data = '';
+    $nopa = '';
+    $state = true;
+    $skip = false;
+    for ($i=0; $i<strlen($data); $i++) {
+      $tag5 = substr($data,$i,5);
+      $tag4 = substr($tag5,0,4);
+      $tag1 = substr($tag4,0,1);
+      // Beginning of a noparse section found
+      if($state && $tag4 == '~np~') {
+        $i+=3;
+        $state = false;
+        $skip=true;
+      }
+      // Termination of a noparse section found
+      if(!$state && ($tag5 == '~/np~')) {
+        $state = true;
+        $i+=4;
+        $skip=true;
+        $key = md5($this->genPass());
+        $new_data.=$key;
+        $aux["key"]=$key;
+        $aux["data"]=$nopa;
+        $noparsed[]=$aux;
+        $nopa='';
+      }
+      if(!$skip) {   // This character is not part of a noparse tag
+        if($state) {    // This character is not within a noparse section
+          $new_data .= $tag1;
+        } else {        // This character is within a noparse section
+          $nopa .= $tag1;
+        }
+      } else {       // Tag is now skipped over
+        $skip = false;
+      }
+    }
+    $data = $new_data;
+  }
+
+  // This recursive function handles pre- and no-parse sections and plugins
+  function parse_first( &$data, &$preparsed, &$noparsed )
+  {
+    // Handle pre- and no-parse sections
+    $this->parse_pp_np( $data, $preparsed, $noparsed );
+    
+    // Find the plugins
+    // note: [1] is plugin name, [2] is plugin arguments
+    preg_match_all( "/\{([A-Z]+)\(([^\)]*)\)\}/", $data, $plugins );
+
+    // Process plugins in reverse order, so that nested plugins are handled
+    // from the inside out.
+    for ($i=count($plugins[0])-1; $i>=0; $i--) {
+
+      $plugin_start = $plugins[0][$i];
+      $plugin_end = '{'.$plugins[1][$i].'}';
+      $plugin_start_base = '{'.$plugins[1][$i].'(';
+      $pos = strpos( $data, $plugin_start );         // where plugin starts
+      $pos_end = strpos( $data, $plugin_end, $pos ); // where plugin data ends
+      if ($pos_end > $pos) {
+
+        // Extract the plugin data
+        $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
+        $plugin_data = substr( $data, $pos + strlen($plugin_start),
+                               $plugin_data_len );
+
+        // Construct plugin file pathname
+        $php_name = 'lib/wiki-plugins/wikiplugin_';
+        $php_name.= strtolower($plugins[1][$i]).'.php';
+
+        // Construct plugin function name
+        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
+
+        // Construct argument list array
+        $params = split(',',trim($plugins[2][$i]));
+        $arguments = Array();
+        foreach ($params as $param) {
+          $parts = explode( '=>', $param );
+          if (isset( $parts[0] ) && isset( $parts[1]) ) {
+            $name = trim( $parts[0] );
+            $arguments[$name] = trim( $parts[1] );
+          }
+        }
+
+        if (file_exists($php_name)) {
+          include_once($php_name);
+          $ret = $func_name( $plugin_data, $arguments );
+
+          // Handle pre- & no-parse sections and plugins inserted by this plugin
+          $this->parse_first( $ret, $preparsed, $noparsed );
+
+          // Replace plugin section with its output in data
+          $data = substr_replace( $data, $ret, $pos,
+                                  $pos_end - $pos + strlen($plugin_end) );
+        }
+      }
+    }
+  }
   
   //PARSEDATA
   function parse_data($data)
@@ -2612,124 +2740,23 @@ class TikiLib {
     global $user;
     global $tikidomain;
 
-	// Process pre_handlers here
-	foreach($this->pre_handlers as $handler) {
-	  $data = $handler($data);
-	}
-
-    // Now search for plugins
-    //$smc = new Smarty_Compiler();
-    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
-    
-    for($i=count($plugins[0])-1;$i>=0;$i--) {
-      $plugin_start = $plugins[0][$i];
-      $plugin_end = '{'.$plugins[1][$i].'}';
-      $plugin_start_base = '{'.$plugins[1][$i].'(';
-      $pos = strpos($data,$plugin_start);
-      $pos_end = strpos($data,$plugin_end,$pos);
-      if($pos_end>$pos) {
-        $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
-        $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
-        $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
-        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
-        $params = split(',',trim($plugins[2][$i]));
-        $arguments=Array();
-        foreach($params as $param) {
-          $parts=explode('=>',$param);
-          if(isset($parts[0])&&isset($parts[1])) {
-            $name=trim($parts[0]);
-            $arguments[$name]=trim($parts[1]);
-          }
-        }
-        if(file_exists($php_name)) {
-          include_once($php_name);
-          $ret = $func_name($plugin_data,$arguments);
-          $ret = $this->parse_data($ret);
-          $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
-          
-        }
-      }
+    if($feature_hotwords_nw == 'y') {
+      $hotw_nw = "target='_blank'";
+    } else {
+      $hotw_nw = '';
     }
 
-	
-    $preparsed=Array();
-    
-    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
-    foreach(array_unique($preparse[1]) as $pp) {
-      $key=md5($this->genPass());
-      $aux["key"]=$key;
-      $aux["data"]=$pp;
-      $preparsed[]=$aux;
-      $data=str_replace("~pp~$pp~/pp~",$key,$data);
-    } 
-    // Temporary remove <pre> tags too
-    // TODO: Is this a problem if user insert <PRE> but after parsing
-    //       will get <pre> (lowercase)?? :)
-    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/",$data,$preparse);
-    $idx=0;
-    foreach(array_unique($preparse[2]) as $pp) {
-      $key=md5($this->genPass());
-      $aux["key"]=$key;
-      $aux["data"]=$pp;
-      $preparsed[]=$aux;
-      $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
-      $idx=$idx+1;
+    // Process pre_handlers here
+    foreach ($this->pre_handlers as $handler) {
+      $data = $handler($data);
     }
 
-    //Extract noparse sections almost before anything
-    $noparsed=Array();
-    /*
-    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/",$data,$noparse);
-    foreach(array_unique($noparse[1]) as $np) {
-      $key=md5($this->genPass());
-      $aux["key"]=$key;
-      $aux["data"]=$np;
-      $noparsed[]=$aux;
-      $data=str_replace("~np~$np~/np~",$key,$data);
-    }
-    */
+    // Handle pre- and no-parse sections and plugins
+    $preparsed = Array();
+    $noparsed  = Array();
+    $this->parse_first( $data, $preparsed, $noparsed );
 
-    
-    /* NEW WAY */
-    $new_data = '';
-    $nopa = '';
-    $state = true;
-    $skip = false;
-    for($i=0;$i<strlen($data);$i++) {
-      $tag5 = substr($data,$i,5);
-      $tag4 = substr($tag5,0,4);
-      $tag1 = substr($tag4,0,1);
-      if($state && $tag4 == '~np~') {
-        $i+=3;
-        $state = false;
-        $skip=true;
-      }
-      if(!$state && ($tag5 == '~/np~')) {
-        $state = true;
-        $i+=4;
-        $skip=true;
-        $key = md5($this->genPass());
-        $new_data.=$key;
-        $aux["key"]=$key;
-        $aux["data"]=$nopa;
-        $noparsed[]=$aux;
-        $nopa='';
-      }
-      if(!$skip) {
-        if($state) {
-          $new_data .= $tag1;  
-        } else {
-          $nopa .= $tag1;
-        }
-      } else {
-        $skip = false;
-      }
-    }
-
-    $data = $new_data;
-
-
-    //Extract [link] sections almost before anything
+    //Extract [link] sections (to be re-inserted later)
     $noparsedlinks=Array();
     preg_match_all("/\[([^\]]*)\]/",$data,$noparseurl);
     foreach(array_unique($noparseurl[1]) as $np) {
@@ -2740,20 +2767,8 @@ class TikiLib {
       $data=str_replace("$np",$key,$data);
     }
 
-	//Note \x characters are automatically escaped
-	//$data = preg_replace("/\\./","$1",$data);
-
-    if($feature_hotwords_nw == 'y') {
-      $hotw_nw = "target='_blank'";
-    } else {
-      $hotw_nw = '';
-    }
-
-
-
-
     // Now replace a TOC
-    preg_match_all("/\{toc\}/",$data,$tocs);
+    preg_match_all("/\{toc\}/i",$data,$tocs);
     if(count($tocs[0])>0) {
       include_once("lib/structures/structlib.php");
       if($structlib->page_is_in_structure($page)) {
@@ -2762,11 +2777,14 @@ class TikiLib {
         $toc=$structlib->get_subtree_toc_slide($page,$page,$html);
         } else {
         $toc=$structlib->get_subtree_toc($page,$page,$html);
+        } 
+        // Loop over all the case-specific versions of {toc} used
+        // (if the user is consistent, this is a loop of count 1)
+        for ($i=0; $i<count($tocs[0]); $i++) {
+          $data=str_replace($tocs[0],$html,$data);
         }
-        $data=str_replace('{toc}',$html,$data);
       }
     }
-    //$page='';
 
 
     //unset($smc);
@@ -3063,9 +3081,9 @@ class TikiLib {
       $data = str_replace($np["key"],$np["data"],$data);
     }
 
-      // TODO: I think this is 1. just wrong and 2. not needed here? remove it?
-      // Replace ))Words((
-      $data = preg_replace("/\(\(([^\)]+)\)\)/","$1",$data);
+    // TODO: I think this is 1. just wrong and 2. not needed here? remove it?
+    // Replace ))Words((
+    $data = preg_replace("/\(\(([^\)]+)\)\)/","$1",$data);
 
     // Images
     preg_match_all("/(\{img [^\}]+})/",$data,$pages);
