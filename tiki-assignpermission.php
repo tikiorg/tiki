@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.11 2003-11-12 06:18:13 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.12 2003-11-16 10:13:39 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,6 +111,7 @@ if (isset($_REQUEST['update'])) {
 }
 
 $levels = $userlib->get_permission_levels();
+sort($levels);
 $smarty->assign('levels', $levels);
 
 $perms = $userlib->get_permissions($offset, $maxRecords, $sort_mode, $find, $_REQUEST["type"], $group);
