@@ -2,11 +2,11 @@
 Calendar._DN = new Array
 ("Domingo",
  "Segunda",
- "TerÁa",
+ "Ter√ßa",
  "Quarta",
  "Quinta",
  "Sexta",
- "S·bado",
+ "S√°bado",
  "Domingo");
 
 Calendar._SDN = new Array
@@ -22,7 +22,7 @@ Calendar._SDN = new Array
 Calendar._MN = new Array
 ("Janeiro",
  "Fevereiro",
- "MarÁo",
+ "Mar√ßo",
  "Abril",
  "Maio",
  "Junho",
@@ -49,33 +49,33 @@ Calendar._SMN = new Array
 
 // tooltips
 Calendar._TT = {};
-Calendar._TT["INFO"] = "Sobre o calend·rio";
+Calendar._TT["INFO"] = "Sobre o calend√°rio";
 
 Calendar._TT["ABOUT"] =
 "Seletor de Data/Hora DHTML\n" +
 "(c) dynarch.com 2002-2003\n" + // don't translate this this ;-)
-"Para ˙ltima vers„o visite: http://dynarch.com/mishoo/calendar.epl\n" +
-"DistribuÌda sob GNU LGPL.  Veja http://gnu.org/licenses/lgpl.html for details." +
+"Para √∫ltima vers√£o visite: http://dynarch.com/mishoo/calendar.epl\n" +
+"Distribu√≠da sob GNU LGPL.  Veja http://gnu.org/licenses/lgpl.html for details." +
 "\n\n" +
-"SeleÁ„o de data:\n" +
-"- Use os botıes \xab e \xbb para selecionar o ano\n" +
-"- Use os botıes " + String.fromCharCode(0x2039) + " e " + String.fromCharCode(0x203a) + " para selecionar o mÍs\n" +
-"- Pressione o bot„o do mouse em quaisquer botıes acima para seleÁ„o mais r·pida..";
+"Sele√ß√£o de data:\n" +
+"- Use os bot√µes \xab e \xbb para selecionar o ano\n" +
+"- Use os bot√µes " + String.fromCharCode(0x2039) + " e " + String.fromCharCode(0x203a) + " para selecionar o m√™s\n" +
+"- Pressione o bot√£o do mouse em quaisquer bot√µes acima para sele√ß√£o mais r√°pida..";
 
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
-"SeleÁ„o de hora:\n" +
-"- Clique em qualquer parte do hor·rio para aument·-la\n" +
-"- ou Shift e clique para diminuÌ-la\n" +
-"- ou clique e arraste para seleÁ„o mais r·pida.";
+"Sele√ß√£o de hora:\n" +
+"- Clique em qualquer parte do hor√°rio para aument√°-la\n" +
+"- ou Shift e clique para diminu√≠-la\n" +
+"- ou clique e arraste para sele√ß√£o mais r√°pida.";
 
 Calendar._TT["TOGGLE"] = "Altera primeiro dia da semana";
 Calendar._TT["PREV_YEAR"] = "Ano anterior(pressione para menu)";
-Calendar._TT["PREV_MONTH"] = "MÍs anterior (pressione bot„o para menu)";
+Calendar._TT["PREV_MONTH"] = "M√™s anterior (pressione bot√£o para menu)";
 Calendar._TT["GO_TODAY"] = "Usar data atual";
-Calendar._TT["NEXT_MONTH"] = "MÍs seguinte (pressione bot„o para menu)";
-Calendar._TT["NEXT_YEAR"] = "ano seguinte (pressione bot„o para menu)";
+Calendar._TT["NEXT_MONTH"] = "M√™s seguinte (pressione bot√£o para menu)";
+Calendar._TT["NEXT_YEAR"] = "ano seguinte (pressione bot√£o para menu)";
 Calendar._TT["SEL_DATE"] = "Selecione uma data";
-Calendar._TT["DRAG_TO_MOVE"] = "Arrasta calend·rio";
+Calendar._TT["DRAG_TO_MOVE"] = "Arrasta calend√°rio";
 Calendar._TT["PART_TODAY"] = " (hoje)";
 Calendar._TT["MON_FIRST"] = "Inicia na segunda-feira";
 Calendar._TT["SUN_FIRST"] = "Inicia no domingo";
@@ -98,7 +98,7 @@ Calendar._TT["DEF_DATE_FORMAT"] = "%d/%m/%Y";
 //Calendar._TT["TT_DATE_FORMAT"] = "%A, %b %e";
 
 Calendar._TT["WK"] = "wk";
-Calendar._TT["TIME"] = "Hor·rio:";
+Calendar._TT["TIME"] = "Hor√°rio:";
 
 
 
