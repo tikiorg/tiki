@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.210 2004-06-15 14:38:07 fhcorrea Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.211 2004-06-17 19:05:47 teedog Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -1842,7 +1842,7 @@ CREATE TABLE tiki_mail_events (
 # Table structure for table `tiki_mailin_accounts`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
+# Last update: Jun 17, 2004 at 03:06 PM EST
 #
 
 DROP TABLE IF EXISTS tiki_mailin_accounts;
@@ -1861,6 +1861,8 @@ CREATE TABLE tiki_mailin_accounts (
   smtpPort int(4) default NULL,
   anonymous char(1) NOT NULL default 'y',
   attachments char(1) NOT NULL default 'n',
+  article_topicId int(4) default NULL,
+  article_type varchar(50) default NULL,
   PRIMARY KEY  (accountId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
