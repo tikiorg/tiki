@@ -8235,23 +8235,18 @@ function r_compare_changed($ar1, $ar2) {
 }
 
 function chkgd2() {
-  if(isset($_SESSION['havegd2'])) {
-    $havegd2 = $_SESSION['havegd2'];
-  } else {
-  ob_start();
-  phpinfo();
-  $phpinfo = ob_get_contents();
-  ob_end_clean();
-  if (preg_match('/GD Version.*2.0/',$phpinfo)) {
-    $_SESSION['havegd2'] = 'yes';
-    return true;
+  if (!isset($_SESSION['havegd2'])) {
+#   TODO test this logic in PHP 4.3
+#  	if (version_compare(phpversion(), "4.3.0") >= 0) {
+#  		$_SESSION['havegd2'] = true;
+#  	} else {
+      ob_start();
+      phpinfo(INFO_MODULES);
+      $_SESSION['havegd2'] = preg_match('/GD Version.*2.0/', ob_get_contents());
+      ob_end_clean();
+#    }
   }
-
-  $_SESSION['havegd2'] = 'no';
-  return false;
-  }
-  if ($havegd2 == 'yes') { return true; }
-  if ($havegd2 == 'no') { return false; }
+  return $_SESSION['havegd2'];
 }
 
 function httpScheme() {
