@@ -11,9 +11,8 @@
 <body bgcolor="#FFFFFF">
 
 <h2>ADOdb Library for PHP</h2>
-<p>V3.60 16 June 2003 (c) 2000-2003 John Lim (<a href="mailto:jlim#natsoft.com.my">jlim#natsoft.com.my</a>)</p>
-<p><font size="1">This software is dual licensed using BSD-Style and LGPL. Where 
-	there is any discrepancy, the BSD-Style license will take precedence. This 
+<p>V3.70 29 July 2003 (c) 2000-2003 John Lim (<a href="mailto:jlim#natsoft.com.my">jlim#natsoft.com.my</a>)</p>
+<p><font size="1">This software is dual licensed using BSD-Style and LGPL. This 
 	means you can use it in proprietary and commercial products.</font></p>
 <p><a href="#intro"><b>Introduction</b></a><b><br>
 	<a href="#features">Unique Features</a><br>
@@ -66,8 +65,8 @@
 	<a href="#blobdecode">BlobDecode</a><br>
 	Paging/Scrolling: <a href="#pageexecute">PageExecute</a> <a href="#cachepageexecute">CachePageExecute</a><br>
 	Cleanup: <a href="#cacheflush">CacheFlush</a> <a href="#Close">Close</a><br>
-	Transactions: <a href="#begintrans">BeginTrans</a> <a href="#committrans">CommitTrans</a> 
-	<a href="#rollbacktrans">RollbackTrans</a> <a href="#starttrans">StartTrans</a> <a href="#completetrans">CompleteTrans</a> <br>
+	Transactions:  <a href="#starttrans">StartTrans</a> <a href="#completetrans">CompleteTrans</a> <a href="#failtrans">FailTrans</a> <a href="#hasfailedtrans">HasFailedTrans</a>  <a href="#begintrans">BeginTrans</a> <a href="#committrans">CommitTrans</a> 
+	<a href="#rollbacktrans">RollbackTrans</a> <br>
 	Fetching Data: </font> <font size="2"><a href="#setfetchmode">SetFetchMode</a><br>
 	Strings: <a href="#concat">concat</a> <a href="#qstr">qstr</a> <a href="#quote">quote</a><br>
 	Dates: <a href="#dbdate">DBDate</a> <a href="#dbtimestamp">DBTimeStamp</a> 
@@ -80,7 +79,7 @@
 	 <a href="#metaerror">MetaError</a> <a href="#metaerrormsg">MetaErrorMsg</a><br>
 	Data Dictionary (metadata): <a href="#metadatabases">MetaDatabases</a> <a href="#metatables">MetaTables</a> 
 	<a href="#metacolumns">MetaColumns</a> <a href="#metacolumnames">MetaColumnNames</a> 
-	<a href="#metaprimarykeys">MetaPrimaryKeys</a> <a href="#serverinfo">ServerInfo</a> 
+	<a href="#metaprimarykeys">MetaPrimaryKeys</a> <a href="#metaforeignkeys">MetaForeignKeys</a> <a href="#serverinfo">ServerInfo</a> 
 	<br>
 	Statistics and Query-Rewriting: <a href="#fnexecute">fnExecute and fnCacheExecute</a><br>
 	</font><font size="2">Deprecated: <a href="#bind">Bind</a> <a href="#blankrecordset">BlankRecordSet</a></font><br>
@@ -116,7 +115,7 @@
   is now required (because we use array-based str_replace).</p>
 <p>We currently support MySQL, Oracle, Microsoft SQL Server, Sybase, Sybase SQL Anywhere, Informix, 
   PostgreSQL, FrontBase,  Interbase (Firebird and Borland variants), Foxpro, Access, ADO and ODBC. We have had successful reports of connecting
-  to Progress and DB2 via ODBC. We hope more people 
+  to Progress, SQLite and DB2 via ODBC. We hope more people 
   will contribute drivers to support other databases.</p>
 <p>PHP4 supports session variables. You can store your session information using 
   ADOdb for true portability and scalability. See adodb-session.php for more information.</p>
@@ -473,6 +472,18 @@ You will use <code>$conn-><a href=#connect>Connect()</a></code> or
 	<td><font size="2">PostgreSQL client</font></td>
 	<td><font size="2">Unix and Windows. </font></td>
   </tr>
+    <tr valign="top"> 
+	<td><b><font size="2">sapdb</font></b></td>
+	<td><font size="2">C</font></td>
+	<td><font size="2">SAP DB. Should work reliably as based on ODBC 
+	  driver.</font></td>
+	<td><font size="2">Y/N</font></td>
+	<td><font size="2">SAP ODBC client</font></td>
+	<td> 
+	  <p><font size="2">?</font></p>
+	</td>
+  </tr>
+  
   <tr valign="top"> 
 	<td><b><font size="2">sqlanywhere</font></b></td>
 	<td><font size="2">C</font></td>
@@ -484,6 +495,17 @@ You will use <code>$conn-><a href=#connect>Connect()</a></code> or
 	  <p><font size="2">?</font></p>
 	</td>
   </tr>
+    <tr valign="top"> 
+	<td height="54"><b><font size="2">sqlite</font></b></td>
+	<td height="54"><font size="2">B</font></td>
+	<td height="54"><font size="2">SQLite. Only tested on PHP5.</font></td>
+	<td height="54"><font size="2">Y</font></td>
+	<td height="54"><font size="2">-</font></td>
+	<td height="54"> 
+	  <p><font size="2">Unix and Windows.</font></p>
+	</td>
+  </tr>
+  
   <tr valign="top"> 
 	<td><b><font size="2">sybase</font></b></td>
 	<td><font size="2">C</font></td>
@@ -940,7 +962,9 @@ if (!CheckRecords()) $conn-><strong>FailTrans</strong>();
 $conn->Execute($Sql2);
 $conn-><b>CompleteTrans</b>();
 </pre>
-Lastly, StartTrans/CompleteTrans is nestable, and only the outermost block is 
+<p>You can also check if a transaction has failed, using HasFailedTrans(), which 
+returns true if FailTrans() was called, or there was an error in the SQL execution.
+<p>Lastly, StartTrans/CompleteTrans is nestable, and only the outermost block is 
 executed. In contrast, BeginTrans/CommitTrans/RollbackTrans is NOT nestable. 
 <pre>
 $conn-><strong>StartTrans</strong>();
@@ -1713,10 +1737,12 @@ $ret = $db->Replace('atable2',
 	$rs-&gt;fields. Requires the recordset to be associative. $magicq is used 
 	to indicate whether magic quotes are enabled (see qstr()). The field names in the array 
 	are case-insensitive.</p>
+	<p>Since 3.61, define('ADODB_FORCE_NULLS',1) and all PHP nulls will be auto-converted to SQL nulls.
 <p><b>GetInsertSQL<a name="getinsertsql"></a>(&$rs, $arrFields,$magicq=false)</b></p>
 <p>Generate SQL to insert into a table given a recordset $rs. Requires the query 
 	to be associative. $magicq is used to indicate whether magic quotes are enabled 
 	(for qstr()). The field names in the array are case-insensitive.</p>
+	<p>Since 3.61, define('ADODB_FORCE_NULLS',1) and all PHP nulls will be auto-converted to SQL nulls.
 <b>PageExecute<a name="pageexecute"></a>($sql, $nrows, $page, $inputarr=false)</b> 
 <p>Used for pagination of recordset. $page is 1-based. See <a href="#ex8">Example 
 	8</a>.</p>
@@ -1779,6 +1805,13 @@ $DB->CompleteTrans($ok);
   Returns true on commit, false on rollback. If the parameter $autoComplete is true
   monitor sql errors and commit and rollback as appropriate. Set $autoComplete to false 
   to force rollback even if no SQL error detected.
+  <p><b>FailTrans<a name="failtrans"></a>( )</b></p>
+  <p>Fail a transaction started with StartTrans(). The rollback will only occur when
+  CompleteTrans() is called.
+    <p><b>HasFailedTrans<a name="hasfailedtrans"></a>( )</b></p>
+	<p>Check whether smart transaction has failed, 
+	eg. returns true if there was an error in SQL execution or FailTrans() was called.
+	If not within smart transaction, returns false.
 <p><b>BeginTrans<a name="begintrans"></a>( )</b></p>
 <p>Begin a transaction. Turns off autoCommit. Returns true if successful. Some 
   databases will always return false if transaction support is not available. 
@@ -1994,8 +2027,8 @@ printf(&quot;&lt;p&gt;Total queries=%d; total cached=%d&lt;/p&gt;&quot;,$EXECS+$
 <p>Eg.<font face="Courier New, Courier, mono"> $s = $db-&gt;qstr(HTTP_GET_VARS['name'],get_magic_quotes_gpc());</font></p>
 <p>Returns the quoted string.</p>
 <p><b>Quote<a name="quote"></a>($s)</b></p>
-<p>Quotes the string, automatically checking get_magic_quotes_gpc() first. If 
-	get_magic_quotes_gpc() is set, then we do not quote the string. 
+<p>Quotes the string $s, escaping the database specific quote character as appropriate. Formerly checked 
+magic quotes setting, but this was disabled since 3.31 for compatibility with PEAR DB.
 <p><b>Affected_Rows<a name="affected_rows"></a>( )</b></p>
 <p>Returns the number of rows affected by a update or delete statement. Returns 
 	false if function not supported.</p>
@@ -2009,23 +2042,39 @@ printf(&quot;&lt;p&gt;Total queries=%d; total cached=%d&lt;/p&gt;&quot;,$EXECS+$
 <p><b>MetaDatabases<a name="metadatabases"></a>()</b></p>
 <p>Returns a list of databases available on the server as an array. You have to 
 	connect to the server first. Only available for ODBC, MySQL and ADO.</p>
-<p><b>MetaTables<a name="metatables"></a>()</b></p>
+<p><b>MetaTables<a name="metatables"></a>($ttype = false, $showSchema = false)</b></p>
 <p>Returns an array of tables and views for the current database as an array. 
-	The array should exclude system catalog tables if possible.</p>
+	The array should exclude system catalog tables if possible. To only show
+	tables, use $db->MetaTables('TABLES'). To show only views, use $db->MetaTables('VIEWS').
+	The $showSchema parameter currently works only for DB2, and when set to true, will add the schema name
+	to the table, eg. "SCHEMA.TABLE".
+	 </p>
 <p><b>MetaColumns<a name="metacolumns"></a>($table)</b></p>
 <p>Returns an array of ADOFieldObject's, one field object for every column of 
 	$table. Currently Sybase does not recognise date types, and ADO cannot identify 
 	the correct data type (so we default to varchar).. </p>
 <p><b>MetaColumnNames<a name="metacolumnames"></a>($table)</b></p>
 <p>Returns an array of column names for $table. 
-<p><font color="#000000"><b>MetaPrimaryKeys<a name="metaprimarykeys"></a>($table)</b></font></font> 
+<p><font color="#000000"><b>MetaPrimaryKeys<a name="metaprimarykeys"></a>($table, $owner=false)</b></font></font> 
 <p><font color="#000000">Returns an array containing column names that are the 
-	primary keys of $table. Only supported by mysql, postgres, oci8 currently. </font><font color="#000000">
+	primary keys of $table.  Supported by mysql, odbc (including db2, odbc_mssql, etc), mssql, postgres, interbase/firebird, oci8 currently. </font><font color="#000000">
 <p><font color="#000000"><b>ServerInfo<a name="serverinfo" id="serverinfo"></a>($table)</b></font></font> 
 <p><font color="#000000">Returns an array of containing two elements 'description' 
 	and 'version'. The 'description' element contains the string description of 
 	the database. The 'version' naturally holds the version number (which is also 
 	a string).</font><font color="#000000">
+<p><b>MetaForeignKeys<a name="metaforeignkeys"></a>($table, $owner=false, $upper=false)</b>
+<p>Returns an associate array of foreign keys, or false if not supported. For example, if table employee has a foreign key
+where employee.deptkey points to dept_table.deptid, and employee.posn=posn_table.postionid and
+employee.poscategory=posn_table.category, then $conn->MetaForeignKeys('employee') will return 
+<pre>
+	array(
+		'dept_table' => array('deptkey=deptid'),
+		'posn_table' => array('posn=positionid','poscategory=category')
+	)
+</pre>
+<p>The optional schema or owner can be defined in $owner. 
+If $upper is true, then the table names (array keys) are upper-cased.
 <hr>
 <h2>ADORecordSet<a name="adorecordset"></a></h2>
 <p>When an SQL statement successfully is executed by <font face="Courier New, Courier, mono">ADOConnection-&gt;Execute($sql),</font>an 
@@ -2179,10 +2228,10 @@ $conn-&gt;Execute(&quot;UPDATE TABLE SET dodate=$fld WHERE ID=$id&quot;);</pre>
  </pre>
 <p><b>MoveNext<a name="movenext"></a>( )</b></p>
 <p>Move the internal cursor to the next row. The <i>$this->fields</i> array is automatically 
-  updated. Return false if unable to do so (normally because EOF has been reached), otherwise true.
+  updated. Returns false if unable to do so (normally because EOF has been reached), otherwise true.
+  <p>
   If EOF is reached, then the $this->fields array is set to false (this was only implemented consistently
-  in ADOdb 3.30).
-  Note that if false is returned, then the previous array in <b>$this->fields</b> is preserved.</p>
+  in ADOdb 3.30). For the pre-3.30 behaviour of $this->fields (at EOF), set the global variable $ADODB_COMPAT_FETCH = true.</p>
 <p>Example:</p>
 <pre>$rs = $db-&gt;Execute($sql);
 if ($rs) 
@@ -2320,7 +2369,7 @@ if ($rs) &#123;
 <p>Determine what <i>generic</i> meta type a database field type is given its 
 	native type $<b>nativeDBType</b> as a string and the length of the field $<b>field_max_length</b>. 
 	Note that field_max_length can be -1 if it is not known. The field object 
-	returned by the database driver can be passed in $<b>fieldobj</b>. This is 
+	returned by FetchField() can be passed in $<b>fieldobj</b> or as the 1st parameter <b>$nativeDBType</b>. This is 
 	useful for databases such as <i>mysql</i> which has additional properties 
 	in the field object such as <i>primary_key</i>. </p>
 <p>Uses the field <b>blobSize</b> and compares it with $<b>field_max_length</b> 
@@ -2460,7 +2509,30 @@ $<font color="#663300">rs</font>   = $<font color="#663300">conn</font>->Execute
 	PHP</a>. </p>
 </font>
 <h2>Change Log<a name="Changes"></a><a name="changelog"></a></h2>
-
+<p><b>3.70 29 July 2003</b>
+<p>Added new SQLite driver. Tested on PHP 4.3 and PHP 5.
+<p>Added limited "sapdb" driver support - mainly date support.
+<p>The oci8 driver did not identify NUMBER with no defined precision correctly.
+<p>Added ADODB_FORCE_NULLS, if set, then PHP nulls are converted to SQL nulls in GetInsertSQL/GetUpdateSQL.
+<p>DBDate() and DBTimeStamp() format for postgresql had problems. Fixed.
+<p>Added tableoptions to ChangeTableSQL(). Thx to Mike Benoit.
+<p>Added charset support to postgresql. Thx to Julian Tarkhanov.
+<p>Changed OS check for MS-Windows to prevent confusion with darWIN (MacOS)
+<p>Timestamp format for db2 was wrong. Changed to yyyy-mm-dd-hh.mm.ss.nnnnnn.
+<p>adodb-cryptsession.php includes wrong. Fixed.
+<p>Added MetaForeignKeys(). Supported by mssql, odbc_mssql and oci8.
+<p>Fixed some oci8 MetaColumns/MetaPrimaryKeys bugs. Thx to Walt Boring.
+<p>adodb_getcount() did not init qryRecs to 0.  Missing "WHERE" clause checking
+ in GetUpdateSQL fixed.
+Thx to Sebastiaan van Stijn.
+<p>Added support for only 'VIEWS' and "TABLES" in MetaTables. From Walt Boring.
+<p>Upgraded to adodb-xmlschema.inc.php 0.0.2.
+<p>NConnect for mysql now returns value. Thx to  Dennis Verspuij.
+<p>ADODB_FETCH_BOTH support added to interbase/firebird.
+<p>Czech language file contributed by  Kamil Jakubovic jake#host.sk.
+<p>PostgreSQL BlobDecode did not use _connectionID properly. Thx to Juraj Chlebec.
+<p>Added some new initialization stuff for Informix. Thx to "Andrea Pinnisi" pinnisi#sysnet.it
+<p>ADODB_ASSOC_CASE constant wrong in sybase _fetch(). Fixed.
 <p><b>3.60 16 June 2003</b>
 
 <p>We now SET CONCAT_NULL_YIELDS_NULL OFF for odbc_mssql driver to be compat with mssql driver.
@@ -2710,7 +2782,7 @@ if constant arrays are supported, as they are in PHP5.
 <p>adodb-session.php now updates only the expiry date if the crc32 check indicates 
 	that the data has not been modified. <hr>
 <p><strong>0.10 Sept 9 2000</strong> First release 
-<h3><strong>Old changelog history moved to old-changelog.htm. </strong></h3>
+<h3><strong>Old changelog history moved to <a href=old-changelog.htm>old-changelog.htm</a>. </strong></h3>
 <p>&nbsp;</p>
 <p>
 </body>
