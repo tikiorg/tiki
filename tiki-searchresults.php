@@ -1,6 +1,9 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+require_once('lib/searchlib.php');
+
+$searchlib =& new SearchLib($tikilib->db);
 
 if($feature_search != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -71,10 +74,10 @@ $fulltext = $feature_search_fulltext == 'y';
 
 // Build the query using words
 if( (!isset($_REQUEST["words"])) || (empty($_REQUEST["words"])) ) {
-  $results = $tikilib->$find_where(' ',$offset,$maxRecords,$fulltext);
+  $results = $searchlib->$find_where(' ',$offset,$maxRecords,$fulltext);
   $smarty->assign('words','');
 } else {
-  $results = $tikilib->$find_where($_REQUEST["words"],$offset,$maxRecords,$fulltext);
+  $results = $searchlib->$find_where($_REQUEST["words"],$offset,$maxRecords,$fulltext);
   $smarty->assign('words',$_REQUEST["words"]);
 }
 
