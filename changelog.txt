@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.141 2003-12-21 17:47:21 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.142 2003-12-22 02:30:39 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -14,6 +14,11 @@ Use the following tags to distinguish changes :
 
 Please wrap your lines to 80 characters and indent them with spaces only.
 ------------------
+
+Version 1.9 
+<http://tikiwiki.org/ReleaseProcess19>
+* [NEW] plugin ATTACH to list attachements on a wiki page
+
 
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
