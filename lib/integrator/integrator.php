@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.22 2003-11-18 22:20:33 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.23 2004-02-22 07:50:56 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -31,28 +31,22 @@ class TikiIntegrator
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
+		
     /// Add/Update
-    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $exp, $descr)
-    {
-        global $tikilib;
-        $name  = addslashes($name);
-        $path  = addslashes($path);
-        $start = addslashes($start);
-        $css   = addslashes($css);
-        $descr = addslashes($descr);
-        if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into `tiki_integrator_reps` (`name`,`path`,`start_page`,`css_file`,
-                      `visibility`,`cacheable`,`expiration`,`description`)
-                      values(?,?,?,?,?,?,?,?)";
-        else
-            $query = "update `tiki_integrator_reps` set `name`=?,path=?,`start_page`=?,
-                      `css_file`=?,`visibility`=?,`cacheable`=?,`expiration`=?,
-                      `description`=? where `repID`=?";
-        $result = $tikilib->query($query, array($name, $path, $start, $css, $vis, $cacheable, $exp, $descr));
-        // Invalidate cached repository if needed
-        if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
-            unset($this->c_rep);
-    }
+function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $exp, $descr) {
+	global $tikilib;
+	if (strlen($repID) == 0 || $repID == 0) {
+		$query = "insert into `tiki_integrator_reps` (`name`,`path`,`start_page`,`css_file`, `visibility`,`cacheable`,`expiration`,`description`) values(?,?,?,?,?,?,?,?)";
+	} else {
+		$query = "update `tiki_integrator_reps` set `name`=?,`path`=?,`start_page`=?,`css_file`=?,`visibility`=?,`cacheable`=?,`expiration`=?,`description`=? where `repID`=?";
+	}
+	$result = $tikilib->query($query, array($name, $path, $start, $css, $vis, $cacheable, $exp, $descr,(int) $repID));
+	// Invalidate cached repository if needed
+	if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID)) {
+		unset($this->c_rep);
+	}
+}
+		
     /// Get one entry by ID
     function get_repository($repID)
     {
