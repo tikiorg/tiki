@@ -12,14 +12,18 @@
 <td class="odd">
 <a href='#' onClick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$files[user]}','','menubar=no,width=252,height=25');"><img width='154' height='98' border='0' src='img/wiki/{$files[user]}.gif' alt='click to edit' /></a>
 </td>
-<td class="odd">{$files[user]}</td>
+<td class="odd">{$files[user]}
+[<a href="tiki-admin_drawings.php?remove={$files[user]}" class="link">{tr}x{/tr}</a>]
+</td>
 </tr>
 {else}
 <tr>
 <td class="even">
 <a href='#' onClick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$files[user]}','','menubar=no,width=252,height=25');"><img width='154' height='98' border='0' src='img/wiki/{$files[user]}.gif' alt='click to edit' /></a>
 </td>
-<td class="even">{$files[user]}</td>
+<td class="even">{$files[user]}
+[<a href="tiki-admin_drawings.php?remove={$files[user]}" class="link">{tr}x{/tr}</a>]
+</td>
 </tr>
 {/if}
 {sectionelse}

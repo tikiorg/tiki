@@ -117,7 +117,7 @@ if(isset($_REQUEST["upload"])) {
         }
       }
     
-      $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+      $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
       $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
       fclose($fp);
       
@@ -128,7 +128,7 @@ if(isset($_REQUEST["upload"])) {
   $up_thumb = 0;
   // If the thumbnail was uploaded
   if(isset($_FILES['userfile2'])&&is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
-      $fp = fopen($_FILES['userfile2']['tmp_name'],"r");
+      $fp = fopen($_FILES['userfile2']['tmp_name'],"rb");
       $thumb_data = fread($fp,filesize($_FILES['userfile2']['tmp_name']));
       fclose($fp);
       $thumb_type = $_FILES['userfile2']['type'];
@@ -169,7 +169,7 @@ if(isset($_REQUEST["upload"])) {
         $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
         imagejpeg($t,$tmpfname);
         // Now read the information
-        $fp = fopen($tmpfname,"r");
+        $fp = fopen($tmpfname,"rb");
         $t_data = fread($fp, filesize($tmpfname));
         fclose($fp);
         unlink($tmpfname);

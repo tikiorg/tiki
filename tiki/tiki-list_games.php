@@ -41,7 +41,7 @@ if(isset($_REQUEST["upload"])) {
     
     
   
-    @$fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+    @$fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
     $name = $_FILES['userfile1']['name'];
     @$fw = fopen("games/flash/$name","wb");
     if($fp && $fw) {
@@ -53,7 +53,7 @@ if(isset($_REQUEST["upload"])) {
       fclose($fw);
     }
     
-    @$fp = fopen($_FILES['userfile2']['tmp_name'],"r");
+    @$fp = fopen($_FILES['userfile2']['tmp_name'],"rb");
     $name = $_FILES['userfile2']['name'];
     @$fw = fopen("games/thumbs/$name","wb");
     if($fp && $fw) {
@@ -81,7 +81,7 @@ if(isset($_REQUEST["edit"]) && $tiki_p_admin_games=='y') {
   $smarty->assign('editable', $_REQUEST["edit"]);
   $file=$_REQUEST["edit"];
   $data = '';
-  @$fp = fopen("games/thumbs/$file".'.txt',"r");
+  @$fp = fopen("games/thumbs/$file".'.txt',"rb");
   if($fp) {
     $data = fread($fp,filesize("games/thumbs/$file".'.txt'));
     fclose($fp);
@@ -117,7 +117,7 @@ while($file=readdir($h)) {
   $game=Array();
   if($file!='.' && $file!='..' && !strstr($file,'txt') ) {
     if(file_exists("games/thumbs/$file".'.txt')) {
-      $fp = fopen("games/thumbs/$file".'.txt',"r");
+      $fp = fopen("games/thumbs/$file".'.txt',"rb");
       $data = fread($fp,filesize("games/thumbs/$file".'.txt'));
       fclose($fp);
       $desc=nl2br($data);
