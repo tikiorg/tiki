@@ -245,13 +245,6 @@ class TrackerLib extends TikiLib {
 		return $this->get_tracker_item($itemId);
 	}
 
-	function get_item_id($trackerId,$fieldId,$value) {
-		$query = "select distinct ttif.`itemid` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
-		$itemId = $this->getOne($query,array((int) $trackerId,$fieldId,$value));
-		return $itemId;
-	}
-
 	function replace_item($trackerId, $itemId, $ins_fields, $status = 'o') {
 		global $user;
 
