@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.21 2003-11-28 02:45:03 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.22 2003-12-14 08:29:56 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -147,6 +147,30 @@ if ($tiki_p_post_comments == 'y') {
 			$_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
 		}
 	    }
+	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y')) {
+		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
+		foreach ($nots as $not) {
+			if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
+			$smarty->assign('mail_page', $_REQUEST["page"]);
+			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('mail_title', $_REQUEST["comments_title"]);
+			$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
+			$smarty->assign('mail_hash', $not['hash']);
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = httpPrefix(). dirname( $foo["path"] );
+			$smarty->assign('mail_machine', $machine);
+			$parts = explode('/', $foo['path']);
+
+			if (count($parts) > 1)
+			    unset ($parts[count($parts) - 1]);
+
+			$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+			$mail_data = $smarty->fetch('mail/user_watch_wiki_page_comment.tpl');
+			@mail($not['email'], tra('Wiki page'). ' ' . $_REQUEST["page"] . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		}
+	    }
+
 	} else {
 	    $smarty->assign('msg', tra("Missing title or body when trying to post a comment"));
 
