@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.2 2003-10-14 05:02:28 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.3 2003-10-14 22:13:14 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -12,30 +12,34 @@
     <td><div class="button2">
       <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view repository{/tr}</a>
     </div></td>
+    {if count($reps) gt 0}
     <td><div class="button2">
       <a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');" class="linkbut">
         {tr}copy rules{/tr}
       </a>
     </div></td>
+    {/if}
   </tr></table>
 </div>
 <br />
 
+{if count($reps) gt 0}
 <div id="rules-copy-panel">
 <form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
 <table class="normal">
   <tr>
-    <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
+    <td class="formcolor" colspan="2">{tr}Copy options{/tr}</td>
   </tr><tr>
     <td class="formcolor">{tr}Source repository{/tr}</td>
-    <td class="formcolor"></td>
+    <td class="formcolor"><select name="srcrep">{html_options options=$reps}</select></td>
   </tr><tr>
-    <td class="formcolor"></td>
+    <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="copy" value="{tr}Copy{/tr}" /></td>
   </tr>
 </table>
 </form>
 </div>
+{/if}
 
 {* Add form *}
 <form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
@@ -70,7 +74,7 @@
     <td class="formcolor">{tr}Description{/tr}</td>
     <td class="formcolor"><textarea name="description" rows="4">{$description|escape}</textarea></td>
   </tr><tr>
-    <td class="formcolor"></td>
+    <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
   </tr><tr>
     <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
@@ -87,7 +91,7 @@
       {tr}Test file from repository (empty = configured start page){/tr}
     </td>
   </tr><tr>
-    <td class="formcolor"></td>
+    <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td>
   </tr>
 </table>
