@@ -7,8 +7,9 @@
 {/if}
 </td>
 <td style="text-align:right;">
+<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/print.gif" /></a>
 {if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 </td>
 </tr>
