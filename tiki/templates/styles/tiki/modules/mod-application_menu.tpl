@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.21 2004-05-06 00:24:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.22 2004-06-11 18:44:10 lfagundes Exp $ *}
 
-{tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
+{tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
 <div class="separated"><a href="{$tikiIndex}" class="linkmenu">{tr}home{/tr}</a></div>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.9 2004-06-11 16:25:51 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.10 2004-06-11 18:44:08 lfagundes Exp $ *}
 {* Module layout with controls *}
 
 <div class="box {$module_name}"><div class="box-title">
@@ -22,9 +22,19 @@
   </tr>
 </table>
 {else}
-  {$module_title}
+  {if $module_flip eq 'y'}
+    <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title|escape}</a>
+  {else}
+    {$module_title|escape}
+  {/if}
 {/if}
 
 </div><div class="box-data">
+{if $module_flip eq 'y'}
+  <div id="flip-{$module_name|escape}" style="display: block">
     {$module_content}
+  </div>
+{else}
+  {$module_content}
+{/if}
 </div></div>
