@@ -62,7 +62,7 @@
 {/if}
 <!--<a class="link" href="javascript:setSomeElement('editwiki',"''text here''");">i</a>-->
 {if $feature_wiki_description}
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="description" value="{$description}" /></td>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description}" /></td>
 {/if}
 <tr><td class="formcolor">{tr}Edit{/tr}:</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata}</textarea>
@@ -74,14 +74,14 @@
 {/if}
 
 {if $page ne 'SandBox'}
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="comment" value="{$commentdata}" /></td>
+<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata}" /></td>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr><td class="formcolor">{tr}Copyright{/tr}:</td><td class="formcolor">
 <table border="0">
-<tr><td class="formcolor">Title:</td><td><input size="40" class="wikitext" name="copyrightTitle" value="{$copyrightTitle}" /></td></tr>
-<tr><td class="formcolor">Year:</td><td><input size="4" class="wikitext" name="copyrightYear" value="{$copyrightYear}" /></td></tr>
-<tr><td class="formcolor">Authors:</td><td><input size="40" class="wikitext" name="copyrightAuthors" value="{$copyrightAuthors}" /></td></tr>
+<tr><td class="formcolor">Title:</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle}" /></td></tr>
+<tr><td class="formcolor">Year:</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear}" /></td></tr>
+<tr><td class="formcolor">Authors:</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors}" /></td></tr>
 </table>
 </td>
 {/if}
