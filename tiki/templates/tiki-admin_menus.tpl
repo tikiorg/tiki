@@ -12,7 +12,7 @@
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
 <select name="type">
-<option value="d" {if $type eq 'd'}selected="selected"{/if}>{tr}dynamic colapsed{/tr}</option>
+<option value="d" {if $type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr}</option>
 <option value="e" {if $type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr}</option>
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr}</option>
 </select>
