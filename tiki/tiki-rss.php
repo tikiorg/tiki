@@ -74,6 +74,8 @@ if ($rss_version < 2) {
 	foreach ($changes["data"] as $chg) {
 		$resource=$read.$chg["$id"];
 		if ($id == "blogId") { $resource .= "&postId=".$chg["postId"]; }
+	// forums have threads, add those to the url:
+		if ($id == "forumId") { $resource .= "&comments_parentId=".$chg["threadId"]; }
 		$resource = htmlspecialchars($resource);		
 		print ('        <rdf:li rdf:resource="'.$resource.'" />'."\n");
 	}
@@ -104,6 +106,8 @@ foreach ($changes["data"] as $chg) {
 	$about = $read.$chg["$id"];
 	// blogs have posts, add those to the url:
 	if ($id == "blogId") { $about .= "&postId=".$chg["postId"]; }		
+	// forums have threads, add those to the url:
+	if ($id == "forumId") { $resource .= "&comments_parentId=".$chg["threadId"]; }
   $about = htmlspecialchars($about);
 
   $title = $chg["$titleId"];
