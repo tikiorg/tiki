@@ -427,6 +427,10 @@ div.titlebar {
   clear: both;
 }
 
+table.wikibar {
+	width: 100%;
+}
+
 /* The bar where the actions for a page are displayed */
 DIV#page-bar {	margin-left: 5px;}
 
