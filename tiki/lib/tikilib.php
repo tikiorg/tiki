@@ -1644,8 +1644,8 @@ function list_forums($offset, $maxRecords, $sort_mode, $find) {
 
 	// Now select `users` 
 	$objectId = $res["forumId"];
-	$query = "select distinct `username` from `tiki_comments` where `object`=? and `objectType`=?";
-	$result2 = $this->query($query,array((int)$objectId,"forum"));
+	$query = "select distinct `userName` from `tiki_comments` where `object`=? and `objectType`=?";
+	$result2 = $this->query($query,array((string) $objectId,"forum"));
 	$res["users"] = $result2->numRows();
 
 	if ($forum_age) {

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.17 2003-10-28 22:12:59 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.18 2003-10-31 01:38:10 redflo Exp $
  *
  * \brief Categiries support class
  *
@@ -231,7 +231,6 @@ class CategLib extends TikiLib {
 	}
 
 	function list_category_objects($categId, $offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
-
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$bindvars=array($categId,$findesc,$findesc);
@@ -241,7 +240,9 @@ class CategLib extends TikiLib {
 			$bindvars=array($categId);
 		}
 
-		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+		$query = "select tbl1.`catObjectId`,`categId`,`type`,`objId`,`description`,
+			`created`,`name`,`href`,`hits`
+			from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid order by tbl2.".$this->convert_sortmode($sort_mode);
 		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$result2 = $this->query($query_cant,$bindvars);
