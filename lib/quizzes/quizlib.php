@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.31 2004-05-28 14:05:15 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.32 2004-06-01 03:41:46 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -293,6 +293,7 @@ class QuizLib extends TikiLib {
 		return $retval;
 	}
 
+	// called by tiki-edit_quiz.php
 	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate) {
 		if ($quizId) {
 			// update an existing quiz
@@ -531,10 +532,42 @@ class QuizLib extends TikiLib {
 	// $quiz is a quiz object
 	function quiz_store($quiz){
 		echo __FILE__." line: ".__LINE__.": in quizlib->quiz_store<br />";
-		foreach($quiz as $key => $val){
-			echo $key." = ".$val."<br />";
+// 		foreach($quiz as $key => $val){
+// 			echo $key." = ".$val."<br />";
+// 		}
+		echo "Store stuff in the dbFields array.<br />";
+		foreach($quiz->dbFields as $f){
+			// echo $key." = ".$val."<br />";
 		}
 		die;
+		/* ($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate) */
+		if ($quizId) {
+			// update an existing quiz
+ 			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?,";
+      $query.= "`immediateFeedback` = ?, `showAnswers` = ?,	`shuffleQuestions` = ?, `shuffleAnswers` = ?, ";
+			$query.= "`publishDate` = ?, `expireDate` = ?, ";
+ 			$query.= "`questionsPerPage` = ?, `timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
+ 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,$publishDate,$expireDate,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
+
+			$result = $this->query($query,$bindvars);
+		} else {
+			// insert a new quiz
+			$now = date("U");
+
+			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,";
+      $query.= "`immediateFeedback`, `showAnswers`,	`shuffleQuestions`, `shuffleAnswers`,";
+			$query.= "`publishDate`, `expireDate`,";
+      $query.="`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$canRepeat,$storeResults,
+											$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,
+											$publishDate,$expireDate,
+											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
+			$result = $this->query($query,$bindvars);
+			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
+			$quizId = $this->getOne($queryid,array((int) $now));
+		}
+
+		return $quizId;
 	}
 // Function for Quizzes end ////
 }
@@ -744,66 +777,108 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
 
 class Quiz {
 	var $id;
-  var $deleted;
-	var $author;            // id of the author (index into the users_users table)
-	var $version;
+	var $bDeleted;
+	var $nVersion;
 	var $timestamp;
-	var $online;
-	var $studentAttempts;
-	var $name;
-	var $description;
+	var $nAuthor;
+	var $bOnline;
+	var $nTaken;
+	var $sName;
+	var $sDescription;
 	var $datePub;
 	var $dateExp;
-  var $shuffleQuestions;
-	var $shuffleAnswers;
-	var $limitDisplay;
-	var $questionsPerPage;
-	var $timeLimited;
-	var $timeLimit;
-	var $multiSession;
-	var $canRepeat;
-	var $repetitions;
-	var $gradingMethod;
-	var $showScore;
-	var $showCorrectAnswers;
-	var $publishStats;
-	var $additionalQuestions;
-	var $forum;
-	var $forumName;
-	var $data;
+	var $bRandomQuestions;
+	var $nRandomQuestions;
+	var $bShuffleQuestions;
+	var $bShuffleAnswers;
+	var $bLimitQuestionsPerPage;
+	var $nLimitQuestionsPerPage;
+	var $bTimeLimited;
+	var $nTimeLimit;
+	var $bMultiSession;
+	var $bCanRepeat;
+	var $nCanRepeat;
+	var $sGradingMethod;
+	var $sShowScore;
+	var $sShowCorrectAnswers;
+	var $sPublishStats;
+	var $bAdditionalQuestions;
+	var $bForum;
+	var $sForum;
+	var $sPrologue;
+	var $sData;
+	var $sEpilogue;
+	var $dbFields;
 
 	function Quiz(){
 		global $user;
 		global $userlib;
+		$this->dbFields = array("id",
+														"bDeleted",
+														"nVersion",
+														"timestamp",
+														"nAuthor",
+														"bOnline",
+														"nTaken",
+														"sName",
+														"sDescription",
+														"datePub",
+														"dateExp",
+														"bRandomQuestions",
+														"nRandomQuestions",
+														"bShuffleQuestions",
+														"bShuffleAnswers",
+														"bLimitQuestionsPerPage",
+														"nLimitQuestionsPerPage",
+														"bTimeLimited",
+														"nTimeLimit",
+														"bMultiSession",
+														"bCanRepeat",
+														"nCanRepeat",
+														"sGradingMethod",
+														"sShowScore",
+														"sShowCorrectAnswers",
+														"sPublishStats",
+														"bAdditionalQuestions",
+														"bForum",
+														"sForum",
+														"sPrologue",
+														"sData",
+														"sEpilogue"
+														);
 		$this->id = 0;
-		$this->deleted = 0;
-		$this->author = $userlib->get_user_id($user);
-		$this->authorLogin = $user;
-		$this->version = 1;
+		$this->bDeleted = 0;
+		$this->nVersion = 1;
 		$this->timestamp = date('U');
-		$this->online = 'n';
-		$this->studentAttempts = 0;
-		$this->name = "";
-		$this->description = "";
+		$this->nAuthor = $userlib->get_user_id($user);
+		$this->sAuthor = $user;
+		$this->bOnline = 'n';
+		$this->nTaken = 'n';
+		$this->sName = "";
+		$this->sDescription = "";
 		$this->datePub = date("U");
 		$this->dateExp = mktime(0, 0, 0, 1, 1,  date("Y")+10);
-		$this->shuffleQuestions = "y";
-		$this->shuffleAnswers = "y";
-		$this->limitDisplay = "y";
-		$this->questionsPerPage = 1;
-		$this->timeLimited = "n";
-		$this->timeLimit = "1";
-		$this->multiSession = "n";
-		$this->canRepeat = "y";
-		$this->repetitions = 'unlimited';
-		$this->gradingMethod = "machine";
-		$this->showScore = "immediately";
-		$this->showCorrectAnswers = "immediately";
-		$this->publishStats = "immediately";
-		$this->additionalQuestions = "n";
+		$this->bRandomQuestions = "y";
+		$this->nRandomQuestions = 10;
+		$this->nShuffleQuestions = "y";
+		$this->bShuffleAnswers = "y";
+		$this->bLimitQuestionsPerPage = "y";
+		$this->nLimitQuestionsPerPage = 1;
+		$this->bTimeLimited = "n";
+		$this->nTimeLimit = "1";
+		$this->bMultiSession = "n";
+		$this->bCanRepeat = "y";
+		$this->nCanRepeat = "unlimited";
+		$this->sGradingMethod = "machine";
+		$this->sShowScore = "immediately";
+		$this->sShowCorrectAnswers = "immediately";
+		$this->sPublishStats = "immediately";
+		$this->bAdditionalQuestions = "n";
+
 		$this->forum = "n";
 		$this->forumName = "";
-		$this->data = "";
+		$this->prologue = "";
+		$this->epilogue = "";
 	}
 
   function show_html(){
@@ -822,6 +897,8 @@ class Quiz {
 		$lines[] = "description = ".$this->description."<br />";
 		$lines[] = "datePub = ".date("r",$this->datePub)."<br />";
 		$lines[] = "dateExp = ".date("r",$this->dateExp)."<br />";
+		$lines[] = "nQuestion = ".$this->nQuestion."<br />";
+		$lines[] = "nQuestions = ".$this->nQuestions."<br />";
 		$lines[] = "shuffleQuestions = ".$this->shuffleQuestions."<br />";
 		$lines[] = "shuffleAnswers = ".$this->shuffleAnswers."<br />";
 		$lines[] = "limitDisplay = ".$this->limitDisplay."<br />";
@@ -855,7 +932,7 @@ class Quiz {
   }
 
   function compare($quiz){
-    // Export the question to an array of text lines.
+    
   }
 
   function getAnswerCount(){
