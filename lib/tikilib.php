@@ -7678,11 +7678,15 @@ function parse_data($data)
     //$page='';
 
     // Now search for plugins
+    $smc = new Smarty_Compiler();
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
+    
     for($i=0;$i<count($plugins[0]);$i++) {
       $plugin_start = $plugins[0][$i];
       $plugin_end = '{'.$plugins[1][$i].'}';
+      // Find first occurrence of start tag
       $pos = strpos($data,$plugin_start);
+      // And now find the LAST occurrence of the end tag
       $pos_end = strpos($data,$plugin_end);
       if($pos_end>$pos) {
         $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
@@ -7702,11 +7706,13 @@ function parse_data($data)
           include_once($php_name);
           $ret = $func_name($plugin_data,$arguments);
           $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
+          // Re-entrant plugins
+          $data = $this->parse_data($data);
+          
         }
       }
-
     }
-
+    unset($smc);
 
 
     // Now search for images uploaded by users
@@ -7769,7 +7775,6 @@ function parse_data($data)
 
     // Replace links to slideshows
 
-
     if($feature_drawings == 'y') {
     // Replace drawings
     // Replace rss modules
@@ -7826,6 +7831,8 @@ function parse_data($data)
         $data = str_replace($dcs[0][$i],$repl,$data);
       }
     }
+
+
 
     // Replace boxes
     $data = preg_replace("/\^([^\^]+)\^/","<div class='simplebox' align='center'>$1</div>",$data);
@@ -7934,6 +7941,8 @@ function parse_data($data)
     $links = $this->get_links($data);
     // Note that there're links that are replaced
 
+
+
     foreach($links as $link) {
       if( $this->is_cached($link) && $cachepages == 'y') {
         $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
@@ -7958,6 +7967,8 @@ function parse_data($data)
     }
     // Title bars
     $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
+
+
 
     // New syntax for tables
     if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
@@ -7994,6 +8005,7 @@ function parse_data($data)
 
 
     // tables
+    /*
     preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page_parse) {
       $pagex=substr($page_parse,1,strlen($page_parse)-2);
@@ -8011,6 +8023,9 @@ function parse_data($data)
       $repl.='</table>';
       $data = str_replace($page_parse, $repl, $data);
     }
+    */
+
+
 
 
     // Now tokenize the expression and process the tokens
@@ -8243,6 +8258,9 @@ function parse_data($data)
           include_once($php_name);
           $ret = $func_name($plugin_data,$arguments);
           $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
+          // Allow plugins to generate plugin code... re-parse plugin output here
+          // This allows recursive plugins
+          $data = $this->parse_data($data);
         }
       }
 
