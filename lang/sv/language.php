@@ -712,6 +712,7 @@ $lang=Array(
 "Top galleries" => "Populäraste gallerier", // ./tiki-galleries_rankings.php, ./templates/modules/mod-top_image_galleries.tpl
 "or" => "eller", // ./tiki-list_games.php, ./templates/comments.tpl, ./templates/tiki-calendar.tpl, ./templates/tiki-edit_help.tpl, ./templates/tiki-view_forum.tpl, ./templates/tiki-view_forum_thread.tpl
 "day" => "dag", // ./tiki-pv_chart.php, ./templates/tiki-admin-include-login.tpl, ./templates/tiki-admin_forums.tpl, ./templates/tiki-admin_rssmodules.tpl, ./templates/tiki-calendar.tpl
+"Page alias" => "Page alias",
 "page" => "sida", // ./tiki-send_objects.php, ./templates/tiki-admin_categories.tpl, ./templates/tiki-edit_help.tpl, ./templates/tiki-index_p.tpl, ./templates/tiki-read_article.tpl, ./templates/tiki-show_page.tpl, ./templates/tiki-view_blog_post.tpl, ./templates/styles/geo/tiki-show_page.tpl, ./templates/styles/moreneat/tiki-show_page.tpl, ./templates/styles/neat/tiki-show_page.tpl, ./templates/styles/tiki/tiki-show_page.tpl, ./templates/styles/trollparty/tiki-show_page.tpl
 "article" => "artikel", // ./tiki-send_objects.php, ./templates/tiki-admin_categories.tpl
 "Anonymous" => "Anonym", // ./lib/commentslib.php, ./templates/tiki-g-admin_roles.tpl

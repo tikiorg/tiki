@@ -1008,6 +1008,7 @@ to preview the appeareance of the page, no versions are stored for this page.",/
 "subs" => "subs",
 "objs" => "objs",
 "new" => "new",
+"Page alias" => "Page alias",
 "page" => "page",
 "article" => "article",
 "blog" => "blog",

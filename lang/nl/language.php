@@ -1464,6 +1464,7 @@ No newsletters will be sent to you until the subscription is confirmed." => "Bed
 "Pictures" => "Afbeeldingen",
 "Use page description" => "Paginaomschrijving gebruiken",
 "Maximum size for each attachment" => "Maximale grootte per bijlage",
+"Page alias" => "Page alias",
 "page" => "pagina",
 "page|desc" => "pagina|omschr.",
 "SomeName" => "EenNaam",

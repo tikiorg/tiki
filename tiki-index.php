@@ -344,10 +344,18 @@ if($structlib->page_is_in_structure($page)) {
 	$next=$structlib->get_next_page($page);
 	$parent=$structlib->get_parent_page($page);
 	$struct=$structlib->get_structure($page);
+	$alias=$structlib->get_page_alias($page);
+	$struct_alias=$structlib->get_page_alias($struct);
+	$prev_alias=$structlib->get_page_alias($prev);
+	$next_alias=$structlib->get_page_alias($next);
 	$smarty->assign('struct_next',$next);
 	$smarty->assign('struct_prev',$prev);
 	$smarty->assign('struct_parent',$parent);
 	$smarty->assign('struct_struct',$struct);
+	$smarty->assign('struct_alias',$alias);
+	$smarty->assign('struct_struct_alias',$struct_alias);
+	$smarty->assign('struct_prev_alias',$prev_alias);
+	$smarty->assign('struct_next_alias',$next_alias);
 }
 
 if($feature_theme_control == 'y') {

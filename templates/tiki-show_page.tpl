@@ -1,4 +1,9 @@
-{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
+{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
+  {if $structure eq 'y' and $struct_alias ne ''}
+    {$struct_alias}
+  {else}
+    {$page}
+  {/if}</a>
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
@@ -79,9 +84,46 @@
 
 </tr>
 </table>
-<div class="wikitext">{if $structure eq 'y'}
+<div class="wikitext">
+{if $structure eq 'y'}
 <div class="tocnav">
-<table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev|escape:"url"}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct|escape:"url"}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next|escape:"url"}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
+<table width='100%'>
+<tr><td width='33%'>
+{if $struct_prev}
+  <a class="tocnavlink" href="tiki-index.php?page={$struct_prev|escape:"url"}">&lt;&lt; 
+  {if $struct_prev_alias}
+	{$struct_prev_alias}
+  {else}
+    {$struct_prev}
+  {/if}
+  </a>
+{else}
+  &nbsp;
+{/if}
+</td>
+<td align='center' width='33%'>
+<a class="tocnavlink" href="tiki-index.php?page={$struct_struct|escape:"url"}">
+	{if $struct_struct_alias}
+	  {$struct_struct_alias}
+	{else}
+	  {$struct_struct}
+	{/if}
+</a>
+</td>
+<td align='right' width='33%'>
+{if $struct_next}
+<a class="tocnavlink" href="tiki-index.php?page={$struct_next|escape:"url"}">
+	{if $struct_next_alias}
+	  {$struct_next_alias}
+	{else}
+      {$struct_next} 
+	{/if}
+&gt;&gt;</a>
+{else}
+&nbsp;
+{/if}
+</td></tr>
+</table>
 </div>
 {/if}{$parsed}
 {if $pages > 1}

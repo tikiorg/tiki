@@ -3511,6 +3511,7 @@ go
 
 CREATE TABLE "tiki_structures" (
   "page" varchar(240) default '' NOT NULL,
+  "page_alias" varchar(240) default '' NOT NULL,
   "parent" varchar(240) default '' NOT NULL,
   "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("page","parent")

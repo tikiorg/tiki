@@ -2641,6 +2641,7 @@ $lang=Array(
 "page created" => "Stránka vytvořena",
 "page imported" => "Stránka importována",
 "page not added (Exists)" => "Stránka nebyla přidána (existuje)",
+"Page alias" => "Page alias",
 "page" => "stránky",
 "pages" => "Stránky",
 "page|desc" => "stránka|popis",

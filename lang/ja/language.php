@@ -528,6 +528,7 @@ $lang=Array(
 "Objects in category" => "カテゴリ内のオブジェクト",
 "type" => "種類",
 "Add objects to category" => "オブジェクトをカテゴリに加える",
+"Page alias" => "Page alias",
 "page" => "ページ",
 "article" => "記事",
 "blog" => "blog",

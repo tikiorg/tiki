@@ -1562,6 +1562,7 @@ Nessuna newsletters verrà inviata prima della conferma della richiesta di abbon
 "Use page description" => "Usa descrizione di pagina",
 "Allow viwing HTML mails?" => "Consenti visualizzazione di mail HTML?",//perhaps not used
 "Maximum size for each attachment" => "Dimensione massima di ogni attachment",
+"Page alias" => "Page alias",
 "page" => "pagina",
 "page|desc" => "pagina|disc",
 "SomeName" => "QualcheNome",

@@ -1549,6 +1549,7 @@ $lang=Array(
 "Use page description" => "Usar descripciones",
 "Allow viwing HTML mails?" => "Permitir leer mails HTML?",//perhaps not used
 "Maximum size for each attachment" => "Tamanio maximo de archivos adjuntos",
+"Page alias" => "Page alias",
 "page" => "página",
 "page|desc" => "página|desc",
 "SomeName" => "AlgunNombre",

@@ -1446,6 +1446,7 @@ from your php.ini file" => "创建一个备份将会花上一段较长的时间.
 "fields" => "范围",
 "search category" => "�?�索分类",
 "Change password enforced" => "强制修改 密�?",
+"Page alias" => "Page alias",
 "page" => "页�?�",
 "page|desc" => "页�?�|注释",
 "SomeName" => "�?些�??称",

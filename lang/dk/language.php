@@ -1357,6 +1357,7 @@ $lang=Array(
 "fields" => "felter",
 "search category" => "s&oslash;g kategori",
 "Change password enforced" => "Tvungent skift af adgangskode",
+"Page alias" => "Page alias",
 "page" => "side",
 "page|desc" => "side|besk",
 "SomeName" => "EtNavn",
