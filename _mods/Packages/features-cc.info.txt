@@ -5,10 +5,12 @@ revision:
 1.3.7
 
 lastmodif:
-$Date: 2005-02-26 16:34:40 $
+$Date: 2005-02-27 10:37:57 $
 
 files: 
 features/cc/cc.php cc.php
+features/modules/mod-my_ledger.php modules/mod-my_ledger.php
+features/templates/modules/mod-my_ledger.tpl templates/modules/mod-my_ledger.tpl
 features/cc/lib/cclib.php lib/cc/cclib.php
 features/cc/templates/currencies.tpl templates/cc/currencies.tpl 
 features/cc/templates/currencies_form.tpl templates/cc/currencies_form.tpl
@@ -31,7 +33,7 @@ INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Add Transaction','cc.php?page=transactions&new=1',1420,'','tiki_p_cc_use','');
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My Currencies','cc.php?page=currencies&my=1',1430,'','tiki_p_cc_use','');
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My Ledgers','cc.php?page=my_ledgers',1440,'','tiki_p_cc_use','');
-INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My Transactions','cc.php?page=transactions',1450,'','tiki_p_cc_use','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','My Transactions','cc.php?page=transactions&my=1',1450,'','tiki_p_cc_use','');
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Currencies','cc.php?page=currencies',1460,'','tiki_p_cc_use','');
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Ledgers','cc.php?page=ledgers',1470,'','tiki_p_cc_admin','');
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Transactions','cc.php?page=transactions&all=1',1480,'','tiki_p_cc_admin','');
@@ -41,6 +43,7 @@ sql-upgrade:
 update tiki_menu_options set url="cc.php?page=transactions&new=1" where name='Add Transaction';
 update tiki_menu_options set url="cc.php?page=currencies&my=1" where name='My Currencies';
 update tiki_menu_options set url="cc.php?page=transactions&all=1" where name='List Transactions';
+update tiki_menu_options set url="cc.php?page=transactions&my=1" where name='My Transactions';
 : 1.3.1
 delete from tiki_menu_options where url like 'cc%';
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Currencies','',1400,'','tiki_p_cc_use','');
