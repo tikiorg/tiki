@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.23 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.24 2003-11-07 23:12:10 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 <script type="javascript" src="lib/calendar/dates.js"></script>
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
-{if $tiki_p_admin eq 'y'}
+{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 <span class="mini"><a href="tiki-admin_calendars.php" class="link">{tr}admin{/tr}</a></span>
 {/if}
 <br />
