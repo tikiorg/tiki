@@ -45,8 +45,6 @@ class Text_Diff_Renderer {
         $ntrail = $this->_trailing_context_lines;
 
         $this->_startDiff();
-        
-        echo '<table style="background-color: black" cellspacing="2" cellpadding="2" border="0">';
 
         foreach ($diff->getDiff() as $edit) {
             if (is_a($edit, 'Text_Diff_Op_copy')) {
@@ -91,8 +89,6 @@ class Text_Diff_Renderer {
                           $y0, $yi - $y0,
                           $block);
         }
-        
-        echo "</table>\n";
 
         return $this->_endDiff();
     }
@@ -151,16 +147,12 @@ class Text_Diff_Renderer {
 
     function _startBlock($header)
     {
-        echo '<tr><td><table style="background-color: white"'
-	      . ' cellspacing="0" border="0" cellpadding="4">'
-	      . '<tr bgcolor="#cccccc"><td><tt>' . $header . "\n"
-	      . "</tt></td></tr>\n<tr><td>\n"
-	      . '<table cellspacing="0" border="0" cellpadding="2">';
+        echo '<div class="diffheader">' . $header . '</div><div class="diffbody">';
     }
 
     function _endBlock()
     {
-    	echo "</table></td></tr></table></td></tr>\n";
+    	echo '</div>';
     }
 
     function _lines($lines, $prefix = ' ', $suffix = '')
@@ -172,7 +164,7 @@ class Text_Diff_Renderer {
 
     function _context($lines)
     {
-        $this->_lines($lines, '<tr style=\"background-color: #ffffff\"><td><tt>', '</tt></td></tr>');
+        $this->_lines($lines);
     }
 
     function _added($lines)

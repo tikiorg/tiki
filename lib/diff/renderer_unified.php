@@ -29,12 +29,12 @@ class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
 
     function _added($lines)
     {
-        $this->_lines($lines, '<tr style="background-color: #ccffcc"><td><tt>+</tt><tt>', '</tt></td></tr>');
+        $this->_lines($lines, '<div class="diffadded">+', '</div>');
     }
 
     function _deleted($lines)
     {
-        $this->_lines($lines, '<tr style="background-color: #ffcccc"><td><tt>-</tt><tt>', '</tt></td></tr>');
+        $this->_lines($lines, '<div class="diffdeleted">-', '</div>');
     }
 
     function _changed($orig, $final)
