@@ -98,6 +98,8 @@ class WikiLib extends TikiLib {
   	// tiki_structures change page and parent
   	$query = "update tiki_structures set page='$newName_as' where page='$oldName_as'";
     $this->query($query);	  	  	  	
+  	$query = "update tiki_structures set parent='$newName_as' where parent='$oldName_as'";
+    $this->query($query);	  	  	  	
   	
   	// user_bookmarks_urls (url)
 
