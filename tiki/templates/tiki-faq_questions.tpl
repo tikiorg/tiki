@@ -1,40 +1,85 @@
-<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a><br /><br />
+<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a>
+<br />
+<br />
 [<a href="tiki-list_faqs.php" class="link">{tr}List FAQs{/tr}</a>
 |<a href="tiki-view_faq.php?faqId={$faqId}" class="link">{tr}View FAQ{/tr}</a>
 |<a href="tiki-list_faqs.php?faqId={$faqId}" class="link">{tr}Edit this FAQ{/tr}</a>
-|<a class="link" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a>]<br /><br />
+|<a class="link" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a>]<br />
+<br />
 <h2>{tr}Edit FAQ questions{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
+
+{* begin table * }
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" ><textarea type="text" rows="2" cols="60" name="question">{$question|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+<tr>
+<td class="formcolor">{tr}Question{/tr}:</td>
+<td class="formcolor" >
+<textarea type="text" rows="2" cols="80" name="question">{$question|escape}</textarea>
+</td>
+</tr>
+<tr>
+<td class="formcolor">{tr}Quicklinks{/tr}</td>
+<td class="formcolor">
 {assign var=area_name value="faqans"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
-<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor" ><textarea id='faqans' type="text" rows="8" cols="60" name="answer">{$answer|escape}</textarea></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor" ><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr>
+<td class="formcolor">{tr}Answer{/tr}:</td>
+<td class="formcolor" >
+<textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
+</td>
+</tr>
+<tr>
+<td  class="formcolor">&nbsp;</td>
+<td class="formcolor" >
+<input type="submit" name="save" value="{tr}Save{/tr}" />
+{* set your changes and save 'em * }
+</td>
+</tr>
 </table>
+{* end table * }
+
 </form>
-<h2>{tr}Use a question from another FAQ{/tr}</h2>
+{* This is the area for choosing questions from the db... it really should support choosing options from the answers * }
+
+<h2> {tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
-<input type="hidden" name="questionId" value="{$questionId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape} " />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Filter{/tr}</td><td class="formcolor"><input type="text" name="filter" value="{$filter|escape}" /><input type="submit" name="filteruseq" value="{tr}filter{/tr}" /></td></tr>
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" >
+<tr>
+<td class="formcolor">{tr}Filter{/tr}</td>
+<td class="formcolor">
+<input type="text" name="filter" value="{$filter|escape}" />
+<input type="submit" name="filteruseq" value="{tr}filter{/tr}" />
+</td>
+</tr>
+<tr>
+<td class="formcolor">{tr}Question{/tr}:</td>
+<td class="formcolor" >
 <select name="usequestionId">
-{section name=ix loop=$allq}
-<option value="{$allq[ix].questionId|escape}">{$allq[ix].question}</option>
+{section name=ix loop=$allq|escape}
+{* Ok, here's where you change the truncation field for this field * }
+<option value="{$allq[ix].questionId|truncate:20:"":true}">{$allq[ix].question|truncate:110:"":true}</option>
 {/section}
 </select>
-</td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="useq" value="{tr}use{/tr}" /></td></tr>
+</td>
+</tr>
+<tr>
+<td class="formcolor">&nbsp;</td>
+<td class="formcolor">
+<input type="submit" name="useq" value="{tr}use{/tr}" />
+</td>
+</tr>
 </table>
 </form>
 <br />
+
+{* next big chunk * }
+
 <h2>{tr}FAQ questions{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -50,8 +95,11 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a></td>
+<td class="heading">
+<a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
+</td>
+<td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a>
+</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -66,6 +114,7 @@
 </tr>
 {/section}
 </table>
+
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
@@ -86,6 +135,9 @@
 </div>
 </div>
 {if count($suggested) > 0}
+
+{* this is the next section* }
+
 <h2>{tr}Suggested questions{/tr}</h2>
 <table class="normal">
 <tr>
