@@ -63,7 +63,6 @@
 					</ul>
 			{/foreach}
   		{/if}
-			</div>
   	</td>
   </tr>
 {if $comments_style != 'commentStyle_plain' }
