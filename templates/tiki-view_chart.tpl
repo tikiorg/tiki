@@ -43,7 +43,13 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].position}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].lastPosition}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].perm}</td>
-	<td class="{cycle advance=false}"><a class="link" target="_blank" href="{$items[ix].URL}">{$items[ix].title}</a>
+	<td class="{cycle advance=false}">
+        {if $items[ix].URL ne ''}
+                <a class="link" target="_blank" href="{$items[ix].URL}">{$items[ix].title}</a>
+        {else}
+                {$items[ix].title}
+
+        {/if}
 	{if $items[ix].dif ne 'new' and $items[ix].dif eq $max_dif}
 		<img src='img/icons/popular.gif' alt='{tr}cool{/tr}' />
 	{/if}
