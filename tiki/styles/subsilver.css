@@ -816,7 +816,7 @@ div.wikitext {
 p.editdate {
 	color:    black;
 	font-size:   smaller;
-	margin-bottom:   -1ex;
+	margin-bottom:   0;
 	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 

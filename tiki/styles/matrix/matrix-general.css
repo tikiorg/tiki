@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.10 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.11 2003-08-15 22:07:18 mose Exp $
  *
  * General HTML redefinitions
  * There is no Tiki related things -- just pure HTML redefinitions
@@ -111,4 +111,12 @@ img {
 /* Expand all text editors to max size */
 textarea {
 	width: 99%;
+}
+
+/* Make definition lists looks better */
+dt {
+    display: compact;
+}
+dd {
+    margin-left: 4em;
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.6 2003-08-14 14:24:50 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.7 2003-08-15 22:09:27 mose Exp $
  *
  */
 
@@ -66,7 +66,10 @@ div.cbox {
 	padding-left: 2px;
 	padding-right: 2px;
 	padding-bottom: 20px;
-	border: 2px outset WindowFrame;
+	border-top: 2px outset ThreeDLightShadow;
+	border-left: 2px outset ThreeDLightShadow;
+	border-bottom: 2px outset ThreeDShadow;
+	border-right: 2px outset ThreeDShadow;
 }
 
 div.cbox#error-box {

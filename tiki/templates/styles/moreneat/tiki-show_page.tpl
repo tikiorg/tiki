@@ -105,10 +105,25 @@
 	<span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
 {/if}
 
-<span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{if $tiki_p_admin_wiki eq 'y'}
+        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{/if}
 
 {if $feature_wiki_discuss eq 'y'}
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&comments_postComment=post&comments_title={$page|escape:"url"}&comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
+{/if}
+
+{if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
+<span class="tabbut">
+{if $comments_cant > 0}
+	<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+{else}
+	<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+{/if}
+{/if}
+{if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
+<span class="tabbut"><a href="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{/if}
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}
@@ -177,8 +192,7 @@
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page}" method="post">
 <table class="normal">
 <tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16
- " name="userfile1" type="file">
+ <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16" name="userfile1" type="file">
  {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlength="250" />
  <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>
