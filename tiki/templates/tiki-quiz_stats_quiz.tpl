@@ -59,7 +59,7 @@ Set the names of the table headings to reflect the names of the db
 </tr>
 {else}
 <tr>
-<td class="even">{$channels[user].user}</td>
+<td class="even">{$channels[user].user|userlink}</td>
 <td class="even">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="even">{$channels[user].timeTaken} secs</td>
 <td class="even">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
