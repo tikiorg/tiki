@@ -339,14 +339,16 @@ if($feature_wiki_footnotes == 'y') {
 $smarty->assign('wiki_extras','y');
 $smarty->assign('structure','n');   
 if($structlib->page_is_in_structure($page)) {   
-	$smarty->assign('structure','y');   
-	$prev=$structlib->get_prev_page($page);   
-	$next=$structlib->get_next_page($page);   
-	$struct=$structlib->get_structure($page);   
-	$smarty->assign('struct_next',$next);   
-	$smarty->assign('struct_prev',$prev);   
-	$smarty->assign('struct_struct',$struct);   
-} 
+	$smarty->assign('structure','y');
+	$prev=$structlib->get_prev_page($page);
+	$next=$structlib->get_next_page($page);
+	$parent=$structlib->get_parent_page($page);
+	$struct=$structlib->get_structure($page);
+	$smarty->assign('struct_next',$next);
+	$smarty->assign('struct_prev',$prev);
+	$smarty->assign('struct_parent',$parent);
+	$smarty->assign('struct_struct',$struct);
+}
 
 if($feature_theme_control == 'y') {
 	$cat_type='wiki page';
