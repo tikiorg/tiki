@@ -30,14 +30,14 @@ if(isset($_REQUEST["remove"])) {
 
 $info = $notepadlib->get_note($user,$_REQUEST["noteId"]);
 
-if(!isset($_REQUEST['mode'])) $_REQUEST['mode']='raw';
-if($_REQUEST['mode']=='raw') {
-  $info['parsed']=htmlentities(nl2br($info['data']));
+if(!isset($_REQUEST['parse_mode'])) $_REQUEST['parse_mode']='raw';
+if($_REQUEST['parse_mode']=='raw') {
+  $info['parsed']=nl2br(htmlentities($info['data']));
 }
-if($_REQUEST['mode']=='wiki') {
+if($_REQUEST['parse_mode']=='wiki') {
   $info['parsed']=$tikilib->parse_data($info['data']);
 }
-$smarty->assign('mode',$_REQUEST['mode']);
+$smarty->assign('parse_mode',$_REQUEST['parse_mode']);
 
 
 $smarty->assign('noteId',$_REQUEST["noteId"]);
