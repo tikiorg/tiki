@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.2 2003-12-29 15:12:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.3 2003-12-30 18:25:37 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
@@ -73,7 +73,7 @@
 {if $print_page eq 'y'}
 <br />
 <div class="mini">
-{tr}The original document is available at{/tr} <a href="{$urlprefix}tiki-index.php?page{$page|escape:"url"}" class="linkmenu">{$urlprefix}tiki-index.php?page{$page|escape:"url"}</a>
+{tr}The original document is available at{/tr} <a href="{$urlprefix}tiki-index.php?page{$page|escape:"url"}" class="linkmenu">{$urlprefix}tiki-index.php?page={$page|escape:"url"}</a>
 </div>
 {/if}
 
