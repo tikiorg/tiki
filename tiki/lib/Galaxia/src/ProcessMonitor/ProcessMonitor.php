@@ -192,7 +192,8 @@ class ProcessMonitor extends Base {
       $res['active_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and pId=".$res['pId']);
     // activities of completed instances are all removed from the instance_activities table for some reason, so we need to look at workitems
       $res['completed_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and pId=".$res['pId']);
-      $res['aborted_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='aborted' and pId=".$res['pId']);
+    // activities of aborted instances are all removed from the instance_activities table for some reason, so we need to look at workitems
+      $res['aborted_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='aborted' and pId=".$res['pId']);
       $res['exception_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and pId=".$res['pId']);
 	  $res['act_running_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and pId=".$res['pId']);      
     // completed activities are removed from the instance_activities table unless they're part of a split for some reason, so this won't work
@@ -215,7 +216,7 @@ class ProcessMonitor extends Base {
       // Number of active instances
       $aid = $res['activityId'];
       if (!isset($ret[$aid])) continue;
-      $ret[$aid]['act_completed_instances'] = $res['num_instances'];
+      $ret[$aid]['act_completed_instances'] = $res['num_instances'] - $ret[$aid]['aborted_instances'];
       $ret[$aid]['duration'] = array('min' => $res['min_time'], 'avg' => $res['avg_time'], 'max' => $res['max_time']);
     }
     $retval = Array();
@@ -361,6 +362,7 @@ class ProcessMonitor extends Base {
 	$findesc = $this->qstr('%'.$find.'%');
       $mid.=" and (`properties` like $findesc)";
     }
+// TODO: retrieve instance status as well
     $query = "select `itemId`,`ended`-`started` as duration,ga.`isInteractive`, ga.`type`,gp.`name` as procname,gp.`version`,ga.`name` as actname,";
     $query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp ";
     $query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);

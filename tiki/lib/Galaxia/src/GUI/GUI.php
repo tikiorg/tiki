@@ -189,16 +189,26 @@ class GUI extends Base {
     return $retval;
   }
 
-// TODO: shouldn't this stop the whole instance, including all activities ?
+  /*!
+  Abort an instance - this terminates the instance with status 'aborted', and removes all running activities
+  */
   function gui_abort_instance($user,$activityId,$instanceId)
   {
     // Users can only abort instances belonging to them
 	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
-	$query = "update ".GALAXIA_TABLE_PREFIX."instances set status='aborted' where instanceId=$instanceId";
-	$this->query($query);
-	    	
+    include_once(GALAXIA_LIBRARY.'/src/API/Instance.php');
+    $instance = new Instance($this->db);
+    $instance->getInstance($instanceId);
+    if (!empty($instance->instanceId)) {
+        $instance->abort($activityId,$user);
+    }
+    unset($instance);
   }
   
+  /*!
+  Exception handling for an instance - this sets the instance status to 'exception', but keeps all running activities.
+  The instance can be resumed afterwards via gui_resume_instance().
+  */
   function gui_exception_instance($user,$activityId,$instanceId)
   {
     // Users can only abort instances belonging to them
