@@ -21,6 +21,12 @@ if($where=='pages' and $feature_wiki != 'y') {
   $smarty->display('error.tpl');
   die;  
 }
+if($where=='faqs' and $feature_faqs != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 if($where=='forums' and $feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');

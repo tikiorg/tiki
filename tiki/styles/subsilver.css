@@ -41,7 +41,7 @@ body {
 DIV#tiki-main {  background: white;  height: 100%;  width: 100%;  margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px; }
 
 /* This is the header */
-DIV#tiki-top {  display: none;  height: 0px;  padding-right: 0px;  width: 100%; }
+DIV#tiki-top {  background: #EFEFEF; color: black; height: 11px;  padding-right: 0px;  width: 100%; }
 
 /* This is the middle */
 DIV#tiki-mid {  background: white;  height: auto;  padding-bottom: 0px; }
@@ -146,6 +146,7 @@ div.cbox-data {
 
 /* Boxes */
 #admmnu { display: none;}   
+#faqsmenu { display: none;}
 #wikimenu { display: none;}
 #galmenu { display: none;}
 #cmsmenu { display: none;}
@@ -1189,3 +1190,45 @@ td.categobjectsdata {
 .catname {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #00639C; text-decoration: none;}
 .catname:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #00639C; text-decoration: none;}
 .catname:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : red; text-decoration: underline;}
+
+/***************************************************** FAQS **************************************************************/
+/* The list of questions */
+div.faqlistquestions {
+  background: #FFFFFF;
+  color: black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  border: 1px solid black;
+  width: 98%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* Container for question-answer block */
+div.faqqa {
+  background: #EFEFEF;
+  color: black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  width: 97%;
+  border: 1px solid black;
+  margin-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+/* The question */
+div.faqquestion {
+  margin-bottom: 5px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  width: 97%;
+}
+
+/* The answer */
+div.faqanswer {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  width: 97%;
+}

@@ -13,12 +13,12 @@
 <br/>
 <div align="center">
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-assignpermission.php">
-     <input type="text" name="find" />
+     <input type="text" name="find" value="{$find}" />
      <input type="hidden" name="group" value="{$group}" />
-     <input type="submit" value="find" name="search" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
@@ -35,13 +35,15 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}">{tr}All{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=tiki">{tr}General{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=wiki">{tr}Wiki{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=file%20galleries">{tr}File galleries{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=file%20galleries">{tr}File gals{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=comments">{tr}Comments{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=blogs">{tr}Blogs{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=image%20galleries">{tr}Image galleries{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=image%20galleries">{tr}Image gals{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=forums">{tr}Forums{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=comm">{tr}Comm{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=cms">{tr}Cms{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=faqs">{tr}FAQs{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=user">{tr}user{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=chat">{tr}Chat{/tr}</a>
    ]
  </td>
@@ -74,10 +76,10 @@
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>

@@ -43,6 +43,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 if(!isset($_REQUEST["galleryId"])) {
   $_REQUEST["galleryId"] = 0;

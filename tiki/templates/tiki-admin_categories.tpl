@@ -103,11 +103,11 @@
       <div align="center">
         <div class="mini">
         {if $prev_offset >= 0}
-          [<a class="prevnext" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+          [<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
         {/if}
         {tr}Page{/tr}: {$actual_page}/{$cant_pages}
         {if $next_offset >= 0}
-          &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+          &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
         {/if}
         </div>
       </div>
@@ -179,6 +179,12 @@
           <td class="form"><select name="pollId">{section name=ix loop=$polls}<option value="{$polls[ix].pollId}">{$polls[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addpoll" value="{tr}add{/tr}" /></td>
         </tr>        
+        <tr>
+          <td class="form">faq:</td>
+          <td class="form"><select name="faqId">{section name=ix loop=$faqs}<option value="{$faqs[ix].faqId}">{$faqs[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
+          <td class="form"><input type="submit" name="addfaq" value="{tr}add{/tr}" /></td>
+        </tr>        
+
       </table>
       </form>
       </div>

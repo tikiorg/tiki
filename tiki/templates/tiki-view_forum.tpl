@@ -9,9 +9,38 @@
 {if $tiki_p_forum_post_topic eq 'y'}
 [<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
 <a class="forumbutlink" href="javascript:hide('{$postclass}');">{tr}Hide Post Form{/tr}</a> |
+<a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS{/tr}</a> |
 <a class="forumbutlink" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
 {if $tiki_p_admin_forum eq 'y'}
 | <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>{/if}]
+
+  {if $comment_preview eq 'y'}
+  <br/><br/>
+  <b>{tr}Preview{/tr}</b>
+  <div class="commentscomment">
+  <div class="commentheader">
+  <table width="97%">
+  <tr>
+  <td>
+  <div class="commentheader">
+  <span class="commentstitle">{$comments_preview_title}</span><br/>
+  {tr}by{/tr} {$user}
+  </div>
+  </td>
+  <td valign="top" align="right" width="20%">
+  <div class="commentheader">
+  </div>
+  </td>
+  </tr>
+  </table>
+  </div>
+  <div class="commenttext">
+  {$comments_preview_data}
+  <br/>
+  </div>
+  </div>
+  {/if}
+
 <div id='{$postclass}'>
   <br/>
   {if $comments_threadId > 0}
@@ -26,7 +55,10 @@
     <table class="forumformtable">
     <tr>
       <td class="forumform">{tr}Post{/tr}</td>
-      <td class="forumform"><input type="submit" name="comments_postComment" value="{tr}post{/tr}"/></td>
+      <td class="forumform">
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      </td>
       <td class="forumform">{tr}smileys{/tr}</td>
     </tr>
     <tr>
@@ -87,7 +119,15 @@
     </tr>
     </table>
     </form>
+<br/>    
+  <div class="commentsedithelp"><b>{tr}Posting comments{/tr}:</b><br/><br/>
+  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br/>
+  {tr}HTML tags are not allowed inside comments{/tr}
+  </div>
+  <br/>
+   
 </div>
+
 <br/><br/>
 {/if}
 <table class="forumstable">

@@ -1,8 +1,68 @@
+Version 1.3 --
+
+* [NEW] Spellchecking, now you can spellcheck your articles, submissions, wiki_pages and blog_posts before saving them,
+  the spellchecking dictionary for your language must be downloaded and installed to make this work, dictionaries will
+  be provided as simple .sql dumps and can be downloaded from SourceForge. In this edition the english dictionary is
+  provided. (Read the documentation to learn how to install the dictionary). Spellchecking can be enabled/disabled for
+  Articles, Submissions, WikiPages and blogs from the admin screen.
+* [NEW] Orphan pages listing, list pages that are not linked from any other wiki page.
+* [NEW] RSS feeds for forums listing the last post to any forum in your site
+* [NEW] RSS feed for individual forums listing the last posts to a given forum
+* [NEW] New Diff routine taken from PHPWiki in the Wiki history for a page, now you can see the diff or compare 
+  two versions side-by-side as before.
+* [NEW] New syntax for colored text in the Wiki ~~#0000FF:text~~ to insert text using colors
+* [NEW] Syntax to center text ::text:: will center the text
+* [NEW] Relevance ranking for WikiPages based on a PageRanking algorithm
+* [NEW] You can now send/receive articles from/to other Tiki sites from the communications center
+* [NEW] You can now search deep into subcategories from the category browser
+* [NEW] Added a tool to produce a printable version of multiple Wiki pages
+* [NEW] Now you can preview comment postings in any "commentable" area or in the forums
+* [NEW] BreadCrumb navigation module listing the last "n" pages that you visited
+* [NEW] New feature: FAQs, create and edit faqs, list faqs, popular faqs module and last faqs module, search for
+  text in faqs.
+* [FIX] Several fixes regarding "find" functions in listings
+* [NEW] Find feature in the listing of Wiki pages
+* [NEW] New syntax for WikiPages ((any)) can be used to create the "any" page, now page names are NOT limited
+  to the CapitalizedWordsSmashedTogether rule
+* [NEW] Syntax to prevent converting Smashed words into wiki names use: ))SomeIdea((
+* [NEW] Now you can double-click on a wiki page to edit it (some browsers only)
+* [NEW] Filter added in the communication center to find specific objects to be sent
+* [NEW] A tool to autogenerate passwords was added in the resgistration screen for lazy users
+* [NEW] New feature: Backups, you can create backups of your entire Tiki base, download backups to be saved in some
+  safe place, upload a backup and restore backups. Backups are encrypted to prevent a user from stealing information
+  from your site.
+* [NEW] New registration mode, now you can make Tiki validate users email address by sending them an email with a
+  link to first-login in Tiki, once activated the user will login normally with his password. Of course this feature
+  is optional and can be enabled/disabled from the Admin screen.
+* [NEW] QuickEdit module, where you can type the name of a WikiPage and quickly edit/create the page without finding
+  a link to the page, this can create a lot of orphan pages but can also be very very helpful to people mantaining
+  the Wiki to quickly create pages and edit them.    
+* [NEW] Optinally Tiki can display a "I forgot my password link" for unregistered users to allow users that have
+  forgotten their password to get it by email. You can enable/disable this feature from the Admin screen.
+* [NEW] User Bookmarks, users with the proper permission can create bookmarks and store them in folders, they can
+  admin their bookmarks as they want, a cache is provided for user bookmarks. A user module to display bookmarks
+  with an option to quick-add a Tiki page to the bookmarks is also included. 
+* [NEW] Users with the right permission can configure the modules that will be displayed in the left/right columns
+  and the order in which modules will appear. This can be used to let users configure their modules as they want,
+  as an admin you must make all the modules that the users can configure available by default. 
+* [NEW] Statistics, a page where you (or anyone with permission) can view a lot of statistics about the site including
+  a graph showing the number of pageviews per day. Statistics can be enabled/disabled from the admin screen, please
+  suggest new (useful) statistics that can be added in future versions    
+* [NEW] Fortune cookies (taglines), you can enter taglines or upload from a textfile, the {cookie} syntax can be
+  used to display a random cookie in articles, posts, wiki pages,etc or any template.
+* [NEW] Games section to play flash games, upload games or use the provided additional game-pack. You can upload new
+  games, edit the descriptions and play. 
+* [NEW] Added a new theme: dblue.
+*
+      
+
 Version 1.2 -Antares-
+
 
 * [THANKS] Special thanks to AlBrown,MarcLaporte,Yakumo,Ramiro,Tom,Tesla2k and others ! for submitting many bugs 
   that  are now fixed and for suggesting many features that are now implemented. If some feature is not yet
   included don't worry it will be addressed in a future version. Thanks!
+* [FIX] Fixed a bug when adding new topics  
 * [NEW] Added a find feature to the lastchanges section in the Wiki (Ramiro)
 * [NEW] Categories: You can create categories and subcategories building a category tree, objects (pages, forums,
   blogs, image galleries, file galleries, etc) can be assigned to one/many categories, the user can browse
@@ -21,7 +81,7 @@ Version 1.2 -Antares-
   features and integrated the forums with the Tiki permission system, rankings, modules and search engine.
   There's a lot about forums so I guess it's best to stop the description here, the documentation will introduce
   all the features in forums.
-* [NEW] Now you can upload th thumbnail of an image when uploading an image, this will prevent automatic
+* [NEW] Now you can upload the thumbnail of an image when uploading an image, this will prevent automatic
   thumbnail generation. Some users wanted this feature because thumbnail generation didn't work or they
   wanted to upload their own thumbnails. Maybe you want to have a thumbnail that is not the same as the
   full image so you can use this feature. Thumbnails will be displayed using the size assignated for thumbnails

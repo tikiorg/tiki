@@ -87,6 +87,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_programmed_content($_REQUEST["contentId"],$offset,$maxRecords,$sort_mode,$find);
@@ -109,6 +110,7 @@ if($offset>0) {
 
 $smarty->assign_by_ref('listpages',$listpages["data"]);
 //print_r($listpages["data"]);
+
 
 // Display the template
 $smarty->assign('mid','tiki-edit_programmed_content.tpl');

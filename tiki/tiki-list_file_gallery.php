@@ -116,6 +116,7 @@ if(isset($_REQUEST["find"])) {
   $find = ''; 
   $_REQUEST["find"]='';
 }
+$smarty->assign('find',$find);
 
 $images = $tikilib->get_files($offset,$maxRecords,$sort_mode,$find,$_REQUEST["galleryId"]);
 $cant_pages = ceil($images["cant"] / $maxRecords);

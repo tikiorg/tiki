@@ -29,6 +29,10 @@ if(isset($_REQUEST["addpoll"])) {
   // Here we categorize a page
   $tikilib->categorize_poll($_REQUEST["pollId"],$_REQUEST["parentId"]);
 }
+if(isset($_REQUEST["addfaq"])) {
+  // Here we categorize a page
+  $tikilib->categorize_faq($_REQUEST["faqId"],$_REQUEST["parentId"]);
+}
 if(isset($_REQUEST["addforum"])) {
   // Here we categorize a page
   $tikilib->categorize_forum($_REQUEST["forumId"],$_REQUEST["parentId"]);
@@ -115,6 +119,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 if(isset($_REQUEST["find_objects"])) {
   $find_objects=$_REQUEST["find_objects"];
@@ -160,6 +165,10 @@ $smarty->assign_by_ref('blogs',$blogs["data"]);
 
 $pages = $tikilib->list_pages(0, -1,  'pageName_asc', $find_objects);
 $smarty->assign_by_ref('pages',$pages["data"]);
+
+$faqs = $tikilib->list_faqs(0, -1,  'title_asc', $find_objects);
+$smarty->assign_by_ref('faqs',$faqs["data"]);
+
 
 $articles = $tikilib->list_articles(0,-1,'title_asc', $find_objects, '');
 $smarty->assign_by_ref('articles',$articles["data"]);

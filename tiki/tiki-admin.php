@@ -49,8 +49,6 @@ if(isset($_REQUEST["maxrss"])) {
 }
 
 if(isset($_REQUEST["rss"])) {
-  $tikilib->set_preference('max_rss_articles',$_REQUEST["max_rss_articles"]);
-  $smarty->assign("max_rss_articles",$_REQUEST["max_rss_articles"]);
   $tikilib->set_preference('max_rss_articles',$_REQUEST["max_rss_blogs"]);
   $smarty->assign("max_rss_blogs",$_REQUEST["max_rss_blogs"]);
   $tikilib->set_preference('max_rss_image_galleries',$_REQUEST["max_rss_image_galleries"]);
@@ -67,7 +65,10 @@ if(isset($_REQUEST["rss"])) {
   $smarty->assign("max_rss_blogs",$_REQUEST["max_rss_blogs"]);
   $tikilib->set_preference('max_rss_blog',$_REQUEST["max_rss_blog"]);
   $smarty->assign("max_rss_blog",$_REQUEST["max_rss_blog"]);
-  
+  $tikilib->set_preference('max_rss_forum',$_REQUEST["max_rss_forum"]);
+  $smarty->assign("max_rss_forum",$_REQUEST["max_rss_forum"]);
+  $tikilib->set_preference('max_rss_forums',$_REQUEST["max_rss_forums"]);
+  $smarty->assign("max_rss_forums",$_REQUEST["max_rss_forums"]);
  if(isset($_REQUEST["rss_articles"]) && $_REQUEST["rss_articles"]=="on") {
     $tikilib->set_preference("rss_articles",'y'); 
     $smarty->assign('rss_articles','y');
@@ -103,6 +104,20 @@ if(isset($_REQUEST["rss"])) {
     $tikilib->set_preference("rss_wiki",'n');
     $smarty->assign('rss_wiki','n');
   }
+  if(isset($_REQUEST["rss_forum"]) && $_REQUEST["rss_forum"]=="on") {
+    $tikilib->set_preference("rss_forum",'y'); 
+    $smarty->assign('rss_forum','y');
+  } else {
+    $tikilib->set_preference("rss_forum",'n');
+    $smarty->assign('rss_forum','n');
+  }
+  if(isset($_REQUEST["rss_forums"]) && $_REQUEST["rss_forums"]=="on") {
+    $tikilib->set_preference("rss_forums",'y'); 
+    $smarty->assign('rss_forums','y');
+  } else {
+    $tikilib->set_preference("rss_forums",'n');
+    $smarty->assign('rss_forums','n');
+  }
   if(isset($_REQUEST["rss_blog"]) && $_REQUEST["rss_blog"]=="on") {
     $tikilib->set_preference("rss_blog",'y'); 
     $smarty->assign('rss_blog','y');
@@ -124,6 +139,17 @@ if(isset($_REQUEST["rss"])) {
     $tikilib->set_preference("rss_file_gallery",'n');
     $smarty->assign('rss_file_gallery','n');
   }
+} else {
+  $smarty->assign("max_rss_articles", $tikilib->get_preference("max_rss_articles",10));
+  $smarty->assign("max_rss_wiki", $tikilib->get_preference("max_rss_wiki",10));
+  $smarty->assign("max_rss_blog", $tikilib->get_preference("max_rss_blog",10));
+  $smarty->assign("max_rss_blogs", $tikilib->get_preference("max_rss_blogs",10));
+  $smarty->assign("max_rss_forums", $tikilib->get_preference("max_rss_forums",10));
+  $smarty->assign("max_rss_forum", $tikilib->get_preference("max_rss_forum",10));
+  $smarty->assign("max_rss_file_galleries", $tikilib->get_preference("max_rss_file_galleries",10));
+  $smarty->assign("max_rss_image_galleries", $tikilib->get_preference("max_rss_image_galleries",10));
+  $smarty->assign("max_rss_file_gallery", $tikilib->get_preference("max_rss_file_gallery",10));
+  $smarty->assign("max_rss_image_gallery", $tikilib->get_preference("max_rss_image_gallery",10));
 }
 
 
@@ -184,6 +210,17 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("allowRegister",'n');
   }
+  if(isset($_REQUEST["validateUsers"]) && $_REQUEST["validateUsers"]=="on") {
+    $tikilib->set_preference("validateUsers",'y'); 
+  } else {
+    $tikilib->set_preference("validateUsers",'n');
+  }
+  if(isset($_REQUEST["forgotPass"]) && $_REQUEST["forgotPass"]=="on") {
+    $tikilib->set_preference("forgotPass",'y'); 
+  } else {
+    $tikilib->set_preference("forgotPass",'n');
+  }
+  
   if(isset($_REQUEST["maxRecords"])) {
     $tikilib->set_preference("maxRecords",$_REQUEST["maxRecords"]);
   }
@@ -197,6 +234,7 @@ if(isset($_REQUEST["cmsprefs"])) {
     $tikilib->set_preference("maxArticles",$_REQUEST["maxArticles"]);
     $smarty->assign('maxArticles',$_REQUEST["maxArticles"]);
   }
+  
 }
 
 if(isset($_REQUEST["wikiprefs"])) {
@@ -209,6 +247,9 @@ if(isset($_REQUEST["wikiprefs"])) {
     $smarty->assign('wiki_comments_default_ordering',$_REQUEST["wiki_comments_default_ordering"]);
   }
 }
+
+
+
 
 if(isset($_REQUEST["homeforumprefs"])) {
   $tikilib->set_preference("home_forum",$_REQUEST["homeForum"]);
@@ -272,6 +313,26 @@ if(isset($_REQUEST["blogcomprefs"])) {
   }
 }
 
+if(isset($_REQUEST["faqcomprefs"])) {
+  if(isset($_REQUEST["faq_comments_per_page"])) {
+    $tikilib->set_preference("faq_comments_per_page",$_REQUEST["faq_comments_per_page"]);
+    $smarty->assign('faq_comments_per_page',$_REQUEST["faq_comments_per_page"]);
+  }
+  if(isset($_REQUEST["faq_comments_default_ordering"])) {
+    $tikilib->set_preference("faq_comments_default_ordering",$_REQUEST["faq_comments_default_ordering"]);
+    $smarty->assign('faq_comments_default_ordering',$_REQUEST["faq_comments_default_ordering"]);
+  }
+  if(isset($_REQUEST["feature_faq_comments"]) && $_REQUEST["feature_faq_comments"]=="on") {
+    $tikilib->set_preference("feature_faq_comments",'y'); 
+    $smarty->assign("feature_faq_comments",'y');
+  } else {
+    $tikilib->set_preference("feature_faq_comments",'n');
+    $smarty->assign("feature_faq_comments",'n');
+  }
+}
+
+
+
 if(isset($_REQUEST["imagegalcomprefs"])) {
   if(isset($_REQUEST["image_galleries_comments_per_page"])) {
     $tikilib->set_preference("image_galleries_comments_per_page",$_REQUEST["image_galleries_comments_per_page"]);
@@ -323,6 +384,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_comments",'n');
     $smarty->assign("feature_wiki_comments",'n');
   }
+  
+  if(isset($_REQUEST["wiki_spellcheck"]) && $_REQUEST["wiki_spellcheck"]=="on") {
+    $tikilib->set_preference("wiki_spellcheck",'y'); 
+    $smarty->assign("wiki_spellcheck",'y');
+  } else {
+    $tikilib->set_preference("wiki_spellcheck",'n');
+    $smarty->assign("wiki_spellcheck",'n');
+  }
 
   if(isset($_REQUEST["feature_warn_on_edit"]) && $_REQUEST["feature_warn_on_edit"]=="on") {
     $tikilib->set_preference("feature_warn_on_edit",'y'); 
@@ -348,6 +417,13 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_rankings",'n');
   }
 
+  if(isset($_REQUEST["feature_wiki_multiprint"]) && $_REQUEST["feature_wiki_multiprint"]=="on") {
+    $tikilib->set_preference("feature_wiki_multiprint",'y'); 
+    $smarty->assign("feature_wiki_multiprint",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_multiprint",'n');
+    $smarty->assign("feature_wiki_multiprint",'n');
+  }
   
   if(isset($_REQUEST["feature_ranking"]) && $_REQUEST["feature_ranking"]=="on") {
     $tikilib->set_preference("feature_ranking",'y'); 
@@ -453,6 +529,15 @@ if(isset($_REQUEST["cmsfeatures"])) {
     $tikilib->set_preference("feature_cms_rankings",'n');
     $smarty->assign("feature_cms_rankings",'n');
   }
+  
+  if(isset($_REQUEST["cms_spellcheck"]) && $_REQUEST["cms_spellcheck"]=="on") {
+    $tikilib->set_preference("cms_spellcheck",'y'); 
+    $smarty->assign("cms_spellcheck",'y');
+  } else {
+    $tikilib->set_preference("cms_spellcheck",'n');
+    $smarty->assign("cms_spellcheck",'n');
+  }
+  
   if(isset($_REQUEST["feature_article_comments"]) && $_REQUEST["feature_article_comments"]=="on") {
     $tikilib->set_preference("feature_article_comments",'y'); 
     $smarty->assign("feature_article_comments",'y');
@@ -470,6 +555,15 @@ if(isset($_REQUEST["blogfeatures"])) {
     $tikilib->set_preference("feature_blog_rankings",'n');
     $smarty->assign("feature_blog_rankings",'n');
   }
+  
+  if(isset($_REQUEST["blog_spellcheck"]) && $_REQUEST["blog_spellcheck"]=="on") {
+    $tikilib->set_preference("blog_spellcheck",'y'); 
+    $smarty->assign("blog_spellcheck",'y');
+  } else {
+    $tikilib->set_preference("blog_spellcheck",'n');
+    $smarty->assign("blog_spellcheck",'n');
+  }
+  
   if(isset($_REQUEST["feature_blog_comments"]) && $_REQUEST["feature_blog_comments"]=="on") {
     $tikilib->set_preference("feature_blog_comments",'y'); 
     $smarty->assign("feature_blog_comments",'y');
@@ -566,6 +660,46 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_categories",'n');
     $smarty->assign("feature_categories",'n');
+  }
+  
+  if(isset($_REQUEST["feature_faqs"]) && $_REQUEST["feature_faqs"]=="on") {
+    $tikilib->set_preference("feature_faqs",'y'); 
+    $smarty->assign("feature_faqs",'y');
+  } else {
+    $tikilib->set_preference("feature_faqs",'n');
+    $smarty->assign("feature_faqs",'n');
+  }
+  
+  if(isset($_REQUEST["feature_stats"]) && $_REQUEST["feature_stats"]=="on") {
+    $tikilib->set_preference("feature_stats",'y'); 
+    $smarty->assign("feature_stats",'y');
+  } else {
+    $tikilib->set_preference("feature_stats",'n');
+    $smarty->assign("feature_stats",'n');
+  }
+  
+  if(isset($_REQUEST["feature_games"]) && $_REQUEST["feature_games"]=="on") {
+    $tikilib->set_preference("feature_games",'y'); 
+    $smarty->assign("feature_games",'y');
+  } else {
+    $tikilib->set_preference("feature_games",'n');
+    $smarty->assign("feature_games",'n');
+  }
+  
+  if(isset($_REQUEST["user_assigned_modules"]) && $_REQUEST["user_assigned_modules"]=="on") {
+    $tikilib->set_preference("user_assigned_modules",'y'); 
+    $smarty->assign("user_assigned_modules",'y');
+  } else {
+    $tikilib->set_preference("user_assigned_modules",'n');
+    $smarty->assign("user_assigned_modules",'n');
+  }
+  
+  if(isset($_REQUEST["feature_user_bookmarks"]) && $_REQUEST["feature_user_bookmarks"]=="on") {
+    $tikilib->set_preference("feature_user_bookmarks",'y'); 
+    $smarty->assign("feature_user_bookmarks",'y');
+  } else {
+    $tikilib->set_preference("feature_user_bookmarks",'n');
+    $smarty->assign("feature_user_bookmarks",'n');
   }
   
   if(isset($_REQUEST["feature_comm"]) && $_REQUEST["feature_comm"]=="on") {
@@ -743,6 +877,8 @@ $smarty->assign_by_ref("tags",$tags);
 // Preferences to load
 // anonCanEdit
 // maxVersions
+
+
 $home_blog = $tikilib->get_preference("home_blog",0);
 $home_forum = $tikilib->get_preference("home_forum",0);
 $home_gallery = $tikilib->get_preference("home_gallery",0);
@@ -773,6 +909,8 @@ if($home_file_gallery) {
 }
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
+$validateUsers = $tikilib->get_preference("validateUsers",'n');
+$forgotPass = $tikilib->get_preference("forgotPass",'n');
 $maxVersions = $tikilib->get_preference("maxVersions", 20);
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $title = $tikilib->get_preference("title","");
@@ -780,6 +918,8 @@ $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $smarty->assign_by_ref('popupLinks',$popupLinks);
 $smarty->assign_by_ref('anonCanEdit',$anonCanEdit);
 $smarty->assign_by_ref('allowRegister',$allowRegister);
+$smarty->assign_by_ref('forgotPass',$forgotPass);
+$smarty->assign_by_ref('validateUsers',$validateUsers);
 $smarty->assign_by_ref('maxVersions',$maxVersions);
 $smarty->assign_by_ref('title',$title);
 $smarty->assign_by_ref('maxRecords',$maxRecords);

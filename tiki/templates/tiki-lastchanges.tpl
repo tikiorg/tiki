@@ -12,8 +12,8 @@
 <tr><td class="findtable">Find</td>
    <td class="findtable">
    <form method="get" action="tiki-lastchanges.php">
-     <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
      <input type="hidden" name="days" value="0" />
    </form>
@@ -66,11 +66,11 @@
 <br/>
 <div class="mini" align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-lastchanges.php?days={$days}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-lastchanges.php?find={$find}&amp;days={$days}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-lastchanges.php?days={$days}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-lastchanges.php?find={$find}&amp;days={$days}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

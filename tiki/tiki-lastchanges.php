@@ -22,6 +22,7 @@ if(!isset($_REQUEST["find"])) {
 } else {
   $findwhat = $_REQUEST["find"]; 
 }
+$smarty->assign('find',$findwhat);
 // lines added by ramiro_v on 11/03/2002 ends here
 
 

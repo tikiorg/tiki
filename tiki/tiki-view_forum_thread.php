@@ -111,7 +111,7 @@ if(!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$
 }
 $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 // Process a post form here 
-if($tiki_p_admin_forum == 'y' || tiki_p_forum_post == 'y') {
+if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
   if($thread_info["type"]<>'l' || $tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST["comments_postComment"])) {
       if( (!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) ){
@@ -180,6 +180,17 @@ if(isset($_REQUEST["quote"])) {
   $smarty->assign('comment_data',$qdata);
   $smarty->assign('openpost','y');
 }
+
+$smarty->assign('comment_preview','n');
+if(isset($_REQUEST["comments_previewComment"])) {
+  $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  $smarty->assign('comment_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comment_data',$_REQUEST["comments_data"]);
+  $smarty->assign('openpost','y');
+  $smarty->assign('comment_preview','y');
+}
+
 
 if($tiki_p_admin_forum == 'y') {
   if(isset($_REQUEST["comments_remove"])&&isset($_REQUEST["comments_threadId"])) {

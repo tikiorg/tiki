@@ -19,6 +19,7 @@ if(!isset($_REQUEST["channelId"])) {
 $channelId=$_REQUEST["channelId"];
 //session_register('channelId');
 
+
 if($user) {
   $nickname = $user;
 } else {
@@ -29,12 +30,16 @@ if($user) {
   }
   $nickname = $_REQUEST["nickname"];
 }
+
+
+
 //session_register("nickname");
 $enterTime = date("U");
 //session_register('enterTime');
 if($tiki_p_admin_chat == 'y') {
   $nickname = '@'.$nickname;
 }
+$tikilib->user_to_channel($nickname,$channelId);
 $smarty->assign('nickname',$nickname);
 $smarty->assign('channelId',$_REQUEST["channelId"]);
 $smarty->assign('now',date("U"));
@@ -47,6 +52,8 @@ $smarty->assign_by_ref('channelInfo',$info);
 $smarty->assign('refresh',$refresh);
 $channels = $tikilib->list_active_channels(0,-1,'name_desc','');
 $smarty->assign_by_ref('channels',$channels["data"]);
+$chatusers = $tikilib->get_chat_users($channelId);
+$smarty->assign_by_ref('chatusers',$chatusers);
 
 // Display the template
 $smarty->assign('mid','tiki-chatroom.tpl');

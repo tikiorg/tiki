@@ -11,7 +11,7 @@ if($feature_wiki != 'y') {
 include_once("tiki-pagesetup.php");
 // Now check permissions to access this page
 
-  if($tiki_p_admin != 'y') {
+  if($tiki_p_admin_wiki != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot assign permissions for this page"));
     $smarty->display('error.tpl');
     die;  

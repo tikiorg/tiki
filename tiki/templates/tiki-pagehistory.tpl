@@ -1,21 +1,25 @@
-<h1>{tr}History of{/tr}: <a href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a></h1>
+<a class="pagetitle" href="tiki-pagehistory?page={$page}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page}">{$page}</a><br/><br/>
 {if $preview}
 <h2>{tr}Version{/tr}: {$version}</h2>
 <div  class="wikitext">{$preview.data}</div>
 <br/> 
 {/if}
 {if $diff}
-<h2>Diff</h2>
-<table width="97%">
+<h3>{tr}Comparing versions{/tr}</h3>
+<table class="normalnoborder">
 <tr>
-  <td class="textbl">{tr}Actual_version{/tr}</td>
-  <td class="textbl">{tr}Version{/tr}:{$version}</td>
+  <td>{tr}Actual_version{/tr}</td>
+  <td>{tr}Version{/tr}:{$version}</td>
 </tr>
 <tr>
   <td valign="top" width="50%"><div class="wikitext">{$parsed}</div></td>
   <td valign="top" width="50%"><div class="wikitext">{$diff}</div></td>
 </tr>
 </table>
+{/if}
+{if $diff2 eq 'y'}
+<h3>Diff to version: {$version}</h3>
+{$diffdata}
 {/if}
 <br/>
 <div align="center">
@@ -51,7 +55,8 @@
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href="tiki-rollback.php?page={$page}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
 {/if}
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
 </td>
 {else}
 <td class="even">&nbsp;{$history[hist].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
@@ -66,7 +71,8 @@
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href="tiki-rollback.php?page={$page}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
 {/if}
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
 </td>
 {/if}
 </tr>

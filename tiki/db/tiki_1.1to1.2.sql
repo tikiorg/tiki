@@ -1,3 +1,7 @@
+rename table users_objectPermissions to users_objectpermissions;
+rename table users_userGroups to users_usergroups;
+rename table users_groupPermissions to users_grouppermissions;
+
 alter table tiki_comments add type char(1);
 alter table tiki_galleries add visible char(1);
 alter table tiki_file_galleries add visible char(1);
@@ -98,6 +102,8 @@ create table tiki_forums(
   usePruneOld char(1),
   pruneMaxAge integer(8),
   topicsPerPage integer(6),
+  topicOrdering varchar(100),
+  threadOrdering varchar(100),
   primary key(forumId)
 );
 

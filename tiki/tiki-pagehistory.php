@@ -54,6 +54,17 @@ if(isset($_REQUEST["preview"])) {
   } 
 }
 
+$smarty->assign('diff2','n');
+if(isset($_REQUEST["diff2"])) {
+  $diff = $tikilib->get_version($page,$_REQUEST["diff2"]);
+  $info = $tikilib->get_page_info($page);
+  $html = $tikilib->diff2($diff["data"],$info["data"]);
+  $smarty->assign('diffdata',$html);
+  $smarty->assign('diff2','y');
+  $smarty->assign_by_ref('version',$_REQUEST["diff2"]);
+}
+
+// We are going to change this to "compare" instead of diff
 $smarty->assign('diff',false);
 if(isset($_REQUEST["diff"])) {
   $diff = $tikilib->get_version($page,$_REQUEST["diff"]);

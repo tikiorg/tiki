@@ -21,6 +21,36 @@
 <option value="{$topics[t].topicId}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 {/section}
 </select></td></tr>
+<tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
+<select id='articletype' name='type' onChange='javascript:chgArtType();'>
+<option value='Article' {if $type eq 'Article'}sselected="selected"{/if}>{tr}Article{/tr}</option>
+<option value='Review' {if $type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
+</select>
+</select></td></tr>
+<tr id='isreview' {if $type eq 'Article'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<select name='rating'>
+<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
+<option value="9.5" {if $rating eq 9.5}selected="selected"{/if}>9.5</option>
+<option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
+<option value="8.5" {if $rating eq 8.5}selected="selected"{/if}>8.5</option>
+<option value="8" {if $rating eq 8}selected="selected"{/if}>8</option>
+<option value="7.5" {if $rating eq 7.5}selected="selected"{/if}>7.5</option>
+<option value="7" {if $rating eq 7}selected="selected"{/if}>7</option>
+<option value="6.5" {if $rating eq 6.5}selected="selected"{/if}>6.5</option>
+<option value="6" {if $rating eq 6}selected="selected"{/if}>6</option>
+<option value="5.5" {if $rating eq 5.5}selected="selected"{/if}>5.5</option>
+<option value="5" {if $rating eq 5}selected="selected"{/if}>5</option>
+<option value="4.5" {if $rating eq 4.5}selected="selected"{/if}>4.5</option>
+<option value="4" {if $rating eq 4}selected="selected"{/if}>4</option>
+<option value="3.5" {if $rating eq 3.5}selected="selected"{/if}>3.5</option>
+<option value="3" {if $rating eq 3}selected="selected"{/if}>3</option>
+<option value="2.5" {if $rating eq 2.5}selected="selected"{/if}>2.5</option>
+<option value="2" {if $rating eq 2}selected="selected"{/if}>2</option>
+<option value="1.5" {if $rating eq 1.5}selected="selected"{/if}>1.5</option>
+<option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
+<option value="0.5" {if $rating eq 0.5}selected="selected"{/if}>0.5</option>
+</select>
+</td></tr>
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
@@ -36,8 +66,11 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
-<tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" wrap="virtual">{$heading}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="body" rows="25" cols="80" wrap="virtual">{$body}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="body" rows="25" cols="80" id='subbody' wrap="virtual">{$body}</textarea></td></tr>
+{if $cms_spellcheck eq 'y'}
+<tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+{/if}
 <tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
@@ -56,14 +89,17 @@
 <a class="wiki">{tr}TextFormattingRules{/tr}</a><br />
 <strong>{tr}Emphasis{/tr}:</strong> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em><br />
 <strong>{tr}Lists{/tr}:</strong> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}<br/> 
-<strong>{tr}References{/tr}:</strong> {tr}JoinCapitalizedWords{/tr} {tr}or use square brackets for an{/tr} {tr}external link{/tr}: [URL] or [URL|{tr}link_description{/tr}] or [URL|description|nocache].<br />
+<strong>{tr}Wiki References{/tr}:</strong> {tr}JoinCapitalizedWords or use{/tr} ((page)) {tr}for wiki references{/tr} ))SomeName(( {tr}prevents referencing{/tr}<br/>
+<strong>{tr}External links{/tr}:</strong> {tr}use square brackets for an{/tr} {tr}external link{/tr}: [URL] or [URL|{tr}link_description{/tr}] or [URL|description|nocache].<br />
 <strong>{tr}Misc{/tr}</strong> "!", "!!", "!!!" {tr}make_headings{/tr}, "-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr}<br />
-<strong>{tr}Title_bar{/tr}</strong> "-={tr}title{/tr}=-" {tr}creates a title bar{/tr}.<br/>
+<strong>{tr}Title bar{/tr}</strong> "-={tr}title{/tr}=-" {tr}creates a title bar{/tr}.<br/>
 <strong>{tr}Images{/tr}</strong> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}<br/> 
 <strong>{tr}Non cacheable images{/tr}</strong> "{literal}{{/literal}img src=http://example.com/foo.jpg?nocache=1 width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}<br/> 
 <strong>{tr}Tables{/tr}</strong> "||row1-col1|row1-col2|row1-col3||row2-col1|row2-col2|row3-col3||" {tr}creates a table{/tr}<br/>
 <strong>{tr}RSS feeds{/tr}</strong> "{literal}{{/literal}rss id=n max=m{literal}}{/literal}" {tr}displays rss feed with id=n maximum=m items{/tr}<br/>
 <strong>{tr}Simple box{/tr}</strong> "^{tr}Box content{/tr}^" {tr}Creates a box with the data{/tr}<br/>
 <strong>{tr}Dynamic content{/tr}</strong> "{literal}{{/literal}content id=n}" {tr}Will be replaced by the actual value of the dynamic content block with id=n{/tr}<br/>
+<strong>{tr}Colored text{/tr}</strong> "~~#FFEE33:some text~~" {tr}Will display using the indicated HTML color{/tr}<br/>
+<strong>{tr}Center{/tr}</strong> "::some text::" {tr}Will display the text centered{/tr}<br/>
 </p>
 </div>

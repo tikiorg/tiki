@@ -81,9 +81,10 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset,$maxRecords,$sort_mode,$find,$pdate);
+$listpages = $tikilib->list_articles($offset,$maxRecords,$sort_mode,$find,$pdate,$user);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

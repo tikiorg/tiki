@@ -52,7 +52,11 @@ $smarty->assign_by_ref('offset',$offset);
 
 if(!isset($_REQUEST["find"])) {
   $find='';
+} else {
+  $find = $_REQUEST["find"];
 }
+$smarty->assign('find',$find);
+
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_cache($offset,$maxRecords,$sort_mode,$find);

@@ -61,8 +61,20 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
 
 $smarty->assign('preview','n');
 if(isset($_REQUEST["preview"])) {
-  $smarty->assign('data',$_REQUEST["data"]);
-  $smarty->assign('parsed_data',$tikilib->parse_data($_REQUEST["data"]));
+  $data = $_REQUEST["data"];
+  $parsed_data = $tikilib->parse_data($_REQUEST["data"]);
+
+  if($blog_spellcheck == 'y') {
+  if(isset($_REQUEST["spellcheck"])&&$_REQUEST["spellcheck"]=='on') {
+  $parsed_data = $tikilib->spellcheckreplace($data,$parsed_data,$language,'blogedit');
+  $smarty->assign('spellcheck','y');
+  } else {
+  $smarty->assign('spellcheck','n');
+  }
+  }
+
+  $smarty->assign('data',$data);
+  $smarty->assign('parsed_data',$parsed_data);
   $smarty->assign('preview','y');
 }
 

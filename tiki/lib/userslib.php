@@ -369,10 +369,18 @@ class UsersLib {
     return true;  
   }
   
-  function add_user($user,$pass,$email)
+  function confirm_user($user)
+  {
+    $provpass = $this->db->getOne("select provpass from users_users where login='$user'");
+    $query = "update users_users set password='$provpass' where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+  }
+  
+  function add_user($user,$pass,$email,$provpass='')
   {
     if($this->user_exists($user)) return false;  
-    $query = "insert into users_users(login,password,email) values('$user','$pass','$email')";
+    $query = "insert into users_users(login,password,email,provpass) values('$user','$pass','$email','$provpass')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $this->assign_user_to_group($user,'Registered');

@@ -15,12 +15,13 @@ if($user != 'admin') {
 
 
 
-
-// Now get left modules from the assigned modules
-$left_modules = $tikilib->get_assigned_modules('l');
-// Now get right modules from the assigned modules
-$right_modules = $tikilib->get_assigned_modules('r');
-//print_r($right_modules);
+if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $tikilib->user_has_assigned_modules($user)) {
+  $left_modules = $tikilib->get_assigned_modules_user($user,'l');
+  $right_modules = $tikilib->get_assigned_modules_user($user,'r');
+} else {
+  $left_modules = $tikilib->get_assigned_modules('l');
+  $right_modules = $tikilib->get_assigned_modules('r');
+}
 
 for($i=0;$i<count($left_modules);$i++) {
     $r=&$left_modules[$i];

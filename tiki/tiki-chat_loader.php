@@ -29,29 +29,48 @@ print('<head>');
 //update_channel_ratio($channelId);
 if(isset($_REQUEST["channelId"])) {
   $messages = $tikilib->get_messages($_REQUEST["channelId"],$lastMessage,$_REQUEST["enterTime"]); 
+  
   if(count($messages)>0) {
     print("<script>");
     foreach ($messages as $msg) {
-      if($msg["poster"]==$_REQUEST["nickname"]) {
-        $classt='chuser'; 
-      } else {
-        $classt='chnormal'; 
-      }
-      $parsed = $tikilib->parse_comment_data($msg["data"]);
-      $prmsg="<span class=\"$classt\">".$msg["posterName"].": ".$parsed."</font><br/>";
-      //$com = "top.document.frames[0].document.write('".$prmsg."');";
-      $com = "top.chatdata.document.write('".$prmsg."');";
-      //$com="top.document.frames[0].document.write('hey')";
-      if($msg["messageId"]>$lastMessage) $lastMessage=$msg["messageId"];
-      //print("alert('$com');");
-      print($com);
-      //print("top.document.frames[0].document.write('\n');");
+      
+        if($msg["poster"]!=$_REQUEST["nickname"]) {
+          $classt='black'; 
+        } else {
+          $classt='blue'; 
+        }
+        $parsed = $tikilib->parse_comment_data($msg["data"]);
+        $prmsg="<span style=\"color:$classt;\">".$msg["posterName"].": ".$parsed."</span><br/>";
+        //$com = "top.document.frames[0].document.write('".$prmsg."');";
+        $com = "top.chatdata.document.write('".$prmsg."');";
+        //$com="top.document.frames[0].document.write('hey')";
+        if($msg["messageId"]>$lastMessage) $lastMessage=$msg["messageId"];
+        //print("alert('$com');");
+        print($com);
+        //print("top.document.frames[0].document.write('\n');");
+      
     }
     print("top.chatdata.scrollTo(0,100000)");
     print("</script>");
     session_register("lastMessage");
   }
 }
+
+
+$messages = $tikilib->get_private_messages($_REQUEST["nickname"]); 
+if(count($messages)>0) {
+  print("<script>");
+  foreach ($messages as $msg) {
+    $classt='red';
+    $parsed = $tikilib->parse_comment_data($msg["data"]);
+    $prmsg="<span style=\"color:$classt;\">".$msg["posterName"].": ".$parsed."</span><br/>";
+    $com = "top.chatdata.document.write('".$prmsg."');";
+    print($com);
+  }
+  print("top.chatdata.scrollTo(0,100000)");
+  print("</script>");
+}
+
 
 ?>
 </head>
@@ -61,7 +80,7 @@ print('<body onLoad="window.setInterval(\'location.reload()\','.$refresh.');">')
 <?
 if(isset($com)) {
 //print_r($messages);
-//print($com);
+//print(htmlentities($com));
 }
 ?>
 </body>

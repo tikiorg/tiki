@@ -8,7 +8,7 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($_REQUEST["galleryId"])) {
   die;
 }
-$foo1=str_replace("tiki-file_gallery_rss","tiki-index",$foo["path"]);
+$foo1=str_replace("tiki-file_gallery_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-file_gallery_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-file_gallery_rss","tiki-download_file",$foo["path"]);
 $home = 'http://'.$_SERVER["SERVER_NAME"].$foo1;

@@ -41,6 +41,13 @@
 <small>File galleries</small>
 </td>
 {/if}
+{if $rss_forums eq 'y'}
+<td>
+<a href="tiki-forums_rss.php"><img alt="rss" border="0" src="img/rss.png" /></a><br />
+<small>Forums</small>
+</td>
+{/if}
+
 </tr>
 </table>
 </div> 

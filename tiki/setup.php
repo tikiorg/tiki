@@ -21,7 +21,7 @@ require_once(SMARTY_DIR.'Smarty.class.php');
 
 class Smarty_Sterling extends Smarty {
   function Smarty_Sterling() {
-    $this->teplate_dir = "templates/";
+    $this->template_dir = "templates/";
     $this->compile_dir = "templates_c/";
     $this->config_dir = "configs/";
     $this->cache_dir = "cache/";

@@ -2,10 +2,8 @@
 <div id="page-bar">
 <table>
 <tr>
-{if !$lock}
-
 <td><div  class="button2"><a href="tiki-print.php?page={$page}" class="linkbut">{tr}printable{/tr}</a></div></td>
-
+{if !$lock}
 {if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 {if $beingEdited eq 'y'}
 <td><div class="button2" ><a style="background: #FFAAAA;" href="tiki-editpage.php?page={$page}" class="linkbut">{tr}edit{/tr}</a></div></td>
@@ -20,7 +18,7 @@
 {/if}
 {/if}
 {if $page ne 'SandBox'}
-{if $tiki_p_admin eq 'y'}
+{if $tiki_p_admin_wiki eq 'y'}
 {if $lock}
 <td><div class="button2"><a href="tiki-index.php?page={$page}&amp;action=unlock" class="linkbut">{tr}unlock{/tr}</a></div></td>
 {else}
@@ -39,6 +37,9 @@
 {/if}
 {if $feature_likePages eq 'y'}
 <td><div class="button2"><a href="tiki-likepages.php?page={$page}" class="linkbut">{tr}like pages{/tr}</a></div></td>
+{/if}
+{if $canundo eq 'y'}
+<td><div class="button2"><a href="tiki-index.php?page={$page}&amp;undo=1" class="linkbut">{tr}undo{/tr}</a></div></td>
 {/if}
 </tr>
 </table>

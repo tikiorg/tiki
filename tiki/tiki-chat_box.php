@@ -13,9 +13,15 @@ if($tiki_p_chat!='y') {
 if(isset($_REQUEST["channelId"]) && isset($_REQUEST["nickname"])) {
   if(isset($_REQUEST["data"])) {
     $data = $_REQUEST["data"];
-    if($channelId) {
-      $tikilib->send_message($_REQUEST["nickname"],$_REQUEST["channelId"],$data);  
-    } 
+    // Recognize a private message
+    if(substr($data,0,1)==':') {
+      preg_match("/:([^:]+):(.*)/",$data,$reqs);
+      $tikilib->send_private_message($_REQUEST["nickname"],$reqs[1],$reqs[2]);  
+    } else {
+      if($channelId) {
+        $tikilib->send_message($_REQUEST["nickname"],$_REQUEST["channelId"],$data);  
+      } 
+    }
   }
   $smarty->assign('nickname',$_REQUEST["nickname"]);
   $smarty->assign('channelId',$_REQUEST["channelId"]);

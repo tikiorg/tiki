@@ -4,8 +4,8 @@
 <tr><td class="findtable">Find</td>
    <td class="findtable">
    <form method="get" action="tiki-old_polls.php">
-     <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
@@ -47,11 +47,11 @@
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-old_polls.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-old_polls.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-old_polls.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-old_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

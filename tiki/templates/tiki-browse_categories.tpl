@@ -7,7 +7,7 @@
 </table>
 <div align="center">
 <form method="post" action="tiki-browse_categories.php">
-search category: <input type="text" name="find" size="35" />
+search category: <input type="text" name="find" value="{$find}" size="35" /> {tr}deep{/tr}:<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
         <input type="hidden" name="parentId" value="{$parentId}" />
         <input type="submit" value="find" name="search" />
         <input type="hidden" name="sort_mode" value="{$sort_mode}" />
@@ -39,11 +39,11 @@ search category: <input type="text" name="find" size="35" />
 	<div align="center">
         <div class="mini">
         {if $prev_offset >= 0}
-          [<a class="prevnext" href="tiki-browse_categories.php?parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+          [<a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
         {/if}
         {tr}Page{/tr}: {$actual_page}/{$cant_pages}
         {if $next_offset >= 0}
-          &nbsp;[<a class="prevnext" href="tiki-browse_categories.php?parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+          &nbsp;[<a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
         {/if}
         </div>
       </div>

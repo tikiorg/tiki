@@ -110,6 +110,13 @@ if($tiki_p_admin_cms == 'y') {
     $smarty->assign("$perm",'y');  
     $$perm='y';
   }
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','topics');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+
 }
 
  
@@ -137,7 +144,10 @@ if(!isset($_SESSION["last_forum_visit"])) {
   $_SESSION["last_forum_visit"]=$last_forum_visit;
 }
 
-
+$userbreadCrumb = 4;
+$wiki_spellcheck = 'n';
+$cms_spellcheck = 'n';
+$blog_spellcheck = 'n';
 $home_blog = 0;
 $home_gallery = 0;
 $home_file_gallery = 0;
@@ -145,10 +155,16 @@ $home_forum = 0;
 $feature_xmlrpc = 'n';
 $feature_comm = 'n';
 $feature_categories = 'n';
+$feature_faqs = 'n';
+$feature_stats = 'n';
+$feature_games = 'n';
+$user_assigned_modules = 'n';
+$feature_user_bookmarks = 'n';
 $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
 $feature_gal_rankings = 'y';
 $feature_wiki_rankings = 'y';
+$feature_wiki_multiprint = 'n';
 $feature_forum_rankings = 'y';
 $feature_lastChanges =  'y';
 $feature_dump =  'y';
@@ -179,6 +195,10 @@ $feature_polls = 'n';
 $feature_wiki_comments = 'n';
 $wiki_comments_default_ordering = 'points_desc';
 $wiki_comments_per_page = 10;
+
+$feature_faq_comments = 'y';
+$faq_comments_default_ordering = 'points_desc';
+$faq_comments_per_page = 10;
 
 $feature_forums = 'n';
 $forums_ordering = 'created_desc';
@@ -218,6 +238,8 @@ $feature_right_column = 'y';
 $feature_top_bar = 'y';
 $feature_bot_bar = 'y';
 
+$rss_forums = 'y';
+$rss_forum = 'y';
 $rss_articles = 'y';
 $rss_blogs = 'y';
 $rss_image_galleries = 'y';
@@ -227,6 +249,8 @@ $rss_image_gallery = 'n';
 $rss_file_gallery = 'n';
 $rss_blog = 'n';
 
+$max_rss_forums = 10;
+$max_rss_forum = 10;
 $max_rss_articles = 10;
 $max_rss_blogs = 10;
 $max_rss_image_galleries = 10;
@@ -240,13 +264,22 @@ $keep_versions = 1;
 
 $feature_custom_home = 'n';
 
+$smarty->assign('dblclickedit','n');
+
 $smarty->assign('feature_custom_home',$feature_custom_home);
 
 $smarty->assign('keep_versions',$keep_versions);
 
+$smarty->assign('wiki_spellcheck',$wiki_spellcheck);
+$smarty->assign('cms_spellcheck',$cms_spellcheck);
+$smarty->assign('blog_spellcheck',$cms_spellcheck);
+
+$smarty->assign('userbreadCrumb',$userbreadCrumb);
 $smarty->assign('feature_polls',$feature_polls);
 $smarty->assign('feature_chat',$feature_chat);
 $smarty->assign('rss_articles',$rss_articles);
+$smarty->assign('rss_forum',$rss_forum);
+$smarty->assign('rss_forums',$rss_forums);
 $smarty->assign('rss_blogs',$rss_blogs);
 $smarty->assign('rss_image_galleries',$rss_image_galleries);
 $smarty->assign('rss_file_galleries',$rss_file_galleries);
@@ -254,6 +287,7 @@ $smarty->assign('rss_wiki',$rss_wiki);
 $smarty->assign('rss_image_gallery',$rss_image_gallery);
 $smarty->assign('rss_file_gallery',$rss_file_gallery);
 $smarty->assign('rss_blog',$rss_blog);
+
 
 $smarty->assign('max_rss_articles',$max_rss_articles);
 $smarty->assign('max_rss_blogs',$max_rss_blogs);
@@ -291,6 +325,11 @@ $smarty->assign('feature_hotwords',$feature_hotwords);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);
 $smarty->assign('feature_dump',$feature_dump);
 $smarty->assign('feature_categories',$feature_categories);
+$smarty->assign('feature_faqs',$feature_faqs);
+$smarty->assign('feature_stats',$feature_stats);
+$smarty->assign('feature_games',$feature_games);
+$smarty->assign('user_assigned_modules',$user_assigned_modules);
+$smarty->assign('feature_user_bookmarks',$feature_user_bookmarks);
 $smarty->assign('feature_ranking',$feature_ranking);
 $smarty->assign('feature_listPages', $feature_listPages);
 $smarty->assign('feature_history', $feature_history);
@@ -311,6 +350,11 @@ $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
 $smarty->assign('feature_wiki_comments',$feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering',$wiki_comments_default_ordering);
 $smarty->assign('wiki_comments_per_page',$wiki_comments_per_page);
+
+$smarty->assign('feature_faq_comments',$feature_faq_comments);
+$smarty->assign('faq_comments_default_ordering',$faq_comments_default_ordering);
+$smarty->assign('faq_comments_per_page',$faq_comments_per_page);
+
 
 $smarty->assign('feature_forums',$feature_forums);
 $smarty->assign('forums_ordering',$forums_ordering);
@@ -350,6 +394,8 @@ $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $cachepages = $tikilib->get_preference("cachepages",'y');
 $cacheimages = $tikilib->get_preference("cacheimages",'y');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
+$validateUsers = $tikilib->get_preference("validateUsers",'n');
+$forgotPass = $tikilib->get_preference("forgotPass",'n');
 $title = $tikilib->get_preference("title","");
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $maxArticles = $tikilib->get_preference("maxArticles",10);
@@ -469,6 +515,17 @@ if(isset($_REQUEST["pollVote"])) {
   }
   $pollId=$_REQUEST["polls_pollId"];
   header("location: tiki-poll_results.php?pollId=$pollId");
+}
+
+$ownurl = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+
+
+// Stats
+if($feature_stats == 'y') {
+if(!strstr($_SERVER["REQUEST_URI"],'chat')) {
+  $tikilib->add_pageview();
+}
 }
 
 ?>

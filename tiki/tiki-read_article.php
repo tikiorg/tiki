@@ -9,6 +9,8 @@ if($feature_articles != 'y') {
 }
 
 
+
+
 if(!isset($_REQUEST["articleId"])) {
   $smarty->assign('msg',tra("No article indicated"));
   $smarty->display('error.tpl');
@@ -25,6 +27,17 @@ if(isset($_REQUEST["articleId"])) {
     $smarty->display('error.tpl');
     die;  
   }
+
+  if($userlib->object_has_one_permission($article_data["topicId"],'topic')) {
+    if(!$userlib->object_has_permission($user,$article_data["topicId"],'topic','tiki_p_topic_read')) {
+      $smarty->assign('msg',tra("Permision denied"));
+      $smarty->display('error.tpl');
+      die;  
+    }
+  }
+
+  
+  
   if( ($article_data["publishDate"]>date("U")) && ($tiki_p_admin != 'y') ){
     $smarty->assign('msg',tra("Article is not published yet"));
     $smarty->display('error.tpl');
@@ -33,6 +46,9 @@ if(isset($_REQUEST["articleId"])) {
   $smarty->assign('title',$article_data["title"]);
   $smarty->assign('authorName',$article_data["authorName"]);
   $smarty->assign('topicId',$article_data["topicId"]);
+  $smarty->assign('type',$article_data["type"]);
+  $smarty->assign('rating',$article_data["rating"]);
+  $smarty->assign('entrating',$article_data["entrating"]);
   $smarty->assign('useImage',$article_data["useImage"]);
   $smarty->assign('image_name',$article_data["image_name"]);
   $smarty->assign('image_type',$article_data["image_type"]);
