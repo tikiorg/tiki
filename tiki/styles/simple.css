@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.21 2004-06-21 02:39:17 dgdaniels Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.22 2004-07-01 21:07:55 teedog Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -294,3 +294,59 @@ TABLE.admin {
   background-color : #ddeeff;
   margin : 1ex;
    border : 1px dashed #adacaf; }
+
+   /* wiki diff styles */
+
+.diffheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.diffbody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+font-family: monospace, 'Courier New', courier;
+color: black;
+background-color: #edeeef;
+}
+.diffdeleted {
+border-color: #A9B8C2;
+color: black;
+background-color: #ffcccc;
+}
+.diffadded {
+border-color: #A9B8C2;
+color: black;
+background-color: #ccffcc;
+}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
