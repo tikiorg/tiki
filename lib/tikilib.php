@@ -900,7 +900,7 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
     $query = "select * from `tiki_tracker_items` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_tracker_items` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant);
+    $cant = $this->getOne($query_cant, $bindvars);
     $ret = array();
 
     while ($res = $result->fetchRow()) {
