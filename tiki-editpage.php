@@ -84,6 +84,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
       }
     }
   }
+  
   if(isset($_REQUEST["save"])) {
     unset($_REQUEST["save"]);
     header("location: tiki-index.php?page=$page");
@@ -289,7 +290,7 @@ function parse_output(&$obj, &$parts,$i) {
 
 // Pro
 if(isset($_REQUEST["save"])) {
-  
+  $page = $_REQUEST["page"];
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $edit = $_REQUEST["edit"];  
   } else {

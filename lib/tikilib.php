@@ -1912,7 +1912,7 @@ class TikiLib {
   function restore_database($filename)
   {
     // Get the password before it's too late
-    $query = "select password from users_users where login='Admin'";
+    $query = "select hash from users_users where login='Admin'";
     $pwd = $this->getOne($query);
 
     // Before anything read tiki.sql from db and run it
@@ -1998,7 +1998,7 @@ class TikiLib {
   function backup_database($filename)
   {
     ini_set("max_execution_time", "3000");
-    $query = "select password from users_users where login='Admin'";
+    $query = "select hash from users_users where login='Admin'";
     $pwd = $this->getOne($query);
     @$fp = fopen($filename,"w");
     if(!$fp) return false;
@@ -3968,7 +3968,15 @@ class TikiLib {
 
   function remove_file_gallery($id)
   {
-
+    global $fgal_use_dir;
+    $query = "select path from tiki_files where galleryId='$id'";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
+      $path = $res["path"];
+      if($path) {
+        @unlink($fgal_use_dir.$path);
+      }
+    }
     $query = "delete from tiki_file_galleries where galleryId='$id'";
     $result = $this->query($query);
     $query = "delete from tiki_files where galleryId='$id'";
@@ -5994,6 +6002,16 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function remove_gallery($id)
   {
+    global $gal_use_dir;
+    $query = "select path from tiki_images where galleryId='$id'";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
+      $path = $res["path"];
+      if($path) {
+        @unlink($gal_use_dir.$path);
+        @unlink($gal_use_dir.$path.'.thumb');
+      }
+    }
     $query = "delete from tiki_galleries where galleryId='$id'";
     $result = $this->query($query);
     $query = "delete from tiki_images where galleryId='$id'";
@@ -7224,7 +7242,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $data;
   }
 
-  function parse_data($data)
+function parse_data($data)
   {
     global $page_regex;
     global $feature_hotwords;
@@ -7236,7 +7254,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $feature_hotwords_nw;
     global $feature_wiki_pictures;
     global $tiki_p_upload_picture;
-    //global $page; // GS
+    global $page; 
     global $dbTiki;
     global $structlib;
 
@@ -7278,6 +7296,547 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $data=str_replace('{toc}',$html,$data);
       }
     }
+    //$page='';
+
+    // Now search for plugins
+    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
+    //print_r($plugins);
+    for($i=0;$i<count($plugins[0]);$i++) {
+      $plugin_start = $plugins[0][$i];
+      $plugin_end = '{'.$plugins[1][$i].'}';
+      $pos = strpos($data,$plugin_start);
+      $pos_end = strpos($data,$plugin_end);
+      if($pos_end>$pos) {
+        $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
+        $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
+        $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
+        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
+        $params = split(',',trim($plugins[2][$i]));
+        $arguments=Array();
+        foreach($params as $param) {
+          $parts=explode('=>',$param);
+          if(isset($parts[0])&&isset($parts[1])) {
+            $name=trim($parts[0]);
+            $arguments[$name]=trim($parts[1]);
+          }
+        }
+        if(file_exists($php_name)) {
+          include_once($php_name);
+          $ret = $func_name($plugin_data,$arguments);
+          $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
+        }
+      }
+
+    }
+
+
+
+    // Now search for images uploaded by users
+    if($feature_wiki_pictures=='y') {
+      preg_match_all("/\{picture file=([^\}]+)\}/",$data,$pics);
+      for($i=0;$i<count($pics[0]);$i++) {
+        // Check if the image exists
+        $name=$pics[1][$i];
+        if(file_exists($name)) {
+          // Replace by the img tag to show the image
+         $repl = "<img src='$name?nocache=1' alt='$name' />";
+        } else {
+          $repl=tra('picture not found');
+        }
+        // Replace by $repl
+        $data = str_replace($pics[0][$i],$repl,$data);
+      }
+    }
+
+
+    $data = stripslashes($data);
+    if($feature_hotwords == 'y') {
+      $words = $this->get_hotwords();
+      foreach($words as $word=>$url) {
+        //print("Replace $word by $url<br/>");
+        $data  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
+      }
+    }
+
+    //$data = strip_tags($data);
+    // BiDi markers
+    $bidiCount = 0;
+    $bidiCount = preg_match_all("/(\{l2r\})/",$data,$pages);
+    $bidiCount += preg_match_all("/(\{r2l\})/",$data,$pages);
+
+    $data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
+    $data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
+    $data = preg_replace("/\{lm\}/", "&lrm;", $data);
+    $data = preg_replace("/\{rm\}/", "&rlm;", $data);
+    // smileys
+    $data = $this->parse_smileys($data);
+
+
+    // Replace rss modules
+    if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
+      for($i=0;$i<count($rsss[0]);$i++) {
+        $id = $rsss[1][$i];
+        $max = $rsss[3][$i];
+        if(empty($max)) $max=99;
+        $rssdata = $this->get_rss_module_content($id);
+        $items = $this->parse_rss_data($rssdata);
+        $repl='';
+        for($j=0;$j<count($items) && $j<$max;$j++) {
+         $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="wiki">'.$items[$j]["title"].'</a></li>';
+        }
+        $repl='<ul>'.$repl.'</ul>';
+        $data = str_replace($rsss[0][$i],$repl,$data);
+      }
+    }
+
+    // Replace links to slideshows
+
+
+    if($feature_drawings == 'y') {
+    // Replace drawings
+    // Replace rss modules
+    $pars=parse_url($_SERVER["REQUEST_URI"]);
+    $pars_parts=split('/',$pars["path"]);
+    $pars=Array();
+    for($i=0;$i<count($pars_parts)-1;$i++) {
+      $pars[]=$pars_parts[$i];
+    }
+    $pars=join('/',$pars);
+    if(preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/",$data,$draws)) {
+      for($i=0;$i<count($draws[0]);$i++) {
+        $id = $draws[1][$i];
+        $repl='';
+        $name=$id.'.gif';
+        if(file_exists("img/wiki/$name")) {
+          if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
+            $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
+          } else {
+            $repl="<img border='0' src='img/wiki/$name' alt='a drawing' />";
+          }
+        } else {
+          if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
+            $repl="<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
+          } else {
+            $repl=tra('drawing not found');
+          }
+        }
+        $data = str_replace($draws[0][$i],$repl,$data);
+      }
+    }
+    }
+
+    // Replace cookies
+    if(preg_match_all("/\{cookie\}/",$data,$rsss)) {
+      for($i=0;$i<count($rsss[0]);$i++) {
+        $cookie = $this->pick_cookie();
+        $data = str_replace($rsss[0][$i],$cookie,$data);
+      }
+    }
+
+
+    // Replace dynamic content occurrences
+    if(preg_match_all("/\{content +id=([0-9]+)\}/",$data,$dcs)) {
+      for($i=0;$i<count($dcs[0]);$i++) {
+        $repl = $this->get_actual_content($dcs[1][$i]);
+        $data = str_replace($dcs[0][$i],$repl,$data);
+      }
+    }
+    // Replace Dynamic content with random selection
+    if(preg_match_all("/\{rcontent +id=([0-9]+)\}/",$data,$dcs)) {
+      for($i=0;$i<count($dcs[0]);$i++) {
+        $repl = $this->get_random_content($dcs[1][$i]);
+        $data = str_replace($dcs[0][$i],$repl,$data);
+      }
+    }
+
+    // Replace boxes
+    $data = preg_replace("/\^([^\^]+)\^/","<div class='simplebox' align='center'>$1</div>",$data);
+    // Replace colors ~~color:text~~
+    $data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/","<span style='color:$1;'>$2</span>",$data);
+    // Underlined text
+    $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
+    // Center text
+    $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
+    // Links to internal pages
+    // If they are parenthesized then don't treat as links
+    // Prevent ))PageName(( from being expanded    \"\'
+
+    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
+    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
+    //print_r($pages);
+    foreach(array_unique($pages[2]) as $page_parse) {
+      if($desc = $this->page_exists_desc($page_parse)) {
+        $repl = "<a title='".$desc."' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
+      } else {
+        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+      }
+      $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
+      //$data = str_replace($page_parse,$repl,$data);
+    }
+
+    $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
+    // New syntax for wiki pages ((name|desc)) Where desc can be anything
+    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
+    for($i=0;$i<count($pages[1]);$i++) {
+      if($desc = $this->page_exists_desc($pages[1][$i])) {
+        $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[5][$i]."</a>";
+      } else {
+        $repl = $pages[5][$i]."<a href='tiki-editpage.php?page=".$pages[1][$i]."' class='wiki'>?</a>";
+      }
+
+      $pattern = "/".$pages[0][$i]."/";
+      $pattern=str_replace('|','\|',$pattern);
+      $pattern=str_replace('(','\(',$pattern);
+      $pattern=str_replace(')','\)',$pattern);
+      $data = preg_replace($pattern,"$repl",$data);
+    }
+
+    // New syntax for wiki pages ((name)) Where name can be anything
+    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages);
+    foreach(array_unique($pages[1]) as $page_parse) {
+      if($desc = $this->page_exists_desc($page_parse)) {
+        $repl = "<a title='$desc' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
+      } else {
+        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+      }
+      $data = preg_replace("/\(\($page_parse\)\)/","$repl",$data);
+      //$data = str_replace($page_parse,$repl,$data);
+    }
+
+    // Replace ))Words((
+    $data = preg_replace("/\(\(([^\)]+)\)\)/","$1",$data);
+
+    // Images
+    preg_match_all("/(\{img [^\}]+})/",$data,$pages);
+    foreach(array_unique($pages[1]) as $page_parse) {
+      $parts = explode(" ",$page_parse);
+      $imgdata = Array();
+      $imgdata["src"]='';
+      $imgdata["height"]='';
+      $imgdata["width"]='';
+      $imgdata["link"]='';
+      $imgdata["align"]='';
+      $imgdata["desc"]='';
+      foreach($parts as $part) {
+        $part = str_replace('}','',$part);
+        $part = str_replace('{','',$part);
+        $part = str_replace('\'','',$part);
+        $part = str_replace('"','',$part);
+        if(strstr($part,'=')) {
+            $subs = explode("=",$part,2);
+            $imgdata[$subs[0]]=$subs[1];
+        }
+      }
+      //print("todo el tag es: ".$page_parse."<br/>");
+      //print_r($imgdata);
+      $repl = "<div class=\"innerimg\"><img alt='an image' src='".$imgdata["src"]."' border='0' ";
+      if($imgdata["width"]) $repl.=" width='".$imgdata["width"]."'";
+      if($imgdata["height"]) $repl.=" height='".$imgdata["height"]."'";
+      $repl.= " /></div>";
+      if($imgdata["link"]) {
+        $repl ="<a href='".$imgdata["link"]."'>".$repl."</a>";
+      }
+      if($imgdata["desc"]) {
+        $repl="<table cellpadding='0' cellspacing='0'><tr><td>".$repl."</td></tr><tr><td class='mini'>".$imgdata["desc"]."</td></tr></table>";
+      }
+      if($imgdata["align"]) {
+        $repl ="<div align='".$imgdata["align"]."'>".$repl."</div>";
+      }
+      $data = str_replace($page_parse,$repl,$data);
+    }
+
+    $target='';
+    if($this->get_preference('popupLinks','n')=='y') {
+      $target='target="_blank"';
+    }
+
+    $links = $this->get_links($data);
+    // Note that there're links that are replaced
+
+    foreach($links as $link) {
+      if( $this->is_cached($link) && $cachepages == 'y') {
+        $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
+        $link2 = str_replace("/","\/",$link);
+        $link2 = str_replace("?","\?",$link2);
+        $link2 = str_replace("&","\&",$link2);
+        $pattern = "/\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
+        $pattern = "/\[$link2\|([^\]\|]+)\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a> $cosa",$data);
+        $pattern = "/\[$link2\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a> $cosa",$data);
+      } else {
+        $link2 = str_replace("/","\/",$link);
+        $link2 = str_replace("?","\?",$link2);
+        $link2 = str_replace("&","\&",$link2);
+        $pattern = "/\[$link2\|([^\]\|]+)([^\]])*\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
+        $pattern = "/\[$link2\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a>",$data);
+      }
+    }
+
+    // Title bars
+    $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
+
+    // New syntax for tables
+    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+     $maxcols = 1;
+      $cols = array();
+      for($i = 0; $i < count($tables[0]); $i++) {
+        $rows = explode('||', $tables[0][$i]);
+        $col[$i] = array();
+        for ($j = 0; $j < count($rows); $j++) {
+          $cols[$i][$j] = explode('|', $rows[$j]);
+          if (count($cols[$i][$j]) > $maxcols)
+            $maxcols = count($cols[$i][$j]);
+        }
+      }
+      for ($i = 0; $i < count($tables[0]); $i++) {
+        $repl = '<table border=1>';
+        for ($j = 0; $j < count($cols[$i]); $j++) {
+          $ncols = count($cols[$i][$j]);
+          if ($ncols == 1 && !$cols[$i][$j][0])
+            continue;
+          $repl .= '<tr>';
+          for ($k = 0; $k < $ncols; $k++) {
+            $repl .= '<td';
+            if ($k == $ncols - 1 && $ncols < $maxcols)
+              $repl .= ' colspan=' . ($maxcols-$k);
+            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+          }
+          $repl.='</tr>';
+        }
+        $repl.='</table>';
+        $data = str_replace($tables[0][$i],$repl,$data);
+      }
+    }
+
+
+    // tables
+    preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
+    foreach(array_unique($pages[1]) as $page_parse) {
+      $pagex=substr($page_parse,1,strlen($page_parse)-2);
+      $repl='<table cellpadding="0" cellspacing="0" border="1">';
+      // First split by lines
+      $lines = explode("\\",$pagex);
+      foreach ($lines as $line) {
+        $repl.='<tr>';
+        $columns = explode("&",$line);
+        foreach($columns as $column) {
+          $repl.='<td valign="top">'.$column.'</td>';
+        }
+        $repl.='</tr>';
+      }
+      $repl.='</table>';
+      $data = str_replace($page_parse, $repl, $data);
+    }
+
+
+    // Now tokenize the expression and process the tokens
+    // Use tab and newline as tokenizing characters as well  ////
+    $lines = explode("\n",$data);
+    $data = ''; $listbeg='';
+    $listlevel = 0;
+    $oldlistlevel = 0;
+    $listbeg='';
+    foreach ($lines as $line) {
+
+      // If the first character is ' ' and we are not in pre then we are in pre
+      if(substr($line,0,1)==' ') {
+        if($listbeg) {
+          while($listlevel>0) {
+            $data.=$listbeg;
+            $listlevel--;
+            $oldlistlevel=0;
+          }
+          $listbeg='';
+        }
+        // If the first character is space then
+        // change spaces for &nbsp;
+        $line = '<font face="courier" size="2">'.str_replace(' ','&nbsp;',substr($line,1)).'</font>';
+        $line.='<br/>';
+      } else {
+        // Reemplazar las bold
+        $line = preg_replace("/__([^_]+)__/","<b>$1</b>",$line);
+        $line = preg_replace("/\'\'([^']+)\'\'/","<i>$1</i>",$line);
+        // Reemplazar las definiciones
+        $line = preg_replace("/^;([^:]+):([^\n]+)/","<dl><dt>$1</dt><dd>$2</dd></dl>",$line);
+        if(0) {
+        $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/","<a class='wiki' $target href='$1'>$2</a>",$line);
+        // Segundo intento reemplazar los [link] comunes
+        $line = preg_replace("/\[([^\]]+)\]/","<a class='wiki' $target href='$1'>$1</a>",$line);
+        $line = preg_replace("/\-\=([^=]+)\=\-/","<div class='wikihead'>$1</div>",$line);
+        }
+
+        // This line is parseable then we have to see what we have
+        if(substr($line,0,3)=='---') {
+          if($listbeg) {
+            while($listlevel>0) {
+            $data.=$listbeg;
+            $listlevel--;
+            $oldlistlevel=0;
+          }
+          $listbeg='';
+          }
+          $line='<hr/>';
+        } else {
+          if(substr($line,0,1)=='*') {
+            // Get the list level examining the number of asterisks
+
+            // If another list had started then end it
+            if($listbeg && $listbeg!='</ul>') {
+              while($listlevel>0) {
+                $data.=$listbeg;
+                $listlevel--;
+                $oldlistlevel=0;
+              }
+            }
+
+            $listlevel=$this->how_many_at_start($line,'*');
+
+            // If the list level is new add ul's
+            while($listlevel>$oldlistlevel) {
+              $data.='<ul>';
+              $listbeg='</ul>';
+              $oldlistlevel++;
+            }
+
+            // If the list level is lower
+            while($listlevel<$oldlistlevel) {
+              $data.='</ul>';
+              $oldlistlevel--;
+            }
+
+            $line = '<li>'.substr($line,$listlevel).'</li>';
+
+          } elseif(substr($line,0,1)=='#') {
+                    // If another list had started then end it
+            if($listbeg && $listbeg!='</ol>') {
+              while($listlevel>0) {
+                $data.=$listbeg;
+                $listlevel--;
+                $oldlistlevel=0;
+              }
+            }
+
+            $listlevel=$this->how_many_at_start($line,'#');
+
+            // If the list level is new add ul's
+            while($listlevel>$oldlistlevel) {
+
+              $data.='<ol>';
+              $listbeg='</ol>';
+              $oldlistlevel++;
+            }
+
+            // If the list level is lower
+            while($listlevel<$oldlistlevel) {
+              $data.='</ol>';
+              $oldlistlevel--;
+            }
+
+            //
+
+            $line = '<li>'.substr($line,$listlevel).'</li>';
+
+          } elseif(substr($line,0,3)=='!!!') {
+            $line = '<h3>'.substr($line,3).'</h3>';
+          } elseif(substr($line,0,2)=='!!') {
+            $line = '<h2>'.substr($line,2).'</h2>';
+          } elseif(substr($line,0,1)=='!') {
+            $line = '<h1>'.substr($line,1).'</h1>';
+          } else {
+            if($listbeg) {
+              while($listlevel>0) {
+              $data.=$listbeg;
+              $listlevel--;
+              $oldlistlevel=0;
+              }
+              $listbeg='';
+            } else {
+              $line.='<br/>';
+            }
+          }
+        }
+      }
+      $data.=$line;
+    }
+
+
+    // Close BiDi DIVs if any
+    for ($i = 0; $i < $bidiCount; $i++) {
+      $data.="</div>";
+    }
+
+    foreach($noparsed as $np) {
+      $data = str_replace($np["key"],$np["data"],$data);
+    }
+
+    foreach($preparsed as $pp) {
+      $data = str_replace($pp["key"],"<pre>".$pp["data"]."</pre>",$data);
+    }
+
+    return $data;
+  }
+
+
+  function parse_data_old($data)
+  {
+    global $page_regex;
+    global $feature_hotwords;
+    global $cachepages;
+    global $ownurl_father;
+    global $feature_drawings;
+    global $tiki_p_admin_drawings;
+    global $tiki_p_edit_drawings;
+    global $feature_hotwords_nw;
+    global $feature_wiki_pictures;
+    global $tiki_p_upload_picture;
+    global $page; 
+    global $dbTiki;
+    global $structlib;
+
+    if($feature_hotwords_nw == 'y') {
+      $hotw_nw = "target='_blank'";
+    } else {
+      $hotw_nw = '';
+    }
+
+    //Extract preparse sections before anything
+    $preparsed=Array();
+    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
+    foreach(array_unique($preparse[1]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace("~pp~$pp~/pp~",$key,$data);
+    }
+
+    //Extract noparse sections almost before anything
+    $noparsed=Array();
+    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/",$data,$noparse);
+    foreach(array_unique($noparse[1]) as $np) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$np;
+      $noparsed[]=$aux;
+      $data=str_replace("~np~$np~/np~",$key,$data);
+    }
+
+    // Now replace a TOC
+    preg_match_all("/\{toc\}/",$data,$tocs);
+    if(count($tocs[0])>0) {
+      include_once("lib/structures/structlib.php");
+      if($structlib->page_is_in_structure($page)) {
+        $html='';
+        $toc=$structlib->get_subtree_toc($page,$page,$html);
+        $data=str_replace('{toc}',$html,$data);
+      }
+    }
+    //$page='';
 
     // Now search for plugins
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
@@ -7761,6 +8320,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     return $data;
   }
+
+
+
 
   function parse_smileys($data)
   {
