@@ -151,6 +151,7 @@ start>$pdate and user='$user' $mid";
 		$res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
 	  }
 	  $res['topic']=$res2;
+			$res['start'] += $this->get_site_time_difference($user); //added by WellsWang to Solove Mini Cal Upcoming Events wrong TimeZone Problem
       $ret[] = $res;
     }
     $retval = Array();

@@ -40,12 +40,15 @@ if(isset($_REQUEST['delete'])) {
   }
 }
 
-if(isset($_SESSION['thedate'])) {
-  $pdate = mktime(0,0,0,date("m",$_SESSION['thedate']),date("d",$_SESSION['thedate']),date("Y",$_SESSION['thedate']));
+if (isset($_REQUEST['day'])&&isset($_REQUEST['mon'])&&isset($_REQUEST['year'])) {
+	$pdate=mktime(0,0,0,$_REQUEST['mon'],$_REQUEST['day'],$_REQUEST['year']);
 } else {
-  $pdate = date("U");
+	if(isset($_SESSION['thedate'])) {
+		$pdate = mktime(0,0,0,date("m",$_SESSION['thedate']),date("d",$_SESSION['thedate']),date("Y",$_SESSION['thedate']));
+	} else {
+		$pdate = date("U");
+	}
 }
-
 $yesterday = $pdate - 60*60*24;
 $tomorrow = $pdate + 60*60*24;
 $smarty->assign('yesterday',$yesterday);
@@ -60,11 +63,14 @@ $smarty->assign('pdate_h',$pdate_h);
 if(isset($_REQUEST['removeold'])) {
   $minicallib->minical_remove_old($user,$pdate_h);
 }
-
-$ev_pdate = $pdate;
-$ev_pdate_h = $pdate_h;
+// corrections by Wells Wang
+// $ev_pdate = $pdate;
+// $ev_pdate_h = $pdate_h;
+$ev_pdate = $pdate+$tikilib->get_site_time_difference($user);
+$ev_pdate_h = $pdate_h+$tikilib->get_site_time_difference($user);
 if($_REQUEST["eventId"]) {
   $info = $minicallib->minical_get_event($user,$_REQUEST["eventId"]);
+	$info['start'] += $tikilib->get_site_time_difference($user);
   $ev_pdate = $info['start'];
   $ev_pdate_h = $info['start'];
 } else {
@@ -78,9 +84,9 @@ if($_REQUEST["eventId"]) {
 $smarty->assign('ev_pdate',$ev_pdate);
 $smarty->assign('ev_pdate_h',$ev_pdate_h);
 
-
 if(isset($_REQUEST['save'])) {
   $start = mktime($_REQUEST['Time_Hour'],$_REQUEST['Time_Minute'],0,$_REQUEST['Date_Month'],$_REQUEST['Date_Day'],$_REQUEST['Date_Year']);
+	$start -= $tikilib->get_site_time_difference($user);
   $minicallib->minical_replace_event($user,$_REQUEST["eventId"],$_REQUEST["title"],$_REQUEST["description"],$start,($_REQUEST['duration_hours']*60*60)+($_REQUEST['duration_minutes']*60),$_REQUEST['topicId']);
   $info=Array();
   $info['title']='';
@@ -107,15 +113,20 @@ $minical_upcoming = $tikilib->get_user_preference($user,'minical_upcoming',7);
 
 // Interval is in hours
 if($_REQUEST['view']=='daily') {
-	$slot_start = $pdate + 60*60*$minical_start_hour;
-	$slot_end = $pdate + 60*60*$minical_end_hour;
+	$tempdate = $pdate - $pdate % (24*60*60); /// added by Wells Wang to solve Mini Cal Event List Wrong Time BUG
+	$slot_start = $tempdate + 60*60*$minical_start_hour;
+	$slot_end = $tempdate + 60*60*$minical_end_hour;
 	$interval = $minical_interval;
 }
+// added by Wells Wang to solve Mini Cal Event List Wrong Time BUG
+if (isset($slot_start)) $slot_start -= $tikilib->get_site_time_difference($user);
+if (isset($slot_end)) $slot_end -= $tikilib->get_site_time_difference($user);
+// end of modification
 if($_REQUEST['view']=='weekly') {
 	$interval=24*60*60;
 	// Determine weekday
 	$wd = date('w',$pdate);
-	if($wd==0) $w=7;
+	if($wd==0) $wd=7;
 	$wd=$wd-1;
 	// Now get the number of days to substract
 	$week_start = $pdate - ($wd*60*60*24);
