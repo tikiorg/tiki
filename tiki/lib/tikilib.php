@@ -3341,7 +3341,7 @@ function set_preference($name, $value) {
     global $preferences;
     global $tikidomain;
 
-    @unlink ("templates_c/" . $tikidomain . "preferences.php");
+    @unlink ("templates_c/$tikidomain/preferences.php");
 
     //refresh cache
     if (isset($preferences[$name])) {
@@ -4154,13 +4154,16 @@ function parse_data($data) {
     $id = $draws[1][$i];
 
     $repl = '';
-    $name = $id . '.gif';
-
-    if (file_exists("img/wiki/$tikidomain$name")) {
+		if ($tikidomain) {
+    	$name = $tikidomain.'/'.$id . '.gif';
+		} else {
+    	$name = $id . '.gif';
+		}
+    if (file_exists("img/wiki/$name")) {
         if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-      $repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$tikidomain$name' alt='click to edit' /></a>";
+      $repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
         } else {
-      $repl = "<img border='0' src='img/wiki/$tikidomain$name' alt='a drawing' />";
+      $repl = "<img border='0' src='img/wiki/$name' alt='a drawing' />";
         }
     } else {
         if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
