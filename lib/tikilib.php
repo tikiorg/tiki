@@ -348,8 +348,8 @@ function convert_sortmode($sort_mode) {
 	break;
 
 	case "sqlite":
-	    $sort_mode = str_replace("_asc", "\" asc", $sort_mode);
-	    $sort_mode = str_replace("_desc", "\" desc", $sort_mode);
+	    $sort_mode = str_replace("_asc", " asc", $sort_mode);
+	    $sort_mode = str_replace("_desc", " desc", $sort_mode);
 	    break;
 
 	case "mysql3":
