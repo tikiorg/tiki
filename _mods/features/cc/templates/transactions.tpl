@@ -17,8 +17,8 @@ $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}date{/tr}</a
 <th align=left><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=acct_id_{if $smarty.request.sort_mode eq 'acct_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}account{/tr}</a></th>
 {/if}
 <th align=left><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=other_id_{if $smarty.request.sort_mode eq 'other_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}with{/tr}</a></th>
-<th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=amount_{if $smarty.request.sort_mode eq 'amount_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if} align=left">{tr}in{/tr}</a></th>
-<th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=amount_{if $smarty.request.sort_mode eq 'amount_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if} align=left">{tr}out{/tr}</a></th>
+<th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=amount_{if $smarty.request.sort_mode eq 'amount_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}in{/tr}</a></th>
+<th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=amount_{if $smarty.request.sort_mode eq 'amount_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}out{/tr}</a></th>
 <th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=cc_id_{if $smarty.request.sort_mode eq 'cc_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}cc{/tr}</a></th>
 <th align=right><a class="tableheading" href="cc.php?page=transactions&amp;sort_mode=balance_{if $smarty.request.sort_mode eq 'balance_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}balance{/tr}</a></th>
 </tr>
