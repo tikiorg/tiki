@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.9 2003-11-12 00:32:25 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.10 2003-11-12 01:00:57 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -22,6 +22,9 @@ if (($tiki_p_view_integrator != 'y') && ($tiki_p_admin_integrator != 'y') && ($t
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
+
+// Create instance of integrator
+$integrator = new TikiIntegrator($dbTiki);
 
 // Fill list of repositories
 $repositories = $integrator->list_repositories(true);
