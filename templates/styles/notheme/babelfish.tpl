@@ -1,4 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/babelfish.tpl,v 1.1 2003-08-14 12:48:41 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/babelfish.tpl,v 1.2 2003-08-14 13:14:05 zaufi Exp $ *}
+
+{if $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'y'}
 
 <table width=100%>
   {section loop=$babelfish_links name=i}
@@ -18,3 +20,21 @@
     </tr>
   {/section}
 </table>
+
+{elseif $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'n'}
+
+<table width=100%>
+  {section loop=$babelfish_links name=i}
+  <tr> <td align="center">
+    <a href="{$babelfish_links[i].href}" target="{$babelfish_links[i].target}"> {$babelfish_links[i].msg} </a>
+  </td> </tr>
+  {/section}
+</table>
+
+{elseif $feature_babelfish eq 'n' and $feature_babelfish_logo eq 'y'}
+
+<div align="center">
+  {$babelfish_logo}
+</div>
+
+{/if}
