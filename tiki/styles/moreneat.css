@@ -61,7 +61,9 @@ color: #225566;
 height: 12px;  
 padding-right: 0px;  
 font-size: 10px;
- }
+padding-bottom: 1px;
+border-bottom: 1px solid #8CACBB;
+}
 
 DIV#tiki-top a {
 color: #225566;
@@ -70,7 +72,6 @@ text-decoration: none;
 }
 DIV#tiki-top-menu {  
 background-color: #C7D0D9; 
-border-top: 1px solid #8CACBB;
 border-bottom: 1px solid #8CACBB;
 color: #436976; 
 height: 12px;  
@@ -643,6 +644,11 @@ div.articleheading {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   clear: both;
+}
+
+div.articleheading img {
+	margin-right: 22px;
+	margin-left: 9px;
 }
 
 div.articletrailer {
