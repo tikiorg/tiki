@@ -78,6 +78,7 @@ class HAWIKI_page
   var $deck;          // HAW_deck object
   var $wiki_string;   // input in wiki syntax
   var $wiki_base;     // URL for WikiName links
+  var $title;         // page title
   var $extwiki;       // array with external wiki declaration
   var $navlink;       // array with navigation links (home, menue etc.)
   var $smiley_dir;    // where smiley gif's are stored
@@ -89,10 +90,11 @@ class HAWIKI_page
   var $debugflags;    // flags for dumping debug info
   var $textformat;    // text format: bold, italic etc.
 
-  function HAWIKI_page($input, $wiki_base)
+  function HAWIKI_page($input, $wiki_base, $title)
   {
     $this->wiki_string = utf8_decode($input);
     $this->wiki_base = $wiki_base;
+    $this->title = HAWIKI_specchar($title);
     $this->smiley_dir = "";       // has to be set later by function call
     $this->link_jingle = "";      // dito
     $this->hawimconv = "";        // dito
@@ -135,6 +137,12 @@ class HAWIKI_page
     if ($this->debugflags & HAWIKI_DEBUG_PARSER)
       printf("<b>Input:</b><br><pre>%s</pre><br>\n", $this->wiki_string);
 
+    if ($this->title)
+    {
+      $title = new HAW_text($this->title, HAW_TEXTFORMAT_BIG | HAW_TEXTFORMAT_BOXED);
+      $this->deck->add_text($title);
+    }
+
     $link_counter = 0;
     foreach ($this->navlink as $value)
     {
@@ -148,9 +156,9 @@ class HAWIKI_page
       }
     }
 
-    if ($link_counter > 0)
+    if (($link_counter > 0) || $this->title)
     {
-      // create horizontal rule between link(s) and wiki content
+      // create horizontal rule between page header and wiki content
       $rule = new HAW_rule();
       $this->deck->add_rule($rule);
     }

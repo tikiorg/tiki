@@ -27,7 +27,7 @@ function HAWTIKI_date($timestamp)
 
 function HAWTIKI_index($info)
 {
-  $wikiPage = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=");
+  $wikiPage = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=", $_REQUEST['page']);
 
   $wikiPage->set_navlink(tra("Wiki Home"), "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   $wikiPage->set_navlink(tra("Home"), "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
@@ -43,11 +43,11 @@ function HAWTIKI_index($info)
 
 function HAWTIKI_view_blog_post($post_info)
 {
-  $page_prefix = sprintf("__%s ~np~%s~/np~__\n__%s %s__\n",
+  $page_prefix = sprintf("__%s ~np~%s~/np~__\n__%s ~np~%s~/np~__\n",
                          hawtra("posted on"), HAWTIKI_date($post_info['created']),
                          hawtra("by"), $post_info['user']);
 
-  $blogPost = new HAWIKI_page($page_prefix . $post_info["data"],"tiki-index.php?mode=mobile&page=");
+  $blogPost = new HAWIKI_page($page_prefix . $post_info["data"],"tiki-index.php?mode=mobile&page=", $post_info["title"]);
 
   $blogPost->set_navlink(tra("Return to blog"), "tiki-view_blog.php?mode=mobile&blogId=" . $post_info["blogId"], HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   $blogPost->set_smiley_dir("img/smiles");
