@@ -893,7 +893,7 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	$itid = $res["itemId"];
 	$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf ";
 	$query2.= " where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by ".$this->convert_sortmode("fieldId_asc");
-	$result2 = $this->query($query2,array((int) $res["itemId"]);
+	$result2 = $this->query($query2,array((int) $res["itemId"]));
 	$pass = true;
 
 	while ($res2 = $result2->fetchRow()) {
