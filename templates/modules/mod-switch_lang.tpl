@@ -4,7 +4,7 @@
 </div>
 <div class="box-data">
 <form method="get" action="tiki-switch_lang.php" target="_self">
-       <select name="language" size="1" onChange="this.form.submit();">
+       <select name="language" size="1" onchange="this.form.submit();">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"
           {if $language eq $languages[ix].value}selected="selected"{/if}>

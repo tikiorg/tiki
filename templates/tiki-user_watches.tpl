@@ -5,7 +5,7 @@
 
 
 <form action="tiki-user_watches.php" method="post" id='formi'>
-{tr}Event{/tr}:<select name="event" onChange="javascript:document.getElementById('formi').submit();">
+{tr}Event{/tr}:<select name="event" onchange="javascript:document.getElementById('formi').submit();">
 <option value"" {if $smarty.request.event eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 {section name=ix loop=$events}
 <option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if} />{$events[ix]}</option>

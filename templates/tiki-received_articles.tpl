@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.14 2003-10-29 05:19:59 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.15 2003-11-11 20:47:40 sylvieg Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 
 {if $feature_help eq 'y'}
@@ -54,7 +54,7 @@
 <tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
-<select id='articletype' name='type' onChange='javascript:chgArtType();'>
+<select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
 {/section}

@@ -95,7 +95,7 @@
 </td>
 <td>
 <form id='selit' method="post" action="tiki-view_chart_item.php">
-<select name="itemId" onChange="javascript:document.getElementById('selit').submit();">
+<select name="itemId" onchange="javascript:document.getElementById('selit').submit();">
 <option value="">{tr}Select something to vote on{/tr}</option>
 {section name=ix loop=$all_items}
 <option value="{$all_items[ix].itemId|escape}">{$all_items[ix].title}</option>

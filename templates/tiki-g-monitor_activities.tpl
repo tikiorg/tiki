@@ -64,7 +64,7 @@
 	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >
-	<select name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
+	<select name="filter_process" onchange='javascript:getElementById("filterf").submit();'>
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_procs name=ix}
 	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
