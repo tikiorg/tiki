@@ -18,6 +18,7 @@
 <table class="normal">
 <tr class="formcolor"><td>{tr}label{/tr}:</td><td><input type="text" maxlength="255" size="10" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td><td><textarea maxlength="255" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Category{/tr}:</td><td><input type="text" maxlength="255" size="10" name="tagcategory" value="{$info.tagcategory|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Path to the tag icon{/tr}:</td><td>
 <select name="tagicon">
 {section name=it loop=$list_icons}
@@ -36,6 +37,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}">{tr}Label{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}">{tr}Insert{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}">{tr}Icon{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagcategory_desc'}tagcategory_asc{else}tagcategory_desc{/if}">{tr}Category{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -44,6 +46,7 @@
 <td class="{cycle advance=false}">{$quicktags[tag].taglabel}</td>
 <td class="{cycle advance=false}">{$quicktags[tag].taginsert}</td>
 <td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].iconpath}</td>
+<td class="{cycle advance=false}">{$quicktags[tag].tagcategory}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}">{tr}edit{/tr}</a>
