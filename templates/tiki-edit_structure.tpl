@@ -17,17 +17,13 @@
   <td class="formcolor">{tr}Move{/tr}</td>
   <td class="formcolor">
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Promote'>
-    <img src='img/icons2/nav_dot_right.gif' border='0' title="Promote"/>
-  </a>
+    <img src='img/icons2/nav_dot_right.gif' border='0' title="Promote"/></a>
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Previous'>
-    <img src='img/icons2/nav_home.gif' border='0' title="Previous"/>
-  </a>
+    <img src='img/icons2/nav_home.gif' border='0' title="Previous"/></a>
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Next'>
-    <img src='img/icons2/nav_down.gif' border='0' title="Next"/>
-  </a>
+    <img src='img/icons2/nav_down.gif' border='0' title="Next"/></a>
   <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Demote'>
-    <img src='img/icons2/nav_dot_left.gif' border='0' title="Demote"/>
-  </a>
+    <img src='img/icons2/nav_dot_left.gif' border='0' title="Demote"/></a>
   </td>
   </tr>
 </table>
@@ -83,8 +79,8 @@
 {section name=ix loop=$subtree}
  {if $subtree[ix].pos eq ''}
      <a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'>{$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
-	 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>view</a>
-	 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>edit</a>]
+	 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>{tr}view{/tr}</a>
+	 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>{tr}edit{/tr}</a>]
  {else}
    {if $subtree[ix].first}<ul>{/if}
    {* Handle dummy last entry *}
@@ -96,8 +92,8 @@
 	     &nbsp;<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'>
          {$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
 		 &nbsp;[<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'>x</a>]
-		 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>view</a>
-		 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>edit</a>]
+		 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>{tr}view{/tr}</a>
+		 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>{tr}edit{/tr}</a>]
      </li>
      {if $page_ref_id eq $subtree[ix].page_ref_id}</b>{/if}
    {/if}
