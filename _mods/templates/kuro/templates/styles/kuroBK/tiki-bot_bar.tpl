@@ -18,6 +18,9 @@
               <a href="http://adodb.sourceforge.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} adodb" src="styles/kuroBK/tag-adodb" /></a>
               <a href="http://www.php.net"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} PHP" src="styles/kuroBK/tag-php" /></a>
               <a href="http://smarty.php.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} smarty" src="http://marisil.org/img/smarty.png"  /></a>
+{if function_exists("mmcache")}
+              <a href="http://turck-mmcache.sourceforge.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} RDF" src="http://images.google.co.uk/images?q=tbn:pDybGgXdUbUJ:www.globware.com/images/turck2.gif"  /></a>
+{/if}
               <a href="http://www.w3.org/RDF/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} RDF" src="styles/kuroBK/tag-rdf"  /></a>
               <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/"><img style="border: 0; vertical-align: middle" alt="{tr}license{/tr} CC" src="http://wiki.splitbrain.org/images/button-cc.gif"  /></a>
 	    </div>
