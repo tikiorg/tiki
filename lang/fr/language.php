@@ -523,8 +523,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Points" => "Points",
 "Warn on edit" => "Avertir de la modification",
 "comments" => "commentaires",
-"Show comments" => "Afficher les commentaires et le formulaire de saisie",//perhaps not used
-"Hide comments" => "Masquer les commentaires",//perhaps not used
 "Post new comment" => "Publier le nouveau commentaire",
 "post" => "publier",
 "Posting comments" => "Commentaires pour poster",
@@ -690,10 +688,8 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Never delete versions younger than days" => "Ne jamais effacer des versions datant de (jours)",
 "Set" => "Valider",
 "wiki" => "Wiki",
-"polls" => "sondages",//perhaps not used
 "Image galleries comments settings" => "Configuration des commentaires de galeries d'images",
 "File galleries comments settings" => "Configuration des commentaires de galerie  de fichiers",
-"cms" => "cms",//perhaps not used
 "CMS settings" => "Configuration du CMS",
 "Article comments settings" => "Configuration des commentaires d'articles",
 "Poll settings" => "Configuration des sondages",
@@ -710,7 +706,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Visits (desc)" => "Visites (desc)",
 "Name (desc)" => "Nom (desc)",
 "Name (asc)" => "Nom (asc)",
-"rss" => "RSS",//perhaps not used
 "<b>Feed</b>" => "<b>Canal</b>",
 "<b>enable/disable</b>" => "<b>produire/ou non</b>",
 "<b>Max number of items</b>" => "<b>Nb. max. d'items</b>",
@@ -1035,7 +1030,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "uploaded" => "téléchargé",
 "size" => "taille",
 "dls" => "téléchargements",
-"No attachments for this page" => "Pas de fichier joint pour cette page",//perhaps not used
 "attach" => "joindre",
 "Quizzes" => "QCMs",
 "HTML pages" => "Pages HTML",
@@ -1241,7 +1235,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Surveys" => "Enquêtes",
 "Webmail" => "Webmail",
 "Newsletters" => "Newsletters",
-"trckrs" => "trckrs",//perhaps not used
 "Use gzipped output" => "Compacter les sorties (gzip)",
 "Use direct pagination links" => "Utiliser les liens de pagination directs",
 "Slideshows theme" => "Thème des diaporamas",
@@ -1260,13 +1253,8 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Password invalid after days" => "Mot de passe invalide après (en jours)",
 "Export Wiki Pages" => "Exporter les pages Wiki",
 "Export" => "Exporter",
-"feat" => "fonc",//perhaps not used
-"file gls" => "fichiers",//perhaps not used
-"gral" => "gen",//perhaps not used
 "Blog level comments" => "Commentaires au niveau blogue",
 "Post level comments" => "Commentaires au niveau article",
-"img gls" => "images",//perhaps not used
-"frms" => "frms",//perhaps not used
 "Trackers" => "Traqueurs",
 "use in newsletters" => "utilisé dans les newsletters",
 "Section" => "Section",
@@ -1447,7 +1435,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Return to blog" => "Retourner aux blogues",
 "Wiki Import dump" => "Wiki Import dump",
 "phpinfo" => "phpinfo",
-"webmail" => "webmail",//perhaps not used
 "List Trackers" => "Liste des traqueurs",
 "List Surveys" => "Liste des enquêtes",
 "Last Modified Items" => "Derniers items modifiés",
@@ -1495,7 +1482,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "You dont have permission to do that" => "Vous n'avez pas les droits d'accès pour faire cela",
 "parent" => "parent",
 "directory" => "répertoire des liens",
-"userfiles" => "fichiers Util.",//perhaps not used
 "Directory" => "Répertoire des liens",
 "User Messages" => "Messages utilisateur",
 "User Tasks" => "Tâches utilisateur",
@@ -1924,7 +1910,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Tiki Logo" => "Logo Tiki",
 "User tasks" => "Tâches utilisateur",
 "You have" => "Vous avez",
-"new message" => "un nouveau message",
+"new message" => "nouveau message",
 "new messages" => "nouveaux messages",
 "Last Sites" => "Derniers sites",
 "Top Sites" => "Sites vedette",
@@ -2098,7 +2084,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "No suggested questions" => "Aucune question suggérée",
 "A" => "R",
 "Vote poll" => "Voter",
-"Use {ed id=name} or {ted id=name} to insert dynamic zones" => "Utilisez {ed id=name} ou {ted id=name} pour insérer une zone dynamique",//perhaps not used
 "Creator" => "Créateur",
 "Go back" => "Revenir à la page précédente",
 "In blog listing show user as" => "A l'affichage du blogue, afficher l'utilisateur comme",
@@ -2213,8 +2198,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "sort" => "trier",
 "Hi" => "Bonjour",
 "you or someone registered this email address at" => "Vous (ou quelqu'un d'autre) vous a inscrit sur",
-"If you want to be a registered user in this site you will have to use" => "Si vous voulez pouvoir vous connecter sur ce site, vous devrez suivre",
-"the following link to login for the first time" => "le lien suivant pour vous connecter la première fois",
 "Float text around image" => "Texte flottant autour de l'image",
 "Use ...page... to separate pages in a multi-page article" => "Utiliser ...page... pour séparer les pages d'un article",
 "Multi-page pages" => "Pages multi-page",
@@ -2451,7 +2434,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "msgs" => "msgs",
 "Transcript" => "Rapport",
 "No notes yet" => "Aucune note pour l'instant",
-"merge notes into" => "fusionner les notes dans",//perhaps not used
 "wiki create" => "Wiki create",
 "wiki overwrite" => "Wiki overwrite",
 "No individual permissions global permissions apply" => "Pas de droit d'accès individuel : les droits globaux s'appliquent",
@@ -2620,12 +2602,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Tiki mail-in instructions" => "Instruction pour le mail-in Tiki",
 "merged note:" => "note de fusion:",
 "created from notepad" => "crée du bloc-note",
-"Someone from " => "Quelqu'un de ",
-" requested to send the password for " => " a demandé d'envoyer le mot de passe pour ",
-" by email to our registered email address" => " par email à votre adresse email d'inscription",
-" and the requested password is " => " et le mot de passe demandé est ",
-"Your tikiaccount information for " => "Les informations de votre compte Tiki sur ",
-"You will receive an email with your password soon" => "Vous allez recevoir un email avec votre mot de passe",
 "Post recommendation at" => "Un bon article sur",
 " successfully sent" => " envoyé avec succés",
 " not sent" => " pas envoyé",
@@ -2635,7 +2611,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Invalid imagename (using filters for filenames)" => "Nom d'image invalide (avec les filtres pour les noms de fichiers)",
 "Error processing zipped image package" => "Erreur lors du processing de package image zippé",
 "Cannot upload this file not enough quota" => "Ne peut pas télécharger ce fichier, pas assez de quota",
-" new topic:" => " nouveau sujet:",
+" new topic:" => "Nouveau sujet:",
 "Tiki email notification" => "Email de notification Tiki",
 "Cannot upload this file maximum upload size exceeded" => "Ne peut pas télécharger le fichier - taille maximale dépassée",
 "topic:" => "sujet:",
@@ -2664,7 +2640,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "You are banned from" => "Vous êtes interdit de",
 "no description" => "aucune description",
 "drawing not found" => "dessin non trouvé",
-"A new message was posted to forum" => "Un nouveau message a été posté sur le forum",
+"A new message was posted to forum" => "Un nouvel article a été posté sur le forum",
 "Message" => "Message",
 "The user" => "L'utilisateur",
 "registered at your site" => "inscrit à votre site",
@@ -2746,7 +2722,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Admin structures" => "Administrer les structures",
 "Edit css" => "Editer le css",
 "\n for rows" => "\n pour rangées",
-"syntax highlighting" => "mise en relief de la syntaxe",
 "Admin Calendars" => "Administrer les calendriers",
 "Create/edit Calendars" => "Ajouter/modifier un calendrier",
 "Custom Locations" => "Personaliser Locations",//??
@@ -2760,8 +2735,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "prio" => "prio",
 "Use {literal}{{/literal}ed id=name} or {literal}{{/literal}ted id=name} to insert dynamic zones" => "Utilisez {literal}{{/literal}ed id=name} ou {literal}{{/literal}ted id=name} pour insérer une zone dynamique",
 "Number of displayed rows" => "Nombre de rangées affichées",
-"more" => "plus",
-"less" => "moins",
 "Refresh" => "Réactualiser",
 "Group Calendars" => "Groupes",//??
 "Tools Calendars" => "Sections",//??
@@ -2770,8 +2743,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "+1d" => "+1j",
 "+7d" => "+7j",
 "+1m" => "+1m",
-"table view" => "table view",//??
-"list view" => "list view",//??
 "browse by" => "parcourir par",
 "month" => "mois",
 "+" => "+",
@@ -2820,10 +2791,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "No image yet, sorry." => "Pas encore d'images, désolé.",
 "continued" => "continued",//??
 "click to edit" => "cliquer pour modifier",
-"new image" => "nouvelle image",
-"image gallery" => "galerie d'images",
 "new image uploaded by" => "nouvelle image téléchargé par",
-"new post" => "nouvel publication",
 "uploaded by" => "téléchargé par",
 "new item in tracker" => "nouveur item dans le traqueur",
 "new subscriptions" => "nouvelles inscriptions",
@@ -2852,6 +2820,32 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Invalid or unknown username" => "Nom utilisateur invalide ou inconnu",
 "About" => "Au sujet",
 "Home" => "Accueil",
-"New message arrived from " => "Une nouveau message est arrivé sur ",
+"New message arrived from " => "Un nouveau message est arrivé sur ",
+"with role" => "avec role",
+"The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "La page {\$mail_page} a été changée par {\$mail_user} à {\$mail_date|tiki_short_datetime}",
+"You can edit the page following this link:" => "Vous pouvez éditer la page en suivant ce lien :",
+"Comment:" => "Commentaires :",
+"Diff:" => "Différences :",
+"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them
+from MyTiki->modules.<br/>\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "<b>Note 1</b>: Si vous permettez aux utilisateurs de configurer les modules, alors les modules attribués seront affichés que quand vous les configurerez dans MyTiki->modules.<br/>
+<b>Note 2</b>: Si vous attribuez des modules à des groupes, soyez sûr que vous avez désactiver l'option 'afficher toujours les modules à tous les groupes' dans Admin->General",
+"Note: if you want to use images please save the post first and you\nwill be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor\nor use the image URL to include images using the WYSIWYG editor. " => "Note: si vous voulez utiliser des images, sauvegardez l'article d'abord et vous devrez être capable de modifier/publier des images. Utilisez le bout de code &lt;img&gt; pour include des images sous l'éditeur texte ou l'URL de l'image sous l'éditeur WYSIWYG",
+"Your message has been queued for approval, the message will be posted after\na moderator approves it." => "Votre message est mis en attente jusqu'à ce qu'il soit approuvé par un modérateur.",
+"Hi {\$mail_user} has sent you this link:" => "Hello, {\$mail_user} vous signale ce lien :",
+"Blog post:" => "Article de blogue :",
+"at:" => "sur :",
+"Hi," => "Hello,",
+"A new message was posted to you at {\$mail_machine}" => "Un nouveau message vous a été envoyé sur {\$mail_machine}",
+"A new article was submitted by {\$mail_user} to {\$mail_site} at {\$mail_date|tiki_short_datetime}" => "Un nouveau article a été publié par {\$mail_user} sur {\$mail_site} à {\$mail_date|tiki_short_datetime}",
+"You can edit the submission following this link:" => "Vous pouvez voir la publication en suivant le lien :",
+"Title:" => "Titre :",
+"Heading:" => "Entête :",
+"Body:" => "Corps :",
+"Information:" => "Information :",
+"If you want to be a registered user in this site you will have to use the following link to login for the first time:" => "Si vous voulez pouvoir vous connecter sur ce site, vous devrez suivre le lien suivant pour vous connecter la première fois:",
+"New blog post: {\$mail_title} by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "Nouvel article de blogue: {\$mail_title} par {\$mail_user} à {\$mail_date|tiki_short_datetime}",
+"View the blog at:" => "Le blogue peut être vu à :",
+"If you don't want to receive these notifications follow this link:" => "Si vous ne voulez pas recevoir ces notifications, suivez le lien :",
+"The new page content is:" => "Le nouveau contenu de la page est :",
 "##end###" => "###end###");
 ?>
