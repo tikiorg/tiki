@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.10 2004-04-29 13:55:20 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.11 2004-04-29 22:31:47 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1912,6 +1912,7 @@ a.phplm:hover	{
 	background-color: #CCCCCC;
 }
 .tabcontent {
+	z-index : 200;
 	position: relative;
 	border: 1px solid #999999;
 	padding: 6px 2px 2px 2px;

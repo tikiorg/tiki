@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.14 2004-04-29 13:55:19 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.15 2004-04-29 22:31:46 mose Exp $
  *
  * My first TIKI theme :)
  *
@@ -182,6 +182,7 @@ div#loadstats {
 }
 
 .tabcontent {
+	z-index : 200;
 	position: relative;
 	border: 1px solid #999999;
 	padding: 6px 2px 2px 2px;
