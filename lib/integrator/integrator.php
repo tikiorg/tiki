@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.18 2003-11-09 00:46:00 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.19 2003-11-10 04:33:18 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -92,7 +92,7 @@ class TikiIntegrator
         return $ret;
     }
     /// Add or update rule for repository
-    function add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $case, $rxmod, $descr)
+    function add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr)
     {
         global $tikilib;
         $srch  = addslashes($srch);
@@ -106,12 +106,13 @@ class TikiIntegrator
             $ord = $tikilib->getOne($query) + 1;
         }
         if (strlen($ruleID) == 0 || $ruleID == 0)
-            $query = "insert into tiki_integrator_rules(repID,ord,srch,repl,type,casesense,rxmod,description)
-                      values('$repID','$ord','$srch','$repl','$type','$case','$rxmod','$descr')";
+            $query = "insert into tiki_integrator_rules(repID,ord,srch,repl,type,casesense,rxmod,enabled,description)
+                      values('$repID','$ord','$srch','$repl','$type','$case','$rxmod','$en','$descr')";
         else
             $query = "update tiki_integrator_rules 
                       set repID='$repID',ord='$ord',srch='$srch',repl='$repl',
-                      type='$type',casesense='$case',rxmod='$rxmod',description='$descr'
+                      type='$type',casesense='$case',rxmod='$rxmod',enabled='$en',
+                      description='$descr'
                       where ruleID='$ruleID'";
         $result = $tikilib->query($query);
         // Clear cached pages for this repository
@@ -141,8 +142,8 @@ class TikiIntegrator
     /// Apply rule to string
     function apply_rule(&$rep, &$rule, $data)
     {
-        // Is there something to search? If no return original data
-        if (strlen($rule["srch"]) == 0) return $data;
+        // Is there something to search? If no or rule disabled return original data
+        if ((strlen($rule["srch"]) == 0) || ($rule["enabled"] != 'y')) return $data;
         // Prepare replace string (subst {path})
         $repl = str_replace('{path}', $rep["path"], $rule["repl"]);
         $repl = str_replace('{repID}', $rep["repID"], $repl);
@@ -273,7 +274,7 @@ class TikiIntegrator
         foreach ($rules as $rule)
             $this->add_replace_rule($dstID, 0, $rule["ord"], $rule["srch"], $rule["repl"],
                                     $rule["type"], $rule["casesense"], $rule["rxmod"],
-                                    $rule["description"]);
+                                    $rule["enabled"], $rule["description"]);
     }
     /**
      * \brief Filter file
