@@ -21,11 +21,17 @@ class Comments extends TikiLib {
                          $usePruneUnreplied, $pruneUnrepliedAge,
                          $usePruneOld, $pruneMaxAge, $topicsPerPage,
                          $topicOrdering, $threadOrdering,$section,
-                         $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads)
+                         $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads,
+                         $show_description,
+                         $inbound_address,$outbound_address,
+                         $topic_smileys, $topic_summary,
+                         $ui_avatar, $ui_flag, $ui_posts, $ui_email, $ui_online)
   {
     $name = addslashes($name);
     $description = addslashes($description);
     $section = addslashes($section);
+    $inbound_address = addslashes($inbound_address);
+    $outbound_address  = addslashes($outbound_address);
      	
     if($forumId) {
       $query = "update tiki_forums set
@@ -43,6 +49,16 @@ class Comments extends TikiLib {
                 vote_threads = '$vote_threads',
                 topics_list_reads = '$topics_list_reads',
                 topics_list_replies = '$topics_list_replies',
+                show_description = '$show_description',
+                inbound_address = '$inbound_address',
+                outbound_address = '$outbound_address',
+                topic_smileys = '$topic_smileys',
+                topic_summary = '$topic_summary',
+                ui_avatar = '$ui_avatar',
+                ui_flag = '$ui_flag',
+                ui_posts = '$ui_posts',
+                ui_email = '$ui_email',
+                ui_online = '$ui_online',
                 topics_list_pts = '$topics_list_pts',
                 topics_list_lastpost = '$topics_list_lastpost',
                 topics_list_author = '$topics_list_author',
@@ -57,13 +73,19 @@ class Comments extends TikiLib {
       $query = "insert into tiki_forums(name, description, created, lastPost, threads,
                 comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
                 pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section,
-                topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads) 
+                topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
+                inbound_address,outbound_address,
+                topic_smileys,topic_summary,
+                ui_avatar,ui_flag,ui_posts,ui_email,ui_online) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
                         $pruneMaxAge, $topicsPerPage,
                         '$topicOrdering','$threadOrdering','$section',
-                        '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads') ";
+                        '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
+                        '$inbound_address','$outbound_address',
+                        '$topic_smileys','$topic_summary',
+                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online') ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
@@ -523,22 +545,25 @@ class Comments extends TikiLib {
   
   
 
-  function update_comment($threadId,$title,$data,$type='n') 
+  function update_comment($threadId,$title,$data,$type='n',$summary='',$smiley='') 
   {
      $title = addslashes(strip_tags($title));
      $data = addslashes($data);
-     $query="update tiki_comments set title='$title', data='$data', type='$type' where threadId=$threadId";
+     $summary = addslashes($summary);
+     $query="update tiki_comments set title='$title', data='$data', type='$type', summary='$summary',smiley='$smiley' where threadId=$threadId";
      $result = $this->query($query);
   }
 
-  function post_new_comment($objectId,$parentId,$userName, $title, $data,$type='n')
+  function post_new_comment($objectId,$parentId,$userName, $title, $data,$type='n',$summary='',$smiley='')
   {
+  	$summary = addslashes($summary);
     if(!$userName) {
       $_SESSION["lastPost"]=date("U");
     }
     // Check for duplicates.
     $title = addslashes(strip_tags($title));
     $data = addslashes($data);
+  	$summary = addslashes($summary);    
     if(!$userName) {
       $userName = tra('Anonymous');
     }
@@ -548,8 +573,8 @@ class Comments extends TikiLib {
     if(!$result->numRows()) {
       $now = date("U");
       $object = md5($objectId);
-      $query = "insert into tiki_comments(object,commentDate,userName,title,data,votes,points,hash,parentId,average,hits,type)
-                          values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type')";
+      $query = "insert into tiki_comments(object,commentDate,userName,title,data,votes,points,hash,parentId,average,hits,type,summary,smiley)
+                          values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type','$summary','$smiley')";
       
       $result = $this->query($query);
     }

@@ -34,6 +34,34 @@ alter table tiki_user_notes add parse_mode char(20);
 update tiki_user_notes set parse_mode='raw';
 
 ### Forums configuration ###
+alter table tiki_comments add summary varchar(240);
+update  tiki_comments set summary='';
+alter table tiki_comments add smiley varchar(80);
+update table tiki_comments set smiley='';
+
+alter table tiki_forums add outbound_address char(1);
+alter table tiki_forums add inbound_address char(1);
+alter table tiki_forums add topic_smileys char(1);
+alter table tiki_forums add ui_avatar char(1);
+alter table tiki_forums add ui_flag char(1);
+alter table tiki_forums add ui_posts char(1);
+alter table tiki_forums add ui_email char(1);
+alter table tiki_forums add ui_online char(1);
+alter table tiki_forums add topic_summary char(1);
+
+update tiki_forums set show_description='y';
+update tiki_forums set inbound_address='';
+update tiki_forums set outbound_address='';
+update tiki_forums set topic_smileys='n';
+update tiki_forums set ui_avatar='y';
+update tiki_forums set ui_flag='y';
+update tiki_forums set ui_posts='n';
+update tiki_forums set ui_email='n';
+update tiki_forums set ui_online='y';
+update tiki_forums set topic_summary='n';
+
+alter table tiki_forums add show_description char(1);
+update tiki_forums set show_description='y';
 alter table tiki_forums add topics_list_replies char(1);
 update tiki_forums set topics_list_replies='y';
 alter table tiki_forums add topics_list_reads char(1);

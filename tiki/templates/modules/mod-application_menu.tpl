@@ -73,7 +73,7 @@
 
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="separator"><a class='separator' href="javascript:setCookie('wfmenu','c');hide('wfmenu');">[-]</a> 
-  <a href="tiki-my_tiki.php" class="separator">{tr}Workflow{/tr}</a>
+  <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
   <a class='separator' href="javascript:setCookie('wfmenu','o');show('wfmenu');">[+]</a></div>
   <div id='wfmenu' style="{$mnu_workflow}">
   {if $tiki_p_admin_workflow eq 'y'}

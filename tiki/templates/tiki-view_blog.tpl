@@ -25,9 +25,9 @@
 		
 		{if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_blog eq 'n'}
-		<a href="{sameurl watch_event='blog_post' watch_object=$blogId watch_action='add'}"><img border='0' alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='img/icons/icon_watch.png' /></a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this blog{/tr}' title='{tr}monitor this blog{/tr}' src='img/icons/icon_watch.png' /></a>
 		{else}
-		<a href="{sameurl watch_event='blog_post' watch_object=$blogId watch_action='remove'}"><img border='0' alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 		{/if}
 

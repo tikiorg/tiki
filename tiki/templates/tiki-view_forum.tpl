@@ -1,19 +1,42 @@
-<div class="forumspagetitle">
-<a href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">{$forum_info.name}</a>
-</div>
+<a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">{$forum_info.name}</a><br/><br/>
+{if $forum_info.show_description eq 'y'}
+{$forum_info.description}
+<br/><br/>
+{/if}
+
+<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+<br/><br/>
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
 {else}
 {assign var="postclass" value="forumpost"}
 {/if}
-{if $tiki_p_forum_post_topic eq 'y'}
-[<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
+<table width="100%">
+<tr>
+<td>
+[{if $tiki_p_forum_post_topic eq 'y'}
+<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
 <a class="forumbutlink" href="javascript:hide('{$postclass}');">{tr}Hide Post Form{/tr}</a> |
-<a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS{/tr}</a> |
+{/if}
+<a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a> |
 <a class="forumbutlink" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
 {if $tiki_p_admin_forum eq 'y'}
-| <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>{/if}]
+| <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
+{/if}]
+</td>
+<td style="text-align:right;">
+{if $user and $feature_user_watches eq 'y'}
+	{if $user_watching_forum eq 'n'}
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' title='{tr}monitor this forum{/tr}' src='img/icons/icon_watch.png' /></a>
+	{else}
+		<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this forum{/tr}' src='img/icons/icon_unwatch.png' /></a>
+	{/if}
+{/if}
+</td>
+</tr>
+</table>
 
+{if $tiki_p_forum_post_topic eq 'y'}
   {if $comment_preview eq 'y'}
   <br/><br/>
   <b>{tr}Preview{/tr}</b>
@@ -65,7 +88,7 @@
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
       
-      {if $feature_smileys eq 'y'}<td rowspan="3" class="forumform">
+      {if $feature_smileys eq 'y'}<td rowspan="4" class="forumform">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
@@ -95,7 +118,6 @@
        <tr><td><a href="javascript:setSomeElement('editpost','(:twisted:)');"><img src="img/smiles/icon_twisted.gif" alt="twisted" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:wink:)');"><img src="img/smiles/icon_wink.gif" alt="wink" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:arrow:)');"><img src="img/smiles/icon_arrow.gif" alt="arrow" border="0" /></a></td>
-          
        </tr>
       </table>
       </td>
@@ -113,8 +135,28 @@
       <option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
       {/if}
       </select>
+      <select name="comment_topicsmiley">
+      <option value="">{tr}no feeling{/tr}</option>
+      <option value="icon_frown.gif">{tr}frown{/tr}</option>
+      <option value="icon_exclaim.gif">{tr}exclaim{/tr}</option>
+      <option value="icon_idea.gif">{tr}idea{/tr}</option>
+      <option value="icon_mad.gif">{tr}mad{/tr}</option>      
+      <option value="icon_neutral.gif">{tr}neutral{/tr}</option>      
+      <option value="icon_question.gif">{tr}question{/tr}</option>      
+      <option value="icon_sad.gif">{tr}sad{/tr}</option>      
+      <option value="icon_smile.gif">{tr}happy{/tr}</option>
+      <option value="icon_wink.gif">{tr}wink{/tr}</option>
+      </select>
       </td>
     </tr>
+    {if $forum_info.topic_summary eq 'y'}
+    <tr>
+    	<td class="forumform">{tr}Summary{/tr}</td>
+    	<td class="forumform">
+    		<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary}" maxlength="240" />
+    	</td>
+    </tr>
+    {/if}
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
       <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
@@ -130,11 +172,14 @@
    
 </div>
 
-<br/><br/>
+<br/>
 {/if}
 <table class="forumstable">
 <tr>
   <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
+  {if $forum_info.topic_smileys eq 'y'}
+  <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}mot{/tr}</a></td>
+  {/if}
   <td width="40%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
   {if $forum_info.topics_list_replies eq 'y'}
   	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
@@ -159,18 +204,31 @@
 {else}
 {assign var="newtopic" value=""}
 {/if}
-
 <tr>
-  <td class="topictitle{cycle advance=false}">
+  <td style="text-align:center;" class="topictitle{cycle advance=false}">
   {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="folder" />{/if}
   {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="announce" />{/if}
   {if $comments_coms[ix].type eq 'h'}<img src="img/icons/folder_hot{$newtopic}.gif" alt="hot" />{/if}
   {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
   </td>
+  
+  {if $forum_info.topic_smileys eq 'y'}
+  <td style="text-align:center;" class="topictitle{cycle advance=false}">
+  	{if strlen($comments_coms[ix].smiley) > 0}
+  		<img src='img/smiles/{$comments_coms[ix].smiley}' />
+  	{else}
+  	&nbsp;{$comments_coms[ix].smiley}
+  	{/if}
+  </td>
+  {/if}  
+  
   <td class="topictitle{cycle advance=false}">
   <table width="100%"><tr><td>
   <a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  {if $forum_info.topic_summary eq 'y'}
+  <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
+  {/if}
   </td>
   {if $tiki_p_admin_forum eq 'y'}
   <td style="text-align:right;">
@@ -181,10 +239,6 @@
   </td>   
   {/if}
   </tr></table>
-  {if $feature_forum_topicd eq 'y'}
-  <br/>
-  <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
-  {/if}
   </td>
   {if $forum_info.topics_list_replies eq 'y'}
   	<td style="text-align:right;" class="topicreplies{cycle advance=false}">{$comments_coms[ix].replies.numReplies}</td>
@@ -204,8 +258,12 @@
 	  </td>
   {/if}
   {if $forum_info.topics_list_author eq 'y'}
-  	<td class="topicauthor{cycle}">{$comments_coms[ix].userName}</td>
+  	<td class="topicauthor{cycle}">{$comments_coms[ix].userName|userlink}</td>
   {/if}
+</tr>
+{sectionelse}
+<tr>
+	<td class="odd" colspan="7">{tr}No topics yet{/tr}</td>
 </tr>
 {/section}
 </table>
