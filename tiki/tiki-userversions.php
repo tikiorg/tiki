@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/histlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -43,7 +44,7 @@ if(isset($_REQUEST["preview"])) {
   } 
 }
 
-$history = $tikilib->get_user_versions($_REQUEST["ruser"]);
+$history = $histlib->get_user_versions($_REQUEST["ruser"]);
 $smarty->assign_by_ref('history',$history);
 
 $smarty->assign('mid','tiki-userversions.tpl');

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -32,7 +33,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_article($_REQUEST["remove"]);  
+  $artlib->remove_article($_REQUEST["remove"]);  
 }
 
 
@@ -117,7 +118,7 @@ if($offset>0) {
 $smarty->assign_by_ref('listpages',$listpages["data"]);
 //print_r($listpages["data"]);
 
-$topics = $tikilib->list_topics();
+$topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
 
 $section='cms';

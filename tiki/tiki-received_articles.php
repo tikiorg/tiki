@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/commcenter/commlib.php');
+include_once('lib/articles/artlib.php');
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -186,7 +187,7 @@ if($offset>0) {
 
 $smarty->assign_by_ref('channels',$channels["data"]);
 
-$topics = $tikilib->list_topics();
+$topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
 
 // Display the template

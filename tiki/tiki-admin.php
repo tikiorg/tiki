@@ -1852,7 +1852,7 @@ if(isset($_REQUEST["features"])) {
 
 if(isset($_REQUEST["createtag"])) {
   // Check existance
-  if($tikilib->tag_exists($_REQUEST["tagname"])) {
+  if($adminlib->tag_exists($_REQUEST["tagname"])) {
       $smarty->assign('msg',tra("Tag already exists"));
       $smarty->display("styles/$style_base/error.tpl");
       die;  
@@ -1861,16 +1861,16 @@ if(isset($_REQUEST["createtag"])) {
 }
 if(isset($_REQUEST["restoretag"])) {
   // Check existance
-  if(!$tikilib->tag_exists($_REQUEST["tagname"])) {
+  if(!$adminlib->tag_exists($_REQUEST["tagname"])) {
       $smarty->assign('msg',tra("Tag not found"));
       $smarty->display("styles/$style_base/error.tpl");
       die;    
   }
-  $tikilib->restore_tag($_REQUEST["tagname"]);  
+  $adminlib->restore_tag($_REQUEST["tagname"]);  
 }
 if(isset($_REQUEST["removetag"])) {
   // Check existance
-  $tikilib->remove_tag($_REQUEST["tagname"]);  
+  $adminlib->remove_tag($_REQUEST["tagname"]);  
 }
 
 
@@ -1886,7 +1886,7 @@ if(isset($_REQUEST["newadminpass"])) {
 if(isset($_REQUEST["dump"])) {
   include("lib/tar.class.php");
   error_reporting(E_ERROR|E_WARNING);
-  $tikilib->dump(); 
+  $adminlib->dump(); 
 }
 
 $styles=Array();
@@ -1958,7 +1958,7 @@ $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'adm
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 $smarty->assign_by_ref('file_galleries',$file_galleries["data"]);
 
-$tags = $tikilib->get_tags();
+$tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags",$tags);
 
 // Preferences to load

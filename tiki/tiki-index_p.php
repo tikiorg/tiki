@@ -147,26 +147,6 @@ if($tiki_p_admin_wiki == 'y') {
   $smarty->assign('canundo','y');		
 }
 
-// Process an undo here
-if(isset($_REQUEST["undo"])) {
-if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
-  // Remove the last version	
-  $tikilib->remove_last_version($page);
-  // If page was deleted then re-create
-  if(!$tikilib->page_exists($page)) {
-    $tikilib->create_page($page,0,'',date("U"),'Tiki initialization'); 
-  }
-  // Restore page information
-  $info = $tikilib->get_page_info($page);  	
-}
-}
-
-$slides = split("-=[^=]+=-",$info["data"]);
-if(count($slides)>1) {
-	$smarty->assign('show_slideshow','y');
-} else {
-	$smarty->assign('show_slideshow','n');
-}
 
 if(isset($_REQUEST['refresh'])) {
   $tikilib->invalidate_cache($page);	

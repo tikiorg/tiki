@@ -1,6 +1,6 @@
 <?php
-
 require_once('tiki-setup.php');
+include_once('lib/featured_links/flinkslib.php');
 
 if($feature_featuredLinks != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -22,14 +22,14 @@ $smarty->assign('type','f');
 $smarty->assign('position',1);
 
 if(isset($_REQUEST["generate"])) {
- $tikilib->generate_featured_links_positions();
+ $flinkslib->generate_featured_links_positions();
 }
 
 if(!isset($_REQUEST["editurl"])) {
   $_REQUEST["editurl"]='n';
 }
 if($_REQUEST["editurl"]!='n') {
-  $info = $tikilib->get_featured_link($_REQUEST["editurl"]);
+  $info = $flinkslib->get_featured_link($_REQUEST["editurl"]);
   if(!$info) {
     $smarty->assign('msg',tra("Unexistant link"));
     $smarty->display("styles/$style_base/error.tpl");
@@ -45,15 +45,15 @@ $smarty->assign('editurl',$_REQUEST["editurl"]);
 if(isset($_REQUEST["add"])) {
   if(!empty($_REQUEST["url"]) && !empty($_REQUEST["url"])) {
     if($_REQUEST["editurl"]==0) {
-      $tikilib->add_featured_link($_REQUEST["url"],$_REQUEST["title"],'',$_REQUEST["position"],$_REQUEST["type"]);
+      $flinkslib->add_featured_link($_REQUEST["url"],$_REQUEST["title"],'',$_REQUEST["position"],$_REQUEST["type"]);
     } else {
-      $tikilib->update_featured_link($_REQUEST["url"], $_REQUEST["$title"], '', $_REQUEST["position"],$_REQUEST["type"]);
+      $flinkslib->update_featured_link($_REQUEST["url"], $_REQUEST["$title"], '', $_REQUEST["position"],$_REQUEST["type"]);
     }
   }
 }
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_featured_link($_REQUEST["remove"]);
+  $flinkslib->remove_featured_link($_REQUEST["remove"]);
 }
 
 $links=$tikilib->get_featured_links(999999);

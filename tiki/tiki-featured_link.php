@@ -1,6 +1,6 @@
 <?php
-
 require_once('tiki-setup.php');
+include_once('lib/featured_links/flinkslib.php');
 
 if($feature_featuredLinks != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -8,7 +8,7 @@ if($feature_featuredLinks != 'y') {
   die;  
 }
 
-$tikilib->add_featured_link_hit($_REQUEST["url"]);
+$flinkslib->add_featured_link_hit($_REQUEST["url"]);
 // Get the page from the request var or default it to HomePage
 
 

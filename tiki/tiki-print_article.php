@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 if(!isset($_REQUEST["articleId"])) {
   $smarty->assign('msg',tra("No article indicated"));
@@ -10,7 +11,7 @@ if(!isset($_REQUEST["articleId"])) {
 }
 
 if(isset($_REQUEST["articleId"])) {
-  $tikilib->add_article_hit($_REQUEST["articleId"]);
+  $artlib->add_article_hit($_REQUEST["articleId"]);
   $smarty->assign('articleId',$_REQUEST["articleId"]);
   $article_data = $tikilib->get_article($_REQUEST["articleId"]);
   if(!$article_data) {

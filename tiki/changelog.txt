@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Forums control to view posts from the last X hours/days only.
+* [NEW] File galleries dupes are now prevented.
+* [NEW] File galleries improved, listings are configurable, files can be moved and
+  deleted. Better interface. etc
 * [NEW] Banning system: Admin can ban users or IPs from specific sections of Tiki,
   rules accept dates (suspensions). Usernames accept regexes, IPs accept wildcards
   example: 23.*.*.*

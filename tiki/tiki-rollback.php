@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/histlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -57,7 +58,7 @@ if(!$tikilib->page_exists($page)) {
 }
 
 if(isset($_REQUEST["rollback"])) {
-  $tikilib->use_version($_REQUEST["page"],$_REQUEST["version"]);
+  $histlib->use_version($_REQUEST["page"],$_REQUEST["version"]);
   header("location: tiki-index.php");
   die;  
 }

@@ -150,7 +150,7 @@ if($tiki_p_admin_wiki == 'y') {
 if(isset($_REQUEST["undo"])) {
 if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
   // Remove the last version	
-  $tikilib->remove_last_version($page);
+  $wikilib->remove_last_version($page);
   // If page was deleted then re-create
   if(!$tikilib->page_exists($page)) {
     $tikilib->create_page($page,0,'',date("U"),'Tiki initialization'); 

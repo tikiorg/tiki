@@ -5,6 +5,7 @@ include_once('lib/rss/rsslib.php');
 include_once('lib/polls/polllib.php');
 include_once('lib/banners/bannerlib.php');
 include_once('lib/dcs/dcslib.php');
+include_once('lib/modules/modlib.php');
 
 if(!isset($dcslib)) {
 	$dcslib= new DCSLib($dbTiki);
@@ -65,7 +66,7 @@ $module_groups=Array();
 
 if(isset($_REQUEST["edit_assign"])) {
   $_REQUEST["edit_assign"]=urldecode($_REQUEST["edit_assign"]);	
-  $info = $tikilib->get_assigned_module($_REQUEST["edit_assign"]);
+  $info = $modlib->get_assigned_module($_REQUEST["edit_assign"]);
   $grps='';
   if($info["groups"]) {
     $module_groups = unserialize($info["groups"]);
@@ -89,17 +90,17 @@ if(isset($_REQUEST["edit_assign"])) {
 
 if(isset($_REQUEST["unassign"])) {
   $_REQUEST["unassign"]=urldecode($_REQUEST["unassign"]);		
-  $tikilib->unassign_module($_REQUEST["unassign"]);
+  $modlib->unassign_module($_REQUEST["unassign"]);
 }
 
 if(isset($_REQUEST["modup"])) {
   $_REQUEST["modup"]=urldecode($_REQUEST["modup"]);	
-  $tikilib->module_up($_REQUEST["modup"]);
+  $modlib->module_up($_REQUEST["modup"]);
 }
 
 if(isset($_REQUEST["moddown"])) {
   $_REQUEST["moddown"]=urldecode($_REQUEST["moddown"]);		
-  $tikilib->module_down($_REQUEST["moddown"]);
+  $modlib->module_down($_REQUEST["moddown"]);
 }
 
 
@@ -109,7 +110,7 @@ if(isset($_REQUEST["um_update"])) {
   $smarty->assign_by_ref('um_name',$_REQUEST["um_name"]);
   $smarty->assign_by_ref('um_title',$_REQUEST["um_title"]);
   $smarty->assign_by_ref('um_data',$_REQUEST["um_data"]);
-  $tikilib->replace_user_module($_REQUEST["um_name"],$_REQUEST["um_title"],$_REQUEST["um_data"]);
+  $modlib->replace_user_module($_REQUEST["um_name"],$_REQUEST["um_title"],$_REQUEST["um_data"]);
 }
 
 if(!isset($_REQUEST["groups"])) {
@@ -169,13 +170,13 @@ if(isset($_REQUEST["assign"])) {
     $grps = $grps." $amodule ";	
   }
   $smarty->assign('module_groups',$grps);
-  $tikilib->assign_module($_REQUEST["assign_name"],'',$_REQUEST["assign_position"],$_REQUEST["assign_order"],$_REQUEST["assign_cache"],$_REQUEST["assign_rows"],serialize($module_groups),$_REQUEST["assign_params"]);
+  $modlib->assign_module($_REQUEST["assign_name"],'',$_REQUEST["assign_position"],$_REQUEST["assign_order"],$_REQUEST["assign_cache"],$_REQUEST["assign_rows"],serialize($module_groups),$_REQUEST["assign_params"]);
   header("location: tiki-admin_modules.php");
 }
 
 if(isset($_REQUEST["um_remove"])) {
  $_REQUEST["um_remove"]=urldecode($_REQUEST["um_remove"]);	
- $tikilib->remove_user_module($_REQUEST["um_remove"]);
+ $modlib->remove_user_module($_REQUEST["um_remove"]);
 }
 
 if(isset($_REQUEST["um_edit"])) {
@@ -186,10 +187,10 @@ if(isset($_REQUEST["um_edit"])) {
   $smarty->assign_by_ref('um_data',$um_info["data"]);
 }
 
-$user_modules = $tikilib->list_user_modules();
+$user_modules = $modlib->list_user_modules();
 $smarty->assign_by_ref('user_modules',$user_modules["data"]);
 
-$all_modules = $tikilib->get_all_modules();
+$all_modules = $modlib->get_all_modules();
 sort($all_modules);
 $smarty->assign_by_ref('all_modules',$all_modules);
 

@@ -1,6 +1,8 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/histlib.php');
+include_once('lib/wiki/wikilib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -51,9 +53,9 @@ if(isset($_REQUEST["remove"])) {
     die; 
   } else {
     if($version=="last") {
-      $tikilib->remove_last_version($_REQUEST["page"]);
+      $wikilib->remove_last_version($_REQUEST["page"]);
     } else {
-      $tikilib->remove_version($_REQUEST["page"],$_REQUEST["version"]);
+      $histlib->remove_version($_REQUEST["page"],$_REQUEST["version"]);
     }
     header("location: tiki-index.php");
     die; 
