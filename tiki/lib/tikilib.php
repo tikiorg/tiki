@@ -8059,6 +8059,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }	
     
     //$data = strip_tags($data);
+
+    // BiDi markers
+    $bidiCount = preg_match_all("/(\{l2r\})/",$data,$pages);
+    $bidiCount += preg_match_all("/(\{r2l\})/",$data,$pages);
+    $data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
+    $data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
+    $data = preg_replace("/\{lm\}/", "&lrm;", $data);
+    $data = preg_replace("/\{rm\}/", "&rlm;", $data);
     
     // smileys
     $data = $this->parse_smileys($data);
@@ -8457,6 +8465,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         }
       } 
       $data.=$line;
+    }
+
+    // Close BiDi DIVs if any
+    for ($i = 0; $i <= $bidiCount; $i++) {
+      $data.="</div>";
     }
     
     foreach($noparsed as $np) {
