@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.58 2003-11-07 00:48:39 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.59 2003-11-08 19:50:32 zaufi Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -550,7 +550,12 @@ INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove
 INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
 INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
-
+#
+# Integrator permissions
+#
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
+ 
 DROP TABLE IF EXISTS tiki_searchindex;
 CREATE TABLE tiki_searchindex(
   searchword varchar(80) NOT NULL default '',

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.6 2003-11-03 23:59:26 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.7 2003-11-08 19:50:32 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -10,7 +10,7 @@ require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
 
 // Check permissions
-if ($tiki_p_admin != 'y')
+if ($tiki_p_admin_integrator != 'y')
 {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
     $smarty->display("styles/$style_base/error.tpl");

@@ -508,6 +508,9 @@
     {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
       &nbsp;<a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />
     {/if}
+    {if $tiki_p_admin_integrator eq 'y'}
+      &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
+    {/if}
     {if $tiki_p_admin eq 'y'}
     &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Import PHPWiki Dump{/tr}</a><br />
     &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br />

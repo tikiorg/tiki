@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.14 2003-11-08 19:51:53 zaufi Exp $ *}
+
 <div class="box">
 <div class="box-title">
 <a class='flip' href="javascript:flip('mainmenu');">{tr}Menu{/tr}</a>
@@ -407,6 +409,9 @@
     {/if}
     {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
       &nbsp;<a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />
+    {/if}
+    {if $tiki_p_admin_integrator eq 'y'}
+          &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}
     &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Import PHPWiki Dump{/tr}</a><br />
