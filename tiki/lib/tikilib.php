@@ -810,26 +810,27 @@ class TikiLib {
 
     /*shared*/
     function list_quizzes($offset, $maxRecords, $sort_mode, $find) {
-	$sort_mode = str_replace("_", " ", $sort_mode);
-
+	
 	if ($find) {
-	    $findesc = $this->qstr('%' . $find . '%');
+	    $findesc = '%' . $find . '%';
 
-	    $mid = " where (`name` like $findesc or `description` like $findesc)";
+	    $mid = " where (`name` like ? or `description` like ?)";
+	    $bindvars=array($findesc,$findesc);
 	} else {
 	    $mid = " ";
+	    $bindvars=array();
 	}
 
-	$query = "select * from `tiki_quizzes` $mid order by $sort_mode limit $offset,$maxRecords";
+	$query = "select * from `tiki_quizzes` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_quizzes` $mid";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=" . $res["quizId"]);
+	    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array($res["quizId"]));
 
-	    $res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=" . $res["quizId"]);
+	    $res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array($res["quizId"]));
 	    $ret[] = $res;
 	}
 
