@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-1.2.8
+1.2.9
 
 lastmodif:
-$Date: 2004-11-13 22:43:52 $
+$Date: 2004-11-14 16:02:27 $
 
 files: 
 features/cc/cc.php cc.php
@@ -73,6 +73,9 @@ openmoney.org
 
 licence:
 GNU/LGPL
+
+devurl:
+http://dev.openmoney.org/TikiCc
 
 Description: 
 Multi-currencies management system
