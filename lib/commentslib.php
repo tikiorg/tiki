@@ -1214,6 +1214,11 @@ class Comments extends TikiLib {
 
 	    if (!$res["lastPost"])
 		$res["lastPost"] = $res["commentDate"];
+          else {
+              $query = "select * from `tiki_comments` where `parentId`=? and `commentDate` =?";
+              $result2 = $this->query($query,array($tid, $res["lastPost"]));
+              $res["lastPostData"] = $result2->fetchRow();
+          }
 
 	    // Get the grandfather
 	    if ($res["parentId"] > 0) {
