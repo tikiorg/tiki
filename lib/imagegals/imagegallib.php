@@ -522,6 +522,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       {
         die;
       }
+    } else {
+      // filetype is not supported, but we store the data
+      // assiming newx,newy as new size
+      $this->xsize=$newx;
+      $this->ysize=$newy;
     }
 
     // we always rescale to jpegs.
@@ -926,14 +931,33 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function remove_gallery($id)
   {
     global $gal_use_dir;
-    $query = "select path from tiki_images where galleryId='$id'";
+    $query = "select imageId,path from tiki_images where galleryId='$id'";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $path = $res["path"];
-      if($path) {
-        @unlink($gal_use_dir.$path);
-        @unlink($gal_use_dir.$path.'.thumb');
+      $query2="select xsize,ysize,type from tiki_images_data where imageId=".$res["imageId"];
+      $result2 = $this->query($query2);
+      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+        switch ($res2["type"]) {
+        case 't':
+          $ext=".thumb";
+          break;
+        case 's':
+          $ext=".scaled_".$res2["xsize"]."x".$res2["ysize"];
+          break;
+        case 'b':
+          // for future use
+          $ext=".backup";
+          break;
+        default:
+          $ext='';
+        }
+        if($path) {
+          @unlink($gal_use_dir.$path.$ext);
+        }
       }
+      $query3 = "delete from tiki_images_data where imageId=".$res["imageId"];
+      $result3  = $this->query($query3);
     }
     $query = "delete from tiki_galleries where galleryId='$id'";
     $result = $this->query($query);
