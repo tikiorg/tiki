@@ -1,6 +1,7 @@
 set quoted_identifier on
 go
 
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.8 2004-02-28 03:47:02 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -2412,6 +2413,36 @@ CREATE TABLE "tiki_live_support_requests" (
 ) 
 go
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_live_support_requests`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 03, 2003 at 07:42 PM
+--
+
+-- DROP TABLE `tiki_logs`
+go
+
+
+CREATE TABLE "tiki_logs" (
+logId numeric(8 ,0) identity,
+  "logtype" varchar(20) NOT NULL,
+  "logmessage" text NOT NULL,
+  "loguser" varchar(200) NOT NULL,
+  "logip" varchar(200) NOT NULL,
+  "logclient" text NOT NULL,
+  "logtime" numeric(14,0) NOT NULL,
+  PRIMARY KEY ("logId")
+
+) 
+go
+
+
+CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype")
+go
 
 -- --------------------------------------------------------
 
@@ -5842,6 +5873,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+
+-- Homework permissions - ggeller
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework')
 go
 
@@ -7589,6 +7622,7 @@ go
 -- Homework tables start
 --
 -- Created Feb 22, 2004
+--
 
 -- DROP TABLE "hw_actionlog"
 go

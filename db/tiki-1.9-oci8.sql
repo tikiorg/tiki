@@ -1,3 +1,4 @@
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.8 2004-02-28 03:47:02 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -2095,6 +2096,34 @@ CREATE TABLE "tiki_live_support_requests" (
   "chat_ended" number(14) default NULL,
   PRIMARY KEY ("reqId")
 ) ;
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tiki_live_support_requests`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 03, 2003 at 07:42 PM
+--
+DROP TABLE `tiki_logs`;
+
+CREATE SEQUENCE "tiki_live_support_requests_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_logs" (
+  "logId" number(8) NOT NULL,
+  "logtype" varchar(20) NOT NULL,
+  "logmessage" clob NOT NULL,
+  "loguser" varchar(200) NOT NULL,
+  "logip" varchar(200) NOT NULL,
+  "logclient" clob NOT NULL,
+  "logtime" number(14) NOT NULL,
+  PRIMARY KEY ("logId")
+) ;
+
+CREATE TRIGGER "tiki_live_support_requests_trig" BEFORE INSERT ON "tiki_live_support_requests" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_live_support_requests_sequ".nextval into :NEW."logId" FROM DUAL;
+END;
+/
+CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 
 -- --------------------------------------------------------
 --
@@ -4640,6 +4669,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
 
+
+-- Homework permissions - ggeller
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editor','homework');
@@ -5624,6 +5655,7 @@ END;
 -- Homework tables start
 --
 -- Created Feb 22, 2004
+--
 DROP TABLE "hw_actionlog";
 
 CREATE TABLE "hw_actionlog" (
