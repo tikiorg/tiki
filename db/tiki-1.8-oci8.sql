@@ -4493,7 +4493,7 @@ DROP TABLE "users_grouppermissions";
 CREATE TABLE "users_grouppermissions" (
   "groupName" varchar(30) default '' NOT NULL,
   "permName" varchar(30) default '' NOT NULL,
-  "value" char(1) default '' NOT NULL,
+  "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
 ) ;
 
