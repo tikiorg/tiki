@@ -23,7 +23,6 @@
 <tr><td><strong>{tr}Center{/tr}:</strong></td><td> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents parsing data{/tr}</td></tr>
 </table>
-{php} var_dump($plugins); {/php}
 {if count($plugins) ne 0}
 <p>
 <a class="wiki">{tr}PluginsHelp{/tr}</a>
