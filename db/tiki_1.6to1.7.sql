@@ -567,15 +567,6 @@ create table galaxia_workitems(
 );
 
 
-## Permissions
-
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_workflow','workflow','Can admin workflow processes','admin');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_abort_instance','workflow','Can abort a process instance','editor');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_use_workflow','workflow','Can execute workflow activities','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_exception_instance','workflow','Can declare an instance as exception','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send_instance','workflow','Can send instances after completion','registered');
-
-
 ### Instance comments
 drop table if exists galaxia_instance_comments;
 create table galaxia_instance_comments(
@@ -627,10 +618,10 @@ CREATE TABLE tiki_calendars (
 
 DROP TABLE IF EXISTS tiki_calendar_roles;
 CREATE TABLE tiki_calendar_roles (
-  calitemId int(14) NOT NULL default '0',
-  username varchar(40) NOT NULL default '',
-  role enum('0','1','2','3') NOT NULL default '0',
-  PRIMARY KEY  (calitemId,username(10))
+  calitemId int(14) NOT NULL,
+  username varchar(40) NOT NULL,
+  role enum('0','1','2','3','6') NOT NULL default '0',
+  PRIMARY KEY  (calitemId,username(16), role)
 );
 
 DROP TABLE IF EXISTS tiki_calendar_locations;
@@ -639,7 +630,8 @@ CREATE TABLE tiki_calendar_locations (
   calendarId int(14) NOT NULL default '0',
   name varchar(255) NOT NULL default '',
   description blob,
-  PRIMARY KEY  (callocId)
+  PRIMARY KEY  (callocId),
+	UNIQUE KEY locname (calendarId,name(16))
 );
 
 DROP TABLE IF EXISTS tiki_calendar_categories;
@@ -647,32 +639,44 @@ CREATE TABLE tiki_calendar_categories (
   calcatId int(11) NOT NULL auto_increment,
   calendarId int(14) NOT NULL default '0',
   name varchar(255) NOT NULL default '',
-  PRIMARY KEY  (calcatId)
+  PRIMARY KEY  (calcatId),
+  UNIQUE KEY catname (calendarId,name(16))
 );
 
 DROP TABLE IF EXISTS tiki_calendar_items;
 CREATE TABLE tiki_calendar_items (
   calitemId int(14) NOT NULL auto_increment,
   calendarId int(14) NOT NULL default '0',
-  organizer varchar(40) default NULL,
+  user varchar(40) default NULL,
   start int(14) NOT NULL default '0',
   end int(14) NOT NULL default '0',
   locationId int(14) default NULL,
   categoryId int(14) default NULL,
   public enum('y','n') NOT NULL default 'y',
-  priority tinyint(1) NOT NULL default '5',
+  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
   status enum('0','1','2') NOT NULL default '0',
-  url varchar(255) default NULL,
+  url varchar(255),
   lang char(2) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
   description blob,
-  created int(14) NOT NULL default '0',
-  lastmodif int(14) NOT NULL default '0',
+  created int(14) NOT NULL,
+  lastmodif int(14) NOT NULL,
   PRIMARY KEY  (calitemId),
   KEY calendarId (calendarId)
 );
+
+## Permissions
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_workflow','workflow','Can admin workflow processes','admin');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_abort_instance','workflow','Can abort a process instance','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_use_workflow','workflow','Can execute workflow activities','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_exception_instance','workflow','Can declare an instance as exception','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send_instance','workflow','Can send instances after completion','registered');
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_calendar','calendar','Can browse the calendar','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_calendar','calendar','Can create/admin calendars','admin');
 
 INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
+
+
+
