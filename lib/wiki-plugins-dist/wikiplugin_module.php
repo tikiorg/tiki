@@ -3,11 +3,16 @@
 // Displays a module inlined in page
 // Parameters: module name, align, max, module args
 // Example:
-// {MODULE(module=>logged_users,align=>left,max=>3,args=>"")}
+// {MODULE(module=>logged_users,align=>left,max=>3,trackerId=>1)}
 // {/MODULE}
+//
+// about module params : all params are passed in $module_params
+// so if you need to use parmas just add them in MODULE()
+// like the trackerId in the above example.
 
 function wikiplugin_module($data,$params) {
-  global $tikilib, $cache_time, $smarty;
+  global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, 
+		$user, $feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
 	$out = '';
   extract($params);
 	if(!isset($align)) {$align='left';}
@@ -35,6 +40,7 @@ function wikiplugin_module($data,$params) {
 		if((!file_exists($cachefile)) || (file_exists($nocache)) || ( (time() - filemtime($cachefile))>$cache_time )){
 			if(file_exists($phpfile)) {
 				$module_rows = $max;
+				$module_params = $params;
 				include_once($phpfile);
 			}
 			$template_file = 'templates/'.$template;
