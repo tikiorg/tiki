@@ -43,10 +43,14 @@
 		  <img id="leg" src="{$image_leg_url}" >
 		  </td></tr>
 		  <tr><td>
-		  <div class="separator"><a class='separator' href="javascript:setCookie('mylayer','c');hide('mylayer');">[-]</a>
-		  {tr}Layer Manager{/tr}
-		  <a class='separator' href="javascript:setCookie('mylayer','o');show('mylayer');">[+]</a></div>
-		  <div id='mylayer' style="display:none;">
+		  <div class="separator">
+    {if $feature_menusfolderstyle eq 'y'}
+    <a class="separator" href="javascript:icntoggle('layermenu');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
+    {else}<a class="separator" href="javascript:toggle('layermenu');">[-]</a>{/if} 
+    {tr}Layer Manager{/tr}
+    {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('layermenu');">[+]</a>{/if}
+    </div>
+		  <div id='layermenu' style="{$mnu_layermenu}">
 		  <table>
 		  <tr><td>
 		  <b>Layer</b></td><td><b>{tr}On{/tr}</b></td>

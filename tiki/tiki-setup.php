@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.116 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.117 2003-08-07 10:39:55 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -412,6 +412,7 @@ $feature_menusfolderstyle = 'n';
 $feature_calendar = 'n';
 $feature_editcss = 'n';
 $feature_wiki_monosp = 'y';
+$feature_maps = 'n';
 
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);
@@ -827,6 +828,7 @@ $smarty->assign('feature_wiki', $feature_wiki);
 $smarty->assign('feature_articles', $feature_articles);
 $smarty->assign('feature_submissions', $feature_submissions);
 $smarty->assign('feature_blogs', $feature_blogs);
+$smarty->assign('feature_maps',$feature_maps);
 
 $smarty->assign('feature_wiki_comments', $feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering', $wiki_comments_default_ordering);
@@ -1439,9 +1441,25 @@ if (count($query) > 0) {
 	$father .= '?';
 }
 
+
+
 $ownurl_father = $father;
 $smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
 
+$smarty->assign('mnu_mapsmenu','display:none;');
+if(isset($_COOKIE["mapsmenu"])) {
+  if($_COOKIE["mapsmenu"]=='o') {
+    $smarty->assign('mnu_mapsmenu','display:block;');
+  }
+}
+	
+$smarty->assign('mnu_layermenu','display:none;');
+if(isset($_COOKIE["layermenu"])) {
+  if($_COOKIE["layermenu"]=='o') {
+      $smarty->assign('mnu_layermenu','display:block;');
+  }
+}
+	
 $allowMsgs = 'n';
 
 if ($user) {

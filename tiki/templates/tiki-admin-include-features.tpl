@@ -316,6 +316,16 @@
         <td><input type="checkbox" name="feature_categoryobjects"
             {if $feature_categoryobjects eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
+        <td class="form" colspan=2>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Maps" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Maps{/tr}">{/if}
+        		{tr}Maps{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_maps"
+            {if $feature_maps eq 'y'}checked="checked"{/if}/></td>
+      </tr><tr>      
 
         <td class="heading" colspan=5 
             align="center">{tr}Content Features{/tr}</td>
