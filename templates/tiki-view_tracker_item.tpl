@@ -86,7 +86,9 @@
 </tr></table></td></tr>
 
 {elseif $ins_fields[ix].type eq 'c'}
-{$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
+{if $ins_fields[ix].value eq 'y'}{tr}Yes{/tr}
+{else}{tr}No{/tr}
+{/if}
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
