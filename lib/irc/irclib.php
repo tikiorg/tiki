@@ -14,6 +14,7 @@ class IRC_Logger extends Net_IRC_Event {
 	var $nick;
 	var $channel;
 	var $_debug = false;
+	var $joined = false;
 	
 	function debug($debug = null) {
 		if (!is_null($debug)) {
@@ -24,35 +25,37 @@ class IRC_Logger extends Net_IRC_Event {
 			$this->options['log_types'] = array(0, 1, 2, 3, 4, 5, 6);
 		}
 
-		return $_debug;
+		return $this->_debug;
 	}
 	
 	function connect($options) {
+		$this->nick		= isset($this->options['nick']) ? $this->options['nick'] : false;
+		$this->channel	= isset($this->options['channel']) ? $this->options['channel'] : false;
+
 		$rv = parent::connect($options);
 		
 		if (!$rv) {
 			return false;
 		}
 
-		$this->nick		= $this->options['nick'];
-		$this->channel	= isset($this->options['channel']) ? $this->options['channel'] : false;
-
 		$this->start();
 
 		if ($this->channel) {
 			$this->command('JOIN #' . $this->channel);
 		}
+
+		$this->joined = true;
 		
 		return true;
 	}
 
 	function start() {
-		$this->_log(sprintf('Session start (%s:#%s: %s', 
+		$this->_log(sprintf('Session Start (%s:#%s): %s', 
 			$this->options['server'], $this->options['channel'], date('r')));
 	}
 	
 	function finish() {
-		$this->_log(sprintf('Session close (#%s: %s', 
+		$this->_log(sprintf('Session Close (#%s): %s', 
 			$this->options['channel'], date('r')));
 	}
 	
@@ -153,8 +156,8 @@ class IRC_Logger extends Net_IRC_Event {
 
     function fallback($origin, $orighost, $target, $params) {
     	$rv = parent::fallback($origin, $orighost, $target, $params);
-    	if ($nick == $this->nick) {
-	    	echo "
+		if ($this->joined && $this->_debug) {
+echo "
 origin  ='$origin'
 orighost='$orighost'
 target  ='$target'
@@ -274,7 +277,6 @@ class IRC_Log_Parser {
 	/**
 	 * \static
 	 */
-
 	function getChannelAndDate($file) {
 		$channel	= false;
 		$date		= false;
