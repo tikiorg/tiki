@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.18 2004-01-15 09:56:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.19 2004-01-24 23:10:10 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -48,14 +48,15 @@
 {/if}
 <div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}" style="padding-left:{$space*30+20}px;">
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
-<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
 {assign var=categ value=$catree[dx].categId}
 {assign var=parent value=$catree[dx].parentId}
+<a class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;removeCat={$categ}" title="{tr}remove{/tr}"><img  
+style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="8" width="8" hspace="5" vspace="2"/></a>
+<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {/section}
 </div>
-{* $tree *}
 </div>
 
 

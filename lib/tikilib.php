@@ -534,12 +534,8 @@ function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find) {
 
 function get_tracker($trackerId) {
 		$query = "select * from `tiki_trackers` where `trackerId`=?";
-
 		$result = $this->query($query,array((int) $trackerId));
-
-		if (!$result->numRows())
-			return false;
-
+		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}
