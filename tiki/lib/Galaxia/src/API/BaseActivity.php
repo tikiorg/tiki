@@ -88,6 +88,7 @@ class BaseActivity extends Base {
     return $act;
   }
   
+  /*! Returns an Array of roleIds for the given user */
   function getUserRoles($user)
   {
     $query = "select roleId from galaxia_user_roles where user='$user'";
@@ -98,7 +99,9 @@ class BaseActivity extends Base {
     }
     return $ret;
   }
-  
+
+  /*! Returns an Array of asociative arrays with roleId and name
+  for the given user */  
   function getActivityRoleNames()
   {
     $aid = $this->activityId;
@@ -111,81 +114,98 @@ class BaseActivity extends Base {
     return $ret;
   }
   
+  /*! Returns the normalized name for the activity */
   function getNormalizedName() 
   {
   	return $this->normalizedName;
   }
-  
+
+  /*! Sets normalized name for the activity */  
   function setNormalizedName($name)
   {
     $this->normalizedName=$name;
   }
   
+  /*! Sets the name for the activity */
   function setName($name)
   {
     $this->name=$name;
   }
   
+  /*! Gets the activity name */
   function getName()
   {
     return $this->name;
   }
   
+  /*! Sets the activity description */
   function setDescription($desc)
   {
     $this->description=$desc;
   }
   
+  /*! Gets the activity description */
   function getDescription()
   {
     return $this->description;
   }
   
+  /*! Sets if the activity is interactive */
   function setIsInteractive($is)
   {
     $this->isInteractive=$is;
   }
   
+  /*! Returns if the activity is interactive */
   function isInteractive()
   {
     return $this->isInteractive;
   }
   
+  /*! Sets if the activity is auto-routed */
   function setIsAutoRouted($is)
   {
     $this->isAutoRouted = $is;
   }
   
+  /*! Gets if the activity is auto routed */
   function isAutoRouted()
   {
     return $this->isAutoRouted;
   }
 
+  /*! Sets the processId for this activity */
   function setProcessId($pid)
   {
   	$this->pId=$pid;
   }
   
+  /*! Gets the processId for this activity*/
   function getProcessId()
   {
     return $this->pId;
   }
 
+  /*! Gets the activityId */
   function getActivityId()
   {
     return $this->activityId;
   }  
   
+  /*! Sets the activityId */
   function setActivityId($id)
   {
     $this->activityId=$id;
   }
   
+  /*! Gets array with roleIds asociated to this activity */
   function getRoles()
   {
     return $this->roles;
   }
   
+  /*! Sets roles for this activities, shoule receive an
+  array of roleIds */
   function setRoles($roles)
   {
     $this->roles = $roles;

@@ -10,6 +10,7 @@ class Instance extends Base {
   var $status = '';
   var $started;
   var $nextActivity;
+  var $nextUser;
   var $ended;
   /// Array of asocs(activityId,status,started,user)
   var $activities = Array();
@@ -44,6 +45,7 @@ class Instance extends Base {
 	$this->started = $res['started'];
 	$this->ended = $res['ended'];
 	$this->nextActivity = $res['nextActivity'];
+	$this->nextUser = $res['nextUser'];
     // Get the activities where the instance is (ids only is ok)
     $query = "select * from galaxia_instance_activities where  instanceId=$instanceId";
 	$result = $this->query($query);    
@@ -65,6 +67,16 @@ class Instance extends Base {
     $query = "update galaxia_instances set nextActivity=$aid where instanceId=".$this->instanceId;
     $this->query($query);
   }
+
+  function setNextUser($user)
+  {
+    $pId = $this->pId;
+	$user = addslashes($user);   
+    $this->nextUser=$user;
+    $query = "update galaxia_instances set nextUser='$user' where instanceId=".$this->instanceId;
+    $this->query($query);
+  }
+
   
   function setNextActivityByName($name)
   {
@@ -82,6 +94,8 @@ class Instance extends Base {
   	// and status
   	$pid = $this->getOne("select pId from galaxia_activities where activityId=$activityId");
   	$this->status = 'active';
+  	$this->nextActivity = 0;
+  	$this->setNextUser('');
   	$this->pId = $pid;
   	$now = date("U");
   	$this->started=$now;
@@ -177,7 +191,6 @@ class Instance extends Base {
     $this->query($query);  
   }
   
-  //\todo code
   function setActivityUser($activityId,$theuser)
   {
     if(empty($theuser)) $theuser='*';
@@ -298,7 +311,6 @@ class Instance extends Base {
   for this instance is completed adding a
   workitem to the instance
   */
-  //\todo workitem management
   function complete($activityId=0,$force=false,$addworkitem=true)
   {
   	global $user;
@@ -426,23 +438,27 @@ class Instance extends Base {
 	
     
     //try to determine the user or *
-    $candidates = Array();
-    $query = "select roleId from galaxia_activity_roles where activityId=$activityId";
-	$result = $this->query($query);    
-	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	  $roleId=$res['roleId'];
-	  $query2 = "select user from galaxia_user_roles where roleId=$roleId";
-	  $result2 = $this->query($query2);     	  
-	  while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-	    $candidates[]=$res2['user'];
-	  }
-	}
-	if(count($candidates)==1) {
-	  $putuser = $candidates[0];
-	} else {
-	  $putuser = '*';
-	}
-        
+    //Use the nextUser
+    if($this->nextUser) {
+    	$putuser = $this->nextUser;
+    } else {
+	    $candidates = Array();
+	    $query = "select roleId from galaxia_activity_roles where activityId=$activityId";
+		$result = $this->query($query);    
+		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		  $roleId=$res['roleId'];
+		  $query2 = "select user from galaxia_user_roles where roleId=$roleId";
+		  $result2 = $this->query($query2);     	  
+		  while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+		    $candidates[]=$res2['user'];
+		  }
+		}
+		if(count($candidates)==1) {
+		  $putuser = $candidates[0];
+		} else {
+		  $putuser = '*';
+		}
+	}        
     //update the instance_activities table
     //if not splitting delete first
     //please update started,status,user
@@ -510,7 +526,70 @@ class Instance extends Base {
    
   }
   
+  /*! Gets a comment */
+  function get_instance_comment($cId)
+  {
+    $iid = $this->instanceId;
+    $query = "select * from galaxia_instance_comments where instanceId=$iid and cId=$cId";
+    $result = $this->query($query);
+	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	return $res;
+	      
+  }
   
+  /*! Inserts or updates an instance comment */
+  function replace_instance_comment($cId, $activityId, $activity, $user, $title, $comment)
+  {
+    if(!$user) $user='"Anonymous"';
+    $title=addslashes($title);
+    $comment=addslashes($comment);
+    $activity=addslashes($activity);
+  	$iid= $this->instanceId;
+  	if($cId) {
+  		$query = "update galaxia_instance_comments set
+  		title = '$title',
+  		comment = '$comment'
+  		where
+  		iid=$iid and cId=$cId";
+		$this->query($query);	  		
+  	} else {
+  		$hash = md5($title.$comment);
+  		if($this->getOne("select count(*) from galaxia_instance_comments where instanceId=$iid and hash='$hash'")) return false;
+  	    $now = date("U");
+		$query ="insert into galaxia_instance_comments
+		(instanceId, user, activityId, activity, title, comment, timestamp, hash)
+		values
+		($iid, '$user', $activityId, '$activity', '$title', '$comment', $now, '$hash')";
+		$this->query($query);	   	
+  	}  
+  }
+  
+  /*!
+  Removes an instance comment
+  */
+  function remove_instance_comment($cId)
+  {
+    $iid = $this->instanceId;
+    $query = "delete from galaxia_instance_comments where cId=$cId and instanceId=$iid";
+    $this->query($query);
+  }
+ 
+  /*!
+  Lists instance comments
+  */
+  function get_instance_comments()
+  {
+    $iid = $this->instanceId;
+    $query = "select * from galaxia_instance_comments where instanceId=$iid order by timestamp desc";
+	$result = $this->query($query);    
+	$ret = Array();
+	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
+		$ret[] = $res;
+	}
+	return $ret;
+  }  
+  
+
   
 }
 ?>

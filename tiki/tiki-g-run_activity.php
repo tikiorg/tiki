@@ -70,10 +70,24 @@ include_once($shared);
 include_once($source);
 
 
+// Process comments
+if(isset($_REQUEST['__removecomment'])) {
+  
+  $__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
+  if($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
+    $instance->remove_instance_comment($_REQUEST['__removecomment']);
+  }
+}
+$smarty->assign_by_ref('__comments',$__comments);
+if(!isset($_REQUEST['__cid'])) $_REQUEST['__cid']=0;
+if(isset($_REQUEST['__post'])) {
+  $instance->replace_instance_comment($_REQUEST['__cid'], $activity->getActivityId(), $activity->getName(), $user, $_REQUEST['__title'], $_REQUEST['__comment']);
+}
+$__comments = $instance->get_instance_comments();
+
 
 // This goes to the end part of all activities
 // If this activity is interactive then we have to display the template
-
 if($__activity_completed ) {
 
 	$smarty->assign('procname',$process->getName());

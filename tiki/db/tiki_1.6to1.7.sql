@@ -79,6 +79,7 @@ create table galaxia_instances(
   started integer(14),
   owner varchar(200),
   nextActivity integer(14),
+  nextUser varchar(200),
   ended integer(14),
   status enum('active','exception','aborted','completed'),
   properties longblob,
@@ -120,5 +121,21 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_abor
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_use_workflow','workflow','Can execute workflow activities','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_exception_instance','workflow','Can declare an instance as exception','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send_instance','workflow','Can send instances after completion','registered');
+
+
+### Instance comments
+drop table if exists galaxia_instance_comments;
+create table galaxia_instance_comments(
+  cId integer(14) not null auto_increment,
+  instanceId integer(14) not null,
+  user varchar(200),
+  activityId integer(14),
+  hash char(32),
+  title varchar(250),
+  comment text,
+  activity varchar(80),
+  timestamp integer(14),
+  primary key(cId)
+);
 
 #### Workflow schema ends
