@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-03-12 16:49:04 $
-# $Author: mose $
+# $Date: 2005-03-13 10:16:42 $
+# $Author: ohertel $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3493,9 +3493,8 @@ CREATE TABLE tiki_user_answers (
 # Last update: Jan 25, 2005 at 07:42 PM
 #
 
-
-
-CREATE TABLE `tiki_user_answers_uploads` (
+DROP TABLE IF EXISTS tiki_user_answers_uploads;
+CREATE TABLE tiki_user_answers_uploads (
   `answerUploadId` int(4) NOT NULL auto_increment,
   `userResultId` int(11) NOT NULL default '0',
   `questionId` int(11) NOT NULL default '0',
@@ -4972,7 +4971,6 @@ CREATE TABLE tiki_opnet_filledform (
 #
 # Opinion-Network tables END
 #
-=======
 
 #
 # event registration tables begin
