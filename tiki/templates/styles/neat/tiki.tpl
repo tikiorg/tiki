@@ -38,7 +38,7 @@
 		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-webmail.php">{tr}Webmail{/tr}</a>
 		  {/if}
 		  {if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-user_notepad.php">{tr}Notepad{/tr}</a>
+		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-notepad_list.php">{tr}Notepad{/tr}</a>
 		  {/if}
 		  {if $feature_user_watches eq 'y'}
 		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-user_watches.php">{tr}Watches{/tr}</a>

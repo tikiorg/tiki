@@ -115,6 +115,8 @@ if(
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {
     $wikilib->lock_page($page);
+    $info["flag"] = 'L';
+    $smarty->assign('lock',true);  
   }  
 }
 }
@@ -127,6 +129,8 @@ if(
 if(isset($_REQUEST["action"])) {
   if ($_REQUEST["action"]=='unlock') {
     $wikilib->unlock_page($page);
+    $smarty->assign('lock',false);  
+    $info["flag"] = 'U';
   }  
 }
 }
