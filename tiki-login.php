@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.19 2003-11-17 02:47:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.20 2003-12-10 23:08:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.19 2003-11-17 02:47:43 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.20 2003-12-10 23:08:30 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -108,6 +108,13 @@ if ($isvalid) {
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
+		if ($url == $tikiIndex && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+			$group = $userlib->get_user_default_group($user);
+    			$groupHome = $userlib->get_group_home($group);
+    			if ($groupHome) {
+        			$url = "tiki-index.php?page=".$groupHome;
+    			}
+		}
 		//unset session variable in case user su's
 		unset($_SESSION['loginfrom']);
 

@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ContentTemplates" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin content templates{/tr}">

@@ -2629,6 +2629,9 @@ function remove_all_versions($page, $comment = '') {
 	$result = $this->query($query, array(
 		$action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
 		) );
+	$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
+	$this->query($query, array(NULL, $page));
+
   $this->remove_object('wiki page', $page);
     
   return true;
@@ -4157,7 +4160,7 @@ function parse_data($data) {
 			$repl .= '<td class="wikicell" ';
 
 			if ($k == $ncols - 1 && $ncols < $maxcols)
-			    $repl .= ' colspan=' . ($maxcols - $k);
+			    $repl .= ' colspan="' . ($maxcols - $k).'"';
 
 			$repl .= '>' . $cols[$i][$j][$k] . '</td>';
 		    }
@@ -4207,7 +4210,7 @@ function parse_data($data) {
 			$repl .= '<td class="wikicell" ';
 
 			if ($k == $ncols - 1 && $ncols < $maxcols)
-			    $repl .= ' colspan=' . ($maxcols - $k);
+			    $repl .= ' colspan="' . ($maxcols - $k).'"';
 
 			$repl .= '>' . $cols[$i][$j][$k] . '</td>';
 		    }

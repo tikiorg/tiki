@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-import_phpwiki.php">{tr}Import pages from a PHPWiki Dump{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ImportingPagesAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ImportingPagesPhpWikiPageAdmin{/tr}">

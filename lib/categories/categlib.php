@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.20 2003-11-10 17:14:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.21 2003-12-10 23:08:32 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -55,11 +55,11 @@ class CategLib extends TikiLib {
 	function get_category_path_admin($categId) {
 
 		$info = $this->get_category($categId);
-		$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
+		$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>';
 
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-			$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>' . '>' . $path;
 		}
 
 		return $path;
@@ -68,11 +68,11 @@ class CategLib extends TikiLib {
 	function get_category_path_browse($categId) {
 
 		$info = $this->get_category($categId);
-		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
+		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>';
 
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-			$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>' . '>' . $path;
 		}
 
 		return $path;

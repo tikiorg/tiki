@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.16 2003-10-29 20:49:20 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.17 2003-12-10 23:08:33 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Topics{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
@@ -12,7 +12,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin topics tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 <br /><br />
 <h3>{tr}Create a new topic{/tr}</h3>
 
@@ -38,12 +38,18 @@
 {section name=user loop=$topics}
 <tr>
 <td class="{cycle advance=false}">{$topics[user].name}</td>
-<td class="{cycle advance=false}"><img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}&amp;reload=1" />
+<td class="{cycle advance=false}">
+{if $topics[user].image_size}
+<img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}&amp;reload=1" />
+{else}
+&nbsp;
+{/if}
 </td>
 <td class="{cycle advance=false}">{$topics[user].active}</td>
 <td class="{cycle advance=false}">{$topics[user].arts} ({$topics[user].subs})</td>
 <td class="{cycle}">
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-admin_topics.php?removeall={$topics[user].topicId}">{tr}Remove with articles{/tr}</a>
 {if $topics[user].active eq 'n'}
 <a class="link" href="tiki-admin_topics.php?activate={$topics[user].topicId}">{tr}Activate{/tr}</a>
 {else}

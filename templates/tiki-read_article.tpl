@@ -36,7 +36,7 @@
 {if $isfloat eq 'n'}
 </td><td  valign="top">
 {/if}
-<span class="articleheading">{$parsed_heading}</span>
+<div class="articleheadingtext">{$parsed_heading}</div>
 </td></tr>
 </table>
 </div>

@@ -1,6 +1,6 @@
 <a href="tiki-admin_mailin.php" class="pagetitle">{tr}WebMail accounts{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Webmail" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Webmail{/tr}">
@@ -19,7 +19,7 @@
 
 <br /><br />
 <a class="linkbut" href="tiki-mailin.php">Mailin</a>
-<!-- What is this link? What does it do? --->
+<!-- What is this link? What does it do? -->
 
 
 <br /><br />

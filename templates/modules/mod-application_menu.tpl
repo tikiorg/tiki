@@ -1,12 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.79 2003-11-23 03:15:06 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.80 2003-12-10 23:08:33 mose Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
-{if $feature_chat eq 'y'}
-{if $tiki_p_chat eq 'y'}
+{if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
 &nbsp;<a href="tiki-chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
-{/if}
 {/if}
 
 {if $feature_contact eq 'y'}
@@ -37,8 +35,12 @@
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>&nbsp;
-  {else}<a class="separator" href="javascript:toggle('mymenu');">[-]</a>{/if} 
+  {else}<a class="separator" href="javascript:toggle('mymenu');">[-]</a>{/if}
+  {if $feature_userPreferences eq 'y'}
   <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+  {else}
+  <span class="separator">{tr}MyTiki{/tr}</span>
+  {/if}
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mymenu');">[+]</a>{/if} 
   </div>
   <div id="mymenu" style="{$mnu_mymenu}">
@@ -478,57 +480,67 @@
       &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br />
       &nbsp;<a href="tiki-list_cache.php" class="linkmenu">{tr}Cache{/tr}</a><br />
       &nbsp;<a href="tiki-admin_modules.php" class="linkmenu">{tr}Modules{/tr}</a><br />
+      {if $feature_featuredLinks eq 'y'}
       &nbsp;<a href="tiki-admin_links.php" class="linkmenu">{tr}Links{/tr}</a><br />
+      {/if}
+      {if $feature_hotwords eq 'y'}
       &nbsp;<a href="tiki-admin_hotwords.php" class="linkmenu">{tr}Hotwords{/tr}</a><br />
+      {/if}
       &nbsp;<a href="tiki-admin_rssmodules.php" class="linkmenu">{tr}RSS modules{/tr}</a><br />
       &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br />
+      {if $feature_polls eq 'y'}
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br />
+      {/if}
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
+      {if $feature_search_stats eq 'y'}
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
+	  {/if}
+      {if $feature_theme_control eq 'y'}
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
+      {/if}
       &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_chat eq 'y'}
+    {if $feature_chat eq 'y' and $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_categories eq 'y'}
+    {if $feature_categories eq 'y' and $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />
     {/if}   
-    {if $tiki_p_admin_banners eq 'y'}
+    {if $feature_banners eq 'y' and $tiki_p_admin_banners eq 'y'}
       &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br />
     {/if}
-    {if $tiki_p_edit_templates eq 'y'}
+    {if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
       &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit templates{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_drawings eq 'y'}
+    {if $feature_drawings eq 'y' and $tiki_p_admin_drawings eq 'y'}
       &nbsp;<a href="tiki-admin_drawings.php" class="linkmenu">{tr}Drawings{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_dynamic eq 'y'}
+    {if $feature_dynamic_content eq 'y' and $tiki_p_admin_dynamic eq 'y'}
       &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic content{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_cookies eq 'y'}
       &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_mailin eq 'y'}
+    {if $feature_webmail eq 'y' and $tiki_p_admin_mailin eq 'y'}
       &nbsp;<a href="tiki-admin_mailin.php" class="linkmenu">{tr}Mail-in{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_content_templates eq 'y'}
       &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br />
     {/if}
-    {if $tiki_p_edit_html_pages eq 'y'}
+    {if $feature_html_pages eq 'y' and $tiki_p_edit_html_pages eq 'y'}
       &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML pages{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_shoutbox eq 'y'}
+    {if $feature_shoutbox eq 'y' and $tiki_p_admin_shoutbox eq 'y'}
       &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br />
     {/if}
-    {if $tiki_p_view_referer_stats eq 'y'}
+    {if $feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
       &nbsp;<a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_integrator eq 'y' && $feature_integrator eq 'y'}
+    {if $feature_integrator eq 'y' and $tiki_p_admin_integrator eq 'y'}
           &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}

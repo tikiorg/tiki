@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.10 2003-11-23 05:10:45 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.11 2003-12-10 23:08:33 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Article Types{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
@@ -12,7 +12,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 <br />
 <b>{tr}Name{/tr}</b> - Shows up in the drop down list of article types<br />
 <b>{tr}Rate{/tr}</b> - Allow ratings by the author<br />
@@ -55,7 +55,7 @@
 {section name=user loop=$types}
 <input type="hidden" name="type_array[{$types[user].type}]" />
 <tr>
-<td class="{cycle advance=false}">{$types[user].type}</td>
+<td class="{cycle advance=false}">{tr}{$types[user].type}{/tr}</td>
 <td class="{cycle advance=false}"><input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_pre_publ[{$types[user].type}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_post_expire[{$types[user].type}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} /></td>

@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.1 2003-09-16 16:38:17 traivor Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.2 2003-12-10 23:08:33 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
-<!-- the help link info --->
+<!-- the help link info -->
 <a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Topics{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' />
 </a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 <br /><br />
 <h3>{tr}Edit a topic{/tr}</h3>

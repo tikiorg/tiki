@@ -1,5 +1,5 @@
 <a href="tiki-create_webhelp.php" class="pagetitle">{tr}Create WebHelp{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
 <br/><br/>
 
 {if  $generated eq 'y'}

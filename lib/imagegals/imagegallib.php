@@ -133,7 +133,11 @@ class ImageGalsLib extends TikiLib {
 
 			$this->image = fread($fp, $size);
 			fclose ($fp);
-			return true;
+			// convert to imagehandle to be able to check if its 
+			// valid image data
+			$this->readimagefromstring();
+			// check if imagehandle is a image:
+			return($this->validhandle());
 		} else {
 			return false;
 		}
@@ -144,9 +148,11 @@ class ImageGalsLib extends TikiLib {
 		$fp = fopen($fname, "rb");
 
 		$size = filesize($fname);
-		$data = fread($fp, $size);
-		echo $data;
+		$this->image = fread($fp, $size);
 		fclose ($fp);
+		$this->readimagefromstring();
+
+		if($this->validhandle()) echo $data;
 	}
 
 	//Get sizes. Image must be loaded before
@@ -1261,7 +1267,7 @@ class ImageGalsLib extends TikiLib {
 
 		foreach ($merge as $img) {
 			// This prevents caching images
-			if (!strstr($img, "show_image.php") && !strstr($img, "nocache")) {
+			if (!strstr($img, "show_image.php") && !strstr($img, "nocache") && @getimagesize($img)) {
 				//print("Procesando: $img<br/>");
 				@$fp = fopen($img, "r");
 

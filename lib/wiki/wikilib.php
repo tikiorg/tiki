@@ -188,6 +188,7 @@ class WikiLib extends TikiLib {
 		    $info = $this->get_page_info($page);
 		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
 		    $data = $info['data'];
+		    $oldName = quotemeta( $oldName );
 		    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
 		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
@@ -233,7 +234,11 @@ class WikiLib extends TikiLib {
 	
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
 		$this->query($query, array( $newName, $oldName ) );
-	
+
+		// group home page
+		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
+		$this->query($query, array( $newName, $oldName ) );
+
 		return true;
 	}
 

@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-live_support_admin.php">
 {tr}Live support system{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=LiveSupport" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Live Support{/tr}">

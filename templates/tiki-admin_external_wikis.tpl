@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ExternalWiki" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin ExternalWiki{/tr}">
@@ -30,7 +30,7 @@
 </form>
 
 <h2>{tr}External Wiki{/tr}</h2>
-<!--- second table --->
+<!-- second table -->
 
 <table class="normal">
 <tr>
