@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.35 2003-12-05 03:05:21 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.36 2003-12-05 03:32:23 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.35 2003-12-05 03:05:21 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.36 2003-12-05 03:32:23 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -594,7 +594,8 @@ closedir ($h);
 $smarty->assign('files', $files);
 
 //Load applications
-// the applications are only mysql-safe at this time, so make other DB's only show the default, which is empty
+// the applications are only mysql-safe at this time, also they only show up if a zip file exists in $app_repository
+$smarty->assign('app_available', 'n');
 if ($db_tiki == "mysql") {
 	$apps = array();
 	$h = opendir($app_repository);
@@ -606,14 +607,12 @@ if ($db_tiki == "mysql") {
 			$app1["desc"] = basename($file,".zip");
 			// Assign the record to the apps array
 			$apps[] = $app1;
+			$smarty->assign('app_available', 'y');
 		}
 	}
 
 	closedir ($h);
 	sort($apps);
-} else {
-	$app1 = array("name" => "none");
-	$apps[] = $app1;
 }
 $smarty->assign('apps', $apps);
 
