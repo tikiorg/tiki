@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.121 2003-08-09 19:10:42 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.122 2003-08-12 01:22:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1165,7 +1165,7 @@ if ($lang_use_db != 'y') {
 
 $smarty->assign('user_dbl', $user_dbl);
 
-$stlstl = split("\.", $style);
+$stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];
 
 $smarty->assign('user', $user);
