@@ -20,11 +20,11 @@ require_once ("lib/webmail/mimeDecode.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/htmlMimeMail.php");
 
-function parse_output(&$obj, &$parts, $i) {
+function mailin_parse_output(&$obj, &$parts, $i) {
   if (!empty($obj->parts)) {
   	$temp_max = count($obj->parts);
     for ($i = 0; $i < $temp_max; $i++)
-      parse_output($obj->parts[$i], $parts, $i);
+      mailin_parse_output($obj->parts[$i], $parts, $i);
   } else {
     $ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;
 
@@ -134,7 +134,7 @@ foreach ($accs['data'] as $acc) {
         );
   
         $output = Mail_mimeDecode::decode($params);
-        parse_output($output, $parts, 0);
+        mailin_parse_output($output, $parts, 0);
   
         if (isset($parts["text"][0])) {
           $msgbody = $parts["text"][0];
@@ -222,7 +222,7 @@ foreach ($accs['data'] as $acc) {
         );
   
         $output = Mail_mimeDecode::decode($params);
-        parse_output($output, $parts, 0);
+        mailin_parse_output($output, $parts, 0);
   
         if (isset($parts["text"][0]))
           $body = $parts["text"][0];
@@ -256,7 +256,7 @@ foreach ($accs['data'] as $acc) {
         );
   
         $output = Mail_mimeDecode::decode($params);
-        parse_output($output, $parts, 0);
+        mailin_parse_output($output, $parts, 0);
   
         if (isset($parts["text"][0]))
           $body = $parts["text"][0];
@@ -301,7 +301,7 @@ foreach ($accs['data'] as $acc) {
         );
   
         $output = Mail_mimeDecode::decode($params);
-        parse_output($output, $parts, 0);
+        mailin_parse_output($output, $parts, 0);
   
         if (isset($parts["text"][0]))
           $body = $parts["text"][0];
