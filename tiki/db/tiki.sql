@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.188 2004-04-28 21:34:07 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.189 2004-04-30 04:27:38 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2509,7 +2509,7 @@ CREATE TABLE tiki_quiz_stats_sum (
 # Table structure for table `tiki_quizzes`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
+# Last update: April 29, 2004
 #
 
 DROP TABLE IF EXISTS tiki_quizzes;
@@ -2524,6 +2524,10 @@ CREATE TABLE tiki_quizzes (
   timeLimit int(14) default NULL,
   created int(14) default NULL,
   taken int(10) default NULL,
+  immediateFeedback char(1) default NULL,
+  showAnswers char(1) default NULL,
+  shuffleQuestions char(1) default NULL,
+  shuffleAnswers char(1) default NULL,
   PRIMARY KEY  (quizId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
