@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.43 2004-02-05 10:29:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.44 2004-02-05 20:55:46 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ $ins_fields = $fields;
 $orderkey = false;
 $usecategs = false;
 $ins_categs = array();
+$listfields = array();
 $textarea_options = false;
 
 
@@ -98,6 +99,13 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $fields["data"][$i]['name']) {
 		$orderkey = true;
 	}
+	if ($fields["data"][$i]['isTblVisible'] == 'y' and ($fields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y')) {
+		$listfields[$fid]['type'] = $fields["data"][$i]["type"];
+		$listfields[$fid]['name'] = $fields["data"][$i]["name"];
+		$listfields[$fid]['options'] = $fields["data"][$i]["options"];
+		$listfields[$fid]['isMain'] = $fields["data"][$i]["isMain"];
+	}
+	
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
 		$ins_fields["data"][$i]["value"] = '';
@@ -320,7 +328,9 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-$items = $trklib->list_trackeritems($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $filterfield, $filtervalue, $_REQUEST["status"],$initial);
+$items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial);
+//var_dump($items);die();
+
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
