@@ -6167,11 +6167,6 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_server_name','')
-go
-
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_shoutbox','n')
 go
 

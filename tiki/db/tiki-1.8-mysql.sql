@@ -4832,9 +4832,6 @@ INSERT INTO "tiki_preferences" (`name``value`) VALUES ('feature_search_stats','n
 INSERT INTO "tiki_preferences" (`name``value`) VALUES ('feature_search','y');
 
 
-INSERT INTO "tiki_preferences" (`name``value`) VALUES ('feature_server_name','');
-
-
 INSERT INTO "tiki_preferences" (`name``value`) VALUES ('feature_shoutbox','n');
 
 

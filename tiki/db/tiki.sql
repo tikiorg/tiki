@@ -3614,7 +3614,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sandbox','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_fulltext','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_server_name','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_shoutbox','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_stats','n');
