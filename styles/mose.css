@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.49 2004-05-01 01:06:32 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.50 2004-05-03 15:34:35 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -1427,7 +1427,7 @@ div.commenttext {
 	color:   black;
 	text-decoration:   underline;
 }
-
+.subcomment{margin-left: 5px;}
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
 	width: 100%;
