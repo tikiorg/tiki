@@ -52,7 +52,7 @@
 <tr> 
   <td width="50%">
     <b>{tr}Add or edit folder{/tr}</b>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">new</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}new{/tr}</a>
     <!-- form to add a category -->
     <table width="100%">
       <form action="tiki-user_bookmarks.php" method="post">
@@ -70,7 +70,7 @@
   <td width="50%">
     <!-- form to add a url -->
     <b>{tr}Add or edit a URL{/tr}</b>
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">new</a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}new{/tr}</a>
     <table width="100%">
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editurl" value="{$editurl}" />
