@@ -15,6 +15,7 @@
 			<li><a href="#" onclick="mergeCellClick()" class="linkbut">Merge Cells</a></li>
 			<li><a href="#" onclick="restoreCellClick()" class="linkbut">Restore Cells</a></li>
 			<li><a href="#" onclick="copyCalculationClick()" class="linkbut">Copy Calculation</a></li>
+			<li><a href="#" onclick="formatCellClick()" class="linkbut">Format Cell</a></li>
 		</menu>
 		<div id="detail"></div>
 	</div>
@@ -40,6 +41,8 @@
 	controlRemoveColumnAfter = '</select><input type="submit" name="submit" value="Remove Column" /></form>';
 	controlCopyCalculation = '<form name="copy" onSubmit="copyCalculationSubmit(this)"><input type="submit" name="type" value="Left" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Right" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Up" onclick="document.copy.clicked.value = this.value;" /><input type="submit" name="type" value="Down" onclick="document.copy.clicked.value = this.value;" /><input type="hidden" name="clicked" /></form>';
 	initGrid();
+	controlFormatCellBefore = '<form name="format" onSubmit="formatCellSubmit(this)"><select name="format"><option value="">None</option>';
+	controlFormatCellAfter = '</select><input type="submit" name="submit" value="Format Cell" /></form>';
 	</script>
 
 {else}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.7 2004-06-05 17:18:35 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.8 2004-06-05 19:52:30 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -28,6 +28,13 @@ if ($feature_sheet != 'y') {
 
 if ($tiki_p_view_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
 	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+if ( !isset($_REQUEST['sheetId']) ) {
+	$smarty->assign('msg', tra("A SheetId is required."));
 
 	$smarty->display("error.tpl");
 	die;
@@ -85,7 +92,7 @@ else
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
 
 	$date = time();
-	if( isset( $_REQUEST[ 'readdate' ] ) )
+	if( !empty( $_REQUEST[ 'readdate' ] ) )
 	{
 		$date = $_REQUEST[ 'readdate' ];
 
