@@ -120,9 +120,14 @@ class tiki extends Wollabot_Module {
 			return "[!T find] Finds a wiki page including string";
 		} else {
 			global $tikilib;
+			$page = array();
 			if (!isset($args[0]) or $args[0] < 0 or $args[0] > 20) { $args[0] = 0; }
-			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg[1]);
-			return "Page [ ".$arg." ".$args[0]." ]:[ http://tikiwiki.org/".$page['data'][0]['pageName']." ]";
+			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg);
+			if ($page['cant'] > 0) {
+				return "Match ".$arg." in [http://tikiwiki.org/".$page['data'][0]['pageName']."] (#".$args[0].")";
+			} else {
+				return "Sorry, no page name matches ".$arg;
+			}
 		}
 	}
 	
