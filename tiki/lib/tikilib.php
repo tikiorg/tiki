@@ -8686,12 +8686,15 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   	static $display_timezone = false;
   	
     if (!$display_timezone) {
+      $server_time = new Date();
       if ($user) {
         $display_timezone = $this->get_user_preference($user, 'display_timezone');
-        if (!$display_timezone || $display_timezone == 'default')
-          $display_timezone = $this->get_preference('display_timezone');
-      } else
-        $display_timezone = $this->get_preference('display_timezone');
+        if (!$display_timezone || $display_timezone == 'default') {
+          $display_timezone = $this->get_preference('display_timezone', $server_time->tz->getID());
+        }
+      } else {
+        $display_timezone = $this->get_preference('display_timezone', $server_time->tz->getID());
+      }
     }
     
     return $display_timezone;
@@ -8701,7 +8704,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   	static $long_date_format = false;
   	
     if (!$long_date_format)
-      $long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
+      $long_date_format = $this->get_preference('long_date_format', '%A %d ' . tra('of') . ' %B, %Y');
 
     return $long_date_format;
   }
@@ -8710,7 +8713,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   	static $short_date_format = false;
   	
     if (!$short_date_format)
-      $short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
+      $short_date_format = $this->get_preference('short_date_format', '%a %d ' . tra('of') . ' %b, %Y');
 
     return $short_date_format;
   }
