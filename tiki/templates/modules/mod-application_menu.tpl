@@ -27,6 +27,10 @@
   &nbsp;<a href="tiki-list_games.php" class="linkmenu">{tr}games{/tr}</a><br/>
 {/if}
 
+{if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+  &nbsp;<a href="tiki-calendar.php" class="linkmenu">{tr}calendar{/tr}</a><br/>
+{/if}
+
 {if $user}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
@@ -440,6 +444,10 @@
 
 	{if $feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
   		&nbsp;<a href="tiki-admin_banning.php" class="linkmenu">{tr}Banning{/tr}</a><br/>
+	{/if}
+
+	{if $feature_calendar eq 'y' and ($tiki_p_admin_calendar eq 'y')}
+  		&nbsp;<a href="tiki-admin_calendars.php" class="linkmenu">{tr}Calendar{/tr}</a><br/>
 	{/if}
 
     {if $tiki_p_admin eq 'y'}
