@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.153 2004-04-03 09:36:39 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.154 2004-04-11 23:38:07 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -32,6 +32,8 @@ Version 1.9
 
 Version 1.8.2 - Polaris -
 <http://tikiwiki.org/ReleaseProcess182>
+* [MOD] enhanced ticketlib in a second version
+* [NEW] added check on vars to avoid XSS attacks
 * [NEW] added an option in wiki admin panel to make use of dashes and
         underscores optionnal in WikiWords
 * [NEW] Confirmation on all destructive actions

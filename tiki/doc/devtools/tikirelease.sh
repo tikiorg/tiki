@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.4 2003-10-20 10:37:52 mose Exp $
+# $Id: tikirelease.sh,v 1.5 2004-04-11 23:38:07 mose Exp $
 # written and maintained by mose@feu.org
 
 # HOWTO release TikiWiki ?
@@ -48,7 +48,7 @@ MODULE="tikiwiki"
 # ############################################################
 
 if [ -z $1 ]; then
-	echo "Usage: tikirelease.sh <release-tag>"
+echo "Usage: tikirelease.sh <release-tag>"
 	echo "  separated by dots like in 1.7.3"
 	exit 0
 fi
@@ -72,14 +72,24 @@ find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name Thumbs.db -exec rm -f {} \;
 find $MODULE-$VER -type d -exec chmod 775 {} \;
 find $MODULE-$VER -type f -exec chmod 664 {} \;
+# some more cleanup
+rm -rf $MODULE-$VER/tests
+rm -rf $MODULE-$VER/db/convertscripts
+rm -rf $MODULE-$VER/db/convert_nulls_to_non_nulls.*
+rm -rf $MODULE-$VER/doc/devtools
+rm -rf $MODULE-$VER/bin
+
+#uncomment for real release
+#grep -rl ' (CVS) ' templates | xargs -- perl -pi -e "s/ \(CVS\) / /"
 chmod 775 $MODULE-$VER/setup.sh
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
+zip -r $MODULE-$VER.zip $MODULE-$VER
 
 echo ""
 echo "copy-paste and exectue the following line at will (depending on SF mood) :"
-echo "  lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;quit;' upload.sf.net"
+echo "  lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;put $MODULE-$VER.zip;quit;' upload.sf.net"
 echo ""
 
 # ############################################################
@@ -96,9 +106,10 @@ echo ""
 # find tikilight_$VER/templates/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
 # find tikilight_$VER/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
 # find tikilight_$VER/styles/ -type f -name "*.css" | grep -v elegant | grep -v moreneat | xargs -- rm -f
-# tar -czf tikiwiki_$VER.light.tar.gz tikilight_$VER
-# tar --bzip2 -cf tikiwiki_$VER.light.tar.bz2 tikilight_$VER
-# echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put tikiwiki_$VER.tar.gz;put tikiwiki_$VER.tar.bz2;put tikiwiki_$VER.light.tar.gz;put tikiwiki_$VER.light.tar.bz2;quit;' upload.sf.net"
+# tar -czf $MODULE-$VER.light.tar.gz tikilight_$VER
+# tar -cjf $MODULE-$VER.light.tar.bz2 tikilight_$VER
+# zip -r $MODULE-$VER.light.zip tikilight_$VER
+# echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put $MODULE-$VER.light.tar.gz;put $MODULE-$VER.light.tar.bz2;put $MODULE-$VER.light.zip;quit;' upload.sf.net"
 # ############################################################
 
 cd $OLDIR

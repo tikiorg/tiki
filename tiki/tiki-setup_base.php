@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.71 2004-04-09 17:01:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.72 2004-04-11 23:38:07 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -516,7 +516,6 @@ $smarty->assign('slide_style', $slide_style);
 $feature_userPreferences = $tikilib->get_preference("feature_userPreferences", 'n');
 $change_language = $tikilib->get_preference("change_language", 'y');
 $change_theme = $tikilib->get_preference("change_theme", 'y');
-
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))

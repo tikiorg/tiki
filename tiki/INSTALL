@@ -37,7 +37,7 @@ Unpack and set the necessary permissions
 unpack to the document root of where you want tiki installed, e.g. /var/www/tiki/ 
 
 bz2 file Use:
-tar xjf tikiwiki-1.8.1.tar.bz2
+tar xjf tikiwiki-1.8.2.tar.bz2
 
 Step two:
 - - - - - - -

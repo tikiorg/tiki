@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.10 2004-04-08 22:55:11 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.11 2004-04-11 23:38:08 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -47,7 +47,7 @@ function key_get($area) {
 		} else { 
   		$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
 		}
-		$ticket = substr(md5(uniqid(rand())),12);
+		$ticket = md5(uniqid(rand()));
 		$tikilib->set_user_preference($whose,'ticket',$ticket);
 		$smarty->assign('ticket',$ticket);
 	}
