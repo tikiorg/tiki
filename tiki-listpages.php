@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.15 2004-07-15 19:21:11 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.16 2004-07-15 20:05:09 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,10 @@ if ($tiki_p_view != 'y') {
 	die;
 }
 
+global $tiki_p_admin;
+global $feature_categories;
+global $tiki_p_admin_categories;
+
 /* mass-remove: 
    the checkboxes are sent as the array $_REQUEST["checked[]"], values are the wiki-PageNames, 
    e.g. $_REQUEST["checked"][3]="HomePage"
@@ -44,7 +48,7 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	check_ticket('list-pages');
 
 	// Now check permissions to remove the selected pages
-	if ($tiki_p_remove != 'y') {
+	if ($tiki_p_remove != 'y' && $tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove pages"));
 
 		$smarty->display("error.tpl");
@@ -64,7 +68,17 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 		$categories = $categlib->list_categs();
 		$smarty->assign('categories', $categories);
 	}
-} elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'add') {
+}
+// to-do: place the following code in categorize.php?
+// mass categorization: add to categories
+elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'add') {
+	
+	if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
+		$smarty->assign('msg', tra("Permission denied: you cannot administer categories"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
@@ -87,7 +101,16 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 			}
 		}
 	}
-} elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'remove') {
+}
+// mass categorization: remove from categories
+elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'remove') {
+	
+	if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
+		$smarty->assign('msg', tra("Permission denied: you cannot administer categories"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	
 	global $categlib;
 	if (!is_object($categlib)) {
 		include_once('lib/categories/categlib.php');
@@ -173,8 +196,9 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-global $tiki_p_admin;
 $smarty->assign('tiki_p_admin',$tiki_p_admin);
+$smarty->assign('feature_categories', $feature_categories);
+$smarty->assign('tiki_p_admin_categories', $tiki_p_admin_categories);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
