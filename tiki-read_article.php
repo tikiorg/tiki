@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.35 2004-06-13 04:45:50 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.36 2004-06-13 04:53:17 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,27 +38,7 @@ if (!isset($_REQUEST["articleId"])) {
 // no need to check articleId; if it doesn't exist script would have died above
 // if (isset($_REQUEST["articleId"])) {
 
-if ($feature_categories == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE; // this var is used below
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-    	}
-   	} else {
-   		$is_categorized = FALSE; // this var is used below
-   	}
-	if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra("Please login"));
-		} else {
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	}
-	    $smarty->display("error.tpl");
-		die;
-	}
-}
+
 	
 	$artlib->add_article_hit($_REQUEST["articleId"]);
 
@@ -77,6 +57,26 @@ if ($feature_categories == 'y') {
 			$smarty->assign('msg', tra("Permision denied"));
 
 			$smarty->display("error.tpl");
+			die;
+		}
+	} elseif ($feature_categories == 'y') {
+		$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
+	   	if ($perms_array) {
+	   		$is_categorized = TRUE; // this var is used below
+	    	foreach ($perms_array as $perm => $value) {
+	    		$$perm = $value;
+	    	}
+	   	} else {
+	   		$is_categorized = FALSE; // this var is used below
+	   	}
+		if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+			if (!isset($user)){
+				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+				$smarty->assign('errortitle',tra("Please login"));
+			} else {
+				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	    	}
+		    $smarty->display("error.tpl");
 			die;
 		}
 	}
