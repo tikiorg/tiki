@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.1 2003-09-19 19:38:21 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.2 2003-10-12 21:06:53 ohertel Exp $ *}
 
 <div class="box">
   <div class="box-title">
@@ -346,7 +346,7 @@
 {if $feature_maps eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('mapssmenu');"><img src="img/icons/fo.gif" style="border: 0" name="mapsmenuicn" alt=""/></a>
+  <a class="separator" href="javascript:icntoggle('mapsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="mapsmenuicn" alt=""/></a>
   {else}<a class="separator" href="javascript:toggle('mapsmenu');">[-]</a>{/if}
   <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mapsmenu');">[+]</a>{/if}
