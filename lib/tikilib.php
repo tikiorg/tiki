@@ -2544,19 +2544,17 @@ class TikiLib {
 
 	/*shared*/
 	function is_user_module($name) {
-		$name = addslashes($name);
 
-		$query = "select `name`  from `tiki_user_modules` where `name`='$name'";
-		$result = $this->query($query);
+		$query = "select `name`  from `tiki_user_modules` where `name`=?";
+		$result = $this->query($query,array($name));
 		return $result->numRows();
 	}
 
 	/*shared*/
 	function get_user_module($name) {
-		$name = addslashes($name);
 
-		$query = "select * from `tiki_user_modules` where `name`='$name'";
-		$result = $this->query($query);
+		$query = "select * from `tiki_user_modules` where `name`=?";
+		$result = $this->query($query,array($name));
 		$res = $result->fetchRow();
 		return $res;
 	}
