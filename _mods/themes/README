@@ -1,0 +1,24 @@
+TikiWiki mods Collection
+-------------------------
+
+This package is bundled separately because it contains various 
+licences. Each mod has his own, refer to them specifically before 
+using them.
+
+
+Themes Index
+------------
+
+Please note the format
+
+/themename/styles/
+* This contains everything that needs to be copied to your sites /styles/ folder
+/themename/templates/styles/themename/
+* This contains everything that needs to be copied to your sites /templates/styles/themename/ folder
+
+The idea being you can just cp -R /themename/* /tikiroot/.
+
+
+/isabelsworld/ - http://isabel.parkersworld.org
+/zaksworld/ - http://zak.parkersworld.org
+
