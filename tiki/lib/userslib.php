@@ -379,7 +379,6 @@ class UsersLib extends TikiLib {
 	else
 	    $status = $a->getStatus();
 
-	}
 
 	return $status;
     }
@@ -548,7 +547,6 @@ class UsersLib extends TikiLib {
 	else
 	    $status = $a->getStatus();
 
-	}
 
 	return $status;
     }
