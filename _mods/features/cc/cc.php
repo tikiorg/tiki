@@ -7,10 +7,6 @@ $page = $_REQUEST['page'];
 
 $mid = "cc/index.tpl";
 
-if ($page == 'help') {
-  $mid = "cc/help.tpl";
-}
-
 if ($user) {
 	
 	$ccuser = $cclib->user_infos($user);
@@ -20,22 +16,22 @@ if ($user) {
 		$thelist = $cclib->get_ledgers(0,-1,'last_tr_date_desc',$user);
 		$smarty->assign("thelist",$thelist['data']);
 		$smarty->assign("userid",$user);
-		$mid = "cc/app.tpl";
+		$mid = "cc/ledgers.tpl";
 
 	} elseif ($page == 'app') {
 		$thelist = $cclib->get_ledgers();
 		$smarty->assign("thelist",$thelist['data']);
-		$mid = "cc/app.tpl";
+		$mid = "cc/ledgers.tpl";
 
 	} elseif ($page == 'tr_my') {
 		$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
 		$smarty->assign('thelist',$thelist['data']);
-		$mid = "cc/history.tpl";
+		$mid = "cc/transactions.tpl";
 	
 	} elseif ($page == 'history') {
 		$thelist = $cclib->get_transactions();
 		$smarty->assign('thelist',$thelist['data']);
-		$mid = "cc/history.tpl";
+		$mid = "cc/transactions.tpl";
 	
 	} elseif ($page == 'registercc') {
 		if (isset($_REQUEST['register'])) {
@@ -51,7 +47,7 @@ if ($user) {
 		}
 		$thelist = $cclib->get_currencies();
 		$smarty->assign('thelist', $thelist['data']);
-		$mid = "cc/registercc.tpl";
+		$mid = "cc/currencies.tpl";
 
 	} elseif ($page == 'newcc') {
 		if (isset($_REQUEST['id']) and $tiki_p_cc_create == 'y') {
@@ -69,7 +65,7 @@ if ($user) {
 				}
 			}
 		}
-		$mid = "cc/ccform.tpl";
+		$mid = "cc/currencies_form.tpl";
 
 	} elseif ($page == 'admincc' and $tiki_p_cc_admin == 'y') {
 		if (isset($_REQUEST['cc_id'])) {
@@ -77,7 +73,7 @@ if ($user) {
 			if ($tiki_p_cc_admin == 'y' or $info['owner_id'] == $user) {
 				
 				$smarty->assign('info', $info);
-				$mid = "cc/ccform.tpl";
+				$mid = "cc/currencies_form.tpl";
 			} else {
 				$smarty->assign('msg',"no perm");
 				$mid = "error_simple.tpl";
@@ -86,7 +82,7 @@ if ($user) {
 			$thelist = $cclib->get_currencies();
 			$smarty->assign('thelist', $thelist['data']);
 			$info = $cclib->get_currencies();
-			$mid = "cc/admincc.tpl";
+			$mid = "cc/currencies.tpl";
 		}
 
 	} elseif ($page == 'tr_record') {
@@ -123,7 +119,7 @@ if ($user) {
 		}
 		$currencies = $cclib->get_currencies(0,1000,'cc_name_asc','',$user);
 		$smarty->assign('currencies',$currencies['data']);
-		$mid = "cc/tr_record.tpl";
+		$mid = "cc/transactions.tpl";
 	}
 }
 
