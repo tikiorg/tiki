@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.6 2003-10-01 21:38:08 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.7 2003-10-03 22:10:49 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,7 @@ if ($feature_poll_comments == 'y') {
 
 	$comments_default_ordering = $poll_comments_default_ordering;
 	$comments_vars = array('pollId');
-	$comments_prefix_var = 'poll';
+	$comments_prefix_var = 'poll:';
 	$comments_object_var = 'pollId';
 	include_once ("comments.php");
 }

@@ -264,7 +264,7 @@ if($feature_wiki_comments == 'y') {
   $comments_per_page = $wiki_comments_per_page;
   $comments_default_ordering = $wiki_comments_default_ordering;
   $comments_vars=Array('page');
-  $comments_prefix_var='wiki page';
+  $comments_prefix_var='wiki page:';
   $comments_object_var='page';
   include_once("comments.php");
 }

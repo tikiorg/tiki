@@ -72,7 +72,10 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_last_topics($limit) {
-		$query = "select * from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by `commentDate` desc";
+		$query = "select * from
+		`tiki_comments`,`tiki_forums` where
+		`object`=`forumId` and `objectType` = 'forum' and
+		`parentId`=0 order by `commentDate` desc";
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
@@ -92,7 +95,11 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_read_topics($limit) {
-		$query = "select tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object` from `tiki_comments` tc,`tiki_forums` tf where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by tc.`hits` desc";
+		$query = "select
+		tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
+		from `tiki_comments` tc,`tiki_forums` tf where
+		`object`=`forumId` and `objectType` = 'forum' and
+		`parentId`=0 order by tc.`hits` desc";
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
@@ -112,7 +119,11 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_top_topics($limit) {
-		$query = "select tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object` from `tiki_comments` tc,`tiki_forums` tf where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by tc.`average` desc";
+		$query = "select
+		tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`
+		from `tiki_comments` tc,`tiki_forums` tf where
+		`object`=`forumId` and `objectType` = 'forum' and
+		`parentId`=0 order by tc.`average` desc";
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.14 2003-10-03 18:05:24 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.15 2003-10-03 22:10:49 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -124,7 +124,7 @@ if ($feature_article_comments == 'y') {
 
 	$comments_default_ordering = $article_comments_default_ordering;
 	$comments_vars = array('articleId');
-	$comments_prefix_var = 'article';
+	$comments_prefix_var = 'article:';
 	$comments_object_var = 'articleId';
 	include_once ("comments.php");
 }

@@ -285,7 +285,11 @@ class CalendarLib extends TikiLib {
 				// have to fix that query. tehre is distinction to do beetween comments and forum item ?
 				$query = "select c.commentDate as created, c.threadId as threadId, c.userName as user, c.title as name, f.name as forum, f.forumId as forumid ";
 
-				$query .= "from tiki_comments as c left join tiki_forums as f on c.object=md5(concat('forum',f.forumId)) ";
+				$query .= "from tiki_comments as c
+				left join tiki_forums as f on
+				c.object=f.forumId and c.`objectId` = 'forum'
+				";
+
 				$query .= "where f.forumId != '' and (c.commentDate>$tstart and c.commentDate<$tstop)";
 				$result = $this->query($query);
 

@@ -801,7 +801,8 @@ CREATE TABLE tiki_chat_users (
 DROP TABLE IF EXISTS tiki_comments;
 CREATE TABLE tiki_comments (
   threadId int(14) NOT NULL auto_increment,
-  object varchar(32) NOT NULL default '',
+  object varchar(255) NOT NULL default '',
+  objectType varchar(32) NOT NULL default '',
   parentId int(14) default NULL,
   userName varchar(200) default NULL,
   commentDate int(14) default NULL,

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.33 2003-10-01 14:10:18 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.34 2003-10-03 22:10:49 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,7 +134,7 @@ if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
 		// To move a topic you just have to change the object
-		$obj = 'forum' . $_REQUEST['moveto'];
+		$obj = 'forum:' . $_REQUEST['moveto'];
 
 		$commentslib->set_comment_object($topic, $obj);
 	    }
@@ -158,7 +158,7 @@ $smarty->assign_by_ref('forum_info', $forum_info);
 $comments_per_page = $forum_info["topicsPerPage"];
 $comments_default_ordering = $forum_info["topicOrdering"];
 $comments_vars = array('forumId');
-$comments_prefix_var = 'forum';
+$comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 
 $commentslib->process_inbound_mail($_REQUEST['forumId']);
