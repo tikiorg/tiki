@@ -99,7 +99,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Id{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'owner_desc'}{sameurl sort_mode='owner_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Owner{/tr}</a></td>
@@ -126,7 +126,7 @@
 	  {$items[ix].procname} {$items[ix].version}</a>
 	</td>
 	<td class="{cycle advance=false}">
-	  {$items[ix].type|act_icon:"$items[ix].isInteractive"} {$items[ix].name}</a>
+	  {$items[ix].type|act_icon:$items[ix].isInteractive} {$items[ix].name}</a>
 	</td>
 	<td class="{cycle advance=false}">
 	  {$items[ix].user}
@@ -139,9 +139,11 @@
 	  <table>
 	  <tr>
 	  {*exception*}
+      {if $tiki_p_exception_instance eq 'y'}
 	  {if $items[ix].status ne 'aborted' and $items[ix].status ne 'exception' and $items[ix].user eq $user}
-	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
+	  <td><a href="tiki-g-user_instances.php?exception=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
 	  {/if}
+      {/if}
 	  {if $items[ix].isAutoRouted eq 'n' and $items[ix].actstatus eq 'completed'}
 	  {*send*}
 	  <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
@@ -151,8 +153,10 @@
 	  <td><a href="tiki-g-run_activity.php?iid={$items[ix].instanceId}&amp;activityId={$items[ix].activityId}"><img border='0' title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a></td>
 	  {/if}
 	  {*abort*}
+      {if $tiki_p_abort_instance eq 'y'}
 	  {if $items[ix].status ne 'aborted' and $items[ix].user eq $user}
 	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a></td>
+      {/if}
 	  {/if}
 	  {if $items[ix].user eq '*' and $items[ix].status eq 'active'}
 	  {*grab*}

@@ -15,14 +15,14 @@
 </form>
 <br /><br />
 {section name=ix loop=$rankings}
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {$rankings[ix].title} ({$rankings[ix].y})
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <table >
 {section name=xi loop=$rankings[ix].data}
-<tr><td align="left" >{$smarty.section.xi.index_next})</td><td  align="left"><a href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  align="right">{$rankings[ix].data[xi].hits}</td></tr>
+<tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  class="form" align="right">{$rankings[ix].data[xi].hits}</td></tr>
 {/section}
 </table>
 </div>

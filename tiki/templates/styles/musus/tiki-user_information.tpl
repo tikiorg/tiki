@@ -2,24 +2,24 @@
 <table >
 <tr>
   <td valign="top">
-  <div class="tiki">
-  <div class="tiki-title">{tr}User Information{/tr}</div>
-  <div class="tiki-content">
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Information{/tr}</div>
+  <div class="cbox-data">
   <div class="simplebox">
   <table>
-  <tr><td>{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
-  <tr><td>{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
+  <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
+  <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
 {if $email_isPublic neq 'n'}  
-  <tr><td>{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
+  <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
-  <tr><td>{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {$country}</td></tr>
-  <tr><td>{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>
-  <tr><td >{tr}Language{/tr}:</td><td>{$user_language}</td></tr>
-  <tr><td>{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
-  <tr><td>{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
-  <tr><td>{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
-  <tr><td>{tr}Personal Wiki Page{/tr}:</td><td><a href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
-  <tr><td>{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
+  <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {$country}</td></tr>
+  <tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>
+  <tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
+  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
+  <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
+  <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
   </table>
   </form>
   </div>
@@ -32,16 +32,16 @@
 {/if}
 <tr>
   <td valign="top">
-  <div class="tiki">
-  <div class="tiki-title">{tr}Send me a message{/tr}</div>
-  <div class="tiki-content">
+  <div class="cbox">
+  <div class="cbox-title">{tr}Send me a message{/tr}</div>
+  <div class="cbox-data">
   <div class="simplebox">
   <form method="post" action="tiki-user_information.php" name="f">
   <input type="hidden" name="to" value="{$userwatch|escape}" />
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="normalnoborder">
   <tr>
-    <td>{tr}Priority{/tr}:</td><td>
+    <td class="form">{tr}Priority{/tr}:</td><td class="form">
     <select name="priority">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
       <option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -53,12 +53,12 @@
     </td>
   </tr>
   <tr>
-    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="80" maxlength="255"/></td>
+    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="" size="80" maxlength="255"/></td>
   </tr>
   </table>
   <table class="normalnoborder">
   <tr>
-    <td style="text-align: center;"><textarea rows="20" cols="80" name="body"></textarea></td>
+    <td style="text-align: center;" class="form"><textarea rows="20" cols="80" name="body"></textarea></td>
   </tr>
 </table>
 

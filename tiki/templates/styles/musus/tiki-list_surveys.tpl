@@ -1,8 +1,8 @@
 <a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a><br /><br />
 {if $tiki_p_view_survey_stats eq 'y'}
-<a class="linkbut" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a><br /><br />
+<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a></span><br /><br />
 {/if}
-<table>
+<table class="normal">
 <tr>
 <th><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
 <th><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></th>
@@ -16,14 +16,20 @@
 {if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
 <a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
 {else}
-<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
 {/if}
 {$channels[user].name}</a>
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')} (<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><small>adm</small></a>){/if}
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')} (<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}"><small>stats</small></a>){/if}
 </td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
-<td class="{cycle}">{$channels[user].questions}</td>
+<td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
+<td style="text-align:right;"  class="{cycle}">
+{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}<a 
+href="tiki-take_survey.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}take survey{/tr}' alt='{tr}take survey{/tr}' width="16" height="16" hspace="6" vspace="0" src='img/icons/toright.gif' /></a>{/if}
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}<a 
+href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}stats{/tr}' alt='{tr}stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}<a
+href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}adm{/tr}' alt='{tr}adm{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/config.gif' /></a>{/if}
+</td>
 </tr>
 {/if}
 {/section}

@@ -20,19 +20,19 @@
 	<h3>{tr}Send post to this addresses{/tr}</h3>
 	<form method="post" action="tiki-send_blog_post.php">
 	<input type="hidden" name="postId" value="{$postId|escape}" />
-	<table>
+	<table class="normal">
 	<tr>
-		<td>{tr}List of email addresses separated by commas{/tr}</td>
-		<td><textarea cols="60" rows="5" name="addresses">{$addresses|escape}</textarea></td>
+		<td class="formcolor">{tr}List of email addresses separated by commas{/tr}</td>
+		<td class="formcolor"><textarea cols="60" rows="5" name="addresses">{$addresses|escape}</textarea></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align:center;"><input type="submit" name="send" value="{tr}send{/tr}" /></td>
+		<td class="formcolor" colspan="2" style="text-align:center;"><input type="submit" name="send" value="{tr}send{/tr}" /></td>
 	</tr>
 	</table>
 	</form>
 {/if}	
 <h2>{tr}Post{/tr}</h2>
-<a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+<a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
 <br /><br />
 <div class="posthead">
 <table ><tr><td align="left">
@@ -57,11 +57,11 @@
 <table >
 <tr><td>
 <small>
-<a href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
+<a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
 ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
- [<a href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
+ [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
 {/if}
 </small>
 </td><td style='text-align:right'>

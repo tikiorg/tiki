@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-debug_console.tpl,v 1.3 2004-01-26 04:01:03 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-debug_console.tpl,v 1.4 2004-02-01 07:45:21 musus Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
@@ -13,16 +13,16 @@
     </a>
   </td></tr>
   <tr>
-    <td><small>{tr}Current URL{/tr}:</small></td>
-    <td>{$console_father}</td>
+    <td class="formcolor"><small>{tr}Current URL{/tr}:</small></td>
+    <td class="formcolor">{$console_father}</td>
   </tr>
   <tr>
-    <td>{tr}Command{/tr}:</td>
-    <td><input type="text" name="command" size="90" value='{$command|escape:"html"}' /></td>
+    <td class="formcolor">{tr}Command{/tr}:</td>
+    <td class="formcolor"><input type="text" name="command" size="90" value='{$command|escape:"html"}' /></td>
   </tr>
   <tr>
-    <td></td>
-    <td>
+    <td class="formcolor"></td>
+    <td class="formcolor">
       <input type="submit" name="exec" value="{tr}exec{/tr}" /> &nbsp;&nbsp;&nbsp;&nbsp;
       <small>{tr}Type <code>help</code> to get list of available commands{/tr}</small>
     </td>
@@ -51,5 +51,6 @@
     {$tabs[i].tab_code}
 </div><!-- Tab: {$tabs[i].tab_id} -->
 {/section}
+
 </div><!-- debug console -->
 {/if}

@@ -27,7 +27,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></td>
 <td  class="heading">&nbsp;</td>
@@ -36,11 +36,11 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">
-	<a href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}">{$channels[user].server}</a>
+	<a class="link" href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}">{$channels[user].server}</a>
 </td>
 <td class="{cycle}">
-	<a href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
-	<a href="tiki-newsreader_servers.php?remove={$channels[user].serverId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}del{/tr}' title='{tr}delete{/tr}' /></a>
+	<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}del{/tr}' title='{tr}delete{/tr}' /></a>
 </td>
 </tr>
 {/section}
@@ -69,23 +69,23 @@
 <h3>{tr}Add or edit a news server{/tr}</h3>
 <form action="tiki-newsreader_servers.php" method="post">
 <input type="hidden" name="serverId" value="{$serverId|escape}" />
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}News server{/tr}</td>
-  <td><input type="text" name="server" value="{$info.server|escape}" />
+  <td class="formcolor">{tr}News server{/tr}</td>
+  <td class="formcolor"><input type="text" name="server" value="{$info.server|escape}" />
   {tr}port{/tr}:<input type="text" size="4" name="port" value="{$info.port|escape}" /></td>
 </tr>
 <tr>
-  <td>{tr}User{/tr}</td>
-  <td><input type="text" name="username" value="{$info.username|escape}" /></td>
+  <td class="formcolor">{tr}User{/tr}</td>
+  <td class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td>
 </tr>
 <tr>
-  <td>{tr}Password{/tr}</td>
-  <td><input type="text" name="password" value="{$info.password|escape}" /></td>
+  <td class="formcolor">{tr}Password{/tr}</td>
+  <td class="formcolor"><input type="text" name="password" value="{$info.password|escape}" /></td>
 </tr>
 <tr>
-  <td>&nbsp;</td>
-  <td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
 </tr>
 
 

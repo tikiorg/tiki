@@ -2,23 +2,23 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Message queue for{/tr}: {$forum_info.name}</a>
 <br /><br />
-<a href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
+<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
 <form method="post" action="tiki-forum_queue.php">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
-<table>
+<table class="normal">
 <tr>
-	<td>{tr}title{/tr}</td>
-	<td>
+	<td class="formcolor">{tr}title{/tr}</td>
+	<td class="formcolor">
 		<input type="text" name="title" value="{$msg_info.title|escape}" />
 	</td>
 </tr>
 {if $msg_info.parentId > 0}
 <tr>
-	<td>{tr}topic{/tr}</td>
-	<td>
+	<td class="formcolor">{tr}topic{/tr}</td>
+	<td class="formcolor">
 		<select name="parentId">
 			{section name=ix loop=$topics}
 			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
@@ -28,8 +28,8 @@
 </tr>
 {else}
 <tr>
-	<td>{tr}make this a thread of{/tr}</td>
-	<td>
+	<td class="formcolor">{tr}make this a thread of{/tr}</td>
+	<td class="formcolor">
 		<select name="parentId">
 			<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
 			{section name=ix loop=$topics}
@@ -41,16 +41,16 @@
 {/if}
 {if $msg_info.parentId eq 0 and $forum_info.topic_summary eq 'y'}
 	<tr>
-		<td>{tr}summary{/tr}</td>
-		<td>
+		<td class="formcolor">{tr}summary{/tr}</td>
+		<td class="formcolor">
 			<input type="text" name="summary" value="{$msg_info.summary|escape}" />
 		</td>
 	</tr>
 {/if}
 {if $msg_info.parentId eq 0}
 <tr>
-	<td>{tr}type{/tr}</td>
-	<td>
+	<td class="formcolor">{tr}type{/tr}</td>
+	<td class="formcolor">
       <select name="type">
       <option value="n" {if $msg_info.type eq 'n'}selected="selected"{/if}>{tr}normal{/tr}</option>
       <option value="a" {if $msg_info.type eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
@@ -76,14 +76,14 @@
 </tr>
 {/if}
 <tr>
-	<td>{tr}data{/tr}</td>
-	<td>
+	<td class="formcolor">{tr}data{/tr}</td>
+	<td class="formcolor">
 		<textarea rows="6" cols="60" name="data">{$msg_info.data|escape}</textarea>
 	</td>
 </tr>
 <tr>
-	<td>&nbsp;</td>
-	<td>
+	<td class="formcolor">&nbsp;</td>
+	<td class="formcolor">
 		<input type="submit" name="save" value="{tr}save{/tr}" />
 		<input type="submit" name="saveapp" value="{tr}save and approve{/tr}" />
 		<input type="submit" name="remove" value="{tr}remove{/tr}" />
@@ -119,7 +119,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading" >&nbsp;</td>
 <td class="heading" >{tr}message{/tr}</td>
@@ -137,7 +137,7 @@
 		{else}
 			[{tr}new topic{/tr}]
 		{/if}
-		<b><a href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title}</a></b>
+		<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title}</a></b>
 		by {$items[ix].user} on {$items[ix].timestamp|tiki_short_datetime}
 		<br />
 		{if $items[ix].parentId eq 0 and $forum_info.topic_summary eq 'y'}
@@ -152,10 +152,10 @@
 		  {if count($items[ix].attachments) > 0}
 		    <br />
 			{section name=iz loop=$items[ix].attachments}
-				<a href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
+				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
 				<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
-				<a href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
+				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
 				<br />
 			{/section}
   		  {/if}

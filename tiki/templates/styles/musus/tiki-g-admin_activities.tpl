@@ -11,7 +11,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h3>{tr}Add or edit an activity{/tr} <a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h3>
+<h3>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h3>
 <form action="tiki-g-admin_activities.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="activityId" value="{$info.activityId|escape}" />
@@ -20,18 +20,18 @@ Errors:<br />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}name{/tr}</td>
-  <td><input type="text" name="name" value="{$info.name|escape}" /></td>
+  <td class="formcolor">{tr}name{/tr}</td>
+  <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
-  <td>{tr}description{/tr}</td>
-  <td><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
+  <td class="formcolor">{tr}description{/tr}</td>
+  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>  
-  <td>{tr}type{/tr}</td>
-  <td>
+  <td class="formcolor">{tr}type{/tr}</td>
+  <td class="formcolor">
   <select name="type">
   <option value="start" {if $info.type eq 'start'}selected="selected"{/if}>{tr}start{/tr}</option>
   <option value="end" {if $info.type eq 'end'}selected="selected"{/if}>{tr}end{/tr}</option>		  
@@ -47,11 +47,11 @@ Errors:<br />
 </tr>
 
 <tr>
-  <td>{tr}Add transitions{/tr}</td>
-  <td>
-    <table>
+  <td class="formcolor">{tr}Add transitions{/tr}</td>
+  <td class="formcolor">
+    <table class="normal">
 		<tr>
-			<td>
+			<td class="formcolor">
 				{tr}Add transition from:{/tr}<br />
 				<select name="add_tran_from[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
@@ -59,7 +59,7 @@ Errors:<br />
 				{/section}			
 				</select>
 			</td>
-			<td>
+			<td class="formcolor">
 				{tr}Add transition to:{/tr}<br />
 				<select name="add_tran_to[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
@@ -73,18 +73,18 @@ Errors:<br />
 </tr>
 
 <tr>
-  <td>{tr}roles{/tr}</td>
-  <td>
+  <td class="formcolor">{tr}roles{/tr}</td>
+  <td class="formcolor">
   {section name=ix loop=$roles}
-  {$roles[ix].name}[<a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br />
+  {$roles[ix].name}[<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br />
   {sectionelse}
   {tr}No roles associated to this activity{/tr}
   {/section}
   </td>
 </tr>
 <tr>
-  <td>{tr}Add role{/tr}</td>
-  <td>
+  <td class="formcolor">{tr}Add role{/tr}</td>
+  <td class="formcolor">
   {if count($all_roles)}
   <select name="userole">
   <option value="">{tr}add new{/tr}</option>
@@ -97,8 +97,8 @@ Errors:<br />
   </td>
 </tr>
 <tr>
-  <td>&nbsp;</td>
-  <td><input type="submit" name="save_act" value="{tr}save{/tr}" /> </td>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor"><input type="submit" name="save_act" value="{tr}save{/tr}" /> </td>
 </tr>
 
 </table>
@@ -174,7 +174,7 @@ Errors:<br />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="activityId" value="{$info.activityId|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td style="text-align:center;"  class="heading"><input type="submit" name="delete_act" value="x " /></td>
 <td  class="heading" ><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'flowNum_desc'}flowNum_asc{else}flowNum_desc{/if}">{tr}#{/tr}</a></td>
@@ -195,13 +195,13 @@ Errors:<br />
 	</td>
 
 	<td class="{cycle advance=false}">
-	  <a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$items[ix].activityId}">{$items[ix].name}</a>
+	  <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$items[ix].activityId}">{$items[ix].name}</a>
 	  {if $items[ix].roles < 1}
 		<small>{tr}(no roles){/tr}</small>
 	  {/if}
 	</td>
 	<td style="text-align:center;" class="{cycle advance=false}">
-	  {$items[ix].type|act_icon:"$items[ix].isInteractive"}
+	  {$items[ix].type|act_icon:$items[ix].isInteractive}
 	</td>
 	<td style="text-align:center;" class="{cycle advance=false}">
 	  <input type="checkbox" name="activity_inter[{$items[ix].activityId}]" {if $items[ix].isInteractive eq 'y'}checked="checked"{/if} />
@@ -211,9 +211,9 @@ Errors:<br />
 	</td>
 
 	<td class="{cycle}">
-	<a href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}">{tr}code{/tr}</a>
+	<a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}">{tr}code{/tr}</a>
 	{if $items[ix].isInteractive eq 'y'}
-	<br /><a href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}&amp;template=1">{tr}template{/tr}</a>
+	<br /><a class="link" href="tiki-g-admin_shared_source.php?pid={$pid}&amp;activityId={$items[ix].activityId}&amp;template=1">{tr}template{/tr}</a>
 	{/if}
 	</td>
 </tr>
@@ -233,7 +233,7 @@ Errors:<br />
 </form>	
 
 <h3>{tr}Process Transitions{/tr}</h3>
-<table>
+<table class="normal">
 <tr>
 	<td >
 		<h3>{tr}List of transitions{/tr}</h3>
@@ -260,7 +260,7 @@ Errors:<br />
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 			<input type="hidden" name="where2" value="{$where2|escape}" />
 			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
-			<table>
+			<table class="normal">
 			<tr>
 			<td class="heading" ><input type="submit" name="delete_tran" value="{tr}x{/tr} " /></td>
 			<td class="heading" ><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actFromName_desc'}actFromName_asc{else}actFromName_desc{/if}">{tr}Origin{/tr}</a></td>
@@ -273,9 +273,9 @@ Errors:<br />
 					<input type="checkbox" name="transition[{$transitions[ix].actFromId}_{$transitions[ix].actToId}]" />
 				</td>
 				<td class="{cycle advance=false}">
-					<a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$transitions[ix].actFromId}">{$transitions[ix].actFromName}</a>
+					<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$transitions[ix].actFromId}">{$transitions[ix].actFromName}</a>
 					<img src='lib/Galaxia/img/icons/next.gif' alt='to' />
-					<a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$transitions[ix].actToId}">{$transitions[ix].actToName}</a>
+					<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId={$transitions[ix].actToId}">{$transitions[ix].actToName}</a>
 				</td>
 				<!--
 				<td class="{cycle advance=false}">
@@ -293,7 +293,7 @@ Errors:<br />
 			</table>
 			</form>		
 	</td>
-	<td >
+	<td class="formcolor" >
 		<h3>{tr}Add a transition{/tr}</h3>
 		<form action="tiki-g-admin_activities.php" method="post">
 		<input type="hidden" name="pid" value="{$pid|escape}" />
@@ -303,9 +303,9 @@ Errors:<br />
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 		<input type="hidden" name="where2" value="{$where2|escape}" />
 		<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
-		<table>
+		<table class="normal">
 		<tr>
-		  <td>
+		  <td class="formcolor">
 		  From:
 		  </td>
 		  <td>
@@ -317,7 +317,7 @@ Errors:<br />
 		  </td>
 		</tr>
 		<tr>
-		  <td>
+		  <td class="formcolor">
 		  To: 
 		  </td>
 		  <td>
@@ -329,8 +329,8 @@ Errors:<br />
 		  </td>
 		</tr>
 		<tr>
-		  <td>&nbsp;</td>
-		  <td>
+		  <td class="formcolor">&nbsp;</td>
+		  <td class="formcolor">
 		    <input type="submit" name="add_trans" value="{tr}add{/tr}" />
 		  </td>
 		</tr>

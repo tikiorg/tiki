@@ -21,9 +21,9 @@
 {/if}
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
-<table>
-<tr><td>{tr}Subject{/tr}:</td><td><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
-<tr><td>{tr}Newsletter{/tr}:</td><td>
+<table class="normal">
+<tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
 <select name="nlId">
 {section loop=$newsletters name=ix}
 <option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>{$newsletters[ix].name}</option>
@@ -31,7 +31,7 @@
 </select>
 </td></tr>
 {if $tiki_p_use_content_templates eq 'y'}
-<tr><td>{tr}Apply template{/tr}</td><td>
+<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
@@ -40,9 +40,9 @@
 </select>
 </td></tr>
 {/if}
-<tr><td>{tr}Data{/tr}:</td><td><textarea name="data" rows="25" cols="60">{$info.data|escape}</textarea></td></tr>
-<tr><td >&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
-<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="25" cols="60">{$info.data|escape}</textarea></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -60,7 +60,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
@@ -76,8 +76,8 @@
 <td class="odd">{$channels[user].users}</td>
 <td class="odd">{$channels[user].sent|tiki_short_datetime}</td>
 <td class="odd">
-   <a href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}">{tr}remove{/tr}</a>
-   <a href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>
+   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>
 </td>
 </tr>
 {/section}

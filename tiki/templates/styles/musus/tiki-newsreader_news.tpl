@@ -6,7 +6,7 @@
 {if $serverId}<a class="linkbut" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>{/if}
 <a class="linkbut" href="tiki-newsreader_news.php?serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;mark=1&amp;offset={$offset}">{tr}Save position{/tr}</a>
 <br /><br />
-<table>
+<table class="normal">
 {cycle values="odd,even" print=false}
 <tr>
 <td class="heading">{tr}From{/tr}</td>
@@ -16,7 +16,7 @@
 {section loop=$articles name=ix}
 <tr>
 <td class="{cycle advance=false}" {if $articles[ix].status eq 'new'} style="font-weight:bold" {/if}>{$articles[ix].From}</td>
-<td class="{cycle advance=false}" {if $articles[ix].status eq 'new'} style="font-weight:bold" {/if}><a href="tiki-newsreader_read.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}&amp;id={$articles[ix].loopid}&amp;serverId={$serverId}">{$articles[ix].Subject}</a></td>
+<td class="{cycle advance=false}" {if $articles[ix].status eq 'new'} style="font-weight:bold" {/if}><a class="link" href="tiki-newsreader_read.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}&amp;id={$articles[ix].loopid}&amp;serverId={$serverId}">{$articles[ix].Subject}</a></td>
 <td class="{cycle}" {if $articles[ix].status eq 'new'} style="font-weight:bold" {/if}>{$articles[ix].Date|tiki_short_datetime}</td>
 </tr>
 {/section}

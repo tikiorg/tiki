@@ -30,7 +30,7 @@
 </table>
 
 
-<table>
+<table class="normal">
 <tr>
 <!-- term -->
 <td class="heading"><a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'term_desc'}term_asc{else}term_desc{/if}">{tr}term{/tr}</a></td>

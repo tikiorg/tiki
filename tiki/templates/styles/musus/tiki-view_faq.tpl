@@ -16,7 +16,7 @@
 <div class="faqlistquestions">
 <ol>
 {section name=ix loop=$channels}
-<li><a href="#q{$channels[ix].questionId}">{$channels[ix].question}</a></li>
+<li><a class="link" href="#q{$channels[ix].questionId}">{$channels[ix].question}</a></li>
 {/section}
 </ol>
 </div>
@@ -38,14 +38,14 @@
 <div class="faq_suggestions" id="faqsugg" style="display:none;">
 <form action="tiki-view_faq.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
-<table>
-<tr><td>{tr}Question{/tr}:</td><td><textarea rows="2" cols="80" name="suggested_question"></textarea></td></tr>
-<tr><td>{tr}Answer{/tr}:</td><td><textarea rows="2" cols="80" name="suggested_answer"></textarea></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="sugg" value="{tr}Add{/tr}" /></td></tr>
+<table class="normal">
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_question"></textarea></td></tr>
+<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor"><textarea rows="2" cols="80" name="suggested_answer"></textarea></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 <br />
-<table>
+<table class="normal">
 <tr><td class="heading">{tr}Suggested questions{/tr}</td></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}

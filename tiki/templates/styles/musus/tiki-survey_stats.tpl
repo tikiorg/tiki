@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a><br /><br />
-<a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-<a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a><br /><br />
+<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span><br /><br />
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -16,7 +16,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Survey{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-survey_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taken_desc'}taken_asc{else}taken_desc{/if}">{tr}taken{/tr}</a></td>

@@ -17,6 +17,7 @@
 </form>
 </div>
 
+
 <div class="dirlistsites">
 <form method="post" action="tiki-directory_search.php">
 <input type="hidden" name="how" value="{$how|escape}" />
@@ -42,20 +43,21 @@
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br />
 <span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
-<div class="dirsitecats">
+<span class="dirsitecats">
 {tr}categories{/tr}:
 {section name=ii loop=$items[ix].cats}
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a>
 {/section}
-</div><br />
-<div class="dirsitetrail">{tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits}</div>
+</span><br />
+<span class="dirsitetrail">{tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits}</span>
 </div>
 {/section}
 </div>
 <br />
 {* next and prev links *}
-<div align="center" class="mini">
+<div align="center">
+<div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-directory_search.php?$words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -72,3 +74,7 @@
 {/section}
 {/if}
 </div>
+</div>
+
+
+

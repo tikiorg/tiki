@@ -30,7 +30,7 @@
 
 <form action="tiki-userfiles.php" method="post">
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
-<table>
+<table class="normal">
 <tr>
 <td style="text-align:center;" class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
@@ -43,7 +43,7 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="userfile[{$channels[user].fileId}]" />
 </td>
-<td class="{cycle advance=false}">{$channels[user].filename|iconify}<a href="tiki-download_userfile.php?fileId={$channels[user].fileId}">{$channels[user].filename}</a></td>
+<td class="{cycle advance=false}">{$channels[user].filename|iconify}<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">{$channels[user].filename}</a></td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td style="text-align:right;" class="{cycle}">{$channels[user].filesize|kbsize}</td>
 </tr>
@@ -73,14 +73,14 @@
 
 <h3>{tr}Upload file{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-userfiles.php" method="post">
-<table>
+<table class="normal">
 <!--
 <tr>
-  <td>{tr}Name{/tr}:</td><td><input type="text" name="name" /></td>
+  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
 </tr>
 -->
 <tr>
-  <td>{tr}Upload file{/tr}:</td><td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor">
   <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><br />
   <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile2" type="file" /><br />
   <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile3" type="file" /><br />

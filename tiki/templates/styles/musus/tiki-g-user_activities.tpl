@@ -72,7 +72,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</td>
@@ -85,11 +85,11 @@
 	  {$items[ix].procname} {$items[ix].version}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:left;">
-		{$items[ix].type|act_icon:"$items[ix].isInteractive"} 
+		{$items[ix].type|act_icon:$items[ix].isInteractive}
 		{if $items[ix].instances > 0}
-		<a href="tiki-g-user_instances.php?filter_process={$items[ix].pId}&amp;filter_activity={$items[ix].activityId}">{$items[ix].name}</a>
+		  <a class="link" href="tiki-g-user_instances.php?filter_process={$items[ix].pId}&amp;filter_activity={$items[ix].activityId}">{$items[ix].name}</a>
 		{else}
-		{$items[ix].name}
+		  {$items[ix].name}
 		{/if}
 		{if $items[ix].isInteractive eq 'y' and ($items[ix].type eq 'start' or $items[ix].type eq 'standalone')}
 			<a href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>		  
@@ -132,3 +132,24 @@
 </div> 
 {* END OF PAGINATION *}
 
+{* SHOW GRAPH IF AVAILABLE... *}
+{if $graph neq ''}
+  <h3>{tr}Process Graph for{/tr} {$procname}</h3>
+  <table class="normal">
+    <tr>
+      <td>
+        <center>
+          {if $map neq ''}
+            <img src="{$graph}" alt="{$procname}" border="0" usemap="#procmap" />
+            <map name="procmap">
+              {$map}
+            </map>
+          {else}
+            <img src="{$graph}" alt="{$procname}" border="0" />
+          {/if}
+        </center>
+      </td>
+    </tr>
+  </table>
+{/if}
+{* END OF SHOW GRAPH *}

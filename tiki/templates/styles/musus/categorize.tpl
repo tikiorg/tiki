@@ -10,7 +10,7 @@
    {section name=ix loop=$categories}
     <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].categpath}</option>
    {/section}
-   </select><br/>
+   </select><br />
    <label for="cat-check">{tr}categorize this object{/tr}:</label>
     <input type="checkbox" name="cat_categorize" id="cat-check" {if $cat_categorize eq 'y' or $categ_checked eq 'y'}checked="checked"{/if}/><br />
   {else}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-list_file_gallery.tpl,v 1.2 2004-01-17 01:19:52 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-list_file_gallery.tpl,v 1.3 2004-02-01 07:49:56 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 [{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
@@ -19,10 +19,10 @@
 <form action="tiki-list_file_gallery.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <input type="hidden" name="fileId" value="{$fileId|escape}" />
-<table>
-<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="fname" value="{$fname|escape}"/></td></tr>
-<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="fdescription">{$fdescription|escape}</textarea></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" value="{tr}edit{/tr}" name="edit" /></td></tr>
+<table class="normal">
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="fname" value="{$fname|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="fdescription">{$fdescription|escape}</textarea></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}edit{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -54,7 +54,7 @@
 	<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
     <input type="hidden" name="find" value="{$find|escape}" />
     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 {if $tiki_p_admin_file_galleries eq 'y'}
 <tr>
 	<td class="heading" colspan="16">
@@ -165,8 +165,8 @@
 
 <td class="{cycle}">
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;fileId={$images[changes].fileId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;fileId={$images[changes].fileId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 	&nbsp;
 </td>

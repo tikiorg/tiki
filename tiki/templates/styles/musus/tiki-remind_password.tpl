@@ -9,11 +9,11 @@
 
 {if $showfrm eq 'y'}
   <form action="tiki-remind_password.php" method="post">
-  <table>
+  <table class="normal">
   <tr>
-    <td>{tr}username{/tr}</td>
-    <td><input type="text" name="username" /></td>
-    <td><input type="submit" name="remind"
+    <td class="formcolor">{tr}username{/tr}</td>
+    <td class="formcolor"><input type="text" name="username" /></td>
+    <td class="formcolor"><input type="submit" name="remind"
                                  value="{tr}send me my password{/tr}" /></td>
   </tr>  
   </table>
@@ -21,4 +21,4 @@
 {/if}
 
 <br /><br />
-<a href="{$tikiIndex}">{tr}Return to HomePage{/tr}</a>
+<a href="{$tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>

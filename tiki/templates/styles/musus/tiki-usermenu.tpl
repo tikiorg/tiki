@@ -3,7 +3,7 @@
 {include file=tiki-mytiki_bar.tpl}
 <br />
 {if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
-<a title="({tr}May need to refresh twice to see changes{/tr})" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
+<a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
 {/if}
 <br /><br />
 <table class="findtable">
@@ -18,7 +18,7 @@
 </tr>
 </table>
 <form action="tiki-usermenu.php" method="post">
-<table>
+<table class="normal">
 <tr>
 <td  class="heading"><input type="submit" name="delete" value="x " title="{tr}delete selected{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></td>
@@ -33,7 +33,7 @@
 <input type="checkbox" name="menu[{$channels[user].menuId}]" />
 </td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}"><a href="tiki-usermenu.php?menuId={$channels[user].menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-usermenu.php?menuId={$channels[user].menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
 <td class="{cycle advance=false}">{$channels[user].url|truncate:40:"...":true}</td>
 <td style="text-align:center;" class="{cycle advance=false}">{$channels[user].mode}</td>
 </tr>
@@ -64,17 +64,17 @@
 <h3>{tr}Add or edit an item{/tr}</h3>
 <form action="tiki-usermenu.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
-<table>
-  <tr><td>{tr}Name{/tr}</td>
-      <td><input type="text" name="name" value="{$info.name|escape}" /></td>
+<table class="normal">
+  <tr><td class="formcolor">{tr}Name{/tr}</td>
+      <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
   </tr>
-  <tr><td>{tr}URL{/tr}</td>
-      <td><input type="text" name="url" value="{$info.url|escape}" /></td>  </tr>
-  <tr><td>{tr}Position{/tr}</td>
-      <td><input type="text" name="position" value="{$info.position|escape}" /></td>
+  <tr><td class="formcolor">{tr}URL{/tr}</td>
+      <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>  </tr>
+  <tr><td class="formcolor">{tr}Position{/tr}</td>
+      <td class="formcolor"><input type="text" name="position" value="{$info.position|escape}" /></td>
   </tr>
-  <tr><td>{tr}Mode{/tr}</td>
-      <td>
+  <tr><td class="formcolor">{tr}Mode{/tr}</td>
+      <td class="formcolor">
         <select name="mode">
           <option value="n" {if $info.mode eq 'n'}selected="selected"{/if}>{tr}new window{/tr}</option>
           <option value="w" {if $info.mode eq 'w'}selected="selected"{/if}>{tr}replace window{/tr}</option>
@@ -82,8 +82,8 @@
       </td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+    <td class="formcolor">&nbsp;</td>
+    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
   </tr>
 </table>
 </form>

@@ -66,17 +66,17 @@
 <td >
 	<select name="filter_process" onchange='javascript:getElementById("filterf").submit();'>
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
-	{/section}
+	{foreach from=$all_procs item=proc}
+	<option {if $proc.pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$proc.pId|escape}">{$proc.name} {$proc.version}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_acts name=ix}
-	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId|escape}">{$all_acts[ix].name}</option>
-	{/section}
+	{foreach from=$all_acts item=act}
+	<option {if $act.activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$act.activityId|escape}">{$act.name}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
@@ -116,7 +116,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">&nbsp;</a></td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
@@ -127,56 +127,56 @@
 </td>
 </tr>
 {cycle values="odd,even" print=false}
-{section name=ix loop=$items}
+{foreach from=$items item=act}
 <tr>
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].type|act_icon:"$items[ix].isInteractive"}
+		{$act.type|act_icon:$act.isInteractive}
 	</td>
 
 
 	<td class="{cycle advance=false}">
-	  <a href="tiki-g-admin_activities.php?pid={$items[ix].pId}&amp;activityId={$items[ix].activityId}">{$items[ix].name}</a>
-	  {if $items[ix].type eq 'standalone'}
-	  <a href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
+	  <a class="link" href="tiki-g-admin_activities.php?pid={$act.pId}&amp;activityId={$act.activityId}">{$act.name}</a>
+	  {if $act.type eq 'standalone'}
+	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
 	  {/if}
-	  {if $items[ix].type eq 'start'}
-	  <a href="tiki-g-run_activity.php?activityId={$items[ix].activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
+	  {if $act.type eq 'start'}
+	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
 	  {/if}
 	</td>
   
 
 	<td class="{cycle advance=false}" style="text-align:left;">
-		{$items[ix].type}
+		{$act.type}
 	</td>
 	
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].isInteractive}
+		{$act.isInteractive}
 	</td>
 
 
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].isAutoRouted}
+		{$act.isAutoRouted}
 	</td>
 	
 	<td class="{cycle}" style="text-align:right;">
 		<table >
 		<tr>
- 		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active&amp;filter_activity={$items[ix].activityId}">{$items[ix].active_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed&amp;filter_activity={$items[ix].activityId}">{$items[ix].completed_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=aborted&amp;filter_activity={$items[ix].activityId}">{$items[ix].aborted_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=exception&amp;filter_activity={$items[ix].activityId}">{$items[ix].exception_instances}</a></td>
+ 		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=active&amp;filter_activity={$act.activityId}">{$act.active_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=completed&amp;filter_activity={$act.activityId}">{$act.completed_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=aborted&amp;filter_activity={$act.activityId}">{$act.aborted_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=exception&amp;filter_activity={$act.activityId}">{$act.exception_instances}</a></td>
 
 		</tr>
 		</table>
 	</td>
 </tr>
-{sectionelse}
+{foreachelse}
 <tr>
 	<td class="{cycle advance=false}" colspan="6">
 	{tr}No processes defined yet{/tr}
 	</td>
 </tr>	
-{/section}
+{/foreach}
 </table>
 </form>
 {* END OF LISTING *}

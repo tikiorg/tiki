@@ -1,11 +1,19 @@
 <a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
+
 <!-- the help link info -->
-{if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=DirectoryDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Validate Sites{/tr}">{$helpIcon $helpIconDesc}</a>{/if}
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=DirectoryDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Validate Sites{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+
 <!-- link to tpl -->
-{if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-directory_validate_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory validate sites tpl{/tr}">{$editIcon $editIconDesc}</a>{/if}
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-directory_validate_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory validate sites tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+
 <!-- beginning of next bit -->
+
 <br /><br />
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
@@ -16,26 +24,26 @@
 <form action="tiki-directory_validate_sites.php" method="post">
 <input type="submit" name="del" value="{tr}remove{/tr}" />
 <input type="submit" name="validate" value="{tr}validate{/tr}" />
-<table>
+<table class="normal">
   <tr>
-    <th>&nbsp;</th>
-    <th><a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
-    <th><a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></th>
-    <th><a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></th>
-    <th><a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></th>
-    <th>{tr}action{/tr}</th>
+    <td class="heading">&nbsp;</td>
+    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
+    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}country{/tr}</a></td>
+    <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
+    <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
-<td style="text-align:center;" class="{cycle advance=false}"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
+<td  style="text-align:center;" class="{cycle advance=false}"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
 <td class="{cycle advance=false}">{$items[user].name}</td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
-<td class="{cycle advance=false}"><img src="img/flags/{$items[user].country}.gif" alt="{$items[user].country}"/></td>
+<td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td  class="{cycle advance=false}">
-   <a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{$deleteIcon $deleteIconDesc}</a>
-   <a href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{$editIcon $editIconDesc}</a>
+   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 </td>
 </tr>
 <tr>

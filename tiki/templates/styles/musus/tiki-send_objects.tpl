@@ -16,41 +16,41 @@
 
 <br /><br />
 {if $msg}
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Transmission results{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 {$msg}
 </div>
 </div>
 {/if}
 <br />
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Send objects to this site{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <form method="post" action="tiki-send_objects.php">
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <table>
-<tr><td>{tr}site{/tr}:</td><td><input type="text" name="site" value="{$site|escape}" /></td></tr>
-<tr><td>{tr}path{/tr}:</td><td><input type="text" name="path" value="{$path|escape}" /></td></tr>
-<tr><td>{tr}username{/tr}:</td><td><input type="text" name="username" value="{$username|escape}" /></td></tr>
-<tr><td>{tr}password{/tr}:</td><td><input type="password" name="password" value="{$password|escape}" /></td></tr>
-<tr><td align="center" colspan="2"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
+<tr><td class="form">{tr}site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>
+<tr><td class="form">{tr}path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
+<tr><td class="form">{tr}username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
+<tr><td class="form">{tr}password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
+<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
 </table>
 </form>
 </div>
 </div>
 <br />
 
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Filter{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <form action="tiki-send_objects.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
@@ -61,11 +61,11 @@
 <br />
 
 {if $tiki_p_send_pages eq 'y'}
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Send Wiki Pages{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <div class="simplebox">
 <b>{tr}Pages{/tr}</b>: 
 {section name=ix loop=$sendpages}
@@ -95,11 +95,11 @@
 <br />
 
 {if $tiki_p_send_articles eq 'y'}
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Send Articles{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <div class="simplebox">
 <b>{tr}Articles{/tr}</b>: 
 {section name=ix loop=$sendarticles}

@@ -33,11 +33,11 @@
 <h2>{tr}Add a related category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
-<table>
+<table class="normal">
   <tr>
-    <td>{tr}Category{/tr}:</td>
-    <td>
-    <select name="categId" />
+    <td class="formcolor">{tr}Category{/tr}:</td>
+    <td class="formcolor">
+    <select name="categId">
     {section name=ix loop=$categs}
       <option value="{$categs[ix].categId|escape}">{$categs[ix].path}</option>
     {/section}
@@ -45,12 +45,12 @@
     </td>
   </tr>
   <tr>
-    <td>{tr}Mutual{/tr}:</td>
-    <td><input type="checkbox" name="mutual" /></td>
+    <td class="formcolor">{tr}Mutual{/tr}:</td>
+    <td class="formcolor"><input type="checkbox" name="mutual" /></td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td><input type="submit" name="add" value="{tr}save{/tr}" />
+    <td class="formcolor">&nbsp;</td>
+    <td class="formcolor"><input type="submit" name="add" value="{tr}save{/tr}" />
   </tr>
 </table>
 </form>
@@ -58,7 +58,7 @@
 <h2>{tr}Related categories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
-<table>
+<table class="normal">
   <tr>
     <td class="heading">{tr}category{/tr}</td>
     <td class="heading">{tr}action{/tr}</td>

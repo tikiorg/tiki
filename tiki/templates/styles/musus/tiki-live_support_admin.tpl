@@ -38,7 +38,7 @@
 {/if}
 {if count($online_operators) > 0}
 <h3>{tr}Online operators{/tr}</h3>
-<table>
+<table class="normal">
 	<tr>
 		<td  class="heading" style="text-align:center;">	
 		{tr}Operator{/tr}
@@ -65,7 +65,7 @@
 					<td>{if $online_operators[ix].status_since ne "0"}{$online_operators[ix].status_since|tiki_short_datetime}{else}{tr}unknown{/tr}{/if}</td>
 				</tr>
 				<tr>
-					<td><a href="tiki-live_support_transcripts.php?filter_operator={$online_operators[ix].user}">{tr}transcripts{/tr}</a></td>
+					<td><a class="link" href="tiki-live_support_transcripts.php?filter_operator={$online_operators[ix].user}">{tr}transcripts{/tr}</a></td>
 				</tr>
 			</table>
 		</td>
@@ -84,7 +84,7 @@
 {if count($offline_operators) > 0}
 <h3>{tr}Offline operators{/tr}</h3>
 {cycle values='odd,even' print=false}
-<table>
+<table class="normal">
 	<tr>
 		<td  class="heading" style="text-align:center;">	
 		{tr}Operator{/tr}
@@ -127,10 +127,10 @@
 <h3>{tr}Add an operator to the system{/tr}</h3>
 <small>{tr}Operators must be tiki users{/tr}</small>
 <form method="post" action="tiki-live_support_admin.php">
-<table>
+<table class="normal">
 	<tr>
-		<td>{tr}user{/tr}</td>
-		<td>
+		<td class="formcolor">{tr}user{/tr}</td>
+		<td class="formcolor">
 			<select name="user">
 				{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user}</option>
@@ -139,8 +139,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td>&nbsp;</td>
-		<td>
+		<td class="formcolor">&nbsp;</td>
+		<td class="formcolor">
 			<input type="submit" name="adduser" value="{tr}set as operator{/tr}" />
 		</td>
 	</tr>

@@ -2,7 +2,7 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages for{/tr}: {$forum_info.name}</a>
 <br /><br />
-<a href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
+<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
 
 <h3>{tr}List of messages{/tr} ({$cant})</h3>
 {* FILTERING FORM *}
@@ -28,7 +28,7 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading" ><input type="submit" name="del" value="x " /></td>
 <td class="heading" >{tr}message{/tr}</td>
@@ -42,7 +42,7 @@
 	</td>
   
 	<td class="{cycle advance=false}" style="text-align:left;">
-		<a href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title}</a>
+		<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title}</a>
 	</td>
 	
 	<td class="{cycle}" style="text-align:left;">

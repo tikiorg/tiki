@@ -11,7 +11,7 @@
 <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='img/icons/ico_olist.gif' border='0' alt='{tr}edit items{/tr}' title='{tr}edit items{/tr}' /></a>
 {/if}
 <a href="tiki-charts.php"><img src='img/icons/ico_table.gif' border='0' alt='{tr}list charts{/tr}' title='{tr}list charts{/tr}' /></a>
-<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}last chart{/tr}' /></a>
+<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}last chart{/tr}' /></a>
 {if $chart_info.frequency > 0}
     <br />
 	{if $prevPeriod > 0}
@@ -22,7 +22,7 @@
 	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}"><img border='0' src='img/icons/toright.gif' alt='{tr}next chart{/tr}' title='{tr}next chart{/tr}' /></a>
 	{/if}
 {/if}
-<table>
+<table class="normal">
 <tr>
 	<td style="text-align:right;"  class="heading">{tr}pos{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}pre{/tr}</td>
@@ -43,7 +43,7 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].position}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].lastPosition}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].perm}</td>
-	<td class="{cycle advance=false}"><a target="_blank" href="{$items[ix].URL}">{$items[ix].title}</a>
+	<td class="{cycle advance=false}"><a class="link" target="_blank" href="{$items[ix].URL}">{$items[ix].title}</a>
 	{if $items[ix].dif ne 'new' and $items[ix].dif eq $max_dif}
 		<img src='img/icons/popular.gif' alt='{tr}cool{/tr}' />
 	{/if}
@@ -70,9 +70,9 @@
 	{if ($chart_info.singleChartVotes eq 'n' or $user_voted_chart eq 'n')
 		and
 		($chart_info.singleItemVotes eq 'n' or $items[ix].voted eq 'n') }
-		<a href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='img/icons/edit.gif' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' /></a>
+		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='img/icons/edit.gif' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' /></a>
 	{else}
-		<a href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='img/icons/edit.gif' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' /></a>
+		<a class="link" href="tiki-view_chart_item.php?itemId={$items[ix].itemId}"><img src='img/icons/edit.gif' border='0' alt='{tr}info/vote{/tr}' title='{tr}info/vote{/tr}' /></a>
 	{/if}
 	</td>
 </tr>	

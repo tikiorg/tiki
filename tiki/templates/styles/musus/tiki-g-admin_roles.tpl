@@ -10,7 +10,7 @@ Errors:<br />
 </div>
 {/if}
 
-<h3>{tr}Add or edit a role{/tr} <a href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h3>
+<h3>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h3>
 <form action="tiki-g-admin_roles.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="roleId" value="{$info.roleId|escape}" />
@@ -18,18 +18,18 @@ Errors:<br />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
-<table>
+<table class="normal">
 <tr>
-  <td>{tr}name{/tr}</td>
-  <td><input type="text" name="name" value="{$info.name|escape}" /></td>
+  <td class="formcolor">{tr}name{/tr}</td>
+  <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
-  <td>{tr}description{/tr}</td>
-  <td><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
+  <td class="formcolor">{tr}description{/tr}</td>
+  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>
-  <td>&nbsp;</td>
-  <td><input type="submit" name="save" value="{tr}save{/tr}" /> </td>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /> </td>
 </tr>
 </table>
 </form>
@@ -45,7 +45,7 @@ Errors:<br />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
@@ -58,7 +58,7 @@ Errors:<br />
 		<input type="checkbox" name="role[{$items[ix].roleId}]" />
 	</td>
 	<td class="{cycle advance=false}">
-	  <a href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;offset={$offset}&amp;find={$find}&amp;pid={$pid}&amp;sort_mode2={$sort_mode2}&amp;roleId={$items[ix].roleId}">{$items[ix].name}</a>
+	  <a class="link" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;offset={$offset}&amp;find={$find}&amp;pid={$pid}&amp;sort_mode2={$sort_mode2}&amp;roleId={$items[ix].roleId}">{$items[ix].name}</a>
 	</td>
 	<td class="{cycle}">
 	  {$items[ix].description}
@@ -83,23 +83,23 @@ Errors:<br />
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 	<input type="hidden" name="find" value="{$find|escape}" />
-	<table>
+	<table class="normal">
 	<tr>
-		<td>{tr}Map{/tr}</td>
-		<td>
+		<td class="formcolor">{tr}Map{/tr}</td>
+		<td class="formcolor">
 		  <table border="1" >
 		  	<tr>
-		  		<td >
+		  		<td class="formcolor" >
 		  		{tr}Users{/tr}:
 				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
-		  		<td >
+		  		<td class="formcolor" >
 	  			{tr}Roles{/tr}:<br />		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
-		  		<td >
+		  		<td class="formcolor" >
 					<select name="user[]" multiple="multiple" size="10">
 					<option value="">"{tr}Anonymous{/tr}"</option>
 					{section name=ix loop=$users}
@@ -107,7 +107,7 @@ Errors:<br />
 					{/section}
 					</select>
 		  		</td>
-		  		<td >
+		  		<td class="formcolor" >
 
 					<select name="role[]" multiple="multiple" size="10">
 					{section name=ix loop=$roles}
@@ -121,8 +121,8 @@ Errors:<br />
 	</tr>
 	
 	<tr>
-		<td>&nbsp;</td>
-		<td style="text-align:center;">
+		<td class="formcolor">&nbsp;</td>
+		<td style="text-align:center;" class="formcolor">
 			<input type="submit" name="save_map" value="{tr}map{/tr}" />
 		</td>
 	</tr>
@@ -137,45 +137,45 @@ Errors:<br />
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 	<input type="hidden" name="find" value="{$find|escape}" />
-	<table>
+	<table class="normal">
 	<tr>
-		<td>
+		<td class="formcolor">
 		{tr}Operation{/tr}
 		</td>
-		<td>
+		<td class="formcolor">
 		{tr}Group{/tr}
 		</td>
-		<td>
+		<td class="formcolor">
 		{tr}Role{/tr}
 		</td>
-		<td>
+		<td class="formcolor">
 		&nbsp;
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="formcolor">
 			<select name="op">
 			<option value="add">{tr}add{/tr}</option>
 			<option value="remove">{tr}remove{/tr}</option>
 			</select>
 		</td>
 		
-		<td>
+		<td class="formcolor">
 			<select name="group">
 			{section name=ix loop=$groups}
-			<option value="{$groups[ix].groupName|escape}">{$groups[ix].groupName}</option>
+			<option value="{$groups[ix]|escape}">{$groups[ix]}</option>
 			{/section}
 			</select>
 		</td>
 		
-		<td>
+		<td class="formcolor">
 			<select name="role">
 			{section name=ix loop=$roles}
 			<option value="{$roles[ix].roleId|escape}">{$roles[ix].name|adjust:30}</option>
 			{/section}
 			</select>	  		
 		</td>
-		<td>
+		<td class="formcolor">
 			<input type="submit" name="mapg" value="{tr}go{/tr}" />
 		</td>
 		
@@ -205,7 +205,7 @@ Errors:<br />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
-<table>
+<table class="normal">
 <tr>
 <td  class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
 <td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>

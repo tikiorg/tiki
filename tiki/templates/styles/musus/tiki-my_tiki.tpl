@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-my_tiki.tpl,v 1.3 2004-01-17 01:11:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-my_tiki.tpl,v 1.4 2004-02-01 07:47:06 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -39,12 +39,19 @@
 	{if $mytiki_blogs eq 'y'}
 		<span id="tab6" class="tab">{tr}My blogs{/tr}</span>
 	{/if}
+    {if $feature_workflow eq 'y'}
+      {if $tiki_p_use_workflow eq 'y'}
+        {if $mytiki_workflow eq 'y'}
+          <span id="tab7" class="tab">{tr}My workflow{/tr}</span>
+        {/if}
+      {/if}
+    {/if}
 </div>
 
 {if $mytiki_pages eq 'y'}
 <div id="content1" class="content">
-  <div class="tiki">
-  <div class="tiki-title">
+  <div class="cbox">
+  <div class="cbox-title">
     <table width=100%>
     <tr>
       <td width=70%>{tr}User Pages{/tr}</td>
@@ -53,13 +60,13 @@
     </tr>
     </table>
   </div>
-  <div class="tiki-content">
+  <div class="cbox-data">
   <table >
   {section name=ix loop=$user_pages}
   <tr><td>
-  <a title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
+  <a class="link" title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
   </td><td align="right">
-  (<a href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+  (<a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName|escape:"url"}">{tr}edit{/tr}</a>)
   </td></tr>
   {/section}
   </table>
@@ -70,15 +77,15 @@
 
 {if $mytiki_gals eq 'y'}
 <div id="content2" class="content">
-  <div class="tiki">
-  <div class="tiki-title">{tr}User Galleries{/tr}</div>
-  <div class="tiki-content">
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Galleries{/tr}</div>
+  <div class="cbox-data">
   <table >
   {section name=ix loop=$user_galleries}
   <tr><td>
-  <a href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
+  <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
   </td><td align="right">
-  <a href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}edit{/tr})</a>
+  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}edit{/tr})</a>
   </td></tr>
   {/section}
   </table>
@@ -89,15 +96,15 @@
 
 {if $mytiki_items eq 'y'}
 <div id="content3" class="content">
-  <div class="tiki">
-  <div class="tiki-title">{tr}Assigned items{/tr}</div>
-  <div class="tiki-content">
+  <div class="cbox">
+  <div class="cbox-title">{tr}Assigned items{/tr}</div>
+  <div class="cbox-data">
   <table >
   {section name=ix loop=$user_items}
   <tr><td>
   <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
   </td><td align="right">
-  <a href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
+  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
   </td>
   </tr>
   {/section}
@@ -109,12 +116,12 @@
 
 {if $mytiki_msgs eq 'y'}
 <div id="content4" class="content">
-  <div class="tiki">
-  <div class="tiki-title">{tr}Unread Messages{/tr}</div>
+  <div class="cbox">
+  <div class="cbox-title">{tr}Unread Messages{/tr}</div>
   <table >
   {section name=ix loop=$msgs}
   <tr><td>
-  <a href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
+  <a class="link" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
   </td></tr>
   {/section}
   </table>
@@ -124,12 +131,12 @@
 
 {if $mytiki_tasks eq 'y'}
 <div id="content5" class="content">
-  <div class="tiki">
-  <div class="tiki-title">{tr}Tasks{/tr}</div>
+  <div class="cbox">
+  <div class="cbox-title">{tr}Tasks{/tr}</div>
   <table >
   {section name=ix loop=$tasks}
   <tr><td>
-  <a href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
+  <a class="link" href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
   </td></tr>
   {/section}
   </table>
@@ -141,14 +148,14 @@
 
 {if $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
-  <div class="tiki">
-  <div class="tiki-title">{tr}User Blogs{/tr}</div>
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Blogs{/tr}</div>
   <table >
   {section name=ix loop=$user_blogs}
   <tr><td>
-  <a href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
+  <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
   </td><td align="right">
-  (<a href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
+  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
   </td></tr>
   {/section}
   </table>
@@ -156,3 +163,10 @@
 </div>
 {/if}
 
+{if $feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
+  <div id="content7" class="content">
+      {include file="templates/tiki-g-my_activities.tpl"}
+      <br /><br />
+      {include file="templates/tiki-g-my_instances.tpl"}
+  </div>
+{/if}

@@ -1,17 +1,37 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_integrator_rules.tpl,v 1.2 2004-01-13 19:01:47 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_integrator_rules.tpl,v 1.3 2004-02-01 07:43:28 musus Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
   <table><tr>
-    <td><div class="button2"><a href="tiki-admin_integrator.php" class="linkbut">{tr}configure repositories{/tr}</a></div></td>
-    <td><div class="button2"><a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a></div></td>
+    <td><div class="button2">
+      <a href="tiki-admin_integrator.php" class="linkbut">{tr}configure repositories{/tr}</a>
+    </div></td>
+    <td><div class="button2">
+      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
+    </div></td>
+
     <td>&nbsp;</td>
-    <td><div class="button2"><a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a></div></td>
-    <td><div class="button2"><a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view this repository{/tr}</a></div></td>
+
+    <td><div class="button2">
+      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
+    </div></td>
+    <td><div class="button2">
+      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view this repository{/tr}</a>
+    </div></td>
+    
     <td>&nbsp;</td>
-    <td><div class="button2"><a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}" class="linkbut">{tr}new rule{/tr}</a></div></td>
+    
+    <td><div class="button2">
+      <a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}" class="linkbut">
+        {tr}new rule{/tr}
+      </a>
+    </div></td>
     {if count($reps) gt 0}
-    <td><div class="button2"><a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');" class="linkbut">{tr}copy rules{/tr}</a></div></td>
+    <td><div class="button2">
+      <a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');" class="linkbut">
+        {tr}copy rules{/tr}
+      </a>
+    </div></td>
     {/if}
   </tr></table>
 </div>
@@ -20,13 +40,13 @@
 {if count($reps) gt 0}
 <div id="rules-copy-panel">
 <form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
-<table><tr>
-  <td>{tr}Source repository{/tr}</td>
-  <td>
+<table class="normal"><tr>
+  <td class="formcolor">{tr}Source repository{/tr}</td>
+  <td class="formcolor">
     <select name="srcrep">{html_options options=$reps}</select> &nbsp; &nbsp;
     <input type="submit" name="copy" value="{tr}Copy{/tr}" />
   </td>
-</tr></table>
+</tr> </table>
 </form>
 <br /><br />
 </div>
@@ -37,53 +57,61 @@
 <input type="hidden" name="ruleID" value="{$ruleID|escape}" />
 <input type="hidden" name="repID" value="{$repID|escape}" />
 
-<table>
+<table class="normal">
   <tr>
-    <td>{tr}Rule order{/tr}</td>
-    <td><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" /></td>
+    <td class="formcolor"><span title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</span></td>
+    <td class="formcolor"><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" />
+    </td>
   </tr><tr>
-    <td>{tr}Search{/tr}</td>
-    <td><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
+    <td class="formcolor"><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Replace{/tr}</td>
-    <td><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</span></td>
+    <td class="formcolor"><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Regex{/tr}</td>
-    <td><input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Is this regular expression or simple search/replacer{/tr}">{tr}Regex{/tr}</span></td>
+    <td class="formcolor">
+      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}" />
+    </td>
   </tr><tr>
-    <td>{tr}Case sensitive{/tr}</td>
-    <td><input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</td>
+    <td class="formcolor">
+      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" />
+    </td>
   </tr><tr>
-    <td>{tr}Regex modifiers{/tr}</td>
-    <td>
+    <td class="formcolor"><span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">{tr}Regex modifiers{/tr}</span></td>
+    <td class="formcolor">
       <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
     </td>
   </tr><tr>
-    <td>{tr}Description{/tr}</td>
-    <td><textarea name="description" rows="4" title="{tr}Human readable text description of rule{/tr}">{$description|escape}</textarea></td>
+    <td class="formcolor"><span title="{tr}Human readable text description of rule{/tr}">{tr}Description{/tr}</td>
+    <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of rule{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
-    <td>&nbsp;</td>
-    <td>
+    <td class="formcolor">&nbsp;</td>
+    <td class="formcolor">
       <input type="submit" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
-      <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}" />&nbsp;{tr}Enabled{/tr}
+      <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}" />&nbsp;
+      {tr}Enabled{/tr}
     </td>
   </tr><tr>
-    <td colspan="2">{tr}Preview options{/tr}</td>
+    <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
   </tr><tr>
-    <td>{tr}Apply all rules{/tr}</td>
-    <td><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Apply all rules or just this to generate preview{/tr}">{tr}Apply all rules{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}" /></td>
   </tr><tr>
-    <td>{tr}Code preview{/tr}</td>
-    <td><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}" /></td>
   </tr><tr>
-    <td>{tr}HTML preview{/tr}</td>
-    <td><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Generate HTML preview{/tr}">{tr}HTML preview{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}" /></td>
   </tr><tr>
-    <td>{tr}File{/tr}</td>
-    <td><input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</td>
+    <td class="formcolor">
+      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" />
+    </td>
   </tr><tr>
-    <td>&nbsp;</td>
-    <td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td>
+    <td class="formcolor">&nbsp;</td>
+    <td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td>
   </tr>
 </table>
 </form>
@@ -106,7 +134,7 @@
 <h2>{tr}Rules List{/tr}</h2>
 
 {* Table with list of repositories *}
-<table id="integrator_rules">
+<table class="normal" id="integrator_rules">
   <tr>
     <td class="heading" rowspan="2"><span title="{tr}Rule order{/tr}">#</span></td>
     <td class="heading">{tr}Search{/tr}</td>
@@ -130,8 +158,9 @@
       <td class="{cycle advance=false}">{$rules[rule].type|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].casesense|escape}</td>
       <td class="{if (strlen($rules[rule].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
-        <a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}edit{/tr}"><img src="img/icons/config.gif" alt="{tr}edit{/tr}" /></a>
-        <a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" alt="{tr}remove{/tr}" /></a>
+        <a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}edit{/tr}"><img alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+        &nbsp;&nbsp;<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')" 
+title="{tr}Click here to delete this rule{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
       </td>
 
     {* Show description as colspaned row if it is not an empty *}

@@ -6,3 +6,4 @@
 <input id="chatedit" accesskey="s" type="text" name="data" size="50" />
 <!--<input type="submit" name="send" value="send" />-->
 </form>
+       

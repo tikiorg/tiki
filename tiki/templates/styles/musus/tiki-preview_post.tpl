@@ -10,3 +10,4 @@
 <div class="postbody">
 {$parsed_data}
 </div>
+

@@ -1,13 +1,14 @@
 <a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a><br /><br />
 <div>
-<form method="post" action="tiki-edit_css.php">{tr}Style Sheet{/tr} : 
+<form method="post" action="tiki-edit_css.php">
+{tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
 <b>{$editstyle}</b>
 <input type="hidden" name="editstyle" value="{$editstyle|escape}" />
 <input type="submit" name="save" value="{tr}save a custom copy{/tr}" /> 
-<a href="tiki-edit_css.php?editstyle={$editstyle}">{tr}Cancel{/tr}</a>
+<a href="tiki-edit_css.php?editstyle={$editstyle}" class="link">{tr}Cancel{/tr}</a>
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
-	<textarea name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>
+<textarea name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>
 </div>
 </div>
 {else}
@@ -17,10 +18,10 @@
 <option value="{$list[t]|escape}"{if $list[t] eq $editstyle} selected="selected"{/if}>{$list[t]}</option>
 {/section}
 </select>
-<input type="submit" name="try" value="{tr}Preview{/tr}" />
-<input type="submit" name="display" value="{tr}Display CSS{/tr}" />
-<input type="submit" name="edit" value="{tr}Edit CSS{/tr}" /><br />
-<div>{tr}File with names appended by -{$user} are modifiable, others are only duplicable and to be used as a model.{/tr}</div>
+<input type="submit" name="try" value="{tr}try{/tr}" />
+<input type="submit" name="display" value="{tr}display{/tr}" />
+<input type="submit" name="edit" value="{tr}edit{/tr}" /><br />
+<div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
 </div>
 {section name=l loop=$css}
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
@@ -30,7 +31,8 @@
 <div style="font-weight: bold;background-color:white;">{$css[l].items[i]}</div>
 {/section}
 {foreach item=v key=a from=$css[l].attributes}
-<div style="margin-left:10px;font:monospace;">{$a|string_format:"%'.-22s"} : {$v|string_format:"%-56.s"}
+<div style="margin-left:10px;font:80% monospace;">{$a|string_format:"%'.-22s"} : 
+{$v|string_format:"%-56.s"}
 {if $v[0] eq "#"}
 <span style="height:8px;width:30px;background-color:{$v};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 {elseif $a|truncate:6:"" eq "border"}
@@ -42,4 +44,5 @@
 {/section}
 {/if}
 </div>
+
 </form>

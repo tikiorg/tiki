@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-print_article.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-print_article.tpl,v 1.3 2004-02-01 07:47:06 musus Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}

@@ -1,10 +1,10 @@
 <a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a><br /><br />
 
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Filter{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <form action="tiki-print_pages.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="printpages" value="{$form_printpages|escape}" />
@@ -15,11 +15,11 @@
 <br />
 
 
-<div class="tiki">
-<div class="tiki-title">
+<div class="cbox">
+<div class="cbox-title">
 {tr}Print Wiki Pages{/tr}
 </div>
-<div class="tiki-content">
+<div class="cbox-data">
 <div class="simplebox">
 <b>{tr}Pages{/tr}</b>: 
 {section name=ix loop=$printpages}
