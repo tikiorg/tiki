@@ -147,10 +147,34 @@ div.cbox-title {
 }
 
 /* When there's a link in a cbox-title */
-.cboxtlink { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: white; text-decoration: none; }
-.cboxtlink:active { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: white; text-decoration: none; }
-.cboxtlink:hover { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color: #EFEFEF; text-decoration: underline; }
-
+.cboxtlink {
+  background-color: #9cba00;
+  color: white;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.cboxtlink:active {
+  background-color: #9cba00;
+  color: white;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+.cboxtlink:hover {
+  background-color: #9cba00;
+  color: white;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+}
 
 /* And this is the data */
 div.cbox-data {
