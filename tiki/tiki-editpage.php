@@ -26,6 +26,68 @@ if(!isset($_REQUEST["page"])) {
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
 
+function compare_import_versions($a1,$a2) {
+  return $a1["version"]-$a2["version"];
+}
+
+
+if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+  require ("lib/webmail/mimeDecode.php");
+  $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+  $data = '';
+  while(!feof($fp)) {
+    $data .= fread($fp,8192*16);
+  }
+  fclose($fp);
+  $name = $_FILES['userfile1']['name'];
+  $params = array('input' => $data,
+                  'crlf'  => "\r\n", 
+                  'include_bodies' => TRUE,
+                  'decode_headers' => TRUE, 
+                  'decode_bodies'  => TRUE
+                  );  
+  $output = Mail_mimeDecode::decode($params);    
+  unset($parts);
+  parse_output($output, $parts,0);  
+  $last_part='';
+  $last_part_ver=0;
+  usort($parts,'compare_import_versions');
+  foreach($parts as $part) {
+    if($part["version"]>$last_part_ver) {
+      $last_part_ver=$part["version"];
+      $last_part=$part["body"];
+    }
+    if(isset($part["pagename"])) {
+      $pagename=urldecode($part["pagename"]);
+      $version=urldecode($part["version"]);
+      $author=urldecode($part["author"]);
+      $lastmodified=$part["lastmodified"];
+      $authorid=urldecode($part["author_id"]);
+      if(isset($part["hits"])) $hits=urldecode($part["hits"]); else $hits=0;
+      $ex=substr($part["body"],0,25);
+      //print(strlen($part["body"]));
+      $msg='';
+      if(isset($_REQUEST["save"])) {
+        if($tikilib->page_exists($pagename)) {
+          $tikilib->update_page($pagename,$part["body"],tra('page imported'),$author,$authorid);
+        } else {
+  
+          $tikilib->create_page($pagename,$hits,$part["body"],$lastmodified,tra('created from import'),$author,$authorid);
+        }
+      } else {
+        $_REQUEST["edit"]=$last_part;
+      }
+    }
+  }
+  if(isset($_REQUEST["save"])) {
+    unset($_REQUEST["save"]);
+    header("location: tiki-index.php?page=$page");
+    die;
+  }
+} 
+      
+
+
 
 if(substr($page,0,8)=="UserPage") {
   $name = substr($page,8);
@@ -174,6 +236,32 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview',1); 
 } 
 
+function parse_output(&$obj, &$parts,$i) {  
+  if(!empty($obj->parts)) {    
+    for($i=0; $i<count($obj->parts); $i++)      
+      parse_output($obj->parts[$i], $parts,$i);  
+  }else{    
+    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;    
+    switch($ctype) {    
+      case 'application/x-tikiwiki':
+         $aux["body"] = $obj->body;  
+         $ccc=$obj->headers["content-type"];
+         $items = split(';',$ccc);
+         foreach($items as $item) {
+           $portions = split('=',$item);
+           if(isset($portions[0])&&isset($portions[1])) {
+             $aux[trim($portions[0])]=trim($portions[1]);
+           }
+         }
+         
+         
+         $parts[]=$aux;
+         
+    }  
+  }
+}
+
+
 
 // Pro
 if(isset($_REQUEST["save"])) {
@@ -191,7 +279,6 @@ if(isset($_REQUEST["save"])) {
   if(!$tikilib->page_exists($_REQUEST["page"])) {
     // Extract links and update the page
     $links = $tikilib->get_links($_REQUEST["edit"]);
-    
     $tikilib->cache_links($links);
     $t = date("U");
     $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"]);  

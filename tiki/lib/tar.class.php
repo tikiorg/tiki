@@ -85,6 +85,7 @@ class tar {
 	// to try to ensure valid file
 	// PRIVATE ACCESS FUNCTION
 	function __computeUnsignedChecksum($bytestring) {
+	       $unsigned_chksum=0;
 		for($i=0; $i<512; $i++)
 			$unsigned_chksum += ord($bytestring[$i]);
 		for($i=0; $i<8; $i++)
@@ -237,7 +238,7 @@ class tar {
 	function __generateTAR() {
 		// Clear any data currently in $this->tar_file	
 		unset($this->tar_file);
-
+                $this->tar_file='';
 		// Generate Records for each directory, if we have directories
 		if($this->numDirectories > 0) {
 			foreach($this->directories as $key => $information) {
@@ -280,6 +281,7 @@ class tar {
 		if($this->numFiles > 0) {
 			foreach($this->files as $key => $information) {
 				unset($header);
+				$header='';
 
 				// Generate the TAR header for this file
 				// Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end
@@ -313,6 +315,7 @@ class tar {
 				$file_contents = str_pad($information["file"],(ceil($information["size"] / 512) * 512),chr(0));
 
 				// Add new tar formatted data to tar file contents
+				
 				$this->tar_file .= $header . $file_contents;
 			}
 		}
@@ -492,6 +495,7 @@ class tar {
 		$activeFile["group_id"]		= "";
 		$activeFile["size"]		= strlen($data);
 		$activeFile["time"]		= $time;
+		if(!isset($checksum)) $checksum=0;
 		$activeFile["checksum"]		= $checksum;
 		$activeFile["user_name"]	= "";
 		$activeFile["group_name"]	= "";

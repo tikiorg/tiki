@@ -2,6 +2,9 @@
 // Initialization
 require_once('tiki-setup.php');
 
+include_once ("lib/webmail/htmlMimeMail.php");
+include_once ("lib/ziplib.php");
+
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
     $smarty->display('error.tpl');
@@ -364,6 +367,13 @@ if(isset($_REQUEST["wikiprefs"])) {
     $tikilib->set_preference("wiki_comments_default_ordering",$_REQUEST["wiki_comments_default_ordering"]);
     $smarty->assign('wiki_comments_default_ordering',$_REQUEST["wiki_comments_default_ordering"]);
   }
+}
+
+if(isset($_REQUEST["wikiexport"])) {
+  //$cosa=$tikilib->export_wiki_page('HomePage',1);
+  $tikilib->MakeWikiZip();
+  die;
+  //print(nl2br($cosa));
 }
 
 if(isset($_REQUEST["wikiattprefs"])) {
@@ -860,6 +870,22 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_trackers",'n');
     $smarty->assign("feature_trackers",'n');
+  }
+  
+  if(isset($_REQUEST["feature_webmail"]) && $_REQUEST["feature_webmail"]=="on") {
+    $tikilib->set_preference("feature_webmail",'y'); 
+    $smarty->assign("feature_webmail",'y');
+  } else {
+    $tikilib->set_preference("feature_webmail",'n');
+    $smarty->assign("feature_webmail",'n');
+  }
+  
+  if(isset($_REQUEST["feature_surveys"]) && $_REQUEST["feature_surveys"]=="on") {
+    $tikilib->set_preference("feature_surveys",'y'); 
+    $smarty->assign("feature_surveys",'y');
+  } else {
+    $tikilib->set_preference("feature_surveys",'n');
+    $smarty->assign("feature_surveys",'n');
   }
   
   if(isset($_REQUEST["feature_drawings"]) && $_REQUEST["feature_drawings"]=="on") {

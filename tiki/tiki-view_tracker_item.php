@@ -282,6 +282,8 @@ if($tracker_info["useAttachments"] == 'y') {
   $smarty->assign('atts',$atts["data"]);
 }
 
+$section='trackers';
+include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_tracker_item.tpl');

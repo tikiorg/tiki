@@ -10,13 +10,11 @@ if($tiki_p_admin != 'y') {
 }
 */
 
-/*
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
 
 if($tiki_p_view_survey_stats != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));

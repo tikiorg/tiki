@@ -11,6 +11,10 @@
   <td class="formcolor">{tr}yes{/tr}<input type="radio" name="crunch" value='y' /><input checked="checked" type="radio" name="crunch" value='n' />{tr}no{/tr}</td>
 </tr>
 <tr>
+  <td class="formcolor">{tr}Previously remove existing page versions{/tr}:</td>
+  <td class="formcolor">{tr}yes{/tr}<input type="radio" name="remo" value='y' /><input checked="checked" type="radio" name="remo" value='n' />{tr}no{/tr}</td>
+</tr>
+<tr>
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor"><input type="submit" name="import" value="{tr}import{/tr}" /></td>
 </tr>

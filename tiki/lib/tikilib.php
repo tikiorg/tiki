@@ -20,6 +20,124 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
+
+  function Rfc2822DateTime ($time = false) {
+    if ($time === false)
+        $time = time();
+    return date('D, j M Y H:i:s ', $time) . $this->TimezoneOffset($time, 'no colon');
+  }
+  
+  function TimezoneOffset ($time = false, $no_colon = false) {
+    if ($time === false)
+        $time = time();
+    $secs = date('Z', $time);
+
+    if ($secs < 0) {
+        $sign = '-';
+        $secs = -$secs;
+    }
+    else {
+        $sign = '+';
+    }
+    $colon = $no_colon ? '' : ':';
+    $mins = intval(($secs + 30) / 60);
+    return sprintf("%s%02d%s%02d",
+                   $sign, $mins / 60, $colon, $mins % 60);
+  }
+
+  function MakeWikiZip()
+  {
+    $zipname         = "wikidb.zip";
+    include_once("tar.class.php"); 
+    $tar = new tar();
+    $query = "select pageName from tiki_pages order by pageName asc";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $page = $res["pageName"];
+      
+      $content = $this->export_wiki_page($page, 0);
+      
+      $tar->addData($page,$content,date("U"));
+    }
+    $tar->toTar("dump/export.tar",FALSE);
+    
+    return '';
+  }
+
+  
+  function export_wiki_page($pageName,$nversions=1)
+  {
+    $info=$this->get_page_info($pageName);
+    $head = '';
+    $head .= "Date: " . $this->Rfc2822DateTime($info["lastModif"]) . "\r\n";
+    $head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
+
+
+    $iter = $this->get_page_history($pageName);
+    $parts = array();
+    //$parts[]=MimeifyPageRevision($info);
+    foreach ($iter as $revision) {
+        $parts[] = MimeifyPageRevision($revision);
+        if ($nversions > 0 && count($parts) >= $nversions)
+            break;
+    }
+    if (count($parts) > 1)
+        return $head . MimeMultipart($parts);
+    assert($parts);
+    return $head . $parts[0];
+  }
+  
+  function set_user_avatar($user,$type,$avatarLibName,$avatarName,$avatarSize,$avatarType,$avatarData)
+  {
+    
+    $avatarData = addslashes($avatarData);
+    $avatarName = addslashes($avatarName);
+    $query = "update users_users set
+      avatarType = '$type',
+      avatarLibName = '$avatarLibName',
+      avatarName = '$avatarName',
+      avatarSize = '$avatarSize',
+      avatarFileType = '$avatarType',
+      avatarData = '$avatarData'
+      where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);	  
+  }
+  
+  function get_user_avatar_img($user) 
+  {
+    $query = "select * from users_users where login='$user'";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+      
+  function get_user_avatar($user)
+  {
+    if(empty($user)) return '';
+    if(!$this->user_exists($user)) {
+      return '';
+    }
+    $type = $this->db->getOne("select avatarType from users_users where login='$user'");
+    $libname = $this->db->getOne("select avatarLibName from users_users where login='$user'");
+    switch($type) {
+      case 'n':
+        $ret = '';
+        break;
+      case 'l':
+        $ret = "<img width='45' height='45' src='".$libname."' />";
+        break;
+      case 'u':
+        $ret = "<img width='45' height='45' src='tiki-show_user_avatar.php?user=$user' />";      
+        break;
+    }
+    return $ret;
+  }
+  
+  
   
   /* Surveys */
   function add_survey_hit($surveyId)
@@ -75,7 +193,7 @@ class TikiLib {
     // Remove all the options for each question
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
       $questionId = $res["questionId"];
-      $query2 = "updatet iki_survey_question_options set votes=0 where questionId=$questionId";
+      $query2 = "update tiki_survey_question_options set average=0, votes=0 where questionId=$questionId";
       $result2 = $this->db->query($query2);
       if(DB::isError($result2)) $this->sql_error($query2, $result2);
     }
@@ -239,11 +357,17 @@ class TikiLib {
       $questionId=$res["questionId"];
       $res["options"]=$this->db->getOne("select count(*) from tiki_survey_question_options where questionId=".$res["questionId"]);
       $query2 = "select * from tiki_survey_question_options where questionId=$questionId";
+      if($res["type"]=='r') {
+        $maxwidth=5;
+      } else {
+        $maxwidth=10;
+      }
+      $res["width"]=$res["average"]*200 / $maxwidth;
       $result2 = $this->db->query($query2);
       if(DB::isError($result2)) $this->sql_error($query2, $result2);
       $ret2 = Array();
       $votes=0;
-      $total_votes = $this->get_one("select sum(votes) from tiki_survey_question_options where questionId=$questionId");
+      $total_votes = $this->db->getOne("select sum(votes) from tiki_survey_question_options where questionId=$questionId");
       while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) { 
         if($total_votes) {
           $average = $res2["votes"]/$total_votes;	
@@ -252,6 +376,7 @@ class TikiLib {
         }
         $votes += $res2["votes"];
         $res2["average"]=$average;
+        $res2["width"]=$average*200;
         $ret2[]=$res2;
       }
       $res["qoptions"]=$ret2;
@@ -8731,7 +8856,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // without the data itself
   function get_page_history($page) 
   {
-    $query = "select version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
+    $query = "select pageName, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
@@ -8741,6 +8866,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $aux["lastModif"] = $res["lastModif"];
       $aux["user"] = $res["user"];
       $aux["ip"] = $res["ip"];
+      $aux["data"] = $res["data"];
+      $aux["pageName"] = $res["pageName"];
+      
       $aux["comment"] = $res["comment"];
       //$aux["percent"] = levenshtein($res["data"],$actual);
       $ret[]=$aux; 
@@ -9761,6 +9889,39 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
           $this->db->query($query);
         }
       }
+    }
+  }
+  
+  function update_page_version($pageName,$version,$edit_data,$edit_comment, $edit_user, $edit_ip,$lastModif) 
+  {
+    global $smarty;
+    if($pageName=='SandBox') return;
+    $edit_data = addslashes($edit_data);
+    $edit_comment = addslashes($edit_comment);
+    if(!$this->page_exists($pageName)) return false;
+    $t = date("U");
+    
+    $query = "delete from tiki_history where pageName='$pageName' and version=$version";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data) 
+              values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    
+    //print("version: $version<br/>");
+    // Get this page information
+    $info = $this->get_page_info($pageName);
+    if($version>=$info["version"]) {
+      $query = "update tiki_pages set data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);  
+      // Parse edit_data updating the list of links from this page
+      $this->clear_links($pageName);
+      $pages = $this->get_pages($edit_data);
+      foreach($pages as $page) {
+         $this->replace_link($pageName,$page);
+      }  
     }
   }
 

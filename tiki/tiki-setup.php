@@ -22,7 +22,8 @@ include_once("tiki-setup_base.php");
 // The votes array stores the votes the user has made
 if(!isset($_SESSION["votes"])) {
   $votes=Array();
-  session_register("votes");
+  //session_register("votes");
+  $_SESSION["votes"]=$votes;
 }
 
 
@@ -30,7 +31,8 @@ if(!isset($_SESSION["votes"])) {
   
 $appname="tiki";
 if(!isset($_SESSION["appname"])) {
-  session_register("appname");
+  //session_register("appname");
+  $_SESSION["appname"]=$appname;
 }
 $smarty->assign("appname","tiki");
 
@@ -166,6 +168,10 @@ $feature_right_column = 'y';
 $feature_top_bar = 'y';
 $feature_bot_bar = 'y';
 
+$feature_surveys = 'n';
+$smarty->assign('feature_surveys',$feature_surveys);
+$feature_webmail = 'n';
+$smarty->assign('feature_webmail',$feature_webmail);
 
 
 $rss_forums = 'y';

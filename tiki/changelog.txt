@@ -1,6 +1,5 @@
 Version 1.4 -Mira-
 
-
 * [NEW] Quizzes, you can create quizzes with as many multiple-choice questions as you want and program specific answers
   to be displayed to the user depending on the Quiz score. Quiz results can be stored and you can control if Quizzes can
   be repeated and stablish a time limit for Quizzes if you want. Useful for fun or for learning, courses, etc.

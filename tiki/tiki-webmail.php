@@ -3,19 +3,22 @@
 
 require_once('tiki-setup.php');
 
-// User preferences screen
-/*
-if($feature_userPreferences != 'y') {   
-  $smarty->assign('msg',tra("This feature is disabled"));   
-  $smarty->display('error.tpl');   
-  die;
+if($feature_webmail != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
 }
-*/
 
-require ("lib/webmail/pop3.php");
-require ("lib/webmail/mimeDecode.php");
-include ("lib/webmail/class.rc4crypt.php");
-include ("lib/webmail/htmlMimeMail.php");
+if($tiki_p_use_webmail != 'y') {
+  $smarty->assign('msg',tra("Permission denied to use this feature"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+require_once ("lib/webmail/pop3.php");
+require_once ("lib/webmail/mimeDecode.php");
+include_once ("lib/webmail/class.rc4crypt.php");
+include_once ("lib/webmail/htmlMimeMail.php");
 
 function parse_output(&$obj, &$parts,$i) {  
   if(!empty($obj->parts)) {    
@@ -597,6 +600,9 @@ if($_REQUEST["section"]=='contacts') {
   }
   $smarty->assign_by_ref('channels',$channels["data"]);
 }
+
+$section='webmail';
+include_once('tiki-section_options.php');
 
 $smarty->assign('mid','tiki-webmail.tpl');$smarty->display('tiki.tpl');
 ?>

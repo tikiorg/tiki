@@ -62,12 +62,30 @@ if(isset($_REQUEST["chgpswd"])) {
     $smarty->display('error.tpl');
     die;
   }
-  $old = $userlib->get_user_password($userwatch);
-  if($old != $_REQUEST["old"]) {
+  
+  if(!$userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],'','')) {
     $smarty->assign('msg',tra("Invalid old password"));
     $smarty->display('error.tpl');
     die;
   }
+  
+  //Validate password here
+  if(strlen($_REQUEST["pass1"])<$min_pass_length) {
+    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+    $smarty->display('error.tpl');
+    die; 	
+  }
+  
+  // Check this code
+  if($pass_chr_num == 'y') {
+    if(!preg_match_all("[0-9]+",$_REQUEST["pass1"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass1"],$foo)) {
+      $smarty->assign('msg',tra("Password must contain both letters and numbers"));
+      $smarty->display('error.tpl');
+      die; 	
+    }
+  }
+
+  
   $userlib->change_user_password($userwatch,$_REQUEST["pass1"]);
 }
 
@@ -121,6 +139,9 @@ $smarty->assign_by_ref('realName',$realName);
 $smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
 $smarty->assign_by_ref('homePage',$homePage);
+
+$avatar = $tikilib->get_user_avatar($user);
+$smarty->assign('avatar',$avatar);
 
 
 $smarty->assign('mid','tiki-user_preferences.tpl');

@@ -35,6 +35,10 @@ function parse_output(&$obj, &$parts,$i) {
   }
 }
 
+function compare_import_versions($a1,$a2) {
+  return $a1["version"]-$a2["version"];
+}
+
 
 $smarty->assign('result','y');
 if(isset($_REQUEST["import"])) {
@@ -54,7 +58,14 @@ while($file=readdir($h)) {
     $output = Mail_mimeDecode::decode($params);    
     unset($parts);
     parse_output($output, $parts,0);  
+    usort($parts,'compare_import_versions');
+    $last_part='';
+    $last_part_ver=0;
     foreach($parts as $part) {
+      if($part["version"]>$last_part_ver) {
+        $last_part_ver=$part["version"];
+        $last_part=$part["body"];
+      }
       if(isset($part["pagename"])) {
         // Parse the body replacing links to Tiki links
         //print_r($part);die;
@@ -69,7 +80,11 @@ while($file=readdir($h)) {
         $ex=substr($part["body"],0,25);
         //print(strlen($part["body"]));
         $msg='';
+        if($_REQUEST["remo"]=='y') {
+          $tikilib->remove_all_versions($pagename,'');    
+        }
         if($tikilib->page_exists($pagename)) {
+          
           if($_REQUEST["crunch"]=='n') {
             $msg='<b>'.tra('page not added (Exists)').'</b>';
           } else {

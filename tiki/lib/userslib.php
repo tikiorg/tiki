@@ -134,6 +134,7 @@ class UsersLib {
     global $feature_challenge;
     $hash=md5($pass);
     if($feature_challenge=='n' || empty($response)) {
+    
       $query = "select login from users_users where login='$user' and hash='$hash'"; 
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
@@ -498,6 +499,13 @@ class UsersLib {
     return $pass;
   }
   
+  function is_due($user)
+  {
+    $due = $this->db->getOne("select due from users_users where login='$user'");
+    if($due<=date("U")) return true;
+    return false;
+  }
+  
   function renew_user_password($user)
   {
     $pass = $this->genPass();
@@ -512,11 +520,15 @@ class UsersLib {
   
   function change_user_password($user,$pass)
   {
-    $hash = md5($hash);
+    global $pass_due;
+    global $feature_clear_passwords;
+    $hash = md5($pass);
+    $now=date("U"); 
+    $new_pass_due=$now+(60*60*24*$pass_due);
     if($feature_clear_passwords == 'n') {
       $pass='';
     }
-    $query = "update users_users set hash='$hash',password='$pass' where login='$user'";
+    $query = "update users_users set hash='$hash',password='$pass',due=$new_pass_due where login='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
   }

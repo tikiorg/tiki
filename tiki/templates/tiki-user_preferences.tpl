@@ -1,6 +1,7 @@
 <a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a><br/><br/>
 [<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
 {if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
+|<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
 <table width="100%">
 <tr>
@@ -31,6 +32,7 @@
         </select></td></tr>
   {/if}      
   <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
+  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>

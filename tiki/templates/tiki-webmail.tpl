@@ -169,11 +169,15 @@
     </form>
   </td>
   <td>
+    <form method="post" action="tiki-webmail.php">
     <input type="submit" name="reply" value="{tr}forward{/tr}" />
-    <select name="type">
-      <option value="attach">{tr}As attachment{/tr}</option>
-      <option value="inline">{tr}As inline text{/tr}</option>
-    </select>
+    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="to" value="" />
+    <input type="hidden" name="cc" value="" />
+    <input type="hidden" name="subject" value="Fw:{$headers.subject}" />
+    <input type="hidden" name="body" value="{$allbodies}" />
+    </form>
+
   </td>
 </tr>
 </table>

@@ -2,13 +2,11 @@
 // Initialization
 require_once('tiki-setup.php');
 
-/*
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
 
 if(!isset($_REQUEST["surveyId"])) {
   $smarty->assign('msg',tra("No survey indicated"));
@@ -90,7 +88,7 @@ if(isset($_REQUEST["ans"])) {
       }
     }	
   }
-  // Redirect to survey stats if the user has permission or to tiki-index if not..
+  header("location: tiki-list_surveys.php");
 }
 
 
