@@ -32,7 +32,9 @@
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 {/section}
-</select></td></tr>
+</select>
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
+</td></tr>
 
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onChange='javascript:chgArtType();'>
