@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.21 2004-08-20 11:26:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.22 2004-08-27 21:04:18 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}" title="{tr}history{/tr}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}" title="{tr}view{/tr}">{$page}</a><br /><br />
 {if $preview}
@@ -34,12 +34,10 @@
   <td colspan="2" class="diffadded">{if $new.description}{$new.description}{else}&nbsp;{/if}</td>
 </tr>
 {/if}
-{if $diff_style == "sideview" || $diff_style == "unidiff"}
-</table>
-{/if}
 {/if}
 
 {if $diff_style eq "sideview"}
+</table>
 <table class="normalnoborder">
 <tr>
   <td valign="top" ><div class="wikitext">{$old.data}</div></td>
@@ -48,8 +46,46 @@
 </table>
 {/if}
 
-{if $diff_style eq 'sidediff' || $diff_style eq 'unidiff' || $diff_style eq 'minsidediff'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="4" align="center">{tr}Versions are identical{/tr}</td></tr></table>{/if}
+{if $diff_style eq 'unidiff'}
+ <tr><td colspan="4">
+ {if $diffdata}
+   {section name=ix loop=$diffdata}
+      {if $diffdata[ix].type == "diffheader"}
+		{assign var="old" value=$diffdata[ix].old}
+		{assign var="new" value=$diffdata[ix].new}
+           <br /><div class="diffheader">@@ {tr}-Lines: {$old} changed to +Lines: {$new}{/tr} @@</div>
+      {elseif $diffdata[ix].type == "diffdeleted"}
+		<div class="diffdeleted">
+			{section name=iy loop=$diffdata[ix].data}
+				{if not $smarty.section.iy.first}<br />{/if}
+				- {$diffdata[ix].data[iy]}
+			{/section}
+            </div>
+      {elseif $diffdata[ix].type == "diffadded"}
+            <div class="diffadded">
+			{section name=iy loop=$diffdata[ix].data}
+				{if not $smarty.section.iy.first}<br />{/if}
+				+ {$diffdata[ix].data[iy]}
+			{/section}
+		</div>
+      {elseif $diffdata[ix].type == "diffbody"}
+            <div class="diffbody">
+			{section name=iy loop=$diffdata[ix].data}
+				{if not $smarty.section.iy.first}<br />{/if}
+				{$diffdata[ix].data[iy]}
+			{/section}
+		</div>
+      {/if}
+   {/section}
+ {else}
+ <div class="diffheader">{tr}Versions are identical{/tr}</div>
+ {/if}
+</td></tr>
+</table>
+{/if}
+
+{if $diff_style eq 'sidediff' || $diff_style eq 'minsidediff'}
+  {if $diffdata}{$diffdata}{else}{tr}Versions are identical{/tr}</td></tr></table>{/if}
 {/if}
 <br />
 
