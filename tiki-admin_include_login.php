@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.18 2004-05-30 04:38:14 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.19 2004-06-09 17:13:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -387,6 +387,47 @@ if (isset($_REQUEST["auth_pam"])) {
     }
 }
 
+if (isset($_REQUEST['auth_cas'])) {
+        check_ticket('admin-inc-login');
+    if (isset($_REQUEST['cas_create_user_tiki']) && $_REQUEST['cas_create_user_tiki'] ==  'on') {
+        $tikilib->set_preference('cas_create_user_tiki', 'y');
+
+        $smarty->assign('cas_create_user_tiki', 'y');
+    } else {
+        $tikilib->set_preference('cas_create_user_tiki', 'n');
+
+        $smarty->assign('cas_create_user_tiki', 'n');
+    }
+    if (isset($_REQUEST['cas_skip_admin']) && $_REQUEST['cas_skip_admin'] == 'on') {
+        $tikilib->set_preference('cas_skip_admin', 'y');
+
+        $smarty->assign('cas_skip_admin', 'y');
+    } else {
+        $tikilib->set_preference('cas_skip_admin', 'n');
+
+        $smarty->assign('cas_skip_admin', 'n');
+    }
+	if (isset($_REQUEST['cas_version'])) {
+		$tikilib->set_preference('cas_version', $_REQUEST['cas_version']);
+
+		$smarty->assign('cas_version', $_REQUEST['cas_version']);
+	}
+	if (isset($_REQUEST['cas_hostname'])) {
+		$tikilib->set_preference('cas_hostname', $_REQUEST['cas_hostname']);
+
+		$smarty->assign('cas_hostname', $_REQUEST['cas_hostname']);
+	}
+	if (isset($_REQUEST['cas_port'])) {
+		$tikilib->set_preference('cas_port', $_REQUEST['cas_port']);
+
+		$smarty->assign('cas_port', $_REQUEST['cas_port']);
+	}
+	if (isset($_REQUEST['cas_path'])) {
+		$tikilib->set_preference('cas_path', $_REQUEST['cas_path']);
+
+		$smarty->assign('cas_path', $_REQUEST['cas_path']);
+	}
+}
 
 // Get list of available languages
 $languages = array();

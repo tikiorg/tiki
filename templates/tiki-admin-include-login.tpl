@@ -10,7 +10,7 @@
 <option value="ws" {if $auth_method eq 'ws'} selected="selected"{/if}>{tr}Web Server{/tr}</option>
 <option value="auth" {if $auth_method eq 'auth'} selected="selected"{/if}>{tr}Tiki and PEAR::Auth{/tr}</option>
 <option value="pam" {if $auth_method eq 'pam'} selected="selected"{/if}>{tr}Tiki and PAM{/tr}</option>
-<!--option value="cas" {if $auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option-->
+<option value="cas" {if $auth_method eq 'cas'} selected="selected"{/if}>{tr}CAS (Central Authentication Service){/tr}</option>
 <!--option value="http" {if $auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
@@ -186,13 +186,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}CAS server version{/tr}:<td>
 <select name="cas_version">
 <option value="none" {if $cas_version neq "1" && $cas_version neq "2"} selected="selected"{/if}></option>
-<option value="1" {if $cas_version eq "1"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
-<option value="2" {if $cas_version eq "2"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
+<option value="CAS_VERSION_1_0" {if $cas_version eq "CAS_VERSION_1_0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
+<option value="CAS_VERSION_2_0" {if $cas_version eq "CAS_VERSION_2_0"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="form">{tr}CAS server hostname{/tr}:</td><td><input type="text" name="cas_hostname" value="{$cas_hostname|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}CAS server port{/tr}:</td><td><input type="text" name="cas_port" size="5" value="{$cas_port|escape}" /></td></tr>
-<tr><td class="form">{tr}CAS server path{/tr}:</td><td><input type="text" name="cas_hostname" value="{$cas_path|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}CAS server path{/tr}:</td><td><input type="text" name="cas_path" value="{$cas_path|escape}" size="50" /></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
 </table>
 </form>
