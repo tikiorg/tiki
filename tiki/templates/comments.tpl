@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.47 2004-06-27 03:05:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.48 2004-06-29 22:23:22 teedog Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -100,7 +100,7 @@
     
     <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
     <td class="heading" valign="bottom">
-    &nbsp;<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
+    &nbsp;<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}&amp;comments_parentId=0">{tr}Top{/tr}</a>
     </td>
   </tr>
   </table>
@@ -121,17 +121,17 @@
     <small>{$comments_below}&nbsp;{tr}Replies below your current threshold{/tr}</small>
   <div class="mini">
   	{if $comments_prev_offset >= 0}
-  		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
+  		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
   	{/if}
   	{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
   	{if $comments_next_offset >= 0}
-  		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}next{/tr}</a>]
+  		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}next{/tr}</a>]
   	{/if}
   	{if $direct_pagination eq 'y'}
 		<br />
 		{section loop=$comments_cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
-		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">
+		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">
 		{$smarty.section.foo.index_next}</a>&nbsp;
 		{/section}
 	{/if}
@@ -156,7 +156,7 @@
     </h2>
     {if $comments_threadId > 0 || $parent_com}
 </td><td align="right">
-<a class="linkbut" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">{tr}post new reply{/tr}</a>
+<a class="linkbut" href="{$comments_complete_father}comments_threadId=0{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">{tr}post new reply{/tr}</a>
     {/if}
 </td></tr></table>
 

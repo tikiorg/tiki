@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.69 2004-06-29 22:08:32 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.70 2004-06-29 22:23:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,9 +65,12 @@ $smarty->assign('topics_find', $_REQUEST['topics_find']);
 if(!isset($_REQUEST['topics_threshold']) || empty($_REQUEST['topics_threshold'])) {
     $_REQUEST['topics_threshold'] = 0;
     $smarty->assign('topics_threshold_param', NULL);
+    $smarty->assign('comments_threshold_param', NULL);
 } else {
 	$topics_threshold_param = '&topics_threshold=' . $_REQUEST['topics_threshold'];
+	$comments_threshold_param = '&comments_threshold=' . $_REQUEST['topics_threshold'];
 	$smarty->assign('topics_threshold_param', htmlspecialchars($topics_threshold_param));
+	$smarty->assign('comments_threshold_param', htmlspecialchars($comments_threshold_param));
 }
 
 if (isset($_REQUEST["quote"]) &&
