@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.26 2003-09-03 21:24:21 docekal Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.27 2003-11-22 21:30:13 docekal Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,6 +15,7 @@
  * \param close    : look for similar strings that are allready translated and generate a commet if a 'match' is made
  * \param module   : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
  * \param patch    : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
+ * \param spelling : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
  */
 
 
@@ -73,58 +74,6 @@ function removephpslashes ($string) {
   return strtr ($string, $removePHPslashes);
 }
 
-
-function writeFile_and_User ($fd, $outstring) {
-  print (nl2br ($outstring));
-  fwrite ($fd, $outstring);
-}
-
-function writeTranslationPair ($fd, $key, $val) {
-  writeFile_and_User ($fd, 
-		      '"' . addphpslashes ($key) . '"' . " => " .
-		      '"' . addphpslashes ($val) . '",');
-}
-
-////////////////////////////////////////////////////////////////////////////
-
-require_once('tiki-setup.php');
-
-if($tiki_p_admin != 'y') {
-  die("You need to be admin to run this script");
-}
-
-$comments = isset ($_REQUEST['comments']);
-$close    = isset ($_REQUEST['close'])  || $comments;
-$module   = isset ($_REQUEST['module']) || $comments;
-$patch    = isset ($_REQUEST['patch']);
-
-$nohelp     = isset ($_REQUEST['nohelp']);
-$nosections = isset ($_REQUEST['nosections']);
-
-
-// Get the language(s)
-$languages = Array();
-print("Languages: ");
-if (isset ($_REQUEST["lang"])) {
-  $lang = $_REQUEST["lang"];
-  $languages[] = $lang;
-  print ("$lang");  
-}
-else {
-  $handle=opendir ('lang');
-  while (false !== ($lang = readdir ($handle))) {
-    if($lang == '.' || $lang == '..') 
-      continue;
-    print("$lang ");  
-    $languages[] = $lang;
-  }
-  closedir ($handle);
-}    	
-print("<br/>");  
-
-
-$files = Array();  
-
 function collect_files ($dir)
 {
   global $files;
@@ -154,6 +103,74 @@ function collect_files ($dir)
   }
   closedir ($handle);
 }
+
+function addToWordlist (&$wordlist, $sentence) {
+  global $spelling;
+  if ($spelling) {
+    // Perhapps regexphandling must be improved?!
+    // Spellcheckers seems to handle special chars quite OK however.
+    $words = preg_split  ("/[\s]+/", $sentence);
+    
+    foreach ($words as $dummy => $word) {
+      $wordlist[strtolower($word)] = 1;
+    }
+  }
+}
+
+
+function writeFile_and_User ($fd, $outstring) {
+  print (nl2br ($outstring));
+  fwrite ($fd, $outstring);
+}
+
+function writeTranslationPair ($fd, $key, $val) {
+  writeFile_and_User ($fd, 
+		      '"' . addphpslashes ($key) . '"' . " => " .
+		      '"' . addphpslashes ($val) . '",');
+}
+
+////////////////////////////////////////////////////////////////////////////
+
+require_once('tiki-setup.php');
+
+if($tiki_p_admin != 'y') {
+  die("You need to be admin to run this script");
+}
+
+$comments = isset ($_REQUEST['comments']);
+$close    = isset ($_REQUEST['close'])  || $comments;
+$module   = isset ($_REQUEST['module']) || $comments;
+$patch    = isset ($_REQUEST['patch']);
+$spelling = isset ($_REQUEST['spelling']);
+
+$nohelp     = isset ($_REQUEST['nohelp']);
+$nosections = isset ($_REQUEST['nosections']);
+
+
+// Get the language(s)
+$languages = Array();
+print("Languages: ");
+if (isset ($_REQUEST["lang"])) {
+  $lang = $_REQUEST["lang"];
+  $languages[] = $lang;
+  print ("$lang");  
+}
+else {
+  $handle=opendir ('lang');
+  while (false !== ($lang = readdir ($handle))) {
+    if($lang == '.' || $lang == '..') 
+      continue;
+    print("$lang ");  
+    $languages[] = $lang;
+  }
+  closedir ($handle);
+}    	
+print("<br/>");  
+
+
+$files = Array();
+
+$wordlist = Array ();
 
 collect_files ('.');
 
@@ -220,6 +237,12 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "//            as the corresponding language.php and overrides any strings\n");
     writeFile_and_User ($fw, "//            in language.php - good if a user does not agree with\n");
     writeFile_and_User ($fw, "//            some translations or if only changes are sent to the maintaner\n");
+
+    writeFile_and_User ($fw, "// spelling : generates a file 'spellcheck_me.txt' that contains the\n");
+    writeFile_and_User ($fw, "//            words used in the translation.It is then easy to check this\n");
+    writeFile_and_User ($fw, "//            file for spelling errors (corrections must be done in\n ");
+    writeFile_and_User ($fw, "//            'language.php, however)\n");
+
     writeFile_and_User ($fw, "// Examples:\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv\n");
     writeFile_and_User ($fw, "// Will translate langauage 'sv' and (almost) avoiding comment generation\n\n");
@@ -367,6 +390,7 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// ### please remove manually!\n");
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
+      addToWordlist ($wordlist, $val);
       writeFile_and_User ($fw, "\n");
     }
     writeFile_and_User ($fw, "// ### end of unused words\n\n");
@@ -382,6 +406,7 @@ foreach ($languages as $sel) {
     foreach ($to_translate as $key => $val) {
       writeFile_and_User ($fw, "// ");
       writeTranslationPair ($fw, $key, $val);
+      addToWordlist ($wordlist, $val);
       if ($module || $close) {
 	$closeText  = "";
 	$moduleText = "";
@@ -424,6 +449,7 @@ foreach ($languages as $sel) {
   foreach ($translated as $key => $val) {
     if ($key == $val) {
       writeTranslationPair ($fw, $key, $val);
+      addToWordlist ($wordlist, $val);
       if ($module) {
 	writeFile_and_User ($fw, ' // '. $modulename[$key]);
       }
@@ -439,6 +465,7 @@ foreach ($languages as $sel) {
   foreach($translated as $key => $val) {
     if ($key != $val) {
       writeTranslationPair ($fw, $key, $val);
+      addToWordlist ($wordlist, $val);
       if ($module) { 
 	writeFile_and_User ($fw, ' // '. $modulename[$key]);
       }
@@ -449,6 +476,17 @@ foreach ($languages as $sel) {
   print ("?&gt;<br/>\n");  
   fwrite ($fw, '?>'."\n");  
   fclose ($fw);
+
+  if ($spelling) {
+    $fw = fopen("lang/$sel/spellcheck_me.txt", 'w');
+    ksort ($wordlist);
+    reset ($wordlist);
+    foreach ($wordlist as $word => $dummy) {
+      fwrite ($fw, "$word\n");
+    }
+
+    fclose ($fw);
+  }
 
   @unlink ("lang/$sel/old.php");
   rename ("lang/$sel/language.php","lang/$sel/old.php");
