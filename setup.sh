@@ -12,6 +12,14 @@ For example, if apache is running as user nobody, type:
 Alternatively, you may wish to set both the user and group:
   
   su -c '$0 mylogin nobody'
+
+This will allow you to delete certain files/directories without becoming root.
+  
+Or, if you can't become root, but are a member of the group apache runs under,
+you can type:
+
+  $0 mylogin nobody
+  
 EOF
 exit 1
 fi
@@ -36,6 +44,6 @@ chown -R $1 img/wiki
 if [ -n "$2" ];
 then
 	chgrp -R $2 modules/cache templates_c
-	chmod g+w modules/cache templates_c
+	chmod -R g+w modules/cache templates_c
 fi
 

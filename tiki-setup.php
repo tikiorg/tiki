@@ -1,5 +1,48 @@
 <?php
 
+$user = @posix_getpwuid(@posix_getuid());
+$wwwuser = $user ? $user['name'] : false;
+unset($user);
+if (!$wwwuser) {
+	$wwwuser = 'nobody (or the user account the web server is running under)';
+}
+$docroot = $_SERVER['DOCUMENT_ROOT'];
+
+$errors = '';
+
+if (!is_writeable('templates_c')) {
+	$errors .= "$docroot/templates_c is not writeable by $wwwuser.\n";
+}
+if (!is_writeable('modules/cache')) {
+	$errors .= "$docroot/modules/cache is not writeable by $wwwuser.\n";
+}
+
+if ($errors) {
+	print <<<qq
+<pre>
+Your tiki is not properly set up:
+
+$errors
+To set up your tiki, log in to the system running tiki,
+and type the following commands:
+
+\$ bash
+\$ cd $docroot
+\$ su -c './setup.sh $wwwuser'
+
+or
+
+\$ su -c './setup.sh mylogin $wwwuser'
+
+Once you have executed these commands, this message will disappear!
+
+qq;
+exit;
+}
+unset($docroot);
+unset($errors);
+unset($wwwuser);
+
 class timer
         {
         function parseMicro($micro)
