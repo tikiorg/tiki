@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.17 2004-05-01 16:22:25 ggeller Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.18 2004-05-05 13:55:08 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3111,7 +3111,7 @@ CREATE TABLE "tiki_quizzes" (
   "shuffleQuestions" char(1) default NULL,
   "shuffleAnswers" char(1) default NULL,
   "publishDate" number(14) default NULL,
-  "expireDate"` number(14) default NULL,
+  "expireDate" number(14) default NULL,
   PRIMARY KEY ("quizId")
 )   ;
 
@@ -4825,7 +4825,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 
 -- Homework permissions - ggeller
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 
@@ -5174,6 +5174,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_page_title','y'
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phpopentracker','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_comments','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_anonymous','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_polls','n');
 
@@ -5825,11 +5827,13 @@ END;
 -- Homework tables start
 --
 -- Created Feb 22, 2004
--- Revised Mar 19, 2004
+-- Revised May 04, 2004
 --
 DROP TABLE "hw_actionlog";
 
-CREATE TABLE "hw_actionlog" (
+DROP TABLE "tiki_hw_actionlog";
+
+CREATE TABLE "tiki_hw_actionlog" (
   "action" varchar(255) default '' NOT NULL,
   "lastModif" number(14) default '0' NOT NULL,
   "pageId" number(14) default NULL,
@@ -5842,8 +5846,10 @@ CREATE TABLE "hw_actionlog" (
 
 DROP TABLE "hw_assignments";
 
-CREATE SEQUENCE "hw_assignments_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "hw_assignments" (
+DROP TABLE "tiki_hw_assignments";
+
+CREATE SEQUENCE "tiki_hw_assignments_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_hw_assignments" (
   "assignmentId" number(8) NOT NULL,
   "title" varchar(80) default NULL,
   "teacherName" varchar(40) default '' NOT NULL,
@@ -5856,17 +5862,19 @@ CREATE TABLE "hw_assignments" (
   PRIMARY KEY ("assignmentId")
 ) ;
 
-CREATE TRIGGER "hw_assignments_trig" BEFORE INSERT ON "hw_assignments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_hw_assignments_trig" BEFORE INSERT ON "tiki_hw_assignments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "hw_assignments_sequ".nextval into :NEW."assignmentId" FROM DUAL;
+SELECT "tiki_hw_assignments_sequ".nextval into :NEW."assignmentId" FROM DUAL;
 END;
 /
-CREATE  INDEX "hw_assignments_dueDate" ON "hw_assignments"("dueDate");
+CREATE  INDEX "tiki_hw_assignments_dueDate" ON "tiki_hw_assignments"("dueDate");
 
 DROP TABLE "hw_grading_queue";
 
-CREATE SEQUENCE "hw_grading_queue_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "hw_grading_queue" (
+DROP TABLE "tiki_hw_grading_queue";
+
+CREATE SEQUENCE "tiki_hw_grading_queue_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_hw_grading_queue" (
   "id" number(14) NOT NULL,
   "status" number(4) default NULL,
   "submissionDate" number(14) default NULL,
@@ -5879,37 +5887,17 @@ CREATE TABLE "hw_grading_queue" (
   PRIMARY KEY ("id")
 ) ;
 
-CREATE TRIGGER "hw_grading_queue_trig" BEFORE INSERT ON "hw_grading_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_hw_grading_queue_trig" BEFORE INSERT ON "tiki_hw_grading_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "hw_grading_queue_sequ".nextval into :NEW."id" FROM DUAL;
-END;
-/
-
-DROP TABLE "hw_grading_queue";
-
-CREATE SEQUENCE "hw_grading_queue_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "hw_grading_queue" (
-  "id" number(14) NOT NULL,
-  "status" number(4) default NULL,
-  "submissionDate" number(14) default NULL,
-  "userLogin" varchar(40) default '' NOT NULL,
-  "userIp" varchar(15) default NULL,
-  "pageId" number(14) default NULL,
-  "pageDate" number(14) default NULL,
-  "pageVersion" number(14) default NULL,
-  "assignmentId" number(14) default NULL,
-  PRIMARY KEY ("id")
-) ;
-
-CREATE TRIGGER "hw_grading_queue_trig" BEFORE INSERT ON "hw_grading_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
-BEGIN
-SELECT "hw_grading_queue_sequ".nextval into :NEW."id" FROM DUAL;
+SELECT "tiki_hw_grading_queue_sequ".nextval into :NEW."id" FROM DUAL;
 END;
 /
 
 DROP TABLE "hw_history";
 
-CREATE TABLE "hw_history" (
+DROP TABLE "tiki_hw_history";
+
+CREATE TABLE "tiki_hw_history" (
   "id" number(14) default '0' NOT NULL,
   "version" number(8) default '0' NOT NULL,
   "lastModif" number(14) default '0' NOT NULL,
@@ -5923,8 +5911,10 @@ CREATE TABLE "hw_history" (
 
 DROP TABLE "hw_pages";
 
-CREATE SEQUENCE "hw_pages_sequ" INCREMENT BY 1 START WITH 1;
-CREATE TABLE "hw_pages" (
+DROP TABLE "tiki_hw_pages";
+
+CREATE SEQUENCE "tiki_hw_pages_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_hw_pages" (
   "id" number(14) NOT NULL,
   "assignmentId" number(14) default '0' NOT NULL,
   "studentName" varchar(200) default '' NOT NULL,
@@ -5947,14 +5937,14 @@ CREATE TABLE "hw_pages" (
   PRIMARY KEY ("studentName","assignmentId")
 ) ;
 
-CREATE TRIGGER "hw_pages_trig" BEFORE INSERT ON "hw_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_hw_pages_trig" BEFORE INSERT ON "tiki_hw_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "hw_pages_sequ".nextval into :NEW."id" FROM DUAL;
+SELECT "tiki_hw_pages_sequ".nextval into :NEW."id" FROM DUAL;
 END;
 /
-CREATE  INDEX "hw_pages_id" ON "hw_pages"("id");
-CREATE  INDEX "hw_pages_assignmentId" ON "hw_pages"("assignmentId");
-CREATE  INDEX "hw_pages_studentName" ON "hw_pages"("studentName");
+CREATE  INDEX "tiki_hw_pages_id" ON "tiki_hw_pages"("id");
+CREATE  INDEX "tiki_hw_pages_assignmentId" ON "tiki_hw_pages"("assignmentId");
+CREATE  INDEX "tiki_hw_pages_studentName" ON "tiki_hw_pages"("studentName");
 
 --
 -- Homework tables end
