@@ -5603,37 +5603,17 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_author','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_type','y');
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_date','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y');
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_img','y')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_reads','y')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_size','y')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_title','y')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_topic','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y');
 go
 
 

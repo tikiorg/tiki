@@ -5116,25 +5116,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_title','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_topic','y');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_author','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_type','y');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_date','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_img','y');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_reads','y');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_size','y');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_title','y');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_topic','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('auth_create_user_auth','n');
