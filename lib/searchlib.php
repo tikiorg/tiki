@@ -332,7 +332,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-view_blog.php?blogId=%d&amp;find=' . urlencode($words),
 			'id' => array('p.blogId'),
 			'pageName' => $pagename,
-			'search' => array('p.data'),
+			'search' => array('p.data','p.title'),
 			'filter' => 'b.use_find = "y"',
 		);
 
