@@ -1661,9 +1661,7 @@ class TikiLib {
     $query = "select * from `tiki_file_galleries` where `visible`='y' $whuser order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_file_galleries` where `visible`='y' $whuser";
     $result = $this->query($query);
-    $result_cant = $this->query($query_cant);
-    $res2 = $result_cant->fetchRow();
-    $cant = $res2[0];
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow()) {
       $aux = Array();
@@ -2512,9 +2510,7 @@ class TikiLib {
     $query = "select * from `tiki_galleries` where `visible`='y' $whuser order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_galleries` where `visible`='y' $whuser";
     $result = $this->query($query);
-    $result_cant = $this->query($query_cant);
-    $res2 = $result_cant->fetchRow();
-    $cant = $res2[0];
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow()) {
       $aux = Array();
