@@ -1390,24 +1390,32 @@ class Comments extends TikiLib {
 	    $temp_query = "CREATE TEMPORARY TABLE temp_tk select distinct `message_id` from `tiki_comments`";
 	    $result = $this->query($temp_query);
 
+	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
+	    $parent_message_id = $this->getOne($query, array( $parentId ) );
+
 	    $query = "select `tiki_comments`.* from `tiki_comments` 
 		left outer join `temp_tk` on `in_reply_to` = temp_tk.`message_id`
 		$mid 
-		and (`in_reply_to` = \"\" or `in_reply_to` is null or temp_tk.message_id is null)
-		$time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+		and (`in_reply_to` = ?
+		or (`in_reply_to` = \"\" or `in_reply_to` is null or temp_tk.message_id is null))
+		$time_cond 
+		order by " . $this->convert_sortmode($sort_mode).",`threadId`";
+	    $bind_mid = array_merge( $bind_mid, array( $parent_message_id ) );
+
+	    $query_cant = "select count(*) from `tiki_comments` $mid and `in_reply_to` = ? $time_cond";
 	} else {
+	    $query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
 	    $query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
-	//print("$query<br />");
-	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
 	$result = $this->query($query,array_merge($bind_mid,$bind_time));
 	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 	$ret = array();
 	$logins = array();
 	$threadIds = array();
 
-	while ( $row = $result->fetchRow() ) {
+	while ( $row = $result->fetchRow() )
+	{
 	    $ret[] = $row;
 	    $logins[$row['userName']] = true;
 	    $threadIds[$row['threadId']] = true;
@@ -1554,6 +1562,7 @@ class Comments extends TikiLib {
 	    $rf = &$retval['data'][$i]['replies_flat'];
 	    $this->flatten_comment_replies($r, $rf);
 	}
+
 	return $retval;
     }
 
@@ -1576,10 +1585,13 @@ class Comments extends TikiLib {
     }
 
     function set_parent($threadId, $parentId) {
-	$query = "update `tiki_comments`
-	    set `parentId`=? where `threadId`=?";
+	$query = "select `message_id` from `tiki_comments` where `threadId` = ?";
+	$parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	$this->query($query, array( (int) $parentId, (int) $threadId ) );
+	$query = "update `tiki_comments`
+	    set `parentId`=?, `in_reply_to`=? where `threadId`=?";
+
+	$this->query($query, array( (int) $parentId, $parent_message_id, (int) $threadId ) );
     }
 
     function unlock_comment($threadId) {

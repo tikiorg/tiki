@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.45 2004-06-22 22:25:46 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.46 2004-06-24 23:01:47 rlpowell Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -19,6 +19,44 @@
   <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
   <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
+
+
+{if $tiki_p_admin_forum eq 'y'}
+<table class="normal">
+	<tr>
+		<td colspan="3" class="heading">{tr}Moderator actions{/tr}</td>
+	</tr>
+	<tr>
+		<td class="odd">
+			<input type="submit" name="delsel" value="{tr}delete selected{/tr}" />
+		</td>
+		<td class="odd">
+			{tr}Move to topic:{/tr}
+			<select name="moveto">
+			{section name=ix loop=$topics}
+				{if $topics[ix].threadId ne $comments_parentId}
+					<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
+				{/if}
+			{/section}
+			</select>
+			<input type="submit" name="movesel" value="{tr}move{/tr}" />
+		</td>
+		<td style="text-align:right;" class="odd">
+			{if $reported > 0}
+				<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported:{/tr}{$reported}</a> | </small>
+			{/if}
+			<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued:{/tr}{$queued}</a></small>
+		</td>
+
+	</tr>
+</table>
+{/if}
+
   <table class="normal">
   <caption> {tr}Posted comments{/tr} </caption>
   <tr>
@@ -65,7 +103,6 @@
     </td>
   </tr>
   </table>
-  </form>
  
     <table class="normal">
 <tr>
@@ -76,6 +113,7 @@
 </td>
 </tr>
     </table>
+  </form>
 
 <br />
 <div align="center">   
