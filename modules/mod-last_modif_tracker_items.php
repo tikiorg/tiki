@@ -9,7 +9,11 @@ if ($feature_trackers == 'y') {
 	$smarty->assign('modlmifn', $module_params["name"]);
 
 	if (isset($module_params["trackerId"])) {
-		$ranking = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'lastModif_desc', '');
+		global $trklib;
+		if (!is_object($trklib)) {
+			require_once('lib/trackers/trackerlib.php');
+		}
+		$ranking = $trklib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'lastModif_desc', '');
 	} else {
 		$ranking = array();
 		$ranking['data'] = '';

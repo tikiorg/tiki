@@ -13,7 +13,11 @@ if ($feature_trackers == 'y') {
 		$status = '';
 	}
 	if (isset($module_params["trackerId"])) {
-		$ranking = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '', $status);
+		global $trklib;
+		if (!is_object($trklib)) {
+			require_once('lib/trackers/trackerlib.php');
+		}
+		$ranking = $trklib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '', $status);
 	} else {
 		$ranking = array();
 	}

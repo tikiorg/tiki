@@ -24,7 +24,11 @@ function wikiplugin_tracker($data, $params) {
 	if (!isset($action)) {
 		$action = tra("Save");
 	}
-	$tracker = $tikilib->get_tracker($trackerId);
+	global $trklib;
+	if (!is_object($trklib)) {
+		require_once('lib/trackers/trackerlib.php');
+	}
+	$tracker = $trklib->get_tracker($trackerId);
 	
 	if ($tracker) {
 		include_once('lib/trackers/trackerlib.php');
