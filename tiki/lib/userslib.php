@@ -1606,7 +1606,7 @@ function get_included_groups($group) {
     $pass = $this->getOne($query, array($email));
     return $pass;
     }
-
+    
     function is_due($user) {
 	$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 

@@ -734,8 +734,7 @@ class TikiLib extends TikiDB {
 	return $retval;
     }
 
-
-    /*shared*/
+    //shared
     // \todo remove all hardcoded html in get_user_avatar()
     function get_user_avatar($user, $float = "") {
 	if (empty($user))
@@ -2949,7 +2948,7 @@ function add_pageview() {
 	$result = $this->query($query, array( $page_ref_id ) );
 	return true;
     }
-
+/* Moved to userlib
     function remove_user($user) {
 	$query = "delete from `users_users` where `login` = ?";
 
@@ -2962,7 +2961,7 @@ function add_pageview() {
 	return $userlib->get_user_details('userId', $user) ? true : false;
 
     }
-
+*/
 /* Moved to userlib.php (a while ago I think)
     function add_user($user, $pass, $email) {
 	global $wikiHomePage;

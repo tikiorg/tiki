@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.17 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.18 2004-06-11 19:58:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ $smarty->assign('showmsg', 'n');
 $smarty->assign('showfrm', 'y');
 
 if (isset($_REQUEST["remind"])) {
-	if ($tikilib->user_exists($_REQUEST["username"])) {
+	if ($userlib->user_exists($_REQUEST["username"])) {
 		if ($feature_clear_passwords == 'y') {
 			$pass = $userlib->get_user_password($_REQUEST["username"]);
 		} else {
