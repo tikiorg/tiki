@@ -2612,6 +2612,7 @@ text-decoration: none;
 font-weight: bold;
 font-size: 11px;
 background-color: #dedede;
+color: #000000;
 }
 a.caltab:hover
 {
@@ -2633,6 +2634,7 @@ a.caltabon
 text-decoration: none;
 font-weight: bold;
 font-size: 11px;
+color: #000000;
 }
 a.caltabon:hover
 {
@@ -2655,6 +2657,7 @@ border: 1px solid #666666;
 border-bottom: 1px solid #aeaeae;
 font-size: 11px;
 }
+
 /* checkboxes background is required for rollover display */
 .calcheckbox
 {
@@ -2665,6 +2668,33 @@ background-color: #ffffff;
 font-size: 9px;
 margin-bottom: 7px;
 }
+
+/* style of the popup background in case of transparent styles */
+#opaque
+{
+background-color: #ffffff;
+}
+.calfocus
+{
+font-size:7px;
+background-color: none;
+}
+.calfocus a
+{
+text-decoration: none;
+color: #000000;
+}
+.calfocuson
+{
+font-size:7px;
+background-color: #f3e498;
+}
+.calfocuson a
+{
+text-decoration: none;
+color: #000000;
+}
+
 /* Style for wiki item */
 .Calwiki
 {
@@ -3043,12 +3073,6 @@ background-color: #DAAAAA;
 .calprio9
 {
 background-color: #DA9A9A;
-}
-
-/* style of the popup background in case of transparent styles */
-#opaque
-{
-background-color: #ffffff;
 }
 
 /* comments toggle trick by zaufi */
