@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.24 2004-01-23 13:50:46 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.25 2004-02-18 04:21:05 ggeller Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -113,7 +113,7 @@
   {if $tiki_p_hw_teacher eq 'y'}
     <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
       &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
-      &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br/>
+      {* &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br/> *}
       &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
     </div>
   {elseif $tiki_p_hw_student eq 'y'}
