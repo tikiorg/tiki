@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.17 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.18 2003-12-31 02:34:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.17 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.18 2003-12-31 02:34:13 mose Exp $
 //
 
 // Initialization
@@ -155,7 +155,7 @@ $smarty->assign('description', $info["description"]);
 
 // If the parent category is not zero get the category path
 if ($_REQUEST["parentId"]) {
-	$path = $categlib->get_category_path_admin($_REQUEST["parentId"]);
+	$path = $categlib->get_category_path($_REQUEST["parentId"]);
 
 	$p_info = $categlib->get_category($_REQUEST["parentId"]);
 	$father = $p_info["parentId"];
@@ -191,7 +191,7 @@ foreach ($ctall as $c) {
 	);
 }
 
-//$debugger->var_dump('$tree_nodes');
+$debugger->var_dump('$tree_nodes');
 $tm = new CatAdminTreeMaker("admcat");
 $res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
 $smarty->assign('tree', $res);

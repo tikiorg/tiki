@@ -1,43 +1,30 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.13 2003-12-24 01:17:26 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.14 2003-12-31 02:34:13 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
-<!-- the help link info -->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=CategoryAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin categories{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
-
-<!-- begin -->
 
 <br />
 <br />
 
 <div class="tree" id="top">
-<table class="tcategpath">
-<tr>
-  <td class="tdcategpath">{tr}Current category{/tr}: {$path} </td>
-  <td class="tdcategpath" align="right">
-  <table><tr><td>
-  {* Don't show 'TOP' button if we already on TOP but reserve space to avoid visual effects on change view *}
-  <div class="button2" style="visibility:{if $parentId ne '0'}visible{else}hidden{/if}">
-      <a class="linkbut" href="tiki-browse_categories.php?parentId=0">{tr}top{/tr}</a>
-    </div>
-  </td></tr></table></td>
-</tr>
-</table>
+<div class="treetitle">{tr}Current category{/tr}: 
+<a href="tiki-admin_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
+{section name=x loop=$path}
+&nbsp;::&nbsp;
+<a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
+{/section}
+</div>
 
-{* Show tree *}
-{ * If not TOP level, append '..' as first node :) *}
 {if $parentId ne '0'}
 <div class="treenode">
-  <a class="catname" href="tiki-admin_categories.php?parentId={$father}" title="Upper level">..</a>
+<a class="catname" href="tiki-admin_categories.php?parentId={$father}" title="Upper level">..</a>
 </div>
 {/if}
 {$tree}
