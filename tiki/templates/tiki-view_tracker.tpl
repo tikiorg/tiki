@@ -338,7 +338,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=2_$fca}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}" id="cat{$iu.categId}"><label for="cat{$iu.categId}">{$iu.name}</label></td>{cycle name=2_$fca}
 {/foreach}
 </table>
 
