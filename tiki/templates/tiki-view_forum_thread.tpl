@@ -495,7 +495,9 @@ a moderator approves it.{/tr}</small>
   <td colspan="2" class="threadseparator"></td>
 </tr>
 {/section}
+{if $replies_cant > 0}
 </table>
+{/if}
 </form>
 
 <br/>
