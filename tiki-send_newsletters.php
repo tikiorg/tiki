@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.15 2004-04-09 12:56:56 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.16 2004-04-28 21:34:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,56 +13,53 @@ include_once ('lib/newsletters/nllib.php');
 
 if ($feature_newsletters != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($tiki_p_admin_newsletters != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-if (!isset($_REQUEST["nlId"]))
-	$_REQUEST["nlId"] = 0;
-
+if (!isset($_REQUEST["nlId"])) $_REQUEST["nlId"] = 0;
 $smarty->assign('nlId', $_REQUEST["nlId"]);
 
-$newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '');
-$smarty->assign('newsletters', $newsletters["data"]);
-
-$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
-// $nl_info["name"] = '';
-// $nl_info["description"] = '';
-// $nl_info["allowUserSub"] = 'y';
-// $nl_info["allowAnySub"] = 'n';
-// $nl_info["unsubMsg"] = 'y';
-// $nl_info["validateAddr"] = 'y';
-
-if (!isset($_REQUEST["editionId"]))
-	$_REQUEST["editionId"] = 0;
-
-if ($_REQUEST["editionId"]) {
-	$info = $nllib->get_edition($_REQUEST["editionId"]);
-} else {
-	$info = array();
-
-	$info["data"] = '';
-	$info["subject"] = '';
+$newsl = $nllib->list_newsletters(0, -1, 'created_desc', '');
+$newsletters = array('data'=>array(),'cant'=>0);
+for ($i = 0; $i < $newsl["cant"]; $i++) {
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_newsletters == 'y' || $userlib->object_has_permission($user, $newsl["data"][$i]["nlId"], 'newsletter', 'tiki_p_send_newsletters')) {
+		$newsletters["data"][] = $newsl["data"][$i];
+		$newsletters["cant"]++;
+	}
 }
 
-$smarty->assign('info', $info);
+if (!$newsletters["cant"]) {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
+$smarty->assign('newsletters', $newsletters["data"]);
+
+if ($_REQUEST["nlId"]) {
+	$nl_info = $nllib->get_newsletter($_REQUEST["nlId"]);
+
+	if (!isset($_REQUEST["editionId"])) $_REQUEST["editionId"] = 0;
+
+	if ($_REQUEST["editionId"]) {
+		$info = $nllib->get_edition($_REQUEST["editionId"]);
+	} else {
+		$info = array();
+		$info["data"] = '';
+		$info["subject"] = '';
+	}
+	$smarty->assign('info', $info);
+}
 
 if (isset($_REQUEST["remove"])) {
-  $area = 'delnewsletter';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-    key_check($area);
+	$area = 'delnewsletter';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
 		$nllib->remove_edition($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
@@ -79,8 +76,16 @@ if (isset($_REQUEST["preview"])) {
 	//if (eregi("\<[ \t]*html[ \t\>]",  $_REQUEST["data"]))  // html newsletter - this will be the text sent with the html part
 	//	$smarty->assign('txt', nl2br(strip_tags($_REQUEST["data"])));
 	//TODO: the sent text version is not pretty: the text must be a textarea
-	$info["data"] = $_REQUEST["data"];
-	$info["subject"] = $_REQUEST["subject"];
+	if (isset($_REQUEST["data"])) {
+		$info["data"] = $_REQUEST["data"];
+	} else {
+		$info["data"] = '';
+	}
+	if (isset($_REQUEST["subject"])) {
+		$info["subject"] = $_REQUEST["subject"];
+	} else {
+		$info["subject"] = '';
+	}
 	$smarty->assign('info', $info);
 }
 
@@ -152,7 +157,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $nllib->list_editions($offset, $maxRecords, $sort_mode, $find);
+$channels = $nllib->list_editions($_REQUEST["nlId"], $offset, $maxRecords, $sort_mode, $find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -170,7 +175,6 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
-
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 if ($tiki_p_use_content_templates == 'y') {

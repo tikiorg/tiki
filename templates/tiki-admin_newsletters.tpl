@@ -87,7 +87,7 @@
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}">{tr}subscriptions{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$channels[user].name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 </td>
 </tr>
 {/section}
