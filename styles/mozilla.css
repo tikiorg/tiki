@@ -1771,14 +1771,14 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 .catname {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   white;
+	color:   green;
 	text-decoration:   none;
 }
 
 .catname:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	color:   white;
+	color:   green;
 	text-decoration:   none;
 }
 
