@@ -37,7 +37,8 @@ function getSubGraph($params) {
 
 	    $neighbours = $wikilib->wiki_get_neighbours($nodeName);
 	    
-	    for ($j = 0; $j < sizeof($neighbours); $j++) {
+	    $temp_max = sizeof($neighbours);
+	    for ($j = 0; $j < $temp_max; $j++) {
 		if (!isset($passed[$neighbours[$j]])) {
 		    $nextQueue[] = $neighbours[$j];
 		    $passed[$neighbours[$j]] = true;
