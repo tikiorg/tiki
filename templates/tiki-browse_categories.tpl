@@ -7,9 +7,9 @@
 </table>
 <div align="center">
 <form method="post" action="tiki-browse_categories.php">
-search category: <input type="text" name="find" value="{$find}" size="35" /> {tr}deep{/tr}:<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
+{tr}search category{/tr}: <input type="text" name="find" value="{$find}" size="35" /> {tr}deep{/tr}:<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}/>
         <input type="hidden" name="parentId" value="{$parentId}" />
-        <input type="submit" value="find" name="search" />
+        <input type="submit" value="{tr}find{/tr}" name="search" />
         <input type="hidden" name="sort_mode" value="{$sort_mode}" />
 </form>
 <h3>{tr}sub categories{/tr}</h3>

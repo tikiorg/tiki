@@ -40,9 +40,12 @@
       <tr>
         <td>
           <table>
-          <tr><td><span class="user-box-text">{tr}user{/tr}:</span></td><td><input type="text" name="user"  size="7" /></td></tr>
-          <tr><td><span class="user-box-text">{tr}pass{/tr}:</span></td><td><input type="password" name="pass" size="7" /></td></tr>
-          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td>
+          <tr><td><span class="user-box-text">{tr}user{/tr}:</span></td></tr>
+          <tr><td><input type="text" name="user"  size="20" /></td></tr>
+          <tr><td><span class="user-box-text">{tr}pass{/tr}:</span></td></tr>
+          <tr><td><input type="password" name="pass" size="20" /></td></tr>
+          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+          <tr>
           {if $allowRegister eq 'y' and $forgotPass eq 'y'}
             <td valign="bottom">[<a class="link" href="tiki-register.php">{tr}register{/tr}</a>|<a class="link" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a>]</td>
           {/if}
