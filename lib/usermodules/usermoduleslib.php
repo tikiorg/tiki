@@ -40,9 +40,34 @@ class UserModulesLib extends TikiLib {
     $query = "select * from tiki_modules where name='$module'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $query2 = "replace into tiki_user_assigned_modules(user,name,position,ord,type,title,cache_time,rows,groups)
-    values('$user','$module','$position',$order,'${res["type"]}','${res["title"]}','${res["cache_time"]}','${res["rows"]}','${res["groups"]}')";
-    $result2 = $this->query($query2);
+    $query2 = '
+    	REPLACE INTO
+    		tiki_user_assigned_modules
+    	(
+    		user,
+    		name,
+    		position,
+    		ord,
+    		type,
+    		title,
+    		cache_time,
+    		rows,
+    		groups
+    	) VALUES
+    		(?,?,?,?,?,?,?,?,?)
+    ';
+    $fields = array(
+    	$user,
+    	$module,
+    	$position,
+    	$order,
+    	$res['type'],
+    	$res['title'],
+    	$res['cache_time'],
+    	$res['rows'],
+    	$res['groups',
+    );
+    $result2 = $this->query($query2, $fields);
   }
   
   function get_user_assigned_modules($user)
