@@ -26,8 +26,10 @@ if ($user) {
 	// ---------------- TRANSACTIONS -------------------------------------------
 	} elseif ($page == 'transactions' or $page == 'my_tr') {
 		if (isset($_REQUEST['tr_amount'])) {
+			if ($tiki_p_cc_admin != 'y') {
+				$_REQUEST['from_id'] = $user;
+			}
 			if (isset($_REQUEST['from_id']) and isset($_REQUEST['to_id']) and isset($_REQUEST['cc_id'])) {
-				$from_user = $_REQUEST['from_id'];
 				$to_user = $_REQUEST['to_id'];
 				$cc_id = $_REQUEST['cc_id'];
 				$from = $to = false;
