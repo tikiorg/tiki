@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.12 2003-08-11 07:06:54 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.13 2003-08-28 12:31:27 redflo Exp $
  *
  * \brief Categiries support class
  *
@@ -236,19 +236,19 @@ class CategLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$bindvars=array($categId,$findesc,$findesc);
-			$mid = " and (name like ? or description like ?)";
+			$mid = " and (tbl2.`name` like ? or tbl2.`description` like ?)";
 		} else {
 			$mid = "";
 			$bindvars=array($categId);
 		}
 
-		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=? $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=? $mid";
+		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$result2 = $this->query($query_cant,$bindvars);
 		$cant = $result2->numRows();
 		$cant2
-			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and `categId`=? $mid",$bindvars);
+			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid",$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
