@@ -1,5 +1,14 @@
 Version 1.5 -TBA-
 
+* [NEW] Added an option to generate gzipper output to the browser.
+* [NEW] Base templates can now be defined by theme so you can create a theme presenting
+  a whole different layout for Tiki. You can also use this to create themes including images
+  and other decoration elements in Tiki. Since only base templates are classified by theme
+  you can do it changing just a few files. If you don't want to change the layout just copy
+  the templates from the templates directory if you are creating a theme.
+* [NEW] Changed wiki page names to support up to 150 characters
+* [NEW] Menus now preserve their state between pages (using cookies) if cookies are disabled
+  then menus wont preserve state but will still work as they did before.
 * [NEW] Added plugins to the Wiki, now you can create your own plugins for the wiki to 
   suit your needs. The syntax is simple, see lib/wiki_plugins/example.php for a
   description and example.
