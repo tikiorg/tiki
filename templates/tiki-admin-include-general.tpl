@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.19 2003-11-10 02:30:43 zaufi Exp $ *}
+
 <div class="cbox">
   <div class="cbox-title">
     {tr}General preferences and settings{/tr}
@@ -27,7 +29,7 @@
             {/section}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr></td></tr>      
+      </tr><tr><td colspan=2><hr/></td></tr>      
       <tr>
         <td class="form">{tr}Use group homepages{/tr}:</td>
         <td><input type="checkbox" name="useGroupHome"
@@ -76,7 +78,7 @@
             {/if}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr></td></tr><tr>
+      </tr><tr><td colspan=2><hr/></td></tr><tr>
         <td class="form">{tr}Language{/tr}:</td>
         <td>
         <select name="language">
@@ -130,7 +132,7 @@
       </tr>
       </table>
       <table ><tr>
-        <td colspan=2><hr></td>
+        <td colspan=2><hr/></td>
       </tr><tr>
         <td class="form" >
           {tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</td>
@@ -146,7 +148,7 @@
       </tr>
       </table>
       <table ><tr>
-        <td colspan=5><hr></td></tr>
+        <td colspan=5><hr/></td></tr>
         <tr>
         <td class="form" >
           {tr}Open external links in new window{/tr}:</td>
@@ -191,7 +193,7 @@
         </td>
       </tr></table>
       <table ><tr>
-        <td colspan=2><hr></td>
+        <td colspan=2><hr/></td>
       </tr><tr>
         <td class="form" >
           {tr}Server name (for absolute URIs){/tr}:</td>
