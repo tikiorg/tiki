@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.12 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.13 2004-09-15 03:05:48 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,13 +49,17 @@ if ($_REQUEST["pollId"]) {
 	$info = array();
 
 	$info["title"] = '';
+	$info["description"] = '';
 	$info["active"] = 'y';
 	$info["publishDate"] = date("U");
+	$info["releaseDate"] = date("U")+60*60*24*14;
 }
 
 $smarty->assign('title', $info["title"]);
+$smarty->assign('description', $info["description"]);
 $smarty->assign('active', $info["active"]);
 $smarty->assign('publishDate', $info["publishDate"]);
+$smarty->assign('releaseDate', $info["releaseDate"]);
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'delpoll';
@@ -69,21 +73,21 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-polls');
-	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
-		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"], 0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$releaseDate = mktime($_REQUEST["r_Time_Hour"], $_REQUEST["r_Time_Minute"], 0, $_REQUEST["r_Date_Month"], $_REQUEST["r_Date_Day"], $_REQUEST["r_Date_Year"]);
 
-	$pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
+	$pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST['description'],$_REQUEST["active"], $publishDate, $releaseDate);
 
 	$cat_type = 'poll';
 	$cat_objid = $pid;
-	$cat_desc = substr($_REQUEST["title"], 0, 200);
+	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["title"];
 	$cat_href = "tiki-poll_results.php?pollId=" . $cat_objid;
 	include_once ("categorize.php");
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'publishDate_desc';
+	$sort_mode = 'releaseDate_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

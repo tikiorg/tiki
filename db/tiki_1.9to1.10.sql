@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.20 2004-09-02 19:26:40 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.21 2004-09-15 03:05:49 mose Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -114,3 +114,14 @@ alter table tiki_galleries_scales add primary key (galleryId,scale);
 
 # added on 2004-9-2 sylvie
 ALTER TABLE tiki_mailin_accounts add column (discard_after varchar(255) default NULL);
+
+# added on 2004-09-14
+# polls enhancement
+alter table tiki_polls add column ( 
+	description text,
+	releaseDate int(14) default NULL,
+	KEY pubdate (publishDate),
+	KEY reldate (releaseDate),
+	KEY active (active)
+);
+
