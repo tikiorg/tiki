@@ -277,7 +277,7 @@ if($feature_wiki_attachments == 'y') {
       $wikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
     }
   }
-  $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
+  $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_asc','');
   $smarty->assign('atts',$atts["data"]);
   $smarty->assign('atts_count',count($atts["data"]));
 }
