@@ -75,6 +75,7 @@ CREATE TABLE tiki_galleries (
   primary key(galleryId)
 );
 
+drop table if exists tiki_images;
 CREATE TABLE tiki_images (
   imageId integer(14) not null auto_increment,
   galleryId integer(14) not null,
