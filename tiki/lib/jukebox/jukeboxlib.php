@@ -4,15 +4,20 @@
 /* tiki jukebox */
 
 class JukeboxLib extends TikiLib {
-	
+
+/* todo */	
 	function replace_album($title, $description, $user, $public, $albumId, $maxTracks, $genreId) {
 
 		$now = date("U");
 
-		if ($albumId) {
-			$query = "update `tiki_jukebox-albums` set `genreName`=?, `genreDescription`=?, `user`=?";
+		if (!$albumId) {
+			$query = "insert into `tiki_jukebox-albums` ()";
+		} else {
+			$query = "update `tiki_jukebox-albums` set `genreName`=?, `genreDescription`=?, `lastModif`=?, `user`=?";
 		}
 	}
+
+/************************************ Genres *******************************/
 
 /* Create or Update a Genre */
 	function replace_genres($title, $description, $genreId) {
@@ -85,6 +90,19 @@ class JukeboxLib extends TikiLib {
                 $result = $this->query($query,array((int) $id));
 
                 return true;
+        }
+
+/****************************** Tracks *******************************/
+
+/* Get a single Track */
+        function get_track($id) {
+
+                $query = "select * from `tiki_jukebox_tracks` where `trackId`=?";
+
+                $result = $this->query($query, array($id));
+                $res = $result->fetchRow();
+
+                return $res;
         }
 
 }
