@@ -632,7 +632,7 @@ class TrackerLib extends TikiLib {
 		$type['x'] = array('label'=>tra('action'),        'opt'=>true, 'help'=>tra('Action options : Label,post,tiki-index.php,page:fieldname,highlight=test') );
 		$type['h'] = array('label'=>tra('header'),        'opt'=>false);
 		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options : parentId') );
-		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker Item options : trackerId,fieldname (where fieldname is chosen in the referred tracker)') );
+		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker Item options : trackerId,itemId') );
 		$type['l'] = array('label'=>tra('tracker links'), 'opt'=>true, 'help'=>tra('Tracker Links options : trackerId,fieldname (where fieldname is chosen in the current tracker)') );
 		return $type;
 	}
