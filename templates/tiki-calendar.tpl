@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.24 2003-11-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.25 2003-11-11 08:43:03 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 <script type="javascript" src="lib/calendar/dates.js"></script>
@@ -130,7 +130,7 @@ onmouseover="this.style.textDecoration='underline';"
 <a href="tiki-calendar.php?todate={$cell[w][d].day}">{$cell[w][d].day|date_format:"%d/%m"}</a>
 </span>
 <span style="float:right;margin-right:3px;padding-right:4px;">
-{if count($listcals) > 0}
+{if $tiki_p_add_events and count($listcals) > 0}
 <a href="tiki-calendar.php?todate={$cell[w][d].day}&amp;editmode=add">{tr}+{/tr}</a>
 {/if}
 </span>
