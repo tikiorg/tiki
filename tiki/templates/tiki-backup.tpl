@@ -32,7 +32,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$backups}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="backups/{$tikidomain}{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"...":true}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="backups/{if $tikidomain}{$tikidomain}/{/if}{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"...":true}</a></td>
 <td class="{cycle advance=false}">{$backups[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$backups[user].size|string_format:"%.2f"} Mb</td>
 <td class="{cycle}">
