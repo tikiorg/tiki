@@ -1,17 +1,48 @@
 <a class="pagetitle" href="tiki-jukebox_albums.php">{tr}Jukebox Albums{/tr}</a><br/><br/>
 {if $tiki_p_jukebox_tracks eq 'y'}
-<a class="linkbut" href="tiki-jukebox_tracks.php">{tr}show all tracks{/tr}</a>
-{/if}
-{if $tiki_p_jukebox_upload eq 'y'}
-<a class="linkbut" href="tiki-jukebox_upload.php">{tr}upload a track{/tr}</a>
-{/if}
-{if $tiki_p_jukebox_admin eq 'y'}
-<a class="linkbut" href="tiki-jukebox_admin.php">{tr}admin{/tr}</a>
+<a class="linkbut" href="tiki-jukebox_albums.php?edit_mode=1?albumId=0">{tr}create new album{/tr}</a>
 {/if}
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=jukebox"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
 <br/><br/>
+{if $tiki_p_create_file_galleries eq 'y'}
+{if $edit_mode eq 'y'}
+{if $galleryId eq 0}
+<h3>{tr}Create a new album{/tr}</h3>
+{else}
+<h3>{tr}Edit this album:{/tr} {$name}</h3>
+<a class="linkbut" href="tiki-jukebox_albums.php?edit_mode=1&amp;galleryId=0">{tr}create new album{/tr}</a>
+{/if}
+<div  align="center">
+<form action="tiki-jukebox_albums.php" method="post">
+<input type="hidden" name="albumId" value="{$albumId|escape}" />
+<table class="normal">
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<tr>
+        <td class="formcolor">{tr}Max description display size{/tr}</td>
+        <td class="formcolor"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
+</tr>
+<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+{include file=categorize.tpl}
+<tr><td class="formcolor">{tr}Other users can upload tracks to this album{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+</table>
+</form>
+</div>
+<br/>
+{if $albumId>0}
+{if $edited eq 'y'}
+<div class="wikitext">
+{tr}You can access this album using the following URL{/tr}: <a class="jukeboxlink" href="{$url}?albumId={$albumId}">{$url}?albumId={$albumId}</a>
+</div>
+{/if}
+{/if}
+
+{/if}
+{/if}
+
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
