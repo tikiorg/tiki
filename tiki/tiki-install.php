@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.60 2004-06-12 07:02:49 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.61 2004-06-18 22:28:17 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.60 2004-06-12 07:02:49 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.61 2004-06-18 22:28:17 teedog Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -408,8 +408,10 @@ function check_password() {
 
                 $hash = md5('admin' . $pass . $res['email']);
                 $hash2 = md5($pass);
-                // next verify the password with 2 hashes methods, the old one (pass�)) and the new one (login.pass;email)
-                $query = "select login from users_users where lower(login) = 'admin' and hash in ('$hash', '$hash2')";
+                $hash3 = md5('admin' . $pass);
+                // next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
+                // 6/18/04 terence added hash3 user.pass
+                $query = "select login from users_users where lower(login) = 'admin' and hash in ('$hash', '$hash2', '$hash3')";
                 $result = $dbTiki->Execute($query);
 
                 if ($result->numRows()) {

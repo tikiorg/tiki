@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.77 2004-06-17 18:56:47 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.78 2004-06-18 22:28:16 teedog Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -587,3 +587,11 @@ ALTER TABLE `tiki_submissions` ADD `bibliographical_references` TEXT DEFAULT NUL
 
 # Added June 17th terence (added "article-put" mail-in account type)
 ALTER TABLE `tiki_mailin_accounts` ADD `article_topicId` int(4) DEFAULT NULL , ADD `article_type` varchar(50) DEFAULT NULL;
+
+# searchword caching table for search syllables
+DROP TABLE IF EXISTS tiki_searchwords;
+CREATE TABLE tiki_searchwords(
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
+  PRIMARY KEY  (syllable,searchword)
+) TYPE=MyISAM;
