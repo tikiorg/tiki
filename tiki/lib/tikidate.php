@@ -16,7 +16,8 @@
  * Created by: Jeremy Jongsma (jjongsma@tickchat.com)
  * Created on: Sat Jul 26 11:51:31 CDT 2003
  */
-class TikiDate {
+require_once("Date.php");
+class TikiDate extends Date {
 	/**
 	 * UTC offset to use for display
 	 */
@@ -32,6 +33,7 @@ class TikiDate {
 	 * $_display_offset: desired offset for date display, in minutes
 	 */
 	function TikiDate($_display_offset = 0) {
+			Date::Date();
 		$this->display_offset = $_display_offset;
 
 		$this->server_offset = intval(date("Z"));
@@ -100,14 +102,9 @@ class TikiDate {
 
 	/**
 	 * Get the name of the current timezone.
-	 *
-	 * Currently, only "UTC" or an empty string (Local).
 	 */
-	function getTzName() {
-		if ($this->display_offset == 0)
-			return "UTC";
-		else
-			return "";
+	function getTzName(){
+			return $this->tz->shortname;
 	}
 }
 
