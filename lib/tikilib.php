@@ -2291,13 +2291,16 @@ class TikiLib {
 	    $mid = '';
 	}
 
+	$bindvars=array();
 	if ($date) {
 	    $bindvars[]=(int) $date;
 	    if ($mid) {
-		$mid .= " and  `publishDate`<=? ";
+		$mid .= " and  ";
 	    } else {
-		$mid = " where `publishDate`<=? ";
+		$mid = " where ";
 	    }
+	    $mid .= "(`publishDate`<=? and `type`<>'Event') or (`publishDate`>=? and `type`='Event')";
+	    $bindvars=array($date,$date);
 	}
 
 	if ($type) {
