@@ -80,6 +80,10 @@ if($_REQUEST["forumId"]) {
   $info["moderator_group"]='';
   $info['forum_password']='';
   $info['forum_use_password']='n';
+  $info['att']='att_no';
+  $info['att_store']='db';
+  $info['att_store_dir']='';
+  $info['att_max_size']=1000000;
           
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -121,6 +125,10 @@ $smarty->assign('approval_type',$info['approval_type']);
 $smarty->assign('moderator_group',$info['moderator_group']);
 $smarty->assign('forum_password',$info['forum_password']);
 $smarty->assign('forum_use_password',$info['forum_use_password']);
+$smarty->assign('att',$info['att']);
+$smarty->assign('att_store',$info['att_store']);
+$smarty->assign('att_store_dir',$info['att_store_dir']);
+$smarty->assign('att_max_size',1000000);
 
 $smarty->assign('topics_list_reads',$info['topics_list_reads']);
 $smarty->assign('topics_list_pts',$info['topics_list_pts']);
@@ -181,7 +189,7 @@ if(isset($_REQUEST["save"])) {
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
   $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads'],$_REQUEST['show_description'],
-  $_REQUEST['inbound_pop_server'],$_REQUEST['inbound_pop_port'],$_REQUEST['inbound_pop_user'],$_REQUEST['inbound_pop_password'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_level'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group'],$_REQUEST['forum_password'],$_REQUEST['forum_use_password']);                         
+  $_REQUEST['inbound_pop_server'],110,$_REQUEST['inbound_pop_user'],$_REQUEST['inbound_pop_password'],$_REQUEST['outbound_address'],$_REQUEST['topic_smileys'],$_REQUEST['topic_summary'],$_REQUEST['ui_avatar'],$_REQUEST['ui_flag'],$_REQUEST['ui_posts'],$_REQUEST['ui_level'],$_REQUEST['ui_email'],$_REQUEST['ui_online'],$_REQUEST['approval_type'],$_REQUEST['moderator_group'],$_REQUEST['forum_password'],$_REQUEST['forum_use_password'],$_REQUEST['att'],$_REQUEST['att_store'],$_REQUEST['att_store_dir'],$_REQUEST['att_max_size']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -225,6 +233,11 @@ if(isset($_REQUEST["save"])) {
   $info["moderator_group"]='';
   $info['forum_password']='';
   $info['forum_use_password']='n';
+  $info['att']='att_no';
+  $info['att_store']='db';
+  $info['att_store_dir']='';
+  $info['att_max_size']=1000000;
+
 
   $info["topics_list_reads"]='y';
   $info["topics_list_pts"]='y';
@@ -271,6 +284,11 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('moderator_group',$info['moderator_group']);
   $smarty->assign('forum_password',$info['forum_password']);
   $smarty->assign('forum_use_password',$info['forum_password']);
+  $smarty->assign('att',$info['att']);
+  $smarty->assign('att_store',$info['att_store']);
+
+  $smarty->assign('att_store_dir',$info['att_store_dir']);
+  $smarty->assign('att_max_size',1000000);
 
 
 }

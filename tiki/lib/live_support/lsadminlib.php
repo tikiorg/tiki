@@ -65,7 +65,7 @@ class LsAdminlib extends Tikilib{
     	}
     }
     $query = "select * from tiki_live_support_messages $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_user_notes $mid";
+    $query_cant = "select count(*) from tiki_live_support_messages $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
@@ -88,6 +88,73 @@ class LsAdminlib extends Tikilib{
     }
     return $ret;
   }
+  
+  /* functions for transcripts */
+  function list_support_requests($offset,$maxRecords,$sort_mode,$find,$where)
+  {
+    
+    $sort_mode = str_replace("_desc"," desc",$sort_mode);
+    $sort_mode = str_replace("_asc"," asc",$sort_mode);
+    if($find) {
+      $mid=" where (reason like '%".$find."%' or user like '%".$find."%' or operator like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    if($where) {
+    	if($mid) {
+    		$mid = ' and '.$where;
+    	} else {
+    		$mid = ' where '.$where;
+    	}
+    }
+    $query = "select * from tiki_live_support_requests $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_live_support_requests $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res['msgs']=$this->getOne("select count(*) from tiki_live_support_events where reqId='".$res['reqId']."'");
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }  
+  
+  function get_all_tiki_users()
+  {
+  	$query = "select distinct(tiki_user) from tiki_live_support_requests";
+  	$result = $this->query($query);	
+  	$ret = Array();
+  	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+  		$ret[] = $res['tiki_user'];
+  	}
+  	return $ret;
+  }
+
+  function get_all_operators()
+  {
+  	$query = "select distinct(operator) from tiki_live_support_requests";
+  	$result = $this->query($query);	
+  	$ret = Array();
+  	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+  		$ret[] = $res['operator'];
+  	}
+  	return $ret;
+  }
+  
+  function get_events($reqId) 
+  {
+  	$query = "select tlr.operator_id,tlr.user_id,tle.data,tle.timestamp,tlr.user,tlr.operator,tlr.tiki_user,tle.senderId from tiki_live_support_events tle, tiki_live_support_requests tlr where tle.reqId=tlr.reqId and (senderId=user_id or senderId=operator_id) and tlr.reqId='$reqId'";
+  	$result = $this->query($query);	
+  	$ret = Array();
+  	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+  		$ret[] = $res;
+  	}
+  	return $ret;
+  }
+
 
 }
 

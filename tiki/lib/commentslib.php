@@ -14,6 +14,55 @@ class Comments extends TikiLib {
   }
   
   /* Functions for the forums */
+  function attach_file($threadId,$qId,$name,$type,$size, $data, $fhash, $dir, $forumId) 
+  {
+  	$name = addslashes($name);
+  	$data =addslashes($data);
+  	$now = date("U");
+  	if($fhash) {
+  		// Do not store data if we have a file
+  		$data = '';
+  	}
+
+  	$query = "insert into tiki_forum_attachments(threadId,qId,filename,filetype,filesize,data,path,created,dir,forumId)
+  	values($threadId,$qId,'$name','$type',$size,'$data','$fhash',$now,'$dir',$forumId)";
+  	$this->query($query);
+  	// Now the file is attached and we can proceed.
+  }
+  
+  function get_thread_attachments($threadId,$qId)
+  {
+  	if($threadId) {
+  		$cond = " where threadId=$threadId ";
+  	} else {
+  		$cond = " where qId=$qId ";
+  	}
+  	$query = "select filename,filesize,attId from tiki_forum_attachments $cond";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	$ret[] = $res;
+    }
+    return $ret;
+  }
+  
+  function get_thread_attachment($attId)
+  {
+  	$query = "select * from tiki_forum_attachments where attId=$attId";
+  	$result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+  	$forum_info = $this->get_forum($res['forumId']);
+  	
+    $res['forum_info']=$forum_info;
+    return $res;	
+  }
+  
+  function remove_thread_attachment($attId)
+  {
+  	$query = "delete from tiki_forum_attachments where attId=$attId";
+  	$this->query($query);
+  }
+  
   function parse_output(&$obj, &$parts,$i) {  
 	  if(!empty($obj->parts)) {    
 	    for($i=0; $i<count($obj->parts); $i++)      
@@ -135,12 +184,14 @@ class Comments extends TikiLib {
   	    where qId=$qId
   	  ";
   	  $this->query($query);
+  	  return $qId;
   	} else {
   	  $query = "insert into tiki_forums_queue(object,parentId,user,title,data,type,topic_smiley,summary,timestamp,topic_title,hash,forumId)
   	  values('$hash',$parentId,'$user','$title','$data','$type','$topic_smiley','$summary',$now,'$topic_title','$hash2',$forumId)";
   	  $this->query($query);
+  	  $qId = $this->getOne("select max(qId) from tiki_forums_queue where hash='$hash2' and timestamp=$now");
   	}
-  	return true;
+	return $qId;
   }
   
   function get_num_queued($object)
@@ -166,6 +217,7 @@ class Comments extends TikiLib {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
     	$res['parsed']=$this->parse_comment_data($res['data']);
+    	$res['attachments']=$this->get_thread_attachments(0,$res['qId']);
         $ret[] = $res;
     }
     $retval = Array();
@@ -181,12 +233,15 @@ class Comments extends TikiLib {
   	$query = "select * from tiki_forums_queue where qId=$qId";
   	$result = $this->query($query);
   	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+  	$res['attchments']=$this->get_thread_attachments(0,$res['qId']);
   	return $res;
   }
   
   function remove_queued($qId)
   {
   	$query = "delete from tiki_forums_queue where qId=$qId";
+  	$this->query($query);
+  	$query = "delete from tiki_forum_attachments where qId=$qId";
   	$this->query($query);
   }
   
@@ -195,8 +250,14 @@ class Comments extends TikiLib {
   function approve_queued($qId)
   {
   	$info = $this->queue_get($qId);
-	$this->post_new_comment('forum'.$info['forumId'],$info['parentId'],$info['user'], $info['title'], $info['data'],$info['type'],$info['summary'],$info['topic_smiley']);
+	$threadId = $this->post_new_comment('forum'.$info['forumId'],$info['parentId'],$info['user'], $info['title'], $info['data'],$info['type'],$info['summary'],$info['topic_smiley']);
 	$this->remove_queued($qId);
+	if($threadId) {
+		$query = "update tiki_forum_attachments set threadId=$threadId where qId=$qId";
+		$this->query($query);
+		$query = "delete from tiki_forum_attachments where qId=$qId";
+		$this->query($query);
+	}
   }
 	
   function get_forum_topics($forumId)
@@ -218,12 +279,13 @@ class Comments extends TikiLib {
                          $topicOrdering, $threadOrdering,$section,
                          $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads,
                          $show_description,
-                         $inbound_pop_server,$inbound_pop_server,$inbound_pop_user,$inbound_pop_password,$outbound_address,
+                         $inbound_pop_server,$inbound_pop_port,$inbound_pop_user,$inbound_pop_password,$outbound_address,
                          $topic_smileys, $topic_summary,
                          $ui_avatar, $ui_flag, $ui_posts, $ui_level,$ui_email, $ui_online,
                          $approval_type,
                          $moderator_group,
-                         $forum_password, $forum_use_password)
+                         $forum_password, $forum_use_password,
+                         $att,$att_store,$att_store_dir,$att_max_size)
   {
     $name = addslashes($name);
     $moderator_group = addslashes($moderator_group);
@@ -269,6 +331,10 @@ class Comments extends TikiLib {
                 moderator_group = '$moderator_group',
                 forum_password = '$forum_password',
                 forum_use_password = '$forum_use_password',
+                att = '$att',
+                att_store = '$att_store',
+                att_store_dir = '$att_store_dir',
+                att_max_size = $att_max_size,
                 topics_list_pts = '$topics_list_pts',
                 topics_list_lastpost = '$topics_list_lastpost',
                 topics_list_author = '$topics_list_author',
@@ -286,7 +352,7 @@ class Comments extends TikiLib {
                 topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
                 inbound_pop_server,inbound_pop_port,inbound_pop_user,inbound_pop_password,outbound_address,
                 topic_smileys,topic_summary,
-                ui_avatar,ui_flag,ui_posts,ui_level,ui_email,ui_online,approval_type,moderator_group,forum_password,forum_use_password) 
+                ui_avatar,ui_flag,ui_posts,ui_level,ui_email,ui_online,approval_type,moderator_group,forum_password,forum_use_password,att,att_store,att_store_dir,att_max_size) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
@@ -295,7 +361,7 @@ class Comments extends TikiLib {
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
                         '$inbound_pop_server',$inbound_pop_port,'$inbound_pop_user','$inbound_pop_password',$outbound_address',
                         '$topic_smileys','$topic_summary',
-                        '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password') ";
+                        '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password','$att','$att_store','$att_store_dir',$att_max_size) ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
@@ -318,6 +384,8 @@ class Comments extends TikiLib {
     $objectId = md5('forum'.$forumId);	
     $query = "delete from tiki_comments where object='$objectId'";
     $result = $this->query($query);
+    $query = "delete from tiki_forum_attachments where forumId=$forumId";
+    $this->query($query);
     return true;
   }              
 
@@ -550,6 +618,7 @@ class Comments extends TikiLib {
     } else {
       $res['user_email']='';
     }
+    $res['attachments']=$this->get_thread_attachments($res['threadId'],0);
     $res['user_online']='n';
     if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
@@ -688,7 +757,7 @@ class Comments extends TikiLib {
       if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
       } 
-
+	  $res['attachments']=$this->get_thread_attachments($res['threadId'],0);
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
@@ -735,7 +804,7 @@ class Comments extends TikiLib {
       if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
       } 
-
+	  $res['attachments']=$this->get_thread_attachments($res['threadId'],0);
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
@@ -892,13 +961,16 @@ class Comments extends TikiLib {
     } else {
       return false;	
     }
-    return true;                      
+    $threadId = $this->getOne("select threadId from tiki_comments where hash='$hash'");
+    return $threadId;                      
   }
   
   function remove_comment($threadId) 
   {
     $query = "delete from tiki_comments where threadId='$threadId' or parentId='$threadId'";
     $result = $this->query($query);
+    $query = "delete from tiki_forum_attachments where threadId=$threadId";
+    $this->query($query);
     return true;
   }
   

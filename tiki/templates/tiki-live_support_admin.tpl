@@ -2,7 +2,8 @@
 <br/><br/>
 [ <a class="link" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a> |
 <a class="link" {jspopup width="300" height="450" href="tiki-live_support_client.php"}>{tr} Open client window{/tr}</a> |
-<a class="link" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a>
+<a class="link" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a> | 
+<a class="link" href="tiki-live_support_transcripts.php">{tr}Transcripts{/tr}</a>
 <!--<a class="link" href="tiki-live_support_messages.php">{tr}Support tickets{/tr}</a>-->
  ]
 <br/><br/>
@@ -49,6 +50,10 @@
 				<tr>
 					<td>{$online_operators[ix].status} {tr}since{/tr}:</td>
 					<td>{$online_operators[ix].status_since|tiki_short_datetime}</td>
+					
+				</tr>
+				<tr>
+					<td><a class="link" href="tiki-live_support_transcripts.php?filter_operator={$online_operators[ix].user}">{tr}transcripts{/tr}</a></td>
 				</tr>
 			</table>
 		</td>

@@ -132,7 +132,7 @@
 	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
 	<td class="formcolor">
 		{tr}POP3 server{/tr}:<input type="text" name="inbound_pop_server" value="{$inbound_pop_server}" />
-		{tr}port{/tr}: <input type="text" name="inbound_pop_port" value="{$inbound_pop_port}" size="4" /><br/>
+		<!--{tr}port{/tr}: <input type="text" name="inbound_pop_port" value="{$inbound_pop_port}" size="4" />--><br/>
 		{tr}User{/tr}: <input type="text" name="inbound_pop_user" value="{$inbound_pop_user}" /><br/>
 		{tr}Password{/tr}: <input type="text" name="inbound_pop_password" value="{$inbound_pop_password}"
 	</td>
@@ -177,6 +177,36 @@
 			<option value="queue_anon" {if $approval_type eq 'queue_anon'}selected="selected"{/if}>{tr}Queue anonymous posts{/tr}</option>
 			<option value="queue_all" {if $approval_type eq 'queue_all'}selected="selected"{/if}>{tr}Queue all posts{/tr}</option>
 		</select>
+	</td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Attachments{/tr}</td>
+	<td class="formcolor">
+		<select name="att">
+			<option value="att_no" {if $att eq 'att_no'}selected="selected"{/if}>{tr}No attachments{/tr}</option>
+			<option value="att_all" {if $att eq 'att_all'}selected="selected"{/if}>{tr}Everybody can attach{/tr}</option>
+			<option value="att_perm" {if $att eq 'att_perm'}selected="selected"{/if}>{tr}Only users with attach permission{/tr}</option>
+			<option value="att_admin" {if $att eq 'att_admin'}selected="selected"{/if}>{tr}Moderators and admin can attach{/tr}</option>
+		</select>
+		<br/>
+		{tr}Store attachments in:{/tr}
+		<table>
+			<tr>
+				<td>
+				<input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if} /> {tr}Database{/tr}
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory (include trailing slash){/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir}" size="14" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size}" />
+				</td>
+			</tr>
+		</table>
 	</td>
 </tr>
 

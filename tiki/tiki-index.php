@@ -317,6 +317,16 @@ if($feature_user_watches == 'y') {
 
 $sameurl_elements=Array('pageName','page');
 
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
+	require_once("lib/hawhaw/hawhaw.inc");
+	require_once("lib/hawhaw/hawiki.inc");
+	error_reporting(E_WARNING);
+	$myWiki = new HAWIKI_wiki($info["data"],"tiki-index.php?mode=wap&page=");
+	$myWiki->set_smiley_dir("img/smiles");
+	$myWiki->display();
+	die;
+}
+
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');

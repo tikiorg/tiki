@@ -78,10 +78,16 @@ if($tiki_p_admin_forum == 'y') {
 
 
 if($tiki_p_admin_forum == 'y') {
+
+	if(isset($_REQUEST['remove_attachment'])) {
+		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+	}
+
+
 	if(isset($_REQUEST['delsel_x'])) {
 	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
 	    $commentslib->remove_comment($topic);
-	    $commentslib->register_remove_post($forumId, 0);
+	    $commentslib->register_remove_post($_REQUEST['forumId'], 0);
 	  }
 	}
 	
@@ -162,10 +168,65 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    $smarty->display("styles/$style_base/error.tpl");
 		    die;
         }
+
+		
+        
         
         if( ($tiki_p_forum_autoapp != 'y') && ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type']=='queue_anon'))) {
  			$smarty->assign('was_queued','y');
- 			$commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,0,$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsmiley'],$_REQUEST["comment_topicsummary"],$_REQUEST["comments_title"]);
+ 			$qId = $commentslib->replace_queue(0,$_REQUEST['forumId'],$comments_objectId,0,$user,$_REQUEST["comments_title"],$_REQUEST["comments_data"],$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsmiley'],$_REQUEST["comment_topicsummary"],$_REQUEST["comments_title"]);
+ 			// PROCESS ATTACHMENT HERE        
+				if(  $qId &&
+					 ($forum_info['att'] == 'att_all') ||
+					 ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') ||
+					 ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
+				{	 
+			        if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+						$fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+					 	$data = '';
+					 	$fhash='';
+					 	if($forum_info['att_store'] == 'dir') {
+					 		$name = $_FILES['userfile1']['name'];
+					   		$fhash = md5(uniqid('.'));    
+					   		// Just in case the directory doesn't have the trailing slash
+					   		if(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) == '\\') {
+		 						$forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],0,strlen($forum_info['att_store_dir'])-1).'/';	
+					   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
+					   			$forum_info['att_store_dir'].='/';	
+					   		}
+					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+					   		if(!$fw) {
+					     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+					     		$smarty->display("styles/$style_base/error.tpl");
+					     		die;  
+					   		}
+					 	}
+					 	while(!feof($fp)) {
+					    	if($forum_info['att_store'] == 'db') {
+					      		$data .= fread($fp,8192*16);
+					    	} else {
+					      		$data = fread($fp,8192*16);
+					      		fwrite($fw,$data);
+					    	}
+					  	}
+					  	fclose($fp);
+					  	if($forum_info['att_store'] == 'dir') {
+					    	fclose($fw);
+					    	$data='';
+					  	}
+					  	$size = $_FILES['userfile1']['size'];
+					  	$name = $_FILES['userfile1']['name'];
+					  	$type = $_FILES['userfile1']['type'];
+					  	if($size > $forum_info['att_max_size']) {
+					    	$smarty->assign('msg',tra('Cannot upload this file maximum upload size exceeded'));
+					     	$smarty->display("styles/$style_base/error.tpl");
+					     	die;  
+					  	}  
+					    $commentslib->attach_file(0,$qId,$name,$type,$size, $data, $fhash, $forum_info['att_store_dir'],$_REQUEST['forumId']);
+					}
+				}
+				//END ATTACHMENT PROCESSING
+ 			// Now process attchement here (queued attachment)
         } else { 
         	$smarty->assign('was_queued','n');
  	        if($_REQUEST["comments_threadId"]==0) {
@@ -202,11 +263,115 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			  }
 			  if(!isset($_REQUEST['comment_topicsummary'])) $_REQUEST['comment_topicsummary']='';          
 			  if(!isset($_REQUEST['comment_topicsmiley'])) $_REQUEST['comment_topicsmiley']='';          
-	          $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST["comment_topicsummary"],$_REQUEST['comment_topicsmiley']);
+	          $threadId = $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST["comment_topicsummary"],$_REQUEST['comment_topicsmiley']);
+	          
+	          // PROCESS ATTACHMENT HERE        
+				if(  $threadId &&
+					 ($forum_info['att'] == 'att_all') ||
+					 ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') ||
+					 ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
+				{	 
+			        if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+						$fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+					 	$data = '';
+					 	$fhash='';
+					 	if($forum_info['att_store'] == 'dir') {
+					 		$name = $_FILES['userfile1']['name'];
+					   		$fhash = md5(uniqid('.'));    
+					   		// Just in case the directory doesn't have the trailing slash
+					   		if(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) == '\\') {
+		 						$forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],0,strlen($forum_info['att_store_dir'])-1).'/';	
+					   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
+					   			$forum_info['att_store_dir'].='/';	
+					   		}
+					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+					   		if(!$fw) {
+					     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+					     		$smarty->display("styles/$style_base/error.tpl");
+					     		die;  
+					   		}
+					 	}
+					 	while(!feof($fp)) {
+					    	if($forum_info['att_store'] == 'db') {
+					      		$data .= fread($fp,8192*16);
+					    	} else {
+					      		$data = fread($fp,8192*16);
+					      		fwrite($fw,$data);
+					    	}
+					  	}
+					  	fclose($fp);
+					  	if($forum_info['att_store'] == 'dir') {
+					    	fclose($fw);
+					    	$data='';
+					  	}
+					  	$size = $_FILES['userfile1']['size'];
+					  	$name = $_FILES['userfile1']['name'];
+					  	$type = $_FILES['userfile1']['type'];
+					  	if($size > $forum_info['att_max_size']) {
+					    	$smarty->assign('msg',tra('Cannot upload this file maximum upload size exceeded'));
+					     	$smarty->display("styles/$style_base/error.tpl");
+					     	die;  
+					  	}  
+					    $commentslib->attach_file($threadId,0,$name,$type,$size, $data, $fhash, $forum_info['att_store_dir'],$_REQUEST['forumId']);
+					}
+				}
+				//END ATTACHMENT PROCESSING
+	          
+	          
 	          $commentslib->register_forum_post($_REQUEST["forumId"],0);
 	        } else {
 	          if($tiki_p_admin_forum == 'y') {
 	            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"],$_REQUEST['comment_topicsummary'],$_REQUEST['comment_topicsmiley']);
+				// PROCESS ATTACHMENT HERE        
+				if(  ($forum_info['att'] == 'att_all') ||
+					 ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') ||
+					 ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
+				{	 
+			        if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+						$fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+					 	$data = '';
+					 	$fhash='';
+					 	if($forum_info['att_store'] == 'dir') {
+					 		$name = $_FILES['userfile1']['name'];
+					   		$fhash = md5(uniqid('.'));    
+					   		// Just in case the directory doesn't have the trailing slash
+					   		if(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) == '\\') {
+		 						$forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],0,strlen($forum_info['att_store_dir'])-1).'/';	
+					   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
+					   			$forum_info['att_store_dir'].='/';	
+					   		}
+					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+					   		if(!$fw) {
+					     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+					     		$smarty->display("styles/$style_base/error.tpl");
+					     		die;  
+					   		}
+					 	}
+					 	while(!feof($fp)) {
+					    	if($forum_info['att_store'] == 'db') {
+					      		$data .= fread($fp,8192*16);
+					    	} else {
+					      		$data = fread($fp,8192*16);
+					      		fwrite($fw,$data);
+					    	}
+					  	}
+					  	fclose($fp);
+					  	if($forum_info['att_store'] == 'dir') {
+					    	fclose($fw);
+					    	$data='';
+					  	}
+					  	$size = $_FILES['userfile1']['size'];
+					  	$name = $_FILES['userfile1']['name'];
+					  	$type = $_FILES['userfile1']['type'];
+					  	if($size > $forum_info['att_max_size']) {
+					    	$smarty->assign('msg',tra('Cannot upload this file maximum upload size exceeded'));
+					     	$smarty->display("styles/$style_base/error.tpl");
+					     	die;  
+					  	}  
+					    $commentslib->attach_file($_REQUEST["comments_threadId"],0,$name,$type,$size, $data, $fhash, $forum_info['att_store_dir'],$_REQUEST['forumId']);
+					}
+				}
+				//END ATTACHMENT PROCESSING
 	          }
 	        }
 	    }
@@ -272,7 +437,7 @@ if($tiki_p_admin_forum == 'y') {
   if(isset($_REQUEST["comments_remove"])&&isset($_REQUEST["comments_threadId"])) {
    $comments_show='y';
    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
-   $commentslib->register_remove_post($forumId, 0);
+   $commentslib->register_remove_post($_REQUEST['forumId'], 0);
   }
 }
 
