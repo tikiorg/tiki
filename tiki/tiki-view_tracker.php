@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.69 2004-04-29 21:35:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.70 2004-06-11 02:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -332,7 +332,7 @@ $smarty->assign('email_mon', '');
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
 		check_ticket('view-trackers');
-		$user_email = $tikilib->get_user_email($user);
+		$user_email = $userlib->get_user_email($user);
 		$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
 		if (in_array($user_email, $emails)) {
 			$notificationlib->remove_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
@@ -343,7 +343,7 @@ if ($user) {
 		}
 		$smarty->assign('mail_msg', $mail_msg);
 	}
-	$user_email = $tikilib->get_user_email($user);
+	$user_email = $userlib->get_user_email($user);
 	$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
 	if (in_array($user_email, $emails)) {
 		$smarty->assign('email_mon', tra('Cancel monitoring'));

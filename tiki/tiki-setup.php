@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.232 2004-06-08 05:15:52 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.233 2004-06-11 02:55:15 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -691,7 +691,7 @@ $feature_contact = 'n';
 $smarty->assign('feature_contact', $feature_contact);
 $contact_user = $tikilib->get_preference('contact_user', 'admin');
 $smarty->assign('contact_user', $contact_user);
-$default_sender_email = $tikilib->get_user_email($contact_user);
+$default_sender_email = $userlib->get_user_email($contact_user);
 $sender_email = $tikilib->get_preference('sender_email', $default_sender_email);
 $smarty->assign('sender_email', $sender_email);
 

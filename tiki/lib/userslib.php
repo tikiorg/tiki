@@ -1568,6 +1568,10 @@ function get_included_groups($group) {
 	return $pass;
     }
 
+    function get_user_email($user) {
+		return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
+    }
+
     function get_user_hash($user) {
 	$query = "select `hash`  from `users_users` where " .
 		$this->convert_binary(). " `login` = ?";

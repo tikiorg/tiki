@@ -32,7 +32,7 @@ if (!$lslib->operators_online()) {
 $smarty->assign('senderId', md5(uniqid('.')));
 
 if ($user) {
-	$smarty->assign('user_email', $tikilib->get_user_email($user));
+	$smarty->assign('user_email', $userlib->get_user_email($user));
 }
 
 // Display the template

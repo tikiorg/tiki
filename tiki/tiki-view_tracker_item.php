@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.67 2004-05-12 03:55:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.68 2004-06-11 02:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -439,7 +439,7 @@ $smarty->assign('email_mon', '');
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
 		check_ticket('view-trackers-items');
-		$user_email = $tikilib->get_user_email($user);
+		$user_email = $userlib->get_user_email($user);
 		$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
 		if (in_array($user_email, $emails)) {
 			$notificationlib->remove_mail_event('tracker_item_modified', $_REQUEST["itemId"], $user_email);
@@ -450,7 +450,7 @@ if ($user) {
 		}
 		$smarty->assign('mail_msg', $mail_msg);
 	}
-	$user_email = $tikilib->get_user_email($user);
+	$user_email = $userlib->get_user_email($user);
 	$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
 
 	if (in_array($user_email, $emails)) {

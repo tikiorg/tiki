@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.13 2004-06-09 22:17:42 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.14 2004-06-11 02:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,11 +27,7 @@ if ($feature_contact != 'y') {
 
 $smarty->assign('mid', 'tiki-contact.tpl');
 
-// This doesn't work, get_user_email() doesn't exist in userlib.
-//   $email = $userlib->get_user_email($contact_user);
-// RW
-
-$email = $tikilib->get_user_email($contact_user);
+$email = $userlib->get_user_email($contact_user);
 $smarty->assign('email', $email);
 
 if ($user == '' and $contact_anon == 'y') {
