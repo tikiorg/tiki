@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.10 2003-11-04 22:40:47 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.11 2003-11-07 23:41:40 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -44,7 +44,6 @@
     <td class="formcolor"><span title="{tr}Is files from repository can be cached{/tr}">{tr}Cacheable{/tr}</td>
     <td class="formcolor">
       <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Is files from repository can be cached{/tr}" />
-      {var_dump var=repID}
       {if isset($repID) and $repID ne '0'}
         &nbsp;&nbsp;
         <a href="tiki-admin_integrator.php?action=clear&repID={$repID|escape}" title="{tr}Clear all cahed pages of this repository{/tr}">
