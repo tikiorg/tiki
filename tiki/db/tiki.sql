@@ -622,7 +622,7 @@ DROP TABLE IF EXISTS tiki_categorized_objects;
 create table tiki_categorized_objects (
   catObjectId integer(12) not null auto_increment,
   type varchar(50),
-  objId varchar(50),
+  objId varchar(255),
   description text,
   created integer(14),
   name varchar(200),

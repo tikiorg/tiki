@@ -1,5 +1,7 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+alter table tiki_categorized_objects modify objId varchar(255);
+
 drop table if exists tiki_newsreader_marks;
 create table tiki_newsreader_marks (
   user varchar(200) not null,
