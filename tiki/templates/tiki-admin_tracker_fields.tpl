@@ -44,6 +44,9 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+<div class="simple">
+{$plug}
+</div>
 <h2>{tr}Tracker fields{/tr}</h2>
 <div  align="center">
 <table class="findtable">
