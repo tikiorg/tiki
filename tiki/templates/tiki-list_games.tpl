@@ -1,20 +1,32 @@
 {if $feature_left_column eq 'n' and $feature_right_column eq 'n'}
+  {assign var=xtitle value=1}
+{else} {assign var=xtitle value=0} {/if}
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
-  <td width="30%">
+  <td{if $xtitle} width="30%"{/if}>
     <a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a>
+
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Games" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Games{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-list_games.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}games tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+
+    
   </td>
+{if $xtitle}
   <td align="center">
     <a class="pagetitle" href="/">{tr}/{/tr}</a>
   </td>
   <td align="right" width="30%">
     <a class="pagetitle" href="tiki-index.php">{tr}Home{/tr}</a>
   </td>
+{/if}
   </tr>
 </table><br />
-{else}
-<a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a><br /><br />
-{/if}
 
 <small>{tr}All games are from{/tr} <a class="link" href="http://www.miniclip.com">www.miniclip.com</a>. {tr}visit the site for more games and fun{/tr}</small><br /><br />
 {if $tiki_p_admin_games eq 'y'}
@@ -36,7 +48,7 @@
         <input name="userfile2" type="file" />
       </td>
   </tr>
-  <tr><td class="formcolor">{tr}description{/tr}:</td>
+  <tr><td class="formcolor">{tr}Description{/tr}:</td>
       <td class="formcolor"><textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
   </tr>
   <tr><td class="formcolor">&nbsp;</td>
@@ -81,7 +93,7 @@
        <td class="even" > <small>{$games[ix].desc}</small> </td>
        <td class="even" > {tr}Played{/tr} {$games[ix].hits} {tr}times{/tr} </td>
    </tr>
-   <tr rowspan="3"><td>&nbsp;</td></tr>
+   <tr><td colspan="3">&nbsp;</td></tr>
 {/section}
 </table>
 
