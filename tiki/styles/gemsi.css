@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.33 2004-04-29 22:31:46 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.34 2004-06-20 20:56:13 dgdaniels Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -1800,3 +1800,6 @@ a.phplm:hover	{
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }

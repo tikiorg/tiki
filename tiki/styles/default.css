@@ -2860,3 +2860,10 @@ table.default	td
 	border-color:		#000000;
 }
 /* }}}1 */
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+padding : 2ex;
+background-color : #D2B48C;
+margin : 1ex;
+border : 1px dashed #adacaf; }
