@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.15 2004-05-03 04:17:06 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.16 2004-06-16 01:43:56 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,7 +108,8 @@ if (isset($_REQUEST["import"])) {
 	foreach ($questions as $question){
 		$question_text = $question->getQuestion();
 		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
-		for ($i = 0; $i < $question->getChoiceCount(); $i++){
+		$temp_max = $question->getChoiceCount();
+		for ($i = 0; $i < $temp_max; $i++){
 			$a = $question->GetChoice($i);
 			$b = $question->GetCorrect($i);
 			$quizlib->replace_question_option(0, $a, $b, $id);
