@@ -5,7 +5,7 @@
 <strong>{tr}Lists{/tr}:</strong> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}<br/> 
 <strong>{tr}Wiki References{/tr}:</strong> {tr}JoinCapitalizedWords or use{/tr} ((page)) {tr}or{/tr} ((page|desc)) {tr}for wiki references{/tr} ))SomeName(( {tr}prevents referencing{/tr}<br/>
 {if $feature_drawings eq 'y'}
-<strong>{tr}Drawings{/tr}:</strong> "{draw name=foo} {tr}creates the editable drawing foo{/tr}<br/>
+<strong>{tr}Drawings{/tr}:</strong> "{literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}<br/>
 {/if}
 <strong>{tr}External links{/tr}:</strong> {tr}use square brackets for an{/tr} {tr}external link{/tr}: [URL] or [URL|{tr}link_description{/tr}] or [URL|description|nocache].<br />
 <strong>{tr}Misc{/tr}</strong> "!", "!!", "!!!" {tr}make_headings{/tr}, "-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr} "===text===" {tr}underlines text{/tr}<br />
