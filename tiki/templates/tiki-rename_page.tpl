@@ -5,7 +5,7 @@
 <table class="normal">
 <tr>
   <td class='formcolor'>{tr}New name{/tr}:</td>
-  <td>
+  <td class='formcolor'>
     <input type='text' name='newpage' />
     <input type="submit" name="rename" value='{tr}rename{/tr}' />
   </td>

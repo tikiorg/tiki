@@ -2,7 +2,6 @@
 <div id="page-bar">
 <table>
 <tr>
-<td><div  class="button2"><a href="tiki-print.php?page={$page}" class="linkbut">{tr}print{/tr}</a></div></td>
 {if !$lock}
 {if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 {if $beingEdited eq 'y'}
@@ -16,6 +15,10 @@
 {if $tiki_p_remove eq 'y'}
 <td><div class="button2"><a href="tiki-removepage.php?page={$page}&amp;version=last" class="linkbut">{tr}remove{/tr}</a></div></td>
 {/if}
+{if $tiki_p_rename eq 'y'}
+<td><div class="button2"><a href="tiki-rename_page.php?page={$page}" class="linkbut">{tr}rename{/tr}</a></div></td>
+{/if}
+
 {/if}
 {if $page ne 'SandBox'}
 {if $tiki_p_admin_wiki eq 'y'}
