@@ -5,8 +5,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     header("location: index.php");
 }
 
-include_once ('lib/diff.php');
-
 require_once ('lib/pear/Date.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
@@ -1294,21 +1292,6 @@ function add_pageview() {
 	$b = new bablotron($this->db, $lang);
 	$result = $b->spellcheck_word($word);
 	return $result;
-    }
-
-    // \todo remove html hardcoded in diff2
-    function diff2($page1, $page2) {
-	$page1 = split("\n", $page1);
-	$page2 = split("\n", $page2);
-	$z = new WikiDiff($page1, $page2);
-	if ($z->isEmpty()) {
-	    $html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
-	} else {
-	    //$fmt = new WikiDiffFormatter;
-	    $fmt = new WikiUnifiedDiffFormatter;
-	    $html = $fmt->format($z, $page1);
-	}
-	return $html;
     }
 
     /*shared*/

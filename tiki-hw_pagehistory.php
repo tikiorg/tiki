@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_pagehistory.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_pagehistory.php,v 1.5 2004-06-11 20:35:01 redflo Exp $
 
 // 20040311 Fixed for new hw_assignments table.
 
@@ -110,8 +110,9 @@ if (isset($_REQUEST["preview"])) {
 $smarty->assign('diff2', 'n');
 
 if (isset($_REQUEST["diff2"])) {
+  require_once('lib/diff.php');
   $diff = $homeworklib->hw_page_get_version($pageId, $_REQUEST["diff2"]);
-  $html = $tikilib->diff2($diff["data"], $page_data["data"]);
+  $html = diff2($diff["data"], $page_data["data"]);
   $smarty->assign('diffdata', $html);
   $smarty->assign('diff2', 'y');
   $smarty->assign_by_ref('version', $_REQUEST["diff2"]);
