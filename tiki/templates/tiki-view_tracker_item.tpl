@@ -246,6 +246,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 </td></tr>
 {/if}
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 {section name=ix loop=$ins_fields}
 {if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type ne 'x'}
