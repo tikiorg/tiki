@@ -26,6 +26,7 @@
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
+<option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" /></td></tr>
