@@ -7,7 +7,7 @@
 
 
 function wikiplugin_snarf_help() {
-    return tra("The SNARF plugin replaces itself with the HTML body of a URL.  Arbitrary regex replacement can be done on this content using regex and regexres, the latter being used as the second argument to preg_replace.").":<br />~np~{SNARF(url=>http://www.lojban.org,regex=>;.*<!-- Content -->(.*)<!-- /Content -->.*;)}".tra("This data is put in a CODE caption.")."{SNARF}~/np~,regexres=>$1";
+    return tra("The SNARF plugin replaces itself with the HTML body of a URL.  Arbitrary regex replacement can be done on this content using regex and regexres, the latter being used as the second argument to preg_replace.").":<br />~np~{SNARF(url=>http://www.lojban.org,regex=>;.*<!-- Content -->(.*)<!-- /Content -->.*;, regexres=>$1)}".tra("This data is put in a CODE caption.")."{SNARF}~/np~";
 }
 
 function wikiplugin_snarf($data, $params)
@@ -40,7 +40,8 @@ function wikiplugin_snarf($data, $params)
     }
 
     // If the user specified a more specialized regex
-    if( isset( $regex ) && isset( $regexres ) )
+    if( isset( $regex ) && isset( $regexres ) 
+    	and preg_match('/^(.)(.)+\1[^e]*$/', $regex))
     {
 	//print("<pre>regex: ".htmlspecialchars($regex)."</pre>"); 
 	//print("<pre>regexres: ".htmlspecialchars($regexres)."</pre>"); 
