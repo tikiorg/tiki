@@ -30,7 +30,11 @@ class FileGalLib extends TikiLib {
 		$name = strip_tags($name);
 
 		if ($fgal_use_db == 'n') {
-			$checksum = md5(implode('', file($fgal_use_dir . $path)));
+			if (function_exists('md5_file')) {
+				$checksum = md5_file($fgal_use_dir . $path);
+			} else {
+				$checksum = md5(implode('', file($fgal_use_dir . $path)));
+			}
 		} else {
 			$checksum = md5($data);
 		}
