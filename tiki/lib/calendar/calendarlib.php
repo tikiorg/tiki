@@ -181,12 +181,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "gal",
 							"url" => "tiki-view_image.php?galleryId=".$res["galid"]."&imageId=".$res["imageid"],
 							"name" => $res["name"],
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => tra("new image")." ".addslashes($res["name"])."<br/>".tra("in")." ".tra("image gallery")." ".addslashes($res["galname"])."<br/>".tra("new image uploaded by")." ".$res["user"]
+							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["galname"])."</b>",
+							"description" => tra("new image uploaded by")." ".$res["user"]
 						);
 					}
 					break;
@@ -200,12 +202,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "art",
 							"url" => "tiki-read_article.php?atricleId=".$res["articleId"],
 							"name" => $res["title"],
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["title"])."</b> ".tra("by")." ".$res["authorName"]."<br/>".addslashes(str_replace('"',"'",$res["heading"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["topicName"])."</b>",
+							"description" => "<i>".tra("by")." ".$res["authorName"]."</i><br/>".addslashes(str_replace('"',"'",$res["heading"]))
 						);
 					}
 					break;
@@ -219,12 +223,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "blog",
 							"url" => "tiki-view_blog.php?blogId=".$res["blogid"],
-							"name" => $res["blogname"],
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".$res["blogname"]."</b> ".tra("by")." ".$res["user"]."<br/>".tra("new post")." ".addslashes($res["postname"])
+							"name" => $res["blogname"]." :: ".addslashes($res["postname"]),
+							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["blogname"])."</b>",
+							"description" => "<i>".tra("by")." ".$res["user"]."</i>"
 						);
 					}
 					break;
@@ -238,12 +244,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "forum",
 							"url" => "tiki-view_forum.php?forumId=".$res["forumId"],
 							"name" => $res["name"],
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b> ".tra("by")." ".$res["user"]."<br/>".tra("in")." ".$res["forum"]
+							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["forum"])."</b>",
+							"description" => "<i>".tra("by")." ".$res["user"]."</i>"
 						);
 					}
 					break;
@@ -257,18 +265,20 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "dir",
 							"url" => "tiki-directory_redirect.php?siteId=".$res["siteId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".addslashes($res["url"])."<br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes($res["url"])."<br/>".addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
 
 				case "fgal":
-					$query = "select f.created as created, f.user as user, f.name as name, f.description as description, g.galleryId as fgalId ";
+					$query = "select f.created as created, f.user as user, f.name as name, f.description as description, g.galleryId as fgalId, g.name as fgalname ";
 					$query.= "from tiki_files as f left join tiki_file_galleries as g on f.galleryId=g.galleryId where (f.created>$tstart and f.created<$tstop)";
 					$result = $this->query($query);
 					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -276,12 +286,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "fgal",
 							"url" => "tiki-list_file_gallery.php?galleryId=".$res["fgalId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".tra("uploaded by")." ".addslashes($res["user"])."<br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["fgalname"])."</b>",
+							"description" => "<i>".tra("uploaded by")." ".addslashes($res["user"])."</i><br/>".addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -295,12 +307,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "faq",
 							"url" => "tiki-view_faq.php?faqId=".$res["faqId"],
 							"name" => str_replace("'","",$res["title"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["title"])."</b><br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -314,12 +328,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "quiz",
 							"url" => "tiki-take_quiz.php?quizId=".$res["quizId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -333,12 +349,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "track",
 							"url" => "tiki-view_tracker_item.php?trackerId=".$res["tracker"]."&offset=0&sort_mode=created_desc&itemId=".$res["itemId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".tra("new item in tracker")
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => tra("new item in tracker")
 						);
 					}
 					break;
@@ -352,12 +370,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "surv",
 							"url" => "tiki-take_survey.php?surveyId=".$res["surveyId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -371,12 +391,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["day"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "nl",
 							"url" => "tiki-newsletters.php?nlId=".$res["nlId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => " ... ".$res["count"],
-							"descriptionbody" => tra("new subscriptions")
+							"head" => " ... ".$res["count"],
+							"description" => tra("new subscriptions")
 						);
 					}
 					break;
@@ -390,12 +412,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "eph",
 							"url" => "tiki-eph.php?day=".date("d",$res["created"])."&mon=".date("m",$res['created'])."&year=".date("Y",$res['created']),
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -409,12 +433,14 @@ class CalendarLib extends TikiLib {
 						$tstart = date("Hi",$res["created"]);
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "chart",
 							"url" => "tiki-view_chart.php?chartId=".$res["chartId"],
 							"name" => str_replace("'","",$res["name"]),
-							"descriptionhead" => date("H:i",$res["created"]),
-							"descriptionbody" => "<b>".addslashes($res["name"])."</b><br/>".addslashes(str_replace('"',"'",$res["description"]))
+							"head" => "<b>".date("H:i",$res["created"])."</b>",
+							"description" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
