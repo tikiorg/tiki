@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.8 2003-12-20 02:55:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.9 2003-12-23 10:28:48 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -54,6 +54,7 @@
 
 {if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
+{if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}
 <table class="normal">
 <tr>
  <td class="formcolor">
