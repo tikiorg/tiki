@@ -10,6 +10,12 @@ class WikiLib extends TikiLib {
     $this->db = $db;  
   }
   
+  function get_creator($name) 
+  {
+    $name = addslashes($name);
+    return $this->getOne("select creator from tiki_pages where pageName='$name'");
+  }
+  
   function wiki_page_graph(&$str, &$graph) {
 	  $page=$str['name'];
 	  $graph->addNode("$page",array('URL'=>"tiki-index.php?page=$page",

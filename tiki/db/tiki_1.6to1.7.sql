@@ -1,3 +1,5 @@
+alter table tiki_pages add creator varchar(200);
+
 #### Workflow tables and permissions
 ## Workflow Roles, each role must be asociated with a process
 ## since roles are not shared among processes. (You can have

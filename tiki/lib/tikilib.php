@@ -417,10 +417,10 @@ class TikiLib {
         $ret = '';
         break;
       case 'l':
-        $ret = "<img width='45' height='45' src='".$libname."' />";
+        $ret = "<img border='0' width='45' height='45' src='".$libname."' />";
         break;
       case 'u':
-        $ret = "<img width='45' height='45' src='tiki-show_user_avatar.php?user=$user' />";
+        $ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' />";
         break;
     }
     return $ret;
@@ -3272,6 +3272,8 @@ class TikiLib {
     $result = $this->query($query);
     return true;
   }
+  
+  
 
   function create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0',$description='')
   {
@@ -3282,7 +3284,7 @@ class TikiLib {
     $data = addslashes($data);
     $comment = addslashes($comment);
     if($this->page_exists($name)) return false;
-    $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,description) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip','$description')";
+    $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,description,creator) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip','$description','$user')";
     $result = $this->query($query);
     $this->clear_links($name);
     // Pages are collected before adding slashes

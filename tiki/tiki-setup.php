@@ -345,6 +345,8 @@ $feature_theme_control = 'n';
 $smarty->assign('feature_theme_control',$feature_theme_control);
 $feature_workflow = 'n';
 $smarty->assign('feature_workflow',$feature_workflow);
+$feature_phpopentracker = 'n';
+$smarty->assign('feature_phpopentracker',$feature_phpopentracker);
 
 $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
@@ -1051,18 +1053,19 @@ if($feature_stats == 'y') {
   }
 }
 
+if($feature_phpopentracker == 'y') {
+	include_once('phpOpenTracker.php');
+	// log access
+	phpOpenTracker::log();
+}
+
+
 $user_preferences=Array();
 
 
 include_once('tiki-handlers.php');
 
-/*
-if($feature_phpopentracker == 'y') {
-	include 'phpOpenTracker.php';
-	// log access
-	phpOpenTracker::log();
-}
-*/
+
 
 
 if($feature_obzip == 'y') {

@@ -1284,6 +1284,13 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_workflow",'n');
   }
 
+  if(isset($_REQUEST["feature_phpopentracker"]) && $_REQUEST["feature_phpopentracker"]=="on") {
+    $tikilib->set_preference("feature_phpopentracker",'y'); 
+    $smarty->assign("feature_phpopentracker",'y');
+  } else {
+    $tikilib->set_preference("feature_phpopentracker",'n');
+    $smarty->assign("feature_phpopentracker",'n');
+  }
 
   
   if(isset($_REQUEST["feature_eph"]) && $_REQUEST["feature_eph"]=="on") {

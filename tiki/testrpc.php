@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.3 2003-03-28 17:53:37 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.4 2003-04-24 14:07:57 lrargerich Exp $
 
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
@@ -10,6 +10,7 @@ $server_path="/tcvs/tiki/xmlrpc.php";
 // DON'T EDIT BELOW THIS LINE
 $client = new xmlrpc_client("$server_path", "$server_uri", $server_port);
 $client->setDebug(1);
+
 
 $appkey='';
 $username='admin';
@@ -24,13 +25,9 @@ $blogs=new xmlrpcmsg('blogger.newPost',array(new xmlrpcval($appkey,"string"),
                                           ));
 */                            
 
-$blogs=new xmlrpcmsg('blogger.getRecentPosts',array(new xmlrpcval($appkey,"string"),
-                                          new xmlrpcval(1),
-                                          new xmlrpcval($username,"string"),
-                                          new xmlrpcval($password,"string"),
-                                          new xmlrpcval(10)
-                                          ));
-              
+// Introspection mechanism
+$blogs=new xmlrpcmsg('system.listMethods',"");
+        
 $result=$client->send($blogs);
 
 if(!$result) {

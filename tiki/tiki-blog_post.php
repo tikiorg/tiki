@@ -42,8 +42,6 @@ $smarty->assign('created',date("U"));
 // If the articleId is passed then get the article data
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
-  
-   
   $data = $bloglib->get_post($_REQUEST["postId"]);
   
   // If the user owns the weblog then he can edit

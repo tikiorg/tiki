@@ -239,6 +239,10 @@ if($feature_userPreferences == 'y') {
 $stlstl=explode('.',$style);
 $style_base = $stlstl[0];
 
+
+
+
+
 //really needed? (todo: check)
 //if ($lang_use_db!='y') {
 global $lang;
