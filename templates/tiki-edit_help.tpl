@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.20 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.21 2004-04-28 15:53:10 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -41,6 +41,7 @@ on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
 <tr><td><strong>{tr}Center{/tr}:</strong></td><td> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents parsing data{/tr}</td></tr>
 <tr><td><strong>{tr}Dynamic variables{/tr}:</strong></td><td> "%{tr}name{/tr}%" {tr}Inserts an editable variable{/tr}</td></tr>
+<tr><td><strong>{tr}Direction{/tr}:</strong></td><td>"{literal}{{/literal}r2l{literal}}{/literal}", "{literal}{{/literal}l2r{literal}}{/literal}"</td></tr>
 </table>
 </div>
 
