@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.191 2004-01-18 11:28:05 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.192 2004-01-18 19:00:45 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1357,6 +1357,15 @@ $smarty->assign('mnu_trkmenu', 'display:none;');
 if (isset($_COOKIE["trkmenu"])) {
     if ($_COOKIE["trkmenu"] == 'o') {
         $smarty->assign('mnu_trkmenu', 'display:block;');
+    }
+}
+
+// Jukebox menu added 18-jan-04 damian aka damosoft
+$smarty->assign('mnu_jukeboxmenu', 'display:none;');
+
+if (isset($_COOKIE["jukeboxmenu"])) {
+    if ($_COOKIE["jukeboxmenu"] == 'o') {
+        $smarty->assign('mnu_jukeboxmenu', 'display:block;');
     }
 }
 
