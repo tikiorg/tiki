@@ -433,7 +433,7 @@ class Comments extends TikiLib {
                         $pruneMaxAge, $topicsPerPage,
                         '$topicOrdering','$threadOrdering','$section',
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
-                        '$inbound_pop_server',$inbound_pop_port,'$inbound_pop_user','$inbound_pop_password',$outbound_address',
+                        '$inbound_pop_server',$inbound_pop_port,'$inbound_pop_user','$inbound_pop_password','$outbound_address',
                         '$topic_smileys','$topic_summary',
                         '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password','$att','$att_store','$att_store_dir',$att_max_size) ";
      $result = $this->query($query);

@@ -324,6 +324,14 @@ class SearchLib Extends TikiLib {
       array_push($data, $a);
     }
     $cant += $rv['cant'];
+    
+    $rv = $this->find_directory($words,     $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = tra('Directory');
+      array_push($data, $a);
+    }
+    $cant += $rv['cant'];
+    
     if ($fulltext) {
       function find_pages_cmp ($a, $b) {
         return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);

@@ -29,6 +29,12 @@ if($where=='wikis' and $feature_wiki != 'y') {
   $smarty->display("styles/$style_base/error.tpl");
   die;
 }
+if($where=='directory' and $feature_directory != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;
+}
+
 if($where=='faqs' and $feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");

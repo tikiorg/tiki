@@ -828,7 +828,7 @@ class UsersLib extends TikiLib {
     if($feature_clear_passwords == 'n') {
       $provpass='';
     }
-    $query = "update users_users set password='$provpass',hash='$hash' where login='$user'";
+    $query = "update users_users set password='$provpass',hash='$hash',provpass='' where login='$user'"; 
     $result = $this->query($query);
   }
   

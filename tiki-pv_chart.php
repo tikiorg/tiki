@@ -19,6 +19,8 @@ $example_data = $tikilib->get_pv_chart_data($_REQUEST["days"]);
 $graph->SetDataValues($example_data);
 //$graph->SetPlotType('bars');
 $graph->SetPlotType('lines');
+$graph->SetYLabel('pageviews');
+$graph->SetXLabel('day'); 
 //Draw it
 $graph->DrawGraph();
 ?>

@@ -1,9 +1,9 @@
 <h2>{tr}Search results{/tr}:</h2>
 {tr}Search in{/tr}:
 [
-<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}Entire site{/tr}</a>
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=wikis">{tr}wiki pages{/tr}</a>
+ | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
 {/if}
 {if $feature_galleries eq 'y'}
  | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=galleries">{tr}galleries{/tr}</a>
@@ -22,6 +22,10 @@
  | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a>
  | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a>
 {/if}
+{if $feature_directory eq 'y'}
+ | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=directory">{tr}directory{/tr}</a>
+{/if}
+
 {if $feature_articles eq 'y'}
  | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=articles">{tr}articles{/tr}</a>
 {/if}

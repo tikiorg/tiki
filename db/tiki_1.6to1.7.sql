@@ -330,7 +330,7 @@ alter table tiki_forums add topic_summary char(1);
 
 ###
 
-update tiki_forums set inbound_address='';
+
 update tiki_forums set outbound_address='';
 update tiki_forums set topic_smileys='n';
 update tiki_forums set ui_avatar='y';
