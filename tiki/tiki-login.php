@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.36 2004-08-09 18:06:07 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.37 2004-08-09 20:17:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.36 2004-08-09 18:06:07 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.37 2004-08-09 20:17:22 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -21,7 +21,9 @@ if (!isset($_REQUEST["login"])) {
 */
 
 // Alert user if cookies are switched off
-if (ini_get('session.use_cookies') == 1) {
+// for some reason, CAS proxy tickets don't work if the following cookie check occurs: help!
+global $auth_ext_xml_cas_proxy;
+if (ini_get('session.use_cookies') == 1 && $auth_ext_xml_cas_proxy != 'y') {
 	if(!isset($_COOKIE['PHPSESSID'])) {
 		$url = 'tiki-error.php?error=' . urlencode(tra('You have to enable cookies to be able to login to this site'));
 		header("location: $url");
