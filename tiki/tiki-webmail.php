@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.22 2004-05-26 18:06:57 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.23 2004-05-27 15:16:07 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,10 +48,12 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
-				if($obj->ctype_parameters['charset'] == "iso-8859-1" || $obj->ctype_parameters['charset'] == "ISO-8859-1")
-				$parts['text'][] = utf8_encode($obj->body);
-			else
-				$parts['text'][] = $obj->body;
+				if(strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
+					$parts['text'][] = utf8_encode($obj->body);
+				else if (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding'))
+					$parts['text'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
+				else
+					$parts['text'][] = $obj->body;
 			}
 
 			break;
@@ -66,14 +68,15 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
-				if($obj->ctype_parameters['charset'] == "iso-8859-1" || $obj->ctype_parameters['charset'] == "ISO-8859-1")
+				if(strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
 					$parts['html'][] = utf8_encode($obj->body);
+				else if (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding'))
+					$parts['html'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
 				else
 					$parts['html'][] = $obj->body;
 			}
 
 			break;
-
 		default:
 			$names = split(';', $obj->headers["content-disposition"]);
 
@@ -85,6 +88,20 @@ function parse_output(&$obj, &$parts, $i) {
 		}
 	}
 }
+function decode_subject_utf8($string){
+	if (ereg('=\?.*\?.*\?=', $string) === false)
+		return $string;
+	$string = explode('?', $string);
+	$str = strtolower($string[2]) == 'q' ?quoted_printable_decode($string[3]):base64_decode($string[3]);
+ 	if (strtolower($string[1]) == "iso-8859-1")
+		return utf8_encode($str);
+	else if (strtolower($string[1]) == "utf-8")
+		return $str;
+	else if (function_exists('mb_convert_encoding'))
+		return mb_convert_encoding($str, "utf-8", $string[1]);
+	else
+		return $str;
+} 
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -359,10 +376,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 
 		for ($i = 1; $i <= $mailsum; $i++) {
 			$aux = $pop3->ListMessage($i);
-			if (stristr($aux['subject'], "=?iso-8859-1?b?") == $aux['subject']) {
-				$aux["subject"] = utf8_encode(base64_decode(eregi_replace("=\?iso-8859-1\?b\?(.*)\?=", "\\1", $aux["subject"])));
-			}
-
+			$aux["subject"] = decode_subject_utf8($aux["subject"]);
 			$aux["msgid"] = $i;
 			$aux["realmsgid"] = $pop3->GetMessageID($i);
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
@@ -403,11 +417,8 @@ if ($_REQUEST["section"] == 'mailbox') {
 			$aux = $filtered[$i];
 		} else {
 			$aux = $pop3->ListMessage($i);
-
-			if (stristr($aux['subject'], "=?iso-8859-1?b?") == $aux['subject']) {
-				$aux["subject"] = utf8_encode(base64_decode(eregi_replace("=\?iso-8859-1\?b\?(.*)\?=", "\\1", $aux["subject"])));
-			}
-
+			$aux["subject"] = decode_subject_utf8($aux["subject"] );
+			
 			//print_r($aux);print("<br />");
 			$aux["realmsgid"] = $pop3->GetMessageID($i);
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);

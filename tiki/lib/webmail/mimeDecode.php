@@ -53,7 +53,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.8 $
+* @version $Revision: 1.9 $
 * @package Mail
 */
 class Mail_mimeDecode extends PEAR {
@@ -476,6 +476,8 @@ class Mail_mimeDecode extends PEAR {
 			}
 			if ($charset == "iso-8859-1")	// patch specifique tiki
 				$text = utf8_encode($text);
+			else if ($charset != "utf-8" && function_exists('mb_convert_encoding'))
+				$text = mb_convert_encoding($text, "utf-8", $charset);
 
 			$input = str_replace($encoded, $text, $input);
 		}
