@@ -471,15 +471,16 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+.form {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
 }
+TD.form { }
 /* Cells in forms using a background color */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -487,6 +488,7 @@ TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forum
 	text-align:   left;
 	background-color:   #99AAAE;
 }
+TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform { }
 
 /* The table */
 table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.jukeboxlist, table.bloglist, table.editblogform, table.editfgalform,
@@ -2565,13 +2567,15 @@ div#loadstats {
   padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
+	text-decoration: none;
+	color: #000000;
 }
 
 .mdkitem a:visited  {
 }
 
 .mdkitem a:hover  {
-  padding: 2px 5px 1px 5px;
+	background-color: #ededed;
 }
 
 .mdkitem a:active {
@@ -2673,8 +2677,20 @@ a.removeTab{
 
 /* ASSORTED  */
 
+	
 #clear {
 	clear:both;
 	}
-	
 
+.treemenudiv	{
+	display: block;
+	white-space: nowrap;
+	font-size: 14px;
+}
+a.phplm	{
+	color: #000000;
+	text-decoration: none;
+}
+a.phplm:hover	{
+	background-color: #dedede;
+}
