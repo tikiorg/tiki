@@ -20,6 +20,11 @@
 <td class="form"><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
 <td class="form">({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
 </tr>
+<tr class="formcolor">
+<td class="form"><b>./temp/cache/</b></td>
+<td class="form"><a href="tiki-admin_system.php?do=temp_cache" class="link">{tr}Empty{/tr}</a></td>
+<td class="form">({$tempcache.cant} {tr}files{/tr} / {$tempcache.total|kbsize})</td>
+</tr>
 </table>
 
 <table class="normal">

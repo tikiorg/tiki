@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.6 2003-12-19 10:41:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.7 2003-12-19 11:55:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,6 +90,8 @@ $buf = '';
 if (isset($_GET['do'])) {
 	if ($_GET['do'] == 'templates_c') {
 		erase_dir_content('templates_c');
+	} elseif ($_GET['do'] == 'temp_cache') {
+		erase_dir_content('temp/cache');
 	} elseif ($_GET['do'] == 'modules_cache') {
 		erase_dir_content('modules/cache');
 	}
@@ -104,6 +106,9 @@ $languages = $tikilib->list_languages();
 
 $templates_c = du('templates_c');
 $smarty->assign('templates_c', $templates_c);
+
+$tempcache = du('temp/cache');
+$smarty->assign('tempcache', $tempcache);
 
 $modules = du('modules/cache');
 $smarty->assign('modules', $modules);
