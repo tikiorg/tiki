@@ -6,27 +6,24 @@ class ExportLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to ExportLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function MakeWikiZip() {
 		global $tikidomain;
-
 		$zipname = "wikidb.zip";
 		include_once ("lib/tar.class.php");
 		$tar = new tar();
-		$query = "select pageName from tiki_pages order by pageName asc";
-		$result = $this->query($query);
+		$query = "select `pageName` from `tiki_pages` order by ".$this->convert_sortmode("pageName_asc");
+		$result = $this->query($query,array());
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$page = $res["pageName"];
-
 			$content = $this->export_wiki_page($page, 0);
 			$tar->addData($page, $content, date("U"));
 		}
 
-		$tar->toTar("dump/" . $tikidomain . "/export.tar", FALSE);
+		$tar->toTar("dump/$tikidomain/export.tar", FALSE);
 		return '';
 	}
 
@@ -48,7 +45,6 @@ class ExportLib extends TikiLib {
 					break;
 			}
 		}
-
 		if (count($parts) > 1)
 			return $head . MimeMultipart($parts);
 
@@ -59,15 +55,12 @@ class ExportLib extends TikiLib {
 	// Returns all the versions for this page
 	// without the data itself
 	function get_page_history($page) {
-		$page = addslashes($page);
-
-		$query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
-		$result = $this->query($query);
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("version_desc");
+		$result = $this->query($query,array($page));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux = array();
-
 			$aux["version"] = $res["version"];
 			$aux["lastModif"] = $res["lastModif"];
 			$aux["user"] = $res["user"];
@@ -79,7 +72,6 @@ class ExportLib extends TikiLib {
 			//$aux["percent"] = levenshtein($res["data"],$actual);
 			$ret[] = $aux;
 		}
-
 		return $ret;
 	}
 }
