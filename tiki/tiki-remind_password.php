@@ -2,34 +2,53 @@
 // Initialization
 require_once('tiki-setup.php');
 
-if($forgotPass != 'y') {
-    $smarty->assign('msg',tra("This feature is disabled"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
+if ($forgotPass != 'y') {
+  $smarty->assign( 'msg', tra("This feature is disabled") );
+  $smarty->display( "styles/$style_base/error.tpl" );
+  die;
 }
 
 
 $smarty->assign('showmsg','n');
-if(isset($_REQUEST["remind"])) {
-  if($tikilib->user_exists($_REQUEST["username"])) {
-    if($feature_clear_passwords == 'y') {
-      $pass = $userlib->get_user_password($_REQUEST["username"]);
+if (isset( $_REQUEST["remind"] )) {
+  if ($tikilib->user_exists( $_REQUEST["username"] )) {
+    if ($feature_clear_passwords == 'y') {
+      $pass = $userlib->get_user_password( $_REQUEST["username"] );
     } else {
-      $pass = $userlib->renew_user_password($_REQUEST["username"]);
+      $pass = $userlib->renew_user_password( $_REQUEST["username"] );
     }
-    $email = $tikilib->get_user_email($_REQUEST["username"]);
-    //$msg = tra('Someone from ').$_SERVER["SERVER_NAME"].tra(' requested to send the password for ').$_REQUEST["username"].tra(' by email to our registered email address')."\n".tra(' and the requested password is ').$pass;
-    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-    $smarty->assign('mail_user',$_REQUEST["username"]);
-    $smarty->assign('mail_pass',$pass);
-    $mail_data = $smarty->fetch('mail/password_reminder.tpl');
-    @mail($email,tra('Your tikiaccount information for ').$_SERVER["SERVER_NAME"],$mail_data);
-    $smarty->assign('showmsg','y');
-    $smarty->assign('msg',tra('You will receive an email with your password soon'));
+    $email = $tikilib->get_user_email( $_REQUEST["username"] );
+    $smarty->assign( 'mail_site', $_SERVER["SERVER_NAME"] );
+    $smarty->assign( 'mail_user', $_REQUEST["username"] );
+    $smarty->assign( 'mail_same', $feature_clear_passwords );  // AWC added
+    $smarty->assign( 'mail_pass', $pass );
+    $mail_data = $smarty->fetch( 'mail/password_reminder.tpl' );
+    $tmp = tra( "Your Tiki account information for" );
+    $tmp .= " ".$_SERVER["SERVER_NAME"];
+    @mail( $email, $tmp, $mail_data );
+    $smarty->assign( 'showmsg', 'y' );
+    $smarty->assign( 'showfrm', 'n' );
+    if ($feature_clear_passwords == 'y') {
+      $tmp = tra( "A password reminder email has been sent " );
+    } else {
+      $tmp = tra( "A new password has been sent " );
+    }
+    $tmp .= tra( "to the registered email address for" );
+    $tmp .= " ".$_REQUEST["username"].".";
+    $smarty->assign( 'msg', $tmp );
+  } else {
+    $smarty->assign( 'showmsg', 'e' );
+    $smarty->assign( 'showfrm', 'y' );
+    $tmp = tra( "Invalid or unknown username" );
+    $tmp .= ": ".$_REQUEST["username"];
+    $smarty->assign( 'msg', $tmp );
   }
+} else {
+  $smarty->assign( 'showmsg', 'n' );
+  $smarty->assign( 'showfrm', 'y' );
 }
 
 // Display the template
-$smarty->assign('mid','tiki-remind_password.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->assign( 'mid', 'tiki-remind_password.tpl' );
+$smarty->display( "styles/$style_base/tiki.tpl" );
 ?>
