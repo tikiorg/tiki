@@ -108,15 +108,15 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 
 <tr> 
 {section name=ix loop=$attfields}
-<td class="heading">{tr}{$attfields[ix]}{/tr}</td>
+<td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
 {/section}
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}
 <tr>
 {foreach key=k item=x from=$attfields}
-<td class="{cycle advance=false}">
+<td class="{cycle advance=false} auto">
 {if $x eq 'created'}
 {$atts[ix].$x|tiki_short_datetime}
 {else}
