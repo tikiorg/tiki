@@ -42,31 +42,31 @@ class BaseActivity extends Base {
     $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?";
     $result = $this->query($query,array($activityId));
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     switch($res['type']) {
       case 'start':
-    	$act = new Start($this->db);  
-      break;
+        $act = new Start($this->db);  
+        break;
       case 'end':
-      	$act = new End($this->db);
-      break;
+        $act = new End($this->db);
+        break;
       case 'join':
-      	$act = new Join($this->db);
-      break;
+        $act = new Join($this->db);
+        break;
       case 'split':
-      	$act = new Split($this->db);
-      break;
+        $act = new Split($this->db);
+        break;
       case 'standalone':
-      	$act = new Standalone($this->db);
-      break;
+        $act = new Standalone($this->db);
+        break;
       case 'switch':
         $act = new SwitchActivity($this->db);
-      break;
+        break;
       case 'activity':
-      	$act = new Activity($this->db);
-      break;
+        $act = new Activity($this->db);
+        break;
       default:
-      	trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
+        trigger_error('Unknown activity type:'.$res['type'],E_USER_WARNING);
     }
     
     $act->setName($res['name']);
@@ -85,7 +85,7 @@ class BaseActivity extends Base {
     //Now get roles
     $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
     $result=$this->query($query,array($res['activityId']));
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $this->roles[] = $res['roleId'];
     }
     $act->setRoles($this->roles);
@@ -97,7 +97,7 @@ class BaseActivity extends Base {
     $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=?";
     $result=$this->query($query,array($user));
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res['roleId'];
     }
     return $ret;
@@ -110,7 +110,7 @@ class BaseActivity extends Base {
     $query = "select gr.`roleId`, `name` from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
     $result=$this->query($query,array($aid));
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     return $ret;
@@ -118,7 +118,7 @@ class BaseActivity extends Base {
   
   /*! Returns the normalized name for the activity */
   function getNormalizedName() {
-  	return $this->normalizedName;
+    return $this->normalizedName;
   }
 
   /*! Sets normalized name for the activity */  
@@ -178,7 +178,7 @@ class BaseActivity extends Base {
 
   /*! Sets the processId for this activity */
   function setProcessId($pid) {
-  	$this->pId=$pid;
+    $this->pId=$pid;
   }
   
   /*! Gets the processId for this activity*/

@@ -560,7 +560,7 @@ class Instance extends Base {
     $now = date("U");
     $iid = $this->instanceId;
     $query="delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
-		$this->query($query,array((int)$iid,(int)$activityId));
+    $this->query($query,array((int)$iid,(int)$activityId));
     $query="insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
     $this->query($query,array((int)$iid,(int)$activityId,$putuser,'running',(int)$now));
     
