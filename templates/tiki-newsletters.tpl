@@ -52,7 +52,7 @@
 </form>
 {/if}
 
-<h2>{tr}newsletters{/tr}</h2>
+<h2>{tr}Newsletters{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

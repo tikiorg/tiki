@@ -8037,6 +8037,13 @@ function parse_data($data)
     }
 
     $links = $this->get_links($data);
+    
+    $notcachedlinks = $this->get_links_nocache($data);
+    
+	$cachedlinks = array_diff($links, $notcachedlinks);
+	
+	$this->cache_links($cachedlinks); 
+    
     // Note that there're links that are replaced
 
 

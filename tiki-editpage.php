@@ -330,13 +330,20 @@ if((md5($info["data"]) != md5($_REQUEST["edit"])) ) {
   // If page exists
   if(!$tikilib->page_exists($_REQUEST["page"])) {
     // Extract links and update the page
-    $links = $tikilib->get_links($_REQUEST["edit"]);
-    $tikilib->cache_links($links);
+    
+	$links = $tikilib->get_links($_REQUEST["edit"]);
+	/*
+	$notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
+	$cachedlinks = array_diff($links, $notcachedlinks);
+	$tikilib->cache_links($cachedlinks); 
+	*/
     $t = date("U");
     $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
   } else {
     $links = $tikilib->get_links($edit);
+    /*
     $tikilib->cache_links($links);
+    */
     $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
   }
   
