@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.78 2004-04-16 05:53:35 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.79 2004-04-27 18:06:59 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,6 +95,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       } else {
         $description = '';
       }
+      $pageLang = isset($part["lang"])? $part["lang"]: "";
 
       $authorid = urldecode($part["author_id"]);
 
@@ -110,9 +111,9 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       if (isset($_REQUEST["save"])) {
         make_clean($description);
         if ($tikilib->page_exists($pagename)) {
-          $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description);
+          $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang);
         } else {
-          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description);
+          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, null, $pageLang);
         }
       } else {
         $_REQUEST["edit"] = $last_part;
@@ -507,7 +508,6 @@ if (isset($info["description"])) {
 
   $description = '';
 }
-
 if(isset($_REQUEST["description"])) {
   $smarty->assign_by_ref('description',$_REQUEST["description"]);
   $description = $_REQUEST["description"];
@@ -517,6 +517,13 @@ if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
 } else {
   $smarty->assign('allowhtml','n');
 }
+if (isset($_REQUEST["lang"]))
+  $pageLang = $_REQUEST["lang"];
+else if (isset($info["lang"])) 
+  $pageLang = $info["lang"];
+else
+  $pageLang = "";
+$smarty->assign('lang', $pageLang);
 
 $smarty->assign_by_ref('pagedata',htmldecode($edit_data));
 
@@ -584,6 +591,7 @@ if (isset($_REQUEST["save"])) {
   // disabled
   if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
   if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
+  if(!isset($_REQUEST["lang"])) $_REQUEST["lang"]='';
 
   if(isset($_REQUEST['wiki_cache'])) {
     $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
@@ -598,7 +606,7 @@ if (isset($_REQUEST["save"])) {
 
   if ((($feature_wiki_description == 'y')
     && (md5($info["description"]) != md5($_REQUEST["description"])))
-    || (md5($info["data"]) != md5($_REQUEST["edit"]))) {
+    || (md5($info["data"]) != md5($_REQUEST["edit"])) || $info["lang"] != $_REQUEST["lang"]) {
 
     $page = $_REQUEST["page"];
 
@@ -642,7 +650,7 @@ if (isset($_REQUEST["save"])) {
     $tikilib->cache_links($cachedlinks);
     */
       $t = date("U");
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, false, $pageLang);
       if ($wiki_watch_author == 'y') 
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
     } else {
@@ -655,7 +663,7 @@ if (isset($_REQUEST["save"])) {
       } else {
         $minor=false;
       }
-      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor);
+      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang);
     }
 
     $page = urlencode($page);
@@ -681,6 +689,12 @@ if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);
+
+if ($feature_multilingual == 'y') {
+	$languages = array();
+	$languages = $tikilib->list_languages();
+	$smarty->assign_by_ref('languages', $languages);
+}
 
 $cat_type = 'wiki page';
 $cat_objid = $_REQUEST["page"];
