@@ -1038,11 +1038,16 @@ class Comments extends TikiLib {
     }
 
     function get_comment_father($id) {
-	$query = "select `parentId` from `tiki_comments` where
-	`threadId`=?";
+    static $cache;
+    if ( isset($cache[$id]) ) {
+        return $cache[$id];
+    }
+    $query = "select `parentId` from `tiki_comments` where `threadId`=?";
 
-	$ret = $this->getOne($query, array( $id ));
-	return $ret;
+    $ret = $this->getOne($query, array( $id ));
+    $cache[$id] = $ret;
+
+    return $ret;
     }
 
     function count_comments($objectId) {
@@ -1218,46 +1223,87 @@ class Comments extends TikiLib {
 	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 	$ret = array();
+    $logins = array();
+    $threadIds = array();
 
-	while ($res = $result->fetchRow()) {
-	    $tid = $res["threadId"];
+	while ( $row = $result->fetchRow() ) {
+        $ret[] = $row;
+        $logins[$row['userName']] = true;
+        $threadIds[$row['threadId']] = true;
+    }
 
-	    $res['user_posts'] = $this->getOne("select `posts` from `tiki_user_postings` where `user`=?",array($res['userName']));
-	    $res['user_level'] = $this->getOne("select `level` from `tiki_user_postings` where `user`=?",array($res['userName']));
+    // cache details for all users with posted messages
+    if ( count($logins) ) {
+        $logins = array_keys($logins);
+        $user_info = array();
+        $this->load_user_cache($logins); // note this extends tikilib
+        $query  = 'SELECT `user` , `posts` , `level` FROM `tiki_user_postings`';
+        $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($logins)-1) . '`user` = ?';
+        $result = $this->query($query, $logins);
+    	while ( $row = $result->fetchRow() ) {
+            $user_info[$row['user']] = $row;
+        }
+        $query  = 'SELECT `user` FROM `tiki_sessions`';
+        $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($logins)-1) . '`user` = ?';
+        $result = $this->query($query, $logins);
+    	while ( $row = $result->fetchRow() ) {
+            $user_info[$row['user']]['online'] = true;
+        }
+    }
+
+    // cache details for all threadIds
+    if ( count($threadIds) ) {
+        $threadIds = array_keys($threadIds);
+        $thread_info = array();
+        $query_where = ' WHERE ' . str_repeat('`threadId` = ? OR ', count($threadIds)-1) . '`threadId` = ?';
+
+        $query  = 'SELECT `threadId` , count(`threadId`) AS hits FROM `tiki_forums_reported`' . $query_where . ' GROUP BY `threadId`';
+        $result = $this->query($query, $threadIds);
+    	while ( $row = $result->fetchRow() ) {
+            $thread_info[$row['threadId']]['reported'] = $row['hits'];
+        }
+
+        $query  = 'SELECT `threadId` , `filename` , `filesize` , `attId` FROM `tiki_forum_attachments`' . $query_where;
+        $result = $this->query($query, $threadIds);
+    	while ( $row = $result->fetchRow() ) {
+            $tid = $row['threadId'];
+            unset($row['threadId']);
+            $thread_info[$tid]['attachments'][] = $row;
+        }
+    }
+
+    foreach ( $ret as $key=>$res ) {
+	    $ret[$key]['user_posts'] = isset($user_info[$res['userName']]['posts']) ? $user_info[$res['userName']]['posts'] : 0;
+	    $ret[$key]['user_level'] = isset($user_info[$res['userName']]['level']) ? $user_info[$res['userName']]['level'] : 0;
+	    $ret[$key]['user_online'] = isset($user_info[$res['userName']]['online']) ? 'y' : 'n';
 
 	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') == 'y') {
-		$res['user_email'] = $this->getOne("select `email` from `users_users` where `login`=?",array($res['userName']));
+    		$ret[$key]['user_email'] = $this->get_user_details('email', $res['userName']);  // note $this extends tikilib
 	    } else {
-		$res['user_email'] = '';
+	    	$ret[$key]['user_email'] = '';
 	    }
 
-	    $res['user_online'] = 'n';
-	    $res['is_reported'] = $this->is_reported($tid);
+	    $ret[$key]['is_reported'] = isset($thread_info[$res['threadId']]['reported']) ? $thread_info[$res['threadId']]['reported'] : 0;
 
-	    if ($res['userName']) {
-		$res['user_online'] = $this->getOne("select count(*) from `tiki_sessions` where `user`=?",array($res['userName'])) ? 'y' : 'n';
-	    }
-
-	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
+	    $ret[$key]['attachments'] = isset($thread_info[$res['threadId']]['attachments']) ? $thread_info[$res['threadId']]['attachments'] : array();
 
 	    // Get the grandfather
 	    if ($res["parentId"] > 0) {
-		$res["grandFather"] = $this->get_comment_father($res["parentId"]);
+  	        $ret[$key]["grandFather"] = $this->get_comment_father($res["parentId"]);
 	    } else {
-		$res["grandFather"] = 0;
+            $ret[$key]["grandFather"] = 0;
 	    }
 
-	    $res["parsed"] = $this->parse_comment_data($res["data"]);
+	    $ret[$key]["parsed"] = $this->parse_comment_data($res["data"]);
+
 	    // Get the replies
-	    $res['replies'] = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
+	    $ret[$key]['replies'] = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
 
 	    if (empty($res["data"])) {
-		$res["isEmpty"] = 'y';
+            $ret[$key]["isEmpty"] = 'y';
 	    } else {
-		$res["isEmpty"] = 'n';
+            $ret[$key]["isEmpty"] = 'n';
 	    }
-
-	    $ret[] = $res;
 	}
 
 	if ($old_sort_mode == 'replies_asc') {
