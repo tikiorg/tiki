@@ -52,11 +52,11 @@ $tikidomain_multi = false;
 $file_local_php = dirname(__FILE__). '/local.php';
 $file_local_php_multi = dirname(__FILE__). '/local_multi.php';
 
-if (file_exists($file_local_php_multi)) {
-	require_once ($file_local_php_multi);
-}
 if (file_exists($file_local_php)) {
   require_once ($file_local_php);
+}
+if ($tikidomain_multi and file_exists($file_local_php_multi)) {
+	require_once ($file_local_php_multi);
 }
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
