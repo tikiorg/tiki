@@ -3759,31 +3759,64 @@ class TikiLib {
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
-      if($desc = $this->page_exists_desc($pages[1][$i])) {
-      	$uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
-        $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".$pages[5][$i]."</a>";
-      } else {
-      	$uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
-        $repl = $pages[5][$i]."<a href='$uri_ref' class='wiki'>?</a>";
-      }
-
       $pattern = "/".$pages[0][$i]."/";
       $pattern=str_replace('|','\|',$pattern);
       $pattern=str_replace('(','\(',$pattern);
       $pattern=str_replace(')','\)',$pattern);
-      $data = preg_replace($pattern,"$repl",$data);
+      
+      // Replace links to external wikis
+      $repl2=true;
+      if(strstr($pages[1][$i],':')) {
+        $wexs = explode(':',$pages[1][$i]);
+        if(count($wexs)==2) {
+          $wkname = $wexs[0];       
+          if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
+			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
+			$wkurl = '<a href="'.str_replace('$page',$wexs[1],$wkurl).'" class="wiki">'.$wexs[1].'</a>';
+			$data = preg_replace($pattern,"$wkurl",$data);
+			$repl2=false;
+          }
+        }
+      }
+      
+      if($repl2) {
+	      if($desc = $this->page_exists_desc($pages[1][$i])) {
+	      	$uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
+	        $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".$pages[5][$i]."</a>";
+	      } else {
+	      	$uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
+	        $repl = $pages[5][$i]."<a href='$uri_ref' class='wiki'>?</a>";
+	      }
+	
+	      $data = preg_replace($pattern,"$repl",$data);
+      }
     }
 
     // New syntax for wiki pages ((name)) Where name can be anything
     preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page_parse) {
-      if($desc = $this->page_exists_desc($page_parse)) {
-        $repl = "<a title='$desc' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
-      } else {
-        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+      $repl2=true;
+      if(strstr($page_parse,':')) {
+        $wexs = explode(':',$page_parse);
+        if(count($wexs)==2) {
+          $wkname = $wexs[0];        
+          if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
+			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
+			$wkurl = '<a href="'.str_replace('$page',$wexs[1],$wkurl).'" class="wiki">'.$wexs[1].'</a>';
+			$data = preg_replace("/\(\($page_parse\)\)/","$wkurl",$data);
+			$repl2=false;
+          }
+        }
       }
-      $data = preg_replace("/\(\($page_parse\)\)/","$repl",$data);
-      //$data = str_replace($page_parse,$repl,$data);
+      if($repl2) {
+	      if($desc = $this->page_exists_desc($page_parse)) {
+	        $repl = "<a title='$desc' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
+	      } else {
+	        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+	      }
+	      $data = preg_replace("/\(\($page_parse\)\)/","$repl",$data);
+      }
+     
     }
 
     // Replace ))Words((

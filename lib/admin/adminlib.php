@@ -73,6 +73,70 @@ class AdminLib extends TikiLib {
     return $res;
   }
 
+
+  function list_extwiki($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where (extwiki like '%".$find."%')";
+    } else {
+      $mid="";
+    }
+    $query = "select * from tiki_extwiki $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_extwiki $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function replace_extwiki($extwikiId, $extwiki,$name)
+  {
+    $extwiki=addslashes($extwiki);
+    $name=addslashes($name);
+    // Check the name
+
+    if($extwikiId) {
+      $query = "update tiki_extwiki set extwiki='$extwiki',name='$name' where extwikiId=$extwikiId";
+    } else {
+      $query = "replace into tiki_extwiki(extwiki,name)
+                values('$extwiki','$name')";
+    }
+    $result = $this->query($query);
+    // And now replace the perm if not created
+    $perm_name = 'tiki_p_extwiki_'.$name;
+    $query = "replace into users_permissions(permName,permDesc,type,level) values
+    ('$perm_name','Can use extwiki $extwiki','extwiki','editor')";
+	$this->query($query);
+    return true;
+  }
+  
+  function remove_extwiki($extwikiId)
+  {
+    $info = $this->get_extwiki($extwikiId);
+    $perm_name = 'tiki_p_extwiki_'.$info['name'];
+    $query = "delete from users_permissions where permName='$perm_name'";
+    $this->query($query);
+    $query = "delete from tiki_extwiki where extwikiId=$extwikiId";
+    $this->query($query);
+    return true;
+  }
+  
+  function get_extwiki($extwikiId)
+  {
+    $query = "select * from tiki_extwiki where extwikiId=$extwikiId";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
   
   function remove_unused_pictures()
   {
