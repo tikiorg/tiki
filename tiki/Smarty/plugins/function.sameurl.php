@@ -11,14 +11,15 @@ function smarty_function_sameurl($params, &$smarty)
     	if(isset($_REQUEST[$name])) {
     	  $_REQUEST[$name]=$val;
     	} else {
-      		if($first) {
+      		if(in_array($name,$sameurl_elements)&&!is_array($name)&&!is_array($val)) {
+ 	        if(!in_array($name,$sets)) {
+ 	              		if($first) {
         		$first = false;
         		$sep='?';
       		} else {
         		$sep='&amp;';
       		}	
-      		if(in_array($name,$sameurl_elements)&&!is_array($name)&&!is_array($val)) {
- 	        if(!in_array($name,$sets)) {
+
         		$data.=$sep.urlencode($name).'='.urlencode($val);
         		$sets[]=$name;
       		}
@@ -28,17 +29,18 @@ function smarty_function_sameurl($params, &$smarty)
     }
     
     foreach($_REQUEST as $name=>$val) {
-      if($first) {
-        $first = false;
-        $sep='?';
-      } else {
-        $sep='&amp;';
-      }
       if(isset($$name)) {
         $val = $$name;
       }
       if(in_array($name,$sameurl_elements)&&!is_array($name)&&!is_array($val)) {
       if(!in_array($name,$sets)) {
+            if($first) {
+        $first = false;
+        $sep='?';
+      } else {
+        $sep='&amp;';
+      }
+
         $data.=$sep.urlencode($name).'='.urlencode($val);
         $sets[]=$name;
       }

@@ -35,7 +35,7 @@ if($_REQUEST["chartId"]) {
     'showVotes' => 'y',
     'useCookies' => 'n',
     'lastChart' => 0,
-    'voteAgainAfter' => 0,
+    'voteAgainAfter' => 7,
     'created' => 0
   );
 }

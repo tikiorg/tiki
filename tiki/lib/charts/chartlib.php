@@ -10,6 +10,34 @@ class ChartLib extends TikiLib {
     $this->db = $db;  
   }
   
+  function user_vote($user,$itemId,$points=0)
+  {
+    $chartId=$this->getOne("select chartId from tiki_chart_items where itemId=$itemId");
+    $now = date("U");
+    
+    // Register that the user has voted the item
+    if($user) {
+      $query = "replace into tiki_charts_votes(user,itemId,timestamp,chartId)
+    	values('$user',$itemId,$now,$chartId)";
+      $this->query($query);
+    } else {
+      $_SESSION['chart_votes'][] = $chartId;
+      $_SESSION['chart_item_votes'][] = $itemId;
+    }
+    // Update points and votes for the item
+    $query = "update tiki_chart_items set points=points+$points, votes=votes+1 where itemId=$itemId";
+    $this->query($query);
+    // Calculate average note that is the maxVoteValue is one average is the number of votes!
+    if($this->getOne("select maxVoteValue from tiki_charts where chartId=$chartId")==1) {
+    	$query = "update tiki_chart_items set average=votes where itemId=$itemId";
+    	$this->query($query);
+    } else {
+    	$query = "update tiki_chart_items set average=points/votes where itemId=$itemId";
+    	$this->query($query);
+    }
+    
+  }
+  
   function ranking_exists($chartId)
   {
     return $this->getOne("select count(*) from tiki_charts_rankings where chartId=$chartId");
@@ -19,6 +47,7 @@ class ChartLib extends TikiLib {
   {
     $maxPeriod = $this->get_last_period($chartId);
     $newPeriod = $maxPeriod + 1;
+    $now = date("U");
     $info = $this->get_chart($chartId);
     // Now just loop the items table and get the topN
     $topN=$info['topN'];
@@ -32,12 +61,12 @@ class ChartLib extends TikiLib {
       } else {
         $lastPosition = 0;
       }
-      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period)
-      values($chartId,$itemId,$position,$lastPosition,$newPeriod)";
+      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period,timestamp)
+      values($chartId,$itemId,$position,$lastPosition,$newPeriod,$now)";
       $this->query($query2);
       $position++;
     }
-    $now = date("U");
+
     $query = "update tiki_charts set lastChart=$now where chartId=$chartId";
     $this->query($query);
   }
@@ -47,15 +76,17 @@ class ChartLib extends TikiLib {
     $this->query($query);
   }
   
+  
+  
   function get_ranking($chartId,$period) 
   {
   	global $user;
-    $query = "select tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
+    $query = "select tcr.rvotes,tcr.raverage,tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
     $result = $this->query($query);
 	$ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
       if($res['lastPosition'] != 0) {
-      	$res['dif']=$res['position']-$res['position'];
+      	$res['dif']=$res['lastPosition']-$res['position'];
       	if($res['dif']==0) $res['dif']='-';
       } else {
       	$res['dif']='new';
@@ -69,6 +100,11 @@ class ChartLib extends TikiLib {
       $ret[]=$res;
     }
     return $ret;
+  }
+
+  function max_dif($chartId)
+  {
+    return $this->getOne("select max(lastPosition-position) from tiki_charts_rankings where chartId=$chartId ");
   }
   
   function purge_user_votes($chartId,$again)
@@ -139,6 +175,7 @@ class ChartLib extends TikiLib {
 	    $res['lastPosition']= $this->getOne("select lastPosition from tiki_charts_rankings where itemId=$itemId and period=$period");   
 	    // Best position
 	    $res['best']= $this->getOne("select min(position) from tiki_charts_rankings where itemId=$itemId");   
+	    $res['bestdate']= $this->getOne("select timestamp from tiki_charts_rankings where itemId=$itemId and position=".$res['best']);   
 	    if($res['lastPosition'] != 0) {
       		$res['dif']=$res['position']-$res['position'];
       		if($res['dif']==0) $res['dif']='-';

@@ -17,6 +17,8 @@ if(!isset($_REQUEST['chartId'])) {
 $chart_info = $chartlib->get_chart($_REQUEST["chartId"]);
 $smarty->assign_by_ref('chart_info',$chart_info);
 
+$smarty->assign('next_chart',$chart_info['lastChart']+($chart_info['frequency']*24*60*60));
+
 // Regenerate the ranking if no ranking is found or if
 // the last ranking is too old for the frequency
 if(!$chartlib->ranking_exists($chart_info['chartId']) ||
@@ -59,6 +61,8 @@ $smarty->assign('user_voted_chart',$user_voted_chart?'y':'n');
 // now get the ranking items
 $items = $chartlib->get_ranking($chart_info['chartId'],$_REQUEST['period']);
 $smarty->assign_by_ref('items',$items);
+
+$smarty->assign('max_dif',$chartlib->max_dif($chart_info['chartId']));
 
 $sameurl_elements = Array('offset','sort_mode','where','find','chartId');
 

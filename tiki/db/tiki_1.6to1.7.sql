@@ -91,8 +91,11 @@ create table tiki_charts_rankings(
   chartId integer(14) not null,
   itemId integer(14) not null,
   position integer(14) not null,
+  timestamp integer(14) not null,
   lastPosition integer(14) not null,
   period integer(14) not null,
+  rvotes integer(14) not null,
+  raverage decimal(4,2) not null,
   primary key(chartId,itemId,period)
 );
 
