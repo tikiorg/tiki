@@ -10,7 +10,7 @@
         <form action="{$login_url}" method="post">
         {tr}user{/tr}:
         <input type="text" name="username" size="8" />
-        <input type="submit" name="su" value="set" />
+        <input type="submit" name="su" value="{tr}set{/tr}" />
         </form>
       {/if}
     {else}
