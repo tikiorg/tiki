@@ -38,25 +38,28 @@ global $userlib, $smarty;
     // Process user array
     $added = 0;
     foreach ($userrecs as $u) {
-    	if (!$u['name']) {
-    		$discarded[] = discardUser($u,tra("User name is required"));
+    	if (@!$u['login']) {
+    		$discarded[] = discardUser($u,tra("User login is required"));
     	}
-    	elseif (!$u['password']) {
+    	elseif (@!$u['password']) {
     		$discarded[] = discardUser($u,tra("Password is required"));
     	}
-    	elseif (!$u['email']) {
+    	elseif (@!$u['email']) {
     		$discarded[] = discardUser($u,tra("Email is required"));
     	}
-    	elseif ($userlib->user_exists($u['name'])) {
+    	elseif ($userlib->user_exists($u['login']) and (!$_REQUEST['overwrite'])) {
     		$discarded[] = discardUser($u,tra("User is duplicated"));
     	}
     	else {
-    		$userlib->add_user($u['name'],$u['password'],$u['email']);
-    		if ($u['groups']) {
+    		if (!$userlib->user_exists($u['login'])) {
+    			$userlib->add_user($u['login'],$u['password'],$u['email']);
+    		}
+    		$userlib->set_user_fields($u);
+    		if (@$u['groups']) {
     			$grps = explode(",",$u['groups']);
     			foreach ($grps as $grp) {
     				if ($userlib->group_exists($grp)) {
-    					$userlib->assign_user_to_group($u['name'],$grp);
+    					$userlib->assign_user_to_group($u['login'],$grp);
     				}
     			}
     		}
@@ -65,7 +68,7 @@ global $userlib, $smarty;
     }
     $smarty->assign('added',$added);
     if (@is_array($discarded)) { $smarty->assign('discarded',count($discarded)); }
-   	$smarty->assign('discardlist',$discarded);
+   	@$smarty->assign('discardlist',$discarded);
 }
 
 
