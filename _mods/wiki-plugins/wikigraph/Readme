@@ -1,0 +1,7 @@
+Wikigraph plugin for TikiWiki
+=============================
+
+Wikiplugin using Graphviz to generate dynamic graph-maps of Wiki pages
+
+Project Admin: Lorinc
+License: LGPL
