@@ -52,7 +52,7 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].email}</td>
 <td class="{cycle advance=false}">{$channels[user].valid}</td>
-<td class="{cycle advance=false}">{$channels[user].subscribed|date_format:"%a %d of %b [%H:%M]"}</td>
+<td class="{cycle advance=false}">{$channels[user].subscribed|tiki_short_datetime}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}&amp;email={$channels[user].email}">{tr}remove{/tr}</a>
 </td>

@@ -14,7 +14,7 @@
 </form>
 {section loop=$shout_msgs name=ix}
 <div class="shoutboxmodmsg">
-<b>{$shout_msgs[ix].user}</b> at {$shout_msgs[ix].timestamp|date_format:"[%H:%M:%S]"}
+<b>{$shout_msgs[ix].user}</b> at {$shout_msgs[ix].timestamp|tiki_long_time}
 <br/>
 {$shout_msgs[ix].message}{if $tiki_p_admin_shoutbox eq 'y'} [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="link">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="link">e</a>]{/if}
 </div>

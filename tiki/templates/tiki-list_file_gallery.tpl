@@ -61,7 +61,7 @@
 &nbsp;</td>
 <td class="listfilesfilesizeodd">{$images[changes].filesize}&nbsp;</td>
 <td class="listfilesdescriptionodd">{$images[changes].description}&nbsp;</td>
-<td class="listfilescreatedodd">{$images[changes].created|date_format:"%d of %b, %Y"}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
+<td class="listfilescreatedodd">{$images[changes].created|tiki_short_date}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
 <td class="listfilesdlsodd">{$images[changes].downloads}&nbsp;</td>
 <!--<td class="listfilesuserodd">{$images[changes].user}&nbsp;</td>-->
 </td>
@@ -83,7 +83,7 @@
 &nbsp;</td>
 <td class="listfilesfilesizeeven">{$images[changes].filesize}&nbsp;</td>
 <td class="listfilesdescriptioneven">{$images[changes].description}&nbsp;</td>
-<td class="listfilescreatedeven">{$images[changes].created|date_format:"%d of %b, %Y"}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
+<td class="listfilescreatedeven">{$images[changes].created|tiki_short_date}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
 <td class="listfilesdlseven">{$images[changes].downloads}&nbsp;</td>
 <!--<td class="listfilesusereven">{$images[changes].user}&nbsp;</td>-->
 {/if}

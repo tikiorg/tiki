@@ -49,7 +49,7 @@
 <!--<td class="forumstableinfoodd">{$channels[user].age}</td> -->
 <td class="forumstableinfoodd">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 <td class="forumstableinfoodd">
-{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}<br/>
+{$channels[user].lastPost|tiki_short_datetime}<br/>
 <small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 </td>
 <td class="forumstableinfoodd">{$channels[user].hits}</td>
@@ -72,7 +72,7 @@
 <!--<td class="forumstableinfoeven">{$channels[user].age}</td> -->
 <td class="forumstableinfoeven">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 <td class="forumstableinfoeven">
-{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}<br/>
+{$channels[user].lastPost|tiki_short_datetime}<br/>
 <small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 </td>
 <td class="forumstableinfoeven">{$channels[user].hits}</td>

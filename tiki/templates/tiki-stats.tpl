@@ -12,12 +12,12 @@
 <a name="site_stats"></a>
 <table class="normal">
 <tr><td class="heading" colspan="2">{tr}Site Stats{/tr}</td></tr>
-<tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|date_format:"%a %d of %b, %Y"}</td></tr>
+<tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|tiki_short_date}</td></tr>
 <tr><td class="odd">{tr}Days online{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.days}</td></tr>
 <tr><td class="even">{tr}Total pageviews{/tr}</td><td class="even" style="text-align:right;">{$site_stats.pageviews}</td></tr>
 <tr><td class="odd">{tr}Average pageviews per day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.ppd|string_format:"%.2f"}</td></tr>
-<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|date_format:"%a %d of %b, %Y"} ({$site_stats.bestpvs} pvs)</td></tr>
-<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|date_format:"%a %d of %b, %Y"} ({$site_stats.worstpvs} pvs)</td></tr>
+<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_short_date} ({$site_stats.bestpvs} pvs)</td></tr>
+<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_short_date} ({$site_stats.worstpvs} pvs)</td></tr>
 </table>
 <br/>
 <form action="tiki-stats.php" method="post">

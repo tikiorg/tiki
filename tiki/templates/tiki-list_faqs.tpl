@@ -42,7 +42,7 @@
 <tr>
 <td class="odd"><a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a></td>
 <td class="odd">{$channels[user].description}</td>
-<td class="odd">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].hits}</td>
 <td class="odd">{$channels[user].questions}</td>
 <td class="odd">{$channels[user].suggested}</td>
@@ -58,7 +58,7 @@
 <tr>
 <td class="even"><a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a></td>
 <td class="even">{$channels[user].description}</td>
-<td class="even">{$channels[user].created|date_format:"%d of %b, %Y [%H:%M]"}</td>
+<td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">{$channels[user].hits}</td>
 <td class="even">{$channels[user].questions}</td>
 <td class="even">{$channels[user].suggested}</td>

@@ -53,7 +53,7 @@
 {/if}
 &nbsp;</td>
 <td class="listarttopicodd">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="listartpublishDateodd">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="listartpublishDateodd">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <td class="listartauthorodd">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
 <td class="listartreadsodd">&nbsp;{$listpages[changes].reads}&nbsp;</td>
 <td class="listartsizeodd">&nbsp;{$listpages[changes].size}&nbsp;</td>
@@ -80,7 +80,7 @@
 {/if}
 &nbsp;</td>
 <td class="listarttopiceven">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="listartpublishDateeven">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="listartpublishDateeven">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <td class="listartauthoreven">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
 <td class="listartreadseven">&nbsp;{$listpages[changes].reads}&nbsp;</td>
 <td class="listartsizeeven">&nbsp;{$listpages[changes].size}&nbsp;</td>

@@ -51,7 +51,7 @@
 <td class="odd"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
 <td class="odd">{$channels[user].active}</td>
 <td class="odd">{$channels[user].votes}</td>
-<td class="odd">{$channels[user].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].options}</td>
 <td class="odd">
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}remove{/tr}</a>
@@ -65,7 +65,7 @@
 <td class="even"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
 <td class="even">{$channels[user].active}</td>
 <td class="even">{$channels[user].votes}</td>
-<td class="even">{$channels[user].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="even">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="even">{$channels[user].options}</td>
 <td class="even">
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}remove{/tr}</a>

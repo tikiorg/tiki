@@ -72,8 +72,8 @@
 {if $smarty.section.changes.index % 2}
   <td class="gallistnameodd"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a>&nbsp;</td>
   <td class="gallistdescriptionodd">{$galleries[changes].description}&nbsp;</td>
-  <td class="gallistcreatedodd">{$galleries[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
-  <td class="gallistlastModifodd">{$galleries[changes].lastModif|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+  <td class="gallistcreatedodd">{$galleries[changes].created|tiki_short_datetime}&nbsp;</td>
+  <td class="gallistlastModifodd">{$galleries[changes].lastModif|tiki_short_datetime}&nbsp;</td>
   <!--<td class="gallistthemeodd">{$galleries[changes].theme}&nbsp;</td>-->
   <td class="gallistuserodd">{$galleries[changes].user}&nbsp;</td>
   <td class="gallistimagesodd">{$galleries[changes].images}&nbsp;</td>
@@ -102,8 +102,8 @@
 {else}
   <td class="gallistnameeven"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a>&nbsp;</td>
   <td class="gallistdescriptioneven">{$galleries[changes].description}&nbsp;</td>
-  <td class="gallistcreatedeven">{$galleries[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
-  <td class="gallistlastModifeven">{$galleries[changes].lastModif|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+  <td class="gallistcreatedeven">{$galleries[changes].created|tiki_short_datetime}&nbsp;</td>
+  <td class="gallistlastModifeven">{$galleries[changes].lastModif|tiki_short_datetime}&nbsp;</td>
   <!--<td class="gallistthemeeven">{$galleries[changes].theme}&nbsp;</td>-->
   <td class="gallistusereven">{$galleries[changes].user}&nbsp;</td>
   <td class="gallistimageseven">{$galleries[changes].images}&nbsp;</td>

@@ -27,7 +27,7 @@
 
 {section name=user loop=$channels}
 <div class="shoutboxmsg">
-<b>{$channels[user].user}</b> at: {$channels[user].timestamp|date_format:"[%H:%M:%S]"}
+<b>{$channels[user].user}</b> at: {$channels[user].timestamp|tiki_long_time}
 {if $tiki_p_admin_shoutbox eq 'y'}
 [<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">x</a>
 |<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">edit</a>]

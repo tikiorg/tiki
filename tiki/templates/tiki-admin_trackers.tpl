@@ -51,8 +51,8 @@
 <a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{$channels[user].name}</a>
 </td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
-<td class="{cycle advance=false}">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
-<td class="{cycle advance=false}">{$channels[user].lastModif|date_format:"%d of %b [%H:%M]"}</td>
+<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].items}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}">{tr}remove{/tr}</a>

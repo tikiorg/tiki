@@ -1,6 +1,6 @@
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"} ({$reads} {tr}reads{/tr})</span><br/>
+<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br/>
 </div>
 
 {if $type eq 'Review'}

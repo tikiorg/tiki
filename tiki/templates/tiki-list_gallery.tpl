@@ -36,7 +36,7 @@
 <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>
-<td class="listgalcreatedodd">{$images[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
+<td class="listgalcreatedodd">{$images[changes].created|tiki_short_datetime}&nbsp;</td>
 <td class="listgalhitsodd">{$images[changes].hits}&nbsp;</td>
 <td class="listgaluserodd">{$images[changes].user}&nbsp;</td>
 <td class="listgalfilesizeodd">{$images[changes].filesize}&nbsp;</td>
@@ -47,7 +47,7 @@
 <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>
-<td class="listgalcreatedeven">{$images[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
+<td class="listgalcreatedeven">{$images[changes].created|tiki_short_datetime}&nbsp;</td>
 <td class="listgalhitseven">{$images[changes].hits}&nbsp;</td>
 <td class="listgalusereven">{$images[changes].user}&nbsp;</td>
 <td class="listgalfilesizeeven">{$images[changes].filesize}&nbsp;</td>

@@ -39,8 +39,8 @@
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].actual|tiki_short_datetime}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].next|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="odd">
@@ -51,8 +51,8 @@
 {else}
 <td class="even">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].actual|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].next|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].actual|tiki_short_datetime}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].next|tiki_short_datetime}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="even">

@@ -157,7 +157,7 @@
 {if $items[user].field_values[ix].isMain eq 'y'}
 <td class="{cycle advance=false}">{if $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
 {if $items[user].field_values[ix].type eq 'f'}
-{$items[user].field_values[ix].value|date_format:"%d of %b [%H:%M]"}
+{$items[user].field_values[ix].value|tiki_short_datetime}
 {else}
 {$items[user].field_values[ix].value}
 {/if}
@@ -169,7 +169,7 @@
 {else}
 <td class="{cycle advance=false}">
 {if $items[user].field_values[ix].type eq 'f'}
-{$items[user].field_values[ix].value|date_format:"%d of %b [%H:%M]"}
+{$items[user].field_values[ix].value|tiki_short_datetime}
 {else}
 {$items[user].field_values[ix].value}
 {/if}
@@ -177,8 +177,8 @@
 {/if}
 {/if}
 {/section}
-<td class="{cycle advance=false}">{$items[user].created|date_format:"%d of %b [%H:%M]"}</td>
-<td class="{cycle advance=false}">{$items[user].lastModif|date_format:"%d of %b [%H:%M]"}</td>
+<td class="{cycle advance=false}">{$items[user].created|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$items[user].lastModif|tiki_short_datetime}</td>
 {if $tracker_info.useComments eq 'y'}
 <td class="{cycle advance=false}">{$items[user].comments}</td>
 {/if}

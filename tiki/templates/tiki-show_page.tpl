@@ -3,7 +3,7 @@
 <small>{$description}</small>
 {/if}
 <div class="wikitext">{$parsed}</div>
-<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|date_format:"%A %d of %B, %Y [%H:%M:%S]"} by {$lastUser}</p>
+<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} by {$lastUser}</p>
 {if $wiki_extras eq 'y'}
 <br/>
 {if $feature_wiki_attachments eq 'y'}
@@ -26,7 +26,7 @@
  <a class="link" href="tiki-index.php?page={$page}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
  {/if}
  </td>
- <td class="{cycle advance=false}">{$atts[ix].created|date_format:"%d of %b [%H:%M]"}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
+ <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
  <td class="{cycle advance=false}">{$atts[ix].filesize}</td>
  <td class="{cycle advance=false}">{$atts[ix].downloads}</td>
  <td class="{cycle}">{$atts[ix].comment}</td>

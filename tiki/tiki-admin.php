@@ -201,6 +201,32 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("language",$_REQUEST["language"]); 
     $smarty->assign_by_ref('language',$_REQUEST["language"]);
   }
+
+  if(isset($_REQUEST['display_timezone'])) {
+    $tikilib->set_preference('display_timezone',$_REQUEST['display_timezone']); 
+    $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
+  }
+
+  if(isset($_REQUEST['long_date_format'])) {
+    $tikilib->set_preference('long_date_format',$_REQUEST['long_date_format']); 
+    $smarty->assign_by_ref('long_date_format',$_REQUEST['long_date_format']);
+  }
+
+  if(isset($_REQUEST['short_date_format'])) {
+    $tikilib->set_preference('short_date_format',$_REQUEST['short_date_format']); 
+    $smarty->assign_by_ref('short_date_format',$_REQUEST['short_date_format']);
+  }
+
+  if(isset($_REQUEST['long_time_format'])) {
+    $tikilib->set_preference('long_time_format',$_REQUEST['long_time_format']); 
+    $smarty->assign_by_ref('long_time_format',$_REQUEST['long_time_format']);
+  }
+
+  if(isset($_REQUEST['short_time_format'])) {
+    $tikilib->set_preference('short_time_format',$_REQUEST['short_time_format']); 
+    $smarty->assign_by_ref('short_time_format',$_REQUEST['short_time_format']);
+  }
+
   if(isset($_REQUEST["anonCanEdit"]) && $_REQUEST["anonCanEdit"]=="on") {
     $tikilib->set_preference("anonCanEdit",'y'); 
     $smarty->assign('anonCanEdit','y');
@@ -1202,6 +1228,26 @@ while($file=readdir($h)) {
 }
 closedir($h);
 $smarty->assign_by_ref('languages',$languages);
+
+$timezone_options = $tikilib->get_timezone_list(false);
+$smarty->assign_by_ref('timezone_options',$timezone_options);
+
+$server_time = new Date();
+$display_timezone = $tikilib->get_preference('display_timezone', $server_time->tz->getID());
+$smarty->assign_by_ref('display_timezone',$display_timezone);
+
+$timezone_server = $timezone_options[$server_time->tz->getID()];
+$smarty->assign_by_ref('timezone_server',$timezone_server);
+
+$long_date_format = $tikilib->get_preference('long_date_format', '%A %d of %B, %Y');
+$short_date_format = $tikilib->get_preference('short_date_format', '%a %d of %b, %Y');
+$long_time_format = $tikilib->get_preference('long_time_format', '%H:M:%S %Z');
+$short_time_format = $tikilib->get_preference('short_time_format', '%H:%M %Z');
+$smarty->assign_by_ref('short_date_format',$short_date_format);
+$smarty->assign_by_ref('long_date_format',$long_date_format);
+$smarty->assign_by_ref('short_time_format',$short_time_format);
+$smarty->assign_by_ref('long_time_format',$long_time_format);
+
 
 include_once("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);

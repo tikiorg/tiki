@@ -22,7 +22,7 @@
 <tr>
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;{$listpages[changes].title}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].votes}&nbsp;</td>
 <td class="odd">
 <a class="link" href="tiki-poll_results.php?pollId={$listpages[changes].pollId}">{tr}Results{/tr}</a>
@@ -30,7 +30,7 @@
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].title}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].votes}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-poll_results.php?pollId={$listpages[changes].pollId}">{tr}Results{/tr}</a>

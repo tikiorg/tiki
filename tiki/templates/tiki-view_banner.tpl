@@ -21,7 +21,7 @@
 </tr>
 <tr>
   <td>{tr}Created{/tr}:</td>
-  <td>{$created|date_format:"%d of %b, %Y"}</td>
+  <td>{$created|tiki_short_date}</td>
 </tr>
 <tr>
   <td>{tr}Max Impressions{/tr}:</td>
@@ -46,7 +46,7 @@
 {if $useDates eq 'y'}
 <tr>
   <td>{tr}Use dates{/tr}:</td>
-  <td>{tr}From{/tr}: {$fromDate|date_format:"%d of %b, %Y"} {tr}to{/tr}: {$toDate|date_format:"%d of %b, %Y"}
+  <td>{tr}From{/tr}: {$fromDate|tiki_short_date} {tr}to{/tr}: {$toDate|tiki_short_date}
   </td>
 </tr>
 {/if}

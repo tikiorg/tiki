@@ -103,7 +103,7 @@
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
   {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}">edit</a>|<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}">remove</a>]{/if}
 <br/>
-<small>{tr}posted on{/tr}: {$comments[ix].posted|date_format:"%a %d of %b [%H:%M]"}</small><br/>
+<small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br/>
 {$comments[ix].parsed}
 <hr/>
 {/section}
@@ -145,7 +145,7 @@
  <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
  {/if}
  </td>
- <td class="{cycle advance=false}">{$atts[ix].created|date_format:"%d of %b [%H:%M]"}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
+ <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
  <td class="{cycle advance=false}">{$atts[ix].filesize}</td>
  <td class="{cycle advance=false}">{$atts[ix].downloads}</td>
  <td class="{cycle}">{$atts[ix].comment}</td>

@@ -33,7 +33,7 @@
 {if $listpages[changes].type eq 'Review'}(r){/if}
 &nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <!--<td class="odd">&nbsp;{$listpages[changes].authorName}&nbsp;</td>-->
 <!--<td class="odd">&nbsp;{$listpages[changes].reads}&nbsp;</td>-->
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
@@ -56,7 +56,7 @@
 {if $listpages[changes].type eq 'Review'}(r){/if}
 &nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <!--<td class="even">&nbsp;{$listpages[changes].authorName}&nbsp;</td>-->
 <!--<td class="even">&nbsp;{$listpages[changes].reads}&nbsp;</td>-->
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>

@@ -33,8 +33,8 @@
 {if $smarty.section.changes.index % 2}
 <td class="bloglistnameodd">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{/if}{$listpages[changes].title|truncate:20:"(...)":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
 <td class="bloglistdescriptionodd">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="bloglistcreatedodd">&nbsp;{$listpages[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
-<td class="bloglistlastModifodd">&nbsp;{$listpages[changes].lastModif|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="bloglistcreatedodd">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
+<td class="bloglistlastModifodd">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="bloglistuserodd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="bloglistpublicodd">&nbsp;{$listpages[changes].public}&nbsp;</td>
 <td class="bloglistpostsodd">&nbsp;{$listpages[changes].posts}&nbsp;</td>
@@ -65,8 +65,8 @@
 {else}
 <td class="bloglistnameeven">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{/if}{$listpages[changes].title|truncate:20:"(...)":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
 <td class="bloglistdescriptioneven">&nbsp;{$listpages[changes].description}&nbsp;</td>
-<td class="bloglistcreatedeven">&nbsp;{$listpages[changes].created|date_format:"%d of %b, %Y [%H:%M]"}&nbsp;</td>
-<td class="bloglistlastModifeven">&nbsp;{$listpages[changes].lastModif|date_format:"%a %d of %b [%H:%M]"}&nbsp;</td>
+<td class="bloglistcreatedeven">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
+<td class="bloglistlastModifeven">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="bloglistusereven">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="bloglistpubliceven">&nbsp;{$listpages[changes].public}&nbsp;</td>
 <td class="bloglistpostseven">&nbsp;{$listpages[changes].posts}&nbsp;</td>

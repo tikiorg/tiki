@@ -1,7 +1,7 @@
 <div class="blogtitle">Blog: {$title}</div>
 <div class="bloginfo">
-{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|date_format:"%a %d of %b, %Y [%H:%M:%S]"}<br/>
-{tr}Last modified{/tr} {$lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}<br/><br/>
+{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>
+{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>
 ({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
 {if $tiki_p_blog_post eq 'y'}
 {if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y' or $public eq 'y'}
@@ -32,7 +32,7 @@
 {section name=ix loop=$listpages}
 <div class="posthead">
 <table width="100%"><tr><td align="left">
-<span class="posthead">{$listpages[ix].created|date_format:"%a %d of %b, %Y [%H:%M]"}</span>
+<span class="posthead">{$listpages[ix].created|tiki_short_datetime}</span>
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}">{tr}Edit{/tr}</a>

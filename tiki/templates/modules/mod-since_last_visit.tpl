@@ -5,7 +5,7 @@
 </div>
 <div class="box-data">
 {tr}Since your last visit on{/tr}<br/>
-<b>{$nvi_info.lastVisit|date_format:"%d of %b [%H:%M]"}</b><br/>
+<b>{$nvi_info.lastVisit|tiki_short_datetime}</b><br/>
 {$nvi_info.images} {tr}new images{/tr}<br/>
 {$nvi_info.pages} {tr}wiki pages changed{/tr}<br/>
 {$nvi_info.files} {tr}new files{/tr}<br/>

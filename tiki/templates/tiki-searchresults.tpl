@@ -45,7 +45,7 @@
 
 <br/>
 <div class="searchdesc">{$results[search].data|strip_tags}</div>
-<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</div><br/>
+<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div><br/>
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
 {/section}

@@ -10,6 +10,8 @@
 
 require_once('lib/tikilib.php'); # httpScheme()
 
+#$smarty->assign_by_ref('long_datetime_format',$tikilib->get_long_datetime_format());
+
 if(!isset($comments_per_page)) {
   $comments_per_page = 10;
 } 
