@@ -51,7 +51,7 @@
             		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
 	    		{/if}
             	{if $imagerotate}
-            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' alt='{tr}rotate' title='{tr}rotate{/tr}' /></a>
+            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
             	{/if}
             	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
             	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
