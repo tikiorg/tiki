@@ -13,7 +13,6 @@
 
 <!-- beginning of next bit -->
 
-
 <br /><br />
 <a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
@@ -27,16 +26,24 @@
 {/if}
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<table>
-<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-{include file=categorize.tpl}
-<tr><td>{tr}Show status when listing tracker items?{/tr}</td><td><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Tracker items allow comments?{/tr}</td><td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Tracker items allow attachments?{/tr}</td><td><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table><tr><td>
+{tr}Name{/tr}: </td><td>
+<input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>
+{tr}Description{/tr}: </td><td>
+<textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+{include file=categorize.tpl}<tr><td>
+{tr}Show status when listing tracker items?{/tr}</td><td>
+<input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr><tr><td>
+{tr}Show creation date when listing tracker items?{/tr}</td><td>
+<input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr><tr><td>
+{tr}Show lastModif date when listing tracker items?{/tr}</td><td>
+<input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr><tr><td>
+{tr}Tracker items allow comments?{/tr}</td><td>
+<input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} /></td></tr><tr><td>
+{tr}Tracker items allow attachments?{/tr}</td><td>
+<input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} /></td></tr><tr><td>&nbsp;</td><td>
+<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}trackers{/tr}</h2>
@@ -57,7 +64,7 @@
 <th><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
 <th><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></th>
 <th><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></th>
-<th><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}last modif{/tr}</a></th>
+<th><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}last modified{/tr}</a></th>
 <th style="text-align:right;"><a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'items_desc'}items_asc{else}items_desc{/if}">{tr}items{/tr}</a></th>
 <th>{tr}action{/tr}</th>
 </tr>
@@ -70,8 +77,8 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
-<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].items}</td>
-<td  class="{cycle}">
+<td class="{cycle advance=false}">{$channels[user].items}</td>
+<td class="{cycle}">
    <a href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
    <a href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt='{tr}fields{/tr}' title='{tr}fields{/tr}' /></a>
    {if $channels[user].individual eq 'y'}({/if}<a href="tiki-objectpermissions.php?objectName=Tracker%20{$channels[user].name}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}
@@ -98,4 +105,3 @@
 {/if}
 </div>
 </div>
-

@@ -1,9 +1,9 @@
 <a class="pagetitle" href="tiki-admin_survey_questions.php?surveyId={$surveyId}">{tr}Edit survey questions{/tr}</a><br /><br />
 <a class="linkbut" href="tiki-list_surveys.php">{tr}List surveys{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a>
-<a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a>
-<a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-survey_stats.php">{tr}Survey statistics{/tr}</a>
+<a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}This survey stats{/tr}</a>
+<a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this survey{/tr}</a>
+<a class="linkbut" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a><br /><br />
 <h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_survey.php?surveyId={$survey_info.surveyId}" class="pagetitle">{$survey_info.name}</a></h2>
 <form action="tiki-admin_survey_questions.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
@@ -13,13 +13,13 @@
 <tr><td>{tr}Position{/tr}:</td><td><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
 <tr><td>{tr}Type{/tr}:</td><td>
 <select name="type">
-<option value='c' {if $info.type eq 'c'}selected=selected{/if}>{tr}One choice{/tr}</option>
-<option value='m' {if $info.type eq 'm'}selected=selected{/if}>{tr}Multiple choices{/tr}</option>
-<option value='t' {if $info.type eq 't'}selected=selected{/if}>{tr}Short text{/tr}</option>
-<option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate (1..5){/tr}</option>
-<option value='s' {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
+<option value="c" {if $info.type eq 'c'}selected=selected{/if}>{tr}One choice{/tr}</option>
+<option value="m" {if $info.type eq 'm'}selected=selected{/if}>{tr}Multiple choices{/tr}</option>
+<option value="t" {if $info.type eq 't'}selected=selected{/if}>{tr}Short text{/tr}</option>
+<option value="r" {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate (1..5){/tr}</option>
+<option value="s" {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
 </select></td></tr>
-<tr><td>{tr}Options (if apply){/tr}:</td><td><input type="text" name="options" value="{$info.options|escape}" /></td></tr>
+<tr><td>{tr}Options (if applicable){/tr}:</td><td><input type="text" name="options" value="{$info.options|escape}" /></td></tr>
 <tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -39,12 +39,12 @@
 </table>
 <table>
 <tr>
-<td class="heading"><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}position{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}options{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a></th>
+<th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}position{/tr}</a></th>
+<th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a></th>
+<th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></th>
+<th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}options{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle print=false values="odd,even}
 {section name=user loop=$channels}

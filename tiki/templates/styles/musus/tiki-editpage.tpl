@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.4 2004-01-17 23:17:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.5 2004-01-29 03:36:41 musus Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -19,7 +19,7 @@
 {assign var=area_name value="editwiki"}
 {if $page eq 'SandBox'}
 <div class="wikitext">
-{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page.{/tr}
+{tr}The SandBox is a page where you can practice your wiki editing skills. Use the preview feature to preview the appeareance of the page. No versions are stored for this page.{/tr}
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
@@ -45,8 +45,9 @@
 </tr>
 {/if}
 <!--<a href="javascript:insertAt('editwiki',"''text here''");">i</a>-->
-{if $feature_wiki_description eq 'y'}
-<tr><td>{tr}Description{/tr}:</td><td><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
+{if $feature_wiki_description eq 'y'}<tr><td>
+{tr}Description{/tr}:</td><td>
+<input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
 <tr><td>{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
@@ -59,43 +60,48 @@
 <input type="hidden" name="cols" value="{$cols}"/>
 </td>
 {if $feature_wiki_footnotes eq 'y'}
-{if $user}
-<tr><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
+{if $user}<tr><td>
+{tr}Footnotes{/tr}:</td><td>
+<textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
 {/if}
 {/if}
 
 {if $page ne 'SandBox'}
-<tr><td>{tr}Comment{/tr}:</td><td><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
+<tr><td>
+{tr}Comment{/tr}:</td><td>
+<input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
-<tr><td>{tr}Title:{/tr}</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td></tr>
-<tr><td>{tr}Year:{/tr}</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr>
-<tr><td>{tr}Authors:{/tr}</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
+<tr><td>
+{tr}Title:{/tr}</td><td>
+<input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td></tr><tr><td>
+{tr}Year:{/tr}</td><td>
+<input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr><tr><td>
+{tr}Authors:{/tr}</td><td>
+<input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
 </table>
 </td>
 {/if}
-{if $tiki_p_use_HTML eq 'y'}
-<tr><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
+{if $tiki_p_use_HTML eq 'y'}<tr><td>
+{tr}Allow HTML{/tr}: </td><td>
+<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 {/if}
-{if $wiki_spellcheck eq 'y'}
-<tr><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+{if $wiki_spellcheck eq 'y'}<tr><td>
+{tr}Spellcheck{/tr}: </td><td>
+<input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 
+<tr><td>
+{tr}Import HTML{/tr}:</td><td>
+<input class="wikitext" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;</td></tr>
 <tr>
-  <td>{tr}Import HTML{/tr}:</td>
-  <td>
-    <input class="wikitext" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;
-  </td>
-</tr>
-<tr>
-  <td>&nbsp;</td>
-  <td>
-    <input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" />&nbsp;
-    <input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
-    {tr}Try to convert HTML to wiki{/tr}
-  </td>
+  <td>&nbsp;</td><td>
+<input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" />&nbsp;
+<input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
+{tr}Try to convert HTML to wiki{/tr}
+</td>
 </tr>
 {if $tiki_p_admin_wiki eq 'y'}
 <tr><td>{tr}Import page{/tr}:</td><td>
@@ -104,16 +110,16 @@
 <a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1">{tr}export all versions{/tr}</a>
 </td></tr>
 {/if}
-{if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
-<tr><td>{tr}Upload picture{/tr}</td><td>
+{if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}<tr><td>
+{tr}Upload picture{/tr}</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input name="picfile1" type="file" />
 </td></tr>
 {/if}
-{if $feature_wiki_icache eq 'y'}
-<tr><td>{tr}Cache{/tr}</td><td>
-    <select name="wiki_cache">
-    <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
+{if $feature_wiki_icache eq 'y'}<tr><td>
+{tr}Cache{/tr}</td><td>
+<select name="wiki_cache">
+	<option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
     <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
     <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
     <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
