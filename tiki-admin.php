@@ -412,11 +412,38 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("urlIndex",$_REQUEST["urlIndex"]);
   }
  
+  if(isset($_REQUEST["use_proxy"]) && $_REQUEST["use_proxy"]=="on") {
+    $tikilib->set_preference("use_proxy",'y');
+  } else {
+    $tikilib->set_preference("use_proxy",'n');
+  }
+  if(isset($_REQUEST["proxy_host"])) {
+    $tikilib->set_preference("proxy_host",$_REQUEST["proxy_host"]);
+  }
+  if(isset($_REQUEST["proxy_port"])) {
+    $tikilib->set_preference("proxy_port",$_REQUEST["proxy_port"]);
+  }
   
   if(isset($_REQUEST["maxRecords"])) {
     $tikilib->set_preference("maxRecords",$_REQUEST["maxRecords"]);
   }
   
+  if(isset($_REQUEST["use_proxy"]) && $_REQUEST["use_proxy"]=="on") {
+    $tikilib->set_preference("use_proxy",'y');
+    $smarty->assign('use_proxy','y');
+  } else {
+    $tikilib->set_preference("use_proxy",'n');
+    $smarty->assign('use_proxy','n');
+  }
+
+  if(isset($_REQUEST["proxy_host"])) {
+    $tikilib->set_preference("proxy_host",$_REQUEST["proxy_host"]);
+  }
+
+  if(isset($_REQUEST["proxy_port"])) {
+    $tikilib->set_preference("proxy_port",$_REQUEST["proxy_port"]);
+  }
+
   header('location: tiki-admin.php#general');  
   
 }
@@ -1811,6 +1838,9 @@ $useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
 $registerPasscode = $tikilib->get_preference("registerPasscode",'');
 $useUrlIndex = $tikilib->get_preference("useUrlIndex",'n');
 $urlIndex = $tikilib->get_preference("urlIndex",'');
+$use_proxy = $tikilib->get_preference("use_proxy",'');
+$proxy_host = $tikilib->get_preference("proxy_host",'');
+$proxy_port = $tikilib->get_preference("proxy_port",'');
 
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');

@@ -1,6 +1,7 @@
 <?php
 include_once('lib/diff.php');
 require_once('lib/Date.php');
+include_once('lib/pear/HTTP/Request.php');
 
 // This class is included by all the Tiki php scripts, so it's important
 // to keep the class as small as possible to improve performance.
@@ -90,6 +91,24 @@ class TikiLib {
   {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
+  }
+
+  /*shared*/ function httprequest($url,$reqmethod=HTTP_REQUEST_METHOD_GET)
+  {
+    global $use_proxy;
+    if ($use_proxy == 'y') {
+      global $proxy_host;
+      global $proxy_port;
+      $reqpar=Array("proxy_host" => $proxy_host,
+                    "proxy_port" => $proxy_port);
+      $req = &new HTTP_Request($url,$reqpar);
+    } else {
+      $req = &new HTTP_Request($url);
+    }
+    $req->setMethod($reqmethod);
+    $req->sendRequest(); // need error checking here
+    $data=$req->getResponseBody();
+    return $data;
   }
 
   /*shared*/ function get_dsn_by_name($name) 

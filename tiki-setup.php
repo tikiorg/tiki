@@ -844,7 +844,10 @@ $allowRegister = $tikilib->get_preference("allowRegister",'n');
 $useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
 $registerPasscode = $tikilib->get_preference("registerPasscode",'');
 $useUrlIndex = $tikilib->get_preference("useUrlIndex",'n');
-$urlIndex = $tikilib->get_preference("useUrlIndex",'');
+$urlIndex = $tikilib->get_preference("urlIndex",'');
+$use_proxy = $tikilib->get_preference("use_proxy",'n');
+$proxy_host = $tikilib->get_preference("use_host",'');
+$proxy_port = $tikilib->get_preference("use_port",'');
 $wikiHomePage = $tikilib->get_preference("wikiHomePage",'HomePage');
 $smarty->assign('wikiHomePage',$wikiHomePage);
 
@@ -906,6 +909,9 @@ $maxArticles = $tikilib->get_preference("maxArticles",10);
 
 $smarty->assign('useUrlIndex',$useUrlIndex);
 $smarty->assign('urlIndex',$urlIndex);
+$smarty->assign('use_proxy',$use_proxy);
+$smarty->assign('proxy_host',$proxy_host);
+$smarty->assign('proxy_port',$proxy_port);
 $smarty->assign('registerPasscode',$registerPasscode);
 $smarty->assign('useRegisterPasscode',$useRegisterPasscode);
 

@@ -59,6 +59,9 @@
 {/if}
         </select></td></tr>
 <tr><td class="form">{tr}Server name (for absolute URIs){/tr}:</td><td><input type="text" name="feature_server_name" value="{$feature_server_name}" /></td></tr>        
+<tr><td class="form">{tr}Use HTTP proxy{/tr}:</td><td><input type="checkbox" name="use_proxy" {if $use_proxy eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Proxy host{/tr}:</td><td><input type="text" name="proxy_host" value="{$proxy_host}" /></td></tr>
+<tr><td class="form">{tr}Proxy port{/tr}:</td><td><input type="text" name="proxy_port" value="{$proxy_port}" /></td></tr>
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
 <tr><td class="form">{tr}Temporary directory{/tr}:</td><td><input type="text" name="tmpDir" value="{$tmpDir}" /></td></tr>
 <tr><td class="form">{tr}Server time zone{/tr}:</td><td class="form">{$timezone_server}
