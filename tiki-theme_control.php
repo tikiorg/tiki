@@ -30,11 +30,17 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('styles',$styles);
 
-if(isset($_REQUEST['assigcat'])) {
-  $tcontrollib->tc_assign_category($_REQUEST['categId'],$_REQUEST['theme']);
+if (isset($_REQUEST['assigcat'])) {
+	if (isset($_REQUEST['categId'])) {
+		$tcontrollib->tc_assign_category($_REQUEST['categId'],$_REQUEST['theme']);
+	} else {
+		$smarty->assign('msg',tra("Please create a category first"));
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
 }
 
-if(isset($_REQUEST["delete"])) {
+if (isset($_REQUEST["delete"])) {
   foreach(array_keys($_REQUEST["categ"]) as $cat) {      	
     $tcontrollib->tc_remove_cat($cat);
   }
