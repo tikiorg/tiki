@@ -260,6 +260,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_galleries','y
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('session_db','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_date_format','%a %d of %b, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:%M %Z');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');
@@ -324,3 +325,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.m
 # adding field for group HomePage feature
 ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
 ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
+
+ create table sessions (
+       SESSKEY char(32) not null,
+       EXPIRY int(11) unsigned not null,
+       DATA text not null,
+       primary key (SESSKEY), 
+       key (EXPIRY) 
+)
+
+

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.23 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.24 2003-08-13 09:58:38 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,26 @@ require_once("lib/tikilib.php");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
+
+// is session data  stored in DB or in filesystem?
+$session_db = $tikilib->get_preference('session_db','n');
+if ($session_db == 'y') {
+	include('db/local.php');
+	$ADODB_SESSION_DRIVER=$db_tiki;
+	$ADODB_SESSION_CONNECT=$host_tiki;
+	$ADODB_SESSION_USER=$user_tiki;
+	$ADODB_SESSION_PWD=$pass_tiki;
+	$ADODB_SESSION_DB=$dbs_tiki;
+	unset($db_tiki);
+	unset($host_tiki);
+	unset($user_tiki);
+	unset($pass_tiki);
+	unset($dbs_tiki);
+	ini_set('session.save_handler','user');
+	include('adodb-session.php');
+}
+session_start();
+
 
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 

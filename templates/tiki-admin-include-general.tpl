@@ -189,6 +189,12 @@
             {/if}
         </td>
       </tr><tr>
+        <td class="form">{tr}Store session data in Database{/tr}:</td>
+        <td><input type="checkbox" name="session_db"
+              {if $session_db eq 'y'}checked="checked"{/if}/>
+        </td>
+      </tr><tr>
+      </tr><tr>
         <td class="form">{tr}Use proxy{/tr}:</td>
         <td><input type="checkbox" name="use_proxy"
               {if $use_proxy eq 'y'}checked="checked"{/if}/>

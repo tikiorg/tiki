@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.5 2003-08-12 10:59:44 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.6 2003-08-13 09:58:38 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,8 @@ if (isset($_REQUEST["prefs"])) {
 		"record_untranslated",
 		"useGroupHome",
 		"useUrlIndex",
-		"use_proxy"
+		"use_proxy",
+		"session_db"
 	);
 
 	foreach ($pref_toggles as $toggle) {
