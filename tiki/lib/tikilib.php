@@ -1290,6 +1290,9 @@ class TikiLib {
 
   /*shared*/function add_file_gallery_hit($id)
   {
+  	global $count_admin_pvs;
+  	global $user;
+  	
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_file_galleries set hits=hits+1 where galleryId=$id";
       $result = $this->query($query);

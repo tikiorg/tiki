@@ -77,6 +77,12 @@ if($tiki_p_admin_forum == 'y') {
 }
 
 
+if($tiki_p_forums_report == 'y') {
+	if(isset($_REQUEST['report'])) {
+		$commentslib->report_post($_REQUEST['forumId'],0,$_REQUEST['report'],$user,'');
+	}
+}
+
 if($tiki_p_admin_forum == 'y') {
 
 	if(isset($_REQUEST['remove_attachment'])) {
@@ -563,6 +569,7 @@ if($user && $feature_messages=='y' && $tiki_p_messages=='y') {
 
 if($tiki_p_admin_forum == 'y') {
 	$smarty->assign('queued',$commentslib->get_num_queued($comments_objectId));
+	$smarty->assign('reported',$commentslib->get_num_reported($_REQUEST['forumId']));
 }
 
 // Display the template
