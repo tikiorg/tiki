@@ -2457,12 +2457,14 @@ function get_assigned_modules($position, $displayed="n") {
 
     while ($res = $result->fetchRow()) {
   if ($res["groups"] && strlen($res["groups"]) > 1) {
-      $grps = unserialize($res["groups"]);
+      $grps = @unserialize($res["groups"]);
 
       $res["module_groups"] = '';
+			if (is_array($grps)) {
       foreach ($grps as $grp) {
     $res["module_groups"] .= " $grp ";
       }
+			}
   } else {
       $res["module_groups"] = '&nbsp;';
   }
@@ -3833,7 +3835,9 @@ function replace_hotwords($line, $words) {
   foreach ($words as $word => $url) {
       // \b is a word boundary, \s is a space char
       $line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-      $line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+      $line = preg_replace("/(=(\"|')[^\"']*)$word(\b)([^\"']*(\"|'))/i","$1 :::::$word$3$4",$line);
+      $line = preg_replace("/ $word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+      $line = preg_replace("/:::::$word(\b)/i"," $word$1",$line);
   }
     }
 
