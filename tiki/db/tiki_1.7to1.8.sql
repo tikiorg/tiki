@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.57 2003-11-06 15:59:42 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.58 2003-11-07 00:48:39 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -562,4 +562,13 @@ CREATE TABLE tiki_searchindex(
   KEY (last_update)
 ) TYPE=MyISAM;
 
-
+#
+# session stored in db
+#
+CREATE TABLE sessions(
+  SESSKEY varchar(32) NOT NULL default '',
+  EXPIRY int(11) unsigned NOT NULL default '0',
+  DATA text NOT NULL,
+  PRIMARY KEY (SESSKEY),
+  KEY (EXPIRY)
+) TYPE=MyISAM;

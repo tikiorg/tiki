@@ -229,6 +229,16 @@ CREATE TABLE messu_messages (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
+
+DROP TABLE IF EXISTS sessions;
+CREATE TABLE sessions(
+  SESSKEY varchar(32) NOT NULL default '',
+  EXPIRY int(11) unsigned NOT NULL default '0',
+  DATA text NOT NULL,
+  PRIMARY KEY (SESSKEY),
+  KEY (EXPIRY)
+) TYPE=MyISAM;
+
 #
 # Table structure for table `tiki_actionlog`
 #
