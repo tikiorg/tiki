@@ -915,7 +915,7 @@ function _generate_debug_output() {
     function _process_template($tpl_file, $compile_path)
     {
         // test if template needs to be compiled
-        if (!$this->force_compile && file_exists($compile_path)) {
+        if (!$this->force_compile && @file_exists($compile_path)) {
             if (!$this->compile_check) {
                 // no need to check if the template needs recompiled
                 return true;
