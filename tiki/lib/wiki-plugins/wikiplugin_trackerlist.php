@@ -9,7 +9,7 @@ function wikiplugin_trackerlist_help() {
 	return $help;
 }
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user;
+	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user;
 
 	extract ($params);
 
@@ -18,7 +18,7 @@ function wikiplugin_trackerlist($data, $params) {
 		return $smarty->fetch("error_simple.tpl");
 	} else {
 
-		include "lib/trackers/trackerlib.php";
+		require_once("lib/trackers/trackerlib.php");
 		if (!isset($fields)) {
 			$smarty->assign('msg', tra("missing fields list"));
 			return $smarty->fetch("error_simple.tpl");
@@ -40,7 +40,7 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('showtitle', $showtitle);
 		
 		if (!isset($showlinks)) {
-			$showdesc = "n";
+			$showlinks = "n";
 		}
 		$smarty->assign_by_ref('showlinks', $showlinks);
 		
