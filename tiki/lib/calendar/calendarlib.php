@@ -13,14 +13,10 @@ class CalendarLib extends TikiLib {
 	function list_calendars($offset=0,$maxRecords=-1,$sort_mode='created desc',$find='',$hide=1)
 	{
 		$res = array();
-		$vis = '';
+		$mid = '';
 		$sort_mode = str_replace("_"," ",$sort_mode);
 		if ($find) {
-			if ($hide) $vis = "visible='y' and";
-			$mid = "where $vis name like '%".$find."%'";
-		} else {
-			if ($hide) $vis = "where visible='y'";
-			$mid = "$vis";
+			$mid = "where name like '%".$find."%'";
 		}
 		$query = "select * from tiki_calendars $mid order by $sort_mode limit $offset,$maxRecords";
 		$result = $this->query($query);
@@ -31,6 +27,13 @@ class CalendarLib extends TikiLib {
 		return $res;
 	}
 
+	function list_calIds($offset=0,$maxRecords=-1,$sort_mode='created desc',$find='',$hide=1)
+	{
+		$result = $this->query("select calendarId from tiki_calendars");
+		if(!$result->numRows()) return false;
+		return $result->fetchRow(DB_FETCHMODE_ASSOC);
+	}
+
 	// give out an array with Ids viewable by $user
 	function list_user_calIds()
 	{
@@ -38,10 +41,10 @@ class CalendarLib extends TikiLib {
 		if ($user) {
 			global $userlib;
 			$groups = $userlib->get_user_groups($user);
-			$groupscond = implode("' or groupname='",$groups);
-			$query = "select calendarId from tiki_calendars where (groupname='$groupscond' or public='y') and (visible='y' or user='$user')";
+			// need to add something
+			$query = "select calendarId from tiki_calendars where user='$user'";
 		} else {
-			$query = "select calendarId from tiki_calendars where (groupname='Anonymous' or public='y') and (visible='y')";
+			$query = "select calendarId from tiki_calendars";
 		}
 		$result = $this->query($query);
 		$ret = array();
@@ -62,7 +65,7 @@ class CalendarLib extends TikiLib {
 		return $users;
 	}
 
-	function set_calendar($calendarId,$user,$name,$description,$public,$visible)
+	function set_calendar($calendarId,$user,$name,$description,$customflags)
 	{
 		$name = addslashes(strip_tags($name));
 		$description = addslashes(strip_tags($description));
@@ -70,12 +73,15 @@ class CalendarLib extends TikiLib {
 		if ($calendarId > 0) {
 			// modification of a calendar
 			$query = "update tiki_calendars set name='$name', user='$user', description='$description', ";
-			$query.= "lastmodif=$now, public='$public', visible='$visible' where calendarId=$calendarId";
+			foreach ($customflags as $k=>$v) {
+				$query.= "$k='$v', ";
+			}
+			$query.= "lastmodif=$now  where calendarId=$calendarId";
 			$result = $this->query($query);
 		} else {
 			// create a new calendar
-			$query = "insert into tiki_calendars (name,user,description,created,lastmodif,public,visible) ";
-			$query.= "values ('$name','$user','$description',$now,$now,'$public','$visible')";
+			$query = "insert into tiki_calendars (name,user,description,created,lastmodif,".implode(",",array_keys($customflags)).") ";
+			$query.= "values ('$name','$user','$description',$now,$now,'".implode("','",$customflags)."')";
 			$result = $this->query($query);
 			$calendarId = mysql_insert_id();
 		}
@@ -106,7 +112,7 @@ class CalendarLib extends TikiLib {
 		#$cond.= " and (start>$tstart or end<$tstop)"; 
 		$cond.= " and ((i.start > $tstart or i.end < $tstop) or (i.start < $tstart and i.end < $tstop))"; 
 		$query = "select i.calitemId as calitemId, i.name as name, i.description as description, i.start as start, i.end as end, ";
-		$query.= "i.url as url, i.status as status, i.priority  as priority, c.name as calname, i.calendarId as calendarId  ";
+		$query.= "i.url as url, i.status as status, i.priority  as priority, c.name as calname, i.calendarId as calendarId ";
 		$query.= "from tiki_calendar_items as i left join tiki_calendars as c on i.calendarId=c.calendarId where ($cond) ";
 		$result = $this->query($query);
 		$ret = Array();
@@ -138,14 +144,16 @@ class CalendarLib extends TikiLib {
 				$ret["$i"][] = array(
 					"result" => $res,
 					"calitemId" => $res["calitemId"],
+					"calname" => $res["calname"],
 					"time" => $tstart,
 					"type" => (string) $res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
 					"url" => "tiki-calendar.php?todate=$i&editmode=1&calitemId=".$res["calitemId"],
 					"name" => $res["name"],
-					"descriptionhead" => $head,
-					"descriptionbody" => $notice
+					"extra" => "<div align=right>... ".tra("click to edit"),
+					"head" => $head,
+					"description" => str_replace("\n|\r","",$res["description"])
 				);
 			}
 		}
@@ -165,14 +173,17 @@ class CalendarLib extends TikiLib {
 					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 						$dstart = mktime(0,0,0,date("m",$res['lastModif']),date("d",$res['lastModif']),date("Y",$res['lastModif']));
 						$tstart = date("Hi",$res["lastModif"]);
+						$quote = "<i>".tra("by")." ".$res["user"]."</i><br/>".addslashes(str_replace('"',"'",$res["comment"]));
 						$ret["$dstart"][] = array(
 							"calitemId" => "",
+							"calname" => "",
+							"prio" => "",
 							"time" => $tstart,
 							"type" => "wiki",
 							"url" => "tiki-index.php?page=".$res["pageName"],
 							"name" => $res["pageName"]." ".tra($res["action"]),
-							"descriptionhead" => date("H:i",$res["lastModif"]),
-							"descriptionbody" => $res["pageName"]." <i>".$res["action"]."</i><br/>".tra("by")." ".$res["user"]."<br/>".addslashes(str_replace('"',"'",$res["comment"]))
+							"head" => "<b>".date("H:i",$tstart)."</b> ".tra("in")." <b>$tik</b>",
+							"description" => str_replace("\n|\r","",$quote)
 						);
 					}
 					break;
@@ -435,9 +446,10 @@ class CalendarLib extends TikiLib {
 	function get_item($calitemId)
 	{
 		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.user as user, i.start as start, i.end as end, t.groupname as groupname, t.name as calname, ";
-		$query.= "i.locationId as locationId, l.name as locationName, i.categoryId as categoryId, c.name as categoryName, i.priority as priority, i.public as public, ";
-		$query.= "i.status as status, i.url as url, i.lang as lang, i.name as name, i.description as description, i.created as created, i.lastModif as lastModif ";
-		$query.= "from tiki_calendar_items as i left join tiki_calendar_locations as l on i.locationId=l.callocId ";
+		$query.= "i.locationId as locationId, l.name as locationName, i.categoryId as categoryId, c.name as categoryName, i.priority as priority, ";
+		$query.= "i.status as status, i.url as url, i.lang as lang, i.name as name, i.description as description, i.created as created, i.lastModif as lastModif, ";
+		$query.= "t.customlocations as customlocations, t.customcategories as customcategories, t.customlanguages as customlanguages, t.custompriorities as custompriorities, ";
+		$query.= "t.customparticipants as customparticipants from tiki_calendar_items as i left join tiki_calendar_locations as l on i.locationId=l.callocId ";
 		$query.= "left join tiki_calendar_categories as c on i.categoryId=c.calcatId left join tiki_calendars as t on i.calendarId=t.calendarId where calitemId=$calitemId";
 		$result = $this->query($query);
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -494,14 +506,14 @@ class CalendarLib extends TikiLib {
 		if ($calitemId) {
 			$query = "update tiki_calendar_items set calendarId=".$data["calendarId"].", user='$user',";
 			$query.= "start=".$data["start"].",end=".$data["end"].",locationId='".$data["locationId"]."',categoryId='".$data["categoryId"]."',";
-			$query.= "public='".$data["public"]."',priority=".$data["priority"].",status='".$data["status"]."',url='".$data["url"]."',";
+			$query.= "priority=".$data["priority"].",status='".$data["status"]."',url='".$data["url"]."',";
 			$query.= "lang='".$data["lang"]."',name='".$data["name"]."',description='".$data["description"]."',lastmodif=".time()." where calitemId=$calitemId";
 			$result = $this->query($query);
 		} else {
 			$query = "insert into tiki_calendar_items (calendarId, user, start, end, locationId, categoryId, ";
-			$query.= " public, priority, status, url, lang, name, description, created, lastmodif) values (";
+			$query.= " priority, status, url, lang, name, description, created, lastmodif) values (";
 			$query.= $data["calendarId"].",'".$data["user"]."',".$data["start"].",".$data["end"].",'".$data["locationId"]."','";
-			$query.= $data["categoryId"]."','".$data["public"]."',".$data["priority"].",'".$data["status"]."','".$data["url"]."','";
+			$query.= $data["categoryId"]."',".$data["priority"].",'".$data["status"]."','".$data["url"]."','";
 			$query.= $data["lang"]."','".$data["name"]."','".$data["description"]."',".time().",".time().")";
 			$result = $this->query($query);
 			$calitemId = mysql_insert_id();

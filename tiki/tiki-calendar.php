@@ -5,17 +5,19 @@ include_once('lib/class_calendar.php');
 include_once('lib/calendar/calendarlib.php');
 
 $cal = new Calendar('en');
-$usercals = $calendarlib->list_user_calIds();
+$listcals = $calendarlib->list_calIds();
 
 if($feature_calendar != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
+
+
 if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"]) and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
 } elseif (!isset($_SESSION['CalendarViewGroups'])) {
-	$_SESSION['CalendarViewGroups'] = $usercals;
+	$_SESSION['CalendarViewGroups'] = $listcals["calendarId"];
 } elseif (isset($_REQUEST["refresh"]) and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
 }
@@ -57,6 +59,101 @@ if(isset($_REQUEST["hidetiki"]) and $_REQUEST["hidetiki"]) {
 	}
 }
 
+$outsess = array();
+if (is_array($_SESSION['CalendarViewGroups']) and count($_SESSION['CalendarViewGroups']) > 0) {
+	foreach ($_SESSION['CalendarViewGroups'] as $grp) {
+		if($userlib->object_has_one_permission($grp,'calendar')) {
+			if($tiki_p_admin != 'y') {
+				$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar');
+				foreach($perms["data"] as $perm) {
+					if($userlib->object_has_permission($user,$grp,'calendar',$permName)) {
+						$$permName = 'y';
+						$smarty->assign("$permName",array("$grp"=>'y'));
+						$outsess[] = $grp;
+					} else {
+						$$permName = 'n';
+						$smarty->assign("$permName",array("$grp"=>'n'));
+					}
+				}
+			}
+		}
+	}
+}
+$_SESSION['CalendarViewGroups'] = $outsess;
+$tikiItems = array(
+	"wiki"=>array(
+		"label"=>tra("Wiki"),
+		"feature"=>"$feature_wiki",
+		"right"=>"$tiki_p_view"
+	),
+	"gal"=>array(
+		"label"=>tra("Image Gallery"),
+		"feature"=>"$feature_galleries",
+		"right"=>"$tiki_p_view_image_gallery"
+	),
+	"art"=>array(
+		"label"=>tra("Articles"),
+		"feature"=>"$feature_articles",
+		"right"=>"$tiki_p_read_article"
+	),
+	"blog"=>array(
+		"label"=>tra("Blogs"),
+		"feature"=>"$feature_blogs",
+		"right"=>"$tiki_p_read_blog"
+	),
+	"forum"=>array(
+		"label"=>tra("Forums"),
+		"feature"=>"$feature_forums",
+		"right"=>"$tiki_p_forum_read"
+	),
+	"dir"=>array(
+		"label"=>tra("Directory"),
+		"feature"=>"$feature_directory",
+		"right"=>"$tiki_p_view_directory"
+	),
+	"fgal"=>array(
+		"label"=>tra("File Gallery"),
+		"feature"=>"$feature_file_galleries",
+		"right"=>"$tiki_p_view_file_gallery"
+	),
+	"faq"=>array(
+		"label"=>tra("FAQs"),
+		"feature"=>$feature_faqs,
+		"right"=>$tiki_p_view_faqs
+	),
+	"quiz"=>array(
+		"label"=>tra("Quizzes"),
+		"feature"=>$feature_quizzes,
+		"right"=>$tiki_p_take_quiz
+	),
+	"track"=>array(
+		"label"=>tra("Trackers"),
+		"feature"=>"$feature_trackers",
+		"right"=>"$tiki_p_view_trackers"
+	),
+	"surv"=>array(
+		"label"=>tra("Survey"),
+		"feature"=>"$feature_surveys",
+		"right"=>"$tiki_p_take_survey"
+	),
+	"nl"=>array(
+		"label"=>tra("Newsletter"),
+		"feature"=>"$feature_newsletters",
+		"right"=>"$tiki_p_subscribe_newsletters"
+	),
+	"eph"=>array(
+		"label"=>tra("Ephemerides"),
+		"feature"=>"$feature_eph",
+		"right"=>"y"
+	),
+	"chart"=>array(
+		"label"=>tra("Charts"),
+		"feature"=>"$feature_charts",
+		"right"=>"$tiki_p_view_chart"
+	)
+);
+$smarty->assign('tikiItems',$tikiItems);
+
 if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
 	$_SESSION['CalendarViewTikiCals'] = array("wiki");
 }
@@ -81,13 +178,12 @@ $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
 $displayedcals = array();
 $tikical = array();
-foreach ($usercals as $ucal) {
-	$listcal = $calendarlib->get_calendar($ucal);
-	$listcals[] = $listcal;
-	if (is_array($_SESSION['CalendarViewGroups']) && (in_array($listcal['calendarId'],$_SESSION['CalendarViewGroups']))) {
-		$displayedcals[] = $listcal;
+foreach ($listcals as $ucal) {
+	if (is_array($_SESSION['CalendarViewGroups']) && (in_array($ucal,$_SESSION['CalendarViewGroups']))) {
+		$displayedcals[] = $calendarlib->get_calendar($ucal);
 	}
 }
+
 $smarty->assign('listcals',$listcals);
 $smarty->assign('displayedcals',$displayedcals);
 foreach ($listcals as $whichcal) {
@@ -138,7 +234,6 @@ if (isset($_REQUEST["save"]) and ($_REQUEST["save"])) {
 	"newloc" => addslashes($_REQUEST["newloc"].' '),
 	"categoryId" => $_REQUEST["categoryId"],
 	"newcat" => addslashes($_REQUEST["newcat"].' '),
-	"public" => $_REQUEST["public"],
 	"priority" => $_REQUEST["priority"],
 	"status" => $_REQUEST["status"],
 	"url" => $_REQUEST["url"],
@@ -178,8 +273,12 @@ if($_REQUEST["calitemId"]) {
 	$info["description"] = '';
 	$info["created"] = time();
 	$info["lastModif"] = time();
-	$info["public"] = 'y';
 	$info["status"] = '0';
+	$info["customlocations"] = 'n';
+	$info["customcategories"] = 'n';
+	$info["customlanguages"] = 'n';
+	$info["custompriorities"] = 'n';
+	$info["customparticipants"] = 'n';
 }
 if (!isset($_REQUEST["calendarId"]) or !$_REQUEST["calendarId"]) {
 	$_REQUEST["calendarId"] = $info["calendarId"];
@@ -197,7 +296,6 @@ $smarty->assign('locationName',$info["locationName"]);
 $smarty->assign('categoryId',$info["categoryId"]);
 $smarty->assign('categoryName',$info["categoryName"]);
 $smarty->assign('priority',$info["priority"]);
-$smarty->assign('public',$info["public"]);
 $smarty->assign('url',$info["url"]);
 $smarty->assign('lang',$info["lang"]);
 $smarty->assign('name',$info["name"]);
@@ -211,22 +309,45 @@ if(!isset($_REQUEST["editmode"])) $_REQUEST["editmode"]=0;
 $smarty->assign('editmode',$_REQUEST["editmode"]);
 
 if ($_REQUEST["editmode"]) {
-	$listcat = $calendarlib->list_categories($_REQUEST["calendarId"]);
-	$smarty->assign('listcat',$listcat);
-	$listloc = $calendarlib->list_locations($_REQUEST["calendarId"]);
-	$smarty->assign('listloc',$listloc);
-	$listpeople = $calendarlib->list_cal_users($_REQUEST["calendarId"]);
-	$smarty->assign('listpeople',$listpeople);
+	$thatcal = $calendarlib->get_calendar($_REQUEST["calendarId"]);
+	$info["customlocations"] = $thatcal["customlocations"];
+	$info["customcategories"] = $thatcal["customcategories"];
+	$info["customlanguages"] = $thatcal["customlanguages"];
+	$info["custompriorities"] = $thatcal["custompriorities"];
+	$info["customparticipants"] = $thatcal["customparticipants"];
+	$listcat = array();
+	$listloc = array();
+	$listpeople = array();
 	$languages=Array();
-	$h=opendir("lang/");
-	while($file=readdir($h)) {
-		if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
-			$languages[]=$file;
-		}
+	if ($thatcal["customcategories"] == 'y') {
+		$listcat = $calendarlib->list_categories($_REQUEST["calendarId"]);
 	}
-	closedir($h);
+	if ($thatcal["customlocations"] == 'y') {
+		$listloc = $calendarlib->list_locations($_REQUEST["calendarId"]);
+	}
+	if ($thatcal["customparticipants"] == 'y') {
+		$listpeople = $calendarlib->list_cal_users($_REQUEST["calendarId"]);
+	}
+	if ($thatcal["customlanguages"] == 'y') {
+		$h=opendir("lang/");
+		while($file=readdir($h)) {
+			if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
+				$languages[]=$file;
+			}
+		}
+		closedir($h);
+	}
+	$smarty->assign('listcat',$listcat);
+	$smarty->assign('listloc',$listloc);
+	$smarty->assign('listpeople',$listpeople);
 	$smarty->assign_by_ref('languages',$languages);
 }
+
+$smarty->assign('customlocations',$info["customlocations"]);
+$smarty->assign('customcategories',$info["customcategories"]);
+$smarty->assign('customlanguages',$info["customlanguages"]);
+$smarty->assign('custompriorities',$info["custompriorities"]);
+$smarty->assign('customparticipants',$info["customparticipants"]);
 
 if(isset($_REQUEST["find"])) {
   $find = $_REQUEST["find"];
@@ -327,16 +448,31 @@ for ($i=0;$i<=$numberofweeks;$i++) {
 		if (isset($listevents["$dday"])) {
 			foreach ($listevents["$dday"] as $le) {
 				$leday["{$le['time']}"] = $le;
+				$smarty->assign_by_ref('cellextra',$le["extra"]);
+				$smarty->assign_by_ref('cellhead',$le["head"]);
+				$smarty->assign_by_ref('cellprio',$le["prio"]);
+				$smarty->assign_by_ref('cellcalname',$le["calname"]);
+				$smarty->assign_by_ref('cellname',$le["name"]);
+				$smarty->assign_by_ref('celldescription',$le["description"]);
+				$leday["{$le['time']}"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 			}
 		}
 		if (isset($listtikievents["$dday"])) {
 			foreach ($listtikievents["$dday"] as $lte) {
 				$leday["{$lte['time']}"] = $lte;
+				$smarty->assign('cellextra',"");
+				$smarty->assign_by_ref('cellhead',$lte["head"]);
+				$smarty->assign_by_ref('cellprio',$lte["prio"]);
+				$smarty->assign_by_ref('cellcalname',$lte["calname"]);
+				$smarty->assign_by_ref('cellname',$lte["name"]);
+				$smarty->assign_by_ref('celldescription',$lte["description"]);
+				$leday["{$lte['time']}"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 			}
 		}
 		if (is_array($leday)) {
 			ksort($leday);
 			$cell[$i][$w]['items'] = array_values($leday);
+
 		}
 	}
 }
@@ -348,6 +484,7 @@ $smarty->assign('weekdays',$weekdays);
 $smarty->assign('weeks',$weeks);
 $smarty->assign('daysnames',$daysnames);
 $smarty->assign('cell',$cell);
+$smarty->assign('var','');
 
 $smarty->assign('mid','tiki-calendar.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

@@ -604,13 +604,11 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_edit
 DROP TABLE IF EXISTS tiki_calendars;
 CREATE TABLE tiki_calendars (
   calendarId int(14) NOT NULL auto_increment,
-  user varchar(40) NOT NULL default '',
   name varchar(80) NOT NULL default '',
   description varchar(255) default NULL,
+  user varchar(40) NOT NULL default '',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
-  public enum('n','y') NOT NULL default 'n',
-  visible enum('y','n') NOT NULL default 'y',
   PRIMARY KEY  (calendarId),
   KEY groupname (groupname)
 );
@@ -646,18 +644,17 @@ DROP TABLE IF EXISTS tiki_calendar_items;
 CREATE TABLE tiki_calendar_items (
   calitemId int(14) NOT NULL auto_increment,
   calendarId int(14) NOT NULL default '0',
-  user varchar(40) default NULL,
   start int(14) NOT NULL default '0',
   end int(14) NOT NULL default '0',
   locationId int(14) default NULL,
   categoryId int(14) default NULL,
-  public enum('y','n') NOT NULL default 'y',
   priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
   status enum('0','1','2') NOT NULL default '0',
   url varchar(255),
   lang char(2) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
   description blob,
+  user varchar(40) default NULL,
   created int(14) NOT NULL,
   lastmodif int(14) NOT NULL,
   PRIMARY KEY  (calitemId),
@@ -674,13 +671,18 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send
 
 # for calendar
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_calendar','calendar','Can browse the calendar','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_change_events','calendar','Can change events in the calendar','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_add_events','calendar','Can add events in the calendar','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_calendar','calendar','Can create/admin calendars','admin');
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_calendar','n');
 
 # for csseditor
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_create_css','tiki','Can create new css suffixed with -user','registered');
 INSERT INTO tiki_preferences(name,value) VALUES ('feature_editcss','n');
 
+# for copyrights
 INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
+
 
 
 
