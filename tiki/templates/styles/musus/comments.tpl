@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.3 2004-01-09 14:08:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.4 2004-01-09 16:05:42 musus Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -49,7 +49,7 @@
   {/section}
   <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
-  <table class="normal">
+  <table>
   <caption> {tr}Posted comments{/tr} </caption>
   <tr>
     <td class="heading"><label for="comments-maxcomm">{tr}Comments{/tr} </label>
@@ -84,14 +84,14 @@
     
     <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
     <td class="heading" valign="bottom">
-     <a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId=0">{tr}Top{/tr}</a>
+     <a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId=0">{tr}Top{/tr}</a>
     </td>
   </tr>
   </table>
   </form>
  
   {section name=com loop=$comments_coms}
-  <table class="normal">
+  <table>
   <tr>
   	<td class="odd">
   		<a name="threadId{$comments_coms[com].threadId}"></a>
@@ -104,19 +104,19 @@
 			  	<td valign="top" style="text-align:right;" >
 			    	{if $tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y'}
 			  			{tr}Vote{/tr}: 
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
+			  				<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
+			  				<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
+			  				<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
+			  				<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
+			  				<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
 			  		{/if}
 			  		{if $tiki_p_remove_comments eq 'y'}
-			  			&nbsp;&nbsp;(<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}" 
+			  			&nbsp;&nbsp;(<a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this comment?{/tr}')" 
 title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>)&nbsp;&nbsp;
 			  		{/if}
 			  		{if $tiki_p_edit_comments eq 'y'}
-			  			(<a class="link" href="{$comments_complete_father}comments_threadId={$comments_coms[com].threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>)
+			  			(<a href="{$comments_complete_father}comments_threadId={$comments_coms[com].threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>)
 			  		{/if}
 			  	</td>
 			 </tr>
@@ -152,7 +152,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 				{/if}
   				<li><a class="commentshlink" 
 href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].replies_flat[rep].parentId}#threadId{$comments_coms[com].replies_flat[rep].threadId}">{$comments_coms[com].replies_flat[rep].title}</a>
-   				<a class="link" href="tiki-user_information.php?view_user={$comments_coms[com].replies_flat[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies_flat[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies_flat[rep].points}) {tr}on{/tr} {$comments_coms[com].replies_flat[rep].commentDate|tiki_long_datetime}</a></li>
+   				<a href="tiki-user_information.php?view_user={$comments_coms[com].replies_flat[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies_flat[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies_flat[rep].points}) {tr}on{/tr} {$comments_coms[com].replies_flat[rep].commentDate|tiki_long_datetime}</a></li>
 				{assign var="lastlevel" value=$level}
   			{/section}
   			</li></ul>
@@ -190,7 +190,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
 
   {if $comment_preview eq 'y'}
   <b>{tr}Preview{/tr}</b>
-  <table class="normal">
+  <table>
   	<tr>
   		<td class="odd">
   			<span class="commentstitle">{$comments_preview_title}</span><br />
@@ -207,7 +207,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
 
   {if $tiki_p_post_comments eq 'y'}
     {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="link" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
+    {tr}Editing comment{/tr}: {$comments_threadId} (<a href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
     {/if}
     <form method="post" action="{$comments_father}">
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
@@ -219,7 +219,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
     {section name=i loop=$comments_request_data}
     <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
     {/section}
-    <table class="normal">
+    <table>
     <tr>
       {if $parent_coms}
 	<td>{tr}Reply to parent comment{/tr}</td>
@@ -273,7 +273,7 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
     </table>
     </form>
   <br />
-  <table class="normal" id="commentshelp">
+  <table id="commentshelp">
   <tr><td class="even">
   <b><label for="comments-posting">{tr}Posting comments{/tr}:</label></b>
   <br />
