@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.14 2004-07-20 20:56:08 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.15 2004-07-23 16:33:49 teedog Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
@@ -257,7 +257,10 @@
 </div>
 {/if}
 
+{if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+{/if}
+
 {if $wiki_extras eq 'y'}
 <br />
 {include file=attachments.tpl}

@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2004-07-20 19:58:57 $
+-- $Date: 2004-07-23 16:35:31 $
 -- $Author: teedog $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -1408,7 +1408,7 @@ go
 
 CREATE TABLE "tiki_dynamic_variables" (
   "name" varchar(40) NOT NULL,
-  "DATA" text default '',
+  "data" text default '',
   PRIMARY KEY ("name")
 )
 go
@@ -2544,7 +2544,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)',"javascript:toggle('debugconsole')",40,'feature_debug_console','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','')
 go
 
 
@@ -4152,7 +4152,7 @@ CREATE TABLE "tiki_sheet_layout" (
   "end" numeric(10,0) default NULL NULL,
   "headerRow" numeric(4,0) default '0' NOT NULL,
   "footerRow" numeric(4,0) default '0' NOT NULL,
-  "className" varchar(64) default NULL NULL,
+  "className" varchar(64) default NULL NULL
 ) 
 go
 
@@ -4174,7 +4174,7 @@ CREATE TABLE "tiki_sheet_values" (
   "calculation" varchar(255) default NULL NULL,
   "width" numeric(4,0) default '1' NOT NULL,
   "height" numeric(4,0) default '1' NOT NULL,
-  "format" varchar(255) default NULL NULL,
+  "format" varchar(255) default NULL NULL
 ) 
 go
 
@@ -6083,6 +6083,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_author', 'Can view wiki page authors', 'basic', 'wiki')
 go
 
 
@@ -8101,7 +8105,7 @@ CREATE TABLE "tiki_translated_objects" (
   "type" varchar(50) NOT NULL,
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL NULL,
-  PRIMARY KEY (type, objId),
+  PRIMARY KEY (type, objId)
 )  
 go
 
