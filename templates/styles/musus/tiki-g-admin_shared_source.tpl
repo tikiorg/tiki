@@ -13,10 +13,10 @@ Errors:<br />
 <form id='editsource' action="tiki-g-admin_shared_source.php" method="post">
 <input type="hidden" name="pid" value="{$pid|escape}" />
 <input type="hidden" name="source_name" value="{$source_name|escape}" />
-<table class="normal">
+<table>
 <tr>
-  <td class="formcolor">{tr}select source{/tr}</td>
-  <td class="formcolor">
+  <td>{tr}select source{/tr}</td>
+  <td>
 		<select name="activityId" onchange="document.getElementById('editsource').submit();">
 		<option value="" {if $activityId eq 0}selected="selected"{/if}>{tr}Shared code{/tr}</option>
 		{section loop=$items name=ix}
@@ -25,7 +25,7 @@ Errors:<br />
 		</select>
   </td>
 
-  <td class="formcolor">
+  <td>
     {if $activityId > 0 and $act_info.isInteractive eq 'y' and $template eq 'n'}
     <input type="submit" name='template' value="{tr}template{/tr}" />
     {/if}
@@ -35,13 +35,13 @@ Errors:<br />
   </td>
 
 
-  <td class='formcolor'>
+  <td>
   	<input type="submit" name='save' value="{tr}save{/tr}" />
   	<input type="submit" name='cancel' value="{tr}cancel{/tr}" />
   </td>
 </tr>
 <tr>
-  <td class="formcolor" colspan="4">
+  <td colspan="4">
     <table>
     <tr>
     <td>
@@ -52,21 +52,21 @@ Errors:<br />
   		templ
   	{else}
   		{literal}
-  		<a class="link" href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');">{tr}Set next user{/tr}</a><hr/>
-		<a class="link" href="javascript:setSomeElement('src','$instance->get(\'\');');">{tr}Get property{/tr}</a><hr/>
-		<a class="link" href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');">{tr}Set property{/tr}</a><hr />
+  		<a href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');">{tr}Set next user{/tr}</a><hr/>
+		<a href="javascript:setSomeElement('src','$instance->get(\'\');');">{tr}Get property{/tr}</a><hr/>
+		<a href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');">{tr}Set property{/tr}</a><hr />
 		{/literal}
   		{if $act_info.isInteractive eq 'y'}
 			{literal}
-  			<a class="link" href="javascript:setSomeElement('src','$instance->complete();');">{tr}Complete{/tr}</a><hr/>
-  			<a class="link" href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');">{tr}Process form{/tr}</a><hr/>
+  			<a href="javascript:setSomeElement('src','$instance->complete();');">{tr}Complete{/tr}</a><hr/>
+  			<a href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');">{tr}Process form{/tr}</a><hr/>
 			{/literal}
   		{/if}
   		{if $act_info.type eq 'switch'}
   			{literal}
-			<a class="link" href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');">{tr}Set Next act{/tr}</a><hr />  		    
-			<a class="link" href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');">{tr}If:SetNextact{/tr}</a><hr />  		    
-			<a class="link" href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">{tr}Switch construct{/tr}</a><hr />
+			<a href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');">{tr}Set Next act{/tr}</a><hr />  		    
+			<a href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');">{tr}If:SetNextact{/tr}</a><hr />  		    
+			<a href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">{tr}Switch construct{/tr}</a><hr />
 			{/literal}
   		{/if}
   	{/if}

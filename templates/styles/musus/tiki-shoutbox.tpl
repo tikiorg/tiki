@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-shoutbox.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-shoutbox.tpl,v 1.3 2004-01-17 01:20:31 musus Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -15,9 +15,9 @@
 {if $tiki_p_admin_shoutbox eq 'y'}
 <h2>{tr}Change shoutbox general settings{/tr}</h2>
 <form action="tiki-shoutbox.php" method="post">
-<table class="normal">
+<table>
 <tr><td class="odd">{tr}auto-link urls{/tr}</td><td class="odd"><input type="checkbox" name="shoutbox_autolink" value="on"{if $shoutbox_autolink eq 'y'} checked="checked"{/if}></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="shoutbox_admin" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -26,9 +26,9 @@
 <h2>{tr}Post or edit a message{/tr}</h2>
 <form action="tiki-shoutbox.php" method="post">
 <input type="hidden" name="msgId" value="{$msgId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message" maxlength="250">{$message|escape}</textarea></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table>
+<tr><td>{tr}message{/tr}:</td><td><textarea rows="4" cols="60" name="message" maxlength="250">{$message|escape}</textarea></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -53,9 +53,9 @@
 <b>{$channels[user].user}</b> {tr}at{/tr}: {$channels[user].timestamp|tiki_long_time}
 {if $tiki_p_admin_shoutbox eq 'y'}
   [
-  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">x</a>
+  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}">x</a>
   |
-  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">edit</a>
+  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}">edit</a>
   ]
 {/if}
 <br />

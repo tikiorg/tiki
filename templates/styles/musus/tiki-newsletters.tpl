@@ -7,7 +7,7 @@
 {/if}
 
 {if $confirm eq 'y'}
-<table class="normal">
+<table>
 <tr>
   <td colspan="2" class="heading">{tr}Subscription confirmed!{/tr}</td>
 </tr>
@@ -24,7 +24,7 @@
 {if $subscribe eq 'y'}
 <form method="post" action="tiki-newsletters.php">
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
-<table class="normal">
+<table>
 <tr>
   <td colspan="2" class="heading">{tr}Subscribe to newsletter{/tr}</td>
 </tr>
@@ -67,7 +67,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>

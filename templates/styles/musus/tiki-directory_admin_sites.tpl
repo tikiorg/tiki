@@ -36,22 +36,22 @@
 <form action="tiki-directory_admin_sites.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
-<table class="normal">
+<table>
   <tr>
-    <td class="formcolor">{tr}Name{/tr}:</td>
-    <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
+    <td>{tr}Name{/tr}:</td>
+    <td><input type="text" name="name" value="{$info.name|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Description{/tr}:</td>
-    <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
+    <td>{tr}Description{/tr}:</td>
+    <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}URL{/tr}:</td>
-    <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
+    <td>{tr}URL{/tr}:</td>
+    <td><input type="text" name="url" value="{$info.url|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Categories{/tr}:</td>
-    <td class="formcolor">
+    <td>{tr}Categories{/tr}:</td>
+    <td>
     <select name="siteCats[]" multiple="multiple" size="4" />
     {section name=ix loop=$categs}
       <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path}</option>
@@ -60,8 +60,8 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Country{/tr}:</td>
-    <td class="formcolor">
+    <td>{tr}Country{/tr}:</td>
+    <td>
       <select name="country">
         {section name=ux loop=$countries}
         <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
@@ -70,12 +70,12 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Is valid{/tr}:</td>
-    <td class="formcolor"><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
+    <td>{tr}Is valid{/tr}:</td>
+    <td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if} /></td>
   </tr>
   <tr>
-    <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" />
+    <td>&nbsp;</td>
+    <td><input type="submit" name="save" value="{tr}save{/tr}" />
   </tr>
 </table>
 </form>
@@ -84,7 +84,7 @@
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
-<table class="normal">
+<table>
   <tr>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
@@ -102,8 +102,8 @@
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td class="{cycle advance=false}">{$items[user].isValid}</td>
 <td  class="{cycle advance=false}">
-   <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
-   <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
+   <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
+   <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
 </td>
 </tr>
 <tr>

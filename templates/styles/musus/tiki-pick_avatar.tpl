@@ -1,10 +1,10 @@
 <a class="pagetitle" href="tiki-pick_avatar.php">{tr}Pick your avatar{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-<table class="normal">
+<table>
 <tr>
-  <td class="formcolor">{tr}Your current avatar{/tr}:</td>
-  <td class="formcolor">
+  <td>{tr}Your current avatar{/tr}:</td>
+  <td>
     {$avatar}
   </td>
 </tr>
@@ -12,7 +12,7 @@
 
 {if $showall eq 'y'}
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}items{/tr}</h2>
-<div class="normal">
+<div>
 {section name=im loop=$avatars}
 <a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''/></a>
 {/section}
@@ -52,18 +52,18 @@ function subavt() {
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}items{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">
 <input id="avatar" type="hidden" name="avatar" value="{$yours|escape}" />
-<table class="normal">
+<table>
 <tr>
- <td class="formcolor">
+ <td>
  <div align="center">
-<a class="link" href="javascript:subavt();">{tr}prev{/tr}</a>
+<a href="javascript:subavt();">{tr}prev{/tr}</a>
 <img id='avtimg' src="{$yours}" alt='{tr}Avatar Image{/tr}'/>
-<a class="link" href="javascript:addavt();">{tr}next{/tr}</a>
+<a href="javascript:addavt();">{tr}next{/tr}</a>
 </div>
  </td>
 </tr>
 <tr>
- <td class="formcolor">
+ <td>
    <div align="center">
 	 <input type="submit" name="rand" value="{tr}random{/tr}" />
 	 <input type="submit" name="uselib" value="{tr}use{/tr}" /> 
@@ -77,11 +77,11 @@ function subavt() {
 
 <h2>{tr}Upload your own avatar{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
-<table class="normal">
-<tr><td class="formcolor">{tr}File{/tr}:</td><td class="formcolor">
+<table>
+<tr><td>{tr}File{/tr}:</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
 <input name="userfile1" type="file">
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>
 </form>

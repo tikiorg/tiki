@@ -10,14 +10,14 @@
 <form action="tiki-edit_programmed_content.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
 <input type="hidden" name="pId" value="{$pId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">Description:</td>
-<td class="formcolor">
+<table>
+<tr><td>Description:</td>
+<td>
 <textarea rows="5" cols="40" name="data">{$data|escape}</textarea>
 </td></tr>
-<tr><td class="formcolor">{tr}Publishing date{/tr}</td>
-<td class="formcolor">{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}</td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
+<tr><td>{tr}Publishing date{/tr}</td>
+<td>{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}</td></tr>
+<tr><td >&nbsp;</td><td>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
@@ -34,7 +34,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publishing Date{/tr}</a></td>
@@ -56,8 +56,8 @@
 <td  class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
 <td  class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
 <td class="{$class}">
-<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
+<a href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
+<a href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
 </td>
 </tr>
 {sectionelse}

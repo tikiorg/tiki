@@ -21,7 +21,7 @@
 <h2>{tr}Content for the feed{/tr}</h2>
 <ul>
 {section name=ix loop=$items}
-<li><a href="{$items[ix].link}" class="link">{$items[ix].title}</a></li>
+<li><a href="{$items[ix].link}">{$items[ix].title}</a></li>
 {/section}
 </ul>
 </div>

@@ -25,11 +25,11 @@
 {/if}
 
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=blog%20{$title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
+<a href="tiki-objectpermissions.php?objectName=blog%20{$title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
 {/if}
 <form method="post" action="tiki-edit_blog.php">
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
-<table class="normal">
+<table>
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform"><input type="text" name="title" value="{$title|escape}" /></td></tr>
 <tr><td class="editblogform">{tr}Description{/tr}</td><td class="editblogform"><textarea class="wikiedit" name="description" rows="2" cols="40" wrap="virtual">{$description|escape}</textarea></td></tr>
 <tr><td class="editblogform">{tr}Number of posts to show{/tr}</td><td class="editblogform"><input type="text" name="maxPosts" value="{$maxPosts|escape}" /></td></tr>

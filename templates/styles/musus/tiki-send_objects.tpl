@@ -35,11 +35,11 @@
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <table>
-<tr><td class="form">{tr}site{/tr}:</td><td class="form"><input type="text" name="site" value="{$site|escape}" /></td></tr>
-<tr><td class="form">{tr}path{/tr}:</td><td class="form"><input type="text" name="path" value="{$path|escape}" /></td></tr>
-<tr><td class="form">{tr}username{/tr}:</td><td class="form"><input type="text" name="username" value="{$username|escape}" /></td></tr>
-<tr><td class="form">{tr}password{/tr}:</td><td class="form"><input type="password" name="password" value="{$password|escape}" /></td></tr>
-<tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
+<tr><td>{tr}site{/tr}:</td><td><input type="text" name="site" value="{$site|escape}" /></td></tr>
+<tr><td>{tr}path{/tr}:</td><td><input type="text" name="path" value="{$path|escape}" /></td></tr>
+<tr><td>{tr}username{/tr}:</td><td><input type="text" name="username" value="{$username|escape}" /></td></tr>
+<tr><td>{tr}password{/tr}:</td><td><input type="password" name="password" value="{$password|escape}" /></td></tr>
+<tr><td align="center" colspan="2"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
 </table>
 </form>
 </div>

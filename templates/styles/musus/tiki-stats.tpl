@@ -1,35 +1,35 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-stats.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-stats.tpl,v 1.2 2004-01-17 01:20:31 musus Exp $ *}
 
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
 
 <div id="page-bar">
   <table><tr>
-    <td><div class="button2"> <a class="link" href="#site_stats">   {tr}Site{/tr}           </a></div></td>
+    <td><div class="button2"> <a href="#site_stats">   {tr}Site{/tr}           </a></div></td>
     {if $wiki_stats}
-      <td><div class="button2"> <a class="link" href="#wiki_stats"> {tr}Wiki{/tr}           </a></div></td>
+      <td><div class="button2"> <a href="#wiki_stats"> {tr}Wiki{/tr}           </a></div></td>
     {/if} {if $igal_stats}
-      <td><div class="button2"> <a class="link" href="#igal_stats"> {tr}Image galleries{/tr}</a></div></td>
+      <td><div class="button2"> <a href="#igal_stats"> {tr}Image galleries{/tr}</a></div></td>
     {/if} {if $fgal_stats}
-      <td><div class="button2"> <a class="link" href="#fgal_stats"> {tr}File galleries{/tr} </a></div></td>
+      <td><div class="button2"> <a href="#fgal_stats"> {tr}File galleries{/tr} </a></div></td>
     {/if} {if $cms_stats}
-      <td><div class="button2"> <a class="link" href="#cms_stats">  {tr}CMS{/tr}            </a></div></td>
+      <td><div class="button2"> <a href="#cms_stats">  {tr}CMS{/tr}            </a></div></td>
     {/if} {if $forum_stats}
-      <td><div class="button2"> <a class="link" href="#forum_stats">{tr}Forums{/tr}         </a></div></td>
+      <td><div class="button2"> <a href="#forum_stats">{tr}Forums{/tr}         </a></div></td>
     {/if} {if $blog_stats}
-      <td><div class="button2"> <a class="link" href="#blog_stats"> {tr}Blogs{/tr}          </a></div></td>
+      <td><div class="button2"> <a href="#blog_stats"> {tr}Blogs{/tr}          </a></div></td>
     {/if} {if $poll_stats}
-      <td><div class="button2"> <a class="link" href="#poll_stats"> {tr}Polls{/tr}          </a></div></td>
+      <td><div class="button2"> <a href="#poll_stats"> {tr}Polls{/tr}          </a></div></td>
     {/if} {if $faq_stats}
-      <td><div class="button2"> <a class="link" href="#faq_stats">  {tr}FAQs{/tr}           </a></div></td>
+      <td><div class="button2"> <a href="#faq_stats">  {tr}FAQs{/tr}           </a></div></td>
     {/if} {if $user_stats}
-      <td><div class="button2"> <a class="link" href="#user_stats"> {tr}User{/tr}           </a></div></td>
+      <td><div class="button2"> <a href="#user_stats"> {tr}User{/tr}           </a></div></td>
     {/if} {if $quiz_stats}
-      <td><div class="button2"> <a class="link" href="#quiz_stats"> {tr}Quizzes{/tr}        </a></div></td>
+      <td><div class="button2"> <a href="#quiz_stats"> {tr}Quizzes{/tr}        </a></div></td>
     {/if}
   </tr></table>
 </div>
 
-<table class="normal">
+<table>
 
 <!-- Site stats -->
 <tr><td colspan="2"><a name="site_stats"></a></td></tr>
@@ -169,7 +169,7 @@
 <br />
 <br />
 <br />
-<a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br /><br />
+<a href="tiki-stats.php?chart=usage">{tr}Usage chart{/tr}</a><br /><br />
 
 {if $usage_chart eq 'y'}
 <br /> 

@@ -1,5 +1,5 @@
 {if $feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
-<tr class="cell">
+<tr>
  <td>{tr}Categorize{/tr}</td>
  <td>
   [ <a href="javascript:show('categorizator');">{tr}show categories{/tr}</a>

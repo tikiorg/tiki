@@ -4,7 +4,7 @@
   <td class="chatchannels"  valign="top">
   <div class="chattitle">{tr}Active Channels{/tr}:</div>
   {section name=chan loop=$channels}
-    <a class="link" href="tiki-chatroom.php?nickname={$nickname}&amp;channelId={$channels[chan].channelId}">{$channels[chan].name}</a><br />
+    <a href="tiki-chatroom.php?nickname={$nickname}&amp;channelId={$channels[chan].channelId}">{$channels[chan].name}</a><br />
   {/section}
   <br />
   <div class="chattitle">{tr}Users in this channel{/tr}:</div>
@@ -16,7 +16,7 @@
   </td>
   <!--
   <td  valign="top">
-    <div class="texthead">{tr}Channel Information{/tr}<a class="link" href="chat.php">(re)</a></div>
+    <div class="texthead">{tr}Channel Information{/tr}<a href="chat.php">(re)</a></div>
     <div class="text">
     {tr}Channel{/tr}: {$channel_info.name}<br />
     {tr}Ratio{/tr}: {$channel_info.ratio} <br /><br />

@@ -26,27 +26,27 @@
 <input type="hidden" name="image_type" value="{$image_type|escape}" />
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" size="80" /></td></tr>
-<tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Topic{/tr}</td><td class="formcolor">
+<table>
+<tr><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" size="80" /></td></tr>
+<tr><td>{tr}Author Name{/tr}</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
+<tr><td>{tr}Topic{/tr}</td><td>
 <select name="topicId">
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 {/section}
 <option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php">{tr}Admin topics{/tr}</a>{/if}
 </td></tr>
-<tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
+<tr><td>{tr}Type{/tr}</td><td>
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
 {/section}
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
-<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td>{tr}Rating{/tr}</td><td>
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -70,27 +70,27 @@
 <option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<tr><td>{tr}Own Image{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-  <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  <tr><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
-    <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">
+    <tr><td>{tr}Own Image{/tr}</td><td>
     <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
     </td></tr>
   {/if}
 {/if}
-<tr><td class="formcolor">{tr}Use own image{/tr}</td><td class="formcolor">
+<tr><td>{tr}Use own image{/tr}</td><td>
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr><td class="formcolor">{tr}Float text around image{/tr}</td><td class="formcolor">
+<tr><td>{tr}Float text around image{/tr}</td><td>
 <input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
+<tr><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
-<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<tr><td>{tr}Apply template{/tr}</td><td>
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
@@ -102,26 +102,26 @@
 
 {include file=categorize.tpl}
 
-<tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+<tr><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
+<tr><td>{tr}Quicklinks{/tr}</td><td>
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
-<tr><td class="formcolor">{tr}Body{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}</td><td class="formcolor">
+<tr><td>{tr}Body{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}</td><td>
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
 <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
 {if $cms_spellcheck eq 'y'}
-<tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+<tr><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
-<tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
+<tr><td>{tr}Publish Date{/tr}</td><td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
-<tr><td class="formcolor">{tr}Expiration Date{/tr}</td><td class="formcolor">
+<tr><td>{tr}Expiration Date{/tr}</td><td>
 {html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>

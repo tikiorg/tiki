@@ -35,28 +35,28 @@
 {/section}
 </select>
 <!--<input type="submit" name="settype" value="{tr}set{/tr}" />-->
-<table class="normal">
+<table>
 <tr>
-  <td class="formcolor">{tr}Object{/tr}</td>
-  <td class="formcolor">{tr}Theme{/tr}</td>
-  <td class="formcolor">&nbsp;</td>
+  <td>{tr}Object{/tr}</td>
+  <td>{tr}Theme{/tr}</td>
+  <td>&nbsp;</td>
 </tr>
 <tr>
-  <td class="formcolor">
+  <td>
     <select name="objdata">
       {section name=ix loop=$objects}
       <option value="{$objects[ix].objId|escape}|{$objects[ix].objName}">{$objects[ix].objName}</option>
       {/section}
     </select>
   </td>
-  <td class="formcolor">
+  <td>
     <select name="theme">
       {section name=ix loop=$styles}
       <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
-  <td class="formcolor">
+  <td>
     <input type="submit" name="assign" value="{tr}assign{/tr}" />
   </td>
 </tr>
@@ -77,7 +77,7 @@
 </table>
 <form action="tiki-theme_control_objects.php" method="post">
 <input type="hidden" name="type" value="{$type|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>

@@ -21,12 +21,12 @@
 <h3>{tr}Create or edit content block{/tr}</h3><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Description{/tr}:</td>
-<td class="formcolor">
+<table>
+<tr><td>{tr}Description{/tr}:</td>
+<td>
 <textarea rows="5" cols="40" name="description">{$description|escape}</textarea>
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
+<tr><td >&nbsp;</td><td>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
@@ -43,7 +43,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Desc{/tr}</a></td>
@@ -63,9 +63,9 @@
 <td class="odd">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].contentId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}">{tr}Program{/tr}</a>
+<a href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].contentId}">{tr}Remove{/tr}</a>
+<a href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit{/tr}</a>
+<a href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}">{tr}Program{/tr}</a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].contentId}&nbsp;</td>
@@ -75,9 +75,9 @@
 <td class="even">&nbsp;{$listpages[changes].future}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].old}&nbsp;</td>
 <td class="even">
-<a class="link" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].contentId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}">{tr}Program{/tr}</a>
+<a href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].contentId}">{tr}Remove{/tr}</a>
+<a href="tiki-list_contents.php?edit={$listpages[changes].contentId}">{tr}Edit{/tr}</a>
+<a href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}">{tr}Program{/tr}</a>
 </td>
 {/if}
 </tr>

@@ -1,13 +1,13 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-eph.php">{tr}Ephemerides{/tr}</a><br /><br />
-<table class="normal">
+<table>
 <tr>
-	<td class="formcolor">
+	<td>
 	<!-- Calendar -->
 	  {include file=modules/mod-calendar.tpl}
 	</td>
 	
-	<td class="formcolor">
+	<td>
 	<!-- Form to upload/edit -->
 	  <b>{$pdate|tiki_long_date}</b>
 	</td>
@@ -18,7 +18,7 @@
 {if $tiki_p_admin eq 'y'}
 <a class="linkbut" href="tiki-eph_admin.php">{tr}Admin{/tr}</a>
 {/if}
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading">{tr}data{/tr}</td>

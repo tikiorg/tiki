@@ -19,8 +19,8 @@
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-[<a class="link" href="tiki-user_tasks.php?tasks_useDates=y">{tr}Use dates{/tr}</a> |
-<a class="link" href="tiki-user_tasks.php?tasks_useDates=n">{tr}All tasks{/tr}</a>]
+[<a href="tiki-user_tasks.php?tasks_useDates=y">{tr}Use dates{/tr}</a> |
+<a href="tiki-user_tasks.php?tasks_useDates=n">{tr}All tasks{/tr}</a>]
 <br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -37,7 +37,7 @@
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="submit" name="complete" value="{tr}mark as done{/tr}" />
 <input type="submit" name="open" value="{tr}open tasks{/tr}" />
-<table class="normal">
+<table>
 <tr>
 <td class="heading">&nbsp;</td>
 <td class="heading" ><a class="tableheading" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
@@ -51,7 +51,7 @@
 <td class="prio{$channels[user].priority}">
 <input type="checkbox" name="task[{$channels[user].taskId}]" />
 </td>
-<td class="prio{$channels[user].priority}"><a {if $channels[user].status eq 'c'}style="text-decoration:line-through;"{/if} class="link" href="tiki-user_tasks.php?task_useDates={$task_useDates}&amp;taskId={$channels[user].taskId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].title}</a></td>
+<td class="prio{$channels[user].priority}"><a {if $channels[user].status eq 'c'}style="text-decoration:line-through;"{/if} href="tiki-user_tasks.php?task_useDates={$task_useDates}&amp;taskId={$channels[user].taskId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].title}</a></td>
 <td {if $channels[user].status eq 'c'}style="text-decoration:line-through;"{/if} class="prio{$channels[user].priority}">{$channels[user].date|date_format:"%d/%m/%Y"}</td>
 <td style="text-align:right;{if $channels[user].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$channels[user].priority}">{$channels[user].priority}</td>
 <td style="text-align:right;{if $channels[user].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$channels[user].priority}">
@@ -68,7 +68,7 @@
 </tr>
 {/section}
 <tr>
-	<td class="formcolor" colspan="16" style="text-align:center;">
+	<td colspan="16" style="text-align:center;">
 		<input type="submit" name="update" value="{tr}update{/tr}" />
 	</td>
 </tr>
@@ -102,38 +102,38 @@
 <input type="hidden" name="Date_Day" value="{$Date_Day|escape}" />
 <input type="hidden" name="Date_Month" value="{$Date_Month|escape}" />
 <input type="hidden" name="Date_Year" value="{$Date_Year|escape}" />
-<table class="normal">
-  <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /></td>
+<table>
+  <tr><td>{tr}Title{/tr}</td>
+      <td><input type="text" name="title" value="{$info.title|escape}" /></td>
   </tr>
-  <tr><td class="formcolor">{tr}Description{/tr}</td>
-      <td class="formcolor">
+  <tr><td>{tr}Description{/tr}</td>
+      <td>
         <textarea rows="10" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
   </tr>
   {if $tasks_useDates eq 'y'}
   
-  <tr><td class="formcolor">{tr}Start date{/tr}</td>
-      <td class="formcolor">{html_select_date time=$info.date end_year="+1"}</td>
+  <tr><td>{tr}Start date{/tr}</td>
+      <td>{html_select_date time=$info.date end_year="+1"}</td>
   </tr>
   
   {if $info.status eq 'c'}
-  <tr><td class="formcolor">{tr}Completed{/tr}</td>
-      <td class="formcolor">{$info.completed|tiki_short_date}</td>
+  <tr><td>{tr}Completed{/tr}</td>
+      <td>{$info.completed|tiki_short_date}</td>
   </tr>
   {/if}
   {/if}
   
-  <tr><td class="formcolor">{tr}Status{/tr}</td>
-      <td class="formcolor">
+  <tr><td>{tr}Status{/tr}</td>
+      <td>
         <select name="status">
           <option value="o" {if $info.status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
           <option value="c" {if $info.status eq 'c'}selected="selected"{/if}>{tr}completed{/tr}</option>
         </select>
       </td>
   </tr>
-  <tr><td class="formcolor">{tr}Priority{/tr}</td>
-      <td class="formcolor">
+  <tr><td>{tr}Priority{/tr}</td>
+      <td>
         <select name="priority">
           <option value="1" {if $info.priority eq 1}selected="selected"{/if}>1</option>
           <option value="2" {if $info.priority eq 2}selected="selected"{/if}>2</option>
@@ -144,16 +144,16 @@
       </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Percentage completed{/tr}</td>
-    <td class="formcolor">
+    <td>{tr}Percentage completed{/tr}</td>
+    <td>
       <select name="percentage">
       {html_options values="$comp_array" output="$comp_array_p" selected="$info.percentage"}
       </select>
     </td>
   </tr>
   <tr>
-    <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
   </tr>
 </table>
 </form>

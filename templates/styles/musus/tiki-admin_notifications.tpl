@@ -31,7 +31,7 @@
 <tr><td>{tr}Email{/tr}:</td>        
     <td>
       <input type="text" id='femail' name="email" />
-      <a href="#" onClick="javascript:document.getElementById('femail').value='{$admin_mail}'" class="link">{tr}use admin email{/tr}</a>
+      <a href="#" onClick="javascript:document.getElementById('femail').value='{$admin_mail}'">{tr}use admin email{/tr}</a>
     </td>
 </tr> 
 <tr><td>&nbsp;</td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map.tpl,v 1.2 2004-01-16 19:36:45 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map.tpl,v 1.3 2004-01-17 01:23:36 musus Exp $ *}
 
 <div align="center">
    <form action="tiki-map.phtml" method="get">
@@ -30,7 +30,7 @@
 		  <input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
 		  {if $tiki_p_map_edit eq 'y'}
      &nbsp;
-     <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
+     <a href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
      <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
      </a>
      {/if}
@@ -62,7 +62,7 @@
     {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('layermenu');">[+]</a>{/if}
     </div>
 		  <div id='layermenu' style="{$mnu_layermenu}">
-		  <table class="normal">
+		  <table>
 		  <tr><td class="heading">
 		  <b>Layer</b></td><td class="heading"><b>{tr}On{/tr}</b></td>
 		  <td class="heading"><img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></td>

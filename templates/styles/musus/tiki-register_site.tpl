@@ -1,22 +1,22 @@
 {if $save eq 'y'}
   <h2>{tr}Tiki site registered{/tr}</h2>
   {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
-  <table class="normal">
+  <table>
   <tr>
-    <td class="formcolor">{tr}Name{/tr}:</td>
-    <td class="formcolor">{$info.name}</td>
+    <td>{tr}Name{/tr}:</td>
+    <td>{$info.name}</td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Description{/tr}:</td>
-    <td class="formcolor">{$info.description}</td>
+    <td>{tr}Description{/tr}:</td>
+    <td>{$info.description}</td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}URL{/tr}:</td>
-    <td class="formcolor">{$info.url}</td>
+    <td>{tr}URL{/tr}:</td>
+    <td>{$info.url}</td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Country{/tr}:</td>
-    <td class="formcolor">{$info.country}</td>
+    <td>{tr}Country{/tr}:</td>
+    <td>{$info.country}</td>
   </tr></table>
 {else}
 <div class="tiki">
@@ -54,22 +54,22 @@
   <b>{tr}Information about your site{/tr}:</b><br />
   <form action="http://tikiwiki.org/tiki-directory_add_tiki_site.php" method="post">
   <input type="hidden" name="registertiki" value="true" />
-  <table class="normal">
+  <table>
   <tr>
-    <td class="formcolor">{tr}Name{/tr}:</td>
-    <td class="formcolor"><input type="text" name="name" size="60" value="{$info.name|escape}" /></td>
+    <td>{tr}Name{/tr}:</td>
+    <td><input type="text" name="name" size="60" value="{$info.name|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Description{/tr}:</td>
-    <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
+    <td>{tr}Description{/tr}:</td>
+    <td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}URL{/tr}:</td>
-    <td class="formcolor"><input type="hidden" name="url" value="{$info.url|escape}" />{$info.url|escape}</td>
+    <td>{tr}URL{/tr}:</td>
+    <td><input type="hidden" name="url" value="{$info.url|escape}" />{$info.url|escape}</td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Country{/tr}:</td>
-    <td class="formcolor">
+    <td>{tr}Country{/tr}:</td>
+    <td>
       <select name="country">
         {section name=ux loop=$countries}
         <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
@@ -79,8 +79,8 @@
   </tr>
   <input name="isValid" type="hidden" value="" />
   <tr>
-    <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
   </tr>
   </table>
   </form>

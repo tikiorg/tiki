@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-list_integrator_repositories.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-list_integrator_repositories.tpl,v 1.2 2004-01-17 01:22:25 musus Exp $ *}
 
 <h2>{tr}Available Repositories{/tr}</h2>
 
@@ -16,7 +16,7 @@
 
 {* Table with list of repositories (if array is not empty) *}
 {if count($repositories) gt 0}
-<table class="normal" id="integrator-repositories">
+<table id="integrator-repositories">
   <tr>
     <td class="heading">{tr}Name{/tr}</td>
     <td class="heading">{tr}Description{/tr}</td>

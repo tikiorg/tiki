@@ -8,7 +8,7 @@
 
 <h2>{tr}Stats for this survey Questions {/tr}</h2>
 {section name=ix loop=$channels}
-  <table class="normal">
+  <table>
   <tr>
     <td colspan="4" class="heading">{$channels[ix].question}</td>
   </tr>

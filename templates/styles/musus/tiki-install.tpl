@@ -1,15 +1,15 @@
 <div style="margin-left:180px;margin-right:180px;">
 <h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
-<a href="tiki-install.php?restart=1" class="link">reload</a><br /><br />
+<a href="tiki-install.php?restart=1">reload</a><br /><br />
 	{if $dbcon eq 'n' or $resetdb eq 'y'}
 	  <b>Tiki cannot find a database connection</b><br />
 	  Please enter your database connection info<br /><br />
 	  <form action="tiki-install.php" method="post">
-	  <table class="normal">
+	  <table>
 	  	<tr>
-	  		<td class="formcolor">Database type:</td>
-	  		<td class="formcolor">
+	  		<td>Database type:</td>
+	  		<td>
 	  			<table><tr><td>
 			    <select name="db">
 			    {section name=dbnames loop=$dbservers}
@@ -23,8 +23,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td class="formcolor">Host:</td>
-	  		<td class="formcolor">
+	  		<td>Host:</td>
+	  		<td>
 	  			<table><tr><td>
 	  			<input type="text" name="host" value="localhost" />
 	  			</td><td>
@@ -37,8 +37,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td class="formcolor">User:</td>
-	  		<td class="formcolor">
+	  		<td>User:</td>
+	  		<td>
 		  	  <table><tr><td>
 	  		  <input type="text" name="user" />
 	  		  </td><td>
@@ -47,8 +47,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td class="formcolor">Password:</td>
-	  		<td class="formcolor">
+	  		<td>Password:</td>
+	  		<td>
 		  	  <table><tr><td>
 	  		  <input type="password" name="pass" />
 	  		  </td><td>
@@ -57,8 +57,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td class="formcolor">Database name:</td>
-	  		<td class="formcolor">
+	  		<td>Database name:</td>
+	  		<td>
 	  		<table><tr><td>
 	  		<input type="text" name="name" />
 	  		</td><td>
@@ -72,8 +72,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td class="formcolor">&nbsp;</td>
-	  		<td class="formcolor"><input type="hidden" name="resetdb" value="{$resetdb}">
+	  		<td>&nbsp;</td>
+	  		<td><input type="hidden" name="resetdb" value="{$resetdb}">
 	  		<input type="submit" name="dbinfo" /></td>
 	  	</tr>
 	  	
@@ -100,7 +100,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    </td></tr>
 		    <tr><td>
 			</td><td>
-			<a href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
+			<a href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles">Descriptions of the available profiles</a>
 			<p>
 		    </td></tr>
 		    <tr><td>
@@ -115,8 +115,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    </td></tr>
 		    </table>
 		    </form><br />
-			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
-			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
+			<a href="tiki-index.php">Do nothing and enter Tiki</a><br />
+			<a href="tiki-install.php?reset=yes">Reset database connection settings</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
 			<b>This site has an admin account configured</b><br />
@@ -134,14 +134,14 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 
 {*
 		  	<form action="tiki-install.php" method="post">
-		  	<table class="normal">
+		  	<table>
 		  		<tr>
-		  			<td class="formcolor">Admin password</td>
-		  			<td class="formcolor"><input type="password" name="pass" /></td>
+		  			<td>Admin password</td>
+		  			<td><input type="password" name="pass" /></td>
 		  		</tr>
 		  		<tr>
-		  			<td class="formcolor">&nbsp;</td>
-		  			<td class="formcolor"><input type="submit" name="login" value="login" /></td>
+		  			<td>&nbsp;</td>
+		  			<td><input type="submit" name="login" value="login" /></td>
 		  		</tr>
 		    </table>
 		    </form>
@@ -167,9 +167,9 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br /><br />
-    		<a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br />
-    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
-    		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
+    		<a href="tiki-install.php?kill=1">Click here to remove the install script and proceed into tiki</a><br />
+    		<a href="tiki-index.php">Click here to proceed into tiki without removing the script</a><br />
+    		<a href="tiki-install.php?reset=yes">Reset database connection settings</a>
     	{/if}
 	{/if}
 	{if $pkg_available eq 'y'}
@@ -183,7 +183,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
 					{/section}
 				</select>
-				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps">Descriptions of the available packages</a>
 			</td></tr>
 			<tr><td>
 				<input type="checkbox" name="runScript" />Run database script (may destroy data)

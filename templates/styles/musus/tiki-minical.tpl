@@ -14,11 +14,11 @@
 </tr>
 </table>
 
-<table class="normal" >
+<table >
 <tr>
-	<td class="formcolor">
+	<td>
 <b>{tr}Upcoming events{/tr}</b><br />
-<table class="normal">
+<table>
 {section name=ix loop=$upcoming}
 <tr>
 
@@ -31,13 +31,13 @@
 			<img title="{$upcoming[ix].topic.name}" src="tiki-view_minical_topic?topicId={$upcoming[ix].topicId}" alt="{tr}topic image{/tr}" />
 			{/if}
     	{/if}
-<a title="{$upcoming[ix].start|tiki_short_time}-{$upcoming[ix].end|tiki_short_time}:{$upcoming[ix].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$upcoming[ix].eventId}#add">{$upcoming[ix].title}</a>
+<a title="{$upcoming[ix].start|tiki_short_time}-{$upcoming[ix].end|tiki_short_time}:{$upcoming[ix].description}" href="tiki-minical.php?view={$view}&amp;eventId={$upcoming[ix].eventId}#add">{$upcoming[ix].title}</a>
 </td>
 </tr>
 {/section}	
 </table>
 	</td>
-	<td width="180" class="formcolor">
+	<td width="180">
 		{include file="modules/mod-calendar.tpl"}
 	</td>
 </tr>
@@ -49,9 +49,9 @@
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
+<b><a href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
+<a href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
 </b>
 <table clas="normal"  >
 {section name=ix loop=$slots}
@@ -72,8 +72,8 @@
 			{/if}
     	{/if}
     	
-    	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
-    	[<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
+    	<a title="{$slots[ix].events[jj].start|tiki_short_time}-{$slots[ix].events[jj].end|tiki_short_time}:{$slots[ix].events[jj].description}" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
+    	[<a href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
     	<br />
     	{/section}
     	</td>
@@ -86,17 +86,17 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
+<a href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 <b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
-<table class="normal"  >
+<a href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
+<table  >
 {section name=ix loop=$slots}
 <tr>
 	<td class="{cycle}">
 	    <table >
 	    <tr>
 	    <td >
-    	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&amp;year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
+    	<a href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&amp;year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
     	{$slots[ix].start|date_format:"%d"}</a>
     	</td>
     	<td>
@@ -110,8 +110,8 @@
 			{/if}
     	{/if}
 
-    	<a title="{$slots[ix].events[jj].start|tiki_short_time}:{$slots[ix].events[jj].description}" class="link" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
-    	[<a class="link" href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
+    	<a title="{$slots[ix].events[jj].start|tiki_short_time}:{$slots[ix].events[jj].description}" href="tiki-minical.php?view={$view}&amp;eventId={$slots[ix].events[jj].eventId}#add">{$slots[ix].events[jj].title}</a>
+    	[<a href="tiki-minical.php?view={$view}&amp;remove={$slots[ix].events[jj].eventId}">x</a>]
     	<br />
     	{/section}
     	</td>
@@ -136,10 +136,10 @@
    </td>
 </tr>
 </table>
-<a class="link" href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
+<a href="tiki-minical.php?view={$view}&amp;removeold=1">{tr}Remove old events{/tr}</a>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="view" value="{$view|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td  class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
@@ -153,7 +153,7 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="event[{$channels[user].eventId}]" />
 </td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}#add">{$channels[user].title}</a></td>
+<td class="{cycle advance=false}"><a href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}#add">{$channels[user].title}</a></td>
 <td class="{cycle advance=false}">{$channels[user].start|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{math equation="x / 3600" x=$channels[user].duration format="%d"} {tr}h{/tr} {math equation="(x % 3600) / 60" x=$channels[user].duration} {tr}mins{/tr}</td>
 <td style="text-align:center;" class="{cycle advance=false}">
@@ -197,24 +197,24 @@
 <input type="hidden" name="eventId" value="{$eventId|escape}" />
 <input type="hidden" name="view" value="{$view|escape}" />
 <input type="hidden" name="duration" value="60*60" />
-<table class="normal">
-  <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}save{/tr}" />
+<table>
+  <tr><td>{tr}Title{/tr}</td>
+      <td><input type="text" name="title" value="{$info.title|escape}" /><input type="submit" name="save" value="{tr}save{/tr}" />
       {if $eventId}
       <input type="submit" name="remove2" value="{tr}delete{/tr}" />
       {/if}
       </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Start{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Start{/tr}</td>
+  	  <td>
   	  {html_select_date time=$ev_pdate end_year="+4"}
   	  {html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=true}
   	  </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Duration{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Duration{/tr}</td>
+  	  <td>
 	  <select name="duration_hours">
 	  {html_options output=$hours values=$hours selected=$duration_hours}
 	  </select> {if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
@@ -226,8 +226,8 @@
   	  
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Topic{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Topic{/tr}</td>
+  	  <td>
   	  <select name="topicId">
   	  <option value="0" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{tr}None{/tr}</option>
   	  {section name=ix loop=$topics}
@@ -237,8 +237,8 @@
   	  </td>
   </tr>
   <tr>
-  	  <td class="formcolor">{tr}Description{/tr}</td>
-  	  <td class="formcolor">
+  	  <td>{tr}Description{/tr}</td>
+  	  <td>
   	  <textarea name="description" rows="5" cols="80">{$info.description|escape}</textarea>
       </td>
   </tr>

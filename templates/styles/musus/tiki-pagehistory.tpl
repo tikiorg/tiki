@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-pagehistory.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-pagehistory.tpl,v 1.2 2004-01-17 01:11:54 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
@@ -51,7 +51,7 @@
 <td class="odd">&nbsp;{$info.user}&nbsp;</td>
 <td class="odd">&nbsp;{$info.ip}&nbsp;</td>
 <td class="odd">&nbsp;{$info.comment}&nbsp;</td>
-<td class="odd">&nbsp;<a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}current{/tr}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a href="tiki-index.php?page={$page|escape:"url"}">{tr}current{/tr}</a>&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=hist loop=$history}
@@ -64,17 +64,17 @@
 <td class="{cycle advance=false}">&nbsp;{$history[hist].user}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$history[hist].ip}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td class="{cycle}">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>&nbsp;
+<td class="{cycle}">&nbsp;<a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>&nbsp;
 <!--{if $tiki_p_remove eq 'y'}
-<a class="link" href="tiki-removepage.php?page={$page|escape:"url"}&amp;version={$history[hist].version}" title="{tr}remove{/tr}">r</a>&nbsp;
+<a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version={$history[hist].version}" title="{tr}remove{/tr}">r</a>&nbsp;
 {/if}
 -->
 {if $tiki_p_rollback eq 'y'}
-<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$history[hist].version}" title="{tr}rollback{/tr}">b</a>&nbsp;
+<a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$history[hist].version}" title="{tr}rollback{/tr}">b</a>&nbsp;
 {/if}
-<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff={$history[hist].version}" title="{tr}compare{/tr}">c</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}" title="{tr}diff{/tr}">d</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}source{/tr}">s</a>&nbsp;
+<a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff={$history[hist].version}" title="{tr}compare{/tr}">c</a>&nbsp;
+<a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}" title="{tr}diff{/tr}">d</a>&nbsp;
+<a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}" title="{tr}source{/tr}">s</a>&nbsp;
 </td></tr>
 {sectionelse}
 <tr><td colspan="6">

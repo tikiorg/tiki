@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-calendar.tpl,v 1.2 2004-01-16 19:33:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-calendar.tpl,v 1.3 2004-01-17 01:11:54 musus Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -104,10 +104,10 @@ onmouseover="this.style.textDecoration='underline';"
 {if $tiki_p_change_events and $calitemId}
 <input type="hidden" name="calitemId" value="{$calitemId}">
 {/if}
-<table class="normal" style="width:100%;">
+<table style="width:100%;">
 
 {if $customcategories eq 'y'}
-<tr><td class="form">{tr}Category{/tr}</td><td class="form">
+<tr><td>{tr}Category{/tr}</td><td>
 <select name="categoryId">
 {section name=t loop=$listcat}
 {if $listcat[t]}
@@ -124,7 +124,7 @@ onmouseover="this.style.textDecoration='underline';"
 {/if}
 
 {if $customlocations eq 'y'}
-<tr><td class="form">{tr}Location{/tr}</td><td class="form">
+<tr><td>{tr}Location{/tr}</td><td>
 <select name="locationId">
 {section name=l loop=$listloc}
 {if $listloc[l]}
@@ -141,19 +141,19 @@ onmouseover="this.style.textDecoration='underline';"
 {/if}
 
 {if $customparticipants eq 'y'}
-<tr><td class="form">{tr}Organized by{/tr}</td><td class="form">
+<tr><td>{tr}Organized by{/tr}</td><td>
 <input type="text" name="organizers" value="{$organizers|escape}" id="organizers">
 {tr}comma separated usernames{/tr}
 </td></tr>
 
-<tr><td class="form">{tr}Participants{/tr}</td><td class="form">
+<tr><td>{tr}Participants{/tr}</td><td>
 <input type="text" name="participants" value="{$participants|escape}" id="participants">
 {tr}comma separated username:role{/tr} 
 {tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
 </td></tr>
 {/if}
 
-<tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
+<tr><td>{tr}Start{/tr}</td><td>
 {if $feature_jscalendar}
 <input type="hidden" name="start_date_input" value="{$start}" id="start_date_input" />
 <span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span>
@@ -176,7 +176,7 @@ align       : "bR"
 {/if}
 </td></tr>
 
-<tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
+<tr><td>{tr}End{/tr}</td><td>
 {if $feature_jscalendar}
 <input type="hidden" name="end_date_input" value="{$end}" id="end_date_input" />
 <span id="end_date_display" class="daterow">{$end|date_format:$daformat}</span>
@@ -199,20 +199,20 @@ align       : "bR"
 {/if}
 </td></tr>
 
-<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" />
+<tr><td>{tr}Name{/tr}</td><td><input type="text" name="name" value="{$name|escape}" />
 {if $name}<span class="mini">( {$name} )</span>{/if}
 </td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor">
+<tr><td>{tr}Description{/tr}</td><td>
 <textarea class="wikiedit" name="description" rows="8" cols="80" id="description" wrap="virtual">{$description|escape}</textarea>
 {if $description}<div class="mini">( {$description} )</div>{/if}
 </td></tr>
 
-<tr><td class="formcolor">{tr}Url{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url|escape}" />
+<tr><td>{tr}Url{/tr}</td><td><input type="text" name="url" value="{$url|escape}" />
 {if $url}<span class="mini">( <a href="{$url}">{$url}</a> )</span>{/if}
 </td></tr>
 
 {if $custompriorities eq 'y'}
-<tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
+<tr><td>{tr}Priority{/tr}</td><td>
 <select name="priority">
 <option value="1" {if $priority eq 1}selected="selected"{/if} class="calprio1">1</option>
 <option value="2" {if $priority eq 2}selected="selected"{/if} class="calprio2">2</option>
@@ -228,7 +228,7 @@ align       : "bR"
 </td></tr>
 {/if}
 
-<tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
+<tr><td>{tr}Status{/tr}</td><td>
 <select name="status">
 <option value="0" {if $status eq 0}selected="selected"{/if}><span class=""></span>0:{tr}Tentative{/tr}</option>
 <option value="1" {if $status eq 1}selected="selected"{/if}>1:{tr}Confirmed{/tr}</option>
@@ -238,7 +238,7 @@ align       : "bR"
 </td></tr>
 
 {if $customlanguages eq 'y'}
-<tr><td class="formcolor">{tr}Language{/tr}</td><td class="formcolor">
+<tr><td>{tr}Language{/tr}</td><td>
 <select name="lang">
 {section name=ix loop=$languages}
 <option value="{$languages[ix].value|escape}"
@@ -251,7 +251,7 @@ align       : "bR"
 </td></tr>
 {/if}
 
-<tr><td class="formcolor"></td><td class="formcolor">
+<tr><td></td><td>
 <span class="button2" style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" class="linkbut" />{tr}delete{/tr}</a></span>
 <input type="submit" name="save" value="{tr}save{/tr}" />
 {if $calitemId and $tiki_p_change_events}
@@ -275,7 +275,7 @@ align       : "bR"
 <ul>
 {foreach name=licals item=k from=$listcals}
 {if $infocals.$k.tiki_p_add_events eq 'y'}
-<li>{tr}in{/tr} <a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
+<li>{tr}in{/tr} <a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add">{$infocals.$k.name}</a></li>
 {/if}
 {/foreach}
 </ul>
@@ -309,13 +309,13 @@ onUpdate     : gotocal
 </script>
 {else}
 <div class="daterow">
-<a href="tiki-calendar.php?todate={$monthbefore}" class="link" title="{$monthbefore|tiki_long_date}">{tr}-1m{/tr}</a>
-<a href="tiki-calendar.php?todate={$weekbefore}" class="link" title="{$weekbefore|tiki_long_date}">{tr}-7d{/tr}</a>
-<a href="tiki-calendar.php?todate={$daybefore}" class="link" title="{$daybefore|tiki_long_date}">{tr}-1d{/tr}</a> 
+<a href="tiki-calendar.php?todate={$monthbefore}" title="{$monthbefore|tiki_long_date}">{tr}-1m{/tr}</a>
+<a href="tiki-calendar.php?todate={$weekbefore}" title="{$weekbefore|tiki_long_date}">{tr}-7d{/tr}</a>
+<a href="tiki-calendar.php?todate={$daybefore}" title="{$daybefore|tiki_long_date}">{tr}-1d{/tr}</a> 
 <b>{$focusdate|tiki_long_date}</b>
-<a href="tiki-calendar.php?todate={$dayafter}" class="link" title="{$dayafter|tiki_long_date}">{tr}+1d{/tr}</a>
-<a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
-<a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
+<a href="tiki-calendar.php?todate={$dayafter}" title="{$dayafter|tiki_long_date}">{tr}+1d{/tr}</a>
+<a href="tiki-calendar.php?todate={$weekafter}" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
+<a href="tiki-calendar.php?todate={$monthafter}" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
 </div>
 {/if}
 </td>

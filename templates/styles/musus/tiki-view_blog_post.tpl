@@ -10,7 +10,7 @@
 </rdf:RDF>
 -->
 <h2>{tr}Viewing blog post{/tr}</h2>
-<a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+<a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
 <br /><br />
 <div class="posthead">
 <table ><tr><td align="left">
@@ -52,11 +52,11 @@
 <table >
 <tr><td>
 <small>
-<a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
+<a href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
 ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count} {tr}posts{/tr} {tr}references{/tr}: {$post_info.trackbacks_to_count} {tr}posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
- [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
+ [<a href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
 {/if}
 </small>
 </td><td style='text-align:right'>
@@ -67,7 +67,7 @@
 {if $post_info.trackbacks_from_count > 0}
 <h3>{tr}Trackback pings{/tr}:</h3>
 {cycle values="odd,even" print=false}
-<table class="normal">
+<table>
 <tr>
 	<td class="heading">{tr}Title{/tr}</td>
 	<td class="heading">{tr}URI{/tr}</td>
@@ -76,7 +76,7 @@
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
   <td  class="{cycle advance=false}">{$item.title}</td>
-  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"}</td>
+  <td  class="{cycle advance=false}"><a href="{$key}" title="{$key}" target="_blank">{$key|truncate:"40"}</td>
   <td  class="{cycle}">{$item.blog_name}</td>
 </tr>
 {/foreach}

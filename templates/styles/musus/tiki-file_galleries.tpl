@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-file_galleries.tpl,v 1.2 2004-01-16 19:33:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-file_galleries.tpl,v 1.3 2004-01-17 01:19:09 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -32,55 +32,55 @@
 <div  align="center">
 <form action="tiki-file_galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<table>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}"/></td></tr>
+<tr><td>{tr}Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
 <!--<tr><td>{tr}Theme{/tr}:</td><td><select name="theme">
        <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
        <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
        </select></td></tr>-->
 {if $tiki_p_admin_file_galleries eq 'y'}       
-<tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
+<tr><td>{tr}Gallery is visible to non-admin users?{/tr}</td><td><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
 {/if}
 <tr>
-	<td class="formcolor">{tr}Listing configuration{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Listing configuration{/tr}</td>
+	<td>
 		<table >
 			<tr>
-				<td class="formcolor">{tr}icon{/tr}</td>
-				<td class="formcolor">{tr}id{/tr}</td>
-				<td class="formcolor">{tr}name{/tr}</td>
-				<td class="formcolor">{tr}size{/tr}</td>
-				<td class="formcolor">{tr}description{/tr}</td>
-				<td class="formcolor">{tr}created{/tr}</td>
-				<td class="formcolor">{tr}downloads{/tr}</td>
+				<td>{tr}icon{/tr}</td>
+				<td>{tr}id{/tr}</td>
+				<td>{tr}name{/tr}</td>
+				<td>{tr}size{/tr}</td>
+				<td>{tr}description{/tr}</td>
+				<td>{tr}created{/tr}</td>
+				<td>{tr}downloads{/tr}</td>
 			</tr>
 			<tr>
-				<td class="formcolor"><input type="checkbox" name="show_icon" {if $show_icon eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_id" {if $show_id eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor">
+				<td><input type="checkbox" name="show_icon" {if $show_icon eq 'y'} checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="show_id" {if $show_id eq 'y'} checked="checked"{/if} /></td>
+				<td>
 					<select name="show_name">
 						<option value="a" {if $show_name eq 'a'}selected="selected"{/if}>{tr}Name-filename{/tr}</option>
 						<option value="n" {if $show_name eq 'n'}selected="selected"{/if}>{tr}Name{/tr}</option>
 						<option value="f" {if $show_name eq 'f'}selected="selected"{/if}>{tr}Filename only{/tr}</option>
 					</select>
 				</td>
-				<td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
-				<td class="formcolor"><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="show_size" {if $show_size eq 'y'} checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
 			</tr>
 		</table>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Max description display size{/tr}</td>
-	<td class="formcolor"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
+	<td>{tr}Max description display size{/tr}</td>
+	<td><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
 </tr>
-<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+<tr><td>{tr}Max Rows per page{/tr}:</td><td><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Other users can upload files to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
+<tr><td>{tr}Other users can upload files to this gallery{/tr}:</td><td><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -111,7 +111,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 {if $fgal_list_name eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>

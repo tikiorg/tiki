@@ -2,9 +2,9 @@
 <a class="pagetitle" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Select news group{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-[<a class="link" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>]
+[<a href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>]
 <br /><br />
-<table class="normal">
+<table>
 <tr>
   <td class="heading">{tr}Group{/tr}</td>
   <td style="text-align:right;" class="heading">{tr}Msgs{/tr}</td>
@@ -13,7 +13,7 @@
 {cycle values="odd,even" print=false}
 {foreach from=$groups key=group item=item}
 <tr>
-  <td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_news.php?server={$info.server}&amp;port={$info.port}&amp;username={$info.username}&amp;password={$info.password}&amp;group={$group}&amp;offset=0&amp;serverId={$serverId}&amp;serverId={$serverId}">{$group}</a></td>
+  <td class="{cycle advance=false}"><a href="tiki-newsreader_news.php?server={$info.server}&amp;port={$info.port}&amp;username={$info.username}&amp;password={$info.password}&amp;group={$group}&amp;offset=0&amp;serverId={$serverId}&amp;serverId={$serverId}">{$group}</a></td>
   <td style="text-align:right;" class="{cycle advance=false}">{math equation="1+x-y" x=$item.last y=$item.first}</td>
   <td class="{cycle}">{$item.desc}</td>
 </tr>

@@ -4,7 +4,7 @@
 <br /><br />
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}Workitem information{/tr}</h3>
-<table class="normal">
+<table>
 <tr>
 	<td  class="odd"><b>id</b></td>
 	<td  class="odd">{$wi.itemId}</td>
@@ -37,7 +37,7 @@
 
 </table>
 <h3>{tr}Properties{/tr}</h3>
-<table class="normal">
+<table>
 <tr>
 	<td  class="heading">{tr}Property{/tr}</td>
 	<td  class="heading">{tr}Value{/tr}</td>

@@ -3,7 +3,7 @@
 <h1>{tr}Activity completed{/tr}</h1>
 {include file=tiki-g-user_bar.tpl}
 <br /><br />
-<table class="normal">
+<table>
 <tr>
 	<td class="odd">{tr}Process{/tr}
 	<td class="odd">{$procname} {$procversion}</td>

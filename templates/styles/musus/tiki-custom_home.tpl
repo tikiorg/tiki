@@ -37,7 +37,7 @@ Download!
 </div>
 <div class="tiki-content">
 Our last stable release is Tiki 1.3 -Pollux- you can download
-Tiki from <a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
+Tiki from <a href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
 </div>
 </div>
 
@@ -47,7 +47,7 @@ Join us!
 </div>
 <div class="tiki-content">
 If you want to contribute with this project join our
-<a class="link" href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
+<a href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
 </div>
 </div>
 <div class="tiki">
@@ -78,20 +78,20 @@ Testing Tiki
 </div>
 <div class="tiki-content">
 <ol>
-<li>May be you want to start reading the tiki <a href="tiki-view_faq.php?faqId=1" class="link">FAQ</a></li>
-<li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>
-<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>
-<li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php?galleryId=2" class="link">uploading images</a> to our public gallery</li>
-<li>You can download some tiki-add-ons from the <a href="tiki-list_file_gallery.php?galleryId=1" class="link">tiki-add-ons file gallery</a></li>
-<li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
-<li>You can enter the <a href="tiki-chat.php" class="link">chatrooms</a> to test our chatting system maybe you should invite a friend to test it</li>
-<li>From the <a href="tiki-list_games.php" class="link">games</a> section you can play some flash games</li>
-<li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users
+<li>May be you want to start reading the tiki <a href="tiki-view_faq.php?faqId=1">FAQ</a></li>
+<li>Test the wiki following this <a href="tiki-index.php">link</a></li>
+<li>Visit the <a href="tiki-forums.php">forums</a>, write a topic or reply to an existing topic if you want</li>
+<li>At the <a href="tiki-galleries.php">images galleries</a> section you can see some images try <a href="tiki-upload_image.php?galleryId=2">uploading images</a> to our public gallery</li>
+<li>You can download some tiki-add-ons from the <a href="tiki-list_file_gallery.php?galleryId=1">tiki-add-ons file gallery</a></li>
+<li>Visit the <a href="tiki-browse_categories.php">category browser</a> to test the tiki categorizing system</li>
+<li>You can enter the <a href="tiki-chat.php">chatrooms</a> to test our chatting system maybe you should invite a friend to test it</li>
+<li>From the <a href="tiki-list_games.php">games</a> section you can play some flash games</li>
+<li>If you are not logged you can <a href="tiki-register.php">register</a> as a new user and test features available to registered users
 such as setting user preferences, user bookmarks or configuring modules</li>
-<li>If you are curious visit the <a href="tiki-stats.php" class="link">stats</a> page</li>
-<li>The <a href="tiki-view_articles.php" class="link">articles</a> section will show a demo article that you can read and comment</li>
-<li>If you want to test editing an article or review you can <a href="tiki-edit_submission.php" class="link">write a submission</a></li>
-<li>From the <a href="tiki-list_blogs.php" class="link">weblogs</a> section you can create a weblog and test writing to your weblog</li>
+<li>If you are curious visit the <a href="tiki-stats.php">stats</a> page</li>
+<li>The <a href="tiki-view_articles.php">articles</a> section will show a demo article that you can read and comment</li>
+<li>If you want to test editing an article or review you can <a href="tiki-edit_submission.php">write a submission</a></li>
+<li>From the <a href="tiki-list_blogs.php">weblogs</a> section you can create a weblog and test writing to your weblog</li>
 </ol>
 </div>
 </div>

@@ -24,30 +24,30 @@ Errors:<br />
 	<input type="hidden" name="offset" value="{$offset|escape}" />
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 	<input type="hidden" name="find" value="{$find|escape}" />
-	<table class="normal">
+	<table>
 	<tr>
-		<td class="formcolor">{tr}Map{/tr}</td>
-		<td class="formcolor">
+		<td>{tr}Map{/tr}</td>
+		<td>
 		  <table border="1" >
 		  	<tr>
-		  		<td class="formcolor" >
+		  		<td >
 		  		{tr}Users{/tr}:
 				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
-		  		<td class="formcolor" >
+		  		<td >
 	  			{tr}Roles{/tr}:<br />		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
-		  		<td class="formcolor" >
+		  		<td >
 					<select name="user[]" multiple="multiple" size="10">
 					{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user}</option>
 					{/section}
 					</select>
 		  		</td>
-		  		<td class="formcolor" >
+		  		<td >
 
 					<select name="role[]" multiple="multiple" size="10">
 					{section name=ix loop=$roles}
@@ -61,8 +61,8 @@ Errors:<br />
 	</tr>
 	
 	<tr>
-		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor">
+		<td>&nbsp;</td>
+		<td>
 			<input type="submit" name="save" value="{tr}map{/tr}" />
 		</td>
 	</tr>
@@ -86,7 +86,7 @@ Errors:<br />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-g-map_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
