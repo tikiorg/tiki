@@ -25,9 +25,9 @@
 
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicklinks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}">{tr}Label{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicklinks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}">{tr}Insert{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_quicklinks.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}">{tr}Icon{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taglabel_desc'}taglabel_asc{else}taglabel_desc{/if}">{tr}Label{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'taginsert_desc'}taginsert_asc{else}taginsert_desc{/if}">{tr}Insert{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tagicon_desc'}tagicon_asc{else}tagicon_desc{/if}">{tr}Icon{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
