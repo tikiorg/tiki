@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.22 2004-02-18 21:21:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.23 2004-03-09 05:45:06 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -234,23 +234,11 @@ for ($i = 0; $i < count($channels["data"]); $i++) {
 		$channels["data"][$i]["individual"] = 'n';
 	}
 }
-
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$urlquery['find'] = $find;
+$urlquery['sort_mode'] = $sort_mode;
+$smarty->assign_by_ref('urlquery', $urlquery);
+$cant = $channels["cant"];
+include "tiki-pagination.php";
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
