@@ -507,10 +507,40 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
 
-	    $res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array((int) $res["quizId"]));
-	    $ret[] = $res;
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['quizId'], 'quiz')) {
+	    // quiz permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_take_quiz') &&
+				!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_view_quiz_stats')) {
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no quiz permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $res['quizId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+
+		if ($add) {
+		    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
+		    $res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array((int) $res["quizId"]));
+		    $ret[] = $res;
+		}
 	}
 
 	$retval = array();
