@@ -15,6 +15,9 @@ fi
 if [ -z "$1" ];
 then
 	cat <<EOF
+This script assigns necessary permissions for the directories that the webserver writes files to.
+It also creates the (initially empty) cache directories.
+
 Usage $0 user [group]
 
 For example, if apache is running as user $USER, type:
