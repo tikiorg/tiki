@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.147 2003-10-12 18:45:00 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.148 2003-10-13 18:25:33 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -426,6 +426,7 @@ $feature_galleries = 'y';
 $feature_featuredLinks = 'y';
 $feature_hotwords = 'y';
 $feature_hotwords_nw = 'n';
+$feature_autolinks = 'y';
 $feature_banners = 'n';
 $feature_top_banner = 'n';
 $feature_wiki = 'y';
@@ -848,6 +849,7 @@ $smarty->assign('feature_forum_quickjump', $feature_forum_quickjump);
 $smarty->assign('feature_forum_topicd', $feature_forum_topicd);
 $smarty->assign('feature_hotwords', $feature_hotwords);
 $smarty->assign('feature_hotwords_nw', $feature_hotwords_nw);
+$smarty->assign('feature_autolinks', $feature_autolinks);
 $smarty->assign('feature_lastChanges', $feature_lastChanges);
 $smarty->assign('feature_dump', $feature_dump);
 $smarty->assign('feature_categories', $feature_categories);

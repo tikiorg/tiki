@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.20 2003-10-12 21:25:36 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.21 2003-10-13 18:25:33 teedog Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
@@ -386,6 +386,21 @@
 					:</td>
 				<td><input type="checkbox" name="feature_calendar"
 					{if $feature_calendar eq 'y'}checked="checked"{/if}/></td>
+
+      </tr>
+            <tr>
+        
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=AutoLinks" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}AutoLinks{/tr}">{/if}
+        		{tr}AutoLinks{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_autolinks"
+            {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td>
+
+        <td>&nbsp;</td>
+
+        <td class="form"></td>
 
       </tr>
 
