@@ -38,6 +38,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	// give out an array with Ids viewable by $user
+	/*Was never used
 	function list_user_calIds() {
 		global $user;
 		if ($user) {
@@ -51,12 +52,12 @@ class CalendarLib extends TikiLib {
 			$bindvars=array();
 		}
 		$result = $this->query($query,$bindvars);
-		$ret = array();
+		$res = array();
 		while ($r = $result->fetchRow()) {
 			$res[] = $r['calendarId'];
 		}
 		return $res;
-	}
+	} */
 
 	function set_calendar($calendarId, $user, $name, $description, $customflags=array()) {
 		$name = strip_tags($name);
