@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.70 2004-06-29 22:23:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.71 2004-07-13 21:29:31 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -240,6 +240,7 @@ $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 $commentslib->process_inbound_mail($_REQUEST['forumId']);
 
+$forum_mode = 'y';
 include_once ("comments.php");
 
 $section = 'forums';
