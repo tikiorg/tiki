@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.66 2004-08-03 19:44:56 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.67 2004-08-11 18:55:36 sylvieg Exp $
 
 MoreNeat theme
 */
@@ -1959,6 +1959,7 @@ border-style: solid;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for c o d e plugin *****/
 .codelisting

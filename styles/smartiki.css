@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.15 2004-07-11 10:27:48 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.16 2004-08-11 18:55:39 sylvieg Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1980,6 +1980,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
