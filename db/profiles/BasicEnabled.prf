@@ -1,5 +1,5 @@
 # BasicEnabled profile for easy use
-# $Header: /cvsroot/tikiwiki/tiki/db/profiles/BasicEnabled.prf,v 1.5 2004-01-12 02:44:11 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/profiles/BasicEnabled.prf,v 1.6 2004-04-26 18:02:41 mose Exp $
 REPLACE INTO tiki_calendars VALUES (1,'Public','Public calendar','admin','n','n','n','n','n',1072170381,1072170381);
 REPLACE INTO tiki_modules VALUES ('application_menu','l',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
 REPLACE INTO tiki_modules VALUES ('login_box','r',1,'P','',0,0,'','a:1:{i:0;s:9:\"Anonymous\"\;}');
@@ -257,5 +257,5 @@ REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_view_eph','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_vote_comments','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_wiki_attach_files','');
 REPLACE INTO users_grouppermissions VALUES ('Registered','tiki_p_wiki_view_attachments','');
-REPLACE INTO users_groups VALUES ('Admins','Administrator and accounts managers.','');
-REPLACE INTO users_groups VALUES ('Editors','Trusted writers and features managers.','');
+REPLACE INTO users_groups (groupName,groupDesc,groupHome) VALUES ('Admins','Administrator and accounts managers.','');
+REPLACE INTO users_groups (groupName,groupDesc,groupHome) VALUES ('Editors','Trusted writers and features managers.','');
