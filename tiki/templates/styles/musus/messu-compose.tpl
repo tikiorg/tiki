@@ -2,7 +2,7 @@
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Compose Message{/tr}">
-<img src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
+{$helpIcon $helpIconDesc}</a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
