@@ -1,7 +1,10 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.27 2004-06-18 22:33:37 teedog Exp $
+-- $Rev$
+-- $Date: 2004-06-19 08:00:28 $
+-- $Author: mose $
+-- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -5459,6 +5462,11 @@ go
 
 -- --------------------------------------------------------
 
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view')
+go
+
+
+
 --
 -- Table structure for table `users_groups`
 --
@@ -6286,11 +6294,14 @@ INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin'
 go
 
 
-UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin"
+UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogin"
 go
 
 
-INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator'); 
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator')
+go
+
+
 -- --------------------------------------------------------
 
 -- Inserts of all default values for preferences
@@ -8149,6 +8160,10 @@ go
 --
 
 --translated objects table
+-- DROP TABLE "tiki_translated_objects"
+go
+
+
 CREATE TABLE "tiki_translated_objects" (
 traId numeric(14 ,0) identity,
   "type" varchar(50) NOT NULL,
@@ -8166,6 +8181,10 @@ go
 -- Community tables begin
 --
 
+-- DROP TABLE "tiki_friends"
+go
+
+
 CREATE TABLE "tiki_friends" (
   "user" char(40) default '' NOT NULL,
   "friend" char(40) default '' NOT NULL,
@@ -8173,6 +8192,10 @@ CREATE TABLE "tiki_friends" (
 ) 
 go
 
+
+
+-- DROP TABLE "tiki_friendship_requests"
+go
 
 
 CREATE TABLE "tiki_friendship_requests" (
@@ -8183,6 +8206,10 @@ CREATE TABLE "tiki_friendship_requests" (
 ) 
 go
 
+
+
+-- DROP TABLE "tiki_score"
+go
 
 
 CREATE TABLE "tiki_score" (
@@ -8200,6 +8227,10 @@ go
 
 CREATE  INDEX "tiki_score_ord" ON "tiki_score"("ord")
 go
+
+-- DROP TABLE "tiki_users_score"
+go
+
 
 CREATE TABLE "tiki_users_score" (
   "user" char(40) default '' NOT NULL,

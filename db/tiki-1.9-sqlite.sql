@@ -1,4 +1,7 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sqlite.sql,v 1.27 2004-06-18 22:33:36 teedog Exp $
+-- $Rev$
+-- $Date: 2004-06-19 08:00:27 $
+-- $Author: mose $
+-- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4335,6 +4338,9 @@ CREATE TABLE "users_grouppermissions" (
 
 -- --------------------------------------------------------
 
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
+
+
 --
 -- Table structure for table `users_groups`
 --
@@ -4800,9 +4806,10 @@ CREATE TABLE "users_users" (
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
-UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
+UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogin";
 
-INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator'); 
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
+
 -- --------------------------------------------------------
 
 -- Inserts of all default values for preferences
@@ -5824,6 +5831,8 @@ CREATE  INDEX "tiki_hw_pages_studentName" ON "tiki_hw_pages"("studentName");
 --
 
 --translated objects table
+DROP TABLE "tiki_translated_objects";
+
 CREATE TABLE "tiki_translated_objects" (
   "traId" bigserial,
   "type" varchar(50) NOT NULL,
@@ -5839,12 +5848,16 @@ CREATE TABLE "tiki_translated_objects" (
 -- Community tables begin
 --
 
+DROP TABLE "tiki_friends";
+
 CREATE TABLE "tiki_friends" (
   "user" char(40) NOT NULL default '',
   "friend" char(40) NOT NULL default '',
   PRIMARY KEY ("user","friend")
 ) ;
 
+
+DROP TABLE "tiki_friendship_requests";
 
 CREATE TABLE "tiki_friendship_requests" (
   "userFrom" char(40) NOT NULL default '',
@@ -5853,6 +5866,8 @@ CREATE TABLE "tiki_friendship_requests" (
   PRIMARY KEY ("userFrom","userTo")
 ) ;
 
+
+DROP TABLE "tiki_score";
 
 CREATE TABLE "tiki_score" (
   "event" varchar(40) NOT NULL default '',
@@ -5866,6 +5881,8 @@ CREATE TABLE "tiki_score" (
 ) ;
 
 CREATE  INDEX "tiki_score_ord" ON "tiki_score"("ord");
+
+DROP TABLE "tiki_users_score";
 
 CREATE TABLE "tiki_users_score" (
   "user" char(40) NOT NULL default '',

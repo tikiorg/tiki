@@ -1,4 +1,7 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.27 2004-06-18 22:33:37 teedog Exp $
+-- $Rev$
+-- $Date: 2004-06-19 08:00:26 $
+-- $Author: mose $
+-- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4526,6 +4529,9 @@ CREATE TABLE "users_grouppermissions" (
 ) ;
 
 -- --------------------------------------------------------
+INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
+
+
 --
 -- Table structure for table `users_groups`
 --
@@ -4988,9 +4994,10 @@ END;
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
-UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
+UPDATE "users_users" SET "currentLogin"="lastLogin" "registrationDate"="lastLogin";
 
-INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator'); 
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
+
 -- --------------------------------------------------------
 -- Inserts of all default values for preferences
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('allowRegister','n');
@@ -6051,12 +6058,14 @@ END;
 CREATE  INDEX "tiki_hw_pages_id" ON "tiki_hw_pages"("id");
 CREATE  INDEX "tiki_hw_pages_assignmentId" ON "tiki_hw_pages"("assignmentId");
 CREATE  INDEX "tiki_hw_pages_studentName" ON "tiki_hw_pages"("studentName");
-CREATE SEQUENCE "tiki_hw_pages_sequ" INCREMENT BY 1 START WITH 1;
 
 --
 -- Homework tables end
 --
 --translated objects table
+DROP TABLE "tiki_translated_objects";
+
+CREATE SEQUENCE "tiki_translated_objects_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_translated_objects" (
   "traId" number(14) NOT NULL,
   "type" varchar(50) NOT NULL,
@@ -6066,21 +6075,25 @@ CREATE TABLE "tiki_translated_objects" (
   KEY ( traId)
 )  ;
 
-CREATE TRIGGER "tiki_hw_pages_trig" BEFORE INSERT ON "tiki_hw_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_translated_objects_trig" BEFORE INSERT ON "tiki_translated_objects" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "tiki_hw_pages_sequ".nextval into :NEW."traId" FROM DUAL;
+SELECT "tiki_translated_objects_sequ".nextval into :NEW."traId" FROM DUAL;
 END;
 /
 
 --
 -- Community tables begin
 --
+DROP TABLE "tiki_friends";
+
 CREATE TABLE "tiki_friends" (
   "user" char(40) default '' NOT NULL,
   "friend" char(40) default '' NOT NULL,
   PRIMARY KEY ("user","friend")
 ) ;
 
+
+DROP TABLE "tiki_friendship_requests";
 
 CREATE TABLE "tiki_friendship_requests" (
   "userFrom" char(40) default '' NOT NULL,
@@ -6089,6 +6102,8 @@ CREATE TABLE "tiki_friendship_requests" (
   PRIMARY KEY ("userFrom","userTo")
 ) ;
 
+
+DROP TABLE "tiki_score";
 
 CREATE TABLE "tiki_score" (
   "event" varchar(40) default '' NOT NULL,
@@ -6101,6 +6116,8 @@ CREATE TABLE "tiki_score" (
 ) ;
 
 CREATE  INDEX "tiki_score_ord" ON "tiki_score"("ord");
+
+DROP TABLE "tiki_users_score";
 
 CREATE TABLE "tiki_users_score" (
   "user" char(40) default '' NOT NULL,

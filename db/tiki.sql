@@ -1,4 +1,7 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.213 2004-06-18 22:33:36 teedog Exp $
+# $Rev$
+# $Date: 2004-06-19 08:00:28 $
+# $Author: mose $
+# $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -3744,6 +3747,8 @@ CREATE TABLE users_grouppermissions (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_view');
+
 #
 # Table structure for table `users_groups`
 #
@@ -4028,8 +4033,8 @@ CREATE TABLE users_users (
 # --------------------------------------------------------
 ### Administrator account
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
-UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
-INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator'); 
+UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
+INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
 # --------------------------------------------------------
 
 # Inserts of all default values for preferences
@@ -4630,6 +4635,7 @@ CREATE TABLE tiki_hw_pages (
 #
 
 #translated objects table
+DROP TABLE IF EXISTS tiki_translated_objects;
 CREATE TABLE tiki_translated_objects (
   traId int(14) NOT NULL auto_increment,
   type varchar(50) NOT NULL,
@@ -4644,12 +4650,14 @@ CREATE TABLE tiki_translated_objects (
 # Community tables begin
 #
 
+DROP TABLE IF EXISTS tiki_friends;
 CREATE TABLE tiki_friends (
   user char(40) NOT NULL default '',
   friend char(40) NOT NULL default '',
   PRIMARY KEY  (user,friend)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_friendship_requests;
 CREATE TABLE tiki_friendship_requests (
   userFrom char(40) NOT NULL default '',
   userTo char(40) NOT NULL default '',
@@ -4657,6 +4665,7 @@ CREATE TABLE tiki_friendship_requests (
   PRIMARY KEY  (userFrom,userTo)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_score;
 CREATE TABLE tiki_score (
   event varchar(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
@@ -4668,6 +4677,7 @@ CREATE TABLE tiki_score (
   KEY ord (ord)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_users_score;
 CREATE TABLE tiki_users_score (
   user char(40) NOT NULL default '',
   event_id char(40) NOT NULL default '',
