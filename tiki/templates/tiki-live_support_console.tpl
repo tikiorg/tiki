@@ -37,12 +37,7 @@
     <h3>{tr}Support requests{/tr}</h3>
     {if $new_requests eq 'y'}
 		<script>
-			var NSsound = navigator.plugins && navigator.plugins["LiveAudio"];
-  			var IEsound = navigator.plugins && document.all;
-  			var audioEnabled = NSsound || IEsound;
-  			if (audioEnabled) {
-				<EMBED SRC="aladdin.mid" HIDDEN="true" AUTOSTART="true"	STARTTIME="00:10" ENDTIME="00:15">
-  			}
+			sound();
 		</script>
     {/if}
 	<table id='reqs' class="normal">
@@ -61,6 +56,7 @@
 			<td class="{cycle}">
 		    {if $status eq 'online'}
 				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&role=observer" width="300" height="450"}>{tr}Join{/tr}</a>
 			{else}
 				&nbsp;
 			{/if}

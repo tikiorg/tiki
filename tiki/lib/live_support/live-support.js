@@ -6,10 +6,10 @@ function sound() {
 			var audioEnabled = NSsound || IEsound;
 			if(audioEnabled) {
 				if(IEsound) {
-					document.write('<BGSOUND SRC="sound/aladdin.mid" />');	
+					document.write('<BGSOUND SRC="img/icons/mission.mid" />');	
 				}
 				if(NSsound) {
-					document.write('<EMBED SRC="sound/aladdin.mid" HIDDEN="true" AUTOSTART="true" />');
+					document.write('<EMBED SRC="img/icons/mission.mid" HIDDEN="true" AUTOSTART="true" />');
 				}
 			} else {
 				alert('no sound');	

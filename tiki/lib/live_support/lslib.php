@@ -137,7 +137,7 @@ class Lslib {
   	$now = date("U");
   	$query = "update tiki_live_support_requests set operator_id='$operator_id',operator='$user',status='op_accepted',timestamp=$now,chat_started=$now where reqId='$reqId'";
   	$this->query($query);
-  	$query = "update tiki_live_support_operators set accepted_requests = accepted_requests + 1 where operator='$user'";
+  	$query = "update tiki_live_support_operators set accepted_requests = accepted_requests + 1 where user='$user'";
   	$this->query($query);
   }
   
@@ -210,7 +210,8 @@ class Lslib {
   {
   	return $this->getOne("select count(*) from tiki_live_support_operators where status='online'");
   }    
-
+  
+  
 }
 
 $lslib= new Lslib($dbTiki);

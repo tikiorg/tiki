@@ -2,7 +2,9 @@
 <br/><br/>
 [ <a class="link" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a> |
 <a class="link" {jspopup width="300" height="450" href="tiki-live_support_client.php"}>{tr} Open client window{/tr}</a> |
-<a class="link" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a> ]
+<a class="link" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a>
+<!--<a class="link" href="tiki-live_support_messages.php">{tr}Support tickets{/tr}</a>-->
+ ]
 <br/><br/>
 {if $html}
 	<b>Generated HTML code:</b><br/>
@@ -51,7 +53,11 @@
 			</table>
 		</td>
 		<td class="{cycle}" style="text-align:right;">
-		<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+		{if $tiki_p_live_support_admin eq 'y'}
+			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+		{else}
+			&nbsp;
+		{/if}
 		</td>
 	</tr>
 {/section}
@@ -89,13 +95,18 @@
 			</table>
 		</td>
 		<td class="{cycle}" style="text-align:right;">
-		<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+		{if $tiki_p_live_support_admin eq 'y'}
+			<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+		{else}
+			&nbsp;
+		{/if}
 		</td>
 	</tr>
 {/section}
 </table>
 {/if}
 
+{if $tiki_p_live_support_admin eq 'y'}
 <h3>{tr}Add an operator to the system{/tr}</h3>
 <small>{tr}Operators must be tiki users{/tr}</small>
 <form method="post" action="tiki-live_support_admin.php">
@@ -118,5 +129,5 @@
 	</tr>
 </table>
 </form>
-
+{/if}
 

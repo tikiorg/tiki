@@ -1088,8 +1088,15 @@ if($user) {
   $smarty->assign('allowMsgs',$allowMsgs);
 } 
 
-
-
+if($feature_live_support == 'y') {
+	$smarty->assign('user_is_operator','n');
+	if($user) {
+		include_once('lib/live_support/lsadminlib.php');
+		if($lsadminlib->is_operator($user)) {
+			$smarty->assign('user_is_operator','y');
+		}
+	}
+}
 
 if($feature_referer_stats != 'y') {
 // Referer tracking

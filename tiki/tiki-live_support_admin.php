@@ -1,8 +1,8 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-include('lib/live_support/lsadminlib.php');
-include('lib/live_support/lslib.php');
+include_once('lib/live_support/lsadminlib.php');
+include_once('lib/live_support/lslib.php');
 
 if($feature_live_support != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -10,7 +10,7 @@ if($feature_live_support != 'y') {
   die;  
 }
 
-if($tiki_p_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
+if($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
@@ -22,11 +22,13 @@ if(isset($_REQUEST['show_html'])) {
 	$smarty->assign('html',$html);
 }
 
-if(isset($_REQUEST['adduser'])) {
-	$lsadminlib->add_operator($_REQUEST['user']);
-}
-if(isset($_REQUEST['removeuser'])) {
-	$lsadminlib->remove_operator($_REQUEST['removeuser']);
+if($tiki_p_live_support_admin == 'y') {
+	if(isset($_REQUEST['adduser'])) {
+		$lsadminlib->add_operator($_REQUEST['user']);
+	}
+	if(isset($_REQUEST['removeuser'])) {
+		$lsadminlib->remove_operator($_REQUEST['removeuser']);
+	}
 }
 
 // Get the list of operators

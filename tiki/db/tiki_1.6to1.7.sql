@@ -1,3 +1,6 @@
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_live_support_admin','support','Admin live support system','admin');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_live_support','support','Can use live support system','basic');
+
 ### Wiki drawings versioning
 drop table if exists tiki_drawings;
 create table tiki_drawings(
@@ -14,6 +17,51 @@ create table tiki_drawings(
 
 ### Live support chat system
 ### under construction
+drop table if exists tiki_live_support_messages;
+create table tiki_live_support_messages(
+	msgId integer(12) not null auto_increment,
+	data text,
+	timestamp integer(14),
+	user varchar(200),
+	username varchar(200),
+	priority integer(2),
+	status char(1),
+	assigned_to varchar(200),
+	resolution varchar(100),
+	title varchar(200),
+	module integer(4),
+	email varchar(250),
+	primary key(msgId)
+);
+
+### Support canned responses for chat
+
+
+
+
+drop table if exists tiki_live_support_modules;
+create table tiki_live_support_modules(
+	modId integer(4) not null auto_increment,
+	name varchar(90),
+	primary key(modId)
+);
+
+insert into tiki_live_support_modules(name) values('wiki');
+insert into tiki_live_support_modules(name) values('forums');
+insert into tiki_live_support_modules(name) values('image galleries');
+insert into tiki_live_support_modules(name) values('file galleries');
+insert into tiki_live_support_modules(name) values('directory');
+insert into tiki_live_support_modules(name) values('workflow');
+insert into tiki_live_support_modules(name) values('charts');
+
+drop table if exists tiki_live_support_message_comments;
+create table tiki_live_support_message_comments(
+    cId integer(12) not null auto_increment,
+	msgId integer(12),
+	data text,
+	timestamp integer(14),
+	primary key(cId)
+);
 
 drop table if exists tiki_live_support_operators;
 create table tiki_live_support_operators(
