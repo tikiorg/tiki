@@ -15,6 +15,8 @@ if($feature_newsreader != 'y') {
   die;  
 }
 
+
+
 $smarty->assign('mid','tiki-newsreader_servers.tpl');
 $smarty->display('tiki.tpl');
 ?>
