@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.4 2004-07-29 21:38:26 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.5 2004-07-30 18:18:38 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,7 @@ class StaticLib extends TikiLib {
 	function create_page($pagename) {
 		
 		global $wikilib;
+		require_once('lib/wiki/wikilib.php');
 		$backlinks = $wikilib->get_backlinks($pagename);
 		foreach ($backlinks as $backlink) {
 			$this->update_page($backlink['fromPage']);
@@ -47,12 +48,8 @@ class StaticLib extends TikiLib {
 	// build the static html page
 	function update_page($pagename) {
 		
-		global $smarty, $tikidomain, $wikiHomePage, $style, $tiki_p_edit;
-		$static_path = "static";
-		if ($tikidomain) {
-			$static_path .= "/$tikidomain";
-		}
-		$filename = $static_path . '/' . $pagename . '.html';
+		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $tiki_p_edit;
+		$filename = $wiki_realtime_static_path . $pagename . '.html';
 		
 		$tiki_p_edit = 'n';
 		$pageobject = $this->get_page_info($pagename);
@@ -63,6 +60,7 @@ class StaticLib extends TikiLib {
 
 		// Display the Index Template
 		global $wikilib, $feature_wiki_pageid;
+		require_once('lib/wiki/wikilib.php');
 		$smarty->assign('page', $pagename);
 		$creator = $wikilib->get_creator($pagename);
 		$smarty->assign('creator', $creator);
@@ -81,21 +79,18 @@ class StaticLib extends TikiLib {
 		@unlink($filename);
 		// write to file
 		file_put_contents($filename, $smarty_result);
-		if(!file_exists("static/styles/$style")) {
-			copy("styles/$style", "static/styles/$style");
+		$style_path = $wiki_realtime_static_path . "styles/" . $style;
+		if(!file_exists($style_path)) {
+			copy("styles/$style", $style_path);
 		}
 
 	}
 	
 	function rename_page($oldpagename, $newpagename) {
 		
-		global $tikidomain;
-		$static_path = "static";
-		if ($tikidomain) {
-			$static_path .= "/$tikidomain";
-		}
-		$oldfilename = $static_path . '/' . $oldpagename . '.html';
-		$newfilename = $static_path . '/' . $newpagename . '.html';
+		global $wiki_realtime_static_path;
+		$oldfilename = $wiki_realtime_static_path . $oldpagename . '.html';
+		$newfilename = $wiki_realtime_static_path . $newpagename . '.html';
 		
 		// rename file
 		@rename($oldfilename, $newfilename);
@@ -107,12 +102,9 @@ class StaticLib extends TikiLib {
 	
 	function remove_page($pagename) {
 
-		global $tikidomain, $wikilib;
-		$static_path = "static";
-		if ($tikidomain) {
-			$static_path .= "/$tikidomain";
-		}
-		$filename = $static_path . '/' . $pagename . '.html';
+		global $wiki_realtime_static_path, $wikilib;
+		require_once('lib/wiki/wikilib.php');
+		$filename = $wiki_realtime_static_path . $pagename . '.html';
 		
 		// delete file
 		@unlink($filename);
@@ -128,7 +120,7 @@ class StaticLib extends TikiLib {
 	function rebuild_all_pages() {
 		
 		$pages = $this->list_pages();
-		foreach ($pages as $page) {
+		foreach ($pages['data'] as $page) {
 			$this->update_page($page['pageName']);
 		}
 		
@@ -136,12 +128,8 @@ class StaticLib extends TikiLib {
 	
 	function purge_ghost_pages() {
 
-		global $tikidomain;
-		$static_path = "static";
-		if ($tikidomain) {
-			$static_path .= "/$tikidomain";
-		}
-		$dir = $static_path;
+		global $wiki_realtime_static_path;
+		$dir = $wiki_realtime_static_path;
 
 		// supress the PHP error because that causes Tiki to crash
 		$dh = @opendir($dir);

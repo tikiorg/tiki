@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.38 2004-07-29 21:38:27 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.39 2004-07-30 18:18:39 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,6 +113,23 @@ if (isset($_REQUEST['staticwiki'])) {
 		$tikilib->set_preference('feature_wiki_realtime_static', 'n');
 		$smarty->assign('feature_wiki_realtime_static', 'n');
 	}
+	if (!empty($_REQUEST['staticpath'])) {
+		// make sure staticpath has a trailing slash
+		$tail = strlen($_REQUEST['staticpath']) - 1;
+		if (substr($_REQUEST['staticpath'], $tail) != '/') {
+			$_REQUEST['staticpath'] = $_REQUEST['staticpath'] . '/';
+		}
+		$tikilib->set_preference('wiki_realtime_static_path', $_REQUEST['staticpath']);
+		$smarty->assign('wiki_realtime_static_path', $_REQUEST['staticpath']);
+	}
+}
+
+// rebuild all static html pages
+if (isset($_REQUEST['rebuildstatic']) && $_REQUEST['rebuildstatic'] == 'y') {
+	check_ticket('admin-inc-wiki');
+	global $staticlib;
+	include_once('lib/static/staticlib.php');
+	$staticlib->rebuild_all_pages();
 }
 
 // purge ghost static html pages
@@ -121,7 +138,7 @@ if (isset($_REQUEST['purgestatic']) && $_REQUEST['purgestatic'] == 'y') {
 	global $staticlib;
 	include_once('lib/static/staticlib.php');
 	$staticlib->purge_ghost_pages();
-}	
+}
 
 if (isset($_REQUEST["setwikiregex"])) {
 	check_ticket('admin-inc-wiki');
