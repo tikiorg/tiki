@@ -275,7 +275,7 @@ class CategLib extends TikiLib {
       // The page is not cateorized
       $info = $this->get_page_info($pageName);
       $href = 'tiki-index.php?page='.urlencode($pageName);
-      $catObjectId = $this->add_categorized_object('wiki page',$pageName,substr($info["data"],0,200),$pageName,$href);
+      $catObjectId = $this->add_categorized_object('wiki page',$pageName,substr($info["description"],0,200),$pageName,$href);
     }
     $this->categorize($catObjectId,$categId);
   }
