@@ -10,13 +10,13 @@ if($feature_articles != 'y') {
 
 
 // PERMISSIONS: NEEDS p_admin
-if($user != 'admin') {
-  if($tiki_p_admin != 'y') {
+
+  if($tiki_p_admin_cms != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
     $smarty->display('error.tpl');
     die;
   }
-}
+
 
 if(isset($_REQUEST["addtopic"])) {
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -49,6 +49,25 @@ if(isset($_REQUEST["deactivate"])) {
 
 
 $topics = $tikilib->list_topics();
+for($i=0;$i<count($topics);$i++) {
+  if($userlib->object_has_one_permission($topics[$i]["topicId"],'topic')) {
+    $topics[$i]["individual"]='y';
+    
+    if($userlib->object_has_permission($user,$topics[$i]["topicId"],'topic','tiki_p_topic_read')) {
+      $topics[$i]["individual_tiki_p_topic_read"]='y';
+    } else {
+      $topics[$i]["individual_tiki_p_topic_read"]='n';
+    }
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$topics[$i]["topicId"],'topic','tiki_p_admin_cms')) {
+      $topics[$i]["individual_tiki_p_topic_read"]='y';
+    } 
+    
+  } else {
+    $topics[$i]["individual"]='n';
+  }
+}
+
+
 $smarty->assign('topics',$topics);
 
 $smarty->assign('mid','tiki-admin_topics.tpl');

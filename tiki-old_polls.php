@@ -69,6 +69,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_all_polls($offset,$maxRecords,$sort_mode,$find);

@@ -46,9 +46,15 @@ if(!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset',$offset);
 
+if(isset($_REQUEST["find"])) {
+  $find = $_REQUEST["find"];  
+} else {
+  $find = ''; 
+}
+$smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_pages($offset,$maxRecords,$sort_mode);
+$listpages = $tikilib->list_pages($offset,$maxRecords,$sort_mode,$find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -8,6 +8,8 @@ if($allowRegister != 'y') {
   die;
 }
 
+$smarty->assign('showmsg','n');
+
 if(isset($_REQUEST["register"])) {
   if($_REQUEST["pass"] <> $_REQUEST["pass2"]) {
     $smarty->assign('msg',tra("The passwords dont match"));
@@ -21,6 +23,12 @@ if(isset($_REQUEST["register"])) {
   }
   
   // VALIDATE NAME HERE
+  if(strtolower($_REQUEST["name"])=='admin') {
+    $smarty->assign('msg',tra("Invalid username"));
+    $smarty->display('error.tpl');
+    die;
+  }
+  
   if(strlen($_REQUEST["name"])>37) {
     $smarty->assign('msg',tra("Username is too long"));
     $smarty->display('error.tpl');
@@ -33,9 +41,26 @@ if(isset($_REQUEST["register"])) {
     die;
   }
   
-  $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
-  header("location: index.php");
-  die;
+  // Check the mode
+  if($validateUsers == 'y') {
+    $apass = substr(md5($tikilib->genPass()),0,25);
+    $foo = parse_url($_SERVER["REQUEST_URI"]);
+    $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
+    $machine ='http://'.$_SERVER["SERVER_NAME"].$foo1;
+
+    $message = tra('Hi')." ".$_REQUEST["name"]." ".tra('you are about to be a registered user in')." ".$_SERVER["SERVER_NAME"]." ";
+    $message .="<a href='".$machine."?user=".$_REQUEST["name"]."&pass=".$apass."'>".tra('use this link to login for the first time')."</a>";
+    $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+    // Send the mail
+    @mail($_REQUEST["email"], tra('your reistration information for')." ".$_SERVER["SERVER_NAME"],$message);
+    $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
+    $smarty->assign('showmsg','y');
+  } else {
+    $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+    header("location: index.php");
+    die;
+  }
+
 }
 
 $smarty->assign('mid','tiki-register.tpl');

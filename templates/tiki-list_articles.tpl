@@ -4,11 +4,11 @@
 <br/><br/>
 <div align="center">
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-list_articles.php">
-     <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
@@ -22,9 +22,9 @@
 <td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
 <td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
 <td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
-<td class="listartheading">{tr}HasImg{/tr}</td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'useImage_desc'}useImage_asc{else}useImage_desc{/if}">{tr}UseImg{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>
+<td class="listartheading">{tr}Img{/tr}</td>
+<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'useImage_desc'}useImage_asc{else}useImage_desc{/if}">{tr}UseImg{/tr}</a></td>-->
+<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>-->
 <td class="listartheading">{tr}Action{/tr}</td>
 </tr>
 {section name=changes loop=$listpages}
@@ -35,6 +35,7 @@
 <a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
 {/if}
 {$listpages[changes].title|truncate:20:"(...)":true}
+{if $listpages[changes].type eq 'Review'}(r){/if}
 {if $tiki_p_read_article eq 'y'}
 </a>
 {/if}
@@ -44,9 +45,9 @@
 <td class="listartauthorodd">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
 <td class="listartreadsodd">&nbsp;{$listpages[changes].reads}&nbsp;</td>
 <td class="listartsizeodd">&nbsp;{$listpages[changes].size}&nbsp;</td>
-<td class="listarthasimageodd">&nbsp;{$listpages[changes].hasImage}&nbsp;</td>
-<td class="listartuseimageodd">&nbsp;{$listpages[changes].useImage}&nbsp;</td>
-<td class="listartauthorodd">&nbsp;{$listpages[changes].author}&nbsp;</td>
+<td class="listarthasimageodd">&nbsp;{$listpages[changes].hasImage}/{$listpages[changes].useImage}&nbsp;</td>
+<!--<td class="listartuseimageodd">&nbsp;{$listpages[changes].useImage}&nbsp;</td>-->
+<!--<td class="listartauthorodd">&nbsp;{$listpages[changes].author}&nbsp;</td>-->
 <td class="listartactionsodd">
 {if $tiki_p_edit_article eq 'y'}
 <a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
@@ -61,6 +62,7 @@
 <a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
 {/if}
 {$listpages[changes].title|truncate:20:"(...)":true}
+{if $listpages[changes].type eq 'Review'}(r){/if}
 {if $tiki_p_read_article eq 'y'}
 </a>
 {/if}
@@ -70,9 +72,9 @@
 <td class="listartauthoreven">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
 <td class="listartreadseven">&nbsp;{$listpages[changes].reads}&nbsp;</td>
 <td class="listartsizeeven">&nbsp;{$listpages[changes].size}&nbsp;</td>
-<td class="listarthasimageeven">&nbsp;{$listpages[changes].hasImage}&nbsp;</td>
-<td class="listartuseimageeven">&nbsp;{$listpages[changes].useImage}&nbsp;</td>
-<td class="listartauthoreven">&nbsp;{$listpages[changes].author}&nbsp;</td>
+<td class="listarthasimageeven">&nbsp;{$listpages[changes].hasImage}/{$listpages[changes].useImage}&nbsp;</td>
+<!--<td class="listartuseimageeven">&nbsp;{$listpages[changes].useImage}&nbsp;</td>-->
+<!--<td class="listartauthoreven">&nbsp;{$listpages[changes].author}&nbsp;</td>-->
 <td class="listartactionseven">
 {if $tiki_p_edit_article eq 'y'}
 <a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
@@ -92,11 +94,11 @@
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="artprevnext" href="tiki-list_articles.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="artprevnext" href="tiki-list_articles.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="artprevnext" href="tiki-list_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="artprevnext" href="tiki-list_articles.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

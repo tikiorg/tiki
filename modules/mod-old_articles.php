@@ -1,5 +1,5 @@
 <?php
-$ranking = $tikilib->list_articles($maxArticles,$maxArticles + $module_rows,'publishDate_desc', '', '');
+$ranking = $tikilib->list_articles($maxArticles,$maxArticles + $module_rows,'publishDate_desc', '', '',$user);
 $smarty->assign('modOldArticles',$ranking["data"]);
 
 ?>

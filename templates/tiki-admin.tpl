@@ -8,7 +8,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <a name="features"></a>
 <div class="cbox">
@@ -40,6 +41,11 @@
 <tr><td class="form">{tr}Forums{/tr}:</td><td><input type="checkbox" name="feature_forums" {if $feature_forums eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Communications (send/receive objects){/tr}:</td><td><input type="checkbox" name="feature_comm" {if $feature_comm eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Categories{/tr}:</td><td><input type="checkbox" name="feature_categories" {if $feature_categories eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}FAQs{/tr}:</td><td><input type="checkbox" name="feature_faqs" {if $feature_faqs eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Users can configure modules{/tr}:</td><td><input type="checkbox" name="user_assigned_modules" {if $user_assigned_modules eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}User bookmarks{/tr}:</td><td><input type="checkbox" name="feature_user_bookmarks" {if $feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Stats{/tr}:</td><td><input type="checkbox" name="feature_stats" {if $feature_stats eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Games{/tr}:</td><td><input type="checkbox" name="feature_games" {if $feature_games eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -71,7 +77,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
@@ -93,6 +100,8 @@
 </select>
 </td></tr>
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
@@ -143,7 +152,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
@@ -226,7 +236,9 @@
     <tr><td class="form">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Like pages{/tr}:</td><td><input type="checkbox" name="feature_likePages" {if $feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_rankings" {if $feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}MultiPrint{/tr}:</td><td><input type="checkbox" name="feature_wiki_multiprint" {if $feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
@@ -258,7 +270,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
@@ -322,7 +335,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}File galleries{/tr}</div>
@@ -383,7 +397,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
@@ -394,6 +409,7 @@
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_cms_rankings" {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_article_comments" {if $feature_article_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="cms_spellcheck" {if $cms_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="cmsfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -437,7 +453,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
@@ -473,7 +490,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
@@ -498,6 +516,7 @@
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_blog_rankings" {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_blog_comments" {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="blog_spellcheck" {if $blog_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="blogfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -533,7 +552,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
@@ -576,6 +596,45 @@
 </div>
 </div>    
 
+
+<a name="faqs"></a>
+[ <a href="#features" class="link">{tr}features{/tr}</a> |
+<a href="#general" class="link">{tr}general{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
+<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}FAQs settings{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+{tr}FAQ comments{/tr}<br/>
+<form action="tiki-admin.php" method="post">
+    <table>
+    <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_faq_comments" {if $feature_faq_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="faq_comments_per_page" value="{$faq_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="faq_comments_default_ordering">
+    <option value="commentDate_desc" {if $faq_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $faq_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="faqcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+</form>
+</div>
+</div>
+</div>
+
+
+
 <a name="rss"></a>
 [ <a href="#features" class="link">{tr}features{/tr}</a> |
 <a href="#general" class="link">{tr}general{/tr}</a> |
@@ -586,7 +645,8 @@
 <a href="#forums" class="link">{tr}forums{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a>
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>
@@ -608,6 +668,9 @@
         <tr><td class="form">{tr}Feed for individual Image Galleries{/tr}:</td><td><input type="checkbox" name="rss_image_gallery" {if $rss_image_gallery eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_image_gallery" size="5" value="{$max_rss_image_gallery}" /></td></tr>
         <tr><td class="form">{tr}Feed for individual File Galleries{/tr}:</td><td><input type="checkbox" name="rss_file_gallery" {if $rss_file_gallery eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_file_gallery" size="5" value="{$max_rss_file_gallery}" /></td></tr>
         <tr><td class="form">{tr}Feed for individual weblogs{/tr}:</td><td><input type="checkbox" name="rss_blog" {if $rss_blog eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_blog" size="5" value="{$max_rss_blog}" /></td></tr>
+        <tr><td class="form">{tr}Feed for forums{/tr}:</td><td><input type="checkbox" name="rss_forums" {if $rss_forums eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forums" size="5" value="{$max_rss_forums}" /></td></tr>
+        <tr><td class="form">{tr}Feed for individual forums{/tr}:</td><td><input type="checkbox" name="rss_forum" {if $rss_forum eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forum" size="5" value="{$max_rss_forum}" /></td></tr>
+        
         <tr><td align="center" colspan="3"><input type="submit" name="rss" value="{tr}Set feeds{/tr}" /></td></tr>    
         </table>
         </form>

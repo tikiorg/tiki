@@ -15,6 +15,33 @@
 {else}
 <div id="comzone">
 {/if}
+  
+  {if $comment_preview eq 'y'}
+  <b>{tr}Preview{/tr}</b>
+  <div class="commentscomment">
+  <div class="commentheader">
+  <table width="97%">
+  <tr>
+  <td>
+  <div class="commentheader">
+  <span class="commentstitle">{$comments_preview_title}</span><br/>
+  {tr}by{/tr} {$user}
+  </div>
+  </td>
+  <td valign="top" align="right" width="20%">
+  <div class="commentheader">
+  </div>
+  </td>
+  </tr>
+  </table>
+  </div>
+  <div class="commenttext">
+  {$comments_preview_data}
+  <br/><br/>
+  </div>
+  </div>
+  {/if}
+  
   {if $tiki_p_read_comments eq 'y'}
   {if $tiki_p_post_comments eq 'y'}
     <div class="commentspost">
@@ -34,7 +61,10 @@
     <table width="100%">
     <tr>
       <td class="comform">{tr}Post new comment{/tr}</td>
-      <td class="comform"><input type="submit" name="comments_postComment" value="{tr}post{/tr}"/></td>
+      <td class="comform">
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      </td>
       <td width="20%" class="comform">{tr}Smileys{/tr}</td>
     </tr>
     <tr>
@@ -87,7 +117,8 @@
 
   <div class="commentsedithelp"><b>{tr}Posting comments{/tr}:</b><br/><br/>
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br/>
-  {tr}HTML tags are not allowed inside comments{/tr}
+  {tr}HTML tags are not allowed inside comments{/tr}<br/>
+  <!--{tr}Use{/tr} {literal}{{/literal}cookie} {tr}to insert a random tagline{/tr}<br/>-->
   </div>
   <br/>
 

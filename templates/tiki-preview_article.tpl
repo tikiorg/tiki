@@ -3,6 +3,21 @@
 <span class="titlea">{$title}</span><br/>
 <span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"} ({$reads} {tr}reads{/tr})</span>
 </div>
+
+{if $type eq 'Review'}
+<div class="articleheading">
+{tr}Rating{/tr}: 
+{repeat count=$rating}
+<img src="img/icons/blue.gif" />
+{/repeat}
+{if $rating > $entrating}
+<img src="img/icons/bluehalf.gif" />
+{/if}
+({$rating}/10)
+</div>
+{/if}
+
+
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr><td width="25%" valign="top">

@@ -81,8 +81,8 @@ if($page != 'SandBox') {
 // if this page has at least one permission then we apply individual group/page permissions
 // if not then generic permissions apply
 if($tiki_p_admin != 'y') {
-  if($userlib->object_has_one_permission($page,TIKI_PAGE_RESOURCE)) {
-    if(!$userlib->object_has_permission($user,$page,TIKI_PAGE_RESOURCE,TIKI_P_EDIT)) {
+  if($userlib->object_has_one_permission($page,'wiki page')) {
+    if(!$userlib->object_has_permission($user,$page,'wiki page','tiki_p_edit')) {
       $smarty->assign('msg',tra("Permission denied you cannot edit this page"));
       $smarty->display('error.tpl');
       die;  
@@ -145,7 +145,20 @@ if(isset($_REQUEST["allowhtml"])) {
   }
 }
 $smarty->assign_by_ref('pagedata',$edit_data);
-$smarty->assign('parsed',$tikilib->parse_data($edit_data));
+$parsed = $tikilib->parse_data($edit_data);
+
+/* SPELLCHECKING INITIAL ATTEMPT */
+//This nice function does all the job!
+if($wiki_spellcheck == 'y') {
+if(isset($_REQUEST["spellcheck"])&&$_REQUEST["spellcheck"]=='on') {
+  $parsed = $tikilib->spellcheckreplace($edit_data,$parsed,$language,'editwiki');
+  $smarty->assign('spellcheck','y');
+} else {
+  $smarty->assign('spellcheck','n');
+}
+}
+
+$smarty->assign_by_ref('parsed',$parsed);
 
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!

@@ -58,6 +58,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 

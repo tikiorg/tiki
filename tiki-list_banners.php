@@ -60,6 +60,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
 $who = 'admin';

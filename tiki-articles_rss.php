@@ -5,7 +5,7 @@ if($rss_articles != 'y') {
 }
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1=str_replace("tiki-articles_rss","tiki-index",$foo["path"]);
+$foo1=str_replace("tiki-articles_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-articles_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-articles_rss","tiki-read_article.php",$foo["path"]);
 $home = 'http://'.$_SERVER["SERVER_NAME"].$foo1;
@@ -13,7 +13,7 @@ $img = 'http://'.$_SERVER["SERVER_NAME"].$foo2;
 $read = 'http://'.$_SERVER["SERVER_NAME"].$foo3;
 //$title = $tikilib->get_preference("title","Tiki RSS feedpepe");
 $now = date("U");
-$changes = $tikilib->list_articles(0,10,'publishDate_desc', '', $now);
+$changes = $tikilib->list_articles(0,$max_rss_articles,'publishDate_desc', '', $now);
 //print_r($changes);die;
 print('<');
 print('?xml version="1.0" ?');

@@ -23,14 +23,6 @@ if($tiki_p_read_article != 'y') {
 }
 
 
-/*
-// Now check permissions to access this page
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display('error.tpl');
-  die;  
-}
-*/
 
 if(isset($_REQUEST["remove"])) {
   if($tiki_p_remove_article != 'y') {
@@ -89,7 +81,7 @@ if(isset($_REQUEST["find"])) {
 }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles(0,$maxArticles,$sort_mode,$find,$pdate);
+$listpages = $tikilib->list_articles(0,$maxArticles,$sort_mode,$find,$pdate,$user);
 
 for($i=0;$i<count($listpages["data"]);$i++) {
   $listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);

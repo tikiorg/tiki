@@ -14,6 +14,9 @@
 {if $feature_forums eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=forums">{tr}forums{/tr}</a> |
 {/if}
+{if $feature_faqs eq 'y'}
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=faqs">{tr}faqs{/tr}</a> |
+{/if}
 {if $feature_blogs eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a> |
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a> |

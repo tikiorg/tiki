@@ -170,6 +170,17 @@ if($tiki_p_admin_forum == 'y') {
   }
 }
 
+$smarty->assign('comment_preview','n');
+if(isset($_REQUEST["comments_previewComment"])) {
+  $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  $smarty->assign('comment_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comment_data',$_REQUEST["comments_data"]);
+  $smarty->assign('comment_topictype',$_REQUEST["comment_topictype"]);
+  $smarty->assign('openpost','y');
+  $smarty->assign('comment_preview','y');
+}
+
 // Check for settings
 if(!isset($_REQUEST["comments_maxComments"])) {
  $_REQUEST["comments_maxComments"]=$comments_per_page;

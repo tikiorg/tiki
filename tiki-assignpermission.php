@@ -61,6 +61,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 if(!isset($_REQUEST["type"])) {
   $_REQUEST["type"]='';

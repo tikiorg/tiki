@@ -111,6 +111,7 @@ if($tiki_p_post_comments == 'y') {
   }
 }
 
+
 if($tiki_p_vote_comments == 'y') {
   // Process a vote here
   if(isset($_REQUEST["comments_vote"])&&isset($_REQUEST["comments_threadId"])) {
@@ -141,6 +142,16 @@ if($tiki_p_remove_comments == 'y') {
    $commentslib->remove_comment($_REQUEST["comments_threadId"]);
   }
 }
+
+$smarty->assign('comment_preview','n');
+if(isset($_REQUEST["comments_previewComment"])) {
+  $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  $smarty->assign('comment_title',$_REQUEST["comments_title"]);
+  $smarty->assign('comment_data',$_REQUEST["comments_data"]);
+  $smarty->assign('comment_preview','y');
+}
+
 
 // Check for settings
 if(!isset($_REQUEST["comments_maxComments"])) {

@@ -48,16 +48,23 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$objects = $tikilib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+if(isset($_REQUEST["deep"])&&$_REQUEST["deep"]=='on') {
+  $objects = $tikilib->list_category_objects_deep($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+  $smarty->assign('deep','on');
+} else {
+  $objects = $tikilib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+  $smarty->assign('deep','off');
+}
 $smarty->assign_by_ref('objects',$objects["data"]);
 $smarty->assign_by_ref('cantobjects',$objects["cant"]);
 
-$cant_pages = ceil($objects["cant"] / $maxRecords);
+$cant_pages = ceil($objects["cant2"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
-if($objects["cant"] > ($offset+$maxRecords)) {
+if($objects["cant2"] > ($offset+$maxRecords)) {
   $smarty->assign('next_offset',$offset + $maxRecords);
 } else {
   $smarty->assign('next_offset',-1); 

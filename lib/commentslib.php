@@ -305,8 +305,28 @@ class Comments {
     return $data;
   }
   
+  function pick_cookie()
+  {
+    $cant = $this->db->getOne("select count(*) from tiki_cookies");
+    if(!$cant) return '';
+    $bid = rand(0,$cant-1);
+    $cookie = $this->db->getOne("select cookie from tiki_cookies limit $bid,1");
+    $cookie = str_replace("\n","",$cookie);
+    return 'Cookie: '.$cookie.'';    
+  }
+  
   function parse_comment_data($data)
   {
+     // Cookies
+     
+     if(preg_match_all("/\{cookie\}/",$data,$rsss)) {
+      for($i=0;$i<count($rsss[0]);$i++) {
+        $cookie = $this->pick_cookie();
+        $data = str_replace($rsss[0][$i],$cookie,$data);
+      }
+     }
+     
+  
      $data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/","<a class='commentslink' href='$1'>$2</a>",$data);
       // Segundo intento reemplazar los [link] comunes
      $data = preg_replace("/\[([^\]\|]+)\]/","<a class='commentslink' href='$1'>$1</a>",$data);
@@ -377,9 +397,7 @@ class Comments {
       $res["average"] = $res["average"];
       $ret1[] = $res;
     }
-    
-    
-    
+      
     // Now the non-sticky
     $ret = Array();
     if($find) {

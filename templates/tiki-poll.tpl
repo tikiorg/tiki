@@ -6,7 +6,7 @@
 {/section}
 <div align="center">
 <input type="submit" name="pollVote" value="{tr}vote{/tr}" /><br/>
-<a class="link" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}Results{/tr}</a>
+<a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}Results{/tr}</a>
 </div>
 </form>
 

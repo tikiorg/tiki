@@ -21,7 +21,7 @@
 <h2>Received pages</h2>
 <div  align="center">
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-received_pages.php">
      <input type="text" name="find" />

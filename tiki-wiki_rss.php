@@ -5,12 +5,12 @@ if($rss_wiki != 'y') {
 }
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1=str_replace("tiki-wiki_rss","tiki-index",$foo["path"]);
+$foo1=str_replace("tiki-wiki_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-wiki_rss.php","img/tiki.jpg",$foo["path"]);
 $home = 'http://'.$_SERVER["SERVER_NAME"].$foo1;
 $img = 'http://'.$_SERVER["SERVER_NAME"].$foo2;
 $title = $tikilib->get_preference("title","pepe");
-$changes =   $tikilib->get_last_changes(10, 0, 20, $sort_mode = 'lastModif_desc');
+$changes =   $tikilib->get_last_changes(999, 0, $max_rss_wiki, $sort_mode = 'lastModif_desc');
 //print_r($changes);die;
 print('<');
 print('?xml version="1.0" ?');

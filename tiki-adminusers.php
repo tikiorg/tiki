@@ -61,6 +61,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 $users = $userlib->get_users($offset,$maxRecords,$sort_mode,$find);
 $cant_pages = ceil($users["cant"] / $maxRecords);

@@ -27,6 +27,9 @@ if(isset($_REQUEST["subId"])) {
 } else {
   $subId = 0;
 }
+
+
+
 $smarty->assign('subId',$subId);
 $smarty->assign('allowhtml','y');
 $publishDate=date("U");
@@ -43,6 +46,8 @@ $smarty->assign('image_x',0);
 $smarty->assign('image_y',0);
 $smarty->assign('heading','');
 $smarty->assign('body','');
+$smarty->assign('type','Article');
+$smarty->assign('rating',7);
 $smarty->assign('publishDate',$publishDate);
 $smarty->assign('edit_data','n');
 
@@ -70,6 +75,8 @@ if(isset($_REQUEST["subId"])) {
   $smarty->assign('reads',$article_data["reads"]);
   $smarty->assign('image_x',$article_data["image_x"]);
   $smarty->assign('image_y',$article_data["image_y"]);
+  $smarty->assign('type',$article_data["type"]);
+  $smarty->assign('rating',$article_data["rating"]);
   if(strlen($article_data["image_data"])>0) {
     $smarty->assign('hasImage','y');
     $hasImage='y';
@@ -96,9 +103,15 @@ if(isset($_REQUEST["subId"])) {
   
   $body = $article_data["body"];
   $heading = $article_data["heading"]; 
-  $smarty->assign('parsed_body',$tikilib->parse_data($body));
-  $smarty->assign('parsed_heading',$tikilib->parse_data($heading));
+  
+  $parsed_body = $tikilib->parse_data($body);
+  $parsed_heading = $tikilib->parse_data($heading);
+    
+  $smarty->assign('parsed_body',$parsed_body);
+  $smarty->assign('parsed_heading',$parsed_heading);
 }
+
+
 
 if(isset($_REQUEST["allowhtml"])) {
   if($_REQUEST["allowhtml"] == "on") {
@@ -133,6 +146,9 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('image_x',$_REQUEST["image_x"]);
   $smarty->assign('image_y',$_REQUEST["image_y"]);
   $smarty->assign('useImage',$useImage);
+  $smarty->assign('type',$_REQUEST["type"]);
+  $smarty->assign('rating',$_REQUEST["rating"]);
+  $smarty->assign('entrating',floor($_REQUEST["rating"]));
   $imgname=$_REQUEST["image_name"];
   $data=urldecode($_REQUEST["image_data"]);
 
@@ -177,10 +193,29 @@ if(isset($_REQUEST["preview"])) {
     $heading = strip_tags($_REQUEST["heading"],'<a><pre><p><img><hr>');
   }
   $smarty->assign('size',strlen($body));
+  
+  $parsed_body = $tikilib->parse_data($body);
+  $parsed_heading = $tikilib->parse_data($heading);
+  
+  if($cms_spellcheck == 'y') {
+  if(isset($_REQUEST["spellcheck"])&&$_REQUEST["spellcheck"]=='on') {
+  $parsed_body = $tikilib->spellcheckreplace($body,$parsed_body,$language,'subbody');
+  $parsed_heading = $tikilib->spellcheckreplace($heading,$parsed_heading,$language,'subheading');
+  $smarty->assign('spellcheck','y');
+  } else {
+  $smarty->assign('spellcheck','n');
+  }
+  }
+
+  
+  
+  $smarty->assign('parsed_body',$parsed_body);
+  $smarty->assign('parsed_heading',$parsed_heading);
+  
+  
   $smarty->assign('body',$body);
   $smarty->assign('heading',$heading);
-  $smarty->assign('parsed_body',$tikilib->parse_data($body));
-  $smarty->assign('parsed_heading',$tikilib->parse_data($heading));
+    
 } 
 
 // Pro
@@ -237,7 +272,9 @@ if(isset($_REQUEST["save"])) {
                             $user,
                             $subId,
                             $_REQUEST["image_x"],
-                            $_REQUEST["image_y"]);
+                            $_REQUEST["image_y"],
+                            $_REQUEST["type"],
+                            $_REQUEST["rating"]);
   $links = $tikilib->get_links($body);
   $tikilib->cache_links($links);
   $links = $tikilib->get_links($heading);

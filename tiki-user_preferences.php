@@ -18,15 +18,16 @@ if(!$user) {
 
 
 if(isset($_REQUEST["view_user"])) {
-if($tiki_p_admin == 'y') {
-  $userwatch = $_REQUEST["view_user"];
+  if($tiki_p_admin == 'y') {
+    $userwatch = $_REQUEST["view_user"];
+  } else {
+    $smarty->assign('msg',tra("You dont have permission to view other users data"));
+    $smarty->display('error.tpl');
+    die;
+  }
 } else {
-  $smarty->assign('msg',tra("You dont have permission to view other users data"));
-   $smarty->display('error.tpl');
-   die;
+  $userwatch = $user;
 }
-}
-$userwatch = $user;
 
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -41,6 +42,7 @@ if(isset($_REQUEST["prefs"])) {
   if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
   if (isset($_REQUEST["style"])) $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
   if (isset($_REQUEST["realName"])) $tikilib->set_user_preference($userwatch,'realName',$_REQUEST["realName"]);
+  if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch,'userbreadCrumb',$_REQUEST["userbreadCrumb"]);
   if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
   if (isset($_REQUEST["language"])) $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
   if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
@@ -103,7 +105,10 @@ $style = $tikilib->get_user_preference($userwatch,'theme',$style);
 $language = $tikilib->get_user_preference($userwatch,'language',$language);
 $smarty->assign_by_ref('style',$style);
 $realName = $tikilib->get_user_preference($userwatch,'realName','');
+$anonpref = $tikilib->get_preference('userbreadCrumb',4);
+$userbreadCrumb = $tikilib->get_user_preference($userwatch,'userbreadCrumb',$anonpref);
 $smarty->assign_by_ref('realName',$realName);
+$smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
 $smarty->assign_by_ref('homePage',$homePage);
 

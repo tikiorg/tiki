@@ -1,4 +1,3 @@
-
 ### DATA MODEL FOR VERSION 0.9 -SPICA-
 
 #### DATA MODEL FOR MYSQL
@@ -39,7 +38,7 @@ CREATE TABLE tiki_modules (
 insert into tiki_modules(name,position,ord,cache_time) values('login_box','r',1,0);
 insert into tiki_modules(name,position,ord,cache_time) values('application_menu','l',1,0);
 ### Removed from version 1.0 since the admin menu module can now be found at the main menu
-### insert into tiki_modules(name,position,ord,cache_time) values('admin_menu','l',2,0);
+
 
 DROP TABLE IF EXISTS tiki_user_modules;
 CREATE TABLE tiki_user_modules (
@@ -140,6 +139,7 @@ CREATE TABLE tiki_pages (
   flag char(1),
   points integer(8),
   votes integer(8),
+  pageRank decimal(4,3),
   primary key(pageName)
 );
 
@@ -183,6 +183,7 @@ create table users_users(
   email varchar(200),
   login varchar(40) not null,
   password varchar(30) not null,
+  provpass varchar(30),
   realname varchar(80),
   homePage varchar(200),
   lastLogin integer(14),
@@ -328,6 +329,8 @@ create table tiki_articles(
   reads integer(14),
   votes integer(8),
   points integer(14),
+  type varchar(50),
+  rating decimal(2,2),
   primary key(articleId)
 );
 
@@ -355,6 +358,8 @@ create table tiki_submissions(
   reads integer(14),
   votes integer(8),
   points integer(14),
+  type varchar(50),
+  rating decimal(2,2),
   primary key(subId)
 );
 
@@ -562,8 +567,6 @@ voted integer(8)
 
 ### End 1.1 versions
 ### CHANGES FOR VERSION 1.2
-update tiki_galleries set visible='y';
-update tiki_file_galleries set visible='y';
 
 insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_wiki','wiki','Can admin the wiki');
 insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_cms','cms','Can admin the cms');
@@ -608,6 +611,8 @@ create table tiki_categorized_objects (
 
 
 ### COMMUNICATION CENTER
+DROP TABLE IF EXISTS tiki_received_articles;
+CREATE
 
 DROP TABLE IF EXISTS tiki_received_pages;
 CREATE TABLE tiki_received_pages (
@@ -763,6 +768,7 @@ CREATE TABLE tiki_chat_channels (
   refresh integer(6),
   PRIMARY KEY  (channelId)
 ); 
+
 DROP TABLE IF EXISTS tiki_chat_messages;
 CREATE TABLE tiki_chat_messages (
   messageId int(8) NOT NULL auto_increment,
@@ -771,7 +777,9 @@ CREATE TABLE tiki_chat_messages (
   poster varchar(200) NOT NULL default 'anonymous',
   timestamp int(14) default NULL,
   PRIMARY KEY  (messageId)
-) 
+);
+
+
 #### /CHAT SYSTEM #####
 
 

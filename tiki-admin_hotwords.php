@@ -50,6 +50,7 @@ if(isset($_REQUEST["find"])) {
 } else {
   $find = ''; 
 }
+$smarty->assign('find',$find);
 
 $words = $tikilib->list_hotwords($offset,$maxRecords,$sort_mode,$find);
 $cant_pages = ceil($words["cant"] / $maxRecords);
