@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.18 2003-10-17 15:01:00 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.19 2003-10-29 12:17:08 redflo Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -73,7 +73,7 @@ class UserModulesLib extends TikiLib {
 			$user,
 			$module,
 			$position,
-			$order,
+			(int) $order,
 			$res['type']
 		);
 
