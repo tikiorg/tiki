@@ -1,5 +1,8 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Handlers can be defined to change how wiki pages and other objects 
+  are parsed, you can define pre-handlers and pos-handlers. See the file
+  tiki-handlers.php
 * [NEW] Some tiki objects can be saved in 1-click to the user notepad.
 * [NEW] Mini calendar for events by user with daily, weekly and lit view, 
   event topics, find events, etc.
@@ -7,7 +10,7 @@ Version 1.6 -Tau Ceti-
   edit wiki pages.
 * [NEW] Themes can redefine ANY template of Tiki, just create the template in
   the templates/styles/name directory and Tiki will use that file. If the file
-  is not there it will default to the templates directory. 
+  is not there it will default to the templates directory. (McKenna)
 * [NEW] Alternative syntax for tables, you can sepparate rows using line
   returns instead of ||. You have to select which syntax to use in the admin
   screen.
@@ -16,7 +19,7 @@ Version 1.6 -Tau Ceti-
 * [NEW] User menus, the user can add items to the application menu, an option 
   to automatically add top-level bookmarks to the menu is provided.
 * [NEW] Theme control center: if activated you can control the theme by 
-  section, by category or by specific object.
+  section, by category or by specific object. (Laporte)
 * [NEW] Ephemerides feature: admin can set up images/texts for specific dates, 
   users can browse using the calendar to get the images/texts for any day. A 
   module is provided to display the image/text for the day, if many one is 

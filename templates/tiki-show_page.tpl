@@ -4,19 +4,30 @@
 <td>
 {if $feature_wiki_description}
 <small>{$description}</small>
+{if $cached_page eq 'y'}
+<small>(cached)</small>
+{/if}
 {/if}
 </td>
 <td style="text-align:right;">
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/print.gif" /></a>
+
+
+
+
+
+<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page}"><img border="0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
+
+{if $cached_page eq 'y'}
+<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
+{/if}
+
+<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/print.gif" alt='{tr}print{/tr}' /></a>
 {if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 </td>
 </tr>
 </table>
-{if $cached_page eq 'y'}
-<small> (cached) [<a class="linkmodule" href="tiki-index.php?page={$page}&amp;refresh=1">refresh</a>]</small>
-{/if}
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
