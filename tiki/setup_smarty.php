@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.6 2003-10-20 21:15:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.7 2003-10-29 15:37:51 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,11 +42,9 @@ class Smarty_TikiWiki extends Smarty {
 		$this->cache_dir = "cache/$tikidomain";
 		$this->caching = 0;
 		$this->assign('app_name', 'TikiWiki');
-		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin (core.assemble_plugin_filepath scans all directories)
-									// if you change the directory order or overload a plugin, you have to delete templates_c/_smarty_cached_paths/*
-			SMARTY_DIR."plugins",
-			dirname(SMARTY_DIR)."/smarty_tiki"
-
+		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
+			dirname(SMARTY_DIR)."/smarty_tiki",
+			SMARTY_DIR."plugins"
 		);
 	}
 
