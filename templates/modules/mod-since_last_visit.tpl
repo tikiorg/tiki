@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.3 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $user}
 <div class="box">
 <div class="box-title">
-{tr}Since your last visit{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Since your last visit{/tr}" module_name="since_last_visit"}
 </div>
 <div class="box-data">
 {tr}Since your last visit on{/tr}<br/>

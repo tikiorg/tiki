@@ -1,4 +1,12 @@
 <?php
+/** \file
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.8 2003-08-07 20:54:18 zaufi Exp $
+ *
+ * \brief Manage user assigned modules
+ *
+ */
+
+include_once ('lib/debug/debugger.php');
 
 class UserModulesLib extends TikiLib {
 	function UserModulesLib($db) {
@@ -216,6 +224,39 @@ class UserModulesLib extends TikiLib {
 		}
 
 		return $ret;
+	}
+  /// Swap current module and above one
+	function swap_up_user_module($name, $user)
+  {
+    $this->swap_adjacent($name, $user, '<');
+	}
+  /// Swap current module and below one
+	function swap_down_user_module($name, $user)
+  {
+    $this->swap_adjacent($name, $user, '>');
+  }
+  /// Function to swap (up/down) two adjacent modules
+  function swap_adjacent($name, $user, $op)
+  {
+    global $debugger;
+    //
+		$query = "select ord, position from tiki_user_assigned_modules where name='$name' and user='$user'";
+		$r = $this->query($query);
+    $cur = $r->fetchRow();
+    //
+		$query = "select name, ord from tiki_user_assigned_modules where position='".$cur['position']."' and ord".$op."'".$cur['ord']."' and user='$user' order by ord desc";
+    $r = $this->query($query);
+    $swap = $r->fetchRow();
+    if (!empty($swap))
+    {
+      $debugger->msg(print_r($swap, true));
+      $query = "update tiki_user_assigned_modules set ord=".$swap['ord']." where name='$name' and user='$user'";
+  		$r = $this->query($query);
+      $query = "update tiki_user_assigned_modules set ord=".$cur['ord']." where name='".$swap['name']."' and user='$user'";
+  		$r = $this->query($query);
+    }
+    else
+      $debugger->msg('$swap is not set -- cant up more...');
 	}
 }
 

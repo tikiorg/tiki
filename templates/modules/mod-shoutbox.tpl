@@ -1,8 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.10 2003-08-01 10:31:14 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.11 2003-08-07 20:56:53 zaufi Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
   <div class="box">
-    <div class="box-title">{tr}Shoutbox{/tr}</div>
+    <div class="box-title">
+      {include file="modules/module-title.tpl" module_title="{tr}Shoutbox{/tr}" module_name="shoutbox"}
+
+    </div>
     <div class="box-data">
     {if $tiki_p_post_shoutbox eq 'y'}
       <form action="{$shout_ownurl}" method="post">

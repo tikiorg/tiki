@@ -1,35 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.57 2003-08-07 15:42:15 mose Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.58 2003-08-07 20:56:53 zaufi Exp $*}
 
-{*
- Next version feature frozen in 1,7 release...
-<div class="box-title">
-<table width="100%">
-  <tr>
-    <td width="11">
-      <a href="{$current_location}?up=application_menu"><img src="img/icons2/up.gif" border="0" /></a>
-    </td>
-    <td width="11">
-      <a href="{$current_location}?down=application_menu"><img src="img/icons2/down.gif" border="0" /></a>
-    </td>
-    <td> <a class="flip" href="javascript:flip('mainmenu');">{tr}Menu{/tr}</a> </td>
-    <td width="8">
-      <a href="{$current_location}?left=application_menu"><img src="img/icons2/nav_dot_right.gif" border="0" /></a>
-    </td>
-    <td width="8">
-      <a href="{$current_location}?right=application_menu"><img src="img/icons2/nav_dot_left.gif" border="0" /></a>
-    </td>
-    <td width="16">
-      <a href="{$current_location}?unassign=application_menu"><img src="img/icons2/delete.gif" border="0" /></a>
-    </td>
-  </tr>
-</table>
-</div>
-*}
 
 <div class="box">
 <div class="box-title">
-<a class="flip" href="javascript:flip('mainmenu');">{tr}Menu{/tr}</a>
+{include file="modules/module-title.tpl" module_title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" module_name="application_menu"}
 </div>
+
 <div id="mainmenu" class="box-data">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}home{/tr}</a><br />
 {if $feature_chat eq 'y'}

@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.9 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $feature_wiki eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Last changes{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Last changes{/tr}" module_name="last_modif_pages"}
 </div>
 <div class="box-data">
 {section name=ix loop=$modLastModif}

@@ -1,6 +1,8 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.2 2003-08-07 20:56:53 zaufi Exp $ *}
+
 <div class="box">
 <div class="box-title">
-{tr}Online users{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Online users{/tr}" module_name="online_users"}
 </div>
 <div class="box-data">
 {section name=ix loop=$online_users}
