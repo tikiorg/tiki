@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.10 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.11 2003-09-21 18:12:30 lueders Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 include_once ("tiki-setup.php");
 
 include_once ('lib/notifications/notificationlib.php');
+include_once('lib/structures/structlib.php');
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled"));
@@ -73,11 +74,26 @@ if (!$tikilib->page_exists($page)) {
 if (isset($_REQUEST["assign"])) {
 	$userlib->assign_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 }
+// Process the form to assign a new permission to this structure
+if(isset($_REQUEST["assignstructure"])) {
+	$userlib->assign_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
+	$pages=$structlib->get_structure_pages($page);
+	foreach($pages as $subpage) {
+		$userlib->assign_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
+	}
+}
 
 // Process the form to remove a permission from the page
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'remove') {
 		$userlib->remove_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
+	}
+	if($_REQUEST["action"] == 'removestructure') {
+		$userlib->remove_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
+		$pages=$structlib->get_structure_pages($page);
+		foreach($pages as $subpage) {
+			$userlib->remove_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
+		}
 	}
 }
 
