@@ -494,10 +494,10 @@ class BlogLib extends TikiLib {
 		$query = "delete from `tiki_blog_activity` where `day`<?";
 		$result = $this->query($query,array((int) $day2));
 		// Register new activity
-		$query = "select * from `tiki_blog_activity` where `blogId`=? and `day`=?";
-		$result = $this->query($query,array((int) $blogId,(int)$today));
+		$query = "select count(*) from `tiki_blog_activity` where `blogId`=? and `day`=?";
+		$result = $this->getOne($query,array((int) $blogId,(int)$today));
 
-		if ($result->numRows()) {
+		if ($result) {
 			$query = "update `tiki_blog_activity` set `posts`=`posts`+1 where `blogId`=? and `day`=?";
 		} else {
 			$query = "insert into `tiki_blog_activity`(`blogId`,`day`,`posts`) values(?,?,1)";

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.17 2003-10-16 10:51:46 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.18 2003-10-17 15:01:00 redflo Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -126,10 +126,10 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function user_has_assigned_modules($user) {
-		$query = "select `name` from `tiki_user_assigned_modules` where `user`=?";
+		$query = "select count(`name`) from `tiki_user_assigned_modules` where `user`=?";
 
-		$result = $this->query($query,array($user));
-		return $result->numRows();
+		$result = $this->getOne($query,array($user));
+		return $result;
 	}
 
 	// Creates user assigned modules copying from tiki_modules
