@@ -140,27 +140,27 @@
 	  <tr>
 	  {*exception*}
 	  {if $items[ix].status ne 'aborted' and $items[ix].status ne 'exception' and $items[ix].user eq $user}
-	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif'></a></td>
+	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
 	  {/if}
 	  {if $items[ix].isAutoRouted eq 'n' and $items[ix].actstatus eq 'completed'}
 	  {*send*}
-	  <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif'></a></td>
+	  <td><a href="tiki-g-user_instances.php?send=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}send instance{/tr}' alt='{tr}send instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a></td>
 	  {/if}
 	  {if $items[ix].isInteractive eq 'y' and $items[ix].status eq 'active'}
 	  {*run*}
-	  <td><a href="tiki-g-run_activity.php?iid={$items[ix].instanceId}&amp;activityId={$items[ix].activityId}"><img border='0' title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif'></a></td>
+	  <td><a href="tiki-g-run_activity.php?iid={$items[ix].instanceId}&amp;activityId={$items[ix].activityId}"><img border='0' title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a></td>
 	  {/if}
 	  {*abort*}
 	  {if $items[ix].status ne 'aborted' and $items[ix].user eq $user}
-	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif'></a></td>
+	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a></td>
 	  {/if}
 	  {if $items[ix].user eq '*' and $items[ix].status eq 'active'}
 	  {*grab*}
-	  <td><a href="tiki-g-user_instances.php?grab=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}grab instance{/tr}' alt='{tr}grab instance{/tr}' src='lib/Galaxia/img/icons/fix.gif'></a></td>
+	  <td><a href="tiki-g-user_instances.php?grab=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}grab instance{/tr}' alt='{tr}grab instance{/tr}' src='lib/Galaxia/img/icons/fix.gif' /></a></td>
 	  {else}
 	  {*release*}
 	  {if $items[ix].status eq 'active'}
-	  <td><a href="tiki-g-user_instances.php?release=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}release instance{/tr}' alt='{tr}release instance{/tr}' src='lib/Galaxia/img/icons/float.gif'></a></td>
+	  <td><a href="tiki-g-user_instances.php?release=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}release instance{/tr}' alt='{tr}release instance{/tr}' src='lib/Galaxia/img/icons/float.gif' /></a></td>
 	  {/if}
 	  {/if}
 	  </tr>
