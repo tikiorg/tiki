@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.8 2003-08-14 04:40:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.9 2003-10-19 14:10:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,10 +19,10 @@ if ($feature_live_support == 'y') {
 	}
 }
 
-setcookie('tiki-user', '', -3600);
+setcookie($user_cookie_site, '', -3600);
 $userlib->user_logout($user);
 session_unregister ('user');
-unset ($_SESSION['user']);
+unset ($_SESSION[$user_cookie_site]);
 session_destroy();
 unset ($user);
 header ("location: $tikiIndex");
