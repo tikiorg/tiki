@@ -33,7 +33,7 @@
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
 
 {if $feature_wiki_pdf eq 'y'}
-<a title="{tr}create pdf{/tr}" href="tiki-export_pdf.php?page={$page}"><img border="0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
+<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page}"><img border="0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
 {/if}
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}

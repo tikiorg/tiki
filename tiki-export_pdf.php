@@ -10,16 +10,6 @@ include_once('lib/pdflib/pdflib.php');
 //  die;
 //}
 
-if(isset($_REQUEST["page"])) {
-  $page=$_REQUEST["page"];
-} else {die;}
-
-if(!$tikilib->page_exists($page)) {
-  $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display("styles/$style_base/error.tpl");
-  die;
-}
-
 //Permissions
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this page"));
@@ -35,9 +25,62 @@ if($feature_wiki_pdf != 'y') {
   die;
 }
 
-// Get page data
-$info = $tikilib->get_page_info($page);
-$data=$tikilib->parse_data($info["data"]);
+//defaults
+
+if(!isset($_REQUEST["font"])){
+  $_REQUEST["font"]="Helvetica";
+}
+
+if(!isset($_REQUEST["textheight"])){
+  $_REQUEST["textheight"]=10;
+}
+
+if(!isset($_REQUEST["h1height"])){
+  $_REQUEST["h1height"]=16;
+}
+
+if(!isset($_REQUEST["h2height"])){
+  $_REQUEST["h2height"]=14;
+}
+
+if(!isset($_REQUEST["h3height"])){
+  $_REQUEST["h3height"]=12;
+}
+
+if(!isset($_REQUEST["tbheight"])){
+  $_REQUEST["tbheight"]=14;
+}
+
+if(!isset($_REQUEST["imagescale"])){
+  $_REQUEST["imagescale"]=0.4;
+}
+
+if(!isset($_REQUEST["convertpages"])) {
+  $convertpages = Array();
+  if(isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
+    $convertpages[]=$_REQUEST["page"];
+  }
+} else {
+  $convertpages = unserialize(urldecode($_REQUEST['convertpages']));
+}
+
+$pdfopts=Array('font' => $_REQUEST["font"],
+	'textheight' => $_REQUEST["textheight"],
+	'h1height' => $_REQUEST["h1height"],
+	'h2height' => $_REQUEST["h2height"],
+	'h3height' => $_REQUEST["h3height"],
+	'tbheight' => $_REQUEST["tbheight"],
+	'imagescale' => $_REQUEST["imagescale"]);
+
+$pdflib =& new TikiPdfLib($pdfopts);
+
+// Get pages data
+$data='';
+foreach(array_values($convertpages) as $page) {
+  $info = $tikilib->get_page_info($page);
+  $data.="\n<h1>$page</h1>\n<br/>\n";
+  $data.=$tikilib->parse_data($info["data"]);
+}
 $pdflib->insert_html($data);
 $pdfdebug=false;
 if($pdfdebug) {

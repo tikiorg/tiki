@@ -56,7 +56,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
 
 if(isset($_REQUEST["save"])) {
   
-  $tikilib->replace_cookie($_REQUEST["cookieId"], $_REQUEST["cookie"]);
+  $taglinelib->replace_cookie($_REQUEST["cookieId"], $_REQUEST["cookie"]);
   $smarty->assign("cookieId",'0');
   $smarty->assign('cookie','');
 }
