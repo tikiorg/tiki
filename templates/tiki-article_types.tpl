@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.17 2004-06-06 08:39:55 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.18 2004-06-20 12:27:07 ohertel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -14,27 +14,27 @@
 
 <!-- beginning of next bit -->
 <br />
-<b>{tr}Name{/tr}</b> - Shows up in the drop down list of article types<br />
-<b>{tr}Rate{/tr}</b> - Allow ratings by the author<br />
-<b>{tr}Show before publish date{/tr}</b> - non-admins can view before the publish date<br />
-<b>{tr}Show after expire date{/tr}</b> - non-admins can view after the expire date<br />
-<b>{tr}Heading only{/tr}</b> - No article body, heading only<br />
-<b>{tr}Comments{/tr}</b> - Allow comments for this type<br />
-<b>{tr}Comment Can Rate Article{/tr}</b> - Allow comments to include a rating value<br />
-<b>{tr}Show image{/tr}</b> - Show topic or own image<br />
-<b>{tr}Show avatar{/tr}</b> - Show author's avatar<br />
-<b>{tr}Show author{/tr}</b> - Show author name<br />
-<b>{tr}Show publish date{/tr}</b> - Show publish date<br />
-<b>{tr}Show expire date{/tr}</b> - Show expire date<br />
-<b>{tr}Show reads{/tr}</b> - Show the number of times the article was read<br />
-<b>{tr}Show size{/tr}</b> - Show the size of the article<br />
-<b>{tr}Show topline{/tr}</b> - Show a small title over the title<br />
-<b>{tr}Show subtitle{/tr}</b> - Show the subtitle<br />
-<b>{tr}Show linkto{/tr}</b> - Show a link field<br />
-<b>{tr}Show Image Caption{/tr}</b> - Show a legend under the image<br />
-<b>{tr}Show Language{/tr}</b> - Show the language<br />
-<b>{tr}Creator can edit{/tr}</b> - The person who submits an article of this type can edit it<br />
-<b>{tr}Delete{/tr}</b> - Delete this type<br />
+<b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
+<b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
+<b>{tr}Show before publish date{/tr}</b> - {tr}non-admins can view before the publish date{/tr}<br />
+<b>{tr}Show after expire date{/tr}</b> - {tr}non-admins can view after the expire date{/tr}<br />
+<b>{tr}Heading only{/tr}</b> - {tr}No article body, heading only{/tr}<br />
+<b>{tr}Comments{/tr}</b> - {tr}Allow comments for this type{/tr}<br />
+<b>{tr}Comment Can Rate Article{/tr}</b> - {tr}Allow comments to include a rating value{/tr}<br />
+<b>{tr}Show image{/tr}</b> - {tr}Show topic or own image{/tr}<br />
+<b>{tr}Show avatar{/tr}</b> - {tr}Show author's avatar{/tr}<br />
+<b>{tr}Show author{/tr}</b> - {tr}Show author name{/tr}<br />
+<b>{tr}Show publish date{/tr}</b> - {tr}Show publish date{/tr}<br />
+<b>{tr}Show expire date{/tr}</b> - {tr}Show expire date{/tr}<br />
+<b>{tr}Show reads{/tr}</b> - {tr}Show the number of times the article was read{/tr}<br />
+<b>{tr}Show size{/tr}</b> - {tr}Show the size of the article{/tr}<br />
+<b>{tr}Show topline{/tr}</b> - {tr}Show a small title over the title{/tr}<br />
+<b>{tr}Show subtitle{/tr}</b> - {tr}Show the subtitle{/tr}<br />
+<b>{tr}Show linkto{/tr}</b> - {tr}Show a link field{/tr}<br />
+<b>{tr}Show Image Caption{/tr}</b> - {tr}Show a legend under the image{/tr}<br />
+<b>{tr}Show Language{/tr}</b> - {tr}Show the language{/tr}<br />
+<b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
+<b>{tr}Delete{/tr}</b> - {tr}Delete this type{/tr}<br />
 <h3>{tr}List of types{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">

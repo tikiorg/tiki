@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.26 2004-06-06 08:39:56 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.27 2004-06-20 12:27:07 ohertel Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -33,7 +33,7 @@
      <select name="type">
      <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
      {section name=t loop=$types}
-     <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+     <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
      {/section}
      </select>
      <select name="topic">
@@ -109,7 +109,7 @@
 	<td class="{cycle advance=false}">{$listpages[changes].expireDate|tiki_short_datetime}</td>
 {/if}
 {if $art_list_visible eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].disp_article}</td>
+	<td class="{cycle advance=false}">{tr}{$listpages[changes].disp_article}{/tr}</td>
 {/if}
 {if $art_list_author eq 'y'}	
 	<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
@@ -121,7 +121,7 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
 {/if}
 {if $art_list_img eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
+	<td class="{cycle advance=false}">{tr}{$listpages[changes].hasImage}{/tr}/{tr}{$listpages[changes].useImage}{/tr}</td>
 {/if}
 <td class="{cycle}">
 {if $tiki_p_edit_article eq 'y' or ($listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
