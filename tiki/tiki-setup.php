@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.182 2003-12-27 16:28:11 vulgrin Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.183 2003-12-28 12:12:44 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -282,10 +282,18 @@ if (!isset($_SESSION["last_forum_visit"])) {
     $_SESSION["last_forum_visit"] = $last_forum_visit;
 }
 
+if (file_exists('lib/bablotron.php')) {
+	$lib_spellcheck = 'y';
+	$wiki_spellcheck = 'n';
+	$cms_spellcheck = 'n';
+	$blog_spellcheck = 'n';
+	$smarty->assign('lib_spellcheck', $lib_spellcheck);
+	$smarty->assign('wiki_spellcheck', $wiki_spellcheck);
+	$smarty->assign('cms_spellcheck', $cms_spellcheck);
+	$smarty->assign('blog_spellcheck', $blog_spellcheck);
+}
+
 $userbreadCrumb = 4;
-$wiki_spellcheck = 'n';
-$cms_spellcheck = 'n';
-$blog_spellcheck = 'n';
 $blog_list_order = 'created_desc';
 $home_blog = 0;
 $home_gallery = 0;
@@ -669,9 +677,6 @@ $smarty->assign('keep_versions', $keep_versions);
 
 $smarty->assign('count_admin_pvs', $count_admin_pvs);
 
-$smarty->assign('wiki_spellcheck', $wiki_spellcheck);
-$smarty->assign('cms_spellcheck', $cms_spellcheck);
-$smarty->assign('blog_spellcheck', $blog_spellcheck);
 $smarty->assign('blog_list_order', $blog_list_order);
 
 $blog_list_user = 'text';

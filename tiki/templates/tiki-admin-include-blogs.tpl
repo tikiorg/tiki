@@ -32,8 +32,8 @@
               {if $feature_blogposts_comments eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
           <td class="form"><label for="blogs-spell">{tr}Spellchecking{/tr}:</label></td>
-          <td><input type="checkbox" name="blog_spellcheck" id="blogs-spell"
-              {if $blog_spellcheck eq 'y'}checked="checked"{/if}/></td>
+          <td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="blog_spellcheck" id="blogs-spell"
+              {if $blog_spellcheck eq 'y'}checked="checked"{/if}/>{else}{tr}Not Installed{/tr}{/if}</td>
         </tr><tr>
           <td class="form"><label for="blogs-order">{tr}Default ordering for blog listing{/tr}:</label></td>
           <td><select name="blog_list_order" id="blogs-order">
