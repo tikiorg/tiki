@@ -1,3 +1,84 @@
+  - fix allow empty years, months and days in html_select_date's
+    time-attribute (messju)
+  - fix YES and NO should not be booleanized inside triple-quotes in a
+    config-file (messju)
+  - fix accidently slurped line following a triple-quoted value in a
+    config-file (messju)
+  - change default for use_sub_dirs to false (messju)
+  - fix quoting of values in smarty_function_popup() (messju)
+  - fix handling of hidden sections in Config_File (messju)
+  - add handling of resources for {config_load} (messju)
+  - fix bug when using arrays with tr_attr and td_attr in {html_table} (messju)
+  - add unit testing to cvs core (Monte)
+
+Version 2.6.1 (Jan 16, 2004)
+----------------------------
+
+  - rename $smarty->tpl_error_reporting to $smarty->error_reporting
+    (messju)
+  - fix interpretation of $smarty->security in {html_image} (messju)
+  - add caching of requested paths to _assemble_plugin_filepath() (messju)
+  - fix handling of comments inside {php}- and {literal}-blocks (messju)
+  - fix bug handling triple-quotes in config-files (BRDude, messju)
+  - change default of request_use_auto_globals to true - $_SERVER is
+    now preferred over $HTTP_SERVER_VARS (messju)
+  - re-add support for $SCRIPT_NAME (messju)
+  - reactivate $smarty->default_modifiers (messju)
+  - add cookie persistance to debug console (Monte)
+  - allow single-digit days and months without smarty_make_timestamp()
+    in html_select_date (messju)
+  - fix headers sent erroneously with cache_modified_check and fetch()
+    (wphilips, messju)
+  - fix config_file path bug (Marc Cabadas, Monte)
+  - fix 'is even by' and 'is odd by' logic (Monte)
+  - add day_empty, month_empty, year_empty and all_empty attributes to
+    html_select_date (messju)
+  - add table of explanation for {if} qualifiers in docs (boots)
+  - fix bug when comparing array-keys to "selected" in html_options
+    and html_checkboxes (messju)
+  - add better checks for correctly nested tags when compiling (messju)
+  - remove {$SCRIPT_NAME}. use {$smarty.server.SCRIPT_NAME} instead (messju)
+  - remove $global_assign. assign global variables explicitly instead (messju)
+  - fix example for count_characters in docs (boots)
+  - add section new basic syntax section "Escaping Smarty Parsing" in docs (boots)
+  - fix error handler call in config_load (boots)
+  - remove warning in debug_print_var on php-resources (messju)
+  - move function.assign.php to compiler.assign.php (messju)
+  - add property $tpl_error_reporting (messju)
+  - remove property $undefined. "null" is used literally instead (messju)
+
+Version 2.6.0 (Nov 19, 2003)
+----------------------------
+
+  - move Smarty::quote_replace() to Smarty_Compiler::_quote_replace() (messju)
+  - remove import of of attributes of {include_php} to php's namespace.
+    use $params[name] instead (messju)
+
+Version 2.6.0-RC3 (Nov 13, 2003)
+--------------------------------
+
+  - fix handling of $var.key inside [] (messju)
+  - fix handling of assign inside {insert}-tags (messju)
+  - fix handling if [...] inside triple-quotes in config-files (messju)
+  - fix handling of simple-math-operators inside modifiers (Dominik, messju)
+  - fix handling of trailing-slashes in open_basedir in
+    smarty_core_create_dir_structure() (packman, messju)
+
+Version 2.6.0-RC2 (Oct 8, 2003)
+-------------------------------
+
+  - apply modifiers only once to section-loop and foreach-from attrs (messju)
+  - remove use of _smarty_cached_paths-files (messju)
+  - remove Smarty::_plugin_implementation_exists() - use is_callable() (messju)
+  - ignore {strip}/{/strip) inside {strip}-blocks (messju)
+  - fixed removal of leading/trailing newlines in {strip}-blocks (messju)
+  - fixed proper escaping of " and ' with escape:javascript (messju)
+  - fixed bug in traversal of $smarty->plugins_dir-array. now the
+    first matching plugin is taken (messju)
+  - moved {strip} back into the compiler (messju)
+  - fixed config_load: handling of section-attribute and use of
+    multiple config-files in one template (atu, messju)
+
 Version 2.6.0-RC1 (August 11, 2003)
 -----------------------------------
 
@@ -62,7 +143,7 @@ Version 2.6.0-RC1 (August 11, 2003)
     (messju)
   - corrected output with {strip} and PHP tag newlines (Monte)
   - added possibility to register function-callbacks as "array(&$obj, 'method)"
-    this affects register_function(), -block, -compiler_function, -modifier, 
+    this affects register_function(), -block, -compiler_function, -modifier,
     -prefilter, -postfilter, -outputfilter-functions() and $cache_handler_func
     (messju)
   - added <labels> to html_checkboxes and html_radios (Philippe, messju)
@@ -78,7 +159,7 @@ Version 2.5.0 (April 11, 2003)
    - recognize $foo[][] syntax inside embedded quotes without
      backtics (Monte)
    - name=123 is passed as an integer (not a string) to plugins now (messju)
-   - $length is now propagated to sub-values in debug_print_var (messju) 
+   - $length is now propagated to sub-values in debug_print_var (messju)
 
 Version 2.5.0-RC2 (March 26, 2003)
 ----------------------------------
@@ -184,7 +265,7 @@ Version 2.5.0-RC1 (March 5, 2003)
       use $this->config_class for loading class name (Monte)
     - fix html_options to not escape already escaped entities (Monte)
     - send Last-Modified header on cache creation (Monte)
-    - check strict syntax of function attributes (Monte) 
+    - check strict syntax of function attributes (Monte)
     - dropped support for modifers on object parameters,
       added support for objects as modifier parameters (Monte)
     - fixed bug with decimal numbers in if statements (Monte)
@@ -322,7 +403,7 @@ Version 2.2.0 (July 11, 2002)
       (Grigory V. Kareev, Monte)
     - optimized for loops with count() function calls (Monte)
     - add month_value_format attribute to html_select_date
-      plugin (Gary Loescher, Monte) 
+      plugin (Gary Loescher, Monte)
     - made it possible to use simple variables inside [] for
       indexing. (Andrei)
     - added "once" attribute to {include_php}. (Monte)
@@ -507,7 +588,7 @@ Version 1.4.4
 -------------
     - fixed problem with including insecure templates with security enabled.
       (Monte)
-    - numerous documentation updates. (Monte) 
+    - numerous documentation updates. (Monte)
     - added ENT_QUOTES to escapement of html. (Monte, Sam Beckwith)
     - implemented access to request variables via auto-assigned $smarty
       template variable. (Andrei)
@@ -568,7 +649,7 @@ Version 1.4.1
 Version 1.4.0
 -------------
     - added {capture}{/capture} function, documented (Monte)
-    - added {counter} function, documented (Monte) 
+    - added {counter} function, documented (Monte)
 
 Version 1.4.0b2
 ---------------

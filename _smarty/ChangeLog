@@ -1,3 +1,954 @@
+2004-02-13  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.html_select_date.php:
+      correctly handle partially empty dates (like "2004--" or "-12-").
+
+    * docs/programmers.sgml:
+      learned something about <note> and sgml and applied this to the
+      use.sub.dirs-section :)
+
+    * docs/designers.sgml:
+      changed attribute-name "checked" to "selected" in the docs for
+      html_radios and html_checkboxes. "checked" is deprecated for ages
+      AFAIK and selected is recommended for consistency with {html_options}
+
+    * docs/programmers.sgml:
+      added note about use_sub_dirs and Smarty-2.6.2 .
+      fixed markup for section about clear_compiled_tpl() .
+
+2004-02-12  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Config_File.class.php:
+      YES and NO should not be booleanized inside triple-quotes in a
+      config-file. this behaviour changed by accident in 2.6.1 and is now
+      reverted to pre-2.6.1 behaviour
+
+2004-02-10  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Config_File.class.php:
+      fixed slurping of a the next line following a triple-quoted value in a
+      config-file
+
+2004-02-07  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Config_File.class.php:
+      avoid @-operator for handling empty lines in Config_File.class.php
+
+    * libs/Smarty_Compiler.class.php:
+      removed two notices from Smarty_Compiler::_parse_is_expr()
+      (thanks shuther!)
+
+    * NEWS
+      libs/Smarty.class.php:
+      changed default for use_sub_dirs to false
+
+    * libs/plugins/function.mailto.php:
+      removed notice of undefined variable. (thanks shuther!)
+
+2004-01-29  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      added file and line-number-information to error-messages regarding
+      assigned objects an an error messages regarding modifiers with
+      security.
+
+2004-01-27  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      removed use of temporary var $_params in compiled code of block-plugins
+
+    * NEWS
+      libs/plugins/function.popup.php:
+      fixed quoting of values in smarty_function_popup()
+
+2004-01-25  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/programmers.sgml:
+      documented parameters of Smarty::clear_compiled_tpl()
+
+    * libs/Smarty_Compiler.class.php:
+      Smarty_Compiler::_syntax_error() uses Smarty::_trigger_fatal_error() now
+      instead of the trigger_error()-function
+
+    * libs/Smarty.class.php:
+      Smarty::_trigger_fatal_error() uses Smarty::trigger_error() now,
+      instead of the native trigger_error()-function
+
+    * libs/Smarty_Compiler.class.php:
+      unrecognized custom-functions trigger an error at compile now, not at
+      display-time.
+
+2004-01-23  Monte Ohrt  <monte@ispi.net>
+
+    * docs/getting-started.sgml:
+      reword a paragraph
+
+2004-01-22  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.config_load.php:
+      removed emission of unnecessary notices for unavailable config-files
+      in config_load()
+
+    * NEWS
+      libs/Config_File.class.php:
+      fixed handling of hidden sections in Config_File
+
+2004-01-21  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.config_load.php:
+      added handling of resources for {config_load}
+
+2004-01-19  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.html_table.php:
+      fixed bug when using arrays with tr_attr and td_attr in {html_table}
+
+2004-01-16  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      add unit testing
+
+    * NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers, add initial unit test directory
+
+    * (Smarty_2_6_1)
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers for 2.6.1 release
+
+2004-01-16  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * (Smarty_2_6_1)
+      NEWS
+      docs/programmers.sgml
+      libs/Smarty.class.php:
+      renamed $smarty->tpl_rror_reporting to $smarty->error_reporting
+      "tpl_" is a bit redundant here (it's a TemPLate-engine overall :)
+
+2004-01-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.html_image.php:
+      forgot to remove duplicate is_secure()-check
+
+    * NEWS
+      libs/plugins/function.html_image.php:
+      fix: $smarty->security is now correctly handled
+      
+      minor optimizations:
+         core/core.is_secure.php is only included when needed
+         $dpi_default is only determined when needed
+
+2004-01-14  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/appendixes.sgml
+      docs/programmers.sgml:
+      removed suggestions to use extract() from the manual
+
+    * docs/designers.sgml:
+      fixed typo
+
+2004-01-12  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml:
+      mention SCRIPT_NAME below {$smarty} reserved variable because it got
+      lost in the docs for $smarty->global_assign
+
+    * docs/designers.sgml:
+      added docs for {$smarty.version} special variable
+
+    * docs/programmers.sgml:
+      removed docs for $global_assign
+
+    * docs/programmers.sgml:
+      added docs for tpl_error_reporting
+
+    * docs/designers.sgml:
+      added docs for year_empty-, month_empty- and day_emtpy-attributes of
+      html_select_date. maybe an example is needed to better explain empty
+      values in YYY-MM-DD.
+
+2004-01-10  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      fixed handling of {php}-tags
+
+2004-01-10  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      fix html_checkboxes examples
+
+2004-01-08  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.assemble_plugin_filepath.php:
+      added caching of requested paths to smarty_core_assemble_plugin_filepath()
+
+    * NEWS:
+      fix handling of comments inside {php}- and {literal}-blocks
+
+    * libs/Smarty_Compiler.class.php:
+      fixed handling of comments inside {php} and {literal}
+
+2004-01-06  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Config_File.class.php:
+      fixed bug handling triple-quotes in config-files
+
+    * libs/Config_File.class.php:
+      fixed bugs with triple-quotes in config-files
+      thanks BRDude for finding them testing!
+
+2004-01-02  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      removed unnecessary param in call to _fetch_resource_info()
+
+2003-12-30  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      oops! removed tabs.
+
+2003-12-27  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      made $SCRIPT_NAME available again
+      changes default for request_use_auto_global to prefer autoglobals
+
+    * libs/Smarty.class.php:
+      removed tabs and trailing spaces
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      readded default_modifiers. who removed that?
+
+2003-12-23  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      add portuguese docs
+
+2003-12-22  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      fix counter example
+
+2003-12-19  Monte Ohrt  <monte@ispi.net>
+
+    * libs/Smarty.class.php:
+      add debug console persistance feature
+
+2003-12-19  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/block.textformat.php
+      libs/plugins/function.html_table.php
+      libs/plugins/function.popup.php:
+      removed extract(). enhanced parameter parsing.
+
+    * libs/plugins/function.counter.php
+      libs/plugins/function.fetch.php
+      libs/plugins/function.popup_init.php
+      libs/plugins/modifier.capitalize.php
+      libs/plugins/modifier.cat.php
+      libs/plugins/modifier.date_format.php
+      libs/plugins/modifier.debug_print_var.php
+      libs/plugins/modifier.escape.php
+      libs/plugins/modifier.indent.php
+      libs/plugins/modifier.lower.php
+      libs/plugins/modifier.nl2br.php
+      libs/plugins/modifier.strip.php
+      libs/plugins/modifier.upper.php
+      libs/plugins/modifier.wordwrap.php
+      libs/plugins/outputfilter.trimwhitespace.php
+      libs/plugins/shared.escape_special_chars.php:
+      removed tabs. fixed indentiation.
+
+    * libs/plugins/modifier.truncate.php:
+      removed tabs
+
+    * libs/plugins/function.counter.php
+      libs/plugins/function.cycle.php:
+      removed extract() from parameter-parsing
+
+2003-12-17  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.html_select_date.php:
+      fix plugin-name in error message
+
+    * libs/plugins/function.html_select_time.php:
+      remove extract-call from {html_select_time}
+
+    * NEWS
+      libs/plugins/function.html_select_date.php:
+      allow single-digit days and months without smarty_make_timestamp()
+      this makes dates like "1968-11-6" work correctly since no strtotime()
+      is involved
+      
+      add warning when unknown parameter is passed
+
+2003-12-16  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      fix headers sent erroneously with cache_modified_check and fetch()
+
+2003-12-12  Monte Ohrt  <monte@ispi.net>
+
+    * libs/plugins/function.config_load.php:
+      move set_path() call below the conditional bracket
+
+    * NEWS
+      libs/plugins/function.config_load.php:
+      fix config_load filepath bug
+
+2003-12-12  boots  <jayboots@yahoo.com>
+
+    * docs/designers.sgml:
+      Updated language.function.if with additional annotation and to fix error
+      that broke docs build process
+
+2003-12-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      little optimization for "is odd" and "is even"
+
+2003-12-11  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fix 'is even by' and 'is odd by' logic
+
+2003-12-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml:
+      update example-output of {mailto}
+
+    * libs/plugins/function.mailto.php:
+      removed extract-call -> cleaner parameter-handling
+
+    * libs/plugins/function.mailto.php:
+      fixed indentiation
+
+    * TODO:
+      removed two done topics
+
+2003-12-11  boots  <jayboots@yahoo.com>
+
+    * docs/designers.sgml:
+      Updated language.function.if to describe qualifiers (thanks andre)
+
+2003-12-10  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.html_select_date.php:
+      added day_empty, month_empty, year_empty and all_empty attributes
+      to pass an undefined date use {html_select_date time="--" ...}
+
+    * libs/plugins/function.html_select_date.php:
+      removed extract()-call
+
+    * libs/plugins/function.html_select_date.php:
+      fixed indetiation
+
+2003-12-10  boots  <jayboots@yahoo.com>
+
+    * NEWS
+      docs/designers.sgml:
+      Added table to language.function.if to describe qualifiers
+
+2003-12-09  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.html_checkboxes.php
+      libs/plugins/function.html_options.php:
+      strict comparason didn't work in all cases. use type-casting now.
+
+    * NEWS
+      libs/plugins/function.html_checkboxes.php
+      libs/plugins/function.html_options.php:
+      fix bug when comparing array-keys to "selected" in html_options and
+      html_checkboxes
+      
+      in_array() uses "strict" comparason now.
+
+    * libs/plugins/function.html_checkboxes.php
+      libs/plugins/function.html_options.php
+      libs/plugins/function.html_radios.php:
+      removed tabs, fixed indentiation
+
+2003-12-08  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      add better checks for correctly nested tags when compiling
+
+2003-12-04  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/plugins/function.html_image.php:
+      fix: check $smarty->request_use_auto_globals at the last occurences of
+           HTTP_*_VARS
+
+2003-12-03  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      remove $global_assign property from Smarty and $global_assign-handling
+      from the constructor. the only visible change is, that $SCRIPT_NAME is
+      not available in the tempates anymore. $smarty.server.SCRIPT_NAME has
+      to be used from now.
+
+2003-12-03  boots  <jayboots@yahoo.com>
+
+    * docs/designers.sgml:
+      Fixed example for count_characters
+
+2003-12-01  boots  <jayboots@yahoo.com>
+
+    * docs/designers.sgml:
+      Added section "Escaping Smarty Parsing" under Basic Syntax.
+
+2003-12-01  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.create_dir_structure.php:
+      thought again about my latest commit and backed it out.
+
+    * libs/core/core.create_dir_structure.php:
+      fix root-dir-handling on windows filepath
+
+2003-11-29  boots  <jayboots@yahoo.com>
+
+    * libs/plugins/function.config_load.php:
+      really make the fixes the last patch was supposed to do
+
+    * libs/plugins/function.config_load.php:
+      removed tabs and killed trailing white-space
+
+    * libs/plugins/function.config_load.php:
+      changed $smarty->_syntax_error to $smarty->trigger_error
+
+2003-11-27  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/modifier.debug_print_var.php:
+      remove warning in debug_print_var on php-resources
+
+    * README:
+      fix version number
+
+2003-11-26  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      raise max_level for $smarty.config... to 3 to allow arrays of config-vars
+
+2003-11-25  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      changed version-tag to indicate incompatibility to older compiled
+      templates
+
+2003-11-24  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/compiler.assign.php
+      libs/plugins/function.assign.php:
+      move function.assign.php to compiler.assign.php
+
+    * libs/core/core.get_include_path.php:
+      silence occasional warnings of open_basedir- and
+      safe_mode-restrictions in core.get_include_path.php
+
+2003-11-23  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.write_compiled_resource.php
+      libs/core/core.write_file.php:
+      avoid touch()-ing of recently unlinked files by touch()-ing the
+      tempfile before rename instead of touch()-ing the resulting file after
+      rename.
+
+    * NEWS
+      libs/Smarty.class.php:
+      add property $tpl_error_reporting
+
+2003-11-22  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.assign.php:
+      remove use of extract() in smarty_function_assign()
+
+    * NEWS
+      libs/Smarty.class.php:
+      remove property $undefined. "null" is used literally instead
+
+2003-11-21  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      remove two E_NOTICES
+
+2003-11-20  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      change version to 2.6.1-dev
+
+2003-11-19  Monte Ohrt  <monte@ispi.net>
+
+    * (Smarty_2_6_0)
+      NEWS:
+      update NEWS file
+
+    * (Smarty_2_6_0)
+      docs/designers.sgml
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      change version numbers to 2.6.0
+
+2003-11-19  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml
+      docs/de/designers.sgml
+      docs/fr/designers.sgml:
+      fix examples of escape-modifier (in docs, docs/de and docs/fr !)
+
+2003-11-18  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      move Smarty::quote_replace() to Smarty_Compiler::_quote_replace()
+
+    * libs/Smarty.class.php:
+      removed extract-calls from _include()- and _eval()-wrappers
+      variables passed with {include_php} have to accessed as members of $params
+      now
+
+2003-11-17  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml:
+      fixed typo
+
+2003-11-13  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Config_File.class.php:
+      fix occasional notice
+
+2003-11-13  andreas halter  <phpcvs@andreashalter.ch>
+
+    * docs/de/designers.sgml:
+      - added cat modifier, thanks messju :-)
+
+2003-11-13  Monte Ohrt  <monte@ispi.net>
+
+    * (Smarty_2_6_0-RC3)
+      NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      commit RC3 tags
+
+2003-11-13  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fix handling of $var.key inside []
+
+    * libs/Smarty.class.php:
+      fix unnecessary loading of core.load_resource_plugin.php
+
+    * (Smarty_2_6_0-RC3)
+      docs/fr/designers.sgml:
+      fixed example of html_table
+
+2003-11-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.process_cached_inserts.php:
+      fix handling of assign inside {insert}-tags
+
+2003-11-06  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.read_cache_file.php:
+      added $exp_time-parameter
+
+    * docs/programmers.sgml:
+      added $exp_time to cache_handler_func-example
+
+    * libs/Smarty.class.php
+      libs/core/core.write_cache_file.php:
+      added $exp_time-parameter of clear_cache() and clear_all_cache() to
+      cache_handler_func.
+
+2003-11-05  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Config_File.class.php:
+      fix handling if [...] inside triple-quotes in config-files
+
+2003-11-04  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      fixed little bug in _parse_resource_name() (jlgunter, messju)
+
+2003-11-03  andreas halter  <phpcvs@andreashalter.ch>
+
+    * docs/designers.sgml
+      docs/de/designers.sgml
+      docs/fr/designers.sgml:
+      - changed Smarty.php.class occurences to Smarty.class.php
+
+2003-10-29  boots  <jayboots@yahoo.com>
+
+    * docs/appendixes.sgml
+      docs/designers.sgml
+      docs/manual.sgml
+      docs/programmers.sgml
+      docs/de/appendixes.sgml
+      docs/de/designers.sgml
+      docs/de/programmers.sgml
+      docs/fr/appendixes.sgml
+      docs/fr/designers.sgml
+      docs/fr/getting-started.sgml
+      docs/fr/manual.sgml
+      docs/fr/preface.sgml
+      docs/fr/programmers.sgml:
+      Fixes to documentation syntax so that all content can be processed used
+      xsltproc docbook-xsl tools. In particular, fixes unescaped entities,
+      broken tags, unquoted attributes.
+
+2003-10-27  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fix handling of simple-math-operators inside modifiers
+
+2003-10-25  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      removed unused property _output_type
+      removed unused param $tag_attrs of _parse_var_props()
+      cleaned up alignment of class-properties
+
+2003-10-23  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      removed notice in php-tag handling in Smarty_Compiler::_compile_file()
+
+    * libs/Smarty_Compiler.class.php:
+      removed two occasional E_NOTICES from
+      Smarty_Compiler::_compile_include_php_tag()
+
+    * NEWS
+      libs/core/core.create_dir_structure.php:
+      fix handling of trailing-slashes in open_basedir in
+      smarty_core_create_dir_structure()
+
+2003-10-20  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      elements inside `` are bracketed now inside the compiled-tpl. this
+      fixes some issues with simple-math inside backticks.
+
+2003-10-16  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      update overlib docs, no working examples
+
+2003-10-12  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/core/core.is_secure.php:
+      move check for template_dir in secure_dir-array into core.is_secure.php
+      
+      this makes template_exists() work correctly with security=true even if
+      template_dir is not inside the secure_dir-array
+
+2003-10-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/shared.make_timestamp.php:
+      tightened check for YYYYMMDDHHMMSS-format. thanks konstantin for
+      pointing this out.
+      
+      removed a few tabs.
+
+    * libs/Smarty_Compiler.class.php:
+      fix precedence of simple-math-operators before modifiers.
+      thanks dominik!
+
+    * libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php
+      libs/core/core.assemble_plugin_filepath.php
+      libs/core/core.assign_smarty_interface.php
+      libs/core/core.create_dir_structure.php
+      libs/core/core.display_debug_console.php
+      libs/core/core.get_include_path.php
+      libs/core/core.get_microtime.php
+      libs/core/core.get_php_resource.php
+      libs/core/core.is_secure.php
+      libs/core/core.is_trusted.php
+      libs/core/core.load_plugins.php
+      libs/core/core.load_resource_plugin.php
+      libs/core/core.process_cached_inserts.php
+      libs/core/core.process_compiled_include.php
+      libs/core/core.read_cache_file.php
+      libs/core/core.rm_auto.php
+      libs/core/core.rmdir.php
+      libs/core/core.run_insert_handler.php
+      libs/core/core.smarty_include_php.php
+      libs/core/core.write_compiled_include.php
+      libs/core/core.write_compiled_resource.php
+      libs/core/core.write_file.php:
+      removed tabs from the main and the core/*.php files
+
+2003-10-08  Monte Ohrt  <monte@ispi.net>
+
+    * (Smarty_2_6_0-RC2)
+      NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      update version numbers to RC2
+
+2003-09-18  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml
+      docs/de/designers.sgml:
+      fixed description of cycle's advance-attribute
+
+2003-09-16  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      apply modifiers only once to section-loop and foreach-from attributes
+
+2003-09-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php
+      libs/core/core.write_cache_paths_file.php:
+      backed out _smarty_cached_paths-file-handling
+
+    * libs/Smarty.class.php
+      libs/core/core.rm_auto.php:
+      fixed clear_compiled_tpl with explicit $tpl_file given
+      fixed return value of smarty_core_rm_auto() + Smarty::_unlink()
+
+    * libs/Smarty.class.php:
+      little fix in _get_auto_filename()
+
+2003-09-14  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/core/core.assemble_auto_filename.php:
+      removed auto-filenames from path-cache. merged assemble_auto_filename
+      back into Smarty::_get_auto_filename()
+
+2003-09-12  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      fixed quoting of modifier parameters
+
+    * NEWS
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php
+      libs/core/core.get_php_resource.php
+      libs/core/core.load_plugins.php
+      libs/core/core.load_resource_plugin.php:
+      remove Smarty::_plugin_implementation_exists() - use php's native
+      is_callable()
+
+2003-09-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      silenced two notices acces HTTP_SERVER_VARS
+
+2003-09-10  andreas halter  <phpcvs@andreashalter.ch>
+
+    * docs/de/designers.sgml
+      docs/de/getting-started.sgml
+      docs/de/programmers.sgml:
+      - minor fixes (2 rep), slight wording changes
+      - jade transform problem fixed
+
+2003-09-08  andreas halter  <phpcvs@andreashalter.ch>
+
+    * docs/de/designers.sgml
+      docs/de/getting-started.sgml
+      docs/de/manual.sgml
+      docs/de/preface.sgml
+      docs/de/programmers.sgml:
+      all updated for 2.6.0 release, translated everything from 2_5_0 branch to
+      20030908
+
+2003-09-04  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      proper checking for files in  _fetch_resource_info()
+
+2003-09-02  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      ignore {strip}/{/strip) inside {strip}-blocks
+
+    * libs/plugins/function.mailto.php:
+      fixed 2 notices in smarty_function_mailto()
+
+2003-09-01  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      re-include cache_paths on multiple calls to fetch() to avoid
+      inconsistencies
+      at multiple calls to fetch() in one script
+
+    * libs/Smarty_Compiler.class.php:
+      fixed handling of \r in {strip}
+      renamed $_trailing_lf to $_additional_newline
+
+    * libs/Smarty_Compiler.class.php:
+      the weekly fix for {strip} :)
+
+    * docs/designers.sgml:
+      fixed example for simple math.
+
+2003-08-29  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.assign_smarty_interface.php
+      libs/core/core.display_debug_console.php
+      libs/plugins/function.assign.php
+      libs/plugins/function.html_options.php
+      libs/plugins/function.html_table.php:
+      fixed PHPDocumentor-comments (thanks Konstantin)
+
+    * libs/core/core.rmdir.php:
+      made rmdir a bit more optimistic. especially it now removes
+      directories correctly that where created accidently by "safe_mode=On
+      && $use_sub_dirs=true"
+
+2003-08-27  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php:
+      fixed removal of leading/trailing newlines in {strip}-blocks
+
+2003-08-25  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * INSTALL:
+      added note emphasizing the introduction of "libs/" with 2.5.0
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      fixed proper escaping of " and ' with escape:javascript
+
+2003-08-22  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.assemble_plugin_filepath.php:
+      fixed bug in traversal of $smarty->plugins_dir-array in
+      smarty_core_assemble_plugin_filepath(). the first matching plugin in
+      the path should be used, not the last one.
+
+    * libs/core/core.read_cache_file.php:
+      discard $_cache_info when the cache should be regenerated
+
+2003-08-20  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty_Compiler.class.php
+      libs/plugins/block.strip.php:
+      reverted {strip} from a block-plugin back into the compiler
+
+    * docs/programmers.sgml:
+      fixed examples for register_function() and register_block()
+
+    * libs/Smarty.class.php:
+      made template_exists() quiet when the template does not exist (thanks
+      to konstatin for pointing this out)
+
+2003-08-18  Monte Ohrt  <monte@ispi.net>
+
+    * docs/getting-started.sgml:
+      fix example title
+
+    * docs/README
+      docs/getting-started.sgml:
+      change installation wording confusion
+
+2003-08-18  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/core/core.read_cache_file.php:
+      fixed unnecessary load of source in template_exists() and the
+      compile-check of smarty_core_read_cache_file()
+
+    * libs/Smarty_Compiler.class.php:
+      allow section-, array- and object-dereference in $smarty-references
+
+2003-08-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * docs/designers.sgml:
+      added parameter-descriptions for count_characters (thanks Konstantin
+      A. Pelepelin)
+      
+      fixed docs for {html_checkboxes}
+
+2003-08-14  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/core/core.read_cache_file.php:
+      fixed timestamp-check of config-files in smarty_core_read_cache_file()
+
+    * libs/Smarty.class.php:
+      fixed typecasting for arrays in _parse_resource_name()
+
+    * NEWS
+      libs/plugins/function.config_load.php:
+      fixes in config_load:
+      - handling of section-attribute
+      - reusing the same config-file multiple times
+      - serialization of config-data for php<4.2.0 (no var_export)
+      
+      many thanks to atu for pointing this out and for testing
+
+2003-08-13  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php
+      libs/core/core.smarty_include_php.php:
+      fixed problem with vars as attributes in {include_php}
+
+2003-08-13  Monte Ohrt  <monte@ispi.net>
+
+    * docs/README:
+      commit README file for documentation compiling
+
+2003-08-13  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/debug.tpl
+      libs/plugins/modifier.debug_print_var.php:
+      removed '\r' from debug_print_vars' output
+      properly escape vars in javascript-version of debug.tpl
+
+2003-08-11  Monte Ohrt  <monte@ispi.net>
+
+    * (Smarty_2_6_0_RC1)
+      NEWS
+      docs/designers.sgml
+      docs/html.dsl
+      docs/php.dsl
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      get ready for 2.6.0-RC1 release
+
 2003-08-10  Messju Mohr  <messju@lammfellpuschen.de>
 
     * NEWS
@@ -1062,7 +2013,7 @@
 
     * libs/Smarty.class.php
       libs/Smarty_Compiler.class.php:
-      added CVS $Id: ChangeLog,v 1.1.1.1 2003-08-20 23:39:27 rossta Exp $
+      added CVS $Id: ChangeLog,v 1.1.1.2 2004-02-27 01:21:36 mose Exp $
 
 2003-03-31  Messju Mohr  <messju@lammfellpuschen.de>
 
