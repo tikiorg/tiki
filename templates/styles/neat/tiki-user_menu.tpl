@@ -9,7 +9,7 @@
 <div class="separator">
 
 {if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/fo.gif" border="0" name="{$cname}icn" alt=''/></a>&nbsp;
+<a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/fo.gif" border="0" name="menu{$cname}icn" alt=''/></a>&nbsp;
 {else}<a class='separator' href="javascript:toggle('menu{$cname}');" title="{tr}Click{/tr}"><img src="styles/neat/linkOpaque.gif" border="0" />&nbsp;</a>{/if} 
 <a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
 </div>

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.27 2004-05-30 11:07:23 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.28 2004-05-31 12:23:03 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4317,9 +4317,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
