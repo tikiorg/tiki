@@ -16,7 +16,7 @@
 </td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
-{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$publishDate end_year="+1"} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

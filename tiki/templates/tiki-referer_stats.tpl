@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-referer_stats.php">referer stats</a><br/><br/>
+<a class="pagetitle" href="tiki-referer_stats.php">Referer stats</a><br/><br/>
 <a class="link" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br/><br/>
 
 <table class="findtable">

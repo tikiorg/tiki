@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a><br/><br/>
-<a class="link" href="tiki-edit_banner.php">Create banner</a>
+<a class="link" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 <br/><br/>
 <div align="center">
 <table class="findtable">

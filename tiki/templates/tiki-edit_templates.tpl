@@ -1,7 +1,7 @@
-<a class="pagetitle" href="tiki-edit_templates.php?mode=listing">Edit templates</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_templates.php?mode=listing">{tr}Edit templates{/tr}</a><br/><br/>
 {if $template}<h2>{tr}Template{/tr}: {$template}</h2>{/if}
 {if $mode eq 'listing'}
-<h3>Available templates:</h3>
+<h3>{}Available templates{/tr}:</h3>
 <table border="1" cellpadding="0" cellspacing="0" width="97%">
 <tr>
 <td class="heading">{tr}Template{/tr}</a></td>
