@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.23 2004-03-04 21:41:22 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.24 2004-03-09 03:30:42 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -58,6 +58,7 @@ style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" al
 border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {/section}
+</div>
 </div>
 </div>
 </div>
