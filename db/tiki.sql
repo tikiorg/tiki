@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.201 2004-06-05 15:17:21 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.202 2004-06-06 04:48:03 lphuberdeau Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2783,6 +2783,7 @@ CREATE TABLE tiki_sheet_values (
   calculation varchar(255) default NULL,
   width int(4) NOT NULL default '1',
   height int(4) NOT NULL default '1',
+  format varchar(255) default NULL,
   UNIQUE KEY sheetId (sheetId,begin,rowIndex,columnIndex),
   KEY sheetId_2 (sheetId,rowIndex,columnIndex)
 ) TYPE=MyISAM;

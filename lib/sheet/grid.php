@@ -28,16 +28,18 @@ CELL:
 The cell merging will be preserved.
 
 FORMAT:
- -- Removed, will only be a template applied on final output.
+The display format of the data of the cell 
 */
 
 define( 'TIKISHEET_SAVE_DATA',		0x00010000 );
 define( 'TIKISHEET_SAVE_CALC',		0x00020000 );
 define( 'TIKISHEET_SAVE_CELL',		0x00040000 );
+define( 'TIKISHEET_SAVE_FORMAT',	0x00080000 );
 
 define( 'TIKISHEET_LOAD_DATA',		0x00000001 );
 define( 'TIKISHEET_LOAD_CALC',		0x00000002 );
 define( 'TIKISHEET_LOAD_CELL',		0x00000004 );
+define( 'TIKISHEET_LOAD_FORMAT',	0x00000008 );
 
 // Initial amount of rows and columns at TikiSheet initialisation
 define( 'INITIAL_ROW_COUNT',		3 );
@@ -58,6 +60,28 @@ function TIKISHEET_REGISTER_HANDLER( $class )
 	$globalHandlers[] = $class;
 }
 // }}}1
+
+/** TikiSheetDataFormat Class {{{1
+ * Class containing the different supported data formats by TikiSheet.
+ * The formats coded in this class should also exist in lib/sheet/formula.js
+ */
+class TikiSheetDataFormat
+{
+	function currency( $value, $before = '', $after = '' )
+	{
+		return $before . sprintf( "%.2f", (float)$value ) . $after;
+	}
+
+	function currency_ca( $value )
+	{
+		return TikiSheetDataFormat::currency( $value, '', '$' );
+	}
+
+	function currency_us( $value )
+	{
+		return TikiSheetDataFormat::currency( $value, '$' );
+	}
+} // }}}1
 
  /** TikiSheet Class {{{1
  * Calculation sheet data container. Used as a bridge between
@@ -81,7 +105,7 @@ class TikiSheet
 	 * Two dimensional array, grid containing an associative arrays 
 	 * with 'height' and 'width' values.
 	 */
-	var $mergeInfo;
+	var $cellInfo;
 
 	/**
 	 * Row and column count once finalized.
@@ -130,7 +154,7 @@ class TikiSheet
 	{
 		$this->dataGrid = array();
 		$this->calcGrid = array();
-		$this->mergeInfo = array();
+		$this->cellInfo = array();
 
 		$this->COLCHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		$this->indexes = array( $this->COLCHAR[0] => 0 );
@@ -221,8 +245,9 @@ class TikiSheet
 
 		return $this->dataGrid[$rowIndex][$columnIndex] == $sheet->dataGrid[$rowIndex][$columnIndex]
 			&& $this->calcGrid[$rowIndex][$columnIndex] == $sheet->calcGrid[$rowIndex][$columnIndex]
-			&& $this->mergeInfo[$rowIndex][$columnIndex]['width'] == $sheet->mergeInfo[$rowIndex][$columnIndex]['width']
-			&& $this->mergeInfo[$rowIndex][$columnIndex]['height'] == $sheet->mergeInfo[$rowIndex][$columnIndex]['height'];
+			&& $this->cellInfo[$rowIndex][$columnIndex]['width'] == $sheet->cellInfo[$rowIndex][$columnIndex]['width']
+			&& $this->cellInfo[$rowIndex][$columnIndex]['height'] == $sheet->cellInfo[$rowIndex][$columnIndex]['height']
+			&& $this->cellInfo[$rowIndex][$columnIndex]['format'] == $sheet->cellInfo[$rowIndex][$columnIndex]['format'];
 	}
 	
 	/** export {{{2
@@ -247,7 +272,7 @@ class TikiSheet
 
 		$this->finalizeGrid( $this->dataGrid, $maxRow, $maxCol );
 		$this->finalizeGrid( $this->calcGrid, $maxRow, $maxCol );
-		$this->finalizeGrid( $this->mergeInfo, $maxRow, $maxCol, true );
+		$this->finalizeGrid( $this->cellInfo, $maxRow, $maxCol, true );
 
 		$this->rowCount = $maxRow + 1;
 		$this->columnCount = $maxCol + 1;
@@ -260,11 +285,11 @@ class TikiSheet
 				if( !isset( $this->calcGrid[$y][$x] ) )
 					$this->calcGrid[$y][$x] = '';
 
-				if( empty( $this->mergeInfo[$y][$x]['width'] ) )
-					$this->mergeInfo[$y][$x]['width'] = 1;
+				if( empty( $this->cellInfo[$y][$x]['width'] ) )
+					$this->cellInfo[$y][$x]['width'] = 1;
 
-				if( empty( $this->mergeInfo[$y][$x]['height'] ) )
-					$this->mergeInfo[$y][$x]['height'] = 1;
+				if( empty( $this->cellInfo[$y][$x]['height'] ) )
+					$this->cellInfo[$y][$x]['height'] = 1;
 			}
 
 		return true;
@@ -352,7 +377,7 @@ class TikiSheet
 	{
 		$this->dataGrid = array();
 		$this->calcGrid = array();
-		$this->mergeInfo = array();
+		$this->cellInfo = array();
 		
 		if( !$handler->_load( $this ) )
 			return false;
@@ -413,10 +438,10 @@ class TikiSheet
 	{
 		return $this->dataGrid[$rowIndex][$columnIndex] == ''
 			&& $this->calcGrid[$rowIndex][$columnIndex] == ''
-			&& ( $this->mergeInfo[$rowIndex][$columnIndex]['width'] == ''
-			||   $this->mergeInfo[$rowIndex][$columnIndex]['width'] == 1 )
-			&& ( $this->mergeInfo[$rowIndex][$columnIndex]['height'] == ''
-			||   $this->mergeInfo[$rowIndex][$columnIndex]['height'] == 1 );
+			&& ( $this->cellInfo[$rowIndex][$columnIndex]['width'] == ''
+			||   $this->cellInfo[$rowIndex][$columnIndex]['width'] == 1 )
+			&& ( $this->cellInfo[$rowIndex][$columnIndex]['height'] == ''
+			||   $this->cellInfo[$rowIndex][$columnIndex]['height'] == 1 );
 	}
 	
 	/** setCalculation {{{2
@@ -429,6 +454,17 @@ class TikiSheet
 		$this->calcGrid[$this->usedRow][$this->usedCol] = $calculation;
 	}
 
+	/** setFormat {{{2
+	 * Indicates the cell's data format during display.
+	 * The format is a text identifier that matches a function
+	 * name that will be executed.
+	 */
+	function setFormat( $format )
+	{
+		if( empty( $format ) || !method_exists( new TikiSheetDataFormat, $format ) ) $format = null;
+		$this->cellInfo[$this->usedRow][$this->usedCol]['format'] = $format;
+	}
+	
 	/** setSize {{{2
 	 * Sets the size of the last initialized cell.
 	 * @param $width The cell's column span.
@@ -436,7 +472,7 @@ class TikiSheet
 	 */
 	function setSize( $width, $height )
 	{
-		$this->mergeInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height );
+		$this->cellInfo[$this->usedRow][$this->usedCol] = array( "width" => $width, "height" => $height );
 	}
 	
 	/** setValue {{{2
@@ -550,6 +586,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				$sheet->setValue( $v );
 				$sheet->setCalculation( $c );
 				$sheet->setSize( $w, $h );
+				$sheet->setFormat( $f );
 			}
 		}
 
@@ -581,8 +618,9 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 			{
 				$calc = $sheet->calcGrid[$y][$x];
 				$value = $sheet->dataGrid[$y][$x];
-				$width = $sheet->mergeInfo[$y][$x]['width'];
-				$height = $sheet->mergeInfo[$y][$x]['height'];
+				$width = $sheet->cellInfo[$y][$x]['width'];
+				$height = $sheet->cellInfo[$y][$x]['height'];
+				$format = $sheet->cellInfo[$y][$x]['format'];
 
 				$calc = addslashes( $calc );
 				$value = addslashes( $value );
@@ -592,17 +630,23 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				else
 					$calc = "=" . $calc;
 
+				if( empty( $format ) )
+					$format = 'null';
+				else
+					$format = "'$format'";
+
 				echo "		cell = g.getIndexCell( $y, $x );\n";
 				echo "		cell.value = '{$calc}';\n";
 				echo "		cell.endValue = '{$value}';\n";
+				echo "		cell.format = {$format};\n";
 
 				if( !empty( $width ) && !empty( $height ) )
 					echo "		cell.changeSize( {$height}, {$width} );\n";
 			}
 		}
 	   
-		echo "		g.refresh();\n";
 		echo "		g.draw();\n";
+		echo "		g.refresh();\n";
 
 		echo "	}\n";
 
@@ -645,13 +689,13 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL | TIKISHEET_LOAD_FORMAT ) & $type ) > 0;
 	}
 
 	// version {{{2
 	function version()
 	{
-		return "0.1-dev";
+		return "1.0-test";
 	}
 } // }}}1
 
@@ -688,7 +732,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 
 			$sheet->dataGrid = $data->dataGrid;
 			$sheet->calcGrid = $data->calcGrid;
-			$sheet->mergeInfo = $data->mergeInfo;
+			$sheet->cellInfo = $data->cellInfo;
 
 			return true;
 		}
@@ -729,13 +773,13 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL | TIKISHEET_LOAD_FORMAT ) & $type ) > 0;
 	}
 
 	// version {{{2
 	function version()
 	{
-		return "0.1-dev";
+		return "1.0";
 	}
  } // }}}1
 
@@ -877,7 +921,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -886,6 +930,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			$sheet->setValue( $value );
 			$sheet->setCalculation( $calculation );
 			$sheet->setSize( $width, $height );
+			$sheet->setFormat( $format );
 		}
 
 		// Fetching the layout informations.
@@ -936,14 +981,15 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$value = $sheet->dataGrid[$row][$col];
 
 				$calc = $sheet->calcGrid[$row][$col];
-				$width = $sheet->mergeInfo[$row][$col]['width'];
-				$height = $sheet->mergeInfo[$row][$col]['height'];
+				$width = $sheet->cellInfo[$row][$col]['width'];
+				$height = $sheet->cellInfo[$row][$col]['height'];
+				$format = $sheet->cellInfo[$row][$col]['format'];
 
 				$updates[] = $row;
 				$updates[] = $col;
 
 				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height );
+					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height, $format );
 
 			}
 		}
@@ -958,7 +1004,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		if( sizeof( $inserts ) > 0 )
 			foreach( $inserts as $values )
 			{
-				$tikilib->query( "INSERT INTO tiki_sheet_values (sheetId, begin, rowIndex, columnIndex, value, calculation, width, height ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )", $values );
+				$tikilib->query( "INSERT INTO `tiki_sheet_values` (`sheetId`, `begin`, `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height`, `format` ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? )", $values );
 			}
 
 		// }}}3
@@ -979,13 +1025,13 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL | TIKISHEET_LOAD_FORMAT ) & $type ) > 0;
 	}
 
 	// version {{{2
 	function version()
 	{
-		return "0.1-beta";
+		return "1.0-test";
 	}
 } // }}}1
 
@@ -1071,8 +1117,8 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						$out->write( $row, $col, utf8_decode( $value ) );
 
 					$width = $height = 1;
-					if( is_array( $sheet->mergeInfo[$row][$col] ) )
-						extract( $sheet->mergeInfo[$row][$col] );
+					if( is_array( $sheet->cellInfo[$row][$col] ) )
+						extract( $sheet->cellInfo[$row][$col] );
 
 					if( $width != 1 || $height != 1 )
 					{
@@ -1170,7 +1216,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 			{
 				$width = $height = "";
-				extract( $sheet->mergeInfo[$i][$j] );
+				extract( $sheet->cellInfo[$i][$j] );
 				$append = "";
 
 				if( empty( $width ) || empty( $height ) )
@@ -1186,6 +1232,10 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 					$data = $sheet->dataGrid[$i][$j];
 				else
 					$data = '';
+
+				$format = $sheet->cellInfo[$i][$j]['format'];
+				if( !empty( $format ) )
+					$data = TikiSheetDataFormat::$format( $data );
 				echo "			<td$append>$data</td>\n";
 			}
 			
@@ -1196,13 +1246,13 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL ) & $type ) > 0;
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT ) & $type ) > 0;
 	}
 
 	// version {{{2
 	function version()
 	{
-		return "0.1-dev";
+		return "1.0-test";
 	}
 } // }}}1
 
