@@ -1,14 +1,16 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.4 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.5 2004-06-11 22:20:41 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.4 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.5 2004-06-11 22:20:41 redflo Exp $
 //
+
+if ($feature_debug_console == 'y') {
 global $debugger;
 
 require_once ('lib/debug/debugger.php');
@@ -67,5 +69,6 @@ foreach ($tabs_list as $tname => $tcode) {
 }
 
 $smarty->assign_by_ref('tabs', $tabs);
+}
 
 ?>
