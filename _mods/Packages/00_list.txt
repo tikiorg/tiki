@@ -27,6 +27,7 @@
 'wikiplugins','ebay','1.1','Currently only works with ebay.co.uk','GNU/LGPL'
 'wikiplugins','scroll','1.1','no description','GNU/LGPL'
 'features','tiki-sheet','1.0','Tiki JavaScript Spreadsheet feature','GNU/LGPL'
+'features','import-phpwiki','1.0','Content importer from phpwiki to tikiwiki','GNU/LGPL'
 'sql','upgrade_0.9to0.95','1.0','SQL Upgrade scripts for TikiWiki 0.9 to 0.95','GNU/LGPL'
 'sql','upgrade_0.95to1.0','1.0','SQL Upgrade scripts for TikiWiki 0.95 to 1.0','GNU/LGPL'
 'sql','upgrade_1.0to1.1','1.0','SQL Upgrade scripts for TikiWiki 1.0 to 1.1','GNU/LGPL'

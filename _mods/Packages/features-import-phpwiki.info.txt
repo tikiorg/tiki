@@ -1,0 +1,25 @@
+contributor:
+$Author: damosoft $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-10-29 19:37:46 $
+
+files:
+
+sql-install:
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Import PHPWiki Dump','tiki-import_phpwiki.php',1210,'','tiki_p_admin','');
+
+sql-remove:
+DELETE FROM tiki_menu_options WHERE url = 'tiki-import_phpwiki.php';
+
+author:
+Unknown/Tiki Community
+
+licence:
+GNU/LGPL
+
+Description: 
+Import content from PHP Wiki
