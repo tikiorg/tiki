@@ -8,7 +8,7 @@ if ($feature_trackers == 'y') {
 		$status = '';
 	}
 	if (isset($module_params["trackerId"])) {
-		$ranking = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', $status);
+		$ranking = $tikilib->list_tracker_items($module_params["trackerId"], 0, $module_rows, 'created_desc', '', $status);
 	} else {
 		$ranking = array();
 	}
