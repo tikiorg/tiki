@@ -930,21 +930,46 @@ class ImageGalsLib extends TikiLib {
         }
 	
 	function get_gallery_image($galleryId,$rule='') {
+		$query='select `imageId` from `tiki_images` where `galleryId`=? order by ';
+		$bindvars=array($galleryId);
 		switch($rule) {
 			case 'firstu':
-				//todo first uploaded image
+				// first uploaded
+				$query.=$this->convert_sortmode('created_asc');
+				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'lastu':
-				//todo last uploaded image
+				// last uploaded
+				$query.=$this->convert_sortmode('created_desc');
+				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'first':
-				//todo first image in gallery default sortorder
+				// first image in default gallery sortorder
+				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
+				$result=$this->query($query2,$bindvars);
+				$res = $result->fetchRow();
+				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
+				$query.=$this->convert_sortmode($sort_mode);
+				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'last':
-				//todo last image in gallery default sortorder
+				// last image in default gallery sortorder
+				$query2='select `sortorder`,`sortdirection` from `tiki_galleries` where `galleryId`=?';
+				$result=$this->query($query2,$bindvars);
+				$res = $result->fetchRow();
+				if($res['sortdirection'] == 'asc') {
+					$res['sortdirection']='desc';
+				} else {
+					$res['sortdirection']='asc';
+				}
+				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
+				$query.=$this->convert_sortmode($sort_mode);
+				$imageId=$this->getOne($query,$bindvars);
 				break;
 			case 'random':
-				//todo random image og gallery
+				//random image of gallery
+				$ret=$this->get_random_image($galleryId);
+				$imageId=$ret['imageId'];
 				break;
 			case 'default':
 				//check gallery settings and re-run this function
