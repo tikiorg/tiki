@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.40 2004-07-13 21:05:37 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.41 2004-07-13 21:29:32 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -372,6 +372,9 @@ if( isset( $_REQUEST["comments_grandParentId"] ) )
     $smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
 }
 
+if(!empty($forum_mode) && $forum_mode == 'y') {
+	$_REQUEST["comments_parentId"] = 0;
+}
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"]);
