@@ -1,20 +1,21 @@
 <?php
 
-$tikiId = "Tiki CMS/Groupware 1.8"; // TODO: make configurable and add version number 
-$rsslang = "en-us"; // TODO: make configurable
+$tikiId =  $tikilib->get_preference("tiki_id","Tiki CMS/Groupware");
+$rsslang = $tikilib->get_preference("rssfeed_language","en-us");
+$rsseditor = $tikilib->get_preference("rssfeed_editor","");
+$rsspublisher = $tikilib->get_preference("rssfeed_publisher","");
+$rsswebmaster = $tikilib->get_preference("rssfeed_webmaster","");
+$rsscreator = $tikilib->get_preference("rssfeed_creator","");
+
 $rsscategorydomain = ""; // TODO: make configurable, currently unused
 $rsscategory = ""; // TODO: make configurable, currently unused
-$rsseditor = ""; // TODO: make configurable, currently unused
-$rsspublisher = ""; // TODO: make configurable, currently unused
-$rsswebmaster = ""; // TODO: make configurable, currently unused
-$rsscreator = ""; // TODO: make configurable, currently unused
 
 $rss_use_css = false; // default is: do not use css
 if (isset($_REQUEST["css"])) {
 	$rss_use_css = true;
 }
 
-$datenow = htmlspecialchars(gmdate('D, d M Y H:i:s T', date("U")));
+$datenow = htmlspecialchars($tikilib->iso_8601(date("U")));
 
 $url = $_SERVER["REQUEST_URI"];
 $url = substr($url, 0, strpos($url."?", "?")); // strip all parameters from url
@@ -62,8 +63,8 @@ if ($output == "")
   if ($rss_version < 2) {
   	$output .= "<dc:language>".$rsslang."</dc:language>\n";
   	$output .= "<dc:date>".$datenow."</dc:date>\n";
-    // $output .= "<dc:publisher>".$rsspublisher."</dc:publisher>\n";
-    // $output .= "<dc:creator>".$rsscreator."</dc:creator>\n";
+    if ($rsspublisher <> "") $output .= "<dc:publisher>".$rsspublisher."</dc:publisher>\n";
+    if ($rsscreator <> "") $output .= "<dc:creator>".$rsscreator."</dc:creator>\n";
   }
   else
   {
@@ -72,8 +73,8 @@ if ($output == "")
   	$output .= "<pubDate>".$datenow."</pubDate>\n";
   	$output .= "<generator>".$tikiId."</generator>\n";
   	// $output .= "<category domain=\"".$rsscategorydomain."\">".$rsscategory."</category>\n";
-    // $output .= "<managingEditor>".$rsseditor."</managingEditor>\n";
-    // $output .= "<webMaster>".$rsswebmaster."</webMaster>\n";
+    if ($rsseditor <> "")  $output .= "<managingEditor>".$rsseditor."</managingEditor>\n";
+    if ($rsswebmaster <> "")  $output .= "<webMaster>".$rsswebmaster."</webMaster>\n";
   }
 
   $output .= "\n";
@@ -112,8 +113,7 @@ if ($output == "")
 
   // LOOP collecting last changes to image galleries
   foreach ($changes["data"] as $chg) {
-    $date = htmlspecialchars(gmdate('D, d M Y H:i:s T', $chg["$dateId"]));
-  
+		$date = htmlspecialchars($tikilib->iso_8601($chg["$dateId"]));
   	$about = $read.$chg["$id"];
   	// blogs have posts, add those to the url:
   	if ($id == "blogId") { $about .= "&postId=".$chg["postId"]; }		
