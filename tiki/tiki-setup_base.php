@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.53 2004-03-16 05:52:45 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.54 2004-03-18 21:22:36 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -308,10 +308,9 @@ if ($tiki_p_admin_forum == 'y') {
 }
 
 if ($tiki_p_admin_wiki == 'y') {
-// $perms_wiki is used instead of $perms to avoid calling get_permissions again in tiki-pagesetup.php
-    $perms_wiki = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
+    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
 
-    foreach ($perms_wiki["data"] as $perm) {
+    foreach ($perms["data"] as $perm) {
         $perm = $perm["permName"];
 
         $smarty->assign("$perm", 'y');
