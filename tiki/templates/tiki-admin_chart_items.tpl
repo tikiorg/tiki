@@ -4,6 +4,7 @@
 <br/><br/>
 [<a class="link" href="tiki-admin_charts.php">{tr}charts{/tr}</a>]
 [<a class="link" href="tiki-admin_charts.php?chartId={$chartId}">{tr}edit chart{/tr}</a>]
+[<a class="link" href="tiki-view_chart.php?chartId={$chartId}">{tr}view{/tr}</a>]
 <h3>{tr}Add or edit an item{/tr} <a class="link" href="tiki-admin_chart_items.php?chartId=$chartId&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;itemId=0">new</a>
 </h3>
 <form action="tiki-admin_chart_items.php" method="post">

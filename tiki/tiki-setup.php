@@ -853,6 +853,14 @@ if(isset($_COOKIE["nlmenu"])) {
   }	
 }
 
+$smarty->assign('mnu_chartmenu','display:none;');
+if(isset($_COOKIE["chartmenu"])) {
+  if($_COOKIE["chartmenu"]=='o') {
+    $smarty->assign('mnu_chartmenu','display:block;');
+  }	
+}
+
+
 $smarty->assign('mnu_ephmenu','display:none;');
 if(isset($_COOKIE["ephmenu"])) {
   if($_COOKIE["ephmenu"]=='o') {

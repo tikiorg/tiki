@@ -9,6 +9,95 @@ class ChartLib extends TikiLib {
     }
     $this->db = $db;  
   }
+  
+  function ranking_exists($chartId)
+  {
+    return $this->getOne("select count(*) from tiki_charts_rankings where chartId=$chartId");
+  }
+  
+  function generate_new_ranking($chartId)
+  {
+    $maxPeriod = $this->get_last_period($chartId);
+    $newPeriod = $maxPeriod + 1;
+    $info = $this->get_chart($chartId);
+    // Now just loop the items table and get the topN
+    $topN=$info['topN'];
+    $query = "select * from tiki_chart_items order by average limit 0,$topN";
+    $result = $this->query($query);
+    $position=1;
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $itemId = $res['itemId'];
+      if($maxPeriod) {
+        $lastPosition = $this->getOne("select position from tiki_charts_rankings where itemId=$itemId and chartId=$chartId and period=$maxPeriod");
+      } else {
+        $lastPosition = 0;
+      }
+      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period)
+      values($chartId,$itemId,$position,$lastPosition,$newPeriod)";
+      $this->query($query2);
+      $position++;
+    }
+    $now = date("U");
+    $query = "update tiki_charts set lastChart=$now where chartId=$chartId";
+    $this->query($query);
+  }
+  
+  function drop_rankings($chartId) {
+    $query = "delete from tiki_charts_rankings where chartId=$chartId";
+    $this->query($query);
+  }
+  
+  function get_ranking($chartId,$period) 
+  {
+    $query = "select tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
+    $result = $this->query($query);
+	$ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+      if($res['lastPosition']) {
+      	$res['dif']=$res['position']-$res['position'];
+      } else {
+      	$res['dif']='new';
+      }
+      if($res['dif']==0) $res['dif']='-';
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
+  function purge_user_votes($chartId,$again)
+  {
+    $now = date("U");
+    $query = "delete from tiki_charts_chart_votes where timestamp + $again < $now";
+    $this->query($query);
+  }
+  
+  function user_has_voted_chart($user,$chartId)
+  {
+    if($user) {
+      return $this->getOne("select count(*) from tiki_charts_chart_votes where user='$user' and chartId=$chartId");
+    } else {
+	  return isset($_SESSION['chart_votes']) && in_array($chartId,$_SESSION['chart_votes']);    
+    }
+  }
+  
+  function get_last_period($chartId) {
+    if($this->ranking_exists($chartId)) {
+    	$maxPeriod = $this->getOne("select max(period) from tiki_charts_rankings where chartId=$chartId");
+    } else {
+    	$maxPeriod = 0;
+    }
+    return $maxPeriod;
+  }
+  
+  function get_first_period($chartId) {
+    if($this->ranking_exists($chartId)) {
+    	$maxPeriod = $this->getOne("select min(period) from tiki_charts_rankings where chartId=$chartId");
+    } else {
+    	$maxPeriod = 0;
+    }
+    return $maxPeriod;
+  }
+
 
   function get_chart($chartId)
   {
