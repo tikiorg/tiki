@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Tue Aug 12 12:34:17 2003
+-- Created on Sun Aug 17 01:02:33 2003
 -- 
 --
 -- Table: galaxia_activities
@@ -1084,7 +1084,6 @@ CREATE INDEX description_tiki_images on tiki_images (description);
 CREATE INDEX hits_tiki_images on tiki_images (hits);
 CREATE INDEX ti_gId_tiki_images on tiki_images (galleryId);
 CREATE INDEX ti_cr_tiki_images on tiki_images (created);
-CREATE INDEX ti_hi_tiki_images on tiki_images (hits);
 CREATE INDEX ti_us_tiki_images on tiki_images (user);
 CREATE INDEX ft_tiki_images on tiki_images (name, description);
 
@@ -1430,7 +1429,6 @@ CREATE TABLE tiki_pages (
   pageRank decimal(4,3) DEFAULT NULL,
   creator varchar(200) DEFAULT NULL
 );
-CREATE INDEX pageName_tiki_pages on tiki_pages (pageName);
 CREATE INDEX data_tiki_pages on tiki_pages (data);
 CREATE INDEX pageRank_tiki_pages on tiki_pages (pageRank);
 CREATE INDEX ft_tiki_pages on tiki_pages (pageName, data);

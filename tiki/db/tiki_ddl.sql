@@ -1011,7 +1011,6 @@ CREATE TABLE tiki_images (
   KEY hits (hits),
   KEY ti_gId (galleryId),
   KEY ti_cr (created),
-  KEY ti_hi (hits),
   KEY ti_us (user),
   FULLTEXT KEY ft (name,description)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -1331,7 +1330,6 @@ CREATE TABLE tiki_pages (
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
   PRIMARY KEY  (pageName),
-  KEY pageName (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
   FULLTEXT KEY ft (pageName,data)
