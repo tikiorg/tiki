@@ -18,7 +18,7 @@ Version 1.7 -Eta Carinae-
 * [NEW] Notepad: A note can be converted in a wiki page or
   update the content of any wiki page (if permitted)
 * [NEW] Notepad: notes can be merged into a single note.
-* [NEW] Weblogs:Trackback pings implemented, you can send a ping from any weblog
+* [NEW] Weblogs: Trackback pings implemented, you can send a ping from any weblog
   post to any URI accepting trackback pings. Tiki will also accept trackback
   pings the tiki-view_blog_post.php script implements the discovery mechanism,
   then Tiki can display a list of trackback pings to your blog posts from other
