@@ -1,22 +1,5 @@
-<div class="blogtitle">Blog: {$title}</div>
-<div class="bloginfo">
-{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>
-{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>
-({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
-{if $tiki_p_blog_post eq 'y'}
-{if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y' or $public eq 'y'}
-[<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{tr}Post{/tr}</a>]
-{/if}
-{if $rss_blog eq 'y'}
-[<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">RSS</a>]
-{/if}
-{/if}
-{if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y'}
-[<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]
-{/if}
-</div>
-
-<div class="blogdesc">{tr}Description:{/tr}{$description}</div>
+{eval var=$heading}
+{if $use_find eq 'y'}
 <div class="blogtools">
 <table><tr><td>
 <form action="tiki-view_blog.php" method="get">
@@ -25,15 +8,25 @@
 {tr}Find:{/tr}<input type="text" name="find" /><input type="submit" name="search" value="{tr}find{/tr}" />
 </form>
 </td><td>
-{tr}Sort posts by:{/tr}
-<a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a>
+<!--
+	{tr}Sort posts by:{/tr}
+	<a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a>
+-->	
 </td></tr></table>
 </div>
+{/if}
 {section name=ix loop=$listpages}
 <div>
 <div class="posthead">
 <table width="100%"><tr><td align="left">
-<span class="posthead">{$listpages[ix].created|tiki_short_datetime}</span>
+<span class="posthead">
+{if $use_title eq 'y'}
+	{$listpages[ix].title}<br/>
+	<small>{tr}posted by{/tr} {$listpages[ix].user} on {$listpages[ix].created|tiki_short_datetime}</small>
+{else}
+	{$listpages[ix].created|tiki_short_datetime}<small>{tr}posted by{/tr} {$listpages[ix].user}</small>
+{/if}
+</span>
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}">{tr}Edit{/tr}</a>
@@ -43,15 +36,18 @@
 </div>
 <div class="postbody">
 {$listpages[ix].parsed_data}
-{if $feature_blogposts_comments eq 'y'}
 <hr/>
+<small>
+<a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
+{if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
 {/if}
+</small>
 </div>
 </div>
 {/section}
-<br/><br/>
+<br/>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}

@@ -64,6 +64,10 @@ if(!$blog_data) {
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId',$_REQUEST["blogId"]);
 $smarty->assign('title',$blog_data["title"]);
+$smarty->assign('heading',$blog_data["heading"]);
+$smarty->assign('use_title',$blog_data["use_title"]);
+$smarty->assign('use_find',$blog_data["use_find"]);
+$smarty->assign('allow_comments',$blog_data["allow_comments"]);
 $smarty->assign('description',$blog_data["description"]);
 $smarty->assign('created',$blog_data["created"]);
 $smarty->assign('lastModif',$blog_data["lastModif"]);

@@ -6,14 +6,16 @@
 		[<a class="link" href="{sameurl wysiwyg='n'}">{tr}Use normal editor{/tr}</a>]
 {/if}
 {if $preview eq 'y'}
-{include file=tiki-preview_post.tpl}
+	{include file=tiki-preview_post.tpl}
 {/if}
 [{if $blogId > 0 }
 <a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>|
 {/if}
 <a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
 <br/><br/>
-<form name='blogpost' method="post" action="tiki-blog_post.php">
+<div class="wikitext">{tr}Note: if you want to use images please save the post first and you
+will be able to edit/post images (you can only upload images to an existing post){/tr}</div>
+<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php">
 <input type="hidden" name="wysiwyg" value="{$wysiwyg}" />
 <input type="hidden" name="postId" value="{$postId}" />
 <table class="editblogform">
@@ -62,8 +64,13 @@
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
+{if $blog_data.use_title eq 'y'}
+<tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
+<input type="text" size="30" name="title" value="{$title}" />
+</td></tr>
+{/if}
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
-<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">
+<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">
 {$data}
 </textarea>
 {if $wysiwyg eq 'y'}
@@ -76,7 +83,33 @@
 	<script defer='defer'>(new HTMLArea(document.forms['blogpost']['data'])).generate();</script>
 {/if}
 </td></tr>
-</td></tr>
+{if $postId > 0}
+	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
+	<td class="editblogform">
+	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+	<input name="userfile1" type="file">
+	</td></tr>
+	{if count($post_images) > 0}
+		<tr><td class="editblogform">{tr}Images{/tr}</td>
+		<td class="editblogform">
+		<table>
+		{section name=ix loop=$post_images}
+		<tr>
+			<td>
+				<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
+			</td>
+			<td>
+				<small>{$post_images[ix].link|escape}</small>
+			</td>
+			<td>
+				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/del.gif' /></a>
+			</td>
+		</tr>
+		{/section}
+		</table>
+		</td></tr>
+	{/if}
+{/if}
 {if $blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}

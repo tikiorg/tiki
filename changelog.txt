@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+
+* [NEW] Weblogs: admin can select what columns to list in the blog listing,
+  the blog owner can be listed as an avatar, link or text. Improved the look
+  and fell of the blog listing.
 * [NEW] WYSIWYG editor added for blog posts, you can now edit an HTML post
   for a blog using a full-featured Wysiwyg editor (IE only in 1.7)
 * [NEW] Workflow engine added. Create processes, monitor processes and

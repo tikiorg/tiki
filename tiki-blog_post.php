@@ -39,13 +39,20 @@ $smarty->assign('postId',$postId);
 
 $smarty->assign('data',' ');
 $smarty->assign('created',date("U"));
+
+$blog_data = $bloglib->get_blog($blogId);
+$smarty->assign_by_ref('blog_data',$blog_data);
+
+if(isset($_REQUEST['remove_image'])) {
+  $bloglib->remove_post_image($_REQUEST['remove_image']);
+}
+
 // If the articleId is passed then get the article data
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
   $data = $bloglib->get_post($_REQUEST["postId"]);
   
   // If the user owns the weblog then he can edit
-  $blog_data = $tikilib->get_blog($data["blogId"]);
   if($user && $user==$blog_data["user"]) {
     $data["user"] = $user;
   } 
@@ -58,10 +65,34 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
     }
   }
   if(empty($data["data"])) $data["data"]=' ';
+
+
   $smarty->assign('data',$data["data"]);
+  $smarty->assign('title',$data["title"]);
   $smarty->assign('created',$data["created"]);
   $smarty->assign('parsed_data',$tikilib->parse_data($data["data"]));
 }
+
+
+if($postId) {
+	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	 $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+	 $data = '';
+	 while(!feof($fp)) {
+	   $data .= fread($fp,8192*16);
+	 }
+	 fclose($fp);
+	 $size = $_FILES['userfile1']['size'];
+	 $name = $_FILES['userfile1']['name'];
+	 $type = $_FILES['userfile1']['type'];
+	 $bloglib->insert_post_image($postId,$name,$size,$type,$data);
+	}
+	
+	$post_images = $bloglib->get_post_images($postId);
+	$smarty->assign_by_ref('post_images',$post_images);
+}
+
+
 
 $smarty->assign('preview','n');
 if(isset($_REQUEST["preview"])) {
@@ -81,6 +112,9 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('parsed_data',$parsed_data);
   $smarty->assign('preview','y');
 }
+
+// remove images (permissions!)
+
 
 if(isset($_REQUEST["save"])) {
   include_once("lib/imagegals/imagegallib.php");
@@ -133,10 +167,11 @@ if(isset($_REQUEST["save"])) {
   }
 
   $_REQUEST["data"] = $imagegallib->capture_images($_REQUEST["data"]);
+  $title = isset($_REQUEST['title'])?$_REQUEST['title'] : '';
   if($_REQUEST["postId"]>0) {
-    $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user);
+    $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user,$title);
   } else {
-    $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user);
+    $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user,$title);
   }
   
   header("location: tiki-view_blog.php?blogId=".$_REQUEST["blogId"]);
