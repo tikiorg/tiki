@@ -4639,6 +4639,7 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     global $notificationlib;
     global $feature_user_watches;
     global $wiki_watch_author;
+    global $wiki_watch_comments;
     global $wiki_watch_editor;
     global $sender_email;
     include_once ('lib/notifications/notificationlib.php');
