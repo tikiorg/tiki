@@ -1,5 +1,6 @@
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
+<div class="article">
 <div class="articletitle">
 <span class="titlea">{$listpages[ix].title}</span><br />
 {if ($listpages[ix].show_author eq 'y')
@@ -103,6 +104,7 @@
 </td>
 </tr>
 </table>
+</div>
 </div>
 {/if}
 {/section}
