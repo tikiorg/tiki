@@ -85,6 +85,7 @@
 <span class="tabbut"><a href="javascript:flip('edithelpzone');" class="linkbut">{tr}Wiki quick help{/tr}</a></span>
 </div>
 
+<table class="normal">
 {include file=categorize.tpl}
 {include file=structures.tpl}
 
