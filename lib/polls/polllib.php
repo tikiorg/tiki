@@ -5,7 +5,7 @@ class PollLib extends TikiLib {
   {
     # this is probably uneeded now
     if(!$db) {
-      die("Invalid db object passed to PollLib constructor");  
+      die("aInvalid db object passed to PollLib constructor");  
     }
     $this->db = $db;  
   }
@@ -224,4 +224,5 @@ class PollLib extends TikiLib {
 }
 
 $polllib= new PollLib($dbTiki);
+
 ?>

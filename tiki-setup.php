@@ -1,6 +1,4 @@
 <?php
-
-
 function system_check() {
 	if (!function_exists('posix_getuid'))
 		return true;

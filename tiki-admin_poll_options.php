@@ -4,6 +4,10 @@ require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/polls/polllib.php');
 
+if(!isset($polllib)) {
+  $polllib = new PollLib($dbTiki);
+}
+
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
     $smarty->display("styles/$style_base/error.tpl");

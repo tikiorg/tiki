@@ -6,6 +6,10 @@ include_once('lib/polls/polllib.php');
 include_once('lib/banners/bannerlib.php');
 include_once('lib/dcs/dcslib.php');
 
+if(!isset($polllib)) {
+  $polllib = new PollLib($dbTiki);
+}
+
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
