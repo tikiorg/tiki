@@ -78,9 +78,13 @@ $pdflib =& new TikiPdfLib($pdfopts);
 $data='';
 foreach(array_values($convertpages) as $page) {
   $info = $tikilib->get_page_info($page);
-  $data.="\n<h1>$page</h1>\n<br/>\n";
+  $data.="\n<C:page:$page>\n<br/>\n";
   $data.=$tikilib->parse_data($info["data"]);
 }
+
+//todo: add linkdestinations for titlebars
+$pdflib->insert_linkdestinations($convertpages);
+// now add data
 $pdflib->insert_html($data);
 $pdfdebug=false;
 if($pdfdebug) {
