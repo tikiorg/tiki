@@ -8,14 +8,14 @@
  * Purpose:  translate a block of text
  * -------------------------------------------------------------
  */
-//global $lang;
-//include_once('lang/language.php');
 function smarty_block_tr($params, $content, &$smarty)
 {
   global $lang_use_db;
   if ($lang_use_db!='y') {
-    global $lang;
     if ($content) {
+    global $language;
+    global $lang;
+    include_once("lang/$language/language.php");
       if(isset($lang[$content])) {
         echo $lang[$content];  
       } else {
