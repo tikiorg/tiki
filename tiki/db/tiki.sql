@@ -2830,11 +2830,6 @@ CREATE TABLE tiki_user_assigned_modules (
   position char(1) default NULL,
   ord int(4) default NULL,
   type char(1) default NULL,
-  title varchar(40) default NULL,
-  cache_time int(14) default NULL,
-  rows int(4) default NULL,
-  groups text,
-  params varchar(250) default NULL,
   user varchar(200) NOT NULL default '',
   PRIMARY KEY  (name,user)
 ) TYPE=MyISAM;
