@@ -8,7 +8,7 @@ $tmp2 = isset($_SERVER["PHP_SELF"]) ? $_SERVER["PHP_SELF"] : "";
 
 // concat all, remove the // between server and path and then
 // remove the name of the script itself:
-$url = str_replace("tiki-register_site.php", "",$tmp1.substr($tmp2,1));
+$url = $tmp1.dirname($tmp2);
 
 $info = Array();
 $info["name"] = $tikilib->get_preference( "siteTitle", "" );
