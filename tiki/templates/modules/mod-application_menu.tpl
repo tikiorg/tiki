@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.95 2004-04-23 18:26:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.96 2004-05-01 16:55:22 lphuberdeau Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -375,6 +375,18 @@
   {if $tiki_p_admin_quizzes eq 'y'}
   &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin quiz{/tr}</a><br />
   {/if}
+  </div>
+{/if}
+
+{if $feature_sheet eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('shtmenu');"><img src="img/icons/fo.gif" style="border: 0" name="shtmenuicn" alt="{tr}ShtMenu{/tr}"/></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('shtmenu');">[-]</a>{/if} 
+  <a href="tiki-sheets.php" class="separator">{tr}TikiSheet{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('shtmenu');">[+]</a>{/if}
+  </div>
+  <div id="shtmenu" style="{$mnu_shtmenu}">
   </div>
 {/if}
 
