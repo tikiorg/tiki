@@ -10,7 +10,8 @@
     <tr><td class="form">{tr}Comments default ordering{/tr}
     </td><td>
     <select name="poll_comments_default_ordering">
-    <option value="commentDate_desc" {if $poll_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="commentDate_desc" {if $poll_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+		<option value="commentDate_asc" {if $poll_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
     <option value="points_desc" {if $poll_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
