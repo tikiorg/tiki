@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.261 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.262 2004-08-28 23:12:30 redflo Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -19,6 +19,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
   header("location: index.php");
   exit;
 }
+
+// see http://tikiwiki.org/tiki-index.php?page=CharacterEncodingTrouble
+header('Content-Type: text/html; charset=utf-8');
 
 // include_once("lib/init/setup_inc.php");
 include_once("lib/init/initlib.php");
