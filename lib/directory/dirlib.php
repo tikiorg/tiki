@@ -114,7 +114,7 @@ class DirLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["sites"] = $this->getOne("select count(*) from `tiki_category_sites` where `categId`=",array((int)$res["categId"]));
+			$res["sites"] = $this->getOne("select count(*) from `tiki_category_sites` where `categId`=?",array((int)$res["categId"]));
 			//$res["path"]=$this->dir_get_path_text($res["categId"]);
 			$ret[] = $res;
 		}
