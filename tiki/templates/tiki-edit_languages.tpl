@@ -75,13 +75,13 @@
   <div class="simplebox">
   {tr}Edit translations{/tr}:<br />
   <table>
-  <tr><td align="right"><input name="tran_search" value="{$tran_search|escape}" size=10  maxlength=255></td>
-      <td align="center"><input type="submit" name="tran_search_sm" value="{tr}search{/tr}" /></td></tr>
+  <tr><td align="left" colspan=4><input name="tran_search" value="{$tran_search|escape}" size=10  maxlength=255 />
+      <input type="submit" name="tran_search_sm" value="{tr}search{/tr}" /></td></tr>
   {section name=it loop=$untranslated}
   <tr><td class="form">{tr}Original{/tr}:</td>
-      <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]|escape}" size=20 maxlength=255></td>
+      <td><input name="edit_edt_source_{$smarty.section.it.index}" value="{$untranslated[it]}" size=30 maxlength=255 /></td>
       <td class="form">{tr}Translation{/tr}:</td>
-      <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]|escape}" size=20 maxlength=255></td>
+      <td><input name="edit_edt_tran_{$smarty.section.it.index}" value="{$translation[it]}" size=42 maxlength=255 /></td>
       <td align="center"><input type="submit" name="edt_tran_{$smarty.section.it.index}" value="{tr}translate{/tr}" /></td>
       <td align="center"><input type="submit" name="del_tran_{$smarty.section.it.index}" value="{tr}delete{/tr}" /></td>
   {/section}

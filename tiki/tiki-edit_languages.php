@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.12 2003-11-27 00:48:27 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.13 2003-12-07 22:09:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,8 +81,8 @@ if (isset($_REQUEST["add_tran"])) {
 	$add_tran_tran = $_REQUEST["add_tran_tran"];
 
 	if (strlen($add_tran_source) != 0 && strlen($add_tran_tran) != 0) {
-		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES);
-		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES);
+		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES, "UTF-8");
+		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES, "UTF-8");
 		$query = "insert into `tiki_language` values (?,?,?)";
 		$result = $tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran));
 		// remove from untranslated Table
@@ -108,8 +108,8 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			// Handle edits in translate recorded
 			if (isset($_REQUEST["edit_rec_$i"])) {
 				if (strlen($_REQUEST["edit_rec_tran_$i"]) > 0 && strlen($_REQUEST["edit_rec_source_$i"]) > 0) {
-					$_REQUEST["edit_rec_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_source_$i"]), ENT_NOQUOTES);
-					$_REQUEST["edit_rec_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_tran_$i"]), ENT_NOQUOTES);
+					$_REQUEST["edit_rec_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_source_$i"]), ENT_NOQUOTES, "UTF-8");
+					$_REQUEST["edit_rec_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_rec_tran_$i"]), ENT_NOQUOTES, "UTF-8");
 					$query = "insert into `tiki_language` values(?,?,?)";
 					$result = $tikilib->query($query,array($_REQUEST["edit_rec_source_$i"],$edit_language,$_REQUEST["edit_rec_tran_$i"]));
 					$query = "delete from `tiki_untranslated` where `source`=? and lang=?";
@@ -119,21 +119,21 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 			} elseif (isset($_REQUEST["edt_tran_$i"])) {
 				// Handle edits in edit translations
 				if (strlen($_REQUEST["edit_edt_tran_$i"]) > 0 && strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$_REQUEST["edit_edt_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_tran_$i"]), ENT_NOQUOTES);
-					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_source_$i"]), ENT_NOQUOTES);
-					$query = "update `tiki_language` set `tran`=? where `source`=? and `lang`=?";
+					$_REQUEST["edit_edt_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_tran_$i"]), ENT_NOQUOTES, "UTF-8");
+					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_source_$i"]), ENT_NOQUOTES, "UTF-8");
+					$query = "update `tiki_language` set `tran`=? where `source`=binary ? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],$_REQUEST["edit_edt_source_$i"],$edit_language));
 
 					//if ($result->numRows()== 0 ) 
 					if (!isset($result)) {
-						$query = "insert into `tiki_language` values(?,?,?)";
+						$query = "insert into `tiki_language` values(binary ?,binary ?,?)";
 						$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"]));
 					}
 				}
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
 				// Handle deletes here
 				if (strlen($_REQUEST["edit_edt_source_$i"]) > 0) {
-					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_etd_source_$i"]), ENT_NOQUOTES);
+					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_etd_source_$i"]), ENT_NOQUOTES, "UTF-8");
 					$query = "delete from `tiki_language` where `source`=? and `lang`=?";
 					$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language));
 				}
@@ -175,7 +175,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$bindvars2 = array($edit_language);
 
 	if (isset($_REQUEST["tran_search"])) {
-		$tran_search = htmlentities(strip_tags($_REQUEST["tran_search"]), ENT_NOQUOTES);
+		$tran_search = htmlentities(strip_tags($_REQUEST["tran_search"]), ENT_NOQUOTES, "UTF-8");
 
 		if (strlen($tran_search) > 0) {
 			$smarty->assign('tran_search', $tran_search);
