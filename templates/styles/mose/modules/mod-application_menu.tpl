@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.21 2004-05-05 21:59:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.22 2004-05-05 22:05:34 sylvieg Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
@@ -82,7 +82,7 @@
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:toggle('wfmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="wfmenu" />&nbsp;</a>
+  <a class="separator" href="javascript:icntoggle('wfmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="wfmenuicn" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('wfmenu');">[-]</a>{/if} 
   <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('wfmenu');">[+]</a>{/if}
@@ -277,7 +277,7 @@
 {if $feature_file_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('filegalmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="galmenuicn" />&nbsp;</a>
+  <a class="separator" href="javascript:icntoggle('filegalmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="filegalmenuicn" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('filegalmenu');">[-]</a>{/if} 
   <a class="separator" href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('filegalmenu');">[+]</a>{/if}
