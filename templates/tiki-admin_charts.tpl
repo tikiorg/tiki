@@ -57,13 +57,13 @@
 	<tr>
 		<td class="formcolor">{tr}Users can suggest new items{/tr}</td>
 		
-		<td class="formcolor"><input {literal}onChange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id='chksug' type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
+		<td class="formcolor"><input {literal}onchange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id='chksug' type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
 		
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Auto validate user suggestions{/tr}</td>
 		
-		<td class="formcolor"><input {literal}onChange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id='chkaut' type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
+		<td class="formcolor"><input {literal}onchange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id='chkaut' type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
 		
 	</tr>
 	
@@ -119,7 +119,7 @@
 	<tr>
 		<td class="formcolor">{tr}Users can vote again after{/tr}</td>
 		<td class="formcolor">
-			<select id='selva' name="voteAgainAfter" {literal}onChange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal} >
+			<select id='selva' name="voteAgainAfter" {literal}onchange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal} >
 				<option value="0" {if $info.voteAgainAfter eq "0"}selected="selected"{/if}>{tr}Anytime{/tr}</option>
 				<option value="300" {if $info.voteAgainAfter eq "300"}selected="selected"{/if}>{tr}5 minutes{/tr}</option>
 				<option value="86400" {if $info.voteAgainAfter eq "86400"}selected="selected"{/if}>{tr}1 day{/tr}</option>

@@ -40,7 +40,7 @@
  | <a class="link" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>]
 <h3>{tr}Assign themes to objects{/tr}</h3>
 <form id='objform' action="tiki-theme_control_objects.php" method="post">
-<select name="type" onChange="javascript:document.getElementById('objform').submit();">
+<select name="type" onchange="javascript:document.getElementById('objform').submit();">
 {section name=ix loop=$types}
 <option value="{$types[ix]|escape}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
 {/section}

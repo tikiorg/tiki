@@ -31,7 +31,7 @@
 <h2>{tr}Parent category{/tr}:</h2>
 {* Display the path adding manually the top category id=0 *}
 <form name="path" method="post" action="tiki-directory_admin_related.php">
-<select name="parent" onChange="javascript:path.submit();">
+<select name="parent" onchange="javascript:path.submit();">
 {section name=ix loop=$all_categs}
 <option value="{$all_categs[ix].categId|escape}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
 {/section}
