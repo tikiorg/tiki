@@ -3544,7 +3544,7 @@ class TikiLib extends TikiDB {
 	    // New syntax for wiki pages ((name|desc)) Where desc can be anything
 	    // preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 	    // match ((name|desc)) as well as ((name|))
-	    preg_match_all("/\(\(($page_regex)\|(.*)\)\)/", $data, $pages);
+	    preg_match_all("/\(\(($page_regex)\|(.*?)\)\)/", $data, $pages);
 
 	    $temp_max = count($pages[1]);
 	    for ($i = 0; $i < $temp_max; $i++) {
