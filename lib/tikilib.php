@@ -1431,16 +1431,6 @@ function add_pageview() {
 	return $result;
     }
 
-/* Moved to commentslib a while ago
-    //shared
-    function get_forum($forumId) {
-	$query = "select * from `tiki_forums` where `forumId`=?";
-	$result = $this->query($query,array((int)$forumId));
-	$res = $result->fetchRow();
-	return $res;
-    }
-*/
-
     /*shared*/
     function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find) {
 	$bindvars = array("forum",0);
@@ -1503,58 +1493,6 @@ function add_pageview() {
 	return $retval;
     }
 
-/* moved to commentslib.php a while ago
-    //shared
-    function list_forums($offset, $maxRecords, $sort_mode, $find) {
-	$bindvars = array();
-	if ($find) {
-	    $findesc = '%'.$find.'%';
-	    $mid = " where (`name` like ? or `description` like ?)";
-	    $bindvars[] = $findesc;
-	    $bindvars[] = $findesc;
-	} else {
-	    $mid = "";
-	}
-
-	$query = "select * from `tiki_forums` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_forums` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$now = date("U");
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
-	    $res["age"] = $forum_age;
-
-	    if ($forum_age) {
-		$res["posts_per_day"] = $res["comments"] / $forum_age;
-	    } else {
-		$res["posts_per_day"] = 0;
-	    }
-
-	    // Now select `users`
-	    $objectId = $res["forumId"];
-	    $query = "select distinct `userName` from `tiki_comments` where `object`=? and `objectType`=?";
-	    $result2 = $this->query($query,array((string) $objectId,"forum"));
-	    $res["users"] = $result2->numRows();
-
-	    if ($forum_age) {
-		$res["users_per_day"] = $res["users"] / $forum_age;
-	    } else {
-		$res["users_per_day"] = 0;
-	    }
-
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-*/
-
     /*shared*/
     function remove_object($type, $id) {
     	global $categlib, $dbTiki;
@@ -1572,53 +1510,6 @@ function add_pageview() {
 	$result = $this->query($query,array(md5($object),$type));
 	return true;
     }
-
-/* moved to categlib.php; will delete this code if no problems arise
-    // shared
-    function uncategorize_object($type, $id) {
-	// Fixed query. -rlpowell
-	$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
-	$catObjectId = $this->getOne($query, array((string) $type,(string) $id));
-
-	if ($catObjectId) {
-	    $query = "delete from `tiki_category_objects` where `catObjectId`=?";
-	    $result = $this->query($query,array((int) $catObjectId));
-	    $query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
-	    $result = $this->query($query,array((int) $catObjectId));
-	}
-    }
-*/
-
-/* moved to categlib.php; will delete this code if no problems arise
-    // shared
-    // \todo remove hardcoded html from get_categorypath()
-    function get_categorypath($cats) {
-	global $dbTiki;
-	global $smarty;
-	global $tikilib;
-	global $feature_categories;
-	global $categlib;
-
-	if (!is_object($categlib)) {
-	    require_once ("lib/categories/categlib.php");
-	}
-
-	$catpath = '';
-	foreach ($cats as $categId) {
-	    $catpath .= '<span class="categpath">';
-	    $path = '';
-	    $info = $categlib->get_category($categId);
-	    $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
-
-	    while ($info["parentId"] != 0) {
-		$info = $categlib->get_category($info["parentId"]);
-		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> > ' . $path;
-	    }
-	    $catpath .= $path . '</span><br />';
-	}
-	return $catpath;
-    }
-*/
 
 /* get_categorypath_array() doesn't seem to be used anywhere
     function get_categorypath_array($cats,$focus=0) {
@@ -1667,124 +1558,6 @@ function add_pageview() {
 	}
 	return $in_multi_array;
     }
-
-/* moved to categlib.php; will delete this code if no problems arise
-    // shared
-    function get_categoryobjects($catids) {
-	global $dbTiki;
-
-	global $smarty;
-	global $tikilib;
-	global $feature_categories;
-	global $categlib;
-
-	if (!is_object($categlib)) {
-	    require_once ("lib/categories/categlib.php");
-	}
-
-	// TODO: move this array to a lib
-	// array for converting long type names to translatable headers (same strings as in application menu)
-	$typetitles = array(
-		"article" => "Articles",
-		"blog" => "Blogs",
-		"directory" => "Directories",
-		"faq" => "FAQs",
-		"file gallery" => "File Galleries",
-		"forum" => "Forums",
-		"image gallery" => "Image Galleries",
-		"newsletter" => "Newsletters",
-		"poll" => "Polls",
-		"quiz" => "Quizzes",
-		"survey" => "Surveys",
-		"tracker" => "Trackers",
-		"wiki page" => "Wiki"
-		);
-
-	// string given back to caller
-	$out = "";
-
-	// array with items to be displayed
-	$listcat = array();
-	// title of categories
-	$title = '';
-	$find = "";
-	$offset = 0;
-	$maxRecords = 500;
-	$count = 0;
-	$sort = 'name_asc';
-
-	foreach ($catids as $id) {
-	    // get data of category
-	    $cat = $categlib->get_category($id);
-
-	    // store name of category
-	    // \todo remove hardcoded html
-	    if ($count != 0) {
-		$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-	    } else {
-		$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-	    }
-
-	    // keep track of how many categories there are for split mode off
-	    $count++;
-	    $subcategs = array();
-	    $subcategs = $categlib->get_category_descendants($id);
-
-	    // array with objects in category
-	    $objectcat = array();
-	    $objectcat = $categlib->list_category_objects($id, $offset, $maxRecords, $sort, $find);
-
-	    foreach ($objectcat["data"] as $obj) {
-		$type = $obj["type"];
-		if (!($this->in_multi_array($obj['name'], $listcat))) {
-		    if (isset($typetitles["$type"])) {
-			$listcat["{$typetitles["$type"]}"][] = $obj;
-		    } elseif (isset($type)) {
-			$listcat["$type"][] = $obj;
-		    }
-		}
-	    }
-
-	    // split mode: appending onto $out each time
-	    $smarty->assign("title", $title);
-	    $smarty->assign("listcat", $listcat);
-	    $out .= $smarty->fetch("tiki-simple_plugin.tpl");
-	    // reset array for next loop
-	    $listcat = array();
-	    // reset title
-	    $title = '';
-	    $count = 0;
-	}
-
-	// non-split mode
-	//  $smarty -> assign("title", $title);
-	//  $smarty -> assign("listcat", $listcat);
-	//  $out = $smarty -> fetch("tiki-simple_plugin.tpl");
-	return $out;
-    }
-*/
-
-/* moved to categlib.php; will delete this code if no problems arise
-    // shared used in mod-last_category_objects
-    function last_category_objects($categId, $maxRecords, $type="") {
-	$mid = "and tbl1.`categId`=?";
-	$bindvars = array((int)$categId);
-	if ($type) {
-	    $mid.= " and tbl2.`type`=?";
-	    $bindvars[] = $type;
-	}
-	$sort_mode = "created_desc";
-	$query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
-	$query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
-	$result = $this->query($query,$bindvars,$maxRecords,0);
-
-	$ret = array('data'=>array());
-	while ($res = $result->fetchRow()) {
-	    $ret['data'][] = $res;
-	}
-	return $ret;
-    }
-*/
 
     /*shared*/
     function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
@@ -2654,56 +2427,6 @@ function add_pageview() {
 	return $res;
     }
 
-/* Moved to artlib.php
-    function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, 
-	    $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
-	    $topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
-
-	if ($expireDate < $publishDate) {
-	    $expireDate = $publishDate;
-	}
-	$hash = md5($title . $heading . $body);
-	$now = date("U");
-	if(empty($imgdata)) $imgdata='';
-	// Fixed query. -rlpowell
-	$query = "select `name`  from `tiki_topics` where `topicId` = ?";
-	$topicName = $this->getOne($query, array($topicId) );
-	$size = strlen($body);
-
-	// Fixed query. -rlpowell
-	if ($articleId) {
-	    // Update the article
-	    $query = "update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ";
-	    $query.= " `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `heading` = ?, `body` = ?, ";
-	    $query.= " `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ";
-	    $query.= " `image_caption`=?, `lang`=?  where `articleId` = ?";
-
-	    $result = $this->query($query, array(
-			$title, $authorName, (int) $topicId, $topicName, (int) $size, $useImage, $imgname, $imgtype, (int) $imgsize, $imgdata, $isfloat,
-			(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $now, $user, $type, (float) $rating, 
-			$topline, $subtitle, $linkto, $image_caption, $lang, (int) $articleId ) );
-	} else {
-	    // Fixed query. -rlpowell
-	    // Insert the article
-	    $query = "insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ";
-	    $query.= " `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `reads`, `votes`, `points`, `size`, `topicName`, ";
-	    $query.= " `image_x`, `image_y`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`) ";
-	    $query.= " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-	    $result = $this->query($query, array(
-			$title, $authorName, (int) $topicId, $useImage, $imgname, (int) $imgsize, $imgtype, $imgdata, (int) $publishDate, (int) $expireDate, (int) $now, $heading,
-			$body, $hash, $user, 0, 0, 0, (int) $size, $topicName, (int) $image_x, (int) $image_y, $type, (float) $rating, $isfloat,
-			$topline, $subtitle, $linkto, $image_caption, $lang));
-
-	    // Fixed query. -rlpowell
-	    $query2 = "select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?";
-	    $articleId = $this->getOne($query2, array( (int) $now, $title, $hash ) );
-	}
-
-	return $articleId;
-    }
-*/
-
     /*shared*/
     function get_topic_image($topicId) {
 	// Fixed query. -rlpowell
@@ -3130,74 +2853,6 @@ function add_pageview() {
 	$result = $this->query($query, array( $page_ref_id ) );
 	return true;
     }
-/* Moved to userlib
-    function remove_user($user) {
-	$query = "delete from `users_users` where `login` = ?";
-
-	$result = $this->query($query, array($user) );
-	return true;
-    }
-
-    function user_exists($user) {
-
-	return $userlib->get_user_details('userId', $user) ? true : false;
-
-    }
-*/
-/* Moved to userlib.php (a while ago I think)
-    function add_user($user, $pass, $email) {
-	global $wikiHomePage;
-
-	if (user_exists($user))
-	    return false;
-
-	$query = "insert into `users_users`(`login`,`password`,`email`)
-	    values(?, ?, ?)";
-	$result = $this->query($query, array($user,$pass,$email) );
-	$action = "user $user added";
-	$t = date("U");
-	$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	$result = $this->query($query,array($action,$wikiHomePage,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],''));
-	return true;
-    }
-
-	// Moved to userlib.php (a while ago I think)
-    function get_user_password($user) {
-	return $this->getOne("select `password`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
-    }
-*/
-
-/*  Moved to userlib
-    function get_user_email($user) {
-	return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
-    }
-*/
-
-/* Moved to userlib (a while back I think)
-    function get_user_info($user) {
-	$query = "select `user` , `email`, `lastLogin` from `tiki_users` where `user`=?";
-
-	$result = $this->query($query, array( $user ));
-	$res = $result->fetchRow();
-	$aux = array();
-	$aux["user"] = $res["user"];
-	$user = $aux["user"];
-	$aux["email"] = $res["email"];
-	$aux["lastLogin"] = $res["lastLogin"];
-	// Obtain lastChanged
-	$query2 = "select count(*) from `tiki_pages` where `user`=?";
-	$result2 = $this->query($query2, array($user));
-	$res2 = $result2->fetchRow();
-	$aux["versions"] = $res2[0];
-	// Obtain versions
-	$query3 = "select count(*) from `tiki_history` where `user`=?";
-	$result3 = $this->query($query3, array($user));
-	$res3 = $result3->fetchRow();
-	$aux["lastChanged"] = $res3[0];
-	$ret[] = $aux;
-	return $aux;
-    }
-*/
 
     /*shared*/
     function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
@@ -3548,79 +3203,6 @@ function add_pageview() {
 	return $retval;
     }
 
-/* Moved to userlib (a while ago I think)
-    function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'user_desc') {
-	$sort_mode = str_replace("_", " ", $sort_mode);
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'versions desc',
-			'versions asc',
-			'changed asc',
-			'changed desc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	// Return an array of users indicating name, email, last changed pages, versions, lastLogin
-	$query = "select `user` , `email`, `lastLogin` from `tiki_users` order by ".$this->convert_sortmode($sort_mode);
-	$cant = $this->getOne("select count(*) from `tiki_users`",array());
-	$result = $this->query($query,array(),$maxRecords,$offset);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $aux = array();
-
-	    $aux["user"] = $res["user"];
-	    $user = $aux["user"];
-	    $aux["email"] = $res["email"];
-	    $aux["lastLogin"] = $res["lastLogin"];
-	    // Obtain lastChanged
-	    $aux["versions"] = $this->getOne("select count(*) from `tiki_pages` where `user`=?",array($user));
-	    // Obtain versions
-	    $aux["lastChanged"] = $this->getOne("select count(*) from `tiki_history` where `user`=?",array($user));
-	    $ret[] = $aux;
-	}
-
-	if ($old_sort_mode == 'changed asc') {
-	    usort($ret, 'compare_changed');
-	}
-
-	if ($old_sort_mode == 'changed desc') {
-	    usort($ret, 'r_compare_changed');
-	}
-
-	if ($old_sort_mode == 'versions asc') {
-	    usort($ret, 'compare_versions');
-	}
-
-	if ($old_sort_mode == 'versions desc') {
-	    usort($ret, 'r_compare_versions');
-	}
-
-	if (in_array($old_sort_mode, array(
-			'versions desc',
-			'versions asc',
-			'changed asc',
-			'changed desc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-*/
-
     function get_all_preferences() {
 	global $preferences;
 	if (empty($preferences)) {
@@ -3705,22 +3287,6 @@ function add_pageview() {
 	}
     }
 
-/* Moved to userslib
-    function get_user_details($item, $login) {
-	global $user_details;
-
-	if (!isset($user_details[$login])) {
-	    $this->load_user_cache($login);
-	}
-
-	if ( isset($user_details[$login][$item]) ) {
-	    return $user_details[$login][$item];
-	} else {
-	    return false;
-	}
-
-    }
-*/
     function get_user_preference($user, $name, $default = '') {
 	global $user_preferences;
 
@@ -3752,26 +3318,6 @@ function add_pageview() {
 	$result = $this->query($query, $bindvars);
 	return true;
     }
-
-/* Moved to userlib (a while ago I think)
-    function validate_user($user, $pass) {
-	$query = "select count(*) from `tiki_users`
-	    where `user`=? and `password`=?";
-
-	$result = $this->getOne($query, array( $user, $pass ) );
-
-	if ($result) {
-	    $t = date("U");
-
-	    $query = "update `tiki_users` set `lastLogin`=?
-		where `user`=?";
-	    $result = $this->query($query, array( $t, $user));
-	    return true;
-	}
-
-	return false;
-    }
-*/
 
     // This implements all the functions needed to use Tiki
     /*shared*/
