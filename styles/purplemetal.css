@@ -1725,6 +1725,138 @@ padding: inherit;
 cursor: help;
 text-decoration: inherit;
 }
+.catblock {
+  border: 1px solid #aaaaaa;
+} 
+.catlists {
+  border-top: 1px solid #ffffff;
+  padding: 1px 6px 1px 6px;
+  background-color: none;
+  color: #666666;
+} 
+.catlists:last-child {
+  border-bottom: 1px solid #ffffff;
+}
+.catlists:hover {
+  background-color: #dedede;
+}
+.cattitle {
+  color: #000000; 
+  font-weight: bold;
+}
+.catlists a.link {
+  color: #666666; 
+  padding: 0px 4px 0px 4px;
+  border: 1px solid #aaaaaa;
+  -moz-border-radius: 6px;
+}
+.catlists a.link:hover {
+  color: #000000;
+} 
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
+}
+
+/*
+** JsCalendar wrapper
+*/
+#datrigger {
+  border: 2px outset #666666;
+  padding: 1px 3px 1px 5px;
+  margin: 2px;
+  cursor: pointer;
+  font-weight:bold; 
+}
+
+TABLE.admin { width: 100%; }
+table.commentinfo { width: 100%; background-color: #FFF7E6; }
+div#loadstats {
+  background-color: #dedede;
+  font-size: 70%;
+  color: #666666;
+  padding: 5px;
+}
+
+/* phplayers style */
+.box-data table {
+  width: 100%; 
+} 
+.mdkverbar  {
+  margin: 0px;
+} 
+
+.mdksubmenu {
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #FFFFFF;
+  visibility: hidden;
+}
+.mdksubmenu table {
+  width: auto;
+}
+
+.mdksubframe  {
+  z-index: 1000;
+  position: relative;
+  display: block;
+  border: 1px solid #000000;
+}
+
+.mdkitem  {
+  border-top: 1px solid #dedede;
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mdkitem a  {
+  padding: 2px 5px 2px 5px;
+  position: relative;
+  display: block;
+}
+
+.mdkitem a:visited  {
+}
+
+.mdkitem a:hover  {
+  padding: 2px 5px 1px 5px;
+}
+
+.mdkitem a:active {
+  color: #993300;
+}
+
+.mdkitem .mdkfwdarr {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+}
+
+.toc {
+}
+.toc li {
+  margin-top: 3px;
+}
+.tocnav {
+  background-color: #ededed;
+  margin-bottom: 16px;
+}
+.tocnav table {
+  width: 100%;
+  background-color: #ffffff;
+}
+.tocnav a {
+  font-size: 90%;
+  color: #424242;
+}
+/* for jscalendar */
+.calendar {
+  z-index: 200;
+}
+
 
 /* for tabs */
 div.tabs {

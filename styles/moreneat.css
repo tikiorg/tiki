@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.32 2004-01-05 08:11:40 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.33 2004-01-16 23:25:44 mose Exp $
 
 MoreNeat theme
 */
@@ -1682,6 +1682,34 @@ padding: inherit;
 cursor: help;
 text-decoration: inherit;
 }
+.catblock {
+  border: 1px solid #aaaaaa;
+} 
+.catlists {
+  border-top: 1px solid #ffffff;
+  padding: 1px 6px 1px 6px;
+  background-color: none;
+  color: #666666;
+} 
+.catlists:last-child {
+  border-bottom: 1px solid #ffffff;
+}
+.catlists:hover {
+  background-color: #dedede;
+}
+.cattitle {
+  color: #000000; 
+  font-weight: bold;
+}
+.catlists a.link {
+  color: #666666; 
+  padding: 0px 4px 0px 4px;
+  border: 1px solid #aaaaaa;
+  -moz-border-radius: 6px;
+}
+.catlists a.link:hover {
+  color: #000000;
+} 
 
 
 /* TikiIntegrator: By default copy rules dialog not shown */
