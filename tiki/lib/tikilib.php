@@ -2981,6 +2981,16 @@ function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'nam
     return $retval;
 }
 
+function last_pages($maxRecords = -1) {
+	$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convert_sortmode('lastModif_desc');
+	$result = $this->query($query,array(),$maxRecords,0);
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	}
+	return $ret;
+}
+
 function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
 
     if ($sort_mode == 'size_desc') {
