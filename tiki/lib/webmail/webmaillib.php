@@ -95,11 +95,11 @@ class WebMailLib extends TikiLib {
 		// Check the name
 		if ($contactId) {
 			$query = "update `tiki_webmail_contacts` set `firstName`=?, `lastName`=?, `email`=?, `nickname`=? where `contactId`=? and `user`=?";
-			$bindvars = array($firstName, $lastName, $email, $nickname, $contactId, $user);
+			$bindvars = array($firstName,$lastName,$email,$nickname,(int)$contactId,$user);
 			$result = $this->query($query, $bindvars);
 		} else {
 		  $query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?"; 
-		  $result = $this->query($query,array($contactId, $user),-1,-1,false); //the false allows ignoring errors 
+		  $result = $this->query($query,array((int)$contactId, $user),-1,-1,false); //the false allows ignoring errors 
 
       $query = "insert into `tiki_webmail_contacts`(`firstName`,`lastName`,`email`,`nickname`,`user`) values(?,?,?,?,?)"; 
       $result = $this->query($query,array($firstName,$lastName,$email,$nickname,$user)); 
@@ -109,15 +109,13 @@ class WebMailLib extends TikiLib {
 
 	function remove_contact($contactId, $user) {
 		$query = "delete from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
-		$bindvars = array($contactId, $user);
-		$result = $this->query($query, $bindvars);
+		$result = $this->query($query, array((int)$contactId,$user));
 		return true;
 	}
 
 	function get_contact($contactId, $user) {
 		$query = "select * from `tiki_webmail_contacts` where `contactId`=? and `user`=?";
-		$bindvars = array($contactId, $user);
-		$result = $this->query($query, $bindvars);
+		$result = $this->query($query, array((int)$contactId,$user));
 
 		if (!$result->numRows())
 			return false;
@@ -128,31 +126,31 @@ class WebMailLib extends TikiLib {
 
 	function remove_webmail_message($current, $user, $msgid) {
 		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$result = $this->query($query, array($current, $msgid, $user));
+		$result = $this->query($query, array((int)$current,(int)$msgid,$user));
 	}
 
-	function replace_webmail_message($current, $user, $msgid) {
+	function replace_webmail_message($current,$user,$msgid) {
 		$query = "select count(*) from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
 
-		if ($this->getOne($query,array($current,$msgid,$user)) == 0) {
+		if ($this->getOne($query,array((int)$current,(int)$msgid,$user)) == 0) {
 			$query = "insert into `tiki_webmail_messages`(`accountId`,`mailId`,`user`,`isRead`,`isFlagged`,`isReplied`) values(?,?,?,'n','n','n')";
-			$result = $this->query($query,array($current,$msgid,$user));
+			$result = $this->query($query,array((int)$current,(int)$msgid,$user));
 		}
 	}
 
 	function set_mail_flag($current, $user, $msgid, $flag, $value) {
 		// flag can be: isRead,isFlagged,isReplied, value: y/n
 		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$result = $this->query($query,array($current,$msgid,$user));
+		$result = $this->query($query,array((int)$current,(int)$msgid,$user));
 
 		$query = "insert into `tiki_webmail_messages`(`$flag`,`accountId`,`mailId`,`user`) values (?,?,?,?)";
-		$result = $this->query($query,array($value,$current,$msgid,$user));
+		$result = $this->query($query,array($value,(int)$current,(int)$msgid,$user));
 		return true;
 	}
 
 	function get_mail_flags($current, $user, $msgid) {
 		$query = "select `isRead`,`isFlagged`,`isReplied` from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and user=?";
-		$result = $this->query($query, array($current,$msgid,$user));
+		$result = $this->query($query, array((int)$current,(int)$msgid,$user));
 
 		if (!$result->numRows()) {
 			return array(
@@ -175,7 +173,7 @@ class WebMailLib extends TikiLib {
 		$result = $this->query($query, array($user));
 
 		$query = "update `tiki_user_mail_accounts` set `current`='y' where `user`=? and `accountId`=?";
-		$result = $this->query($query, array($user, (int)$accountId ));
+		$result = $this->query($query, array($user,(int)$accountId ));
 	}
 
 	function list_webmail_accounts($user, $offset, $maxRecords, $sort_mode, $find) {
@@ -210,7 +208,7 @@ class WebMailLib extends TikiLib {
 		// Check the name
 		if ($accountId) {
 			$query = "update `tiki_user_mail_accounts` set `user`=?, `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `msgs`=? where `accountId`=? and `user`=?";
-			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,(int)$accountId, $user);
+			$bindvars = array($user,$account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,(int)$accountId, $user);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
