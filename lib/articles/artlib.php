@@ -136,6 +136,7 @@ class ArtLib extends TikiLib {
 
 		global $dbTiki;
 		global $sender_email;
+		if(empty($imgdata)) $imgdata='';
 		include_once ('lib/notifications/notificationlib.php');
 		$hash = md5($title . $heading . $body);
 		$now = date("U");
