@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.46 2003-11-24 05:52:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.47 2003-11-28 02:24:44 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,7 +224,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 	if (isset($_REQUEST["comments_postComment"])) {
 	    if (!empty($_REQUEST["comments_data"])) {
 		if (empty($_REQUEST["comments_title"])) {
-		    $_REQUEST["comments_title"] = tra('Re:'). $thread_info["title"];
+		    $_REQUEST["comments_title"] = tra('Re:').' '.$thread_info["title"];
 		}
 
 		if ($commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
@@ -582,7 +582,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_title', $comment_info["title"]);
     $smarty->assign('comment_data', $comment_info["data"]);
 } else {
-    $smarty->assign('comment_title', tra('Re:'). $thread_info["title"]);
+    $smarty->assign('comment_title', tra('Re:').' '.$thread_info["title"]);
 
     $smarty->assign('comment_data', '');
 }
@@ -602,7 +602,7 @@ if (isset($_REQUEST["quote"]) &&
     $qdata = implode("\n", $quoted_lines);
     $qdata = '> ' . $quote_info["userName"] . ":\n" . $qdata;
     $smarty->assign('comment_data', $qdata);
-    $smarty->assign('comment_title', tra('Re:'). $quote_info["title"]);
+    $smarty->assign('comment_title', tra('Re:').' '.$quote_info["title"]);
     $smarty->assign('openpost', 'y');
 }
 
