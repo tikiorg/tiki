@@ -5,7 +5,7 @@ function refresh_search_index() {
   session_write_close();
 
   // check if we have to run. Run every n-th click:
-  $n=50; //todo: make it configurable
+  $n=5; //todo: make it configurable
   //$n=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
