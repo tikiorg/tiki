@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.14 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.15 2003-12-05 10:55:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,8 +113,7 @@ for ($i = 0; $i < count($listpages["data"]); $i++) {
 			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'n';
 		}
 
-		if ($tiki_p_admin
-			== 'y' || $userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'file gallery', 'tiki_p_blog_admin'))
+		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_blog_admin'))
 			{
 			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'y';
 
