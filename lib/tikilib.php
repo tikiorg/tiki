@@ -2876,9 +2876,9 @@ class TikiLib {
     function get_top_pages($limit) {
 	$query = "select `pageName` , `hits`
 	    from `tiki_pages`
-	    order by `hits` desc limit 0, ?";
+	    order by `hits` desc";
 
-	$result = $this->query($query, array( $limit ));
+	$result = $this->query($query, array(),$limit);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
