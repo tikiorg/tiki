@@ -70,6 +70,9 @@ $content=&$info["data"];
 header("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );
 header( "Content-Disposition: inline; filename=$file" );
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Pragma: public"); 
 if($info["path"]) {
   readfile($fgal_use_dir.$info["path"]);
 } else {

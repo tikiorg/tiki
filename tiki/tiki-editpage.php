@@ -234,7 +234,8 @@ if(isset($_REQUEST["edit"])) {
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $edit_data = $_REQUEST["edit"];  
   } else {
-    $edit_data = strip_tags($_REQUEST["edit"]);
+    //$edit_data = strip_tags($_REQUEST["edit"]);
+    $edit_data = htmlspecialchars($_REQUEST["edit"]);
   }
   
   
