@@ -1,5 +1,7 @@
 Version 1.5 -Regulus-
 
+* [NEW] Added a login screen that can be used in columnless layouts or for emergency purposes if the login box
+  or the columns have problems. The file is tiki-login_scr.php.
 * [NEW] Added a phpinfo link to check your php installation in the admin menu.
 * [NEW] Now you can make batch uploads of zip files for file galleries. If you have the right permission just
   upload a zip file and all the files will be added to the gallery.
