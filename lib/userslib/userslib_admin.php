@@ -610,7 +610,7 @@ class UsersLibAdmin extends UsersLib {
 
 	
 	function validate_user_external_xml($user) {
-		require_once('lib/xml/xmlparserlib.php');
+		require_once('xml/xmlparserlib.php');
 		
 		global $auth_ext_xml_url;
 		if ($tikilib->get_preference('auth_method', 'tiki') == 'cas' && $tikilib->get_preference('auth_ext_xml_', 'tiki') == 'cas') {
