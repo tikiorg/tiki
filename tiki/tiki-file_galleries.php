@@ -214,7 +214,6 @@
 	$smarty->assign_by_ref('offset',$offset);
 	
 	// Get the list of libraries available for this user (or public galleries)
-	// GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
 	$galleries = $filegallib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
 	// Now traverse the galleries and check if there're individual permissions preventing the
 	// user from browsing/editing/removing/listing/uploading to the gallery
@@ -222,11 +221,8 @@
 	  if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'file gallery')) {
 	    $galleries["data"][$i]["individual"]='y';
 	    
-	    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_view_file_gallery')) {
-	      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
-	    } else {
-	      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='n';
-	    }
+		$galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+
 	    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_upload_files')) {
 	      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
 	    } else {
