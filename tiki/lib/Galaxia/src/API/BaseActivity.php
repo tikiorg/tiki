@@ -36,8 +36,8 @@ class BaseActivity extends Base {
   */
   function getActivity($activityId) 
   {
-    $query = "select * from galaxia_activities where activityId=$activityId";
-    $result = $this->query($query);
+    $query = "select * from `galaxia_activities` where `activityId`=?";
+    $result = $this->query($query,array($activityId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     switch($res['type']) {
@@ -79,8 +79,8 @@ class BaseActivity extends Base {
     //Now get backward transitions
     
     //Now get roles
-    $query = "select roleId from galaxia_activity_roles where activityId=".$res['activityId'];
-    $result=$this->query($query);
+    $query = "select `roleId` from `galaxia_activity_roles` where `activityId`=?";
+    $result=$this->query($query,array($res['activityId']));
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $this->roles[] = $res['roleId'];
     }
@@ -89,10 +89,9 @@ class BaseActivity extends Base {
   }
   
   /*! Returns an Array of roleIds for the given user */
-  function getUserRoles($user)
-  {
-    $query = "select roleId from galaxia_user_roles where user='$user'";
-    $result=$this->query($query);
+  function getUserRoles($user) {
+    $query = "select `roleId` from `galaxia_user_roles` where `user`=?";
+    $result=$this->query($query,array($user));
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res['roleId'];
@@ -102,11 +101,10 @@ class BaseActivity extends Base {
 
   /*! Returns an Array of asociative arrays with roleId and name
   for the given user */  
-  function getActivityRoleNames()
-  {
+  function getActivityRoleNames() {
     $aid = $this->activityId;
-    $query = "select gr.roleId,name from galaxia_activity_roles gar, galaxia_roles gr where gar.roleId=gr.roleId and gar.activityId=$aid";
-    $result=$this->query($query);
+    $query = "select gr.`roleId`, `name` from `galaxia_activity_roles` gar, `galaxia_roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
+    $result=$this->query($query,array($aid));
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -115,99 +113,83 @@ class BaseActivity extends Base {
   }
   
   /*! Returns the normalized name for the activity */
-  function getNormalizedName() 
-  {
+  function getNormalizedName() {
   	return $this->normalizedName;
   }
 
   /*! Sets normalized name for the activity */  
-  function setNormalizedName($name)
-  {
+  function setNormalizedName($name) {
     $this->normalizedName=$name;
   }
   
   /*! Sets the name for the activity */
-  function setName($name)
-  {
+  function setName($name) {
     $this->name=$name;
   }
   
   /*! Gets the activity name */
-  function getName()
-  {
+  function getName() {
     return $this->name;
   }
   
   /*! Sets the activity description */
-  function setDescription($desc)
-  {
+  function setDescription($desc) {
     $this->description=$desc;
   }
   
   /*! Gets the activity description */
-  function getDescription()
-  {
+  function getDescription() {
     return $this->description;
   }
   
   /*! Sets if the activity is interactive */
-  function setIsInteractive($is)
-  {
+  function setIsInteractive($is) {
     $this->isInteractive=$is;
   }
   
   /*! Returns if the activity is interactive */
-  function isInteractive()
-  {
+  function isInteractive() {
     return $this->isInteractive == 'y';
   }
   
   /*! Sets if the activity is auto-routed */
-  function setIsAutoRouted($is)
-  {
+  function setIsAutoRouted($is) {
     $this->isAutoRouted = $is;
   }
   
   /*! Gets if the activity is auto routed */
-  function isAutoRouted()
-  {
+  function isAutoRouted() {
     return $this->isAutoRouted == 'y';
   }
 
   /*! Sets the processId for this activity */
-  function setProcessId($pid)
-  {
+  function setProcessId($pid) {
   	$this->pId=$pid;
   }
   
   /*! Gets the processId for this activity*/
-  function getProcessId()
-  {
+  function getProcessId() {
     return $this->pId;
   }
 
   /*! Gets the activityId */
-  function getActivityId()
-  {
+  function getActivityId() {
     return $this->activityId;
   }  
   
   /*! Sets the activityId */
-  function setActivityId($id)
-  {
+  function setActivityId($id) {
     $this->activityId=$id;
   }
   
   /*! Gets array with roleIds asociated to this activity */
-  function getRoles()
-  {
+  function getRoles() {
     return $this->roles;
   }
   
   /*! Sets roles for this activities, shoule receive an
   array of roleIds */
-  function setRoles($roles)
-  {
+  function setRoles($roles) {
     $this->roles = $roles;
   }
   
