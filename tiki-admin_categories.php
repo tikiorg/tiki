@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.20 2004-01-01 03:27:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.21 2004-02-21 18:29:33 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.20 2004-01-01 03:27:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.21 2004-02-21 18:29:33 mose Exp $
 //
 
 // Initialization
@@ -197,8 +197,15 @@ $smarty->assign('tree', $res);
 */
 // ---------------------------------------------------
 function array_csort($marray, $column) {
-  foreach ($marray as $key=>$row) { $sortarr[$key] = $row[$column]; }
-  array_multisort($sortarr, $marray); return $marray;
+	if (is_array($marray)) {
+		$sortarr = array();
+  	foreach ($marray as $key=>$row) { 
+			$sortarr[$key] = $row[$column]; 
+		}
+ 		array_multisort($sortarr, $marray); return $marray;
+	} else {
+		return array();
+	}
 }
 
 $catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
