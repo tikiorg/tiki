@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.9 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.10 2003-10-20 01:16:55 zaufi Exp $
  *
  */
 
@@ -57,6 +57,9 @@ div.box-title {
 	font-weight: bold;
 	letter-spacing: 0.1em;
 }
+div.box-title table {
+    width: 100%;
+}
 
 /* And this is the data */
 div.box-data {
@@ -100,7 +103,8 @@ div.cbox-title {
 }
 
 /* And this is the data */
-div.cbox-data {
+div.cbox-data table {
+    width: 100%;
 }
 
 /* When modules display a list of items each item is enclosed
