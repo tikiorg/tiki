@@ -68,7 +68,7 @@
 </table>
 </div>
 <div class="articletrailer">
-<table>
+<table class="wikitopline">
 <tr>
 {if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
