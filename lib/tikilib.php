@@ -127,6 +127,9 @@ class TikiLib {
 
 		$res = $result->fetchRow();
 
+		//count the number of queries made
+		$this->num_queries++;
+
 		if ($res === false)
 			return (NULL); //simulate pears behaviour
 
