@@ -36,8 +36,13 @@ if(!$tikilib->page_exists($page)) {
 }
 
 if(isset($_REQUEST["rename"])) {
-print("ren");
-$wikilib->wiki_rename_page($_REQUEST['oldpage'],$_REQUEST['newpage']);
+  if(!$wikilib->wiki_rename_page($_REQUEST['oldpage'],$_REQUEST['newpage'])) {
+    $smarty->assign('msg',tra("Cannot rename page maybe new page already exists"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+  $newName=$_REQUEST['newpage'];
+  header("location: tiki-index.php?page=$newName");
 }
 
 $smarty->assign('mid','tiki-rename_page.tpl');

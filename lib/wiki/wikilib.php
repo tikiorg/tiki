@@ -28,11 +28,11 @@ class WikiLib extends TikiLib {
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $page = $res['fromPage'];
-      print("Examining $page<br/>");
 	  $info = $this->get_page_info($page);
 	  $data=addslashes(str_replace($oldName,$newName,$info['data']));
 	  $query = "update tiki_pages set data='$data' where pageName='$page'";
 	  $this->query($query);	  
+	  $this->invalidate_cache($page);
     }
     
     // correct toPage and fromPage in tiki_links
@@ -70,10 +70,10 @@ class WikiLib extends TikiLib {
     $this->query($query);	  	  	  	
   	
   	// theme_control_objects(objId,name)
-  	$query = "update tiki_control_objects set objId='newId',name='$newName' where objId='$oldId'";
+  	$query = "update tiki_theme_control_objects set objId='newId',name='$newName' where objId='$oldId'";
     $this->query($query);	  	  	  	
   	
-  	
+
   }
   
   function save_notepad($user,$title,$data)
