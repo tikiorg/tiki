@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-include_once('lib/backups/backuplib.php');
+include_once('lib/backups/backupslib.php');
 
 // Check for admin permission
 if($tiki_p_admin != 'y') {
