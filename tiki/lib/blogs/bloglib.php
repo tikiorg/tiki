@@ -229,7 +229,7 @@ class BlogLib extends TikiLib {
   function blog_post($blogId,$data,$user,$title='',$trackbacks='')
   {
     // update tiki_blogs and call activity functions
-
+	global $smarty;
     $tracks=addslashes(serialize(explode(',',$trackbacks)));
     $title=addslashes($title);
     $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
@@ -252,19 +252,20 @@ class BlogLib extends TikiLib {
 		if($not) {
 			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
 	        $smarty->assign('mail_title',$title);
+	        $smarty->assign('mail_blogid',$blogId);
+	        $smarty->assign('mail_postid',$id);
 	        $smarty->assign('mail_date',date("U"));
 	        $smarty->assign('mail_user',$user);
-	        $smarty->assign('mail_comment',$edit_comment);
 	        $smarty->assign('mail_data',$data);
 	        $smarty->assign('mail_hash',$not['hash']);
 	        $foo = parse_url($_SERVER["REQUEST_URI"]);
 		    $machine =httpPrefix().$foo["path"];
 	        $smarty->assign('mail_machine',$machine);
-	        $parts = explode($foo['path']);
+	        $parts = explode('/',$foo['path']);
 	        if(count($parts)>1) unset($parts[count($parts)-1]);
-	        $smarty->assign('mail_machine_raw',implode('/',$parts));
+	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $mail_data = $smarty->fetch('mail/user_watch_blog_post.tpl');
-	        mail($not['email'], tra('Blog post').' '.$title, $mail_data);          
+	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data);          
         }
       }
 
