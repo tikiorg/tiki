@@ -9,13 +9,13 @@
 <div class="separator">
 
 {if $feature_menusfolderstyle eq 'y'}
-<a class='separator' href="javascript:icntoggle('{$cname}');"><img src="img/icons/fo.gif" border="0" name="{$cname}icn" alt=''/></a>&nbsp;
-{else}<a class='separator' href="javascript:toggle('{$cname}');">[-]</a>{/if} 
+<a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/fo.gif" border="0" name="{$cname}icn" alt=''/></a>&nbsp;
+{else}<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>{/if} 
 <a href="{$chdata.url|escape:"url"}" class="separator">{tr}{$chdata.name}{/tr}</a>
 {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('{$cname}');">[+]</a>{/if} 
 </div>
 {assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if} id='{$cname}'>
+<div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {else}
 <div>&nbsp;<a href="{$chdata.url|escape:"url"}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {/if}
