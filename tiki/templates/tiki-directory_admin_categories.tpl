@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a><br/><br/>
 {* Display the title using parent *}
-
+{include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}
 
 <h2>{tr}Parent category{/tr}:</h2>

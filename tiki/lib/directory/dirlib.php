@@ -86,11 +86,98 @@ class DirLib extends TikiLib {
     return $retval;
   }
   
-  function dir_get_all_categories($offset,$maxRecords,$sort_mode,$find)
+  function dir_list_sites($parent,$offset,$maxRecords,$sort_mode,$find,$isValid)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    if($isValid) {
+      $mid.= " and isValid='$isValid' ";
+    }
+    $query = "select * from tiki_directory_sites tds, tiki_category_sites tcs where tds.siteId=tcs.siteId and tcs.categId=$parent $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_sites tds, tiki_category_sites tcs where tds.siteId=tcs.siteId and tcs.categId=$parent $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function dir_list_invalid_sites($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    
+    $query = "select * from tiki_directory_sites where isValid='n' $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_sites where isValid='n' $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function dir_get_site_categories($siteId)
+  {
+    $query = "select tdc.name,tcs.categId from tiki_category_sites tcs,tiki_directory_categories tdc where tcs.siteId=$siteId and tcs.categId=tdc.categId";
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["path"]=$this->dir_get_path_text($res["categId"]);
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
+  function dir_list_all_sites($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    
+    $query = "select * from tiki_directory_sites $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_sites $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  
+  function dir_get_all_categories($offset,$maxRecords,$sort_mode,$find,$siteId=0)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where (title like '%".$find."%' or data like '%".$find."%')";  
     } else {
       $mid=""; 
     }
@@ -100,14 +187,104 @@ class DirLib extends TikiLib {
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["path"]=$this->dir_get_path_text($res["categId"]);
+      $res["belongs"]='n';
+      if($siteId) {
+        $belongs = $this->db->getOne("select count(*) from tiki_category_sites where siteId=$siteId and categId=".$res["categId"]);
+        if($belongs) {
+          $res["belongs"]='y';
+        } 
+      }
+      $ret[] = $res;
+    }
+    usort($ret,'compare_paths');
+    return $ret;
+  }
+  
+  function dir_get_all_categories_np($offset,$maxRecords,$sort_mode,$find,$parent)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    $query = "select * from tiki_directory_categories where categId<>$parent $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_categories where categId<>$parent $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["path"]=$this->dir_get_path_text($res["categId"]);
+      $ret[] = $res;
+    }
+    usort($ret,'compare_paths');
+    return $ret;
+  }
+  
+  function dir_get_all_categories_accept_sites($offset,$maxRecords,$sort_mode,$find,$siteId=0)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    $query = "select * from tiki_directory_categories where allowSites='y' $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_categories $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $res["sites"]=$this->db->getOne("select count(*) from tiki_category_sites where categId=".$res["categId"]);
       $res["path"]=$this->dir_get_path_text($res["categId"]);
+      $res["belongs"]='n';
+      if($siteId) {
+        $belongs = $this->db->getOne("select count(*) from tiki_category_sites where siteId=$siteId and categId=".$res["categId"]);
+        if($belongs) {
+          $res["belongs"]='y';
+        } 
+      }
       $ret[] = $res;
     }
     usort($ret,'compare_paths');
     
     return $ret;
   }
+  
+  function dir_validate_site($siteId)
+  {
+    $query = "update tiki_directory_sites set isValid='y' where siteId=$siteId";
+    $this->query($query);
+  }
+  
+  
+  function dir_replace_site($siteId,$name,$description,$url,$country,$isValid)
+  {
+    $name = addslashes($name);
+    $description = addslashes($description);
+    $now=date("U");
+    if($siteId) {
+      $query ="update tiki_directory_sites set
+      name='$name',
+      description='$description',
+      url='$url',
+      country='$country',
+      isValid='$isValid',
+      lastModif=$now
+      where siteId=$siteId";
+      $this->query($query);
+      return $siteId;        
+    } else {
+      $query = "insert into tiki_directory_sites(name,description,url,country,isValid,hits,created,lastModif)
+      values('$name','$description','$url','$country','$isValid',0,$now,$now)";
+      $this->query($query);        
+      $siteId=$this->db->getOne("select max(siteId) from tiki_directory_sites where created=$now and name='$name'");
+      return $siteId;
+    }
+    
+  }
+  
   
   
   
@@ -130,13 +307,22 @@ class DirLib extends TikiLib {
         where categId=$categId";
       $this->query($query);        
     } else {
-      $query = "insert into tiki_directory_categories(parent,hits,name,description,childrenType,viewableChildren,allowSites,showCount,editorGroup)
-      values($parent,0,'$name','$description','$childrenType',$viewableChildren,'$allowSites','$showCount','$editorGroup')";
+      $query = "insert into tiki_directory_categories(parent,hits,name,description,childrenType,viewableChildren,allowSites,showCount,editorGroup,sites)
+      values($parent,0,'$name','$description','$childrenType',$viewableChildren,'$allowSites','$showCount','$editorGroup',0)";
       $this->query($query);
     }
   }
     
   // Get
+  function dir_get_site($siteId)
+  {
+    $query = "select * from tiki_directory_sites where siteId=$siteId";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
   function dir_get_category($categId)
   {
     $query = "select * from tiki_directory_categories where categId=$categId";
@@ -144,6 +330,32 @@ class DirLib extends TikiLib {
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
+  }
+  
+  function dir_remove_site($siteId) 
+  {
+    $query = "delete from tiki_directory_sites where siteId=$siteId";
+    $this->query($query);
+    $query = "delete from tiki_category_sites where siteId=$siteId";
+    $this->query($query);
+  }
+  
+  function dir_add_site_to_category($siteId,$categId)
+  {
+   $query = "replace into tiki_category_sites(siteId,categId) values($siteId,$categId)";
+   $this->query($query);
+  }
+  
+  function remove_site_from_categories($siteId)
+  {
+    $query = "delete from tiki_category_sites where siteId=$siteId";
+    $this->query($query);
+  }
+  
+  function remove_site_from_category($siteId,$categId)
+  {
+    $query = "delete from tiki_category_sites where siteId=$siteId and categId=$categId";
+    $this->query($query);
   }
   
   // Remove
@@ -174,6 +386,14 @@ class DirLib extends TikiLib {
     // Remove the category
     $query = "delete from tiki_directory_categories where categId=$categId";
     $result = $this->query($query);
+    $query = "delete from tiki_category_sites where categId=$categId";
+    $result = $this->query($query);
+  }
+  
+  function dir_remove_related($parent,$related)
+  {
+    $query = "delete from tiki_related_categories where categId=$parent and relatedTo=$related";
+    $this->query($query);
   }
   
   // Functions to manage sites
@@ -195,19 +415,33 @@ class DirLib extends TikiLib {
   }
   
   // Functions to manage relationship between categories
+  function dir_list_related_categories($parent,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+       
+    // Armar query con info de las categories
+    $query = "select * from tiki_related_categories where categId=$parent limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_related_categories where categId=$parent";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      //$res["path"]=$this->dir_get_path_text($res["relatedTo"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
   
-  // Update relationship
+  function dir_add_categ_rel($parent,$categ)
+  {
+    $query = "replace into tiki_related_categories(categId,relatedTo) values('$parent','$categ')";
+    $this->query($query);
+  } 
   
-  // Remove relationship
-  
-  // Add relationship
-  
-  // Functions to manage relationshipts between sites and categories
-  
-  // Add relation
-  
-  // Remove
-    
+      
   // Functions to validate sites
   
   // Validate  
