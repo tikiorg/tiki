@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.12 2003-08-07 19:42:24 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.13 2003-08-08 10:08:40 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
 {if $groupname eq ''}
 <h3>{tr}Add New Group{/tr}</h3>
 {else}
 <h3>{tr}Edit this group:{/tr} {$groupname}</h3>
-<a href="tiki-admingroups.php">Add new group</a>
+<a href="tiki-admingroups.php">{tr}Add new group{/tr}</a>
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
