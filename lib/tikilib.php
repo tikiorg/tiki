@@ -180,7 +180,7 @@ function remove_user_watch_by_hash($hash) {
 }
 
 /*shared*/
-function remove_events_watches($user, $event, $object) {
+function remove_user_watch($user, $event, $object) {
     $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
     $this->query($query,array($user,$event,$object));
 }
