@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.3 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.4 2003-11-09 12:29:50 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ $content = &$info["data"];
 //die;
 header ("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );
-header ("Content-Disposition: inline; filename=$file");
+header ("Content-Disposition: inline; filename=\"$file\"");
 
 if ($info["path"]) {
 	readfile ($t_use_dir . $info["path"]);

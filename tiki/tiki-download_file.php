@@ -71,7 +71,7 @@ header("Content-type: $type");
 
 // Added by Jenolan  31/8/2003 /////////////////////////////////////////////
 // File galleries should always be attachments (files) not inline (textual)
-header( "Content-Disposition: attachment; filename=$file" );
+header( "Content-Disposition: attachment; filename=\"$file\"" );
 //header( "Content-Disposition: inline; filename=$file" );
 
 if( $info["path"] )
