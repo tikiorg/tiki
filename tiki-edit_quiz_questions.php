@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.5 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.6 2003-10-14 19:27:04 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -128,7 +128,7 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $quizlib->list_quiz_questions($_REQUEST["quizId"], $offset, $maxRecords, $sort_mode, $find);
-$questions = $quizlib->list_all_questions(0, -1, 'question_desc', '');
+$questions = $quizlib->list_all_questions(0, -1, 'position_desc', '');
 $smarty->assign('questions', $questions["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);

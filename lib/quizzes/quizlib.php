@@ -305,17 +305,17 @@ class QuizLib extends TikiLib {
 		if ($questionId) {
 			// update an existing quiz
 			$query = "update `tiki_quiz_questions` set `type`=?, `position` = ?, `question` = ?  where `questionId` = ? and `quizId`=?";
-			$bindvars=array($type,$position,$question,(int)$questionId,(int)$quizId);
+			$bindvars=array($type,(int) $position,$question,(int)$questionId,(int)$quizId);
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
 			$query = "insert into `tiki_quiz_questions`(`question`,`type`,`quizId`,`position`) values(?,?,?,?)";
-			$bindvars=array($question,$type,(int)$quizId,$position);
+			$bindvars=array($question,$type,(int)$quizId,(int) $position);
 			$result = $this->query($query,$bindvars);
-			$queryid = "select max(`questionId`) from `tiki_quiz_questions` where `question`=? and type=?";
-			$questionId = $this->getOne($queryid,array($question,$type));
+			$queryid = "select max(`questionId`) from `tiki_quiz_questions` where `question` like ? and type=?";
+			$questionId = $this->getOne($queryid,array(substr($question,0,200)."%",$type));
 		}
 		return $questionId;
 	}
@@ -390,7 +390,7 @@ class QuizLib extends TikiLib {
 		return $retval;
 	}
 
-	function list_all_questions($offset, $maxRecords, $sort_mode, $find) {
+	function list_all_questions($offset, $maxRecords, $sort_mode="position_desc", $find) {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
