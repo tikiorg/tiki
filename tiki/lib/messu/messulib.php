@@ -25,13 +25,13 @@ class Messu extends Tikilib {
 		// Prevent duplicates
 		$hash = md5($subject . $body);
 
-		if ($this->getOne("select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?",array($user,$from,$hash)) {
+		if ($this->getOne("select count(*) from `messu_messages` where `user`=? and `user_from`=? and `hash`=?",array($user,$from,$hash))) {
 			return false;
 		}
 
 		$now = date('U');
 		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array($user,$from,$to,$cc,$subject,$body,$now,'n','n','n',$priority,$hash));
+		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash));
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -66,6 +66,7 @@ class Messu extends Tikilib {
 
 	function list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '') {
 		$bindvars = array($user);
+		$mid="";
 		if ($prio) {
 			$mid = " and priority=? ";
 			$bindvars[] = $prio;
@@ -89,7 +90,7 @@ class Messu extends Tikilib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res["len"] = strlen($res["body"]);
 
 			if (empty($res['subject']))
@@ -121,7 +122,8 @@ class Messu extends Tikilib {
 	function get_next_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio) {
 		if (!$msgId)
 			return 0;
-
+		
+		$mid = "";
 		$bindvars = array($user,(int)$msgId);
 		if ($prio) {
 			$mid.= " and priority=? ";
@@ -140,14 +142,13 @@ class Messu extends Tikilib {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select min(`msgId`) from `messu_messages` where `user`=? and `msgId` > ? $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msgId_desc");
-		$result = $this->query($query,$bindvars,0,1);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select min(`msgId`) as `nextmsg` from `messu_messages` where `user`=? and `msgId` > ? $mid ";
+		$result = $this->query($query,$bindvars,1,0);
+		$res = $result->fetchRow();
 
 		if (!$res)
 			return false;
-
-		return $res['min(msgId)'];
+		return $res['nextmsg'];
 	}
 
 	function get_prev_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio) {
@@ -155,6 +156,7 @@ class Messu extends Tikilib {
 			return 0;
 		
 		$bindvars = array($user,(int)$msgId);
+		$mid="";
 		if ($prio) {
 			$mid.= " and priority=? ";
 			$bindvars[] = $prio;
@@ -171,21 +173,21 @@ class Messu extends Tikilib {
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
-		$query = "select max(`msgId`) from `messu_messages` where `user`=? and `msgId` < ? $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msgId_desc");
-		$result = $this->query($query,$bindvars,0,1);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select max(`msgId`) as `prevmsg` from `messu_messages` where `user`=? and `msgId` < ? $mid";
+		$result = $this->query($query,$bindvars,1,0);
+		$res = $result->fetchRow();
 
 		if (!$res)
 			return false;
 
-		return $res['max(msgId)'];
+		return $res['prevmsg'];
 	}
 
 	function get_message($user, $msgId) {
 		$bindvars = array($user,(int)$msgId);
 		$query = "select * from `messu_messages` where `user`=? and `msgId`=?";
 		$result = $this->query($query,$bindvars);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		$res['parsed'] = $this->parse_data($res['body']);
 
 		if (empty($res['subject']))
