@@ -106,7 +106,8 @@ if (isset($_REQUEST['del']) && isset($_REQUEST['msg'])) {
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
-	for ($i = 0; $i < count($all_forums["data"]); $i++) {
+	$temp_max = count($all_forums["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		if ($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"], 'forum')) {
 			if ($tiki_p_admin == 'y'
 				|| $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')

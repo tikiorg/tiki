@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.10 2004-06-16 06:06:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -219,7 +219,8 @@ if (isset($_REQUEST['app']) && isset($_REQUEST['msg'])) {
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
-	for ($i = 0; $i < count($all_forums["data"]); $i++) {
+	$temp_max = count($all_forums["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		if ($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"], 'forum')) {
 			if ($tiki_p_admin == 'y'
 				|| $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum')
