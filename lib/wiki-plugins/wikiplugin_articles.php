@@ -2,6 +2,9 @@
 // Includes a wiki page in another
 // Usage:
 // {ARTICLES(max=>3)}{ARTICLES}
+//
+// Damian added the following parameter
+// topic=>topicId
 
 function wikiplugin_articles_help() {
 	return tra("Insert articles into a wikipage");
@@ -19,10 +22,15 @@ function wikiplugin_articles($data,$params) {
 		return("");
 	}
 	if(!isset($max)) {$max='3';}
+	if(!isset($topic)) {
+	  $topic='';
+        } else {
+	  $topic = $tikilib->fetchtopicId($topic);
+	}
 	
 	$now = date("U");
 	
-	$listpages = $tikilib->list_articles(0, $max, 'publishDate_desc', '', $now, 'admin', '', '');
+	$listpages = $tikilib->list_articles(0, $max, 'publishDate_desc', '', $now, 'admin', '', $topic);
   
 	for ($i = 0; $i < count($listpages["data"]); $i++) {
 		$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
