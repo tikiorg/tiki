@@ -26,7 +26,7 @@ $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}date{/tr}</a
 {cycle values="odd,even" print=false}
 {section name=i loop=$thelist}
 <tr class="{cycle}">
-<td title="{$thelist[i].tr_date|duration}">{$thelist[i].tr_date|date_format:"%d/%m"}</td>
+<td title="{tr}{$thelist[i].age|duration} ago{/tr}">{$thelist[i].tr_date|date_format:"%Y/%d/%m"}</td>
 <td>{$thelist[i].item}</td>
 {if $tiki_p_cc_admin eq 'y' or $info.owner_id eq $user}
 <td>{$thelist[i].acct_id|userlink}</td>
