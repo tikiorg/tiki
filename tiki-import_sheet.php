@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.1 2004-04-30 23:53:01 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_sheet.php,v 1.2 2004-06-12 16:19:24 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -94,6 +94,9 @@ else
 	foreach( $handlers as $key=>$handler )
 	{
 		$temp = &new $handler;
+		if( !$temp->supports( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC ) )
+			continue;
+
 		$list[$key] = array(
 			"name" => $temp->name(),
 			"version" => $temp->version(),
