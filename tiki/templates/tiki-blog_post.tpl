@@ -16,11 +16,11 @@
 <div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
 will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor
 or use the image URL to include images using the WYSIWYG editor. {/tr}</small></div>
-<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php">
+<form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 <input type="hidden" name="postId" value="{$postId|escape}" />
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
-<table class="editblogform">
+<table class="normal">
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">
 {section name=ix loop=$blogs}
@@ -28,23 +28,26 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {/section}
 </select>
 </td></tr>
+{assign var=area_name value="blogedit"}
 {if $feature_smileys eq 'y'}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
-   {assign var=area_name value="blogedit"}{include file="tiki-smileys.tpl"}
+   {include file="tiki-smileys.tpl"}
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+<tr><td class="editblogform">{tr}Quicklinks{/tr}</td><td class="editblogform">
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}
 </td></tr>
 {if $blog_data.use_title eq 'y'}
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-<input type="text" size="30" name="title" value="{$title|escape}" />
+<input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
-<tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
+<tr><td class="editblogform">{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareaSize.tpl"}{/if}</td><td class="editblogform">
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
-<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">{$data|escape}</textarea>
+<textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>

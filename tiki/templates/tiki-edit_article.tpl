@@ -29,7 +29,7 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" size="80" /></td></tr>
 <tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Topic{/tr}</td><td class="formcolor">
 <select name="topicId">
@@ -74,9 +74,9 @@
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-  <tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  <tr><td class="formcolor">Own Image</td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
-    <tr><td class="formcolor">Own Image:</td><td class="formcolor">
+    <tr><td class="formcolor">Own Image</td><td class="formcolor">
     <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
     </td></tr>
   {/if}
