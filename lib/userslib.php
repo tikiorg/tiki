@@ -574,23 +574,30 @@ class UsersLib extends TikiLib {
 	return ($ret);
     }
 
-    function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '') {
-	$sort_mode = $this->convert_sortmode($sort_mode);
-
+function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '', $initial = '') {
+	
+	$mid = '';
+	$bindvars = array();
+	$mmid = '';
+	$mbindvars = array();
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 	if ($find) {
 	    $mid = " where `login` like ?";
 	    $bindvars = array('%'.$find.'%');
-	} else {
-	    $mid = '';
-	    $bindvars = array();
 	}
 
-	$query = "select * from `users_users` $mid order by $sort_mode";
+	if ($initial) {
+		$mid = " where `login` like ?";
+		$mmid = $mid;
+		$bindvars = array($initial.'%');
+		$mbindvars = $bindvars;
+	}
 
-	$query_cant = "select count(*) from `users_users`";
+	$query = "select * from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+
+	$query_cant = "select count(*) from `users_users` $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
-	$cant = $this->getOne($query_cant, array());
+	$cant = $this->getOne($query_cant, $mbindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -643,23 +650,28 @@ class UsersLib extends TikiLib {
 	$result = $this->query($query, array($userid, $group));
     }
 
-    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '') {
-	$sort_mode = $this->convert_sortmode($sort_mode);
+    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '') {
 
-	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+	$mid = "";
+	$mmid = "";
+	$bindvars = array();
+	$mbindvars = array();
 	if ($find) {
 	    $mid = " where `groupName` like ?";
 	    $bindvars[] = "%" . $find . "%";
-	} else {
-	    $mid = '';
-
-	    $bindvars = array();
 	}
 
-	$query = "select `groupName` , `groupDesc` from `users_groups` $mid order by $sort_mode";
-	$query_cant = "select count(*) from `users_groups`";
+	if ($initial) {
+	    $mid = " where `groupName` like ?";
+	    $bindvars = array($initial . "%");
+			$mmid = $mid;
+			$mbindvars = $bindvars;
+	}
+
+	$query = "select `groupName` , `groupDesc` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `users_groups` $mmid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
-	$cant = $this->getOne($query_cant, false);
+	$cant = $this->getOne($query_cant, $mbindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -1097,7 +1109,7 @@ class UsersLib extends TikiLib {
 	{
 	    // Create a group just for this user, for permissions
 	    // assignment.
-	    $this->add_group($user, "Personal group for $user.", '');
+	    $this->add_group($user, "Personal group for $user.", '',0,0);
 
 	    $this->assign_user_to_group($user, $user);
 	}
@@ -1199,24 +1211,24 @@ class UsersLib extends TikiLib {
 		    ));
     }
 
-    function add_group($group, $desc, $home) {
+    function add_group($group, $desc, $home, $utracker=0, $gtracker=0) {
     
 	if ($this->group_exists($group))
 	    return false;
 
 	$query = "insert into `users_groups`(`groupName`, `groupDesc`,
-		`groupHome`) values( ?, ?, ?)";
-	$result = $this->query($query, array($group, $desc, $home) );
+		`groupHome`,`usersTrackerId``groupTrackerId`) values( ?, ?, ?, ?)";
+	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
 	return true;
     }
 
-    function change_group($olgroup,$group,$desc,$home) {
+		function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0) {
 	if (!$this->group_exists($olgroup))
-	    return $this->add_group($group, $desc, $home);
+	    return $this->add_group($group, $desc, $home,$utracker,$gtracker);
 
 	$query = "update `users_groups` set `groupName` = ?, `groupDesc` = ?,
-		`groupHome` = ? where `groupName` = ?";
-	$result = $this->query($query, array($group, $desc, $home, $olgroup));
+		`groupHome` = ?, `usersTrackerId`=?, `groupTrackerId`=? where `groupName` = ?";
+	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $olgroup));
 
 	$query = "update `users_usergroups` set `groupName` = ? where
 		`groupName` = ?";
