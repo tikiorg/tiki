@@ -145,7 +145,7 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Threads can be voted{/tr}</td>
+	<td class="formcolor">{tr}Posts can be rated{/tr}</td>
 	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
