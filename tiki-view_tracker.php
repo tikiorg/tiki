@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.68 2004-04-29 20:01:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.69 2004-04-29 21:35:31 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -167,6 +167,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		$listfields[$fid]['type'] = $fields["data"][$i]["type"];
 		$listfields[$fid]['name'] = $fields["data"][$i]["name"];
 		$listfields[$fid]['options'] = $fields["data"][$i]["options"];
+		$listfields[$fid]['options_array'] = split(',',$fields["data"][$i]["options"]);
 		$listfields[$fid]['isMain'] = $fields["data"][$i]["isMain"];
 		$listfields[$fid]['isTblVisible'] = $fields["data"][$i]["isTblVisible"];
 		$listfields[$fid]['isHidden'] = $fields["data"][$i]["isHidden"];
@@ -445,8 +446,8 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {
-	if (isset($_REQUEST["filtervalue"])) {
-		$filtervalue = $_REQUEST["filtervalue"];
+	if (isset($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
+		$filtervalue = $_REQUEST["filtervalue"]["$filterfield"];
 	} else {
 		$filtervalue = '';
 	}

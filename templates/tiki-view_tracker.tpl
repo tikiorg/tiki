@@ -48,28 +48,42 @@
 class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata.label align=top}</a></div></td>
 {/foreach}
 {/if}
-{if $show_filters eq 'y'}
 <td class="formcolor" style="width:100%;">
-{assign var=disp value='n'}
+{assign var=cnt value=0}
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
 {if $field.type eq 'c'}
-<div style="display:{if $disp eq 'n'}block{else}none{/if};"><select name="filtervalue"><option value="y">{tr}Yes{/tr}</option><option value="n">{tr}No{/tr}</option></select></div>
+<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
+<option value="y"{if $filtervalue eq 'y'} selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value="n"{if $filtervalue eq 'n'} selected="selected"{/if}>{tr}No{/tr}</option>
+</select></div>
 {elseif $field.type eq 'd'}
-<div style="display:{if $disp eq 'n'}block{else}none{/if};"><select name="filtervalue">
+<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><select name="filtervalue[{$fid}]">
 {section name=jx loop=$field.options_array}
-<option value="{$field.options_array[jx]|escape}" {if $defaultvalues.$fid eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]}</option>
+<option value="{$field.options_array[jx]|escape}" {if $filtervalue eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]}</option>
 {/section}
 </select></div>
 {else}
-<div style="display:{if $disp eq 'n'}block{else}none{/if};"><input type="text" name="filtervalue" value="{$filtervalue}" /></div>
+<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}"><input type="text" name="filtervalue[{$fid}]" value="{$filtervalue}" /></div>
 {/if}
-{assign var=disp value='y'}
+{assign var=cnt value=$cnt+1}
 {/if}
 {/foreach}
 </td>
+{if $show_filters eq 'y'}
 <td>
-<select name="filterfield">
+<script type="text/javascript">
+fields = new Array({$cnt})
+{assign var=c value=0}
+{foreach key=fid item=field from=$listfields}
+{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
+fields[{$c}] = '{$fid}'
+{assign var=c value=$c+1}
+{/if}
+{/foreach}
+</script>
+<select name="filterfield" onChange="multitoggle(fields,this.options[selectedIndex].value);">
+<option value="">{tr}Choose a filter{/tr}</option>
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
 <option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
