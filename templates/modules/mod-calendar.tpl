@@ -5,10 +5,9 @@ if(isset($_SESSION["thedate"])) {
   $mon=date("m",$_SESSION["thedate"]);
   $year=date("Y",$_SESSION["thedate"]);
 } else {
-  $day=date("d");
-  $mon=date("m");
-  $year=date("Y");
-
+	$day=date("d",$tikilib->server_time_to_site_time(time(),$user));
+	$mon=date("m",$tikilib->server_time_to_site_time(time(),$user));
+	$year=date("Y",$tikilib->server_time_to_site_time(time(),$user));
 }
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];

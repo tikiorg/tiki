@@ -9,15 +9,27 @@ if($feature_eph != 'y') {
   die;  
 }
 
+/*
+Modified by Wells Wang to solve eph wrong date problem
 if(isset($_SESSION['thedate'])) {
   $pdate = $_SESSION['thedate'];
 } else {
   $pdate = date("U");
 }
-
 if(!isset($_REQUEST['day'])) $_REQUEST['day']=date("d");
 if(!isset($_REQUEST['mon'])) $_REQUEST['mon']=date("m");
 if(!isset($_REQUEST['year'])) $_REQUEST['year']=date("Y");
+*/
+if (isset($_REQUEST['day'])&&isset($_REQUEST['mon'])&&isset($_REQUEST['year'])) {
+	$pdate=mktime(23,59,59,$_REQUEST['mon'],$_REQUEST['day'],$_REQUEST['year']);
+} else {
+	$pdate = date("U");
+}
+if(!isset($_REQUEST['day'])) $_REQUEST['day']=date("d",$tikilib->server_time_to_site_time(time(),$user));
+if(!isset($_REQUEST['mon'])) $_REQUEST['mon']=date("m",$tikilib->server_time_to_site_time(time(),$user));
+if(!isset($_REQUEST['year'])) $_REQUEST['year']=date("Y",$tikilib->server_time_to_site_time(time(),$user));
+// end of modif
+
 $smarty->assign('day',$_REQUEST['day']);
 $smarty->assign('mon',$_REQUEST['mon']);
 $smarty->assign('year',$_REQUEST['year']);
@@ -74,7 +86,10 @@ if($offset>0) {
 }
 $smarty->assign_by_ref('channels',$channels["data"]);
 
-
+// don't seem to be used in .tpl // is it required ?
+if (!isset($tasks_useDates)) $tasks_useDates='';
+$smarty->assign('tasks_useDates',$tasks_useDates);
+// end of existential question
 
 $smarty->assign('mid','tiki-eph.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
