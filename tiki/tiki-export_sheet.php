@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.2 2004-05-01 21:11:27 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_sheet.php,v 1.3 2004-06-12 16:19:24 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -74,7 +74,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 	$handler = &new $handler( "php://stdout" );
 	$grid->export( $handler );
 
-	die;
+	exit;
 }
 else
 {
@@ -85,6 +85,9 @@ else
 	foreach( $handlers as $key=>$handler )
 	{
 		$temp = &new $handler;
+		if( !$temp->supports( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC ) )
+			continue;
+
 		$list[$key] = array(
 			"name" => $temp->name(),
 			"version" => $temp->version(),

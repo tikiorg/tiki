@@ -1,4 +1,5 @@
 <?php
+ini_set( 'include_path', ini_get( 'include_path' ) . ":lib/sheet" );
 
 // Nice dependencies, mostly for excel support. Don't try changing the order.
 require_once( "PEAR.php" );
@@ -14,6 +15,7 @@ require_once( "lib/sheet/ole/pps/root.php" );
 require_once( "lib/sheet/ole/pps/file.php" );
 require_once( "lib/sheet/ole.php" );
 require_once( "lib/sheet/excel/writer.php" );
+require_once( "lib/sheet/conf/config.inc.php" );
 
 // Constants {{{1
 
@@ -143,7 +145,8 @@ class TikiSheet
 		return array(
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
-			'TikiSheetExcelHandler'
+			'TikiSheetExcelHandler',
+			'TikiSheetOpenOfficeHandler'
 		);
 	}// }}}2
 	
@@ -711,7 +714,7 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetSerializeHandler( $file )
+	function TikiSheetSerializeHandler( $file = "php://stdout" )
 	{
 		$this->file = $file;
 	}
@@ -796,7 +799,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetCSVHandler( $file, $lineLen = 1024 )
+	function TikiSheetCSVHandler( $file = "php://stdout", $lineLen = 1024 )
 	{
 		$this->file = $file;
 		$this->lineLen = $lineLen;
@@ -1047,7 +1050,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	 * Initializes the the serializer on a file.
 	 * @param $file The file path to save or load from.
 	 */
-	function TikiSheetExcelHandler( $file )
+	function TikiSheetExcelHandler( $file = "php://stdout" )
 	{
 		$this->file = $file;
 	}
@@ -1139,7 +1142,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CELL | TIKI_SAVE_CALC | TIKI_SAVE_DATA ) & $type ) > 0;
+		return ( ( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CELL | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_DATA ) & $type ) > 0;
 	}
 
 	// version {{{2
@@ -1148,6 +1151,67 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 		return "0.1-dev";
 	}
  } // }}}1
+
+/** TikiSheetOpenOfficeHandler {{{1
+ * Class to generate OpenOffice sxc documents.
+ */
+class TikiSheetOpenOfficeHandler extends TikiSheetDataHandler
+{
+	/** Constructor {{{2
+	 * Does nothing special.
+	 */
+	function TikiSheetOpenOfficeHandler( $file = "php://stdout" )
+	{
+	}
+	
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		// Get rid of debug output
+		ob_start();
+		
+		APIC::import("org.apicnet.io.OOo.objOOo.OOoTable");
+		$OOoCalc = APIC::loadClass("org.apicnet.io.OOo.OOoDoc");
+
+		$OOoCalc->newCalc();
+		$OOoCalc->setName("export.sxc");
+		$OOoCalc->meta->setCreator("TikiSheet");
+		$OOoCalc->meta->setTitle("TikiSheet Export");
+	
+		$OOoCalc->content->addFeuille();
+		
+		foreach( $sheet->dataGrid as $rowIndex=>$row )
+			foreach( $row as $columnIndex=>$value )
+				$OOoCalc->content->addcellData($rowIndex + 1, $columnIndex + 1, array("DATA" => $value));
+
+		$OOoCalc->save();
+		$OOoCalc->close();
+		ob_end_clean();	
+
+		$OOoCalc->download();
+
+		return true;
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "OpenOffice.org";
+	}
+
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_SAVE_DATA ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "0.1-dev";
+	}
+} // }}}1
 
 /** TikiSheetOutputHandler {{{1
  * Class to output the data sheet as a standard HTML table.
@@ -1246,7 +1310,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT ) & $type ) > 0;
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CELL | TIKISHEET_SAVE_FORMAT ) & $type ) > 0;
 	}
 
 	// version {{{2
