@@ -2876,7 +2876,7 @@ function remove_all_versions($page, $comment = '') {
 	`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`)
 	values(?,?,?,?,?,?)";
 	$result = $this->query($query, array(
-		$action,$page,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment
+		$action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
 		) );
     $this->remove_object('wiki page', $page);
     $this->remove_from_structure($page);
