@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.12 2004-01-26 23:09:04 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.13 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,12 +120,12 @@ if (isset($_REQUEST["send"])) {
 					$res = xmlrpc_decode($result->value());
 
 					if ($res) {
-						$msg .= tra('page'). ': ' . $page . tra(' successfully sent'). "<br/>";
+						$msg .= tra('page'). ': ' . $page . tra(' successfully sent'). "<br />";
 					}
 				} else {
 					$errorMsg = $result->faultstring();
 
-					$msg .= tra('page'). ': ' . $page . tra(' not sent').': '. tra($errorMsg) . "<br/>";
+					$msg .= tra('page'). ': ' . $page . tra(' not sent').': '. tra($errorMsg) . "<br />";
 				}
 			}
 		}
@@ -169,12 +169,12 @@ if (isset($_REQUEST["send"])) {
 					$res = xmlrpc_decode($result->value());
 
 					if ($res) {
-						$msg .= tra('article'). ': ' . $article . tra(' successfully sent'). "<br/>";
+						$msg .= tra('article'). ': ' . $article . tra(' successfully sent'). "<br />";
 					}
 				} else {
 					$errorMsg = $result->faultstring();
 
-					$msg .= tra('page'). ': ' . $article . tra(' not sent'). ': '.tra($errorMsg) . "<br/>";
+					$msg .= tra('page'). ': ' . $article . tra(' not sent'). ': '.tra($errorMsg) . "<br />";
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.14 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.15 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,7 @@ if ($user) {
 			die;
 		}
 
-		$message = tra('Message sent to'). ':' . $userwatch . '<br/>';
+		$message = tra('Message sent to'). ':' . $userwatch . '<br />';
 		$messulib->post_message($userwatch, $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 

@@ -11,7 +11,7 @@ include_once('tiki-setup.php');
   </head>
   <body>
 <div align="center" style="width:100%;height:100%">  
-<br/>
+<br />
 <?php
 
 $arguments = Array('table','template','tableclass','where',
@@ -215,7 +215,7 @@ print("($total records) Page: $actual_page/$cant_pages");
 if($next_offset>-1) {
   print(" <a class='link' href='$nexthref'>[next]</a>");
 } 
-print("</small><br/>");
+print("</small><br />");
 */
 if($directpagination == 1 && $cant_pages < 50) {
 	print("<small>");
@@ -236,7 +236,7 @@ if($directpagination == 1 && $cant_pages < 50) {
 		}
 		print("</a> ");
 	}
-	print("</small><br/>");
+	print("</small><br />");
 }
 
 if($combopagination == 1 && $cant_pages < 550) {
@@ -255,11 +255,11 @@ if($combopagination == 1 && $cant_pages < 550) {
 		}
 		print(">$page</option> ");
 	}
-	print("</select></form><br/>");
+	print("</select></form><br />");
 }
 
 ?>
-<br/>
+<br />
 </div>
 </body>
 </html>

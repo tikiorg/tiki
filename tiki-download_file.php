@@ -66,7 +66,7 @@ $file=&$info["filename"];
 $content=&$info["data"];
 
 
-//print("File:$file<br/>");
+//print("File:$file<br />");
 //die;
 header("Content-type: $type");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.8 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.9 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 			die;
 		}
 
-		$message = tra('Message sent to'). ':' . $contact_user . '<br/>';
+		$message = tra('Message sent to'). ':' . $contact_user . '<br />';
 		$messulib->post_message($contact_user, $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 

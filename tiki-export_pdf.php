@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.10 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.11 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,7 +102,7 @@ if ($_REQUEST["autobreak"] == 'on') {
 		$data = '';
 		$info = $tikilib->get_page_info($page);
 
-		$data = "\n<C:page:$page>\n<br/>\n";
+		$data = "\n<C:page:$page>\n<br />\n";
 		$data .= $tikilib->parse_data($info["data"]);
 		$data = utf8_decode($data);
 		$pdflib->add_linkdestination($page);
@@ -114,7 +114,7 @@ else {
 	foreach (array_values($convertpages)as $page) {
 		$info = $tikilib->get_page_info($page);
 
-		$data .= "\n<C:page:$page>\n<br/>\n";
+		$data .= "\n<C:page:$page>\n<br />\n";
 		$data .= $tikilib->parse_data($info["data"]);
 	}
 
@@ -129,7 +129,7 @@ $pdfdebug = false;
 if ($pdfdebug) {
 	$pdfcode = $pdflib->output(1);
 
-	$pdfcode = str_replace("\n", "\n<br>", htmlspecialchars($pdfcode));
+	$pdfcode = str_replace("\n", "\n<br />", htmlspecialchars($pdfcode));
 	echo '<html>';
 	echo trim($pdfcode);
 	echo '</body>';
