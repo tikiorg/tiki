@@ -21,6 +21,15 @@
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+{if $page_ref_id}
+<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+{/if}
+{if $current_page_id}
+<input type="hidden" name="current_page_id" value="{$current_page_id}" />
+{/if}
+{if $add_child}
+<input type="hidden" name="add_child" value="true" />
+{/if}
 <div style="margin-bottom:1px;">
 {if !$lock}
   {if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
