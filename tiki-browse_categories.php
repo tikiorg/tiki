@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.15 2004-01-20 06:30:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.16 2004-03-11 16:22:55 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.15 2004-01-20 06:30:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.16 2004-03-11 16:22:55 mose Exp $
 //
 
 // Initialization
@@ -82,7 +82,9 @@ if ($feature_phplayers == 'y') {
 	$phplayers->setImgdir("lib/phplayers/images/");
 	$phplayers->setImgwww("lib/phplayers/images/");
 	$phplayers->setTpldirCommon("lib/phplayers/templates/");
-	$phplayers->setMenuStructureString($itall);
+	if ($itall) {
+		$phplayers->setMenuStructureString($itall);
+	}
 	$phplayers->parseStructureForMenu("treemenu1");
 	$phpitall = $phplayers->newTreeMenu("treemenu1");
 	$smarty->assign('tree', $phpitall);
