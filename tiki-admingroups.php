@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.29 2004-03-02 07:11:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.30 2004-03-02 16:00:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -215,6 +215,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	if ($userTracker == 'y') {
 		$usersFields = array();
 		if ($userstrackerid) {
+			include_once('lib/trackers/trackerlib.php');
 			$usersFields = $trklib->list_tracker_fields($userstrackerid, 0, -1, 'position_asc', '');
 		}
 		$smarty->assign_by_ref('usersFields', $usersFields['data']);
