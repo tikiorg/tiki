@@ -18,5 +18,6 @@
 <strong>{tr}Dynamic content{/tr}:</strong> "{literal}{{/literal}content id=n}" {tr}Will be replaced by the actual value of the dynamic content block with id=n{/tr}<br/>
 <strong>{tr}Colored text{/tr}:</strong> "~~#FFEE33:{tr}some text{/tr}~~" {tr}Will display using the indicated HTML color{/tr}<br/>
 <strong>{tr}Center{/tr}:</strong> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}<br/>
+<strong>{tr}Non parsed sections{/tr}:</strong> "~np~ data ~/np~" {tr}Prevents parsing data{/tr}<br/>
 </p>
 </div>

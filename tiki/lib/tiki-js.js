@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.2 2003-01-01 18:31:17 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.3 2003-01-06 18:23:12 lrargerich Exp $
 
 function chgArtType() {
   if(document.getElementById('articletype').value=='Article') {
@@ -7,6 +7,15 @@ function chgArtType() {
     document.getElementById('isreview').style.display="block";
   }
 }
+
+function chgTrkFld() {
+  if(document.getElementById('trkfldtype').value=='d') {
+    document.getElementById('trkfldoptions').style.display="block";	
+  } else {
+    document.getElementById('trkfldoptions').style.display="none";		
+  }
+}
+
 
 function setMenuCon(foo1,foo2) {
   document.getElementById('menu_url').value=foo1;

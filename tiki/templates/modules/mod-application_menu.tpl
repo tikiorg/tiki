@@ -238,6 +238,7 @@
   <div id='nlmenu' style="{$mnu_nlmenu}">
   {if $tiki_p_admin_newsletters eq 'y'}
   &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send newsletters{/tr}</a><br/>
   {/if}
   </div>
 {/if}

@@ -179,6 +179,7 @@ $smarty->assign('wiki_extras','y');
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display("styles/$style_base/tiki-slideshow.tpl");
+//$smarty->display("styles/$style_base/tiki-slideshow.tpl");
+$smarty->display("tiki-slideshow.tpl");
 
 ?>

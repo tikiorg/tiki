@@ -52,9 +52,7 @@ if($user) {
       $smarty->assign('msg',tra("You cannot take this quiz twice"));
       $smarty->display("styles/$style_base/error.tpl");
       die;
-    } else {
-      $quizlib->user_takes_quiz($user,$_REQUEST["quizId"]);
-    }
+    } 
   }
 }
 

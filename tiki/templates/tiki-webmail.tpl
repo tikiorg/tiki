@@ -163,6 +163,7 @@
     <input type="hidden" name="section" value="compose" />
     <input type="submit" name="replyall" value="{tr}reply all{/tr}" />
     <input type="hidden" name="to" value="{$headers.replyto}" />
+    <input type="hidden" name="realmsgid" value="{$realmsgid}" />
     <input type="hidden" name="cc" value="{$headers.replycc}" />
     <input type="hidden" name="subject" value="Re:{$headers.subject}" />
     <input type="hidden" name="body" value="{$allbodies}" />

@@ -1,5 +1,10 @@
 Version 1.5 -Regulus-
 
+* [NEW] You can select the name of your Wiki home page. Can be other than HomePage.
+* [NEW] Now admin has an option to enable full wiki page names allowing spaces and accents and other chatacters
+  to be part of a wiki page.
+* [NEW] Quick image uploads to wiki pages, you can upload a picture from the editpage feature and 
+  have it displayed in the page inmediately
 * [NEW] Added a login screen that can be used in columnless layouts or for emergency purposes if the login box
   or the columns have problems. The file is tiki-login_scr.php.
 * [NEW] Added a phpinfo link to check your php installation in the admin menu.

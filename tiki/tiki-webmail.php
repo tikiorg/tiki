@@ -218,7 +218,11 @@ if($_REQUEST["section"]=='mailbox') {
   }  
   // Now delete the messages and reopen the mailbox to renumber messages
   $pop3->close();
+  
   $pop3->Open();  
+  $s = $pop3->Stats() ;  
+  $mailsum = $s["message"];  
+  
   if(isset($_REQUEST["operate"])) {    
     if(isset($_REQUEST["msg"])) {      
       // Now we can operate the messages      
@@ -244,6 +248,9 @@ if($_REQUEST["section"]=='mailbox') {
   $s = $pop3->Stats() ;  
   $mailsum = $s["message"];  
   $numshow=$current["msgs"];        
+  
+  if(isset($_REQUEST["start"])&&$_REQUEST["start"]>$mailsum) $_REQUEST["start"]=$mailsum;
+  
   if(!isset($_REQUEST["filter"]))     
     $smarty->assign('filter','');   
   else     
@@ -257,21 +264,22 @@ if($_REQUEST["section"]=='mailbox') {
     for($i=1;$i<=$mailsum;$i++) {      
       $aux = $pop3->ListMessage($i);	      
       
-      $aux["msgid"]=$i;      
-      $aux["realmsgid"]=$pop3->GetMessageID($i);      
-      $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
-      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
-      if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
-      if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
-      $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
-      $aux["subject"]=htmlspecialchars($aux["subject"]);      
-      if($_REQUEST["filter"]=='unread' && $aux["isRead"]=='n') {      	
-        $tot++;      	
-        $filtered[]=$aux;      
-      }	elseif ($_REQUEST["filter"]=='flagged' && $aux["isFlagged"]=='y') {      	
-        $tot++;      	
-        $filtered[]=$aux;      
-      }    
+        $aux["msgid"]=$i;      
+        $aux["realmsgid"]=$pop3->GetMessageID($i);      
+        $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
+        list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
+        if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
+        if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
+        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
+        $aux["subject"]=htmlspecialchars($aux["subject"]);      
+        if($_REQUEST["filter"]=='unread' && $aux["isRead"]=='n') {      	
+          $tot++;      	
+          $filtered[]=$aux;      
+        }  elseif ($_REQUEST["filter"]=='flagged' && $aux["isFlagged"]=='y') {      	
+          $tot++;      	
+          $filtered[]=$aux;      
+        }    
+      
     }    
     $mailsum=count($filtered)-1;     
   }     
@@ -284,17 +292,21 @@ if($_REQUEST["section"]=='mailbox') {
       $aux = $filtered[$i];	    
     } else {      
       $aux = $pop3->ListMessage($i);	      
-      //print_r($aux);print("<br/>");
-      $aux["realmsgid"]=$pop3->GetMessageID($i);      
-      $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         
-      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      
-      if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
-      if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
-      $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
-      $aux["subject"]=htmlspecialchars($aux["subject"]);    
+      
+        //print_r($aux);print("<br/>");
+        $aux["realmsgid"]=$pop3->GetMessageID($i);      
+        $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         
+        list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      
+        if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
+        if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
+        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
+        $aux["subject"]=htmlspecialchars($aux["subject"]);    
+      
     }    
-    $aux["msgid"]=$i;    
-    $list[]=$aux;  
+    
+      $aux["msgid"]=$i;    
+      $list[]=$aux;  
+    
   }  
   $lowerlimit=$i;      
   if ($lowerlimit < 0) 

@@ -74,11 +74,12 @@ if(isset($_REQUEST["send"])) {
   $mail = new htmlMimeMail();    
   $mail->setFrom('noreply@noreply.com');   
   $mail->setSubject($_REQUEST["subject"]);    
-  $mail->setHTML($_REQUEST["data"],strip_tags($_REQUEST["data"]));    
   $sent=0;
   foreach($subscribers as $email) {
     $to_array=array();
     $to_array[]=$email;
+    $unsubmsg=$nllib->get_unsub_msg($_REQUEST["nlId"],$email);
+    $mail->setHTML($_REQUEST["data"].$unsubmsg,strip_tags($_REQUEST["data"]));    
     if($mail->send($to_array,'mail')) $sent++;
   }
   $smarty->assign('sent',$sent);

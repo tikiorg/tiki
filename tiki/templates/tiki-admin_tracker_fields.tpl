@@ -13,7 +13,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
-<select name="type">
+<select name="type" id='trkfldtype' onChange="javascript:chgTrkFld();">
 <option value="c" {if $type eq 'c'}selected="selected"{/if}>{tr}checkbox{/tr}</option>
 <option value="t" {if $type eq 't'}selected="selected"{/if}>{tr}text field{/tr}</option>
 <option value="a" {if $type eq 'a'}selected="selected"{/if}>{tr}textarea{/tr}</option>
@@ -21,10 +21,9 @@
 <option value="u" {if $type eq 'u'}selected="selected"{/if}>{tr}user selector{/tr}</option>
 <option value="g" {if $type eq 'g'}selected="selected"{/if}>{tr}group selector{/tr}</option>
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
-<!--{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}-->
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Options (sepparated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options}" /></td></tr>
+<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (sepparated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options}" /></td></tr>
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
