@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.20 2003-10-12 12:37:28 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.21 2003-10-14 22:11:17 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,7 @@ if (!isset($_REQUEST["blogId"])) {
 	die; // TODO: output of rss file with message: object not found
 }
 
+$feed = "blog";
 $id = "blogId";
 $tmp = $tikilib -> get_blog($_REQUEST["$id"]);
 $title = "Tiki RSS feed for blog ".$tmp["title"]; // TODO: make configurable
@@ -36,7 +37,13 @@ $descId = "data";
 $dateId = "created";
 $titleId = "created";
 $readrepl = "tiki-view_blog_post.php?$id=";
-$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $max_rss_blog, $dateId.'_desc', '', $now);
+
+require ("tiki-rss_readcache.php");
+
+if ($output == "EMPTY") {
+  $changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $max_rss_blog, $dateId.'_desc', '', $now);
+  $output = "";
+}
 
 require ("tiki-rss.php");
 

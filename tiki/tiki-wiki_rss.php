@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.22 2003-10-12 12:37:29 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.23 2003-10-14 22:13:19 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,7 @@ if ($tiki_p_view != 'y') {
 	die; // TODO: output of rss file with message: permission denied
 }
 
+$feed = "wiki";
 $title = "Tiki RSS feed for the wiki pages"; // TODO: make configurable
 $desc = "Last modifications to the Wiki."; // TODO: make configurable
 $now = date("U");
@@ -27,8 +28,14 @@ $titleId = "pageName";
 $descId = "comment";
 $dateId = "lastModif";
 $readrepl = $tikiIndex."?page=";
-$changes = $histlib -> get_last_changes(999, 0, $max_rss_wiki, $sort_mode = $dateId.'_desc');
-// FIX: get_last_changes does not return pages with german umlauts (they are left out)
+
+require ("tiki-rss_readcache.php");
+
+if ($output == "EMPTY") {
+  $changes = $histlib -> get_last_changes(999, 0, $max_rss_wiki, $sort_mode = $dateId.'_desc');
+  // FIX: get_last_changes does not return pages with german umlauts (they are left out)
+  $output = "";
+}
 
 require ("tiki-rss.php");
 

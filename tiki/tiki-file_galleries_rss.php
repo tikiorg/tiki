@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.16 2003-10-12 12:37:29 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.17 2003-10-14 22:11:44 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,7 @@ if ($tiki_p_view_file_gallery != 'y') {
   die; // TODO: output of rss file with message: permission denied
 }
 
+$feed = "filegals";
 $title = "Tiki RSS feed for file galleries"; // TODO: make configurable
 $desc = "Last files uploaded to the file galleries."; // TODO: make configurable
 $now = date("U");
@@ -28,7 +29,13 @@ $descId = "description";
 $dateId = "created";
 $titleId = "filename";
 $readrepl = "tiki-download_file.php?$id=";
-$changes = $tikilib->list_files(0, $max_rss_file_galleries, $dateId.'_desc', '');
+
+require ("tiki-rss_readcache.php");
+
+if ($output == "EMPTY") {
+  $changes = $tikilib->list_files(0, $max_rss_file_galleries, $dateId.'_desc', '');
+  $output="";
+}
 
 require ("tiki-rss.php");
 

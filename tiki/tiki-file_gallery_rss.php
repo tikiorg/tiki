@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.16 2003-10-12 12:37:29 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.17 2003-10-14 22:11:44 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,7 @@ if (!isset($_REQUEST["galleryId"])) {
 	die; // TODO: output of rss file with message: object not found
 }
 
+$feed = "filegal";
 $tmp = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
 $title = "Tiki RSS feed for the file gallery: ".$tmp["name"]; // TODO: make configurable
 $desc = $tmp["description"]; // TODO: make configurable
@@ -35,7 +36,13 @@ $descId = "description";
 $dateId = "created";
 $titleId = "filename";
 $readrepl = "tiki-download_file.php?$id=";
-$changes = $tikilib->get_files( 0,10,$dateId.'_desc', '', $_REQUEST["galleryId"]);
+
+require ("tiki-rss_readcache.php");
+
+if ($output == "EMPTY") {
+  $changes = $tikilib->get_files( 0,10,$dateId.'_desc', '', $_REQUEST["galleryId"]);
+  $output = "";
+}
 
 require ("tiki-rss.php");
 

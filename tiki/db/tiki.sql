@@ -2353,6 +2353,24 @@ CREATE TABLE tiki_rss_modules (
 # --------------------------------------------------------
 
 #
+# Table structure for table `tiki_rss_feeds`
+#
+# Creation: Oct 14, 2003 at 20:34 PM
+# Last update: Oct 14, 2003 at 20:34 PM
+#
+
+DROP TABLE IF EXISTS tiki_rss_feeds;
+CREATE TABLE tiki_rss_feeds (
+  name varchar(30) NOT NULL default '',
+  rssVer char(1) NOT NULL default '1',
+  refresh int(8) default NULL,
+  lastUpdated int(14) default NULL,
+  cache longblob,
+  PRIMARY KEY  (name, rssVer)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
 # Table structure for table `tiki_search_stats`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
