@@ -81,6 +81,14 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-list_faqs.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-list_faqs.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
 </div>
 </div>
 

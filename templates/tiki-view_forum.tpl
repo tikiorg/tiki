@@ -222,6 +222,14 @@
   {if $comments_next_offset >= 0}
   &nbsp;[<a class="forumprevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
   {/if}
+  {if $direct_pagination eq 'y'}
+<br/>
+{section loop=$comments_cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
+<a class="prevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
   </div>
   <br/>
   </div>

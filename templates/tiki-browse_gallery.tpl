@@ -72,6 +72,15 @@
       {if $next_offset >= 0}
       &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
       {/if}
+      {if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+
   </div>
 </div>
 {if $feature_image_galleries_comments eq 'y'}
