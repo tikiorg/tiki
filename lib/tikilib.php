@@ -4181,8 +4181,6 @@ class TikiLib {
   function get_site_date($timestamp, $user = false) {
     static $localed = false;
 
-Debug::d('get_site_date()');
-
     if (!$localed) {
       $this->set_locale($user);
       $localed = true;
@@ -4227,8 +4225,6 @@ Debug::d('get_site_date()');
       $rv .= $date->format($format);
       $rv .= " =convertTZbyID($tz_id)\n";
     }
-
-	Debug::d($rv);
 
     #return $rv;
 
@@ -4609,15 +4605,6 @@ function httpPrefix() {
       $rv .= ':' . $_SERVER['SERVER_PORT'];
   }
   return $rv;
-}
-
-class Debug {
-	function d($m) {
-		if (!isset($REQUEST['_d']))
-			return;
-
-		echo "\n<pre>\n",$m,"\n</pre>\n";
-	}
 }
 
 if(!function_exists('file_get_contents')) {
