@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.31 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.32 2004-04-19 12:38:41 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -464,13 +464,38 @@ $wd = date('w', $focusdate);
 #$wd--;
 
 // calculate timespan for sql query
-if ($_SESSION['CalendarViewMode'] == 'month') {
+if ($_SESSION['CalendarViewMode'] == 'quarter') {
    $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
+   $daystart=$viewstart;
+   $TmpWeekday = date("w",$viewstart);
+   // move viewstart back to Sunday....
+   $viewstart -= $TmpWeekday * $d;
+   // this is the last day of $focus_month
+   $viewend = mktime(0,0,0,$focus_month + 3, 0, $focus_year);
+   $dayend=$viewend;
+   $TmpWeekday = date("w", $viewend);
+   $viewend += (6 - $TmpWeekday) * $d;
+   $viewend -= 1;
+   // ISO weeks --- kinda mangled because ours begin on Sunday...
+   $firstweek = date("W", $viewstart + $d);
+   $lastweek = date("W", $viewend);
+   if ($lastweek < $firstweek) {
+	   if ($currentweek < $firstweek) {
+		   $firstweek -= 52;
+	   } else {
+		   $lastweek += 52;
+	   }
+   }
+   $numberofweeks = $lastweek - $firstweek;
+} elseif ($_SESSION['CalendarViewMode'] == 'month') {
+   $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
+   $daystart=$viewstart;
    $TmpWeekday = date("w",$viewstart);
    // move viewstart back to Sunday....
    $viewstart -= $TmpWeekday * $d;
    // this is the last day of $focus_month
    $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
+   $dayend=$viewend;
    $TmpWeekday = date("w", $viewend);
    $viewend += (6 - $TmpWeekday) * $d;
    $viewend -= 1;
@@ -492,14 +517,18 @@ if ($_SESSION['CalendarViewMode'] == 'month') {
    $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
    // then back up to the preceding Sunday;
    $viewstart -= $wd * $d;
+   $daystart=$viewstart;
    // then go to the end of the week for $viewend
    $viewend = $viewstart + ((7 * $d) - 1);
+   $dayend=$viewend;
    $numberofweeks = 0;
 } else {
    $firstweek = $currentweek;
    $lastweek = $currentweek;
    $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+   $daystart=$viewstart;
    $viewend = $viewstart + ($d - 1);
+   $dayend=$viewend;
    $weekdays = array(date('w',$focusdate));
    $numberofweeks = 0;
 }
@@ -566,6 +595,13 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 		$leday = array();
 	        $dday = $startOfWeek + $d * $w;
 		$cell[$i][$w]['day'] = $dday;
+		
+		If ($dday>=$daystart && $dday<=$dayend) {
+		  $cell[$i][$w]['focus'] = true;
+		} else {
+		  $cell[$i][$w]['focus'] = false;
+		}
+		
 		if (isset($listevents["$dday"])) {
 			$e = 0;
 
