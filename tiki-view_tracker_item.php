@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.44 2004-02-10 07:07:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.45 2004-02-10 09:43:14 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -247,7 +247,7 @@ if ($tiki_p_admin_trackers == 'y') {
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
-var_dump($tracker_info);
+
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('view-trackers-items');
