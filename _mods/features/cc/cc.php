@@ -6,6 +6,7 @@ if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
 
 $mid = "cc/index.tpl";
+$view = '';
 
 if ($user) {
 	
@@ -70,14 +71,15 @@ if ($user) {
 		if (isset($_REQUEST['new'])) {
 			$currencies = $cclib->get_registered_cc($user);
 			$smarty->assign('currencies',$currencies);
+			$view = 'new';
 			$mid = 'cc/transactions_form.tpl';
+		} elseif (isset($_REQUEST['all']) and $tiki_p_cc_admin == 'y') {
+			$thelist = $cclib->get_transactions();
+			$view = 'all';
+			$smarty->assign('thelist',$thelist['data']);
+			$mid = "cc/transactions.tpl";
 		} else {
-			if ($page == 'transactions' and $tiki_p_cc_admin == 'y') {
-				$thelist = $cclib->get_transactions();
-			} else {
-				$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
-				$smarty->assign("userid",$user);
-			}
+			$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
 			$smarty->assign('thelist',$thelist['data']);
 			$mid = "cc/transactions.tpl";
 		}
