@@ -264,7 +264,7 @@ class BlogLib extends TikiLib {
     $id = $this->getOne($query);
     // Send trackbacks recovering only succesful trackbacks
     $trackbacks = addslashes(serialize($this->send_trackbacks($id,$trackbacks)));
-    // Update post with trackbacks succesfully sent
+    // Update post with trackbacks successfully sent
     $query = "update tiki_blog_posts set trackbacks_from='', trackbacks_to = '$trackbacks' where postId=$id";
     $this->query($query);
     $query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
