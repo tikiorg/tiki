@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.27 2003-11-13 10:32:28 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.28 2003-11-26 06:27:13 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -399,7 +399,6 @@
             {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td>
 
         <td>&nbsp;</td>
-{*new view tpl feature*}
         <td class="form">
             	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=SmartyTplEditingDev" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}AutoLinks{/tr}">{/if}
         		{tr}Tiki Template Viewing{/tr}
@@ -421,8 +420,12 @@
             {if $feature_integrator eq 'y'}checked="checked"{/if}/></td>
 
         <td>&nbsp;</td>
-        <td class="form">&nbsp;</td>
-        <td>&nbsp;</td>
+        <td class="form">
+				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=PhpLayers" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Integrator{/tr}">{/if}
+				{tr}PhpLayers Dynamic menus{/tr}
+				{if $feature_help eq 'y'}</a>{/if}
+				:</td>
+        <td><input type="checkbox" name="feature_phplayers" {if $feature_phplayers eq 'y'}checked="checked"{/if}/></td>
 
       </tr>
 
