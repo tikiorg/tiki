@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.189 2004-01-08 19:01:32 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.190 2004-01-15 22:12:34 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,8 +19,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
   die("This script cannot be called directly");
 }
 
-include_once("lib/init/setup_inc.php");
-include_once(TIKI_LIB_PATH."/init/initlib.php");
+// include_once("lib/init/setup_inc.php");
+include_once("lib/init/initlib.php");
 
 class TikiSetup extends TikiInit {
 
@@ -1577,15 +1577,16 @@ $ownurl_father = $father;
 $smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
 
 // load lib configs
-if ($libdir = opendir(TIKI_LIB_PATH)) {
+/*
+if ($libdir = opendir('lib')) {
 	while (FALSE !== ($libname = readdir($libdir))) {
-		$configIncFile = TIKI_LIB_PATH.'/'.$libname.'/setup_inc.php';
-		if (is_dir( TIKI_LIB_PATH.'/'.$libname ) && file_exists( $configIncFile )) {
+		$configIncFile = 'lib/'.$libname.'/setup_inc.php';
+		if (is_dir( 'lib/'.$libname ) && file_exists( $configIncFile )) {
 			include_once( $configIncFile );
 		}
 	}
 }
-
+*/
 $allowMsgs = 'n';
 
 if ($user) {
