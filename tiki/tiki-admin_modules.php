@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.31 2004-03-31 09:53:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.32 2004-06-10 16:15:39 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,7 +133,7 @@ if (isset($_REQUEST["um_update"])) {
 	$smarty->assign_by_ref('um_name', $_REQUEST["um_name"]);
 	$smarty->assign_by_ref('um_title', $_REQUEST["um_title"]);
 	$smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
-	$modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"]);
+	$modlib->replace_user_module(preg_replace("/\W/", "_",$_REQUEST["um_name"]), $_REQUEST["um_title"], $_REQUEST["um_data"]);
 	$logslib->add_log('adminmodules','changed user module '.$_REQUEST["um_name"]);
 }
 
