@@ -72,7 +72,9 @@
 {/if}
 
 <h2>{tr}Available File Galleries{/tr}</h2>
+{if  $tiki_p_admin_file_galleries eq 'y'}
 <a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
+{/if}
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
