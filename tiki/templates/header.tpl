@@ -24,6 +24,9 @@
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
+<script language="JavaScript" type="text/javascript"><!--
+{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
+// --></script>
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
 <script type="text/javascript" src="lib/jscalendar/lang/calendar-en.js"></script>
 <script type="text/javascript" src="lib/jscalendar/calendar-setup.js"></script>
@@ -34,7 +37,7 @@
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
 <style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
 <script language="JavaScript" type="text/javascript"><!--
-{php} include ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
+{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
 // --></script>
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>

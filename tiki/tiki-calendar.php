@@ -1,13 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.22 2003-12-04 13:14:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.23 2003-12-05 19:42:05 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once ('tiki-setup.php');
 
-include_once ('lib/userslib.php');
 include_once ('lib/calendar/calendarlib.php');
 
 # perms are 
@@ -27,25 +26,56 @@ if ($tiki_p_view_calendar != 'y') {
 	die;
 }
 
-$infocals = array();
-$infocals = $calendarlib->list_calendars();
-$listcals = array_keys($infocals["data"]);
+$modifiable = array();
+$rawcals = $calendarlib->list_calendars();
 
-$outsess = array();
-foreach ($listcals as $grp) {
-	if($userlib->object_has_one_permission($grp,'calendar')) { 
-		$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar');
-		foreach($perms["data"] as $perm) {    
-			if ($userlib->object_has_permission($user,$grp,'calendar','tiki_p_view_calendar')) {
-				$outsess[] = $grp;                                                 
+foreach ($rawcals["data"] as $cal_id=>$cal_data) {
+	if ($tiki_p_admin == 'y') {
+		$cal_data["tiki_p_view_calendar"] = 'y';
+		$cal_data["tiki_p_add_events"] = 'y';
+		$cal_data["tiki_p_change_events"] = 'y';
+	} else {
+		if ($userlib->object_has_one_permission($cal_id,'calendar')) {
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_view_calendar')) {
+				$cal_data["tiki_p_view_calendar"] = 'y';
+			} else {
+				$cal_data["tiki_p_view_calendar"] = 'n';
 			}
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
+				$cal_data["tiki_p_add_events"] = 'y';
+			} else {
+				$cal_data["tiki_p_add_events"] = 'n';
+			}
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
+				$cal_data["tiki_p_change_events"] = 'y';
+			} else {
+				$cal_data["tiki_p_change_events"] = 'n';
+			}
+			if ($userlib->object_has_permission($user, $cal_id, 'calendar', 'tiki_p_admin_calendar')) {
+				$cal_data["tiki_p_view_calendar"] = 'y';
+				$cal_data["tiki_p_add_events"] = 'y';
+				$cal_data["tiki_p_change_events"] = 'y';
+			}
+		} else {
+			$cal_data["tiki_p_view_calendar"] = $tiki_p_view_calendar;
+			$cal_data["tiki_p_add_events"] = $tiki_p_add_events;
+			$cal_data["tiki_p_change_events"] = $tiki_p_change_events;
 		}
 	}
+	if ($cal_data["tiki_p_view_calendar"] == 'y') {
+		$bufid[] = $cal_id;
+		$bufdata["$cal_id"] = $cal_data;
+	}
+	if (($cal_data["tiki_p_add_events"] == 'y') or ($cal_data["tiki_p_change_events"] == 'y')) {
+		$modifiable[] = $cal_id;
+	}
 }
-$listcals = $outsess;
+$listcals = $bufid;
+$infocals["data"] = $bufdata;
 
 $smarty->assign('infocals', $infocals["data"]);
 $smarty->assign('listcals', $listcals);
+$smarty->assign('modifiable', count($modifiable));
 
 // set up list of groups 
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
@@ -236,25 +266,28 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 	if (!isset($_REQUEST["name"])or !(trim($_REQUEST["name"]))) {
 		$_REQUEST["name"] = tra("event without name");
 	}
-
-	if (isset($_REQUEST["start_freeform"])and $_REQUEST["start_freeform"]) {
-		$event_start = strtotime($_REQUEST["start_freeform"]);
+	if (isset($_REQUEST["start_date_input"]) and $_REQUEST["start_date_input"]) {
+		$event_start = $_REQUEST["start_date_input"];
+	} else {
+		if (isset($_REQUEST["start_freeform"])and $_REQUEST["start_freeform"]) {
+			$event_start = strtotime($_REQUEST["start_freeform"]);
+		}
+		if (!isset($event_start)) {
+			$event_start = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
+					0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
+		}
 	}
-
-	if (isset($_REQUEST["end_freeform"])and $_REQUEST["end_freeform"]) {
-		$event_end = strtotime($_REQUEST["end_freeform"]);
+	if (isset($_REQUEST["end_date_input"]) and $_REQUEST["end_date_input"]) {
+		$event_end = $_REQUEST["end_date_input"];
+	} else {
+		if (isset($_REQUEST["end_freeform"])and $_REQUEST["end_freeform"]) {
+			$event_end = strtotime($_REQUEST["end_freeform"]);
+		}
+		if (!isset($event_end)) {
+			$event_end = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
+					0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
+		}
 	}
-
-	if (!isset($event_start)) {
-		$event_start = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
-			0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
-	}
-
-	if (!isset($event_end)) {
-		$event_end = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
-			0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
-	}
-
 	$_REQUEST["calitemId"] = $calendarlib->set_item($user, $_REQUEST["calitemId"], array(
 		"user" => $user,
 		"organizers" => $_REQUEST["organizers"],
@@ -534,16 +567,14 @@ if ($_SESSION['CalendarViewMode'] == 'day') {
 	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
 		$rawhour = substr($dayitems['time'],0,2);
 		$dayitems['mins'] = substr($dayitems['time'],2);
-		//$unsortday["{$dayitems['time']}"] = $dayitems;
-		//ksort($unsortday);
-		//$dayits = array_values($unsortday);
 		$hrows["$rawhour"][] = $dayitems;
 	}
 }
 $smarty->assign('hrows', $hrows); 
 
 $smarty->assign('trunc', $trunc); 
-$smarty->assign('daformat', $short_date_format); 
+$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
+$smarty->assign('daformat2', $tikilib->get_long_date_format()); 
 $smarty->assign('currentweek', $currentweek);
 $smarty->assign('firstweek', $firstweek);
 $smarty->assign('lastweek', $lastweek);

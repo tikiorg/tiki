@@ -545,17 +545,15 @@ class CalendarLib extends TikiLib {
 		}
 
 		if ($calitemId) {
-			$query = "update `tiki_calendar_items` set `calendarId`=?, `user`=?,";
-			$query.= "`start`=?,`end`=? ,`locationId`=? ,`categoryId`='?,";
-			$query.= "`priority`=?,`status`=?,`url`=?,";
+			$query = "update `tiki_calendar_items` set `calendarId`=?,`user`=?,`start`=?,`end`=? ,`locationId`=? ,`categoryId`=?,`priority`=?,`status`=?,`url`=?,";
 			$query.= "`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
-			$bindvars=array($data["calendarId"],$user,$data["start"],$data["end"],$data["locationId"],$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],time(),$calitemId);
+			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["priority"],
+			                (int)$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$now=time();
 			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`, ";
-			$query.= " `priority`, `status`, `url`, `lang`, `name`, `description`, `created`, `lastmodif`) values (";
-			$query.= "?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query.= " `priority`, `status`, `url`, `lang`, `name`, `description`, `created`, `lastmodif`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($data["calendarId"],$user,$data["start"],$data["end"],$data["locationId"],$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],$now,$now);
 			$result = $this->query($query,$bindvars);
 			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$now));
