@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.7 2003-10-17 16:17:24 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.8 2003-10-18 23:17:00 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -67,25 +67,30 @@ class TikiIntegrator extends TikiLib
     /// List rules for given repository
     function list_rules($repID)
     {
-        $query = "select * from tiki_integrator_rules where repID='$repID'";
+        $query = "select * from tiki_integrator_rules where repID='$repID' order by 'ord'";
         $result = $this->query($query);
         $ret = Array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
     /// Add or update rule for repository
-    function add_replace_rule($repID, $ruleID, $srch, $repl, $type, $case, $rxmod, $descr)
+    function add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $case, $rxmod, $descr)
     {
         $srch  = addslashes($srch);
         $repl  = addslashes($repl);
         $rxmod = addslashes($rxmod);
         $descr = addslashes($descr);
+        if ($ord == 0)
+        {
+            $query = "select max(ord) from tiki_integrator_rules where repID='$repID'";
+            $ord = $this->getOne($query) + 1;
+        }
         if (strlen($ruleID) == 0 || $ruleID == 0)
-            $query = "insert into tiki_integrator_rules(repID,srch,repl,type,casesense,rxmod,description)
-                      values('$repID','$srch','$repl','$type','$case','$rxmod','$descr')";
+            $query = "insert into tiki_integrator_rules(repID,ord,srch,repl,type,casesense,rxmod,description)
+                      values('$repID','$ord','$srch','$repl','$type','$case','$rxmod','$descr')";
         else
             $query = "update tiki_integrator_rules 
-                      set repID='$repID',srch='$srch',repl='$repl',
+                      set repID='$repID',ord='$ord',srch='$srch',repl='$repl',
                       type='$type',casesense='$case',rxmod='$rxmod',description='$descr'
                       where ruleID='$ruleID'";
         $result = $this->query($query);

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.5 2003-10-17 16:10:16 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.6 2003-10-18 23:17:00 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -21,6 +21,7 @@ if ($tiki_p_admin != 'y')
 // Setup local variables from request or set default values
 $repID       = isset($_REQUEST["repID"])       ? $_REQUEST["repID"]       :  0;
 $ruleID      = isset($_REQUEST["ruleID"])      ? $_REQUEST["ruleID"]      :  0;
+$ord         = isset($_REQUEST["ord"])         ? $_REQUEST["ord"]         :  0;
 $srcrep      = isset($_REQUEST["srcrep"])      ? $_REQUEST["srcrep"]      :  0;
 $srch        = isset($_REQUEST["srch"])        ? $_REQUEST["srch"]        : '';
 $repl        = isset($_REQUEST["repl"])        ? $_REQUEST["repl"]        : '';
@@ -48,7 +49,7 @@ if (isset($_REQUEST["save"]))
 {
     // ... and all mandatory paramaters r OK
     if (strlen($srch)  > 0)
-        $integrator->add_replace_rule($repID, $ruleID, $srch, $repl, $type, $casesense, $rxmod, $description);
+        $integrator->add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $casesense, $rxmod, $description);
     else
     {
         $smarty->assign('msg',tra("Search is mandatory field"));
@@ -63,6 +64,7 @@ if (isset($_REQUEST["preview"]))
     $rule = array();
     $rule["repID"] = $repID;
     $rule["ruleID"] = $ruleID;
+    $rule["ord"] = $ord;
     $rule["srch"] = $srch;
     $rule["repl"] = $repl;
     $rule["type"] = $type;
@@ -72,6 +74,7 @@ if (isset($_REQUEST["preview"]))
 
     // Reassign values in form
     $smarty->assign('ruleID', $rule["ruleID"]);
+    $smarty->assign('ord', $rule["ord"]);
     $smarty->assign('srch', $rule["srch"]);
     $smarty->assign('repl', $rule["repl"]);
     $smarty->assign('type', $rule["type"]);

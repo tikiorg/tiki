@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.6 2003-10-17 16:10:17 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.7 2003-10-18 23:17:01 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -11,6 +11,14 @@
     </div></td>
     <td><div class="button2">
       <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view repository{/tr}</a>
+    </div></td>
+    
+    <td>&nbsp;</td>
+    
+    <td><div class="button2">
+      <a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}" class="linkbut">
+        {tr}new rule{/tr}
+      </a>
     </div></td>
     {if count($reps) gt 0}
     <td><div class="button2">
@@ -44,7 +52,12 @@
 <input type="hidden" name="repID" value="{$repID|escape}" />
 
 <table class="normal">
-  <tr><td class="formcolor">{tr}Search{/tr}</td>
+  <tr>
+    <td class="formcolor"><span title="{tr}0 = auto{/tr}">{tr}Rule order{/tr}</span></td>
+    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}0 = auto{/tr}" />&nbsp;
+    </td>
+  </tr><tr>
+    <td class="formcolor">{tr}Search{/tr}</td>
     <td class="formcolor"><input type="text" name="srch" value="{$srch|escape}" /></td>
   </tr><tr>
     <td class="formcolor">{tr}Replace{/tr}</td>
@@ -117,6 +130,7 @@
 {* Table with list of repositories *}
 <table class="normal" id="integrator_rules">
   <tr>
+    <td class="heading" rowspan="2">#</td>
     <td class="heading">{tr}Search{/tr}</td>
     <td class="heading">{tr}Replace{/tr}</td>
     <td class="heading">{tr}Regex{/tr}</td>
@@ -128,6 +142,7 @@
   {cycle values="odd,even" print=false}
   {section name=rule loop=$rules}
     <tr>
+      <td class="{cycle advance=false}"{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>{$rules[rule].ord|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].srch|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].repl|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].type|escape}</td>
