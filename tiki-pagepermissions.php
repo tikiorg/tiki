@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.17 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.18 2004-06-08 21:13:30 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,6 +102,28 @@ if (isset($_REQUEST["action"])) {
 // Now we have to get the individual page permissions if any
 $page_perms = $userlib->get_object_permissions($page, 'wiki page');
 $smarty->assign_by_ref('page_perms', $page_perms);
+
+// Get the permissions of the categories that this page belongs to
+$categ_perms = array();
+$parents = $categlib->get_object_categories('wiki page',$page);
+foreach ($parents as $categId) {
+	if ($userlib->object_has_one_permission($categId, 'category')) {
+		$categ_perms[] = $userlib->get_object_permissions($categId, 'category');
+	} else {
+		$categpath = $categlib->get_category_path($categId);
+		$arraysize = count($categpath);
+		$x = 0;
+		for ($i=$arraysize-2; $i>=0; $i--) {
+			if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
+				$categ_perms[] = $userlib->get_object_permissions($categpath[$i]['categId'], 'category');
+				$categ_perms[$x][0]['catpath'] = implode($categlib->get_category_name($categpath[$i]['categId']));
+				$x++;
+				break 1;
+			}
+		}
+	}
+}
+$smarty->assign_by_ref('categ_perms', $categ_perms);
 
 // Get a list of groups
 $groups = $userlib->get_groups(0, -1, 'groupName_desc');
