@@ -31,6 +31,7 @@
 {/section}
 </select>
 </td></tr>
+
 {if $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
@@ -41,6 +42,7 @@
 </select>
 </td></tr>
 {/if}
+{if $nlId}
 <tr><td class="formcolor">{tr}Data{/tr}:<br/><br/>{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}</td>
 <td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
@@ -48,10 +50,14 @@
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
+{else}
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Next{/tr}" /></td></tr>
+{/if}
 </table>
 </form>
 {/if}
 
+{if $nlId}
 <h2>{tr}Sent editions{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -105,4 +111,4 @@
 {/if}
 </div>
 </div>
-
+{/if}

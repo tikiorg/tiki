@@ -238,15 +238,19 @@ class NlLib extends TikiLib {
 		return $retval;
 	}
 
-	function list_editions($offset, $maxRecords, $sort_mode, $find) {
+	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find) {
 		$bindvars = array();
+		$mid = "";
+		
+		if ($nlId) {
+			$mid.= " and tn.`nlId`=". intval($nlId);
+		}
+		
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " and (`subject` like ? or `data` like ?)";
+			$mid.= " and (`subject` like ? or `data` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
-		} else {
-			$mid = " ";
 		}
 
 		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";

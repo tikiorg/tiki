@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.48 2004-04-28 06:23:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.49 2004-04-28 21:34:07 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -446,3 +446,6 @@ CREATE TABLE hw_pages (
 #
 # Homework tables end
 #
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'admin', 'newsletters');
+
