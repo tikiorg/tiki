@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.16 2004-01-29 16:34:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.17 2004-02-04 12:24:34 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,9 @@ $info["useAttachments"] = '';
 $info["showComments"] = '';
 $info["showAttachments"] = '';
 $info["defaultOrderKey"] = '';
-$info["defaultOrderDir"] = '';
+$info["defaultOrderDir"] = 'asc';
+$info["newItemStatus"] = 'o';
+$info["modItemStatus"] = 'o';
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 
 if ($_REQUEST["trackerId"]) {
@@ -71,6 +73,8 @@ $smarty->assign('showComments', $info["showComments"]);
 $smarty->assign('showAttachments', $info["showAttachments"]);
 $smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
 $smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
+$smarty->assign('newItemStatus', $info["newItemStatus"]);
+$smarty->assign('modItemStatus', $info["modItemStatus"]);
 
 $outatt = array();
 $info["orderPopup"] = '';
@@ -140,6 +144,14 @@ if (isset($_REQUEST["save"])) {
 
 	if (isset($_REQUEST["defaultOrderDir"]) && ($_REQUEST["defaultOrderDir"] == 'asc' or $_REQUEST["defaultOrderDir"] == 'desc')) {
 		$tracker_options["defaultOrderDir"] = $_REQUEST["defaultOrderDir"];
+	}
+
+	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"]) {
+		$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
+	}
+
+	if (isset($_REQUEST["modItemStatus"]) && $_REQUEST["modItemStatus"]) {
+		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
 	}
 
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
