@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.55 2003-08-07 10:39:55 franck Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.56 2003-08-07 15:41:06 mose Exp $*}
 
 {*
  Next version feature frozen in 1,7 release...
@@ -344,7 +344,7 @@
   </div>
 {/if}
 
-HEllo?????{$feature_maps}
+{$feature_maps}
 
 {if $feature_maps eq 'y'}
   <div class="separator">
