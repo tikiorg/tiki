@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.36 2004-06-14 03:15:51 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.37 2004-06-14 20:13:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,14 +54,17 @@ if ($userlib->object_has_one_permission($_REQUEST["blogId"], 'blog')) {
 			}
 		}
 	}
-} elseif ($feature_categories == 'y') {
+} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $_REQUEST['blogId']);
    	if ($perms_array) {
+   		$is_categorized = TRUE;
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
     	}
+   	} else {
+   		$is_categorized = FALSE;
    	}
-	if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
