@@ -68,6 +68,9 @@ if(isset($_REQUEST["edit_assign"])) {
       $grps = $grps.' $amodule ';	
     }
   }
+  if(!isset($info['rows'])||empty($info['rows'])) {
+    $info['rows']=0;
+  }
   $smarty->assign('module_groups',$grps);
   $smarty->assign_by_ref('assign_name',$info["name"]);
   //$smarty->assign_by_ref('assign_title',$info["title"]);
