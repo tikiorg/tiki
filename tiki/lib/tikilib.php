@@ -70,19 +70,27 @@ class TikiLib extends TikiDB {
 	// (cdx) return false when can't connect
 	// I prefer throw a PEAR_Error. You decide ;)
 	if (PEAR::isError($oError=$req->sendRequest())) {
-	    $fp = fopen($url, "r");
+		  return(false);
+		  /* Please people, don't use fopen. It's potentially unsafe
+		   * because if any form does not check the url, you can upload
+		   * /etc/passwd and other file from the local host.
+		   * it's also more safe to use httprequest, because the admin can set
+		   * a proxy so that noone can upload files in tiki from behind a
+		   * firewall (safes the net where tiki runs in). 
+			$fp = fopen($url, "r");
 
-	    if ($fp) {
-		$data = '';
-		while(!feof($fp)) {
-		    $data .= fread($fp,4096);
-		}
-		fclose ($fp);
-	    }
-	    if ($data =="") return false;
-	} else $data = $req->getResponseBody();
-	return $data;
-    }
+			if ($fp) {
+				$data = '';
+				while(!feof($fp)) {
+					$data .= fread($fp,4096);
+				}
+			fclose ($fp);
+			}
+			if ($data =="") return false;
+			*/
+	  } else $data = $req->getResponseBody();
+	  return $data;
+}
 
     /*shared*/
     function get_dsn_by_name($name) {

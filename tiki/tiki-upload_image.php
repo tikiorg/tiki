@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.32 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.33 2004-08-27 15:40:52 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,17 +96,17 @@ if (isset($_REQUEST["upload"])) {
 	$error_msg = '';
 
 	if (!empty($_REQUEST["url"])) {
+		// check URL. avoid uploading local files!
+		if(!preg_match('#http[s]?://#i',$_REQUEST["url"])) {
+			$_REQUEST["url"]='http://'.$_REQUEST["url"];
+		}
+
+		$data=$tikilib->httprequest($_REQUEST["url"]);
+		if($data) {
 		// Get the image from a URL
-		if (@getimagesize($_REQUEST["url"])) {
-		$fp = @fopen($_REQUEST["url"], "r");
-
-		if ($fp) {
-			$data = '';
-			while(!feof($fp)) {
-				$data .= fread($fp,4096);
-			}
-
-			fclose ($fp);
+		if (@getimagesize($_REQUEST["url"])) { // that's not nice. reads the image twice.
+						       // I'll have to add some functionality in imagegalslib
+						       // remember me if i forget that. redflo
 			$url_info = parse_url($_REQUEST["url"]);
 			$pinfo = pathinfo($url_info["path"]);
 			$type = "image/" . $pinfo["extension"];
