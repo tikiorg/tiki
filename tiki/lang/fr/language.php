@@ -1169,7 +1169,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Add notification" => "Ajouter une notification",
 "Event" => "Événement",
 "A user registers" => "Un utilisateur s'inscrit",
-"A user submits an article" => "Un utilisateur soumet un article",
+"A user submits an article" => "Un utilisateur publie un article",
 "use admin email" => "utiliser la messagerie de l'administrateur",
 "event" => "événement",
 "object" => "objet",
@@ -1533,7 +1533,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Users can lock pages (if perm)" => "Les utilisateurs peuvent verrouiller une page (si droits)",
 "Tables syntax" => "Syntaxes des tables",
 "|| for rows" => "|| pour les rangées",
-"Wiki History" => "Wiki History",
+"Wiki History" => "Historique Wiki",
 "Number of columns per page when listing categories" => "Nombre de colonnes par page à l'affichage des catégories",
 "Links per page" => "Liens par page",
 "Validate URLs" => "Tester la validité des adresses Web",
@@ -2714,7 +2714,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Copyright Management" => "Administration du Copyright",
 "Enable Feature" => "Activer cette fonctionalité",
 "License Page" => "Page de la licence",
-"Submit Notice" => "Soumettre une notice",
+"Submit Notice" => "Publier une notice",
 "Copyright" => "Copyright",
 "License" => "Licence",
 "Important" => "Important",
@@ -2731,9 +2731,6 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "You do not have permission to use this feature." => "Vous n'avez pas le droit d'utiliser cette fonctionnalité.",
 "You must supply all the information, including title and year." => "Vous devez fournir toutes les informations, y compris titre et année.",
 "Tuesday" => "Mardi",
-"
- for rows" => "
- pour les rangées",//perhaps not used
 "Thank you for you registration. You may log in now." => "Merci pour votre inscription. Vous pouvez vous connecter maintenant",
 "Displays the user Avatar" => "Affiche l'avatar utilisateur",
 "Centers the plugin content in the wiki page" => "Centre le contenu du plugin dans la page Wiki",
@@ -2748,11 +2745,11 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Use single spaces to indent structure levels" => "Utiliser un seul espace pour une mise en retrait",
 "Admin structures" => "Administrer les structures",
 "Edit css" => "Editer le css",
-"\n for rows" => "\n pour rangées",
+"\\n for rows" => "\\n pour rangées",
 "syntax highlighting" => "mise en relief de la syntaxe",
 "Admin Calendars" => "Administrer les calendriers",
 "Create/edit Calendars" => "Ajouter/modifier un calendrier",
-"Custom Locations" => "Personalisé Locations",
+"Custom Locations" => "Personaliser Locations",//??
 "Custom Categories" => "Custom Categories",//??
 "Custom Languages" => "Custom Languages",//??
 "Custom Priorities" => "Custom Priorities",//??
@@ -2766,9 +2763,9 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "more" => "plus",
 "less" => "moins",
 "Refresh" => "Réactualiser",
-"Group Calendars" => "Group Calendars",//??
-"Tools Calendars" => "Tools Calendars",//??
-"hide from display" => "caché à l'affichage",
+"Group Calendars" => "Groupes",//??
+"Tools Calendars" => "Sections",//??
+"hide from display" => "masqué à l'affichage",
 "Tiki Calendars" => "Calendriers Tiki",
 "+1d" => "+1j",
 "+7d" => "+7j",
@@ -2835,5 +2832,25 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Sorry no such module" => "Désolé module inexistant",
 "Please choose a module" => "SVP choissisez un module",
 "to be used as argument" => "à être utilisé comme paramètre",
+"Click twice if once is not enough !" => "Cliquer 2 fois si ce n'est pas assez !",
+"Toggle display of comment zone" => "Afficher/Désafficher les commentaires et le formulaire de saisie",
+"Sender Email" => "Expéditeur de l'email",
+"Automonospaced text" => "Automonospaced text",//??
+"Calendars Panel" => "Tableau de bord calendier",
+"check / uncheck all" => "cocher/décocher tout",
+"Navigation Panel" => "Tableau de bord navigation",
+"Hide Panels" => "Cacher les tableaux de bord",
+"today" => "aujourd'hui",
+"You should first ask that a calendar is created, so you can create events attached to it." => "Vous devez d'abord demandé qu'un calendrier soit créé pour pouvoir y attacher des événements.",
+"IRC log" => "Trace des discussions",
+"Select" => "Sélectionner",
+"Submit a new link" => "Publier un nouveau lien",
+"Your Tiki account information for" => "Les informations de votre compte Tiki pour ",
+"A password reminder email has been sent " => "Un rappel du mot de passe a été envoyé ",
+"A new password has been sent " => "Un nouveau mot de passe a été envoyé ",
+"to the registered email address for" => "à l'adresse email inscrite pour",
+"Invalid or unknown username" => "Nom utilisateur invalide ou inconnu",
+"About" => "Au sujet",
+"Home" => "Accueil",
 "##end###" => "###end###");
 ?>
