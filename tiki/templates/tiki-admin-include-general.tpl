@@ -189,6 +189,17 @@
             {/if}
         </td>
       </tr><tr>
+        <td class="form">{tr}Use proxy{/tr}:</td>
+        <td><input type="checkbox" name="use_proxy"
+              {if $use_proxy eq 'y'}checked="checked"{/if}/>
+        </td>
+      </tr><tr>
+        <td class="form">{tr}Proxy Host{/tr}:</td>
+        <td><input type="text" name="proxy_host" value="{$proxy_host|escape}" /></td>
+      </tr><tr>
+        <td class="form">{tr}Proxy port{/tr}:</td>
+        <td><input size=5 type="text" name="proxy_port" value="{$proxy_port|escape}" /></td>
+      </tr><tr>
         <td class="form">{tr}Maximum number of records in listings{/tr}:</td>
         <td><input size="5" type="text" name="maxRecords"
                    value="{$maxRecords|escape}" />
