@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.24 2003-11-23 22:04:32 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.25 2003-11-24 00:31:07 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,7 +98,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
 
         //$mnm = $r["name"]."_module_title";
         //$smarty->assign_by_ref($mnm,$r["title"]);
-        //$smarty->assign_by_ref('module_rows',$r["rows"]);
+        $smarty->assign_by_ref('module_rows',$r["rows"]);
         if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $r["cache_time"])) {
             //print("Refrescar cache<br/>");
             $r["data"] = '';
@@ -205,6 +205,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
         parse_str($r["params"], $module_params);
 
         //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
+        $smarty->assign_by_ref('module_rows',$r["rows"]);
         if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $r["cache_time"])) {
             $r["data"] = '';
 
