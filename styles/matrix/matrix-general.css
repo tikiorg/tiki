@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.12 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.13 2004-01-31 14:10:45 mose Exp $
  *
  * General HTML redefinitions
  * There is no Tiki related things -- just pure HTML redefinitions
@@ -87,6 +87,13 @@ input, textarea, select {
     color: #001000;
     background: #D8DFC8;
     font: normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+div#leftcolumn * input,
+div#rightcolumn * input {
+    color: #00E000;
+    background: transparent;
+    border: 1px inset #00E000;
 }
 
 /* Warning background/color */

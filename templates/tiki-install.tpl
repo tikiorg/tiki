@@ -147,6 +147,16 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 			</select>
 			<input type="submit" name="update" value="update" />
 		    </td></tr>
+		    <tr><td colspan="2">
+		    	For database update from 1.7 you should use this order:
+			<ol>
+				<li>tiki_1.7to1.8.sql - can be run more than once if errors occur</li>
+				<li>comments_fix_1.7to1.8.sql - use only once!</li>
+				<li>structure_fix_1.7to1.8.sql use only once!</li>
+			</ol>
+			We recommend that you <b>backup your database</b> with mysqldump and
+			we recommend<br />to run these scripts from the command line (mysql tikidatabase &lt; scriptname.sql).
+		</td></tr>
 		    </table>
 		    </form><br />
 		  {else}
@@ -184,7 +194,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br /><br />
-    	  {/if}
+    	{/if}
 	{/if}
     	{if $dbcon eq 'y'}
 	  {if $dbdone eq 'y'} 

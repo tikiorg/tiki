@@ -18,7 +18,7 @@ if(!isset($_REQUEST["forumId"])) {
 }
 
 $feed = "forum";
-$tmp = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+$tmp = $tikilib->get_forum($_REQUEST["forumId"]);
 $title = "Tiki RSS feed for forum: ".$tmp["name"]; // TODO: make configurable
 $desc = $tmp["description"]; // TODO: make configurable
 $now = date("U");

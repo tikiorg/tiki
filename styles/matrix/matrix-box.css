@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.11 2003-11-14 20:09:05 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.12 2004-01-31 14:10:45 mose Exp $
  *
  */
 
@@ -100,6 +100,9 @@ div.cbox {
 	border: 3px ridge #00B000;
 	font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
+}
+div.cbox-data table {
+    width: 100%;
 }
 
 div.cbox#error-box {

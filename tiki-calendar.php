@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.28 2004-01-15 09:56:26 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.29 2004-01-31 14:10:43 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -471,6 +471,13 @@ if ($_SESSION['CalendarViewMode'] == 'month') {
    // ISO weeks --- kinda mangled because ours begin on Sunday...
    $firstweek = date("W", $viewstart + $d);
    $lastweek = date("W", $viewend);
+   if ($lastweek < $firstweek) {
+	   if ($currentweek < $firstweek) {
+		   $firstweek -= 52;
+	   } else {
+		   $lastweek += 52;
+	   }
+   }
    $numberofweeks = $lastweek - $firstweek;
 } elseif ($_SESSION['CalendarViewMode'] == 'week') {
    $firstweek = $currentweek;

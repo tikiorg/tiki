@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.34 2004-01-20 20:08:28 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.35 2004-01-31 14:10:45 mose Exp $
 
 MoreNeat theme
 */
@@ -315,7 +315,7 @@ div.simplebox {
 FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  padding-right : 0px;  padding-top : 0px;}
 
 /* General form elements */
-input,textarea, select {color : #000000; font: normal 10px Verdana, Arial, Helvetica, sans-serif; }
+input,textarea, select { font: normal 10px Verdana, Arial, Helvetica, sans-serif; }
 input { text-indent : 2px; }
 input[type=submit]:hover {
   background-color: #aaaaaa;

@@ -1,7 +1,8 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.10 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.11 2004-01-31 14:10:45 mose Exp $
  *
  */
+
 
 /*
  * General TIKI layout
@@ -19,6 +20,8 @@ div#tiki-top {
     text-align: right;
     position: absolute;
     right: 200px;
+    margin-top: 0px;
+    padding: 0px;
 }
 
 /* This is the middle */
@@ -53,16 +56,18 @@ div#tiki-bot:hover > table {
 /* The three columns (now divs) */
 div#leftcolumn {
     position: absolute;
-    left: 5px;
+    left: 0px;
     top: 5px;
     width: 180px;
+    padding: 4px;
 }
 
 div#rightcolumn {
     position: absolute;
-    right: 5px;
+    right: 0px;
     top: 5px;
     width: 180px;
+    padding: 4px;
 }
 
 /* And this is what lies inside the centercolumn
@@ -73,5 +78,9 @@ div#tiki-center {
     padding-left: 2px;
     padding-right: 2px;
     color: #00E000;
+    width: auto;
+}
+
+div#tiki-center > table {
     width: 100%;
 }
