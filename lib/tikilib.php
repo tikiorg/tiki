@@ -672,9 +672,39 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
 
-	    $ret[] = $res;
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['surveyId'], 'survey')) {
+	    // gallery permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_take_survey') &&
+				!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_view_survey_stats')) {
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no forum permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $res['surveyId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+
+		if ($add) {
+		    $res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
+		    $ret[] = $res;
+		}
 	}
 
 	$retval = array();
