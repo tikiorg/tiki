@@ -143,12 +143,15 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
+  {if $auth_method neq 'cas'}
+    <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
+  {/if}
   <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
   </table>
   </form>
   </div>
 
+{if $auth_method neq 'cas'}
   <div class="simplebox">
   {tr}Change your password{/tr}<br />
   <form action="tiki-user_preferences.php" method="post">
@@ -163,6 +166,7 @@
   </table>
   </form>
   </div>
+{/if}
   </div>
   </td>
   <!--The line below was <td valign="top" > for no real reason-->

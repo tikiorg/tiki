@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.50 2004-06-09 04:03:09 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.51 2004-06-09 21:23:39 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,7 +141,12 @@ if (isset($_REQUEST["prefs"])) {
 if (isset($_REQUEST['chgemail'])) {
 	check_ticket('user-prefs');
 	// check user's password
-	if (!$userlib->validate_user($userwatch, $_REQUEST['pass'], '', '')) {
+	if (isset($_REQUEST['pass'])) {
+		$pass = $_REQUEST['pass'];
+	} else {
+		$pass = '';
+	}
+	if (!$userlib->validate_user($userwatch, $pass, '', '')) {
 		$smarty->assign('msg', tra("Invalid password.  You current password is required to change your email address."));
 
 		$smarty->display("error.tpl");
