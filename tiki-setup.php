@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.180 2003-12-24 01:17:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.181 2003-12-24 09:18:16 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -176,7 +176,7 @@ TikiSetup::check();
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
 
-$tmpDir = TikiSetup::tempdir();
+$tmpDir = TikiInit::tempdir();
 
 class timer {
     function parseMicro($micro) {

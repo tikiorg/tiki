@@ -196,9 +196,8 @@ class StructLib extends TikiLib {
 			if (isset($parent_id)) {
 				$parent_check = " and `parent_id`=?";
 				$attributes = array((int)$page_id,$alias,(int)$max, (int)$parent_id);
-			}
-			else {
-				$parent_check = " and `parent_id` is null";
+			} else {
+				$parent_check = " and (`parent_id` is null or `parent_id`=0)";
 				$attributes = array((int)$page_id,$alias,(int)$max);
 			}
 			$query  = "select `page_ref_id` from `tiki_structures` ";
@@ -370,7 +369,7 @@ class StructLib extends TikiLib {
 	function get_struct_ref_if_head($pageName) {
     $query =  "select `page_ref_id` ";
     $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
-    $query .= "where ts.`page_id`=tp.`page_id` and `parent_id` is null and `pageName`=?";
+    $query .= "where ts.`page_id`=tp.`page_id` and (`parent_id` is null or `parent_id`=0) and `pageName`=?";
 		$page_ref_id = $this->getOne($query,array($pageName));
 		return $page_ref_id;
 	}
@@ -573,10 +572,10 @@ class StructLib extends TikiLib {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where ts.`page_id`= tp.`page_id` and `parent_id` is null and (tp.`pageName` like ?)";
+			$mid = " where ts.`page_id`= tp.`page_id` and (`parent_id` is null or `parent_id`=0) and (tp.`pageName` like ?)";
 			$bindvars=array($findesc);
 		} else {
-			$mid = " where ts.`page_id`= tp.`page_id` and `parent_id` is null";
+			$mid = " where ts.`page_id`= tp.`page_id` and (`parent_id` is null or `parent_id`=0) ";
 			$bindvars=array();
 		}
 
