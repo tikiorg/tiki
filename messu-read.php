@@ -62,7 +62,7 @@ $smarty->assign('msg',$msg);
 
 $section='user_messages';
 include_once('tiki-section_options.php');
-
+include_once('tiki-mytiki_shared.php');
 $smarty->assign('mid','messu-read.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 ?>

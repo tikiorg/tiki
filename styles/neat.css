@@ -64,19 +64,19 @@ text-align:right;
 padding-right: 10px;
 padding-bottom: 2px;
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
-width: 100%; }
+}
 
 .tikitopmenu {  
 color: #436976; 
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;   
 text-decoration: none;
-width: 100%; }
+}
 
 .tikitopmenu2 {  
 color: black; 
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
 text-decoration: none;
-width: 100%; }
+}
 
 
 DIV#usermenu {  
@@ -87,7 +87,7 @@ margin-bottom: 5px;
 padding-right: 10px;
 padding-bottom: 2px;
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
-width: 100%; }
+}
 
 
 /* This is the middle */
@@ -267,7 +267,7 @@ TD.formcolor, td.galform , td.editblogform, td.editfgalform, TD.comform,td.forum
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
 table.viewthread
-{  padding:0px; margin: 0px; border-collapse: collapse; width: 97%;}
+{  padding:0px; margin: 0px; border-collapse: collapse; width: 100%;}
 
 
 TABLE.normalnoborder {  width: 97%;}

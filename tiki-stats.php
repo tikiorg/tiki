@@ -15,11 +15,13 @@ if($tiki_p_view_stats != 'y') {
     die;
 }
 
+if(!isset($_REQUEST["days"])) $_REQUEST["days"]=7;
+
 $smarty->assign('pv_chart','n');
 if(isset($_REQUEST["pv_chart"])) {
   $smarty->assign('pv_chart','y');
-  $smarty->assign('days',$_REQUEST["days"]);
 }
+$smarty->assign('days',$_REQUEST["days"]);
 
 $smarty->assign('usage_chart','n');
 if(isset($_REQUEST["chart"])) {
