@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.67 2004-06-03 21:06:56 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.68 2004-06-06 04:48:03 lphuberdeau Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -533,3 +533,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
 
+# Added on June 5th 2004 by lphuberdeau; Field to hold the cell format
+
+ALTER TABLE tiki_sheet_values ADD format varchar(255) default NULL;
