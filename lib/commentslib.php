@@ -118,8 +118,8 @@ class Comments extends TikiLib {
 
 	$query = "insert into
 	    `tiki_forum_attachments`(`threadId`, `qId`, `filename`,
-	    `filetype`, `filesize`, `data`, `path`, `created`, `dir`,
-	    `forumId`)
+		    `filetype`, `filesize`, `data`, `path`, `created`, `dir`,
+		    `forumId`)
 	    values(?,?,?,?,?,?,?,?,?,?)";
 	$this->query($query,array($threadId,$qId,$name,$type,$size,$data,$fhash,$now,$dir,$forumId));
 	// Now the file is attached and we can proceed.
@@ -243,11 +243,12 @@ class Comments extends TikiLib {
 	    // Remove 're:' and [forum]. -rlpowell
 	    $title = trim(
 		    preg_replace( "/[rR][eE]:/", "", 
-			preg_replace( "/$\[[-A-Za-z _:]*\]/", "", 
+			preg_replace( "/\[[-A-Za-z _:]*\]/", "", 
 			    $aux['subject'] 
 			    )
 			)
 		    );
+
 	    $email = $aux["sender"]["email"];
 	    $message = $pop3->GetMessage($i);
 	    $full = $message["full"];
@@ -270,8 +271,14 @@ class Comments extends TikiLib {
 	    //Todo: check permissions
 	    $message_id = substr($output->headers["message-id"], 1,
 		    strlen($output->headers["message-id"])-2);
-	    $in_reply_to = substr($output->headers["in-reply-to"], 1,
-		    strlen($output->headers["in-reply-to"])-2);
+
+	    if( isset( $output->headers["in-reply-to"] ) )
+	    {
+		$in_reply_to = substr($output->headers["in-reply-to"], 1,
+			strlen($output->headers["in-reply-to"])-2);
+	    } else {
+		$in_reply_to = '';
+	    }
 
 	    // post_new_comment does md5()
 	    $object = 'forum' . $forumId;
@@ -581,19 +588,19 @@ class Comments extends TikiLib {
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?)";
 	    $bindvars=array($name, $description, $now, $now, 0, 0,
-	    $controlFlood, $floodInterval, $moderator, 0, $mail,
-	    $useMail, $usePruneUnreplied, $pruneUnrepliedAge,
-	    $usePruneOld, $pruneMaxAge, $topicsPerPage,  $topicOrdering,
-	    $threadOrdering, $section, $topics_list_reads,
-	    $topics_list_replies, $topics_list_pts,
-	    $topics_list_lastpost, $topics_list_author, $vote_threads,
-	    $show_description, $inbound_pop_server, $inbound_pop_port,
-	    $inbound_pop_user, $inbound_pop_password, $outbound_address,
-	    $outbound_from,  $topic_smileys, $topic_summary, $ui_avatar,
-	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
-	    $approval_type, $moderator_group, $forum_password,
-	    $forum_use_password, $att, $att_store, $att_store_dir,
-	    $att_max_size);
+		    $controlFlood, $floodInterval, $moderator, 0, $mail,
+		    $useMail, $usePruneUnreplied, $pruneUnrepliedAge,
+		    $usePruneOld, $pruneMaxAge, $topicsPerPage,  $topicOrdering,
+		    $threadOrdering, $section, $topics_list_reads,
+		    $topics_list_replies, $topics_list_pts,
+		    $topics_list_lastpost, $topics_list_author, $vote_threads,
+		    $show_description, $inbound_pop_server, $inbound_pop_port,
+		    $inbound_pop_user, $inbound_pop_password, $outbound_address,
+		    $outbound_from,  $topic_smileys, $topic_summary, $ui_avatar,
+		    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
+		    $approval_type, $moderator_group, $forum_password,
+		    $forum_use_password, $att, $att_store, $att_store_dir,
+		    $att_max_size);
 
 	    $result = $this->query($query,$bindvars);
 	    $forumId = $this->getOne("select max(`forumId`)
@@ -738,7 +745,7 @@ class Comments extends TikiLib {
     function user_can_edit_post( $user, $threadId )
     {
 	$result = $this->getOne( "select `userName` from tiki_comments
-	where `threadId` = ?", array( $threadId ) );
+		where `threadId` = ?", array( $threadId ) );
 
 	if( $result == $user )
 	{
@@ -1020,13 +1027,13 @@ class Comments extends TikiLib {
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords
-	    = -1, $sort_mode = 'commentDate_desc', $find = '', $threshold =
+	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
 	    0, $id = 0)
     {
 	$hash = md5($objectId);
 
-	if ($sort_mode == 'points_desc') {
-	    $sort_mode = 'average_desc';
+	if ($sort_mode == 'points_asc') {
+	    $sort_mode = 'average_asc';
 	}
 
 	if ($this->time_control) {
@@ -1267,9 +1274,9 @@ class Comments extends TikiLib {
     function update_comment($threadId, $title, $data, $type = 'n', $summary = '', $smiley = '') {
 	$query = "update `tiki_comments` set `title`=?,
 	data=?, type=?, summary=?, smiley=?
-	where `threadId`=?";
+	    where `threadId`=?";
 	$result = $this->query($query, array( $title, $data, $type,
-	$summary, $smiley, $threadId ) );
+		    $summary, $smiley, $threadId ) );
     }
 
     // Added an aption, $getold, to have it return the threadId of
@@ -1361,8 +1368,8 @@ class Comments extends TikiLib {
 	// Check if we were passed a message-id.
 	if ( ! $message_id )
 	{
-	// Construct a message id via proctological
-	// extraction.  -rlpowell
+	    // Construct a message id via proctological
+	    // extraction.  -rlpowell
 	    $message_id = $userName . "-" .
 		$parentId . "-" .
 		substr( $hash, 0, 10 ) .
