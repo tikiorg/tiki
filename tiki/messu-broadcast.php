@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.13 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.14 2003-10-19 13:44:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ $smarty->assign('mid', 'messu-broadcast.tpl');
 $smarty->assign('sent', 0);
 
 if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
-	$messulib->flag_message($_SESSION['user'], $_REQUEST['msgId'], 'isReplied', 'y');
+	$messulib->flag_message($user, $_REQUEST['msgId'], 'isReplied', 'y');
 }
 
 if (isset($_REQUEST['group'])) {
@@ -124,8 +124,7 @@ if (isset($_REQUEST['send'])) {
 
 	// Insert the message in the inboxes of each user
 	foreach ($users as $a_user) {
-		$messulib->post_message($a_user, $_SESSION['user'], $a_user,
-			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+		$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 	}
 
 	$smarty->assign('message', $message);
