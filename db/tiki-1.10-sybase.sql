@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2004-06-21 13:52:05 $
--- $Author: damosoft $
+-- $Date: 2004-07-15 19:30:54 $
+-- $Author: teedog $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -3010,7 +3010,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_admin_newsletters','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','')
 go
 
 
@@ -3037,67 +3037,67 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','')
 go
 
 
@@ -5627,7 +5627,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'editors', 'newsletters')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters')
 go
 
 
@@ -5959,7 +5959,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'admin', 'newsletters')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'editors', 'newsletters')
 go
 
 
@@ -7053,6 +7053,14 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_usrlock','
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_userpage','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_userpage_prefix','UserPage')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wikiwords','y')
 go
 
@@ -7757,7 +7765,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_score','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','login_asc')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score_desc')
 go
 
 
@@ -8216,17 +8224,11 @@ CREATE TABLE "tiki_score" (
   "event" varchar(40) default '' NOT NULL,
   "score" numeric(11,0) default '0' NOT NULL,
   "expiration" numeric(11,0) default '0' NOT NULL,
-  "category" text NOT NULL,
-  "description" text NOT NULL,
-  "ord" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("event")
-
 ) 
 go
 
 
-CREATE  INDEX "tiki_score_ord" ON "tiki_score"("ord")
-go
 
 -- DROP TABLE "tiki_users_score"
 go
@@ -8235,8 +8237,7 @@ go
 CREATE TABLE "tiki_users_score" (
   "user" char(40) default '' NOT NULL,
   "event_id" char(40) default '' NOT NULL,
-  "score" numeric(11,0) default '0' NOT NULL,
-  "expire" datetime default '0000-00-00 00:00:00' NOT NULL,
+  "expire" numeric(14,0) default '0' NOT NULL,
   "tstamp" timestamp NOT NULL,
   PRIMARY KEY ("user","event_id")
 
@@ -8247,131 +8248,74 @@ go
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire")
 go
 
-INSERT INTO tiki_score VALUES ('login',1,0,'General','Login',1)
+
+--
+-- Community tables end
+--
+
+--
+-- Tables of the Opinion-Network
+--
+
+-- DROP TABLE "tiki_opnet_question"
 go
 
 
-INSERT INTO tiki_score VALUES ('login_remain',2,60,'General','Stay logged',2)
+CREATE TABLE "tiki_opnet_question" (
+id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+which_formtype INT(10) NOT NULL,
+question_str VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( id ) 
+)
 go
 
 
-INSERT INTO tiki_score VALUES ('profile_fill',10,0,'General','Fill each profile field',3)
+
+-- DROP TABLE "tiki_opnet_formtype"
 go
 
 
-INSERT INTO tiki_score VALUES ('profile_see',2,0,'General','See other user\'s profile',4)
+CREATE TABLE "tiki_opnet_formtype" (
+id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+name VARCHAR( 30 ) NOT NULL ,
+PRIMARY KEY ( id ) 
+)
 go
 
 
-INSERT INTO tiki_score VALUES ('profile_is_seen',1,0,'General','Have your profile seen',5)
+
+-- DROP TABLE "tiki_opnet_answer"
 go
 
 
-INSERT INTO tiki_score VALUES ('friend_new',10,0,'General','Make friends (feature not available yet)',6)
+CREATE TABLE "tiki_opnet_answer" (
+id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+id_question INT( 10 ) NOT NULL ,
+id_filledform INT( 10 ) NOT NULL ,
+value INT( 10 ) NOT NULL ,
+PRIMARY KEY ( id ) 
+)
 go
 
 
-INSERT INTO tiki_score VALUES ('message_receive',1,0,'General','Receive message',7)
+
+-- DROP TABLE "tiki_opnet_filledform"
 go
 
 
-INSERT INTO tiki_score VALUES ('message_send',2,0,'General','Send message',8)
+CREATE TABLE "tiki_opnet_filledform" (
+id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+who INT( 10 ) NOT NULL ,
+about_who INT( 10 ) NOT NULL ,
+which_form INT( 10 ) NOT NULL ,
+PRIMARY KEY ( id ) 
+)
 go
-
-
-INSERT INTO tiki_score VALUES ('article_read',2,0,'Articles','Read an article',9)
-go
-
-
-INSERT INTO tiki_score VALUES ('article_comment',5,0,'Articles','Comment an article',10)
-go
-
-
-INSERT INTO tiki_score VALUES ('article_new',20,0,'Articles','Publish an article',11)
-go
-
-
-INSERT INTO tiki_score VALUES ('article_is_read',1,0,'Articles','Have your article read',12)
-go
-
-
-INSERT INTO tiki_score VALUES ('article_is_commented',2,0,'Articles','Have your article commented',13)
-go
-
-
-INSERT INTO tiki_score VALUES ('fgallery_new',10,0,'File galleries','Create new file gallery',14)
-go
-
-
-INSERT INTO tiki_score VALUES ('fgallery_new_file',10,0,'File galleries','Upload new file to gallery',15)
-go
-
-
-INSERT INTO tiki_score VALUES ('fgallery_download',5,0,'File galleries','Download other user\'s file',16)
-go
-
-
-INSERT INTO tiki_score VALUES ('fgallery_is_downloaded',5,0,'File galleries','Have your file downloaded',17)
-go
-
-
-INSERT INTO tiki_score VALUES ('igallery_new',10,0,'Image galleries','Create a new image gallery',18)
-go
-
-
-INSERT INTO tiki_score VALUES ('igallery_new_img',6,0,'Image galleries','Upload new image to gallery',19)
-go
-
-
-INSERT INTO tiki_score VALUES ('igallery_see_img',3,0,'Image galleries','See other user\'s image',20)
-go
-
-
-INSERT INTO tiki_score VALUES ('igallery_img_seen',1,0,'Image galleries','Have your image seen',21)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_new',20,0,'Blogs','Create new blog',22)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_post',5,0,'Blogs','Post in a blog',23)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_read',2,0,'Blogs','Read other user\'s blog',24)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_comment',2,0,'Blogs','Comment other user\'s blog',25)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_is_read',3,0,'Blogs','Have your blog read',26)
-go
-
-
-INSERT INTO tiki_score VALUES ('blog_is_commented',3,0,'Blogs','Have your blog commented',27)
-go
-
-
-INSERT INTO tiki_score VALUES ('wiki_new',10,0,'Wiki','Create a new wiki page',28)
-go
-
-
-INSERT INTO tiki_score VALUES ('wiki_edit',5,0,'Wiki','Edit an existing page',29)
-go
-
-
-INSERT INTO tiki_score VALUES ('wiki_attach_file',3,0,'Wiki','Attach file',30)
-go
-
-
 
 
 
 --
--- Community tables end
+-- Opinion-Network tables END
 --
 
 go
