@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.20 2004-02-12 18:57:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.21 2004-02-17 06:29:55 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,6 +37,7 @@ $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
 $info = array();
+$fields = array('data'=>array());
 $info["name"] = '';
 $info["description"] = '';
 $info["showCreated"] = '';
@@ -62,12 +63,14 @@ if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 }
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
 foreach ($dstatus as $ds) {
 	$info["defaultStatusList"][$ds] = true;
 }
 
+$smarty->assign('fields', $fields['data']);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
