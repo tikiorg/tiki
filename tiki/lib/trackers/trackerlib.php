@@ -456,7 +456,7 @@ class TrackerLib extends TikiLib {
 				} else {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
-				$the_data .= "$name = $value\n";
+				$the_data .= "  $name = $value\n";
 
 				if ($itemId) {
 					$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
@@ -477,15 +477,21 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_date', $now);
 			$smarty->assign('mail_user', $user);
 			if ($itemId) {
-				$smarty->assign('mail_action', tra('Modification of item $itemId in tracker $trackerName'));
+				$mail_action = "\r\n".tra('Item Modification')."\r\n\r\n";
+				$mail_action.= tra('Tracker').': '.$trackerName."\r\n";
+				$mail_action.= tra('Item').': '.$itemId;
 			} else {
-				$smarty->assign('mail_action', tra('New item $itemId in tracker $trackerName'));
+				$mail_action = "\r\n".tra('Item creation')."\r\n\r\n";
+				$mail_action.= tra('Tracker').': '.$trackerName;
 			}
+			$smarty->assign('mail_action', $mail_action);
 			$smarty->assign('mail_data', $the_data);
+			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 			foreach ($emails as $email) {
-				$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
-				@mail($email, tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data,
-					"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+				//var_dump($email);
+				//var_dump($mail_data);
+				@mail($email, '['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+				//echo "$email, ";
 			}
 		}
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
