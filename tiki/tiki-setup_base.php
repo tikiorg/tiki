@@ -60,6 +60,15 @@ if($tiki_p_admin_file_galleries == 'y') {
   }
 }
 
+if($tiki_p_admin_directory == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','directory');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
 if($tiki_p_blog_admin == 'y') {
   $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
   foreach($perms["data"] as $perm) {

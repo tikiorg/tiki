@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.9 2003-02-10 19:48:22 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.10 2003-02-18 17:01:54 lrargerich Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -9,6 +9,15 @@ if (!isset($_REQUEST["login"])) {
   die;  
 }
 */
+
+if($tiki_p_admin == 'y') {
+ if(isset($_REQUEST["su"])) {
+    $_SESSION['user'] = $_REQUEST["username"];
+    $smarty->assign_by_ref('user', $_REQUEST["username"]);
+    header("location: $tikiIndex");
+    die;
+ }
+}
 
 $https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
 $https_login_required = $tikilib->get_preference('https_login_required', 'n');

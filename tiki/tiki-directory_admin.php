@@ -9,6 +9,12 @@ if($feature_directory != 'y') {
   die;  
 }
 
+if($tiki_p_admin_directory != 'y' && $tiki_p_admin_directory_sites != 'y' && $tiki_p_admin_directory_cats != 'y' && $tiki_p_validate_links != 'y') {
+  $smarty->assign('msg',tra("Permission denied"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
 // This will only display a menu to
 // admin_categories
 // admin_sites

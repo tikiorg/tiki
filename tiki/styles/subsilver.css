@@ -1296,3 +1296,67 @@ div.tocnav {
 
 .tocnavlink { color:black; text-decoration: none; }
 .tocnavlink:hover {color: black; background-color: #EFEFEF; text-decoration:none;}
+
+/*************************************************** DIRECTORY ***************************************************/
+/* The list of categories */
+div.dircategs {
+  border: 0.5px solid black;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+/* Links to categories */
+.dirlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black; text-decoration: underline; font-weight: bold;}
+.dirlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #636363; text-decoration: underline; font-weight: bold;}
+
+/* Links to subcategories */
+.dirsublink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black; text-decoration: underline;}
+.dirsublink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: underline;}
+
+
+/* The list of sites in any category */
+div.dirlistsites {
+  background-color: white;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border: 0.5px solid black;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* each site in the list of sites */
+div.dirsite {
+  background-color: #EFEFEF;
+  margin-bottom: 10px;
+}
+
+span.dirsitedesc {}
+span.dirsitetrail {font-size: 10px;}
+span.dirsitecats {}
+
+/* Links to sites */
+.dirsitelink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black; text-decoration: underline;}
+.dirsitelink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #636363; text-decoration: underline;}
+
+/* Related categories */
+div.dirrelated {
+  background-color: White;
+  margin-top: 10px;
+  border: 0.5px solid black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  margin-left: 5px;
+}
+
+/* Footer with stats for the directory */
+td.dirfooter {
+ font-size: 9px;
+}
+
+div.dirfooter {
+  margin-top: 10px;
+  border: 1px solid black;
+}

@@ -38,10 +38,10 @@ class DirLib extends TikiLib {
   {
     $path = '';
     $info = $this->dir_get_category($categId);
-    $path = '<a class="link" href=tiki-directory_browse_category.php?parent="'.$info["categId"].'">'.$info["name"].'</a>';
+    $path = '<a class="dirlink" href=tiki-directory_browse.php?parent='.$info["categId"].'>'.$info["name"].'</a>';
     while($info["parent"]!=0) {
       $info = $this->dir_get_category($info["parent"]);
-      $path = $path = '<a class="link" href=tiki-directory_browse_category.php?parent="'.$info["categId"].'">'.$info["name"].'</a>'.'>'.$path;
+      $path = $path = '<a class="dirlink" href=tiki-directory_browse.php?parent='.$info["categId"].'>'.$info["name"].'</a>'.'>'.$path;
     }
     return $path;
   }
@@ -60,6 +60,27 @@ class DirLib extends TikiLib {
   }
 
   // Functions to manage categories
+  
+  function get_random_subcats($parent,$cant)
+  {
+    //Return an array of 'cant' random subcategories
+    $count = $this->db->getOne("select count(*) from tiki_directory_categories where parent=$parent");
+    if($count<$cant) $cant=$count;
+    $ret = Array();
+    while(count($ret)<$cant) {
+      $x = rand(0,$count);
+      if(!in_array($x,$ret)) {
+        $ret[]=$x;
+      }
+    }
+    $ret=Array();
+    foreach($ret as $r) {
+      $query = "select * from tiki_directory_categories limit $r,1";
+      $result = $this->query($query);
+      $ret[] = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    }
+    return $ret;
+  }
   
   // List
   function dir_list_categories($parent,$offset,$maxRecords,$sort_mode,$find)
@@ -171,6 +192,31 @@ class DirLib extends TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
+  
+  function dir_list_all_valid_sites($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where isValid='y' and (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=" where isValid='y' "; 
+    }
+    
+    $query = "select * from tiki_directory_sites $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_sites $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
   
   
   function dir_get_all_categories($offset,$maxRecords,$sort_mode,$find,$siteId=0)
@@ -284,10 +330,7 @@ class DirLib extends TikiLib {
     }
     
   }
-  
-  
-  
-  
+    
   // Replace
   function dir_replace_category($parent, $categId, $name, $description, $childrenType, $viewableChildren, $allowSites, $showCount, $editorGroup)
   {
@@ -426,7 +469,7 @@ class DirLib extends TikiLib {
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      //$res["path"]=$this->dir_get_path_text($res["relatedTo"]);
+      $res["path"]=$this->dir_get_path_text($res["relatedTo"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -441,16 +484,108 @@ class DirLib extends TikiLib {
     $this->query($query);
   } 
   
+  function dir_url_exists($url)
+  {
+    $cant = $this->db->getOne("select count(*) from tiki_directory_sites where url='$url'");
+    return $cant;
+  }
       
   // Functions to validate sites
+  
   
   // Validate  
    
   // Functions to add hits
   
   // Site hit
+  function dir_add_site_hit($siteId)
+  {
+    $query = "update tiki_directory_sites set hits=hits+1 where siteId=$siteId";
+    $this->query($query);
+  }  
   
   // Category hit
+  function dir_add_category_hit($categId)
+  {
+    $query = "update tiki_directory_categories set hits=hits+1 where categId=$categId";
+    $this->query($query);
+  }
+   
+  // Search
+  
+  function dir_search($words, $how='or', $offset=0,$maxRecords=-1,$sort_mode='hits_desc')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    // First of all split the words by whitespaces building the query string
+    // we'll search by name, url, description and cache
+    // the relevance will be calculated using hits
+    $words = split(' ',$words);
+    for($i=0;$i<count($words);$i++) {
+      $words[$i]=trim($words[$i]);
+      $word = $words[$i];
+      // Check if the term is in the stats then add it or increment it
+      if($this->db->getOne("select count(*) from tiki_directory_search where term='$word'")) {
+        $query = "update tiki_directory_search set hits=hits+1 where term='$word'";
+        $this->query($query);
+      } else {
+        $query = "insert into tiki_directory_search(term,hits) values('$word',1)";
+        $this->query($query);
+      }
+      // Now build the query
+      $words[$i] = " ((name like '%$word%') or (description like '%$word%') or (url like '%$word%') or (cache like '%$word%')) ";
+    }
+    $words = implode($how,$words);
+    $query = "select * from tiki_directory_sites where isValid='y' and $words  order by $sort_mode limit $offset,$maxRecords";
+    $cant = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='y' and $words");
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+
+  function dir_search_cat($parent,$words, $how='or', $offset=0,$maxRecords=-1,$sort_mode='hits_desc')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    // First of all split the words by whitespaces building the query string
+    // we'll search by name, url, description and cache
+    // the relevance will be calculated using hits
+    $words = split(' ',$words);
+    for($i=0;$i<count($words);$i++) {
+      $words[$i]=trim($words[$i]);
+      $word = $words[$i];
+      // Check if the term is in the stats then add it or increment it
+      if($this->db->getOne("select count(*) from tiki_directory_search where term='$word'")) {
+        $query = "update tiki_directory_search set hits=hits+1 where term='$word'";
+        $this->query($query);
+      } else {
+        $query = "insert into tiki_directory_search(term,hits) values('$word',1)";
+        $this->query($query);
+      }
+      // Now build the query
+      $words[$i] = " ((tds.name like '%$word%') or (tds.description like '%$word%') or (tds.url like '%$word%') or (cache like '%$word%')) ";
+    }
+    $words = implode($how,$words);
+    $query = "select distinct tds.name,tds.siteId,tds.description,tds.url,tds.country,tds.hits,tds.created,tds.lastModif from tiki_directory_sites tds,tiki_category_sites tcs,tiki_directory_categories tdc where tds.siteId=tcs.siteId and tcs.categId=tdc.categId and isValid='y' and tdc.categId=$parent and $words  order by $sort_mode limit $offset,$maxRecords";
+    $cant = $this->db->getOne("select count(*) from tiki_directory_sites tds,tiki_category_sites tcs,tiki_directory_categories tdc where tds.siteId=tcs.siteId and tcs.categId=tdc.categId and isValid = 'y' and tdc.categId=$parent and $words");
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["cats"]=$this->dir_get_site_categories($res["siteId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
   
   // Functions for search stats
   

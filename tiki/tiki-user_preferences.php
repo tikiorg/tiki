@@ -63,6 +63,7 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
     $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
   }
+  $tikilib->set_user_preference($userwatch,'country',$_REQUEST["country"]);
   header("location: tiki-user_preferences.php?view_user=$userwatch");
   die;
 }
@@ -134,16 +135,27 @@ $smarty->assign_by_ref('user_galleries',$user_galleries);
 $user_items = $tikilib->get_user_items($userwatch);
 $smarty->assign_by_ref('user_items',$user_items);
 
-// Get user blogs
 
+// Get flags here
+$flags=Array();
+$h=opendir("img/flags/");
+while($file=readdir($h)) {
+  if(strstr($file,".gif")) {
+    $parts = explode('.',$file);
+    $flags[]=$parts[0];
+  }
+}
+closedir($h);
+$smarty->assign('flags',$flags);
 
-// Get user galleries
 
 // Get preferences
 $style = $tikilib->get_user_preference($userwatch,'theme',$style);
 $language = $tikilib->get_user_preference($userwatch,'language',$language);
 $smarty->assign_by_ref('style',$style);
 $realName = $tikilib->get_user_preference($userwatch,'realName','');
+$country = $tikilib->get_user_preference($userwatch,'country','Other');
+$smarty->assign('country',$country);
 $anonpref = $tikilib->get_preference('userbreadCrumb',4);
 $userbreadCrumb = $tikilib->get_user_preference($userwatch,'userbreadCrumb',$anonpref);
 $smarty->assign_by_ref('realName',$realName);

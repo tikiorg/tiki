@@ -839,4 +839,68 @@ div.tocnav {
 
 .tocnavlink { color:white; text-decoration: none; }
 .tocnavlink:hover {color: #EFEFFF; text-decoration:none;}
+
+/*************************************************** DIRECTORY ***************************************************/
+/* The list of categories */
+div.dircategs {
+  border: 0.5px solid white;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+/* Links to categories */
+.dirlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white; text-decoration: underline; font-weight: bold;}
+.dirlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white; text-decoration: underline; font-weight: bold;}
+
+/* Links to subcategories */
+.dirsublink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : white; text-decoration: underline;}
+.dirsublink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : white; text-decoration: underline;}
+
+
+/* The list of sites in any category */
+div.dirlistsites {
+  background-color: black;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border: 0.5px solid black;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* each site in the list of sites */
+div.dirsite {
+  background-color: #333333;
+  margin-bottom: 10px;
+}
+
+span.dirsitedesc {}
+span.dirsitetrail {font-size: 10px;}
+span.dirsitecats {}
+
+/* Links to sites */
+.dirsitelink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white; text-decoration: underline;}
+.dirsitelink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white; text-decoration: underline;}
+
+/* Related categories */
+div.dirrelated {
+  background-color: black;
+  margin-top: 10px;
+  border: 0.5px solid white;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  margin-left: 5px;
+}
+
+/* Footer with stats for the directory */
+td.dirfooter {
+ font-size: 9px;
+}
+
+div.dirfooter {
+  margin-top: 10px;
+  border: 1px solid white;
+}
    

@@ -161,6 +161,20 @@
   </div>
 {/if}
 
+{if $feature_directory eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('dirmenu','c');hide('dirmenu');">[-]</a> 
+  <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
+  <a class='separator' href="javascript:setCookie('dirmenu','o');show('dirmenu');">[+]</a></div>
+  <div id='dirmenu' style="{$mnu_dirmenu}">
+  {if $tiki_p_view_directory eq 'y'}
+  &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Directory{/tr}</a><br/>
+  {/if}
+  {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
+  &nbsp;<a href="tiki-directory_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
 {if $feature_file_galleries eq 'y'}
   <div class="separator"><a class='separator' href="javascript:javascript:setCookie('filegalmenu','c');hide('filegalmenu');">[-]</a> 
   <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>

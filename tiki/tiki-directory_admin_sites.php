@@ -9,7 +9,6 @@ if($feature_directory != 'y') {
   die;  
 }
 
-
 // If no parent category then the parent category is 0
 if(!isset($_REQUEST["parent"])) $_REQUEST["parent"]=0;
 $smarty->assign('parent',$_REQUEST["parent"]);
@@ -22,6 +21,20 @@ if($_REQUEST["parent"]==0) {
   $parent_name = $parent_info['name'];
 }
 $smarty->assign('parent_name',$parent_name);
+
+if(isset($parent_info)&&$user) {
+  if(in_array($parent_info['editorGroup'],$userlib->get_user_groups($user))) {
+    $tiki_p_admin_directory_sites = 'y';
+    $smarty->assign('tiki_p_admin_directory_sites','y'); 
+  }
+}
+
+if($tiki_p_admin_directory_sites != 'y') {
+  $smarty->assign('msg',tra("Permission denied"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
 
 
 // Now get the path to the parent category

@@ -9,6 +9,11 @@ if($feature_directory != 'y') {
   die;  
 }
 
+if($tiki_p_admin_directory_cats != 'y') {
+  $smarty->assign('msg',tra("Permission denied"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}  
 
 
 // If no parent category then the parent category is 0

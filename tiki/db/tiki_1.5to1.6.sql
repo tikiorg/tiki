@@ -3,15 +3,24 @@
 ### Tiki structures permissions
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_structures','wiki','Can create and edit structures');
 
+### Cache for wiki pages
+alter table tiki_pages add cache longblob;
+alter table tiki_pages add cache_timestamp integer(14);
+
+
+
+
+
 ### DIRECTORIES BEGIN
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory','directory','Can admin the directory');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_directory','directory','Can use the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_validate_links','directory','Can validate submited links');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin any directory site');
+
 
 drop table if exists tiki_directory_categories;
 create table tiki_directory_categories(
@@ -40,6 +49,8 @@ create table tiki_directory_sites(
   isValid char(1),
   created integer(14),
   lastModif integer(14), 
+  cache longblob,
+  cache_timestamp integer(14),
   primary key(siteId)
 );
 
