@@ -4893,6 +4893,7 @@ function add_pageview() {
 	    // Replace definition lists
 	    $line = preg_replace("/^;(.*):[^\/\/](.*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
+/* this code following if (0) is never executed, right?
 	    if (0) {
 		$line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
 
@@ -4900,6 +4901,7 @@ function add_pageview() {
 		$line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
 		$line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
 	    }
+*/
 
 	    // This line is parseable then we have to see what we have
 	    if (substr($line, 0, 3) == '---') {
