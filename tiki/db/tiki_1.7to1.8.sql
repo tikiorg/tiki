@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.89 2003-12-08 09:07:46 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.90 2003-12-10 03:51:45 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -836,3 +836,7 @@ INSERT INTO tiki_preferences (name, value) VALUES ('wiki_uses_slides', 'n');
 
 # added on 2003-12-08 by mose (adding power to trackers)
 ALTER TABLE `tiki_tracker_fields` ADD `position` INT( 4 ) AFTER `options` ;
+
+# added on 2003-12-10 by mose (adding options for trackers listing)
+ALTER TABLE `tiki_trackers` ADD `showComments` CHAR( 1 ) AFTER `useComments` ;
+ALTER TABLE `tiki_trackers` ADD `showAttachments` CHAR( 1 ) AFTER `useAttachments` ;

@@ -30,8 +30,11 @@
 <tr><td class="formcolor">{tr}Show status when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show creation date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show lastModif date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Tracker items allow comments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Tracker items allow attachments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Tracker items allow comments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} />
+{tr}and display comments in listing?{/tr} <input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Tracker items allow attachments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} />
+{tr}and display attachments in listing?{/tr} <input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} /></td></tr>
+</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

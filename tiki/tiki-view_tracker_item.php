@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.13 2003-12-02 07:42:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.14 2003-12-10 03:51:45 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -337,6 +337,11 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('atts', $atts["data"]);
 }
 
+if (isset($_REQUEST['show'])) {
+	if ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'att') {
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");	
+	}
+}
 $section = 'trackers';
 include_once ('tiki-section_options.php');
 

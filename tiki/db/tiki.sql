@@ -3039,7 +3039,9 @@ CREATE TABLE tiki_trackers (
   showStatus char(1) default NULL,
   showLastModif char(1) default NULL,
   useComments char(1) default NULL,
+  showComments char(1) default NULL,
   useAttachments char(1) default NULL,
+  showAttachments char(1) default NULL,
   items int(10) default NULL,
   PRIMARY KEY  (trackerId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
