@@ -1184,12 +1184,12 @@ class Comments extends TikiLib {
 	    if ($get_replies) {
 		    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
 		    $res["replies"] = $replies;
+	    }
 
-		    if (empty($res["data"])) {
-			$res["isEmpty"] = 'y';
-		    } else {
-			$res["isEmpty"] = 'n';
-		    }
+	    if (empty($res["data"])) {
+		$res["isEmpty"] = 'y';
+	    } else {
+		$res["isEmpty"] = 'n';
 	    }
 
 	    $ret[] = $res;
