@@ -46,5 +46,5 @@ INSERT INTO tiki_integrator_rules VALUES (2,1,'</html>','','y','n','i','Remove <
 INSERT INTO tiki_integrator_rules VALUES (3,1,'<body.*>','-->','y','n','i','End of comment just after <body>');
 INSERT INTO tiki_integrator_rules VALUES (4,1,'</body>','','y','n','i','Remove </body>');
 INSERT INTO tiki_integrator_rules VALUES (5,1,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (6,1,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID=<N>&file=','y','n','i','Relace internal links to integrator. Attention! Don not forget to replace <N> with ID of your repository!!!');
+INSERT INTO tiki_integrator_rules VALUES (6,1,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 

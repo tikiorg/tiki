@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.6 2003-10-17 14:48:43 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.7 2003-10-17 16:17:24 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -112,6 +112,7 @@ class TikiIntegrator extends TikiLib
         if (strlen($rule["srch"]) == 0) return $data;
         // Prepare replace string (subst {path})
         $repl = str_replace('{path}', $rep["path"], $rule["repl"]);
+        $repl = str_replace('{repID}', $rep["repID"], $repl);
         //
         $d = $data;
         if ($rule["type"] == 'y')
