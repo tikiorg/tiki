@@ -36,7 +36,8 @@
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 {assign var=ustatus value=$items[user].status|default:"c"}
-<tr class="formcolor"><td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td><td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
+<tr class="formcolor"><td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
+<td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
 {/if}
 {section name=ix loop=$ins_fields}
 
@@ -220,7 +221,8 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 <td>
 <select name="status">
 {foreach key=st item=stdata from=$status_types}
-<option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if} style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:20px;">{$stdata.label}</option>
+<option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if} 
+style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
 {/foreach}
 </select>
 </td></tr>
