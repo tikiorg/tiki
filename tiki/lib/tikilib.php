@@ -2146,15 +2146,6 @@ function fetchtopicId($topic) {
 }
 
 /*shared*/
-# Returns a topicname from passed topicid
-function fetchtopicId($topic) {
-    $topicId = '';
-    $query = "select `topicId`  from `tiki_topics` where `name` = ?";
-    $topicId = $this->getOne($query, array($topic) );
-    return $topicId;
-}
-
-/*shared*/
 function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = '') {
     global $userlib;
 
