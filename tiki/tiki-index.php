@@ -323,6 +323,7 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
 	error_reporting(E_WARNING);
 	$myWiki = new HAWIKI_wiki($info["data"],"tiki-index.php?mode=wap&page=");
 	$myWiki->set_smiley_dir("img/smiles");
+	$myWiki->set_homelink("Home", "tiki-index.php?mode=wap");
 	$myWiki->display();
 	die;
 }

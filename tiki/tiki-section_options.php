@@ -1,7 +1,14 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.3 2003-03-22 22:39:07 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.4 2003-05-15 20:44:07 lrargerich Exp $
 
 if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
+}
+if($feature_banning == 'y') {
+	if($msg = $tikilib->check_rules($user,$section)) {
+		$smarty->assign('msg',$msg);
+  		$smarty->display("styles/$style_base/error.tpl");
+  		die;
+	}
 }
 
 if($layout_section == 'y') {

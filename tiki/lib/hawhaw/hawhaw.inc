@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 14. May 2003
+// Last modified: 15. May 2003
 // Tested with PHP 3.0.7, 3.0.13, 4.0.0 and 4.1.1
 //
 // This library is free software; you can redistribute it and/or modify it under the
@@ -32,6 +32,7 @@
 // - enhancement: HTML output for Reqwireless Browser
 // - enhancement: HTML PDA output for Pendragon Browser
 // - bugfix: check presence of text in HAW_text::create() with isset()
+// - bugfix: create proper border attributes in HAW_table elements (HTML)
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V4.10b");
@@ -2764,7 +2765,7 @@ class HAW_table
     if ($deck->ml == HAW_HTML)
     {
       // HTML
-      echo "<table border>\n";
+      echo "<table border=\"1\">\n";
     }
     elseif ($deck->ml == HAW_WML)
     {
@@ -4984,7 +4985,7 @@ class HAW_linkset
         if ($deck->pureHTML)
         {
           // create links inside a table for big-screen HTML
-          echo "<table border cellpadding=\"4\"><tr><td>\n";
+          echo "<table border=\"1\" cellpadding=\"4\"><tr><td>\n";
 
           // repeat size and face declarations in table element
           if ($deck->size)

@@ -364,6 +364,10 @@
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br/>
 	{/if}
 
+	{if $feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
+  		&nbsp;<a href="tiki-admin_banning.php" class="linkmenu">{tr}Banning{/tr}</a><br/>
+	{/if}
+
     {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br/>
       &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br/>

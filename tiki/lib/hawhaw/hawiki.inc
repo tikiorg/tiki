@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki project team
-// Last modified: 14. May 2003
+// Last modified: 15. May 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -97,6 +97,8 @@ class HAWIKI_wiki
   var $deck;          // HAW_deck object
   var $wiki_string;   // input in wiki syntax
   var $wiki_base;     // URL for WikiName links
+  var $home_url;      // URL of home link
+  var $home_label;    // label of home link
   var $smiley_dir;    // where smiley gif's are stored
   var $yytext;        // parser output
   var $firstColumn;   // flag to determine parser position
@@ -127,7 +129,16 @@ class HAWIKI_wiki
 
   function display()
   {
-    // convert wiki text into HAWHAW object structure
+    // convert wiki text into HAWHAW object structure and create appropriate markup
+
+    if ($this->home_url && $this->home_label)
+    {
+      // create home link at top of deck
+ 
+      $homelink_top = new HAW_link($this->home_label, $this->home_url);
+      $homelink_top->set_br(2);
+      $this->deck->add_link($homelink_top);
+    }
 
     $input = $this->wiki_string;
 
@@ -412,8 +423,26 @@ class HAWIKI_wiki
       HAWIKI_error(HAWIKI_ERROR_INVWIKISYNTAX); // script end
     }
 
+    if ($this->home_url && $this->home_label)
+    {
+      // create home link at bottom of deck
+
+      $emptyline = new HAW_text("");
+      $this->deck->add_text($emptyline);
+       
+      $homelink_bottom = new HAW_link($this->home_label, $this->home_url);
+      $this->deck->add_link($homelink_bottom);
+    }
+
     // output appropriate markup language
     $this->deck->create_page();
+  }
+
+
+  function set_homelink($label, $url)
+  {
+    $this->home_label = $label;
+    $this->home_url = $url;
   }
 
 

@@ -77,6 +77,45 @@ class TikiLib {
     return $this->getOne("select dsn from tiki_dsn where name='$name'");
   }
   
+  
+  /*shared*/ function check_rules($user,$section)
+  {
+  	// Admin is never banned
+  	if($user == 'admin' ) return false;
+  	$ips = explode('.',$_SERVER["REMOTE_ADDR"]);
+  	$now = date("U");
+  	$query = "select tb.message,tb.user,tb.ip1,tb.ip2,tb.ip3,tb.ip4,tb.mode from tiki_banning tb, tiki_banning_sections tbs where tbs.banId=tb.banId and tbs.section='$section' and ( (tb.use_dates = 'n') or (tb.date_from <= $now and tb.date_to >= $now))";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	if(!$res['message']) {
+    		$res['message']=tra('You are banned from').':'.$section;
+    	}
+    	if($user && $res['mode'] == 'user') {
+    		// check user
+    		$pattern = '/'.$res['user'].'/';
+    		if(preg_match($pattern,$user)) {
+    			return $res['message'];
+    		}
+    	} else {
+    		// check ip
+    		if(count($ips)==4) {
+    			if(
+    				($ips[0] == $res['ip1'] || $res['ip1']=='*')
+    				&&
+    				($ips[1] == $res['ip2'] || $res['ip2']=='*')
+    				&&
+    				($ips[2] == $res['ip3'] || $res['ip3']=='*')
+    				&&
+    				($ips[3] == $res['ip4'] || $res['ip4']=='*')
+    			) {
+    				return $res['message'];
+    			}
+    				
+    		}
+    	}
+    }
+  	return false;
+  }
 
   /*shared*/ function replace_note($user,$noteId,$name,$data)
   {
