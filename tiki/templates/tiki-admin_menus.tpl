@@ -1,24 +1,14 @@
-<a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a>
+<a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a><br />
 
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin menu builder{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_menus.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin menus tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_menus.tpl" target="tikihelp" class="tikihelp" title="{tr}Edit tpl{/tr}: {tr}admin menus tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
-
-<!-- begin -->
-
-
-
-
 
 <br />
 {if $menuId > 0}

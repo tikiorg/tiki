@@ -1,25 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.14 2003-08-15 01:23:48 dgdaniels Exp $ *}
-
-<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.15 2003-08-15 21:15:09 mose Exp $ *}
+<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
-<!-- begin -->
-
-
-
-<br /><br />
+<br />
 {if $groupname eq ''}
 <h3>{tr}Add New Group{/tr}</h3>
 {else}
@@ -30,7 +21,6 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$groupname|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc">{$groupdesc|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}HomePage{/tr}:</td><td class="formcolor"><input type="text" name="home" size="40" value="{$grouphome|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
 <select name="include_groups[]" multiple="multiple" size="4">
 {section name=ix loop=$users}
@@ -40,7 +30,6 @@
 </select>
 </td></tr>
 {if $group ne ''}
-<tr><td  class="formcolor">{tr}Set as default for all in group{/tr}:</td><td class="formcolor"><input type="checkbox" name="batch_set_default"></td></tr>
 <tr><td  class="formcolor">&nbsp;
 <input type="hidden" name="olgroup" value="{$group|escape}">
 </td><td  class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
