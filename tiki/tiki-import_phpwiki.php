@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.12 2003-09-22 20:21:33 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.13 2003-09-22 23:27:11 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,6 +130,13 @@ if (isset($_REQUEST["import"])) {
 
 		    // %%% makes a linebreak in PHPWiki. -rlpowell
 		    $part["body"] = str_replace("%%%", "", $part["body"]);
+
+		    // ! and !!! need to be switched, annoyingly enough.
+		    // This is a bit non-trivial. -rlpowell
+		    $part["body"] = preg_replace("/\n\!([^\!])/", "\n&!!!&$1", $part["body"]);
+		    $part["body"] = preg_replace("/\n\!\!\!([^\!])/", "\n!$1", $part["body"]);
+		    $part["body"] = str_replace("\n&!!!&", "\n!!!", $part["body"]);
+
 
 		    $pagename = urldecode($part["pagename"]);
 		    $version = urldecode($part["version"]);
