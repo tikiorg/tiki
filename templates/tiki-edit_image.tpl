@@ -13,9 +13,9 @@
 <input type="hidden" name="edit" value="{$imageId|escape}">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}">
 <table class="normal">
-<tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></tr></td>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="editimage" value="{tr}save{/tr}" /></td></tr>
+<tr class="formcolor"><td>{tr}Image Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Image Description{/tr}:</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></tr></td>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="editimage" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 <br />
