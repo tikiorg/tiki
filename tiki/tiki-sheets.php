@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.3 2004-04-11 23:28:16 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.4 2004-04-12 00:54:37 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -96,7 +96,7 @@ if (isset($_REQUEST["edit"])) {
 	check_ticket('sheet');
 	// Saving information
 	// If the user is not gallery admin
-	if ($tiki_p_admin_sheet != 'y') {
+	if ($tiki_p_admin_sheet != 'y' && $tiki_p_admin != 'y') {
 		if ($tiki_p_edit_sheet != 'y') {
 			// If you can't create a gallery then you can't edit a gallery because you can't have a gallery
 			$smarty->assign('msg', tra("Permission denied you cannot create galleries and so you cant edit them"));
@@ -125,7 +125,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('title', $_REQUEST["title"]);
 	$smarty->assign_by_ref('description', $_REQUEST["description"]);
 
-	$gid = $imagegallib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $user );
+	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $user );
 
 	$cat_type = 'sheet';
 	$cat_objid = $gid;
@@ -138,7 +138,7 @@ if (isset($_REQUEST["edit"])) {
 }
 
 if (isset($_REQUEST["removesheet"])) {
-	if ($tiki_p_admin_sheet != 'y') {
+	if ($tiki_p_admin_sheet != 'y' && $tiki_p_admin != 'y') {
 
 		$smarty->assign('msg', tra("Permission denied you cannot remove this gallery"));
 
