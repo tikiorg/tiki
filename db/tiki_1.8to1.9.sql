@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.51 2004-04-30 04:43:33 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.52 2004-04-30 05:37:33 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -443,7 +443,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 ALTER TABLE `tiki_quizzes` ADD `immediateFeedback` char(1) ;
 ALTER TABLE `tiki_quizzes` ADD `showAnswers` char(1) ;
-ALTER TABLE `tiki_quizzes` ADD `shuffleQuestions char(1) ;
+ALTER TABLE `tiki_quizzes` ADD `shuffleQuestions` char(1) ;
 ALTER TABLE `tiki_quizzes` ADD `shuffleAnswers` char(1) ;
 
 #
