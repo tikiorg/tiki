@@ -1,4 +1,4 @@
-<h2>{tr}Remove page{/tr}: {$page} ({tr}version{/tr}: {$version})</h2>
+<h2>{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}last version{/tr}{else}{tr}version{/tr}: {$version}{/if})</h2>
 <form action="tiki-removepage.php" method="post">
 {tr}You are about to remove the page{/tr}: {$page} {tr}permanently{/tr}.<br />
 {tr}Remove all versions of this page{/tr}: <input type="checkbox" name="all" /><br />

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.8 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.9 2004-03-23 14:21:02 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if ($_REQUEST["version"] <> "last") {
 
 	$version = $_REQUEST["version"];
 } else {
-	$smarty->assign('version', 'last');
+	$smarty->assign('version', 'last');//get_strings tra('last version');
 
 	$version = "last";
 }
