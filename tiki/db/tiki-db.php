@@ -3,7 +3,7 @@
 require_once('DB.php');
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
-$pass_tiki   = 'seldon';
+$pass_tiki   = '';
 $dbs_tiki    = 'tiki14b1';
 $dsn = "mysql://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
