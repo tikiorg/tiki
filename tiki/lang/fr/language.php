@@ -3753,7 +3753,7 @@ $lang=Array(
 "Somebody or you tried to subscribe this email address at our site:" => "Vous ou quelqu'un d'autre a essayé d'inscrire votre adresse électronique de notre site :",
 "To the newsletter:" => "à la newsletter :",
 "In order to confirm your subscription you must access the following URL:" => "Pour confirmer votre inscription, vous devez aller à l'adresse suivante :",
-"A new message was posted to forum" => "Un nouvel article a été posté sur le forum",
+"A new message was posted to forum" => "Un nouveau message a été posté sur le forum ",
 "Hi," => "Bonjour,",
 "A new message was posted to you at {\$mail_machine}" => "Un nouveau message vous a été envoyé sur {\$mail_machine}",
 "The user" => "L'utilisateur",
@@ -4097,6 +4097,7 @@ $lang=Array(
 "English British" => "Britannique",
 "Subject:" => "Sujet :",
 "Date:" => "Date :",
+"Wiki page %s changed" => "La page Wiki %s a été modifiée",
 "Does your mail reader need a special charset" => "Votre lecteur de messages a-t-il besoin d'un jeu de caractères particulier",
 "###end###"=>"###end###");
 ?>

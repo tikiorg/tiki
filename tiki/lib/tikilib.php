@@ -6,6 +6,7 @@ require_once ('lib/pear/Date.php');
 include_once ('lib/pear/HTTP/Request.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
+require_once ('lib/webmail/tikimaillib.php');
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 
@@ -4967,30 +4968,42 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 
   if ($feature_user_watches == 'y') {
       $nots = $this->get_event_watches('wiki_page_changed', $pageName);
+      $isBuilt = false;
 
       foreach ($nots as $not) {
-    if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
-    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+    if ($wiki_watch_editor != 'y' && $not['user'] == $user)
+       break;
+    if (!$isBuilt) {
+       $isBuilt = true;
+       $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+       $smarty->assign('mail_page', $pageName);
+       $smarty->assign('mail_date', date("U"));
+       $smarty->assign('mail_user', $edit_user);
+       $smarty->assign('mail_comment', $edit_comment);
+       $smarty->assign('mail_last_version', $version);
+       $smarty->assign('mail_data', $edit_data);
+       $smarty->assign('mail_hash', $not['hash']);
+       $foo = parse_url($_SERVER["REQUEST_URI"]);
+       $machine = httpPrefix(). dirname( $foo["path"] );
+       $smarty->assign('mail_machine', $machine);
+       $parts = explode('/', $foo['path']);
 
-    $smarty->assign('mail_page', $pageName);
-    $smarty->assign('mail_date', date("U"));
-    $smarty->assign('mail_user', $edit_user);
-    $smarty->assign('mail_comment', $edit_comment);
-    $smarty->assign('mail_last_version', $version);
-    $smarty->assign('mail_data', $edit_data);
-    $smarty->assign('mail_hash', $not['hash']);
-    $foo = parse_url($_SERVER["REQUEST_URI"]);
-    $machine = httpPrefix(). dirname( $foo["path"] );
-    $smarty->assign('mail_machine', $machine);
-    $parts = explode('/', $foo['path']);
+        if (count($parts) > 1)
+           unset ($parts[count($parts) - 1]);
 
-    if (count($parts) > 1)
-        unset ($parts[count($parts) - 1]);
-
-    $smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
-    $smarty->assign('mail_pagedata', $edit_data);
-    $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
-    @mail($not['email'], tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+       $smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+       $smarty->assign('mail_pagedata', $edit_data);
+       $mail = new TikiMail();
+    }
+    global $language;// TODO: optimise by grouping user by language
+    $languageEmail = $this->get_user_preference($not['user'], "language", $language);
+    $mail->setUser($not['user']);
+    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
+    $mail->setSubject(sprintf($mail_data, $pageName));
+    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed.tpl');
+    $mail->setText($mail_data);
+    $mail->buildMessage();
+    $mail->send(array($not['email']));
       }
   }
     }
