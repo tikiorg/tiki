@@ -100,6 +100,8 @@ Version 1.4 -Mira-
 * [NEW] You can now choose if hotword links are opened in a new window
 * [OPT] Reduced the number of queries that tiki makes when loading preferences, if not changed preferences are loaded
   from a file now this is controlled automatically and you don't have to do anything.
+* [FIX] Fixed a terrible bug that broke file and image uploads on SOME windows systems.
+* [NEW] Search entire site feature added to the search box and improved the search mechanism. [Ross]  
 
 Version 1.3 -Pollux-
 

@@ -7662,180 +7662,149 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $ret; 
   }
 
-  function find_pages($words='',$offset=0,$maxRecords=-1) 
-  {
-    $this->pageRank();
-    if(!$words) {
-      $query="select * from tiki_pages order by pageRank desc limit $offset,$maxRecords";
-    } else {
+  function _find($h, $words = '', $offset = 0, $maxRecords = -1) {
+    $words = trim($words);
+
+    $sql = sprintf('SELECT
+        %s            AS name, 
+        LEFT(%s, 240)	AS data,
+        %s				    AS hits,
+        %s		        AS lastModif,
+        %s		  	    AS pageName
+    ', $h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
+
+    $id = $h['id'];
+    for ($i = 0; $i < count($id); ++$i)
+      $sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
+    if (count($id) < 2)
+      $sql .= ',1 AS id2';
+    
+    $sql2 = ' FROM ' . $h['from'] . ' WHERE 1 ';
+    if ($words) {
       $vwords = split(' ',$words);
-      $parts = Array();
+      $search = array_merge($h['search'], array($h['name'], $h['data']));
       foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',pageName) or locate('$aword',data) )"; 
+        $aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
+        $sql2 .= ' AND (';
+        for ($i = 0; $i < count($search); ++$i) {
+          if ($i)
+            $sql2 .= ' OR ';
+          $sql2 .= 'UPPER(' . $search[$i] . ') REGEXP ' . $aword;
+        }
+        $sql2 .= ')';
       }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_pages where '.$part.' order by pageRank desc '."limit $offset,$maxRecords"; 
     }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_pages where '.$part.' order by pageRank desc '; 
-    $cant = $this->db->getOne($queryCant);
+    $cant = $this->db->GetOne('SELECT COUNT(*)' . $sql2);
+    if (!$cant) {
+      return array('data' => array(), 'cant' => 0);
+    }
+    $sql .= $sql2 . ' ORDER BY ' . (isset($h['orderby']) ? $h['orderby'] : $h['hits']) .
+      ' DESC LIMIT ' . $offset . ',' . $maxRecords;
+    $result = $this->db->query($sql);
+    if (DB::isError($result))
+      $this->sql_error($sql, $result);
     
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["pageName"];
-      // Build an excerpt
-      $aux["data"] = substr($res["data"],0,240);
-      $aux["hits"] = $res["pageRank"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["href"]='tiki-index.php?page='.$res["pageName"];
-      $ret[] = $aux;
+    while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $href = sprintf($h['href'], $res['id1'], $res['id2']);
+      $ret[] = array(
+        'pageName'  => $res["pageName"],
+        'data'      => $res["data"],
+        'hits'      => $res["hits"],
+        'lastModif' => $res["lastModif"],
+        'href'      => $href,
+      );
     }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    return array('data' => $ret, 'cant' => $cant);
   }
+
+  function find_pages($words='',$offset=0,$maxRecords=-1) 
+  {
+    static $search_pages = array(
+      'from'      => 'tiki_pages',
+      'name'      => 'pageName',
+      'data'      => 'data',
+      'hits'      => 'pageRank',
+      'lastModif'	=> 'lastModif',
+      'href'      => 'tiki-index.php?page=%d',
+      'id'        => array('pageName'),
+      'pageName'	=> 'pageName',
+      'search'    => array(),
+    );
+
+    $this->pageRank();
+    return $this->_find($search_pages, $words, $offset, $maxRecords);
+  }
+
+
+
 
   function find_galleries($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_galleries order by hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',name) or locate('$aword',description) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_galleries where '.$part.' order by hits desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_galleries where '.$part.' order by hits desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["name"];
-      // Build an excerpt
-      $aux["data"] = substr($res["description"],0,240);
-      $aux["hits"] = $res["hits"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["href"]='tiki-browse_gallery.php?galleryId='.$res["galleryId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_galleries = array(
+      'from'      => 'tiki_galleries',
+      'name'      => 'name',
+      'data'      => 'description',
+      'hits'      => 'hits',
+      'lastModif' => 'lastModif',
+      'href'      => 'tiki-browse_gallery.php?galleryId=%d',
+      'id'        => array('galleryId'),
+      'pageName'  => 'name',
+      'search'    => array(),
+    );
+
+    return $this->_find($search_galleries, $words, $offset, $maxRecords);
   }
   
   function find_faqs($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_faqs f1,tiki_faq_questions f2 where f1.faqId=f2.faqId order by hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',title) or locate('$aword',description) or locate('$aword',question) or locate('$aword',answer))"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_faqs f1,tiki_faq_questions f2 where f1.faqId=f2.faqId and '.$part.' order by hits desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_faqs f1,tiki_faq_questions f2 where f1.faqId=f2.faqId and '.$part.' order by hits desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["title"].": ".$res["question"];
-      // Build an excerpt
-      $aux["data"] = substr($res["description"],0,240);
-      $aux["hits"] = $res["hits"];
-      $aux["lastModif"] = $res["created"];
-      $aux["href"]='tiki-view_faq.php?faqId='.$res["faqId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_faqs = array(
+      'from'      => 'tiki_faqs f LEFT JOIN tiki_faq_questions q ON q.faqId = f.faqId',
+      'name'      => 'f.title',
+      'data'      => 'f.description',
+      'hits'      => 'f.hits',
+      'lastModif' => 'f.created',
+      'href'      => 'tiki-view_faq.php?faqId=%d',
+      'id'        => array('f.faqId'),
+      'pageName'  => 'CONCAT(f.title, ": ", q.question)',
+      'search'    => array('q.question', 'q.answer'),
+    );
+ 
+    return $this->_find($search_faqs, $words, $offset, $maxRecords);
   }
 
 
   function find_images($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_images order by hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',name) or locate('$aword',description) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_images where '.$part.' order by hits desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_images where '.$part.' order by hits desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["name"];
-      // Build an excerpt
-      $aux["data"] = substr($res["description"],0,240);
-      $aux["hits"] = $res["hits"];
-      $aux["lastModif"] = $res["created"];
-      $aux["href"]='tiki-browse_image.php?imageId='.$res["imageId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_images = array(
+      'from'      => 'tiki_images',
+      'name'      => 'name',
+      'data'      => 'description',
+      'hits'      => 'hits',
+      'lastModif' => 'created',
+      'href'      => 'tiki-browse_image.php?imageId=%d',
+      'id'        => array('imageId'),
+      'pageName'  => 'name',
+      'search'    => array(),
+    );
+
+    return $this->_find($search_images, $words, $offset, $maxRecords);
   }
 
   function find_forums($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_comments,tiki_forums where md5(concat('forum',forumId))=object order by tiki_comments.hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',title) or locate('$aword',data) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query="select * from tiki_comments,tiki_forums where md5(concat('forum',forumId))=object and($part) order by tiki_comments.hits desc "."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = "select count(*) from tiki_comments,tiki_forums where md5(concat('forum',forumId))=object and($part) order by tiki_comments.hits desc "; 
-    $cant = $this->db->getOne($queryCant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["name"].': '.$res["title"];
-      // Build an excerpt
-      $aux["data"] = substr($res["data"],0,240);
-      $aux["hits"] = $res["hits"];
-      $aux["lastModif"] = $res["commentDate"];
-      $aux["href"]='tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;    
+    static $search_forums = array(
+      'from'      => 'tiki_comments c LEFT JOIN tiki_forums f ON md5(concat("forum",f.forumId))=c.object',
+      'name'      => 'c.title',
+      'data'      => 'c.data',
+      'hits'      => 'c.hits',
+      'lastModif' => 'c.commentDate',
+      'href'      => 'tiki-view_forum_thread.php?forumId=%d&amp;comments_parentId=%d',
+      'id'        => array('f.forumId', 'c.threadId'),
+      'pageName'  => 'CONCAT(name, ": ", title)',
+      'search'    => array(),
+    );
+    return $this->_find($search_forums, $words, $offset, $maxRecords);
   }
 
 
@@ -7843,148 +7812,116 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function find_files($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select fileId,filename,downloads,description,created from tiki_files order by downloads desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',name) or locate('$aword',description) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select fileId,filename,downloads,description,created from tiki_files where '.$part.' order by downloads desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_files where '.$part.' order by downloads desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["filename"];
-      // Build an excerpt
-      $aux["data"] = substr($res["description"],0,240);
-      $aux["hits"] = $res["downloads"];
-      $aux["lastModif"] = $res["created"];
-      $aux["href"]='tiki-download_file.php?fileId='.$res["fileId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_files = array(
+      'from'      => 'tiki_files',
+      'name'      => 'name',
+      'data'      => 'description',
+      'hits'      => 'downloads',
+      'lastModif' => 'created',
+      'href'      => 'tiki-download_file.php?fileId=%d',
+      'id'        => array('fileId'),
+      'pageName'  => 'filename',
+      'search'    => array(),
+    );
+
+    return $this->_find($search_files, $words, $offset, $maxRecords);
   }
 
   function find_blogs($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_blogs order by hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',title) or locate('$aword',description) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_blogs where '.$part.' order by hits desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_blogs where '.$part.' order by hits desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["title"];
-      // Build an excerpt
-      $aux["data"] = substr($res["description"],0,240);
-      $aux["hits"] = $res["hits"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["href"]='tiki-view_blog.php?blogId='.$res["blogId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_blogs = array(
+      'from'      => 'tiki_blogs',
+      'name'      => 'title',
+      'data'      => 'description',
+      'hits'      => 'hits',
+      'lastModif' => 'lastModif',
+      'href'      => 'tiki-view_blog.php?blogId=%d',
+      'id'        => array('blogId'),
+      'pageName'  => 'title',
+      'search'    => array(),
+    );
+
+    return $this->_find($search_blogs, $words, $offset, $maxRecords);
   }
 
   function find_articles($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_articles order by reads desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',title) or locate('$aword',heading) or locate('$aword',body) )"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_articles where '.$part.' order by reads desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_articles where '.$part.' order by reads desc '; 
-    $cant = $this->db->getOne($queryCant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["title"];
-      // Build an excerpt
-      $aux["data"] = substr($res["heading"],0,240);
-      $aux["hits"] = $res["reads"];
-      $aux["lastModif"] = $res["publishDate"];
-      $aux["href"]='tiki-read_article.php?articleId='.$res["articleId"];
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_articles = array(
+      'from'      => 'tiki_articles',
+      'name'      => 'title',
+      'data'      => 'heading',
+      'hits'      => 'reads',
+      'lastModif' => 'publishDate',
+      'href'      => 'tiki-read_article.php?articleId=%d',
+      'id'        => array('articleId'),
+      'pageName'  => 'title',
+      'search'    => array('body'),
+    );
+
+    return $this->_find($search_articles, $words, $offset, $maxRecords);
   }
 
   function find_posts($words='',$offset=0,$maxRecords=-1) 
   {
-    if(!$words) {
-      $query="select * from tiki_blog_posts order by hits desc limit $offset,$maxRecords";
-    } else {
-      $vwords = split(' ',$words);
-      $parts = Array();
-      foreach ($vwords as $aword) {
-        $parts[] = " (locate('$aword',data))"; 
-      }
-      $part = implode(" and ",$parts);
-      $query='select * from tiki_blog_posts where '.$part.' order by created desc '."limit $offset,$maxRecords"; 
-    }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $queryCant = 'select count(*) from tiki_blog_posts where '.$part.' order by created desc '; 
-    $cant = $this->db->getOne($queryCant);
-    
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $qb = "select title from tiki_blogs where blogId=".$res["blogId"];
-      $blogName = $this->db->getOne($qb);
-      $aux["pageName"] = $blogName.' ['.date("F d Y (h:i)",$res["created"]).']'.' by:'.$res["user"];
-      // Build an excerpt
-      $aux["data"] = substr($res["data"],0,240);
-      $aux["hits"] = 1;
-      $aux["lastModif"] = $res["created"];
-      $day=date("d",$res["created"]);
-      $mon=date("m",$res["created"]);
-      $year=date("Y",$res["created"]);
-      $aux["href"]='tiki-view_blog.php?blogId='.$res["blogId"].'&amp;find='.$words;
-      //.'&amp;day='.$day.'&amp;mon='.$mon.'&amp;year='.$year;
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"]=$ret;
-    $retval["cant"]=$cant;
-    return $retval;
+    static $search_posts = array(
+      'from'      => 'tiki_blog_posts p LEFT JOIN tiki_blogs b ON b.blogId = p.blogId',
+      'name'      => 'p.data',	# to simplify the logic, won't hurt performance
+      'data'      => 'p.data',
+      'hits'      => '1',
+      'orderby'   => 'p.created',
+      'lastModif' => 'p.created',
+      'href'      => 'tiki-read_article.php?articleId=%d',
+      'id'        => array('p.blogId'),
+      'pageName'  => 'CONCAT(b.title, " [", DATE_FORMAT(p.created, "%M %d %Y %h:%i"), "] by: ", p.user)',
+      'search'    => array(),
+    );
+
+    return $this->_find($search_posts, $words, $offset, $maxRecords);
   }
+
+  function find_all($words='',$offset=0,$maxRecords=-1) 
+  {
+    $rv = $this->find_pages($words,     $offset, $maxRecords);
+    $data = $rv['data'];
+    $cant = $rv['cant'];
+    $rv = $this->find_galleries($words, $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_faqs($words,      $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_images($words,    $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_forums($words,    $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_files($words,     $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_blogs($words,     $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_articles($words,  $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    $rv = $this->find_posts($words,     $offset, $maxRecords);
+    foreach($rv['data'] as $a)  # array_merge() didn't work here
+      array_push($data, $a);
+    $cant += $rv['cant'];
+    return array(
+      'data' => $data,
+      'cant' => $cant,
+    );
+   }
+
 
   // tikilib.php a Library to access the Tiki's Data Model
   // This implements all the functions needed to use Tiki
@@ -8198,28 +8135,31 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     // New syntax for tables
-    if(preg_match_all("/\|\|(.*)\|\|/",$data,$tables)) {
-      $maxcols=1;
-      $table_columns = array();
-      for($i=0;$i<count($tables[0]);++$i) {
-        $table_rows = explode('||',$tables[0][$i]);
-        $table_columns[$i] = array();
-        for($j=0;$j<count($table_rows);++$j) {
-          $table_columns[$i][$j] = explode('|',$table_rows[$j]);
-          if (count($table_columns[$i][$j]) > $maxcols)
-            $maxcols = count($table_columns[$i][$j]);
+    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+     $maxcols = 1;
+      $cols = array();
+      for($i = 0; $i < count($tables[0]); $i++) {
+        $rows = explode('||', $tables[0][$i]);
+        $col[$i] = array();
+        for ($j = 0; $j < count($rows); $j++) {
+          $cols[$i][$j] = explode('|', $rows[$j]);
+          if (count($cols[$i][$j]) > $maxcols)
+            $maxcols = count($cols[$i][$j]);
         }
       }
-      for($i=0;$i<count($tables[0]);++$i) {
-        $repl='<table border="1">';
-        for($j=0;$j<count($table_columns[$i]);++$j) {
-          $repl.='<tr>';
-          $cols = count($table_columns[$i][$j]);
-          for($k=0;$k<$cols;++$k) {
-            $repl.='<td';
-            if ($k == $cols - 1 && $cols < $maxcols)
-              $repl.=' colspan="'.($maxcols-$k).'"';
-            $repl.='>'.$table_columns[$i][$j][$k].'</td>';
+      for ($i = 0; $i < count($tables[0]); $i++) {
+        $repl = '<table border=1>';
+        for ($j = 0; $j < count($cols[$i]); $j++) {
+          $ncols = count($cols[$i][$j]);
+          if ($ncols == 1 && !$cols[$i][$j][0])
+          	continue;
+          $repl .= '<tr>';
+          for ($k = 0; $k < $ncols; $k++) {
+            $repl .= '<td';
+            if ($k == $ncols - 1 && $ncols < $maxcols)
+              $repl .= ' colspan=' . ($maxcols-$k);
+            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+
           }
           $repl.='</tr>';
         }
