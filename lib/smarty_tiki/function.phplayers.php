@@ -12,21 +12,25 @@ function smarty_function_phplayers($params, &$smarty) {
 	extract($params);
 
 	$types['vert'] = 'layersmenu.inc.php';
+        $types['horiz'] = 'layersmenu.inc.php';
 	$types['tree'] = 'treemenu.inc.php';
 	$types['phptree'] = 'phptreemenu.inc.php';
 	$types['plain'] = 'phptreemenu.inc.php';
 
 	$classes['vert'] = 'LayersMenu';
+        $classes['horiz'] = 'LayersMenu';
 	$classes['tree'] = 'TreeMenu';
 	$classes['phptree'] = 'PHPTreeMenu';
 	$classes['plain'] = 'PlainMenu';
 	
 	$struct['vert'] = 'vermenu2';
+        $struct['horiz'] = 'hormenu3';
 	$struct['tree'] = 'treemenu1';
 	$struct['phptree'] = 'treemenu1';
 	$struct['plain'] = 'treemenu1';
 
 	$new['vert'] = 'newVerticalMenu';
+        $new['horiz'] = 'newHorizontalMenu';
 	$new['tree'] = 'newTreeMenu';
 	$new['phptree'] = 'newTreeMenu';
 	$new['plain'] = 'newTreeMenu';
@@ -61,6 +65,7 @@ function smarty_function_phplayers($params, &$smarty) {
 			}
 			$output.= ".|".$cd["name"]."|".$cd["url"]."\n";
 		}
+echo "$output";
 		$phplayers->setMenuStructureString($output);
 	} elseif (!empty($file)) {
 		if (is_file($file)) {	
