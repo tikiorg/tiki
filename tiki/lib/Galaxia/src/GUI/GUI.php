@@ -194,8 +194,10 @@ class GUI extends Base {
   */
   function gui_abort_instance($user,$activityId,$instanceId)
   {
-    // Users can only abort instances belonging to them
-	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
+    // Users can only abort instances they're currently running, or instances that they're the owner of
+    if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
+                       where gia.instanceId=gi.instanceId and activityId=$activityId and gia.instanceId=$instanceId and (user='$user' or owner='$user')"))
+      return false;
     include_once(GALAXIA_LIBRARY.'/src/API/Instance.php');
     $instance = new Instance($this->db);
     $instance->getInstance($instanceId);
@@ -211,16 +213,23 @@ class GUI extends Base {
   */
   function gui_exception_instance($user,$activityId,$instanceId)
   {
-    // Users can only abort instances belonging to them
-	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;	
+    // Users can only do exception handling for instances they're currently running, or instances that they're the owner of
+    if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
+                       where gia.instanceId=gi.instanceId and activityId=$activityId and gia.instanceId=$instanceId and (user='$user' or owner='$user')"))
+      return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instances set status='exception' where instanceId=$instanceId";
-	$this->query($query);
+    $this->query($query);
   }
 
+  /*!
+  Resume an instance - this sets the instance status from 'exception' back to 'active'
+  */
   function gui_resume_instance($user,$activityId,$instanceId)
   {
-    // Users can only resume instances belonging to them
-	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;	
+    // Users can only resume instances they're currently running, or instances that they're the owner of
+    if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities gia, ".GALAXIA_TABLE_PREFIX."instances gi
+                       where gia.instanceId=gi.instanceId and activityId=$activityId and gia.instanceId=$instanceId and (user='$user' or owner='$user')"))
+      return false;
     $query = "update ".GALAXIA_TABLE_PREFIX."instances set status='active' where instanceId=$instanceId";
 	$this->query($query);
   }
