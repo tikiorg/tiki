@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: mysql.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
+// $Id: mysql.php,v 1.4 2003-10-13 21:17:28 awcolley Exp $
 //
 // Database independent query interface definition for PHP's MySQL
 // extension.

@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: common.php,v 1.4 2003-08-04 05:19:18 rossta Exp $
+// $Id: common.php,v 1.5 2003-10-13 21:17:28 awcolley Exp $
 //
 // Base class for DB implementations.
 //
