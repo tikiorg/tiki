@@ -77,7 +77,11 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 
 			// Check if we are bookmarking a file gallery
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-list_file_gallery')) {
-				$info = $tikilib->get_file_gallery($setup_query_data["galleryId"]);
+				global $filegallib;
+				if (!is_object($filegallib)) {
+					include_once ('lib/filegals/filegallib.php');
+				}
+				$info = $filegallib->get_file_gallery($setup_query_data["galleryId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["name"];
 			}

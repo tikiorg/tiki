@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.22 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_gallery_rss.php,v 1.23 2004-07-15 22:09:07 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,7 +24,11 @@ if (!isset($_REQUEST["galleryId"])) {
 }
 
 $feed = "filegal";
-$tmp = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+global $filegallib;
+if (!is_object($filegallib)) {
+	include_once ('lib/filegals/filegallib.php');
+}
+$tmp = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
 $title = tra("Tiki RSS feed for the file gallery: ").$tmp["name"];
 $desc = $tmp["description"];
 $now = date("U");
