@@ -1883,7 +1883,8 @@ div.tabs {
 .content {
 	position: relative;
 	border: 1px solid #666;
-	width: 600px;
+	max-width: 800px;
+	min-width: 400px;
 	padding: 10px;
 	margin-bottom: 25px;
 	z-index: 80;
