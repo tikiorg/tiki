@@ -23,8 +23,8 @@
 
 
 <br /><br />
-<a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
+<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
 <br /><br />
 {if $info.surveyId > 0}
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>

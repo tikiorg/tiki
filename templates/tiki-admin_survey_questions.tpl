@@ -1,9 +1,9 @@
 <a class="pagetitle" href="tiki-admin_survey_questions.php?surveyId={$surveyId}">{tr}Edit survey questions{/tr}</a><br/><br/>
-<a class="linkbut" href="tiki-list_surveys.php">{tr}List surveys{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-<a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a>
-<a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a>
-<a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a><br/><br/>
+<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List surveys{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a></span>
+<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span><br/><br/>
 <h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_survey.php?surveyId={$survey_info.surveyId}" class="pagetitle">{$survey_info.name}</a></h2>
 <form action="tiki-admin_survey_questions.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
