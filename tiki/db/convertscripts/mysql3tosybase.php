@@ -89,6 +89,7 @@ function parse($stmt)
   $stmt=preg_replace("/  (UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$2','$3','$1')",$stmt);
   // handle inserts
   $stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
+  $stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
   // why does i modifier not work???
   $stmt=preg_replace("/insert into ([a-zA-Z0-9_]*).*\(([^\)]+)\) values(.*)/e","do_inserts('$1','$2','$3')",$stmt);
   // the update

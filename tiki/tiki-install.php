@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.12 2003-08-07 20:32:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.13 2003-08-12 13:24:56 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.12 2003-08-07 20:32:57 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.13 2003-08-12 13:24:56 redflo Exp $
 session_start();
 
 // Define and load Smarty components
@@ -23,24 +23,19 @@ function process_sql_file($file) {
 	$command = '';
 	$fp = fopen("db/$file", "r");
 
-	while ($line = fgets($fp, 1024)) {
-		if (substr($line, 0, 1) != '#') {
-			$command .= $line;
-		}
+	while(!feof($fp)) {
+		$command.= fread($fp,4096);
+	}
+	$statements=split(";",$command);
+	foreach ($statements as $statement) {
+		$result = $dbTiki->query($statement);
 
-		if (strstr($command, ';')) {
-			$command = trim($command);
-
-			$commands[] = $command;
-			$result = $dbTiki->query($command);
-
-			if (DB::isError($result)) {
-				trigger_error("DB error:  " . $result->getMessage(). " in query:<br/>" . $command . "<br/>", E_USER_WARNING);
-			// Do not die at the moment. Wen need some better error checking here
-			//die;
-			}
-
-			$command = '';
+		if (DB::isError($result)) {
+			trigger_error("DB error:  " . $result->getMessage(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
+		// Do not die at the moment. Wen need some better error checking here
+		//die;
+		} else {
+			$commands.=$statement;
 		}
 	}
 
@@ -142,14 +137,15 @@ $dbservers = array(
 	"Oracle 9i" => "oci9"
 );
 */
-$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i');
+$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase/MSSQL');
 
 $dbtodsn = array(
 	"MySQL 3.x" => "mysql",
 	"MySQL 4.x" => "mysql",
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle 8i" => "oci8",
-	"Oracle 9i" => "oci8"
+	"Oracle 9i" => "oci8",
+	"Sybase/MSSQL" => "sybase"
 );
 
 $smarty->assign_by_ref('dbservers', $dbservers);
@@ -353,11 +349,6 @@ if (!$dbcon && isset($_REQUEST['dbinfo'])) {
 	$filetowrite .= '$dbversion_tiki="' . $tiki_version . '";' . "\n";
 
 	switch ($_REQUEST["connmethod"]) {
-	case "hostname":
-		$filetowrite .= '$host_tiki="' . $_REQUEST['host'] . '";' . "\n";
-
-		break;
-
 	case "tcp":
 		$filetowrite .= '$host_tiki="tcp(' . $_REQUEST['tcphost'] . ')";' . "\n";
 
@@ -367,6 +358,11 @@ if (!$dbcon && isset($_REQUEST['dbinfo'])) {
 		$filetowrite .= '$host_tiki="unix(' . $_REQUEST['socket'] . ')";' . "\n";
 
 		break;
+        case "hostname":
+	default:
+                $filetowrite .= '$host_tiki="' . $_REQUEST['host'] . '";' . "\n";
+
+                break;
 	}
 
 	$filetowrite .= '$user_tiki="' . $_REQUEST['user'] . '";' . "\n";
@@ -525,7 +521,7 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 	$smarty->assign('logged', 'y');
 
 	if (isset($_REQUEST['scratch'])) {
-		process_sql_file ('tiki-' . $dbversion_tiki . '.sql');
+		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql');
 
 		$smarty->assign('dbdone', 'y');
 	}
