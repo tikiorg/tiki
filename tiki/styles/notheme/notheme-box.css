@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.15 2003-11-15 06:42:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.16 2003-11-15 17:46:23 zaufi Exp $
  *
  */
 
@@ -164,17 +164,29 @@ div.box-title td {
 
 /* Repaint module placed on wiki page */
 div.wikitext * div.box {
+    position: static;
+    display: block;
     margin: 0px;
     color: WindowText;
-    background-color: ThreeDHighlight;
+    background: transparent;
     border: none;
-    width: 250px;
+    width: auto;
+    min-width: 170px;
 }
 div.wikitext * div.box-title {
+    position: static;
+    display: block;
     margin: 0px;
     border: 2px ridge WindowFrame;
+    width: auto;
+    min-width: 170px;
 }
 div.wikitext * div.box-data {
+    position: static;
+    display: block;
+    background: transparent;
     margin: 0px;
-    border: 2px ridge WindowFrame;
+    border: none;
+    width: auto;
+    min-width: 170px;
 }
