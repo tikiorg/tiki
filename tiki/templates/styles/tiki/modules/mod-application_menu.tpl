@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.26 2004-06-23 22:34:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.27 2004-08-13 14:24:57 sylvieg Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -90,7 +90,7 @@
 <a class='separator' href="#" onclick="javascript:toggle('wfmenu');">.:</a>
 <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
 </div>
-<div id='wfmenu' style="{$mnu_workflow}">
+<div id='wfmenu' style="{$mnu_wfmenu}">
 {if $tiki_p_admin_workflow eq 'y'}
 <div class="separated"><a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a></div>  
 <div class="separated"><a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor processes{/tr}</a></div>
