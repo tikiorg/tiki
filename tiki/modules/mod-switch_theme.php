@@ -4,7 +4,7 @@ if(isset($_COOKIE['tiki-theme']) && !($feature_userPreferences == 'y' && $user &
 }
 
 //Create a list of styles
-$styleslist = Array("eyeye","hjhj");
+$styleslist = Array();
 $h = opendir("styles/");
 while ($file = readdir($h)) {
   if (substr($file,-4,4) == ".css") {
