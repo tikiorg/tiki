@@ -53,10 +53,11 @@
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   {/if}
 <select name="country">
+  <option value="None" {if $country eq "None"}selected="selected"{/if}>{tr}None{/tr}</option>
   <option value="Other" {if $country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
   {sortlinks}
   {section name=ix loop=$flags}
-  {if $flags[ix] ne "Other"}
+  {if $flags[ix] ne "Other" and $flags[ix] ne "None"}
   <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
   {/if}
   {/section}
