@@ -1,3 +1,43 @@
+### SURVEYS
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_surveys','quizzes','Can admin surveys');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_take_survey','quizzes','Can take surveys');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_survey_stats','quizzes','Can view survey stats');
+
+drop table if exists tiki_surveys;
+create table tiki_surveys (
+  surveyId integer(12) not null auto_increment,
+  name varchar(200),
+  description text,
+  taken integer(10),
+  lastTaken integer(14),
+  created integer(14),
+  status char(1),
+  primary key(surveyId)
+);
+
+drop table if exists tiki_survey_questions;
+create table tiki_survey_questions (
+  questionId integer(12) not null auto_increment,
+  surveyId integer(12) not null,
+  question text,
+  options text,
+  type char(1),
+  position integer(5),
+  votes integer(10),
+  value integer(10),
+  primary key(questionId)
+);
+
+drop table if exists tiki_survey_question_options;
+create table tiki_survey_question_options (
+  optionId integer(12) not null auto_increment,
+  questionId integer(12) not null,
+  qoption text,
+  votes integer(10),
+  primary key(optionId)
+);
+### SURVEYS
+
 alter table tiki_forums add section varchar(200);
 update tiki_forums set section="";
 
