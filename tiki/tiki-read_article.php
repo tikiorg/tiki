@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.23 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.24 2004-04-10 04:46:23 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,6 +62,16 @@ if (isset($_REQUEST["articleId"])) {
 	}
 
 	$smarty->assign('title', $article_data["title"]);
+	$smarty->assign('topline', $article_data["topline"]);
+	$smarty->assign('show_topline', $article_data["show_topline"]);
+	$smarty->assign('subtitle', $article_data["subtitle"]);
+	$smarty->assign('show_subtitle', $article_data["show_subtitle"]);
+	$smarty->assign('linkto', $article_data["linkto"]);
+	$smarty->assign('show_linkto', $article_data["show_linkto"]);
+	$smarty->assign('image_caption', $article_data["image_caption"]);
+	$smarty->assign('show_image_caption', $article_data["show_image_caption"]);
+	$smarty->assign('lang', $article_data["lang"]);
+	$smarty->assign('show_lang', $article_data["show_lang"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
 	$smarty->assign('type', $article_data["type"]);

@@ -1,5 +1,11 @@
+{if $show_topline eq 'y' and $topline}<div class="articletopline">{$topline}</div>{/if}
 <div class="articletitle">
-<span class="titlea">{$title}</span><br />
+<span class="titlea">
+{if $show_lang and $lang}
+<img src="img/flags/{$lang}.gif" width="18" height="10" border="1" align="right" style="float:right;font-size:10px;" alt="{$lang}"> 
+{/if}
+{$title}</span><br />
+{if $show_subtitle eq 'y' and $subtitle}<div class="articlesubtitle">{$subtitle}</div>{/if}
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
 </div>
 
@@ -21,11 +27,15 @@
 <table  cellpadding="0" cellspacing="0">
 <tr>{if $isfloat eq 'n'}<td  valign="top">{else}<td valign="top">{/if}
 {if $useImage eq 'y'}
-  {if $hasImage eq 'y'}
-    <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
-  {else}
-    <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
-  {/if}
+{if $hasImage eq 'y'}
+<a href="#" title="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}">
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} 
+alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}" 
+border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/></a>
+{else}
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} 
+alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
+{/if}
 {else}
 {section name=it loop=$topics}
 {if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
@@ -73,6 +83,11 @@
 	</div>
 {/if}
 </div>
+{if $show_linkto eq 'y' and $linkto}
+<div class="articlesource">
+{tr}Source{/tr}: <a href="{$linkto}"{if $popupLinks eq 'y'} target="_blank"{/if}>{$linkto}</a>
+</div>
+{/if}
 {if $feature_article_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
@@ -94,5 +109,6 @@
 </div>
 </td></tr></table>
 </div>
+
 {include file=comments.tpl}
 {/if}
