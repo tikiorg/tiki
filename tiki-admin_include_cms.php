@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.4 2003-10-12 18:45:00 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.5 2003-10-19 02:48:28 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,6 +78,14 @@ if (isset($_REQUEST['artlist'])) {
 
 	$smarty->assign('art_list_title', isset($_REQUEST['art_list_title']) ? 'y' : 'n');
 
+	if (isset($_REQUEST['art_list_type'])) {
+		$tikilib->set_preference('art_list_type', 'y');
+	} else {
+		$tikilib->set_preference('art_list_type', 'n');
+	}
+
+	$smarty->assign('art_list_type', isset($_REQUEST['art_list_type']) ? 'y' : 'n');
+
 	if (isset($_REQUEST['art_list_topic'])) {
 		$tikilib->set_preference('art_list_topic', 'y');
 	} else {
@@ -93,6 +101,22 @@ if (isset($_REQUEST['artlist'])) {
 	}
 
 	$smarty->assign('art_list_date', isset($_REQUEST['art_list_date']) ? 'y' : 'n');
+
+	if (isset($_REQUEST['art_list_expire'])) {
+		$tikilib->set_preference('art_list_expire', 'y');
+	} else {
+		$tikilib->set_preference('art_list_expire', 'n');
+	}
+
+	$smarty->assign('art_list_expire', isset($_REQUEST['art_list_expire']) ? 'y' : 'n');
+
+	if (isset($_REQUEST['art_list_visible'])) {
+		$tikilib->set_preference('art_list_visible', 'y');
+	} else {
+		$tikilib->set_preference('art_list_visible', 'n');
+	}
+
+	$smarty->assign('art_list_visible', isset($_REQUEST['art_list_visible']) ? 'y' : 'n');
 
 	if (isset($_REQUEST['art_list_author'])) {
 		$tikilib->set_preference('art_list_author', 'y');
@@ -126,62 +150,6 @@ if (isset($_REQUEST['artlist'])) {
 
 	$smarty->assign('art_list_img', isset($_REQUEST['art_list_img']) ? 'y' : 'n');
 
-//
-	if (isset($_REQUEST['art_view_title'])) {
-		$tikilib->set_preference('art_view_title', 'y');
-	} else {
-		$tikilib->set_preference('art_view_title', 'n');
-	}
-
-	$smarty->assign('art_view_title', isset($_REQUEST['art_view_title']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_topic'])) {
-		$tikilib->set_preference('art_view_topic', 'y');
-	} else {
-		$tikilib->set_preference('art_view_topic', 'n');
-	}
-
-	$smarty->assign('art_view_topic', isset($_REQUEST['art_view_topic']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_date'])) {
-		$tikilib->set_preference('art_view_date', 'y');
-	} else {
-		$tikilib->set_preference('art_view_date', 'n');
-	}
-
-	$smarty->assign('art_view_date', isset($_REQUEST['art_view_date']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_author'])) {
-		$tikilib->set_preference('art_view_author', 'y');
-	} else {
-		$tikilib->set_preference('art_view_author', 'n');
-	}
-
-	$smarty->assign('art_view_author', isset($_REQUEST['art_view_author']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_reads'])) {
-		$tikilib->set_preference('art_view_reads', 'y');
-	} else {
-		$tikilib->set_preference('art_view_reads', 'n');
-	}
-
-	$smarty->assign('art_view_reads', isset($_REQUEST['art_view_reads']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_size'])) {
-		$tikilib->set_preference('art_view_size', 'y');
-	} else {
-		$tikilib->set_preference('art_view_size', 'n');
-	}
-
-	$smarty->assign('art_view_size', isset($_REQUEST['art_view_size']) ? 'y' : 'n');
-
-	if (isset($_REQUEST['art_view_img'])) {
-		$tikilib->set_preference('art_view_img', 'y');
-	} else {
-		$tikilib->set_preference('art_view_img', 'n');
-	}
-
-	$smarty->assign('art_view_img', isset($_REQUEST['art_view_img']) ? 'y' : 'n');
 }
 
 ?>

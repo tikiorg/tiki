@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.38 2003-10-19 02:22:53 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.39 2003-10-19 02:48:28 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -26,13 +26,9 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_reads'
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_size', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_title', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_topic', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_author', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_date', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_img', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_reads', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_size', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_title', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_topic', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_type','y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_expire','y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_visible','y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_create_user_auth', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_create_user_tiki', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_ldap_adminpass', '');
@@ -342,6 +338,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('wikiSubmitNotic
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('wiki_top_bar', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('w_use_db', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('w_use_dir', '');
+DELETE /* IGNORE */ FROM tiki_preferences WHERE name like 'art_view%';
 
 INSERT /* IGNORE */ INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
 INSERT /* IGNORE */ INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
