@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme-II/tiki.tpl,v 1.1 2003-08-09 18:54:41 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme-II/tiki.tpl,v 1.2 2003-08-09 19:16:48 zaufi Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
@@ -20,21 +20,6 @@
         {/section}
       </div><!-- left -->
     {/if}
-
-    {* Calculate size of center div *}
-
-    {php} $add_style=''; {/php}
-    {if $feature_left_column eq 'y' and count($left_modules) gt 0}
-	{php} $add_style.='margin-left: 190px;'; {/php}
-    {/if}
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
-	{php} $add_style.='margin-right: 190px;'; {/php}
-    {/if}
-    {php}
-	$add_style = strlen($add_style) ? 'style="'.$add_style.'"' : ''; 
-	global $smarty;
-	$smarty->assign('add_style', $add_style);
-    {/php}
 
     {* Display center column *}
 
