@@ -30,8 +30,8 @@ class ModLib extends TikiLib {
     $query = "delete from tiki_modules where name='$name'";
     $result = $this->query($query);
     //check for valid values
-    $cache_time=is_int($cache_time) ? $cache_time : 0 ;
-    $rows=is_int($rows) ? $rows : 10 ;
+    $cache_time=is_numeric($cache_time) ? $cache_time : 0 ;
+    $rows=is_numeric($rows) ? $rows : 10 ;
     $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params')";
     $result = $this->query($query);
     return true;
