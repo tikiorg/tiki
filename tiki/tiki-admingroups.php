@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.17 2004-01-14 22:47:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.18 2004-01-15 08:55:20 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-include_once('lib/trackers/trackerlib.php');
 
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
@@ -19,20 +18,25 @@ if ($user != 'admin') {
 	}
 }
 
-$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
-$trackers = $trackerlist['list'];
-$smarty->assign('eligibleUserTrackers', array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
-$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
-$smarty->assign('trackers', $trackers);
+if ($groupTracker == 'y') {
+	include_once('lib/trackers/trackerlib.php');
+	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trackers = $trackerlist['list'];
+	$smarty->assign('eligibleUserTrackers', array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
+	$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
+	$smarty->assign('trackers', $trackers);
 
-list($ag_home,$ag_utracker,$ag_gtracker) = array('',0,0);
+	list($ag_utracker,$ag_gtracker) = array(0,0);
+	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
+		$ag_utracker = $_REQUEST["userstracker"];
+	}
+	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
+		$ag_gtracker = $_REQUEST["groupstracker"];
+	}
+}
+
+$ag_home = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
-if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
-	$ag_utracker = $_REQUEST["userstracker"];
-}
-if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
-	$ag_gtracker = $_REQUEST["groupstracker"];
-}
 
 // Process the form to add a group
 if (isset($_REQUEST["newgroup"])) {
@@ -194,8 +198,10 @@ $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);
 $smarty->assign('groupdesc', $groupdesc);
 $smarty->assign('grouphome',$grouphome);
+if ($groupTracker == 'y') {
+	$smarty->assign('grouptrackerid',$grouptrackerid);
+}
 $smarty->assign('userstrackerid',$userstrackerid);
-$smarty->assign('grouptrackerid',$grouptrackerid);
 $smarty->assign('groupperms', $groupperms);
 
 $cant_pages = ceil($users["cant"] / $numrows);
