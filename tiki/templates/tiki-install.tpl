@@ -1,5 +1,5 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v1.7 -Eta Carinae- <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+<h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 <a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
 {*
@@ -23,6 +23,21 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  Please enter your database connection info<br/><br/>
 	  <form action="tiki-install.php" method="post">
 	  <table class="normal">
+	  	<tr>
+	  		<td class="formcolor">Database type:</td>
+	  		<td class="formcolor">
+	  			<table><tr><td>
+			    <select name="db">
+			    {section name=dbnames loop=$dbservers}
+			    <option value="{$dbservers[dbnames]}">{$dbservers[dbnames]}</option>
+			    {/section}
+			    </select>
+	  			</td><td>
+	  			<small>The type of database you intend to use</small>
+	  			</td></tr></table>
+	  		
+	  		</td>
+	  	</tr>
 	  	<tr>
 	  		<td class="formcolor">Host:</td>
 	  		<td class="formcolor">

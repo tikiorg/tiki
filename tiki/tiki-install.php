@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.11 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.12 2003-08-07 20:32:57 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.11 2003-08-07 04:33:57 rossta Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.12 2003-08-07 20:32:57 teedog Exp $
 session_start();
 
 // Define and load Smarty components
@@ -129,7 +129,11 @@ $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('style', 'default.css');
 $smarty->assign('mid', 'tiki-install.tpl');
 
+$tiki_version = '1.8';
+$smarty->assign('tiki_version', $tiki_version);
+
 // Avalible DB Servers
+/*
 $dbservers = array(
 	"Mysql 3.X" => "mysql3",
 	"Mysql 4.X" => "mysql4",
@@ -137,13 +141,15 @@ $dbservers = array(
 	"Oracle 8i" => "oci8",
 	"Oracle 9i" => "oci9"
 );
+*/
+$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i');
 
 $dbtodsn = array(
-	"mysql3" => "mysql",
-	"mysql4" => "mysql",
-	"pgsql72" => "pgsql",
-	"oci8" => "oci8",
-	"oci9" => "oci8"
+	"MySQL 3.x" => "mysql",
+	"MySQL 4.x" => "mysql",
+	"PostgeSQL 7.2+" => "pgsql",
+	"Oracle 8i" => "oci8",
+	"Oracle 9i" => "oci8"
 );
 
 $smarty->assign_by_ref('dbservers', $dbservers);
@@ -344,7 +350,7 @@ if (!$dbcon && isset($_REQUEST['dbinfo'])) {
 	$filetowrite = '<' . '?' . 'php' . "\n";
 
 	$filetowrite .= '$db_tiki="' . $dbtodsn[$_REQUEST['db']] . '";' . "\n";
-	$filetowrite .= '$dbversion_tiki="' . $_REQUEST['db'] . '";' . "\n";
+	$filetowrite .= '$dbversion_tiki="' . $tiki_version . '";' . "\n";
 
 	switch ($_REQUEST["connmethod"]) {
 	case "hostname":
@@ -435,7 +441,7 @@ if ($noadmin) {
 //Load SQL scripts
 $files = array();
 $h = opendir('db/');
-echo $dbversion_tiki . "---";
+//echo $dbversion_tiki . "---";
 
 while ($file = readdir($h)) {
 	if (strstr($file, 'to') && strstr($file, $dbversion_tiki)) {
