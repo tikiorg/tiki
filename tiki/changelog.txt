@@ -4,6 +4,7 @@ Tikiwiki Changelog
 
 Version 1.8 --
 
+* [NEW] admin topics now allows existing topics to be changed
 * [FIX] fixed galaxia bugs while porting to adodb queries
 * [NEW] added a module to switch themes 
 * [FIX] moved wiki table parse code behind link parse code
