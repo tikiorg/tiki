@@ -1,0 +1,9 @@
+devtools
+--------
+
+This directory will hold the tools used to checkout and package the mods
+into their individual packages each night.
+
+This script will be used on mods.tikiwiki.org
+
+- Damian
