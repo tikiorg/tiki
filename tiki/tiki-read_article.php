@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.24 2004-04-10 04:46:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.25 2004-04-13 06:16:43 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+include_once('lib/categories/categlib.php');
 
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
@@ -141,6 +142,31 @@ if ($feature_article_comments == 'y') {
 	$comments_prefix_var = 'article:';
 	$comments_object_var = 'articleId';
 	include_once ("comments.php");
+}
+
+$objId = $_REQUEST["articleId"];
+$is_categorized = $categlib->is_categorized('article',$objId);
+
+// Display category path or not (like {catpath()})
+if ($is_categorized) {
+  $smarty->assign('is_categorized','y');
+  if(isset($feature_categorypath) and $feature_categories == 'y') {
+    if ($feature_categorypath == 'y') {
+      $cats = $categlib->get_object_categories('article',$objId);
+      $display_catpath = $tikilib->get_categorypath($cats);
+      $smarty->assign('display_catpath',$display_catpath);
+    }
+  } 
+  // Display current category objects or not (like {category()})
+  if (isset($feature_categoryobjects) and $feature_categories == 'y') {
+    if ($feature_categoryobjects == 'y') {
+      $catids = $categlib->get_object_categories('article', $objId);
+      $display_catobjects = $tikilib->get_categoryobjects($catids);
+      $smarty->assign('display_catobjects',$display_catobjects);
+    }
+  } 
+} else {
+  $smarty->assign('is_categorized','n');
 }
 
 $section = 'cms';
