@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@fast.no>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: HTTP.php,v 1.1 2003-04-09 00:03:15 lrargerich Exp $
+// $Id: HTTP.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
 //
 // HTTP utility functions.
 //

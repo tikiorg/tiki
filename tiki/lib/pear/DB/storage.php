@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <stig@php.net>                                   |
 // +----------------------------------------------------------------------+
 //
-// $Id: storage.php,v 1.1 2003-04-09 00:03:16 lrargerich Exp $
+// $Id: storage.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
 //
 // DB_storage: a class that lets you return SQL data as objects that
 // can be manipulated and that updates the database accordingly.

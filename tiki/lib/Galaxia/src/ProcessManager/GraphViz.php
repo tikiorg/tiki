@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.1 2003-04-19 17:42:03 lrargerich Exp $
+// $Id: GraphViz.php,v 1.2 2003-06-19 21:05:45 awcolley Exp $
 //
 
 /**
