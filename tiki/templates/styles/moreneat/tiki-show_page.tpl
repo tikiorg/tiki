@@ -93,6 +93,21 @@
 </form>
 {/if}
 </td>
+	{if $feature_multilingual == 'y'}
+		{if count($trads) > 1}
+			<td style="text-align:right;">
+			<form action="tiki-index.php" method="post">
+			<select name="page_id" onchange="page_id.form.submit()">
+			{section name=i loop=$trads}
+			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
+			{/section}
+			</form>
+			</td>
+		{else}
+		<td style="text-align:right;">{$trads[0].langName}</td>
+		{/if}
+		</td>
+	{/if}
 </tr>
 {/if}
 </table>
@@ -172,6 +187,10 @@
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
+{/if}
+
+{if $feature_multilingual eq 'y'}
+     <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}
