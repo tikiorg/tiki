@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.106 2004-06-13 04:45:50 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.107 2004-06-13 04:53:17 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,7 +93,7 @@ $smarty->assign('page_ref_id', $page_ref_id);
 
 require_once('tiki-pagesetup.php');
 
-if ($feature_categories == 'y') {
+if ($feature_categories == 'y' && !$object_has_perms) {
 	// Check to see if page is categorized
 	$objId = urldecode($page);
 
@@ -106,7 +106,7 @@ if ($feature_categories == 'y') {
    	} else {
    		$is_categorized = FALSE; // this var is used below
    	}
-	if ($tiki_p_admin != 'y' && !$object_has_perms && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	if ($tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 		if (!isset($user)){
 			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 			$smarty->assign('errortitle',tra("Please login"));
