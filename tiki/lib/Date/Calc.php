@@ -1499,7 +1499,7 @@ class Date_Calc
             $month = Date_Calc::dateNow("%m");
         }
 
-        return substr(Date_Calc::getMonthFullname($month), 0, $length);
+        return mb_substr(Date_Calc::getMonthFullname($month), 0, $length);
     } // end func getMonthAbbrname
 
     /**
@@ -1558,7 +1558,7 @@ class Date_Calc
             $day = Date_Calc::dateNow("%d");
         }
 
-        return substr(Date_Calc::getWeekdayFullname($day,$month,$year),0,$length);
+        return mb_substr(Date_Calc::getWeekdayFullname($day,$month,$year),0,$length);
     } // end func getWeekdayFullname
 
     /**
