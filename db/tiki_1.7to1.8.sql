@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.18 2003-09-24 18:16:25 lrargerich Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.19 2003-09-27 09:29:14 rlpowell Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -350,6 +350,11 @@ ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
 
 # Per-forum from address.  -rlpowell
 ALTER TABLE `tiki_forums` ADD `outbound_from` VARCHAR( 250 ) AFTER `outbound_address` ;
+
+# Message Ids and In-Reply-To, for strict threading that extends to
+# e-mail. -rlpowell
+ALTER TABLE `tiki_comments` ADD `message_id` VARCHAR( 250 ) AFTER `smiley` ;
+ALTER TABLE `tiki_comments` ADD `in_reply_to` VARCHAR( 250 ) AFTER `message_id` ;
 
 # \todo rename to tiki_sessions
 # \todo lower case these field names, postgres dislikes non-lowercase fields

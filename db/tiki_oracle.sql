@@ -998,6 +998,8 @@ CREATE TABLE tiki_comments (
   user_ip varchar2(15) DEFAULT NULL,
   summary varchar2(240) DEFAULT NULL,
   smiley varchar2(80) DEFAULT NULL,
+  message_id varchar(250) default NULL,
+  in_reply_to varchar(250) default NULL,
   CONSTRAINT pk_tiki_comments PRIMARY KEY (threadId)
 );
 
@@ -1579,6 +1581,7 @@ CREATE TABLE tiki_forums (
   moderator_group varchar2(200) DEFAULT NULL,
   approval_type varchar2(20) DEFAULT NULL,
   outbound_address varchar2(250) DEFAULT NULL,
+  outbound_from varchar(250) default NULL,
   inbound_pop_server varchar2(250) DEFAULT NULL,
   inbound_pop_port number(4) DEFAULT NULL,
   inbound_pop_user varchar2(200) DEFAULT NULL,

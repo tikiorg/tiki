@@ -1,4 +1,4 @@
---$Id: tiki_pgsql.sql,v 1.2 2003-07-15 20:21:26 rossta Exp $
+--$Id: tiki_pgsql.sql,v 1.3 2003-09-27 09:31:33 rlpowell Exp $
 -- Dump of tiki_mysql.sql
 
 
@@ -893,6 +893,8 @@ CREATE TABLE tiki_comments (
 "summary" varchar(240) NOT NULL default '',
 "smiley" varchar(80) NOT NULL default '',
 "user_ip" varchar(15) NOT NULL default '',
+  "message_id" varchar(250) default NULL,
+  "in_reply_to" varchar(250) default NULL,
 PRIMARY KEY ("threadId")
 
 
@@ -1373,6 +1375,7 @@ CREATE TABLE tiki_forums (
 "moderator_group" varchar(200) NOT NULL default '',
 "approval_type" varchar(20) NOT NULL default '',
 "outbound_address" varchar(1) NOT NULL default '',
+"outbound_from" varchar(1) NOT NULL default '',
 "inbound_address" varchar(1) NOT NULL default '',
 "topic_smileys" varchar(1) NOT NULL default '',
 "ui_avatar" varchar(1) NOT NULL default '',

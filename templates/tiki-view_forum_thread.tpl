@@ -171,6 +171,7 @@ a moderator approves it.{/tr}</small>
     {/if}
     <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="quote" value="{$quote|escape}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
     <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />

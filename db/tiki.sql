@@ -816,6 +816,8 @@ CREATE TABLE tiki_comments (
   user_ip varchar(15) default NULL,
   summary varchar(240) default NULL,
   smiley varchar(80) default NULL,
+  message_id varchar(250) default NULL,
+  in_reply_to varchar(250) default NULL,
   PRIMARY KEY  (threadId),
   KEY title (title),
   KEY data (data(255)),

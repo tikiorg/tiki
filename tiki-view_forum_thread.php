@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.28 2003-09-24 00:30:30 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.29 2003-09-27 09:28:23 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,16 @@ if (!isset($_REQUEST['topics_find'])) {
 if(!isset($_REQUEST['topics_threshold']) || empty($_REQUEST['topics_threshold'])) {
     $_REQUEST['topics_threshold'] = 0;
 }
+
+if (isset($_REQUEST["quote"]) &&
+	$_REQUEST["quote"] )
+{
+    $quote = $_REQUEST["quote"];
+} else {
+    $quote = 0;
+}
+
+$smarty->assign('quote', $quote);
 
 $comments_parentId = $_REQUEST["comments_parentId"];
 
@@ -306,8 +316,26 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 			$smarty->assign('was_queued', 'n');
 
 			if ($_REQUEST["comments_threadId"] == 0) {
+			    if (isset($_REQUEST["quote"]) &&
+				    $_REQUEST["quote"] )
+			    {
+				$quote_info = $commentslib->get_comment($_REQUEST["quote"]);
+				$in_reply_to = $quote_info["message_id"];
+
+				// Don't carry the quote value through
+				// after this.
+				$smarty->clear_assign('quote');
+				$quote = 0;
+				$_REQUEST["quote"] = 0;
+			    } else {
+				$in_reply_to = '';
+			    }
+
 			    $threadId = $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"],
-				    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
+				    $user, $_REQUEST["comments_title"],
+				    $_REQUEST["comments_data"],
+				    $in_reply_to, &$message_id
+				    );
 
 			    // PROCESS ATTACHMENT HERE        
 			    if ($threadId && ($forum_info['att'] == 'att_all')
@@ -377,11 +405,21 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 			    }
 			    //END ATTACHMENT PROCESSING
 			    if ($forum_info["outbound_address"]) {
+				if( $in_reply_to )
+				{
+				    $in_reply_line = "In-Reply-To: <" . $in_reply_to . ">\r\n";
+				} else {
+				    $in_reply_line = '';
+				}
 				@mail(
 					$forum_info["outbound_address"],
 					$thread_info['title'],
-					$_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
-					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
+					$_REQUEST["comments_title"] .
+					"\n\n" . $_REQUEST["comments_data"],
+					"From: " . $forum_info["outbound_from"] . "\r\n" .
+					"Message-Id: <" . $message_id . ">\r\n" .
+					$in_reply_line .
+					"Content-type: text/plain;charset=utf-8\r\n"
 				     );
 			    }
 
@@ -398,7 +436,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				    $smarty->assign('mail_topic', tra('topic:'). $thread_info['title']);
 				    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 				    @mail($not['email'], tra('Tiki email notification'), $mail_data,
-				    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+					    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 				}
 			    }
 
@@ -412,7 +450,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 
 				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 				@mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
-				"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 			    }
 
 			    $commentslib->register_forum_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
@@ -525,7 +563,9 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_data', '');
 }
 
-if (isset($_REQUEST["quote"])) {
+if (isset($_REQUEST["quote"]) &&
+	$_REQUEST["quote"] )
+{
     $quote_info = $commentslib->get_comment($_REQUEST["quote"]);
 
     $quoted_lines = split("\n", $quote_info["data"]);

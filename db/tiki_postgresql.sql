@@ -678,6 +678,8 @@ CREATE TABLE "tiki_comments" (
   "user_ip" character varying(15) DEFAULT NULL,
   "summary" character varying(240) DEFAULT NULL,
   "smiley" character varying(80) DEFAULT NULL,
+  "message_id" varchar(250) default NULL,
+  "in_reply_to" varchar(250) default NULL,
   CONSTRAINT pk_tiki_comments PRIMARY KEY ("threadId")
 );
 
@@ -1051,6 +1053,7 @@ CREATE TABLE "tiki_forums" (
   "moderator_group" character varying(200) DEFAULT NULL,
   "approval_type" character varying(20) DEFAULT NULL,
   "outbound_address" character varying(250) DEFAULT NULL,
+  "outbound_from" varchar(250) default NULL,
   "inbound_pop_server" character varying(250) DEFAULT NULL,
   "inbound_pop_port"  smallint DEFAULT NULL,
   "inbound_pop_user" character varying(200) DEFAULT NULL,
