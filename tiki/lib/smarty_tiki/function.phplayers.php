@@ -28,11 +28,11 @@ function smarty_function_phplayers($params, &$smarty) {
 	// beware ! that below is a variable class declaration
 	$class = $classes["$type"];
 	$phplayers = new $class();
-	$phplayers->dirroot = "lib/phplayers";
-	$phplayers->libjsdir = "lib/phplayers/libjs/";
-	$phplayers->imgdir = "lib/phplayers/images/";
-	$phplayers->imgwww = "lib/phplayers/images/";
-	$phplayers->tpldir = "lib/phplayers/templates/";
+	$phplayers->setDirrootCommon("lib/phplayers");
+	$phplayers->setLibjsdir("lib/phplayers/libjs/");
+	$phplayers->setImgdir("lib/phplayers/images/");
+	$phplayers->setImgwww("lib/phplayers/images/");
+	$phplayers->setTpldirCommon("lib/phplayers/templates/");
 	
 	if (!empty($id)) {
 		$menu_info = $tikilib->get_menu($id);
