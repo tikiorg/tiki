@@ -10,7 +10,7 @@
 </div>
 <div class="cbox-data">
 {$msg}<br /><br />
-<a href="javascript:window.close()" class="linkmenu">{tr}Close Window{/tr}</a><br /><br />
+<a title="{tr}Click here to close this window{/tr}" href="javascript:window.close()" class="linkmenu">{tr}Close Window{/tr}</a><br /><br />
 </div>
 </div>
 </div>

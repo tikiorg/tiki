@@ -1,12 +1,12 @@
-<a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
+<a title="{tr}Click here to broadcast a message to multiple users{/tr}" class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Message Broadcast{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<a title="{tr}Click here for help on broadcasting messages{/tr}" href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp">
+<img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/messu-broadcast.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+<a title="{tr}Click here to edit this template{/tr}" href="tiki-edit_templates.php?template=templates/messu-broadcast.tpl" target="tikihelp" class="tikihelp">
+<img border="0" src="img/icons/info.gif" alt="{tr}edit template{/tr}" /></a>
 {/if}
 
 <br /><br />
