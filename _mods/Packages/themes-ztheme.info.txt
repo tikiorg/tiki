@@ -1,3 +1,12 @@
+contributor:
+$Author: mose $
+
+revision:
+$Rev: 1.1$
+
+lastmodif:
+$Date: 2004-09-29 19:41:54 $
+
 files: 
 themes/ztheme/styles/ztheme.css styles/ztheme.css
 
@@ -7,20 +16,9 @@ bobzim
 licence:
 GNU/LGPL
 
-contributor:
-$Author: mose $
-
-revision: 
-$Rev$
-
-lastmodif:
-$Date: 2004-09-29 19:16:01 $
-
 Description: 
-Simple theme - conservative colors - designed for easy "readability" and use.
-
-Copyright: 
-2004 the Tikiwiki Community
+Simple theme, conservative colors. 
+Designed for easy "readability" and use.
 
 Changelog:
 1 initial package

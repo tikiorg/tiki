@@ -1,3 +1,12 @@
+contributor:
+$Author: mose $
+
+revision:
+$Rev: 1.1$
+
+lastmodif:
+$Date: 2004-09-29 19:41:54 $
+
 files: 
 avatars/tikiavatars/exploded/520.gif img/avatars/520.gif
 avatars/tikiavatars/exploded/521.gif img/avatars/521.gif
@@ -47,14 +56,16 @@ avatars/tikiavatars/exploded/578.gif img/avatars/578.gif
 avatars/tikiavatars/exploded/579.gif img/avatars/579.gif
 
 
-contributor:
-lrargerich
-
-revision: 
-1
-
 Description: 
 Collection of 46 avatars from the Xmen (tm) serie.
 
 licence:
 unknown
+
+Version:
+1.7
+1.8
+1.9
+1.10
+
+

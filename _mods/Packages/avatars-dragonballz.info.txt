@@ -1,10 +1,3 @@
-# 
-# DragnBall Z avatar collection
-#
-
-author:
-unknown
-
 contributor:
 $Author: mose $
 
@@ -12,7 +5,7 @@ revision:
 $Rev: 1.1$
 
 lastmodif:
-$Date: 2004-09-29 19:16:01 $
+$Date: 2004-09-29 19:41:54 $
 
 files: 
 avatars/tikiavatars/exploded/295.gif img/avatars/295.gif
@@ -58,15 +51,4 @@ Version:
 1.8
 1.9
 1.10
-
-sql-install:
-
-sql-remove:
-
-configuration:
-
-php-install:
-
-php-remove:
-
 

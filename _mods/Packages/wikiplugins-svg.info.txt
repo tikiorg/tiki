@@ -1,12 +1,3 @@
-files: 
-wiki-plugins/svg/wiki-plugins/wikiplugin_svg.php lib/wiki-plugins/wikiplugin_svg.php
-
-author:
-tomb
-
-licence:
-GNU/GPL
-
 contributor:
 $Author: mose $
 
@@ -14,13 +5,19 @@ revision:
 $Rev$
 
 lastmodif:
-$Date: 2004-09-29 19:16:01 $
+$Date: 2004-09-29 19:41:54 $
+
+files: 
+wiki-plugins/svg/wiki-plugins/wikiplugin_svg.php lib/wiki-plugins/wikiplugin_svg.php
+
+author:
+tomb
+
+licence:
+GNU/LGPL
 
 Description: 
-Wiki Plugin to include swf file.
-
-Copyright: 
-2004 the Tikiwiki Community
+Wiki Plugin to include SVG file.
 
 Changelog:
 1 initial package
