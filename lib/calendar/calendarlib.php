@@ -135,10 +135,11 @@ class CalendarLib extends TikiLib {
 					$head = " ... " . tra("continued"). " ... ";
 				}
 
+				$resitem = array();
 				$resitem=$this->get_item($res["calitemId"]);
 				
 				$ret["$i"][] = array(
-					"result" => $res,
+					"result" => $resitem,
 					"calitemId" => $res["calitemId"],
 					"calname" => $res["calname"],
 					"time" => $tstart,
