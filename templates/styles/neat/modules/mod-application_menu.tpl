@@ -58,7 +58,7 @@
     &nbsp;<a href="tiki-lastchanges.php" class="linkmenu">{tr}last changes{/tr}</a><br/>
   {/if}
   {if $feature_dump eq 'y' and $tiki_p_view eq 'y'}
-    &nbsp;<a href="dump/new.tar" class="linkmenu">{tr}dump{/tr}</a><br/>
+    &nbsp;<a href="dump/{$tikidomain}new.tar" class="linkmenu">{tr}dump{/tr}</a><br/>
   {/if}
   {if $feature_wiki_rankings eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-wiki_rankings.php" class="linkmenu">{tr}rankings{/tr}</a><br/>

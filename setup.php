@@ -19,11 +19,11 @@ require_once(SMARTY_DIR.'Smarty.class.php');
 
 
 class Smarty_Sterling extends Smarty {
-  function Smarty_Sterling() {
+  function Smarty_Sterling($tikidomain = "") {
     $this->template_dir = "templates/";
-    $this->compile_dir = "templates_c/";
+    $this->compile_dir = "templates_c/$tikidomain";
     $this->config_dir = "configs/";
-    $this->cache_dir = "cache/";
+    $this->cache_dir = "cache/$tikidomain";
     $this->caching = false;
     $this->assign('app_name','Sterling');
     //$this->debugging = true;
@@ -63,7 +63,7 @@ class Smarty_Sterling extends Smarty {
   
 }
 
-$smarty = new Smarty_Sterling();
+$smarty = new Smarty_Sterling($tikidomain);
 $smarty->load_filter('pre','tr');
 //$smarty->load_filter('output','trimwhitespace');
 

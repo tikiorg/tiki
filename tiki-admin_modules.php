@@ -55,7 +55,7 @@ if(isset($_REQUEST["clear_cache"])) {
   $h = opendir("modules/cache/$tikidomain");
   while (($file = readdir($h)) !== false) {
       if(substr($file,0,3)=='mod') {
-        $file="modules/cache/$tikidomain/".$file;
+        $file="modules/cache/$tikidomain".$file;
         unlink($file);
       }
     }  

@@ -918,14 +918,14 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 }
 
 
-if(!file_exists('templates_c/preferences.php')) {
+if(!file_exists("templates_c/".$tikidomain."preferences.php")) {
   $prefs = $tikilib->get_all_preferences();
-  $fw=@fopen('templates_c/preferences.php',"wb");
+  $fw=@fopen("templates_c/$tikidomain/preferences.php","wb");
   if (!$fw) {
   	if (isset($php_errormsg)) {
   		die($php_errormsg);
   	}
-  	fopen('templates_c/preferences.php',"wb");
+  	fopen("templates_c/".$tikidomain."preferences.php","wb");
   	die;
   }
   fwrite($fw,'<?php'."\n");
@@ -939,7 +939,7 @@ if(!file_exists('templates_c/preferences.php')) {
   fwrite($fw,'?>');
   fclose($fw);
 } else {
-  include_once('templates_c/preferences.php');
+  include_once("templates_c/".$tikidomain."preferences.php");
 }
 
 $user_dbl='y';

@@ -140,6 +140,7 @@ class AdminLib extends TikiLib {
   
   function remove_unused_pictures()
   {
+		global $tikidomain;
     $query = "select data from tiki_pages";
     $result = $this->query($query);
     $pictures=Array();
@@ -149,10 +150,10 @@ class AdminLib extends TikiLib {
         $pictures[]=$pic;
       }
     }
-    $h = opendir("img/wiki_up");
+    $h = opendir("img/wiki_up/$tikidomain");
     while (($file = readdir($h)) !== false) {
-      if(is_file("img/wiki_up/$file")&&($file!='license.txt')) {
-        $filename="img/wiki_up/$file";
+      if(is_file("img/wiki_up/$tikidomain$file")&&($file!='license.txt')) {
+        $filename="img/wiki_up/$tikidomain$file";
         if(!in_array($filename,$pictures)) {
           @unlink($filename);
         }
@@ -297,9 +298,11 @@ class AdminLib extends TikiLib {
   }  
   
   // Dumps the database to dump/new.tar
+	// changed for virtualhost support
   function dump()
   {
-    unlink("dump/new.tar");
+		global $tikidomain;
+    @unlink("dump/".$tikidomain."new.tar");
     $tar = new tar();
     $tar->addFile("styles/main.css");
     // Foreach page
@@ -317,7 +320,7 @@ class AdminLib extends TikiLib {
       $data = "<html><head><title>".$res["pageName"]."</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='HomePage.html'>home</a><br/><h1>".$res["pageName"]."</h1><div class='wikitext'>".$dat.'</div></body></html>';
       $tar->addData($pageName,$data,$res["lastModif"]);
     }
-    $tar->toTar("dump/new.tar",FALSE);
+    $tar->toTar("dump/".$tikidomain."new.tar",FALSE);
     unset($tar);
     $action = "dump created";
     $t = date("U");
