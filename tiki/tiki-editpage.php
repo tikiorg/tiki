@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.51 2003-10-25 16:15:45 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.52 2003-10-26 00:15:27 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,16 +133,21 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
 /**
  * \brief Parsed HTML tree walker (used by HTML sucker)
  *
- * This is initial implementation (don't generate any wiki syntaxes)
+ * This is initial implementation (stupid... w/o any intellegence (almost :))
+ * It is rapidly designed version... just for test: 'can this feature be useful'.
+ * Later it should be replaced by well designed one :) don't bash me now :)
  *
+ * \param &$c array -- parsed HTML
+ * \param &$src string -- output string
+ * \param &$stack array -- closing strings stack
+ * \param &$listack -- stack of list types currently opened
  */
-function walk_and_parse(&$c, &$src, &$stack)
+function walk_and_parse(&$c, &$src, &$stack, &$listack)
 {
     for ($i=0; $i <= $c["contentpos"]; $i++)
     {
         // If content type 'text' output it to destination...
-        if ($c[$i]["type"] == "text")
-            $src .= $c[$i]["data"];
+        if ($c[$i]["type"] == "text") $src .= $c[$i]["data"];
         elseif ($c[$i]["type"] == "tag")
         {
             if ($c[$i]["data"]["type"] == "open")
@@ -150,45 +155,52 @@ function walk_and_parse(&$c, &$src, &$stack)
                 // Open tag type
                 switch ($c[$i]["data"]["name"])
                 {
-                case "title"; $src .= "\n!"; array_push($stack, array('tag' => 'title', 'string' => "\n")); break;
-                case "p": $src .= "\n"; array_push($stack, array('tag' => 'p', 'string' => "\n")); break;
-                case "b": $src .= '__'; array_push($stack, array('tag' => 'b', 'string' => '__')); break;
-                case "i": $src .= "''"; array_push($stack, array('tag' => 'i', 'string' => "''")); break;
-                case "u": $src .= "=="; array_push($stack, array('tag' => 'u', 'string' => "==")); break;
-                case "center": $src .= '::'; array_push($stack, array('tag' => 'center', 'string' => '::')); break;
-                case "code": $src .= '-+';  array_push($stack, array('tag' => 'code', 'string' => '+-')); break;
-                case "h1": $src .= "\n!"; array_push($stack, array('tag' => 'h1', 'string' => "\n")); break;
-                case "h2": $src .= "\n!!"; array_push($stack, array('tag' => 'h2', 'string' => "\n")); break;
-                case "h3": $src .= "\n!!!"; array_push($stack, array('tag' => 'h3', 'string' => "\n")); break;
-                case "h3": $src .= "\n!!!!"; array_push($stack, array('tag' => 'h4', 'string' => "\n")); break;
-                case "h5": $src .= "\n!!!!!"; array_push($stack, array('tag' => 'h5', 'string' => "\n")); break;
-                case "h6": $src .= "\n!!!!!!"; array_push($stack, array('tag' => 'h6', 'string' => "\n")); break;
-                case "pre": $src .= '~pp~'; array_push($stack, array('tag' => 'pre', 'string' => '~/pp~')); break;
+                case "title"; $src .= "\n!"; $stack[] = array('tag' => 'title', 'string' => "\n"); break;
+                case "p": $src .= "\n"; $stack[] = array('tag' => 'p', 'string' => "\n"); break;
+                case "b": $src .= '__'; $stack[] = array('tag' => 'b', 'string' => '__'); break;
+                case "i": $src .= "''"; $stack[] = array('tag' => 'i', 'string' => "''"); break;
+                case "u": $src .= "=="; $stack[] = array('tag' => 'u', 'string' => "=="); break;
+                case "center": $src .= '::'; $stack[] = array('tag' => 'center', 'string' => '::'); break;
+                case "code": $src .= '-+';  $stack[] = array('tag' => 'code', 'string' => '+-'); break;
+                // headers detection looks like real suxx code...
+                // but possible it run faster :) I don't know where is profiler in PHP...
+                case "h1": $src .= "\n!"; $stack[] = array('tag' => 'h1', 'string' => "\n"); break;
+                case "h2": $src .= "\n!!"; $stack[] = array('tag' => 'h2', 'string' => "\n"); break;
+                case "h3": $src .= "\n!!!"; $stack[] = array('tag' => 'h3', 'string' => "\n"); break;
+                case "h3": $src .= "\n!!!!"; $stack[] = array('tag' => 'h4', 'string' => "\n"); break;
+                case "h5": $src .= "\n!!!!!"; $stack[] = array('tag' => 'h5', 'string' => "\n"); break;
+                case "h6": $src .= "\n!!!!!!"; $stack[] = array('tag' => 'h6', 'string' => "\n"); break;
+                case "pre": $src .= '~pp~'; $stack[] = array('tag' => 'pre', 'string' => '~/pp~'); break;
+                case "br": $src .= "\n"; break;
+                case "ul": $listack[] = '*'; break;
+                case "ol": $listack[] = '#'; break;
+                case "li":
+                    // Generate wiki list item according to current list depth.
+                    // Hope count($listack) is O(0) :))
+                    $src .= "\n";
+                    for ($l = 0; $l < count($listack); $l++) $src .= end($listack);
+                    $src .= " ";
+                    break;
                 case "font":
-                    // If href attribute present in <a> tag
-                    if (array_key_exists("pars", $c[$i]) 
-                     && array_key_exists("color", $c[$i]["pars"])
-                     && array_key_exists("value", $c[$i]["pars"]["color"]))
+                    // If color attribute present in <font> tag
+                    if (isset($c[$i]["pars"]["color"]["value"]))
                     {
                         $src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
-                        array_push($stack, array('tag' => 'font', 'string' => '~~'));
+                        $stack[] = array('tag' => 'font', 'string' => '~~');
                     }
                     break;
                 case "img":
-                    // If href attribute present in <a> tag
-                    if (array_key_exists("pars", $c[$i]) 
-                     && array_key_exists("src", $c[$i]["pars"])
-                     && array_key_exists("value", $c[$i]["pars"]["src"]))
+                    // If src attribute present in <img> tag
+                    if (isset($c[$i]["pars"]["src"]["value"]))
+                        // Note what it produce (img) not {img}! Will fix this below...
                         $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
                     break;
                 case "a":
                     // If href attribute present in <a> tag
-                    if (array_key_exists("pars", $c[$i]) 
-                     && array_key_exists("href", $c[$i]["pars"])
-                     && array_key_exists("value", $c[$i]["pars"]["href"]))
+                    if (isset($c[$i]["pars"]["href"]["value"]))
                     {
                         $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
-                        array_push($stack, array('tag' => 'a', 'string' => ']'));
+                        $stack[] = array('tag' => 'a', 'string' => ']');
                     }
                     break;
                 }
@@ -196,11 +208,22 @@ function walk_and_parse(&$c, &$src, &$stack)
             else
             {
                 // This is close tag type. Is that smth we r waiting for?
-                $e = end($stack);
-                if ($c[$i]["data"]["name"] == $e['tag'])
+                switch ($c[$i]["data"]["name"])
                 {
-                    $src .= $e['string'];
-                    array_pop($stack);
+                case "ul":
+                    if (end($listack) == '*') array_pop($listack);
+                    break;
+                case "ol":
+                    if (end($listack) == '#') array_pop($listack);
+                    break;
+                default:
+                    $e = end($stack);
+                    if ($c[$i]["data"]["name"] == $e['tag'])
+                    {
+                        $src .= $e['string'];
+                        array_pop($stack);
+                    }
+                    break;
                 }
             }
         }
@@ -208,7 +231,7 @@ function walk_and_parse(&$c, &$src, &$stack)
         if (isset($c[$i]["content"]))
         {
 //            if (substr($src, -1) != " ") $src .= " ";
-            walk_and_parse($c[$i]["content"], $src, $stack);
+            walk_and_parse($c[$i]["content"], $src, $stack, $listack);
         }
     }
 }
@@ -254,7 +277,26 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         // Should I try to convert HTML to wiki?
         $parseddata = '';
         $close_stack = array();
-        walk_and_parse($htmlparser->content, $parseddata, $close_stack);
+        $list_stack = array();
+        walk_and_parse($htmlparser->content, $parseddata, $close_stack, $list_stack);
+        // Is some tags still opened? (It can be if HTML not valid, but this is not reason
+        // to produce invalid wiki :)
+        while (count($close_stack))
+        {
+            $e = end($close_stack);
+            $sdta .= $e['string'];
+            array_pop($close_stack);
+        }
+        // Unclosed lists r ignored... wiki have no special start/end lists syntax....
+
+        // OK. Things remains to do:
+        // 1) fix linked images
+        $parseddata = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $parseddata);
+        var_dump($parsedata);
+        // 2) fix remains images (not in links)
+        $parseddata = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $parseddata);
+
+        // Reassign previous data
         $sdta = $parseddata;
     }
     $_REQUEST['edit'] .= $sdta;
