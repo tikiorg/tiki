@@ -2,9 +2,9 @@
 [<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
 |<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 
-<table >
+<table>
 <tr>
-  <td valign="top" >
+  <td valign="top">
   <form action="tiki-edit_languages.php" method="post">
   <div class="cbox">
   <div class="cbox-title">{tr}Edit and create languages{/tr}</div>
@@ -22,7 +22,7 @@
   </div>
   <div class="simplebox">
   <table>
-  <tr><td  class="form">{tr}Select the language to edit{/tr}:</td><td>
+  <tr><td class="form">{tr}Select the language to edit{/tr}:</td><td>
         <select name="edit_language">
         {section name=ix loop=$languages}
         <option value="{$languages[ix]|escape}" {if $edit_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
