@@ -224,6 +224,11 @@ class UsersLib extends TikiLib {
 	$userAuth = false;
 	$userAuthPresent = false;
 
+	// see if we are to use PAM
+	$auth_pam = ($tikilib->get_preference("auth_method", "tiki") == "pam");
+	$pam_create_tiki = ($tikilib->get_preference("pam_create_user_tiki", "n") == "y");
+	$pam_skip_admin = ($tikilib->get_preference("pam_skip_admin", "n") == "y");
+
 	// see if we are to use PEAR::Auth
 	$auth_pear = ($tikilib->get_preference("auth_method", "tiki") == "auth");
 	$create_tiki = ($tikilib->get_preference("auth_create_user_tiki", "n") == "y");
@@ -247,7 +252,7 @@ class UsersLib extends TikiLib {
 	}
 
 	// if we aren't using LDAP this will be quick
-	if (!$auth_pear || ($auth_pear && $user == "admin" && $skip_admin)) {
+	if ((!$auth_pear && !$auth_pam) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)
 		return $this->update_lastlogin($user);
@@ -258,6 +263,58 @@ class UsersLib extends TikiLib {
 	    // this could be for future uses
 	    else
 		return false;
+	}
+	// next see if we need to check PAM
+	elseif ($auth_pam) {
+		$result = $this->validate_user_pam($user, $pass);
+		switch ($result) {
+		case USER_VALID:
+			$userPAM = true;
+
+			break;
+		case PASSWORD_INCORRECT:
+			$userPAM = false;
+
+			break;
+		}
+
+    	// start off easy
+	    // if the user verified in Tiki and PAM, log in
+	    if ($userPAM && $userTiki) {
+			return $this->update_lastlogin($user);
+	    }
+	    // if the user wasn't found in either system, just fail
+	    elseif (!$userTikiPresent && !$userPAM) {
+			return false;
+	    }
+	    // if the user was logged into PAM but not found in Tiki
+	    elseif ($userPAM && !$userTikiPresent) {
+			// see if we can create a new account
+			if ($pam_create_tiki) {
+			    // need to make this better! *********************************************************
+			    $result = $this->add_user($user, $pass, '');
+
+			    // if it worked ok, just log in
+			    if ($result == USER_VALID)
+					// before we log in, update the login counter
+					return $this->update_lastlogin($user);
+			    // if the server didn't work, do something!
+			    elseif ($result == SERVER_ERROR) {
+					// check the notification status for this type of error
+					return false;
+			    }
+			    // otherwise don't log in.
+			    else
+					return false;
+			}
+			// otherwise
+			else
+			    // just say no!
+			    return false;
+	    }
+	    // if the user was logged into PAM and found in Tiki (no password in Tiki user table necessary)
+	    elseif ($userPAM && $userTikiPresent)
+			return $this->update_lastlogin($user);
 	}
 
 	// next see if we need to check LDAP
@@ -346,6 +403,27 @@ class UsersLib extends TikiLib {
 	// we will never get here
 	return false;
     }
+
+  // validate the user through PAM
+    function validate_user_pam($user, $pass) {
+	global $tikilib;
+
+	// just make sure we're supposed to be here
+	if ($tikilib->get_preference("auth_method", "tiki") != "pam")
+	    return false;
+
+	// get all of the PAM options from the database
+	$pam_service = $tikilib->get_preference("pam_service", "tikiwiki");
+
+	if (pam_auth($user, $pass, &$error)) {
+		return USER_VALID;
+	} else {
+	// Uncomment the following to see errors on that
+	// error_log("TIKI ERROR PAM:  $error User: $user Pass: $pass");
+		return PASSWORD_INCORRECT;
+	}
+    }
+
 
     // validate the user in the PEAR::Auth system
     function validate_user_auth($user, $pass) {
@@ -562,7 +640,7 @@ class UsersLib extends TikiLib {
 
     function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
-	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+	// Return an array of users indicating name, email, last changed pages, versions, lastLogin
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 	    $mid = " where `login` like ?";
@@ -956,9 +1034,9 @@ function get_included_groups($group) {
 
     function change_permission_level($perm, $level) {
     global $cachelib;
-    
+
     $cachelib->invalidate("allperms");
-    
+
 	$query = "update `users_permissions` set `level` = ?
 		where `permName` = ?";
 	$this->query($query, array($level, $perm));
@@ -979,7 +1057,7 @@ function get_included_groups($group) {
 
     function remove_level_permissions($group, $level) {
     global $cachelib;
-    
+
     $cachelib->invalidate("allperms");
 
 	$query = "select `permName` from `users_permissions` where `level` = ?";
@@ -994,7 +1072,7 @@ function get_included_groups($group) {
 
     function create_dummy_level($level) {
     global $cachelib;
-    
+
     $cachelib->invalidate("allperms");
 
 	$query = "delete from `users_permissions` where `permName` = ?";
@@ -1167,7 +1245,7 @@ function get_included_groups($group) {
 
     function assign_permission_to_group($perm, $group) {
     global $cachelib;
-    
+
     $cachelib->invalidate("allperms");
 
 	$query = "delete from `users_grouppermissions` where `groupName` = ?
@@ -1203,7 +1281,7 @@ function get_included_groups($group) {
 	if ($user == 'admin')
 	    return true;
 
-	// Get user_groups ?  
+	// Get user_groups ?
 	$groups = $this->get_user_groups($user);
 
 	foreach ($groups as $group) {
@@ -1228,7 +1306,7 @@ function get_included_groups($group) {
 
     function remove_permission_from_group($perm, $group) {
     global $cachelib;
-    
+
     $cachelib->invalidate("allperms");
 
 	$query = "delete from `users_grouppermissions` where `permName` = ?
@@ -1248,7 +1326,7 @@ function get_included_groups($group) {
     }
 
     function assign_user_to_group($user, $group) {
-    
+
 	$userid = $this->get_user_id($user);
 
 	$query = "insert into `users_usergroups`(`userId`,`groupName`) values(?,?)";
@@ -1518,7 +1596,7 @@ function get_included_groups($group) {
     // damian aka damosoft
     function count_users($group) {
         static $rv = array();
-                                                                                                                                                                    
+
         if (!isset($rv[$group])) {
             if ($group == '') {
                 $query = "select count(login) from `users_users`";
@@ -1529,7 +1607,7 @@ function get_included_groups($group) {
             }
             $rv[$group] = $result;
         }
-                                                                                                                                                                    
+
         return $rv[$group];
     }
 
