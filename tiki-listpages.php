@@ -22,6 +22,28 @@ if($tiki_p_view != 'y') {
   die;  
 }
 
+/* mass-remove: 
+   the checkboxes are sent as the array $_REQUEST["checked[]"], values are the wiki-PageNames, 
+   e.g. $_REQUEST["checked"][3]="HomePage"
+   $_REQUEST["submit_mult"] holds the value of the "with selected do..."-option list
+   we look if any page's checkbox is on and if remove_pages is selected.
+   then we check permission to delete pages.
+   if so, we call histlib's method remove_all_versions for all the checked pages.
+*/
+if(isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
+  include_once("tiki-pagesetup.php");
+  // Now check permissions to remove the selected pages
+  if($tiki_p_remove != 'y') {
+    $smarty->assign('msg',tra("Permission denied you cannot remove pages"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+  // permissions ok: go!
+  include_once('lib/wiki/histlib.php');
+  foreach($_REQUEST["checked"] as $deletepage) {      	
+    $histlib->remove_all_versions($deletepage);
+  }
+}
 
 // This script can receive the thresold
 // for the information as the number of
