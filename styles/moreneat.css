@@ -1542,6 +1542,7 @@ div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }
 
 .highlight { background-color: #FFAAAA; color: #000000; }
+.pagetop_msg { background-color: #FFFFCC; color: #FF0066; font-weight: bold; }
 
 /*
  * Caption in tables.

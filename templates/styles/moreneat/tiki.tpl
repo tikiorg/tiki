@@ -70,7 +70,11 @@
       
       </td>
       {/if}
-      <td id="centercolumn"><div id="tiki-center">{include file=$mid}
+      <td id="centercolumn"><div id="tiki-center">
+	  {if $pagetop_msg ne ''}
+      <span class="pagetop_msg">{$pagetop_msg}</div>
+	  {/if}
+      {include file=$mid}
       </div>
       </td>
       {if $feature_right_column eq 'y'}
