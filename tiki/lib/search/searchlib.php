@@ -90,7 +90,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='blog' and
-                s.`page`=b.`blogId`";
+                s.`page`=b.`blogId` order by `hits`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -126,7 +126,7 @@ class SearchLib extends TikiLib {
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='blog_post' and
                 s.`page`=bp.`postId` and
-		bp.`blogId`=b.`blogId`";
+		bp.`blogId`=b.`blogId` order by `hits`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_blog_posts` bp where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -160,7 +160,7 @@ class SearchLib extends TikiLib {
 		`tiki_searchindex` s, `tiki_articles` a where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='article' and
-		s.`page`=a.`articleId`";
+		s.`page`=a.`articleId` order by `reads`";
 	    $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_articles` a where `searchword` in
 	     	(".implode(',',array_fill(0,count($words),'?')).") and
@@ -194,7 +194,7 @@ class SearchLib extends TikiLib {
 	        `tiki_searchindex` s, `tiki_pages` p  where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='wiki' and
-		s.`page`=p.`pageName`";
+		s.`page`=p.`pageName` order by `count`";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
 	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_pages` p where
@@ -233,7 +233,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='faq' and
-                s.`page`=f.`faqId`";
+                s.`page`=f.`faqId` order by `hits`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -269,7 +269,7 @@ class SearchLib extends TikiLib {
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='faq_question' and
                 s.`page`=f.`questionId` and
-		f.`faqId`=faq.`faqId`";
+		f.`faqId`=faq.`faqId` order by `hits`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f  where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -305,7 +305,7 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_forums` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='forum' and
-                s.`page`=f.`forumId`";
+                s.`page`=f.`forumId` order by `hits`";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $querycant="select count(*) from `tiki_searchindex` s, `tiki_forums` f where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
@@ -348,7 +348,7 @@ class SearchLib extends TikiLib {
 	  	(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='forumcomment' and
 		s.`page`=f.`threadId` and
-		fo.`forumId`=f.`object`";
+		fo.`forumId`=f.`object` order by `count`";
 	  $cant=$this->getOne($querycant,$words);
 	  $ret=array();
 	  while ($res = $result->fetchRow()) {
