@@ -1,7 +1,10 @@
+## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
+
 ### DIRECTORIES BEGIN
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory','directory','Can admin the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_validate_links','directory','Can validate submited links');
@@ -14,6 +17,7 @@ create table tiki_directory_categories(
   name varchar(240),
   description text,
   childrenType char(1),
+  sites integer(10),
   viewableChildren integer(4),
   allowSites char(1),
   showCount char(1),

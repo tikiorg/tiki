@@ -9,6 +9,8 @@ if($feature_directory != 'y') {
   die;  
 }
 
+
+
 // If no parent category then the parent category is 0
 if(!isset($_REQUEST["parent"])) $_REQUEST["parent"]=0;
 $smarty->assign('parent',$_REQUEST["parent"]);

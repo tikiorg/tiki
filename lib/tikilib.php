@@ -5544,7 +5544,7 @@ class TikiLib {
       $res = $r1[1];
       $links = array_unique($res);
     }
-    print_r($links);
+    
     return $links;
   }
 
