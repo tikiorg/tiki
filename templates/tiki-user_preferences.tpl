@@ -1,14 +1,6 @@
 <a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a><br/><br/>
-[<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
-{if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
-|<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
-{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-|<a href="messu-mailbox.php" class="link">{tr}Messages{/tr} ({$unread})</a>
-{/if}
-{if $feature_tasks eq 'y'}
-|<a href="tiki-user_tasks.php" class="link">{tr}Tasks{/tr}</a>
-{/if}
-{if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
+{include file=tiki-mytiki_bar.tpl}
+<br/><br/>
 <table width="100%">
 <tr>
   <!--The line below was <td valign="top" width="50%"> for no real reason-->
@@ -48,7 +40,7 @@
         </select></td></tr>
   {/if}      
   <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
-  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
+  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
@@ -210,61 +202,24 @@
 
 <br/>
 
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Pages{/tr}</div>
-  <div class="cbox-data">
-  <table width="100%">
-  {section name=ix loop=$user_pages}
-  <tr><td>
-  <a class="link" title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
-  </td><td align="right">
-  (<a class="link" href="tiki-editpage.php?page={$user_pages[ix].pageName}">{tr}edit{/tr}</a>)
-  </td></tr>
-  {/section}
-  </table>
-  </div>
-  </div>
-<br/>  
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Blogs{/tr}</div>
-  <table width="100%">
-  {section name=ix loop=$user_blogs}
-  <tr><td>
-  <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
-  </td><td align="right">
-  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
-  </td></tr>
-  {/section}
-  </table>
-  </div>
-<br/>
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Galleries{/tr}</div>
-  <div class="cbox-data">
-  <table width="100%">
-  {section name=ix loop=$user_galleries}
-  <tr><td>
-  <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
-  </td><td align="right">
-  <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">({tr}edit{/tr})</a>
-  </td></tr>
-  {/section}
-  </table>
-  </div>
-  </div>
-<br/>
-  <div class="cbox">
-  <div class="cbox-title">{tr}Assigned items{/tr}</div>
-  <div class="cbox-data">
-  <table width="100%">
-  {section name=ix loop=$user_items}
-  <tr><td>
-  <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
-  </td><td align="right">
-  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
-  </td>
-  </tr>
-  {/section}
-  </table>
-  </div>
-  </div>
+    <div class="cbox">
+      <div class="cbox-title">{tr}My Tiki{/tr}</div>
+      <div class="cbox-data">
+        <div class="simplebox">
+        <form action="tiki-user_preferences.php" method="post">
+<table class="normal">
+<tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My blogs{/tr}</td><td class="form"><input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My galleries{/tr}</td><td class="form"><input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My messages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_msgs" {if $mytiki_msgs eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My tasks{/tr}</td><td class="form"><input type="checkbox" name="mytiki_tasks" {if $mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}My items{/tr}</td><td class="form"><input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
+<tr>
+  <td class="form">&nbsp;</td>
+  <td class="form"><input type="submit" name="mytikiprefs" value="set" /></td>
+</tr>
+</table>
+</form>
+      </div>
+    </div>
+ </div>

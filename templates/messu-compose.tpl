@@ -1,4 +1,5 @@
 <a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a><br/><br/>
+{include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br/><br/>
 {if $sent}

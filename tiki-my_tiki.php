@@ -1,6 +1,8 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/messu/messulib.php');
+include_once('lib/tasks/tasklib.php');
 
 // User preferences screen
 
@@ -113,48 +115,6 @@ if(isset($_REQUEST['messprefs'])) {
   
 }
 
-if(isset($_REQUEST['mytikiprefs'])) {
-  if(isset($_REQUEST['mytiki_pages'])&&$_REQUEST['mytiki_pages']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_pages','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_pages','n');
-  }
-  if(isset($_REQUEST['mytiki_blogs'])&&$_REQUEST['mytiki_blogs']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_blogs','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_blogs','n');
-  }
-  if(isset($_REQUEST['mytiki_gals'])&&$_REQUEST['mytiki_gals']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_gals','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_gals','n');
-  }
-  if(isset($_REQUEST['mytiki_msgs'])&&$_REQUEST['mytiki_msgs']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_msgs','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_msgs','n');
-  }
-  if(isset($_REQUEST['mytiki_tasks'])&&$_REQUEST['mytiki_tasks']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_tasks','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_tasks','n');
-  }
-  if(isset($_REQUEST['mytiki_items'])&&$_REQUEST['mytiki_items']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_items','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_items','n');
-  }
-}
-
-$smarty->assign('mytiki_pages',$tikilib->get_user_preference($userwatch,'mytiki_pages'),'y');
-$smarty->assign('mytiki_blogs',$tikilib->get_user_preference($userwatch,'mytiki_blogs'),'y');
-$smarty->assign('mytiki_gals',$tikilib->get_user_preference($userwatch,'mytiki_gals'),'y');
-$smarty->assign('mytiki_items',$tikilib->get_user_preference($userwatch,'mytiki_items'),'y');
-$smarty->assign('mytiki_msgs',$tikilib->get_user_preference($userwatch,'mytiki_msgs'),'y');
-$smarty->assign('mytiki_tasks',$tikilib->get_user_preference($userwatch,'mytiki_tasks'),'y');
-
-
-
 if(isset($_REQUEST['tasksprefs'])) {
   $tikilib->set_user_preference($userwatch,'tasks_maxRecords',$_REQUEST['tasks_maxRecords']);
   if(isset($_REQUEST['tasks_useDates'])&&$_REQUEST['tasks_useDates']=='on') {
@@ -242,6 +202,21 @@ $smarty->assign_by_ref('homePage',$homePage);
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar',$avatar);
 
+//Get messages
+$msgs = $messulib->list_user_messages($user,0,-1,'date_desc','','isRead','n');
+$smarty->assign('msgs',$msgs['data']);
+
+//Get tasks
+if(isset($_SESSION['thedate'])) {
+  $pdate = $_SESSION['thedate'];
+} else {
+  $pdate = date("U");
+}
+$tasks_useDates = $tikilib->get_user_preference($user,'tasks_useDates');
+$tasks = $tasklib->list_tasks($user,0,-1,'priority_desc','',$tasks_useDates,$pdate);
+$smarty->assign('tasks',$tasks['data']);
+
+
 $user_information = $tikilib->get_user_preference($userwatch,'user_information','public');
 $smarty->assign('user_information',$user_information);
 
@@ -256,7 +231,15 @@ $server_time = new Date();
 $display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone', $server_time->tz->getID());
 $smarty->assign_by_ref('display_timezone',$display_timezone);
 
-$smarty->assign('mid','tiki-user_preferences.tpl');
+$smarty->assign('mytiki_pages',$tikilib->get_user_preference($user,'mytiki_pages'),'y');
+$smarty->assign('mytiki_blogs',$tikilib->get_user_preference($user,'mytiki_blogs'),'y');
+$smarty->assign('mytiki_gals',$tikilib->get_user_preference($user,'mytiki_gals'),'y');
+$smarty->assign('mytiki_items',$tikilib->get_user_preference($user,'mytiki_items'),'y');
+$smarty->assign('mytiki_msgs',$tikilib->get_user_preference($user,'mytiki_msgs'),'y');
+$smarty->assign('mytiki_tasks',$tikilib->get_user_preference($user,'mytiki_tasks'),'y');
+
+
+$smarty->assign('mid','tiki-my_tiki.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

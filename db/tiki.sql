@@ -557,7 +557,7 @@ CREATE TABLE tiki_files (
 # the semaphore IS NOT enforced, just a signal
 drop table if exists tiki_semaphores;
 create table tiki_semaphores (
-  semName varchar(30) not null,
+  semName varchar(250) not null,
   timestamp integer(14),
   primary key(semName)
 );

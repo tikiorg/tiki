@@ -74,6 +74,11 @@ $smarty->assign_by_ref('assignables',$assignables);
 $smarty->assign_by_ref('modules',$modules);
 //print_r($modules);
 
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
+
 
 $smarty->assign('mid','tiki-user_assigned_modules.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
