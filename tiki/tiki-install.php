@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.8 2003-08-03 10:15:51 sylvieg Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.9 2003-08-04 00:29:46 redflo Exp $
 
 session_start();
 // Define and load Smarty components
@@ -21,8 +21,9 @@ function process_sql_file($file) {
       $commands[] = $command;
       $result = $dbTiki->query($command);
       if(DB::isError($result)) {
-      	trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$command."<br/>",E_USER_WARNING);
-      	die;
+      	trigger_error("DB error:  ".$result->getMessage()." in query:<br/>".$command."<br/>",E_USER_WARNING);
+	// Do not die at the moment. Wen need some better error checking here
+      	//die;
       }
       $command = '';
     }
@@ -110,6 +111,21 @@ $smarty->load_filter('output','trimwhitespace');
 $smarty->assign('style','default.css');
 $smarty->assign('mid','tiki-install.tpl');
 
+// Avalible DB Servers
+
+$dbservers=array("Mysql 3.X" => "mysql3",
+            "Mysql 4.X" => "mysql4",
+	    "PostgeSQL 7.2 or higher" => "pgsql72",
+	    "Oracle 8i" => "oci8",
+	    "Oracle 9i" => "oci9");
+
+$dbtodsn=array("mysql3" => "mysql",
+          "mysql4" => "mysql",
+	  "pgsql72" => "pgsql",
+	  "oci8" => "oci8",
+	  "oci9" => "oci8");
+
+$smarty->assign_by_ref('dbservers',$dbservers);
 		$errors = '';
 
 		$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
@@ -278,7 +294,7 @@ if(!file_exists('db/local.php')) {
 } else {
   // include the file to get the variables
   include('db/local.php');
-  $dsn = "mysql://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
+  $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
   $dbTiki = DB::connect($dsn);
   if (DB::isError($dbTiki)) {        
     $dbcon = false;
@@ -292,7 +308,19 @@ if(!file_exists('db/local.php')) {
 // database.
 if(!$dbcon && isset($_REQUEST['dbinfo'])) {
   $filetowrite='<'.'?'.'php'."\n";
-  $filetowrite.='$host_tiki="'.$_REQUEST['host'].'";'."\n";
+  $filetowrite.='$db_tiki="'.$dbtodsn[$_REQUEST['db']].'";'."\n";
+  $filetowrite.='$dbversion_tiki="'.$_REQUEST['db'].'";'."\n";
+  switch ($_REQUEST["connmethod"]) {
+  case "hostname":
+    $filetowrite.='$host_tiki="'.$_REQUEST['host'].'";'."\n";
+    break;
+  case "tcp":
+    $filetowrite.='$host_tiki="tcp('.$_REQUEST['tcphost'].')";'."\n";
+    break;
+  case "socket":
+    $filetowrite.='$host_tiki="unix('.$_REQUEST['socket'].')";'."\n";
+    break;
+  }
   $filetowrite.='$user_tiki="'.$_REQUEST['user'].'";'."\n";
   $filetowrite.='$pass_tiki="'.$_REQUEST['pass'].'";'."\n";
   $filetowrite.='$dbs_tiki="'.$_REQUEST['name'].'";'."\n";
@@ -301,7 +329,7 @@ if(!$dbcon && isset($_REQUEST['dbinfo'])) {
   fwrite($fw,$filetowrite);
   fclose($fw);
   include('db/local.php');
-  $dsn = "mysql://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
+  $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
   $dbTiki = DB::connect($dsn);
   if (DB::isError($dbTiki)) {        
     $dbcon = false;
@@ -359,7 +387,7 @@ if($noadmin) {
 $files=Array();
 $h = opendir('db/');
 while($file = readdir($h)) {
-  if(strstr($file,'to')) {
+  if(strstr($file,'to') && strstr($file,$dbversion_tiki)) {
     $files[]=$file;
   }
 }
@@ -431,7 +459,7 @@ $smarty->assign('logged',$logged);
 if(isset($_SESSION['install-logged']) && $_SESSION['install-logged']=='y') {
 	$smarty->assign('logged','y');
 	if(isset($_REQUEST['scratch'])) {
-	  process_sql_file('tiki.sql');
+	  process_sql_file('tiki-'.$dbversion_tiki.'.sql');
 	  $smarty->assign('dbdone','y');
 	}
 	if(isset($_REQUEST['update'])) {

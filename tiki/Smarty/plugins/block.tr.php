@@ -28,7 +28,7 @@ function smarty_block_tr($params, $content, &$smarty)
     $query="select tran from tiki_language where source='".addslashes($content)."' and lang='".$language."'";
     $result=$tikilib->db->query($query);
     $res=$result->fetchRow(DB_FETCHMODE_ASSOC);
-    if(DB::isError($result)) { echo $content ; return; }
+    if(!$res) { echo $content ; return; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
