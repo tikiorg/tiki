@@ -28,8 +28,8 @@
 		  <input type="hidden" name="miny" value="{$miny}">
 		  <input type="hidden" name="maxx" value="{$maxx}">
 		  <input type="hidden" name="maxy" value="{$maxy}">
-		  <a href="/tiki/tiki-view_faq.php?faqId=1"><small>{tr}Help{/tr}</small></a>&nbsp
-		  <a href="/tiki/tiki-index.php?page=MapServer"><small>{tr}Comments{/tr}</small></a>
+		  <a href="/tiki/tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp
+		  <a href="/tiki/tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a>
 		</td></tr>
 		</table>
 		</td>
@@ -71,7 +71,7 @@
 		  </td><td>
 		  {if $layer_download[j] eq "T"}
 		  <small>
-		  <a href="tiki-map_download.php?layer={$my_layers[j]->connection}">D</a>
+		  <a href="tiki-map_download.php?mapfile={$mapfile}&layer={$my_layers[j]->name}">D</a>
 		  </small>
 		  {/if}
 		  </td></tr>
