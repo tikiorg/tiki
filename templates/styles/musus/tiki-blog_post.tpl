@@ -8,9 +8,7 @@
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
 {/if}
-{if $blogId > 0 }
-<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>
-{/if}
+{if $blogId > 0 }<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>{/if}
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 <br /><br />
 <div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
@@ -20,7 +18,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 <input type="hidden" name="postId" value="{$postId|escape}" />
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
-<table class="normal">
+<table>
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">
 {section name=ix loop=$blogs}
@@ -30,22 +28,22 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 </td></tr>
 {assign var=area_name value="blogedit"}
 {if $feature_smileys eq 'y'}
-<tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
+<tr class="editblogform"><td>{tr}Smileys{/tr}</td><td>
    {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
 {/if}
-<tr><td class="editblogform">{tr}Quicklinks{/tr}</td><td class="editblogform">
-{assign var=area_name value="blogedit"}
-{include file=tiki-edit_help_tool.tpl}
+<tr class="editblogform"><td>{tr}Quicklinks{/tr}</td><td>
+{assign var="area_name" value="blogedit"}
+{include file="tiki-edit_help_tool.tpl"}
 </td></tr>
 {if $blog_data.use_title eq 'y'}
-<tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
+<tr class="editblogform"><td>{tr}Title{/tr}</td><td>
 <input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
-<tr><td class="editblogform">{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}</td><td class="editblogform">
+<tr class="editblogform"><td>{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}</td><td>
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
-<textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
+<textarea id="blogedit" class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 {if $wysiwyg eq 'y'}
@@ -55,7 +53,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 	<style type="text/css">
 		@import url(lib/htmlarea/htmlarea.css);
 	</style>
-	<script defer='defer'>(new HTMLArea(document.forms['blogpost']['data'])).generate();</script>
+	<script defer="defer">(new HTMLArea(document.forms['blogpost']['data'])).generate();</script>
 {/if}
 </td></tr>
 {if $postId > 0}
