@@ -425,7 +425,7 @@ Version 1.4 -Mira-
   notified when specific events occur, for example when a user registers or 
   when a submission is received
 * [NEW] New theme jalist inspired in www.jalist.com
-* [NEW] ShoutBox, a graffiti wall where users can send messages, a module to 
+* [NEW] Shoutbox, a graffiti wall where users can send messages, a module to 
   display the last "n" messages and to add new messages is included. This is 
   nice :-)
 * [NEW] Templates for mail notifications, all the Tiki mails that can be sent 

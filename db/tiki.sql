@@ -1095,7 +1095,7 @@ create table tiki_group_inclusion(
 );
 ###
 
-### ShoutBox ####
+### Shoutbox ####
 insert into users_permissions(permName,type,permDesc) values('tiki_p_view_shoutbox','shoutbox','Can view shoutbox');
 insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_shoutbox','shoutbox','Can admin shoutbox (Edit/remove msgs)');
 insert into users_permissions(permName,type,permDesc) values('tiki_p_post_shoutbox','shoutbox','Can pot messages in shoutbox');
@@ -1110,7 +1110,7 @@ create table tiki_shoutbox(
  primary key(msgId)
 );
 
-### ShoutBox ###
+### Shoutbox ###
 
 
 update tiki_featured_links set type='f';

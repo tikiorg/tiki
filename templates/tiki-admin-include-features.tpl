@@ -39,7 +39,7 @@
 <tr><td class="form">{tr}Games{/tr}:</td><td><input type="checkbox" name="feature_games" {if $feature_games eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Quizzes{/tr}:</td><td><input type="checkbox" name="feature_quizzes" {if $feature_quizzes eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Allow smileys{/tr}:</td><td><input type="checkbox" name="feature_smileys" {if $feature_smileys eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}ShoutBox{/tr}:</td><td><input type="checkbox" name="feature_shoutbox" {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Shoutbox{/tr}:</td><td><input type="checkbox" name="feature_shoutbox" {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}HTML pages{/tr}:</td><td><input type="checkbox" name="feature_html_pages" {if $feature_html_pages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Drawings{/tr}:</td><td><input type="checkbox" name="feature_drawings" {if $feature_drawings eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Referer stats{/tr}:</td><td><input type="checkbox" name="feature_referer_stats" {if $feature_referer_stats eq 'y'}checked="checked"{/if}/></td></tr>

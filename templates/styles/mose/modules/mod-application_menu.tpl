@@ -495,7 +495,7 @@
       &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML pages{/tr}</a><br/>
     {/if}
     {if $tiki_p_admin_shoutbox eq 'y'}
-      &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}ShoutBox{/tr}</a><br/>
+      &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br/>
     {/if}
     {if $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br/>
