@@ -4237,52 +4237,6 @@ class TikiLib extends TikiDB {
 	$divdepth = array();
 	$inTable = 0;
 
-	// loop: process all lines
-	$in_paragraph = 0;
-	foreach ($lines as $line) {
-	    $line = rtrim($line); // Trim off trailing white space
-	    // Check for titlebars...
-	    // NOTE: that title bar should start at the beginning of the line and
-	    //	   be alone on that line to be autoaligned... otherwise, it is an old 
-	    //	   styled title bar...
-	    if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
-		// Close open paragraph and lists, but not div's
-		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-		//
-		$align_len = strlen($line) - strlen(ltrim($line));
-
-		// My textarea size is about 120 space chars.
-		//define('TEXTAREA_SZ', 120);
-
-		// NOTE: That strict math formula (split into 3 areas) gives
-		//	   bad visual effects...
-		// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
-		//		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
-		//
-		// Going to introduce some heuristic here :)
-		// Visualy (remember that space char is thin) center starts at 25 pos
-		// and 'right' from 60 (HALF of full width!) -- thats all :)
-		//
-		// NOTE: Guess align only if more than 10 spaces before -=title=-
-		if ($align_len > 10) {
-		    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
-
-		    $align = ' style="text-align: ' . $align . ';"';
-		} else
-		    $align = '';
-
-		//
-		$line = trim($line);
-		$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-		$data .= $line . "\n";
-		// TODO: Case is handled ...  no need to check other conditions
-		//	   (it is apriori known that they are all false, moreover sometimes
-		//	   check procedure need > O(0) of compexity)
-		//	   -- continue to next line...
-		//	   MUST replace all remaining parse blocks to the same logic...
-		continue;
-	    }
-
 	    // loop: process all lines
 	    $in_paragraph = 0;
 	    foreach ($lines as $line) {
@@ -4702,7 +4656,7 @@ class TikiLib extends TikiDB {
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
 	     global $histlib; include_once ("lib/wiki/histlib.php");
-	    $old_version = $histlib->get_page_latest_version($pageName, &$old_data);
+	    $old_version = $histlib->get_page_latest_version($pageName, $old_data);
 	   
 	    if (!$minor && $pageName != 'SandBox') {
 		// Archive current version
