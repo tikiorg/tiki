@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.8 2003-11-10 02:26:53 zaufi Exp $ *}
+
 <div align="center">
    <form action="tiki-map.phtml" method="GET">
    <input type="hidden" name="mapfile" value="{$mapfile}">
@@ -21,7 +23,7 @@
 		  <select name="size" size="1">
 		  {html_options values=$possiblesizes selected=$size output=$displaysizes}
 		  </select>
-		  <br>
+		  <br/>
 		  <small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
 		<tr><td align="center">
@@ -32,7 +34,7 @@
      <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
      </a>
      {/if}
-     <br>
+     <br/>
 		  <small>{tr}Click on the map or click redraw{/tr}</small>
 		  <input type="hidden" name="minx" value="{$minx}">
 		  <input type="hidden" name="miny" value="{$miny}">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.24 2003-10-13 21:29:02 awcolley Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.25 2003-11-10 02:26:52 zaufi Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 <!-- the help link info --->
@@ -34,7 +34,7 @@
 <tr><td class="formcolor">{tr}Pass{/tr}:</td><td class="formcolor"><input type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Again{/tr}:</td><td class="formcolor"><input type="password" name="pass2" /></td></tr>
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" size="30" /></td></tr>
-<tr><td class="formcolor">{tr}Batch upload (CSV file){/tr}:</td><td class="formcolor"><input type="file" name="csvlist" /><br>{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked></td></tr>
+<tr><td class="formcolor">{tr}Batch upload (CSV file){/tr}:</td><td class="formcolor"><input type="file" name="csvlist" /><br/>{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
@@ -48,7 +48,7 @@
 	<h3>{tr}Batch Upload Results{/tr}</h3>
 	{tr}Added users{/tr}: {$added}
 	{if ($discarded != "") }
-		 - {tr}Rejected users{/tr}: {$discarded}<br><br>
+		 - {tr}Rejected users{/tr}: {$discarded}<br/><br/>
 		<table class="normal">
 			<tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
 			{section name=reject loop=$discardlist}

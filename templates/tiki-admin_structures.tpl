@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.13 2003-11-10 02:26:52 zaufi Exp $ *}
+
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info --->
   
@@ -14,15 +16,6 @@
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 <!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
 
 <br/><br/>
 <h2>{tr}Create new structure{/tr}</h2>
@@ -51,7 +44,7 @@
 {if $askremove eq 'y'}
 <a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>
 <a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
-<br/><br>
+<br/><br/>
 {/if}
 <table class="normal">
 <tr>

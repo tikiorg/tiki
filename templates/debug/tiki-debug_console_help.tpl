@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_help.tpl,v 1.1 2003-07-13 00:11:00 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_help.tpl,v 1.2 2003-11-10 02:26:53 zaufi Exp $ *}
 {* Show help for debugger commands *}
 
 {if $command_result.action eq 'one'}
@@ -9,12 +9,12 @@
     <td width=15%><code>{$command_result.name}</code></td>
     <td>{$command_result.description} </td>
    </tr>
-   <tr><td><br></td></tr>
+   <tr><td><br /></td></tr>
    <tr>
     <td></td>
     <td> {tr}Syntax{/tr}: <pre>{$command_result.syntax}</pre> </td>
    </tr>
-   <tr><td><br></td></tr>
+   <tr><td><br /></td></tr>
    <tr>
     <td></td>
     <td> {tr}Example{/tr}: <pre>{$command_result.example}</pre>  </td>

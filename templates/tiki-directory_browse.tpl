@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.9 2003-11-10 02:26:52 zaufi Exp $ *}
+
 <a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br/><br/>
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
@@ -23,7 +25,7 @@
 </div>
 
 {if count($categs)}
-<br/><br>
+<br/><br/>
 <b>{tr}Subcategories{/tr}</b><br/>
 {* The table with the subcategories *}
 <div class="dircategs">

@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.6 2003-11-10 02:26:53 zaufi Exp $ *}
+
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br/><br/>
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
@@ -72,7 +74,7 @@
 &nbsp&nbsp&nbsp
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 {/if}
-  <br>
+  <br/>
   <table class="normal">
   <tr>
   	<td class="even">
