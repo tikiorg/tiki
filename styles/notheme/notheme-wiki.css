@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.8 2003-11-15 06:42:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.9 2003-12-08 01:36:20 mose Exp $
  *
  */
 
@@ -61,7 +61,7 @@ div#page-bar {
  * Wiki action buttons (the buttons displayed at the end of
  * each page to edit/print/remove/etc a page
  */
-div.button2 {
+.button2 {
     font-family: serif;
     font-size: small;
     text-align: center;
@@ -76,7 +76,7 @@ div.button2 {
     border-right: 1px solid ThreeDShadow;
 }
 
-div.button2:hover {
+.button2:hover {
     /*
       border: 1px inset ThreeDLightShadow;
     */

@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.15 2003-12-07 15:48:44 mose Exp $
+$Id: trollparty.css,v 1.16 2003-12-08 01:36:18 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -1007,7 +1007,7 @@ margin-left: 0px;
 Wiki action buttons (the buttons displayed at the 
 end of each page to edit/print/remove/etc a page 
 */
-div.button2
+.button2
 {
 border-top: 1px solid #2255aa;
 font-size: 90%;
@@ -1035,7 +1035,7 @@ border-top: 1px solid #ffffff;
 color: white;
 }
 
-div.button2top
+.button2top
 {
 border-bottom: 1px solid #2255aa;
 display: inline;

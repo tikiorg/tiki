@@ -460,7 +460,7 @@ div.titlebar {
 DIV#page-bar {	backgroud-color: white; margin-left: 5px;}
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-div.button2 {
+.button2 {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-image: url(akwa/aqua-tab.png);
   font-size: 10px;

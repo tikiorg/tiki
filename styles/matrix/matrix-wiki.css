@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.10 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.11 2003-12-08 01:36:20 mose Exp $
  *
  */
 
@@ -52,7 +52,7 @@ div#page-bar {
  * Wiki action buttons (the buttons displayed at the end of
  * each page to edit/print/remove/etc a page
  */
-div.button2 {
+.button2 {
     color: green;
     background: transparent;
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -62,7 +62,7 @@ div.button2 {
     margin: 0px;
 }
 
-div.button2:hover {
+.button2:hover {
     color: #001000;
     background: lightgreen;
 }
