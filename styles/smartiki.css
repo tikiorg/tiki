@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.3 2004-02-03 02:00:06 musus Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.4 2004-02-08 05:01:25 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -46,13 +46,11 @@ a:hover {
 	color: #000000;
 }
 a.menuWhite {
-	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 80%;
 	color: #ffffff;
 }
 
 a.menuBlack {
-	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 80%;
 	color: #000000;
 }
@@ -154,8 +152,9 @@ textarea.small {
 #tiki-bottom {
 	background-color: #f0c040;
 	width: 100%;
-	padding: 2px 10px 2px 10px;
+	padding: 2px 0px 2px 0px;
 	border-top: 1px solid #9b410e;
+	border-bottom: 1px solid #9b410e;
 }
 #tiki-top {
 	background-color: #f0c040;
@@ -347,7 +346,6 @@ TABLE.normalnoborder {
 /* Table headings */
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, 
 td.listfilesheading, td.listartheading, td.forumheading, td.thead {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black; font-size: 10px;
   background-color: #f0ead8; 
   border: 1px solid #676767;
@@ -367,7 +365,6 @@ th.listfilesheading, th.listartheading, th.forumheading, th.thead {
 
 TD.button
 {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black; font-size: 10px;
   background-color: #f0ead8; 
   border: 1px solid #676767;
@@ -393,14 +390,14 @@ a.forumnameread:hover
 /* Links in table headings */
 .tableheading,.gallistheading, .listgalheading, .bloglistheading, .llisfgalheading,
 .llistfileslink,.llistart,.lforumheading
-{ font-family: Verdana, Arial, Helvetica, sans-serif;  color: black;   font-size: 10px;  text-decoration: none;}
+{   color: black;   font-size: 10px;  text-decoration: none;}
 .tableheading:hover,gallistheading:hover,.listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover,
 .llistfileslink:hover, .llistart:hover,.lforumheading:hover
-{  font-family: Verdana, Arial, Helvetica, sans-serif;  color: black;   font-size: 10px; text-decoration: none;}
+{    color: black;   font-size: 10px; text-decoration: none;}
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
 table.findtable { width: 100%; margin-bottom: 1px; padding-bottom: 10px;}
-td.findtable { font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 11px;}
+td.findtable {   font-size: 11px;}
 TD.form {
 	color: black;
 	text-align: left;
@@ -558,14 +555,14 @@ div.titlebar {
 DIV#page-bar {	margin-left: 5px;}
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-div.button2 {
+.button2 {
   background-color: #f0c040;
   border: 1px solid #676767;
 	padding-left: 4px;
 	padding-right: 4px;
   margin: 0.0ex 0px;
 }
-div.button2:hover {
+.button2:hover {
 	cursor: pointer;
 	background-color: #f0ead8;
 }
@@ -694,7 +691,6 @@ div.postbody {
 
 /* The weblog title */
 div.blogtitle {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black; font-size: 11px; font-weight : bold;
   font-size: 18px;
   background-color: #C7D0D9; 
@@ -752,7 +748,6 @@ div.blogtools {
 
 /* The article title bar */
 div.articletitle {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: #424242; font-size: 11px; 
   background: white;
   border-bottom: 0px;
@@ -875,14 +870,14 @@ div.forumspagetitle {  margin-top: 10px;  margin-bottom: 40px;}
 
 table.threads { width: 97%;}
 
-td.viewthreadl { border: 1px solid #8CACBB; border-collapse:collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 10px; vertical-align: top;}
-td.viewthreadr { border: 1px solid #8CACBB; border-collapse:collapse; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 10px; vertical-align: top;}
+td.viewthreadl { border: 1px solid #8CACBB; border-collapse:collapse;  font-size: 11px; background-color: #EFEFEF; height: 10px; vertical-align: top;}
+td.viewthreadr { border: 1px solid #8CACBB; border-collapse:collapse;  font-size: 11px; background-color: #EFEFEF; height: 10px; vertical-align: top;}
 
 /* Cells for the threads table */
-td.threadsevenl { border: 1px solid #8CACBB; border-collapse:collapse;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #EFEFEF; vertical-align: top;}
-td.threadsevenr { border: 1px solid #8CACBB; border-collapse:collapse;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; background-color: #EFEFEF; vertical-align: top;}
-td.threadsoddl { border: 1px solid #8CACBB; border-collapse:collapse;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #DDDDDD; vertical-align: top;}
-td.threadsoddr { border: 1px solid #8CACBB; border-collapse:collapse;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; background-color: #DDDDDD; vertical-align: top;}
+td.threadsevenl { border: 1px solid #8CACBB; border-collapse:collapse; font-size: 12px; background-color: #EFEFEF; vertical-align: top;}
+td.threadsevenr { border: 1px solid #8CACBB; border-collapse:collapse; font-size: 13px; background-color: #EFEFEF; vertical-align: top;}
+td.threadsoddl { border: 1px solid #8CACBB; border-collapse:collapse; font-size: 12px; background-color: #DDDDDD; vertical-align: top;}
+td.threadsoddr { border: 1px solid #8CACBB; border-collapse:collapse; font-size: 13px; background-color: #DDDDDD; vertical-align: top;}
 td.threadseparator { border: 1px solid #8CACBB; border-collapse:collapse;background-color: #EEEEEE; height: 5px;}
 
 #forumpost { display: none;}   
@@ -891,11 +886,11 @@ td.threadseparator { border: 1px solid #8CACBB; border-collapse:collapse;backgro
 
 div.forumtoolbar {  background: #395AAD;     margin-bottom: 20px;  border: 0px;}
 
-td.forumtoolbar { font-family: Verdana, Arial, Helvetica, sans-serif; color: white;  font-size: 11px;  font-weight : bold; text-decoration: none; vertical-align: bottom;}
+td.forumtoolbar {  color: white;  font-size: 11px;  font-weight : bold; text-decoration: none; vertical-align: bottom;}
 
-.toolbarlink {font-family: Verdana, Arial, Helvetica, sans-serif; color: white;  font-size: 11px;  font-weight : bold; text-decoration: none;}
-.toolbarlink:active {font-family: Verdana, Arial, Helvetica, sans-serif; color: white;  font-size: 11px;  font-weight : bold; text-decoration: none;}
-.toolbarlink:hover {font-family: Verdana, Arial, Helvetica, sans-serif; color: #00FFFF;  font-size: 11px;  font-weight : bold; text-decoration: none;}
+.toolbarlink { color: white;  font-size: 11px;  font-weight : bold; text-decoration: none;}
+.toolbarlink:active { color: white;  font-size: 11px;  font-weight : bold; text-decoration: none;}
+.toolbarlink:hover { color: #00FFFF;  font-size: 11px;  font-weight : bold; text-decoration: none;}
 
 /* Links to vote */
 .forumvotelink {font-size: 12px; color : black;}
@@ -908,7 +903,6 @@ table.tcategpath { margin-bottom: 40px; border-color: #99bec6;  border-style: so
 
 /* Table containing the category path */
 td.tdcategpath { 
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   color: #225566; font-size: 12px; font-weight : bold;
   background-color: #C7D0D9;
   padding-left: 2px;
@@ -1072,7 +1066,7 @@ textarea.tshoutbox{
         border-width: 1px;
         border-color: #CCCCCC;
         background-color: #F4F4F4;
-        font-family: courier;
+        font-family: 'fixed', courier, monoospace;
  }
 
 
@@ -1700,7 +1694,7 @@ div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }
 
-.highlight { background-color: #FFAAAA; color: #000000; }
+.highlight { background-color: #FFBB99 !important; color: #000000 !important; }
 .pagetop_msg { background-color: #FFFFCC; color: #FF0066; font-weight: bold; }
 
 /*
@@ -1709,7 +1703,6 @@ div#attzoneopen      { display: block; margin-top: 10px; }
  */
 caption
 {
-  font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-weight : bold;
   text-align: right;
@@ -1791,7 +1784,7 @@ div#loadstats {
 	position: absolute;
 	left: 0;
 	top: 0;
-	background-color: #cccccc;
+	background-color: #f0ead8;
 	visibility: hidden;
 }
 .mdksubmenu table {
@@ -1813,19 +1806,16 @@ div#loadstats {
 }
 
 .mdkitem a	{
-	padding: 2px 5px 2px 5px;
-	color: #1c60a8;
+	padding: 1px 15px 1px 5px;
 	position: relative;
 	display: block;
 	text-decoration: none;
 }
 
 .mdkitem a:link	{
-	color: #1c60a8;
 }
 
 .mdkitem a:visited	{
-	color: #1c60a8;
 }
 
 .mdkitem a:hover	{
@@ -1953,7 +1943,6 @@ a.removeTab{
 .treemenudiv	{
 	display: block;
 	white-space: nowrap;
-	font-size: 14px;
 }
 a.phplm	{
 	color: #000000;
