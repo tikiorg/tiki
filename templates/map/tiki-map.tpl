@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.10 2003-11-19 00:35:58 gongo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.11 2003-11-20 06:26:41 franck Exp $ *}
 
 <div align="center">
    <form action="tiki-map.phtml" method="get">
@@ -65,8 +65,9 @@
 		  <table class="normal">
 		  <tr><td class="heading">
 		  <b>Layer</b></td><td class="heading"><b>{tr}On{/tr}</b></td>
-		  <td class="heading"><img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></td>
-		  <td class="heading"><img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></td></tr>
+		  <td class="heading"><img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}"></td>
+		  <td class="heading"><img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}"></td>
+		  <td class="heading"><img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}"></td></tr>
 		  {section name=j loop=$my_layers}
 		  <tr>
 		  {if $smarty.section.j.index % 2}
@@ -92,6 +93,17 @@
 		  <input type="checkbox" name="{$my_layers[j]->name}_label" value="1" {$my_layers_label_checked[j]} />
 		  {else}
 		  &nbsp;
+		  {/if}
+		  </td>
+		  {if $smarty.section.j.index % 2}
+		  <td class="odd">
+		  {else}
+		  <td class="even">
+		  {/if}
+		  {if $layer_query[j] eq "On"}
+     <img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}">		  
+		  {else}
+		  &nbsp
 		  {/if}
 		  </td>
 		  {if $smarty.section.j.index % 2}

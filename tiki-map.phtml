@@ -180,6 +180,13 @@ for ($j=0;$j<$map->numlayers;$j++)
     $layer_label[$j]="Off";
   }
   
+  if ($my_layer->tolerance!="")
+  {
+    $layer_query[$j]="On";
+  } else {
+    $layer_query[$j]="Off";
+  }
+  
   if ($query) // We have a query
   {
     if (@$my_layer->queryByPoint($query_point,MS_MULTIPLE,0)==MS_SUCCESS)
@@ -241,6 +248,8 @@ $smarty->assign('displaysizes',array('200x200','400x400','600x600'));
 
 $smarty->assign_by_ref('layer_label',$layer_label);
 $smarty->assign_by_ref('my_layers_label_checked',$my_layers_label_checked);
+
+$smarty->assign_by_ref('layer_query',$layer_query);
 
 // is the user registered?
 if(isset($_REQUEST['view_user'])) {
