@@ -44,10 +44,10 @@ class TikiLib {
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
     if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
-    $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
+    $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->query($querystat);
     if(DB::isError($qresult)) {
-      $querystat="update `tiki_querystats` set `qcount`=qcount+1, qtime=qtime+$qdiff where `qtext`='".addslashes($query)."'";
+      $querystat="update `tiki_querystats` set `qcount`=qcount+1, `qtime`=qtime+$qdiff where `qtext`='".addslashes($query)."'";
       $qresult=$this->db->query($querystat);
     }
     return $result;
@@ -62,10 +62,10 @@ class TikiLib {
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
     if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
-    $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
+    $querystat="insert into `tiki_querystats` values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->query($querystat);
     if(DB::isError($qresult)) {
-      $querystat="update `tiki_querystats` set `qcount`=qcount+1, qtime=qtime+$qdiff where `qtext`='".addslashes($query)."'";
+      $querystat="update `tiki_querystats` set `qcount`=qcount+1, `qtime`=qtime+$qdiff where `qtext`='".addslashes($query)."'";
       $qresult=$this->db->query($querystat);
     }
     return $result;
@@ -269,12 +269,12 @@ class TikiLib {
     $now = date("U");
     $size = strlen($data);
     if($noteId) {
-      $query = "update tiki_user_notes set
-      name = '$name',
-      data = '$data',
-      size = $size,
-      lastModif = $now
-      where `user`='$user' and noteId=$noteId";	
+      $query = "update `tiki_user_notes` set
+      `name` = '$name',
+      `data` = '$data',
+      `size` = $size,
+      `lastModif` = $now
+      where `user`='$user' and `noteId`=$noteId";	
       $this->query($query);
       return $noteId;
     } else {
@@ -367,14 +367,14 @@ class TikiLib {
     $title = addslashes($title);	
     $description = addslashes($description);
     if($taskId) {
-      $query = "update tiki_user_tasks set
-      title = '$title',
-      description = '$description',
-      date = $date,
-      status = '$status',
-      priority = $priority,
-      percentage = $percentage,
-      completed = $completed
+      $query = "update `tiki_user_tasks` set
+      `title` = '$title',
+      `description` = '$description',
+      `date` = $date,
+      `status` = '$status',
+      `priority` = $priority,
+      `percentage` = $percentage,
+      `completed` = $completed
       where `user`='$user' and `taskId`=$taskId";	
       $this->query($query);
       return $taskId;
@@ -1185,12 +1185,12 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" and (title like $findesc or data like $findesc)";
+      $mid=" and (`title` like $findesc or `data` like $findesc)";
     } else {
       $mid="";
     }
     $query = "select * from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $now = date("U");
@@ -1209,12 +1209,12 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" and (title like $findesc or data like $findesc)";
+      $mid=" and (`title` like $findesc or `data` like $findesc)";
     } else {
       $mid="";
     }
-    $query = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_comments,tiki_forums where `object`=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_comments`,`tiki_forums`  where `object`=md5(concat('forum',$forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',$forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $now = date("U");
@@ -1233,7 +1233,7 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (name like $findesc or description like $findesc)";
+      $mid=" where (`name` like $findesc or `description` like $findesc)";
     } else {
       $mid="";
     }
@@ -1277,7 +1277,7 @@ class TikiLib {
     $query = "delete from `tiki_comments` where `object`='$object'";
     $result = $this->query($query);
     // Remove individual permissions for this object if they exist
-    $query = "delete from `users_objectpermissions` where `objectId`='$object' and objectType='$type'";
+    $query = "delete from `users_objectpermissions` where `objectId`='$object' and `objectType`='$type'";
     $result = $this->query($query);
     return true;
    }
@@ -1285,7 +1285,7 @@ class TikiLib {
   /*shared*/ function uncategorize_object($type,$id)
   {
     $id=addslashes($id);
-    $query = "select `catObjectId`  from `tiki_categorized_objects` where `type`='$type' and objId='$id'";
+    $query = "select `catObjectId`  from `tiki_categorized_objects` where `type`='$type' and `objId`='$id'";
     $catObjectId = $this->getOne($query);
     if($catObjectId) {
       $query = "delete from `tiki_category_objects` where `catObjectId`=$catObjectId";
@@ -1422,7 +1422,7 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (pagename like $findesc or data like $findesc)";
+      $mid=" where (`pagename` like $findesc or `data` like $findesc)";
     } else {
       $mid="";
     }
@@ -1482,7 +1482,7 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where `menuId`=$menuId and (name like '%".$find."%' or url like '%".$find."%')";
+      $mid=" where `menuId`=$menuId and (`name` like '%".$find."%' or `url` like '%".$find."%')";
     } else {
       $mid=" where `menuId`=$menuId ";
     }
@@ -1515,7 +1515,7 @@ class TikiLib {
         $ret = false;
       }
     } else {
-      $query = "select `user`  from `tiki_user_votings` where `user`='$user' and id='$id'";
+      $query = "select `user`  from `tiki_user_votings` where `user`='$user' and `id`='$id'";
       $result = $this->query($query);
       if($result->numRows()) {
         $ret = true;
@@ -1545,11 +1545,11 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (name like $findesc or description like $findesc)";
+      $mid=" where (`name` like $findesc or `description` like $findesc)";
     } else {
       $mid="";
     }
-    $query = "select `fileId` ,name,description,created,filename,filesize,user,downloads from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_files` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -1565,7 +1565,7 @@ class TikiLib {
 
   /*shared*/ function get_file($id)
   {
-    $query = "select `path` ,galleryId,filename,filetype,data from `tiki_files` where `fileId`='$id'";
+    $query = "select `path` ,`galleryId`,`filename`,`filetype`,`data` from `tiki_files` where `fileId`='$id'";
     $result = $this->query($query);
     $res = $result->fetchRow();
     return $res;
@@ -1575,11 +1575,11 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where `galleryId`=$galleryId and (name like '%".$find."%' or description like '%".$find."%')";
+      $mid=" where `galleryId`=$galleryId and (`name` like '%".$find."%' or `description` like '%".$find."%')";
     } else {
       $mid="where `galleryId`=$galleryId";
     }
-    $query = "select `fileId` ,name,description,created,filename,filesize,user,downloads from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_files` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -1652,9 +1652,9 @@ class TikiLib {
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = " and (name like $findesc or description like $findesc)";
+        $whuser = " and (`name` like $findesc or `description` like $findesc)";
       } else {
-        $whuser .= " and (name like $findesc or description like $findesc)";
+        $whuser .= " and (`name` like $findesc or `description` like $findesc)";
       }
     }
 
@@ -1714,7 +1714,7 @@ class TikiLib {
 
     $now=date("U");
     $lim=$now-$limit;
-    $query = "delete from `tiki_semaphores` where `semName`='$semName' and timestamp<$lim";
+    $query = "delete from `tiki_semaphores` where `semName`='$semName' and `timestamp`<$lim";
     $result = $this->query($query);
     $query = "select `semName`  from `tiki_semaphores` where `semName`='$semName'";
     $result = $this->query($query);
@@ -1738,7 +1738,7 @@ class TikiLib {
 
   function semaphore_unset($semName,$lock)
   {
-    $query = "delete from `tiki_semaphores` where `semName`='$semName' and timestamp=$lock";
+    $query = "delete from `tiki_semaphores` where `semName`='$semName' and `timestamp`=$lock";
     $result = $this->query($query);
   }
   
@@ -1760,7 +1760,7 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (title like $findesc or description like $findesc) ";
+      $mid=" where (`title` like $findesc or `description` like $findesc) ";
     } else {
       $mid='';
     }
@@ -1810,7 +1810,7 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (data like $findesc) ";
+      $mid=" where (`data` like $findesc) ";
     } else {
       $mid='';
     }
@@ -1843,27 +1843,27 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (title like $findesc or heading like $findesc or body like $findesc) ";
+      $mid=" where (`title` like $findesc or `heading` like $findesc or `body` like $findesc) ";
     } else {
       $mid='';
     }
     if($date) {
       if($mid) {
-        $mid.=" and  publishDate<=$date ";
+        $mid.=" and  `publishDate`<=$date ";
       } else {
         $mid=" where `publishDate`<=$date ";
       }
     }
     if($type) {
       if($mid) {
-        $mid.=" and type='$type'";
+        $mid.=" and `type`='$type'";
       } else {
         $mid=" where `type`='$type'";
       }
     }
     if($topicId) {
       if($mid) {
-        $mid.=" and topicId=$topicId";
+        $mid.=" and `topicId`=$topicId";
       } else {
         $mid=" where `topicId`=$topicId";
       }
@@ -1986,27 +1986,27 @@ class TikiLib {
     $size = strlen($body);
     if($articleId) {
       // Update the article
-      $query = "update tiki_articles set
-                title = '$title',
-                authorName = '$authorName',
-                topicId = $topicId,
-                topicName = '$topicName',
-                size = $size,
-                useImage = '$useImage',
-                image_name = '$imgname',
-                image_type = '$imgtype',
-                image_size = '$imgsize',
-                image_data = '$imgdata',
-                isfloat = '$isfloat',
-                image_x = $image_x,
-                image_y = $image_y,
-                heading = '$heading',
-                body = '$body',
-                publishDate = $publishDate,
-                created = $now,
-                author = '$user',
-                type = '$type',
-                rating = $rating
+      $query = "update `tiki_articles` set
+                `title` = '$title',
+                `authorName` = '$authorName',
+                `topicId` = $topicId,
+                `topicName` = '$topicName',
+                `size` = $size,
+                `useImage` = '$useImage',
+                `image_name` = '$imgname',
+                `image_type` = '$imgtype',
+                `image_size` = '$imgsize',
+                `image_data` = '$imgdata',
+                `isfloat` = '$isfloat',
+                `image_x` = $image_x,
+                `image_y` = $image_y,
+                `heading` = '$heading',
+                `body` = '$body',
+                `publishDate` = $publishDate,
+                `created` = $now,
+                `author` = '$user',
+                `type` = '$type',
+                `rating` = $rating
                 where `articleId` = $articleId";
       $result = $this->query($query);
 
@@ -2016,7 +2016,7 @@ class TikiLib {
                          values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
       $result = $this->query($query);
 
-      $query2 = "select `max` (articleId) from `tiki_articles` where `created` = $now and title='$title' and hash='$hash'";
+      $query2 = "select max(`articleId`) from `tiki_articles` where `created` = $now and `title`='$title' and `hash`='$hash'";
       $articleId=$this->getOne($query2);
     }
     return $articleId;
@@ -2024,7 +2024,7 @@ class TikiLib {
 
   /*shared*/ function get_topic_image($topicId)
   {
-    $query = "select `image_name` ,image_size,image_type,image_data from `tiki_topics` where `topicId`=$topicId";
+    $query = "select `image_name` ,`image_size`,`image_type`,`image_data` from `tiki_topics` where `topicId`=$topicId";
     $result = $this->query($query);
 
     $res = $result->fetchRow();
@@ -2033,7 +2033,7 @@ class TikiLib {
 
   /*shared*/ function get_featured_links($max=10)
   {
-    $query = "select * from `tiki_featured_links` where `position`>0 order by position asc limit 0,$max";
+    $query = "select * from `tiki_featured_links` where `position`>0 order by `position` asc limit 0,$max";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -2058,7 +2058,7 @@ class TikiLib {
 
   function count_sessions()
   {
-    $query = "select count(*) from tiki_sessions";
+    $query = "select count(*) from `tiki_sessions`";
     $cant = $this->getOne($query);
     return $cant;
   }
@@ -2175,11 +2175,11 @@ class TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where (url like $findesc) ";
+      $mid=" where (`url` like $findesc) ";
     } else {
       $mid="";
     }
-    $query = "select `cacheId` ,url,refresh from `tiki_link_cache` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_link_cache` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -2201,7 +2201,7 @@ class TikiLib {
     $data = $this->httprequest($url);
     $data = addslashes($data);
     $refresh = date("U");
-    $query = "update `tiki_link_cache` set `data`='$data', refresh=$refresh where `cacheId`=$cacheId";
+    $query = "update `tiki_link_cache` set `data`='$data', `refresh`=$refresh where `cacheId`=$cacheId";
     $result = $this->query($query);
     return true;
   }
@@ -2233,14 +2233,14 @@ class TikiLib {
   function vote_page($page, $points)
   {
     $page = addslashes($page);
-    $query = "update `pages` set `points`=points+$points, votes=votes+1 where `pageName`='$page'";
+    $query = "update `pages` set `points`=points+$points, `votes`=votes+1 where `pageName`='$page'";
     $result = $this->query($query);
   }
 
   function get_votes($page)
   { 
     $page = addslashes($page);
-    $query = "select `points` ,votes from `pages` where `pageName`='$page'";
+    $query = "select `points` ,`votes` from `pages` where `pageName`='$page'";
     $result = $this->query($query);
     $res = $result->fetchRow();
     return $res;
@@ -2251,7 +2251,7 @@ class TikiLib {
   // it returns pageName and hits for each page
   function get_top_pages($limit)
   {
-    $query = "select `pageName` , hits from `tiki_pages` order by hits desc limit 0,$limit";
+    $query = "select `pageName` , `hits` from `tiki_pages` order by `hits` desc limit 0,$limit";
     $result=$this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -2265,7 +2265,7 @@ class TikiLib {
   // Returns the name of "n" random pages
   function get_random_pages($n)
   {
-    $query = "select count(*) from tiki_pages";
+    $query = "select count(*) from `tiki_pages`";
     $cant = $this->getOne($query);
     // Adjust the limit if there are not enough pages
     if($cant<$n) $n=$cant;
@@ -2329,12 +2329,12 @@ class TikiLib {
   {
     // Now recursively remove
     $page_sl=addslashes($page);
-    $query = "select page from tiki_structures where parent='$page_sl'";
+    $query = "select `page` from `tiki_structures` where `parent`='$page_sl'";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $this->remove_from_structure($res["page"]);	
     }
-    $query = "delete from tiki_structures where page='$page_sl'";
+    $query = "delete from tiki_structures where `page`='$page_sl'";
     $result = $this->query($query);
     return true;	
   }
@@ -2384,7 +2384,7 @@ class TikiLib {
 
   function get_user_info($user)
   {
-    $query = "select `login` , email, lastLogin from `tiki_users` where `user`='$user'";
+    $query = "select `login` , `email`, `lastLogin` from `tiki_users` where `user`='$user'";
     $result = $this->query($query);
     $res = $result->fetchRow();
     $aux = Array();
@@ -2431,9 +2431,9 @@ class TikiLib {
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = "where `name` like '%".$find."%' or description like '%".$find.".%'";
+        $whuser = "where `name` like '%".$find."%' or `description` like '%".$find.".%'";
       } else {
-        $whuser .= " and name like $findesc or description like $findesc";
+        $whuser .= " and `name` like $findesc or `description` like $findesc";
       }
     }
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
@@ -2501,9 +2501,9 @@ class TikiLib {
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = " and (name like $findesc or description like $findesc)";
+        $whuser = " and (`name` like $findesc or `description` like $findesc)";
       } else {
-        $whuser .= " and (name like $findesc or description like $findesc)";
+        $whuser .= " and (`name` like $findesc or `description` like $findesc)";
       }
     }
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
@@ -2577,7 +2577,7 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select `creator` ,pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from `tiki_pages` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select `creator` ,`pageName`, `hits`, length(`data`) as len ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from `tiki_pages` $mid";
     $result = $this->query($query);
     $cant=$this->getOne($query_cant);
@@ -2642,8 +2642,8 @@ class TikiLib {
       $maxRecords = -1;
     }
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin
-    $query = "select `user` , email, lastLogin from `tiki_users` order by $sort_mode limit $offset,$maxRecords";
-    $cant = $this->getOne("select count(*) from tiki_users");
+    $query = "select `user` , `email`, `lastLogin` from `tiki_users` order by $sort_mode limit $offset,$maxRecords";
+    $cant = $this->getOne("select count(*) from `tiki_users`");
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -2684,7 +2684,7 @@ class TikiLib {
   	static $preferences;
   	
   	if (!$preferences) {
-	    $query = "select `name` ,value from tiki_preferences";
+	    $query = "select `name` ,value from `tiki_preferences`";
 	    $result = $this->query($query);
 	    $preferences = Array();
 	    while($res = $result->fetchRow()) {
@@ -2755,7 +2755,7 @@ class TikiLib {
 
   function validate_user($user,$pass)
   {
-    $query = "select `user`  from `tiki_users` where `user`='$user' and password='$pass'";
+    $query = "select `user`  from `tiki_users` where `user`='$user' and `password`='$pass'";
     $result = $this->query($query);
     if($result->numRows()) {
       $t = date("U");
@@ -2845,7 +2845,7 @@ class TikiLib {
 
   function get_user_galleries($user,$max)
   {
-    $query = "select `name` ,galleryId from `tiki_galleries` where `user`='$user' limit 0,$max";
+    $query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`='$user' limit 0,$max";
     $result = $this->query($query);
     $ret=Array();
     while( $res = $result->fetchRow()) {
@@ -3965,7 +3965,7 @@ class TikiLib {
         }
       }
     }  
-    $query = "update `tiki_pages` set `description`='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where `pageName`='$pageName_sl'";
+    $query = "update `tiki_pages` set `description`='$description', `data`='$edit_data', `comment`='$edit_comment', `lastModif`=$t, version=$version, `user`='$edit_user', `ip`='$edit_ip' where `pageName`='$pageName_sl'";
     $result = $this->query($query);
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
@@ -3984,13 +3984,13 @@ class TikiLib {
         $keep = $this->get_preference('keep_versions',0);
         $now = date("U");
         $oktodel = $now - ($keep * 24 * 3600);
-        $query = "select `pageName` ,version from `tiki_history` where `pageName`='$pageName_sl' and lastModif<=$oktodel order by lastModif desc limit $maxversions,-1";
+        $query = "select `pageName` ,`version` from `tiki_history` where `pageName`='$pageName_sl' and `lastModif`<=$oktodel order by `lastModif` desc limit $maxversions,-1";
         $result = $this->query($query);
         $toelim = $result->numRows();
         while($res= $result->fetchRow()) {
           $page = $res["pageName"];
           $version = $res["version"];
-          $query = "delete from `tiki_history` where `pageName`='$pageName_sl' and version='$version'";
+          $query = "delete from `tiki_history` where `pageName`='$pageName_sl' and `version`='$version'";
           $this->query($query);
         }
       }
@@ -4009,7 +4009,7 @@ class TikiLib {
     $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
     $t = date("U");
-    $query = "delete from `tiki_history` where `pageName`='$pageName' and version=$version";
+    $query = "delete from `tiki_history` where `pageName`='$pageName' and `version`=$version";
     $result = $this->query($query);
     $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data,description)
               values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data','$description')";
