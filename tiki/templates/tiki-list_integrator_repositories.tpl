@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.1 2003-10-13 17:17:22 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.2 2003-10-15 16:04:47 zaufi Exp $ *}
 
 <h2>{tr}Available Repositories{/tr}</h2>
 
+{if $tiki_p_admin eq 'y'}
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
@@ -9,6 +10,7 @@
     </div></td>
   </tr></table>
 </div>
+{/if}
 <br />
 
 {* Table with list of repositories *}

@@ -42,9 +42,9 @@ CREATE TABLE tiki_integrator_rules (
 --
 
 INSERT INTO tiki_integrator_rules VALUES (1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
-INSERT INTO tiki_integrator_rules VALUES (2,1,'</html>','','y','n','','Remove </html>');
-INSERT INTO tiki_integrator_rules VALUES (3,1,'<body>','-->','y','n','i','End of comment just after <body>');
+INSERT INTO tiki_integrator_rules VALUES (2,1,'</html>','','y','n','i','Remove </html>');
+INSERT INTO tiki_integrator_rules VALUES (3,1,'<body.*>','-->','y','n','i','End of comment just after <body>');
 INSERT INTO tiki_integrator_rules VALUES (4,1,'</body>','','y','n','i','Remove </body>');
-INSERT INTO tiki_integrator_rules VALUES (5,1,'img src=\"','img src=\"/{path}/','y','n','','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (6,1,'href=\"','href=\"tiki-integrator.php?repID=<N>&file=','y','n','','Relace links to integrator. Attention! Don not forget to replace <N> with ID of your repository!!!');
+INSERT INTO tiki_integrator_rules VALUES (5,1,'img src=\"','img src=\"/{path}/','y','n','i','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (6,1,'href=\"','href=\"tiki-integrator.php?repID=<N>&file=','y','n','i','Relace links to integrator. Attention! Don not forget to replace <N> with ID of your repository!!!');
 
