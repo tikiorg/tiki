@@ -182,7 +182,9 @@
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 
-<div class="wikitext">{if $structure eq 'y'}
+<div class="wikitext"
+{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
 <tr>

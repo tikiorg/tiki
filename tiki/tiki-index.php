@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.116 2004-06-30 20:25:30 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.117 2004-07-01 19:06:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -540,8 +540,10 @@ if (isset($is_categorized) && $is_categorized) {
 $smarty->assign('show_page','y');
 ask_ticket('index');
 
+global $feature_wiki_dblclickedit;
+$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
+
 // Display the Index Template
-$smarty->assign('dblclickedit','y');
 $smarty->assign('print_page','n');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
