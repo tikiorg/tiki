@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_pagehistory.tpl,v 1.2 2004-02-06 20:17:54 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_pagehistory.tpl,v 1.3 2004-02-22 17:15:00 ggeller Exp $ *}
 
 <a class="pagetitle" href="tiki-hw_pagehistory.php?id={$pageId|escape:"url"}">
   {tr}History{/tr}
@@ -33,8 +33,8 @@
   <h3>{tr}Diff to version{/tr}: {$version}</h3>
   {$diffdata}
 {/if}
-<br />
-<form action="tiki-pagehistory.php" method="post">
+<br/>
+<form action="tiki-hw_pagehistory.php?id={$pageId}" method="post">
   {* <input type="hidden" name="page" value="{$page|escape}" /> *}
   <div align="center">
     <table border="1" cellpadding="0" cellspacing="0">
@@ -58,7 +58,7 @@
         <td class="odd">&nbsp;{$info.user}&nbsp;</td>
         <td class="odd">&nbsp;{$info.ip}&nbsp;</td>
         <td class="odd">&nbsp;{$info.comment}&nbsp;</td>
-        <td class="odd">&nbsp;<a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}current{/tr}</a>&nbsp;</td>
+        <td class="odd">&nbsp;<a class="link" href="tiki-hw_page.php?assignmentId={$assignmentId|escape:"url"}&student={$studentName|escape:"url"}">{tr}current{/tr}</a>&nbsp;</td>
       </tr>
       {cycle values="odd,even" print=false}
       {section name=hist loop=$history}
