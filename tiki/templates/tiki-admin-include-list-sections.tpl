@@ -45,7 +45,7 @@
 	{tr}RSS{/tr}</a>
 	</td>
 
-	<td style="text-align:center;"><a href="tiki-admin.php?page=cms" class="link"><img border='0' src='img/icons/admin_cms.png' alt='icon' /><br/>
+	<td style="text-align:center;"><a href="tiki-admin.php?page=cms" class="link"><img border='0' src='img/icons/admin_articles.png' alt='icon' /><br/>
 	{tr}Articles{/tr}</a>
 	</td>
 

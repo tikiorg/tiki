@@ -20,7 +20,7 @@ $smarty->assign_by_ref('chart_info',$chart_info);
 // Regenerate the ranking if no ranking is found or if
 // the last ranking is too old for the frequency
 if(!$chartlib->ranking_exists($chart_info['chartId']) ||
-    ($chart_info['lastChart']+($chart_info['frequency']*24*60*60) < $now)) {
+    ($chart_info['lastChart']+($chart_info['frequency']*24*60*60)) < $now) {
   if($chart_info['frequency']==0) $chartlib->drop_rankings($chart_info['chartId']);  
   $chartlib->generate_new_ranking($chart_info['chartId']);    
 }
@@ -54,7 +54,7 @@ $chartlib->purge_user_votes($chart_info['chartId'],$chart_info['voteAgainAfter']
 
 // determine if the user has voted this chart or not
 $user_voted_chart = $chartlib->user_has_voted_chart($user,$chart_info['chartId']);
-$smarty->assign('user_voted_chart',$user_voted_chart);
+$smarty->assign('user_voted_chart',$user_voted_chart?'y':'n');
 
 // now get the ranking items
 $items = $chartlib->get_ranking($chart_info['chartId'],$_REQUEST['period']);
