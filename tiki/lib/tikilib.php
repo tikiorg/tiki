@@ -2992,6 +2992,7 @@ function add_pageview() {
     }
 */
 
+/* Moved to userlib (a while back I think)
     function get_user_info($user) {
 	$query = "select `user` , `email`, `lastLogin` from `tiki_users` where `user`=?";
 
@@ -3015,6 +3016,7 @@ function add_pageview() {
 	$ret[] = $aux;
 	return $aux;
     }
+*/
 
     /*shared*/
     function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
@@ -3332,6 +3334,7 @@ function add_pageview() {
 	return $retval;
     }
 
+/* Moved to userlib (a while ago I think)
     function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'user_desc') {
 	$sort_mode = str_replace("_", " ", $sort_mode);
 
@@ -3402,6 +3405,7 @@ function add_pageview() {
 	$retval["cant"] = $cant;
 	return $retval;
     }
+*/
 
     function get_all_preferences() {
 	global $preferences;
@@ -3488,6 +3492,7 @@ function add_pageview() {
 	}
     }
 
+/* Moved to userlib; also an unused function
     function get_user_details($item, $login) {
 	global $user_details;
 
@@ -3502,7 +3507,7 @@ function add_pageview() {
 	}
 
     }
-
+*/
     function get_user_preference($user, $name, $default = '') {
 	global $user_preferences;
 
@@ -3535,6 +3540,7 @@ function add_pageview() {
 	return true;
     }
 
+/* Moved to userlib (a while ago I think)
     function validate_user($user, $pass) {
 	$query = "select count(*) from `tiki_users`
 	    where `user`=? and `password`=?";
@@ -3552,6 +3558,7 @@ function add_pageview() {
 
 	return false;
     }
+*/
 
     // This implements all the functions needed to use Tiki
     /*shared*/
