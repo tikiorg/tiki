@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.13 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.14 2005-01-05 19:22:41 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if ($feature_edit_templates != 'y') {
 }
 
 if ($tiki_p_edit_templates != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -32,7 +32,7 @@ if (!isset($_REQUEST["mode"])) {
 // Validate to prevent editing any file
 if (isset($_REQUEST["template"])) {
 	if (strstr($_REQUEST["template"], '..')) {
-		$smarty->assign('msg', tra("You dont have permission to do that"));
+		$smarty->assign('msg', tra("You do not have permission to do that"));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -50,7 +50,7 @@ if (isset($_REQUEST["save"])) {
     $fp = fopen($smarty->template_dir.$_REQUEST["template"], "w");
   }
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to write the template"));
+		$smarty->assign('msg', tra("You do not have permission to write the template"));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -72,7 +72,7 @@ if (isset($_REQUEST["template"])) {
 	}
 	$fp = fopen($file,'r');
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to read the template"));
+		$smarty->assign('msg', tra("You do not have permission to read the template"));
 		$smarty->display("error.tpl");
 		die;
 	}

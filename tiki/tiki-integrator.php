@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.15 2003-11-17 15:44:29 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.16 2005-01-05 19:22:41 jburleyebuilt Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -18,7 +18,7 @@ if ($feature_integrator != 'y')
 }
 if (($tiki_p_view_integrator != 'y') && ($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->assign('msg',tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;
 }

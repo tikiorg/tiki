@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.17 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.18 2005-01-05 19:22:42 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,7 +30,7 @@ if (!isset($_REQUEST["mode"])) {
 // Validate to prevent editing any file
 if (isset($_REQUEST["mapfile"])) {
 	if (strstr($_REQUEST["mapfile"], '..')) {
-		$smarty->assign('msg', tra("You dont have permission to do that"));
+		$smarty->assign('msg', tra("You do not have permission to do that"));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -72,7 +72,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	$fp = fopen($newmapfile, "w");
   ini_set("display_errors","1");
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
+		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
 
 		$smarty->display("error.tpl");
 		die;
@@ -87,7 +87,7 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		if(!unlink($map_path.$_REQUEST["mapfile"])) {
-			$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));
+			$smarty->assign('msg', tra("You do not have permission to delete the mapfile"));
 			$smarty->display("error.tpl");  
 			die;
 		}
@@ -99,7 +99,7 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 
 if (isset($_REQUEST["save"])) {
 if ($tiki_p_map_edit != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -108,7 +108,7 @@ if ($tiki_p_map_edit != 'y') {
 	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
   ini_set("display_errors","1");
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
+		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
 
 		$smarty->display("error.tpl");
 		die;
@@ -146,7 +146,7 @@ if ($tiki_p_map_edit != 'y') {
 
 if ((isset($_REQUEST["mapfile"])) && ($mode=='editing')) {
 if ($tiki_p_map_edit != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -155,7 +155,7 @@ if ($tiki_p_map_edit != 'y') {
 	$fp = fopen($mapfile, "r");
   ini_set("display_errors","1");
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to read the mapfile"));
+		$smarty->assign('msg', tra("You do not have permission to read the mapfile"));
 		$smarty->display("error.tpl");
 		die;
 	}

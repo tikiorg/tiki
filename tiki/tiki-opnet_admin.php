@@ -24,7 +24,7 @@
 	}
 	
 	if ( $tiki_p_opnet != 'y') {
-		$smarty->assign( 'msg', tra( "You dont have permission to use this feature" ) );
+		$smarty->assign( 'msg', tra( "You do not have permission to use this feature" ) );
 		$smarty->display( "error.tpl" );
 		die;
 	}

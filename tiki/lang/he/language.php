@@ -950,7 +950,7 @@ $lang = Array(
 "Rating" => "דירוג",
 
 //  tiki-edit_banner.php
-"You dont have permissions to edit banners" => "אין הרשאות לעריכת באנרים.",
+"You do not have permissions to edit banners" => "אין הרשאות לעריכת באנרים.",
 "Use text" => "שימוש בטקסט",
 "To date" => "עד תאריך",
 "from" => "החל מ",
@@ -1137,9 +1137,9 @@ $lang = Array(
 "none" => "ללא תבנית",
 
 //  tiki-edit_templates.php
-"You dont have permission to read the template" => "אין הרשאות לקריאת התבנית.",
-"You dont have permission to do that" => "אין הראשות לביצוע פעולה זאת.",
-"You dont have permission to write the template" => "אין הרשאות לכתובת התבנית.",
+"You do not have permission to read the template" => "אין הרשאות לקריאת התבנית.",
+"You do not have permission to do that" => "אין הראשות לביצוע פעולה זאת.",
+"You do not have permission to write the template" => "אין הרשאות לכתובת התבנית.",
 "Feature disabled" => "התכונה אינה פעילה",
 "Template" => "תבניות",
 "Template listing" => "רשימת תבניות",
@@ -1282,7 +1282,7 @@ $lang = Array(
 "create new block" => "יצירת בלוק חדש",
 "Program" => "קביעת תוכן",
 
-"You dont have permission to use this feature" => "אין הרשאה להשתמש בתכונה זאת.",
+"You do not have permission to use this feature" => "אין הרשאה להשתמש בתכונה זאת.",
 
 "Users can suggest questions" => "משתמשים יכולים להציע שאלות",
 "Create/edit Faq" => "יצירת/עריכת שאלות נפוצות",
@@ -1583,7 +1583,7 @@ $lang = Array(
 "username" => "שם משתמש",
 "clear" => "ניקוי",
 
-"You dont have permission to edit messages" => "אין הרשאות לעריכת הגיגים.",
+"You do not have permission to edit messages" => "אין הרשאות לעריכת הגיגים.",
 "Tiki ShoutBox" => "הגיגים",
 "Post or edit a message" => "שליחת/עריכת הודעה",
 "Messages" => "הודעות",
@@ -1762,7 +1762,7 @@ $lang = Array(
 
 "Invalid old password" => "סיסמה ישנה לא תקינה.",
 "The passwords did not match" => "הסיסאות החדשות אינן תואמות.",
-"You dont have permission to view other users data" => "אין הרשאה לצפות בנתוני משתמשים אחרים",
+"You do not have permission to view other users data" => "אין הרשאה לצפות בנתוני משתמשים אחרים",
 "Password should be at least" => "הסיסמה צריכה להיות באורך של לפחות",
 "Password must contain both letters and numbers" => "הסיסמה צריכה להכיל גם תווים וגם ספרות",
 "characters long" => "תווים",
@@ -1796,7 +1796,7 @@ $lang = Array(
 
 //  tiki-view_banner.php
 "No banner indicated" => "לא נבחר באנר",
-"You dont have permission to edit this banner" => "אין הרשאות לעריכת הבאנר",
+"You do not have permission to edit this banner" => "אין הרשאות לעריכת הבאנר",
 "Banner not found" => "הבאנר לא נמצא",
 "Click ratio" => "יחס הקלקה",
 "Weekdays" => "ימי השבוע",

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.11 2003-11-17 15:44:29 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.12 2005-01-05 19:22:42 jburleyebuilt Exp $
  *
  * Admin interface for repositories management
  *
@@ -18,7 +18,7 @@ if ($feature_integrator != 'y')
 }
 if (($tiki_p_view_integrator != 'y') && ($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->assign('msg',tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-charts.php,v 1.9 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-charts.php,v 1.10 2005-01-05 19:22:41 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if ($feature_charts != 'y') {
 }
 
 if($tiki_p_view_chart != 'y') {
-        $smarty->assign('msg',tra("You dont have permission to use this feature"));
+        $smarty->assign('msg',tra("You do not have permission to use this feature"));
         $smarty->display("error.tpl");
         die;
 }

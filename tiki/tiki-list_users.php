@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.3 2004-07-11 10:27:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.4 2005-01-05 19:22:42 jburleyebuilt Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -11,7 +11,7 @@ if($feature_friends != 'y') {
 }
 
 if($tiki_p_list_users != 'y') {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->assign('msg',tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;
 }
