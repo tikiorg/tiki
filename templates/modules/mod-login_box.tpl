@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.25 2003-12-28 11:41:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.26 2004-03-10 07:11:05 mose Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box"}
 
@@ -8,8 +8,9 @@
       {if $tiki_p_admin eq 'y'}
         <form action="{$login_url}" method="post">
         <label for="login-switchuser">{tr}user{/tr}:</label>
+        <input type="hidden" name="su" value="1" />
         <input type="text" name="username" id="login-switchuser" size="8" />
-        <input type="submit" name="su" value="{tr}set{/tr}" />
+        <input type="submit" name="actsu" value="{tr}set{/tr}" />
         </form>
       {/if}
     {else}
