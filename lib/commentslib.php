@@ -76,10 +76,11 @@ class Comments extends TikiLib {
 			return false;
 
 		$now = date("U");
-  		$bindvars=array($user,$threadId,$forumId,$now);
+  		$bindvars=array($user,$threadId,$forumId);
 
-		$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=? and `forumId`=? and `timestamp`=?";
+		$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=? and `forumId`=?";
 		$this->query($query,$bindvars,-1,-1,false);
+		$bindvars [] = $now;
 		$query = "insert into `tiki_forum_reads`(`user`,`threadId`,`forumId`,`timestamp`)
   	values(?,?,?,?)";
 		$this->query($query,$bindvars);
