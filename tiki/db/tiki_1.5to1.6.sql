@@ -1,10 +1,10 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 alter table users_permissions add level varchar(80);
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered);
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_tasks','user','Can use tasks','registered);
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_notepad','user','Can use the notepad','registered);
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_newsreader','user','Can use the newsreader','registered);
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_tasks','user','Can use tasks','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_notepad','user','Can use the notepad','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_newsreader','user','Can use the newsreader','registered');
 
 drop table if exists tiki_userfiles;
 create table tiki_userfiles(

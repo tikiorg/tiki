@@ -7,7 +7,7 @@ class Messu extends Tikilib {
   {
     
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");
+      die("Invalid db object passed to MessuLib constructor");
     }
     $this->db = $db;
   }

@@ -19,7 +19,7 @@ class TikiLib {
   function TikiLib($db)
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");
+      die("Invalid db object passed to TikiLib constructor");
     }
     $this->db = $db;
   }
@@ -3847,6 +3847,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result = $this->query($query);
     return true;
   }
+  
+  
 
   // Returns backlinks for a given page
   function get_backlinks($page)
@@ -4153,12 +4155,13 @@ function parse_data($data)
 
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
+	  include_once('lib/rss/rsslib.php');
       for($i=0;$i<count($rsss[0]);$i++) {
         $id = $rsss[1][$i];
         $max = $rsss[3][$i];
         if(empty($max)) $max=99;
-        $rssdata = $this->get_rss_module_content($id);
-        $items = $this->parse_rss_data($rssdata);
+        $rssdata = $rsslib->get_rss_module_content($id);
+        $items = $rsslib->parse_rss_data($rssdata);
         $repl='';
         for($j=0;$j<count($items) && $j<$max;$j++) {
          $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="wiki">'.$items[$j]["title"].'</a></li>';

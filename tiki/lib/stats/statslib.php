@@ -6,7 +6,7 @@ class StatsLib extends TikiLib {
   {
     # this is probably uneeded now
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to StatsLib constructor");  
     }
     $this->db = $db;  
   }

@@ -5,7 +5,7 @@ class HotwordsLib extends TikiLib {
   {
     # this is probably uneeded now
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to HotwordLib constructor");  
     }
     $this->db = $db;  
   }

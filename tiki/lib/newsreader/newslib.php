@@ -10,7 +10,7 @@ class Newslib extends Tikilib {
   {
     
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");
+      die("Invalid db object passed to NewsLib constructor");
     }
     $this->nntp = new Net_NNTP;
     $this->db = $db;

@@ -9,7 +9,7 @@ class Comments extends TikiLib {
   function Comments($db) 
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to CommentsLib constructor");  
     }
     $this->db = $db;  
   }
