@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.29 2004-01-13 14:50:19 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.30 2004-01-14 01:13:29 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -9,15 +9,16 @@
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin users tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<br />
 
-<br/><br/>
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php" class="linkbuton">{tr}Admin users{/tr}</a></span>
+<br /><br /><br />
 
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
-{if $tiki_p_create_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Add a new user{/tr}</span>
-{/if}
 </div>
 
 {cycle name=content values="1,2,3" print=false advance=false}
@@ -26,7 +27,7 @@
 <h2>{tr}Users{/tr}</h2>
 <div align="center">
 <form method="get" action="tiki-adminusers.php">
-<table><tr>
+<table class="findtable"><tr>
 <td>{tr}Find{/tr}</td>
 <td><input type="text" name="find" value="{$find|escape}" /></td>
 <td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
@@ -35,6 +36,19 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
 </tr></table>
 </form>
+
+<div align="center">
+{section name=ini loop=$initials}
+{if $initial and $initials[ini] eq $initial}
+<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
+{else}
+<a href="tiki-adminusers.php?initial={$initials[ini]}{if $find}&amp;find={$find}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
+class="prevnext">{$initials[ini]}</a> . 
+{/if}
+{/section}
+<a href="tiki-adminusers.php?initial={if $find}&amp;find={$find}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
+class="prevnext">{tr}All{/tr}</a>
+</div>
 
 <table class="normal">
 <tr>
@@ -46,20 +60,21 @@
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}
-<tr>
-<td class="{cycle advance=false}">{$users[user].user}</td>
-<td class="{cycle advance=false}">{$users[user].email}</td>
-<td class="{cycle advance=false}">{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
-<td class="{cycle advance=false}">
+<tr class="{cycle}">
+<td>{$users[user].user}</td>
+<td>{$users[user].email}</td>
+<td>{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
+<td>
 {foreach from=$users[user].groups item=grs}
 {if $grs != "Anonymous"}
 {$grs}
 (<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
-{/if}&nbsp;
+{/if}<br />
 {/foreach}
-<td class="{cycle}" nowrap="nowrap">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"  title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
-<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>
-<a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+<td nowrap="nowrap">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
+title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;{/if}<a 
+class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>&nbsp;&nbsp;<a 
+class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 </td>
 </tr>
 {/section}
@@ -67,17 +82,17 @@
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br/>
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$selector_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;{if $initial}initial={$initial}&amp;{/if}offset={$selector_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
