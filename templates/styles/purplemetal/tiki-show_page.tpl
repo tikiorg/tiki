@@ -132,7 +132,7 @@
 {/if}
 
 {if $page ne 'SandBox'}
-	{if $feature_history eq 'y'}
+	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}
