@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.36 2003-10-16 02:19:35 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.37 2003-10-17 00:05:20 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -406,7 +406,7 @@ ALTER TABLE `tiki_pages` ADD `wiki_cache` int(10) default 0 AFTER `cache` ;
 ALTER TABLE tiki_forums ADD forum_last_n int(2);
 UPDATE tiki_forums SET forum_last_n = 0;
 
-CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );
+CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  data text,  PRIMARY  KEY ( name )  );
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 ALTER TABLE tiki_newsletters ADD allowUserSub char(1) DEFAULT 'y' AFTER `users`;
