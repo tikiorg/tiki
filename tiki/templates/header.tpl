@@ -82,5 +82,12 @@
 
 <body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
 {if $minical_reminders>100}
-<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
+	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
+{/if}
+
+{if $feature_siteidentity eq 'y'}
+<!-- Site identity header section -->
+	<div id="siteheader">
+		{include file="tiki-site_header.tpl"}
+	</div>
 {/if}
