@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.26 2003-09-18 03:22:57 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.27 2003-09-24 00:30:30 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -300,8 +300,14 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				$cadata_data = $_REQUEST["comments_topicssummary"] . $cdata_data;
 			    }
 
-			    @mail($forum_info["outbound_address"], '[' . $forum_info['name'] . ']' . $_REQUEST["comments_title"],
-				    $cdata_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			    if ($forum_info["outbound_address"]) {
+				@mail(
+					$forum_info["outbound_address"],
+					$thread_info['title'],
+					$_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
+					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
+				     );
+			    }
 			}
 
 			if ($forum_info["useMail"] == 'y') {
@@ -314,7 +320,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
 			    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 			    @mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
-				    "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+				    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 			}
 
 			// Check if the user is monitoring this post
@@ -331,7 +337,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				$smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
 				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 				@mail($not['email'], tra('Tiki email notification'), $mail_data,
-					"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+					"From: ". $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 			    }
 			}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.14 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.15 2003-09-24 00:30:30 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ if ($_REQUEST["forumId"]) {
 	$info["show_description"] = 'n';
 
 	$info["outbound_address"] = '';
+	$info["outbound_from"] = '';
 	$info["inbound_pop_server"] = '';
 	$info["inbound_pop_port"] = 110;
 	$info["inbound_pop_user"] = '';
@@ -123,6 +124,7 @@ $smarty->assign('topics_list_replies', $info['topics_list_replies']);
 $smarty->assign('show_description', $info['show_description']);
 
 $smarty->assign('outbound_address', $info['outbound_address']);
+$smarty->assign('outbound_from', $info['outbound_from']);
 $smarty->assign('inbound_pop_server', $info['inbound_pop_server']);
 $smarty->assign('inbound_pop_port', $info['inbound_pop_port']);
 $smarty->assign('inbound_pop_user', $info['inbound_pop_user']);
@@ -214,7 +216,9 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["section"], $_REQUEST['topics_list_replies'], $_REQUEST['topics_list_reads'], $_REQUEST['topics_list_pts'],
 		$_REQUEST['topics_list_lastpost'], $_REQUEST['topics_list_author'], $_REQUEST['vote_threads'],
 		$_REQUEST['show_description'], $_REQUEST['inbound_pop_server'],
-		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], $_REQUEST['outbound_address'],
+		110, $_REQUEST['inbound_pop_user'], $_REQUEST['inbound_pop_password'], 
+		$_REQUEST['outbound_address'],
+		$_REQUEST['outbound_from'],
 		$_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'],
 		$_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'],
 		$_REQUEST['moderator_group'], $_REQUEST['forum_password'], $_REQUEST['forum_use_password'], $_REQUEST['att'],
@@ -245,6 +249,7 @@ if (isset($_REQUEST["save"])) {
 	$info["topics_list_replies"] = 'y';
 	$info["show_description"] = 'n';
 	$info["outbound_address"] = '';
+	$info["outbound_from"] = '';
 	$info["inbound_pop_servers"] = '';
 	$info["inbound_pop_port"] = 110;
 	$info["inbound_pop_user"] = '';
@@ -295,6 +300,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('threadOrdering', $info["threadOrdering"]);
 	$smarty->assign('pruneMaxAge', $info["pruneMaxAge"]);
 	$smarty->assign('outbound_address', $info['outbound_address']);
+	$smarty->assign('outbound_from', $info['outbound_from']);
 	$smarty->assign('inbound_pop_server', $info['inbound_pop_server']);
 	$smarty->assign('inbound_pop_port', $info['inbound_pop_port']);
 	$smarty->assign('inbound_pop_user', $info['inbound_pop_user']);

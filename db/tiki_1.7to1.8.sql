@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.16 2003-08-26 13:26:14 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.17 2003-09-24 00:30:31 rlpowell Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -347,6 +347,9 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('default_map', '
 ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
 
 ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
+
+# Per-forum from address.  -rlpowell
+ALTER TABLE `tiki_forums` ADD `outbound_from` VARCHAR( 250 ) AFTER `outbound_address` ;
 
 # \todo rename to tiki_sessions
 # \todo lower case these field names, postgres dislikes non-lowercase fields

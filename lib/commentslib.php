@@ -233,7 +233,16 @@ class Comments extends TikiLib {
 			if (empty($aux["sender"]["name"]))
 				$aux["sender"]["name"] = $aux["sender"]["email"];
 
-			$title = addslashes(trim($aux['subject']));
+			// Remove 're:' and [forum]. -rlpowell
+			$title = addslashes(
+				trim(
+				    preg_replace( "/[rR][eE]:/", "", 
+					preg_replace( "/$\[[-A-Za-z _:]*\]/", "", 
+					    $aux['subject'] 
+					    )
+					)
+				    )
+				);
 			$email = $aux["sender"]["email"];
 			$message = $pop3->GetMessage($i);
 			$full = $message["full"];
@@ -254,10 +263,18 @@ class Comments extends TikiLib {
 				$body = $parts["text"][0];
 
 			//Todo: check permissions
-			$object = 'forum' . $forumId; // post_new_comment does md5()
+
+			// post_new_comment does md5()
+			$object = 'forum' . $forumId;
+			//   But that doesn't matter because first we're
+			//   going to do a select to see if it already
+			//   exists. -rlpowell
+			$object_md5 = md5('forum' . $forumId);
+
 			// Determine if this is a topic or a thread
 			$parentId = $this->getOne(
-				"select `threadId` from `tiki_comments` where `object`=? and `parentId`=0 and locate(`title`,?)",array($object,$title)); //todo: replace mysql locate() 
+				"select `threadId` from `tiki_comments` where `object`=? and `parentId`=0 and locate(`title`,?)",
+				array($object_md5,$title)); //todo: replace mysql locate() 
 
 			if (!$parentId)
 				$parentId = 0;
@@ -270,6 +287,15 @@ class Comments extends TikiLib {
 
 			// post
 			$this->post_new_comment($object, $parentId, $userName, $title, $body, $type = 'n', $summary = '', $smiley = '');
+
+			if ($info["outbound_address"]) {
+			    @mail(
+				    $info["outbound_address"],
+				    $title,
+				    $body,
+				    "From: " . $info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
+				 );
+			}
 
 			$pop3->DeleteMessage($i);
 		}
@@ -412,7 +438,9 @@ class Comments extends TikiLib {
 		$usePruneUnreplied, $pruneUnrepliedAge, $usePruneOld, $pruneMaxAge, $topicsPerPage, $topicOrdering, $threadOrdering,
 		$section, $topics_list_reads, $topics_list_replies, $topics_list_pts, $topics_list_lastpost, $topics_list_author,
 		$vote_threads, $show_description, $inbound_pop_server, $inbound_pop_port, $inbound_pop_user, $inbound_pop_password,
-		$outbound_address, $topic_smileys, $topic_summary, $ui_avatar, $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
+		$outbound_address, 
+		$outbound_from, 
+		$topic_smileys, $topic_summary, $ui_avatar, $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 		$approval_type, $moderator_group, $forum_password, $forum_use_password, $att, $att_store, $att_store_dir, $att_max_size) {
 		$name = addslashes($name);
 
@@ -424,6 +452,7 @@ class Comments extends TikiLib {
 		$inbound_pop_password = addslashes($inbound_pop_password);
 
 		$outbound_address = addslashes($outbound_address);
+		$outbound_from = addslashes($outbound_from);
 
 		if ($forumId) {
 			$query = "update tiki_forums set
@@ -447,6 +476,7 @@ class Comments extends TikiLib {
                 inbound_pop_user = '$inbound_pop_user',
                 inbound_pop_password = '$inbound_pop_password',
                 outbound_address = '$outbound_address',
+                outbound_from = '$outbound_from',
                 topic_smileys = '$topic_smileys',
                 topic_summary = '$topic_summary',
                 ui_avatar = '$ui_avatar',
@@ -480,7 +510,9 @@ class Comments extends TikiLib {
                 `comments`, `controlFlood`,`floodInterval`, `moderator`, `hits`, `mail`, `useMail`, `usePruneUnreplied`,
                 `pruneUnrepliedAge`, `usePruneOld`,`pruneMaxAge`, `topicsPerPage`, `topicOrdering`, `threadOrdering`,`section`,
                 `topics_list_reads`,`topics_list_replies`,`topics_list_pts`,`topics_list_lastpost`,`topics_list_author`,`vote_threads`,`show_description`,
-                `inbound_pop_server`,`inbound_pop_port`,`inbound_pop_user`,`inbound_pop_password`,`outbound_address`,
+                `inbound_pop_server`,`inbound_pop_port`,`inbound_pop_user`,`inbound_pop_password`,
+		`outbound_address`,
+		`outbound_from`,
                 `topic_smileys`,`topic_summary`,
                 `ui_avatar`,`ui_flag`,`ui_posts`,`ui_level`,`ui_email`,`ui_online`,`approval_type`,`moderator_group`,`forum_password`,`forum_use_password`,`att`,`att_store`,`att_store_dir`,`att_max_size`) 
                 values (?,?,?,?,?,?,?,?,?,?,
@@ -494,7 +526,9 @@ class Comments extends TikiLib {
                         $pruneMaxAge, $topicsPerPage,
                         $topicOrdering,$threadOrdering,$section,
                         $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads,$show_description,
-                        $inbound_pop_server,$inbound_pop_port,$inbound_pop_user,$inbound_pop_password,$outbound_address,
+                        $inbound_pop_server,$inbound_pop_port,$inbound_pop_user,$inbound_pop_password,
+			$outbound_address,
+			$outbound_from,
                         $topic_smileys,$topic_summary,
                         $ui_avatar,$ui_flag,$ui_posts,$ui_level,$ui_email,$ui_online,$approval_type,$moderator_group,$forum_password,$forum_use_password,$att,$att_store,$att_store_dir,$att_max_size);
 			$result = $this->query($query,$bindvars);
