@@ -1,36 +1,70 @@
-{if $tiki_p_admin eq 'y'}
-<div class="box" style="width:170px;">
-<div class="box-title" style="width:170px;">
-<a class='flip' href="javascript:flip('adminmenu');">{tr}Admin{/tr}</a>
+<div class="box">
+<div class="box-title">
+<a class='flip' href="javascript:flip('adminmnu');">{tr}Admin Menu{/tr}</a>
 </div>
-<div id='adminmenu' class="box-data" style="width:170px;">
-  <div class="button">&nbsp;<a href="tiki-admin.php" class="linkbut">{tr}Admin{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-adminusers.php" class="linkbut">{tr}Users{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admingroups.php" class="linkbut">{tr}Groups{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_cache.php" class="linkbut">{tr}Cache{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admin_modules.php" class="linkbut">{tr}Modules{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admin_links.php" class="linkbut">{tr}Links{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admin_hotwords.php" class="linkbut">{tr}Hotwords{/tr}</a></div>
-  <div class="separator">Galleries</div>
-  <div class="button">&nbsp;<a href="tiki-galleries.php" class="linkbut">{tr}Galleries{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkbut">{tr}System gallery{/tr}</a></div>
-  <div class="separator">Wiki</div>
-  <div class="button">&nbsp;<a href="tiki-listpages.php" class="linkbut">{tr}Pages{/tr}</a></div>
-  <div class="separator">CMS</div>
-  <div class="button">&nbsp;<a href="tiki-admin_topics.php" class="linkbut">{tr}Topics{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_articles.php" class="linkbut">{tr}Articles{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-edit_article.php" class="linkbut">{tr}Edit article{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_submissions.php" class="linkbut">{tr}Submissions{/tr}</a></div>
-  <div class="separator">Blogs</div>
-  <div class="button">&nbsp;<a href="tiki-list_blogs.php" class="linkbut">{tr}Blogs{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_posts.php" class="linkbut">{tr}Posts{/tr}</a></div>
-  <div class="separator">Banners</div>
-  <div class="button">&nbsp;<a href="tiki-list_banners.php" class="linkbut">{tr}Banners{/tr}</a></div>
-  <div class="separator">Templates</div>
-  <div class="button">&nbsp;<a href="tiki-edit_templates.php" class="linkbut">{tr}Edit templates{/tr}</a></div>
-  <div class="separator">Dynamic content system</div>
-  <div class="button">&nbsp;<a href="tiki-list_contents.php" class="linkbut">{tr}Admin content{/tr}</a></div>
-</div>
-</div>
+<div id='adminmnu' class="box-data">
+{if $tiki_p_admin eq 'y' or 
+ $tiki_p_admin_chat eq 'y' or
+ $tiki_p_admin_categories eq 'y' or
+ $tiki_p_admin_banners eq 'y' or
+ $tiki_p_edit_templates eq 'y' or
+ $tiki_p_admin_dynamic eq 'y' or
+ $tiki_p_admin_dynamic eq 'y' or
+ $tiki_p_edit_content_templates eq 'y' or
+ $tiki_p_edit_html_pages eq 'y' or
+ $tiki_p_view_referer_stats eq 'y' or
+ $tiki_p_admin_drawings eq 'y' or
+ $tiki_p_admin_shoutbox eq 'y'
+ }
+    {if $tiki_p_admin eq 'y'}
+      &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br/>
+      &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br/>
+      &nbsp;<a href="tiki-list_cache.php" class="linkmenu">{tr}Cache{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_modules.php" class="linkmenu">{tr}Modules{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_links.php" class="linkmenu">{tr}Links{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_hotwords.php" class="linkmenu">{tr}Hotwords{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_rssmodules.php" class="linkmenu">{tr}RSS modules{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br/>
+      &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br/>
+      &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_chat eq 'y'}
+      &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_categories eq 'y'}
+      &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br/>
+    {/if}   
+    {if $tiki_p_admin_banners eq 'y'}
+      &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_edit_templates eq 'y'}
+      &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit templates{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_drawings eq 'y'}
+      &nbsp;<a href="tiki-admin_drawings.php" class="linkmenu">{tr}Admin drawings{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_dynamic eq 'y'}
+      &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic content{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_edit_cookies eq 'y'}
+      &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_edit_content_templates eq 'y'}
+      &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_edit_html_pages eq 'y'}
+      &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML pages{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_shoutbox eq 'y'}
+      &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_view_referer_stats eq 'y'}
+    &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br/>
+    {/if}
+  </div>
 {/if}
 
+</div>
+</div>

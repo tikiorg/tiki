@@ -10,7 +10,7 @@ function smarty_function_poll($params, &$smarty)
     }
     if($id) {
       $menu_info = $tikilib->get_poll($id);
-      $channels = $tikilib->list_poll_options($id,0,-1,'title_asc','');
+      $channels = $tikilib->list_poll_options($id,0,-1,'pollId_asc','');
       $smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels["data"]);

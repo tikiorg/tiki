@@ -59,6 +59,10 @@ function replaceSome(fooel,what,repl) {
   document.getElementById(fooel).value = document.getElementById(fooel).value.replace(what,repl);
 }
 
+function replaceLimon(vec) {
+  document.getElementById(vec[0]).value = document.getElementById(vec[0]).value.replace(vec[1],vec[2]);
+}
+
 function setUserModuleFromCombo(id) {
   document.getElementById('usermoduledata').value=document.getElementById('usermoduledata').value + document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
   //document.getElementById('usermoduledata').value='das';
@@ -86,6 +90,7 @@ function hide(foo) {
 // -->
 </script>
 {/literal}
+{$trl}
 
   </head>
   <body {if $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  

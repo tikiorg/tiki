@@ -1,3 +1,4 @@
+{popup_init src="lib/overlib.js"}
 {if $preview eq 'y'}
 {include file=tiki-preview_post.tpl}
 {/if}

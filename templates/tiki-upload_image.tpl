@@ -1,4 +1,5 @@
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br/><br/>
+<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="link">{tr}Browse gallery{/tr}</a><br/><br/>
 <div align="center">
 <form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">
 <table class="normal">

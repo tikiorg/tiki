@@ -1,6 +1,13 @@
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br/><br/>
-
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+<a href="tiki-stats?chart=usage" class="link">{tr}Usage chart{/tr}</a><br/><br/>
+{if $usage_chart eq 'y'}
+<br/> 
+<div align="center">
+<img src="tiki-usage_chart.php" />
+</div>
+<br/><br/>
+{/if}
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Site stats -->
 <a name="site_stats"></a>
 <table class="normal">
@@ -29,7 +36,7 @@
 {/if}
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>] 
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Wiki Stats -->
 <a name="wiki_stats"></a>
 <table class="normal">
@@ -47,7 +54,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Image gallleries stats -->
 <a name="igal_stats"></a>
 <table class="normal">
@@ -63,7 +70,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- File gallleries stats -->
 <a name="fgal_stats"></a>
 <table class="normal">
@@ -80,7 +87,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- CMS stats -->
 <a name="cms_stats"></a>
 <table class="normal">
@@ -96,7 +103,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Forum stats -->
 <a name="forum_stats"></a>
 <table class="normal">
@@ -112,7 +119,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Blogs stats -->
 <a name="blog_stats"></a>
 <table class="normal">
@@ -128,7 +135,7 @@
 
 <br/>
 
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <!-- Poll stats -->
 <a name="poll_stats"></a>
 <table class="normal">
@@ -142,7 +149,7 @@
 <br/>
 
 <!-- FAQ stats -->
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <a name="faq_stats"></a>
 <table class="normal">
 <tr><td class="heading" colspan="2">{tr}Faq Stats{/tr}</td></tr>
@@ -155,7 +162,7 @@
 <br/>
 
 <!-- Users stats -->
-[<a class="link" href="#site_stats">{tr}Site{/tr}</a>|<a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a>|<a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a>|<a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a>|<a class="link" href="#forum_stats">{tr}Forums{/tr}</a>|<a class="link" href="#faq_stats">{tr}FAQs{/tr}</a>|<a class="link" href="#user_stats">{tr}User{/tr}</a>|<a class="link" href="#poll_stats">{tr}Polls{/tr}</a>|<a class="link" href="#cms_stats">{tr}CMS{/tr}</a>|<a class="link" href="#blog_stats">{tr}Blogs{/tr}</a>]
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
 <a name="user_stats"></a>
 <table class="normal">
 <tr><td class="heading" colspan="2">{tr}User Stats{/tr}</td></tr>
@@ -164,6 +171,24 @@
 <tr><td class="even">{tr}Average bookmarks per user{/tr}</td><td class="even" style="text-align:right;">{$user_stats.bpu|string_format:"%.2f"}</td></tr>
 </table>
 <!-- Usersstats -->
+
+<br/>
+
+<!-- Quiz stats -->
+[<a class="link" href="#site_stats">{tr}Site{/tr}</a> | <a class="link" href="#wiki_stats">{tr}Wiki{/tr}</a> | <a class="link" href="#igal_stats">{tr}Image galleries{/tr}</a> | <a class="link" href="#fgal_stats">{tr}File galleries{/tr}</a> | <a class="link" href="#forum_stats">{tr}Forums{/tr}</a> | <a class="link" href="#faq_stats">{tr}FAQs{/tr}</a> | <a class="link" href="#user_stats">{tr}User{/tr}</a> | <a class="link" href="#poll_stats">{tr}Polls{/tr}</a> | <a class="link" href="#cms_stats">{tr}CMS{/tr}</a> | <a class="link" href="#blog_stats">{tr}Blogs{/tr}</a> | <a class="link" href="#quiz_stats">{tr}Quizzes{/tr}</a>] 
+<a name="quiz_stats"></a>
+<table class="normal">
+<tr><td class="heading" colspan="2">{tr}Quiz Stats{/tr}</td></tr>
+<tr><td class="even">{tr}Quizzes{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.quizzes}</td></tr>
+<tr><td class="odd">{tr}Questions{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.questions}</td></tr>
+<tr><td class="even">{tr}Average questions per quiz{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.qpq|string_format:"%.2f"}</td></tr>
+<tr><td class="odd">{tr}Quizzes taken{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.visits}</td></tr>
+<tr><td class="even">{tr}Average quiz score{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.avg|string_format:"%.2f"}</td></tr>
+<tr><td class="odd">{tr}Average time per quiz{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.avgtime|string_format:"%.2f"} secs</td></tr>
+</table>
+<!-- Quiz stats -->
+
+
 <br/>
 <br/>
 <br/>

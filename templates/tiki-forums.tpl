@@ -34,14 +34,18 @@
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 <a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">admin</a>
-{/if}
+{/if}<br/>
+<small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
 </td>
 <td class="forumstableinfoodd">{$channels[user].threads}</td>
 <td class="forumstableinfoodd">{$channels[user].comments}</td>
 <!--<td class="forumstableinfodd">{$channels[user].users}</td> -->
 <!--<td class="forumstableinfoodd">{$channels[user].age}</td> -->
 <td class="forumstableinfoodd">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td class="forumstableinfoodd">{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+<td class="forumstableinfoodd">
+{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}<br/>
+<small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+</td>
 <td class="forumstableinfoodd">{$channels[user].hits}</td>
 </tr>
 {else}
@@ -53,14 +57,18 @@
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 <a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">admin</a>
-{/if}
+{/if}<br/>
+<small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
 </td>
 <td class="forumstableinfoeven">{$channels[user].threads}</td>
 <td class="forumstableinfoeven">{$channels[user].comments}</td>
 <!--<td class="forumstableinfoeven">{$channels[user].users}</td>-->
 <!--<td class="forumstableinfoeven">{$channels[user].age}</td> -->
 <td class="forumstableinfoeven">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td class="forumstableinfoeven">{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+<td class="forumstableinfoeven">
+{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}<br/>
+<small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
+</td>
 <td class="forumstableinfoeven">{$channels[user].hits}</td>
 </tr>
 {/if}
