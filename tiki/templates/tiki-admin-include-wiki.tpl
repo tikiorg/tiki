@@ -120,7 +120,21 @@
     <div class="simplebox">
     <form method="post" action="tiki-admin.php#wiki">
     <table><tr>
-    <td class="form">{tr}Wiki Page Names{/tr}</td><td class="form">
+    <td colspan="2" class="form">{tr}Wiki Discussion{/tr}</td></tr><tr><td class="form">
+    {tr}Discuss pages on forums{/tr}: </td><td>
+    <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
+    <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
+    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum}"/>
+    <tr><td align="center" colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
+    </td>
+    </tr></table>
+    </form>
+    </div>
+  
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php#wiki">
+    <table><tr>
+    <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
     <select name="wiki_page_regex">
     <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
     <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}strict{/tr}</option>
@@ -130,7 +144,7 @@
     </tr></table>
     </form>
     </div>
-    
+
     </td>
     
     <td width="40%" valign="top">
