@@ -144,7 +144,8 @@ if(!isset($nextscaleinfo["xsize"])) {
   $nextscaleinfo["ysize"]=0;}
 if($info["maxRows"]==0) $info["maxRows"]=10;
 if($info["rowImages"]==0) $info["rowImages"]=6;
-$maxRecords = $info["maxRows"] * $info["rowImages"];
+$maxImages = $info["maxRows"] * $info["rowImages"];
+$smarty->assign_by_ref('maxImages',$maxImages);
 $smarty->assign_by_ref('rowImages',$info["rowImages"]);
 $smarty->assign('rowImages2',$info["rowImages"]-1);
 $smarty->assign_by_ref('thx',$info["thumbSizeX"]);
@@ -191,18 +192,18 @@ if(isset($_REQUEST["find"])) {
   $_REQUEST["find"] = '';
 }
 
-$images = $imagegallib->get_images($offset,$maxRecords,$sort_mode,$find,$_REQUEST["galleryId"]);
-$cant_pages = ceil($images["cant"] / $maxRecords);
+$images = $imagegallib->get_images($offset,$maxImages,$sort_mode,$find,$_REQUEST["galleryId"]);
+$cant_pages = ceil($images["cant"] / $maxImages);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
-$smarty->assign('actual_page',1+($offset/$maxRecords));
-if($images["cant"] > ($offset+$maxRecords)) {
-  $smarty->assign('next_offset',$offset + $maxRecords);
+$smarty->assign('actual_page',1+($offset/$maxImages));
+if($images["cant"] > ($offset+$maxImages)) {
+  $smarty->assign('next_offset',$offset + $maxImages);
 } else {
   $smarty->assign('next_offset',-1); 
 }
 // If offset is > 0 then prev_offset
 if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
+  $smarty->assign('prev_offset',$offset - $maxImages);  
 } else {
   $smarty->assign('prev_offset',-1); 
 }
