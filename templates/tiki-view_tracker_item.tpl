@@ -37,15 +37,15 @@
 {section name=ix loop=$ins_fields}
 {if $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].label}</h3>
+<h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
 {elseif $ins_fields[ix].type ne 'x'}
 {if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1'}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td>
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
-<td>{$ins_fields[ix].label}</td><td>
+<td>{$ins_fields[ix].name}</td><td>
 {else}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td>
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
 <td colspan="3">
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
@@ -187,7 +187,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 {section name=ix loop=$fields}
-<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
+<input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
 {/section}
 <table>
 <tr><td>{tr}Status{/tr}</td>
@@ -204,20 +204,20 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 {if $ins_fields[ix].type ne 'x'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].label}</h3>
+<h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
 {else}
-{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1'}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td>
+{if $ins_fields[ix].type eq 'c' and $ins_fields[ix].options eq '1'}
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
-<td>{$ins_fields[ix].label}</td><td>
+<td>{$ins_fields[ix].name}</td><td>
 {else}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td colspan="3">
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td colspan="3">
 {/if}
 {/if}
 
 {if $ins_fields[ix].type eq 'u'}
-<select name="ins_{$ins_fields[ix].name}">
+<select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$users}
 <option value="{$users[ux]|escape}" {if $ins_fields[ix].value eq $users[ux]}selected="selected"{/if}>{$users[ux]}</option>
@@ -225,7 +225,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 </select>
 
 {elseif $ins_fields[ix].type eq 'g'}
-<select name="ins_{$ins_fields[ix].name}">
+<select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux].groupName|escape}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
@@ -241,33 +241,33 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 </table>
 
 {elseif $ins_fields[ix].type eq 't'}
-<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
+<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" />
 
 {elseif $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
+<textarea name="ins_{$ins_fields[ix].id}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
 
 {elseif $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
+{html_select_date prefix=$ins_fields[ix].ins_id time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].ins_id time=$ins_fields[ix].value display_seconds=false}
 
 {elseif $ins_fields[ix].type eq 'd'}
-<select name="ins_{$ins_fields[ix].name}">
+<select name="ins_{$ins_fields[ix].id}">
 {section name=jx loop=$ins_fields[ix].options_array}
 <option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
 
 {elseif $ins_fields[ix].type eq 'c'}
-<input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
+<input type="checkbox" name="ins_{$ins_fields[ix].id}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
 
 {elseif $ins_fields[ix].type eq 'j'}
-<input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].name}" />
-<span id="disp_{$ins_fields[ix].name}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<input type="hidden" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].id}" />
+<span id="disp_{$ins_fields[ix].id}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$ins_fields[ix].value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
-inputField  : "ins_{$ins_fields[ix].name}",      // ID of the input field
+inputField  : "ins_{$ins_fields[ix].id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
-displayArea : "disp_{$ins_fields[ix].name}",       // ID of the span where the date is to be shown
+displayArea : "disp_{$ins_fields[ix].id}",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
@@ -299,7 +299,7 @@ align       : "bR"
 <input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$item_info.$valvar|escape}" />
 {/if}
 {/section}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
 </table>
 </form>
 {/capture}

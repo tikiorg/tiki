@@ -27,7 +27,7 @@
 </td><td class="formcolor">
 <select name="type" id='trkfldtype' onchange="javascript:chgTrkFld('{$fld}',this.options[selectedIndex].value);">
 {foreach key=fk item=fi from=$field_types}
-<option value="{$fk}" {if $type eq $fk}{if $fi.opt}{assign var=showit value=true}{/if}selected="selected"{/if}>{$fi.label}</option>
+<option value="{$fk}" {if $type eq $fk}{if $fi.opt}{assign var=showit value=true}{/if}selected="selected"{/if}>{$fi.name}</option>
 {/foreach}
 </select>
 <span  id='z' {if $showit}style="display:inline;"{else}style="display:none;"{/if}><br /><input type="text" name="options" value="{$options|escape}" size="50" /></span>
@@ -65,8 +65,8 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].label}</td>
-<td class="{cycle advance=false}">{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
+<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}">{assign var=x value=$channels[user].type}{$field_types[$x].name}</td>
 <td class="{cycle advance=false}">{$channels[user].isMain}</td>
 <td class="{cycle advance=false}">{$channels[user].isTblVisible}</td>
 <td class="{cycle}">

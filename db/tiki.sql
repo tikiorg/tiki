@@ -3040,6 +3040,23 @@ CREATE TABLE tiki_tracker_items (
 # --------------------------------------------------------
 
 #
+# Table structure for table `tiki_tracker_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 01:48 PM
+#
+
+DROP TABLE IF EXISTS tiki_tracker_options;
+CREATE TABLE tiki_tracker_options (
+  trackerId int(12) NOT NULL default '0',
+  name varchar(80) default NULL,
+  value text default NULL,
+  PRIMARY KEY (trackerId,name(30))
+) TYPE=MyISAM ;
+# --------------------------------------------------------
+
+
+#
 # Table structure for table `tiki_trackers`
 #
 # Creation: Jul 03, 2003 at 07:42 PM

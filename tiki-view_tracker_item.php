@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.27 2004-01-21 03:51:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.28 2004-01-22 07:55:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,18 +65,18 @@ $smarty->assign('tracker_info', $tracker_info);
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
 for ($i = 0; $i < count($fields["data"]); $i++) {
-	$name = $fields["data"][$i]["name"];
-	$ins_name = 'ins_' . $name;
-	$ins_fields["data"][$i]["ins_name"] = $ins_name;
+	$fid = $fields["data"][$i]["fieldId"];
+	$ins_id = 'ins_' . $fid;
+	$ins_fields["data"][$i]["id"] = $ins_id;
 
 	if ($fields["data"][$i]["type"] != 'c' && $fields["data"][$i]["type"] != 'f') {
-		if (isset($_REQUEST["$name"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$name"];
+		if (isset($_REQUEST["$fid"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if (isset($_REQUEST["$ins_name"])) {
-			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_name"];
+		if (isset($_REQUEST["$ins_id"])) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
 			$ins_fields["data"][$i]["value"] = '';
 		}
@@ -84,9 +84,9 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
-		if (isset($_REQUEST["$ins_name" . "Day"])) {
-			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_name" . "Hour"], $_REQUEST["$ins_name" . "Minute"],
-				0, $_REQUEST["$ins_name" . "Month"], $_REQUEST["$ins_name" . "Day"], $_REQUEST["$ins_name" . "Year"]);
+		if (isset($_REQUEST["$ins_id" . "Day"])) {
+			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
+				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 		}
 	}
 
@@ -97,12 +97,12 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	}
 
 	if ($fields["data"][$i]["type"] == 'c') {
-		if (isset($_REQUEST["$name"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$name"];
+		if (isset($_REQUEST["$fid"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$fid"];
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if (isset($_REQUEST["$ins_name"]) && $_REQUEST["$ins_name"] == 'on') {
+		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
 		} else {
 			$ins_fields["data"][$i]["value"] = 'n';
@@ -124,9 +124,9 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
 
 		for ($i = 0; $i < count($fields["data"]); $i++) {
-			$name = $fields["data"][$i]["name"];
+			$fid = $fields["data"][$i]["fieldId"];
 
-			$ins_name = 'ins_' . $name;
+			$ins_id = 'ins_' . $fid;
 			$ins_fields["data"][$i]["value"] = '';
 		}
 
@@ -141,29 +141,28 @@ if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 		if ($fields["data"][$i]["type"] != 'h') {
-			$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
-			$ins_name = 'ins_' . $name;
+			$fid = $fields["data"][$i]["fieldId"];
+			$ins_fields["data"][$i]["id"] = $fid;
 			if ($fields["data"][$i]["type"] == 'c') {
-				if (!isset($info["$name"])) $info["$name"] = 'n';
+				if (!isset($info["$fid"])) $info["$fid"] = 'n';
 			} else {
-				if (!isset($info["$name"])) $info["$name"] = '';
+				if (!isset($info["$fid"])) $info["$fid"] = '';
 			}
 			if ($fields["data"][$i]["type"] == 'e') {
 				foreach ($cat as $c) {
 					$ins_fields["data"][$i]["value"]["$c"] = 'y';
 				}
 			} elseif ($fields["data"][$i]["type"] == 'a') {
-				$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+				$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$fid"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = $info["$name"];
+				$ins_fields["data"][$i]["value"] = $info["$fid"];
 			}
 		}
 	}
 }
 
 $smarty->assign_by_ref('fields', $fields["data"]);
-$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
-$smarty->assign_by_ref('ins_keys', $keys);
+$smarty->assign('ins_fields', $ins_fields["data"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';

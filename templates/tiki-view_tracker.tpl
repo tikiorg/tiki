@@ -60,7 +60,8 @@ class="prevnext">{tr}All{/tr}</a>
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
-$fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode=f_{if $sort_mode|escape:"url" eq $fields[ix].label|escape:'url'|cat:'_desc'}{$fields[ix].label|escape:"url"}_asc{else}{$fields[ix].label|escape:"url"}_desc{/if}">{$fields[ix].label}</a></td>
+$fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode=f_{if $sort_mode|escape:"url" eq
+$fields[ix].name|escape:'url'|cat:'_desc'}{$fields[ix].name|escape:"url"}_asc{else}{$fields[ix].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -184,7 +185,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
 {if $fields[ix].type ne 'i'}
-<tr><td class="formcolor">{$fields[ix].label}</td>
+<tr><td class="formcolor">{$fields[ix].name}</td>
 {/if}
 {if $fields[ix].type ne 'i'}
 <td class="formcolor">
@@ -250,7 +251,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {section name=ix loop=$ins_fields}
 
 {if $ins_fields[ix].type ne 'x' and $ins_fields[ix].type ne 'h'}
-<tr class="formcolor"><td>{$ins_fields[ix].label}</td>
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
 <td>
 {/if}
 
@@ -272,7 +273,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 
 {elseif $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].label}</h3>
+<h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
 
 {elseif $ins_fields[ix].type eq 'e'}
