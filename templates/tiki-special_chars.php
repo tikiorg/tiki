@@ -122,6 +122,8 @@ onchange="handleListChange(this)">
               <option value="¥"> ¥ </option>
               <option value="Æ"> Æ </option>
               <option value="æ"> æ </option>
+              <option value="Œ"> Œ </option>
+              <option value="œ"> œ </option>
               <option value="ß"> ß </option>
               <option value="Ç"> Ç </option>
               <option value="ç"> ç </option>
@@ -148,4 +150,3 @@ onclick="window.close();" name="close" value="close" />
 </table>
 </form>
 </body>
-
