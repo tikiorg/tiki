@@ -71,7 +71,8 @@ function qstr($str) {
     }
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
 
     return $result;
     }
@@ -118,7 +119,8 @@ function qstr($str) {
 
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
 
     return $result;
 }
@@ -158,7 +160,8 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $res = $result->fetchRow();
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
 
     if ($res === false)
         return (NULL); //simulate pears behaviour

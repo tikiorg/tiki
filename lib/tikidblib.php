@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.2 2003-11-16 19:34:28 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.3 2003-11-21 01:50:06 redflo Exp $
 //
 
 
@@ -8,13 +8,11 @@ class TikiDB {
 // Database access functions
 
 var $db; // The ADODB db object used to access the database
-var $num_queries;
 
 function TikiDB($db)
 {
   if (!$db) die("Invalid db object passed to TikiLib constructor");
   $this->db = $db;
-  $this->num_queries = 0;
 }
 
 // Use ADOdb->qstr() for 1.8
@@ -46,7 +44,8 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
     }
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
     $this->debugger_log($query, $values);
     return $result;
 }
@@ -79,7 +78,8 @@ function query($query, $values = null, $numrows = -1,
 
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
     $this->debugger_log($query, $values);
     return $result;
 }
@@ -106,7 +106,8 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $res = $result->fetchRow();
 
     //count the number of queries made
-    $this->num_queries++;
+    global $num_queries;
+    $num_queries++;
     $this->debugger_log($query, $values);
 
     if ($res === false)
