@@ -28,7 +28,15 @@
 	</table>
 </BODY></HTML>
 {else}
-<SCRIPT language=javascript>
+
+{*
+date: 2003/07/23 21:40:07;  author: ohertel;  state: Exp;  lines: +1 -1
+fixing <script> tags to valid version
+-<SCRIPT language=javascript>
++<script language='Javascript' type='text/javascript'>
+*}
+
+<script language='Javascript' type='text/javascript'>
 	if( self.name == '' ) {ldelim}
 	   var title = 'Console';
 	{rdelim}
@@ -60,5 +68,5 @@
 	_smarty_console.document.write("</table>");
 	_smarty_console.document.write("</BODY></HTML>");
 	_smarty_console.document.close();
-</SCRIPT>
+</script>
 {/if}

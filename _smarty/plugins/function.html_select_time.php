@@ -155,6 +155,13 @@ function smarty_function_html_select_time($params, &$smarty)
         $html_result .= "</select>\n";
     }
 
+	// date: 2003/02/12 21:23:52;  author: gilshwartz;  state: Exp;  lines: +1 -1
+	// Enforce LTR direction of time entry regardless of overall directionality.
+	// -    print $html_result;
+	// +    print '<span dir="ltr">'.$html_result.'</span>';
+	
+    $html_result = '<span dir="ltr">' . $html_result . '</span>';
+    
     return $html_result;
 }
 

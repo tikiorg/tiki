@@ -43,7 +43,7 @@
  * @version 2.6.0-RC1-cvs
  */
 
-/* $Id: Smarty.class.php,v 1.1.1.1 2003-08-20 23:50:11 rossta Exp $ */
+/* $Id: Smarty.class.php,v 1.2 2003-08-21 00:12:08 rossta Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -1191,8 +1191,13 @@ class Smarty
 				. urlencode($resource_name)
 				. '.php';
 
+// date: 2002/12/24 20:46:42;  author: lrargerich;  state: Exp;  lines: +1 -1
+// Added @ to prevent some warnings
+// -        if (!$this->force_compile && file_exists($compile_path)) {
+// +        if (!$this->force_compile && @file_exists($compile_path)) {
+
 		if(!$this->force_compile
-			&& file_exists($this->_cache_paths_file)) {
+			&& @file_exists($this->_cache_paths_file)) {
 			include_once($this->_cache_paths_file);
 		}		
 				
@@ -1469,7 +1474,7 @@ class Smarty
      */    
     function _is_compiled($resource_name, $compile_path)
     {
-        if (!$this->force_compile && file_exists($compile_path)) {
+        if (!$this->force_compile && @file_exists($compile_path)) {
             if (!$this->compile_check) {
                 // no need to check compiled file
                 return true;
@@ -1541,7 +1546,7 @@ class Smarty
      */    
     function _compile_source($resource_name, &$source_content, &$compiled_content, $cache_include_path=null)
     {
-        if (file_exists(SMARTY_DIR . $this->compiler_file)) {
+        if (@file_exists(SMARTY_DIR . $this->compiler_file)) {
             require_once(SMARTY_DIR . $this->compiler_file);
         } else {
             // use include_path
@@ -1731,7 +1736,7 @@ class Smarty
                 settype($_resource_base_path, 'array');
                 foreach ($_resource_base_path as $_curr_path) {
                     $_fullpath = $_curr_path . DIRECTORY_SEPARATOR . $params['resource_name'];
-                    if (file_exists($_fullpath) && is_file($_fullpath)) {
+                    if (@file_exists($_fullpath) && is_file($_fullpath)) {
                         $params['resource_name'] = $_fullpath;
                         return true;
                     }
