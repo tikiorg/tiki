@@ -51,7 +51,7 @@ Errors:<br/>
   	{if $template eq 'y'}
       <a class="link" href="javascript:setSomeElement('src','\n{ldelim}if{rdelim}\n{ldelim}elseif{rdelim}\n{ldelim}else{rdelim}\n{ldelim}/if{rdelim}\n');">{ldelim}if{rdelim}{ldelim}/if{rdelim}</a><hr/>
       <a class="link" href="javascript:setSomeElement('src','\n{ldelim}section name= loop={rdelim}\n{ldelim}sectionelse{rdelim}\n{ldelim}/section{rdelim}\n');">{ldelim}section{rdelim}{ldelim}/section{rdelim}</a><hr/>
-      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}foreach from= item={rdelim}\n{ldelim}foreachelse{rdelim}\n{ldelim}/foreach&{rdelim}\n');">{ldelim}foreach{rdelim}{ldelim}/foreach{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}foreach from= item={rdelim}\n{ldelim}foreachelse{rdelim}\n{ldelim}/foreach{rdelim}\n');">{ldelim}foreach{rdelim}{ldelim}/foreach{rdelim}</a><hr/>
       <a class="link" href="javascript:setSomeElement('src','\n{ldelim}tr{rdelim}{ldelim}/tr{rdelim}\n');">{ldelim}tr{rdelim}{ldelim}/tr{rdelim}</a><hr/>
       <a class="link" href="javascript:setSomeElement('src','\n{ldelim}literal{rdelim}\n{ldelim}/literal{rdelim}\n');">{ldelim}literal{rdelim}{ldelim}/literal{rdelim}</a><hr/>
       <a class="link" href="javascript:setSomeElement('src','\n{ldelim}* *{rdelim}\n');">{ldelim}* *{rdelim}</a><hr/>
