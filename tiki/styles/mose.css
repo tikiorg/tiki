@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.38 2004-02-16 08:53:44 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.39 2004-02-17 02:17:41 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -282,7 +282,6 @@ TD.module {
 Links in modules 
 */
 .linkmodule {
-padding: 0 5px 0 5px;
 }
 
 .linkmodule:active {
