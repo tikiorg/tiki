@@ -1100,7 +1100,6 @@ class UsersLib extends TikiLib {
 
 	function renew_user_password($user) {
 		$pass = $this->genPass();
-
 		$query = "select email from users_users where login='$user'";
 		$email = $this->getOne($query);
 		$hash = md5($user . $pass . $email);
