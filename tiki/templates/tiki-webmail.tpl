@@ -11,6 +11,16 @@
     <img border="0" src="img/webmail/mailbox.gif"><br/>
     {tr}mailbox{/tr}</a>
   </td>
+  <td>
+    <a class="link" href="tiki-webmail.php?section=compose">
+    <img border="0" src="img/webmail/compose.gif"><br/>
+    {tr}compose{/tr}</a>
+  </td>
+  <td>
+    <a class="link" href="tiki-webmail.php?section=contacts">
+    <img border="0" src="img/webmail/contact.gif"><br/>
+    {tr}contacts{/tr}</a>
+  </td>
 </tr>
 </table>
 <hr/>
@@ -50,12 +60,35 @@
 {/if}
 
 {if $section eq 'mailbox'}
+<table width="100%">
+<tr>
+<td>
+<a class="link" href="tiki-webmail.php?section=mailbox">{tr}View All{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=unread">{tr}Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=flagged">{tr}Flagged{/tr}</a>
+</td>
+<td align="right">
+{tr}Msg{/tr} {$showstart}-{$showend} {tr}of{/tr} {$total} 
+{if $first}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$first}{if $filter}&amp;filter={$filter}{/if}">{tr}First{/tr}</a>{/if} 
+{if $prevstart}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$prevstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Prev{/tr}</a>{/if} 
+{if $nextstart}| <a class="link" href="tiki-webmail.php?section=mailbox&start={$nextstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Next{/tr}</a>{/if} 
+{if $last}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$last}{if $filter}&amp;filter={$filter}{/if}">{tr}Last{/tr}</a>{/if}
+</td>
+</tr>
+</table><br/>
 <form action="tiki-webmail.php" method="post">
 <input type="hidden" name="section" value="mailbox" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="hidden" name="start" value="{$start}" />
+<select name="action">
+<option value="flag">{tr}Mark as Flagged{/tr}</option>
+<option value="unflag">{tr}Mark as unflagged{/tr}</option>
+<option value="read">{tr}Mark as read{/tr}</option>
+<option value="unread">{tr}Mark as unread{/tr}</option>
+</select>
+<input type="submit" name="operate" value="{tr}ok{/tr}" />
 <br/><br/>
 <table class="normal">
 <tr>
+  <td class="heading"></td>
   <td class="heading"></td>
   <td class="heading">{tr}sender{/tr}</td>
   <td class="heading"></td>
@@ -63,17 +96,30 @@
   <td class="heading">{tr}date{/tr}</td>
   <td class="heading">{tr}size{/tr}</td>
 </tr>
-{cycle values="odd,even" print=false}
 {section name=ix loop=$list}
+{if $list[ix].isRead eq 'y'}
+{assign var=class value=even}
+{else}
+{assign var=class value=odd}
+{/if}
 <tr>
-<td class="{cycle advance=false}">
+<td class="{$class}">
 <input type="checkbox" name="msg[{$list[ix].msgid}]" />
+<input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid}" />
 </td>
-<td class="{cycle advance=false}">{$list[ix].sender.name}</td>
-<td class="{cycle advance=false}">{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" />{/if}</td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a></td>
-<td class="{cycle advance=false}">{$list[ix].date}</td>
-<td class="{cycle}">{$list[ix].size}</td>
+<td class="{$class}">
+{if $list[ix].isFlagged eq 'y'}
+<img src="img/webmail/flagged.gif" />
+{/if}
+{if $list[ix].isReplied eq 'y'}
+<img src="img/webmail/replied.gif" />
+{/if}
+</td>
+<td class="{$class}">{$list[ix].sender.name}</td>
+<td class="{$class}">{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" />{/if}</td>
+<td class="{$class}"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a></td>
+<td class="{$class}">{$list[ix].date}</td>
+<td class="{$class}">{$list[ix].size}</td>
 </tr>
 {/section}
 </table>
@@ -81,16 +127,57 @@
 {/if}
 
 {if $section eq 'read'}
+{if $prev}<a class="link" href="tiki-webmail.php?section=read&amp;msgid={$prev}">{tr}Prev{/tr}</a> |{/if}
+{if $next}<a class="link" href="tiki-webmail.php?section=read&amp;msgid={$next}">{tr}Next{/tr}</a> |{/if}
+ <a class="link" href="tiki-webmail.php?section=mailbox">{tr}back to mailbox{/tr}</a> |
+{if $fullheaders eq 'n'} 
+ <a class="link" href="tiki-webmail.php?section=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}full headers{/tr}</a>
+{else}
+ <a class="link" href="tiki-webmail.php?section=read&amp;msgid={$msgid}">{tr}normal headers{/tr}</a>
+{/if} 
 <table>
-<tr><td>{tr}From{/tr}</td><td>{$headers.from}</td></tr>
-<tr><td>{tr}To{/tr}</td><td>{$headers.to}</td></tr>
-{if $headers.cc}
-<tr><td>{tr}Cc{/tr}</td><td>{$headers.cc}</td></tr>
-{/if}
-<tr><td>{tr}Subject{/tr}</td><td>{$headers.subject}</td></tr>
-<tr><td>{tr}Date{/tr}</td><td>{$headers.date}</td></tr>
+<tr>
+  <td>
+    <input type="submit" name="delete" value="{tr}delete{/tr}" />
+  </td>
+  <td>
+    <input type="submit" name="reply" value="{tr}reply{/tr}" />
+  </td>
+  <td>
+    <input type="submit" name="replyall" value="{tr}reply all{/tr}" />
+  </td>
+  <td>
+    <input type="submit" name="reply" value="{tr}forward{/tr}" />
+    <select name="type">
+      <option value="attach">{tr}As attachment{/tr}</option>
+      <option value="inline">{tr}As inline text{/tr}</option>
+    </select>
+  </td>
+</tr>
 </table>
-<hr/>
+<table width="100%">
+{if $fullheaders eq 'n'}
+<tr><td class="formcolor">{tr}From{/tr}</td><td class="formcolor">{$headers.from}</td></tr>
+<tr><td class="formcolor">{tr}To{/tr}</td><td class="formcolor">{$headers.to}</td></tr>
+{if $headers.cc}
+<tr><td class="formcolor">{tr}Cc{/tr}</td><td class="formcolor">{$headers.cc}</td></tr>
+{/if}
+<tr><td class="formcolor">{tr}Subject{/tr}</td><td class="formcolor">{$headers.subject}</td></tr>
+<tr><td class="formcolor">{tr}Date{/tr}</td><td class="formcolor">{$headers.date}</td></tr>
+{/if}
+{if $fullheaders eq 'y'}
+{foreach key=key item=item from=$headers}
+    <tr><td class="formcolor">{$key}</td><td class="formcolor">
+    {section name=ix loop=$item}
+    {$item[ix]}<br/> 
+    {sectionelse}
+    {$item}
+    {/section}
+    </td></tr>
+  {/foreach}
+{/if}
+</table>
+<br/>
 {section name=ix loop=$bodies}
 {$bodies[ix]}
 <hr/>
@@ -103,3 +190,19 @@
 {/section}
 {/if}
 
+{if $section eq 'compose'}
+<table width="100%">
+<tr><td class="formcolor">{tr}To{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="to" value="{$to}" /></td></tr>
+<tr><td class="formcolor">{tr}cc{/tr}</td><td class="formcolor"><input type="text" name="cc" value="{$cc}" /></td><td class="formcolor">{tr}bcc{/tr}</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc}" /></td></tr>
+<tr><td class="formcolor">{tr}Subject{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="subject" /></td></tr>
+<tr><td class="formcolor">{tr}Attachments{/tr}</td><td colspan="3" class="formcolor">
+
+</td></tr>
+<tr>
+<tr><td class="formcolor">&nbsp;</td>
+<td class="formcolor" colspan="3">
+<textarea name="body" cols="60" rows="30"></textarea>
+</td></tr>
+</table>
+
+{/if}

@@ -1,207 +1,1 @@
-<?php
-// Initialization
-require_once('tiki-setup.php');
-
-// User preferences screen
-/*
-if($feature_userPreferences != 'y') {
-   $smarty->assign('msg',tra("This feature is disabled"));
-   $smarty->display('error.tpl');
-   die;
-}
-*/
-
-require ("lib/webmail/pop3.php");
-require ("lib/webmail/mimeDecode.php");
-include ("lib/webmail/class.rc4crypt.php");
-
-function parse_output(&$obj, &$parts,$i){
-
-                if(!empty($obj->parts)){
-                        for($i=0; $i<count($obj->parts); $i++)
-                                parse_output($obj->parts[$i], $parts,$i);
-
-                }else{
-                        $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
-                        switch($ctype){
-                                case 'text/plain':
-                                        if(!empty($obj->disposition) AND $obj->disposition == 'attachment'){
-                                                $aux['name']=$obj->headers["content-description"];
-                                                $aux['content-type']=$obj->headers["content-type"];
-                                                //$aux['body']=$obj->body;
-                                                $aux['part']=$i;
-                                                $parts['attachments'][] = $aux;
-                                                
-                                        }else{
-                                                $parts['text'][] = nl2br($obj->body);
-                                        }
-                                        break;
-
-                                case 'text/html':
-                                        if(!empty($obj->disposition) AND $obj->disposition == 'attachment'){
-                                                
-                                                $aux['name']=$obj->headers["content-description"];
-                                                $aux['content-type']=$obj->headers["content-type"];
-                                                //$aux['body']=$obj->body;
-                                                $aux['part']=$i;
-                                                $parts['attachments'][] = $aux;
-                                                
-                                        }else{
-                                                $parts['html'][] = nl2br($obj->body);
-                                        }
-                                        break;
-
-                                default:
-                                        
-                                        $aux['name']=$obj->headers["content-description"];
-                                        $aux['content-type']=$obj->headers["content-type"];
-                                        //$aux['body']=$obj->body;
-                                        $aux['part']=$i;
-                                        $parts['attachments'][] = $aux;
-                                        
-                        }
-                }
-        }
-
-
-
-if(!$user) {
-   $smarty->assign('msg',tra("You are not logged in"));
-   $smarty->display('error.tpl');
-   die;
-}
-
-if(!isset($_REQUEST["section"])) {
-  $_REQUEST["section"]='mailbox';
-}
-$smarty->assign('section',$_REQUEST["section"]);
-
-if($_REQUEST["section"]=='read') {
-  $current=$tikilib->get_current_webmail_account($user);
-  $smarty->assign('current',$current);
-  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);
-  $pop3->Open();
-  $message = $pop3->GetMessage($_REQUEST["msgid"]) ;
-  $smarty->assign('msgid',$_REQUEST["msgid"]);
-  $s = $pop3->Stats() ;
-  $body = $message["body"];
-  $header = $message["header"];
-  $full = $message["full"];
-  $pop3->Close();
-  
-  $params = array(
-                                        'input'          => $full,
-                                        'crlf'           => "\r\n",
-                                        'include_bodies' => TRUE,
-                                        'decode_headers' => TRUE,
-                                        'decode_bodies'  => TRUE
-                                        );
-
-  $output = Mail_mimeDecode::decode($params);
-  parse_output($output, $parts,0);
-  //print_r($parts);
-  //print_r($output);
-  
-  if(isset($parts["html"])) {
-    $bodies=$parts["html"];
-  } else {
-    $bodies=$parts["text"];
-  }
-  if(isset($parts["attachments"])) {
-    $attachs=$parts["attachments"];
-  } else {
-    $attachs=Array();
-    
-  }
-  //print_r($attachs);
-  //print_r($output);
-  $smarty->assign('attachs',$attachs);
-  $smarty->assign('bodies',$bodies);
-  $smarty->assign('headers',$output->headers);
-  
- 
-}
-
-if($_REQUEST["section"]=='mailbox') {
-  
-  $current=$tikilib->get_current_webmail_account($user);
-  $smarty->assign('current',$current);
-  // Now get messages from mailbox
-  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);
-  $pop3->Open();
-  
-  
-  if(isset($_REQUEST["delete"])) {
-    if(isset($_REQUEST["msg"])) {
-      // Now we can delete the messages
-      foreach(array_keys($_REQUEST["msg"]) as $msg) {
-        $pop3->DeleteMessage($msg);
-      }
-    }
-  }
-  
-  $s = $pop3->Stats() ;
-  
-  $mailsum = $s["message"];
-  $numshow=$current["msgs"];
-  if (!isset($_REQUEST["start"])) $upperlimit = $mailsum; else $upperlimit = $start;
-  $lowerlimit = $upperlimit - $numshow;
-  if ($lowerlimit < 0) $lowerlimit = 0;
-  $showstart =  $mailsum - $upperlimit + 1;
-  $showend = $mailsum - $lowerlimit;
-
-  if (!isset($_REQUEST["offset"])) $_REQUEST["offset"]=0;
-  $lowerlimit = $upperlimit - $numshow;
-  if ($lowerlimit < 0) $lowerlimit = 0;
-  $showstart =  $mailsum - $upperlimit + 1;
-  $showend = $mailsum - $lowerlimit;
-
-  $list=Array();
-  for ($i=$upperlimit;$i>$lowerlimit;$i--) {
-    $aux = $pop3->ListMessage($i);
-    $aux["msgid"]=$i;
-    if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];
-    $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);
-    $aux["subject"]=htmlspecialchars($aux["subject"]);
-    $list[]=$aux;
-  }
-  $pop3->Close();
-  $smarty->assign('list',$list);
-  
-  
-}
-
-if($_REQUEST["section"]=='settings') {
-  // Add a new mail account for the user here
-  if(!isset($_REQUEST["accountId"])) $_REQUEST["accountId"]=0;
-  $smarty->assign('accountId',$_REQUEST["accountId"]);
-  
-  if(isset($_REQUEST["new_acc"])) {
-    $tikilib->replace_webmail_account($_REQUEST["accountId"],$user,$_REQUEST["account"],$_REQUEST["pop"],$_REQUEST["port"],$_REQUEST["username"],$_REQUEST["pass"],$_REQUEST["msgs"]);
-    $_REQUEST["accountId"]=0;
-  }
-  if(isset($_REQUEST["remove"])) {
-    $tikilib->remove_webmail_account($user,$_REQUEST["remove"]);
-  }
-  if(isset($_REQUEST["current"])) {
-    $tikilib->current_webmail_account($user,$_REQUEST["current"]);
-  }
-  if($_REQUEST["accountId"]) {
-    $info = $tikilib->get_webmail_account($user,$_REQUEST["accountId"]);
-  } else {
-    $info["account"]='';
-    $info["username"]='';
-    $info["pass"]='';
-    $info["pop"]='';
-    $info["port"]=110;
-    $info["msgs"]=20;
-  }
-  $smarty->assign('info',$info);
-  // List
-  $accounts = $tikilib->list_webmail_accounts($user,0,-1,'account_asc','');
-  $smarty->assign('accounts',$accounts["data"]);
-}
-
-$smarty->assign('mid','tiki-webmail.tpl');
-$smarty->display('tiki.tpl');
-?>
+<?php// Initializationrequire_once('tiki-setup.php');// User preferences screen/*if($feature_userPreferences != 'y') {   $smarty->assign('msg',tra("This feature is disabled"));   $smarty->display('error.tpl');   die;}*/require ("lib/webmail/pop3.php");require ("lib/webmail/mimeDecode.php");include ("lib/webmail/class.rc4crypt.php");function parse_output(&$obj, &$parts,$i){                if(!empty($obj->parts)){                        for($i=0; $i<count($obj->parts); $i++)                                parse_output($obj->parts[$i], $parts,$i);                }else{                        $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;                        switch($ctype){                                case 'text/plain':                                        if(!empty($obj->disposition) AND $obj->disposition == 'attachment'){                                                $aux['name']=$obj->headers["content-description"];                                                $aux['content-type']=$obj->headers["content-type"];                                                //$aux['body']=$obj->body;                                                $aux['part']=$i;                                                $parts['attachments'][] = $aux;                                        }else{                                                $parts['text'][] = nl2br($obj->body);                                        }                                        break;                                case 'text/html':                                        if(!empty($obj->disposition) AND $obj->disposition == 'attachment'){                                                $aux['name']=$obj->headers["content-description"];                                                $aux['content-type']=$obj->headers["content-type"];                                                //$aux['body']=$obj->body;                                                $aux['part']=$i;                                                $parts['attachments'][] = $aux;                                        }else{                                                $parts['html'][] = $obj->body;                                        }                                        break;                                default:                                        $aux['name']=$obj->headers["content-description"];                                        $aux['content-type']=$obj->headers["content-type"];                                        //$aux['body']=$obj->body;                                        $aux['part']=$i;                                        $parts['attachments'][] = $aux;                        }                }        }if(!$user) {   $smarty->assign('msg',tra("You are not logged in"));   $smarty->display('error.tpl');   die;}if(!isset($_REQUEST["section"])) {  $_REQUEST["section"]='mailbox';}$smarty->assign('section',$_REQUEST["section"]);if($_REQUEST["section"]=='read') {  if(isset($_REQUEST["fullheaders"])) {    $smarty->assign('fullheaders','y');	  } else {    $smarty->assign('fullheaders','n');		  }  $current=$tikilib->get_current_webmail_account($user);  $smarty->assign('current',$current);  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);  $pop3->Open();  $message = $pop3->GetMessage($_REQUEST["msgid"]) ;    $realmsgid = $pop3->GetMessageID($_REQUEST["msgid"]);  $smarty->assign('msgid',$_REQUEST["msgid"]);  $smarty->assign('realmsgid',$realmsgid);  $tikilib->set_mail_flag($current["accountId"],$user,$realmsgid,'isRead','y');  $s = $pop3->Stats() ;  $mailsum = $s["message"];  $numshow=$current["msgs"];  if($_REQUEST["msgid"]==$mailsum) {    $smarty->assign('next','');  	  } else {    $smarty->assign('next',$_REQUEST["msgid"]+1);  	 	  }    if($_REQUEST["msgid"]>1) {    $smarty->assign('prev',$_REQUEST["msgid"]-1);  	 		  } else {    $smarty->assign('prev','');  	 			  }    $body = $message["body"];  $header = $message["header"];    $full = $message["full"];  $pop3->Close();  $params = array(                                        'input'          => $full,                                        'crlf'           => "\r\n",                                        'include_bodies' => TRUE,                                        'decode_headers' => TRUE,                                        'decode_bodies'  => TRUE                                        );  $output = Mail_mimeDecode::decode($params);  parse_output($output, $parts,0);  //print_r($parts);  //print_r($output);  if(isset($parts["html"])) {    $bodies=$parts["html"];  } else {    $bodies=$parts["text"];  }    if(isset($parts["attachments"])) {    $attachs=$parts["attachments"];  } else {    $attachs=Array();  }  //print_r($attachs);  //print_r($output);  $smarty->assign('attachs',$attachs);  $smarty->assign('bodies',$bodies);  $smarty->assign('headers',$output->headers);  }if($_REQUEST["section"]=='mailbox') {  $current=$tikilib->get_current_webmail_account($user);  if(!$current) {    header("location: tiki-webmail.php?section=settings");    die;	  }  $smarty->assign('current',$current);  // Now get messages from mailbox  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);  $pop3->Open();  if(isset($_REQUEST["delete"])) {    if(isset($_REQUEST["msg"])) {      // Now we can delete the messages      foreach(array_keys($_REQUEST["msg"]) as $msg) {        $pop3->DeleteMessage($msg);      }    }  }  if(isset($_REQUEST["operate"])) {    if(isset($_REQUEST["msg"])) {      // Now we can delete the messages      foreach(array_keys($_REQUEST["msg"]) as $msg) {      	$realmsg=$_REQUEST["realmsg"][$msg];        switch($_REQUEST["action"]) {          case "flag":             $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','y');             break;          case "unflag":	             $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','n');             break;          case "read":             $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','y');             break;          case "unread":             $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','n');             break;        }      }    }  	  }    $s = $pop3->Stats() ;  $mailsum = $s["message"];  $numshow=$current["msgs"];        if(!isset($_REQUEST["filter"]))     $smarty->assign('filter','');   else     $smarty->assign('filter',$_REQUEST["filter"]);    // If we have a filter then we have to     if(isset($_REQUEST["filter"])) {    $tot=0;	      $aux["msgid"]='foo';    $filtered=Array();    $filtered[]=$aux;    for($i=1;$i<=$mailsum;$i++) {      $aux = $pop3->ListMessage($i);	      $aux["msgid"]=$i;      $aux["realmsgid"]=$pop3->GetMessageID($i);      $tikilib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$tikilib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      $aux["subject"]=htmlspecialchars($aux["subject"]);      if($_REQUEST["filter"]=='unread' && $aux["isRead"]=='n') {      	$tot++;      	$filtered[]=$aux;      }	elseif ($_REQUEST["filter"]=='flagged' && $aux["isFlagged"]=='y') {      	$tot++;      	$filtered[]=$aux;      }    }    $mailsum=count($filtered)-1;      }     if(!isset($_REQUEST["start"])) $_REQUEST["start"]=$mailsum;  $upperlimit=$_REQUEST["start"];  $smarty->assign('start',$_REQUEST["start"]);    $list=Array();  for ($i=$upperlimit;$i>0&&count($list)<$numshow;$i--) {    if(isset($_REQUEST["filter"])) {      $aux = $filtered[$i];	    } else {      $aux = $pop3->ListMessage($i);	      $aux["realmsgid"]=$pop3->GetMessageID($i);      $tikilib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$tikilib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      $aux["subject"]=htmlspecialchars($aux["subject"]);    }    $aux["msgid"]=$i;    $list[]=$aux;  }  $lowerlimit=$i;      if ($lowerlimit < 0) $lowerlimit = 0;  $showstart =  $mailsum - $upperlimit + 1;  $showend = $mailsum - $lowerlimit;  $smarty->assign('showstart',$showstart);  $smarty->assign('showend',$showend);  $smarty->assign('total',$mailsum);    if($lowerlimit>0) {    $smarty->assign('nextstart',$lowerlimit);  } else {    $smarty->assign('nextstart','');  	  }  if($upperlimit<>$mailsum) {    $prevstart=$upperlimit+$numshow;    if($prevstart>$mailsum) $prevstart=$mailsum;    $smarty->assign('prevstart',$prevstart);  } else {    $smarty->assign('prevstart','');	  } 	  if($_REQUEST["start"]<>$mailsum) {    $smarty->assign('first',$mailsum);  } else {    $smarty->assign('first','');	  }  // Now calculate the last message block  $last = $mailsum % $numshow;  if($_REQUEST["start"]<>$last) {    $smarty->assign('last',$last);		  } else {    $smarty->assign('last','');	  }          $pop3->Close();  $smarty->assign('list',$list);}if($_REQUEST["section"]=='settings') {  // Add a new mail account for the user here  if(!isset($_REQUEST["accountId"])) $_REQUEST["accountId"]=0;  $smarty->assign('accountId',$_REQUEST["accountId"]);  if(isset($_REQUEST["new_acc"])) {    $tikilib->replace_webmail_account($_REQUEST["accountId"],$user,$_REQUEST["account"],$_REQUEST["pop"],$_REQUEST["port"],$_REQUEST["username"],$_REQUEST["pass"],$_REQUEST["msgs"]);    $_REQUEST["accountId"]=0;  }  if(isset($_REQUEST["remove"])) {    $tikilib->remove_webmail_account($user,$_REQUEST["remove"]);  }  if(isset($_REQUEST["current"])) {    $tikilib->current_webmail_account($user,$_REQUEST["current"]);  }  if($_REQUEST["accountId"]) {    $info = $tikilib->get_webmail_account($user,$_REQUEST["accountId"]);  } else {    $info["account"]='';    $info["username"]='';    $info["pass"]='';    $info["pop"]='';    $info["port"]=110;    $info["msgs"]=20;  }  $smarty->assign('info',$info);  // List  $accounts = $tikilib->list_webmail_accounts($user,0,-1,'account_asc','');  $smarty->assign('accounts',$accounts["data"]);}if($_REQUEST["section"]=='compose') {  if(!isset($_REQUEST["to"])) $_REQUEST["to"]='';  if(!isset($_REQUEST["cc"])) $_REQUEST["cc"]='';  if(!isset($_REQUEST["bcc"])) $_REQUEST["bcc"]='';  $smarty->assign('cc',$_REQUEST["cc"]);  $smarty->assign('to',$_REQUEST["to"]);  $smarty->assign('bcc',$_REQUEST["bcc"]);}$smarty->assign('mid','tiki-webmail.tpl');$smarty->display('tiki.tpl');?>
