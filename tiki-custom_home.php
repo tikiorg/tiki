@@ -2,7 +2,8 @@
 // Initialization
 require_once('tiki-setup.php');
 
-
+//ini_set('include_path','.;pear/');
+//include('foobar.php');
 /*
 hfd
 require_once "lib/NNTP.php";

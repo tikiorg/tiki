@@ -92,11 +92,11 @@ if ($fulltext == 'y') {
     }
 
   $results['data'] = $CurrentData;
-  $results['cant'] = $CurrentIndex;
+  $results['cant'] = $CurrentIndex+1;
   }
 
 $cant_pages = ceil($results["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_results',$results["cant"]);
+$smarty->assign('cant_results',$results["cant"]);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
 if($results["cant"] > ($offset+$maxRecords)) {
