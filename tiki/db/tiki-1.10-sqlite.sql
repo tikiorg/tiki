@@ -1,6 +1,6 @@
 -- $Rev$
--- $Date: 2004-07-16 20:54:57 $
--- $Author: teedog $
+-- $Date: 2004-07-17 13:31:42 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -10,11 +10,11 @@
 -- Generation Time: Jul 13, 2003 at 02:09 AM
 -- Server version: 4.0.13
 -- PHP Version: 4.2.3
--- Database : `tikiwiki`
+-- Database : tikiwiki
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_activities`
+-- Table structure for table galaxia_activities
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -39,7 +39,7 @@ CREATE TABLE "galaxia_activities" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_activity_roles`
+-- Table structure for table galaxia_activity_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -56,7 +56,7 @@ CREATE TABLE "galaxia_activity_roles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instance_activities`
+-- Table structure for table galaxia_instance_activities
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -77,7 +77,7 @@ CREATE TABLE "galaxia_instance_activities" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instance_comments`
+-- Table structure for table galaxia_instance_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -101,7 +101,7 @@ CREATE TABLE "galaxia_instance_comments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instances`
+-- Table structure for table galaxia_instances
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -125,7 +125,7 @@ CREATE TABLE "galaxia_instances" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_processes`
+-- Table structure for table galaxia_processes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -148,7 +148,7 @@ CREATE TABLE "galaxia_processes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_roles`
+-- Table structure for table galaxia_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -168,7 +168,7 @@ CREATE TABLE "galaxia_roles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_transitions`
+-- Table structure for table galaxia_transitions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -186,7 +186,7 @@ CREATE TABLE "galaxia_transitions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_user_roles`
+-- Table structure for table galaxia_user_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -204,7 +204,7 @@ CREATE TABLE "galaxia_user_roles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_workitems`
+-- Table structure for table galaxia_workitems
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -227,7 +227,7 @@ CREATE TABLE "galaxia_workitems" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messu_messages`
+-- Table structure for table messu_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:29 PM
@@ -264,13 +264,12 @@ CREATE TABLE "sessions"(
   "expireref" varchar(64),
   "data" text NOT NULL,
   PRIMARY KEY ("sesskey")
-
 ) ;
 
 CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 
 --
--- Table structure for table `tiki_actionlog`
+-- Table structure for table tiki_actionlog
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 12:29 AM
@@ -290,7 +289,7 @@ CREATE TABLE "tiki_actionlog" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_articles`
+-- Table structure for table tiki_articles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:30 AM
@@ -335,11 +334,6 @@ CREATE TABLE "tiki_articles" (
   "rating" decimal(3,2) default NULL,
   "isfloat" char(1) default NULL,
   PRIMARY KEY ("articleId")
-
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_articles_title" ON "tiki_articles"("title");
@@ -386,7 +380,7 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allo
 
 
 --
--- Table structure for table `tiki_banners`
+-- Table structure for table tiki_banners
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -430,7 +424,7 @@ CREATE TABLE "tiki_banners" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_banning`
+-- Table structure for table tiki_banning
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -458,7 +452,7 @@ CREATE TABLE "tiki_banning" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_banning_sections`
+-- Table structure for table tiki_banning_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -475,7 +469,7 @@ CREATE TABLE "tiki_banning_sections" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_activity`
+-- Table structure for table tiki_blog_activity
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 04:52 PM
@@ -493,7 +487,7 @@ CREATE TABLE "tiki_blog_activity" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_posts`
+-- Table structure for table tiki_blog_posts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 04:52 PM
@@ -514,10 +508,6 @@ CREATE TABLE "tiki_blog_posts" (
   "trackbacks_from" text,
   "title" varchar(80) default NULL,
   PRIMARY KEY ("postId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
@@ -527,7 +517,7 @@ CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_posts_images`
+-- Table structure for table tiki_blog_posts_images
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -548,7 +538,7 @@ CREATE TABLE "tiki_blog_posts_images" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blogs`
+-- Table structure for table tiki_blogs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:07 AM
@@ -577,10 +567,6 @@ CREATE TABLE "tiki_blogs" (
   "allow_comments" char(1) default NULL,
   "show_avatar" char(1) default NULL,
   PRIMARY KEY ("blogId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_blogs_title" ON "tiki_blogs"("title");
@@ -590,7 +576,7 @@ CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_categories`
+-- Table structure for table tiki_calendar_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:05 AM
@@ -603,14 +589,13 @@ CREATE TABLE "tiki_calendar_categories" (
   "calendarId" bigint NOT NULL default '0',
   "name" varchar(255) NOT NULL default '',
   PRIMARY KEY ("calcatId")
-
 )   ;
 
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_items`
+-- Table structure for table tiki_calendar_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:43 AM
@@ -635,14 +620,13 @@ CREATE TABLE "tiki_calendar_items" (
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
   PRIMARY KEY ("calitemId")
-
 )   ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_locations`
+-- Table structure for table tiki_calendar_locations
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:05 AM
@@ -656,14 +640,13 @@ CREATE TABLE "tiki_calendar_locations" (
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
   PRIMARY KEY ("callocId")
-
 )   ;
 
 CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_locations"("calendarId","name");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_roles`
+-- Table structure for table tiki_calendar_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -681,7 +664,7 @@ CREATE TABLE "tiki_calendar_roles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendars`
+-- Table structure for table tiki_calendars
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 02:03 PM
@@ -707,7 +690,7 @@ CREATE TABLE "tiki_calendars" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_categories`
+-- Table structure for table tiki_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 04, 2003 at 09:47 PM
@@ -727,7 +710,7 @@ CREATE TABLE "tiki_categories" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_categorized_objects`
+-- Table structure for table tiki_categorized_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -750,7 +733,7 @@ CREATE TABLE "tiki_categorized_objects" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_category_objects`
+-- Table structure for table tiki_category_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -767,7 +750,7 @@ CREATE TABLE "tiki_category_objects" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_category_sites`
+-- Table structure for table tiki_category_sites
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 07, 2003 at 01:53 AM
@@ -784,7 +767,7 @@ CREATE TABLE "tiki_category_sites" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chart_items`
+-- Table structure for table tiki_chart_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -808,7 +791,7 @@ CREATE TABLE "tiki_chart_items" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts`
+-- Table structure for table tiki_charts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 08:14 AM
@@ -841,7 +824,7 @@ CREATE TABLE "tiki_charts" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts_rankings`
+-- Table structure for table tiki_charts_rankings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -864,7 +847,7 @@ CREATE TABLE "tiki_charts_rankings" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts_votes`
+-- Table structure for table tiki_charts_votes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -883,7 +866,7 @@ CREATE TABLE "tiki_charts_votes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_channels`
+-- Table structure for table tiki_chat_channels
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -906,7 +889,7 @@ CREATE TABLE "tiki_chat_channels" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_messages`
+-- Table structure for table tiki_chat_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -926,7 +909,7 @@ CREATE TABLE "tiki_chat_messages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_users`
+-- Table structure for table tiki_chat_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -944,7 +927,7 @@ CREATE TABLE "tiki_chat_users" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_comments`
+-- Table structure for table tiki_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:56 PM
@@ -975,12 +958,6 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(250) default NULL,
   "comment_rating" smallint default NULL,  
   PRIMARY KEY ("threadId")
-
-
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_comments_title" ON "tiki_comments"("title");
@@ -992,7 +969,7 @@ CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content`
+-- Table structure for table tiki_content
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1009,7 +986,7 @@ CREATE TABLE "tiki_content" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content_templates`
+-- Table structure for table tiki_content_templates
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:37 AM
@@ -1028,7 +1005,7 @@ CREATE TABLE "tiki_content_templates" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content_templates_sections`
+-- Table structure for table tiki_content_templates_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:37 AM
@@ -1045,7 +1022,7 @@ CREATE TABLE "tiki_content_templates_sections" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_cookies`
+-- Table structure for table tiki_cookies
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 10, 2003 at 04:00 AM
@@ -1062,7 +1039,7 @@ CREATE TABLE "tiki_cookies" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_copyrights`
+-- Table structure for table tiki_copyrights
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1084,7 +1061,7 @@ CREATE TABLE "tiki_copyrights" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_categories`
+-- Table structure for table tiki_directory_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:59 PM
@@ -1110,7 +1087,7 @@ CREATE TABLE "tiki_directory_categories" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_search`
+-- Table structure for table tiki_directory_search
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1127,7 +1104,7 @@ CREATE TABLE "tiki_directory_search" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_sites`
+-- Table structure for table tiki_directory_sites
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:32 PM
@@ -1148,14 +1125,13 @@ CREATE TABLE "tiki_directory_sites" (
   "cache" bytea,
   "cache_timestamp" bigint default NULL,
   PRIMARY KEY ("siteId")
-
 )   ;
 
 CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_drawings`
+-- Table structure for table tiki_drawings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 05:02 AM
@@ -1177,7 +1153,7 @@ CREATE TABLE "tiki_drawings" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_dsn`
+-- Table structure for table tiki_dsn
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1205,7 +1181,7 @@ CREATE TABLE "tiki_dynamic_variables" (
 
 
 --
--- Table structure for table `tiki_eph`
+-- Table structure for table tiki_eph
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 08:23 AM
@@ -1230,7 +1206,7 @@ CREATE TABLE "tiki_eph" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_extwiki`
+-- Table structure for table tiki_extwiki
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1248,7 +1224,7 @@ CREATE TABLE "tiki_extwiki" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_faq_questions`
+-- Table structure for table tiki_faq_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1264,10 +1240,6 @@ CREATE TABLE "tiki_faq_questions" (
   "question" text,
   "answer" text,
   PRIMARY KEY ("questionId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_faq_questions_faqId" ON "tiki_faq_questions"("faqId");
@@ -1277,7 +1249,7 @@ CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_faqs`
+-- Table structure for table tiki_faqs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 09:09 PM
@@ -1295,10 +1267,6 @@ CREATE TABLE "tiki_faqs" (
   "hits" integer default NULL,
   "canSuggest" char(1) default NULL,
   PRIMARY KEY ("faqId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_faqs_title" ON "tiki_faqs"("title");
@@ -1308,7 +1276,7 @@ CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_featured_links`
+-- Table structure for table tiki_featured_links
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:08 PM
@@ -1329,7 +1297,7 @@ CREATE TABLE "tiki_featured_links" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_file_galleries`
+-- Table structure for table tiki_file_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:13 AM
@@ -1364,7 +1332,7 @@ CREATE TABLE "tiki_file_galleries" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_files`
+-- Table structure for table tiki_files
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:13 AM
@@ -1392,10 +1360,6 @@ CREATE TABLE "tiki_files" (
   "is_reference" char(1) default NULL,
   "hash" varchar(32) default NULL,
   PRIMARY KEY ("fileId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_files_name" ON "tiki_files"("name");
@@ -1405,7 +1369,7 @@ CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forum_attachments`
+-- Table structure for table tiki_forum_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1431,7 +1395,7 @@ CREATE TABLE "tiki_forum_attachments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forum_reads`
+-- Table structure for table tiki_forum_reads
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:17 PM
@@ -1450,7 +1414,7 @@ CREATE TABLE "tiki_forum_reads" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums`
+-- Table structure for table tiki_forums
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:14 PM
@@ -1516,7 +1480,7 @@ CREATE TABLE "tiki_forums" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums_queue`
+-- Table structure for table tiki_forums_queue
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1544,7 +1508,7 @@ CREATE TABLE "tiki_forums_queue" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums_reported`
+-- Table structure for table tiki_forums_reported
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1565,7 +1529,7 @@ CREATE TABLE "tiki_forums_reported" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_galleries`
+-- Table structure for table tiki_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:59 PM
@@ -1590,10 +1554,6 @@ CREATE TABLE "tiki_galleries" (
   "thumbSizeY" bigint default NULL,
   "public" char(1) default NULL,
   PRIMARY KEY ("galleryId")
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_galleries_name" ON "tiki_galleries"("name");
@@ -1603,7 +1563,7 @@ CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_galleries_scales`
+-- Table structure for table tiki_galleries_scales
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1621,7 +1581,7 @@ CREATE TABLE "tiki_galleries_scales" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_games`
+-- Table structure for table tiki_games
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 08:23 PM
@@ -1640,7 +1600,7 @@ CREATE TABLE "tiki_games" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_group_inclusion`
+-- Table structure for table tiki_group_inclusion
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 02:03 AM
@@ -1657,7 +1617,7 @@ CREATE TABLE "tiki_group_inclusion" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_history`
+-- Table structure for table tiki_history
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 12:29 AM
@@ -1680,7 +1640,7 @@ CREATE TABLE "tiki_history" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_hotwords`
+-- Table structure for table tiki_hotwords
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 10, 2003 at 11:04 PM
@@ -1697,7 +1657,7 @@ CREATE TABLE "tiki_hotwords" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_html_pages`
+-- Table structure for table tiki_html_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1717,7 +1677,7 @@ CREATE TABLE "tiki_html_pages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_html_pages_dynamic_zones`
+-- Table structure for table tiki_html_pages_dynamic_zones
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1736,7 +1696,7 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_images`
+-- Table structure for table tiki_images
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:29 PM
@@ -1755,13 +1715,6 @@ CREATE TABLE "tiki_images" (
   "hits" bigint default NULL,
   "path" varchar(255) default NULL,
   PRIMARY KEY ("imageId")
-
-
-
-
-
-
-
 )   ;
 
 CREATE  INDEX "tiki_images_name" ON "tiki_images"("name");
@@ -1774,7 +1727,7 @@ CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_images_data`
+-- Table structure for table tiki_images_data
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:49 PM
@@ -1793,14 +1746,13 @@ CREATE TABLE "tiki_images_data" (
   "filename" varchar(80) default NULL,
   "data" bytea,
   PRIMARY KEY ("imageId","xsize","ysize","type")
-
 ) ;
 
 CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_language`
+-- Table structure for table tiki_language
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1818,7 +1770,7 @@ CREATE TABLE "tiki_language" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_languages`
+-- Table structure for table tiki_languages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1838,7 +1790,7 @@ INSERT INTO tiki_languages VALUES('en','English');
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_link_cache`
+-- Table structure for table tiki_link_cache
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 06:06 PM
@@ -1857,7 +1809,7 @@ CREATE TABLE "tiki_link_cache" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_links`
+-- Table structure for table tiki_links
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:39 PM
@@ -1874,7 +1826,7 @@ CREATE TABLE "tiki_links" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_events`
+-- Table structure for table tiki_live_support_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1896,7 +1848,7 @@ CREATE TABLE "tiki_live_support_events" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_message_comments`
+-- Table structure for table tiki_live_support_message_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1915,7 +1867,7 @@ CREATE TABLE "tiki_live_support_message_comments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_messages`
+-- Table structure for table tiki_live_support_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1942,7 +1894,7 @@ CREATE TABLE "tiki_live_support_messages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_modules`
+-- Table structure for table tiki_live_support_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1974,7 +1926,7 @@ INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_operators`
+-- Table structure for table tiki_live_support_operators
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2000,7 +1952,7 @@ CREATE TABLE "tiki_live_support_operators" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_requests`
+-- Table structure for table tiki_live_support_requests
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2029,13 +1981,13 @@ CREATE TABLE "tiki_live_support_requests" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_requests`
+-- Table structure for table tiki_live_support_requests
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE `tiki_logs`;
+DROP TABLE "tiki_logs";
 
 CREATE TABLE "tiki_logs" (
   "logId" serial,
@@ -2046,7 +1998,6 @@ CREATE TABLE "tiki_logs" (
   "logclient" text NOT NULL,
   "logtime" bigint NOT NULL,
   PRIMARY KEY ("logId")
-
 ) ;
 
 CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
@@ -2054,7 +2005,7 @@ CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_mail_events`
+-- Table structure for table tiki_mail_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 05:28 AM
@@ -2071,7 +2022,7 @@ CREATE TABLE "tiki_mail_events" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_mailin_accounts`
+-- Table structure for table tiki_mailin_accounts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jun 17, 2004 at 03:06 PM EST
@@ -2102,7 +2053,7 @@ CREATE TABLE "tiki_mailin_accounts" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menu_languages`
+-- Table structure for table tiki_menu_languages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2119,7 +2070,7 @@ CREATE TABLE "tiki_menu_languages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menu_options`
+-- Table structure for table tiki_menu_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Nov 21, 2003 at 07:05 AM
@@ -2158,7 +2109,9 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)',"javascript:toggle('debugconsole')",40,'feature_debug_console','tiki_p_admin','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki (click!)','tiki-my_tiki.php',50,'','','Registered');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_userPreferences','','Registered');
 
@@ -2204,7 +2157,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Community','tiki-list_users.php','187','feature_friends','tiki_p_list_users','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','');
 
@@ -2234,14 +2187,6 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_edit_structures','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','');
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','');
-
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
@@ -2266,7 +2211,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_ranking','tiki_p_read_article','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_cms_rankings','tiki_p_read_article','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','');
 
@@ -2328,7 +2273,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_view_file_gallery','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload  "File"','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','');
@@ -2352,6 +2297,9 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Quiz stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','','');
@@ -2387,37 +2335,39 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_chat','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_live_support','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','');
 
@@ -2477,7 +2427,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'','tiki_p_admin_shoutbox','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Referer stats','tiki-referer_stats.php',1195,'','tiki_p_view_referer_stats','');
 
@@ -2493,22 +2443,26 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
+
 
 -- Tiki Jukebox
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menus`
+-- Table structure for table tiki_menus
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2530,7 +2484,7 @@ INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Ap
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_minical_events`
+-- Table structure for table tiki_minical_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 09, 2003 at 04:06 AM
@@ -2555,7 +2509,7 @@ CREATE TABLE "tiki_minical_events" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_minical_topics`
+-- Table structure for table tiki_minical_topics
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2579,7 +2533,7 @@ CREATE TABLE "tiki_minical_topics" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_modules`
+-- Table structure for table tiki_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:44 PM
@@ -2610,7 +2564,7 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsletter_subscriptions`
+-- Table structure for table tiki_newsletter_subscriptions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2630,7 +2584,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsletters`
+-- Table structure for table tiki_newsletters
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2657,7 +2611,7 @@ CREATE TABLE "tiki_newsletters" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsreader_marks`
+-- Table structure for table tiki_newsreader_marks
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2676,7 +2630,7 @@ CREATE TABLE "tiki_newsreader_marks" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsreader_servers`
+-- Table structure for table tiki_newsreader_servers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2697,7 +2651,7 @@ CREATE TABLE "tiki_newsreader_servers" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_page_footnotes`
+-- Table structure for table tiki_page_footnotes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:00 AM
@@ -2716,7 +2670,7 @@ CREATE TABLE "tiki_page_footnotes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_pages`
+-- Table structure for table tiki_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -2747,10 +2701,6 @@ CREATE TABLE "tiki_pages" (
   "page_size" bigint unsigned default 0,
   "lang" varchar(16) default null,
   PRIMARY KEY ("page_id")
-
-
-
-
 )  ;
 
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
@@ -2760,7 +2710,7 @@ CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_pageviews`
+-- Table structure for table tiki_pageviews
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -2777,7 +2727,7 @@ CREATE TABLE "tiki_pageviews" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_poll_options`
+-- Table structure for table tiki_poll_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 07:57 PM
@@ -2796,7 +2746,7 @@ CREATE TABLE "tiki_poll_options" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_polls`
+-- Table structure for table tiki_polls
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 07:57 PM
@@ -2816,7 +2766,7 @@ CREATE TABLE "tiki_polls" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_preferences`
+-- Table structure for table tiki_preferences
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:04 PM
@@ -2833,7 +2783,7 @@ CREATE TABLE "tiki_preferences" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_private_messages`
+-- Table structure for table tiki_private_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2853,7 +2803,7 @@ CREATE TABLE "tiki_private_messages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_programmed_content`
+-- Table structure for table tiki_programmed_content
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2872,7 +2822,7 @@ CREATE TABLE "tiki_programmed_content" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_question_options`
+-- Table structure for table tiki_quiz_question_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2891,7 +2841,7 @@ CREATE TABLE "tiki_quiz_question_options" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_questions`
+-- Table structure for table tiki_quiz_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2912,7 +2862,7 @@ CREATE TABLE "tiki_quiz_questions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_results`
+-- Table structure for table tiki_quiz_results
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2932,7 +2882,7 @@ CREATE TABLE "tiki_quiz_results" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_stats`
+-- Table structure for table tiki_quiz_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2951,7 +2901,7 @@ CREATE TABLE "tiki_quiz_stats" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_stats_sum`
+-- Table structure for table tiki_quiz_stats_sum
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2972,7 +2922,7 @@ CREATE TABLE "tiki_quiz_stats_sum" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quizzes`
+-- Table structure for table tiki_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: April 29, 2004
@@ -3003,27 +2953,27 @@ CREATE TABLE "tiki_quizzes" (
   "bOnline" char(1) default NULL,
   "bRandomQuestions" char(1) default NULL,
   "nRandomQuestions" smallint default NULL,
-	bLimitQuestionsPerPage char(1) default NULL,
+  "bLimitQuestionsPerPage" char(1) default NULL,
   "nLimitQuestionsPerPage" smallint default NULL,
-	bMultiSession char(1) default NULL,
-	nCanRepeat smallint default NULL,
-	sGradingMethod varchar(80) default NULL,
-	sShowScore varchar(80) default NULL,
-	sShowCorrectAnswers varchar(80) default NULL,
-	sPublishStats varchar(80) default NULL,
-	bAdditionalQuestions char(1) default NULL,
-	bForum char(1) default NULL,
-	sForum varchar(80) default NULL,
-	sPrologue text,
-	sData text,
-	sEpilogue text,
-  PRIMARY KEY ("quizId"," nVersion")
+  "bMultiSession" char(1) default NULL,
+  "nCanRepeat" smallint default NULL,
+  "sGradingMethod" varchar(80) default NULL,
+  "sShowScore" varchar(80) default NULL,
+  "sShowCorrectAnswers" varchar(80) default NULL,
+  "sPublishStats" varchar(80) default NULL,
+  "bAdditionalQuestions" char(1) default NULL,
+  "bForum" char(1) default NULL,
+  "sForum" varchar(80) default NULL,
+  "sPrologue" text,
+  "sData" text,
+  "sEpilogue" text,
+  PRIMARY KEY ("quizId","nVersion")
 )   ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_received_articles`
+-- Table structure for table tiki_received_articles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3061,7 +3011,7 @@ CREATE TABLE "tiki_received_articles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_received_pages`
+-- Table structure for table tiki_received_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 09, 2003 at 03:56 AM
@@ -3084,7 +3034,7 @@ CREATE TABLE "tiki_received_pages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_referer_stats`
+-- Table structure for table tiki_referer_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:30 AM
@@ -3102,7 +3052,7 @@ CREATE TABLE "tiki_referer_stats" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_related_categories`
+-- Table structure for table tiki_related_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3119,7 +3069,7 @@ CREATE TABLE "tiki_related_categories" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_rss_modules`
+-- Table structure for table tiki_rss_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:19 AM
@@ -3143,7 +3093,7 @@ CREATE TABLE "tiki_rss_modules" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_rss_feeds`
+-- Table structure for table tiki_rss_feeds
 --
 -- Creation: Oct 14, 2003 at 20:34 PM
 -- Last update: Oct 14, 2003 at 20:34 PM
@@ -3171,7 +3121,6 @@ CREATE TABLE "tiki_searchindex"(
   "count" bigint NOT NULL default '1',
   "last_update" bigint NOT NULL default '0',
   PRIMARY KEY ("searchword","location","page")
-
 ) ;
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
@@ -3184,7 +3133,6 @@ CREATE TABLE "tiki_searchsyllable"(
   "lastUsed" bigint NOT NULL default '0',
   "lastUpdated" bigint NOT NULL default '0',
   PRIMARY KEY ("syllable")
-
 ) ;
 
 CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
@@ -3200,7 +3148,7 @@ CREATE TABLE "tiki_searchwords"(
 
 
 --
--- Table structure for table `tiki_search_stats`
+-- Table structure for table tiki_search_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:55 PM
@@ -3217,7 +3165,7 @@ CREATE TABLE "tiki_search_stats" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_semaphores`
+-- Table structure for table tiki_semaphores
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -3235,7 +3183,7 @@ CREATE TABLE "tiki_semaphores" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_sent_newsletters`
+-- Table structure for table tiki_sent_newsletters
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3256,7 +3204,7 @@ CREATE TABLE "tiki_sent_newsletters" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_sessions`
+-- Table structure for table tiki_sessions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -3283,7 +3231,6 @@ CREATE TABLE "tiki_sheet_layout" (
   "headerRow" smallint NOT NULL default '0',
   "footerRow" smallint NOT NULL default '0',
   "className" varchar(64) default NULL,
-
 ) ;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
@@ -3301,8 +3248,6 @@ CREATE TABLE "tiki_sheet_values" (
   "width" smallint NOT NULL default '1',
   "height" smallint NOT NULL default '1',
   "format" varchar(255) default NULL,
-
-
 ) ;
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
@@ -3320,7 +3265,7 @@ CREATE TABLE "tiki_sheets" (
 
 
 --
--- Table structure for table `tiki_shoutbox`
+-- Table structure for table tiki_shoutbox
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:21 PM
@@ -3340,7 +3285,7 @@ CREATE TABLE "tiki_shoutbox" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_shoutbox_words`
+-- Table structure for table tiki_shoutbox_words
 --
 
 DROP TABLE "tiki_shoutbox_words";
@@ -3354,7 +3299,7 @@ CREATE TABLE "tiki_shoutbox_words" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_structure_versions`
+-- Table structure for table tiki_structure_versions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3371,7 +3316,7 @@ CREATE TABLE "tiki_structure_versions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_structures`
+-- Table structure for table tiki_structures
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3388,14 +3333,13 @@ CREATE TABLE "tiki_structures" (
   "page_alias" varchar(240) NOT NULL default '',
   "pos" smallint default NULL,
   PRIMARY KEY ("page_ref_id")
-
 )   ;
 
 CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_submissions`
+-- Table structure for table tiki_submissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 04:16 PM
@@ -3443,7 +3387,7 @@ CREATE TABLE "tiki_submissions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_suggested_faq_questions`
+-- Table structure for table tiki_suggested_faq_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:52 PM
@@ -3464,7 +3408,7 @@ CREATE TABLE "tiki_suggested_faq_questions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_survey_question_options`
+-- Table structure for table tiki_survey_question_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 12:55 AM
@@ -3483,7 +3427,7 @@ CREATE TABLE "tiki_survey_question_options" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_survey_questions`
+-- Table structure for table tiki_survey_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 11:55 PM
@@ -3507,7 +3451,7 @@ CREATE TABLE "tiki_survey_questions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_surveys`
+-- Table structure for table tiki_surveys
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:40 PM
@@ -3529,7 +3473,7 @@ CREATE TABLE "tiki_surveys" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tags`
+-- Table structure for table tiki_tags
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 02:58 AM
@@ -3555,7 +3499,7 @@ CREATE TABLE "tiki_tags" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_categs`
+-- Table structure for table tiki_theme_control_categs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3572,7 +3516,7 @@ CREATE TABLE "tiki_theme_control_categs" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_objects`
+-- Table structure for table tiki_theme_control_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3591,7 +3535,7 @@ CREATE TABLE "tiki_theme_control_objects" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_sections`
+-- Table structure for table tiki_theme_control_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3608,7 +3552,7 @@ CREATE TABLE "tiki_theme_control_sections" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_topics`
+-- Table structure for table tiki_topics
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 04, 2003 at 10:10 PM
@@ -3631,7 +3575,7 @@ CREATE TABLE "tiki_topics" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_fields`
+-- Table structure for table tiki_tracker_fields
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 01:48 PM
@@ -3658,7 +3602,7 @@ CREATE TABLE "tiki_tracker_fields" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_attachments`
+-- Table structure for table tiki_tracker_item_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3686,7 +3630,7 @@ CREATE TABLE "tiki_tracker_item_attachments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_comments`
+-- Table structure for table tiki_tracker_item_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:12 AM
@@ -3707,7 +3651,7 @@ CREATE TABLE "tiki_tracker_item_comments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_fields`
+-- Table structure for table tiki_tracker_item_fields
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -3725,7 +3669,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_items`
+-- Table structure for table tiki_tracker_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -3745,7 +3689,7 @@ CREATE TABLE "tiki_tracker_items" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_options`
+-- Table structure for table tiki_tracker_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 01:48 PM
@@ -3764,7 +3708,7 @@ CREATE TABLE "tiki_tracker_options" (
 
 
 --
--- Table structure for table `tiki_trackers`
+-- Table structure for table tiki_trackers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -3793,7 +3737,7 @@ CREATE TABLE "tiki_trackers" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_untranslated`
+-- Table structure for table tiki_untranslated
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3806,8 +3750,6 @@ CREATE TABLE "tiki_untranslated" (
   "source" bytea NOT NULL,
   "lang" char(16) NOT NULL default '',
   PRIMARY KEY ("source","lang")
-
-
 )   ;
 
 CREATE  INDEX "tiki_untranslated_id_2" ON "tiki_untranslated"("id");
@@ -3815,7 +3757,7 @@ CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_answers`
+-- Table structure for table tiki_user_answers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3834,7 +3776,7 @@ CREATE TABLE "tiki_user_answers" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_assigned_modules`
+-- Table structure for table tiki_user_assigned_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:25 PM
@@ -3854,7 +3796,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_bookmarks_folders`
+-- Table structure for table tiki_user_bookmarks_folders
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:35 AM
@@ -3873,7 +3815,7 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_bookmarks_urls`
+-- Table structure for table tiki_user_bookmarks_urls
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:36 AM
@@ -3895,7 +3837,7 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_mail_accounts`
+-- Table structure for table tiki_user_mail_accounts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3922,7 +3864,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_menus`
+-- Table structure for table tiki_user_menus
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 10:58 PM
@@ -3943,7 +3885,7 @@ CREATE TABLE "tiki_user_menus" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_modules`
+-- Table structure for table tiki_user_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 03:16 AM
@@ -3961,7 +3903,7 @@ CREATE TABLE "tiki_user_modules" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_notes`
+-- Table structure for table tiki_user_notes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:52 AM
@@ -3984,7 +3926,7 @@ CREATE TABLE "tiki_user_notes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_postings`
+-- Table structure for table tiki_user_postings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:12 AM
@@ -4004,7 +3946,7 @@ CREATE TABLE "tiki_user_postings" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_preferences`
+-- Table structure for table tiki_user_preferences
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -4022,7 +3964,7 @@ CREATE TABLE "tiki_user_preferences" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_quizzes`
+-- Table structure for table tiki_user_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4045,7 +3987,7 @@ CREATE TABLE "tiki_user_quizzes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_taken_quizzes`
+-- Table structure for table tiki_user_taken_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4062,7 +4004,7 @@ CREATE TABLE "tiki_user_taken_quizzes" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_tasks`
+-- Table structure for table tiki_user_tasks
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 05:30 PM
@@ -4086,7 +4028,7 @@ CREATE TABLE "tiki_user_tasks" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_votings`
+-- Table structure for table tiki_user_votings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 11:55 PM
@@ -4103,7 +4045,7 @@ CREATE TABLE "tiki_user_votings" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_watches`
+-- Table structure for table tiki_user_watches
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:07 AM
@@ -4126,7 +4068,7 @@ CREATE TABLE "tiki_user_watches" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_userfiles`
+-- Table structure for table tiki_userfiles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4152,7 +4094,7 @@ CREATE TABLE "tiki_userfiles" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_userpoints`
+-- Table structure for table tiki_userpoints
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 05:47 AM
@@ -4169,7 +4111,7 @@ CREATE TABLE "tiki_userpoints" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_users`
+-- Table structure for table tiki_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4188,7 +4130,7 @@ CREATE TABLE "tiki_users" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_webmail_contacts`
+-- Table structure for table tiki_webmail_contacts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4209,7 +4151,7 @@ CREATE TABLE "tiki_webmail_contacts" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_webmail_messages`
+-- Table structure for table tiki_webmail_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4230,7 +4172,7 @@ CREATE TABLE "tiki_webmail_messages" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_wiki_attachments`
+-- Table structure for table tiki_wiki_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4256,7 +4198,7 @@ CREATE TABLE "tiki_wiki_attachments" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_zones`
+-- Table structure for table tiki_zones
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4271,57 +4213,32 @@ CREATE TABLE "tiki_zones" (
 
 -- --------------------------------------------------------
 --
--- Table structure for table `tiki_download`
+-- Table structure for table tiki_download
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Apr 15 2004 at 07:42 PM
 --
 
-DROP TABLE `tiki_download`;
+DROP TABLE "tiki_download";
 
-CREATE TABLE `tiki_download` (
-  `id` bigserial,
-  `object` varchar(255) NOT NULL default '',
-  `userId` integer NOT NULL default '0',
-  `type` varchar(20) NOT NULL default '',
-  `date` bigint NOT NULL default '0',
-  `IP` varchar(50) NOT NULL default '',
-  PRIMARY KEY ("`id`")
-  KEY `object` (`object`,`userId`,`type`),
-  KEY `userId` (`userId`),
-  KEY `type` (`type`),
-  KEY `date` (`date`)
-)  "AUTO_INCREMENT"=32 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tiki_download`
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Apr 15 2004 at 07:42 PM
---
-
-DROP TABLE `tiki_download`;
-
-CREATE TABLE `tiki_download` (
-  `id` bigserial,
-  `object` varchar(255) NOT NULL default '',
-  `userId` integer NOT NULL default '0',
-  `type` varchar(20) NOT NULL default '',
-  `date` bigint NOT NULL default '0',
-  `IP` varchar(50) NOT NULL default '',
-  PRIMARY KEY ("`id`")
-  KEY `object` (`object`,`userId`,`type`),
-  KEY `userId` (`userId`),
-  KEY `type` (`type`),
-  KEY `date` (`date`)
+CREATE TABLE "tiki_download" (
+  "id" bigserial,
+  "object" varchar(255) NOT NULL default '',
+  "userId" integer NOT NULL default '0',
+  "type" varchar(20) NOT NULL default '',
+  "date" bigint NOT NULL default '0',
+  "IP" varchar(50) NOT NULL default '',
+  PRIMARY KEY ("id")
 ) ;
 
+CREATE  INDEX "tiki_download_object" ON "tiki_download"("object","userId","type");
+CREATE  INDEX "tiki_download_userId" ON "tiki_download"("userId");
+CREATE  INDEX "tiki_download_type" ON "tiki_download"("type");
+CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_grouppermissions`
+-- Table structure for table users_grouppermissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 07:22 AM
@@ -4342,7 +4259,7 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous
 
 
 --
--- Table structure for table `users_groups`
+-- Table structure for table users_groups
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 08:57 PM
@@ -4364,7 +4281,7 @@ CREATE TABLE "users_groups" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_objectpermissions`
+-- Table structure for table users_objectpermissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:20 AM
@@ -4383,7 +4300,7 @@ CREATE TABLE "users_objectpermissions" (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_permissions`
+-- Table structure for table users_permissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 07:22 AM
@@ -4747,7 +4664,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_usergroups`
+-- Table structure for table users_usergroups
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 09:31 PM
@@ -4769,7 +4686,7 @@ INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_users`
+-- Table structure for table users_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:07 AM
@@ -4799,9 +4716,9 @@ CREATE TABLE "users_users" (
   "avatarType" char(1) default NULL,
   "score" int4 NOT NULL default 0,
   PRIMARY KEY ("userId")
-  KEY (score)
 )   ;
 
+CREATE  INDEX "users_users_score" ON "users_users"("score");
 -- --------------------------------------------------------
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
@@ -5545,6 +5462,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_score','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score_desc');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_anon','n');
+
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
@@ -5592,7 +5511,6 @@ CREATE TABLE "tiki_integrator_rules" (
   "enabled" char(1) NOT NULL default 'n',
   "description" text NOT NULL,
   PRIMARY KEY ("ruleID")
-
 ) ;
 
 CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
@@ -5627,9 +5545,9 @@ CREATE TABLE "tiki_quicktags" (
   "tagicon" varchar(255) default NULL,
   "tagcategory" varchar(255) default NULL,
   PRIMARY KEY ("tagId")
-  KEY `tagcategory` (`tagcategory`)
 )   ;
 
+CREATE  INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags"("tagcategory");
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','images/ed_format_bold.gif','wiki');
 
@@ -5757,7 +5675,6 @@ CREATE TABLE "tiki_hw_assignments" (
   "body" text,
   "deleted" smallint NOT NULL default '0',
   PRIMARY KEY ("assignmentId")
-
 ) ;
 
 CREATE  INDEX "tiki_hw_assignments_dueDate" ON "tiki_hw_assignments"("dueDate");
@@ -5821,9 +5738,6 @@ CREATE TABLE "tiki_hw_pages" (
   "lockUser" varchar(200) default NULL,
   "lockExpires" bigint default '0',
   PRIMARY KEY ("studentName","assignmentId")
-
-
-
 ) ;
 
 CREATE  INDEX "tiki_hw_pages_id" ON "tiki_hw_pages"("id");
@@ -5843,9 +5757,9 @@ CREATE TABLE "tiki_translated_objects" (
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL,
   PRIMARY KEY (type, objId),
-  KEY ( traId)
 )  ;
 
+CREATE  INDEX "tiki_translated_objects_tradid" ON "tiki_translated_objects"("traId");
 
 
 --
@@ -5889,7 +5803,6 @@ CREATE TABLE "tiki_users_score" (
   "expire" bigint NOT NULL default '0',
   "tstamp" timestamp(3) NOT NULL,
   PRIMARY KEY ("user","event_id")
-
 ) ;
 
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");
@@ -5908,47 +5821,48 @@ CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","e
 DROP TABLE "tiki_opnet_question";
 
 CREATE TABLE "tiki_opnet_question" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-which_formtype INT(10) NOT NULL,
-question_str VARCHAR( 100 ) NOT NULL ,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "which_formtype" INT(10) NOT NULL,
+  "question_str" VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id) 
 );
 
 
 DROP TABLE "tiki_opnet_formtype";
 
 CREATE TABLE "tiki_opnet_formtype" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-name VARCHAR( 30 ) NOT NULL ,
-timestamp DATE NOT NULL,
-PRIMARY KEY ( id ) 
+  "id" INT( 10 ) NOT NULL AUTO_INCREMENT,
+  "name" VARCHAR(30) NOT NULL,
+  "timestamp" INT(14) NOT NULL,
+  PRIMARY KEY (id) 
 );
 
 
 DROP TABLE "tiki_opnet_answer";
 
 CREATE TABLE "tiki_opnet_answer" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-id_question INT( 10 ) NOT NULL ,
-id_filledform INT( 10 ) NOT NULL ,
-value TEXT NOT NULL ,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "id_question" INT(10) NOT NULL,
+  "id_filledform" INT(10) NOT NULL,
+  "value" TEXT NOT NULL,
+  PRIMARY KEY (id) 
 );
 
 
 DROP TABLE "tiki_opnet_filledform";
 
 CREATE TABLE "tiki_opnet_filledform" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-who INT( 10 ) NOT NULL ,
-about_who INT( 10 ) NOT NULL ,
-which_form INT( 10 ) NOT NULL ,
-timestamp DATE NOT NULL,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "who" INT(10) NOT NULL,
+  "about_who" INT(10) NOT NULL,
+  "which_form" INT(10) NOT NULL,
+  "timestamp" INT(14) NOT NULL,
+  PRIMARY KEY (id) 
 );
 
 
 --
 -- Opinion-Network tables END
---;
+--
+;
 

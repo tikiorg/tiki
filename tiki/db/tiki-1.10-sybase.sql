@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2004-07-16 20:54:57 $
--- $Author: teedog $
+-- $Date: 2004-07-17 13:31:42 $
+-- $Author: mose $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -13,11 +13,11 @@ go
 -- Generation Time: Jul 13, 2003 at 02:09 AM
 -- Server version: 4.0.13
 -- PHP Version: 4.2.3
--- Database : `tikiwiki`
+-- Database : tikiwiki
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_activities`
+-- Table structure for table galaxia_activities
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -28,7 +28,7 @@ go
 
 
 CREATE TABLE "galaxia_activities" (
-activityId numeric(14 ,0) identity,
+  "activityId" numeric(14 ,0) identity,
   "name" varchar(80) default NULL NULL,
   "normalized_name" varchar(80) default NULL NULL,
   "pId" numeric(14,0) default '0' NOT NULL,
@@ -46,7 +46,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_activity_roles`
+-- Table structure for table galaxia_activity_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -67,7 +67,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instance_activities`
+-- Table structure for table galaxia_instance_activities
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -92,7 +92,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instance_comments`
+-- Table structure for table galaxia_instance_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -103,7 +103,7 @@ go
 
 
 CREATE TABLE "galaxia_instance_comments" (
-cId numeric(14 ,0) identity,
+  "cId" numeric(14 ,0) identity,
   "instanceId" numeric(14,0) default '0' NOT NULL,
   "user" varchar(200) default NULL NULL,
   "activityId" numeric(14,0) default NULL NULL,
@@ -120,7 +120,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_instances`
+-- Table structure for table galaxia_instances
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -131,7 +131,7 @@ go
 
 
 CREATE TABLE "galaxia_instances" (
-instanceId numeric(14 ,0) identity,
+  "instanceId" numeric(14 ,0) identity,
   "pId" numeric(14,0) default '0' NOT NULL,
   "started" numeric(14,0) default NULL NULL,
   "owner" varchar(200) default NULL NULL,
@@ -148,7 +148,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_processes`
+-- Table structure for table galaxia_processes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -159,7 +159,7 @@ go
 
 
 CREATE TABLE "galaxia_processes" (
-pId numeric(14 ,0) identity,
+  "pId" numeric(14 ,0) identity,
   "name" varchar(80) default NULL NULL,
   "isValid" char(1) default NULL NULL,
   "isActive" char(1) default NULL NULL,
@@ -175,7 +175,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_roles`
+-- Table structure for table galaxia_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -186,7 +186,7 @@ go
 
 
 CREATE TABLE "galaxia_roles" (
-roleId numeric(14 ,0) identity,
+  "roleId" numeric(14 ,0) identity,
   "pId" numeric(14,0) default '0' NOT NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   "name" varchar(80) default NULL NULL,
@@ -199,7 +199,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_transitions`
+-- Table structure for table galaxia_transitions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -221,7 +221,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_user_roles`
+-- Table structure for table galaxia_user_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -233,7 +233,7 @@ go
 
 CREATE TABLE "galaxia_user_roles" (
   "pId" numeric(14,0) default '0' NOT NULL,
-roleId numeric(14 ,0) identity,
+  "roleId" numeric(14 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("roleId","user")
 )   
@@ -243,7 +243,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `galaxia_workitems`
+-- Table structure for table galaxia_workitems
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -254,7 +254,7 @@ go
 
 
 CREATE TABLE "galaxia_workitems" (
-itemId numeric(14 ,0) identity,
+  "itemId" numeric(14 ,0) identity,
   "instanceId" numeric(14,0) default '0' NOT NULL,
   "orderId" numeric(14,0) default '0' NOT NULL,
   "activityId" numeric(14,0) default '0' NOT NULL,
@@ -270,7 +270,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `messu_messages`
+-- Table structure for table messu_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:29 PM
@@ -281,7 +281,7 @@ go
 
 
 CREATE TABLE "messu_messages" (
-msgId numeric(14 ,0) identity,
+  "msgId" numeric(14 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   "user_from" varchar(200) default '' NOT NULL,
   "user_to" text default '',
@@ -313,7 +313,6 @@ CREATE TABLE "sessions"(
   "expireref" varchar(64) default '',
   "data" text NOT NULL,
   PRIMARY KEY ("sesskey")
-
 ) 
 go
 
@@ -322,7 +321,7 @@ CREATE  INDEX "sessions_expiry" ON "sessions"("expiry")
 go
 
 --
--- Table structure for table `tiki_actionlog`
+-- Table structure for table tiki_actionlog
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 12:29 AM
@@ -346,7 +345,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_articles`
+-- Table structure for table tiki_articles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:30 AM
@@ -358,7 +357,7 @@ go
 
 
 CREATE TABLE "tiki_articles" (
-articleId numeric(8 ,0) identity,
+  "articleId" numeric(8 ,0) identity,
   "topline" varchar(255) default NULL NULL,
   "title" varchar(80) default NULL NULL,
   "subtitle" varchar(255) default NULL NULL,
@@ -393,11 +392,6 @@ articleId numeric(8 ,0) identity,
   "rating" decimal(3,2) default NULL NULL,
   "isfloat" char(1) default NULL NULL,
   PRIMARY KEY ("articleId")
-
-
-
-
-
 )   
 go
 
@@ -463,7 +457,7 @@ go
 
 
 --
--- Table structure for table `tiki_banners`
+-- Table structure for table tiki_banners
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -474,7 +468,7 @@ go
 
 
 CREATE TABLE "tiki_banners" (
-bannerId numeric(12 ,0) identity,
+  "bannerId" numeric(12 ,0) identity,
   "client" varchar(200) default '' NOT NULL,
   "url" varchar(255) default NULL NULL,
   "title" varchar(255) default NULL NULL,
@@ -511,7 +505,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_banning`
+-- Table structure for table tiki_banning
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -522,7 +516,7 @@ go
 
 
 CREATE TABLE "tiki_banning" (
-banId numeric(12 ,0) identity,
+  "banId" numeric(12 ,0) identity,
   "mode" varchar(6) default NULL NULL CHECK ("mode" IN ('user','ip')),
   "title" varchar(200) default NULL NULL,
   "ip1" char(3) default NULL NULL,
@@ -543,7 +537,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_banning_sections`
+-- Table structure for table tiki_banning_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -564,7 +558,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_activity`
+-- Table structure for table tiki_blog_activity
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 04:52 PM
@@ -586,7 +580,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_posts`
+-- Table structure for table tiki_blog_posts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 04:52 PM
@@ -598,7 +592,7 @@ go
 
 
 CREATE TABLE "tiki_blog_posts" (
-postId numeric(8 ,0) identity,
+  "postId" numeric(8 ,0) identity,
   "blogId" numeric(8,0) default '0' NOT NULL,
   "data" text default '',
   "data_size" numeric(11,0) default '0' NOT NULL,
@@ -609,10 +603,6 @@ postId numeric(8 ,0) identity,
   "trackbacks_from" text default '',
   "title" varchar(80) default NULL NULL,
   PRIMARY KEY ("postId")
-
-
-
-
 )   
 go
 
@@ -628,7 +618,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blog_posts_images`
+-- Table structure for table tiki_blog_posts_images
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -639,7 +629,7 @@ go
 
 
 CREATE TABLE "tiki_blog_posts_images" (
-imgId numeric(14 ,0) identity,
+  "imgId" numeric(14 ,0) identity,
   "postId" numeric(14,0) default '0' NOT NULL,
   "filename" varchar(80) default NULL NULL,
   "filetype" varchar(80) default NULL NULL,
@@ -653,7 +643,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_blogs`
+-- Table structure for table tiki_blogs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:07 AM
@@ -665,7 +655,7 @@ go
 
 
 CREATE TABLE "tiki_blogs" (
-blogId numeric(8 ,0) identity,
+  "blogId" numeric(8 ,0) identity,
   "created" numeric(14,0) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   "title" varchar(200) default NULL NULL,
@@ -684,10 +674,6 @@ blogId numeric(8 ,0) identity,
   "allow_comments" char(1) default NULL NULL,
   "show_avatar" char(1) default NULL NULL,
   PRIMARY KEY ("blogId")
-
-
-
-
 )   
 go
 
@@ -703,7 +689,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_categories`
+-- Table structure for table tiki_calendar_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:05 AM
@@ -714,11 +700,10 @@ go
 
 
 CREATE TABLE "tiki_calendar_categories" (
-calcatId numeric(11 ,0) identity,
+  "calcatId" numeric(11 ,0) identity,
   "calendarId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("calcatId")
-
 )   
 go
 
@@ -728,7 +713,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_items`
+-- Table structure for table tiki_calendar_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:43 AM
@@ -739,7 +724,7 @@ go
 
 
 CREATE TABLE "tiki_calendar_items" (
-calitemId numeric(14 ,0) identity,
+  "calitemId" numeric(14 ,0) identity,
   "calendarId" numeric(14,0) default '0' NOT NULL,
   "start" numeric(14,0) default '0' NOT NULL,
   "end" numeric(14,0) default '0' NOT NULL,
@@ -755,7 +740,6 @@ calitemId numeric(14 ,0) identity,
   "created" numeric(14,0) default '0' NOT NULL,
   "lastmodif" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY ("calitemId")
-
 )   
 go
 
@@ -765,7 +749,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_locations`
+-- Table structure for table tiki_calendar_locations
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:05 AM
@@ -776,12 +760,11 @@ go
 
 
 CREATE TABLE "tiki_calendar_locations" (
-callocId numeric(14 ,0) identity,
+  "callocId" numeric(14 ,0) identity,
   "calendarId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   "description" image default '',
   PRIMARY KEY ("callocId")
-
 )   
 go
 
@@ -791,7 +774,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendar_roles`
+-- Table structure for table tiki_calendar_roles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -813,7 +796,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_calendars`
+-- Table structure for table tiki_calendars
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 02:03 PM
@@ -824,7 +807,7 @@ go
 
 
 CREATE TABLE "tiki_calendars" (
-calendarId numeric(14 ,0) identity,
+  "calendarId" numeric(14 ,0) identity,
   "name" varchar(80) default '' NOT NULL,
   "description" varchar(255) default NULL NULL,
   "user" varchar(40) default '' NOT NULL,
@@ -843,7 +826,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_categories`
+-- Table structure for table tiki_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 04, 2003 at 09:47 PM
@@ -854,7 +837,7 @@ go
 
 
 CREATE TABLE "tiki_categories" (
-categId numeric(12 ,0) identity,
+  "categId" numeric(12 ,0) identity,
   "name" varchar(100) default NULL NULL,
   "description" varchar(250) default NULL NULL,
   "parentId" numeric(12,0) default NULL NULL,
@@ -867,7 +850,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_categorized_objects`
+-- Table structure for table tiki_categorized_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -878,7 +861,7 @@ go
 
 
 CREATE TABLE "tiki_categorized_objects" (
-catObjectId numeric(12 ,0) identity,
+  "catObjectId" numeric(12 ,0) identity,
   "type" varchar(50) default NULL NULL,
   "objId" varchar(255) default NULL NULL,
   "description" text default '',
@@ -894,7 +877,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_category_objects`
+-- Table structure for table tiki_category_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -915,7 +898,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_category_sites`
+-- Table structure for table tiki_category_sites
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 07, 2003 at 01:53 AM
@@ -936,7 +919,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chart_items`
+-- Table structure for table tiki_chart_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -947,7 +930,7 @@ go
 
 
 CREATE TABLE "tiki_chart_items" (
-itemId numeric(14 ,0) identity,
+  "itemId" numeric(14 ,0) identity,
   "title" varchar(250) default NULL NULL,
   "description" text default '',
   "chartId" numeric(14,0) default '0' NOT NULL,
@@ -964,7 +947,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts`
+-- Table structure for table tiki_charts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 08:14 AM
@@ -975,7 +958,7 @@ go
 
 
 CREATE TABLE "tiki_charts" (
-chartId numeric(14 ,0) identity,
+  "chartId" numeric(14 ,0) identity,
   "title" varchar(250) default NULL NULL,
   "description" text default '',
   "hits" numeric(14,0) default NULL NULL,
@@ -1001,7 +984,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts_rankings`
+-- Table structure for table tiki_charts_rankings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1028,7 +1011,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_charts_votes`
+-- Table structure for table tiki_charts_votes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1051,7 +1034,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_channels`
+-- Table structure for table tiki_chat_channels
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1062,7 +1045,7 @@ go
 
 
 CREATE TABLE "tiki_chat_channels" (
-channelId numeric(8 ,0) identity,
+  "channelId" numeric(8 ,0) identity,
   "name" varchar(30) default NULL NULL,
   "description" varchar(250) default NULL NULL,
   "max_users" numeric(8,0) default NULL NULL,
@@ -1078,7 +1061,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_messages`
+-- Table structure for table tiki_chat_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1089,7 +1072,7 @@ go
 
 
 CREATE TABLE "tiki_chat_messages" (
-messageId numeric(8 ,0) identity,
+  "messageId" numeric(8 ,0) identity,
   "channelId" numeric(8,0) default '0' NOT NULL,
   "data" varchar(255) default NULL NULL,
   "poster" varchar(200) default 'anonymous' NOT NULL,
@@ -1102,7 +1085,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_chat_users`
+-- Table structure for table tiki_chat_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1124,7 +1107,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_comments`
+-- Table structure for table tiki_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:56 PM
@@ -1136,7 +1119,7 @@ go
 
 
 CREATE TABLE "tiki_comments" (
-threadId numeric(14 ,0) identity,
+  "threadId" numeric(14 ,0) identity,
   "object" varchar(255) default '' NOT NULL,
   "objectType" varchar(32) default '' NOT NULL,
   "parentId" numeric(14,0) default NULL NULL,
@@ -1157,12 +1140,6 @@ threadId numeric(14 ,0) identity,
   "in_reply_to" varchar(250) default NULL NULL,
   "comment_rating" numeric(2,0) default NULL NULL,  
   PRIMARY KEY ("threadId")
-
-
-
-
-
-
 )   
 go
 
@@ -1182,7 +1159,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content`
+-- Table structure for table tiki_content
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1193,7 +1170,7 @@ go
 
 
 CREATE TABLE "tiki_content" (
-contentId numeric(8 ,0) identity,
+  "contentId" numeric(8 ,0) identity,
   "description" text default '',
   PRIMARY KEY ("contentId")
 )   
@@ -1203,7 +1180,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content_templates`
+-- Table structure for table tiki_content_templates
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:37 AM
@@ -1214,7 +1191,7 @@ go
 
 
 CREATE TABLE "tiki_content_templates" (
-templateId numeric(10 ,0) identity,
+  "templateId" numeric(10 ,0) identity,
   "content" image default '',
   "name" varchar(200) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
@@ -1226,7 +1203,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_content_templates_sections`
+-- Table structure for table tiki_content_templates_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:37 AM
@@ -1247,7 +1224,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_cookies`
+-- Table structure for table tiki_cookies
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 10, 2003 at 04:00 AM
@@ -1258,7 +1235,7 @@ go
 
 
 CREATE TABLE "tiki_cookies" (
-cookieId numeric(10 ,0) identity,
+  "cookieId" numeric(10 ,0) identity,
   "cookie" varchar(255) default NULL NULL,
   PRIMARY KEY ("cookieId")
 )   
@@ -1268,7 +1245,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_copyrights`
+-- Table structure for table tiki_copyrights
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1279,7 +1256,7 @@ go
 
 
 CREATE TABLE "tiki_copyrights" (
-copyrightId numeric(12 ,0) identity,
+  "copyrightId" numeric(12 ,0) identity,
   "page" varchar(200) default NULL NULL,
   "title" varchar(200) default NULL NULL,
   "year" numeric(11,0) default NULL NULL,
@@ -1294,7 +1271,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_categories`
+-- Table structure for table tiki_directory_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:59 PM
@@ -1305,7 +1282,7 @@ go
 
 
 CREATE TABLE "tiki_directory_categories" (
-categId numeric(10 ,0) identity,
+  "categId" numeric(10 ,0) identity,
   "parent" numeric(10,0) default NULL NULL,
   "name" varchar(240) default NULL NULL,
   "description" text default '',
@@ -1324,7 +1301,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_search`
+-- Table structure for table tiki_directory_search
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1345,7 +1322,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_directory_sites`
+-- Table structure for table tiki_directory_sites
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:32 PM
@@ -1356,7 +1333,7 @@ go
 
 
 CREATE TABLE "tiki_directory_sites" (
-siteId numeric(14 ,0) identity,
+  "siteId" numeric(14 ,0) identity,
   "name" varchar(240) default NULL NULL,
   "description" text default '',
   "url" varchar(255) default NULL NULL,
@@ -1368,7 +1345,6 @@ siteId numeric(14 ,0) identity,
   "cache" image default '',
   "cache_timestamp" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("siteId")
-
 )   
 go
 
@@ -1378,7 +1354,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_drawings`
+-- Table structure for table tiki_drawings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 05:02 AM
@@ -1389,7 +1365,7 @@ go
 
 
 CREATE TABLE "tiki_drawings" (
-drawId numeric(12 ,0) identity,
+  "drawId" numeric(12 ,0) identity,
   "version" numeric(8,0) default NULL NULL,
   "name" varchar(250) default NULL NULL,
   "filename_draw" varchar(250) default NULL NULL,
@@ -1404,7 +1380,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_dsn`
+-- Table structure for table tiki_dsn
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1415,7 +1391,7 @@ go
 
 
 CREATE TABLE "tiki_dsn" (
-dsnId numeric(12 ,0) identity,
+  "dsnId" numeric(12 ,0) identity,
   "name" varchar(200) default '' NOT NULL,
   "dsn" varchar(255) default NULL NULL,
   PRIMARY KEY ("dsnId")
@@ -1440,7 +1416,7 @@ go
 
 
 --
--- Table structure for table `tiki_eph`
+-- Table structure for table tiki_eph
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 08:23 AM
@@ -1451,7 +1427,7 @@ go
 
 
 CREATE TABLE "tiki_eph" (
-ephId numeric(12 ,0) identity,
+  "ephId" numeric(12 ,0) identity,
   "title" varchar(250) default NULL NULL,
   "isFile" char(1) default NULL NULL,
   "filename" varchar(250) default NULL NULL,
@@ -1469,7 +1445,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_extwiki`
+-- Table structure for table tiki_extwiki
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1480,7 +1456,7 @@ go
 
 
 CREATE TABLE "tiki_extwiki" (
-extwikiId numeric(12 ,0) identity,
+  "extwikiId" numeric(12 ,0) identity,
   "name" varchar(200) default '' NOT NULL,
   "extwiki" varchar(255) default NULL NULL,
   PRIMARY KEY ("extwikiId")
@@ -1491,7 +1467,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_faq_questions`
+-- Table structure for table tiki_faq_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1503,16 +1479,12 @@ go
 
 
 CREATE TABLE "tiki_faq_questions" (
-questionId numeric(10 ,0) identity,
+  "questionId" numeric(10 ,0) identity,
   "faqId" numeric(10,0) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
   "question" text default '',
   "answer" text default '',
   PRIMARY KEY ("questionId")
-
-
-
-
 )   
 go
 
@@ -1528,7 +1500,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_faqs`
+-- Table structure for table tiki_faqs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 09:09 PM
@@ -1540,7 +1512,7 @@ go
 
 
 CREATE TABLE "tiki_faqs" (
-faqId numeric(10 ,0) identity,
+  "faqId" numeric(10 ,0) identity,
   "title" varchar(200) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -1548,10 +1520,6 @@ faqId numeric(10 ,0) identity,
   "hits" numeric(8,0) default NULL NULL,
   "canSuggest" char(1) default NULL NULL,
   PRIMARY KEY ("faqId")
-
-
-
-
 )   
 go
 
@@ -1567,7 +1535,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_featured_links`
+-- Table structure for table tiki_featured_links
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:08 PM
@@ -1592,7 +1560,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_file_galleries`
+-- Table structure for table tiki_file_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:13 AM
@@ -1603,7 +1571,7 @@ go
 
 
 CREATE TABLE "tiki_file_galleries" (
-galleryId numeric(14 ,0) identity,
+  "galleryId" numeric(14 ,0) identity,
   "name" varchar(80) default '' NOT NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -1631,7 +1599,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_files`
+-- Table structure for table tiki_files
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:13 AM
@@ -1643,7 +1611,7 @@ go
 
 
 CREATE TABLE "tiki_files" (
-fileId numeric(14 ,0) identity,
+  "fileId" numeric(14 ,0) identity,
   "galleryId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
@@ -1661,10 +1629,6 @@ fileId numeric(14 ,0) identity,
   "is_reference" char(1) default NULL NULL,
   "hash" varchar(32) default NULL NULL,
   PRIMARY KEY ("fileId")
-
-
-
-
 )   
 go
 
@@ -1680,7 +1644,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forum_attachments`
+-- Table structure for table tiki_forum_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1691,7 +1655,7 @@ go
 
 
 CREATE TABLE "tiki_forum_attachments" (
-attId numeric(14 ,0) identity,
+  "attId" numeric(14 ,0) identity,
   "threadId" numeric(14,0) default '0' NOT NULL,
   "qId" numeric(14,0) default '0' NOT NULL,
   "forumId" numeric(14,0) default NULL NULL,
@@ -1710,7 +1674,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forum_reads`
+-- Table structure for table tiki_forum_reads
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:17 PM
@@ -1733,7 +1697,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums`
+-- Table structure for table tiki_forums
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:14 PM
@@ -1744,7 +1708,7 @@ go
 
 
 CREATE TABLE "tiki_forums" (
-forumId numeric(8 ,0) identity,
+  "forumId" numeric(8 ,0) identity,
   "name" varchar(200) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -1803,7 +1767,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums_queue`
+-- Table structure for table tiki_forums_queue
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1814,7 +1778,7 @@ go
 
 
 CREATE TABLE "tiki_forums_queue" (
-qId numeric(14 ,0) identity,
+  "qId" numeric(14 ,0) identity,
   "object" varchar(32) default NULL NULL,
   "parentId" numeric(14,0) default NULL NULL,
   "forumId" numeric(14,0) default NULL NULL,
@@ -1835,7 +1799,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_forums_reported`
+-- Table structure for table tiki_forums_reported
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1860,7 +1824,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_galleries`
+-- Table structure for table tiki_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:59 PM
@@ -1872,7 +1836,7 @@ go
 
 
 CREATE TABLE "tiki_galleries" (
-galleryId numeric(14 ,0) identity,
+  "galleryId" numeric(14 ,0) identity,
   "name" varchar(80) default '' NOT NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -1887,10 +1851,6 @@ galleryId numeric(14 ,0) identity,
   "thumbSizeY" numeric(10,0) default NULL NULL,
   "public" char(1) default NULL NULL,
   PRIMARY KEY ("galleryId")
-
-
-
-
 )   
 go
 
@@ -1906,7 +1866,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_galleries_scales`
+-- Table structure for table tiki_galleries_scales
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -1928,7 +1888,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_games`
+-- Table structure for table tiki_games
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 08:23 PM
@@ -1951,7 +1911,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_group_inclusion`
+-- Table structure for table tiki_group_inclusion
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 02:03 AM
@@ -1972,7 +1932,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_history`
+-- Table structure for table tiki_history
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 12:29 AM
@@ -1999,7 +1959,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_hotwords`
+-- Table structure for table tiki_hotwords
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 10, 2003 at 11:04 PM
@@ -2020,7 +1980,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_html_pages`
+-- Table structure for table tiki_html_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2044,7 +2004,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_html_pages_dynamic_zones`
+-- Table structure for table tiki_html_pages_dynamic_zones
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2067,7 +2027,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_images`
+-- Table structure for table tiki_images
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:29 PM
@@ -2079,7 +2039,7 @@ go
 
 
 CREATE TABLE "tiki_images" (
-imageId numeric(14 ,0) identity,
+  "imageId" numeric(14 ,0) identity,
   "galleryId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
@@ -2088,13 +2048,6 @@ imageId numeric(14 ,0) identity,
   "hits" numeric(14,0) default NULL NULL,
   "path" varchar(255) default NULL NULL,
   PRIMARY KEY ("imageId")
-
-
-
-
-
-
-
 )   
 go
 
@@ -2116,7 +2069,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_images_data`
+-- Table structure for table tiki_images_data
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:49 PM
@@ -2137,7 +2090,6 @@ CREATE TABLE "tiki_images_data" (
   "filename" varchar(80) default NULL NULL,
   "data" image default '',
   PRIMARY KEY ("imageId","xsize","ysize","type")
-
 ) 
 go
 
@@ -2147,7 +2099,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_language`
+-- Table structure for table tiki_language
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2169,7 +2121,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_languages`
+-- Table structure for table tiki_languages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2195,7 +2147,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_link_cache`
+-- Table structure for table tiki_link_cache
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 06:06 PM
@@ -2206,7 +2158,7 @@ go
 
 
 CREATE TABLE "tiki_link_cache" (
-cacheId numeric(14 ,0) identity,
+  "cacheId" numeric(14 ,0) identity,
   "url" varchar(250) default NULL NULL,
   "data" image default '',
   "refresh" numeric(14,0) default NULL NULL,
@@ -2218,7 +2170,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_links`
+-- Table structure for table tiki_links
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:39 PM
@@ -2239,7 +2191,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_events`
+-- Table structure for table tiki_live_support_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2250,7 +2202,7 @@ go
 
 
 CREATE TABLE "tiki_live_support_events" (
-eventId numeric(14 ,0) identity,
+  "eventId" numeric(14 ,0) identity,
   "reqId" varchar(32) default '' NOT NULL,
   "type" varchar(40) default NULL NULL,
   "seqId" numeric(14,0) default NULL NULL,
@@ -2265,7 +2217,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_message_comments`
+-- Table structure for table tiki_live_support_message_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2276,7 +2228,7 @@ go
 
 
 CREATE TABLE "tiki_live_support_message_comments" (
-cId numeric(12 ,0) identity,
+  "cId" numeric(12 ,0) identity,
   "msgId" numeric(12,0) default NULL NULL,
   "data" text default '',
   "timestamp" numeric(14,0) default NULL NULL,
@@ -2288,7 +2240,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_messages`
+-- Table structure for table tiki_live_support_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2299,7 +2251,7 @@ go
 
 
 CREATE TABLE "tiki_live_support_messages" (
-msgId numeric(12 ,0) identity,
+  "msgId" numeric(12 ,0) identity,
   "data" text default '',
   "timestamp" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
@@ -2319,7 +2271,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_modules`
+-- Table structure for table tiki_live_support_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2330,7 +2282,7 @@ go
 
 
 CREATE TABLE "tiki_live_support_modules" (
-modId numeric(4 ,0) identity,
+  "modId" numeric(4 ,0) identity,
   "name" varchar(90) default NULL NULL,
   PRIMARY KEY ("modId")
 )   
@@ -2369,7 +2321,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_operators`
+-- Table structure for table tiki_live_support_operators
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2399,7 +2351,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_requests`
+-- Table structure for table tiki_live_support_requests
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2432,18 +2384,18 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_live_support_requests`
+-- Table structure for table tiki_live_support_requests
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
--- DROP TABLE `tiki_logs`
+-- DROP TABLE "tiki_logs"
 go
 
 
 CREATE TABLE "tiki_logs" (
-logId numeric(8 ,0) identity,
+  "logId" numeric(8 ,0) identity,
   "logtype" varchar(20) NOT NULL,
   "logmessage" text NOT NULL,
   "loguser" varchar(200) NOT NULL,
@@ -2451,7 +2403,6 @@ logId numeric(8 ,0) identity,
   "logclient" text NOT NULL,
   "logtime" numeric(14,0) NOT NULL,
   PRIMARY KEY ("logId")
-
 ) 
 go
 
@@ -2462,7 +2413,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_mail_events`
+-- Table structure for table tiki_mail_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 05:28 AM
@@ -2483,7 +2434,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_mailin_accounts`
+-- Table structure for table tiki_mailin_accounts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jun 17, 2004 at 03:06 PM EST
@@ -2494,7 +2445,7 @@ go
 
 
 CREATE TABLE "tiki_mailin_accounts" (
-accountId numeric(12 ,0) identity,
+  "accountId" numeric(12 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   "account" varchar(50) default '' NOT NULL,
   "pop" varchar(255) default NULL NULL,
@@ -2518,7 +2469,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menu_languages`
+-- Table structure for table tiki_menu_languages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -2529,7 +2480,7 @@ go
 
 
 CREATE TABLE "tiki_menu_languages" (
-menuId numeric(8 ,0) identity,
+  "menuId" numeric(8 ,0) identity,
   "language" char(16) default '' NOT NULL,
   PRIMARY KEY ("menuId","language")
 )   
@@ -2539,7 +2490,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menu_options`
+-- Table structure for table tiki_menu_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Nov 21, 2003 at 07:05 AM
@@ -2550,7 +2501,7 @@ go
 
 
 CREATE TABLE "tiki_menu_options" (
-optionId numeric(8 ,0) identity,
+  "optionId" numeric(8 ,0) identity,
   "menuId" numeric(8,0) default NULL NULL,
   "type" char(1) default NULL NULL,
   "name" varchar(200) default NULL NULL,
@@ -2598,7 +2549,11 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki (click!)','tiki-my_tiki.php',50,'','','Registered')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered')
 go
 
 
@@ -2688,7 +2643,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','')
 go
 
 
@@ -2746,22 +2701,6 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','')
-go
-
-
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','')
 go
 
@@ -2808,7 +2747,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_ranking','tiki_p_read_article','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_cms_rankings','tiki_p_read_article','')
 go
 
 
@@ -2928,7 +2867,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload  "File"','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','')
 go
 
 
@@ -2972,6 +2911,11 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','')
 go
 
 
@@ -3037,67 +2981,71 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_chat','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_categories','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_banners','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_templates','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_cookies','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_dynamic','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_mailin','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_content_templates','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_html_pages','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_view_referer_stats','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_drawings','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_live_support','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'','user_is_operator','')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','')
 go
 
 
@@ -3217,7 +3165,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','')
 go
 
 
@@ -3249,6 +3197,14 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','')
+go
+
+
 
 -- Tiki Jukebox
 
@@ -3256,15 +3212,15 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '')
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '')
 go
 
 
@@ -3272,7 +3228,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_menus`
+-- Table structure for table tiki_menus
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3283,7 +3239,7 @@ go
 
 
 CREATE TABLE "tiki_menus" (
-menuId numeric(8 ,0) identity,
+  "menuId" numeric(8 ,0) identity,
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
   "type" char(1) default NULL NULL,
@@ -3300,7 +3256,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_minical_events`
+-- Table structure for table tiki_minical_events
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 09, 2003 at 04:06 AM
@@ -3312,7 +3268,7 @@ go
 
 CREATE TABLE "tiki_minical_events" (
   "user" varchar(200) default NULL NULL,
-eventId numeric(12 ,0) identity,
+  "eventId" numeric(12 ,0) identity,
   "title" varchar(250) default NULL NULL,
   "description" text default '',
   "start" numeric(14,0) default NULL NULL,
@@ -3329,7 +3285,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_minical_topics`
+-- Table structure for table tiki_minical_topics
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3341,7 +3297,7 @@ go
 
 CREATE TABLE "tiki_minical_topics" (
   "user" varchar(200) default NULL NULL,
-topicId numeric(12 ,0) identity,
+  "topicId" numeric(12 ,0) identity,
   "name" varchar(250) default NULL NULL,
   "filename" varchar(200) default NULL NULL,
   "filetype" varchar(200) default NULL NULL,
@@ -3357,7 +3313,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_modules`
+-- Table structure for table tiki_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 11:44 PM
@@ -3398,7 +3354,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsletter_subscriptions`
+-- Table structure for table tiki_newsletter_subscriptions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3422,7 +3378,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsletters`
+-- Table structure for table tiki_newsletters
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3433,7 +3389,7 @@ go
 
 
 CREATE TABLE "tiki_newsletters" (
-nlId numeric(12 ,0) identity,
+  "nlId" numeric(12 ,0) identity,
   "name" varchar(200) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -3453,7 +3409,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsreader_marks`
+-- Table structure for table tiki_newsreader_marks
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3476,7 +3432,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_newsreader_servers`
+-- Table structure for table tiki_newsreader_servers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3488,7 +3444,7 @@ go
 
 CREATE TABLE "tiki_newsreader_servers" (
   "user" varchar(200) default '' NOT NULL,
-serverId numeric(12 ,0) identity,
+  "serverId" numeric(12 ,0) identity,
   "server" varchar(250) default NULL NULL,
   "port" numeric(4,0) default NULL NULL,
   "username" varchar(200) default NULL NULL,
@@ -3501,7 +3457,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_page_footnotes`
+-- Table structure for table tiki_page_footnotes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:00 AM
@@ -3524,7 +3480,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_pages`
+-- Table structure for table tiki_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -3536,7 +3492,7 @@ go
 
 
 CREATE TABLE "tiki_pages" (
-page_id numeric(14 ,0) identity,
+  "page_id" numeric(14 ,0) identity,
   "pageName" varchar(160) default '' NOT NULL,
   "hits" numeric(8,0) default NULL NULL,
   "data" text default '',
@@ -3557,10 +3513,6 @@ page_id numeric(14 ,0) identity,
   "page_size" numeric(10,0) default 0,
   "lang" varchar(16) default null,
   PRIMARY KEY ("page_id")
-
-
-
-
 )  
 go
 
@@ -3576,7 +3528,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_pageviews`
+-- Table structure for table tiki_pageviews
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -3597,7 +3549,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_poll_options`
+-- Table structure for table tiki_poll_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 07:57 PM
@@ -3609,7 +3561,7 @@ go
 
 CREATE TABLE "tiki_poll_options" (
   "pollId" numeric(8,0) default '0' NOT NULL,
-optionId numeric(8 ,0) identity,
+  "optionId" numeric(8 ,0) identity,
   "title" varchar(200) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   PRIMARY KEY ("optionId")
@@ -3620,7 +3572,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_polls`
+-- Table structure for table tiki_polls
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 07:57 PM
@@ -3631,7 +3583,7 @@ go
 
 
 CREATE TABLE "tiki_polls" (
-pollId numeric(8 ,0) identity,
+  "pollId" numeric(8 ,0) identity,
   "title" varchar(200) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "active" char(1) default NULL NULL,
@@ -3644,7 +3596,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_preferences`
+-- Table structure for table tiki_preferences
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 12:04 PM
@@ -3665,7 +3617,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_private_messages`
+-- Table structure for table tiki_private_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3676,7 +3628,7 @@ go
 
 
 CREATE TABLE "tiki_private_messages" (
-messageId numeric(8 ,0) identity,
+  "messageId" numeric(8 ,0) identity,
   "toNickname" varchar(200) default '' NOT NULL,
   "data" varchar(255) default NULL NULL,
   "poster" varchar(200) default 'anonymous' NOT NULL,
@@ -3689,7 +3641,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_programmed_content`
+-- Table structure for table tiki_programmed_content
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3700,7 +3652,7 @@ go
 
 
 CREATE TABLE "tiki_programmed_content" (
-pId numeric(8 ,0) identity,
+  "pId" numeric(8 ,0) identity,
   "contentId" numeric(8,0) default '0' NOT NULL,
   "publishDate" numeric(14,0) default '0' NOT NULL,
   "data" text default '',
@@ -3712,7 +3664,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_question_options`
+-- Table structure for table tiki_quiz_question_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3723,7 +3675,7 @@ go
 
 
 CREATE TABLE "tiki_quiz_question_options" (
-optionId numeric(10 ,0) identity,
+  "optionId" numeric(10 ,0) identity,
   "questionId" numeric(10,0) default NULL NULL,
   "optionText" text default '',
   "points" numeric(4,0) default NULL NULL,
@@ -3735,7 +3687,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_questions`
+-- Table structure for table tiki_quiz_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3746,7 +3698,7 @@ go
 
 
 CREATE TABLE "tiki_quiz_questions" (
-questionId numeric(10 ,0) identity,
+  "questionId" numeric(10 ,0) identity,
   "quizId" numeric(10,0) default NULL NULL,
   "question" text default '',
   "position" numeric(4,0) default NULL NULL,
@@ -3760,7 +3712,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_results`
+-- Table structure for table tiki_quiz_results
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3771,7 +3723,7 @@ go
 
 
 CREATE TABLE "tiki_quiz_results" (
-resultId numeric(10 ,0) identity,
+  "resultId" numeric(10 ,0) identity,
   "quizId" numeric(10,0) default NULL NULL,
   "fromPoints" numeric(4,0) default NULL NULL,
   "toPoints" numeric(4,0) default NULL NULL,
@@ -3784,7 +3736,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_stats`
+-- Table structure for table tiki_quiz_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3807,7 +3759,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quiz_stats_sum`
+-- Table structure for table tiki_quiz_stats_sum
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3832,7 +3784,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_quizzes`
+-- Table structure for table tiki_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: April 29, 2004
@@ -3843,7 +3795,7 @@ go
 
 
 CREATE TABLE "tiki_quizzes" (
-quizId numeric(10 ,0) identity,
+  "quizId" numeric(10 ,0) identity,
   "name" varchar(255) default NULL NULL,
   "description" text default '',
   "canRepeat" char(1) default NULL NULL,
@@ -3865,21 +3817,21 @@ quizId numeric(10 ,0) identity,
   "bOnline" char(1) default NULL NULL,
   "bRandomQuestions" char(1) default NULL NULL,
   "nRandomQuestions" numeric(4,0) default NULL NULL,
-	bLimitQuestionsPerPage char(1) default NULL NULL,
+  "bLimitQuestionsPerPage" char(1) default NULL NULL,
   "nLimitQuestionsPerPage" numeric(4,0) default NULL NULL,
-	bMultiSession char(1) default NULL NULL,
-	nCanRepeat numeric(4,0) default NULL NULL,
-	sGradingMethod varchar(80) default NULL NULL,
-	sShowScore varchar(80) default NULL NULL,
-	sShowCorrectAnswers varchar(80) default NULL NULL,
-	sPublishStats varchar(80) default NULL NULL,
-	bAdditionalQuestions char(1) default NULL NULL,
-	bForum char(1) default NULL NULL,
-	sForum varchar(80) default NULL NULL,
-	sPrologue text,
-	sData text,
-	sEpilogue text,
-  PRIMARY KEY ("quizId"," nVersion")
+  "bMultiSession" char(1) default NULL NULL,
+  "nCanRepeat" numeric(4,0) default NULL NULL,
+  "sGradingMethod" varchar(80) default NULL NULL,
+  "sShowScore" varchar(80) default NULL NULL,
+  "sShowCorrectAnswers" varchar(80) default NULL NULL,
+  "sPublishStats" varchar(80) default NULL NULL,
+  "bAdditionalQuestions" char(1) default NULL NULL,
+  "bForum" char(1) default NULL NULL,
+  "sForum" varchar(80) default NULL NULL,
+  "sPrologue" text default '',
+  "sData" text default '',
+  "sEpilogue" text default '',
+  PRIMARY KEY ("quizId","nVersion")
 )   
 go
 
@@ -3887,7 +3839,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_received_articles`
+-- Table structure for table tiki_received_articles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3898,7 +3850,7 @@ go
 
 
 CREATE TABLE "tiki_received_articles" (
-receivedArticleId numeric(14 ,0) identity,
+  "receivedArticleId" numeric(14 ,0) identity,
   "receivedFromSite" varchar(200) default NULL NULL,
   "receivedFromUser" varchar(200) default NULL NULL,
   "receivedDate" numeric(14,0) default NULL NULL,
@@ -3929,7 +3881,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_received_pages`
+-- Table structure for table tiki_received_pages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 09, 2003 at 03:56 AM
@@ -3940,7 +3892,7 @@ go
 
 
 CREATE TABLE "tiki_received_pages" (
-receivedPageId numeric(14 ,0) identity,
+  "receivedPageId" numeric(14 ,0) identity,
   "pageName" varchar(160) default '' NOT NULL,
   "data" image default '',
   "description" varchar(200) default NULL NULL,
@@ -3956,7 +3908,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_referer_stats`
+-- Table structure for table tiki_referer_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:30 AM
@@ -3978,7 +3930,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_related_categories`
+-- Table structure for table tiki_related_categories
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -3999,7 +3951,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_rss_modules`
+-- Table structure for table tiki_rss_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:19 AM
@@ -4010,7 +3962,7 @@ go
 
 
 CREATE TABLE "tiki_rss_modules" (
-rssId numeric(8 ,0) identity,
+  "rssId" numeric(8 ,0) identity,
   "name" varchar(30) default '' NOT NULL,
   "description" text default '',
   "url" varchar(255) default '' NOT NULL,
@@ -4027,7 +3979,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_rss_feeds`
+-- Table structure for table tiki_rss_feeds
 --
 -- Creation: Oct 14, 2003 at 20:34 PM
 -- Last update: Oct 14, 2003 at 20:34 PM
@@ -4061,7 +4013,6 @@ CREATE TABLE "tiki_searchindex"(
   "count" numeric(11,0) default '1' NOT NULL,
   "last_update" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("searchword","location","page")
-
 ) 
 go
 
@@ -4079,7 +4030,6 @@ CREATE TABLE "tiki_searchsyllable"(
   "lastUsed" numeric(11,0) default '0' NOT NULL,
   "lastUpdated" numeric(11,0) default '0' NOT NULL,
   PRIMARY KEY ("syllable")
-
 ) 
 go
 
@@ -4102,7 +4052,7 @@ go
 
 
 --
--- Table structure for table `tiki_search_stats`
+-- Table structure for table tiki_search_stats
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 10:55 PM
@@ -4123,7 +4073,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_semaphores`
+-- Table structure for table tiki_semaphores
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -4145,7 +4095,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_sent_newsletters`
+-- Table structure for table tiki_sent_newsletters
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4156,7 +4106,7 @@ go
 
 
 CREATE TABLE "tiki_sent_newsletters" (
-editionId numeric(12 ,0) identity,
+  "editionId" numeric(12 ,0) identity,
   "nlId" numeric(12,0) default '0' NOT NULL,
   "users" numeric(10,0) default NULL NULL,
   "sent" numeric(14,0) default NULL NULL,
@@ -4170,7 +4120,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_sessions`
+-- Table structure for table tiki_sessions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:52 AM
@@ -4203,7 +4153,6 @@ CREATE TABLE "tiki_sheet_layout" (
   "headerRow" numeric(4,0) default '0' NOT NULL,
   "footerRow" numeric(4,0) default '0' NOT NULL,
   "className" varchar(64) default NULL NULL,
-
 ) 
 go
 
@@ -4226,8 +4175,6 @@ CREATE TABLE "tiki_sheet_values" (
   "width" numeric(4,0) default '1' NOT NULL,
   "height" numeric(4,0) default '1' NOT NULL,
   "format" varchar(255) default NULL NULL,
-
-
 ) 
 go
 
@@ -4242,7 +4189,7 @@ go
 
 
 CREATE TABLE "tiki_sheets" (
-sheetId numeric(8 ,0) identity,
+  "sheetId" numeric(8 ,0) identity,
   "title" varchar(200) default '' NOT NULL,
   "description" text default '',
   "author" varchar(200) default '' NOT NULL,
@@ -4253,7 +4200,7 @@ go
 
 
 --
--- Table structure for table `tiki_shoutbox`
+-- Table structure for table tiki_shoutbox
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:21 PM
@@ -4264,7 +4211,7 @@ go
 
 
 CREATE TABLE "tiki_shoutbox" (
-msgId numeric(10 ,0) identity,
+  "msgId" numeric(10 ,0) identity,
   "message" varchar(255) default NULL NULL,
   "timestamp" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
@@ -4277,7 +4224,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_shoutbox_words`
+-- Table structure for table tiki_shoutbox_words
 --
 
 -- DROP TABLE "tiki_shoutbox_words"
@@ -4295,7 +4242,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_structure_versions`
+-- Table structure for table tiki_structure_versions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4306,7 +4253,7 @@ go
 
 
 CREATE TABLE "tiki_structure_versions" (
-structure_id numeric(14 ,0) identity,
+  "structure_id" numeric(14 ,0) identity,
   "version" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("structure_id")
 )   
@@ -4316,7 +4263,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_structures`
+-- Table structure for table tiki_structures
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4327,7 +4274,7 @@ go
 
 
 CREATE TABLE "tiki_structures" (
-page_ref_id numeric(14 ,0) identity,
+  "page_ref_id" numeric(14 ,0) identity,
   "structure_id" numeric(14,0) NOT NULL,
   "parent_id" numeric(14,0) default NULL NULL,
   "page_id" numeric(14,0) NOT NULL,
@@ -4335,7 +4282,6 @@ page_ref_id numeric(14 ,0) identity,
   "page_alias" varchar(240) default '' NOT NULL,
   "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY ("page_ref_id")
-
 )   
 go
 
@@ -4345,7 +4291,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_submissions`
+-- Table structure for table tiki_submissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 04:16 PM
@@ -4356,7 +4302,7 @@ go
 
 
 CREATE TABLE "tiki_submissions" (
-subId numeric(8 ,0) identity,
+  "subId" numeric(8 ,0) identity,
   "topline" varchar(255) default NULL NULL,
   "title" varchar(80) default NULL NULL,
   "subtitle" varchar(255) default NULL NULL,
@@ -4397,7 +4343,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_suggested_faq_questions`
+-- Table structure for table tiki_suggested_faq_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:52 PM
@@ -4408,7 +4354,7 @@ go
 
 
 CREATE TABLE "tiki_suggested_faq_questions" (
-sfqId numeric(10 ,0) identity,
+  "sfqId" numeric(10 ,0) identity,
   "faqId" numeric(10,0) default '0' NOT NULL,
   "question" text default '',
   "answer" text default '',
@@ -4422,7 +4368,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_survey_question_options`
+-- Table structure for table tiki_survey_question_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 12:55 AM
@@ -4433,7 +4379,7 @@ go
 
 
 CREATE TABLE "tiki_survey_question_options" (
-optionId numeric(12 ,0) identity,
+  "optionId" numeric(12 ,0) identity,
   "questionId" numeric(12,0) default '0' NOT NULL,
   "qoption" text default '',
   "votes" numeric(10,0) default NULL NULL,
@@ -4445,7 +4391,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_survey_questions`
+-- Table structure for table tiki_survey_questions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 11:55 PM
@@ -4456,7 +4402,7 @@ go
 
 
 CREATE TABLE "tiki_survey_questions" (
-questionId numeric(12 ,0) identity,
+  "questionId" numeric(12 ,0) identity,
   "surveyId" numeric(12,0) default '0' NOT NULL,
   "question" text default '',
   "options" text default '',
@@ -4473,7 +4419,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_surveys`
+-- Table structure for table tiki_surveys
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:40 PM
@@ -4484,7 +4430,7 @@ go
 
 
 CREATE TABLE "tiki_surveys" (
-surveyId numeric(12 ,0) identity,
+  "surveyId" numeric(12 ,0) identity,
   "name" varchar(200) default NULL NULL,
   "description" text default '',
   "taken" numeric(10,0) default NULL NULL,
@@ -4499,7 +4445,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tags`
+-- Table structure for table tiki_tags
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 06, 2003 at 02:58 AM
@@ -4529,7 +4475,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_categs`
+-- Table structure for table tiki_theme_control_categs
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4550,7 +4496,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_objects`
+-- Table structure for table tiki_theme_control_objects
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4573,7 +4519,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_theme_control_sections`
+-- Table structure for table tiki_theme_control_sections
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4594,7 +4540,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_topics`
+-- Table structure for table tiki_topics
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 04, 2003 at 10:10 PM
@@ -4605,7 +4551,7 @@ go
 
 
 CREATE TABLE "tiki_topics" (
-topicId numeric(14 ,0) identity,
+  "topicId" numeric(14 ,0) identity,
   "name" varchar(40) default NULL NULL,
   "image_name" varchar(80) default NULL NULL,
   "image_type" varchar(80) default NULL NULL,
@@ -4621,7 +4567,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_fields`
+-- Table structure for table tiki_tracker_fields
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 01:48 PM
@@ -4632,7 +4578,7 @@ go
 
 
 CREATE TABLE "tiki_tracker_fields" (
-fieldId numeric(12 ,0) identity,
+  "fieldId" numeric(12 ,0) identity,
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(255) default NULL NULL,
   "options" text default '',
@@ -4652,7 +4598,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_attachments`
+-- Table structure for table tiki_tracker_item_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4663,7 +4609,7 @@ go
 
 
 CREATE TABLE "tiki_tracker_item_attachments" (
-attId numeric(12 ,0) identity,
+  "attId" numeric(12 ,0) identity,
   "itemId" numeric(12,0) default 0 NOT NULL,
   "filename" varchar(80) default NULL NULL,
   "filetype" varchar(80) default NULL NULL,
@@ -4684,7 +4630,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_comments`
+-- Table structure for table tiki_tracker_item_comments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:12 AM
@@ -4695,7 +4641,7 @@ go
 
 
 CREATE TABLE "tiki_tracker_item_comments" (
-commentId numeric(12 ,0) identity,
+  "commentId" numeric(12 ,0) identity,
   "itemId" numeric(12,0) default '0' NOT NULL,
   "user" varchar(200) default NULL NULL,
   "data" text default '',
@@ -4709,7 +4655,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_item_fields`
+-- Table structure for table tiki_tracker_item_fields
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -4731,7 +4677,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_items`
+-- Table structure for table tiki_tracker_items
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -4742,7 +4688,7 @@ go
 
 
 CREATE TABLE "tiki_tracker_items" (
-itemId numeric(12 ,0) identity,
+  "itemId" numeric(12 ,0) identity,
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "created" numeric(14,0) default NULL NULL,
   "status" char(1) default NULL NULL,
@@ -4755,7 +4701,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_tracker_options`
+-- Table structure for table tiki_tracker_options
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 01:48 PM
@@ -4778,7 +4724,7 @@ go
 
 
 --
--- Table structure for table `tiki_trackers`
+-- Table structure for table tiki_trackers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:26 AM
@@ -4789,7 +4735,7 @@ go
 
 
 CREATE TABLE "tiki_trackers" (
-trackerId numeric(12 ,0) identity,
+  "trackerId" numeric(12 ,0) identity,
   "name" varchar(80) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -4811,7 +4757,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_untranslated`
+-- Table structure for table tiki_untranslated
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4822,12 +4768,10 @@ go
 
 
 CREATE TABLE "tiki_untranslated" (
-id numeric(14 ,0) identity,
+  "id" numeric(14 ,0) identity,
   "source" image NOT NULL,
   "lang" char(16) default '' NOT NULL,
   PRIMARY KEY ("source","lang")
-
-
 )   
 go
 
@@ -4839,7 +4783,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_answers`
+-- Table structure for table tiki_user_answers
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4862,7 +4806,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_assigned_modules`
+-- Table structure for table tiki_user_assigned_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:25 PM
@@ -4886,7 +4830,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_bookmarks_folders`
+-- Table structure for table tiki_user_bookmarks_folders
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:35 AM
@@ -4897,7 +4841,7 @@ go
 
 
 CREATE TABLE "tiki_user_bookmarks_folders" (
-folderId numeric(12 ,0) identity,
+  "folderId" numeric(12 ,0) identity,
   "parentId" numeric(12,0) default NULL NULL,
   "user" varchar(200) default '' NOT NULL,
   "name" varchar(30) default NULL NULL,
@@ -4909,7 +4853,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_bookmarks_urls`
+-- Table structure for table tiki_user_bookmarks_urls
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 08:36 AM
@@ -4920,7 +4864,7 @@ go
 
 
 CREATE TABLE "tiki_user_bookmarks_urls" (
-urlId numeric(12 ,0) identity,
+  "urlId" numeric(12 ,0) identity,
   "name" varchar(30) default NULL NULL,
   "url" varchar(250) default NULL NULL,
   "data" image default '',
@@ -4935,7 +4879,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_mail_accounts`
+-- Table structure for table tiki_user_mail_accounts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -4946,7 +4890,7 @@ go
 
 
 CREATE TABLE "tiki_user_mail_accounts" (
-accountId numeric(12 ,0) identity,
+  "accountId" numeric(12 ,0) identity,
   "user" varchar(200) default '' NOT NULL,
   "account" varchar(50) default '' NOT NULL,
   "pop" varchar(255) default NULL NULL,
@@ -4966,7 +4910,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_menus`
+-- Table structure for table tiki_user_menus
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 10:58 PM
@@ -4978,7 +4922,7 @@ go
 
 CREATE TABLE "tiki_user_menus" (
   "user" varchar(200) default '' NOT NULL,
-menuId numeric(12 ,0) identity,
+  "menuId" numeric(12 ,0) identity,
   "url" varchar(250) default NULL NULL,
   "name" varchar(40) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
@@ -4991,7 +4935,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_modules`
+-- Table structure for table tiki_user_modules
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 05, 2003 at 03:16 AM
@@ -5013,7 +4957,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_notes`
+-- Table structure for table tiki_user_notes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:52 AM
@@ -5025,7 +4969,7 @@ go
 
 CREATE TABLE "tiki_user_notes" (
   "user" varchar(200) default '' NOT NULL,
-noteId numeric(12 ,0) identity,
+  "noteId" numeric(12 ,0) identity,
   "created" numeric(14,0) default NULL NULL,
   "name" varchar(255) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
@@ -5040,7 +4984,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_postings`
+-- Table structure for table tiki_user_postings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:12 AM
@@ -5064,7 +5008,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_preferences`
+-- Table structure for table tiki_user_preferences
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:09 AM
@@ -5086,7 +5030,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_quizzes`
+-- Table structure for table tiki_user_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5104,7 +5048,7 @@ CREATE TABLE "tiki_user_quizzes" (
   "points" numeric(12,0) default NULL NULL,
   "maxPoints" numeric(12,0) default NULL NULL,
   "resultId" numeric(10,0) default NULL NULL,
-userResultId numeric(10 ,0) identity,
+  "userResultId" numeric(10 ,0) identity,
   PRIMARY KEY ("userResultId")
 )   
 go
@@ -5113,7 +5057,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_taken_quizzes`
+-- Table structure for table tiki_user_taken_quizzes
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5134,7 +5078,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_tasks`
+-- Table structure for table tiki_user_tasks
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 08, 2003 at 05:30 PM
@@ -5146,7 +5090,7 @@ go
 
 CREATE TABLE "tiki_user_tasks" (
   "user" varchar(200) default NULL NULL,
-taskId numeric(14 ,0) identity,
+  "taskId" numeric(14 ,0) identity,
   "title" varchar(250) default NULL NULL,
   "description" text default '',
   "date" numeric(14,0) default NULL NULL,
@@ -5162,7 +5106,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_votings`
+-- Table structure for table tiki_user_votings
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 11:55 PM
@@ -5183,7 +5127,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_user_watches`
+-- Table structure for table tiki_user_watches
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 08:07 AM
@@ -5210,7 +5154,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_userfiles`
+-- Table structure for table tiki_userfiles
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5222,7 +5166,7 @@ go
 
 CREATE TABLE "tiki_userfiles" (
   "user" varchar(200) default '' NOT NULL,
-fileId numeric(12 ,0) identity,
+  "fileId" numeric(12 ,0) identity,
   "name" varchar(200) default NULL NULL,
   "filename" varchar(200) default NULL NULL,
   "filetype" varchar(200) default NULL NULL,
@@ -5240,7 +5184,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_userpoints`
+-- Table structure for table tiki_userpoints
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 05:47 AM
@@ -5261,7 +5205,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_users`
+-- Table structure for table tiki_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5284,7 +5228,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_webmail_contacts`
+-- Table structure for table tiki_webmail_contacts
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5295,7 +5239,7 @@ go
 
 
 CREATE TABLE "tiki_webmail_contacts" (
-contactId numeric(12 ,0) identity,
+  "contactId" numeric(12 ,0) identity,
   "firstName" varchar(80) default NULL NULL,
   "lastName" varchar(80) default NULL NULL,
   "email" varchar(250) default NULL NULL,
@@ -5309,7 +5253,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_webmail_messages`
+-- Table structure for table tiki_webmail_messages
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5334,7 +5278,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_wiki_attachments`
+-- Table structure for table tiki_wiki_attachments
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5345,7 +5289,7 @@ go
 
 
 CREATE TABLE "tiki_wiki_attachments" (
-attId numeric(12 ,0) identity,
+  "attId" numeric(12 ,0) identity,
   "page" varchar(200) default '' NOT NULL,
   "filename" varchar(80) default NULL NULL,
   "filetype" varchar(80) default NULL NULL,
@@ -5364,7 +5308,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tiki_zones`
+-- Table structure for table tiki_zones
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 07:42 PM
@@ -5383,65 +5327,40 @@ go
 
 -- --------------------------------------------------------
 --
--- Table structure for table `tiki_download`
+-- Table structure for table tiki_download
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Apr 15 2004 at 07:42 PM
 --
 
--- DROP TABLE `tiki_download`
+-- DROP TABLE "tiki_download"
 go
 
 
-CREATE TABLE `tiki_download` (
-  `id` numeric(11,0) NOT NULL auto_increment,
-  `object` varchar(255) default '' NOT NULL,
-  `userId` numeric(8,0) default '0' NOT NULL,
-  `type` varchar(20) default '' NOT NULL,
-  `date` numeric(14,0) default '0' NOT NULL,
-  `IP` varchar(50) default '' NOT NULL,
-  PRIMARY KEY ("`id`")
-  KEY `object` (`object`,`userId`,`type`),
-  KEY `userId` (`userId`),
-  KEY `type` (`type`),
-  KEY `date` (`date`)
-)  "AUTO_INCREMENT"=32 
-go
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tiki_download`
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Apr 15 2004 at 07:42 PM
---
-
--- DROP TABLE `tiki_download`
-go
-
-
-CREATE TABLE `tiki_download` (
-  `id` numeric(11,0) NOT NULL auto_increment,
-  `object` varchar(255) default '' NOT NULL,
-  `userId` numeric(8,0) default '0' NOT NULL,
-  `type` varchar(20) default '' NOT NULL,
-  `date` numeric(14,0) default '0' NOT NULL,
-  `IP` varchar(50) default '' NOT NULL,
-  PRIMARY KEY ("`id`")
-  KEY `object` (`object`,`userId`,`type`),
-  KEY `userId` (`userId`),
-  KEY `type` (`type`),
-  KEY `date` (`date`)
+CREATE TABLE "tiki_download" (
+  "id" numeric(11 ,0) identity,
+  "object" varchar(255) default '' NOT NULL,
+  "userId" numeric(8,0) default '0' NOT NULL,
+  "type" varchar(20) default '' NOT NULL,
+  "date" numeric(14,0) default '0' NOT NULL,
+  "IP" varchar(50) default '' NOT NULL,
+  PRIMARY KEY ("id")
 ) 
 go
 
 
+CREATE  INDEX "tiki_download_object" ON "tiki_download"("object","userId","type")
+go
+CREATE  INDEX "tiki_download_userId" ON "tiki_download"("userId")
+go
+CREATE  INDEX "tiki_download_type" ON "tiki_download"("type")
+go
+CREATE  INDEX "tiki_download_date" ON "tiki_download"("date")
+go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_grouppermissions`
+-- Table structure for table users_grouppermissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 07:22 AM
@@ -5468,7 +5387,7 @@ go
 
 
 --
--- Table structure for table `users_groups`
+-- Table structure for table users_groups
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 03, 2003 at 08:57 PM
@@ -5494,7 +5413,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_objectpermissions`
+-- Table structure for table users_objectpermissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 07:20 AM
@@ -5517,7 +5436,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_permissions`
+-- Table structure for table users_permissions
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 11, 2003 at 07:22 AM
@@ -6221,7 +6140,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_usergroups`
+-- Table structure for table users_usergroups
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 12, 2003 at 09:31 PM
@@ -6251,7 +6170,7 @@ go
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_users`
+-- Table structure for table users_users
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
 -- Last update: Jul 13, 2003 at 01:07 AM
@@ -6262,7 +6181,7 @@ go
 
 
 CREATE TABLE "users_users" (
-userId numeric(8 ,0) identity,
+  "userId" numeric(8 ,0) identity,
   "email" varchar(200) default NULL NULL,
   "login" varchar(40) default '' NOT NULL,
   "password" varchar(30) default '',
@@ -6283,11 +6202,12 @@ userId numeric(8 ,0) identity,
   "avatarType" char(1) default NULL NULL,
   "score" int4 default 0 NOT NULL,
   PRIMARY KEY ("userId")
-  KEY (score)
 )   
 go
 
 
+CREATE  INDEX "users_users_score" ON "users_users"("score")
+go
 -- --------------------------------------------------------
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
@@ -7769,6 +7689,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_anon','n')
+go
+
+
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
@@ -7784,7 +7708,7 @@ go
 
 
 CREATE TABLE "tiki_integrator_reps" (
-repID numeric(11 ,0) identity,
+  "repID" numeric(11 ,0) identity,
   "name" varchar(255) default '' NOT NULL,
   "path" varchar(255) default '' NOT NULL,
   "start_page" varchar(255) default '' NOT NULL,
@@ -7815,7 +7739,7 @@ go
 
 
 CREATE TABLE "tiki_integrator_rules" (
-ruleID numeric(11 ,0) identity,
+  "ruleID" numeric(11 ,0) identity,
   "repID" numeric(11,0) default '0' NOT NULL,
   "ord" numeric(2,0) default '0' NOT NULL,
   "srch" image NOT NULL,
@@ -7826,7 +7750,6 @@ ruleID numeric(11 ,0) identity,
   "enabled" char(1) default 'n' NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY ("ruleID")
-
 ) 
 go
 
@@ -7870,17 +7793,18 @@ go
 
 
 CREATE TABLE "tiki_quicktags" (
-tagId numeric(4 ,0) identity,
+  "tagId" numeric(4 ,0) identity,
   "taglabel" varchar(255) default NULL NULL,
   "taginsert" varchar(255) default NULL NULL,
   "tagicon" varchar(255) default NULL NULL,
   "tagcategory" varchar(255) default NULL NULL,
   PRIMARY KEY ("tagId")
-  KEY `tagcategory` (`tagcategory`)
 )   
 go
 
 
+CREATE  INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags"("tagcategory")
+go
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','images/ed_format_bold.gif','wiki')
 go
@@ -7964,7 +7888,7 @@ go
 
 
 CREATE TABLE "tiki_jukebox_genres" (
-genreId numeric(14 ,0) identity,
+  "genreId" numeric(14 ,0) identity,
   "genreName" varchar(80) default '',
   "genreDescription" text default '',
   PRIMARY KEY ("genreId")
@@ -7978,7 +7902,7 @@ go
 
 
 CREATE TABLE "tiki_jukebox_albums" (
-albumId numeric(14 ,0) identity,
+  "albumId" numeric(14 ,0) identity,
   "title" varchar(80) default NULL NULL,
   "description" text default '',
   "created" numeric(14,0) default NULL NULL,
@@ -7998,7 +7922,7 @@ go
 
 
 CREATE TABLE "tiki_jukebox_tracks" (
-trackId numeric(14 ,0) identity,
+  "trackId" numeric(14 ,0) identity,
   "albumId" numeric(14,0) default NULL NULL,
   "artist" varchar(200) default '',
   "title" varchar(200) default '',
@@ -8056,7 +7980,7 @@ go
 
 
 CREATE TABLE "tiki_hw_assignments" (
-assignmentId numeric(8 ,0) identity,
+  "assignmentId" numeric(8 ,0) identity,
   "title" varchar(80) default NULL NULL,
   "teacherName" varchar(40) default '' NOT NULL,
   "created" numeric(14,0) default '0' NOT NULL,
@@ -8066,7 +7990,6 @@ assignmentId numeric(8 ,0) identity,
   "body" text default '',
   "deleted" numeric(4,0) default '0' NOT NULL,
   PRIMARY KEY ("assignmentId")
-
 ) 
 go
 
@@ -8083,7 +8006,7 @@ go
 
 
 CREATE TABLE "tiki_hw_grading_queue" (
-id numeric(14 ,0) identity,
+  "id" numeric(14 ,0) identity,
   "status" numeric(4,0) default NULL NULL,
   "submissionDate" numeric(14,0) default NULL NULL,
   "userLogin" varchar(40) default '' NOT NULL,
@@ -8129,7 +8052,7 @@ go
 
 
 CREATE TABLE "tiki_hw_pages" (
-id numeric(14 ,0) identity,
+  "id" numeric(14 ,0) identity,
   "assignmentId" numeric(14,0) default '0' NOT NULL,
   "studentName" varchar(200) default '' NOT NULL,
   "data" text default '',
@@ -8149,9 +8072,6 @@ id numeric(14 ,0) identity,
   "lockUser" varchar(200) default NULL NULL,
   "lockExpires" numeric(14,0) default '0',
   PRIMARY KEY ("studentName","assignmentId")
-
-
-
 ) 
 go
 
@@ -8173,16 +8093,17 @@ go
 
 
 CREATE TABLE "tiki_translated_objects" (
-traId numeric(14 ,0) identity,
+  "traId" numeric(14 ,0) identity,
   "type" varchar(50) NOT NULL,
   "objId" varchar(255) NOT NULL,
   "lang" varchar(16) default NULL NULL,
   PRIMARY KEY (type, objId),
-  KEY ( traId)
 )  
 go
 
 
+CREATE  INDEX "tiki_translated_objects_tradid" ON "tiki_translated_objects"("traId")
+go
 
 
 --
@@ -8240,7 +8161,6 @@ CREATE TABLE "tiki_users_score" (
   "expire" numeric(14,0) default '0' NOT NULL,
   "tstamp" timestamp NOT NULL,
   PRIMARY KEY ("user","event_id")
-
 ) 
 go
 
@@ -8264,10 +8184,10 @@ go
 
 
 CREATE TABLE "tiki_opnet_question" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-which_formtype INT(10) NOT NULL,
-question_str VARCHAR( 100 ) NOT NULL ,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "which_formtype" INT(10) NOT NULL,
+  "question_str" VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id) 
 )
 go
 
@@ -8278,10 +8198,10 @@ go
 
 
 CREATE TABLE "tiki_opnet_formtype" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-name VARCHAR( 30 ) NOT NULL ,
-timestamp DATE NOT NULL,
-PRIMARY KEY ( id ) 
+  "id" INT( 10 ) NOT NULL AUTO_INCREMENT,
+  "name" VARCHAR(30) NOT NULL,
+  "timestamp" INT(14) NOT NULL,
+  PRIMARY KEY (id) 
 )
 go
 
@@ -8292,11 +8212,11 @@ go
 
 
 CREATE TABLE "tiki_opnet_answer" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-id_question INT( 10 ) NOT NULL ,
-id_filledform INT( 10 ) NOT NULL ,
-value TEXT NOT NULL ,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "id_question" INT(10) NOT NULL,
+  "id_filledform" INT(10) NOT NULL,
+  "value" TEXT NOT NULL,
+  PRIMARY KEY (id) 
 )
 go
 
@@ -8307,12 +8227,12 @@ go
 
 
 CREATE TABLE "tiki_opnet_filledform" (
-id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-who INT( 10 ) NOT NULL ,
-about_who INT( 10 ) NOT NULL ,
-which_form INT( 10 ) NOT NULL ,
-timestamp DATE NOT NULL,
-PRIMARY KEY ( id ) 
+  "id" INT(10) NOT NULL AUTO_INCREMENT,
+  "who" INT(10) NOT NULL,
+  "about_who" INT(10) NOT NULL,
+  "which_form" INT(10) NOT NULL,
+  "timestamp" INT(14) NOT NULL,
+  PRIMARY KEY (id) 
 )
 go
 
@@ -8321,6 +8241,7 @@ go
 --
 -- Opinion-Network tables END
 --
+
 go
 
 
