@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.23 2004-05-27 15:16:07 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.24 2004-05-27 21:58:17 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ function parse_output(&$obj, &$parts, $i) {
 
 		switch ($ctype) {
 		case 'text/plain':
-			if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
+			if (isset($obj->disposition)AND $obj->disposition == 'attachment') {
 				$names = split(';', $obj->headers["content-disposition"]);
 
 				$names = split('=', $names[1]);
@@ -48,9 +48,9 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
-				if(strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
+				if(isset($obj->ctype_parameters) && strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
 					$parts['text'][] = utf8_encode($obj->body);
-				else if (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding'))
+				else if (isset($obj->ctype_parameters) && (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding')))
 					$parts['text'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
 				else
 					$parts['text'][] = $obj->body;
@@ -59,7 +59,7 @@ function parse_output(&$obj, &$parts, $i) {
 			break;
 
 		case 'text/html':
-			if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
+			if (isset($obj->disposition)AND $obj->disposition == 'attachment') {
 				$names = split(';', $obj->headers["content-disposition"]);
 
 				$names = split('=', $names[1]);
@@ -68,9 +68,9 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
-				if(strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
+				if(isset($obj->ctype_parameters) && strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
 					$parts['html'][] = utf8_encode($obj->body);
-				else if (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding'))
+				else if (isset($obj->ctype_parameters) && (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding')))
 					$parts['html'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
 				else
 					$parts['html'][] = $obj->body;
