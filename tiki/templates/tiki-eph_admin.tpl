@@ -1,5 +1,28 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Ephemerides" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Ephemerides{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-eph_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Ephemerides tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!--- beginning of next bit --->
+
+
+
+
+
+
+
+<br /><br />
 
 
 <table class="normal">
