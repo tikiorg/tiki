@@ -25,11 +25,13 @@
 class tiki extends Wollabot_Module {
 	
 	function tiki() {
+		$this->bind_prefix('tiki_do','.. ');
 		$this->bind_prefix('tiki_do','!T ');
 		$this->bind_prefix('tiki_do','!tiki ');
 	}
 
 	function tiki_do($params) {
+		global $who;
 
 		if (substr($params['channel'],0,1) == '#') {
 			$target = $params['channel'];
@@ -38,6 +40,7 @@ class tiki extends Wollabot_Module {
 			$target = $params["nick"];
 			$who = '';
 		}
+
 		array_shift($params["message_exploded"]);
 		$command = array_shift($params["message_exploded"]);
 		$method = "tiki_$command";
@@ -63,6 +66,9 @@ class tiki extends Wollabot_Module {
 		}
 	}
 
+	function tiki_whoami($arg,$args) {
+		
+	}
 	function tiki_who($arg,$args) {
 		if ($arg == 'help') {
 			return "[!T who] Returns who is connected on tikiwiki.org right now.";
@@ -82,6 +88,39 @@ class tiki extends Wollabot_Module {
 			}
 		}
 	}
+	
+	function tiki_add($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T add PageName my comment] Appends some lines on a WikiPage on tikiwiki.org.";
+		} else {
+			global $tikilib;
+			global $who;
+			$ppl = strtok($who,':');
+			// if ($ppl == 'mose' or $ppl == 'damian') {
+				$comment = implode(' ',$args);
+				$comment = preg_replace("~((https?|ftp|irc)://)([^ ]*)~i", "[\\0]", $comment);
+				$date = date("Y/m/d H:i");
+				$textinput = "\n~~#666666:''__{$ppl}__ $date :''~~ $comment";
+				if ($tikilib->page_exists($arg)) {
+					$tikilib->invalidate_cache($arg);
+					$info = $tikilib->get_page_info($arg);
+					if (strpos($info['data'],"IrcHook")) {
+						$data1 = substr($info['data'],0,strpos($info['data'],"IrcHook") + 7);
+						$data2 = substr(strstr($info['data'],"IrcHook"),7);
+						$tikilib->update_page($arg,$data1.$textinput.$data2, "added via tikibot", $ppl, '(via tikibot)', $info['description']);
+						return "Added your comment on http://tikiwiki.org/$arg";
+					} else {
+						return "Sorry, that page has no IrcHook.";
+					}
+				} else {
+					return "Unknown page : $arg";
+				}
+			//} else {
+			//	return "Sorry, $ppl, I can't.";
+			//}
+		}
+	}
+
 	
 	function tiki_stats($arg,$args) {
 		if ($arg == 'help') {
@@ -121,16 +160,16 @@ class tiki extends Wollabot_Module {
 		} else {
 			global $tikilib;
 			$page = array();
-			if (!isset($args[0]) or $args[0] < 0 or $args[0] > 20) { $args[0] = 0; }
-			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg);
+			if (!isset($args[0]) or !is_int($args[0]) or $args[0] < 0 or $args[0] > 20) { $args[0] = 0; }
+			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', "$arg");
 			if ($page['cant'] > 0) {
-				return "Match ".$arg." in [http://tikiwiki.org/".$page['data'][0]['pageName']."] (#".$args[0].")";
+				return "Match '".$arg."' in (http://tikiwiki.org/".$page['data'][0]['pageName'].") (#".$args[0].")";
 			} else {
 				return "Sorry, no page name matches ".$arg;
 			}
 		}
 	}
-	
+
 	function tiki_help($arg,$args) {
 		$help = "tiki_$arg";
 		if (method_exists($this,$help)) {

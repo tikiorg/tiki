@@ -1253,10 +1253,15 @@ div.articletrailer {
 	background:    white;
 	border:   1px solid black;
 	border-bottom:   1px solid black;
-	border-top:   thin solid blue;
+	border-top:   thin solid #5B6C71;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
 	margin-bottom:   20px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
+	width:   98%;
 	clear:   both;
 }
 

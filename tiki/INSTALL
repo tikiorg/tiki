@@ -6,13 +6,13 @@ DOCUMENTATION
   http://doc.tikiwiki.org
 
 * It is highly recommended you refer to the online documentation:
-* http://tikiwiki.org/InstallTikiDoc for a setup guide
+* http://tikiwiki.org/InstallTiki for a setup guide
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
-* http://tikiwiki.org/InstallTikiTroubleShootingDoc for some troubleshooting ideas and workarounds
 * It might also be helpful to look into the official Manual. Last released documentation, in pdf
   format (350 pages) (outdated at the time of this writing): http://tikiwiki.org/tiki.pdf
 * Tikiwiki is also a community : irc.freenode.net channel #tikiwiki
 
+The rest of this document includes parts of the online documentation that might be enough to get you running Tiki.
 
 INSTALL TIKI WITH POSTGRESQL
 ----------------------------

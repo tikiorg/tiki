@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.20 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.21 2004-05-12 13:15:28 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,7 +118,7 @@ if ($_REQUEST['page'] > 1) {
 
 $smarty->assign('first_page', 1);
 $smarty->assign('last_page', $pages);
-$smarty->assign('page', $_REQUEST['page']);
+$smarty->assign('pagenum', $_REQUEST['page']);
 
 $smarty->assign('parsed_data', $parsed_data);
 

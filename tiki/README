@@ -5,26 +5,24 @@ version 1.8.2 -Polaris-
 DOCUMENTATION
 
 * It is highly recommended you refer to the online documentation:
-* http://tikiwiki.org/InstallTikiDoc for a setup guide
+* http://tikiwiki.org/InstallTiki for a setup guide
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
-* http://tikiwiki.org/InstallTikiTroubleShootingDoc for some troubleshooting
-  ideas and workarounds
 * It might also be helpful to look into the official Manual. Last released
-  documentation, in pdf format (350 pages) (outdated at the time of this writing): 
+  documentation, in pdf format (350 pages) (outdated at the time of this writing):
   http://tikiwiki.org/tiki.pdf (version 1.6)
 
-* The documentation for 1.8 version is under construction at 
+* The documentation for 1.8 version is under construction at
     http://doc.tikiwiki.org,
   come and help if you can and wish.
 
-* details about the 1.8 releases are at http://tikiwiki.org/ReleaseNotes18
-* TikiWiki is also a live community on irc.freenode.net channel #tikiwiki 
+* Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
+* TikiWiki is also a live community on irc.freenode.net channel #tikiwiki
 
 
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see www.tikiwiki.org for the latest install help. 
+  configure Tiki. Again, see tikiwiki.org for the latest install help.
 
 
 COPYRIGHT

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.25 2004-04-13 06:16:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.26 2004-05-12 13:15:28 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,7 +118,7 @@ if (isset($_REQUEST["articleId"])) {
 
 	$smarty->assign('first_page', 1);
 	$smarty->assign('last_page', $pages);
-	$smarty->assign('page', $_REQUEST['page']);
+	$smarty->assign('pagenum', $_REQUEST['page']);
 
 	$smarty->assign('body', $article_data["body"]);
 	$smarty->assign('publishDate', $article_data["publishDate"]);
@@ -190,7 +190,6 @@ ask_ticket('article-read');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-read_article.tpl');
 $smarty->assign('show_page_bar', 'n');
-$smarty->assign('page', $title);    // Fix to display the article title in the browser titlebar instead of "1"
 $smarty->display("tiki.tpl");
 
 ?>

@@ -18,13 +18,13 @@
   <div valign=middle height={$winy} align="center" >
 	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$firstId}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}first image{/tr}' title='{tr}first image{/tr}' /></a>    
     {if $prevx != 0}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}&amp;popup={$popup}" class="gallink"><img src='img/icons2/up.gif' border='0' alt='{tr}smaller{/tr}' title='{tr}smaller{/tr}' /></a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}&amp;popup={$popup}" class="gallink"><img src='img/icons2/down.gif' border='0' alt='{tr}smaller{/tr}' title='{tr}smaller{/tr}' /></a>
     {/if}
     {if $itype !='o'}
     	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
     {/if}
     {if $nextx != 0}
-    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;popup={$popup}" class="gallink"><img src='img/icons2/down.gif' border='0' alt='{tr}bigger{/tr}' title='{tr}bigger{/tr}' /></a>
+    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;popup={$popup}" class="gallink"><img src='img/icons2/up.gif' border='0' alt='{tr}bigger{/tr}' title='{tr}bigger{/tr}' /></a>
     {/if}
 
     {if $previmg}
@@ -38,11 +38,11 @@
   <br />
 {/if}   
 
-  <div class="showimage" {if ($popup) }height=400{/if}>
+  <div class="showimage" {if ($popup) }style="height: 400px"{/if}>
     {if $itype=='o'}
     	<img alt="image" src="show_image.php?id={$imageId}" />
     {else}
-	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;scaled" title="{tr}Klick to enlarge{/tr}">
+	    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$desp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;scaled" title="{tr}Click to enlarge{/tr}">
 	    <img alt="image" src="show_image.php?id={$imageId}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}" /></a>
     {/if}
   </div>
@@ -51,13 +51,13 @@
 	<div align="center" >
 		<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$firstId}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}first image{/tr}' title='{tr}first image{/tr}' /></a>    
 	    {if $prevx != 0}
-	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}&amp;popup={$popup}" class="gallink"><img src='img/icons2/up.gif' border='0' alt='{tr}smaller{/tr}' title='{tr}smaller{/tr}' /></a>
+	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}&amp;popup={$popup}" class="gallink"><img src='img/icons2/down.gif' border='0' alt='{tr}smaller{/tr}' title='{tr}smaller{/tr}' /></a>
 	    {/if}
 	    {if $itype !='o'}
 	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
 	    {/if}
 	    {if $nextx != 0}
-	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;popup={$popup}" class="gallink"><img src='img/icons2/down.gif' border='0' alt='{tr}bigger{/tr}' title='{tr}bigger{/tr}' /></a>
+	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;popup={$popup}" class="gallink"><img src='img/icons2/up.gif' border='0' alt='{tr}bigger{/tr}' title='{tr}bigger{/tr}' /></a>
 	    {/if}
 	    {if $previmg}
 	    	<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}prev image{/tr}' title='{tr}prev image{/tr}' /></a>

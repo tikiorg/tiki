@@ -60,7 +60,7 @@ function trans($params) {
 	}
 	if($param and $lang) {
 		$buffer = '';
-		$str = 'urltext='.urlencode($param).'&lp='.$lang.'&submit=Translate';
+		$str = 'tt=urltext&urltext='.urlencode($param).'&lp='.$lang.'&submit=Translate';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL,"http://babelfish.altavista.com/babelfish/tr");
 		curl_setopt($ch, CURLOPT_FAILONERROR, 1);
@@ -74,7 +74,6 @@ function trans($params) {
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		curl_close ($ch);
-// 		$start = strpos ($buffer, 'padding:10px')+22; Maybe less init offset is better		
 		$start = strpos ($buffer, 'padding:10px')+14;
 		$buffer = substr($buffer, $start);
 		$end = strpos ($buffer, '</div>');

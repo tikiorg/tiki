@@ -78,7 +78,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
 
-		<small>{tr}page{/tr}:{$page}/{$pages}</small>
+		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
 
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
 
