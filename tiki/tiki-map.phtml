@@ -106,20 +106,20 @@ $smarty->assign("page",$map->name." Map");
 $layerbol=FALSE;
 
 if (isset($_REQUEST['Redraw'])) {
-	$_REQUEST['size'] = 2;
 	$_REQUEST['x'] = floor($map->width / 2);
 	$_REQUEST['y'] = floor($map->height / 2);
 }
 
-if (isset($_REQUEST['size']) and $_REQUEST['size'] < 5) {
-  $xsize=floor($_REQUEST['size']*($map->width / 2));
-  $ysize=floor($_REQUEST['size']*($map->height / 2));
-  $layerbol=TRUE;
+if (isset($_REQUEST['size'])&&(is_numeric($_REQUEST['size']))&& ($_REQUEST['size']>0)){//check for a non negative numeric 
+       $xsize=floor($_REQUEST['size']);
+       $ysize=floor(($_REQUEST['size']*$map->height/$map->width));
+       $layerbol=TRUE;
 	$size = $_REQUEST['size'];
-} else {
+}
+else {
 	$xsize = $map->width;
 	$ysize = $map->height;
-	$size = 2;
+	$size = $map->width;
 }
 $map->Set("width",$xsize);
 $map->Set("height",$ysize);
@@ -144,7 +144,7 @@ if (isset($_REQUEST['zoom']))
   $my_point = ms_newpointObj();
   if (isset($_REQUEST['x']) && isset($_REQUEST['y']) && $zoom!=0)
   {
-    $my_point->setXY($_REQUEST['x'],$_REQUEST['y']);
+    $my_point->setXY(floor($_REQUEST['x']*$size/$_REQUEST['oldsize']),floor($_REQUEST['y']*$size/$_REQUEST['oldsize']));
   } else
   {
     $my_point->setXY(($map->height)/2,($map->width)/2);
@@ -294,8 +294,8 @@ $smarty->assign('maxx',$maxx);
 $smarty->assign('maxy',$maxy);
 
 $smarty->assign('size',$size);
-$smarty->assign('possiblesizes',array(1,2,3,4));
-$smarty->assign('displaysizes',array(tra('half'),tra('normal'),tra('bigger'),tra('double')));
+$smarty->assign('possiblesizes',array(200,300,400,600,800,1000));
+$smarty->assign('displaysizes',array(200,300,400,600,800,1000));
 
 $smarty->assign_by_ref('layer_label',$layer_label);
 $smarty->assign_by_ref('my_layers_label_checked',$my_layers_label_checked);

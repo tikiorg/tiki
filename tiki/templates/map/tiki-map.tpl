@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.18 2004-07-17 12:49:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.19 2004-07-21 00:34:25 tna Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -89,6 +89,7 @@
 		  <input type="hidden" name="miny" value="{$miny}" />
 		  <input type="hidden" name="maxx" value="{$maxx}" />
 		  <input type="hidden" name="maxy" value="{$maxy}" />
+		  <input type="hidden" name="oldsize" value="{$size}" />
 		  <a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp;
 		  <a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a>
 		</td></tr>
