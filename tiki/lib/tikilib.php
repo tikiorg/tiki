@@ -5888,7 +5888,7 @@ function httpPrefix() {
      * there is no need to add port if it is non default --
      * $_SERVER['HTTP_HOST'] already contain it ...
      */
-    $rv = 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
+    return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 }
 
 if (!function_exists('file_get_contents')) {
