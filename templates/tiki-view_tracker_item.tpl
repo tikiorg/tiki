@@ -47,7 +47,7 @@
 <table class="normal">
 
 {elseif $ins_fields[ix].type ne 'x'}
-{if $ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' and $fields[ix].options_array[0] eq '1'}
+{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$ins_fields[ix].name}</td><td>
@@ -57,6 +57,13 @@
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
 {$ins_fields[ix].value|date_format:$daformat}</td></tr>
+
+{elseif $ins_fields[ix].type eq 'l'}
+{foreach key=tid item=tlabel from=$ins_fields[ix].links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{/foreach}
+
+{$ins_fields[ix].pvalue|default:"&nbsp;"}
 
 {elseif $ins_fields[ix].type eq 'a'}
 {$ins_fields[ix].pvalue|default:"&nbsp;"}
@@ -271,6 +278,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <option value="{$groups[ux]|escape}" {if $ins_fields[ix].value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
+
+{elseif $ins_fields[ix].type eq 'l'}
+{foreach key=tid item=tlabel from=$ins_fields[ix].links}
+<div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
+{/foreach}
 
 {elseif $ins_fields[ix].type eq 'e'}
 {assign var=fca value=$ins_fields[ix].options}
