@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.38 2003-11-26 11:13:12 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.39 2003-12-22 08:02:36 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -23,6 +23,9 @@
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+{if $page_ref_id}
+<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+{/if}
 <table class="normal">
 <tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
 {include file=tiki-edit_help_tool.tpl}

@@ -56,8 +56,11 @@ if(isset($page_ref_id)) {
     $page = $page_info["pageName"];
     $structure_path = $structlib->get_structure_path($page_ref_id);
  	$smarty->assign('structure_path', $structure_path);
+} else {
+	$page_ref_id = '';
 }
 $smarty->assign_by_ref('page',$page);
+$smarty->assign('page_ref_id', $page_ref_id);
 
 require_once('tiki-pagesetup.php');
 
@@ -77,7 +80,7 @@ if(isset($_REQUEST["copyrightpage"])) {
 }
 
 //If not currently viewing a structure 
-if (!isset($page_ref_id)) {
+if (!$page_ref_id) {
 	//Get the structures this page is a member of
 	$structs = $structlib->get_page_structures($_REQUEST["page"]);
 	$smarty->assign('showstructs', $structs);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.26 2003-12-02 08:30:42 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.27 2003-12-22 08:02:36 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -9,7 +9,7 @@
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')}
     <td>
       <div class="button2" >
-      <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}" class="linkbut">
+      <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" class="linkbut">
         {if $beingEdited eq 'y'}
           <span class="highlight">{tr}edit{/tr}</span>
         {else}
