@@ -3805,6 +3805,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_user','admin');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('count_admin_pvs','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_columns','3');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_links_per_page','20');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_open_links','n');
@@ -3877,6 +3878,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_live_support','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_menusfolderstyle','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_messages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_minical','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsletters','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsreader','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_notepad','n');
@@ -3885,6 +3887,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_page_title','y'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phplayers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_referer_stats','n');
@@ -3981,6 +3984,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lang_use_db','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('layout_section','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_date_format','%A %d of %B, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%M:%S %Z');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxRecords','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_articles','10');
@@ -4084,9 +4088,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiSubmitNotice','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
