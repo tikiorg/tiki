@@ -39,8 +39,11 @@ function wikiplugin_articles($data,$params) {
 	}
 	require_once ('lib/articles/artlib.php');
 
-	$topics = $artlib->list_topics();
-	$smarty->assign_by_ref('topics', $topics);
+// Unsure of reasoning, but Ive added a isset around here for when Articles plugin is called
+// multiple times on a page. - Damian aka Damosoft
+	If (isset($artlib)) {
+        $topics = $artlib->list_topics();
+        $smarty->assign_by_ref('topics', $topics);}
 
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
