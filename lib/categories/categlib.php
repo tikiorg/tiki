@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.49 2004-07-08 12:50:36 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.50 2004-07-15 18:44:24 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -557,6 +557,10 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('forum', $forumId);
 
 		if (!$catObjectId) {
+			global $commentslib;
+			if (!is_object($commentslib)) {
+				require_once('lib/commentslib.php');
+			}
 			// The page is not cateorized
 			$info = $commentslib->get_forum($forumId);
 
