@@ -24,6 +24,7 @@ if(!$user) {
 
 if(isset($_REQUEST['save'])) {
   $tikilib->set_user_preference($user,'minical_interval',$_REQUEST['minical_interval']);
+  $tikilib->set_user_preference($user,'minical_reminders',$_REQUEST['minical_reminders']);
   $tikilib->set_user_preference($user,'minical_upcoming',$_REQUEST['minical_upcoming']);
   $tikilib->set_user_preference($user,'minical_start_hour',$_REQUEST['minical_start_hour']);
   $tikilib->set_user_preference($user,'minical_end_hour',$_REQUEST['minical_end_hour']);
@@ -50,6 +51,11 @@ if(isset($_REQUEST['minical_public'])) {
 if(isset($_REQUEST['minical_upcoming'])) {
   $minical_upcoming = $_REQUEST['minical_upcoming'];
 } 
+if(isset($_REQUEST['minical_reminders'])) {
+  $minical_reminders = $_REQUEST['minical_reminders'];
+  $smarty->assign('minical_reminders',$minical_reminders);
+} 
+
 
 
 $smarty->assign('minical_interval',$minical_interval);

@@ -48,6 +48,19 @@
 	</select>
 	</td>
 </tr>
+<tr>
+	<td class="formcolor">{tr}Reminders{/tr}</td>
+	<td class="formcolor">
+	<select name="minical_reminders">
+    <option value="0" {if $minical_reminders eq 0}selected="selected"{/if}>{tr}no reminders{/tr}</option>
+    <option value="60" {if $minical_reminders eq 60}selected="selected"{/if}>1 min</option>
+    <option value="120" {if $minical_reminders eq 120}selected="selected"{/if}>2 min</option>
+    <option value="300" {if $minical_reminders eq 300}selected="selected"{/if}>5 min</option>
+    <option value="600" {if $minical_reminders eq 600}selected="selected"{/if}>10 min</option>
+    <option value="900" {if $minical_reminders eq 900}selected="selected"{/if}>15 min</option>
+	</select>
+	</td>
+</tr>
 
 <tr>
 	<td class="formcolor">&nbsp;</td>

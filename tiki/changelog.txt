@@ -1,5 +1,7 @@
 Version 1.6 -Tau Ceti-
 
+* [CHG] Comment and link to diff are now informed when notifying that a page
+  has changed
 * [NEW] Option to allow users to lock a page and only the user who locked the
   page can unlock it. 
 * [NEW] Handlers can be defined to change how wiki pages and other objects 

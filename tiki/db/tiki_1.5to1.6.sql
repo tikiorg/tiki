@@ -38,6 +38,7 @@ create table tiki_minical_events(
   security char(1),
   duration integer(3),
   topicId integer(12),
+  reminded char(1),
   primary key(eventId)
 );
 
