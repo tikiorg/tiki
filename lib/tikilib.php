@@ -2376,8 +2376,8 @@ class TikiLib {
 
 	    $query = "select `title`  from `tiki_blogs` where `blogId`=?";
 	    $cant_com = $this->getOne("select count(*) from
-	    `tiki_comments` where `object`=? and `objectType` =
-	    'blog'",array($res["postId"]));
+	    `tiki_comments` where `object`=? and `objectType` =?",
+	    array((string) $res["postId"], 'blog'));
 	    $res["comments"] = $cant_com;
 	    $res["blogTitle"] = $this->getOne($query,array($blogId));
 	    $res["size"] = strlen($res["data"]);
