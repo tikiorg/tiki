@@ -8,7 +8,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_cookies.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin FortuneCookie tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_cookies.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin FortuneCookie tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 <!-- begin -->
@@ -61,9 +61,9 @@
 <td class="odd">{$channels[user].cookieId}</td>
 <td class="odd">{$channels[user].cookie}</td>
 <td class="odd">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -71,9 +71,9 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this co
 <td class="even">{$channels[user].cookieId}</td>
 <td class="even">{$channels[user].cookie}</td>
 <td class="even">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
