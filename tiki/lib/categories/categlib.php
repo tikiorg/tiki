@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.41 2004-06-13 21:50:44 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.42 2004-06-14 01:13:00 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -541,7 +541,7 @@ class CategLib extends TikiLib {
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $this->get_forum($forumId);
+			$info = $commentslib->get_forum($forumId);
 
 			$href = 'tiki-view_forum.php?forumId=' . $forumId;
 			$catObjectId = $this->add_categorized_object('forum', $forumId, $info["description"], $info["name"], $href);
