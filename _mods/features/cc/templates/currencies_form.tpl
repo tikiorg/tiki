@@ -39,6 +39,7 @@
 <td><textarea cols='40' rows='10' name='cc_description'>{$info.cc_description}</textarea></td>
 </tr>
 
+<!--
 <tr class="formrow">
 <td>{tr}Requires approval{/tr}</td>
 <td><select name='requires_approval'>
@@ -47,15 +48,17 @@
 </select>
 </td>
 </tr>
+-->
 
 <tr class="formrow">
-<td>{tr}Listed publicaly{/tr}</td>
+<td>{tr}Listed publicly{/tr}</td>
 <td><select name='listed'>
 <option value='y'{if $info.listed eq 'y'} selected="selected"{/if}>{tr}Yes{/tr}</option>
 <option value='n'{if $info.listed eq 'n'} selected="selected"{/if}>{tr}No{/tr}</option>
 </select>
 </td>
 </tr>
+
 
 {if !$info}
 <tr class="formrow">
