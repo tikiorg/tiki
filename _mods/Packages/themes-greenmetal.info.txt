@@ -1,0 +1,46 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 20:21:12 $
+
+files: 
+themes/greenmetal/theme/styles/greenmetal.css styles/greenmetal.css
+themes/greenmetal/theme/styles/greenmetal/green_barbg.gif styles/greenmetal/green_barbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_barleft.gif styles/greenmetal/green_barleft.gif
+themes/greenmetal/theme/styles/greenmetal/green_barright.gif styles/greenmetal/green_barright.gif
+themes/greenmetal/theme/styles/greenmetal/green_botbg.gif styles/greenmetal/green_botbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_bottombg.gif styles/greenmetal/green_bottombg.gif
+themes/greenmetal/theme/styles/greenmetal/green_bottomleft.gif styles/greenmetal/green_bottomleft.gif
+themes/greenmetal/theme/styles/greenmetal/green_bottomright.gif styles/greenmetal/green_bottomright.gif
+themes/greenmetal/theme/styles/greenmetal/green_leftbg.gif styles/greenmetal/green_leftbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_rightbg.gif styles/greenmetal/green_rightbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_rtsidebg.gif styles/greenmetal/green_rtsidebg.gif
+themes/greenmetal/theme/styles/greenmetal/green_topbg.gif styles/greenmetal/green_topbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_topleft.gif styles/greenmetal/green_topleft.gif
+themes/greenmetal/theme/styles/greenmetal/green_topleftbg.gif styles/greenmetal/green_topleftbg.gif
+themes/greenmetal/theme/styles/greenmetal/green_topright.gif styles/greenmetal/green_topright.gif
+themes/greenmetal/theme/styles/greenmetal/green_toprightbg.gif styles/greenmetal/green_toprightbg.gif
+themes/greenmetal/theme/styles/greenmetal/page_0.gif styles/greenmetal/page_0.gif
+themes/greenmetal/theme/templates/styles/greenmetal/error.tpl templates/styles/greenmetal/error.tpl
+themes/greenmetal/theme/templates/styles/greenmetal/error_ticket.tpl templates/styles/greenmetal/error_ticket.tpl
+themes/greenmetal/theme/templates/styles/greenmetal/index.php templates/styles/greenmetal/index.php
+themes/greenmetal/theme/templates/styles/greenmetal/tiki-editpage.tpl templates/styles/greenmetal/tiki-editpage.tpl
+themes/greenmetal/theme/templates/styles/greenmetal/tiki-show_page.tpl templates/styles/greenmetal/tiki-show_page.tpl
+themes/greenmetal/theme/templates/styles/greenmetal/tiki-user_menu.tpl templates/styles/greenmetal/tiki-user_menu.tpl
+themes/greenmetal/theme/templates/styles/greenmetal/tiki.tpl templates/styles/greenmetal/tiki.tpl
+
+author:
+colorado
+
+licence:
+GNU/GPL
+
+Description: 
+Theme borrowed to another cms.
+
+Changelog:
+1 initial package

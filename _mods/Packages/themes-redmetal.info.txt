@@ -1,0 +1,49 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 20:21:12 $
+
+files: 
+themes/redmetal/theme/styles/redmetal.css styles/redmetal.css
+themes/redmetal/theme/styles/redmetal/red_barbg.gif styles/redmetal/red_barbg.gif
+themes/redmetal/theme/styles/redmetal/red_barleft.gif styles/redmetal/red_barleft.gif
+themes/redmetal/theme/styles/redmetal/red_barright.gif styles/redmetal/red_barright.gif
+themes/redmetal/theme/styles/redmetal/red_botbg.gif styles/redmetal/red_botbg.gif
+themes/redmetal/theme/styles/redmetal/red_bottombg.gif styles/redmetal/red_bottombg.gif
+themes/redmetal/theme/styles/redmetal/red_bottomleft.gif styles/redmetal/red_bottomleft.gif
+themes/redmetal/theme/styles/redmetal/red_bottomright.gif styles/redmetal/red_bottomright.gif
+themes/redmetal/theme/styles/redmetal/red_leftbg.gif styles/redmetal/red_leftbg.gif
+themes/redmetal/theme/styles/redmetal/red_rightbg.gif styles/redmetal/red_rightbg.gif
+themes/redmetal/theme/styles/redmetal/red_rtsidebg.gif styles/redmetal/red_rtsidebg.gif
+themes/redmetal/theme/styles/redmetal/red_topbg.gif styles/redmetal/red_topbg.gif
+themes/redmetal/theme/styles/redmetal/red_topleft.gif styles/redmetal/red_topleft.gif
+themes/redmetal/theme/styles/redmetal/red_topleftbg.gif styles/redmetal/red_topleftbg.gif
+themes/redmetal/theme/styles/redmetal/red_topright.gif styles/redmetal/red_topright.gif
+themes/redmetal/theme/styles/redmetal/red_toprightbg.gif styles/redmetal/red_toprightbg.gif
+themes/redmetal/theme/styles/redmetal/nav_m.gif styles/redmetal/nav_m.gif
+themes/redmetal/theme/styles/redmetal/page_0.gif styles/redmetal/page_0.gif
+themes/redmetal/theme/styles/redmetal/page_back.png styles/redmetal/page_back.png
+themes/redmetal/theme/styles/redmetal/tile_back.gif styles/redmetal/tile_back.gif
+themes/redmetal/theme/templates/styles/redmetal/error.tpl templates/styles/redmetal/error.tpl
+themes/redmetal/theme/templates/styles/redmetal/error_ticket.tpl templates/styles/redmetal/error_ticket.tpl
+themes/redmetal/theme/templates/styles/redmetal/index.php templates/styles/redmetal/index.php
+themes/redmetal/theme/templates/styles/redmetal/tiki-editpage.tpl templates/styles/redmetal/tiki-editpage.tpl
+themes/redmetal/theme/templates/styles/redmetal/tiki-show_page.tpl templates/styles/redmetal/tiki-show_page.tpl
+themes/redmetal/theme/templates/styles/redmetal/tiki-user_menu.tpl templates/styles/redmetal/tiki-user_menu.tpl
+themes/redmetal/theme/templates/styles/redmetal/tiki.tpl templates/styles/redmetal/tiki.tpl
+
+author:
+colorado
+
+licence:
+GNU/GPL
+
+Description: 
+Theme borrowed to another cms.
+
+Changelog:
+1 initial package
