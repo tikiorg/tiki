@@ -1,5 +1,6 @@
 <?php
 
+// Nice dependencies, mostly for excel support. Don't try changing the order.
 require_once( "PEAR.php" );
 require_once( "lib/sheet/excel/reader_ole.php" );
 require_once( "lib/sheet/excel/reader.php" );

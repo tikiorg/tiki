@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.6 2004-06-05 17:05:31 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.7 2004-06-05 17:18:35 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -83,6 +83,22 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 else
 {
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
+
+	$date = time();
+	if( isset( $_REQUEST[ 'readdate' ] ) )
+	{
+		$date = $_REQUEST[ 'readdate' ];
+
+		if( !is_numeric( $date ) )
+			$date = strtotime( $date );
+
+		if( $date == -1 )
+			$date = time();
+	}
+
+	$smarty->assign( 'read_date', $date );
+	$handler->setReadDate( $date );
+	
 	$grid->import( $handler );
 
 	if( isset( $_REQUEST['mode'] ) && $_REQUEST['mode'] == 'edit' )
