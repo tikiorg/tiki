@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-$Revision: 1.2 $
+$Revision: 1.3 $
 
 lastmodif:
-$Date: 2004-11-01 17:25:23 $
+$Date: 2004-11-04 00:10:23 $
 
 files: 
 themes/redgrey/styles/redgrey.css styles/redgrey.css
@@ -26,4 +26,5 @@ Description:
 A rip of the Fedora* themes
 
 Changelog:
+3 added wikirating include
 1 initial package

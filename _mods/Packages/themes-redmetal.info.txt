@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-09-29 20:21:12 $
+$Date: 2004-11-04 00:10:23 $
 
 files: 
 themes/redmetal/theme/styles/redmetal.css styles/redmetal.css
@@ -46,4 +46,5 @@ Description:
 Theme borrowed to another cms.
 
 Changelog:
+2 added wikirating include
 1 initial package

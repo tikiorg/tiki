@@ -1,20 +1,20 @@
 contributor:
-$Author: damosoft $
+$Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-29 19:26:31 $
+$Date: 2004-11-04 00:10:23 $
 
 files: 
+themes/matrix/styles/matrix/index.php  styles/matrix/index.php
 themes/matrix/styles/matrix/img/dark.png   styles/matrix/img/dark.png
 themes/matrix/styles/matrix/img/grey.png   styles/matrix/img/grey.png
 themes/matrix/styles/matrix/img/index.php   styles/matrix/img/index.php
 themes/matrix/styles/matrix/img/ltgreen.png   styles/matrix/img/ltgreen.png
 themes/matrix/styles/matrix/img/matrix.jpg   styles/matrix/img/matrix.jpg
 themes/matrix/styles/matrix/img/red.png   styles/matrix/img/red.png
-themes/matrix/styles/matrix/index.php  styles/matrix/index.php
 themes/matrix/styles/matrix/matrix-box.css  styles/matrix/matrix-box.css
 themes/matrix/styles/matrix/matrix-box.f.css  styles/matrix/matrix-box.f.css
 themes/matrix/styles/matrix/matrix-box.l.css  styles/matrix/matrix-box.l.css

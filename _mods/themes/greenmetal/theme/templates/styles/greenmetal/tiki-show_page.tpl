@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/themes/greenmetal/theme/templates/styles/greenmetal/tiki-show_page.tpl,v 1.1 2004-09-22 09:39:58 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/themes/greenmetal/theme/templates/styles/greenmetal/tiki-show_page.tpl,v 1.2 2004-11-04 00:10:29 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock and $print_page ne 'y'}
@@ -213,7 +213,9 @@
 {/foreach}
 </table>
 </div>
-{/if}{$parsed}
+{/if}
+{if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{$parsed}
 {if $pages > 1}
 	<br />
 	<div align="center">
