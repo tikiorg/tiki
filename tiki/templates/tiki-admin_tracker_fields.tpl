@@ -69,7 +69,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
-<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}">{$channels[user].label}</td>
 <td class="{cycle advance=false}">{$channels[user].type}</td>
 <td class="{cycle advance=false}">{$channels[user].isMain}</td>
 <td class="{cycle advance=false}">{$channels[user].isTblVisible}</td>
