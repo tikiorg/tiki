@@ -32,7 +32,7 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
-<td class="{cycle advance=false}"><a href="tiki-admin_mailin.php}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
+<td class="{cycle advance=false}"><a href="tiki-admin_mailin.php" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
 [<a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}" class="tablename">edit</a>]
 </td>
 <td class="{cycle}">{$accounts[ix].type}</td>
