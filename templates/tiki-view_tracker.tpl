@@ -43,7 +43,8 @@
 {/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x
+loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].label}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -58,10 +59,13 @@
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <td class="heading" width="5%">{tr}atts{/tr}</td>
 {/if}
+{if $tiki_p_admin_trackers eq 'y'}
+<td class="heading" width="5%">{tr}action{/tr}</td>
+{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
-<tr>
+<tr class="{cycle}">
 {if $tracker_info.showStatus eq 'y'}
 <td class="third">
 {if $items[user].status eq 'o'}
@@ -74,7 +78,7 @@
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isTblVisible eq 'y'}
 {if $items[user].field_values[ix].isMain eq 'y'}
-<td class="{cycle advance=false}">{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
+<td>{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime}
 {elseif $items[user].field_values[ix].type eq 'i'}
@@ -84,18 +88,19 @@
 {/if}
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
 {if $tiki_p_admin_trackers eq 'y'}
- [&nbsp;&nbsp;<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
+</td><td>
+&nbsp;&nbsp;<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker?{/tr}')" 
-title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]
+title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {/if}
 </td>
 {else}
 {if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
-<td class="{cycle advance=false}">
+<td>
 {$items[user].field_values[ix].value|tiki_short_datetime}
 </td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
-<td class="{cycle advance=false}">
+<td>
 {$items[user].field_values[ix].value}
 </td>
 {/if}
@@ -103,21 +108,20 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
-<td class="{cycle advance=false}">{$items[user].created|tiki_short_datetime}</td>
+<td>{$items[user].created|tiki_short_datetime}</td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="{cycle advance=false}">{$items[user].lastModif|tiki_short_datetime}</td>
+<td>{$items[user].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<td  style="text-align:center;" class="{cycle advance=false}">{$items[user].comments}</td>
+<td  style="text-align:center;">{$items[user].comments}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-<td  style="text-align:center;" class="{cycle advance=false}"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if
+<td  style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if
 $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=att" link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
 {/if}
 </tr>
-{cycle print=false}
 {/section}
 </table>
 <br/>
@@ -163,7 +167,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
 {if $fields[ix].type ne 'i'}
-<tr><td class="formcolor">{$fields[ix].name}</td>
+<tr><td class="formcolor">{$fields[ix].label}</td>
 {/if}
 {if $fields[ix].type ne 'i'}
 <td class="formcolor">

@@ -94,12 +94,12 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Upload file{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" /></td></tr>
-<tr class="formcolor"><td>{tr}comment{/tr}</td><td class="formcolor"><input type="text" name="attach_comment" maxlength="250" /></td></tr>
-<tr class="formcolor"><td>{tr}version{/tr}</td><td class="formcolor"><input type="text" name="attach_version" size="5" maxlength="10" /></td></tr>
-<tr class="formcolor"><td>{tr}description{/tr}</td><td class="formcolor"><textarea name="attach_longdesc" style="width:100%;" rows="10"></textarea></td></tr>
+<tr class="formcolor"><td>{tr}Upload file{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" /></td></tr>
+<tr class="formcolor"><td>{tr}comment{/tr}</td><td><input type="text" name="attach_comment" maxlength="250" /></td></tr>
+<tr class="formcolor"><td>{tr}version{/tr}</td><td><input type="text" name="attach_version" size="5" maxlength="10" /></td></tr>
+<tr class="formcolor"><td>{tr}description{/tr}</td><td><textarea name="attach_longdesc" style="width:100%;" rows="10"></textarea></td></tr>
 
-<tr class="formcolor"><td></td><td class="formcolor"><input type="submit" name="attach" value="{tr}attach{/tr}" /></td></tr>
+<tr class="formcolor"><td></td><td><input type="submit" name="attach" value="{tr}attach{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
