@@ -847,7 +847,12 @@ class ImageGalsLib extends TikiLib {
 			@unlink ($gal_use_dir . $path);
 
 			@unlink ($gal_use_dir . $path . '.thumb');
-		//todo: remove scaled images
+		  // remove scaled images
+		  $query = "select i.`path`, d.`xsize`, d.`ysize` from `tiki_images` i, `tiki_images_data` d where i.`imageId`=d.`imageId` and i.`imageId`=? and d.`type`=?";
+		  $result=$this->query($query,array($id,'s'));
+		  while($res = $result->fetchRow()) {
+                    @unlink ($gal_use_dir . $path . '.scaled_'.$res['xsize'].'x'.$res['ysize']);
+		  }
 		}
 
 		$query = "delete from `tiki_images` where `imageId`=?";
@@ -1821,6 +1826,48 @@ class ImageGalsLib extends TikiLib {
 			}
 		} // foreach
 		return $page_data;
+	}
+	function get_one_image_from_disk($userfile, $galleryId, $name, $description) {
+		global $tmpDir, $user;
+		$ret = array();
+		if (is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
+			$file_name = $_FILES[$userfile]['name'];
+			$ret['filename'] = $file_name;
+			if (!empty($gal_match_regex) && !preg_match("/$gal_match_regex/", $file_name, $reqs)) {
+				$ret['msg'] = tra('Invalid imagename (using filters for filenames)');
+				return $ret;
+			}
+			if (!empty($gal_nmatch_regex) && preg_match("/$gal_nmatch_regex/", $file_name, $reqs)) {
+				$ret['msg'] = tra('Invalid imagename (using filters for filenames)');
+				return $ret;
+			}
+			$type = $_FILES[$userfile]['type'];
+			$size = $_FILES[$userfile]['size'];
+			$file_tmp_name = $_FILES[$userfile]['tmp_name'];
+			$tmp_dest = $tmpDir . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
+			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+				$ret['msg'] = tra('Errors detected');
+				@unlink($tmp_dest);
+				return $ret;
+			}
+			$fp = fopen($tmp_dest, "rb");
+			$data = fread($fp, filesize($tmp_dest));
+			fclose ($fp);
+			unlink($tmp_dest);
+			if ($name == '')
+				$name = $file_name;
+			if (($imageId = $this->insert_image($galleryId, $name, $description, $file_name, $type, $data, $size, 0, 0, $user, '', ''))===false) {
+				$ret['msg'] = tra('Upload was not successful');
+				return $ret;
+			} else {
+				$ret['imageId'] = $imageId;
+				return $ret;
+			}
+		} else {
+			$ret['msg'] = tra('Upload was not successful');
+			$ret['filename'] = $_FILES[$userfile]['tmp_name'];
+			return $ret;
+		}
 	}
 }
 
