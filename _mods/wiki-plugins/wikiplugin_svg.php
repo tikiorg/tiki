@@ -28,9 +28,10 @@ function wikiplugin_svg($data, $params) {
 		return ("<b>missing height parameter for plugin</b><br/>");
 	}
 	if (!isset($src)) {                return ("<b>missing src parameter for plugin</b><br/>");        }
-	
-//optionals parameters
-	// margin requierd for ilayer scrolling on mozilla
+        if (substr($src,-3) == "svg" || substr($src,-4) == "svgz") {
+	} else {
+	 return ("<b> ".substr($src,-3,-1)."src parameter should finish by '.svg' or by '.svgz'</b><br/>");
+	}
    $margin=40;
 	 if (substr($width,-1) == "x") {
 	 $width_w=substr($width,0,-2);
