@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-1.2.14
+1.2.15
 
 lastmodif:
-$Date: 2004-11-16 09:31:11 $
+$Date: 2004-11-17 14:42:44 $
 
 files: 
 features/cc/cc.php cc.php
