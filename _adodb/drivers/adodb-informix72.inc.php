@@ -1,6 +1,6 @@
 <?php
 /*
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim. All rights reserved.
+V4.05 13 Dec 2003  (c) 2000-2003 John Lim. All rights reserved.
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
@@ -22,6 +22,8 @@ class ADODB_informix72 extends ADOConnection {
 	var $fmtTimeStamp = "'Y-m-d H:i:s'";
 	var $hasInsertID = true;
 	var $hasAffectedRows = true;
+	var $upperCase = 'upper';
+    var $substr = 'substr';
 	var $metaTablesSQL="select tabname from systables";
 	var $metaColumnsSQL = 
 "select c.colname, c.coltype, c.collength, d.default 
@@ -63,8 +65,8 @@ class ADODB_informix72 extends ADOConnection {
 	function _affectedrows()
 	{
 		if ($this->lastQuery) {
-		   return ifx_affected_rows ($this->lastQuery);
-	   } else
+		   return @ifx_affected_rows ($this->lastQuery);
+		}
 		return 0;
 	}
 
@@ -107,14 +109,17 @@ class ADODB_informix72 extends ADOConnection {
 
 	function ErrorMsg() 
 	{
+		if (!empty($this->_logsql)) return $this->_errorMsg;
 		$this->_errorMsg = ifx_errormsg();
 		return $this->_errorMsg;
 	}
 
-   function ErrorNo() 
-   {
-	  return ifx_error();
-   }
+	function ErrorNo()
+	{
+		preg_match("/.*SQLCODE=([^\]]*)/",ifx_error(),$parse); //!EOS
+		if (is_array($parse) && isset($parse[1])) return (int)$parse[1]; 
+		return 0;
+	}
 
    
     function &MetaColumns($table)
@@ -168,12 +173,17 @@ class ADODB_informix72 extends ADOConnection {
 
    function BlobDecode($blobid)
    {
-   		return @ifx_get_blob($blobid);
+   		return function_exists('ifx_byteasvarchar') ? $blobid : @ifx_get_blob($blobid);
    }
+   
 	// returns true or false
    function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('ifx_connect')) return false;
+		
 		$dbs = $argDatabasename . "@" . $argHostname;
+		if ($argHostname) putenv("INFORMIXSERVER=$argHostname"); 
+		putenv("INFORMIXSERVER=$argHostname"); 
 		$this->_connectionID = ifx_connect($dbs,$argUsername,$argPassword);
 		if ($this->_connectionID === false) return false;
 		#if ($argDatabasename) return $this->SelectDB($argDatabasename);
@@ -183,7 +193,10 @@ class ADODB_informix72 extends ADOConnection {
 	// returns true or false
    function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('ifx_connect')) return false;
+		
 		$dbs = $argDatabasename . "@" . $argHostname;
+		if ($argHostname) putenv("INFORMIXSERVER=$argHostname"); 
 		$this->_connectionID = ifx_pconnect($dbs,$argUsername,$argPassword);
 		if ($this->_connectionID === false) return false;
 		#if ($argDatabasename) return $this->SelectDB($argDatabasename);

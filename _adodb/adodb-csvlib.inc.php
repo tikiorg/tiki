@@ -1,7 +1,9 @@
 <?php
+global $ADODB_INCLUDED_CSV;
+$ADODB_INCLUDED_CSV = 1;
 
 /* 
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -194,16 +196,14 @@ V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reser
 		
 		// slurp in the data
 		$MAXSIZE = 128000;
-		$text = fread($fp,$MAXSIZE);
-		$cnt = 1;
-		while (strlen($text) == $MAXSIZE*$cnt) {
-			$text .= fread($fp,$MAXSIZE);
-			$cnt += 1;
+		
+		$text = '';
+		while ($txt = fread($fp,$MAXSIZE)) {
+			$text .= $txt;
 		}
 			
 		fclose($fp);
 		$arr = @unserialize($text);
-		
 		//var_dump($arr);
 		if (!is_array($arr)) {
 			$err = "Recordset had unexpected EOF (in serialized recordset)";

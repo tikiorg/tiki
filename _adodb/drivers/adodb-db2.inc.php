@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -82,11 +82,19 @@ class ADODB_DB2 extends ADODB_odbc {
 	var $fmtTimeStamp = "'Y-m-d-H.i.s'";
 	var $ansiOuter = true;
 	var $identitySQL = 'values IDENTITY_VAL_LOCAL()';
+	var $_bindInputArray = true;
+	var $upperCase = 'upper';
+	
 	
 	function ADODB_DB2()
 	{
 		if (strncmp(PHP_OS,'WIN',3) === 0) $this->curmode = SQL_CUR_USE_ODBC;
 		$this->ADODB_odbc();
+	}
+	
+	function IfNull( $field, $ifNull ) 
+	{
+		return " COALESCE($field, $ifNull) "; // if DB2 UDB
 	}
 	
 	function ServerInfo()
@@ -234,20 +242,22 @@ class ADODB_DB2 extends ADODB_odbc {
 	} 
  
 	
-		function &SelectLimit($sql,$nrows=-1,$offset=-1,$arg3=false)
+		function &SelectLimit($sql,$nrows=-1,$offset=-1)
 		{
 			if ($offset <= 0) {
 			// could also use " OPTIMIZE FOR $nrows ROWS "
 				if ($nrows >= 0) $sql .=  " FETCH FIRST $nrows ROWS ONLY ";
-				return $this->Execute($sql,false,$arg3);
+				$rs =& $this->Execute($sql,false);
 			} else {
 				if ($offset > 0 && $nrows < 0);
 				else {
 					$nrows += $offset;
 					$sql .=  " FETCH FIRST $nrows ROWS ONLY ";
 				}
-				return ADOConnection::SelectLimit($sql,-1,$offset,$arg3);
+				$rs =& ADOConnection::SelectLimit($sql,-1,$offset);
 			}
+			
+			return $rs;
 		}
 	
 };

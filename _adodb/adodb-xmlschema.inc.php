@@ -1,6 +1,6 @@
 <?PHP
 // Copyright (c) 2003 ars Cognita Inc., all rights reserved
- /*******************************************************************************
+/* ******************************************************************************
     Released under both BSD license and Lesser GPL library license. 
  	Whenever there is any discrepancy between the two licenses, 
  	the BSD license will take precedence. 
@@ -11,20 +11,26 @@
  * XML schema.
  *
  * @author Richard Tango-Lowy
- * @version $Revision: 1.2 $
- * @package xmlschema
+ * @version $Revision: 1.3 $
  */
  
 /**
-  * Include the main ADODB library
-  */
+* Debug on or off
+*/
+ if (!defined('XMLS_DEBUG')) define( 'XMLS_DEBUG', FALSE );
+ 
+/**
+* Include the main ADODB library
+*/
 if (!defined( '_ADODB_LAYER' ) ) {
-	require( dirname(__FILE__).'/adodb.inc.php' );
+	require( dirname(__FILE__) . '/adodb.inc.php' );
 }
 
 /**
- * Maximum length allowed for object prefix
- */
+* Maximum length allowed for object prefix
+*
+* @access private
+*/
 define( 'XMLS_PREFIX_MAXLEN', 10 );
 
 
@@ -64,7 +70,25 @@ class dbTable {
 	* @var string If set (to 'ALTER' or 'REPLACE'), upgrade an existing database
 	* @access private
 	*/
-	var $upgradeMethod;
+	var $upgrade;
+	
+	/**
+	* @var array Array of legacy metadata. Used for REPLACE upgrades.
+	* @access private
+	*/
+	var $legacyFieldMetadata;
+	
+	/**
+	* @var boolean Mark table for destruction
+	* @access private
+	*/
+	var $dropTable;
+	
+	/**
+	* @var boolean Mark field for destruction (not yet implemented)
+	* @access private
+	*/
+	var $dropField;
 	
 	/**
 	* Constructor. Iniitializes a new table object.
@@ -77,21 +101,44 @@ class dbTable {
 	* @param string	$name		Table name
 	* @param string	$upgradeTable		Upgrade method (NULL, ALTER, or REPLACE)
 	*/
-	function dbTable( $name, $upgradeTable = NULL ) {
+	function dbTable( $name, $upgrade = NULL ) {
+		logMsg( "+++dbTable( $name, $upgrade )" );
+		
+		$dbconn = $GLOBALS['AXMLS_DBCONN'];
+		$dbdict = $GLOBALS['AXMLS_DBDICT'];
+		
 		$this->tableName = $name;
 
-		// If upgrading, set the upgrade method
-		if( isset( $upgradeTable ) ) {
-			$upgradeTable = strtoupper( $upgradeTable );
-			if( $upgradeTable == 'ALTER' or $upgradeTable == 'REPLACE' ) {
-				$this->upgradeMethod = strtoupper( $upgradeTable );
-				print "<P>Upgrading table '$name' using {$this->upgradeMethod}</P>";
-			} else {
-				unset( $this->upgradeMethod );
+		// If upgrading, set and handle the upgrade method
+		if( isset( $upgrade ) ) {
+			$upgrade = strtoupper( $upgrade );
+			
+			switch( $upgrade ) {
+				
+				case "ALTER":
+					$this->upgrade = strtoupper( $upgrade );
+					logMsg( "Upgrading table '$name' using {$this->upgrade}" );
+					break;
+					
+				case "REPLACE":
+					$this->upgrade = strtoupper( $upgrade );
+					logMsg( "Upgrading table '$name' using {$this->upgrade}" );
+					
+					// Need to fetch column names, run them through the case handler (for MySQL),
+					// create the new column, migrate the data, then drop the old column.
+					$this->legacyFieldMetadata = $dbconn->MetaColumns( $name );
+					logMsg( $this->legacyFieldMetadata, "Legacy Metadata" );
+					break;
+					
+				default:
+					unset( $this->upgrade );
+					break;
 			}
+			
 		} else {
-			print "<P>Creating table '$name'</P>";
+			logMsg( "Creating table '$name'" );
 		}
+		logMsg( "   ---dbTable" );
 	}
 	
 	/**
@@ -124,7 +171,7 @@ class dbTable {
 	* @return array	Field specifier array
 	*/
 	function addField( $name, $type, $size = NULL, $opts = NULL ) {
-	
+		logMsg( "   +++addField( $name, $type, $size, $opts )" );
 		// Set the field index so we know where we are
 		$this->currentField = $name;
 		
@@ -140,6 +187,7 @@ class dbTable {
 		if( isset( $opts ) ) $this->fieldSpec[$name]['OPTS'] = $opts;
 		
 		// Return array containing field specifier
+		logMsg( "   ---addField" );
 		return $this->fieldSpec;
 	}
 	
@@ -155,6 +203,7 @@ class dbTable {
 	* @return array	Field specifier array
 	*/
 	function addFieldOpt( $field, $opt, $value = NULL ) {
+		logMsg( "   +++addFieldOpt( $field, $opt, $value )" );
 		
 		// Add the option to the field specifier
 		if(  $value === NULL ) { // No value, so add only the option
@@ -164,6 +213,7 @@ class dbTable {
 		}
 	
 		// Return array containing field specifier
+		logMsg( "   ---addFieldOpt( $field )" );
 		return $this->fieldSpec;
 	}
 	
@@ -177,11 +227,13 @@ class dbTable {
 	* @return string	Option list
 	*/
 	function addTableOpt( $opt ) {
-	
+		logMsg( "   +++addTableOpt( $opt )" );
+		
 		$optlist = &$this->tableOpts;
-		$optlist ? $optlist .= ", $opt" : $optlist = $opt;
+		$optlist ? ( $optlist .= ", $opt" ) : ($optlist = $opt );
 		
 		// Return the options list
+		logMsg( "   ---addTableOpt( $opt )" );
 		return $optlist;
 	}
 	
@@ -194,7 +246,14 @@ class dbTable {
 	* @return array	Array containing table creation SQL
 	*/
 	function create( $dict ) {
+		logMsg( "   +++<b>create</b>( $dict )" );
 	
+		// Drop the table
+		if( $this->dropTable ) {
+			$sqlArray[] = "DROP TABLE {$this->tableName}";
+			return $sqlArray;
+		}
+		
 		// Loop through the field specifier array, building the associative array for the field options
 		$fldarray = array();
 		$i = 0;
@@ -216,6 +275,7 @@ class dbTable {
 						$key = key( $opt );
 						$value = $opt[key( $opt ) ];
 						$fldarray[$i][$key] = $value;
+						
 					} else { // Option doesn't have arguments
 						array_push( $fldarray[$i], $opt );
 					}
@@ -229,32 +289,66 @@ class dbTable {
 			foreach( $dict->MetaTables() as $table ) {
 				$this->legacyTables[ strtoupper( $table ) ] = $table;
 			}
-			if( in_array( strtoupper( $tableName ), $legacyTables ) ) {
-				$existingTableName = $legacyTables[strtoupper( $tableName )];
+			if( isset( $this->legacyTables ) and is_array( $this->legacyTables ) and count( $this->legacyTables > 0 ) ) {
+				if( array_key_exists( strtoupper( $this->tableName ), $this->legacyTables ) ) {
+					$existingTableName = $this->legacyTables[strtoupper( $this->tableName )];
+					logMsg( "Upgrading $existingTableName using '{$this->upgrade}'" );
+				}
 			}
-		} 
+		} 	
+		
 		// Build table array
-		if( !isset( $this->upgradeMethod ) or !isset( $existingTableName ) ) {
+		if( !isset( $this->upgrade ) or !isset( $existingTableName ) ) {
+			
 			// Create the new table
 			$sqlArray = $dict->CreateTableSQL( $this->tableName, $fldarray, $this->tableOpts );
-			print "<P>Generated create table SQL</P>";
+			logMsg( $sqlArray, "Generated CreateTableSQL" );
+			
 		} else {
+			
 			// Upgrade an existing table
-			switch( $this->upgradeMethod ) {
+			switch( $this->upgrade ) {
+				
 				case 'ALTER':
 					// Use ChangeTableSQL
-					print "<P>Generated ALTER table SQL</P>";
 					$sqlArray = $dict->ChangeTableSQL( $this->tableName, $fldarray, $this->tableOpts );
+					logMsg( $sqlArray, "Generated ChangeTableSQL (ALTERing table)" );
 					break;
+					
 				case 'REPLACE':
+					logMsg( "Doing upgrade REPLACE (testing)" );
+					$sqlArray = $dict->ChangeTableSQL( $this->tableName, $fldarray, $this->tableOpts );
 					$this->replace( $dict );
 					break;
+					
 				default:
 			}
 		}
 		
 		// Return the array containing the SQL to create the table
+		logMsg( "   ---create" );
 		return $sqlArray;
+	}
+	
+	/**
+	* Generates the SQL that will drop the table or field from the database
+	*
+	* @param object $dict		ADOdb data dictionary
+	* @return array	Array containing table creation SQL
+	*/
+	function drop( $dict ) {
+		if( isset( $this->currentField ) ) {
+			// Drop the current field
+			logMsg( "Dropping field '{$this->currentField}' from table '{$this->tableName}'" );
+			$this->dropField = TRUE;
+			$sqlArray = $dict->DropColumnSQL( $this->tableName, $this->currentField );
+		} else {
+			// Drop the current table
+			logMsg( "Dropping table '{$this->tableName}'" );
+			$this->dropTable = TRUE;
+			$sqlArray = false;
+		}
+		return $sqlArray; 
 	}
 	
 	/**
@@ -265,26 +359,18 @@ class dbTable {
 	* @return array	Array containing table replacement SQL
 	*/
 	function replace( $dict ) {
+		logMsg( "   +++replace( $dict )" );
 		
-		$oldTable = $this->tableName;
-		$tempTable= "xmls_" . $this->tableName;
+		// Identify new columns
 		
-		// Create the new table
-		$sqlArray = $dict->CreateTableSQL( $tempTable, $fldarray, $this->tableOpts );
-		
-		switch( $dict->dataProvider ) {
-			case "posgres7":
-				break;
-			case "mysql":
-				break;
-			default:
-		}
+		logMsg( "   ---replace)" );
 	}
 	
 	/**
 	* Destructor
 	*/
 	function destroy() {
+		logMsg( "===destroy" );
 		unset( $this );
 	}
 }
@@ -322,14 +408,47 @@ class dbIndex {
 	var $fields;
 	
 	/**
+	* @var string If set (to 'ALTER' or 'REPLACE'), upgrade an existing database
+	* @access private
+	*/
+	var $upgrade;
+	
+	/**
+	* @var boolean Mark index for destruction
+	* @access private
+	*/
+	var $dropIndex;
+	
+	/**
 	* Constructor. Initialize the index and table names.
+	*
+	* If the upgrade argument is set to ALTER or REPLACE, axmls will attempt to drop the index
+	* before and replace it with the new one.
 	*
 	* @param string $name	Index name
 	* @param string $table		Name of indexed table
+	* @param string	$upgrade		Upgrade method (NULL, ALTER, or REPLACE)
 	*/
-	function dbIndex( $name, $table ) {
+	function dbIndex( $name, $table, $upgrade = NULL ) {
+		logMsg( "===dbIndex( $name, $table )" );
 		$this->indexName = $name;
 		$this->tableName = $table;
+		$this->dropIndex = FALSE;
+		
+		// If upgrading, set the upgrade method
+		if( isset( $upgrade ) ) {
+			$upgrade = strtoupper( $upgrade );
+			if( $upgrade == 'ALTER' or $upgrade == 'REPLACE' ) {
+				$this->upgrade = strtoupper( $upgrade );
+				// Drop the old index
+				logMsg( "Dropping old index '$name' using {$this->upgrade}" );
+			} else {
+				unset( $this->upgrade );
+			}
+			
+		} else {
+			logMsg( "Creating index '$name'" );
+		}
 	}
 	
 	/**
@@ -341,10 +460,13 @@ class dbIndex {
 	* @return string	Field list
 	*/
 	function addField( $name ) {
+		logMsg( "   +++addField( $name )" );
+		
 		$fieldlist = &$this->fields;
-		$fieldlist ? $fieldlist .=" , $name" : $fieldlist = $name;
+		$fieldlist ? ( $fieldlist .=" , $name" ) : ( $fieldlist = $name );
 		
 		// Return the field list
+		logMsg( "   ---addField" );
 		return $fieldlist;
 	}
 	
@@ -358,11 +480,12 @@ class dbIndex {
 	* @return string	Option list
 	*/
 	function addIndexOpt( $opt ) {
-
+		logMsg( "   +++addIndexOpt( $opt )" );
 		$optlist = &$this->indexOpts;
-		$optlist ? $optlist .= ", $opt" : $optlist = $opt;
+		$optlist ? ( $optlist .= ", $opt" ) : ( $optlist = $opt );
 
 		// Return the options list
+		logMsg( "   ---addIndexOpt" );
 		return $optlist;
 	}
 
@@ -375,25 +498,48 @@ class dbIndex {
 	* @return array	Array containing index creation SQL
 	*/
 	function create( $dict ) {
-	
+		logMsg( "   +++create( $dict )" );
+		
+		// Drop the index
+		if( $this->dropIndex == TRUE ) {
+			$sqlArray = array( "DROP INDEX {$this->indexName}" );
+			return $sqlArray; 
+		}
+		
 		if (isset($this->indexOpts) ) {
 			// CreateIndexSQL requires an array of options.
 			$indexOpts_arr = explode(",",$this->indexOpts);
 		} else {
 			$indexOpts_arr = NULL;
 		}
-
-		// Build table array
+	 
+		// Build index SQL array
 		$sqlArray = $dict->CreateIndexSQL( $this->indexName, $this->tableName, $this->fields, $indexOpts_arr );
+	 	
+		// If upgrading, prepend SQL to drop the old index
+		if( isset( $this->upgrade ) ) {
+			$dropSql = "DROP INDEX {$this->indexName} ON {$this->tableName}";
+			array_unshift( $sqlArray, $dropSql );
+		}
 		
 		// Return the array containing the SQL to create the table
+		logMsg( "   ---create" );
 		return $sqlArray;
+	}
+	
+	/**
+	* Marks an index for destruction
+	*/
+	function drop() {
+		logMsg( "Marking index '{$this->indexName}' from '{$this->tableName}' for drop" );
+		$this->dropIndex = TRUE;
 	}
 	
 	/**
 	* Destructor
 	*/
 	function destroy() {
+		logMsg( "===destroy" );
 		unset( $this );
 	}
 }
@@ -421,6 +567,7 @@ class dbQuerySet {
 	* Constructor. Initializes the queries array
 	*/
 	function dbQuerySet() {
+		logMsg( "===dbQuerySet" );
 		$this->querySet = array();
 		$this->query = '';
 	}
@@ -431,7 +578,9 @@ class dbQuerySet {
 	* $param string $data	Line of SQL data or NULL to initialize a new query
 	*/
 	function buildQuery( $data = NULL ) {
-		isset( $data ) ? $this->query .= " " . trim( $data ) : $this->query = '';
+		logMsg( "   +++buildQuery( $data )" );
+		isset( $data ) ? ( $this->query .= " " . trim( $data ) ) : ( $this->query = '' );
+		logMsg( "   ---buildQuery" );
 	}
 	
 	/**
@@ -440,12 +589,14 @@ class dbQuerySet {
 	* @return string	SQL of added query
 	*/
 	function addQuery() {
+		logMsg( "   +++addQuery" );
 		
 		// Push the query onto the query set array
 		$finishedQuery = $this->query;
 		array_push( $this->querySet, $finishedQuery );
 		
 		// Return the query set array
+		logMsg( "   ---addQuery" );
 		return $finishedQuery;
 	}
 	
@@ -455,6 +606,7 @@ class dbQuerySet {
 	* @return array Query set
 	*/
 	function create() {
+		logMsg( "   ===create" );
 		return $this->querySet;
 	}
 	
@@ -462,6 +614,7 @@ class dbQuerySet {
 	* Destructor
 	*/
 	function destroy() {
+		logMsg( "===destroy" );
 		unset( $this );
 	}
 }
@@ -473,7 +626,9 @@ class dbQuerySet {
 * This class is used to load and parse the XML file, to create an array of SQL statements
 * that can be used to build a database, and to build the database using the SQL array.
 *
-* @package xmlschema
+* @author Richard Tango-Lowy
+* @version $Revision: 1.3 $
+* @copyright (c) 2003 ars Cognita, Inc., all rights reserved
 */
 class adoSchema {
 	
@@ -561,22 +716,22 @@ class adoSchema {
 	var $debug;
 	
 	/**
-	* Initializes the xmlschema object.
+	* Constructor. Initializes the xmlschema object.
 	*
-	* adoSchema provides methods to parse and process the XML schema file, and is called automatically
-	* when an xmlschema object is instantiated. 
-	* 
-	* The dbconn argument is a database connection object created by ADONewConnection. 
-	* Set upgradeSchema to TRUE to upgrade an existing database to the provided schema. By default,
-	*  adoSchema will attempt to upgrade tables by ALTERing them on the fly. Upgrading has only been tested
-	* on the MySQL platform. It is know NOT to work on PostgreSQL. The forceReplace flag is not currently
-	* implemented.
+	* adoSchema provides methods to parse and process the XML schema file. The dbconn argument 
+	* is a database connection object created by ADONewConnection. To upgrade an existing database to
+	* the provided schema, set the upgradeSchema flag to TRUE. By default, adoSchema will attempt to
+	* upgrade tables by ALTERing them on the fly. If your RDBMS doesn't support direct alteration
+	* (e.g., PostgreSQL), setting the forceReplace flag to TRUE will replace existing tables rather than
+	* altering them, copying data from each column in the old table to the like-named column in the
+	* new table.
 	*
 	* @param object $dbconn		ADOdb connection object
-	* @param object $upgradeSchema	Upgrade the database
-	* @param object $forceReplace	If upgrading, REPLACE tables (**NOT IMPLEMENTED**)
+	* @param object $upgradeSchema	Upgrade the database (deprecated)
+	* @param object $forceReplace	If upgrading, REPLACE tables (deprecated)
 	*/
-	function adoSchema( &$dbconn, $upgradeSchema = FALSE, $forceReplace = FALSE ) {
+	function adoSchema( $dbconn, $upgradeSchema = FALSE, $forceReplace = FALSE ) {
+		logMsg( "+++<b>adoSchema</b>( $dbconn, $upgradeSchema, $forceReplace )" );
 		
 		// Initialize the environment
 		$this->mgq = get_magic_quotes_runtime();
@@ -589,31 +744,86 @@ class adoSchema {
 		
 		// Create an ADOdb dictionary object
 		$this->dict = NewDataDictionary( $dbconn );
-
+	
+		$GLOBALS['AXMLS_DBCONN'] = $this->dbconn;
+		$GLOBALS['AXMLS_DBDICT'] = $this->dict;
+		
 		// If upgradeSchema is set, we will be upgrading an existing database to match
 		// the provided schema. If forceReplace is set, objects are marked for replacement
-		// rather than alteration.
+		// rather than alteration. Both these options are deprecated in favor of the 
+		// upgradeSchema method.
 		if( $upgradeSchema == TRUE ) {
 			
-			// Get the metadata from existing tables
-			$legacyTables = $this->dict->MetaTables();
-			if( is_array( $legacyTables ) and count( $legacyTables > 0 ) ) {
-				foreach( $this->dict->MetaTables() as $table ) {
-					$this->legacyTables[ strtoupper( $table ) ] = $table;
-				}
-				showDebug( $this->legacyTables, "LEGACY table" );
-			} 
+			if( $forceReplace == TRUE ) {
+				logMsg( "upgradeSchema option deprecated. Use adoSchema->upgradeSchema('REPLACE') method instead" );
+				$method = 'REPLACE';
+			} else {
+				logMsg( "upgradeSchema option deprecated. Use adoSchema->upgradeSchema() method instead" );
+				$method = 'BEST';
+			}
+			$method = $this->upgradeSchema( $method );
+			logMsg( "Upgrading database using '$method'" );
 			
-			$forceReplace == TRUE ? $this->upgradeMethod = 'REPLACE' : $this->upgradeMethod = 'ALTER';
-			print "<P>Upgrading database schema using {$this->upgradeMethod}</P>";
 		} else {
-			print "<P>Creating new database schema</P>";
+			logMsg( "Creating new database schema" );
 			unset( $this->upgradeMethod );
 		}
+		logMsg( "---<b>adoSchema</b>" );
 	}
 	
 	/**
-	* Loads and XML document and parses it into a prepared schema
+	* Upgrades an existing schema rather than creating a new one
+	*
+	* Upgrades an exsiting database to match the provided schema. The method
+	* option can be set to ALTER, REPLACE, BEST, or NONE. ALTER attempts to
+	* alter each database object directly, REPLACE attempts to rebuild each object
+	* from scratch, BEST attempts to determine the best upgrade method for each
+	* object, and NONE disables upgrading.
+	*
+	* @param string $method Upgrade method (ALTER|REPLACE|BEST|NONE)
+	* @returns string Upgrade method used
+	*/
+	function upgradeSchema( $method = 'BEST' ) {
+		
+		// Get the metadata from existing tables, then map the names back to case-insensitive
+		// names (for RDBMS' like MySQL,. that are case specific.)
+		$legacyTables = $this->dict->MetaTables();
+
+		if( is_array( $legacyTables ) and count( $legacyTables > 0 ) ) {
+			foreach( $this->dict->MetaTables() as $table ) {
+				$this->legacyTables[ strtoupper( $table ) ] = $table;
+			}
+			logMsg( $this->legacyTables, "Legacy Tables Map" );
+		} 
+		
+		// Handle the upgrade methods
+		switch( strtoupper( $method ) ) {
+			
+			case 'ALTER':
+				$this->upgradeMethod = 'ALTER';
+				break;
+				
+			case 'REPLACE':
+				$this->upgradeMethod = 'REPLACE';
+				break;
+				
+			case 'BEST':
+				$this->upgradeMethod = 'ALTER';
+				break;
+				
+			case 'NONE':
+				$this->upgradeMethod = '';
+				break;
+				
+			default:
+				// Fail out if no legitimate method is passed.
+				return FALSE;
+		}
+		return $method;
+	}
+		
+	/**
+	* Loads and parses an XML file
 	*
 	* This method accepts a path to an xmlschema-compliant XML file,
 	* loads it, parses it, and uses it to create the SQL to generate the objects
@@ -623,7 +833,8 @@ class adoSchema {
 	* @return array	Array of SQL queries, ready to execute
 	*/
 	function ParseSchema( $file ) {
-	
+		logMsg( "+++ParseSchema( $file )" );
+		
 		// Create the parser
 		$this->xmlParser = &$xmlParser;
 		$xmlParser = xml_parser_create();
@@ -648,6 +859,7 @@ class adoSchema {
 		}
 		
 		// Return the array of queries
+		logMsg( "---ParseSchema" );
 		return $this->sqlArray;
 	}
 	
@@ -659,12 +871,15 @@ class adoSchema {
 	*
 	* @param array $sqlArray	Array of SQL statements
 	* @param boolean $continueOnErr	Don't fail out if an error is encountered
-	* @return integer	0 if failed, 1 if errors, 2 if successful
+	* @returns integer	0 if failed, 1 if errors, 2 if successful
 	*/
 	function ExecuteSchema( $sqlArray, $continueOnErr =  TRUE ) {
+		logMsg( "+++ExecuteSchema( $sqlArray, $continueOnErr )" );
+		
 		$err = $this->dict->ExecuteSQLArray( $sqlArray, $continueOnErr );
 		
 		// Return the success code
+		logMsg( "---ExecuteSchema" );
 		return $err;
 	}
 	
@@ -674,6 +889,8 @@ class adoSchema {
 	* @access private
 	*/
 	function _xmlcb_startElement( $parser, $name, $attrs ) {
+		
+		isset( $this->upgradeMethod ) ? ( $upgradeMethod = $this->upgradeMethod ) : ( $upgradeMethod = '' );
 		
 		$dbType = $this->dbType;
 		if( isset( $this->table ) ) $table = &$this->table;
@@ -698,8 +915,8 @@ class adoSchema {
 
 			case "TABLE":	// Table element
 				if( !isset( $attrs['PLATFORM'] ) or $this->supportedPlatform( $attrs['PLATFORM'] ) ) {
-					isset( $this->objectPrefix ) ? $tableName = $this->objectPrefix . $attrs['NAME'] : $tableName =  $attrs['NAME'];
-					$this->table = new dbTable( $tableName, $this->upgradeMethod );
+					isset( $this->objectPrefix ) ? ( $tableName = $this->objectPrefix . $attrs['NAME'] ) : ( $tableName =  $attrs['NAME'] );
+					$this->table = new dbTable( $tableName, $upgradeMethod );
 				} else {
 					unset( $this->table );
 				}
@@ -709,8 +926,8 @@ class adoSchema {
 				if( isset( $this->table ) ) {
 					$fieldName = $attrs['NAME'];
 					$fieldType = $attrs['TYPE'];
-					isset( $attrs['SIZE'] ) ? $fieldSize = $attrs['SIZE'] : $fieldSize = NULL;
-					isset( $attrs['OPTS'] ) ? $fieldOpts = $attrs['OPTS'] : $fieldOpts = NULL;
+					isset( $attrs['SIZE'] ) ? ( $fieldSize = $attrs['SIZE'] ) : ( $fieldSize = NULL );
+					isset( $attrs['OPTS'] ) ? ( $fieldOpts = $attrs['OPTS'] ) : ( $fieldOpts = NULL );
 					$this->table->addField( $fieldName, $fieldType, $fieldSize, $fieldOpts );
 				}
 				break;
@@ -740,9 +957,13 @@ class adoSchema {
 				break;
 				
 			case "INDEX":	// Table index
+			
 				if( !isset( $attrs['PLATFORM'] ) or $this->supportedPlatform( $attrs['PLATFORM'] ) ) {
-					isset( $this->objectPrefix ) ? $tableName = $this->objectPrefix . $attrs['TABLE'] : $tableName =  $attrs['TABLE'];
-					$this->index = new dbIndex( $attrs['NAME'], $tableName );
+					if (isset($attrs['TABLE']))
+						isset( $this->objectPrefix) ? ( $tableName = $this->objectPrefix . $attrs['TABLE'] ) : ( $tableName =  $attrs['TABLE'] );
+					else
+						$tableName = '';
+					$this->index = new dbIndex( $attrs['NAME'], $tableName, $upgradeMethod );
 				} else {
 					if( isset( $this->index ) ) unset( $this->index );
 				}
@@ -840,9 +1061,12 @@ class adoSchema {
 					// Get the metadata from the database, convert old and new table names to the
 					// same case and compare. If they're the same, pop a RENAME onto the query stack.
  					$tableName = $this->table->tableName;
-					if( $this->dict->upperName == 'MYSQL' and $oldTableName = $this->legacyTables[ strtoupper( $tableName ) ] ) {
+					if( $this->dict->upperName == 'MYSQL' 
+						and is_array( $this->legacyTables )
+						and array_key_exists( strtoupper( $tableName ), $this->legacyTables )
+						and $oldTableName = $this->legacyTables[ strtoupper( $tableName ) ] ) {
 						if( $oldTableName != $tableName ) {
-    						print "RENAMING table $oldTableName to $tableName\n";
+    						logMsg( "RENAMING table $oldTableName to $tableName" );
     						array_push( $this->sqlArray, "RENAME TABLE $oldTableName TO $tableName" );
 						}
 					}
@@ -853,10 +1077,24 @@ class adoSchema {
 				}
 				break;
 				
+			case "DROP":	// Drop an item
+				logMsg( "DROPPING" );
+				if( isset( $this->table ) ) {
+					// Drop a table or field
+					$dropSQL = $this->table->drop( $this->dict );					
+				} 
+				if( isset( $this->index ) ) {
+					// Drop an index
+					$dropSQL = $this->index->drop();
+				}
+				break;
+				
 			case "INDEX":	// Index element
 				if( isset( $this->index ) ) {
 					$indexSQL = $this->index->create( $this->dict );
-					array_push( $this->sqlArray, $indexSQL[0] );
+					foreach( $indexSQL as $query ) {
+						array_push( $this->sqlArray, $query );
+					}
 					$this->index->destroy();
 				}
 				break;
@@ -879,23 +1117,25 @@ class adoSchema {
 	}
 	
 	/**
-        * Sets default table prefix
-        *
-        * Sets a standard prefix that will be prepended to all database tables during
-        * database creation. The prefix will automatically apply to tables referenced in indices as well.
-		* Calling setPrefix with no arguments clears the prefix.
-        *
-        * @param string $prefix Prefix
-        * @return boolean       TRUE if successful, else FALSE
-        */
-        function setPrefix( $prefix = '' ) {
-                if( !preg_match( '/[^\w]/', $prefix ) and strlen( $prefix < XMLS_PREFIX_MAXLEN ) ) {
-                        $this->objectPrefix = $prefix;
-                        return TRUE;
-                } else {
-                        return FALSE;
-                }
-        }
+    * Set object prefix
+    *
+    * Sets a standard prefix that will be prepended to all database tables during
+    * database creation. Calling setPrefix with no arguments clears the prefix.
+    *
+    * @param string $prefix Prefix
+    * @return boolean       TRUE if successful, else FALSE
+    */
+    function setPrefix( $prefix = '' ) {
+
+            if( !preg_match( '/[^\w]/', $prefix ) and strlen( $prefix < XMLS_PREFIX_MAXLEN ) ) {
+                $this->objectPrefix = $prefix;
+                logMsg( "Prepended prefix: $prefix" );
+                return TRUE;
+            } else {
+            	logMsg( "No prefix" );
+                return FALSE;
+            }
+    }
 	
 	
 	/**
@@ -905,33 +1145,57 @@ class adoSchema {
 	* using the specified platform.
 	*
 	* @param string	$platform	Requested platform
-	* @return boolean	TRUE if platform check succeeds
+	* @returns boolean	TRUE if platform check succeeds
 	*
 	* @access private
 	*/
 	function supportedPlatform( $platform = NULL ) {
-
+		
 		$dbType = $this->dbType;
 		$regex = "/^(\w*\|)*" . $dbType . "(\|\w*)*$/";
 		
-		if( !isset( $platform ) or 
-			preg_match( $regex, $platform ) ) {
+		if( !isset( $platform ) or preg_match( $regex, $platform ) ) {
+			logMsg( "Platform $platform is supported" );
 			return TRUE;
 		} else {
+			logMsg( "Platform $platform is NOT supported" );
 			return FALSE;
 		}
 	}
 	
 	/**
-	* Destroys the current object, freeing all bound resources
+	* Destructor: Destroys an adoSchema object. 
 	*
-	* It is recommended that you explicitly destroy all adoSchema objects when
-	* you are finished using them.
+	* You should call this to clean up when you're finished with adoSchema.
 	*/
 	function Destroy() {
 		xml_parser_free( $this->xmlParser );
 		set_magic_quotes_runtime( $this->mgq );
 		unset( $this );
+	}
+}
+
+/**
+* Message loggging function
+*
+* @access private
+*/
+function logMsg( $msg, $title = NULL ) {
+	if( XMLS_DEBUG ) {
+		print "<PRE>";
+		if( isset( $title ) ) {
+			print "<H3>$title</H3>";
+		}
+		if( isset( $this ) ) {
+			print "[" . get_class( $this ) . "] ";
+		}
+		if( is_array( $msg ) or is_object( $msg ) ) {
+			print_r( $msg );
+			print "<BR/>";
+		} else {
+			print "$msg<BR/>";
+		}
+		print "</PRE>";
 	}
 }
 ?>

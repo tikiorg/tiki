@@ -1,7 +1,7 @@
 <?php
 
 /**
-  V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -194,7 +194,7 @@ CREATE TABLE
 */
 	function _IndexSQL($idxname, $tabname, $flds, $idxoptions)
 	{
-		if (isset($idxoptions['REPLACE'])) $sql[] = "DROP INDEX $idxname";
+		if (isset($idxoptions['REPLACE'])) $sql[] = "DROP INDEX $tabname.$idxname";
 		if (isset($idxoptions['UNIQUE'])) $unique = ' UNIQUE';
 		else $unique = '';
 		if (is_array($flds)) $flds = implode(', ',$flds);
