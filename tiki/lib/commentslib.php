@@ -188,7 +188,10 @@ class Comments extends TikiLib {
 			$aux['part'] = $i;
 			$parts['attachments'][] = $aux;
 		    } else {
-			$parts['text'][] = $obj->body;
+			if($obj->ctype_parameters['charset'] == "iso-8859-1" || $obj->ctype_parameters['charset'] == "ISO-8859-1")
+				$parts['text'][] = utf8_encode($obj->body);
+			else
+				$parts['text'][] = $obj->body;
 		    }
 
 		    break;
@@ -276,6 +279,8 @@ class Comments extends TikiLib {
 			    )
 			)
 		    );
+		if (stristr($aux['subject'], "=?iso-8859-1?") == $aux['subject'])
+			$title = utf8_encode($title);
 
 
 	    //Todo: check permissions
