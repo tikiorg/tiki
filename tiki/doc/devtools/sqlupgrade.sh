@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sqlupgrade.sh,v 1.2 2004-06-17 00:19:13 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/sqlupgrade.sh,v 1.3 2004-09-15 03:11:49 mose Exp $
 # that script runs the last sql upgrade
 # It reads db/local.php to find proper mysql info
 # mose@tikiwiki.org
@@ -10,7 +10,7 @@ FIND='/usr/bin/find'
 SED='/bin/sed'
 MYSQL='/usr/bin/mysql'
 
-UPGRADE="tiki_1.8to1.9.sql"
+UPGRADE="tiki_1.9to1.10.sql"
 if [ ! -d 'db' ]; then
 	echo "You must launch that script from your (multi)tiki root dir."
 	exit 0
