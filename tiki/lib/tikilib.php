@@ -126,7 +126,7 @@ class TikiLib {
     }
 
     // Gets one column for the database.
-    function getOne($query, $values = null, $reporterrors = true) {
+    function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
         $this->convert_query($query);
 
         //echo "<pre>";
@@ -137,7 +137,7 @@ class TikiLib {
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
 
-        $result = $this->db->SelectLimit($query, 1, 0, $values);
+        $result = $this->db->SelectLimit($query, 1, $offset, $values);
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
     $qdiff=$query_stop-$query_start;
@@ -234,14 +234,14 @@ class TikiLib {
     }
 
     // Gets one column for the database.
-    function getOne($query, $values = null, $reporterrors = true) {
+    function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 	$this->convert_query($query);
 
 	//echo "<pre>";
 	//echo "query: $query \n";
 	//print_r($values);
 	//echo "\n";
-	$result = $this->db->SelectLimit($query, 1, 0, $values);
+	$result = $this->db->SelectLimit($query, 1, $offset, $values);
 
 	//echo "\n</pre>\n";
 	if (!$result && $reporterrors)
