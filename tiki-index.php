@@ -366,8 +366,8 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 	error_reporting(E_ALL & ~E_NOTICE);
 	$myWiki = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=");
 	
-	$myWiki->set_navlink("Home", "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-	$myWiki->set_navlink("Menu", "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+	$myWiki->set_navlink(tra("Home Page"), "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+	$myWiki->set_navlink(tra("Menu"), "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 	$myWiki->set_smiley_dir("img/smiles");
 	$myWiki->set_link_jingle("lib/hawhaw/link.wav");
 	$myWiki->set_hawimconv("lib/hawhaw/hawimconv.php");
