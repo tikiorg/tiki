@@ -32,10 +32,10 @@
 {* --- tab with view --- *}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}View item{/tr}</h3>
-<table class="normal">
+<table>
 {section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
+<tr><td>{$ins_fields[ix].name}</td>
+<td>
 {$ins_fields[ix].value}
 </td>
 </tr>
@@ -52,19 +52,19 @@
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save_comment" value="{tr}save{/tr}" /></td></tr>
+<table>
+<tr><td>{tr}Title{/tr}:</td><td><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
+<tr><td>{tr}Comment{/tr}:</td><td><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save_comment" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
 <h3>{tr}Comments{/tr}</h3>
 {section name=ix loop=$comments}
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Click here to edit this comment{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>|<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
+  {if $tiki_p_admin_trackers eq 'y'}[<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Click here to edit this comment{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>|<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this comment?{/tr}')" 
-title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>]{/if}
+title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>]{/if}
 <br/>
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br/>
 {$comments[ix].parsed}
@@ -82,9 +82,9 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
-<table class="normal">
+<table>
 <tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" />
+ <td>{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" />
  {tr}comment{/tr}: <input type="text" name="attach_comment" maxlength="250" />
  <input type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>
@@ -93,7 +93,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 </form>
 {/if}
 <h3>{tr}Attachments{/tr}</h3>
-<table class="normal">
+<table>
 <tr> 
   <td  class="heading">{tr}name{/tr}</td>
   <td  class="heading">{tr}uploaded{/tr}</td>
@@ -108,7 +108,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
  {$atts[ix].filename|iconify}
  <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
- <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+ <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
  {/if}
  </td>
  <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
@@ -135,17 +135,17 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 {section name=ix loop=$fields}
 <input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
-<table class="normal">
-<tr><td class="formcolor">{tr}Status{/tr}</td>
-<td class="formcolor">
+<table>
+<tr><td>{tr}Status{/tr}</td>
+<td>
 <select name="status">
 <option value="o" {if $item_info.status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
 <option value="c" {if $item_info.status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
 {section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
+<tr><td>{$ins_fields[ix].name}</td>
+<td>
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
@@ -184,7 +184,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 </td>
 </tr>
 {/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 </div>
