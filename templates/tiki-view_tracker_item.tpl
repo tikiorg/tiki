@@ -134,8 +134,8 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 {/if}
 <h3>{tr}Attachments{/tr}</h3>
 <table class="normal">
-
 <tr> 
+<td class="heading auto">&nbsp;</td>
 {section name=ix loop=$attfields}
 <td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
 {/section}
@@ -143,24 +143,30 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}
-<tr>
-{foreach key=k item=x from=$attfields}
-<td class="{cycle advance=false} auto">
-{if $x eq 'created'}
-{$atts[ix].$x|tiki_short_datetime}
-{else}
-{$atts[ix].$x}
-{/if}
-</td>
-{/foreach}
-<td class="{cycle}" align="right" nowrap="nowrap">
+<tr class="{cycle}">
+<td nowrap="nowrap" class="auto">
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
-<a class="tablename" href="#" onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return true;">{tr}More Info{/tr}</a>
+<a class="tablename" href="#" title="{tr}More Info{/tr}"
+onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return
+true;"><img src="img/icons/question.gif" border="0" alt="{tr}More Info{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
+class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}Download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}Download{/tr}" hspace="8" vspace="O" /></a>
+</td>
+{foreach key=k item=x from=$attfields}
+{if $x eq 'created'}
+<td>{$atts[ix].$x|tiki_short_datetime}</td>
+{elseif $x eq 'filesize'}
+<td nowrap="nowrap">{$atts[ix].$x|kbsize}</td>
+{elseif $x eq 'filetype'}
+<td>{$atts[ix].$x|iconify}</td>
+{else}
+<td>{$atts[ix].$x}</td>
 {/if}
-<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{tr}Download{/tr}</a>
+{/foreach}
+<td>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[{tr}erase{/tr}]</a>
+<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}erase{/tr}"><img
+src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="0" /></a>
 {/if}
 </td>
 </tr>
