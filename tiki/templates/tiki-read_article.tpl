@@ -19,17 +19,19 @@
 
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
-<tr><td width="25%" valign="top">
+<tr>{if $isfloat eq 'n'}<td width="25%" valign="top">{else}<td valign="top">{/if}
 {if $useImage eq 'y'}
 {if $hasImage eq 'y'}
-<img alt="theimage" border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="article_image.php?id={$articleId}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
 {else}
-<img alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
 {/if}
 {else}
-<img alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="theimage" border="0" src="topic_image.php?id={$topicId}" />
 {/if}
+{if $isfloat eq 'n'}
 </td><td width="75%" valign="top">
+{/if}
 <span class="articleheading">{$parsed_heading}</span>
 </td></tr>
 </table>

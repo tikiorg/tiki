@@ -1586,7 +1586,7 @@ class TikiLib {
     }
   }
 
-  function replace_article ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$articleId,$image_x,$image_y,$type,$rating=0)
+  function replace_article ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$articleId,$image_x,$image_y,$type,$rating=0,$isfloat='n')
   {
     $title = addslashes($title);
     $heading = addslashes($heading);
@@ -1613,6 +1613,7 @@ class TikiLib {
                 image_type = '$imgtype',
                 image_size = '$imgsize',
                 image_data = '$imgdata',
+                isfloat = '$isfloat',
                 image_x = $image_x,
                 image_y = $image_y,
                 heading = '$heading',
@@ -1627,8 +1628,8 @@ class TikiLib {
 
     } else {
       // Insert the article
-      $query = "insert into tiki_articles(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating)
-                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating)";
+      $query = "insert into tiki_articles(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
+                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
       $result = $this->query($query);
 
       $query2 = "select max(articleId) from tiki_articles where created = $now and title='$title' and hash='$hash'";
@@ -1637,7 +1638,7 @@ class TikiLib {
     return $articleId;
   }
 
-  function replace_submission ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$subId,$image_x,$image_y,$type,$rating=0)
+  function replace_submission ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$subId,$image_x,$image_y,$type,$rating=0,$isfloat='n')
   {
     global $smarty;
     global $dbTiki;
@@ -1663,6 +1664,7 @@ class TikiLib {
                 topicName = '$topicName',
                 size = $size,
                 useImage = '$useImage',
+                isfloat = '$isfloat',
                 image_name = '$imgname',
                 image_type = '$imgtype',
                 image_size = '$imgsize',
@@ -1681,8 +1683,8 @@ class TikiLib {
 
     } else {
       // Insert the article
-      $query = "insert into tiki_submissions(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating)
-                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating)";
+      $query = "insert into tiki_submissions(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
+                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
       $result = $this->query($query);
 
     }

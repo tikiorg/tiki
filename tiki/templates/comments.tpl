@@ -111,7 +111,7 @@
     </tr>
     <tr>
       <td class="comform">{tr}Comment{/tr}</td>
-      <td class="comform"><textarea id="editpost" name="comments_data" rows="6" cols="62">{$comment_data}</textarea></td>
+      <td class="comform"><textarea id="editpost" name="comments_data" rows="6" cols="60">{$comment_data}</textarea></td>
     </tr>
     </table>
     </form>

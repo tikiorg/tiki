@@ -50,6 +50,7 @@ if(isset($_REQUEST["articleId"])) {
   $smarty->assign('rating',$article_data["rating"]);
   $smarty->assign('entrating',$article_data["entrating"]);
   $smarty->assign('useImage',$article_data["useImage"]);
+  $smarty->assign('isfloat',$article_data["isfloat"]);
   $smarty->assign('image_name',$article_data["image_name"]);
   $smarty->assign('image_type',$article_data["image_type"]);
   $smarty->assign('image_size',$article_data["image_size"]);
