@@ -17,23 +17,21 @@ class RefererLib extends TikiLib {
 	}
 
 	function list_referer_stats($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
 			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (referer like $findesc)";
+			$mid = " where (`referer` like ?)";
+			$bindvars = array($findesc);
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_referer_stats $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_referer_stats $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_referer_stats` $mid order by ".$this-convert_sortmode($sort_mode);;
+		$query_cant = "select count(*) from `tiki_referer_stats` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
