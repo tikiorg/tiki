@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.36 2004-10-07 23:01:23 telenieko Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.37 2004-10-13 22:23:28 jjolly Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -254,7 +254,7 @@ if (isset($_REQUEST["edit"])) {
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
 		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
-		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geogrpahic);
+		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic);
 
 	#add scales
 	if (isset($_REQUEST["scaleSize"]) && is_numeric($_REQUEST["scaleSize"])) {
