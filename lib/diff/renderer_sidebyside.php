@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.2 2004-08-03 19:44:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.3 2004-08-11 17:39:01 sylvieg Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -62,15 +62,9 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
 	            echo "<tr class='diffdeleted'><td>$prefix</td><td>$line</td><td colspan='2'></td></tr>\n";
 	        }
     	} elseif ($type == 'change-deleted') {
-    		foreach ($lines as $line) {
-    			if (!empty($line))
-    			echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>$line</td>\n";
-    		}
+    		echo '<tr><td class="diffdeleted" valign="top">'.$prefix.'</td><td class="diffdeleted" valign="top">'.implode("<br />", $lines)."</td>\n";
     	} elseif ($type == 'change-added') {
-    		foreach ($lines as $line) {
-    			if (!empty($line))
-    			echo "<td class='diffadded'>$prefix</td><td class='diffadded'>$line</td></tr>\n";
-    		}
+    		echo '<td class="diffadded" valign="top">'.$prefix.'</td><td class="diffadded" valign="top">'.implode("<br />", $lines)."</td></tr>\n";
     	}
     }
 
