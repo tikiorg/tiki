@@ -19,6 +19,7 @@ class BaseActivity extends Base {
   var $inbound=Array();
   var $pId;
   var $activityId;
+  var $type;
   
   function setDb($db)
   {
@@ -28,6 +29,7 @@ class BaseActivity extends Base {
   function BaseActivity($db)
   {
     $this->db=$db;
+    $this->type='base';
   }
   
   
@@ -74,6 +76,7 @@ class BaseActivity extends Base {
     $act->setIsInteractive($res['isInteractive']);
     $act->setIsAutoRouted($res['isAutoRouted']);
     $act->setActivityId($res['activityId']);
+    $act->setType($res['type']);
     
     //Now get forward transitions 
     
@@ -143,6 +146,16 @@ class BaseActivity extends Base {
     return $this->description;
   }
   
+  /*! Sets the type for the activity - this does NOT allow you to change the actual type */
+  function setType($type) {
+    $this->type=$type;
+  }
+  
+  /*! Gets the activity type */
+  function getType() {
+    return $this->type;
+  }
+
   /*! Sets if the activity is interactive */
   function setIsInteractive($is) {
     $this->isInteractive=$is;
@@ -194,5 +207,12 @@ class BaseActivity extends Base {
     $this->roles = $roles;
   }
   
+  /*! Checks if a user has a certain role (by name) for this activity,
+      e.g. $isadmin = $activity->checkUserRole($user,'admin'); */
+  function checkUserRole($user,$rolename) {
+    $aid = $this->activityId;
+    return $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."user_roles` gur, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gur.`roleId`=gr.`roleId` and gar.`activityId`=? and gur.`user`=? and gr.`name`=?",array($aid, $user, $rolename));
+  }
+
 }
 ?>
