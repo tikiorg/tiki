@@ -1,5 +1,5 @@
 Tiki! The wiki with a lot of features!
-version 1.8.2 -Polaris-
+version 1.9 -Sirius-
 
 
 DOCUMENTATION
@@ -9,20 +9,19 @@ DOCUMENTATION
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
 * It might also be helpful to look into the official Manual. Last released
   documentation, in pdf format (350 pages) (outdated at the time of this writing):
-  http://tikiwiki.org/tiki.pdf (version 1.6)
+  http://tikiwiki.org/tiki.pdf (version 1.6 but with many valuable help)
 
-* The documentation for 1.8 version is under construction at
-    http://doc.tikiwiki.org,
+* The documentation for 1.9 version is maintained on http://doc.tikiwiki.org,
   come and help if you can and wish.
 
-* Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
+* Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess19
 * TikiWiki is also a live community on irc.freenode.net channel #tikiwiki
 
 
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see tikiwiki.org for the latest install help.
+  configure Tiki. Again, see http://tikiwiki.org for the latest install help.
 
 
 COPYRIGHT
