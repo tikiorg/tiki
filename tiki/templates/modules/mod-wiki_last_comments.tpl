@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-wiki_last_comments.tpl,v 1.1 2003-11-24 02:41:12 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-wiki_last_comments.tpl,v 1.2 2003-11-24 20:52:07 zaufi Exp $ *}
 
 {if $feature_forums eq 'y'}
 {if $nonums eq 'y'}
@@ -12,8 +12,8 @@
       <tr>
         {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}
         <td class="module">
-          <a class="linkmodule" href="tiki-index.php?page={$comments[ix].page|escape}" title="{$comments[ix].commentDate|tiki_short_datetime}, by {$comments[ix].user}">
-            <b>{$comments[ix].page}:</b> {$comments[ix].title}
+          <a class="linkmodule" href="tiki-index.php?page={$comments[ix].page|escape}" title="{$comments[ix].commentDate|tiki_short_datetime}, by {$comments[ix].user}{if $moretooltips eq 'y'} on page {$comments[ix].page}{/if}">
+            {if $moretooltips ne 'y'}<b>{$comments[ix].page}:</b>{/if} {$comments[ix].title}
           </a>
         </td>
       </tr>
