@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_page.tpl,v 1.2 2004-02-06 20:31:49 ggeller Exp $ *}
 <h1>
   <a  href="tiki-hw_student_assignment.php?assignmentId={$assignmentId}" class="pagetitle">
     {$assignmentTitle}
@@ -33,6 +34,7 @@
 </table>
 
 {if $beingEdited eq 'y'}
+  {* TODO Add something here regarding editing after the due date. *}
   {popup_init src="lib/overlib.js"}
   <span class="tabbut"><a style="background: #FFAAAA;" href="tiki-hw_editpage.php?id={$id|escape:"url"}" class="tablink" {popup text="$semUser" width="-1"}>{tr}edit{/tr}</a></span>
 {else}
@@ -48,11 +50,19 @@
 
 <p class="editdate"> {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser}</p>
 
+<form enctype="multipart/form-data" method="post" action="tiki-hw_page.php?assignmentId={$assignmentId}" id='editpageform'>
+
+
+{* TODO Work out the specs for grading queues and submissions 
+
 {if $nGradingQueue eq 0}
   {if $user eq $studentName}
-    <input type="submit" class="wikiaction" name="submit for grading" value="{tr}submit for grading{/tr}" /> <a class="link" href="tiki-hw_page.php?submit={$id}"></a>  &nbsp 
+    <input type="submit" class="wikiaction" name="submit" value="{tr}submit for grading{/tr}" /> &nbsp 
   {/if}
   ({tr}This page is not in a grading queue.{/tr})
 {else}
   (This page is number {$nGradingQueue} in the grading queue for this assignment.)
 {/if}
+TODO *}
+
+</form>
