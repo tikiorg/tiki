@@ -2,6 +2,7 @@
 include_once('lib/diff.php');
 require_once('lib/Date.php');
 
+
 class TikiLib {
   var $db;  // The PEAR db object used to access the database
   var $buffer;
@@ -766,6 +767,7 @@ class TikiLib {
                              "13" => "swc", "14" => "iff");
             $type="image/".$mimetypes[$imageinfo["2"]];
           }
+          
           $exp=substr($file,strlen($file)-3,3);
           $fp = fopen($tmpDir."/".$file,"rb");
           $size=filesize($tmpDir."/".$file);

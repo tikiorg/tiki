@@ -6,8 +6,8 @@
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modb_folders}
-<tr><td class="module">
-<a href="{$ownurl}{$modb_sep}bookmarks_parent={$modb_folders[ix].folderId}"><img border="0" src="img/icons/icon_folder.gif" /></a>&nbsp;{$modb_folders[ix].name}
+<tr><td valign="bottom" class="module">
+<a href="{$ownurl}{$modb_sep}bookmarks_parent={$modb_folders[ix].folderId}"><img border="0" src="img/icons/folderin.gif" /></a>&nbsp;{$modb_folders[ix].name}
 </td></tr>
 {/section}
 {section name=ix loop=$modb_urls}
@@ -21,10 +21,10 @@
 {/section}
 </table>
 <br/>
-<form action="{$ownurl}" method="post">
-<input type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
-<input type="text" size="8" name="bookmark_urlname" />
-<input type="submit" name="bookmark_create_folder" value="{tr}n{/tr}" />
+<form name="bookmarks" action="{$ownurl}" method="post">
+<input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
+<input style="font-size: 9px;" type="text" size="8" name="bookmark_urlname" />
+<input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}new{/tr}" />
 </form>
 </div>
 </div>

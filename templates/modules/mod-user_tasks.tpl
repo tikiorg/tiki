@@ -5,6 +5,10 @@
 </div>
 <div class="box-data">
 <form action="{$ownurl}" method="post">
+<input style="font-size: 9px;" type="text" name="modTasksTitle" />
+<input style="font-size: 9px;" type="submit" name="modTasksSave" value="{tr}add{/tr}" />
+</form>
+<form action="{$ownurl}" method="post">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTasks}
 <tr><td class="module">
@@ -14,12 +18,8 @@
 <tr><td class="module">&nbsp;</td></tr>
 {/section}
 </table>
-<input type="submit" name="modTasksCom" value="{tr}done{/tr}" />
-<input type="submit" name="modTasksDel" value="{tr}del{/tr}" />
-</form>
-<form action="{$ownurl}" method="post">
-<input type="text" name="modTasksTitle" size="16" />
-<input type="submit" name="modTasksSave" value="{tr}add{/tr}" />
+<input style="font-size: 9px;" type="submit" name="modTasksCom" value="{tr}done{/tr}" />
+<input style="font-size: 9px;" type="submit" name="modTasksDel" value="{tr}del{/tr}" />
 </form>
 </div>
 </div>
