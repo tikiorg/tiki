@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.6 2005-02-14 15:43:20 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.7 2005-02-14 18:42:34 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -302,7 +302,9 @@ DIV#sitelogo {
   padding: 0px
   padding-left: 2px;
   padding-right: 2px;
-  //height: 142px; /* +padding */
+/*
+  height: 142px; / * +padding * /
+*/
   text-align: center;
   vertical-align: middle;
 }
@@ -597,7 +599,7 @@ div.box-title {
   padding-left: 0px;  padding-right: 0px;
   margin-bottom: 1px;
   width: 160px;
-  height: 19px;
+  height: 19px; /* if the height is changed, midbg should be changed to match */
 }
 div.box-title a:active, div.box-title a:hover
 {
@@ -663,11 +665,9 @@ div.cbox {
 /*
   background-image: url(kuroBK/midbg);
 */
-  margin-left: 7px;  
-  margin-right: 7px;  
   margin-top: 7px;  
   margin-bottom: 0px;
-  border: 1px solid black;  
+  padding: 0px;
   padding-bottom: 10px;  
   overflow: hidden; 
 }
@@ -675,7 +675,9 @@ div.cbox {
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
   background-image: url(kuroBK/titlebg);
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;
+  border-bottom: 1px solid black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 13px;
   font-weight: bold;
   overflow: hidden;
   text-align: center;
@@ -704,15 +706,10 @@ div.cbox-title a:hover, a.cboxtlink:hover {
 
 /* And this is the data */
 div.cbox-data {
-/*
-  background-image: none;
-*/
   overflow: hidden;
   width: 100%;
-/*
-  padding: 4px 4px 4px 4px;
-*/
-  margin-left: 10px;  margin-right: 10px;  margin-top: 4px;  margin-bottom: 4px;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
 }
 
@@ -810,8 +807,11 @@ div.imagerank {  margin-left: 5px;  margin-right: 5px;  margin-bottom: 10px;  ma
 /* A simple box is just a div with a border around and some margin 
  * used for example in the admin screen */
 div.simplebox {  
+  margin: 0px 0px 0px 0px;
+/*
   margin-left: 5px;  margin-right: 5px;  margin-top: 5px;  margin-bottom: 5px;
-  padding-left: 5px;  padding-top: 5px;  padding-bottom: 5px;  padding-right: 5px;
+*/
+  padding-left: 15px;  padding-top: 10px;  padding-bottom: 15px;  padding-right: 0px;
   color: black;
   font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;
   width: 100%;
@@ -820,7 +820,7 @@ div.simplebox {
   background-repeat: repeat-x;
   background-color: white;
   overflow: hidden;
-  border: 0;
+  border: none;
   border-right-image: url(kuroBK/rightbg);
   box-shadow: 0.2em 0.2em #CCC; /* CSS3 */
 }
@@ -932,9 +932,10 @@ th.listfilesheading, th.listartheading, th.forumheading, th.thead
 TD.button
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px; font-weight : bold;
+  font-size: 11px;
+  font-weight: bold;
   padding-left: 2px;
-  padding-right: 5px;
+  padding-right: 2px;
   text-align: center; 
   vertical-align: middle;
 }
@@ -2409,11 +2410,10 @@ div#rules-copy-panel {
   font-weight:bold;
 } 
 
-TABLE.admin { width: 95%; }
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 DIV#power {            
   font-size: 70%;
-  padding: 0pxi 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 DIV#loadstats {
@@ -2592,9 +2592,11 @@ a.phplm:hover	{
 	background-color: #dedede;
 }
 
-/* Table Admin width */
 TABLE.admin {
   width: 100%;
+  border-spacing: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* tiki tabs */
