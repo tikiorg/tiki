@@ -49,11 +49,11 @@ class ShoutboxLib extends TikiLib {
 			$query = "update `tiki_shoutbox` set `user`=?, `message`=?, `hash`=? where `msgId`=?";
 			$bindvars = array($user,$message,$hash,(int)$msgId);
 		} else {
-			$query = "replace into tiki_shoutbox(message,user,timestamp,hash) values('$message','$user',$now,'$hash')";
+			$query = "replace into tiki_shoutbox(message,user,timestamp,hash) values(?,?,?,?)";
 			$bindvars = array($message,$user,(int)$now,$hash);
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 		return true;
 	}
 
