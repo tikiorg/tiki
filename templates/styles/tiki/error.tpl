@@ -37,6 +37,7 @@
 <div id="tiki-center">
 
 <div style="float:right;">
+{if $page and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a><br /><br />{/if}
 <a href="javascript:history.back()" class="tablink">{tr}Go back{/tr}</a>
 <a href="{$tikiIndex}" class="tablink">{tr}Return to home page{/tr}</a>
 </div>
