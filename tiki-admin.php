@@ -478,6 +478,11 @@ if(isset($_REQUEST["loginprefs"])) {
   $tikilib->set_preference('remembertime',$_REQUEST['remembertime']);
   $smarty->assign('rememberme',$_REQUEST['rememberme']);
   $smarty->assign('remembertime',$_REQUEST['remembertime']);
+
+  if(isset($_REQUEST["auth_method"])) {
+    $tikilib->set_preference('auth_method',$_REQUEST['auth_method']);
+    $smarty->assign('auth_method',$_REQUEST['auth_method']);
+  }
 }
 
 if(isset($_REQUEST["cmsprefs"])) {
@@ -687,6 +692,106 @@ if(isset($_REQUEST["articlecomprefs"])) {
     $smarty->assign('article_comments_default_ordering',$_REQUEST["article_comments_default_ordering"]);
   }
 }
+
+if(isset($_REQUEST["auth_pear"])) {
+
+  if(isset($_REQUEST["auth_create_user_tiki"]) && $_REQUEST["auth_create_user_tiki"]=="on") {
+    $tikilib->set_preference("auth_create_user_tiki",'y');
+    $smarty->assign("auth_create_user_tiki",'y');
+  } else {
+    $tikilib->set_preference("auth_create_user_tiki",'n');
+    $smarty->assign("auth_create_user_tiki",'n');
+  }
+
+  if(isset($_REQUEST["auth_create_user_auth"]) && $_REQUEST["auth_create_user_auth"]=="on") {
+    $tikilib->set_preference("auth_create_user_auth",'y');
+    $smarty->assign("auth_create_user_auth",'y');
+  } else {
+    $tikilib->set_preference("auth_create_user_auth",'n');
+    $smarty->assign("auth_create_user_auth",'n');
+  }
+
+  if(isset($_REQUEST["auth_skip_admin"]) && $_REQUEST["auth_skip_admin"]=="on") {
+    $tikilib->set_preference("auth_skip_admin",'y');
+    $smarty->assign("auth_skip_admin",'y');
+  } else {
+    $tikilib->set_preference("auth_skip_admin",'n');
+    $smarty->assign("auth_skip_admin",'n');
+  }
+
+  if(isset($_REQUEST["auth_ldap_host"])) {
+    $tikilib->set_preference("auth_ldap_host",$_REQUEST["auth_ldap_host"]);
+    $smarty->assign('auth_ldap_host',$_REQUEST["auth_ldap_host"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_port"])) {
+    $tikilib->set_preference("auth_ldap_port",$_REQUEST["auth_ldap_port"]);
+    $smarty->assign('auth_ldap_port',$_REQUEST["auth_ldap_port"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_scope"])) {
+    $tikilib->set_preference("auth_ldap_scope",$_REQUEST["auth_ldap_scope"]);
+    $smarty->assign('auth_ldap_scope',$_REQUEST["auth_ldap_scope"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_basedn"])) {
+    $tikilib->set_preference("auth_ldap_basedn",$_REQUEST["auth_ldap_basedn"]);
+    $smarty->assign('auth_ldap_basedn',$_REQUEST["auth_ldap_basedn"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_userdn"])) {
+    $tikilib->set_preference("auth_ldap_userdn",$_REQUEST["auth_ldap_userdn"]);
+    $smarty->assign('auth_ldap_userdn',$_REQUEST["auth_ldap_userdn"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_userattr"])) {
+    $tikilib->set_preference("auth_ldap_userattr",$_REQUEST["auth_ldap_userattr"]);
+    $smarty->assign('auth_ldap_userattr',$_REQUEST["auth_ldap_userattr"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_useroc"])) {
+    $tikilib->set_preference("auth_ldap_useroc",$_REQUEST["auth_ldap_useroc"]);
+    $smarty->assign('auth_ldap_useroc',$_REQUEST["auth_ldap_useroc"]);
+  }
+  if(isset($_REQUEST["auth_ldap_groupdn"])) {
+    $tikilib->set_preference("auth_ldap_groupdn",$_REQUEST["auth_ldap_groupdn"]);
+    $smarty->assign('auth_ldap_groupdn',$_REQUEST["auth_ldap_groupdn"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_groupattr"])) {
+    $tikilib->set_preference("auth_ldap_groupattr",$_REQUEST["auth_ldap_groupattr"]);
+    $smarty->assign('auth_ldap_groupattr',$_REQUEST["auth_ldap_groupattr"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_groupoc"])) {
+    $tikilib->set_preference("auth_ldap_groupoc",$_REQUEST["auth_ldap_groupoc"]);
+    $smarty->assign('auth_ldap_groupoc',$_REQUEST["auth_ldap_groupoc"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_memberattr"])) {
+    $tikilib->set_preference("auth_ldap_memberattr",$_REQUEST["auth_ldap_memberattr"]);
+    $smarty->assign('auth_ldap_ldap_memberattr',$_REQUEST["auth_ldap_memberattr"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_memberisdn"]) && $_REQUEST["auth_ldap_memberisdn"]=="on") {
+    $tikilib->set_preference("auth_ldap_memberisdn",'y');
+    $smarty->assign("auth_ldap_memberisdn",'y');
+  } else {
+    $tikilib->set_preference("auth_ldap_memberisdn",'n');
+    $smarty->assign("auth_ldap_memberisdn",'n');
+  }
+
+  if(isset($_REQUEST["auth_ldap_adminuser"])) {
+    $tikilib->set_preference("auth_ldap_adminuser",$_REQUEST["auth_ldap_adminuser"]);
+    $smarty->assign('auth_ldap_adminuser',$_REQUEST["auth_ldap_adminuser"]);
+  }
+
+  if(isset($_REQUEST["auth_ldap_adminpass"])) {
+    $tikilib->set_preference("auth_ldap_adminpass",$_REQUEST["auth_ldap_adminpass"]);
+    $smarty->assign('auth_ldap_adminpass',$_REQUEST["auth_ldap_adminpass"]);
+  }
+}
+
 
 if(isset($_REQUEST["setwikihome"])) {
   $tikilib->set_preference('wikiHomePage',$_REQUEST["wikiHomePage"]);
