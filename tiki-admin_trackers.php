@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.23 2004-03-09 05:45:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.24 2004-03-18 01:26:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,66 +119,98 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-trackers');
 	if (isset($_REQUEST["showCreated"]) && $_REQUEST["showCreated"] == 'on') {
 		$tracker_options["showCreated"] = 'y';
+	} else {
+		$tracker_options["showCreated"] = 'n';
 	}
 
 	if (isset($_REQUEST["showStatus"]) && $_REQUEST["showStatus"] == 'on') {
 		$tracker_options["showStatus"] = 'y';
+	} else {
+		$tracker_options["showStatus"] = 'n';
 	}
 
 	if (isset($_REQUEST["showStatusAdminOnly"]) && $_REQUEST["showStatusAdminOnly"] == 'on') {
 		$tracker_options["showStatusAdminOnly"] = 'y';
+	} else {
+		$tracker_options["showStatusAdminOnly"] = 'n';
 	}
 	
 	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"] == 'on') {
 		$tracker_options["newItemStatus"] = 'y';
+	} else {
+		$tracker_options["newItemStatus"] = 'n';
 	}
 
 	if (isset($_REQUEST["useComments"]) && $_REQUEST["useComments"] == 'on') {
 		$tracker_options["useComments"] = 'y';
+	} else {
+		$tracker_options["useComments"] = 'n';
 	}
 
 	if (isset($_REQUEST["useAttachments"]) && $_REQUEST["useAttachments"] == 'on') {
 		$tracker_options["useAttachments"] = 'y';
+	} else {
+		$tracker_options["useAttachments"] = 'n';
 	}
 
 	if (isset($_REQUEST["showComments"]) && $_REQUEST["showComments"] == 'on') {
 		$tracker_options["showComments"] = 'y';
+	} else {
+		$tracker_options["showComments"] = 'n';
 	}
 
 	if (isset($_REQUEST["showAttachments"]) && $_REQUEST["showAttachments"] == 'on') {
 		$tracker_options["showAttachments"] = 'y';
+	} else {
+		$tracker_options["showAttachments"] = 'n';
 	}
 
 	if (isset($_REQUEST["showLastModif"]) && $_REQUEST["showLastModif"] == 'on') {
 		$tracker_options["showLastModif"] = 'y';
+	} else {
+		$tracker_options["showLastModif"] = 'n';
 	}
 
 	if (isset($_REQUEST["defaultOrderKey"]) && $_REQUEST["defaultOrderKey"]) {
 		$tracker_options["defaultOrderKey"] = $_REQUEST["defaultOrderKey"];
+	} else {
+		$tracker_options["defaultOrderKey"] = '';
 	}
 
 	if (isset($_REQUEST["defaultOrderDir"]) && ($_REQUEST["defaultOrderDir"] == 'asc' or $_REQUEST["defaultOrderDir"] == 'desc')) {
 		$tracker_options["defaultOrderDir"] = $_REQUEST["defaultOrderDir"];
+	} else {
+		$tracker_options["defaultOrderDir"] = 'asc';
 	}
 
 	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"]) {
 		$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
+	} else {
+		$tracker_options["newItemStatus"] = 'o';
 	}
 
-	if (isset($_REQUEST["modItemStatus"])) {
+	if (isset($_REQUEST["modItemStatus"]) && $_REQUEST["modItemStatus"]) {
 		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
+	} else {
+		$tracker_options["modItemStatus"] = 'o';
 	}
 
 	if (isset($_REQUEST["writerCanModify"]) && $_REQUEST["writerCanModify"] == 'on') {
 		$tracker_options["writerCanModify"] = 'y';
+	} else {
+		$tracker_options["writerCanModify"] = 'n';
 	}
 
 	if (isset($_REQUEST["writerGroupCanModify"]) && $_REQUEST["writerGroupCanModify"] == 'on') {
 		$tracker_options["writerGroupCanModify"] = 'y';
+	} else {
+		$tracker_options["writerGroupCanModify"] = 'n';
 	}
 
 	if (isset($_REQUEST["defaultStatus"]) && $_REQUEST["defaultStatus"] && is_array($_REQUEST["defaultStatus"])) {
 		$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
+	} else {
+		$tracker_options["defaultStatus"] = 'o';
 	}
 
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
