@@ -14,7 +14,7 @@ class QuickTagsLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category) {
+	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category=null) {
 		
 		$bindvars=array();
 		if ($find) {
