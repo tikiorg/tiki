@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.20 2003-11-23 23:19:11 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.21 2003-11-28 02:45:03 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,8 +96,15 @@ $smarty->assign('comments_complete_father', $comments_complete_father);
 if (!isset($_REQUEST["comments_threadId"])) {
     $_REQUEST["comments_threadId"] = 0;
 }
-
 $smarty->assign("comments_threadId", $_REQUEST["comments_threadId"]);
+
+// The same for replies to comments threads
+
+if (!isset($_REQUEST["comments_reply_threadId"])) {
+    $_REQUEST["comments_reply_threadId"] = 0;
+}
+$smarty->assign("comments_reply_threadId", $_REQUEST["comments_reply_threadId"]);
+
 
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
@@ -171,6 +178,11 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_title', $comment_info["title"]);
     $smarty->assign('comment_rating', $comment_info["comment_rating"]);	
     $smarty->assign('comment_data', $comment_info["data"]);
+} elseif ($_REQUEST["comments_reply_threadId"] > 0) {
+    // Replies to comments. TODO: optionally qouting the content of comment data into the reply
+    $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
+    
+    $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
 } else {
     $smarty->assign('comment_title', '');
     $smarty->assign('comment_rating', '');	
