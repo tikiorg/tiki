@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sqlite.sql,v 1.10 2004-03-10 13:49:13 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sqlite.sql,v 1.11 2004-03-12 01:36:09 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3210,10 +3210,10 @@ CREATE TABLE "tiki_shoutbox" (
 
 DROP TABLE "tiki_shoutbox_words";
 
-CREATE TABLE `tiki_shoutbox_words` (
+CREATE TABLE "tiki_shoutbox_words" (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY ( `word` )
+  PRIMARY KEY ("word")
 ) ;
 
 -- --------------------------------------------------------
@@ -3596,7 +3596,7 @@ CREATE TABLE "tiki_tracker_options" (
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(80) NOT NULL default '',
   "value" text default NULL,
-  PRIMARY KEY (trackerId,name(30))
+  PRIMARY KEY ("trackerId","name")
 )  ;
 
 -- --------------------------------------------------------
@@ -4508,7 +4508,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 -- Homework permissions - ggeller
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editor','homework');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
 
@@ -5410,7 +5410,7 @@ CREATE TABLE "tiki_jukebox_genres" (
   "genreId" bigserial,
   "genreName" varchar(80),
   "genreDescription" text,
-  PRIMARY KEY (genreId)
+  PRIMARY KEY ("genreId")
 )   ;
 
 
@@ -5426,7 +5426,7 @@ CREATE TABLE "tiki_jukebox_albums" (
   "visits" bigint,
   "public" char(1),
   "genreId" bigint,
-  PRIMARY KEY(albumId)
+  PRIMARY KEY ("albumId")
 )   ;
 
 
@@ -5444,7 +5444,7 @@ CREATE TABLE "tiki_jukebox_tracks" (
   "filetype" varchar(250),
   "genreId" bigint,
   "plays" bigint,
-  PRIMARY KEY(trackId)
+  PRIMARY KEY ("trackId")
 )  ;
 
 
