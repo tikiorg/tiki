@@ -57,8 +57,8 @@ class NlLib extends TikiLib {
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
 			$url_subscribe = httpPrefix(). $foopath;
-			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=?";
-			$result = $this->query($query,array((int)$nlId));
+			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=?";
+			$result = $this->query($query,array((int)$nlId,$email));
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`) values(?,?,?,?,?)";
 			$result = $this->query($query,array((int)$nlId,$email,$code,'n',(int)$now));
 			// Now send an email to the address with the confirmation instructions
@@ -71,8 +71,8 @@ class NlLib extends TikiLib {
 			@mail($email, tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $mail_data,
 				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 		} else {
-			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=?";
-			$result = $this->query($query,array((int)$nlId));
+			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=?";
+			$result = $this->query($query,array((int)$nlId,$email));
 			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`) values(?,?,?,?,?)";
 			$result = $this->query($query,array((int)$nlId,$email,$code,'y',(int)$now));
 		}
