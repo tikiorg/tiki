@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.20 2004-07-08 12:50:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.21 2004-09-03 19:20:21 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -137,9 +137,7 @@ if (isset($_REQUEST['send'])) {
 	$users = array_unique($users);
 
 	// Validation: either to, cc or bcc must have a valid user
-	if (count($users) > 0) {
-		$message .= tra("Message will be sent to: "). implode(',', $users). "<br />";
-	} else {
+	if (count($users) <= 0) {
 		$message .= tra('ERROR: No valid users to send the message');
 
 		$smarty->assign('message', $message);
@@ -158,7 +156,7 @@ if (isset($_REQUEST['send'])) {
 		        }
 
 	}
-
+	$message .= tra("Message sent to: "). implode(',', $users). "<br />";
 	$smarty->assign('message', $message);
 }
 
