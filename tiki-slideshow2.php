@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.7 2003-11-18 23:59:24 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,32 +19,29 @@ if ($feature_wiki != 'y') {
 	die;
 }
 
-$page = $_REQUEST['page'];
-
-if ($structlib->page_is_in_structure($page)) {
-	$smarty->assign('structure', 'y');
-
-	$prev = $structlib->get_prev_page($page);
-	$next = $structlib->get_next_page($page);
-	$struct = $structlib->get_structure($page);
-	$smarty->assign('struct_next', $next);
-	$smarty->assign('struct_prev', $prev);
-	$smarty->assign('struct_struct', $struct);
-} else {
+$page_ref_id  = $_REQUEST['page_ref_id'];
+if (!isset($page_ref_id)) {
 	$smarty->assign('msg', tra("Page must be defined inside a structure to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-//print($GLOBALS["HTTP_REFERER"]);
+$smarty->assign('structure', 'y');
+
+$navigation_info = $structlib->get_navigation_info($page_ref_id);
+$page_info = $structlib->s_get_page_info($page_ref_id);
+$smarty->assign('next_info', $navigation_info["next"]);
+$smarty->assign('prev_info', $navigation_info["prev"]);
+$smarty->assign('home_info', $navigation_info["home"]);
+$smarty->assign('page_info', $page_info);
+
 if (!isset($_SESSION["thedate"])) {
 	$thedate = date("U");
 } else {
 	$thedate = $_SESSION["thedate"];
 }
 
-$smarty->assign_by_ref('page', $_REQUEST["page"]);
+//$smarty->assign_by_ref('page', $_REQUEST["page"]);
 
 require_once ('tiki-pagesetup.php');
 
@@ -60,13 +57,7 @@ if ($tiki_p_admin_wiki == 'y') {
 	}
 }
 
-// If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
+$page = $page_info["pageName"];
 
 // Now check permissions to access this page
 if ($tiki_p_view != 'y') {
@@ -105,8 +96,6 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 	array_push($_SESSION["breadCrumb"], $page);
 }
 
-//print_r($_SESSION["breadCrumb"]);
-
 // Now increment page hits since we are visiting this page
 if ($count_admin_pvs == 'y' || $user != 'admin') {
 	$tikilib->add_hit($page);
@@ -114,6 +103,7 @@ if ($count_admin_pvs == 'y' || $user != 'admin') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
+$smarty->assign('slide_data', $info["data"]);
 
 // Verify lock status
 if ($info["flag"] == 'L') {
@@ -132,15 +122,6 @@ if ($info["flag"] != 'L' && (($tiki_p_edit == 'y' && $info["user"] == $user) || 
 if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
-
-$prev = $structlib->get_prev_page($page);
-$next = $structlib->get_next_page($page);
-$struct = $structlib->get_structure($page);
-$smarty->assign('struct_next', $next);
-$smarty->assign('struct_prev', $prev);
-$smarty->assign('struct_struct', $struct);
-
-$smarty->assign('structure', 'y');
 
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
