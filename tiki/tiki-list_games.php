@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.17 2004-02-28 22:01:07 techtonik Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.18 2004-02-28 22:17:48 techtonik Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,8 @@
  * 3. Upload games
  * 4. Edit them
  * 5. Delete
+ *
+ * GameID used in all requests is a name of thumbnail file
  *
  * @package Features
  * @subpackage Games
@@ -85,7 +87,7 @@ $smarty->assign('play', 'n');
 
 if(isset($_REQUEST["game"])) {
  $gamelib->add_game_hit($_REQUEST["game"]);
- $game = str_replace( array('/','\\'), '_', $_REQUEST["game"]);
+ $game = basename( $_REQUEST["game"] );
  $parts=explode('.',$game);
  $source='games/flash/'.$parts[0].'.'.$parts[1];
  if (is_file($source))
@@ -104,29 +106,34 @@ if (isset($_REQUEST["uploadform"]) && $tiki_p_admin_games == 'y') {
     $smarty->assign('uploadform', 'y');
 }
 
-if (isset($_REQUEST["upload"])) {
+if (isset($_POST["upload"])) {
     check_ticket('list-games');
-    if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])
-        && isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
-        $name1 = $_FILES['userfile1']['name'];
+    if (isset($_FILES['flashfile']) && is_uploaded_file($_FILES['flashfile']['tmp_name'])
+        && isset($_FILES['imagefile']) && is_uploaded_file($_FILES['imagefile']['tmp_name'])) {
+        $name1 = basename ($_FILES['flashfile']['name']);
 
-        $name2 = $_FILES['userfile1']['name'];
+        $name2 = basename ($_FILES['imagefile']['name']);
         $parts = explode('.', $name2);
-        $namec = implode('.', array(
-            $parts[0],
-            $parts[1]
-        ));
+        $namec = $parts[0].'.'.$parts[1];
 
-        if ($namec != $name1) {
+        if (!ereg("\.(swf|dcr)$", $name1)) {
             $smarty->assign(
-                'msg', tra("The thumbnail name must be"). " $name1.gif " . tra("or"). " $name1.jpg " . tra("or"). " $name1.png");
+                'msg', tra("The game file must have .swf or .dcr extension"));
 
             $smarty->display("error.tpl");
             die;
         }
 
-        @$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-        $name = $_FILES['userfile1']['name'];
+        if (!$namec || $namec != $name1 || !isset($parts[2]) || !in_array($parts[2], array('gif','png','jpg'))) {
+            $smarty->assign(
+                'msg', tra("The thumbnail name must be"). " $name1.gif, $name1.jpg " . tra("or"). " $name1.png");
+
+            $smarty->display("error.tpl");
+            die;
+        }
+
+        @$fp = fopen($_FILES['flashfile']['tmp_name'], "rb");
+        $name = $_FILES['flashfile']['name'];
         @$fw = fopen("games/flash/$name", "wb");
 
         if ($fp && $fw) {
@@ -138,10 +145,11 @@ if (isset($_REQUEST["upload"])) {
 
             fclose($fp);
             fclose($fw);
+            unlink($_FILES['flashfile']['tmp_name']);
         }
 
-        @$fp = fopen($_FILES['userfile2']['tmp_name'], "rb");
-        $name = $_FILES['userfile2']['name'];
+        @$fp = fopen($_FILES['imagefile']['tmp_name'], "rb");
+        $name = $_FILES['imagefile']['name'];
         @$fw = fopen("games/thumbs/$name", "wb");
 
         if ($fp && $fw) {
@@ -153,16 +161,31 @@ if (isset($_REQUEST["upload"])) {
 
             fclose($fp);
             fclose($fw);
+            unlink($_FILES['imagefile']['tmp_name']);
         }
 
         @$fw = fopen("games/thumbs/$name" . ".txt", "wb");
 
         if ($fw) {
-            fwrite($fw, $_REQUEST['description']);
-
+            fwrite($fw, nl2br($_POST['description']));
             fclose($fw);
         }
+
+        $game["hits"] = $gamelib->get_game_hits($name2);
+        $game["desc"] = $_POST['description'];
+        $game["game"] = $name2;
+        $games[$name2] = $game;
+
+    // if all needed files are not uploaded
+    } else {
+
+        $smarty->assign(
+            'msg', tra("Please supply both files"));
+
+        $smarty->display("error.tpl");
+        die;
     }
+
 }
 
 
@@ -171,32 +194,36 @@ if (isset($_REQUEST["upload"])) {
 $smarty->assign('editgame', 'n');
 
 if (isset($_REQUEST["edit"]) && $tiki_p_admin_games == 'y') {
-    $smarty->assign('editgame', 'y');
+    $file = basename( $_REQUEST["edit"] );
 
-    $smarty->assign('editable', $_REQUEST["edit"]);
-    $file = $_REQUEST["edit"];
-    $data = '';
-    @$fp = fopen("games/thumbs/$file" . '.txt', "rb");
+    if (array_key_exists($file, $games)) {
 
-    if ($fp) {
-        $data = fread($fp, filesize("games/thumbs/$file" . '.txt'));
+        $smarty->assign('editgame', 'y');
+        $smarty->assign('editable', $file);
 
-        fclose($fp);
+        $descfile = "games/thumbs/$file". '.txt';
+        $data = '';
+
+        if (is_file($descfile))
+            $data = file_get_contents("games/thumbs/$file" . '.txt');
+
+        $smarty->assign('data', $data);
     }
-
-    $smarty->assign('data', $data);
 }
 
-if (isset($_REQUEST["save"]) && $tiki_p_admin_games == 'y') {
+if (isset($_POST["save"]) && $tiki_p_admin_games == 'y') {
     check_ticket('list-games');
-    $file = $_REQUEST["editable"];
+    $file = basename( $_POST["editable"] );
 
+    if (array_key_exists($file, $games)) {
     @$fp = fopen("games/thumbs/$file" . '.txt', "wb");
 
     if ($fp) {
-        fwrite($fp, $_REQUEST["description"]);
+        fwrite($fp, $_POST["description"]);
 
         fclose($fp);
+    }
+    $games[$file]['desc'] = nl2br($_POST["description"]);
     }
 }
 
@@ -204,21 +231,26 @@ if (isset($_REQUEST["save"]) && $tiki_p_admin_games == 'y') {
 
 // 5. Delete //
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_games == 'y') {
-    // security issue - remove slashes to avoid deleting in parent directory
-    $game = str_replace( array('/','\\'), '_',$_REQUEST["remove"]);
+    // security issue - remove slashes to avoid traversing in parent directory
+    $game = basename( $_REQUEST["remove"] );
+
+    if (array_key_exists($game, $games)) {
 
     $parts = explode('.', $game);
     $parts = array_slice($parts,0,3);
     $source = 'games/flash/'.$parts[0].'.'.$parts[1];
 
-    $game = 'games/thumbs/'.implode('.',$parts);
+    $gamefile = 'games/thumbs/'.implode('.',$parts);
     $desc = 'games/thumbs/'.implode('.',$parts).'.txt';
 
-    @unlink($source);
-    @unlink($desc);
-    @unlink($game);
-}
+    unlink($source);
+    unlink($desc);
+    unlink($gamefile);
 
+    unset($games[$game]);
+
+    }
+}
 
 
 
