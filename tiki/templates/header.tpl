@@ -24,7 +24,6 @@
 
 {* --- tikiwiki block --- *}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
-<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 {include file="bidi.tpl"}
 <title>
 {$siteTitle}
@@ -43,7 +42,11 @@
 {if $feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
 // --></script>
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
+{if $jscalendar_langfile}
+<script type="text/javascript" src="lib/jscalendar/lang/calendar-{$jscalendar_langfile}.js"></script>
+{else}
 <script type="text/javascript" src="lib/jscalendar/lang/calendar-en.js"></script>
+{/if}
 <script type="text/javascript" src="lib/jscalendar/calendar-setup.js"></script>
 {/if}
 
@@ -68,6 +71,8 @@
 {if $uses_tabs eq 'y'}
 {* tabs lib removed because non-free *}
 {/if}
+
+<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 
 {$trl}
 
