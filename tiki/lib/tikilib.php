@@ -1052,6 +1052,7 @@ class TikiLib {
    
   /*shared*/ function uncategorize_object($type,$id)
   {
+    $id=addslashes($id);
     $query = "select catObjectId from tiki_categorized_objects where type='$type' and objId='$id'";
     $catObjectId = $this->getOne($query);
     if($catObjectId) {
@@ -4279,11 +4280,14 @@ class TikiLib {
   }
 
   function clear_links($page) {
+    $page = addslashes($page);
     $query = "delete from tiki_links where fromPage='$page'";
     $result = $this->query($query);
   }
 
   function replace_link($pageFrom, $pageTo) {
+    $pageFrom=addslashes($pageFrom);
+    $pageTo=addslashes($pageTo);
     $query = "replace into tiki_links(fromPage,toPage) values('$pageFrom','$pageTo')";
     $result = $this->query($query);
   }
@@ -4322,11 +4326,13 @@ class TikiLib {
     // The line below is not consistent with the rest of Tiki
     // (I commented it out so it can be further examined by CVS change control)
     //$pageName=addslashes($pageName);
+    // But this should work (comment added by redflo):
+    $pageName_sl=addslashes($pageName);
     $comment=addslashes($comment);
     $version += 1;
     if(!$minor) {
       $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description)
-              values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
+              values('$pageName_sl',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
       if($pageName != 'SandBox') {
         $result = $this->query($query);
       }
@@ -4374,7 +4380,7 @@ class TikiLib {
         }
       }
     }  
-    $query = "update tiki_pages set description='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
+    $query = "update tiki_pages set description='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName_sl'";
     $result = $this->query($query);
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
@@ -4385,7 +4391,7 @@ class TikiLib {
     // Update the log
     if($pageName != 'SandBox' && !$minor) {
       $action = "Updated";
-      $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName',$t,'$edit_user','$edit_ip','$edit_comment')";
+      $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName_sl',$t,'$edit_user','$edit_ip','$edit_comment')";
       $result = $this->query($query);
       $maxversions = $this->get_preference("maxVersions",0);
       if($maxversions) {
@@ -4393,13 +4399,13 @@ class TikiLib {
         $keep = $this->get_preference('keep_versions',0);
         $now = date("U");
         $oktodel = $now - ($keep * 24 * 3600);
-        $query = "select pageName,version from tiki_history where pageName='$pageName' and lastModif<=$oktodel order by lastModif desc limit $maxversions,-1";
+        $query = "select pageName,version from tiki_history where pageName='$pageName_sl' and lastModif<=$oktodel order by lastModif desc limit $maxversions,-1";
         $result = $this->query($query);
         $toelim = $result->numRows();
         while($res= $result->fetchRow(DB_FETCHMODE_ASSOC)) {
           $page = $res["pageName"];
           $version = $res["version"];
-          $query = "delete from tiki_history where pageName='$pageName' and version='$version'";
+          $query = "delete from tiki_history where pageName='$pageName_sl' and version='$version'";
           $this->query($query);
         }
       }

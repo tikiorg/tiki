@@ -14,12 +14,13 @@ class StructLib extends TikiLib {
   function s_remove_page($page,$delete)
   {
     // Now recursively remove
-    $query = "select page from tiki_structures where parent='$page'";
+    $page_sl=addslashes($page);
+    $query = "select page from tiki_structures where parent='$page_sl'";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $this->s_remove_page($res["page"],$delete);	
     }
-    $query = "delete from tiki_structures where page='$page'";
+    $query = "delete from tiki_structures where page='$page_sl'";
     $result = $this->query($query);
     if($delete) {
       $this->remove_all_versions($page);	
@@ -29,28 +30,29 @@ class StructLib extends TikiLib {
   
   function s_create_page($parent,$after,$name)
   {
-    $name=addslashes($name);	
-    
+    $parent_sl=addslashes($parent);
+    $after_sl=addslashes($after);
+    $name_sl=addslashes($name);
     
     if(!$this->page_exists($name)) {
       $now=date("U");
       $this->create_page($name, 0, '', $now, 'created from stucture', 'system', '0.0.0.0','');
     }    
     if($after) {
-      $max = $this->getOne("select pos from tiki_structures where page='$after'");	
+      $max = $this->getOne("select pos from tiki_structures where page='$after_sl'");	
     } else {
       $max =0;	
     }
     if($max>0) {
      //If max is 5 then we are inserting after position 5 so we'll insert 5 and move all
      // the others
-     $query = "update tiki_structures set pos=pos+1 where pos>$max and parent='$parent'";
+     $query = "update tiki_structures set pos=pos+1 where pos>$max and parent='$parent_sl'";
      $result = $this->query($query);
     }
-    $cant = $this->getOne("select count(*) from tiki_structures where page='$name'");
+    $cant = $this->getOne("select count(*) from tiki_structures where page='$name_sl'");
     if($cant) return false;
     $max++;
-    $query = "insert into tiki_structures(parent,page,pos) values('$parent','$name',$max)";
+    $query = "insert into tiki_structures(parent,page,pos) values('$parent_sl','$name_sl',$max)";
     
     $result = $this->query($query);
     // If the page doesn't exist then create the page!
@@ -58,11 +60,12 @@ class StructLib extends TikiLib {
  
   function get_subtree($structure,$page,&$html,$level='')
   {
+    $page_sl=addslashes($page);
     $ret = Array();
     $first=true;
     //$level++;
     $sublevel=0;
-    $query = "select page from tiki_structures where parent='$page' order by pos asc";
+    $query = "select page from tiki_structures where parent='$page_sl' order by pos asc";
     $result = $this->query($query);
     $subs=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -71,9 +74,10 @@ class StructLib extends TikiLib {
     	  $first=false;	
     	}
     	$sublevel++;
+	$upage=urlencode($res["page"]);
     	if($level) {$plevel=$level.'.'.$sublevel;} else {$plevel=$sublevel;}
-    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-edit_structure.php?structure=$structure&amp;page=${res["page"]}'>$plevel&nbsp;".$res["page"]."</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=$structure&amp;remove=${res["page"]}'>x</a>]";
-    	$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
+    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-edit_structure.php?structure=$structure&amp;page=$upage'>$plevel&nbsp;".$res["page"]."</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=$structure&amp;remove=$upage'>x</a>]";
+    	$html.="&nbsp;[<a class='link' href='tiki-index.php?page=$upage'>view</a>|<a  class='link' href='tiki-editpage.php?page=$upage'>edit</a>]";
     	//$prev = $this->get_prev_page($res["page"]);
     	//$next = $this->get_next_page($res["page"]);
     	//$html.=" prev: $prev next: $next ";
@@ -93,18 +97,20 @@ class StructLib extends TikiLib {
   
   function get_structure($page)
   {
-    $parent = $this->getOne("select parent from tiki_structures where page='$page'");
+    $page_sl=addslashes($page);
+    $parent = $this->getOne("select parent from tiki_structures where page='$page_sl'");
     if(!$parent) return $page;
     return $this->get_structure($parent);
   }
   
   function get_subtree_toc($structure,$page,&$html,$level='')
   {
+    $page_sl=addslashes($page);
     $ret = Array();
     $first=true;
     //$level++;
     $sublevel=0;
-    $query = "select page from tiki_structures where parent='$page' order by pos asc";
+    $query = "select page from tiki_structures where parent='$page_sl' order by pos asc";
     $result = $this->query($query);
     $subs=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -114,7 +120,8 @@ class StructLib extends TikiLib {
     	}
     	$sublevel++;
     	if($level) {$plevel=$level.'.'.$sublevel;} else {$plevel=$sublevel;}
-    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-index.php?page=${res["page"]}'>$plevel&nbsp;".$res["page"]."</a>";
+	$upage=urlencode($res["page"]);
+    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-index.php?page=$upage'>$plevel&nbsp;".$res["page"]."</a>";
     	//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
     	$html.="</li>";
     	
@@ -132,11 +139,12 @@ class StructLib extends TikiLib {
   
   function get_subtree_toc_slide($structure,$page,&$html,$level='')
   {
+    $page_sl=addslashes($page);
     $ret = Array();
     $first=true;
     //$level++;
     $sublevel=0;
-    $query = "select page from tiki_structures where parent='$page' order by pos asc";
+    $query = "select page from tiki_structures where parent='$page_sl' order by pos asc";
     $result = $this->query($query);
     $subs=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -146,7 +154,8 @@ class StructLib extends TikiLib {
     	}
     	$sublevel++;
     	if($level) {$plevel=$level.'.'.$sublevel;} else {$plevel=$sublevel;}
-    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=${res["page"]}'>$plevel&nbsp;".$res["page"]."</a>";
+	$upage=urlencode($res["page"]);
+    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=$upage'>$plevel&nbsp;".$res["page"]."</a>";
     	//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
     	$html.="</li>";
     	
@@ -164,12 +173,14 @@ class StructLib extends TikiLib {
   
   function page_is_in_structure($page)
   {
+    $page=addslashes($page);
     $cant = $this->getOne("select count(*) from tiki_structures where page='$page'");
     return $cant;
   }
   
   function get_next_page($page,$deep=1)
   {
+    $page=addslashes($page);
     // If we have children then get the first children
     if($deep) {
     $query = "select page from tiki_structures where parent='$page' order by pos asc";
@@ -184,7 +195,7 @@ class StructLib extends TikiLib {
     $parent = $this->getOne("select parent from tiki_structures where page='$page'");
     $pos = $this->getOne("select pos from tiki_structures where page='$page'");
     if(!$parent) return '';
-    $query = "select page from tiki_structures where parent='$parent' and pos>$pos order by pos asc";
+    $query = "select page from tiki_structures where parent='".addslashes($parent)."' and pos>$pos order by pos asc";
     $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -198,10 +209,11 @@ class StructLib extends TikiLib {
   function get_prev_page($page)
   {
     // Try to get the next page with the same parent as this
+    $page=addslashes($page);
     $parent = $this->getOne("select parent from tiki_structures where page='$page'");
     $pos = $this->getOne("select pos from tiki_structures where page='$page'");
     if(!$parent) return '';
-    $query = "select page from tiki_structures where parent='$parent' and pos<$pos order by pos desc";
+    $query = "select page from tiki_structures where parent='".addslashes($parent)."' and pos<$pos order by pos desc";
     $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -214,6 +226,7 @@ class StructLib extends TikiLib {
   // Return an array of subpages
   function get_pages($page)
   {
+    $page=addslashes($page);
     $ret = Array();
     $query = "select page from tiki_structures where parent='$page' order by pos desc";
     $result = $this->query($query);
@@ -225,6 +238,7 @@ class StructLib extends TikiLib {
   
   function get_max_children($page)
   {
+    $page=addslashes($page);
     $query = "select page from tiki_structures where parent='$page'";	
     $result = $this->query($query);
     if(!$result->numRows()) {
@@ -239,6 +253,7 @@ class StructLib extends TikiLib {
   {
     $ret = Array($page);
     //print("page: $page<br/>");
+    $page=addslashes($page);
     $query = "select page from tiki_structures where parent='$page'";
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {

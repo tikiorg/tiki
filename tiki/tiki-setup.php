@@ -1098,7 +1098,7 @@ if($feature_live_support == 'y') {
 	}
 }
 
-if($feature_referer_stats != 'y') {
+if($feature_referer_stats == 'y') {
 // Referer tracking
 if(isset($HTTP_SERVER_VARS["HTTP_REFERER"])) {
   $pref = parse_url($HTTP_SERVER_VARS["HTTP_REFERER"]);
