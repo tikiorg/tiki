@@ -1,5 +1,8 @@
 Version 1.5 -Regulus-
 
+* [FIX] Several Minor Typos (jaw959 et al.)
+* [NEW DEVLEOPER] Joseph Witthuhn (jaw959) can be contacted at
+  jaw959@users.sourceforge.net
 * [NEW] You can select the name of your Wiki home page. Can be other than HomePage.
 * [NEW] Now admin has an option to enable full wiki page names allowing spaces and accents and other chatacters
   to be part of a wiki page.
@@ -79,8 +82,6 @@ Version 1.5 -Regulus-
   Month and weekday names are also localized, if locales are configured correctly on the server.
 * [NEW] The administrator can allow or require HTTPS logins.
   The user can choose to stay in HTTPS mode after logging in.
-* [NEW DEVLEOPER] Joseph Witthuhn (jaw959) can be contacted at
-  jaw959@users.sourceforge.net
 
 Version 1.4.2 -Mira- 
 
