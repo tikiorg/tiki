@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.4 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.5 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,11 @@ if (isset($_REQUEST["filegalfeatures"])) {
 	$smarty->assign('fgal_match_regex', $_REQUEST["fgal_match_regex"]);
 	$tikilib->set_preference("fgal_nmatch_regex", $_REQUEST["fgal_nmatch_regex"]);
 	$smarty->assign('fgal_nmatch_regex', $_REQUEST["fgal_nmatch_regex"]);
+
+        // Check for last character being a / or a \
+        if (substr($_REQUEST["fgal_use_dir"], -1) != "\\" && substr($_REQUEST["fgal_use_dir"], -1) != "/" && $_REQUEST["fgal_use_dir"] != "")  {
+                $_REQUEST["fgal_use_dir"] .= "/";
+        }
 
 	$tikilib->set_preference("fgal_use_db", $_REQUEST["fgal_use_db"]);
 	$smarty->assign('fgal_use_db', $_REQUEST["fgal_use_db"]);

@@ -32,7 +32,7 @@ class TagLineLib extends TikiLib {
 	}
 
 	function replace_cookie($cookieId, $cookie) {
-		$cookie = addslashes($cookie);
+//		$cookie = addslashes($cookie);
 		// Check the name
 		if ($cookieId) {
 			$query = "update `tiki_cookies` set `cookie`=? where `cookieId`=?";

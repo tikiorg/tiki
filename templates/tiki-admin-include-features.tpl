@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.36 2004-01-18 02:02:10 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.37 2004-02-09 18:20:22 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -584,16 +584,16 @@
 		        {tr}Communications (send/receive objects){/tr}
 		        {if $feature_help eq 'y'}</a>{/if}
 		        :</td>
-        <td><input type="checkbox" name="feature_comm" 
+        <td><input type="checkbox" name="feature_comm"
             {if $feature_comm eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=PhpOpenTracker" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}PHPOpenTracker{/tr}">{/if}
-        		{tr}PHPOpenTracker{/tr}
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Theme Control{/tr}">{/if}
+        		{tr}Theme Control{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
-        <td><input type="checkbox" name="feature_phpopentracker"
-            {if $feature_phpopentracker eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_theme_control"
+            {if $feature_theme_control eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=XmlrpcApi" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}XMLRPC API{/tr}">{/if}
@@ -618,16 +618,6 @@
         		:</td>
         <td><input type="checkbox" name="feature_contact"
             {if $feature_contact eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Theme Control{/tr}">{/if}
-        		{tr}Theme Control{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_theme_control"
-            {if $feature_theme_control eq 'y'}checked="checked"{/if}/></td>
-        <td>&nbsp;</td>
-        <td class="form" colspan="2">&nbsp;</td>
       </tr><tr>
 
         <td class="heading" colspan="5"

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.10 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.11 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,7 +88,7 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('dir-admin-sites');
 	if (empty($_REQUEST["name"])) {
-		$smarty->assign('msg', tra("Mus enter a name to add a site"));
+		$smarty->assign('msg', tra("Must enter a name to add a site"));
 
 		$smarty->display("error.tpl");
 		die;

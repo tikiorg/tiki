@@ -976,7 +976,7 @@ class ImageGalsLib extends TikiLib {
 			$mid .= "and d.`ysize`=? ";
 			$bindvars=array((int)$id,$itype,(int)$ysize);
 		} 
-		if ($xsize != 0 && $ysize == $xsize) {
+		if ($xsize != 0 && $ysize != 0) {
 			// we don't know yet.
 			$mid = "and (d.`xsize` = ? or d.`ysize` = ?) order by `xysize` desc";
 			$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);

@@ -40,7 +40,7 @@
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
 <script language="JavaScript" type="text/javascript"><!--
-{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
+{if $feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
 // --></script>
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
 <script type="text/javascript" src="lib/jscalendar/lang/calendar-en.js"></script>

@@ -83,7 +83,7 @@ class Comments extends TikiLib {
 	if (!$user)
 	    return false;
 
-	$now = date("U");
+	$now = time();
 
 	$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=?";
 	$bindvars=array($user,(int) $threadId);
@@ -91,7 +91,7 @@ class Comments extends TikiLib {
 
 	$query = "insert into `tiki_forum_reads`(`user`,`threadId`,`forumId`,`timestamp`)
 	    values(?,?,?,?)";
-	$bindvars=array($user,(int) $threadId,(int) $forumId,$now);
+	$bindvars=array($user,(int) $threadId,(int) $forumId,(int) $now);
 	$this->query($query,$bindvars);
     }
 
@@ -111,7 +111,7 @@ class Comments extends TikiLib {
     }
 
     function attach_file($threadId, $qId, $name, $type, $size, $data, $fhash, $dir, $forumId) {
-	$now = date("U");
+	$now = time();
 
 	if ($fhash) {
 	    // Do not store data if we have a file
@@ -223,8 +223,10 @@ class Comments extends TikiLib {
 	include_once ("lib/webmail/class.rc4crypt.php");
 	include_once ("lib/webmail/htmlMimeMail.php");
 	$info = $this->get_forum($forumId);
-
-	if (!$info["inbound_pop_server"])
+	// for any reason my sybase test machine adds a space to
+	// the inbound_pop_server field in the table.
+	$info["inbound_pop_server"]=trim($info["inbound_pop_server"]);
+	if (!$info["inbound_pop_server"] || empty($info["inbound_pop_server"]))
 	    return;
 
 	$pop3 = new POP3($info["inbound_pop_server"], $info["inbound_pop_user"], $info["inbound_pop_password"]);
@@ -458,8 +460,8 @@ class Comments extends TikiLib {
 	}
 	if ($this->time_control) {
 		$limit = time() - $this->time_control;
-		$time_cond = " and `commentDate` > ? ";
-		$bind_time = array($limit);
+		$time_cond = " and a.`commentDate` > ? ";
+		$bind_time = array((int) $limit);
 	} else {
 		$time_cond = '';
 		$bind_time = array();
@@ -477,11 +479,13 @@ class Comments extends TikiLib {
 			on b.`parentId`=a.`threadId`
 			where a.`object`=?
 			and a.`type` $stickytest ?  and a.`objectType` = 'forum'
-			and a.`parentId` = ? $time_cond
-			group by a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`
-			order by ".$this->convert_sortmode($sort_mode).
-			", `threadId`";
-		$result = $this->query($query, array_merge(array($forumId, 's', 0),
+			and a.`parentId` = ? $time_cond group by a.`threadId`";
+		global $ADODB_LASTDB;
+		if($ADODB_LASTDB != 'sybase') {
+			$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
+		}
+		$query .="order by ".$this->convert_sortmode($sort_mode).", `threadId`";
+		$result = $this->query($query, array_merge(array((string) $forumId, 's', 0),
 				$bind_time), $max, $offset);
 
 		while ($res = $result->fetchRow()) {
@@ -889,8 +893,8 @@ class Comments extends TikiLib {
 	$result = $this->query($query,array((int) $forumId));
 
 	$lastPost = $this->getOne("select max(`commentDate`) from
-		`tiki_comments`,`tiki_forums` where `object` = `forumId`
-		and `objectType` = 'forum' and
+		`tiki_comments`,`tiki_forums` where `object` = ".$this->sql_cast("`forumId`","string").
+		"and `objectType` = 'forum' and
 		`forumId` = ?", array( (int) $forumId ) );
 	$query = "update `tiki_forums` set `lastPost`=? where
 	`forumId`=? ";
@@ -1059,7 +1063,10 @@ class Comments extends TikiLib {
 	`threadId`,`title`,`userName`,`points`,`commentDate`,`parentId`
 	from `tiki_comments` where `parentId`=? and `average`>=?
 	order by " .
-	$this->convert_sortmode($sort_mode).",`commentDate` desc";
+	$this->convert_sortmode($sort_mode);
+	if($sort_mode != 'commentDate_desc') {
+		$query.=",`commentDate` desc";
+	}
 
 	$result = $this->query($query,array((int) $id,(int) $threshold),$max,$offset);
 	$retval = array();

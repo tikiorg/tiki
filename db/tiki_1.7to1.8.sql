@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.102 2004-01-15 09:56:27 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.103 2004-02-09 18:20:19 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -552,6 +552,10 @@ INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|f
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
  
+#
+# New Search
+#
+
 DROP TABLE IF EXISTS tiki_searchindex;
 CREATE TABLE tiki_searchindex(
   searchword varchar(80) NOT NULL default '',
@@ -562,6 +566,15 @@ CREATE TABLE tiki_searchindex(
   PRIMARY KEY (searchword,location,page),
   KEY (last_update)
 ) TYPE=MyISAM;
+
+# searchword caching table for search syllables
+DROP TABLE IF EXISTS tiki_searchwords;
+CREATE TABLE tiki_searchwords(
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
+  PRIMARY KEY  (syllable,searchword)
+) TYPE=MyISAM;
+
 
 #
 # session stored in db

@@ -74,7 +74,7 @@ class RankLib extends TikiLib {
 	function forums_ranking_last_topics($limit) {
 		$query = "select * from
 		`tiki_comments`,`tiki_forums` where
-		`object`=`forumId` and `objectType` = 'forum' and
+		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum' and
 		`parentId`=0 order by `commentDate` desc";
 
 		$result = $this->query($query,array(),$limit,0);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.44 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.45 2004-02-09 18:20:22 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -14,7 +14,8 @@
 {/if}
 
 <br /><br />
-<a href="tiki-admingroups.php" class="link">Back to groups</a><br />
+<a href="tiki-admingroups.php" class="link">{tr}Back to groups{/tr}</a><br />
+
 <h3>{tr}Group Information{/tr}</h3>
 <table class="normal">
 <tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>

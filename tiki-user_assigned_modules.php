@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.10 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_assigned_modules.php,v 1.11 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,7 +38,7 @@ if (isset($_REQUEST["recreate"])) {
 }
 
 if (!$usermoduleslib->user_has_assigned_modules($user)) {
-	check_ticket('user-modules');
+//	check_ticket('user-modules');
 	$usermoduleslib->create_user_assigned_modules($user);
 }
 
