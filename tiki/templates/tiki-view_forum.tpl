@@ -153,7 +153,7 @@ a moderator approves it.{/tr}</small>
 {/if}
     {if $feature_smileys eq 'y'}
      <tr>
-	<td class="forumform">{tr}Smileys{/tr}:</td>
+	<td class="forumform">{tr}Smileys{/tr}</td>
 	<td class="forumform">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
      </tr>
     {/if}
