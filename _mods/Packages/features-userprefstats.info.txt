@@ -2,14 +2,14 @@ contributor:
 $Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-09 07:33:47 $
+$Date: 2004-10-25 11:07:17 $
 
 files: 
 features/userprefstats/stats.php stats.php
-features/userprefstats/stats.tpl templates/stats.php
+features/userprefstats/stats.tpl templates/stats.tpl
 
 author:
 mose
