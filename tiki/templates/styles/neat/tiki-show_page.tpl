@@ -323,5 +323,5 @@
 </div>
 {/if}
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
-{$display_catobjects}
+<div class="catblock">{$display_catobjects}</div>
 {/if}

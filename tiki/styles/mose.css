@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.30 2003-12-27 21:19:21 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.31 2003-12-29 15:12:17 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -2514,27 +2514,33 @@ a.tikihelp:hover {
 	cursor:   help;
 	text-decoration:   inherit;
 }
-div.catbox {
-	clear: both;
+.catblock {
+	border: 1px solid #aaaaaa;
 }
-div.catlists {
-	margin-right: 5px;
-	border: 1px solid #424242;
-	display: inline;
-	width: auto;
+.catlists {
+	border-top: 1px solid #ffffff;
+	padding: 1px 6px 1px 6px;
+	background-color: none;
+	color: #666666;
 }
-.catlists .cbox-title {
-	width: auto;
+.catlists:last-child {
+	border-bottom: 1px solid #ffffff;
 }
-.catlists .cbox-data {
-	width: auto;
+.catlists:hover {
+	background-color: #dedede;
 }
-.catlists .cbox-data a {
-	display: block;
-	padding-bottom: 1px;
+.cattitle {
+	color: #000000;
+	font-weight: bold;
 }
-.catlists .cbox-data a:hover {
-	padding-bottom: 0px;
+.catlists a.link {
+	color: #666666;
+	padding: 0px 4px 0px 4px;
+	border: 1px solid #aaaaaa;
+	-moz-border-radius: 6px;
+}
+.catlists a.link:hover {
+	color: #000000;
 }
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {

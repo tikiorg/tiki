@@ -178,6 +178,6 @@
 <div class="editdate" align="center"><p>{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}</p></div>
 {/if}
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
-{$display_catobjects}
+<div class="catblock">{$display_catobjects}</div>
 {/if}
 
