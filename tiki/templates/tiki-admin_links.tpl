@@ -10,30 +10,19 @@
 <td class="heading">{tr}type{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$links}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$links[user].url}</td>
-<td class="odd">{$links[user].title}</td>
-<td class="odd">{$links[user].hits}</td>
-<td class="odd">{$links[user].position}</td>
-<td class="odd">{$links[user].type}</td>
-<td class="odd"><a class="link" href="tiki-admin_links.php?remove={$links[user].url}">{tr}delete{/tr}</a>
-<a class="link" href="tiki-admin_links.php?editurl={$links[user].url}">{tr}edit{/tr}</a>
-             </td>
+<td class="{cycle advance=false}">{$links[user].url}</td>
+<td class="{cycle advance=false}">{$links[user].title}</td>
+<td class="{cycle advance=false}">{$links[user].hits}</td>
+<td class="{cycle advance=false}">{$links[user].position}</td>
+<td class="{cycle advance=false}">{$links[user].type}</td>
+<td class="{cycle}">
+ <a class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{tr}delete{/tr}</a>
+ <a class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{tr}edit{/tr}</a>
+</td>
 </tr>
-{else}
-<tr>
-<td class="even">{$links[user].url}</td>
-<td class="even">{$links[user].title}</td>
-<td class="even">{$links[user].hits}</td>
-<td class="even">{$links[user].position}</td>
-<td class="even">{$links[user].type}</td>
-<td class="even"><a class="link" href="tiki-admin_links.php?remove={$links[user].url}">{tr}delete{/tr}</a>
-<a class="link" href="tiki-admin_links.php?editurl={$links[user].url}">{tr}edit{/tr}</a>
-             </td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td colspan="2">
 <b>{tr}No records found{/tr}</b>
