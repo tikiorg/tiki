@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.146 2003-10-02 14:23:46 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.147 2003-10-12 18:45:00 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -465,6 +465,13 @@ $smarty->assign('art_list_author','y');
 $smarty->assign('art_list_reads','y');
 $smarty->assign('art_list_size','y');
 $smarty->assign('art_list_img','y');
+$smarty->assign('art_view_title','y');
+$smarty->assign('art_view_topic','y');
+$smarty->assign('art_view_date','y');
+$smarty->assign('art_view_author','y');
+$smarty->assign('art_view_reads','y');
+$smarty->assign('art_view_size','y');
+$smarty->assign('art_view_img','y');
 
 $smarty->assign('wiki_list_name','y');
 $smarty->assign('wiki_list_hits','y');

@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.114 2003-10-10 11:04:02 traivor Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.115 2003-10-12 18:45:00 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,8 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] Ability to turn certain fields off in the view article page, similar to
+  what is permitted for the list article page.
 * [MOD] Improved thread display of comments
 * [NEW] newsletter enhancements - per newsletter determine whether users can
   subscribe, whether the address must be validated, and whether to include an

@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.28 2003-10-07 20:19:24 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.29 2003-10-12 18:45:00 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -26,6 +26,13 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_reads'
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_size', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_title', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_list_topic', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_author', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_date', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_img', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_reads', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_size', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_title', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('art_view_topic', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_create_user_auth', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_create_user_tiki', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('auth_ldap_adminpass', '');
