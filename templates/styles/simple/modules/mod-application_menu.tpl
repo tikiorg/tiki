@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.4 2003-10-28 00:27:26 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.5 2003-10-28 17:29:04 dheltzel Exp $ *}
 
 <div class="box">
   <div class="box-title">
@@ -231,6 +231,7 @@
   {/if}
   {if $tiki_p_admin_cms eq 'y'}
       <a href="tiki-admin_topics.php" class="linkmenu">{tr}Admin topics{/tr}</a><br />
+      <a href="tiki-article_types.php" class="linkmenu">{tr}Admin types{/tr}</a><br />
   {/if}
   </div>
 {/if}
