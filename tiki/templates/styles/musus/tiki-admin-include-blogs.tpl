@@ -14,28 +14,26 @@
         </tr></table>
       </form>
     </div>
-
-    <div class="simplebox">
-      {tr}Blog features{/tr}<br />
+    <div class="simplebox">{tr}Blog features{/tr}<br />
       <form action="tiki-admin.php?page=blogs" method="post">
         <table class="admin"><tr>
-          <td><label for="blogs-rankings">{tr}Rankings{/tr}:</label></td>
+          <td><label for="blogs-rankings">{tr}Rankings{/tr}: </label></td>
           <td><input type="checkbox" name="feature_blog_rankings" id="blogs-rankings"
               {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label for="blogs-blogcomments">{tr}Blog level comments{/tr}:</label></td>
+          <td><label for="blogs-blogcomments">{tr}Blog level comments{/tr}: </label></td>
           <td><input type="checkbox" name="feature_blog_comments" id="blogs-blogcomments"
               {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label for="blogs-postcomments">{tr}Post level comments{/tr}:</label></td>
+          <td><label for="blogs-postcomments">{tr}Post level comments{/tr}: </label></td>
           <td><input type="checkbox" name="feature_blogposts_comments" id="blogs-postcomments"
               {if $feature_blogposts_comments eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label for="blogs-spell">{tr}Spellchecking{/tr}:</label></td>
+          <td><label for="blogs-spell">{tr}Spellchecking{/tr}: </label></td>
           <td><input type="checkbox" name="blog_spellcheck" id="blogs-spell"
               {if $blog_spellcheck eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td><label for="blogs-order">{tr}Default ordering for blog listing{/tr}:</label></td>
+          <td><label for="blogs-order">{tr}Default ordering for blog listing{/tr}: </label></td>
           <td><select name="blog_list_order" id="blogs-order">
               <option value="created_desc" {if $blog_list_order eq 'created_desc'}selected="selected"{/if}>{tr}Creation date (desc){/tr}</option>
               <option value="lastModif_desc" {if $blog_list_order eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last modification date (desc){/tr}</option>
@@ -45,7 +43,7 @@
               <option value="activity_desc" {if $blog_list_order eq 'activity_desc'}selected="selected"{/if}>{tr}Activity (desc){/tr}</option>
           </select></td>
         </tr><tr>
-          <td><label for="blogs-listinguser">{tr}In blog listing show user as{/tr}:</label></td>
+          <td><label for="blogs-listinguser">{tr}In blog listing show user as{/tr}: </label></td>
           <td><select name="blog_list_user" id="blogs-listinguser">
               <option value="text" {if $blog_list_user eq 'text'}selected="selected"{/if}>{tr}Plain text{/tr}</option>
               <option value="link" {if $blog_list_user eq 'link'}selected="selected"{/if}>{tr}Link to user information{/tr}</option>
@@ -57,9 +55,7 @@
         </tr></table>
       </form>
     </div>
-
-    <div class="simplebox">
-      {tr}Blog listing configuration (when listing available blogs){/tr}
+    <div class="simplebox">{tr}Blog listing configuration (when listing available blogs){/tr}
       <form method="post" action="tiki-admin.php?page=blogs">
         <table class="admin"><tr>
           <td><label for="blogs-title">{tr}Title{/tr}</label></td>
@@ -99,27 +95,23 @@
         </tr></table>
       </form>
     </div>
-
-    <div class="simplebox">
-      {tr}Blog comments settings{/tr}
+    <div class="simplebox">{tr}Blog comments settings{/tr}
       <form method="post" action="tiki-admin.php?page=blogs">
         <table class="admin"><tr>
           <td><label for="blogs-commpage">{tr}Default number of comments per page{/tr}: </label></td>
           <td><input size="5" type="text" name="blog_comments_per_page" id="blogs-commpage"
                value="{$blog_comments_per_page|escape}" /></td>
         </tr><tr>
-          <td><label for="blogs-commorder">{tr}Comments default ordering{/tr}</label></td>
+          <td><label for="blogs-commorder">{tr}Comments default ordering{/tr}: </label></td>
           <td><select name="blog_comments_default_ordering" id="blogs-commorder">
               <option value="commentDate_desc" {if $blog_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
 			  <option value="commentDate_asc" {if $blog_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
               <option value="points_desc" {if $blog_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
            </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="blogcomprefs"
-              value="{tr}Change preferences{/tr}" /></td>
+          <td colspan="2" class="button"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
-
   </div>
 </div>
