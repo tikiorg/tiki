@@ -25,6 +25,12 @@ function refresh_search_index() {
       $locs[]="random_refresh_index_blogs";
       $locs[]="random_refresh_index_blog_posts";
       }
+    global $feature_faqs;
+    if ($feature_faqs == 'y') {
+      $locs[]="random_refresh_index_faqs";
+      $locs[]="random_refresh_index_faq_questions";
+    }
+
     // comments can be everywhere?
     $locs[]="random_refresh_index_comments";
     // some refreshes to enhance the refreshing stats
@@ -61,6 +67,32 @@ function random_refresh_index_blogs() {
     $res=$result->fetchRow();
     $words=&search_index($res["title"]." ".$res["user"]." ".$res["description"]);
     insert_index($words,'blog',$res["blogId"]);
+  }
+}
+
+function random_refresh_index_faqs() {
+  global $tikilib;
+  // get random faq 
+  $cant=$tikilib->getOne("select count(*) from `tiki_faqs`",array());
+  if($cant>0) {
+    $query="select * from `tiki_faqs`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["title"]." ".$res["description"]);
+    insert_index($words,'faq',$res["faqId"]);
+  }
+}
+
+function random_refresh_index_faq_questions() {
+  global $tikilib;
+  // get random faq   
+  $cant=$tikilib->getOne("select count(*) from `tiki_faq_questions`",array());
+  if($cant>0) {
+    $query="select * from `tiki_faq_questions`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["question"]." ".$res["answer"]);
+    insert_index($words,'faq_question',$res["questionId"]);
   }
 }
 
