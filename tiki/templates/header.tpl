@@ -6,6 +6,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     {if $description ne ''}<meta name="description" content="{$description}" />{/if}
+    {if strlen($integrator_css_file) > 0}
+    <link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
+    {/if}
     <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
     {include file="bidi.tpl"}
     <title>{$siteTitle}{if $page ne ''} : {$page}
