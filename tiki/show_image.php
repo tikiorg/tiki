@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.25 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.26 2004-09-14 07:23:21 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.25 2004-09-08 19:51:49 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.26 2004-09-14 07:23:21 chealer Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -125,6 +125,7 @@ header ("Etag: $etag");
 //which makes images fail to load.  It appears that commenting out the "Content-length:" header
 //makes this problem go away.  From what I found through Google, "Content-length:" is mostly optional
 //so commenting it out should not cause problems.
+// note that the problem was not so mysterious : 912614
 // header ("Content-length: ".$imagegallib->filesize);
 
 header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
