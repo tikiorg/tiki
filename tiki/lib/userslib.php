@@ -721,16 +721,16 @@ function get_included_groups($group) {
 
 	function list_all_groups() {
 		global $cachelib;
-		if (!$cachelib->isCached("groupslist")) {
+		if (!$cachelib->isCached("grouplist")) {
 			$groups = array();
 			$result = $this->query("select `groupName` from `users_groups` order by `groupName`", array());
 			while ($res = $result->fetchRow()) {
 				$groups[] = $res['groupName'];
 			}
-			$cachelib->cacheItem("groupslist",serialize($groups));
+			$cachelib->cacheItem("grouplist",serialize($groups));
 			return $groups;
 		} else {
-			return unserialize($cachelib->getCached("groupslist"));
+			return unserialize($cachelib->getCached("grouplist"));
 		}
 	}
 
