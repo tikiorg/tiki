@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.33 2004-07-02 16:49:30 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.34 2004-07-12 22:00:36 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -720,6 +720,9 @@ if ($feature_forums == 'y') {
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
+
+global $feature_wiki_dblclickedit;
+$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 $smarty->assign("maxVersions", $tikilib->get_preference("maxVersions", 0));
 $smarty->assign("keep_versions", $tikilib->get_preference("keep_versions", 1));
