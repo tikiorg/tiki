@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.34 2004-03-04 18:42:08 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.35 2004-03-10 03:24:13 gmuslera Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -33,7 +33,7 @@ $c = new Calendar("en");
 $v = mb_substr(tra($c->nameOfMonth($mon)),0,3);
 $dayofweek = tra($c->dayOfWeekStr($day,$mon,$year));
 {/php}
-{*get_strings {tr}January{/tr} {tr}February{/tr} {tr}March{/tr} {tr}April{/tr} {tr}May");tra("June{/tr} {tr}July{/tr} {tr}August{/tr} {tr}September{/tr} {tr}October{/tr} {tr}November{/tr} {tr}December{/tr}
+{*get_strings {tr}January{/tr} {tr}February{/tr} {tr}March{/tr} {tr}April{/tr} {tr}May{/tr} {tr}June{/tr} {tr}July{/tr} {tr}August{/tr} {tr}September{/tr} {tr}October{/tr} {tr}November{/tr} {tr}December{/tr}
 {tr}Monday{/tr} {tr}Tuesday{/tr} {tr}Wednesday{/tr} {tr}Thursday{/tr} {tr}Friday{/tr} {tr}Saturday{/tr} {tr}Sunday{/tr}-  only tr tags are collected by get_strings in tpl*}
 {php}
 
