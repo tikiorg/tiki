@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_blog_post.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_blog_post.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,6 +143,8 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST['blogId'];
 	include ('tiki-tc.php');
 }
+
+ask_ticket('print-blog-post');
 
 // Display the template
 $smarty->display("tiki-print_blog_post.tpl");

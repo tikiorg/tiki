@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,6 +90,7 @@ if (isset($_REQUEST["cleararticles"])) {
 $msg = '';
 
 if (isset($_REQUEST["send"])) {
+	check_ticket('send-objects');
 	// Create XMLRPC object
 	$client = new xmlrpc_client($_REQUEST["path"], $_REQUEST["site"], 80);
 
@@ -193,6 +194,8 @@ $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find);
 $articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, date("U"), $user);
 $smarty->assign_by_ref('pages', $pages["data"]);
 $smarty->assign_by_ref('articles', $articles["data"]);
+
+ask_ticket('send-object');
 
 // Display the template
 $smarty->assign('mid', 'tiki-send_objects.tpl');

@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.16 2003-11-19 00:02:28 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.17 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.16 2003-11-19 00:02:28 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.17 2003-12-28 20:12:51 mose Exp $
 //
 
 // Initialization
@@ -47,6 +47,7 @@ if (!isset($_REQUEST["parentId"])) {
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
 if (isset($_REQUEST["addpage"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a page
 	// $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
 	// add multiple pages at once
@@ -56,51 +57,61 @@ if (isset($_REQUEST["addpage"])) {
 }
 
 if (isset($_REQUEST["addpoll"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a poll
 	$categlib->categorize_poll($_REQUEST["pollId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addfaq"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a faq
 	$categlib->categorize_faq($_REQUEST["faqId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addtracker"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a tracker
 	$categlib->categorize_tracker($_REQUEST["trackerId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addquiz"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a quiz
 	$categlib->categorize_quiz($_REQUEST["quizId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addforum"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a forum
 	$categlib->categorize_forum($_REQUEST["forumId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addgallery"])) {
+	check_ticket('admin-categories');
 	// Here we categorize an image gallery
 	$categlib->categorize_gallery($_REQUEST["galleryId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addfilegallery"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a file gallery
 	$categlib->categorize_file_gallery($_REQUEST["file_galleryId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addarticle"])) {
+	check_ticket('admin-categories');
 	// Here we categorize an article
 	$categlib->categorize_article($_REQUEST["articleId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["addblog"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a blog
 	$categlib->categorize_blog($_REQUEST["blogId"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["adddirectory"])) {
+	check_ticket('admin-categories');
 	// Here we categorize a directory category
 	$categlib->categorize_directory($_REQUEST["directoryId"], $_REQUEST["parentId"]);
 }
@@ -115,14 +126,17 @@ if (isset($_REQUEST["categId"])) {
 }
 
 if (isset($_REQUEST["removeObject"])) {
+	check_ticket('admin-categories');
 	$categlib->remove_object_from_category($_REQUEST["removeObject"], $_REQUEST["parentId"]);
 }
 
 if (isset($_REQUEST["removeCat"])) {
+	check_ticket('admin-categories');
 	$categlib->remove_category($_REQUEST["removeCat"]);
 }
 
 if (isset($_REQUEST["save"]) && isset($_REQUEST["name"]) && strlen($_REQUEST["name"]) > 0) {
+	check_ticket('admin-categories');
 	// Save
 	if ($_REQUEST["categId"]) {
 		$categlib->update_category($_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["parentId"]);
@@ -270,6 +284,8 @@ $smarty->assign_by_ref('articles', $articles["data"]);
 
 $directories = $dirlib->dir_list_all_categories(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('directories', $directories["data"]);
+
+ask_ticket('admin-categories');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_categories.tpl');

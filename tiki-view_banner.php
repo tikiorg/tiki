@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_banner.php,v 1.15 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_banner.php,v 1.16 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,8 @@ if ($fp = @fopen(httpPrefix(). $foo1 . "?id=$bannerId", "r")) {
 }
 
 $smarty->assign_by_ref('raw', $raw);
+
+ask_ticket('view-banner');
 
 $smarty->assign('mid', 'tiki-view_banner.tpl');
 $smarty->display("tiki.tpl");

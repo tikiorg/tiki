@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.14 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,8 @@ if($tiki_p_view != 'y') {
 }
 */
 if (isset($_REQUEST["remove"])) {
+	check_ticket('list-articles');
+
 	if ($tiki_p_remove_article != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
 
@@ -138,6 +140,7 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 
 	HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRecords, $listpages["cant"]);
 }
+ask_ticket('list-articles');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_articles.tpl');

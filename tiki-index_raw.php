@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.12 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.13 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,7 @@ require_once ('tiki-pagesetup.php');
 // for example lock/unlock
 if ($tiki_p_admin_wiki == 'y') {
 	if (isset($_REQUEST["action"])) {
+		check_ticket('index-raw');
 		if ($_REQUEST["action"] == 'lock') {
 			$wikilib->lock_page($page);
 		} elseif ($_REQUEST["action"] == 'unlock') {
@@ -185,6 +186,7 @@ if ($feature_wiki_comments == 'y') {
 
 $section = 'wiki';
 include_once ('tiki-section_options.php');
+ask_ticket('index-raw');
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.8 2003-11-20 12:22:35 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -137,6 +137,9 @@ $section = 'wiki';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('wiki_extras', 'y');
+
+ask_ticket('slideshow2');
+
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');

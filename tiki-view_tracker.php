@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.18 2003-12-18 01:13:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.19 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,6 +133,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 
 if ($tiki_p_admin_trackers == 'y') {
 	if (isset($_REQUEST["remove"])) {
+		check_ticket('view-trackers');
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
@@ -142,6 +143,7 @@ $smarty->assign('email_mon', '');
 
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
+		check_ticket('view-trackers');
 		$user_email = $tikilib->get_user_email($user);
 		$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
 		if (in_array($user_email, $emails)) {
@@ -176,6 +178,7 @@ if (!isset($_REQUEST["save"])) {
 
 if ($tiki_p_create_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
+		check_ticket('view-trackers');
 		// Save here the values for this item
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields);
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
@@ -255,6 +258,8 @@ if ($feature_jscalendar) {
 $smarty->assign('tiki_p_filter_tracker_items', 'n');
 
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
+
+ask_ticket('view-trackers');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.6 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,14 +26,17 @@ if ($tiki_p_admin_drawings != 'y') {
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-drawings');
 	$drawlib->remove_drawing($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["removeall"])) {
+	check_ticket('admin-drawings');
 	$drawlib->remove_all_drawings($_REQUEST["removeall"]);
 }
 
 if (isset($_REQUEST['del'])) {
+	check_ticket('admin-drawings');
 	foreach (array_keys($_REQUEST['draw'])as $id) {
 		$drawlib->remove_drawing($id);
 	}
@@ -107,6 +110,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('items', $items["data"]);
+
+ask_ticket('admin-drawings');
 
 $smarty->assign('mid', 'tiki-admin_drawings.tpl');
 $smarty->display("tiki.tpl");

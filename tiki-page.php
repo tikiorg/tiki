@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-page.php,v 1.7 2003-12-27 14:05:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-page.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,8 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST['pageName'];
 	include ('tiki-tc.php');
 }
+
+ask_ticket('html-page');
 
 // Display the template
 $smarty->assign('mid', 'tiki-page.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.12 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,11 +121,13 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 }
 
 if (isset($_REQUEST["removeZone"])) {
+	check_ticket('edit-banner');
 	$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
 }
 
 // Now assign if the set button was pressed
 if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
+	check_ticket('edit-banner');
 	$fromDate = mktime(0, 0, 0, $_REQUEST["fromDate_Month"], $_REQUEST["fromDate_Day"], $_REQUEST["fromDate_Year"]);
 
 	$toDate = mktime(0, 0, 0, $_REQUEST["toDate_Month"], $_REQUEST["toDate_Day"], $_REQUEST["toDate_Year"]);
@@ -297,6 +299,7 @@ $zones = $bannerlib->banner_get_zones();
 $smarty->assign_by_ref('zones', $zones);
 $clients = $userlib->get_users(0, -1, 'login_desc', '');
 $smarty->assign_by_ref('clients', $clients["data"]);
+ask_ticket('edit-banner');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_banner.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.9 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.10 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,7 @@ if ($tiki_p_admin != 'y') {
 }
 
 if (isset($_REQUEST["generate"])) {
+	check_ticket('backup');
 	$filename = md5($tikilib->genPass()). '.sql';
 
 	$backuplib->backup_database("backups/$tikidomain$filename");
@@ -28,22 +29,26 @@ if (isset($_REQUEST["generate"])) {
 $smarty->assign('restore', 'n');
 
 if (isset($_REQUEST["restore"])) {
+	check_ticket('backup');
 	$smarty->assign('restore', 'y');
 
 	$smarty->assign('restorefile', basename($_REQUEST["restore"]));
 }
 
 if (isset($_REQUEST["rrestore"])) {
+	check_ticket('backup');
 	$backuplib->restore_database("backups/$tikidomain" . basename($_REQUEST["rrestore"]));
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('backup');
 	$filename = "backups/$tikidomain" . basename($_REQUEST["remove"]);
 
 	unlink ($filename);
 }
 
 if (isset($_REQUEST["upload"])) {
+	check_ticket('backup');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "r");
 
@@ -85,6 +90,7 @@ while ($file = readdir($h)) {
 closedir ($h);
 $smarty->assign_by_ref('backups', $backups);
 $smarty->assign('tikidomain', $tikidomain);
+ask_ticket('backup');
 
 $smarty->assign('mid', 'tiki-backup.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 	$smarty->assign('sent', 0);
 
 	if (isset($_REQUEST['send'])) {
+		check_ticket('contact');
 		$smarty->assign('sent', 1);
 
 		$message = '';
@@ -56,6 +57,7 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 }
 
 $smarty->assign('priority', 3);
+ask_ticket('contact');
 
 $smarty->display("tiki.tpl");
 

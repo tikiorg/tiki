@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_instances.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_instances.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,7 @@ $where = '';
 $wheres = array();
 
 if (isset($_REQUEST['update'])) {
+	check_ticket('g-monitor-instances');
 	foreach ($_REQUEST['update_status'] as $key => $val) {
 		$processMonitor->update_instance_status($key, $val);
 	}
@@ -43,20 +44,24 @@ if (isset($_REQUEST['update'])) {
 }
 
 if (isset($_REQUEST['delete'])) {
+	check_ticket('g-monitor-instances');
 	foreach (array_keys($_REQUEST['inst'])as $ins) {
 		$processMonitor->remove_instance($ins);
 	}
 }
 
 if (isset($_REQUEST['remove_aborted'])) {
+	check_ticket('g-monitor-instances');
 	$processMonitor->remove_aborted();
 }
 
 if (isset($_REQUEST['remove_all'])) {
+	check_ticket('g-monitor-instances');
 	$processMonitor->remove_all($_REQUEST['filter_process']);
 }
 
 if (isset($_REQUEST['sendInstance'])) {
+	check_ticket('g-monitor-instances');
 	//activityId indicates the activity where the instance was
 	//and we have to send it to some activity to be determined
 	include_once ('lib/Galaxia/src/API/Instance.php');
@@ -177,6 +182,8 @@ $sameurl_elements = array(
 $smarty->assign('statuses', $processMonitor->monitor_list_statuses());
 $smarty->assign('users', $processMonitor->monitor_list_users());
 $smarty->assign('owners', $processMonitor->monitor_list_owners());
+ask_ticket('g-monitor-instances');
+
 $smarty->assign('mid', 'tiki-g-monitor_instances.tpl');
 $smarty->display("tiki.tpl");
 

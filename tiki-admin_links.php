@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.10 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.11 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,7 @@ $smarty->assign('type', 'f');
 $smarty->assign('position', 1);
 
 if (isset($_REQUEST["generate"])) {
+	check_ticket('admin-links');
 	$flinkslib->generate_featured_links_positions();
 }
 
@@ -56,6 +57,7 @@ if ($_REQUEST["editurl"] != 'n') {
 $smarty->assign('editurl', $_REQUEST["editurl"]);
 
 if (isset($_REQUEST["add"])) {
+	check_ticket('admin-links');
 	if (!empty($_REQUEST["url"]) && !empty($_REQUEST["url"])) {
 		if ($_REQUEST["editurl"] == 0) {
 			$flinkslib->add_featured_link($_REQUEST["url"], $_REQUEST["title"], '', $_REQUEST["position"], $_REQUEST["type"]);
@@ -71,6 +73,7 @@ if (isset($_REQUEST["remove"])) {
 
 $links = $tikilib->get_featured_links(999999);
 $smarty->assign_by_ref('links', $links);
+ask_ticket('admin-links');
 
 $smarty->assign('mid', 'tiki-admin_links.tpl');
 $smarty->display("tiki.tpl");

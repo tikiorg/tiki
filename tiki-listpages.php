@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,6 +40,7 @@ if ($tiki_p_view != 'y') {
    if so, we call histlib's method remove_all_versions for all the checked pages.
 */
 if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
+	check_ticket('list-pages');
 	include_once ("tiki-pagesetup.php");
 
 	// Now check permissions to remove the selected pages
@@ -111,6 +112,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
+ask_ticket('list-pages');
 
 // Display the template
 $smarty->assign('mid', 'tiki-listpages.tpl');

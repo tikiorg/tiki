@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_read.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ if (!isset($_REQUEST["noteId"])) {
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('notepad-read');
 	$notepadlib->remove_note($user, $_REQUEST['noteId']);
 
 	header ('location: tiki-notepad_list.php');
@@ -48,6 +49,7 @@ $info = $notepadlib->get_note($user, $_REQUEST["noteId"]);
 
 if ($tiki_p_edit == 'y') {
 	if (isset($_REQUEST['wikify'])) {
+	check_ticket('notepad-read');
 		if (empty($_REQUEST['wiki_name'])) {
 			$smarty->assign('msg', tra("No name indicated for wiki page"));
 
@@ -96,6 +98,7 @@ $smarty->assign('noteId', $_REQUEST["noteId"]);
 $smarty->assign('info', $info);
 
 include_once ('tiki-mytiki_shared.php');
+ask_ticket('notepad-read');
 
 $smarty->assign('mid', 'tiki-notepad_read.tpl');
 $smarty->display("tiki.tpl");

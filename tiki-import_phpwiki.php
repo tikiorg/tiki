@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.14 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,6 +68,8 @@ function compare_import_versions($a1, $a2) {
 $smarty->assign('result', 'y');
 
 if (isset($_REQUEST["import"])) {
+	check_ticket('import-phpwiki');
+
     $path = $_REQUEST["path"];
 
     $h = opendir("$path/");
@@ -199,6 +201,7 @@ if (isset($_REQUEST["import"])) {
     $smarty->assign('lines', $lines);
     $smarty->assign('result', 'y');
 }
+ask_ticket('import-phpwiki');
 
 $smarty->assign('mid', 'tiki-import_phpwiki.tpl');
 $smarty->display("tiki.tpl");

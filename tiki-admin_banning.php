@@ -45,16 +45,19 @@ $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST['remove'])) {
+	check_ticket('admin-banning');
 	$banlib->remove_rule($_REQUEST['remove']);
 }
 
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
+	check_ticket('admin-banning');
 	foreach (array_keys($_REQUEST['delsec'])as $sec) {
 		$banlib->remove_rule($sec);
 	}
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('admin-banning');
 	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
 
 	$_REQUEST['date_from'] = mktime(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
@@ -165,6 +168,7 @@ $sections = array(
 );
 
 $smarty->assign('sections', $sections);
+ask_ticket('admin-banning');
 
 $smarty->assign('mid', 'tiki-admin_banning.tpl');
 $smarty->display("tiki.tpl");

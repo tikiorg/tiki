@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_html_pages.php,v 1.6 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_html_pages.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,7 @@ if ($_REQUEST["pageName"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-html-pages');
 	$htmlpageslib->remove_html_page($_REQUEST["remove"]);
 }
 
@@ -71,6 +72,7 @@ if (isset($_REQUEST["preview"])) {
 }
 
 if (isset($_REQUEST["save"]) && !empty($_REQUEST["pageName"])) {
+	check_ticket('admin-html-pages');
 	$tid = $htmlpageslib->replace_html_page($_REQUEST["pageName"], $_REQUEST["type"], $_REQUEST["content"], $_REQUEST["refresh"]);
 
 	$smarty->assign("pageName", '');
@@ -130,6 +132,7 @@ if ($tiki_p_use_content_templates == 'y') {
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);
+ask_ticket('admin-html-pages');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_html_pages.tpl');

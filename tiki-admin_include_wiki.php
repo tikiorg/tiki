@@ -1,11 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.11 2003-12-15 17:49:22 bburgaud Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.12 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 if (isset($_REQUEST["dump"])) {
+	check_ticket('admin-inc-wiki');
 	include ("lib/tar.class.php");
 
 	error_reporting (E_ERROR | E_WARNING);
@@ -13,6 +14,7 @@ if (isset($_REQUEST["dump"])) {
 }
 
 if (isset($_REQUEST["createtag"])) {
+	check_ticket('admin-inc-wiki');
 	// Check existance
 	if ($adminlib->tag_exists($_REQUEST["tagname"])) {
 		$smarty->assign('msg', tra("Tag already exists"));
@@ -25,6 +27,7 @@ if (isset($_REQUEST["createtag"])) {
 }
 
 if (isset($_REQUEST["restoretag"])) {
+	check_ticket('admin-inc-wiki');
 	// Check existance
 	if (!$adminlib->tag_exists($_REQUEST["tagname"])) {
 		$smarty->assign('msg', tra("Tag not found"));
@@ -37,11 +40,13 @@ if (isset($_REQUEST["restoretag"])) {
 }
 
 if (isset($_REQUEST["removetag"])) {
+	check_ticket('admin-inc-wiki');
 	// Check existance
 	$adminlib->remove_tag($_REQUEST["tagname"]);
 }
 
 if (isset($_REQUEST["wikiprefs"])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST["wiki_comments_per_page"])) {
 		$tikilib->set_preference("wiki_comments_per_page", $_REQUEST["wiki_comments_per_page"]);
 
@@ -56,6 +61,7 @@ if (isset($_REQUEST["wikiprefs"])) {
 }
 
 if (isset($_REQUEST["wikiattprefs"])) {
+	check_ticket('admin-inc-wiki');
 	$tikilib->set_preference('w_use_db', $_REQUEST["w_use_db"]);
 
 	$tikilib->set_preference('w_use_dir', $_REQUEST["w_use_dir"]);
@@ -74,16 +80,19 @@ if (isset($_REQUEST["wikiattprefs"])) {
 }
 
 if (isset($_REQUEST["rmvunusedpic"])) {
+	check_ticket('admin-inc-wiki');
 	$adminlib->remove_unused_pictures();
 }
 
 if (isset($_REQUEST["setwikihome"])) {
+	check_ticket('admin-inc-wiki');
 	$tikilib->set_preference('wikiHomePage', $_REQUEST["wikiHomePage"]);
 
 	$smarty->assign('wikiHomePage', $_REQUEST["wikiHomePage"]);
 }
 
 if (isset($_REQUEST["wikidiscussprefs"])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST["feature_wiki_discuss"])) {
 		$tikilib->set_preference('feature_wiki_discuss', 'y');
 
@@ -105,12 +114,14 @@ if (isset($_REQUEST["wikidiscussprefs"])) {
 }
 
 if (isset($_REQUEST["setwikiregex"])) {
+	check_ticket('admin-inc-wiki');
 	$tikilib->set_preference('wiki_page_regex', $_REQUEST["wiki_page_regex"]);
 
 	$smarty->assign('wiki_page_regex', $_REQUEST["wiki_page_regex"]);
 }
 
 if (isset($_REQUEST['wikilistprefs'])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST['wiki_list_name'])) {
 		$tikilib->set_preference('wiki_list_name', 'y');
 	} else {
@@ -209,6 +220,7 @@ if (isset($_REQUEST['wikilistprefs'])) {
 }
 
 if (isset($_REQUEST["wikifeatures"])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST["feature_lastChanges"]) && $_REQUEST["feature_lastChanges"] == "on") {
 		$tikilib->set_preference("feature_lastChanges", 'y');
 
@@ -519,6 +531,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 }
 
 if (isset($_REQUEST["wikisetprefs"])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST["maxVersions"])) {
 		$tikilib->set_preference("maxVersions", $_REQUEST["maxVersions"]);
 	}
@@ -531,6 +544,7 @@ if (isset($_REQUEST["wikisetprefs"])) {
 }
 
 if (isset($_REQUEST["wikisetcopyright"])) {
+	check_ticket('admin-inc-wiki');
 	if (isset($_REQUEST["wiki_feature_copyrights"]) && $_REQUEST["wiki_feature_copyrights"] == "on") {
 		$tikilib->set_preference("wiki_feature_copyrights", 'y');
 
@@ -555,6 +569,7 @@ if (isset($_REQUEST["wikisetcopyright"])) {
 }
 
 if(isset($_REQUEST["wikisetwatch"])) {
+	check_ticket('admin-inc-wiki');
   if(isset($_REQUEST["wiki_watch_author"]) && $_REQUEST["wiki_watch_author"]=="on") {
     $tikilib->set_preference("wiki_watch_author",'y'); 
     $smarty->assign("wiki_watch_author",'y');
@@ -586,5 +601,5 @@ $smarty->assign_by_ref("tags", $tags);
 
 $smarty->assign("maxVersions", $tikilib->get_preference("maxVersions", 0));
 $smarty->assign("keep_versions", $tikilib->get_preference("keep_versions", 1));
-
+ask_ticket('admin-inc-wiki');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ $questions = $srvlib->list_survey_questions($_REQUEST["surveyId"], 0, -1, 'posit
 $smarty->assign_by_ref('questions', $questions["data"]);
 
 if (isset($_REQUEST["ans"])) {
+	check_ticket('take-survey');
 	foreach ($questions["data"] as $question) {
 		$questionId = $question["questionId"];
 
@@ -113,6 +114,8 @@ if (isset($_REQUEST["ans"])) {
 //print_r($questions);
 $section = 'surveys';
 include_once ('tiki-section_options.php');
+
+ask_ticket('take-survey');
 
 // Display the template
 $smarty->assign('mid', 'tiki-take_survey.tpl');

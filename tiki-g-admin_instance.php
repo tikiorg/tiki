@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,6 +36,7 @@ $smarty->assign('iid', $_REQUEST['iid']);
 // Get workitems and list the workitems with an option to edit workitems for
 // this instance
 if (isset($_REQUEST['save'])) {
+	check_ticket('g-admin-instance');
 	//status, owner
 	$instanceManager->set_instance_status($_REQUEST['iid'], $_REQUEST['status']);
 
@@ -70,6 +71,7 @@ $smarty->assign_by_ref('users', $users['data']);
 $props = $instanceManager->get_instance_properties($_REQUEST['iid']);
 
 if (isset($_REQUEST['unsetprop'])) {
+	check_ticket('g-admin-instance');
 	unset ($props[$_REQUEST['unsetprop']]);
 
 	$instanceManager->set_instance_properties($_REQUEST['iid'], $props);
@@ -81,12 +83,14 @@ if (!is_array($props))
 $smarty->assign_by_ref('props', $props);
 
 if (isset($_REQUEST['addprop'])) {
+	check_ticket('g-admin-instance');
 	$props[$_REQUEST['name']] = $_REQUEST['value'];
 
 	$instanceManager->set_instance_properties($_REQUEST['iid'], $props);
 }
 
 if (isset($_REQUEST['saveprops'])) {
+	check_ticket('g-admin-instance');
 	foreach (array_keys($_REQUEST['props'])as $key) {
 		$props[$key] = $_REQUEST['props'][$key];
 	}
@@ -101,6 +105,7 @@ $instance->getInstance($_REQUEST['iid']);
 
 // Process comments
 if (isset($_REQUEST['__removecomment'])) {
+	check_ticket('g-admin-instance');
 	$__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
 
 	if ($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
@@ -114,10 +119,12 @@ if (!isset($_REQUEST['__cid']))
 	$_REQUEST['__cid'] = 0;
 
 if (isset($_REQUEST['__post'])) {
+	check_ticket('g-admin-instance');
 	$instance->replace_instance_comment($_REQUEST['__cid'], 0, '', $user, $_REQUEST['__title'], $_REQUEST['__comment']);
 }
 
 $__comments = $instance->get_instance_comments();
+ask_ticket('g-admin-instance');
 
 $smarty->assign('mid', 'tiki-g-admin_instance.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,6 +77,7 @@ $smarty->assign('editurl', $_REQUEST["editurl"]);
 
 // Create a folder inside the parentFolder here
 if (isset($_REQUEST["addfolder"])) {
+	check_ticket('user-bookmarks');
 	if ($_REQUEST["editfolder"]) {
 		$bookmarklib->update_folder($_REQUEST["editfolder"], $_REQUEST["foldername"], $user);
 
@@ -88,14 +89,17 @@ if (isset($_REQUEST["addfolder"])) {
 }
 
 if (isset($_REQUEST["removefolder"])) {
+	check_ticket('user-bookmarks');
 	$bookmarklib->remove_folder($_REQUEST["removefolder"], $user);
 }
 
 if (isset($_REQUEST["refreshurl"])) {
+	check_ticket('user-bookmarks');
 	$bookmarklib->refresh_url($_REQUEST["refreshurl"]);
 }
 
 if (isset($_REQUEST["addurl"])) {
+	check_ticket('user-bookmarks');
 	$urlid
 		= $bookmarklib->replace_url($_REQUEST["editurl"], $_REQUEST["parentId"], $_REQUEST["urlname"], $_REQUEST["urlurl"], $user);
 
@@ -109,6 +113,7 @@ if (isset($_REQUEST["addurl"])) {
 }
 
 if (isset($_REQUEST["removeurl"])) {
+	check_ticket('user-bookmarks');
 	$bookmarklib->remove_url($_REQUEST["removeurl"], $user);
 }
 
@@ -131,6 +136,8 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('folders', $folders);
 
 include_once ('tiki-mytiki_shared.php');
+
+ask_ticket('user-bookmarks')
 
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');

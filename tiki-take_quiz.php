@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.9 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.10 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,7 @@ if (isset($_REQUEST["timeleft"])) {
 		$max += $questions["data"][$i]["maxPoints"];
 
 		if (isset($_REQUEST["question_$qid"])) {
+			check_ticket('take-quiz');
 			$opt = $quizlib->get_quiz_question_option($_REQUEST["question_$qid"]);
 
 			$points += $opt["points"];
@@ -138,6 +139,7 @@ if (isset($_REQUEST["timeleft"])) {
 			$qid = $questions["data"][$i]["questionId"];
 
 			if (isset($_REQUEST["question_$qid"])) {
+				check_ticket('take-quiz');
 				$quizlib->register_user_quiz_answer($userResultId, $_REQUEST["quizId"], $qid, $_REQUEST["question_$qid"]);
 			}
 		}
@@ -169,6 +171,8 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["quizId"];
 	include ('tiki-tc.php');
 }
+
+ask_ticket('take-quiz');
 
 // Display the template
 $smarty->assign('mid', 'tiki-take_quiz.tpl');

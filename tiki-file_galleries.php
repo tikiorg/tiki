@@ -105,6 +105,7 @@
 	
 	// Process the insertion or modification of a gallery here
 	if(isset($_REQUEST["edit"])) {
+		check_ticket('fgal');
 	  // Saving information
 	  // If the user is not gallery admin
 	  if($tiki_p_admin_file_galleries != 'y') {
@@ -181,6 +182,7 @@
 	
 	
 	if(isset($_REQUEST["removegal"])) {
+		check_ticket('fgal');
 	  if($tiki_p_admin_file_galleries != 'y') {
 	     $info = $filegallib->get_file_gallery_info($_REQUEST["removegal"]);
 	     if(!$user || $info["user"]!=$user) {
@@ -277,7 +279,7 @@
 	$section='file_galleries';
 	include_once('tiki-section_options.php');
 	
-	
+ask_ticket('fgal');
 	
 	// Display the template
 	$smarty->assign('mid','tiki-file_galleries.tpl');

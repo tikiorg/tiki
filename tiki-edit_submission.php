@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.33 2003-12-04 08:56:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.34 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -147,6 +147,7 @@ $smarty->assign('preview', 0);
 
 // If we are in preview mode then preview it!
 if (isset($_REQUEST["preview"])) {
+	check_ticket('edit-submission'); 
 	# convert from the displayed 'site' time to 'server' time
 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
@@ -260,6 +261,7 @@ if (isset($_REQUEST["preview"])) {
 
 // Pro
 if (isset($_REQUEST["save"])) {
+	check_ticket('edit-submission'); 
 	include_once ("lib/imagegals/imagegallib.php");
 
 	# convert from the displayed 'site' time to 'server' time
@@ -382,6 +384,7 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+ask_ticket('edit-submission');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_submission.tpl');

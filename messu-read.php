@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.12 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,7 @@ if ($tiki_p_messages != 'y') {
 }
 
 if (isset($_REQUEST["delete"])) {
+	check_ticket('messu-read');
 	$messulib->delete_message($user, $_REQUEST['msgdel']);
 }
 
@@ -69,7 +70,7 @@ $messulib->flag_message($user, $_REQUEST['msgId'], 'isRead', 'y');
 // Get the message and assign its data to template vars
 $msg = $messulib->get_message($user, $_REQUEST['msgId']);
 $smarty->assign('msg', $msg);
-
+ask_ticket('messu-read');
 $section = 'user_messages';
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.9 2003-11-17 17:08:24 awcolley Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.10 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,16 +26,19 @@ if ($tiki_p_validate_links != 'y') {
 }
 
 if (isset($_REQUEST["validate"]) && isset($_REQUEST['sites'])) {
+	check_ticket('dir-validate');
 	foreach (array_keys($_REQUEST["sites"])as $siteId) {
 		$dirlib->dir_validate_site($siteId);
 	}
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('dir-validate');
 	$dirlib->dir_remove_site($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["del"]) && isset($_REQUEST['sites'])) {
+	check_ticket('dir-validate');
 	foreach (array_keys($_REQUEST["sites"])as $siteId) {
 		$dirlib->dir_remove_site($siteId);
 	}
@@ -94,6 +97,7 @@ $smarty->assign('all_categs',$all_categs);
 // This page should be displayed with Directory section options
 $section='directory';
 include_once('tiki-section_options.php');
+ask_ticket('dir-validate');
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_validate_sites.tpl');

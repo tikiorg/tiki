@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.12 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.12 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 //
 
 // Initialization
@@ -127,6 +127,7 @@ if ($offset > 0) {
 
 $section = 'categories';
 include_once ('tiki-section_options.php');
+ask_ticket('browse-categories');
 
 // Display the template
 $smarty->assign('mid', 'tiki-browse_categories.tpl');

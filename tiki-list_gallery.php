@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.11 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.12 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,6 +109,7 @@ $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('list-gal');
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
@@ -121,6 +122,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["rebuild"])) {
+	check_ticket('list-gal');
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
@@ -222,6 +224,7 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');
 }
+ask_ticket('list-gal');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_gallery.tpl');

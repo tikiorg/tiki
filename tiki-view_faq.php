@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.11 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.12 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,7 @@ $channels = $faqlib->list_faq_questions($_REQUEST["faqId"], 0, -1, 'position,que
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 if (isset($_REQUEST["sugg"])) {
+	check_ticket('view-faq');
 	if ($tiki_p_suggest_faq == 'y') {
 		$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"],
 			$user);
@@ -85,6 +86,8 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["faqId"];
 	include ('tiki-tc.php');
 }
+
+ask_ticket('view-faq');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_faq.tpl');

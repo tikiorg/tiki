@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_prefs.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_prefs.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,7 @@ if (!$user) {
 //  die;  
 //}
 if (isset($_REQUEST['save'])) {
+	check_ticket('minical-prefs');
 	$tikilib->set_user_preference($user, 'minical_interval', $_REQUEST['minical_interval']);
 
 	$tikilib->set_user_preference($user, 'minical_reminders', $_REQUEST['minical_reminders']);
@@ -83,10 +84,12 @@ $upcoming = range(1, 20);
 $smarty->assign('upcoming', $upcoming);
 
 if (isset($_REQUEST['removetopic'])) {
+	check_ticket('minical-prefs');
 	$minicallib->minical_remove_topic($user, $_REQUEST['removetopic']);
 }
 
 if (isset($_REQUEST['import'])) {
+	check_ticket('minical-prefs');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
@@ -107,6 +110,7 @@ if (isset($_REQUEST['import'])) {
 
 // Process upload here
 if (isset($_REQUEST['addtopic'])) {
+	check_ticket('minical-prefs');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
@@ -136,6 +140,7 @@ $smarty->assign('topics', $topics['data']);
 $smarty->assign('cols', 4);
 
 include_once('tiki-mytiki_shared.php');
+ask_ticket('minical-prefs');
 
 $smarty->assign('mid', 'tiki-minical_prefs.tpl');
 $smarty->display("tiki.tpl");

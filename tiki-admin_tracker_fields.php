@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.12 2003-12-17 14:37:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,10 +71,12 @@ $smarty->assign('isTblVisible', $info["isTblVisible"]);
 
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-tracker-fields');
 	$trklib->remove_tracker_field($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-tracker-fields');
 	if (isset($_REQUEST["isMain"]) && $_REQUEST["isMain"] == 'on') {
 		$isMain = 'y';
 	} else {
@@ -137,6 +139,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+ask_ticket('admin-tracker-fields');
 
 $orders = array(); 
 for ($i=1;$i<50;$i++) { $orders[] = $i; }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.13 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.14 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,6 +51,7 @@ if ($user) {
 	$smarty->assign('sent', 0);
 
 	if (isset($_REQUEST['send'])) {
+		check_ticket('user-information');
 		$smarty->assign('sent', 1);
 
 		$message = '';
@@ -108,6 +109,8 @@ if ($email_isPublic != 'n') {
 }
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
+
+ask_ticket('user-information');
 
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,6 +41,7 @@ $smarty->assign('url_browse', httpPrefix(). $foo1);
 $smarty->assign('url_show', httpPrefix(). $foo2);
 
 if (isset($_REQUEST["editimage"])) {
+	check_ticket('edit-image');
 	$smarty->assign('individual', 'n');
 
 	if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')) {
@@ -114,6 +115,7 @@ $smarty->assign_by_ref('imageId', $_REQUEST['edit']);
 $smarty->assign_by_ref('galleryId', $info['galleryId']);
 $smarty->assign_by_ref('name', $info['name']);
 $smarty->assign_by_ref('description', $info['description']);
+ask_ticket('edit-image');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_image.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.14 2003-12-28 11:41:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,6 +53,7 @@ $smarty->assign('userwatch', $userwatch);
 
 // Upload avatar is processed here
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('pick-avatar');
 	$type = $_FILES['userfile1']['type'];
 
 	$size = $_FILES['userfile1']['size'];
@@ -107,6 +108,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 }
 
 if (isset($_REQUEST["uselib"])) {
+	check_ticket('pick-avatar');
 	$userprefslib->set_user_avatar($user, 'l', $_REQUEST["avatar"], '', '', '', '');
 }
 
@@ -128,6 +130,8 @@ include_once ('tiki-mytiki_shared.php');
 
 $avatar = $tikilib->get_user_avatar($user);
 $smarty->assign('avatar', $avatar);
+
+ask_ticket('pick-avatar');
 
 $smarty->assign('mid', 'tiki-pick_avatar.tpl');
 $smarty->display("tiki.tpl");

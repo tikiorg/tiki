@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_survey_questions.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_survey_questions.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,10 +81,12 @@ if ($_REQUEST["questionId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-survey-questions');
 	$srvlib->remove_survey_question($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-survey-questions');
 	$srvlib->replace_survey_question($_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["type"], $_REQUEST["surveyId"],
 		$_REQUEST["position"], $_REQUEST["options"]);
 
@@ -147,6 +149,7 @@ for ($i = 1; $i < 100; $i++)
 	$positions[] = $i;
 
 $smarty->assign('positions', $positions);
+ask_ticket('admin-survey-questions');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_survey_questions.tpl');

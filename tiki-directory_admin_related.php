@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.8 2003-11-18 15:08:37 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.9 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,11 +47,13 @@ $smarty->assign_by_ref('path', $path);
 
 // Remove a relationship
 if (isset($_REQUEST["remove"])) {
+	check_ticket('dir-admin-related');
 	$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
 }
 
 // Update a relationship
 if (isset($_REQUEST["update"])) {
+	check_ticket('dir-admin-related');
 	$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["oldcategId"]);
 
 	$dirlib->dir_add_categ_rel($_REQUEST["parent"], $_REQUEST["categId"]);
@@ -59,6 +61,7 @@ if (isset($_REQUEST["update"])) {
 
 // Add a relationship
 if (isset($_REQUEST["add"])) {
+	check_ticket('dir-admin-related');
 	$dirlib->dir_add_categ_rel($_REQUEST["parent"], $_REQUEST["categId"]);
 
 	if (isset($_REQUEST["mutual"]) && $_REQUEST["mutual"] == 'on') {
@@ -117,6 +120,7 @@ $smarty->assign('all_categs', $all_categs);
 // This page should be displayed with Directory section options
 $section='directory';
 include_once('tiki-section_options.php');
+ask_ticket('dir-admin-related');
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_admin_related.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,10 +82,12 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('position', $info["position"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('edit-quiz-question');
 	$quizlib->remove_quiz_question($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('edit-quiz-question');
 	$quizlib->replace_quiz_question($_REQUEST["questionId"], $_REQUEST["question"],
 		'o', $_REQUEST["quizId"], $_REQUEST["position"]);
 
@@ -94,6 +96,7 @@ if (isset($_REQUEST["save"])) {
 }
 
 if (isset($_REQUEST["useQuestion"])) {
+	check_ticket('edit-quiz-question');
 	$info = $quizlib->get_quiz_question($_REQUEST["usequestionid"]);
 
 	$qid = $quizlib->replace_quiz_question(0, $info["question"], $info["type"], $_REQUEST["quizId"], $_REQUEST["position"]);
@@ -157,6 +160,7 @@ for ($i = 1; $i < 100; $i++)
 	$positions[] = $i;
 
 $smarty->assign('positions', $positions);
+ask_ticket('edit-quiz-question');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_quiz_questions.tpl');

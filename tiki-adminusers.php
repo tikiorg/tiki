@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.11 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.12 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,6 +106,7 @@ if ($user != 'admin') {
 
 // Process the form to add a user here
 if (isset($_REQUEST["newuser"])) {
+	check_ticket('admin-users');
 	// if no user data entered, check if it's a batch upload  
 	if ((!$_REQUEST["name"]) and (is_uploaded_file($_FILES['csvlist']['tmp_name']))) {
 		batchImportUsers();
@@ -132,6 +133,7 @@ if (isset($_REQUEST["newuser"])) {
 // Process actions here
 // Remove user or remove user from group
 if (isset($_REQUEST["action"])) {
+	check_ticket('admin-users');
 	if ($_REQUEST["action"] == 'delete') {
 		$userlib->remove_user($_REQUEST["user"]);
 	}
@@ -196,6 +198,7 @@ if ($offset > 0) {
 
 // Get users (list of users)
 $smarty->assign_by_ref('users', $users["data"]);
+ask_ticket('admin-users');
 
 // Display the template
 $smarty->assign('mid', 'tiki-adminusers.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.12 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.13 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ if (!isset($_REQUEST["serverId"]))
 	$_REQUEST["serverId"] = 0;
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('news-server');
 	$newslib->remove_server($user, $_REQUEST['remove']);
 }
 
@@ -50,6 +51,7 @@ if ($_REQUEST["serverId"]) {
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('news-server');
 	$newslib->replace_server(
 		$user, $_REQUEST["serverId"], $_REQUEST["server"], $_REQUEST["port"], $_REQUEST['username'], $_REQUEST['password']);
 
@@ -118,6 +120,7 @@ $section = 'newsreader';
 include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
+ask_ticket('news-server');
 
 $smarty->assign('mid', 'tiki-newsreader_servers.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.34 2003-12-15 00:08:03 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.35 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -249,6 +249,7 @@ if (isset($_REQUEST["preview"])) {
 
 // Pro
 if (isset($_REQUEST["save"])) {
+	check_ticket('edit-article');
 	include_once ("lib/imagegals/imagegallib.php");
 
 	# convert from the displayed 'site' time to 'server' time
@@ -361,6 +362,7 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+ask_ticket('edit-article');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_article.tpl');

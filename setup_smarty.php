@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.8 2003-11-29 23:24:20 marcius Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.9 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 
 require_once ("db/tiki-db.php");
+require_once("lib/tikiticketlib.php");
 
 error_reporting (E_ALL);
 // Set the separator for PHP generated tags to be &amp; instead of &

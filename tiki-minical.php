@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,14 +32,17 @@ if (!isset($_REQUEST["eventId"]))
 	$_REQUEST["eventId"] = 0;
 
 if (isset($_REQUEST['remove'])) {
+	check_ticket('minical');
 	$minicallib->minical_remove_event($user, $_REQUEST['remove']);
 }
 
 if (isset($_REQUEST['remove2'])) {
+	check_ticket('minical');
 	$minicallib->minical_remove_event($user, $_REQUEST['eventId']);
 }
 
 if (isset($_REQUEST['delete'])) {
+	check_ticket('minical');
 	foreach (array_keys($_REQUEST["event"])as $ev) {
 		$minicallib->minical_remove_event($user, $ev);
 	}
@@ -96,6 +99,7 @@ $smarty->assign('ev_pdate', $ev_pdate);
 $smarty->assign('ev_pdate_h', $ev_pdate_h);
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('minical');
 	$start = mktime($_REQUEST['Time_Hour'], $_REQUEST['Time_Minute'],
 		0, $_REQUEST['Date_Month'], $_REQUEST['Date_Day'], $_REQUEST['Date_Year']);
 
@@ -244,6 +248,7 @@ $topics = $minicallib->minical_list_topics($user, 0, -1, 'name_asc', '');
 $smarty->assign('topics', $topics['data']);
 
 include_once('tiki-mytiki_shared.php');
+ask_ticket('minical');
 
 $smarty->assign('mid', 'tiki-minical.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.28 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.29 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,7 @@ $smarty->assign('creator', $blog_data["user"]);
 $smarty->assign('activity', $blog_data["activity"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('view-blog');
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
 	if (!$ownsblog) {
@@ -213,6 +214,7 @@ if ($feature_theme_control == 'y') {
 }
 
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+	check_ticket('view-blog');
 	$post_info = $bloglib->get_post($_REQUEST['savenotepad']);
 
 	$tikilib->replace_note($user,
@@ -221,6 +223,7 @@ if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUES
 
 if ($feature_user_watches == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('view-blog');
 		if ($_REQUEST['watch_action'] == 'add') {
 			$post_info = $bloglib->get_post($_REQUEST['watch_object']);
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], tra('blog'), $post_info['title'],
@@ -242,6 +245,8 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 
 	HAWTIKI_view_blog($listpages, $blog_data);
 }
+
+ask_ticket('view-blog');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog.tpl');

@@ -36,10 +36,12 @@ if (isset($_REQUEST['show_html'])) {
 
 if ($tiki_p_live_support_admin == 'y') {
 	if (isset($_REQUEST['adduser'])) {
+		check_ticket('ls-admin');
 		$lsadminlib->add_operator($_REQUEST['user']);
 	}
 
 	if (isset($_REQUEST['removeuser'])) {
+		check_ticket('ls-admin');
 		$lsadminlib->remove_operator($_REQUEST['removeuser']);
 	}
 }
@@ -77,6 +79,7 @@ for ($i = 0; $i < count($users['data']); $i++) {
 }
 
 $smarty->assign_by_ref('users', $ok_users);
+ask_ticket('ls-admin');
 
 // Display the template
 $smarty->assign('mid', 'tiki-live_support_admin.tpl');

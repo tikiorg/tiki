@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.50 2003-12-10 23:08:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.51 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,17 +95,20 @@ if ($tiki_p_admin_forum == 'y') {
 
 if ($tiki_p_forums_report == 'y') {
     if (isset($_REQUEST['report'])) {
+	check_ticket('view-forum');
 	$commentslib->report_post($_REQUEST['forumId'], 0, $_REQUEST['report'], $user, '');
     }
 }
 
 if ($tiki_p_admin_forum == 'y') {
     if (isset($_REQUEST['remove_attachment'])) {
+	check_ticket('view-forum');
 	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
     }
 
     if (isset($_REQUEST['delsel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
+		check_ticket('view-forum');
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
 		$commentslib->remove_comment($topic);
 
@@ -116,6 +119,7 @@ if ($tiki_p_admin_forum == 'y') {
 
     if (isset($_REQUEST['locksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
+		check_ticket('view-forum');
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
 		$commentslib->lock_comment($topic);
 	    }
@@ -124,6 +128,7 @@ if ($tiki_p_admin_forum == 'y') {
 
     if (isset($_REQUEST['unlocksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
+		check_ticket('view-forum');
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
 		$commentslib->unlock_comment($topic);
 	    }
@@ -133,6 +138,7 @@ if ($tiki_p_admin_forum == 'y') {
     if (isset($_REQUEST['movesel'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+		check_ticket('view-forum');
 		// To move a topic you just have to change the object
 		$obj = 'forum:' . $_REQUEST['moveto'];
 
@@ -144,6 +150,7 @@ if ($tiki_p_admin_forum == 'y') {
     if (isset($_REQUEST['mergesel'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+		check_ticket('view-forum');
 		// To move a topic you just have to change the object
 		if ($topic != $_REQUEST['mergetopic']) {
 		    $commentslib->set_parent($topic, $_REQUEST['mergetopic']);
@@ -190,6 +197,7 @@ $smarty->assign('warning', 'n');
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
+	check_ticket('view-forum');
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
 		//Replace things between square brackets by links
@@ -560,6 +568,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
     // Process a vote here
     if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
+	check_ticket('view-forum');
 	$comments_show = 'y';
 
 	if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
@@ -616,6 +625,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
                 && $tiki_p_forum_post == 'y')
        )
     {
+	check_ticket('view-forum');
         $comments_show = 'y';
 
         $commentslib->remove_comment($_REQUEST["comments_threadId"]);
@@ -631,6 +641,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
 $smarty->assign('comment_preview', 'n');
 
 if (isset($_REQUEST["comments_previewComment"])) {
+	check_ticket('view-forum');
     $smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
 
     $smarty->assign('comments_preview_data', ($commentslib->parse_comment_data($_REQUEST["comments_data"])));
@@ -733,6 +744,7 @@ if ($feature_theme_control == 'y') {
 
 if ($feature_user_watches == 'y') {
     if ($user && isset($_REQUEST['watch_event'])) {
+	check_ticket('view-forum');
 	if ($_REQUEST['watch_action'] == 'add') {
 	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], tra('forum'), $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
 	} else {
@@ -784,6 +796,8 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+
+ask_ticket('view-forum.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum.tpl');

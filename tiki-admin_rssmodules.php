@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.11 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.12 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,10 +61,12 @@ $smarty->assign('showTitle', $info["showTitle"]);
 $smarty->assign('showPubDate', $info["showPubDate"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-rssmodules');
 	$rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-rssmodules');
 
 	if (isset($_REQUEST['showTitle']) == 'on') {
 		$smarty->assign('showTitle', 'y');
@@ -139,6 +141,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+ask_ticket('admin-rssmodules');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_rssmodules.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,6 +43,7 @@ $smarty->assign_by_ref('styles',$styles);
 
 if (isset($_REQUEST['assigcat'])) {
 	if (isset($_REQUEST['categId'])) {
+		check_ticket('theme-control');
 		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme']);
 	} else {
 		$smarty->assign('msg', tra("Please create a category first"));
@@ -54,6 +55,7 @@ if (isset($_REQUEST['assigcat'])) {
 
 if (isset($_REQUEST["delete"])) {
 	if (isset($_REQUEST["categ"])) {
+		check_ticket('theme-control');
 		foreach (array_keys($_REQUEST["categ"])as $cat) {
 			$tcontrollib->tc_remove_cat($cat);
 		}
@@ -105,6 +107,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 //$sections=Array('wiki','galleries','file_galleries','cms','blogs','forums','chat','categories','games','faqs','html_pages','quizzes','surveys','webmail','trackers','featured_links','directory','user_messages','newsreader','mytiki');
+
+ask_ticket('theme-control');
 
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control.tpl');

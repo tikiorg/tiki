@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.13 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.14 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,6 +33,7 @@ if ($tiki_p_notepad != 'y') {
 
 // Process upload here
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('notepad-list');
 	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 	$data = '';
@@ -57,6 +58,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 }
 
 if (isset($_REQUEST["merge"])) {
+	check_ticket('notepad-list');
 	$merge = '';
 
 	$first = true;
@@ -157,6 +159,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 include_once ('tiki-mytiki_shared.php');
+
+ask_ticket('notepad-list');
 
 $smarty->assign('mid', 'tiki-notepad_list.tpl');
 $smarty->display("tiki.tpl");

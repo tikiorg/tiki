@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,7 @@ if (!$tikilib->page_exists($page,true)) { // true: casesensitive check here
 }
 
 if (isset($_REQUEST["rename"])) {
+	check_ticket('rename-page');
 	if (!$wikilib->wiki_rename_page($_REQUEST['oldpage'], $_REQUEST['newpage'])) {
 		$smarty->assign('msg', tra("Cannot rename page maybe new page already exists"));
 
@@ -59,6 +60,8 @@ if (isset($_REQUEST["rename"])) {
 	$newName = $_REQUEST['newpage'];
 	header ("location: tiki-index.php?page=$newName");
 }
+
+ask_ticket('rename-page');
 
 $smarty->assign('mid', 'tiki-rename_page.tpl');
 $smarty->assign('show_page_bar', 'y');

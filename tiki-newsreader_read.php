@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,6 +106,7 @@ if ($user && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
 	//Get the news	
 	$tikilib->replace_note($user, 0, $headers['Subject'], $body);
 }
+ask_ticket('news-read');
 
 $smarty->assign('mid', 'tiki-newsreader_read.tpl');
 $smarty->display("tiki.tpl");

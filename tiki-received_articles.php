@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.11 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.12 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,7 @@ if (isset($_REQUEST["view"])) {
 }
 
 if (isset($_REQUEST["accept"])) {
+	check_ticket('received-articles');
 	// CODE TO ACCEPT A PAGE HERE
 	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
@@ -132,10 +133,12 @@ $smarty->assign('parsed_heading', $tikilib->parse_data($info["heading"]));
 $smarty->assign('parsed_body', $tikilib->parse_data($info["body"]));
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('received-articles');
 	$commlib->remove_received_article($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('received-articles');
 	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 	$expireDate = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
@@ -205,6 +208,9 @@ $smarty->assign_by_ref('topics', $topics);
 
 $types = $artlib->list_types();
 $smarty->assign_by_ref('types', $types);
+
+
+ask_ticket('received-articles');
 
 // Display the template
 $smarty->assign('mid', 'tiki-received_articles.tpl');

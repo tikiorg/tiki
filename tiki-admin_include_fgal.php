@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.4 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,7 @@ if (isset($_REQUEST["filegalset"])) {
 }
 
 if (isset($_REQUEST["filegalfeatures"])) {
+	check_ticket('admin-inc-fgal');
 	if (isset($_REQUEST["feature_file_galleries_rankings"]) && $_REQUEST["feature_file_galleries_rankings"] == "on") {
 		$tikilib->set_preference("feature_file_galleries_rankings", 'y');
 
@@ -44,6 +45,7 @@ if (isset($_REQUEST["filegalfeatures"])) {
 }
 
 if (isset($_REQUEST["filegallistprefs"])) {
+	check_ticket('admin-inc-fgal');
 	if (isset($_REQUEST["fgal_list_name"])) {
 		$tikilib->set_preference("fgal_list_name", 'y');
 
@@ -116,6 +118,7 @@ if (isset($_REQUEST["filegallistprefs"])) {
 }
 
 if (isset($_REQUEST["filegalcomprefs"])) {
+	check_ticket('admin-inc-fgal');
 	if (isset($_REQUEST["file_galleries_comments_per_page"])) {
 		$tikilib->set_preference("file_galleries_comments_per_page", $_REQUEST["file_galleries_comments_per_page"]);
 
@@ -133,5 +136,5 @@ $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'adm
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
 $smarty->assign("fgal_match_regex", $tikilib->get_preference("fgal_match_regex", ''));
-
+ask_ticket('admin-inc-fgal');
 ?>

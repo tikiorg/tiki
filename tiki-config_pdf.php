@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.7 2003-12-05 11:53:20 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,6 +125,7 @@ $smarty->assign('form_convertpages', $form_convertpages);
 // insert pdfcreation code here
 $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
+ask_ticket('pdf');
 
 $smarty->assign('mid', 'tiki-config_pdf.tpl');
 $smarty->display("tiki.tpl");

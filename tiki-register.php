@@ -20,6 +20,7 @@ if (!isset($_REQUEST['novalidation'])) {
 }
 
 if(isset($_REQUEST["register"])) {
+  check_ticket('register');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
@@ -144,6 +145,9 @@ if(isset($_REQUEST["register"])) {
   }
 
 }
+
+
+ask_ticket('register');
 
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
