@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.7 2004-08-17 16:33:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.8 2004-08-27 21:04:17 sylvieg Exp $
 
 function diff2($page1, $page2, $type='sidediff') {
 	$page1 = split("\n", $page1);
@@ -12,7 +12,7 @@ function diff2($page1, $page2, $type='sidediff') {
 		require_once('renderer.php');
 		if ($type == 'unidiff') {
 			require_once('renderer_unified.php');
-			$renderer = new Text_Diff_Renderer_unified;	
+			$renderer = new Text_Diff_Renderer_unified(2);
 		} else if ($type == 'minsidediff') {
 			require_once('renderer_sidebyside.php');
 			$renderer = new Text_Diff_Renderer_sidebyside(2);

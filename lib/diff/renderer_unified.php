@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.4 2004-07-08 12:50:37 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.5 2004-08-27 21:04:18 sylvieg Exp $
 
 /**
  * "Unified" diff renderer.
@@ -16,27 +16,37 @@ class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
     {
         $this->_leading_context_lines = $context_lines;
         $this->_trailing_context_lines = $context_lines;
+        $this->_table = Array();
+    }
+    function _endDiff() {
+        return $this->_table;
     }
 
     function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
     {
         if ($xlen != 1) {
-            $xbeg .= ',' . $xlen;
+		$l = $xbeg+$xlen -1;
+            $xbeg .= '-' . $l;
         }
         if ($ylen != 1) {
-            $ybeg .= ',' . $ylen;
+		$l = $ybeg+$ylen-1;
+            $ybeg .= '-' . $l;
         }
-        return "@@ -$xbeg +$ybeg @@";
+        $this->_table[] =  array('type'=>"diffheader", 'old'=>"$xbeg", 'new'=>"$ybeg");
     }
 
+    function _context($lines)
+    {
+        $this->_table[] = array('type'=>"diffbody", 'data'=>$lines);
+    }
     function _added($lines)
     {
-        $this->_lines($lines, '<div class="diffadded">+', '</div>');
+        $this->_table[] = array('type'=>"diffadded", 'data'=>$lines);
     }
 
     function _deleted($lines)
     {
-        $this->_lines($lines, '<div class="diffdeleted">-', '</div>');
+        $this->_table[] = array('type'=>"diffdeleted", 'data'=>$lines);
     }
 
     function _changed($orig, $final)
