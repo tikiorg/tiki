@@ -33,7 +33,7 @@
 {/if}
 
 {if $feature_wiki eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('wikimenu','c');hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>Wiki</a> <a class='separator' href="javascript:setCookie('wikimenu','o');show('wikimenu');">[+]</a></div>
+  <div class="separator"><a class='separator' href="javascript:setCookie('wikimenu','c');hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a> <a class='separator' href="javascript:setCookie('wikimenu','o');show('wikimenu');">[+]</a></div>
   <div id="wikimenu" style="{$mnu_wikimenu}">
   {if $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-index.php" class="linkmenu">{tr}home{/tr}</a><br/>
