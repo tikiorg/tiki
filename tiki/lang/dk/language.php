@@ -571,7 +571,7 @@ $lang=Array(
 "Rollback page" => "Henvisende side", /* templates/tiki-rollback.tpl */
 "List of existing groups" => "Liste over eksisterende grupper", /* templates/tiki-admingroups.tpl */
 "Create/edit Forums" => "Opret/rediger fora", /* templates/tiki-admin_forums.tpl */
-"There are individual permissions set for this forum" => "Der findes individuelle adgangsbegr&aelig;nsninger for dette forum", /* templates/tiki-admin_forums.tpl */
+"There are inddividual permissions set for this forum" => "Der findes individuelle adgangsbegr&aelig;nsninger for dette forum", /* templates/tiki-admin_forums.tpl */
 "Prevent flooding" => "Undg&aring; syndflod", /* templates/tiki-admin_forums.tpl */
 "Minimum time between posts" => "Minimumetid mellem indl&aelig;g", /* templates/tiki-admin_forums.tpl */
 "Topics per page" => "Emner pr. side", /* templates/tiki-admin_forums.tpl */
@@ -1017,7 +1017,7 @@ $lang=Array(
 "Last Created FAQs" => "Senest oprettede FAQs", /* templates/modules/mod-last_created_faqs.tpl */
 "Top Visited FAQs" => "Mest bes&oslash;gte FAQs", /* templates/modules/mod-top_visited_faqs.tpl */
 "Quick edit a Wiki page" => "Hurtig redigering af wiki-side", /* templates/modules/mod-quick_edit.tpl */
-"Bookmarks" => "Bogm&aelig;rker", /* templates/modules/mod-user_bookmarks.tpl */
+"Bookmakrs" => "Bogm&aelig;rker", /* templates/modules/mod-user_bookmarks.tpl */
 "mark" => "m&aelig;rke", /* templates/modules/mod-user_bookmarks.tpl */
 "new" => "nyt", /* templates/modules/mod-user_bookmarks.tpl */
 "Permision denied" => "Ingen adgang", /* tiki-read_article.php */
@@ -1514,18 +1514,13 @@ $lang=Array(
 "No post indicated" => "Intet indl&aelig;g valgt", /* tiki-view_blog_post.php */
 "No item indicated" => "Intet emne valgt", /* tiki-view_tracker_item.php */
 "Restoring a backup destoys all the data in your Tiki database.
-
 All your tables will be replaced with the information in the backup." => "At genindl&aelig;se en sikkerhedskopi vil overskrive alle data i din Tiki database.?
 Alle dine tabeller vil blive erstattet med data i sikkerhedskopien.", /* templates/tiki-backup.tpl */
 "Creating backups may take a long time. If the process is not completed you will
-
 see a blank screen. If so you need to increment the maximum script execution time
-
 from your php.ini file" => "At tage sikkerhedskopi kan vare lang tid. Hvis processen ikke er afsluttet, vil du se en blank sk&aelig;rm.
-
 I s&aring; fald skal du &oslash;ge den maksimale eksekveringstid for scripts i din php.ini fil", /* templates/tiki-backup.tpl */
 "Thanks for your subscription. You will receive an email soon to confirm your subscription.
-
 No newsletters will be sent to you until the subscription is confirmed." => "Tak for dit abonnement. Du vil snart modtage en email, hvor du kan bekr&aelig;fte abonnementet.?
 Du vil ikke modtage nyhedsbreve, f&oslash;r abonnementet er bekr&aelig;ftet.", /* templates/tiki-newsletters.tpl */
 "##end###" => "###end###");
