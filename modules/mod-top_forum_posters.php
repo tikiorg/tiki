@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-top_forum_posters.php,v 1.2 2004-05-01 01:06:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-top_forum_posters.php,v 1.3 2004-08-26 19:24:11 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 include_once ('lib/rankings/ranklib.php');

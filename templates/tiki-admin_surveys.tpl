@@ -28,7 +28,7 @@
 <h2>{tr}Create New Survey{/tr}:</h2>
 {/if}
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$info.name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br /><br />
+<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br /><br />
 {/if}
 <form action="tiki-admin_surveys.php" method="post">
 <input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
@@ -116,9 +116,9 @@
    <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='img/icons/question.gif' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}' /></a>
    <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
    {if $channels[user].individual eq 'y'}
-	<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' border='0' title='{tr}active perms{/tr}' /></a>
+	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' border='0' title='{tr}active perms{/tr}' /></a>
    {else}
-	<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' border='0' title='{tr}perms{/tr}' /></a>
+	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' border='0' title='{tr}perms{/tr}' /></a>
    {/if}
 </td>
 </tr>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.13 2004-07-13 17:37:48 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.14 2004-08-26 19:24:10 mose Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -12,7 +12,10 @@ function wikiplugin_code_help() {
 //	$help.= "* ln=>1 provides line-numbering\n";
 //	$help.= "* colors=>php highlights phpcode (other syntaxes to come)\n";
 //	$help.= "( note : those parameters are exclusive for now )\n";
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode)}".tra("code")."{CODE}~/np~ - ''".tra("note: those parameters are exclusive")."''";
+//	$help.= "* caption=>provides a caption for the code\n";
+//	$help.= "* wrap=>allows line wrapping in the code\n";
+//	$help.= "* wiki=>allow wiki interpolation of the code\n";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode),caption=>caption text,wrap=>1,wiki=>1}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
 	return tra($help);
 }
 
@@ -63,8 +66,21 @@ function wikiplugin_code($data, $params) {
 			}
 			$code = trim($code);
 		}
-		$out.= "<pre class='codelisting'>~np~".trim($code)."~/np~</pre>";
-		//$data = "<div class='codelisting'><pre>" . $code . "</pre></div>";
+		if (isset($wrap) && $wrap == 1)
+		{
+		    if (isset($wiki) && $wiki == 1) {
+			$out.= "<div class='codelisting'>\n".trim($code)."\n</div>";
+		    } else {
+			$out.= "<div class='codelisting'>~np~".trim($code)."~/np~</div>";
+		    }
+		} else {
+		    if (isset($wiki) && $wiki == 1) {
+			$out.= "<pre class='codelisting'>\n".trim($code)."\n</pre>";
+		    } else {
+			$out.= "<pre class='codelisting'>~np~".trim($code)."~/np~</pre>";
+		    }
+		    //$data = "<div class='codelisting'><pre>" . $code . "</pre></div>";
+		}
 	}
 	return $out;
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.4 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.5 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 $datenow = htmlspecialchars($tikilib->iso_8601(date("U")));

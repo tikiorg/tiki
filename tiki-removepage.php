@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.10 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.11 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (!isset($_REQUEST["page"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if ($tiki_p_remove != 'y') {
+if ($tiki_p_remove != 'y' || !$wikilib->is_editable($page, $user)) {
 	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
 
 	$smarty->display("error.tpl");

@@ -2,6 +2,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 if( !defined( 'PLUGINS_DIR' ) ) {
@@ -242,11 +243,7 @@ class WikiLib extends TikiLib {
 		// tiki_footnotes change pageName
 		$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
 		$this->query($query, array( $newName, $oldName ));
-	
-		// Build objectId using 'wiki page' and the name
-		$oldId = 'wiki page' + md5($oldName);
-		$newId = 'wiki page' + md5($newName);
-	
+
 		// in tiki_categorized_objects update objId
 		$newcathref = 'tiki-index.php?page=' . urlencode($newName);
 		$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
@@ -259,16 +256,20 @@ class WikiLib extends TikiLib {
 		// in tiki_comments update object  
 		$query = "update `tiki_comments` set `object`=? where `object`=?";
 		$this->query($query, array( $newName, $oldName ) );
-	
-		// in tiki_mail_events by object
+
+		// Move email notifications
+		$oldId = 'wikipage' . $oldName;
+		$newId = 'wikipage' . $newName;
 		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
-		$this->query($query, array( 'wikipage' . $newName, 'wikipage' . $oldName ) );
+		$this->query($query, array( $newId, $oldId ) );
 
 		// user watches
 		$query = "update `tiki_user_watches` set `object`=?, `title`=? where `object`=? and `type` = 'Page Wiki'";
 		$this->query($query, array( $newName, $newName, $oldName ) );
 
 		// theme_control_objects(objId,name)
+		$oldId = md5('wiki page' . $oldName);
+		$newId = md5('wiki page' . $newName);
 		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
 		$this->query($query, array( $newId, $newName, $oldId ) );
 	
@@ -284,6 +285,12 @@ class WikiLib extends TikiLib {
 			$pos = array_search($oldName, $_SESSION["breadCrumb"]);
 			$_SESSION["breadCrumb"][$pos] = $newName;
 		}
+
+		// Move custom permissions
+		$oldId = md5('wiki page' . strtolower($oldName));
+		$newId = md5('wiki page' . strtolower($newName));
+		$query = "update `users_objectpermissions` set `objectId`=? where `objectId`=?";
+		$this->query($query, array( $newId, $oldId ) );
 
 		return true;
 	}
@@ -545,7 +552,7 @@ class WikiLib extends TikiLib {
     }
 
     function is_locked($page, $info=null) {
-	if ($info) {
+	if (!$info) {
 		$query = "select `flag`, `user` from `tiki_pages` where `pageName`=?";
 		$result = $this->query($query, array( $page ) );
 		$info = $result->fetchRow();
@@ -553,7 +560,8 @@ class WikiLib extends TikiLib {
 	return ($info["flag"] == 'L')? $info["user"] : null; 
     }
     function is_editable($page, $user, $info=null) {
-      if ($user == 'admin')
+	global $tiki_p_admin, $tiki_p_admin_wiki;
+      if ($tiki_p_admin == 'y' || $tiki_p_admin_wiki == 'y')
             return true;
       else
             return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;

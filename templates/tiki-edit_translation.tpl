@@ -1,9 +1,9 @@
 <h1>{tr}Edit Translation:{/tr}&nbsp;
 {if $type == "wiki page"}
-	<a href="tiki-index.php?page={$name|escape:url}">{$name}</a>
+	<a href="tiki-index.php?page={$name|escape:url}" title="{tr}view{/tr}">{$name}</a>
 	{assign var="title" value="{tr}Pages{/tr}"}
 {else}
-	<a href="tiki-read_article.php?articleId={$id}">{$name}</a>
+	<a href="tiki-read_article.php?articleId={$id}" title="{tr}view{/tr}">{$name}</a>
 	{assign var="title" value="{tr}Articles{/tr}"}
 {/if}
 </h1>
@@ -35,7 +35,7 @@
 <input type="hidden" name="id" value="{$id}" />
 <input type="hidden" name="type" value="{$type|escape}" />
 
-<h2>{tr}Language{/tr}</h2>
+<h2>{tr}Language: {/tr}{$name}</h2>
 <p>{tr}Use this section to set the language of the version you are currently working on.{/tr}</p>
 <table>
 <tr>
@@ -81,11 +81,13 @@
 	</td></tr></table>
 
 {else} {* first translation *}
-	<p>{tr}To create a new translation of a page that has never been translated before, create an initial version of the translation, select the translation language above, enter the page name of the original page below, and hit "go".{/tr}</p>
-	{tr}Translation of:{/tr}&nbsp;
 	{if $articles}
+		<p>{tr}Select the article for which the current article is the translation.{/tr}</p>
+		{tr}Translation of:{/tr}&nbsp;
 		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
 	{else}
+		<p>{tr}Enter the name of the page for which the current page is the translation.{/tr}</p>
+		{tr}Translation of:{/tr}&nbsp;
 		<input name="srcName" size="60" type="text" value="{$srcName}" />
 	{/if}
 	&nbsp;<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/>

@@ -5,7 +5,7 @@
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_quicktags.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin quicktags template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_quicktags.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin quicktags template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
  

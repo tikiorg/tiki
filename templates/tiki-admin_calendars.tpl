@@ -44,7 +44,7 @@
 <td>{$cal.custompriorities}</td>
 <td>{if $cal.individual eq 'y'}({/if}
 <a title="{tr}permissions{/tr}" class="link" 
-href="tiki-objectpermissions.php?objectName={"{tr}Calendar{/tr} "|cat:$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}"><img 
+href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}"><img 
 src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $cal.individual eq 'y'}){/if}</td>
 <td>
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 

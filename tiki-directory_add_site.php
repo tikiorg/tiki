@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.11 2004-06-16 01:43:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.12 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,7 +208,7 @@ $countries = array();
 $h = opendir("img/flags");
 
 while ($file = readdir($h)) {
-	if (is_file('img/flags/' . $file)) {
+	if (is_file('img/flags/' . $file) && preg_match('/\.gif$/', $file)) {
 		$name = explode('.', $file);
 
 		$countries[] = $name[0];
@@ -216,6 +216,7 @@ while ($file = readdir($h)) {
 }
 
 closedir ($h);
+usort($countries, 'country_sort');
 $smarty->assign_by_ref('countries', $countries);
 
 // This page should be displayed with Directory section options
@@ -226,5 +227,15 @@ ask_ticket('dir-add-site');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_add_site.tpl');
 $smarty->display("tiki.tpl");
+
+function country_sort($a, $b) {
+    if ($a == 'None' || $b == 'Other') {
+        return -1;
+    } elseif ($b == 'None' || $a == 'Other') {
+	return 1;
+    } else {
+	return strcmp($a, $b);
+    }
+}
 
 ?>

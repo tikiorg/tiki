@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.260 2004-08-16 02:26:41 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.261 2004-08-26 19:23:09 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -17,6 +17,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
   header("location: index.php");
+  exit;
 }
 
 // include_once("lib/init/setup_inc.php");

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.36 2004-08-12 22:31:57 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.37 2004-08-26 19:24:17 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -22,10 +22,10 @@
 
 {if $page ne 'SandBox'}
 
-{if $tiki_p_remove eq 'y'}
+{if $tiki_p_remove eq 'y' && $editable}
 <td><div class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}remove{/tr}</a></div></td>
 {/if}
-{if $tiki_p_rename eq 'y'}
+{if $tiki_p_rename eq 'y' && $editable}
 <td><div class="button2"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="linkbut">{tr}rename{/tr}</a></div></td>
 {/if}
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}

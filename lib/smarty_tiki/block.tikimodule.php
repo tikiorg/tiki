@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.5 2004-07-08 12:50:37 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.6 2004-08-26 19:24:02 mose Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -28,6 +28,7 @@ I fixed that error case. -- mose
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 

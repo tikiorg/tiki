@@ -7,7 +7,7 @@
 </tr>  
 <tr>
   <td class="formcolor">{tr}Old password{/tr}:</td>
-  <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
+  <td class="formcolor"><input type="password" name="oldpass" /></td>
 </tr>     
 <tr>
   <td class="formcolor">{tr}New password{/tr}:</td>

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.7 2004-03-29 21:26:40 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.8 2004-08-26 19:24:07 mose Exp $
  *
  * \brief Base tree maker
  *
@@ -11,6 +11,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 require_once ('lib/debug/debugger.php');

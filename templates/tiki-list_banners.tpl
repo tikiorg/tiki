@@ -9,7 +9,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-list_banners.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Banners tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-list_banners.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Banners tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
 <!-- begin -->

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.24 2004-08-13 19:16:52 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.25 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -226,6 +226,10 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_view_blog_post ($post_info);
+}
+
+if (isset($_REQUEST['show_comments']) && $_REQUEST['show_comments'] == 1) {
+        $smarty->assign('show_comments', 1);
 }
 
 ask_ticket('view-blog-post');

@@ -5,7 +5,7 @@
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/messu-broadcast.tpl" target="tikihelp" class="tikihelp">
+<a href="tiki-edit_templates.php?template=messu-broadcast.tpl" target="tikihelp" class="tikihelp">
 <img border="0" src="img/icons/info.gif" alt="{tr}edit template{/tr}" /></a>
 {/if}
 

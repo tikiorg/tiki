@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.16 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.17 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,11 @@ session_destroy();
 /* change group home page or desactivate if no page is set */
 $groupHome = $userlib->get_group_home('Anonymous');
 if ($groupHome) {
-    $tikiIndex = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
+    if (strpos($groupHome,'http://') == 0 || preg_match('/^tiki-.+\.php/',$groupHome)) {
+	$tikiIndex = $groupHome;
+    } else {
+	$tikiIndex = "tiki-index.php?page=".$groupHome;
+    }
 } else {
     $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php'); 
 }

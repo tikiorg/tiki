@@ -6,7 +6,7 @@
 
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-sheets.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}sheets tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-sheets.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}sheets tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
 
@@ -20,7 +20,7 @@
 {/if}
 <div align="center">
 {if $individual eq 'y'}
-<a class="gallink" href="tiki-objectpermissions.php?objectName=sheet%20{$name}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheetId}">{tr}There are individual permissions set for this sheet{/tr}</a>
+<a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheetId}">{tr}There are individual permissions set for this sheet{/tr}</a>
 {/if}
 <form action="tiki-sheets.php" method="post">
 <input type="hidden" name="sheetId" value="{$sheetId|escape}" />

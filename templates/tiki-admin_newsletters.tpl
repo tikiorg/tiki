@@ -8,7 +8,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin newsletters template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 <!-- beginning of next bit -->
@@ -25,7 +25,7 @@
 <br /><br />
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$info.name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
+<a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br /><br />
 {/if}
 <form action="tiki-admin_newsletters.php" method="post">
 <input type="hidden" name="nlId" value="{$info.nlId|escape}" />
@@ -87,7 +87,7 @@
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}">{tr}subscriptions{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 </td>
 </tr>
 {/section}

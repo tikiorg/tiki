@@ -107,3 +107,6 @@
 </div>
 {include file=comments.tpl}
 {/if}
+{if $show_comments}
+<script language="JavaScript">flip('comzone{if $comments_show eq 'y'}open{/if}');</script>
+{/if}

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.18 2004-08-16 14:55:00 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.19 2004-08-26 19:24:15 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
 <br />
-<h3>{tr}User Information{/tr}</h3>
+<h2>{tr}User Information{/tr}</h2>
 <table class="normal">
 <tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
 <tr><td class="even">{tr}Email{/tr}:</td><td class="odd">{$user_info.email}</td></tr>
@@ -11,7 +11,7 @@
 {foreach from=$user_info.groups item=grp}
 {$grp}
 {if $grp != "Anonymous"}
-(<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;group={$grp}">x</a>)
+(<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;group={$grp}" title="remove">x</a>)
 {/if}&nbsp;&nbsp;
 {/foreach}
 </td></tr>

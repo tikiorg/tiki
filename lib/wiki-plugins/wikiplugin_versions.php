@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.2 2004-08-12 22:31:46 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.3 2004-08-26 19:24:10 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -67,21 +67,20 @@ function wikiplugin_versions($data, $params) {
 		for ($i=0;$i<count($v[1]);$i++) {
 			$ver = $v[1][$i];
 			if ($i == $p-1) {
-				$version = "<b>$ver</b>";
+				$version = "<b class=\"highlight\">$ver</b>";
 			} else {
 				$version = $ver;
 			}
 			if ($type == 'host') {
 				$vv = preg_replace('/[^a-z0-9]/','',strtolower($ver));
-				$nav.= '<span class="button2"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $version .'</a></span>';
+				$nav.= ' <span class="button2"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $version .'</a></span>';
 			} elseif ($type == 'request') {
-				$nav.= '<span class="button2"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
+				$nav.= ' <span class="button2"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
 			} else {
-				$nav.= '<span class="button2"><a href="'. $_SERVER['REQUEST_URI'] .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
+				$nav.= ' <span class="button2"><a href="'. $_SERVER['REQUEST_URI'] .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
 			}
 		}
-		$nav.= "</div>";
-		$data = $nav."\n".$data;
+		$data = $nav."<div style='border: 1px solid #999999;padding : 0 2ex;'>\n".$data."\n</div></div>";
 	}
 	return $data;
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.15 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.16 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,6 +62,13 @@ if (isset($_REQUEST["merge"])) {
 	$merge = '';
 
 	$first = true;
+	
+	if (!isset($_REQUEST["note"])) {
+		$smarty->assign('msg', tra("No item indicated"));
+
+		$smarty->display("error.tpl");
+		die;
+	}
 
 	foreach (array_keys($_REQUEST["note"])as $note) {
 		$data_c = $notepadlib->get_note($user, $note);

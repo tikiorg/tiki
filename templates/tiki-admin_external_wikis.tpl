@@ -9,7 +9,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.74 2004-07-22 13:08:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.75 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -526,12 +526,15 @@ if ($feature_jscalendar) {
 	$smarty->assign('uses_jscalendar', 'y');
 }
 $smarty->assign('show_filters', 'n');
+if(count($fields['data'])>0) {
 foreach ($fields['data'] as $it) {
 	if ($it['isSearchable'] == 'y' and $it['isTblVisible'] == 'y'){
 		$smarty->assign('show_filters', 'y');
 		break;
 	}
 }
+}
+
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 

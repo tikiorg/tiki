@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.21 2004-06-23 22:34:27 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.22 2004-08-26 19:24:10 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -48,7 +48,7 @@ function wikiplugin_module($data, $params) {
 		$np = '0';
 	}
 
-	if (!isset($module)) {
+	if (!isset($module) or !$module) {
 		$out = '<form class="box" id="modulebox">';
 
 		$out .= '<br /><select name="choose">';

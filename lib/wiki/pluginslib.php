@@ -21,12 +21,13 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.7 $
+    * @version $Revision: 1.8 $
     */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
     class PluginsLib extends TikiLib {
@@ -121,7 +122,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.7 $");
+            //                    "\$Revision: 1.8 $");
         }
         /**
         * Returns the default arguments for the plugin

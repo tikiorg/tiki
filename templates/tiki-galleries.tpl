@@ -26,7 +26,7 @@
 {/if}
 <div align="center">
 {if $individual eq 'y'}
-<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this gallery{/tr}</a>
+<a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this gallery{/tr}</a>
 {/if}
 <form action="tiki-galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
@@ -188,9 +188,9 @@
   {/if}
   {if $tiki_p_admin eq 'y'}
     {if $galleries[changes].individual eq 'y'}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$galleries[changes].name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
     {else}
-	<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$galleries[changes].name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
+	<a class="gallink" href="tiki-objectpermissions.php?objectName={$galleries[changes].name|escape:"url"}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
     {/if}
   {/if}
 {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}

@@ -3,9 +3,10 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
-/* $Id: taillib.php,v 1.6 2004-06-23 22:34:26 mose Exp $*/
+/* $Id: taillib.php,v 1.7 2004-08-26 19:24:05 mose Exp $*/
 function tail_filter_irc(&$item, $key) {
 	# here is a sample line
 	# [06-24-03/05:13] <mose> how is everyone ?

@@ -1,9 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_category_objects.php,v 1.5 2004-06-07 17:22:05 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-last_category_objects.php,v 1.6 2004-08-26 19:24:10 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 if (!isset($module_params["type"])) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.54 2004-07-17 12:49:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.55 2004-08-26 19:24:15 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -8,7 +8,7 @@
 {if $feature_help eq 'y'}</a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 <br /><br />
@@ -120,7 +120,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $groupname}
 <h3>{tr}Edit group{/tr} {$groupname}</h3>
-(<a class="link" href="tiki-assignpermission.php?group={$groupname}">assign permissions</a>)
+<a class="linkbut" href="tiki-assignpermission.php?group={$groupname}">{tr}assign permissions{/tr}</a>
 {else}
 <h3>{tr}Add new group{/tr}</h3>
 {/if}
@@ -219,7 +219,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
 </div>
 {else}
-<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1">List all members</a></td>
+<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1" class="linkbut">{tr}List all members{/tr}</a></td>
 </tr></table>
 </div>
 {/if}

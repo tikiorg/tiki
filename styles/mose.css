@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.59 2004-08-11 18:55:37 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.60 2004-08-26 19:24:12 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -89,6 +89,7 @@ color: #990000;
 
 ul {
 	margin: 0;
+	padding: 0 0 0 35px;
 }
 /*
 GENERAL LAYOUT 

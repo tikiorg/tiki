@@ -1,4 +1,4 @@
-<h2>{tr}Assign permissions to {/tr}{$objectName}</h2>
+<h2>{tr}Assign permissions to {/tr}{tr}{$objectType}{/tr} {$objectName}</h2>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
 <h3>{tr}Current permissions for this object{/tr}:</h3>

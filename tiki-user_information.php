@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.20 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.21 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,7 +75,10 @@ if ($user) {
 		$smarty->assign('message', $message);
 	}
 }
-
+if ($feature_score == 'y' and isset($user) and $user != $userwatch) {
+	$tikilib->score_event($user, 'profile_see');
+	$tikilib->score_event($userwatch, 'profile_is_seen');
+}
 global $site_style;
 
 $smarty->assign('priority',3);

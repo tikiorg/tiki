@@ -1,3 +1,5 @@
+{* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
+
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
 {if $preview}
@@ -12,7 +14,7 @@
 {/if}
 
 {if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 

@@ -2,7 +2,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-    header("location: index.php");
+  header("location: index.php");
+  exit;
 }
 
 require_once ('lib/pear/Date.php');
@@ -2949,7 +2950,7 @@ class TikiLib extends TikiDB {
 	$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
     }
 
-    // Reverses parse_pp_np.
+    // Reverses parse_first.
     function replace_preparse(&$data, &$preparsed, &$noparsed)
     {
 	$data1 = $data;
@@ -3068,9 +3069,6 @@ class TikiLib extends TikiDB {
 	    return;
 	}
 
-	// Handle pre- and no-parse sections
-	//$this->parse_pp_np($data, $preparsed, $noparsed);
-
 	// Find the plugins
 	$this->plugin_match( $data, $plugins );
 
@@ -3149,9 +3147,19 @@ class TikiLib extends TikiDB {
 		$key = md5($this->genPass());
 		$noparsed["key"][] = "/". preg_quote($key)."/";
 
+		if( strstr( $plugin_data, '$' ) )
+		{
+		    $plugin_data = str_replace('$', '\$', $plugin_data);
+		}
+
 		if( $plugin_start == "~pp~" )
 		{
-		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
+		    if( strstr( $plugin_data, '<' ) )
+		    {
+			$noparsed["data"][] = "<pre>" . htmlspecialchars( $plugin_data ) . "</pre>";
+		    } else {
+			$noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
+		    }
 		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
 		    $plugin_start2 = $plugins[1];
@@ -3159,7 +3167,15 @@ class TikiLib extends TikiDB {
 		    $plugin_end2 = $plugins[1];
 		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
-		    $noparsed["data"][] = $plugin_data;
+			$noparsed["data"][] = $plugin_data;
+			/* very doubtful, and it breaks modules that produce html
+		    if( strstr( $plugin_data, '<' ) )
+		    {
+			$noparsed["data"][] = htmlspecialchars( $plugin_data );
+		    } else {
+			$noparsed["data"][] = $plugin_data;
+		    }
+			*/
 		}
 
 		// Replace plugin section with its output in data
@@ -3187,6 +3203,7 @@ class TikiLib extends TikiDB {
 		    // the following str_replace line is to decode the &gt; char when html is turned off
 		    // perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
 		    $decoded_param = str_replace('&gt;', '>', $param);
+		    $decoded_param = str_replace('&lt;', '<', $decoded_param);
 		    $parts = split( '=>?', $decoded_param );
 
 		    if (isset($parts[0]) && isset($parts[1])) {
@@ -3208,11 +3225,14 @@ class TikiLib extends TikiDB {
 			// Pull the np out.
 			preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
 
-			$key = md5($this->genPass());
-			$noparsed["key"][] = "/". preg_quote($key)."/";
-			$noparsed["data"][] = $stuff[1];
+			if( count( $stuff ) > 0 )
+			{
+			    $key = md5($this->genPass());
+			    $noparsed["key"][] = "/". preg_quote($key)."/";
+			    $noparsed["data"][] = $stuff[1];
 
-			$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+			    $ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+			}
 
 		    } else {
 			// Handle nested plugins.
@@ -3245,9 +3265,6 @@ class TikiLib extends TikiDB {
 	} // while
 
 	// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
-
-	// Handle pre- and no-parse sections
-	//$this->parse_pp_np($data, $preparsed, $noparsed);
     }
 
     // Replace hotwords in given line
@@ -3941,11 +3958,8 @@ class TikiLib extends TikiDB {
 	    }
 
 	    $links = $this->get_links($data);
-
 	    $notcachedlinks = $this->get_links_nocache($data);
-
 	    $cachedlinks = array_diff($links, $notcachedlinks);
-
 	    $this->cache_links($cachedlinks);
 
 	    // Note that there're links that are replaced
@@ -3978,7 +3992,7 @@ class TikiLib extends TikiDB {
 	    {
 		$target = '';
 	    }
-	
+
 	    // The (?<!\[) stuff below is to give users an easy way to
 	    // enter square brackets in their output; things like [[foo]
 	    // get rendered as [foo]. -rlpowell
@@ -4628,12 +4642,12 @@ class TikiLib extends TikiDB {
 			$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
 
 			$maxversions = $this->get_preference("maxVersions", 0);
-			if ($maxversions) {
+			if ($maxversions && ($nb = $histlib->get_nb_history($pageName)) > $maxversions) {
 				// Delete outdated versions from history
 				$keep = $this->get_preference('keep_versions', 0);
 				$oktodel = $t - ($keep * 24 * 3600);
-				$query = "select `version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
-				$result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
+				$query = "select `pageName`,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
+				$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
 				$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 				while ($res = $result->fetchRow()) {
 					$this->query($query,array($pageName,$res["version"]));

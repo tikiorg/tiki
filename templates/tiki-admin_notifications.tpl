@@ -9,7 +9,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 <!-- begin -->
@@ -27,6 +27,7 @@
       <option value="user_registers">{tr}A user registers{/tr}</option>
       <option value="article_submitted">{tr}A user submits an article{/tr}</option>
       <option value="wiki_page_changes">{tr}Any wiki page is changed{/tr}</option>
+	<option value="php_error">{tr}PHP error{/tr}</option>
     </select>
     </td>
 </tr> 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.23 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.24 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,12 +45,14 @@ if (isset($_REQUEST["rremove"])) {
     key_get($area);
   }
 }
-
+# TODO : Case where the index page of the structure is removed seems to be unexpected, leaving a corrupted structure
 if (isset($_REQUEST["sremove"])) {
   $area = 'delstructureandpages';
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
-		$structlib->s_remove_page($_REQUEST["sremove"], true);
+		$page = $page_info["pageName"];
+		require ('tiki-pagesetup.php');
+		$structlib->s_remove_page($_REQUEST["sremove"], $tiki_p_remove == 'y');
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
   } else {
     key_get($area);

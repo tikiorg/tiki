@@ -11,6 +11,7 @@ require_once ('lib/userslib/userslib_admin.php');
 // Permission: needs p_register
 if($allowRegister != 'y') {
   header("location: index.php");
+  exit;
   die;
 }
 

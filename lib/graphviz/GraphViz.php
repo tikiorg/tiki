@@ -13,12 +13,13 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.6 2004-03-29 21:26:34 mose Exp $
+// $Id: GraphViz.php,v 1.7 2004-08-26 19:23:51 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 /**

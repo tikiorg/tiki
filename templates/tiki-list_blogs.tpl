@@ -95,9 +95,9 @@
 	{/if}
 	{if $tiki_p_admin eq 'y'}
 	    {if $listpages[changes].individual eq 'y'}
-		<a class="bloglink" href="tiki-objectpermissions.php?objectName=blog%20{$listpages[changes].title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}active perms{/tr}' alt='{tr}active perms{/tr}' src='img/icons/key_active.gif' /></a>
+		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}active perms{/tr}' alt='{tr}active perms{/tr}' src='img/icons/key_active.gif' /></a>
 	    {else}
-		<a class="bloglink" href="tiki-objectpermissions.php?objectName=blog%20{$listpages[changes].title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}perms{/tr}' alt='{tr}perms{/tr}' src='img/icons/key.gif' /></a>
+		<a class="bloglink" href="tiki-objectpermissions.php?objectName={$listpages[changes].title|escape:"url"}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}perms{/tr}' alt='{tr}perms{/tr}' src='img/icons/key.gif' /></a>
 	    {/if}
 	{/if}
         {if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.100 2004-08-16 02:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.101 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -567,8 +567,12 @@ if (($tiki_p_use_HTML == 'y' || $tiki_p_admin == 'y') && $feature_wiki_allowhtml
 }
 
 // apply the optional post edit filters before preview
-$parsed = $tikilib->apply_postedit_handlers($edit_data);
-$parsed = $tikilib->parse_data($parsed);
+if(isset($_REQUEST["preview"]) || ($wiki_spellcheck == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
+  $parsed = $tikilib->apply_postedit_handlers($edit_data);
+  $parsed = $tikilib->parse_data($parsed);
+} else {
+  $parsed = "";
+}
 
 /* SPELLCHECKING INITIAL ATTEMPT */
 //This nice function does all the job!
