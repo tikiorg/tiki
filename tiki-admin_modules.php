@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.22 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.23 2003-08-11 18:38:25 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,7 @@ if (isset($_REQUEST["edit_assign"])) {
 	$smarty->assign_by_ref('assign_cache', $info["cache_time"]);
 	$smarty->assign_by_ref('assign_rows', $info["rows"]);
 	$smarty->assign_by_ref('assign_params', $info["params"]);
+	$smarty->assign_by_ref('assign_type', $info["type"]);
 
 	if (isset($info["ord"])) {
 		$cosa = "" . $info["ord"];
@@ -201,6 +202,7 @@ if (isset($_REQUEST["assign"])) {
 	$smarty->assign_by_ref('assign_order', $_REQUEST["assign_order"]);
 	$smarty->assign_by_ref('assign_cache', $_REQUEST["assign_cache"]);
 	$smarty->assign_by_ref('assign_rows', $_REQUEST["assign_rows"]);
+ 	$smarty->assign_by_ref('assign_type',$_REQUEST["assign_type"]);
 	$module_groups = $_REQUEST["groups"];
 	$grps = '';
 
@@ -211,7 +213,7 @@ if (isset($_REQUEST["assign"])) {
 	$smarty->assign('module_groups', $grps);
 	$modlib->assign_module($_REQUEST["assign_name"],
 		'', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $_REQUEST["assign_rows"],
-		serialize($module_groups), $_REQUEST["assign_params"]);
+		serialize($module_groups), $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
 	header ("location: tiki-admin_modules.php");
 }
 
