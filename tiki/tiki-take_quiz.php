@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.11 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.12 2004-03-12 02:12:49 aurel42 Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,7 +112,7 @@ if (isset($_REQUEST["timeleft"])) {
 	$max = 0;
 
 	for ($i = 0; $i < count($questions["data"]); $i++) {
-		$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_desc', '');
+		$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_asc', '');
 
 		$qid = $questions["data"][$i]["questionId"];
 		$max += $questions["data"][$i]["maxPoints"];
@@ -134,7 +134,7 @@ if (isset($_REQUEST["timeleft"])) {
 
 	if ($quiz_info["storeResults"] == 'y') {
 		for ($i = 0; $i < count($questions["data"]); $i++) {
-			$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_desc', '');
+			$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_asc', '');
 
 			$qid = $questions["data"][$i]["questionId"];
 
@@ -155,7 +155,7 @@ $smarty->assign('quiz_info', $quiz_info);
 $questions = $quizlib->list_quiz_questions($_REQUEST["quizId"], 0, -1, 'position_asc', '');
 
 for ($i = 0; $i < count($questions["data"]); $i++) {
-	$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_desc', '');
+	$options = $quizlib->list_quiz_question_options($questions["data"][$i]["questionId"], 0, -1, 'optionText_asc', '');
 
 	$questions["data"][$i]["options"] = $options["data"];
 }
