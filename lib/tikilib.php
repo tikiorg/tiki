@@ -123,6 +123,7 @@ class TikiLib {
     }
     $type = $this->db->getOne("select avatarType from users_users where login='$user'");
     $libname = $this->db->getOne("select avatarLibName from users_users where login='$user'");
+    $ret='';
     switch($type) {
       case 'n':
         $ret = '';
@@ -9359,6 +9360,33 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $data=str_replace("~np~$np~/np~",$key,$data);
     }
     
+    // Now search for plugins
+    preg_match_all("/\{([A-Z]+)\(([^\)]+)\)\}/",$data,$plugins);
+    for($i=0;$i<count($plugins[0]);$i++) {
+      $plugin_start = $plugins[0][$i];
+      $plugin_end = '{'.$plugins[1][$i].'}';
+      $pos = strpos($data,$plugin_start);
+      $pos_end = strpos($data,$plugin_end);
+      if($pos_end>$pos) {
+      	$plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
+        $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
+        $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
+        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
+        $params = split(',',$plugins[2][$i]);
+        $arguments=Array();
+        foreach($params as $param) {
+          $parts=explode('=>',$param);
+          $name=trim($parts[0]);
+          $arguments[$name]=trim($parts[1]);
+        }
+        if(file_exists($php_name)) {
+          include_once($php_name);
+          $ret = $func_name($plugin_data,$arguments);	
+          $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
+        }    
+      }
+      
+    }
     
     
     

@@ -1,5 +1,8 @@
 Version 1.5 -TBA-
 
+* [NEW] Added plugins to the Wiki, now you can create your own plugins for the wiki to 
+  suit your needs. The syntax is simple, see lib/wiki_plugins/example.php for a
+  description and example.
 * [NEW] Admin can choose if passwords are stored in plaintext or not. If not, a hash will be used to authenticate
   users and the remind-password feature will generate a new password and send it by email. The new password will
   be immediately due so the user will be forced to change it.
