@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.43 2004-04-30 09:34:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.44 2004-04-30 10:42:22 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -346,17 +346,10 @@ align       : "bR"
 {if $modifiable}
 <td>
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
-<div class="caltoggle"
-onclick="document.getElementById('calswitch').click();document.getElementById('calswitch').checked=!document.getElementById('calswitch').checked;document.getElementById('calswitch').click();"
-><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'calIds[]','calswitch');"/> {tr}check / uncheck all{/tr}</div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onchange="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
 {foreach item=k from=$listcals}
-<div class="calcheckbox"
-onclick="document.getElementById('groupcal_{$k}').checked=!document.getElementById('groupcal_{$k}').checked;"
-onmouseout="this.style.textDecoration='none';" 
-onmouseover="this.style.textDecoration='underline';"
-><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}
-onclick="this.checked=!this.checked;"/>
-{$infocals.$k.name} (id #{$k})
+<div class="calcheckbox"><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+<label for="groupcal_{$k}">{$infocals.$k.name} (id #{$k})</label>
 </div>
 {/foreach}
 </td>
@@ -364,17 +357,11 @@ onclick="this.checked=!this.checked;"/>
 
 <td>
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
-<div class="caltoggle"
-onclick="document.getElementById('tikiswitch').click();document.getElementById('tikiswitch').checked=!document.getElementById('tikiswitch').checked;document.getElementById('tikiswitch').click();"
-><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;" /> {tr}check / uncheck all{/tr}</div>
+<div class="caltoggle"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'tikicals[]',this.checked);" /> <label for="tikiswitch">{tr}check / uncheck all{/tr}</label></div>
 {foreach from=$tikiItems key=ki item=vi}
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
-<div class="calcheckbox"
-onclick="document.getElementById('tikical_{$ki}').checked=!document.getElementById('tikical_{$ki}').checked;"
-onmouseout="this.style.textDecoration='none';"  
-onmouseover="this.style.textDecoration='underline';" 
-><input type="checkbox" name="tikicals[]" value="{$ki|escape}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-<span class="Cal{$ki}"> = {$vi.label}</span></div>
+<div class="calcheckbox"><input type="checkbox" name="tikicals[]" value="{$ki|escape}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} />
+<label for="tikical_{$ki}" class="Cal{$ki}"> = {$vi.label}</label></div>
 {/if}
 {/foreach}
 </td>
