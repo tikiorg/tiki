@@ -23,11 +23,17 @@
 // | Author(s): Christian Jørgensen <mail@phpguru.dk>                     |
 // +----------------------------------------------------------------------+
 // 
-// $Id: start.php,v 1.1 2003-11-15 11:33:15 mose Exp $                                                                 
+// $Id: start.php,v 1.2 2003-11-15 14:45:18 mose Exp $                                                                 
 
-ini_set('include_path', '.:../wollabot:../smartirc');
+ini_set('include_path', '.:../wollabot:../smartirc:../..:../../lib/pear:../../lib/adodb');
 
 require_once "lib/wollabot.php";
+
+require_once("../../db/tiki-db.php");
+require_once("../tikilib.php");
+require_once("../stats/statslib.php");
+		
+$tikilib = new TikiLib($dbTiki);
 
 // This file is only meant to work as a list of tasks wollabot must finish
 // in a given order.
