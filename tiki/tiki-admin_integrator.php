@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.5 2003-11-03 02:47:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.6 2003-11-03 23:59:26 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -24,8 +24,8 @@ $path        = isset($_REQUEST["path"])        ? $_REQUEST["path"]        : '';
 $start       = isset($_REQUEST["start"])       ? $_REQUEST["start"]       : '';
 $cssfile     = isset($_REQUEST["cssfile"])     ? $_REQUEST["cssfile"]     : '';
 $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
-$vis         = isset($_REQUEST["vis"])         ? ($_REQUEST["vis"]      == 'on' ? 'y' : 'n')  : 'n';
-$cachable    = isset($_REQUEST["cachable"])    ? ($_REQUEST["cachable"] == 'on' ? 'y' : 'n')  : 'n';
+$vis         = isset($_REQUEST["vis"])         ? ($_REQUEST["vis"]       == 'on' ? 'y' : 'n')  : 'n';
+$cacheable   = isset($_REQUEST["cacheable"])   ? ($_REQUEST["cacheable"] == 'on' ? 'y' : 'n')  : 'n';
 
 
 // Check if 'submit' pressed ...
@@ -33,7 +33,7 @@ if (isset($_REQUEST["save"]))
 {
     // ... and all mandatory paramaters r OK
     if (strlen($name)  > 0)
-        $integrator->add_replace_repository($repID, $name, $path, $start, $cssfile, $vis, $cachable, $description);
+        $integrator->add_replace_repository($repID, $name, $path, $start, $cssfile, $vis, $cacheable, $description);
     else
     {
         $smarty->assign('msg',tra("Repository name can't be an empty"));
@@ -56,15 +56,19 @@ if (isset($_REQUEST["action"]))
             $smarty->assign('start', $rep["start_page"]);
             $smarty->assign('cssfile', $rep["css_file"]);
             $smarty->assign('vis', $rep["visibility"]);
-            $smarty->assign('cachable', $rep["cachable"]);
+            $smarty->assign('cacheable', $rep["cacheable"]);
             $smarty->assign('description', $rep["description"]);
         }
         break;
     case 'rm':
         if ($repID != 0) $integrator->remove_repository($repID);
         break;
+    case 'clear':
+        if ($repID != 0) $integrator->clear_cache($repID);
+        header('location: '.$_SERVER['SCRIPT_NAME'].'?action=edit&repID='.$repID);
+        exit;
     default:
-        $smarty->assign('msg', tra("Requested action in not supportted on repository"));
+        $smarty->assign('msg', tra("Requested action is not supportted on repository"));
         $smarty->display("styles/$style_base/error.tpl");
         die;
         break;

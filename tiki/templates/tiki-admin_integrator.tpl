@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.8 2003-11-03 02:47:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.9 2003-11-03 23:59:27 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -36,8 +36,17 @@
     <td class="formcolor"><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</td>
     <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}Is files from repository can be cached{/tr}">{tr}Cachable{/tr}</td>
-    <td class="formcolor"><input type="checkbox" name="cachable" {if $cachable eq 'y'}checked="checked"{/if} title="{tr}Is files from repository can be cached{/tr}" /></td>
+    <td class="formcolor"><span title="{tr}Is files from repository can be cached{/tr}">{tr}Cacheable{/tr}</td>
+    <td class="formcolor">
+      <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Is files from repository can be cached{/tr}" />
+      {var_dump var=repID}
+      {if isset($repID) and $repID ne '0'}
+        &nbsp;&nbsp;
+        <a href="tiki-admin_integrator.php?action=clear&repID={$repID|escape}" title="{tr}Clear all cahed pages of this repository{/tr}">
+          {tr}Clear cache{/tr}
+        </a>
+      {/if}
+    </td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Human readable text description of repository{/tr}">{tr}Description{/tr}</td>
     <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>
