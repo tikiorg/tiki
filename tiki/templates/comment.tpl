@@ -26,7 +26,7 @@
 			  		{/if}
 		{if $tiki_p_post_comments == 'y'}
 					<br /><br />
-  		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comment.threadId}&amp;post_reply=1#threadId{$comment.threadId}">{tr}comment this{/tr}</a>
+  		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comment.threadId}&amp;post_reply=1#threadId{$comment.threadId}">{tr}reply{/tr}</a>
 		{/if}
 			  	</td>
 			 </tr>
