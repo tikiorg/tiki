@@ -19,5 +19,8 @@ this link:
 
 
 
-{tr}The new page content is:{/tr}
+{tr}The new page content follows below.{/tr}
+
+***********************************************************
+
 {$mail_pagedata}

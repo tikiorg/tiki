@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.35 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.36 2003-10-09 01:07:45 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -305,7 +305,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    if ($forum_info["outbound_address"]) {
 				@mail(
 					$forum_info["outbound_address"],
-					$thread_info['title'],
+					$_REQUEST["comments_title"],
 					$_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
 					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
 				     );
