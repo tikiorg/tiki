@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.26 2003-11-03 03:34:25 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.27 2003-11-11 01:34:14 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,8 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 
 $smarty->assign('allowhtml', 'y');
 $publishDate = date("U");
-$expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
+$cur_time = getdate();
+$expireDate = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
