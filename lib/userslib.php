@@ -69,16 +69,16 @@ class UsersLib extends TikiLib {
 	$objectId = md5($objectType . $objectId);
 
 	foreach ($groups as $groupName) {
-	    $query = "select `permName`
+	    $query = "select count(*)
 		from `users_objectpermissions`
 		where `groupName` = ? and objectId = ?
 		and objectType = ? and permName = ?";
 
 	    $bindvars = array($groupName, $objectId, $objectType,
 		    $permName);
-	    $result = $this->query($query, $bindvars);
+	    $result = $this->getOne($query, $bindvars);
 
-	    if ($result->numRows())
+	    if ($result>0)
 		return true;
 	}
 
@@ -133,23 +133,23 @@ class UsersLib extends TikiLib {
     function object_has_one_permission($objectId, $objectType) {
 	$objectId = md5($objectType . $objectId);
 
-	$query = "select `objectId`,`objectType` from `users_objectpermissions` where `objectId`=? and `objectType`=?";
-	$result = $this->query($query, array(
+	$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
+	$result = $this->getOne($query, array(
 		    $objectId,
 		    $objectType
 		    ));
 
-	return $result->numRows();
+	return $result();
     }
 
     function user_exists($user) {
 	static $rv = array();
 
 	if (!isset($rv[$user])) {
-	    $query = "select `login` from `users_users` where `login` = ?";
+	    $query = "select count(*) from `users_users` where `login` = ?";
 
-	    $result = $this->query($query, array($user));
-	    $rv[$user] = $result->numRows();
+	    $result = $this->getOne($query, array($user));
+	    $rv[$user] = $result;
 	}
 
 	return $rv[$user];
@@ -159,10 +159,10 @@ class UsersLib extends TikiLib {
 	static $rv = array();
 
 	if (!isset($rv[$group])) {
-	    $query = "select `groupName`  from `users_groups` where `groupName` = ?";
+	    $query = "select count(`groupName`)  from `users_groups` where `groupName` = ?";
 
-	    $result = $this->query($query, array($group));
-	    $rv[$group] = $result->numRows();
+	    $result = $this->getOne($query, array($group));
+	    $rv[$group] = $result;
 	}
 
 	return $rv[$group];
@@ -968,15 +968,15 @@ class UsersLib extends TikiLib {
 
     function group_has_permission($group, $perm) {
 	if (!isset($perm, $this->groupperm_cache[$group][$perm])) {
-	    $query = "select `groupName` ,`permName` from `users_grouppermissions` where `groupName`=? and `permName`=?";
+	    $query = "select count(*) from `users_grouppermissions` where `groupName`=? and `permName`=?";
 
-	    $result = $this->query($query, array(
+	    $result = $this->getOne($query, array(
 			$group,
 			$perm
 			));
 
-	    $this->groupperm_cache[$group][$perm] = $result->numRows();
-	    return $result->numRows();
+	    $this->groupperm_cache[$group][$perm] = $result;
+	    return $result;
 	} else {
 	    return $this->groupperm_cache[$group][$perm];
 	}
