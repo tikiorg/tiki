@@ -1,5 +1,7 @@
 Version 1.7 -Eta Carinae-
 
+* [FIX] Lethal bug in tikilib that caused cache engine to infinitely recurse has been
+  resolved.
 * [NEW] Forums: Posts can be reported to moderator.
 * [NEW] File galleries: Up to 6 files can be uploaded at once. 
 * [NEW] Forums control to view posts from the last X hours/days only.
@@ -14,6 +16,7 @@ Version 1.7 -Eta Carinae-
   friendly version of the Wiki.
 * [NEW] Forum attachments added, you can setup which forums admit attachments and who
   can attach files to forum posts. 
+>>>>>>> 1.82
 * [NEW] Added forum discussion button to wiki page view: allows users to go straight to
   forum for page discussion.
 * [NEW] Drawings history added. From the admin drawings panel you can view the history,

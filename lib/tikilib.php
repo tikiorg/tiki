@@ -1826,7 +1826,18 @@ class TikiLib {
     return $links;
   }
 
-	//cache
+  function is_cacheable($url) {
+    // simple implementation: future versions should analyse
+    // if this is a link to the local machine
+    if(strstr($url,"tiki-index")) {
+      return false;
+    }
+    if(strstr($url,"tiki-edit")) {
+      return false;
+    }
+    return true;
+  }
+
   function is_cached($url)
   {
     if(strstr($url,"tiki-index")) {
@@ -1840,6 +1851,399 @@ class TikiLib {
     $result = $this->query($query);
     $cant = $result->numRows();
     return $cant;
+  }
+
+  function list_cache($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where (url like '%".$find."%') ";
+    } else {
+      $mid="";
+    }
+    $query = "select cacheId,url,refresh from tiki_link_cache $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_link_cache $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+
+  function ($url)
+  {
+    $url=addslashes($url);
+    // This function stores a cached representation of a page in the cache
+    // Check if the URL is not already cached
+    //if($this->is_cached($url)) return false;
+    if( !$this->is_cacheable($url) ) return false;
+    @$fp = fopen($url,"r");
+    if(!$fp) return false;
+    $data = '';
+    while(!feof($fp)) {
+      $data .= fread($fp,4096);
+    }
+    fclose($fp);
+    // Check for META tags with equiv
+    if(0){
+    print("Len: ".strlen($data)."<br/>");
+    preg_match_all("/\<meta([^\>\<\n\t]+)/i",$data,$reqs);
+    foreach($reqs[1] as $meta)
+    {
+      print("Un meta: $meta<br/>");
+      if(stristr($meta,'refresh')) {
+        print("Es refresh<br/>");
+        preg_match("/url=([^ \"\'\n\t]+)/i",$meta,$urls);
+        if(strlen($urls[1])) {
+          $urli=$urls[1];
+          print("URL: $urli<br/>");
+        }
+      }
+    }
+    print("pepe");
+    }
+    $data = addslashes($data);
+    $refresh = date("U");
+    $query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
+    $result = $this->query($query);
+    return true;
+  }
+
+  function refresh_cache($cacheId)
+  {
+    $query = "select url from tiki_link_cache where cacheId=$cacheId";
+    $url = $this->getOne($query);
+    @$fp = fopen($url,"r");
+    if(!$fp) return false;
+    $data = '';
+    while(!feof($fp)) {
+      $data .= fread($fp,4096);
+    }
+    fclose($fp);
+    $data = addslashes($data);
+    $refresh = date("U");
+    $query = "update tiki_link_cache set data='$data', refresh=$refresh where cacheId=$cacheId";
+    $result = $this->query($query);
+    return true;
+  }
+
+  function remove_cache($cacheId)
+  {
+    $query = "delete from tiki_link_cache where cacheId=$cacheId";
+    $result = $this->query($query);
+    return true;
+  }
+
+  function get_cache($cacheId)
+  {
+    $query = "select * from tiki_link_cache where cacheId=$cacheId";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
+  function get_cache_id($url)
+  {
+    if(!$this->is_cached($url)) return false;
+    $query = "select cacheId from tiki_link_cache where url='$url'";
+    $id = $this->getOne($query);
+    return $id;
+  }
+
+  
+  function vote_page($page, $points)
+  {
+    $page = addslashes($page);
+    $query = "update pages set points=points+$points, votes=votes+1 where pageName='$page'";
+    $result = $this->query($query);
+  }
+
+  function get_votes($page)
+  { 
+    $page = addslashes($page);
+    $query = "select points,votes from pages where pageName='$page'";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
+  function tag_exists($tag)
+  {
+    $query = "select distinct tagName from tiki_tags where tagName = '$tag'";
+    $result = $this->query($query);
+    return $result->numRows($result);
+  }
+
+  function remove_tag($tagname)
+  {
+    $query = "delete from tiki_tags where tagName='$tagname'";
+    $result = $this->query($query);
+    $action = "removed tag: $tagname";
+    $t = date("U");
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $result = $this->query($query);
+    return true;
+  }
+
+  function get_tags()
+  {
+    $query = "select distinct tagName from tiki_tags";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res["tagName"];
+    }
+    return $ret;
+  }
+
+  // This function can be used to store the set of actual pages in the "tags"
+  // table preserving the state of the wiki under a tag name.
+  function create_tag($tagname,$comment='')
+  {
+    $tagname = addslashes($tagname);
+    $comment = addslashes($comment);
+    $query = "select * from tiki_pages";
+    $result=$this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
+                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
+      $result2=$this->query($query);
+    }
+    $action = "created tag: $tagname";
+    $t = date("U");
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
+    $result = $this->query($query);
+    return true;
+  }
+
+  // This funcion recovers the state of the wiki using a tagName from the
+  // tags table
+  function restore_tag($tagname)
+  {
+    $query = "update tiki_pages set cache_timestamp=0";
+    $this->query($query);
+    $query = "select * from tiki_tags where tagName='$tagname'";
+    $result=$this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $query = "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
+                values('".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
+      $result2=$this->query($query);
+    }
+    $action = "recovered tag: $tagname";
+    $t = date("U");
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $result = $this->query($query);
+    return true;
+  }
+
+  // This funcion return the $limit most accessed pages
+  // it returns pageName and hits for each page
+  function get_top_pages($limit)
+  {
+    $query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["pageName"] = $res["pageName"];
+      $aux["hits"] = $res["hits"];
+      $ret[] = $aux;
+    }
+    return $ret;
+  }
+
+  // Returns the name of "n" random pages
+  function get_random_pages($n)
+  {
+    $query = "select count(*) from tiki_pages";
+    $cant = $this->getOne($query);
+    // Adjust the limit if there are not enough pages
+    if($cant<$n) $n=$cant;
+    // Now that we know the number of pages to pick select n random positions from 0 to cant
+    $positions = Array();
+    for ($i=0;$i<$n;$i++)
+    {
+      $pick = rand(0,$cant-1);
+      if(!in_array($pick,$positions)) $positions[]=$pick;
+    }
+    // Now that we have the positions we just build the data
+    $ret = Array();
+    for ($i=0; $i<count($positions);$i++) {
+      $index = $positions[$i];
+      $query = "select pageName from tiki_pages limit $index,1";
+      $name = $this->getOne($query);
+      $ret[]=$name;
+    }
+    return $ret;
+  }
+
+  function wiki_ranking_top_pages($limit)
+  {
+    $query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["name"] = $res["pageName"];
+      $aux["hits"] = $res["hits"];
+      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
+      $ret[] = $aux;
+    }
+    $retval["data"]=$ret;
+    $retval["title"]=tra("Wiki top pages");
+    $retval["y"]=tra("Hits");
+    return $retval;
+  }
+
+  function wiki_ranking_top_pagerank($limit)
+  {
+    $this->pageRank();
+    $query = "select pageName, pageRank from tiki_pages order by pageRank desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["name"] = $res["pageName"];
+      $aux["hits"] = $res["pageRank"];
+      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
+      $ret[] = $aux;
+    }
+    $retval["data"]=$ret;
+    $retval["title"]=tra("Most relevant pages");
+    $retval["y"]=tra("Relevance");
+    return $retval;
+  }
+
+  function wiki_ranking_last_pages($limit)
+  {
+    $query = "select pageName,lastModif,hits from tiki_pages order by lastModif desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["name"] = $res["pageName"];
+      $aux["hits"] = $this->get_long_datetime($res["lastModif"]);
+      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Wiki last pages");
+    $ret["y"]=tra("Modified");
+    return $ret;
+  }
+
+  function forums_ranking_last_topics($limit)
+  {
+    $query = "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0 order by commentDate desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["name"] = $res["name"].': '.$res["title"];
+      $aux["hits"] = $this->get_long_datetime($res["commentDate"]);
+      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Forums last topics");
+    $ret["y"]=tra("Topic date");
+    return $ret;
+  }
+
+  function forums_ranking_most_read_topics($limit)
+  {
+    $query = "select tc.hits,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.hits desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+
+      $aux["name"] = $res["name"].': '.$res["title"];
+      $aux["hits"] = $res["hits"];
+      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Forums most read topics");
+    $ret["y"]=tra("Reads");
+    return $ret;
+  }
+
+  function forums_ranking_top_topics($limit)
+  {
+    $query = "select tc.average,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.average desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+
+      $aux["name"] = $res["name"].': '.$res["title"];
+      $aux["hits"] = $res["average"];
+      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Forums best topics");
+    $ret["y"]=tra("Score");
+    return $ret;
+  }
+
+  function forums_ranking_most_visited_forums($limit)
+  {
+    $query = "select * from tiki_forums order by hits desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+
+      $aux["name"] = $res["name"];
+      $aux["hits"] = $res["hits"];
+      $aux["href"] = 'tiki-view_forum.php?forumId='.$res["forumId"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Forums most visited forums");
+    $ret["y"]=tra("Visits");
+    return $ret;
+  }
+
+  function forums_ranking_most_commented_forum($limit)
+  {
+    $query = "select * from tiki_forums order by comments desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+
+      $aux["name"] = $res["name"];
+      $aux["hits"] = $res["comments"];
+      $aux["href"] = 'tiki-view_forum.php?forumId='.$res["forumId"];
+      $ret[] = $aux;
+    }
+    $ret["data"]=$ret;
+    $ret["title"]=tra("Forums with most posts");
+    $ret["y"]=tra("Posts");
+    return $ret;
+  }
+
+  function gal_ranking_top_galleries($limit)
+  {
+    $query = "select * from tiki_galleries where visible='y' order by hits desc limit 0,$limit";
+    $result=$this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["name"] = $res["name"];
+      $aux["hits"] = $res["hits"];
+      $aux["href"] = 'tiki-browse_gallery.php?galleryId='.$res["galleryId"];
+      $ret[] = $aux;
+    }
+    $retval["data"]=$ret;
+    $retval["title"]=tra("Wiki top galleries");
+    $retval["y"]=tra("Visits");
+    return $retval;
+=======
+    $url=addslashes($url);
+    $query = "select cacheId from tiki_link_cache where url='$url'";
+    $result = $this->query($query);
+    $cant = $result->numRows();
+    return $cant;
+>>>>>>> 1.165
   }
 
   function list_cache($offset,$maxRecords,$sort_mode,$find)
