@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.14 2004-08-03 20:53:31 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.15 2004-08-03 21:00:37 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,7 @@ class StaticLib extends TikiLib {
 	}
 
 	// build the static html page
-	function update_page($pagename, $rebuildall = FALSE) {
+	function update_page($pagename) {
 		
 		global $smarty, $wiki_realtime_static_path, $wiki_realtime_static_group, $wikiHomePage, $style, $style_base, $feature_categories, $feature_categorypath, $feature_categoryobjects;
 		
@@ -283,8 +283,7 @@ class StaticLib extends TikiLib {
 		
 		$pages = $this->list_pages();
 		foreach ($pages['data'] as $page) {
-			$rebuildall = TRUE;
-			$this->update_page($page['pageName'], $rebuildall);
+			$this->update_page($page['pageName']);
 		}
 		
 		return TRUE;
