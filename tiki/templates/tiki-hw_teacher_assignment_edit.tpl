@@ -1,39 +1,25 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit.tpl,v 1.4 2004-02-22 17:04:33 ggeller Exp $ *}
 {* tiki-hw_teacher_assignment_edit.tpl *}
-{* Adapted from tiki-edit_article.tpl *}
-{* January 16, 2004 *}
 {* George G. Geller *}
 
-{* See http://www.bosrup.com/web/overlib/
-   overLIB is a JavaScript library created to enhance websites with small popup
-   information boxes (tooltips) to help visitors around your website. It will
-   provide the user with information about what will happen before they click
-   on a link as well as navigational help. Not to mention that it looks cool.
-
-   I think it is used to make the popups when you move the mouse over the
-   quicklinks.
-*}
-{* {popup_init src="lib/overlib.js"} *} {* Commenting this out doesn't seem to have any effect. *}
+<!-- templates/tiki-hw_teacher_assignment_edit.tpl start -->
 
 {if $preview}
-{include file="tiki-hw_teacher_assignment_edit_preview.tpl"}
+  {include file="tiki-hw_teacher_assignment_edit_preview.tpl"}
 {/if}
 
 <a class="pagetitle" href="tiki-hw_teacher_assignment_edit.php">{tr}Edit Assignment{/tr}: {$title}
-{assign var=area_name value="body"}
+
+{* {assign var=area_name value="body"} *}
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Homework" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Assignment{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
-{/if}
-
-{if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+  <a href="http://tikiwiki.org/tiki-index.php?page=HWAssignmentEdit" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Assignment{/tr}">
+  <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
 <br /><br />
 <a class="linkbut" href="tiki-hw_teacher_assignments.php">{tr}list assignments{/tr}</a>
-{* <a class="linkbut" href="tiki-hw_assignments_view.php">{tr}view assignments{/tr}</a> *}
+
 <br /><br />
 <form enctype="multipart/form-data" method="post" action="tiki-hw_teacher_assignment_edit.php" id='editpageform'>
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
@@ -51,7 +37,6 @@
 </td></tr>
 
 <tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" size="80" /></td></tr>
-<tr><td class="formcolor">{tr}Teacher{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 
 <input type="hidden" name="topicId" value="" /> {* GGG *}
 {* GGG 
@@ -149,7 +134,7 @@ GGG *}
 </td>
 </tr>
 
-<tr><td class="formcolor">{tr}Details test test test{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
+<tr><td class="formcolor">{tr}Details{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
 <br /><br />{tr}Quicklinks{/tr}
 {include file=tiki-edit_help_tool.tpl}
 </td><td class="formcolor">
@@ -185,3 +170,5 @@ GGG *}
 </form>
 <br />
 {include file=tiki-edit_help.tpl}
+
+<!-- templates/tiki-hw_teacher_assignment_edit.tpl end -->
