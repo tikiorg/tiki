@@ -44,14 +44,13 @@
 
 		  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr> 
-                  <td height="32" colspan="3"id="page21"> <div align="left"> 
-                      <table width="100%" height="32" border="0" align="CENTER" cellpadding="0" cellspacing="0">
-                        <tr> 
-                          <td width="170" height="31" background="http://coloradoschoice.com/topbgsmall.gif"><img src="styles/bluemetal/page_0.gif" alt="...Talk Radio By the People, For the People. Start your own channel!" width="170" height="31" border="0" align="absbottom"></td>
-                          <td width="100%" background="http://coloradoschoice.com/topbgsmall.gif">&nbsp;</td>
-                          <td width="170" height="31" background="http://coloradoschoice.com/topbgsmall.gif"> 
-                            <div align="center"><a href="http://TikiWiki.org" target="_blank"><img src="styles/bluemetal/tikibuttonmetal.gif" alt="... a customization of the TikiWiki open-source CMS" width="88" height="31" border="0" align="absbottom"></a></div></td>
-                          <td width="1"></td>
+                  <td height="31" colspan="3" id="page37"> <div align="left"> 
+                      <table width="100%" height="31" border="0" align="CENTER" cellpadding="0" cellspacing="0">
+<tr> 
+                          <td width="100%"><div align="left"></div></td>
+                          <td width="88" height="31"> 
+                            <div align="right"><a href="http://TikiWiki.org" target="_blank"><img src="styles/bluemetal/tikibuttonmetal.gif" width="88" height="31" border="0" align="absbottom"></a></div></td>
+
                         </tr>
                       </table>
                     </div></td>

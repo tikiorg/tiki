@@ -97,6 +97,7 @@ TD#page30 { background-image: url(bluemetal/blue_bottombg.gif); }
 TD#page31 { background-image: url(bluemetal/blue_bottomleft.gif); }
 TD#page35 { background-image: url(bluemetal/blue_bottomright.gif); }
 TD#page36 { background-image: url(bluemetal/blue_topleftbg.gif); }
+TD#page37 { background-image: url(bluemetal/topbgsmall.gif); }
 
 div#debugconsole {
   position: absolute;
