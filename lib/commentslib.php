@@ -1141,8 +1141,7 @@ class Comments extends TikiLib {
 	    $real_id = (int) $id;
 	}
 
-	$query = "select `threadId`, `title`, `userName`, `points`,
-	`commentDate`, `parentId`, `message_id`, `data` from `tiki_comments`";
+	$query = "select `threadId` from `tiki_comments`";
 
 	if( $forum )
 	{
@@ -1172,8 +1171,10 @@ class Comments extends TikiLib {
 
 	$ret = array();
 
+	global $userlib;
+
 	while ($res = $result->fetchRow()) {
-	    $res['parsed'] = $this->parse_comment_data($res['data']);
+	    $res = $this->get_comment( $res['threadId'] );
 
 	    /* Trim to maxRecords, including replies! */
 	    if( $offset >= 0  && $orig_offset != 0 )
@@ -1393,7 +1394,7 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select `tiki_comments`.* from `tiki_comments` 
+	    $query = "select `tiki_comments`.threadId from `tiki_comments` 
 		left outer join `temp_tk` on `in_reply_to` = temp_tk.`message_id`
 		$mid 
 		and (`in_reply_to` = ?
@@ -1404,7 +1405,7 @@ class Comments extends TikiLib {
 		$query_cant = "select count(*) from `tiki_comments` $mid and `in_reply_to` = ? $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
-	    $query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select threadId from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
 	$result = $this->query($query,array_merge($bind_mid,$bind_time));
@@ -1415,52 +1416,11 @@ class Comments extends TikiLib {
 
 	while ( $row = $result->fetchRow() )
 	{
-	    $ret[] = $row;
-	    $logins[$row['userName']] = true;
-	    $threadIds[$row['threadId']] = true;
+	    $ret[] = $this->get_comment( $row['threadId'] );
 	}
 
-	// cache details for all users with posted messages
-	if ( count($logins) ) {
-	    $logins = array_keys($logins);
-	    $user_info = array();
-	    $this->load_user_cache($logins); // note this extends tikilib
-	    $query  = 'SELECT `user` , `posts` , `level` FROM `tiki_user_postings`';
-	    $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($logins)-1) . '`user` = ?';
-	    $result = $this->query($query, $logins);
-	    while ( $row = $result->fetchRow() ) {
-		$user_info[$row['user']] = $row;
-	    }
-	    $query  = 'SELECT `user` FROM `tiki_sessions`';
-	    $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($logins)-1) . '`user` = ?';
-	    $result = $this->query($query, $logins);
-	    while ( $row = $result->fetchRow() ) {
-		$user_info[$row['user']]['online'] = true;
-	    }
-	}
-
-	// cache details for all threadIds
-	if ( count($threadIds) ) {
-	    $threadIds = array_keys($threadIds);
-	    $thread_info = array();
-	    $query_where = ' WHERE ' . str_repeat('`threadId` = ? OR ', count($threadIds)-1) . '`threadId` = ?';
-
-	    $query  = 'SELECT `threadId` , count(`threadId`) AS hits FROM `tiki_forums_reported`' . $query_where . ' GROUP BY `threadId`';
-	    $result = $this->query($query, $threadIds);
-	    while ( $row = $result->fetchRow() ) {
-		$thread_info[$row['threadId']]['reported'] = $row['hits'];
-	    }
-
-	    $query  = 'SELECT `threadId` , `filename` , `filesize` , `attId` FROM `tiki_forum_attachments`' . $query_where;
-	    $result = $this->query($query, $threadIds);
-	    while ( $row = $result->fetchRow() ) {
-		$tid = $row['threadId'];
-		unset($row['threadId']);
-		$thread_info[$tid]['attachments'][] = $row;
-	    }
-	}
-
-	foreach ( $ret as $key=>$res ) {
+	foreach ( $ret as $key=>$res )
+	{
 	    if( $offset > 0  && $orig_offset != 0 )
 	    {
 		$ret[$key]['doNotShow'] = 1;
@@ -1472,28 +1432,12 @@ class Comments extends TikiLib {
 		break;
 	    }
 
-	    $ret[$key]['user_posts'] = isset($user_info[$res['userName']]['posts']) ? $user_info[$res['userName']]['posts'] : 0;
-	    $ret[$key]['user_level'] = isset($user_info[$res['userName']]['level']) ? $user_info[$res['userName']]['level'] : 0;
-	    $ret[$key]['user_online'] = isset($user_info[$res['userName']]['online']) ? 'y' : 'n';
-
-	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') == 'y') {
-		$ret[$key]['user_email'] = $userlib->get_user_details('email', $res['userName']);  // note $this extends tikilib
-	    } else {
-		$ret[$key]['user_email'] = '';
-	    }
-
-	    $ret[$key]['is_reported'] = isset($thread_info[$res['threadId']]['reported']) ? $thread_info[$res['threadId']]['reported'] : 0;
-
-	    $ret[$key]['attachments'] = isset($thread_info[$res['threadId']]['attachments']) ? $thread_info[$res['threadId']]['attachments'] : array();
-
 	    // Get the grandfather
 	    if ($res["parentId"] > 0) {
 		$ret[$key]["grandFather"] = $this->get_comment_father($res["parentId"]);
 	    } else {
 		$ret[$key]["grandFather"] = 0;
 	    }
-
-	    $ret[$key]["parsed"] = $this->parse_comment_data($res["data"]);
 
 	    /* Trim to maxRecords, including replies! */
 	    if( $offset >= 0  && $orig_offset != 0 )

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.49 2004-06-29 23:26:57 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.50 2004-06-30 00:50:50 rlpowell Exp $ *}
 
 {if $forum_mode eq 'y'}
     <td>
@@ -182,7 +182,7 @@
 	<input type="hidden" name="forumId" value="{$forumId|escape}" />
 
 
-{if $tiki_p_admin_forum eq 'y'}
+{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y'}
 <table class="normal">
 	<tr>
 		<td colspan="3" class="heading">{tr}Moderator actions{/tr}</td>

@@ -22,10 +22,24 @@
 		{if $forum_info.ui_level eq 'y' and $comment.user_level}
 		    <br /><img src="img/icons/{$comment.user_level}stars.gif" alt='{$comment.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
 		{/if}
+		<br />
+		{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+		    <a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+		{/if}
+		{if $comment.userName and $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0}  
+		    <a href="mailto:{$comment.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+		{/if}
+		{if $comment.userName and $forum_info.ui_online eq 'y' }
+		    {if $comment.user_online eq 'y'}
+			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+		    {elseif $comment.user_online eq 'n'}
+			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+		    {/if}
+		{/if}
 	    </div>
 	</td>
 	<td>
-	    {if $tiki_p_admin_forum eq 'y'}
+	    {if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y'}
 		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}" {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if} />
 	    {/if}
 	    <span class="commentstitle">
@@ -78,6 +92,7 @@
 	    {/if}
 	</td>
     </tr>
+
 {if $comments_style != 'commentStyle_plain' }
 </table>
 {/if}
