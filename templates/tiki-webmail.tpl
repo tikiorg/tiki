@@ -52,7 +52,7 @@
 <tr><td class="formcolor">{tr}SMTP server{/tr}</td><td class="formcolor"><input type="text" name="smtp" value="{$info.smtp|escape}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td></tr>
 <tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="yes" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="no" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Username{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="password" name="pass" value="{$info.pass|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs|escape}" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
 </table>
