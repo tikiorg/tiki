@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.8 2003-12-10 03:51:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.9 2003-12-16 07:26:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,7 +36,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 }
 
 if ($_REQUEST["trackerId"]) {
-	$info = $trklib->get_tracker($_REQUEST["trackerId"]);
+	$info = $tikilib->get_tracker($_REQUEST["trackerId"]);
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -48,6 +48,7 @@ if ($_REQUEST["trackerId"]) {
 	$info["useAttachments"] = '';
 	$info["showComments"] = '';
 	$info["showAttachments"] = '';
+	$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -59,6 +60,25 @@ $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('useAttachments', $info["useAttachments"]);
 $smarty->assign('showComments', $info["showComments"]);
 $smarty->assign('showAttachments', $info["showAttachments"]);
+
+$outatt = array();
+$info["orderPopup"] = '';
+if (strstr($info["orderAttachments"],'|')) {
+	$part = split("\|",$info["orderAttachments"]);
+	$info["orderAttachments"] = $part[0];
+	$info["orderPopup"] = $part[1];
+}
+$i = 1;
+foreach (split(',',$info["orderAttachments"]) as $it) {
+	$outatt["$it"] = $i;
+	$i++;
+}
+$i = -1;
+foreach (split(',',$info["orderPopup"]) as $it) {
+	$outatt["$it"] = $i;
+	$i--;
+}
+$smarty->assign('ui', $outatt);
 
 if (isset($_REQUEST["remove"])) {
 	$trklib->remove_tracker($_REQUEST["remove"]);
@@ -107,11 +127,27 @@ if (isset($_REQUEST["save"])) {
 		$showLastModif = 'n';
 	}
 
+	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
+		$showlist = array();
+		$popupinfo = array();
+		foreach ($_REQUEST['ui'] as $kk=>$vv) {
+			if ($vv > 0) { $showlist[$vv] = $kk; }
+			if ($vv < 0) { $popupinfo[$vv] = $kk; }
+		}
+		ksort($showlist);
+		krsort($popupinfo);
+		$orderat = implode(',',$showlist);
+		if (count($popupinfo)) {
+			$orderat.= '|'.implode(',',$popupinfo);
+		}
+	}
+
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $showCreated, $showLastModif,
-		$useComments, $useAttachments, $showStatus, $showComments, $showAttachments);
+		$useComments, $useAttachments, $showStatus, $showComments, $showAttachments, $orderat);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
+	$smarty->assign('ui',array());
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

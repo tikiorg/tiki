@@ -91,27 +91,31 @@
 {/if}
 <h3>{tr}Attachments{/tr}</h3>
 <table class="normal">
+
 <tr> 
-  <td  class="heading">{tr}name{/tr}</td>
-  <td  class="heading">{tr}uploaded{/tr}</td>
-  <td  class="heading">{tr}size{/tr}</td>
-  <td  class="heading">{tr}dls{/tr}</td>
-  <td  class="heading">{tr}desc{/tr}</td>
-</tr> 
+{section name=ix loop=$attfields}
+<td class="heading">{tr}{$attfields[ix]}{/tr}</td>
+{/section}
+<td class="heading">{tr}action{/tr}</td>
+</tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}
+
 <tr>
- <td class="{cycle advance=false}">
- {$atts[ix].filename|iconify}
- <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
- {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
- <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
- {/if}
- </td>
- <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
- <td class="{cycle advance=false}">{$atts[ix].filesize}</td>
- <td class="{cycle advance=false}">{$atts[ix].downloads}</td>
- <td class="{cycle}">{$atts[ix].comment}</td>
+{foreach key=k item=x from=$attfields}
+<td class="{cycle advance=false}">
+{$atts[ix].$x}
+</td>
+{/foreach}
+<td class="{cycle}" align="right" nowrap="nowrap">
+{if $attextra eq 'y'}
+<a class="tablename" href="#" onclick="javascript:window.open('tiki-view_tracker_more_info.php?attId={$atts[ix].attId}','_blank','menubar=no,toolbar=no,location=no,directories=no,fullscreen=no,titlebar=no,hotkeys=no,status=no,scrollbars=yes,resizable=yes,width=350,height=500');">more</a>
+{/if}
+<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename|iconify}</a>
+{if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
+&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+{/if}
+</td>
 </tr>
 {sectionelse}
 <tr>

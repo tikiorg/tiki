@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.14 2003-12-10 03:51:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.15 2003-12-16 07:26:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,12 @@ include_once ('lib/notifications/notificationlib.php');
 
 if ($feature_trackers != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["itemId"])) {
 	$smarty->assign('msg', tra("No item indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -32,7 +30,6 @@ $smarty->assign('item_info', $item_info);
 
 if (!isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -65,7 +62,6 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 
 if ($tiki_p_view_trackers != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -147,10 +143,8 @@ if ($tiki_p_modify_tracker_items == 'y') {
 
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
-
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 		$name = $fields["data"][$i]["name"];
-
 		$ins_name = 'ins_' . $name;
 		$ins_fields["data"][$i]["value"] = $info["$name"];
 	}
@@ -333,8 +327,15 @@ if ($tracker_info["useAttachments"] == 'y') {
 		}
 	}
 
+	$attextra = 'n';
+	if (strstr($tracker_info["orderAttachments"],'|')) {
+		$attextra = 'y';
+	}
+	$attfields = split(',',strtok($tracker_info["orderAttachments"],'|'));
 	$atts = $trklib->list_item_attachments($_REQUEST["itemId"], 0, -1, 'created_desc', '');
 	$smarty->assign('atts', $atts["data"]);
+	$smarty->assign('attfields', $attfields);
+	$smarty->assign('attextra', $attextra);
 }
 
 if (isset($_REQUEST['show'])) {
