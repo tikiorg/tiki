@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.8 2003-10-13 13:38:56 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.9 2003-12-04 18:29:15 mose Exp $
  *
  * My first TIKI theme :)
  *
@@ -14,3 +14,4 @@
 @import "matrix/matrix-dir.l.css";
 @import "matrix/matrix-other.l.css";
 @import "matrix/matrix-debug.css";
+@import "matrix/matrix-calendar.css";
