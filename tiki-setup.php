@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.190 2004-01-15 22:12:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.191 2004-01-18 11:28:05 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -600,6 +600,8 @@ $smarty->assign('feature_wiki_notepad',$feature_wiki_notepad);
 */
 $feature_minical = 'n';
 $smarty->assign('feature_minical', $feature_minical);
+$feature_jukebox = 'n';
+$smarty->assign('feature_jukebox', $feature_jukebox);
 
 $feature_notepad = 'n';
 $smarty->assign('feature_notepad', $feature_notepad);
