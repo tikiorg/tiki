@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.111 2004-09-19 19:37:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.112 2004-09-24 11:20:14 sylvieg Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -526,7 +526,8 @@
  $tiki_p_admin_drawings eq 'y' or
  $tiki_p_admin_shoutbox eq 'y' or
  $tiki_p_admin_live_support eq 'y' or
- $user_is_operator eq 'y'
+ $user_is_operator eq 'y' or
+ $tiki_p_admin_users eq 'y'
  }
  
   <div class="separator">
@@ -561,32 +562,40 @@
   		&nbsp;<a href="tiki-admin_calendars.php" class="linkmenu">{tr}Calendar{/tr}</a><br />
 	{/if}
 
-    {if $tiki_p_admin eq 'y'}
+      {if $tiki_p_admin_users eq 'y'}
       &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br />
+      {/if}
+      {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br />
       &nbsp;<a href="tiki-list_cache.php" class="linkmenu">{tr}Cache{/tr}</a><br />
       &nbsp;<a href="tiki-admin_modules.php" class="linkmenu">{tr}Modules{/tr}</a><br />
-      {if $feature_featuredLinks eq 'y'}
+      {/if}
+      {if $feature_featuredLinks eq 'y' and $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admin_links.php" class="linkmenu">{tr}Links{/tr}</a><br />
       {/if}
-      {if $feature_hotwords eq 'y'}
+      {if $feature_hotwords eq 'y' and $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admin_hotwords.php" class="linkmenu">{tr}Hotwords{/tr}</a><br />
       {/if}
+      {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admin_rssmodules.php" class="linkmenu">{tr}RSS modules{/tr}</a><br />
       &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br />
-      {if $feature_polls eq 'y'}
+      {/if}
+      {if $feature_polls eq 'y' and $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br />
       {/if}
+      {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
-      {if $feature_search_stats eq 'y'}
+      {/if}
+      {if $feature_search_stats eq 'y' and $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
-	  {/if}
-      {if $feature_theme_control eq 'y'}
+	 {/if}
+      {if $feature_theme_control eq 'y' and $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
       {/if}
+      {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
-    {/if}
+       {/if}
     {if $feature_chat eq 'y' and $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
     {/if}

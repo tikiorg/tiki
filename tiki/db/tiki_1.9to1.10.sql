@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.23 2004-09-21 23:04:48 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.24 2004-09-24 11:20:14 sylvieg Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -142,3 +142,5 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_comment', 'Can add coments to polls', 'registered', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_item_comment', 'Can add comments to poll items', 'registered', 'polls');
 
+# added on 2004-9-24 sylvie
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
