@@ -1,0 +1,41 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-box.f.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ * Backgrounds for full featured 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-box.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+div.cbox, div.separator:hover{
+    background: url(img/ltgreen.png) repeat;
+}
+
+/* Separate, because IE doesn't like Child selectors */
+div#tiki-center > div.simplebox {
+    background: url(img/ltgreen.png) repeat;
+}
+
+div.box, div.separator {
+    background: url(img/dark.png) repeat;
+}
+
+div.separator {
+    background: url(img/grey.png) repeat;
+}
+
+div.box:hover {
+    border: 1px outset #00FF00;
+}
+
+div.cbox#error-box {
+    background: url(img/red.png) repeat;
+}
+
+.linkmenu:hover {
+    background: #70B080;
+}

@@ -1,0 +1,38 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-box.l.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ * Backgrounds for light version of 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-box.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+.linkmenu:hover, div.separator:hover,
+div#tiki-center > div.simplebox {
+    background: #70B080;
+}
+
+div.cbox {
+    background: #507050;
+}
+
+div.box {
+    background: #202020;
+}
+
+div.box:hover {
+    border: 1px outset #00FF00;
+}
+
+div.cbox#error-box {
+    background-image: url(img/red.png);
+    background-repeat: repeat;
+}
+
+div.separator {
+    background: #404040;
+}

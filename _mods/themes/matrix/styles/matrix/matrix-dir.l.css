@@ -1,0 +1,22 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-dir.l.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ * Directory styles
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-dir.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+
+/* Footer with stats for the directory */
+td.dirfooter:hover {
+    background-color: #70B080;
+}
+
+div.dirfooter {
+    background-color: #507050;
+}

@@ -1,0 +1,298 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-wiki.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ */
+
+/*
+ * Wiki page preferences
+ */
+
+/* Titles */
+/* When the page title is a link this is the style */
+.pagetitle, .pagetitle:hover, .pagetitle:active, .pagetitle:visited, .pagetitle:visited:hover {
+    color: #00E000;
+	 background-color: transparent;
+    font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-variant: small-caps;
+    font-size: 30px;
+    text-decoration: none;
+    text-transform: none;
+}
+
+/* Text in wiki pages is displayed using the following style */
+div.wikitext {
+    color: #001000;
+	 background-color: transparent;
+    border: 3px ridge #00B000;
+    padding: 1px;
+    padding-bottom: 10px;
+    margin: 5px 1px 1px 1px;
+    clear: both;
+}
+
+/* -= Wiki title bar =- */
+div.titlebar {
+    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-size: 20px;
+    padding-left: 5px;
+    border: 1px outset #00B000;
+    margin-top: 35px;
+}
+/* Do not add space before top page -=title=- */
+div.wikitext > div.titlebar:first-child {
+    margin-top: 5px;
+}
+
+/* The bar where the actions for a page are displayed */
+div#page-bar {
+    margin-left: 5px;
+}
+
+/*
+ * Wiki action buttons (the buttons displayed at the end of
+ * each page to edit/print/remove/etc a page
+ */
+.button2 {
+    color: green;
+    background: transparent;
+    font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-align: center;
+    border: 1px solid;
+	 border-color: #90EE90;
+    margin: 0px;
+}
+
+.button2:hover {
+    color: #001000;
+    background: #90EE90;
+}
+
+/* Links in buttons */
+.linkbut, .linkbut:visited, .linkbut:active {
+    color: #00D000;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+.linkbut:hover, .linkbut:visited:hover, .highlight:hover {
+    color: #001000;
+    text-decoration: none;
+    background: #90EE90;
+}
+
+.highlight {
+    color: black;
+    background-color: #90EE90;
+}
+
+/* When a cached version of an external link is displayed */
+div.cache {
+    border: 1px solid green;
+    padding: 0.1em;
+    margin: 0.1ex 0px;
+    width: 100%;
+}
+
+div.cachedpage {
+    border: 1px solid green;
+    padding: 0.1em;
+    margin: 0.1ex 0px;
+    width: 100%;
+}
+
+/*
+ * When an external link is cached a small link
+ * to the cached version (cache) is displayed
+ * using this style
+ */
+.wikicache, .wikicache:active, .wikicache:hover {
+    color: #00E000;
+	 background-color: transparent;
+    font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+.wikicache:visited, .wikicache:visited:hover {
+    color: #00B000;
+	 background-color: transparent;
+    font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+/* User table on wiki page */
+table.wikitable {
+    border: 1px solid black;
+}
+
+td.wikicell {
+    border: 1px solid #90EE90;
+    border-style: outset;
+}
+
+/* Links to wiki pages */
+.wiki, .wiki.active, .wiki:visited {
+    color: #00E000;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+.wiki:hover, .wiki:visited:hover {
+    color: #00F000;
+	 background-color: transparent;
+    text-decoration: underline;
+}
+
+/* Date displayed for last modification date of pages */
+p.editdate {
+    margin-bottom: -1ex;
+    font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+/* The edit-help used to display the wiki syntax when editing a page */
+div.wiki-edithelp {
+    border: 1px outset #00A000;
+    font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 6px;
+    color: #001000;
+	 background-color: transparent;
+}
+
+/* Wiki structures navigation bar */
+div.tocnav {
+    font-family: "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    border: 2px ridge #00A000;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-bottom: 30px;
+}
+
+.tocnavlink {
+    color: #90EE90;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+.tocnavlink:hover {
+    color: #90EE90;
+    text-decoration: none;
+    background-color: green;
+}
+
+/* The whole comment (attachment) area when it is visible and when it is not */
+#edithelpzone {
+    display: none;
+    margin-top: 10px;
+}
+
+#attzone {
+    display: none;
+    margin-top: 10px;
+}
+
+#comzone {
+    display: none;
+    margin-top: 10px;
+}
+
+#comzoneopen {
+    display: block;
+    margin-top: 10px;
+}
+
+/* The comment title */
+span.commentstitle {
+    font-weight: bold;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+/* Links in comments and in the comment header */
+.commentshlink, .commentshlink:active, .commentshlink:visited, .commentslink, .commentslink:active {
+    color: #00E000;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+.commentslink:visited {
+    color: #00B000;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+.commentshlink:hover, .commentshlink:visited:hover, .commentslink:hover, .commentslink:visited:hover {
+    color: #00F000;
+	 background-color: transparent;
+    text-decoration: underline;
+}
+
+/* Code listing style */
+div.codelisting {
+    color: black;
+	 background-color: transparent;
+    border: 2px ridge #00A000;
+    margin: 4px;
+    padding-left: 20px;
+}
+
+/* My UserStory wiki pluin styles */
+td.userstoryid, td.userstorystatus {
+    text-align: center;
+    width: 12%;
+    border: 1px outset #00A000;
+}
+
+td.userstorytitle {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 1em;
+    width: auto;
+    border: 1px outset #00A000;
+}
+
+td.userstoryidwarn {
+    color: red;
+	 background-color: transparent;
+    border: 1px outset #A00000;
+}
+
+td.userstorydata {
+}
+
+table.userstory {
+    width: 100%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+/*
+ * Wiki style hacks
+ */
+
+/* Links to wiki pages without descriptions */
+:link[title = 'no description'], :link[title = 'no description']:visited {
+    color: #E0E0E0;
+	 background-color: transparent;
+    text-decoration: none;
+}
+
+:link[title = 'no description']:hover, :link[title = 'no description']:visited:hover {
+    color: #E0E0E0;
+	 background-color: transparent;
+    text-decoration: underline;
+}
+
+/*
+:link[title~='Updated']:after
+{
+  display: marker;
+  content: url(img/hot.png);
+}
+*/

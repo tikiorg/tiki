@@ -1,0 +1,24 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-table.f.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ * Backgrounds for full featured 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-table.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+td.formcolor,
+td.heading,
+td.button,
+td.even
+{
+    background: url(img/ltgreen.png) repeat;
+}
+
+td.odd {
+    background: url(img/dark.png) repeat;
+}

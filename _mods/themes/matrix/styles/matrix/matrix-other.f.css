@@ -1,0 +1,29 @@
+/*
+ * $Header: /cvsroot/tikiwiki/_mods/themes/matrix/styles/matrix/matrix-other.f.css,v 1.1 2004-10-29 19:13:25 damosoft Exp $
+ *
+ * Backgrounds for full featured 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-other.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+div.messureadbody,
+div.messureadhead {
+    background: url(img/dark.png) repeat;
+}
+/* Separate because IE does not like sibling selectors */
+div.messureadhead td[style = "font-weight:bold;"] + td {
+    background: url(img/dark.png) repeat;
+}
+
+div.messureadhead td[style = "font-weight:bold;"] {
+    background: url(img/ltgreen.png) repeat;
+}
+
+div.shoutboxmsg {
+    background: url(img/grey.png) repeat;
+}
