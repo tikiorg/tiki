@@ -421,7 +421,7 @@ $lang=Array(
 "Upload failed" => "Échec de téléchargement",
 "Feature disabled" => "Fonctionnalité désactivée",
 "No page indicated" => "Aucune page indiquée",
-"Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release." => "Vos modificatins ont été prises en compte. <a href='tiki-admin.php?page=general'>Clicquer ici</a> ou revenez plus tard pour voir les modifications. C'est une erreur connue qui sera corrigée.",
+"Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release." => "Vos modifications ont été prises en compte. <a href='tiki-admin.php?page=general'>Cliquer ici</a> ou revenez plus tard pour voir les modifications. C'est une erreur connue qui sera corrigée.",
 "The passwords don't match" => "Les mots de passe ne correspondent pas",
 "Password should be at least" => "Le mot de passe doit être au moins",
 "characters long" => "caractères longs",
