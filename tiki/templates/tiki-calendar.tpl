@@ -150,6 +150,9 @@
 <a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}">{tr}month{/tr}</a>
 </div>
 </td></tr>
+{if $viewmode eq 'day'}
+
+{elseif $viewmode eq 'month'}
 <tr><td></td>
 {section name=dn loop=$daysnames}
 <td class="heading">{$daysnames[dn]}</td>
@@ -184,6 +187,36 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 {/section}
 </tr>
 {/section}
+
+{else}
+<tr><td></td>
+{section name=dn loop=$daysnames}
+<td class="heading">{$daysnames[dn]}</td>
+{/section}
+</tr>
+<tr><td width="20" class="heading">{$currentweek}</td>
+{cycle values="odd,even" print=false}
+{section name=d loop=$weekdays}
+<td class="{cycle}">
+<div align="center" class="menu" style="font-size:7px;background-color:{if $cellweek[d].day eq $focusdate}#f3e498{else}none{/if};">
+<span style="float:left;">
+<a href="tiki-calendar.php?todate={$cellweek[d].day}" class="linkmenu" style="color:#666666;font-size:7px;">{$cellweek[d].day|date_format:"%d/%m"}</a>
+</span>
+<span style="float:right;margin-right:3px;">
+<a href="tiki-calendar.php?todate={$cell.currentweek[d].day}&editmode=add" class="linkmenu" style="color:#666666;font-size:7px;">{tr}+{/tr}</a>
+</span>
+.<br/>
+</div>
+{section name=items loop=$cell.currentweek[d].items}
+<div class="Cal{$cell.currentweek[d].items[items].type}">
+<a href="{$cell.currentweek[d].items[items].url}" onmouseover="return overlib('<b>{$cell.currentweek[d].items[items].descriptionhead}</b><br>{$cell[w][d].items[items].descriptionbody}');"
+onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."}</a><br/>
+</div>
+{/section}
+</td>
+{/section}
+</tr>
+{/if}
 </table>
 
 {if $editmode}
