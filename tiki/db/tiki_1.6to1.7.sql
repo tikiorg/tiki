@@ -1,3 +1,39 @@
+### file galleries configuration ###
+alter table tiki_files add reference_url varchar(250);
+alter table tiki_files add is_reference char(1);
+update tiki_files set reference_url = '';
+update tiki_files set is_reference = 'n';
+
+alter table tiki_file_galleries add show_id char(1);
+alter table tiki_file_galleries add show_icon char(1);
+update tiki_file_galleries set show_icon = 'y';
+alter table tiki_file_galleries add show_name char(1);
+alter table tiki_file_galleries add show_size char(1);
+alter table tiki_file_galleries add show_description char(1);
+alter table tiki_file_galleries add max_desc integer(8);
+alter table tiki_file_galleries add show_created char(1);
+alter table tiki_file_galleries add show_dl char(1);
+update tiki_file_galleries set show_id = 'y';
+update tiki_file_galleries set show_name = 'a';
+update tiki_file_galleries set show_size = 'y';
+update tiki_file_galleries set show_description = 'y';
+update tiki_file_galleries set show_created = 'y';
+update tiki_file_galleries set show_dl = 'y';
+update tiki_file_galleries set max_desc = '1024';
+
+### table to track posts read from forums ###
+drop table if exists tiki_forum_reads;
+create table tiki_forum_reads(
+	user varchar(200),
+	threadId integer(14),
+	forumId integer(14),
+	timestamp integer(14),
+	primary key(user,threadId)
+);
+
+
+
+
 ### tiki  banning system
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_banning','tiki','Can ban users or ips','admin');
 drop table if exists tiki_banning;

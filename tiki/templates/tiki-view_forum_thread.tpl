@@ -1,5 +1,9 @@
 <a class="pagetitle" href="tiki-view_forum.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 <br/><br/>
+{if $unread > 0}
+	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/><br/></a>
+{/if}
+
 {if $was_queued eq 'y'}
 <div class="wikitext">
 <small>{tr}Your message has been queued for approval, the message will be posted after

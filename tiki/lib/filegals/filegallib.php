@@ -111,6 +111,12 @@ class FileGalLib extends TikiLib {
     return $retval;
   }
   
+  function set_file_gallery($file,$gallery)
+  {
+  	$query  = "update tiki_files set galleryId=$gallery where fileId=$file";
+  	$this->query($query);
+  }
+  
   function remove_file_gallery($id)
   {
     global $fgal_use_dir;
@@ -138,7 +144,7 @@ class FileGalLib extends TikiLib {
     return $res;
   }
 
-  function replace_file_gallery($galleryId, $name, $description, $user,$maxRows,$public,$visible='y')
+  function replace_file_gallery($galleryId, $name, $description, $user,$maxRows,$public,$visible='y',$show_id,$show_icon,$show_name,$show_size,$show_description,$show_created,$show_dl,$max_desc)
   {
     // if the user is admin or the user is the same user and the gallery exists then replace if not then
     // create the gallary if the name is unused.
@@ -146,12 +152,13 @@ class FileGalLib extends TikiLib {
     $description = addslashes(strip_tags($description));
     $now = date("U");
     if($galleryId>0) {
-      $query = "update tiki_file_galleries set name='$name', maxRows=$maxRows, description='$description',lastModif=$now, public='$public', visible='$visible' where galleryId=$galleryId";
+      $query = "update tiki_file_galleries set name='$name', maxRows=$maxRows, description='$description',lastModif=$now, public='$public', visible='$visible',show_icon='$show_icon',show_id='$show_id',show_name='$show_name',show_description='$show_description',show_size='$show_size',show_created='$show_created',show_dl='$show_dl',max_desc=$max_desc where galleryId=$galleryId";
       $result = $this->query($query);
     } else {
       // Create a new record
-      $query =  "insert into tiki_file_galleries(name,description,created,user,lastModif,maxRows,public,hits,visible)
-                                    values ('$name','$description',$now,'$user',$now,$maxRows,'$public',0,'$visible')";
+      $query =  "insert into tiki_file_galleries(name,description,created,user,lastModif,maxRows,public,hits,visible,show_id,show_icon,show_name,show_description,show_created,show_dl,max_desc)
+                                    values ('$name','$description',$now,'$user',$now,$maxRows,'$public',0,'$visible',
+                                    '$show_id','$show_icon','$show_name','$show_description','$show_created','$show_dl',$max_desc)";
       $result = $this->query($query);
       $galleryId=$this->getOne("select max(galleryId) from tiki_file_galleries where name='$name' and lastModif=$now");
     }

@@ -554,6 +554,13 @@ if($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 	$smarty->assign('all_forums',$all_forums['data']);
 }
 
+$smarty->assign('unread',0);
+if($user && $feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
+
+
 if($tiki_p_admin_forum == 'y') {
 	$smarty->assign('queued',$commentslib->get_num_queued($comments_objectId));
 }

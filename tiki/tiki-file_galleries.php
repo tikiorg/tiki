@@ -54,6 +54,16 @@ $smarty->assign('url',httpPrefix().$foo["path"]);
 //$smarty->assign('theme','');
 $smarty->assign('name','');
 $smarty->assign('description','');
+
+$smarty->assign('show_id','y');
+$smarty->assign('show_icon','y');
+$smarty->assign('show_name','a');
+$smarty->assign('show_size','y');
+$smarty->assign('show_description','y');
+$smarty->assign('show_created','y');
+$smarty->assign('show_dl','y');
+$smarty->assign('max_desc',1024);
+
 $smarty->assign('maxRows',10);
 $smarty->assign('public','n');
 $smarty->assign('edited','n');
@@ -67,9 +77,21 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
   $smarty->assign('edited','y');
   if($_REQUEST["galleryId"]>0) {
     $info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
+
     //$smarty->assign_by_ref('theme',$info["theme"]);
     $smarty->assign_by_ref('name',$info["name"]);
     $smarty->assign_by_ref('description',$info["description"]);
+
+	$smarty->assign('show_id',$info['show_id']);
+	$smarty->assign('show_icon',$info['show_icon']);
+	$smarty->assign('show_name',$info['show_name']);
+	$smarty->assign('show_size',$info['show_size']);
+	$smarty->assign('show_description',$info['show_description']);
+	$smarty->assign('show_created',$info['show_created']);
+	$smarty->assign('show_dl',$info['show_dl']);
+	$smarty->assign('max_desc',$info['max_desc']);
+
+
     $smarty->assign_by_ref('maxRows',$info["maxRows"]);
     $smarty->assign_by_ref('public',$info["public"]);
     $smarty->assign_by_ref('visible',$info["visible"]);
@@ -103,6 +125,17 @@ if(isset($_REQUEST["edit"])) {
   //$smarty->assign_by_ref('theme',$_REQUEST["theme"]);
   $smarty->assign_by_ref('name',$_REQUEST["name"]);
   $smarty->assign_by_ref('description',$_REQUEST["description"]);
+  
+  $smarty->assign('show_id',isset($_REQUEST['show_id'])?'y':'n');
+  $smarty->assign('show_icon',isset($_REQUEST['show_icon'])?'y':'n');
+  $smarty->assign('show_name',($_REQUEST['show_name']));
+  $smarty->assign('show_size',isset($_REQUEST['show_size'])?'y':'n');
+  $smarty->assign('show_description',isset($_REQUEST['show_description'])?'y':'n');
+  $smarty->assign('show_created',isset($_REQUEST['show_created'])?'y':'n');
+  $smarty->assign('show_dl',isset($_REQUEST['show_dl'])?'y':'n');
+  $smarty->assign('max_desc',($_REQUEST['max_desc']));
+
+  
   $smarty->assign_by_ref('maxRows',$_REQUEST["maxRows"]);
   $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
   $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
@@ -124,11 +157,17 @@ if(isset($_REQUEST["edit"])) {
   }
   $smarty->assign('public',$public);
   $smarty->assign('visible',$visible);
-  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible);
+  $_REQUEST['show_id']=isset($_REQUEST['show_id'])?'y':'n';
+  $_REQUEST['show_icon']=isset($_REQUEST['show_icon'])?'y':'n';
+  $_REQUEST['show_description']=isset($_REQUEST['show_description'])?'y':'n';
+  $_REQUEST['show_created']=isset($_REQUEST['show_created'])?'y':'n';
+  $_REQUEST['show_dl']=isset($_REQUEST['show_dl'])?'y':'n';
+  $_REQUEST['show_size']=isset($_REQUEST['show_size'])?'y':'n';
+  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible,$_REQUEST['show_id'],$_REQUEST['show_icon'],$_REQUEST['show_name'],$_REQUEST['show_size'],$_REQUEST['show_description'],$_REQUEST['show_created'],$_REQUEST['show_dl'],$_REQUEST['max_desc']);
   
   $cat_type='file gallery';
   $cat_objid = $fgid;
-  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_desc = substr($_REQUEST["description"],0,$_REQUEST['max_desc']);
   $cat_name = $_REQUEST["name"];
   $cat_href="tiki-list_file_gallery.php?galleryId=".$cat_objid;
   include_once("categorize.php");

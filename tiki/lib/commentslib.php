@@ -14,7 +14,32 @@ class Comments extends TikiLib {
     $this->db = $db;  
   }
   
+  
+  
   /* Functions for the forums */
+  function mark_comment($user,$forumId,$threadId)
+  {
+  	if(!$user) return false;
+  	$now = date("U");
+  	$query = "replace into tiki_forum_reads(user,threadId,forumId,timestamp)
+  	values('$user',$threadId,$forumId,$now)";
+  	$this->query($query);
+  }
+  
+  function unmark_comment($user,$forumId,$threadId)
+  {
+  	$query = "delete from tiki_forum_reads where user='$user' and threadId=$threadId";
+  	$this->query($query);	
+  }
+  
+  function is_marked($threadId)
+  {
+  	global $user;
+  	if(!$user) return false;
+  	return $this->getOne("select count(*) from tiki_forum_reads where user='$user' and threadId=$threadId");
+  	
+  }
+  
   function attach_file($threadId,$qId,$name,$type,$size, $data, $fhash, $dir, $forumId) 
   {
   	$name = addslashes($name);
@@ -621,6 +646,7 @@ class Comments extends TikiLib {
     }
     $res['attachments']=$this->get_thread_attachments($res['threadId'],0);
     $res['user_online']='n';
+    $res['is_marked']=$this->is_marked($res['threadId']);
     if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
     } 
@@ -765,6 +791,7 @@ class Comments extends TikiLib {
       	$res['user_email']='';
       }
       $res['user_online']='n';
+      $res['is_marked']=$this->is_marked($res['threadId']);
       if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
       } 
@@ -812,6 +839,7 @@ class Comments extends TikiLib {
       $res['user_level']=$this->getOne("select level from tiki_user_postings where user='".$res['userName']."'");
       $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
       $res['user_online']='n';
+      $res['is_marked']=$this->is_marked($res['threadId']);
       if($res['userName']) {
     	$res['user_online']=$this->getOne("select count(*) from tiki_sessions where user='".$res['userName']."'")?'y':'n';
       } 

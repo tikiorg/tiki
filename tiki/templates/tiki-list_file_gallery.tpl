@@ -47,48 +47,123 @@
    </td>
 </tr>
 </table>
+<form method="get" action="tiki-list_file_gallery.php">
+	<input type="hidden" name="galleryId" value="{$galleryId}" />
+    <input type="hidden" name="find" value="{$find}" />
+    <input type="hidden" name="sort_mode" value="{$sort_mode}" />
 <table class="listfiles">
+{if $tiki_p_admin_file_galleries eq 'y'}
 <tr>
-<td width="4%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
-<!--<td width="15%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Title{/tr}</a></td>-->
+	<td class="heading" colspan="16">
+	{tr}Actions{/tr}
+	</td>
+</tr>
+<tr>	
+	<td class="even" colspan="16">
+	
+	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected files{/tr}' />
+	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected topics{/tr}' />
+	
+	</td>
+</tr>
+{if $smarty.request.movesel_x} 
+<tr>
+	<td class="even" colspan="18">
+	{tr}Move to{/tr}:
+	<select name="moveto">
+		{section name=ix loop=$all_galleries}
+			{if $all_galleries[ix].galleryId ne $galleryId}
+				<option value="{$all_galleries[ix].galleryId}">{$all_galleries[ix].name}</option>
+			{/if}
+		{/section}
+	</select>
+	<input type='submit' name='movesel' value='{tr}move{/tr}' />
+	</td>
+</tr>
+{/if}
+{/if}
+
+<tr>
+{if $tiki_p_admin_file_galleries eq 'y'}
+<td width="2%" class="listfilesheading">&nbsp;</td>
+{/if}
+{if $gal_info.show_id eq 'y'}
+	<td width="4%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
+{/if}
 <td class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></td>
-<td width="12%" style="text-align:right;" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></td>
-<td width="25%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td width="16%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
-<td style="text-align:right;" width="5%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
-<!--<td class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>-->
+{if $gal_info.show_size eq 'y'}
+	<td width="12%" style="text-align:right;" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></td>
+{/if}
+{if $gal_info.show_description eq 'y'}
+	<td width="25%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+{/if}
+{if $gal_info.show_created eq 'y'}
+	<td width="16%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
+{/if}
+{if $gal_info.show_dl eq 'y'}
+	<td style="text-align:right;" width="5%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
+{/if}
 <td class="listfilesheading">Actions</td>
 </tr>
+
+
+
+
 {cycle values="odd,even" print=false}
 {section name=changes loop=$images}
 <tr>
-<td class="listfilesid{cycle advance=false}">{$images[changes].fileId}&nbsp;</td>
-<!--<td class="listfilesname{cycle advance=false}">{$images[changes].name}&nbsp;</td>-->
+
+{if $tiki_p_admin_file_galleries eq 'y'}
+<td width="2%" style="text-align:center;" class="listfilesid{cycle advance=false}">
+	<input type="checkbox" name="file[]" value="{$images[changes].fileId}"  {if $smarty.request.file and in_array($images[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
+</td>
+{/if}
+
+{if $gal_info.show_id eq 'y'}
+	<td class="listfilesid{cycle advance=false}">{$images[changes].fileId}</td>
+{/if}
+
 <td class="listfilesfilename{cycle advance=false}">
-{$images[changes].filename|iconify}
-{if $tiki_p_download_files eq 'y'}
-<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+	{if $gal_info.show_icon eq 'y'}
+		{$images[changes].filename|iconify}
+	{/if}
+	
+	{if $tiki_p_download_files eq 'y'}
+		<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+	{/if}
+	{if ($images[changes].name != "") and $gal_info.show_name ne 'f'}
+		{$images[changes].name}
+	{else}
+		{$images[changes].filename}
+	{/if}
+	{if $tiki_p_download_files eq 'y'}
+		</a>
+	{/if}
+	{if $gal_info.show_name eq 'a'}
+			({$images[changes].filename})
+	{/if}
+</td>
+
+{if $gal_info.show_size eq 'y'}
+	<td style="text-align:right;" class="listfilesfilesize{cycle advance=false}">{$images[changes].filesize|kbsize}&nbsp;</td>
 {/if}
-{if ($images[changes].name != "") }
-{$images[changes].name}
-{else}
-{$images[changes].filename}
+
+{if $gal_info.show_description eq 'y'}
+	<td class="listfilesdescription{cycle advance=false}">{$images[changes].description|truncate:$gal_info.max_desc:"..."}&nbsp;</td>
 {/if}
-{if $tiki_p_download_files eq 'y'}
-</a>
+	
+{if $gal_info.show_created eq 'y'}
+	<td class="listfilescreated{cycle advance=false}">{$images[changes].created|tiki_short_date}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
 {/if}
-{if ($images[changes].name != "") }
-({$images[changes].filename})
+
+{if $gal_info.show_dl eq 'y'}
+	<td style="text-align:right;" class="listfilesdls{cycle advance=false}">{$images[changes].downloads}&nbsp;</td>
 {/if}
-&nbsp;</td>
-<td style="text-align:right;" class="listfilesfilesize{cycle advance=false}">{$images[changes].filesize|kbsize}&nbsp;</td>
-<td class="listfilesdescription{cycle advance=false}">{$images[changes].description}&nbsp;</td>
-<td class="listfilescreated{cycle advance=false}">{$images[changes].created|tiki_short_date}{if $images[changes].user} by {$images[changes].user}{/if}&nbsp;</td>
-<td style="text-align:right;" class="listfilesdls{cycle advance=false}">{$images[changes].downloads}&nbsp;</td>
+
 <td class="listfilesactions{cycle}">
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
-		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;fileId={$images[changes].fileId}">Edit</a>
-		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}">Remove</a>
+		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;fileId={$images[changes].fileId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+		<a class="link" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].fileId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
 	{/if}
 	&nbsp;
 </td>
@@ -96,11 +171,13 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td colspan="16">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
 </table>
+</form>
+
 <br/>
   <div class="mini">
       {if $prev_offset >= 0}

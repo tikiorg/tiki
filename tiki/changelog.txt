@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Banning system: Admin can ban users or IPs from specific sections of Tiki,
+  rules accept dates (suspensions). Usernames accept regexes, IPs accept wildcards
+  example: 23.*.*.*
+* [NEW] Forums: Tiki distinguishes between read and unread posts
 * [NEW] WML&PDA Integration using HawHaw: Use tiki-wap.php to access a Phone/PDA 
   friendly version of the Wiki.
 * [NEW] Forum attachments added, you can setup which forums admit attachments and who

@@ -59,6 +59,21 @@ if($tiki_p_admin_file_galleries == 'y') {
   $smarty->assign("tiki_p_download_files",'y');
   $tiki_p_create_file_galleries = 'y';
   $smarty->assign("tiki_p_create_file_galleries",'y');
+  
+  	if(isset($_REQUEST['delsel_x'])) {
+	  foreach(array_values($_REQUEST['file']) as $file) {
+	    $filegallib->remove_file($file);
+	  }
+	}
+	
+	if(isset($_REQUEST['movesel'])) {
+	  foreach(array_values($_REQUEST['file']) as $file) {
+	    // To move a topic you just have to change the object
+	    $filegallib->set_file_gallery($file,$_REQUEST['moveto']);
+	  }
+	}
+
+  
 }
 
 
@@ -68,7 +83,7 @@ if($tiki_p_view_file_gallery != 'y') {
   die;  
 }
 
-
+$smarty->assign_by_ref('gal_info',$gal_info);
 $smarty->assign_by_ref('owner',$gal_info["user"]);
 $smarty->assign_by_ref('public',$gal_info["public"]);
 $smarty->assign_by_ref('galleryId',$_REQUEST["galleryId"]);
@@ -215,6 +230,8 @@ if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
 }
 
+$all_galleries = $filegallib->list_file_galleries(0,-1,'name_asc', $user,'');
+$smarty->assign('all_galleries',$all_galleries['data']);
 
 
 // Display the template
