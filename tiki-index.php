@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.132 2004-10-15 15:54:42 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.133 2004-10-28 01:04:38 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,10 +11,7 @@ require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 if ($feature_categories == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
+	include_once('lib/categories/categlib.php');
 }
 
 if($feature_wiki != 'y') {
@@ -548,20 +545,18 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
     $smarty->assign('is_categorized','y');
-    if(isset($feature_categorypath) and $feature_categories == 'y') {
-	if ($feature_categorypath == 'y') {
+    if(isset($feature_categorypath) && $feature_categorypath == 'y') {
 	    $cats = $categlib->get_object_categories('wiki page',$objId);
 	    $display_catpath = $categlib->get_categorypath($cats);
 	    $smarty->assign('display_catpath',$display_catpath);
-	}
     }
     // Display current category objects or not (like {category()})
-    if (isset($feature_categoryobjects) and $feature_categories == 'y') {
-	if ($feature_categoryobjects == 'y') {
-	    $catids = $categlib->get_object_categories('wiki page', $objId);
-	    $display_catobjects = $categlib->get_categoryobjects($catids);
+    if (isset($feature_categoryobjects) && $feature_categoryobjects == 'y') {
+	    if (!isset($cats)) {
+	    	$cats = $categlib->get_object_categories('wiki page', $objId);
+	    }
+	    $display_catobjects = $categlib->get_categoryobjects($cats);
 	    $smarty->assign('display_catobjects',$display_catobjects);
-	}
     }
 } else {
     $smarty->assign('is_categorized','n');
