@@ -973,9 +973,9 @@ class TikiLib {
 
 	/*shared*/
 	function get_gallery($id) {
-		$query = "select * from `tiki_galleries` where `galleryId`='$id'";
+		$query = "select * from `tiki_galleries` where `galleryId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($id));
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -2876,7 +2876,6 @@ class TikiLib {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
 		global $tiki_p_admin_galleries;
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
 		$old_sort_mode = '';
 
 		if (in_array($sort_mode, array(
@@ -2895,27 +2894,32 @@ class TikiLib {
 		// If the user is not admin then select `it` 's own galleries or public galleries
 		if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
 			$whuser = "";
+			$bindvars=array();
 		} else {
-			$whuser = "where `user`='$user' or public='y'";
+			$whuser = "where `user`=? or public=?";
+			$bindvars=array($user,'y');
 		}
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
 			if (empty($whuser)) {
-				$whuser = "where `name` like '%" . $find . "%' or `description` like '%" . $find . ".%'";
+				$whuser = "where `name` like ? or `description` like ?";
+				$bindvars=array($findesc,$findesc);
 			} else {
-				$whuser .= " and `name` like $findesc or `description` like $findesc";
+				$whuser .= " and `name` like ? or `description` like ?";
+				$bindvars[]=$findesc;
+				$bindvars[]=$findesc;
 			}
 		}
 
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select * from `tiki_galleries` $whuser order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_galleries` $whuser";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -2933,7 +2937,7 @@ class TikiLib {
 			$aux["hits"] = $res["hits"];
 			$aux["public"] = $res["public"];
 			$aux["theme"] = $res["theme"];
-			$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`='$gid'");
+			$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 			$ret[] = $aux;
 		}
 
@@ -2961,7 +2965,6 @@ class TikiLib {
 	/*shared*/
 	function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		$old_sort_mode = '';
 
@@ -2980,28 +2983,33 @@ class TikiLib {
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
 		if ($user != 'admin') {
-			$whuser = " and (user='$user' or public='y') ";
+			$whuser = "where `user`=? or `public`=?";
+			$bindvars=array('y',$user,'y');
 		} else {
 			$whuser = "";
+			$bindvars=array('y');
 		}
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
 			if (empty($whuser)) {
-				$whuser = " and (`name` like $findesc or `description` like $findesc)";
+				$whuser = " and (`name` like ? or `description` like ?)";
+				$bindvars=array('y',$findesc,$findesc);
 			} else {
-				$whuser .= " and (`name` like $findesc or `description` like $findesc)";
+				$whuser .= " and (`name` like ? or `description` like ?)";
+				$bindvars[]=$findesc;
+				$bindvars[]=$findesc;
 			}
 		}
 
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select * from `tiki_galleries` where `visible`='y' $whuser order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from `tiki_galleries` where `visible`='y' $whuser";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -3019,7 +3027,7 @@ class TikiLib {
 			$aux["hits"] = $res["hits"];
 			$aux["public"] = $res["public"];
 			$aux["theme"] = $res["theme"];
-			$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`='$gid'");
+			$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 			$ret[] = $aux;
 		}
 
