@@ -702,11 +702,13 @@ class UsersLib extends TikiLib {
     function remove_group($group) {
 	$query = "delete from `users_groups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
-	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or
-		`includeGroup` = ?";
+	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or `includeGroup` = ?";
 	$result = $this->query($query, array($group, $group));
 	$query = "delete from `users_grouppermissions` where `groupName` = ?";
 	$result = $this->query($query, array($group));
+	$query = "delete from `users_usergroups` where `groupName` = ?";
+	$result = $this->query($query, array($group));
+	
 	return true;
     }
 
