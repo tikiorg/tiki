@@ -26,9 +26,11 @@ if($_REQUEST["faqId"]) {
   $info = Array();
   $info["title"]='';
   $info["description"]='';
+  $info["canSuggest"]='n';
 }
 $smarty->assign('title',$info["title"]);
 $smarty->assign('description',$info["description"]);
+$smarty->assign('canSuggest',$info["canSuggest"]);
 
 
 if(isset($_REQUEST["remove"])) {
@@ -46,7 +48,25 @@ if(isset($_REQUEST["save"])) {
     $smarty->display('error.tpl');
     die;
   }
-  $tikilib->replace_faq($_REQUEST["faqId"], $_REQUEST["title"], $_REQUEST["description"]);
+  if(isset($_REQUEST["canSuggest"])&&$_REQUEST["canSuggest"]=='on') {
+    $canSuggest='y';
+  } else {
+    $canSuggest='n';
+  }
+  $fid = $tikilib->replace_faq($_REQUEST["faqId"], $_REQUEST["title"], $_REQUEST["description"],$canSuggest);
+  
+  $cat_type='faq';
+  $cat_objid = $fid;
+  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_name = $_REQUEST["title"];
+  $cat_href="tiki-view_faq.php?faqId=".$cat_objid;
+  include_once("categorize.php");
+  
+  $smarty->assign('faqId',0);
+  $smarty->assign('title','');
+  $smarty->assign('description','');
+  $smarty->assign('canSuggest','');
+
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -88,6 +108,9 @@ if($offset>0) {
 }
 
 $smarty->assign_by_ref('channels',$channels["data"]);
+$cat_type='faq';
+$cat_objid = $_REQUEST["faqId"];
+include_once("categorize_list.php");
 
 
 // Display the template

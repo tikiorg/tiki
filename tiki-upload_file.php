@@ -86,8 +86,30 @@ if(isset($_REQUEST["upload"])) {
      // We process here file uploads
      if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
        $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
-       $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
+       $data = '';
+       $fhash='';
+       if($fgal_use_db == 'n') {
+         $fhash = md5($name = $_FILES['userfile1']['name']);    
+         @$fw = fopen($fgal_use_dir.$fhash,"w");
+         if(!$fw) {
+           $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+           $smarty->display('error.tpl');
+           die;  
+         }
+       }
+       while(!feof($fp)) {
+         if($fgal_use_db == 'y') {
+           $data .= fread($fp,8192*16);
+         } else {
+           $data = fread($fp,8192);
+           fwrite($fw,$data);
+         }
+       }
        fclose($fp);
+       if($fgal_use_db == 'n') {
+         fclose($fw);
+         $data='';
+       }
        $size = $_FILES['userfile1']['size'];
        $name = $_FILES['userfile1']['name'];
        $type = $_FILES['userfile1']['type'];
@@ -103,15 +125,17 @@ if(isset($_REQUEST["upload"])) {
     $smarty->display('error.tpl');
     die;  
   }
+  if($fgal_use_db == 'y') {
   if(!isset($data) || strlen($data)<1) {
      $smarty->assign('msg',tra('Upload was not successful'));
      $smarty->display('error.tpl');
      die;  
   }
+  }
   if(isset($data)) {
       $smarty->assign('upload_name',$name);
       $smarty->assign('upload_size',$size);
-      $fileId = $tikilib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user);
+      $fileId = $tikilib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
       $smarty->assign_by_ref('fileId',$fileId);
       // Now that the image was inserted we can display the image here.
       $smarty->assign('show','y');

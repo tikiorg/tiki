@@ -184,6 +184,12 @@
           <td class="form"><select name="faqId">{section name=ix loop=$faqs}<option value="{$faqs[ix].faqId}">{$faqs[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfaq" value="{tr}add{/tr}" /></td>
         </tr>        
+        <tr>
+          <td class="form">quiz:</td>
+          <td class="form"><select name="quizId">{section name=ix loop=$quizzes}<option value="{$quizzes[ix].quizId}">{$quizzes[ix].name|truncate:20:"(...)":true}</option>{/section}</select></td>
+          <td class="form"><input type="submit" name="addquiz" value="{tr}add{/tr}" /></td>
+        </tr>        
+
 
       </table>
       </form>

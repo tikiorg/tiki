@@ -121,12 +121,17 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
           if($_REQUEST["comments_threadId"]==0) {
             $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]))  ;
             if($forum_info["useMail"]=='y') {
-              @mail($forum_info["mail"], tra('Tiki email notification'), 
-              tra('New forum post to forum:').' '.$forum_info["title"].'\n'
-              .tra('Author:').' '.$user."\n"
-              .tra('Title:').' '.$_REQUEST["comments_title"]."\n"
-              .tra('Body:').' '.$_REQUEST["comments_data"]."\n"
-              .tra('Date:').' '.date("d-m-Y [h:i]"));
+              
+              $smarty->assign('mail_forum',$forum_info["name"]);
+              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
+              $smarty->assign('mail_date',date("u"));
+              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
+              $smarty->assign('mail_author',$user);
+              
+              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
+              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
+              
+              
             }
             $commentslib->register_forum_post($_REQUEST["forumId"],$_REQUEST["comments_parentId"]);
           } else {

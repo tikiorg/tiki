@@ -63,10 +63,15 @@ $type=&$info["filetype"];
 $file=&$info["filename"];
 $content=&$info["data"];
 
+
 //print("File:$file<br/>");
 //die;
 header("Content-type: $type");
-header( "Content-Disposition: attachment; filename=$file" );
-//header( "Content-Disposition: inline; filename=$file" );
-echo "$content";    
+//header( "Content-Disposition: attachment; filename=$file" );
+header( "Content-Disposition: inline; filename=$file" );
+if($info["path"]) {
+  readfile($fgal_use_dir.$info["path"]);
+} else {
+  echo "$content";    
+}
 ?>

@@ -65,11 +65,14 @@
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       </td>
+      {if $feature_smileys eq 'y'}
       <td width="20%" class="comform">{tr}Smileys{/tr}</td>
+      {/if}
     </tr>
     <tr>
       <td class="comform">{tr}Title{/tr}</td>
       <td class="comform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
+      {if $feature_smileys eq 'y'}
       <td class="comform" rowspan="2">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
@@ -103,8 +106,8 @@
           
        </tr>
       </table>
-      
       </td>
+      {/if}
     </tr>
     <tr>
       <td class="comform">Comment</td>

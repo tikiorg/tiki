@@ -22,6 +22,7 @@
 <tr><td class="galform">{tr}Images per row{/tr}:</td><td class="galform"><input type="text" name="rowImages" value="{$rowImages}" /></td></tr>
 <tr><td class="galform">{tr}Thumbnails size X{/tr}:</td><td class="galform"><input type="text" name="thumbSizeX" value="{$thumbSizeX}" /></td></tr>
 <tr><td class="galform">{tr}Thumbnails size Y{/tr}:</td><td class="galform"><input type="text" name="thumbSizeY" value="{$thumbSizeY}" /></td></tr>      
+{include file=categorize.tpl}
 <tr><td class="galform">{tr}Other users can upload images to this gallery{/tr}:</td><td class="galform"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="galform">&nbsp;</td><td class="galform"><input type="submit" value="{tr}edit/create{/tr}" name="edit" /></td></tr>
 </table>

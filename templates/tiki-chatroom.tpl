@@ -39,7 +39,9 @@
    <small>
    {tr}Use :nickname:message for private messages{/tr}<br/> 
    {tr}Use [URL|description] or [URL] for links{/tr}<br/>
+   {if $feature_smileys eq 'y'}
    {tr}Use (:name:) for smileys{/tr} (smile, biggrin, cool, evil, frown, rolleyes, confused, cry, eek, exclaim, idea, mad, surprised, lol, redface, neutral, sad, twisted, wink)"<br/>
+   {/if}
    </small>
   </td>
 </tr>  

@@ -17,6 +17,7 @@
 {/section}
 </select>
 </td></tr>
+{if $feature_smileys eq 'y'}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
    
      <table>
@@ -49,6 +50,7 @@
 
 
 </td></tr>
+{/if}
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}

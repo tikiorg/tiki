@@ -4,7 +4,7 @@
 <a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a><br/><br/>
 [<a class="link" href="tiki-list_submissions.php">list submissions</a>]
 <br/><br/>
-<form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php">
+<form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='tikieditsubmission'>
 <input type="hidden" name="subId" value="{$subId}" />
 <input type="hidden" name="image_data" value="{$image_data}" />
 <input type="hidden" name="useImage" value="{$useImage}" />
@@ -68,6 +68,19 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
+
+{if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<select name="templateId" onChange="javascript:document.getElementById('tikieditsubmission').submit();">
+<option value="0">{tr}none{/tr}</option>
+{section name=ix loop=$templates}
+<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+{/section}
+</select>
+</td></tr>
+{/if}
+
+
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="subbody"}

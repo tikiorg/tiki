@@ -1,6 +1,6 @@
-/* Default2 style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
+/* Default style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
    every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
-   adapt to produce a new theme
+   adapt to produce a new theme. Good luck!
 */
 
 body {
@@ -24,10 +24,10 @@ body {
 /********************************************* GENERAL LAYOUT *********************************************************/
 
 /* This div encloses the whole Tiki application */
-DIV#tiki-main {  background: #EFEFE7;  height: 100%;  width: 100%;  margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px; }
+DIV#tiki-main {  background: #EFEFE7;  height: 100%;  margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px; }
 
 /* This is the header */
-DIV#tiki-top {  background-color: #5A4A39; color: white; padding-right: 0px;  width: 100%; }
+DIV#tiki-top {  background-color: #5A4A39; color: white; padding-right: 0px;}
 
 /* This is the middle */
 DIV#tiki-mid {  background: #EFEFE7;  height: auto;  padding-bottom: 0px; }
@@ -38,7 +38,7 @@ DIV#tiki-bot {  padding-top: 10px;  margin-top: 0px;  background: #DED6C6;  padd
 /* The three columns */
 TD#leftcolumn {  padding-left: 2px; padding-right: 2px; vertical-align: top;  background: #DED6C6;  width: 180px;}
 TD#rightcolumn {  padding-left: 2px; vertical-align: top;  background: #DED6C6;  width: 180px;}
-TD#centercolumn { padding-right: 2px;background: #EFEFE7;  vertical-align: top;  width: auto; }
+TD#centercolumn { padding-right: 2px;background: #EFEFE7;  vertical-align: top; }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
@@ -51,7 +51,7 @@ DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  pa
    The box class is used for modules while the cbox class is used for other boxes
 */
 
-/* Boxes used for modules (modules are those boxes in the left/right columns) */
+/* Modules (modules are those boxes in the left/right columns) */
 
 div.box {  
   background: white; margin-left: 4px;  margin-right: 4px;  margin-top: 4px;  margin-bottom: 10px;
@@ -93,9 +93,14 @@ TD.module { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-si
 
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {  
-  background: white; margin-left: 4px;  margin-right: 4px;  margin-top: 4px;  margin-bottom: 0px;
-  border: 1px solid black;  padding-bottom: 10px;  overflow: hidden; 
-  width: 99%;
+  background: white; 
+  margin-left: 4px;  
+  margin-right: 8px;  
+  margin-top: 4px;  
+  margin-bottom: 0px;
+  border: 1px solid black;  
+  padding-bottom: 10px;  
+  overflow: hidden; 
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -108,7 +113,6 @@ div.cbox-title {
   text-align: center;
   padding-left: 0px;  padding-right: 0px;
   margin-bottom: 0px;
-  width: 100%;
 }
 
 /* When there's a link in a cbox-title */
@@ -123,7 +127,6 @@ div.cbox-data {
   background: white;
   margin-left: 5px;  margin-right: 5px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
-  width: 99%;
 }
 
 
@@ -179,7 +182,7 @@ div.simplebox {
   margin-left: 1px;  margin-right: 1px;  margin-top: 5px;  margin-bottom: 5px;
   padding-left: 2px;  padding-top: 2px;  padding-bottom: 2px;  padding-right: 2px;
   color: black;
-  border: 1px solid black;  background: white;  width: 98%;
+  border: 1px solid black;  background: white;  
   font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;
 }
 
@@ -223,8 +226,6 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
   padding-left: 2px;
   padding-right: 5px;
 }
-
- 
 
 
 /* Links to view an object from a table listing objects can be generalized to this link */
@@ -295,7 +296,7 @@ H3 { font-weight: bold; font-size: 20px; font-family: "Trebuchet MS",Verdana, Ar
 /* Links where no special link style apply (usually with the general application background) */
 .link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
 .admlink,.forumbutlink
-{  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;}
+{  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: underline;}
 .link:active, .gallink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active,.commentslink:active,
 .admlink:active,.forumbutlink:active
 {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: underline;}
@@ -869,4 +870,73 @@ div.faqanswer {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   width: 97%;
+}
+
+/***************************************************** QUIZZES **************************************************************/
+
+#quizmenu { display: none;}
+
+div.questionblock {
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+div.quizquestion {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+div.quizoptions {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+div.quizdescription {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+div.quizanswer {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+/***************************************************** SHOUTBOX **************************************************************/
+div.shoutboxmsg {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 0px;
+  padding-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+div.shoutboxmodmsg {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+textarea.tshoutbox{
+	background-color: white;
+	border-bottom: #5e5d63 1px solid;
+	border-left: #5e5d63 1px solid;
+	border-right: #5e5d63 1px solid;
+	border-top: #5e5d63 1px solid;
+	color: #000000;
+	font-family: verdana, tahoma, arial, helvetica, sans-serif;
+	font-size: 10px;
 }

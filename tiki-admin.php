@@ -210,6 +210,12 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("allowRegister",'n');
   }
+  if(isset($_REQUEST["useRegisterPasscode"]) && $_REQUEST["useRegisterPasscode"]=="on") {
+    $tikilib->set_preference("useRegisterPasscode",'y'); 
+  } else {
+    $tikilib->set_preference("useRegisterPasscode",'n');
+  }
+  $tikilib->set_preference("registerPasscode",$_REQUEST["registerPasscode"]);
   if(isset($_REQUEST["validateUsers"]) && $_REQUEST["validateUsers"]=="on") {
     $tikilib->set_preference("validateUsers",'y'); 
   } else {
@@ -424,6 +430,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_undo",'n');
     $smarty->assign("feature_wiki_undo",'n');
   }
+  
+  if(isset($_REQUEST["feature_wiki_templates"]) && $_REQUEST["feature_wiki_templates"]=="on") {
+    $tikilib->set_preference("feature_wiki_templates",'y'); 
+    $smarty->assign("feature_wiki_templates",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_templates",'n');
+    $smarty->assign("feature_wiki_templates",'n');
+  }
 
 
   if(isset($_REQUEST["feature_wiki_multiprint"]) && $_REQUEST["feature_wiki_multiprint"]=="on") {
@@ -519,6 +533,12 @@ if(isset($_REQUEST["filegalfeatures"])) {
     $tikilib->set_preference("feature_file_galleries_rankings",'n');
     $smarty->assign("feature_file_galleries_rankings",'n');
   }
+  
+  $tikilib->set_preference("fgal_use_db",$_REQUEST["fgal_use_db"]);
+  $smarty->assign('fgal_use_db',$_REQUEST["fgal_use_db"]);
+  $tikilib->set_preference("fgal_use_dir",$_REQUEST["fgal_use_dir"]);
+  $smarty->assign('fgal_use_dir',$_REQUEST["fgal_use_dir"]);
+  
   if(isset($_REQUEST["feature_file_galleries_comments"]) && $_REQUEST["feature_file_galleries_comments"]=="on") {
     $tikilib->set_preference("feature_file_galleries_comments",'y'); 
     $smarty->assign("feature_file_galleries_comments",'y');
@@ -553,6 +573,14 @@ if(isset($_REQUEST["cmsfeatures"])) {
   } else {
     $tikilib->set_preference("feature_article_comments",'n');
     $smarty->assign("feature_article_comments",'n');
+  }
+  
+  if(isset($_REQUEST["feature_cms_templates"]) && $_REQUEST["feature_cms_templates"]=="on") {
+    $tikilib->set_preference("feature_cms_templates",'y'); 
+    $smarty->assign("feature_cms_templates",'y');
+  } else {
+    $tikilib->set_preference("feature_cms_templates",'n');
+    $smarty->assign("feature_cms_templates",'n');
   }
 }
 
@@ -677,6 +705,30 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_faqs",'n');
     $smarty->assign("feature_faqs",'n');
+  }
+  
+  if(isset($_REQUEST["feature_shoutbox"]) && $_REQUEST["feature_shoutbox"]=="on") {
+    $tikilib->set_preference("feature_shoutbox",'y'); 
+    $smarty->assign("feature_shoutbox",'y');
+  } else {
+    $tikilib->set_preference("feature_shoutbox",'n');
+    $smarty->assign("feature_shoutbox",'n');
+  }
+  
+  if(isset($_REQUEST["feature_quizzes"]) && $_REQUEST["feature_quizzes"]=="on") {
+    $tikilib->set_preference("feature_quizzes",'y'); 
+    $smarty->assign("feature_quizzes",'y');
+  } else {
+    $tikilib->set_preference("feature_quizzes",'n');
+    $smarty->assign("feature_quizzes",'n');
+  }
+  
+  if(isset($_REQUEST["feature_smileys"]) && $_REQUEST["feature_smileys"]=="on") {
+    $tikilib->set_preference("feature_smileys",'y'); 
+    $smarty->assign("feature_smileys",'y');
+  } else {
+    $tikilib->set_preference("feature_smileys",'n');
+    $smarty->assign("feature_smileys",'n');
   }
   
   if(isset($_REQUEST["feature_stats"]) && $_REQUEST["feature_stats"]=="on") {
@@ -918,6 +970,8 @@ if($home_file_gallery) {
 }
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
+$useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
+$registerPasscode = $tikilib->get_preference("registerPasscode",'');
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');
 $maxVersions = $tikilib->get_preference("maxVersions", 20);
@@ -927,6 +981,8 @@ $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $smarty->assign_by_ref('popupLinks',$popupLinks);
 $smarty->assign_by_ref('anonCanEdit',$anonCanEdit);
 $smarty->assign_by_ref('allowRegister',$allowRegister);
+$smarty->assign_by_ref('useRegisterPasscode',$useRegisterPasscode);
+$smarty->assign_by_ref('registerPasscode',$registerPasscode);
 $smarty->assign_by_ref('forgotPass',$forgotPass);
 $smarty->assign_by_ref('validateUsers',$validateUsers);
 $smarty->assign_by_ref('maxVersions',$maxVersions);

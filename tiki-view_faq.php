@@ -39,6 +39,14 @@ $channels = $tikilib->list_faq_questions($_REQUEST["faqId"],0,-1,'question_asc',
 
 $smarty->assign_by_ref('channels',$channels["data"]);
 
+if(isset($_REQUEST["sugg"])) {
+  if($tiki_p_suggest_faq == 'y')  {
+    $tikilib->add_suggested_faq_question($_REQUEST["faqId"],$_REQUEST["suggested_question"],$_REQUEST["suggested_answer"],$user);
+  }
+}
+
+$suggested = $tikilib->list_suggested_questions(0,-1,'created_desc','');
+$smarty->assign_by_ref('suggested',$suggested["data"]);
 
 if($feature_faq_comments == 'y') {
   $comments_per_page = $faq_comments_per_page;

@@ -6,6 +6,8 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
+{include file=categorize.tpl}
+<tr><td class="formcolor">{tr}Users can suggest questions{/tr}:</td><td class="formcolor"><input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -30,6 +32,7 @@
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}questions{/tr}</a></td>
+<td class="heading">{tr}suggested{/tr}</td>
 {if $tiki_p_admin_faqs eq 'y'}
 <td class="heading">{tr}action{/tr}</td>
 {/if}
@@ -42,6 +45,7 @@
 <td class="odd">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
 <td class="odd">{$channels[user].hits}</td>
 <td class="odd">{$channels[user].questions}</td>
+<td class="odd">{$channels[user].suggested}</td>
 {if $tiki_p_admin_faqs eq 'y'}
 <td class="odd">
    <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{tr}remove{/tr}</a>
@@ -57,6 +61,7 @@
 <td class="even">{$channels[user].created|date_format:"%d of %b, %Y [%H:%M]"}</td>
 <td class="even">{$channels[user].hits}</td>
 <td class="even">{$channels[user].questions}</td>
+<td class="even">{$channels[user].suggested}</td>
 {if $tiki_p_admin_faqs eq 'y'}
 <td class="even">
    <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{tr}remove{/tr}</a>

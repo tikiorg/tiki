@@ -14,6 +14,7 @@
 <option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
+{include file=categorize.tpl}
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
@@ -47,7 +48,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">{$channels[user].pollId}</td>
-<td class="odd">{$channels[user].title}</td>
+<td class="odd"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
 <td class="odd">{$channels[user].active}</td>
 <td class="odd">{$channels[user].votes}</td>
 <td class="odd">{$channels[user].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
@@ -61,7 +62,7 @@
 {else}
 <tr>
 <td class="even">{$channels[user].pollId}</td>
-<td class="even">{$channels[user].title}</td>
+<td class="even"><a class="tablename" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{$channels[user].title}</a></td>
 <td class="even">{$channels[user].active}</td>
 <td class="even">{$channels[user].votes}</td>
 <td class="even">{$channels[user].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>

@@ -71,10 +71,23 @@ if(isset($_REQUEST["save"])) {
   } else {
     $public = 'n';
   }
-  $tikilib->replace_blog($_REQUEST["title"],$_REQUEST["description"],$user,$public,$_REQUEST["maxPosts"],$_REQUEST["blogId"]);
+  $bid=$tikilib->replace_blog($_REQUEST["title"],$_REQUEST["description"],$user,$public,$_REQUEST["maxPosts"],$_REQUEST["blogId"]);
+  
+  $cat_type='blog';
+  $cat_objid = $bid;
+  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_name = $_REQUEST["title"];
+  $cat_href="tiki-view_blog.php?blogId=".$cat_objid;
+  include_once("categorize.php");
+  
   header("location: tiki-list_blogs.php");
   die;
 }
+
+$cat_type='blog';
+$cat_objid = $blogId;
+include_once("categorize_list.php");
+
 
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_blog.tpl');

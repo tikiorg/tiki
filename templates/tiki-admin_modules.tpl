@@ -160,7 +160,7 @@
 <td class="even">{$right[user].ord}</td>
 <td class="even">{$right[user].cache_time}</td>
 <td class="even">{$right[user].rows}</td>
-<td class="odd">{$right[user].module_groups}</td>
+<td class="even">{$right[user].module_groups}</td>
 <td class="even">
              <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>

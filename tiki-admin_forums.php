@@ -107,7 +107,15 @@ if(isset($_REQUEST["save"])) {
     $usePruneOld='n';
   }
   
-  $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"]);                         
+  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"]);                         
+  
+  $cat_type='forum';
+  $cat_objid = $fid;
+  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_name = $_REQUEST["name"];
+  $cat_href="tiki-view_forum.php?forumId=".$cat_objid;
+  include_once("categorize.php");
+  
   $info["name"]='';
   $info["description"]='';
   $info["controlFlood"]='n';
@@ -217,6 +225,10 @@ if($offset>0) {
 }
 
 $smarty->assign_by_ref('channels',$channels["data"]);
+
+$cat_type='forum';
+$cat_objid = $_REQUEST["forumId"];
+include_once("categorize_list.php");
 
 
 // Display the template

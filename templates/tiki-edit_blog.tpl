@@ -13,6 +13,7 @@
 <tr><td class="editblogform">{tr}Allow other user to post in this blog{/tr}</td><td class="editblogform">
 <input type="checkbox" name="public" {if $public eq 'y'}checked='checked'{/if}/>
 </td></tr>
+{include file=categorize.tpl}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>

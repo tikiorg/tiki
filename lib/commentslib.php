@@ -52,8 +52,9 @@ class Comments {
                 threadOrdering = '$threadOrdering',
                 pruneMaxAge = $pruneMaxAge
                 where forumId = $forumId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);   
     } else{
-     
       $now = date("U");
       $query = "insert into tiki_forums(name, description, created, lastPost, threads,
                 comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
@@ -63,10 +64,11 @@ class Comments {
                         $pruneUnrepliedAge,  '$usePruneOld',
                         $pruneMaxAge, $topicsPerPage,
                         '$topicOrdering','$threadOrdering') ";
+     $result = $this->db->query($query);
+     if(DB::isError($result)) $this->sql_error($query, $result);   
+     $forumId=$this->db->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);   
-    return true;
+    return $forumId;
   }           
   
   function get_forum($forumId) 
@@ -301,7 +303,10 @@ class Comments {
   
   function parse_smileys($data) 
   {
+    global $feature_smileys;
+    if($feature_smileys == 'y') {
     $data = preg_replace("/\(:([^:]+):\)/","<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />",$data);
+    }
     return $data;
   }
   
