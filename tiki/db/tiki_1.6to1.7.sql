@@ -1,3 +1,7 @@
+alter table tiki_mail_events add user varchar(200);
+alter table tiki_mail_events add hash char(32);
+update tiki_mail_events set user='admin';
+
 alter table tiki_user_notes add parse_mode char(20);
 update tiki_user_notes set parse_mode='raw';
 
