@@ -555,7 +555,7 @@ class UsersLib extends TikiLib {
 	return $status;
     }
 
-    function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '') {
+    function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '') {
 
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 	if ($find) {
@@ -578,7 +578,7 @@ class UsersLib extends TikiLib {
 	return ($ret);
     }
 
-function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '', $initial = '') {
+function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '') {
 	
 	$mid = '';
 	$bindvars = array();
