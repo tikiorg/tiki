@@ -219,7 +219,8 @@ class Calendar {
     if(!$lan) {$lan=$this->lan;}
     $ar=array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre');
     $br=array('','Janeiro','Fevereiro','Março','Abril','Junho','Julho','Agosto','Stembro','Outubro','Novembro','Dezembro');
-    $en=array('','January','February','March','April','May','June','July','August','September','October','November','December');
+    $en=array('',tra('January'),tra('February'),tra('March'),tra('April'),tra('May'),tra('June'),tra('July'),tra('August'),tra('September'),tra('October'),tra('November'),tra('December'));
+
     $coso=${$lan}[$month];
     return ${$lan}[$month];
   }
@@ -242,7 +243,7 @@ class Calendar {
   function dayOfWeekStrFromNo($x,$lan=false){
     if(!$lan) {$lan=$this->lan;}
     $ar=array('','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
-    $en=array('','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+    $en=array('',tra('Sunday'),tra('Monday'),tra('Tuesday'),tra('Wednesday'),tra('Thursday'),tra('Friday'),tra('Saturday'));
     $br=array('','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado');
     return ${$lan}[$x];
   }
