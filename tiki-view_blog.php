@@ -206,31 +206,27 @@ if($feature_user_watches == 'y') {
 	}
 }
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
-	require_once("lib/hawhaw/hawhaw.inc");
-	require_once("lib/hawhaw/hawiki.inc");
-	error_reporting(E_WARNING);
-    $BlogPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
-    $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
-    $BlogPage->add_text($title);
-    $linkset = new HAW_linkset();
-	for($i=0;$i<count($listpages['data']);$i++) {
-		$blog = $listpages['data'][$i];
-		// check for tiki_p_read_blog here
-      if (isset($blog['title']) && strlen($blog['title'])>0)
-        $label = $blog['title'];
-      else
-        $label = date("d/m/Y [h:i]",$blog['created']);
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
+  require_once("lib/hawhaw/hawhaw.inc");
+  error_reporting(E_ALL & ~E_NOTICE);
+  $BlogPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
+  $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
+  $BlogPage->add_text($title);
+  $linkset = new HAW_linkset();
+  for($i=0;$i<count($listpages['data']);$i++) {
+    $blog = $listpages['data'][$i];
+    // check for tiki_p_read_blog here
+    if (isset($blog['title']) && strlen($blog['title'])>0)
+      $label = $blog['title'];
+    else
+      $label = date("d/m/Y [h:i]",$blog['created']);
 
-			//$link2 = new HAW_link(isset($blog['title'])?$blog['title']:date("d/m/Y [h:i]",$blog['created']),"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
-			$link2 = new HAW_link($label,"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
-			$linkset->add_link($link2);
-	}
-    $BlogPage->add_linkset($linkset);
-    $BlogPage->create_page();
-    $BlogPage->display();
-	die;
-
+    $link = new HAW_link($label,"tiki-view_blog_post.php?mode=mobile&blogId=".$_REQUEST['blogId']."&postId=".$blog['postId']);
+    $linkset->add_link($link);
+  }
+  $BlogPage->add_linkset($linkset);
+  $BlogPage->create_page();
+  die;
 }
 
 
