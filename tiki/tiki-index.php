@@ -76,6 +76,12 @@ if(isset($_REQUEST["copyrightpage"])) {
   $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
 }
 
+//If not currently viewing a structure 
+if (!isset($page_ref_id) && $feature_wiki_showstructs == 'y') {
+	//Get the structures this page is a member of
+	$structs = $structlib->get_page_structures($_REQUEST["page"]);
+	$smarty->assign('showstructs', $structs);
+}
 // Get the backlinks for the page "page"
 $backlinks = $wikilib->get_backlinks($page);
 $smarty->assign_by_ref('backlinks', $backlinks);

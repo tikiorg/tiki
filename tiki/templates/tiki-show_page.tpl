@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.51 2003-11-18 23:59:25 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.52 2003-11-20 12:22:37 chris_holman Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -56,6 +56,19 @@
 	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
 		  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+		{/section}
+	  </select>
+	{/if}
+	{if $feature_wiki_showstructs eq 'y' and $showstructs}
+	  <select name=page onchange="go(this)">
+	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
+		{section name=struct loop=$showstructs}
+		  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
+{if $showstructs[struct].page_alias} 
+{$showstructs[struct].page_alias}
+{else}
+{$showstructs[struct].pageName}
+{/if}</option>
 		{/section}
 	  </select>
 	{/if}

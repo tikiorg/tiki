@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.7 2003-11-18 23:59:24 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.8 2003-11-20 12:22:35 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,7 +103,8 @@ if ($count_admin_pvs == 'y' || $user != 'admin') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
-$smarty->assign('slide_data', $info["data"]);
+$slide_data = $tikilib->parse_data($info["data"]);
+$smarty->assign('slide_data', $slide_data);
 
 // Verify lock status
 if ($info["flag"] == 'L') {
