@@ -36,7 +36,7 @@ foreach ($dirs as $dir) {
 }
 
 //php directories - look for all the .php files
-$dirs=Array('./', 'modules/', 'lib/');
+$dirs=Array('./', 'modules/', 'lib/', 'Smarty/plugins/');
 chdir('lib/');
 $handle=opendir('.');
 while ($file = readdir($handle)) {
