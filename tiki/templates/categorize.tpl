@@ -1,6 +1,6 @@
 {if $feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
 <tr>
- <td class="formcolor">{tr}categorize{/tr}</td>
+ <td class="formcolor">{tr}Categorize{/tr}</td>
  <td class="formcolor">
   [ <a class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
   | <a class="link" href="javascript:hide('categorizator');">{tr}hide categories{/tr}</a> ]
