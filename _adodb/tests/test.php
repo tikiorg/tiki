@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.23 16 June 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.55 3 Jan 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -43,7 +43,8 @@ global $ADODB_EXTENSION;
 function do_strtolower(&$arr)
 {
 	foreach($arr as $k => $v) {
-		$arr[$k] = strtolower($v);
+		if (is_object($v)) $arr[$k] = adodb_pr($v,true);
+		else $arr[$k] = strtolower($v);
 	}
 }
 
@@ -112,6 +113,8 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	else $ext = '';
 	print "<h3>ADODB Version: $ADODB_vers Host: <i>$db->host</i> &nbsp; Database: <i>$db->database</i> &nbsp; PHP: $phpv $ext</h3>";
 	flush();
+
+	
 	$arr = $db->ServerInfo();
 	print_r($arr);
 	echo "<br>";
@@ -122,7 +125,7 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	if ($tt == 0) echo '<br><b>$db->Time failed</b>';
 	else echo "<br>db->Time: ".date('d-m-Y H:i:s',$tt);
 	echo '<br>';
-
+	
 	echo "Date=",$db->UserDate('2002-04-07'),'<br>';
 	print "<i>date1</i> (1969-02-20) = ".$db->DBDate('1969-2-20');
 	print "<br><i>date1</i> (1999-02-20) = ".$db->DBDate('1999-2-20');
@@ -138,7 +141,7 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	print "<br><i>ts4</i> =".($db->UnixTimeStamp("19700101000101")+8*3600);
 	print "<br><i>ts5</i> =".$db->DBTimeStamp($db->UnixTimeStamp("20040110092123"));
 	print "<br><i>ts6</i> =".$db->UserTimeStamp("20040110092123");
-	print "<br><i>ts6</i> =".$db->DBTimeStamp("20040110092123");
+	print "<br><i>ts7</i> =".$db->DBTimeStamp("20040110092123");
 	flush();
 	// mssql too slow in failing bad connection
 	if (false && $db->databaseType != 'mssql') {
@@ -151,14 +154,9 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	}
 	error_reporting($e);
 	flush();
-	
+
 	//$ADODB_COUNTRECS=false;
 	$rs=$db->Execute('select * from adoxyz order by id');
-
-	//print_r($rs);
-	//OCIFetchStatement($rs->_queryID,$rez,0,-1);//,OCI_ASSOC | OCI_FETCHSTATEMENT_BY_ROW);
-	//print_r($rez);
-	//die();
 	if($rs === false) $create = true;
 	else $rs->Close();
 		
@@ -184,11 +182,11 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	print "<p>Test select on empty table, FetchField when EOF, and GetInsertSQL</p>";
 	$rs = &$db->Execute("select id,firstname from ADOXYZ where id=9999");
 	if ($rs && !$rs->EOF) print "<b>Error: </b>RecordSet returned by Execute(select...') on empty table should show EOF</p>";
-	if ($rs->EOF && ($o = $rs->FetchField(0))) {
+	if ($rs->EOF && (($ox = $rs->FetchField(0)) && !empty($ox->name))) {
 		$record['id'] = 99;
 		$record['firstname'] = 'John';
 		$sql =  $db->GetInsertSQL($rs, $record);
-		if ($sql != "INSERT INTO ADOXYZ ( id, firstname ) VALUES ( 99, 'John' )") Err("GetInsertSQL does not work on empty table");
+		if (strtoupper($sql) != strtoupper("INSERT INTO ADOXYZ ( id, firstname ) VALUES ( 99, 'John' )")) Err("GetInsertSQL does not work on empty table: $sql");
 	} else {
 		Err("FetchField does not work on empty recordset, meaning GetInsertSQL will fail...");
 	}
@@ -277,6 +275,12 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 			print '</p>';
 		}
 		
+		$db->debug=0;
+		$rez = $db->MetaColumns("NOSUCHTABLEHERE");
+		if ($rez !== false) {
+			Err("MetaColumns error handling failed");
+			var_dump($rez);
+		}
 		$db->debug=1;
 		$a = $db->MetaColumns('ADOXYZ');
 		if ($a===false) print "<b>MetaColumns not supported</b></p>";
@@ -306,6 +310,15 @@ FROM `nuke_stories` `t1`, `nuke_authors` `t2`, `nuke_stories_cat` `t3`, `nuke_to
 	
 	
 	switch ($db->databaseType) {
+	case 'vfp':
+		
+		if (0) {
+			// memo test
+			$rs = $db->Execute("select data from memo");
+			rs2html($rs);
+		}
+		break;
+
 	case 'postgres7':
 	case 'postgres64':
 	case 'postgres':
@@ -376,7 +389,7 @@ GO
 		rs2html($rs);
 		
 		/*
-		Test out params - works in 4.2.3 but not 4.3.0???:
+		Test out params - works in PHP 4.2.3 and 4.3.3 and 4.3.8 but not 4.3.0:
 		
 			CREATE PROCEDURE at_date_interval 
 				@days INTEGER, 
@@ -398,7 +411,7 @@ GO
 		$db->OutParameter($stmt,$begin_date,'start', 20, SQLVARCHAR ); 
 		$db->OutParameter($stmt,$end_date,'end', 20, SQLVARCHAR ); 
 		$db->Execute($stmt);
-		if (empty($begin_date) or empty($end_date)) {
+		if (empty($begin_date) or empty($end_date) or $begin_date == $end_date) {
 			Err("MSSQL SP Test for OUT Failed");
 			print "begin=$begin_date end=$end_date<p>";
 		} else print "(Today +10days) = (begin=$begin_date end=$end_date)<p>";
@@ -407,43 +420,134 @@ GO
 		break;
 	case 'oci8': 
 	case 'oci8po':
+		
+		# cleanup
+		$db->Execute("delete from photos where id=99 or id=1");
+		$db->Execute("insert into photos (id) values(1)");
+		$db->Execute("update photos set photo=null,descclob=null where id=1");
+		
 		$saved = $db->debug;
 		$db->debug=true;
 		
+		
+
+		/*
+		CREATE TABLE PHOTOS
+		(
+		  ID           NUMBER(16),
+		  PHOTO        BLOB,
+		  DESCRIPTION  VARCHAR2(4000 BYTE),
+		  DESCCLOB     CLOB
+		);
+		
+		INSERT INTO PHOTOS (ID) VALUES(1);
+		*/
+		$s = '';
+		for ($i = 0; $i <= 500; $i++) {
+			$s .= '1234567890';
+		}
+		
+		$sql = "INSERT INTO photos ( ID, photo) ".
+			"VALUES ( :id, empty_blob() )".
+			" RETURNING photo INTO :xx";
+
+		
+		$blob_data = $s;
+		$id = 99;
+		
+ 		$stmt = $db->PrepareSP($sql);
+		$db->InParameter($stmt, $id, 'id');
+		$blob = $db->InParameter($stmt, $s, 'xx',-1, OCI_B_BLOB);
+		$db->StartTrans();
+		$result = $db->Execute($stmt);
+		$db->CompleteTrans();
+		
+		$s2= $db->GetOne("select photo from photos where id=99");
+		echo "<br>---$s2";
+		if ($s !== $s2) Err("insert blob does not match");
+
+		print "<h4>Testing Blob: size=".strlen($s)."</h4>";
+		$ok = $db->Updateblob('photos','photo',$s,'id=1');
+		if (!$ok) Err("Blob failed 1");
+		else {
+			$s2= $db->GetOne("select photo from photos where id=1");
+			if ($s !== $s2) Err("updateblob does not match");
+		}
+		
+		print "<h4>Testing Clob: size=".strlen($s)."</h4>";
+		$ok = $db->UpdateClob('photos','descclob',$s,'id=1');
+		if (!$ok) Err("Clob failed 1");
+		else {
+			$s2= $db->GetOne("select descclob from photos where id=1");
+			if ($s !== $s2) Err("updateclob does not match");
+		}
+		
+		
+		$s = '';
+		$s2 = '';
 		print "<h4>Testing Foreign Keys</h4>";
 		$arr = $db->MetaForeignKeys('emp');
 		print_r($arr);
 		if (!$arr) Err("Bad MetaForeignKeys");
-		print "<h4>Testing Cursor Variables</h4>";
 /*
 -- TEST PACKAGE
-CREATE OR REPLACE PACKAGE adodb AS
-TYPE TabType IS REF CURSOR RETURN tab%ROWTYPE;
-PROCEDURE open_tab (tabcursor IN OUT TabType,tablenames in varchar);
-PROCEDURE data_out(input IN varchar, output OUT varchar); 
-END adodb;
+-- "Set scan off" turns off substitution variables. 
+Set scan off; 
+
+CREATE OR REPLACE PACKAGE Adodb AS
+TYPE TabType IS REF CURSOR RETURN TAB%ROWTYPE;
+PROCEDURE open_tab (tabcursor IN OUT TabType,tablenames IN VARCHAR);
+PROCEDURE open_tab2 (tabcursor IN OUT TabType,tablenames IN OUT VARCHAR) ;
+PROCEDURE data_out(input IN VARCHAR, output OUT VARCHAR);
+PROCEDURE data_in(input IN VARCHAR);
+PROCEDURE myproc (p1 IN NUMBER, p2 OUT NUMBER);
+END Adodb;
 /
 
-CREATE OR REPLACE PACKAGE BODY adodb AS
-PROCEDURE open_tab (tabcursor IN OUT TabType,tablenames in varchar) IS
+
+CREATE OR REPLACE PACKAGE BODY Adodb AS
+PROCEDURE open_tab (tabcursor IN OUT TabType,tablenames IN VARCHAR) IS
 	BEGIN
-		OPEN tabcursor FOR SELECT * FROM tab where tname like tablenames;
+		OPEN tabcursor FOR SELECT * FROM TAB WHERE tname LIKE tablenames;
 	END open_tab;
-	
-PROCEDURE data_out(input IN varchar, output OUT varchar) IS
+
+	PROCEDURE open_tab2 (tabcursor IN OUT TabType,tablenames IN OUT VARCHAR) IS
+	BEGIN
+		OPEN tabcursor FOR SELECT * FROM TAB WHERE tname LIKE tablenames;
+		tablenames := 'TEST';
+	END open_tab2;
+
+PROCEDURE data_out(input IN VARCHAR, output OUT VARCHAR) IS
 	BEGIN
 		output := 'Cinta Hati '||input;
 	END;
-END adodb;
+	
+PROCEDURE data_in(input IN VARCHAR) IS
+	ignore varchar(1000);
+	BEGIN
+		ignore := input;
+	END;
+
+PROCEDURE myproc (p1 IN NUMBER, p2 OUT NUMBER) AS
+BEGIN
+p2 := p1;
+END;
+END Adodb;
 /
+
 */
-		$rs = $db->ExecuteCursor("BEGIN adodb.open_tab(:RS,'A%'); END;");
+
+		print "<h4>Testing Cursor Variables</h4>";
+		$rs = $db->ExecuteCursor("BEGIN adodb.open_tab(:zz,'A%'); END;",'zz');
 	
 		if ($rs && !$rs->EOF) {
-			print "Test 1 RowCount: ".$rs->RecordCount()."<p>";
+			$v = $db->GetOne("SELECT count(*) FROM tab where tname like 'A%'");
+			if ($v == $rs->RecordCount()) print "Test 1 RowCount: OK<p>";
+			else Err("Test 1 RowCount ".$rs->RecordCount().", actual = $v");
 		} else {
 			print "<b>Error in using Cursor Variables 1</b><p>";
 		}
+		$rs->Close();
 		
 		print "<h4>Testing Stored Procedures for oci8</h4>";
 		
@@ -460,13 +564,16 @@ END adodb;
 			print "<b>Error in using Stored Procedure IN/Out Variables</b><p>";
 		}
 		
-		
 		$tname = 'A%';
 		
 		$stmt = $db->PrepareSP('select * from tab where tname like :tablename');
 		$db->Parameter($stmt,$tname,'tablename');
 		$rs = $db->Execute($stmt);
 		rs2html($rs);
+		
+		$stmt = $db->PrepareSP("begin adodb.data_in(:a1); end;");
+		$db->InParameter($stmt,$a1,'a1');
+		$db->Execute($stmt);
 		
 		$db->debug = $saved;
 		break;
@@ -488,6 +595,7 @@ END adodb;
 	$db->CompleteTrans();
 	$rs = $db->Execute('select * from ADOXYZ order by id');
 	if ($rs->RecordCount() != 3) Err("Bad bulk insert");
+	
 	rs2html($rs);
 	
 	$db->Execute('delete from ADOXYZ');
@@ -519,7 +627,8 @@ END adodb;
 		$arr = array(0=>'Caroline',1=>'Miranda');
 		$sql = "insert into ADOXYZ (id,firstname,lastname,created) values ($i*10+0,?,?,$time)";
 		break;
-		
+	case 'mysqli':
+	case 'mysqlt':
 	case 'mysql':
 		$sqlt = "CREATE TABLE `mytable` (
   `row1` int(11) NOT NULL auto_increment,
@@ -578,7 +687,7 @@ END adodb;
 	if (!is_object($rs)) {
 		print_r($rs);
 		err("Update should return object");
-	}
+	} 
 	if (!$rs) err("Update generated error");
 	
 	$nrows = $db->Affected_Rows();   
@@ -586,8 +695,7 @@ END adodb;
 	else if ($nrows != $cnt)  print "<p><b>Affected_Rows() Error: $nrows returned (should be 50) </b></p>";
 	else print "<p>Affected_Rows() passed</p>";
 	}
-	
-	
+
 	$array = array('zid'=>1,'zdate'=>date('Y-m-d',time()));
 	$id = $db->GetOne("select id from ADOXYZ 
 		where id=".$db->Param('zid')." and created>=".$db->Param('ZDATE')."",
@@ -596,7 +704,6 @@ END adodb;
 	else echo "<br>Bind date/integer passed";
 	
 	$db->debug = false;
-	
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
  //////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -677,6 +784,7 @@ END adodb;
 		}
 		if ($rs->fields['id'] != 1)  {Err("Error"); print_r($rs->fields);};
 		if (trim($rs->fields['firstname']) != 'Caroline')  {print Err("Error 2"); print_r($rs->fields);};
+		
 		$rs->MoveNext();
 		if ($rs->fields['id'] != 2)  {Err("Error 3"); print_r($rs->fields);};
 		$rs->MoveNext();
@@ -747,16 +855,28 @@ END adodb;
 	if (trim($col[0]) != 'Alan' or trim($col[9]) != 'Yat Sun') Err("Col elements wrong");
 
 	$db->debug = true;
+	
+		
+	echo "<p>Date Update Test</p>";
+	$zdate = date('Y-m-d',time()+3600*24);
+	$zdate = $db->DBDate($zdate);
+	$db->Execute("update ADOXYZ set created=$zdate where id=1");
+	$row = $db->GetRow("select created,firstname from ADOXYZ where id=1");
+	print_r($row); echo "<br>";
+	
+	
+	
 	print "<p>SelectLimit Distinct Test 1: Should see Caroline, John and Mary</p>";
 	$rs = &$db->SelectLimit('select distinct * from ADOXYZ order by id',3);
-	$db->debug=false;
-
+	
+	
 	if ($rs && !$rs->EOF) {
-		if (trim($rs->fields[1]) != 'Caroline') Err("Error 1");
+		if (trim($rs->fields[1]) != 'Caroline') Err("Error 1 (exp Caroline), ".$rs->fields[1]);
 		$rs->MoveNext();
-		if (trim($rs->fields[1]) != 'John') Err("Error 2");
+		
+		if (trim($rs->fields[1]) != 'John') Err("Error 2 (exp John), ".$rs->fields[1]);
 		$rs->MoveNext();
-		if (trim($rs->fields[1]) != 'Mary') Err("Error 3");
+		if (trim($rs->fields[1]) != 'Mary') Err("Error 3 (exp Mary),".$rs->fields[1]);
 		$rs->MoveNext();
 		if (! $rs->EOF) Err("Error EOF");
 		//rs2html($rs);
@@ -765,16 +885,16 @@ END adodb;
 	print "<p>SelectLimit Test 2: Should see Mary, George and Mr. Alan</p>";
 	$rs = &$db->SelectLimit('select * from ADOXYZ order by id',3,2);
 	if ($rs && !$rs->EOF) {
-		if (trim($rs->fields[1]) != 'Mary') Err("Error 1");
+		if (trim($rs->fields[1]) != 'Mary') Err("Error 1 - No Mary, instead: ".$rs->fields[1]);
 		$rs->MoveNext();
-		if (trim($rs->fields[1]) != 'George')Err("Error 2");
+		if (trim($rs->fields[1]) != 'George')Err("Error 2 - No George, instead: ".$rs->fields[1]);
 		$rs->MoveNext();
-		if (trim($rs->fields[1]) != 'Mr. Alan') Err("Error 3");
+		if (trim($rs->fields[1]) != 'Mr. Alan') Err("Error 3 - No Mr. Alan, instead: ".$rs->fields[1]);
 		$rs->MoveNext();
 		if (! $rs->EOF) Err("Error EOF");
 	//	rs2html($rs);
 	}
-	 else Err("Failed SelectLimit Test 2");
+	 else Err("Failed SelectLimit Test 2 ". ($rs ? 'EOF':'no RS'));
 	
 	print "<p>SelectLimit Test 3: Should see Wai Hun and Steven</p>";
 	$db->debug=1;
@@ -854,10 +974,10 @@ END adodb;
 	$save = $ADODB_FETCH_MODE;
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	if ($db->dataProvider == 'postgres') {
-		$sql = "select ".$db->Concat('cast(firstname as varchar)',$db->qstr(' '),'lastname')." as fullname,id from ADOXYZ";
+		$sql = "select ".$db->Concat('cast(firstname as varchar)',$db->qstr(' '),'lastname')." as fullname,id,".$db->sysTimeStamp." as d from ADOXYZ";
 		$rs = &$db->Execute($sql);
 	} else {
-		$sql = "select distinct ".$db->Concat('firstname',$db->qstr(' '),'lastname')." as fullname,id from ADOXYZ";
+		$sql = "select distinct ".$db->Concat('firstname',$db->qstr(' '),'lastname')." as fullname,id,".$db->sysTimeStamp." as d from ADOXYZ";
 		$rs = &$db->Execute($sql);
 	}
 	if ($rs) {
@@ -904,12 +1024,12 @@ END adodb;
 	//$arr = $db->GetArray("select  lastname,firstname from ADOXYZ");
 	//print_r($arr);
 	print "<hr>";
-	$rs =& $db->Execute("select distinct lastname,firstname from ADOXYZ");
+	$rs =& $db->Execute("select distinct lastname,firstname,created from ADOXYZ");
 	
 	if ($rs) {
 		$arr = $rs->GetAssoc();
 		//print_r($arr);
-		if (empty($arr['See']) || trim($arr['See']) != 'Wai Hun') print $arr['See']." &nbsp; <b>ERROR</b><br>";
+		if (empty($arr['See']) || trim(reset($arr['See'])) != 'Wai Hun') print $arr['See']." &nbsp; <b>ERROR</b><br>";
 		else print " OK 1";
 	}
 	
@@ -950,13 +1070,24 @@ END adodb;
 	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
 	if ($rs) print 'With blanks, Steven selected:'. $rs->GetMenu2('menu',('Oey')).'<BR>'; 
 	else print " Fail<BR>";
-	$rs = &$db->CacheExecute(4,"select distinct firstname,lastname from ADOXYZ");
+	$rs = &$db->CacheExecute(6,"select distinct firstname,lastname from ADOXYZ");
 	if ($rs) print ' No blanks, Steven selected: '. $rs->GetMenu2('menu',('Oey'),false).'<BR>';
 	else print " Fail<BR>";
 	}
+	echo "<h3>CacheEXecute</h3>";
+
+	$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+	$rs = &$db->CacheExecute(6,"select distinct firstname,lastname from ADOXYZ");
+	print_r($rs->fields); echo $rs->fetchMode;echo "<br>";
+	echo $rs->Fields('firstname');
 	
+	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+	$rs = &$db->CacheExecute(6,"select distinct firstname,lastname from ADOXYZ");
+	print_r($rs->fields);echo "<br>";
+	echo $rs->Fields('firstname');
 	$db->debug = false;
 	
+	$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 	// phplens
 	
 	$sql = 'select * from ADOXYZ where 0=1';
@@ -1104,10 +1235,11 @@ END adodb;
 	
 	$rs = $db->SelectLimit('select id,firstname,lastname,created,\'The	"young man", he said\' from adoxyz',10);	
 	
-	print "<pre>";
-	rs2tabout($rs);
-	print "</pre>";
-	
+	if (PHP_VERSION < 5) {
+		print "<pre>";
+		rs2tabout($rs);
+		print "</pre>";
+	}
 	//print " CacheFlush ";
 	//$db->CacheFlush();
 	
@@ -1184,13 +1316,13 @@ END adodb;
 	
 	print "<h3>rs2rs Test</h3>";
 	
-	$rs = $db->Execute('select * from adoxyz order by id');
+	$rs = $db->Execute('select * from adoxyz where id>= 1 order by id');
 	$rs = $db->_rs2rs($rs);
 	$rs->valueX = 'X';
 	$rs->MoveNext();
 	$rs = $db->_rs2rs($rs);
 	if (!isset($rs->valueX)) err("rs2rs does not preserve array recordsets");
-	if (reset($rs->fields) != 1) err("rs2rs does not move to first row");
+	if (reset($rs->fields) != 1) err("rs2rs does not move to first row: id=".reset($rs->fields));
 
 	/////////////////////////////////////////////////////////////
 	include_once('../pivottable.inc.php');
@@ -1375,6 +1507,7 @@ END adodb;
 	print "<p>";
 	////////////////////////////////////////////////////////////////////
 	
+	if ($db->dataProvider == 'odbtp') $db->databaseType = 'odbtp';
 	$conn = NewADOConnection($db->databaseType);
 	$conn->raiseErrorFn = 'adodb_test_err';
 	@$conn->PConnect('abc');
@@ -1432,7 +1565,7 @@ if (isset($_SERVER['argv'][1])) {
 	$HTTP_GET_VARS[$_SERVER['argv'][1]] = 1;
 }
 
-if ( @$HTTP_SERVER_VARS['COMPUTERNAME'] == 'TIGRESS') {
+if (@$HTTP_SERVER_VARS['COMPUTERNAME'] == 'TIGRESS') {
 	CheckWS('mysqlt');
 	CheckWS('postgres');
 	CheckWS('oci8po');
@@ -1477,7 +1610,7 @@ if (strpos(PHP_VERSION,'5') === 0) {
 
 This script tests the following databases: Interbase, Oracle, Visual FoxPro, Microsoft Access (ODBC and ADO), MySQL, MSSQL (ODBC, native, ADO). 
 There is also support for Sybase, PostgreSQL.</p>
-For the latest version of ADODB, visit <a href=http://php.weblogs.com/ADODB>php.weblogs.com</a>.</p>
+For the latest version of ADODB, visit <a href=http://adodb.sourceforge.net/>adodb.sourceforge.net</a>.</p>
 
 Test <a href=test4.php>GetInsertSQL/GetUpdateSQL</a> &nbsp; 
 	<a href=testsessions.php>Sessions</a> &nbsp;
@@ -1488,9 +1621,11 @@ include('./testdatabases.inc.php');
 
 echo "<br>vers=",ADOConnection::Version();
 
+
 include_once('../adodb-time.inc.php');
-adodb_date_test();
+if (isset($_GET['time'])) adodb_date_test();
+
 ?>
-<p><i>ADODB Database Library  (c) 2000-2004 John Lim. All rights reserved. Released under BSD and LGPL.</i></p>
+<p><i>ADODB Database Library  (c) 2000-2005 John Lim. All rights reserved. Released under BSD and LGPL.</i></p>
 </body>
 </html>

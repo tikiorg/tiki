@@ -1,10 +1,10 @@
 <?PHP
 
-// V4.23 16 June 2004
+// V4.50 6 July 2004
 
 error_reporting(E_ALL);
-
-require( "../adodb-xmlschema.inc.php" );
+include_once( "../adodb.inc.php" );
+include_once( "../adodb-xmlschema.inc.php" );
 
 // To build the schema, start by creating a normal ADOdb connection:
 $db = ADONewConnection( 'mysql' );
@@ -18,10 +18,10 @@ $schema = new adoSchema( $db );
 // uncomment the following line:
 #$schema->upgradeSchema();
 
+print "<b>SQL to build xmlschema.xml</b>:\n<pre>";
 // Build the SQL array
 $sql = $schema->ParseSchema( "xmlschema.xml" );
 
-print "Here's the SQL to do the build:\n<pre>";
 print_r( $sql );
 print "</pre>\n";
 
@@ -38,10 +38,12 @@ $db2->Connect('localhost','sa','natsoft','northwind') || die("Fail 2");
 
 $db2->Execute("drop table simple_table");
 
+
+print "<b>SQL to build xmlschema-mssql.xml</b>:\n<pre>";
+
 $schema = new adoSchema( $db2 );
 $sql = $schema->ParseSchema( "xmlschema-mssql.xml" );
 
-print "Here's the SQL to do the build:\n<pre>";
 print_r( $sql );
 print "</pre>\n";
 
