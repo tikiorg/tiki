@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.40 2004-06-13 04:20:58 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.41 2004-06-13 21:50:44 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -81,6 +81,12 @@ class CategLib extends TikiLib {
 			$categpath = implode("::",$tepath);
 			$res["categpath"] = $categpath;
 			$res["tepath"] = $tepath;
+			global $userlib;
+			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
+				$res['has_perm'] = 'y';
+			} else {
+				$res['has_perm'] = 'n';
+			}
 			$ret["$categpath"] = $res;
 		}
 		ksort($ret);

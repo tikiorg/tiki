@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.27 2004-06-07 20:37:55 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.28 2004-06-13 21:50:44 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -58,7 +58,11 @@
 style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
 <a title="{tr}edit{/tr}" class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;categId={$categ}" title="{tr}edit{/tr}"><img  
 border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
+{if $catree[dx].has_perm eq 'y'}
+<a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key_active.gif" /></a>
+{else}
 <a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /></a>
+{/if}
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {/section}
 </div>
