@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_pages.tpl,v 1.7 2003-09-25 01:05:23 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_pages.tpl,v 1.8 2003-10-20 01:13:16 zaufi Exp $ *}
 
 {if $user}
   {if $feature_wiki eq 'y'}
@@ -10,9 +10,9 @@
        <table  border="0" cellpadding="0" cellspacing="0">
        {section name=ix loop=$modUserPages}
        <tr>
-        <td   class="module" valign="top">
-          {$smarty.section.ix.index_next})
-        </td>
+        {if $nonums != 'y'}
+          <td class="module" valign="top">{$smarty.section.ix.index_next})</td>
+        {/if}
         <td class="module">&nbsp;
          <a class="linkmodule" href="tiki-index.php?page={$modUserPages[ix].pageName|escape:"url"}">
           {$modUserPages[ix].pageName}
