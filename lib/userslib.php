@@ -311,7 +311,7 @@ class UsersLib extends TikiLib {
     $options["useroc"]     =  $tikilib->get_preference("auth_ldap_useroc", "posixAccount");
     $options["groupdn"]    =  $tikilib->get_preference("auth_ldap_groupdn", "");
     $options["groupattr"]  =  $tikilib->get_preference("auth_ldap_groupattr", "cn");
-    $options["groupoc"]    =  $tikilib->get_preference("auth_ldap_groupoc", "grouOfUniqueNames");
+    $options["groupoc"]    =  $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
     $options["memberattr"] =  $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
     $options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
 

@@ -4,8 +4,8 @@
  * Smarty plugin
  * -------------------------------------------------------------
  * Type:     modifier
- * Name:     capitalize
- * Purpose:  capitalize words in the string
+ * Name:     kbsize
+ * Purpose:  returns size in Mb, Kb or bytes.
  * -------------------------------------------------------------
  */
 function smarty_modifier_kbsize($string)
