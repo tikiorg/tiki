@@ -57,11 +57,13 @@
 		<form method="post">
 		<input type="hidden" name="itemId" value="{$info.itemId|escape}">
 		{if $chart_info.maxVoteValue eq '5'}
+		{tr}Lowest{/tr}
 		<input type="radio" name="points" value="1" />
 		<input type="radio" name="points" value="2" />
 		<input type="radio" name="points" value="3" />
 		<input type="radio" name="points" value="4" />
 		<input type="radio" name="points" value="5" />
+		{tr}Highest{/tr}
 		{elseif $chart_info.maxVoteValue eq '10'}
 		{tr}Lowest{/tr}
 		<input type="radio" name="points" value="1" />
