@@ -93,9 +93,9 @@ then
 	chgrp -R $AGROUP $DIRS
 fi
 
-if [ -n "$RIGHTS" ];
+if [ -z "$RIGHTS" ];
 then
-	RIGHTS=$RIGHTS
+	RIGHTS=02775
 fi
 
 chmod -R $RIGHTS $DIRS
