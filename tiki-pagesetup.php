@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.11 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.12 2004-06-07 20:37:27 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,5 +32,7 @@ if ($tiki_p_admin != 'y' && isset($page) && $userlib->object_has_one_permission(
 			}
 		}
 	}
+} else {
+	$has_object_perms = false;
 }
 ?>
