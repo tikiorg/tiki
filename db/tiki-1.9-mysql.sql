@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.21 2004-05-01 16:22:25 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.22 2004-05-03 11:26:41 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2529,7 +2529,7 @@ CREATE TABLE tiki_quizzes (
   shuffleQuestions char(1) default NULL,
   shuffleAnswers char(1) default NULL,
   publishDate int(14) default NULL,
-  expireDate` int(14) default NULL,
+  expireDate int(14) default NULL,
   PRIMARY KEY  (quizId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
