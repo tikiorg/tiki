@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.39 2003-12-05 22:35:26 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.40 2003-12-06 02:53:50 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.39 2003-12-05 22:35:26 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.40 2003-12-06 02:53:50 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -523,11 +523,12 @@ if (isset($_REQUEST['install_pkg'])) {
 		die("Error : ".$archive->errorInfo(true));
 	}
 	else {
-		$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
-		if (is_file("db/".$pkg_sql_install_file)) {
-			print "Running ".$pkg_sql_install_file."<br>";
-			process_sql_file ($pkg_sql_install_file,$db_tiki);
-
+		if (isset($_REQUEST['runScript'])) {
+			$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
+			if (is_file("db/".$pkg_sql_install_file)) {
+				print "Running ".$pkg_sql_install_file."<br>";
+				process_sql_file ($pkg_sql_install_file,$db_tiki);
+			}
 		}
 		print "The application in <b>".$_REQUEST['pkgs']."</b> was installed successfully";
 	}
@@ -536,10 +537,12 @@ if (isset($_REQUEST['install_pkg'])) {
 // This is used to remove files that were installed into the Tiki file structure by the install_pkg prcess
 if (isset($_REQUEST['remove_pkg'])) {
 	$archive = new PclZip($package_dir.$_REQUEST['pkgs']);
-	$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
-	if (is_file("db/".$pkg_sql_remove_file)) {
-		print "Running ".$pkg_sql_remove_file."<br>";
-		process_sql_file ($pkg_sql_remove_file,$db_tiki);
+	if (isset($_REQUEST['runScript'])) {
+		$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
+		if (is_file("db/".$pkg_sql_remove_file)) {
+			print "Running ".$pkg_sql_remove_file."<br>";
+			process_sql_file ($pkg_sql_remove_file,$db_tiki);
+		}
 	}
 
 	// Read Archive contents
