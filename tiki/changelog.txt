@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.125 2003-11-05 00:30:59 dheltzel Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.126 2003-11-05 06:25:49 caustin_ats Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -65,7 +65,7 @@ Version 1.8 -Polaris-
 * [MOD] CODE plugin now accepts php syntax highlighting {CODE(colors=>php)}
 * [NEW] Replace PEAR::DB with ADOdb to support PostgreSQL, Oracle, MSSQL, etc.
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
-
+* [MOD] Wiki pages can now belong to multiple structures
 
 Version 1.7.1.1 -Eta Carinae-
 * [FIX] fixed a blocking bug that prevents wiki pages from being saved in some
