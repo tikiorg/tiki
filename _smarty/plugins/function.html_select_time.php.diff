@@ -1,0 +1,17 @@
+Index: function.html_select_time.php
+===================================================================
+RCS file: /cvsroot/tikiwiki/tiki/Smarty/plugins/function.html_select_time.php,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -u -r1.1 -r1.2
+--- function.html_select_time.php	8 Oct 2002 13:54:47 -0000	1.1
++++ function.html_select_time.php	12 Feb 2003 21:23:52 -0000	1.2
+@@ -144,7 +144,7 @@
+         $html_result .= "</select>\n";
+     }
+ 
+-    print $html_result;
++    print '<span dir="ltr">'.$html_result.'</span>';
+ }
+ 
+ /* vim: set expandtab: */
