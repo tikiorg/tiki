@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.28 2003-08-15 22:35:29 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.29 2003-09-28 14:06:05 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once('lib/modules/modlib.php');
 
 // User preferences screen
 if ($feature_userPreferences != 'y') {
@@ -72,6 +73,7 @@ if (isset($_REQUEST["prefs"])) {
 
 			$smarty->assign('language', $_REQUEST["language"]);
 			include ('lang/' . $_REQUEST["language"] . '/language.php');
+                  $modlib->clear_cache();
 		}
 	}
 

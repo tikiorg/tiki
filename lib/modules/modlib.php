@@ -143,6 +143,19 @@ class ModLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+
+	function clear_cache() {
+		global $tikidomain;
+		$h = opendir("modules/cache/$tikidomain");
+		while (($file = readdir($h)) !== false) {
+			if (substr($file, 0, 3) == 'mod') {
+				$file = "modules/cache/$tikidomain" . $file;
+				unlink ($file);
+			}
+		}
+		closedir($h);
+	}
+
 }
 
 $modlib = new ModLib($dbTiki);

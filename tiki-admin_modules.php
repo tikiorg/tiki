@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.23 2003-08-11 18:38:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.24 2003-09-28 14:06:05 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,17 +60,7 @@ $smarty->assign('assign_rows', 10);
 $smarty->assign('assign_params', '');
 
 if (isset($_REQUEST["clear_cache"])) {
-	$h = opendir("modules/cache/$tikidomain");
-
-	while (($file = readdir($h)) !== false) {
-		if (substr($file, 0, 3) == 'mod') {
-			$file = "modules/cache/$tikidomain" . $file;
-
-			unlink ($file);
-		}
-	}
-
-	closedir ($h);
+	$modlib->clear_cache(); 
 }
 
 $module_groups = array();
