@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.105 2003-09-22 00:16:40 rlpowell Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.106 2003-09-23 14:58:52 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,10 +18,10 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] Added a Jabber plugin {JABBER()}
 * [NEW] Basic error handling in function "query" in lib/tikilib.php
 * [NEW] assign page permissions to whole structures 
-* [NEW] added an optional &highlight=word+otherword to highlight some words 
-  in any page
+* [NEW] added an optional &highlight=word+otherword to highlight some words in any page
 * [NEW] admin topics now allows existing topics to be changed
 * [FIX] fixed galaxia bugs while porting to adodb queries
 * [NEW] added a module to switch themes 
@@ -33,8 +33,7 @@ Version 1.8 --
 
 
 Version 1.7.1.1 -Eta Carinae-
-* [FIX] fixed a blocking bug that prevents wiki pages from being saved 
-  in some cases
+* [FIX] fixed a blocking bug that prevents wiki pages from being saved in some cases
 
 
 Version 1.7.1 -Eta Carinae-
