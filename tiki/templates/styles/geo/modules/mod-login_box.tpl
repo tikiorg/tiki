@@ -4,7 +4,7 @@
 </div>
 <div class="box-data">
     {if $user}
-      {tr}logged as{/tr}: {$smarty.session.user}<br />
+      {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
         <form action="{$login_url}" method="post">
