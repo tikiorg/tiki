@@ -2360,7 +2360,7 @@ function get_cache($cacheId) {
     return $res;
 }
 
-    function get_cache_id($url) {
+function get_cache_id($url) {
 	if (!$this->is_cached($url))
 	    return false;
 
@@ -2368,7 +2368,7 @@ function get_cache($cacheId) {
 	    where `url`=?";
 	$id = $this->getOne($query, array( $url ) );
 	return $id;
-    }
+}
 
 function vote_page($page, $points) {
     $query = "update `pages`
@@ -2438,38 +2438,39 @@ function get_random_pages($n) {
 
     return $ret;
 }
-
-function cache_url($url) {
-    // Avoid caching internal references...
-    if (strstr($url, 'tiki-') || strstr($url, 'messu-')) {
-	return false;
-    }
+/**
+ * \brief Cache given url
+ * If \c $data present (passed) it is just associated \c $url and \c $data.
+ * Else it will request data for given URL and store it in DB.
+ * Actualy (currently) data may be proviced by TIkiIntegrator only.
+ */
+function cache_url($url, $data = '') {
+    // Avoid caching internal references... (only if $data not present)
     // (cdx) And avoid other protocols than http...
-    if (preg_match("_^(mailto:|ftp:|gopher:|file:|smb:|news:|telnet:|javascript:|nntp:)_",$url)) {
-	return false;
-    }
-    // This function stores a cached representation of a page in the cache
-    // Check if the URL is not already cached
-    //if($this->is_cached($url)) return false;
-    $data = $this->httprequest($url);
+    // 03-Nov-2003, by zaufi
+    // preg_match("_^(mailto:|ftp:|gopher:|file:|smb:|news:|telnet:|javascript:|nntp:|nfs:)_",$url)
+    // was removed (replaced to explicit http[s]:// detection) bcouse
+    // I now (and actualy use in my production Tiki) another bunch of protocols
+    // available in my konqueror... (like ldap://, ldaps://, nfs://, fish://...)
+    // ... seems like it is better to enum that allowed explicitly than all
+    // noncacheable protocols.
+    if (((strstr($url, 'tiki-') || strstr($url, 'messu-')) && $data == '')
+     || (substr($url, 0, 7) != 'http://' && substr($url, 0, 8) != 'https://'))
+        return false;
+    // Request data for URL if nothing given in parameters
+    // (reuse $data var)
+    if ($data == '') $data = $this->httprequest($url);
 
     // If stuff inside [] is *really* malformatted, $data
     // will be empty.  -rlpowell
-    if ( $data )
+    if ($data)
     {
-	$refresh = date("U");
-	$query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
-	$result = $this->queryError($query, $error,
-		array($url,$data,$refresh) );
-	if( isset( $error ) )
-	{
-	    return false;
-	} else {
-	    return true;
-	}
-    } else {
-	return false;
+	    $refresh = date("U");
+    	$query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
+	    $result = $this->queryError($query, $error, array($url,$data,$refresh) );
+        return !isset($error);
     }
+    else return false;
 }
 
 // Removes all the versions of a page and the page itself
