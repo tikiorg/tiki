@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.65 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.66 2003-12-30 07:50:05 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,8 +10,9 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/wiki/wikilib.php');
-
 include_once ('lib/structures/structlib.php');
+include_once ('lib/notifications/notificationlib.php');
+
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
