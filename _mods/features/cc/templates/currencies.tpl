@@ -1,5 +1,10 @@
-<a href="cc.php?page={$page}{if $userid}&amp;user={$userid}{/if}" class="pagetitle">List of currencies</a>
-<br /><br />
+<h1><a href="cc.php?page={$page}{if $userid}&amp;user={$userid}{/if}" class="pagetitle">List of currencies</a></h1>
+
+<span class="button2"><a href="cc.php?page=currencies" class="linkbut">All Currencies</a></span>
+{if $tiki_p_cc_use eq 'y'}
+<span class="button2"><a href="cc.php?page=currencies&amp;my" class="linkbut">Owned Currencies</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;reg" class="linkbut">Registered Currencies</a></span>
+{/if}
 {if $tiki_p_cc_create eq 'y' or $tiki_p_cc_admin eq 'y'}
 <span class="button2"><a href="cc.php?page=currencies&amp;new" class="linkbut">Create new currency</a></span>
 <br /><br />
@@ -7,6 +12,13 @@
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}
 
+{if $view eq 'my'}
+<h2>Owned Currencies</h2>
+{elseif $view eq 'reg'}
+<h2>Registered Currencies</h2>
+{else}
+<h2>All Currencies</h2>
+{/if}
 <table class="normal">
 <tr class="heading">
 <th>&nbsp;</th>
@@ -22,9 +34,8 @@
 </tr>
 
 {cycle values="odd,even" print=false}
-{section name=i loop=$thelist}
+{foreach key=ccid item=it from=$thelist}
 <tr class="{cycle}">
-{assign var=ccid value=$thelist[i].id}
 {if $ccuser.registered_cc.$ccid.approved eq 'y'}
 <td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$thelist[i].id}">Unregister</a></td>
 {elseif $ccuser.registered_cc.$ccid.approved eq 'c'}
@@ -35,16 +46,16 @@
 {if $tiki_p_cc_admin eq 'y'}
 <td><a href="cc.php?page={$page}&amp;cc_id={$thelist[i].id}">{tr}Edit{/tr}</a></td>
 {/if}
-<td>{$thelist[i].id}</td>
-<td>{$thelist[i].cc_name}</td>
-<td>{$thelist[i].cc_description}</td>
-<td>{$thelist[i].owner_id|userlink}</td>
-<td>{$thelist[i].requires_approval}</td>
-<td>{$thelist[i].listed}</td>
+<td>{$it.id}</td>
+<td>{$it.cc_name}</td>
+<td>{$it.cc_description}</td>
+<td>{$it.owner_id|userlink}</td>
+<td>{$it.requires_approval}</td>
+<td>{$it.listed}</td>
 </tr>
-{sectionelse}
+{foreachelse}
 <td colspan="7">No entry</td>
-{/section}
+{/foreach}
 </table>
 
 <br /><br />

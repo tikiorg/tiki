@@ -112,7 +112,7 @@ class CcLib extends UsersLib {
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
+			$ret["{$res['id']}"] = $res;
 		}
 		$retval = array();
 		$retval['data'] = $ret;
@@ -167,7 +167,7 @@ class CcLib extends UsersLib {
 	}
 
 	function get_registered_cc($user,$app='y') {
-		$query = "select * from `cc_ledger` where `acct_id`=? and `approved`=?";
+		$query = "select * from `cc_ledger` left join `cc_cc` on `cc_ledger`.cc_id=`cc_cc`.id where `acct_id`=? and `approved`=?";
 		$result = $this->query($query,array($user,$app));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
