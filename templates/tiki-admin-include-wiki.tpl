@@ -122,7 +122,7 @@
     dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{tr}<br />
     {tr}Full adds accented characters.{/tr}<br />
     {tr}Complete allows <em>anything at all</em>.  I (<a
-    href="http://www.lojban.org/tiki/tiki-view_forum_thread.php">rlpowell</a>)
+    href="http://tikiwiki.org/tiki-index.php?page=UserPagerlpowell">rlpowell</a>)
     cannot guarantee that it is bug-free or secure.{/tr}
     </p>
     <p>{tr}Note that this does not affect WikiWord recognition, only page names surrounded by (( and )).{/tr}
