@@ -10,6 +10,7 @@ function smarty_prefilter_tr($source) {
 
 function _translate_lang($key) {
   global $language;
+  global $lang;
   global $lang_use_db;
   if ($lang_use_db!='y') {
     include_once("lang/$language/language.php");
