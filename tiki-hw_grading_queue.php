@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_grading_queue.php,v 1.1 2004-03-19 18:09:59 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_grading_queue.php,v 1.2 2004-06-19 15:25:17 ohertel Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -46,7 +46,7 @@ if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
 }
 
 if (!$homeworklib->hw_pages_list_for_assignment(&$listPages, $assignmentId)){
-  $smarty->assign('msg', __FILE__." line ".__LINE__.": Call to hw_pages_list_for_assignment failed.");
+  $smarty->assign('msg', tra('No entries available yet!'));
   $smarty->display("error.tpl");
   die;
 }
