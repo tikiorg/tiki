@@ -1,7 +1,7 @@
 <?php
 
 if( !defined( 'PLUGINS_DIR' ) ) {
-	define('PLUGINS_DIR', TIKI_LIB_PATH.'/wiki-plugins');
+	define('PLUGINS_DIR', 'lib/wiki-plugins');
 }
 
 class WikiLib extends TikiLib {

@@ -1,10 +1,10 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.21 2004-01-06 20:46:57 gravesweeper Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.22 2004-01-15 22:03:16 mose Exp $
  *
  * \brief Manage user assigned modules
  */
-include_once (TIKI_LIB_PATH.'/debug/debugger.php');
+include_once ('lib/debug/debugger.php');
 
 /**
  * \brief Class to manage user assigned modules
