@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.27 2004-01-20 06:30:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.28 2004-01-28 10:45:08 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -270,7 +270,6 @@ class CategLib extends TikiLib {
 
 		$result = $this->query($query,array((int) $categId));
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}

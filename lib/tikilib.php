@@ -674,7 +674,7 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 			$fieldId = $res2["fieldId"];
 
 			if (count($filters) > 0) {
-				if ($filters["$fieldId"]["value"]) {
+				if (isset($filters["$fieldId"]["value"]) and $filters["$fieldId"]["value"]) {
 					if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
 						if (!stristr($res2["value"], $filters["$fieldId"]["value"]))
 							$pass = false;

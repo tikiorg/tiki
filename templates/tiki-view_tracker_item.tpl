@@ -59,15 +59,22 @@
 {$ins_fields[ix].value|date_format:$daformat}</td></tr>
 
 {elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue}
+{$ins_fields[ix].pvalue|default:"&nbsp;"}
 
 {elseif $ins_fields[ix].type eq 'e'}
-{assign var=fca value=$ins_fields[ix].options}
+{assign var=fca value=$fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><tt>{if $ins_fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
+{assign var=fcat value=$iu.categId }
+<td width="50%" nowrap="nowrap">
+{if $ins_fields[ix].cat.$fcat eq 'y'}
+<tt>X&nbsp;</tt><b>{$iu.name}</b></td>
+{else}
+<tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>
+{/if}
+{cycle name=$fca}
 {/foreach}
-</table></td></tr>
+</tr></table></td></tr>
 
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
@@ -84,9 +91,9 @@
 {$ins_fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
 {else}
 {if $ins_fields[ix].linkId}
-<a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value}</a>
+<a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
 {else}
-{$ins_fields[ix].value}
+{$ins_fields[ix].value|default:"&nbsp;"}
 {/if}
 {/if}
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
@@ -98,7 +105,7 @@
 {/if}
 
 {else}
-{$ins_fields[ix].value}
+{$ins_fields[ix].value|default:"&nbsp;"}
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
@@ -266,9 +273,10 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $ins_fields[ix].type eq 'e'}
 {assign var=fca value=$ins_fields[ix].options}
-<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+<table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="{$ku}[]" value="{$iu.categId}" {if $ins_fields[ix].value.$ku eq 'y'}checked="checked"{/if}/>{$iu.name}</td>{cycle name=$fca}
+{assign var=fcat value=$iu.categId }
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$fca}[]" value="{$fcat}" {if $ins_fields[ix].cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name}</td>{cycle name="2_$fca"}
 {/foreach}
 </table>
 

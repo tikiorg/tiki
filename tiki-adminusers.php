@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.19 2004-01-28 03:37:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.20 2004-01-28 10:45:06 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -187,6 +187,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			$usermail = $re['email'];
 			$fields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');
 			$info = $trklib->get_item($usersTrackerId,'Login',$username);
+			$useritemId = $info["itemId"];
+			$smarty->assign('useritemId', $useritemId);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
 				$name = $fields["data"][$i]["fieldId"];
 				if ($fields["data"][$i]["type"] == 'c') {
@@ -194,14 +196,28 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				} else {
 					if (!isset($info["$name"])) $info["$name"] = '';
 				}
-				$fields["data"][$i]["value"] = $info["$name"];
-				if ($fields["data"][$i]["type"] == 'a') {
+				if ($fields["data"][$i]["type"] == 'e') {
+					include_once('lib/categories/categlib.php');
+					$k = $fields["data"][$i]["options"];
+					$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+					if (!isset($cat)) {
+						$cat = $categlib->get_object_categories("tracker ".$usertrackerId,$useritemId);
+					}
+					foreach ($cat as $c) {
+						$ins_fields["data"][$i]["value"]["$c"] = 'y';
+					}
+				} elseif  ($fields["data"][$i]["type"] == 'r') {
+					$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
+					$fields["data"][$i]["value"] = $info["$name"];
+					$fields["data"][$i]["type"] = 't';
+				} elseif ($fields["data"][$i]["type"] == 'a') {
+					$fields["data"][$i]["value"] = $info["$name"];
 					$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+				} else {
+					$fields["data"][$i]["value"] = $info["$name"];
 				}
 			}
 			$smarty->assign('fields', $fields["data"]);
-			$useritemId = $info["itemId"];
-			$smarty->assign('useritemId', $useritemId);
 		}
 	}
 	if (!isset($_REQUEST["action"])) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.37 2004-01-28 03:37:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.38 2004-01-28 10:45:08 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -195,9 +195,16 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {assign var=fca value=$fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><tt>{if $fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
+{assign var=fcat value=$iu.categId }
+<td width="50%" nowrap="nowrap">
+{if $fields[ix].cat.$fcat eq 'y'}
+<tt>X&nbsp;</tt><b>{$iu.name}</b></td>
+{else}
+<tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>
+{/if}
+{cycle name=$fca}
 {/foreach}
-</table></td></tr>
+</tr></table></td></tr>
 
 {elseif $fields[ix].type eq 'c'}
 {$fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
@@ -213,7 +220,11 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {if $fields[ix].options_array[2]}
 {$fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>
 {else}
+{if $fields[ix].linkId}
+<a href="tiki-view_tracker_item.php?trackerId={$fields[ix].options_array[0]}&amp;itemId={$fields[ix].linkId}" class="link">{$fields[ix].value}</a>
+{else}
 {$fields[ix].value}
+{/if}
 {/if}
 {if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
