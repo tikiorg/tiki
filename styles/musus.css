@@ -377,10 +377,10 @@ table {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: Black;
 	background-color: #EFEFEF;
-	font-size: 11px;
+	font-size: 10px;
 	border-color: #00639C;
 	border-style: solid;
-	border-width: 2px;
+	border-width: 1px;
 	width: 98%;
 }
 
@@ -741,68 +741,6 @@ a.wiki:hover {
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
-/* The form to create or edit a gallery */
-table.newgal {
-	border-color: #00639C;
-	border-style: solid;
-	border-width: 2px;
-	width: 98%;
-}
-
-tr.gallisteven {
-	color: Black;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background-color: #EFEFEF;
-	font-size: 11px;
-	vertical-align: top;
-	text-align: left;
-}
-
-tr.gallistodd {
-	color: Black;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background-color: #EFEFEF;
-	font-size: 11px;
-	vertical-align: top;
-	text-align: left;
-}
-
-/* The table with the listing */
-table.gallist {
-	border-color: #00639C;
-	border-style: solid;
-	border-width: 2px;
-	width: 98%;
-}
-
-th.gallist {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFA34F;
-	font-size: 11px;
-	font-weight: bold;
-	background-color: #006699;
-	height: 25px;
-	background-image: url(subsilver/cellpic3.gif);
-	text-decoration: none;
-	padding-left: 2px;
-	padding-right: 5px;
-}
-
-th.gallist:active {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FFA34F;
-	font-size: 11px;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-th.gallist:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #FF860D;
-	font-size: 11px;
-	font-weight: bold;
-	text-decoration: none;
-}
 
 /* The gallery name is a link to browsing the gallery */
 .gal {
@@ -837,16 +775,6 @@ a.gal:hover {
 	font-size: 11px;
 	color: red;
 	text-decoration: underline;
-}
-
-/* Listing images in a gallery (non-graphical browsing) */
-
-/* The table listing images in the gallery */
-table.listfiles {
-	border-color: #00639C;
-	border-style: solid;
-	border-width: 2px;
-	width: 98%;
 }
 
 /* The image name is a link to the image */
