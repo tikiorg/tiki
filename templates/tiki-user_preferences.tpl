@@ -34,6 +34,15 @@
   </select>
   </td></tr>
   </td></tr>
+  <tr><td class="form">{tr}Does you mail reader need a special charset{/tr}</td>
+  <td class="form">
+  <select name="mailCharset">
+   {section name=ix loop=$mailCharsets}
+      <option value="{$mailCharsets[ix]|escape}" {if $mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
+   {/section}
+  </select>
+  </td></tr>
+  </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">

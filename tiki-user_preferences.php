@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.44 2004-02-14 03:46:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.45 2004-03-11 18:25:47 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -111,6 +111,8 @@ if (isset($_REQUEST["prefs"])) {
 
 	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic']: 'n';
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
+
+	$tikilib->set_user_preference($userwatch, 'mailCharset', $_REQUEST['mailCharset']);
 
 	// Custom fields
 	foreach ($customfields as $custpref=>$prefvalue ) {
@@ -329,6 +331,9 @@ $scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'),
 $smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
+$smarty->assign('mailCharset', $tikilib->get_user_preference($userwatch, 'mailCharset', 'utf-8'));
+$mailCharsets = array('utf-8', 'iso-8859-1');
+$smarty->assign_by_ref('mailCharsets', $mailCharsets);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);
