@@ -4090,12 +4090,14 @@ function add_pageview() {
 	    for ($i = 0; $i < $temp_max; $i++) {
 		// Check if the image exists
 		$name = $pics[1][$i];
-
+		if ($tikidomain) {
+			$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
+		}
 		if (file_exists($name)) {
 		    // Replace by the img tag to show the image
-		    $repl = "<img src='$name?nocache=1' alt='$name' />";
+		    $repl = "<img src='$name' alt='$name' />";
 		} else {
-		    $repl = tra('picture not found');
+		    $repl = tra('picture not found')." $name";
 		}
 
 		// Replace by $repl
@@ -4144,6 +4146,9 @@ function add_pageview() {
 		    } else {
 			$name = $id . '.gif';
 		    }
+				if ($tikidomain) {
+				  $name = $tikidomain.'/'.$name;
+				}
 		    if (file_exists("img/wiki/$name")) {
 			if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
 			    $repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
@@ -4414,6 +4419,9 @@ function add_pageview() {
 	    $imgdata["imalign"] = '';
 	    $imgdata = $this->split_assoc_array( $parts, $imgdata);
 
+			if ($tikidomain) {
+				$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
+			}
 	    $repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
 
 	    if ($imgdata["width"])
