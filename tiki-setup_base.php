@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.25 2003-08-13 11:52:14 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.26 2003-08-17 22:22:27 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,6 +307,7 @@ $change_theme = $tikilib->get_preference("change_theme", 'y');
 
 $language = $tikilib->get_preference('language', 'en');
 
+/* This seems to be done in tiki-setup.php
 if ($feature_userPreferences == 'y') {
 	// Check for FEATURES for the user
 	$user_style = $tikilib->get_preference("style", 'moreneat.css');
@@ -332,6 +333,7 @@ if ($feature_userPreferences == 'y') {
 	$smarty->assign('style', $style);
 	$smarty->assign('language', $language);
 }
+*/
 
 $stlstl = explode('.', $style);
 $style_base = $stlstl[0];

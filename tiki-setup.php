@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.131 2003-08-15 22:32:42 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.132 2003-08-17 22:22:27 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1153,7 +1153,7 @@ $user_dbl = 'y';
 
 if ($feature_userPreferences == 'y') {
 	// Check for FEATURES for the user
-	$user_style = $tikilib->get_preference("style", 'moreneat.css');
+	$user_style = $site_style = $tikilib->get_preference("style", 'moreneat.css');
 
 	if ($user) {
 		$user_dbl = $tikilib->get_user_preference($user, 'user_dbl', 'y');
