@@ -20,7 +20,6 @@ public class Can3d
 	boolean painted = true;
 	Thread t;
 	float xfac;
-	BalanceThread balancing;
 	boolean focussed = false;
 	Face face;
 	ObjectVertex ob;
@@ -59,6 +58,8 @@ public class Can3d
 	String startNodeName = "Krico";
 	
 	int clickX, clickY; // Position where the user clicked;
+	
+	Navigator navigator;
 
 	//Construct the applet
 
@@ -142,13 +143,7 @@ public class Can3d
 	}
 	//Start the applet
 
-	public void start() {
-
-		xr = new XmlReader(url);
-		graph.setXmlReader(xr);
-		xr.getNodeData(startNodeName,graph);
-		graph.navigateTo(Graph.centerNode);
-		
+	public void start() {		
 		bi =
 			new BufferedImage(
 				Config.windowwidth,
@@ -160,9 +155,17 @@ public class Can3d
 			Config.viewstarty,
 			Config.viewwidth,
 			Config.viewheight);
-		balancing = new BalanceThread(this);
-		Thread t = new Thread(balancing);
-		t.start();
+		
+		xr = new XmlReader(url);
+		navigator = new Navigator(graph, xr);
+		Balancer balancing = new Balancer(this);
+		
+		navigator.navigateFirst(startNodeName);
+		
+		Thread navigateThread = new Thread(navigator);
+		Thread balanceThread = new Thread(balancing);
+		balanceThread.start();
+		navigateThread.start();
 
 		//CanvaxVertex.setanimator(a);
 
@@ -184,16 +187,7 @@ public class Can3d
 
 		if (graph.contains(e.getX(), e.getY())) {
 			graph.focus = graph.focus;
-
-			/*
-			 * This code is here as an example on how to open an url and how to
-			 * catch a node click, to be used later if (vertexes.focus.type() ==
-			 * 'a') { this.getAppletContext().showDocument( ((Action)
-			 * vertexes.focus).getURL(), ((Action) vertexes.focus).getLabel()); }
-			 * else { // here goes navigation through nodes, later }
-			 * System.out.println("mouse clicked");
-			 *  
-			 */
+		
 
 		}
 	}
@@ -236,7 +230,7 @@ public class Can3d
 
 	public void mouseReleased(MouseEvent e) {
         if (e.getX() == clickX && e.getY() == clickY) {
-        	graph.navigateTo(graph.focus);
+        	navigator.navigateTo(graph.focus);
         }
 		if (focussed) {
 			focussed = false;

@@ -9,14 +9,14 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.text.AttributedString;
-import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Node extends Vertex {
 	int relativeBallSize, ballSize;
 
-	static BalanceThread balancer;
+	static Balancer balancer;
 	public static Vertex origin;
 	public static Matrix3D mat;
 	public boolean mouseover = false;
@@ -26,27 +26,28 @@ public class Node extends Vertex {
 	int i, j;
 	int xpos, ypos, zpos;
 	public int id;
-	public static int idCounter = 0;
 	SpeedVector speed = new SpeedVector(0, 0, 0);
 
-	public HashMap links;
+	public Hashtable links;
 	private boolean positionFixed;
 	private boolean isCentered;
 
 	public String name;
 
-	public Graph parentGraph;
-
 	public int distanceFromCenter = 0;
 	public boolean passed = false;
+	public boolean initialized = false;
 
-	public Node(String name, Graph graph) {
+	private static Hashtable nodesFromName = new Hashtable();
+
+	public Node(String name) {
 		super();
-		links = new HashMap();
+		links = new Hashtable();
 		mat = new Matrix3D();
-		parentGraph = graph;
 
 		this.name = name;
+		this.passed = false;
+		distanceFromCenter = -1;
 
 		relativeBallSize = Config.ballsize;
 		ballSize = Config.ballsize;
@@ -55,10 +56,13 @@ public class Node extends Vertex {
 		x = length();
 		z = length();
 		setBounds();
+		
+		System.out.println("Creating " + name);
+		nodesFromName.put(name, this);
 
 	}
 
-	public static void setBalancer(BalanceThread a) {
+	public static void setBalancer(Balancer a) {
 		balancer = a;
 	}
 
@@ -104,7 +108,7 @@ public class Node extends Vertex {
 	 * @return
 	 */
 	private boolean isLinkedTo(Node node) {
-		return links.containsKey(node);
+		return links.containsKey(node.name);
 	}
 
 	/**
@@ -115,24 +119,14 @@ public class Node extends Vertex {
 	}
 
 	public void center() {
-		
-		try {
-			Graph.centerNode.unCenter();
-		} catch (NullPointerException e) {
-			System.out.println("No center node");
-		}
-
 		isCentered = true;
-		Graph.centerNode = this;
-		//x = y = z = 0;
-
 	}
 
 	public void unCenter() {
 		isCentered = false;
-		x++; //= length();
-		y++; //= length();
-		z++; //= length();
+		x++;
+		y++;
+		z++;
 	}
 
 	public void clearSpeed() {
@@ -149,7 +143,7 @@ public class Node extends Vertex {
 			addSpeed(getForceToCenter());
 			change(speed.x, speed.y, speed.z);
 		} else if (!this.positionFixed()) {
-			change(speed.x, speed.y, speed.z);
+			change(speed);
 		}
 	}
 
@@ -159,9 +153,11 @@ public class Node extends Vertex {
 
 	public void releasePosition() {
 		positionFixed = false;
+
 	}
 
 	public void fixPosition() {
+
 		positionFixed = true;
 		xpos = x;
 		ypos = y;
@@ -171,6 +167,7 @@ public class Node extends Vertex {
 
 	//function for changing the object space coordinates,
 	public void change(int dx, int dy, int dz) {
+
 		x = x + (dx);
 		y = y + (dy);
 		z = z + (dz);
@@ -194,6 +191,13 @@ public class Node extends Vertex {
 			y = Config.ymin;
 		}
 
+	}
+
+	public void change(SpeedVector sp) {
+		if (sp.module() > Config.maxSpeed) {
+			sp.resize(Config.maxSpeed / sp.module());
+		}
+		change(sp.x, sp.y, sp.z);
 	}
 
 	synchronized public void proj() {
@@ -251,78 +255,92 @@ public class Node extends Vertex {
 		z = Math.min(Math.max(z, Config.zmin), Config.zmax);
 	}
 
-	public void addLink(Node node) {
-		links.put(node, new Object());
-		node.links.put(this, new Object());
+	public void addLink(String nodeName) {
+		links.put(nodeName, new Object());
+		Node neighbour = Node.fromString(nodeName);
+		if (neighbour != null) {
+			neighbour.links.put(this.name, new Object());
+		}
+	}
+
+	public static Node fromString(String nodeName) {
+		Node node = (Node) nodesFromName.get(nodeName);
+		return node;
 	}
 
 	public void paint(Graphics g) {
-		Graphics2D graphic = (Graphics2D) g;
+		if (visible()) {
+			Graphics2D graphic = (Graphics2D) g;
 
-		double zc = Z - ZC;
-		double scale;
-		if (Math.abs(zc) > 1)
-			scale = Math.abs(FOV * 1 / zc);
-		else
-			scale = 1;
-		scale *= 2;
+			double zc = Z - ZC;
+			double scale;
+			if (Math.abs(zc) > 1)
+				scale = Math.abs(FOV * 1 / zc);
+			else
+				scale = 1;
+			scale *= 2;
 
-		if (scale > 1)
-			scale = 1;
-		if (scale < 0.1)
-			scale = 0.1;
+			if (scale > 1)
+				scale = 1;
+			if (scale < 0.1)
+				scale = 0.1;
 
-		g.setColor(Config.graphstringcolor);
-		Set linkSet = links.keySet();
+			g.setColor(Config.graphstringcolor);
+			Set linkSet = links.keySet();
 
-		for (Iterator it = linkSet.iterator(); it.hasNext();) {
-			Node neighbour = (Node) it.next();
-			g.drawLine(u, v, neighbour.u, neighbour.v);
+			for (Iterator it = linkSet.iterator(); it.hasNext();) {
+				Node neighbour = fromString((String) it.next());
+				if (neighbour != null && neighbour.visible()) {
+					g.drawLine(u, v, neighbour.u, neighbour.v);
+				}
+			}
+
+			AffineTransform at = graphic.getTransform();
+
+			AlphaComposite al2 = (AlphaComposite) graphic.getComposite();
+
+			AlphaComposite al =
+				AlphaComposite.getInstance(
+					AlphaComposite.SRC_OVER,
+					(float) (scale));
+
+			graphic.setComposite(al);
+
+			Color cl = graphic.getColor();
+
+			Stroke s = graphic.getStroke();
+
+			at.setToScale(scale, scale);
+
+			graphic.setColor(Config.linkballcolor);
+			graphic.setComposite(al);
+			graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
+			AffineTransform at2 = new AffineTransform();
+			at2.setToScale(scale, scale);
+			FontRenderContext frc = new FontRenderContext(at2, true, true);			
+			
+			TextLayout l =
+				new TextLayout(
+					(new AttributedString(name))
+						.getIterator(),
+					frc);
+			l.draw(graphic, U, V);
+			graphic.setComposite(al2);
 		}
-
-		AffineTransform at = graphic.getTransform();
-
-		AlphaComposite al2 = (AlphaComposite) graphic.getComposite();
-
-		AlphaComposite al =
-			AlphaComposite.getInstance(
-				AlphaComposite.SRC_OVER,
-				(float) (scale));
-
-		graphic.setComposite(al);
-
-		Color cl = graphic.getColor();
-
-		Stroke s = graphic.getStroke();
-
-		at.setToScale(scale, scale);
-
-		graphic.setColor(Config.linkballcolor);
-		graphic.setComposite(al);
-		graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
-		AffineTransform at2 = new AffineTransform();
-		at2.setToScale(scale, scale);
-		FontRenderContext frc = new FontRenderContext(at2, true, true);
-		TextLayout l =
-			new TextLayout((new AttributedString(name)).getIterator(), frc);
-		l.draw(graphic, U, V);
-		graphic.setComposite(al2);
 	}
 
-	public void removeLink(Node neighbour) {
-		links.remove(neighbour);
+	/**
+	 * @return
+	 */
+	public boolean visible() {
+		return true
+			|| isCentered
+			|| (distanceFromCenter >= 0
+				&& distanceFromCenter <= Config.navigationDepth);
 	}
 
-	public void clean() {
-		Set linkSet = links.keySet();
-
-		for (Iterator it = linkSet.iterator(); it.hasNext();) {
-			Node neighbour = (Node) it.next();
-			neighbour.removeLink(this);
-		}
-
-		Graph.nodeNameMap.remove(this.name);
-		parentGraph.remove(this);
+	public void remove() {
+		nodesFromName.remove((String) name);
 	}
 
 }
