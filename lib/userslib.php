@@ -1019,11 +1019,70 @@ function get_included_groups($group) {
 	return $res;
     }
 
+	function get_tracker_usergroup($user) {
+		$query = "select `default_group` from `users_users` where `login` = ?";
+		$result = $this->getOne($query, array($user));
+		$ret = '';
+		$userTrackerId = $ret;
+		if (!is_null($result)) {
+			$ret = $this->get_usertrackerid($result);
+			if ($ret) {
+				$userTrackerId = $ret;
+			}
+		} 
+		if (!$userTrackerId) {
+			$groups = $this->get_user_groups($user);
+			foreach ($groups as $gr) {
+				if ($gr != "Anonymous" and $gr != "Registered") {
+					$ret = $this->get_usertrackerid($gr);
+					if ($ret) {
+						$userTrackerId = $ret;
+						break;
+					}
+				}
+			}
+		}
+		return $ret;
+	}
+
+	function get_grouptrackerid($group) {
+		$ret = $this->getOne("select `groupTrackerId` from `users_groups` where `groupName`=?",array($group));
+		if (!$ret) {
+			$groups = $this->get_included_groups($group);
+			foreach ($groups as $gr) {
+				$ret = $this->getOne("select `groupTrackerId` from `users_groups` where `groupName`=?",array($gr));
+				if ($ret) {
+					return $ret;
+				}
+			}
+		} else {
+			return $ret;
+		}
+		return false;
+	}
+
+	function get_usertrackerid($group) {
+		return $this->getOne("select `usersTrackerId` from `users_groups` where `groupName`=?",array($group));
+		if (!$ret) {
+			$groups = $this->get_included_groups($group);
+			foreach ($groups as $gr) {
+				$ret = $this->getOne("select `userTrackerId` from `users_groups` where `groupName`=?",array($gr));
+				if ($ret) {
+					return $ret;
+				}
+			}
+		} else {
+			return $ret;
+		}
+		return false;
+	}
+
+	
 	function get_usertracker($uid) {
 		$utr = $this->get_userid_info($uid);
 		$utr["usersTrackerId"] = '';
 		foreach ($utr['groups']  as $gr) {
-			$utrid = $this->getOne("select `usersTrackerId` from `users_groups` where `groupname`=?",array($gr));
+			$utrid = $this->get_usertrackerid($gr);
 			if ($utrid > 0) {
 				$utr["usersTrackerId"] = $utrid;
 				break;
@@ -1032,36 +1091,21 @@ function get_included_groups($group) {
 		return $utr;
 	}
 
-	function get_user_tracker($groups) {
-		foreach ($groups as $gr) {
-			$utrid = $this->getOne("select `usersTrackerId` from `users_groups` where `groupname`=?",array($gr));
-			if ($utrid > 0) {
-				return $utrid;
-			}
-		}
-	}
-
   function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
 	$values = array();
-
 	$sort_mode = $this->convert_sortmode($sort_mode);
-
 	$mid = '';
-
 	if ($type) {
 	    $mid = ' where `type`= ? ';
-
 	    $values[] = $type;
 	}
 
 	if ($find) {
 	    if ($mid) {
 		$mid .= " and `permName` like ?";
-
 		$values[] = '%'.$find.'%';
 	    } else {
 		$mid .= " where `permName` like ?";
-
 		$values[] = '%'.$find.'%';
 	    }
 	}
