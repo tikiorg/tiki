@@ -622,6 +622,8 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use a directory to store images{/tr}:</td><td class="form"><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="gal_use_dir" value="{$gal_use_dir}" /> </tr>
+    <tr><td class="form">{tr}Library to use for processing images{/tr}:</td><td><input type="radio" name="gal_use_lib" value="gd" {if $gal_use_lib eq 'gd'}checked="checked"{/if}/>GD</td></tr>
+    <tr><td class="form"></td><td><input type="radio" name="gal_use_lib" value="imagick" {if $gal_use_lib eq 'imagick'}checked="checked"{/if}/>Imagick</td></tr>
     <tr><td class="form">{tr}Uploaded image names must match regex{/tr}:</td><td><input type="text" name="gal_match_regex" value="{$gal_match_regex}"/></td></tr>
     <tr><td class="form">{tr}Uploaded image names cannot match regex{/tr}:</td><td><input type="text" name="gal_nmatch_regex" value="{$gal_nmatch_regex}"/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
