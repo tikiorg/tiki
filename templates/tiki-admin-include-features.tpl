@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.17 2003-08-31 20:55:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.18 2003-09-21 01:15:27 fukuchi Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
@@ -564,7 +564,7 @@
             {if $feature_userPreferences eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UsersConfigureModules" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User can Configure Modules{/tr}">{/if}
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=UsersConfigureModules" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Users can Configure Modules{/tr}">{/if}
         		{tr}Users can Configure Modules{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
