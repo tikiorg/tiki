@@ -55,7 +55,7 @@
 </div>
 {/if}
 {section name=ix loop=$listpages}
-<div>
+<div class="blogpost">
 <div class="posthead">
 <table ><tr><td align="left">
 <span class="posthead">
