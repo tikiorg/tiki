@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.51 2004-04-09 04:05:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.52 2004-04-09 04:07:02 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -25,7 +25,7 @@
 
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
-<div class="tabs">
+<div id="page-bar">
 <span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Users{/tr}</a></span>
 {if $userinfo.userId}
 <span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
