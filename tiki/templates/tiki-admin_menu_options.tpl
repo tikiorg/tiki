@@ -17,20 +17,20 @@
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table>
-<tr><td class="form">{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="form">{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
-<tr><td class="form">{tr}Sections{/tr}:</td><td><input id="menu_section" type="text" name="section" value="{$section|escape}" /></td></tr>
-<tr><td class="form">{tr}Permissions{/tr}:</td><td><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" /></td></tr>
-<tr><td class="form">{tr}Groups{/tr}:</td><td><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" /></td></tr>
-<tr><td class="form">{tr}Type{/tr}:</td><td>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td><input id="menu_section" type="text" name="section" value="{$section|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Groups{/tr}:</td><td><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 <option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" /></td></tr>
-<tr><td  class="form">&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 </td><td valign="top" class="even">
@@ -136,16 +136,16 @@
 </tr>
 {section name=user loop=$channels}
 {if $channels[user].type eq 's'}
-<tr>
-<td class="odd">{$channels[user].menuId}</td>
-<td class="odd">{$channels[user].position}</td>
-<td class="odd">{$channels[user].name}</td>
-<td class="odd">{$channels[user].url}</td>
-<td class="odd">{$channels[user].type}</td>
-<td class="odd">{$channels[user].section}</td>
-<td class="odd">{$channels[user].perm}</td>
-<td class="odd">{$channels[user].groupname}</td>
-<td class="odd">
+<tr class="odd">
+<td>{$channels[user].menuId}</td>
+<td>{$channels[user].position}</td>
+<td>{$channels[user].name}</td>
+<td>{$channels[user].url}</td>
+<td>{$channels[user].type}</td>
+<td>{$channels[user].section}</td>
+<td>{$channels[user].perm}</td>
+<td>{$channels[user].groupname}</td>
+<td>
   &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
 title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
@@ -153,16 +153,16 @@ title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{
 </td>
 </tr>
 {else}
-<tr>
-<td class="even">{$channels[user].menuId}</td>
-<td class="even">{$channels[user].position}</td>
-<td class="even">{$channels[user].name}</td>
-<td class="even">{$channels[user].url}</td>
-<td class="even">{$channels[user].type}</td>
-<td class="even">{$channels[user].section}</td>
-<td class="even">{$channels[user].perm}</td>
-<td class="even">{$channels[user].groupname}</td>
-<td class="even">
+<tr class="even">
+<td>{$channels[user].menuId}</td>
+<td>{$channels[user].position}</td>
+<td>{$channels[user].name}</td>
+<td>{$channels[user].url}</td>
+<td>{$channels[user].type}</td>
+<td>{$channels[user].section}</td>
+<td>{$channels[user].perm}</td>
+<td>{$channels[user].groupname}</td>
+<td>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
 title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
