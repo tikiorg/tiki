@@ -745,8 +745,8 @@ class TikiLib extends TikiDB {
 	    return '';
 	}
 
-	$type = $this->get_user_details('avatarType', $user);
-	$libname = $this->get_user_details('avatarLibName', $user);
+	$type = $userlib->get_user_details('avatarType', $user);
+	$libname = $userlib->get_user_details('avatarLibName', $user);
 
 	$ret = '';
 	$style = '';
@@ -2959,7 +2959,7 @@ function add_pageview() {
 
     function user_exists($user) {
 
-	return $this->get_user_details('userId', $user) ? true : false;
+	return $userlib->get_user_details('userId', $user) ? true : false;
 
     }
 
@@ -3492,7 +3492,7 @@ function add_pageview() {
 	}
     }
 
-/* Moved to userlib; also an unused function
+/* Moved to userslib
     function get_user_details($item, $login) {
 	global $user_details;
 

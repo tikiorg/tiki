@@ -1150,7 +1150,7 @@ function get_included_groups($group) {
 	return $res;
     }
     
-/* Moved from tikilib; also an unused function
+// Moved from tikilib
     function get_user_details($item, $login) {
 		global $user_details;
 
@@ -1164,7 +1164,7 @@ function get_included_groups($group) {
 		    return false;
 		}
     }
-*/
+
 
     function set_default_group($user,$group) {
 	$query = "update `users_users` set `default_group` = ?
