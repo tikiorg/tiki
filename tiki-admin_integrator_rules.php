@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.20 2003-11-17 15:44:28 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.21 2004-03-31 07:38:41 mose Exp $
  *
  * Admin interface for rules management
  *
@@ -159,7 +159,15 @@ if (isset($_REQUEST["action"]))
         }
         break;
     case 'rm':
-        if ($ruleID != 0) $integrator->remove_rule($ruleID);
+        if ($ruleID != 0) {
+					$area = "delintegratorrule";
+					if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+						key_check($area);
+						$integrator->remove_rule($ruleID);
+					} else {
+						key_get($area);
+					}
+				}
         break;
     default:
         $smarty->assign('msg', tra("Requested action in not supported on repository"));

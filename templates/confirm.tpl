@@ -1,5 +1,5 @@
-{include file="header.tpl"}
 {* Index we display a wiki page here *}
+{include file="header.tpl"}
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
@@ -23,16 +23,16 @@
       <td id="centercolumn"><div id="tiki-center">
       <br />
         <div class="cbox">
-        <div class="cbox-title">
-        {$errortitle|default:"{tr}Error{/tr}"}
-        </div>
+        <br />
         <div class="cbox-data">
-        {$msg}<br /><br />
-        {if $page and !$nocreate and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a><br /><br />{/if}
-        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
-        <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+				<form action="{$confirmaction}" method="post">
+				<input type="submit" name="daconfirm" value="{tr}Click here to confirm your action{/tr}" />
+        <span class="button2"><a href="javascript:history.back()" class="linkbut">{tr}Go back{/tr}</a></span>
+        <span class="button2"><a href="{$tikiIndex}" class="linkbut">{tr}Return to home page{/tr}</a></span>
+				</form>
         </div>
-        </div>
+        </div><br />
+
       </div></td>
       {if $feature_right_column eq 'y'}
       <td id="rightcolumn">

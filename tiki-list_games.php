@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.19 2004-02-29 14:12:27 techtonik Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.20 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -233,33 +233,28 @@ if (isset($_POST["save"]) && $tiki_p_admin_games == 'y') {
     }
 }
 
-
-
 // 5. Delete //
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_games == 'y') {
-    // security issue - remove slashes to avoid traversing in parent directory
-    $game = basename( $_REQUEST["remove"] );
-
-    if (array_key_exists($game, $games)) {
-
-    $parts = explode('.', $game);
-    $parts = array_slice($parts,0,3);
-    $source = 'games/flash/'.$parts[0].'.'.$parts[1];
-
-    $gamefile = 'games/thumbs/'.implode('.',$parts);
-    $desc = 'games/thumbs/'.implode('.',$parts).'.txt';
-
-    unlink($source);
-    unlink($desc);
-    unlink($gamefile);
-
-    unset($games[$game]);
-
-    }
+	// security issue - remove slashes to avoid traversing in parent directory
+	$game = basename( $_REQUEST["remove"] );
+	if (array_key_exists($game, $games)) {
+		$area = 'delgame';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$parts = explode('.', $game);
+    	$parts = array_slice($parts,0,3);
+			$source = 'games/flash/'.$parts[0].'.'.$parts[1];
+			$gamefile = 'games/thumbs/'.implode('.',$parts);
+			$desc = 'games/thumbs/'.implode('.',$parts).'.txt';
+			unlink($source);
+			unlink($desc);
+			unlink($gamefile);
+			unset($games[$game]);
+		} else {
+			key_get($area);
+		}
+	}
 }
-
-
-
 
 $section = 'games';
 include_once('tiki-section_options.php');

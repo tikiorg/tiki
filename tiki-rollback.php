@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.11 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.12 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,9 +71,13 @@ if (!$tikilib->page_exists($page)) {
 }
 
 if (isset($_REQUEST["rollback"])) {
-	check_ticket('rollback');
-	$histlib->use_version($_REQUEST["page"], $_REQUEST["version"]);
-
+  $area = 'delrollbackpage';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$histlib->use_version($_REQUEST["page"], $_REQUEST["version"]);
+  } else {
+    key_get($area);
+  }
 	header ("location: tiki-index.php");
 	die;
 }

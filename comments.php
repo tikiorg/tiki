@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.27 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.28 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -238,11 +238,16 @@ if ($_REQUEST["comments_threadId"] > 0) {
 }
 
 if ($tiki_p_remove_comments == 'y') {
-    if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-	$comments_show = 'y';
-
-	$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-    }
+	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
+		$area = 'delcomment';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$comments_show = 'y';
+			$commentslib->remove_comment($_REQUEST["comments_threadId"]);
+		} else {
+			key_get($area);
+		}
+	}
 }
 
 $smarty->assign('comment_preview', 'n');

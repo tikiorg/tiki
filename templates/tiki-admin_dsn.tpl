@@ -38,8 +38,9 @@
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].dsn}</td>
 <td class="{cycle}">
-   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId} 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this dsn?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link"
+	 href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}"><img 
+	 border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a title="{tr}edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>

@@ -182,7 +182,6 @@
 	
 	
 	if(isset($_REQUEST["removegal"])) {
-		check_ticket('fgal');
 	  if($tiki_p_admin_file_galleries != 'y') {
 	     $info = $filegallib->get_file_gallery_info($_REQUEST["removegal"]);
 	     if(!$user || $info["user"]!=$user) {
@@ -191,7 +190,13 @@
 	       die;  
 	     }
 	  }
-	  $filegallib->remove_file_gallery($_REQUEST["removegal"]);
+		$area = 'delfilegal';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$filegallib->remove_file_gallery($_REQUEST["removegal"]);
+		} else {
+			key_get($area);
+		}
 	}
 	
 	if(!isset($_REQUEST["sort_mode"])) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.68 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.69 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,21 +101,24 @@ if ($tiki_p_forums_report == 'y') {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-    if (isset($_REQUEST['remove_attachment'])) {
-	check_ticket('view-forum');
-	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
-    }
-
-    if (isset($_REQUEST['delsel_x'])) {
-	if (isset($_REQUEST['forumtopic'])) {
-		check_ticket('view-forum');
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
-		$commentslib->remove_comment($topic);
-
-		$commentslib->register_remove_post($_REQUEST['forumId'], 0);
-	    }
+	if (isset($_REQUEST['remove_attachment'])) {
+  	$area = 'delforumattach';
+  	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    	key_check($area);
+			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+  	} else {
+    	key_get($area);
+  	}
 	}
-    }
+
+	if (isset($_REQUEST['delsel_x'])) {
+		if (isset($_REQUEST['forumtopic'])) {
+	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+				$commentslib->remove_comment($topic);
+				$commentslib->register_remove_post($_REQUEST['forumId'], 0);
+	    }
+		}
+	}
 
     if (isset($_REQUEST['locksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
@@ -568,13 +571,16 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
                     $_REQUEST["comments_threadId"]
                     )
                 && $tiki_p_forum_post == 'y')
-       )
-    {
-	check_ticket('view-forum');
+       ) {
+			$area = 'delforumcomm';
+		  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    		key_check($area);
         $comments_show = 'y';
-
         $commentslib->remove_comment($_REQUEST["comments_threadId"]);
         $commentslib->register_remove_post($_REQUEST["forumId"], 0);
+			} else {
+    		key_get($area);
+		  }
     } else { // user can't edit this post
         $smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.22 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.23 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,15 +36,25 @@ if (isset($_REQUEST["remove"])) {
 
 $page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 if (isset($_REQUEST["rremove"])) {
-	check_ticket('edit-structure');
-	$structlib->s_remove_page($_REQUEST["rremove"], false);
-  $_REQUEST["page_ref_id"] = $page_info["parent_id"];
+  $area = 'delstructure';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$structlib->s_remove_page($_REQUEST["rremove"], false);
+  	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
+  } else {
+    key_get($area);
+  }
 }
 
 if (isset($_REQUEST["sremove"])) {
-	check_ticket('edit-structure');
-	$structlib->s_remove_page($_REQUEST["sremove"], true);
-  $_REQUEST["page_ref_id"] = $page_info["parent_id"];
+  $area = 'delstructureandpages';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$structlib->s_remove_page($_REQUEST["sremove"], true);
+  	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
+  } else {
+    key_get($area);
+  }
 }
 
 $page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);

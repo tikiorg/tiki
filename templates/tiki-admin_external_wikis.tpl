@@ -42,7 +42,7 @@
 <td class="{cycle advance=false}">{$channels[user].extwiki}</td>
 <td class="{cycle}">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].extwikiId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this external wiki?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a title="{tr}edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>

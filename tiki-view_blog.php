@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.33 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.34 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,7 +101,6 @@ $smarty->assign('creator', $blog_data["user"]);
 $smarty->assign('activity', $blog_data["activity"]);
 
 if (isset($_REQUEST["remove"])) {
-	check_ticket('blog');
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
 	if (!$ownsblog) {
@@ -114,8 +113,13 @@ if (isset($_REQUEST["remove"])) {
 			}
 		}
 	}
-
-	$bloglib->remove_post($_REQUEST["remove"]);
+  $area = 'delpost';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$bloglib->remove_post($_REQUEST["remove"]);
+  } else {
+    key_get($area);
+  }
 }
 
 // This script can receive the thresold

@@ -70,7 +70,7 @@
 <td class="odd">{$channels[user].refresh}</td>
 <td class="odd">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
@@ -82,7 +82,7 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this ch
 <td class="even">{$channels[user].refresh}</td>
 <td class="even">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a title="{tr}edit{/tr}" class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}edit{/tr}" border="0" src="img/icons/edit.gif" /></a>
 </td>
 </tr>

@@ -3384,15 +3384,15 @@ function get_user_preference($user, $name, $default = '') {
 
 function set_user_preference($user, $name, $value) {
     global $user_preferences;
-
-  $user_preferences[$user][$name] = $value;
-  $query = "delete from `tiki_user_preferences`where `user`=? and `prefName`=?";
-  $bindvars=array($user,$name);
-  $result = $this->query($query, $bindvars, -1,-1,false);
-  $query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-  $bindvars[]=$value;
-  $result = $this->query($query, $bindvars);
-  return true;
+	make_clean($value);
+	$user_preferences[$user][$name] = $value;
+	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+	$bindvars=array($user,$name);
+	$result = $this->query($query, $bindvars, -1,-1,false);
+	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+	$bindvars[]=$value;
+	$result = $this->query($query, $bindvars);
+	return true;
 }
 
 function validate_user($user, $pass) {

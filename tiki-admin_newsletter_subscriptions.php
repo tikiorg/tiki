@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.9 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.10 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,8 +72,13 @@ if ($_REQUEST["nlId"]) {
 $smarty->assign('nl_info', $info);
 
 if (isset($_REQUEST["remove"])) {
-	check_ticket('admin-nl-subsriptions');
-	$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["email"]);
+	$area = 'delnlsub';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		$nllib->remove_newsletter_subscription($_REQUEST["remove"], $_REQUEST["email"]);
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST["add_all"])) {

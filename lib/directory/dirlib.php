@@ -348,6 +348,10 @@ class DirLib extends TikiLib {
 	function dir_replace_site($siteId, $name, $description, $url, $country, $isValid) {
 		global $cachepages;
 
+		make_clean($name);
+		make_clean($description);
+		make_clean($url);
+		make_clean($country);
 		$now = date("U");
 
 		if ($siteId) {

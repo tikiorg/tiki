@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.32 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.33 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,8 +57,13 @@ $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
 
 if (isset($_REQUEST['remove_image'])) {
-	check_ticket('blog');
-	$bloglib->remove_post_image($_REQUEST['remove_image']);
+  $area = 'delblogpostimage';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$bloglib->remove_post_image($_REQUEST['remove_image']);
+  } else {
+    key_get($area);
+  }
 }
 
 // If the articleId is passed then get the article data

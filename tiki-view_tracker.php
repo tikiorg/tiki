@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.62 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.63 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -294,12 +294,16 @@ if ($textarea_options) {
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
-if ($tiki_p_admin_trackers == 'y') {
-	if (isset($_REQUEST["remove"])) {
-		check_ticket('view-trackers');
+if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove"])) {
+  $area = 'deltrackeritem';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
-	}
+  } else {
+    key_get($area);
+  }
 }
+
 
 $smarty->assign('mail_msg', '');
 $smarty->assign('email_mon', '');

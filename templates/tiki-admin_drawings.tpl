@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.17 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.18 2004-03-31 07:38:44 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 <!-- the help link info -->
@@ -71,10 +71,10 @@
 <td class="{cycle}">
 {if $smarty.request.ver}
 	&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this drawing?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {else}
 	&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this drawing?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {/if}
 <a title="{tr}view{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link"><img src='img/icons/ico_img.gif' border='0' alt='{tr}view{/tr}' /></a>
 {if not $smarty.request.ver}

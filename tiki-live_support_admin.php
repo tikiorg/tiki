@@ -41,8 +41,13 @@ if ($tiki_p_live_support_admin == 'y') {
 	}
 
 	if (isset($_REQUEST['removeuser'])) {
-		check_ticket('ls-admin');
-		$lsadminlib->remove_operator($_REQUEST['removeuser']);
+		$area = 'dellsuser';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$lsadminlib->remove_operator($_REQUEST['removeuser']);
+		} else {
+			key_get($area);
+		}
 	}
 }
 

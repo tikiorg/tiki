@@ -45,8 +45,12 @@ $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST['remove'])) {
-	check_ticket('admin-banning');
-	$banlib->remove_rule($_REQUEST['remove']);
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		$banlib->remove_rule($_REQUEST['remove']);
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {

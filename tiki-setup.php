@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.206 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.207 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -298,6 +298,7 @@ if (file_exists('lib/bablotron.php')) {
 
 if (isset($_REQUEST['page'])) { $_REQUEST['page'] = strip_tags($_REQUEST['page']); }
 
+$area = 'tiki';
 $userbreadCrumb = 4;
 $blog_list_order = 'created_desc';
 $home_blog = 0;
@@ -389,6 +390,9 @@ $smarty->assign('feature_ticketlib',$feature_ticketlib);
 
 $wiki_uses_slides = 'n';
 $smarty->assign('wiki_uses_slides', $wiki_uses_slides);
+
+$feature_wiki_allowhtml = 'n';
+$smarty->assign('feature_wiki_allowhtml ', $feature_wiki_allowhtml );
 
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);

@@ -44,7 +44,13 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 
 	if ($tiki_p_admin_shoutbox == 'y') {
 		if (isset($_REQUEST["shout_remove"])) {
-			$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
+			$area = 'delshoutboxentry';
+			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+				key_check($area);
+				$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
+			} else {
+				key_get($area);
+			}
 		}
 	}
 

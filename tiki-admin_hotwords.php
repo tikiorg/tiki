@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.10 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.11 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,8 +39,13 @@ if (isset($_REQUEST["add"])) {
 }
 
 if (isset($_REQUEST["remove"]) && !empty($_REQUEST["remove"])) {
-	check_ticket('admin-hotwords');
-	$hotwordlib->remove_hotword($_REQUEST["remove"]);
+  $area = 'delhotword';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$hotwordlib->remove_hotword($_REQUEST["remove"]);
+  } else {
+    key_get($area);
+  }
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

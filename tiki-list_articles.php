@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.16 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.17 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,6 @@ if($tiki_p_view != 'y') {
 }
 */
 if (isset($_REQUEST["remove"])) {
-	check_ticket('list-articles');
 
 	if ($tiki_p_remove_article != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove articles"));
@@ -43,8 +42,13 @@ if (isset($_REQUEST["remove"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	$artlib->remove_article($_REQUEST["remove"]);
+  $area = 'delarticle';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$artlib->remove_article($_REQUEST["remove"]);
+  } else {
+    key_get($area);
+  }
 }
 
 // This script can receive the thresold

@@ -144,8 +144,8 @@
 {/section}
 </td>
 <td class="{cycle}">
-&nbsp;&nbsp;<a title="{tr}delete{/tr} href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

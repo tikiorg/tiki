@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.173 2004-03-27 21:23:53 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.174 2004-03-31 07:38:42 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4012,6 +4012,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_allowhtml','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');

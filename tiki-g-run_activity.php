@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.10 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.11 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,7 +91,13 @@ if (isset($_REQUEST['__removecomment'])) {
 	$__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
 
 	if ($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
-		$instance->remove_instance_comment($_REQUEST['__removecomment']);
+		$area = "delinstancecomment";
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$instance->remove_instance_comment($_REQUEST['__removecomment']);
+		} else {
+			key_get($area);
+		}
 	}
 }
 

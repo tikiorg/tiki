@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.74 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.75 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -462,9 +462,10 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 }
 
 if(isset($_REQUEST["edit"])) {
-
-  if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $edit_data = $_REQUEST["edit"];
+  
+  if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
+		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
+    $edit_data = $_REQUEST["edit"];  
   } else {
   $edit_data = htmlspecialchars($_REQUEST["edit"]);
   }

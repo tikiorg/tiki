@@ -163,7 +163,7 @@
 </table>
 </td>
 {/if}
-{if $tiki_p_use_HTML eq 'y'}
+{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
 <tr><td class="formcolor">{tr}Allow HTML{/tr}: </td><td class="formcolor"><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 {/if}
 {if $wiki_spellcheck eq 'y'}
