@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_menus.php">Admin Menus</a><br/>
+<a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a><br/>
 <h2>{tr}Create/edit Menus{/tr}</h2>
 <form action="tiki-admin_menus.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId}" />
@@ -15,7 +15,7 @@
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>Menus</h2>
+<h2>{tr}Menus{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
