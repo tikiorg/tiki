@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.34 2004-06-16 01:36:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.35 2004-07-11 13:45:05 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 // Initialization
 $tikifeedback = array();
 require_once ('tiki-setup.php');
+require_once ('lib/userslib/userslib_admin.php');
 
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
@@ -60,7 +61,7 @@ function batchImportUsers() {
 			$discarded[] = discardUser($u, tra("User is duplicated"));
 		} else {
 			if (!$userlib->user_exists($u['login'])) {
-				$userlib->add_user($u['login'], $u['password'], $u['email']);
+				$userslibadmin->add_user($u['login'], $u['password'], $u['email']);
 			}
 
 			$userlib->set_user_fields($u);
@@ -100,7 +101,7 @@ if (isset($_REQUEST["newuser"])) {
 			if ($userlib->user_exists($_REQUEST["name"])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
 			} else {
-				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
+				if ($userslibadmin->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
