@@ -1,3 +1,38 @@
+Version 1.5 -TBA-
+
+* [NEW] Fulltext searching added (optional) using this feature results can be sotred bu relevance upon the user
+  query imporving a lot results from the search engine.
+* [NEW] PHPWikiImport feature. You can export pages from a PHPWiki dump into tiki even versions will be created.
+* [NEW] Export all wiki feature. As admin you can export the whole wiki as a txt dump that can later be imported
+  into this or another Tiki site.
+* [NEW] Import/export wiki pages. Wiki pages can now be exported to a .txt Mime-alike format and imported from an
+  exported file.
+* [NEW] Slideshows added, if a wiki page contains more than one -=titlebar=- then you can display it as a slide show.
+  This is a very cool feature.
+* [NEW] Admin can select the minimu length for a password to be valid
+* [NEW] Admin can choose if user passwords must include letters and numbers to be valid
+* [NEW] Admin can setup passwords lifetime and Tiki will force the user to change his password once the password
+  is expired. 
+* [NEW] Challenge-response authentication added, if enabled and the browser support Javascript then user passwords
+  are never send accross the network being replaced by a challenge-response authentication algorithm. This improves
+  security since the chance of password eavesdropping is reduced a lot.
+* [NEW] Added sections to forums, now you can put forums into sections and the forums listing will list forums for
+  each existing section. (As phpBB and other forum softwares do)
+* [NEW] Improved forum layout to be nicer (Roger)
+* [NEW] Avatars added to forums. Users can configure their avatars from their user preferences screen, pick an
+  avatr from the library (more than 500) or upload an image to be used as your avatar.
+* [NEW] Surveys, create surveys to get a better understanding on your users opinions, many survey question types,
+  users can fill surveys and stats are stored. 
+* [NEW] Many bugs fixed, google module now works, definition lists fixed, wiki lists fixed, etc etc.
+* [NEW] Webmail, set-up as many POP-accounts as you want, select a "current" account and you will be able to read
+  emails, write emails, delete emails, download attachments, use attachments, write or read HTML based emails. Manage
+  your address book, automatically add addresses to your address book and all the regular cool webmail features.
+* [NEW] Trackers, trackers are a flexible way to track user-requests and groupware tasks, you can define the fields
+  for each tracker. Many field-types supported. Tracker items can be commented and can have file attachments, tracker
+  items can be assigned to a user or group and will appear in the user preferences page (the user's home). Trackers
+  and tracker items can be monitored and Tiki will send you an email when something is changed. You can open-close
+  tracker items.
+
 Version 1.4 -Mira-
 
 * [NEW] Quizzes, you can create quizzes with as many multiple-choice questions as you want and program specific answers
