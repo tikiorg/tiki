@@ -3,23 +3,21 @@
 </a>
 <br /><br />
 
-[
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-    <a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
-    <a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> |
+    <a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
+    <a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="linkbut">{tr}rebuild thumbnails{/tr}</a>
   {/if}
   {if $tiki_p_upload_images eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-      <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a> |
+      <a href="tiki-upload_image.php?galleryId={$galleryId}" class="linkbut">{tr}upload image{/tr}</a>
     {/if}
   {/if}
 {/if}
-<a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a>
+<a href="tiki-list_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}list gallery{/tr}</a>
 {if $rss_image_gallery eq 'y'}
-  | <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>
+  <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">RSS</a>
 {/if}
-]  
 
 {if strlen($description) > 0}
 	<div class="imgaldescr">
