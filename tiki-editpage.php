@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.53 2003-10-26 00:45:37 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.54 2003-10-28 22:25:49 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -687,6 +687,9 @@ if (isset($_REQUEST['cat_categorize'])) {
 		$smarty->assign('categ_checked', 'y');
 	}
 }
+
+$smarty->assign('rows', isset($_REQUEST['rows'])? $_REQUEST['rows']: '22');
+$smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-editpage.tpl');
