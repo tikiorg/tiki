@@ -117,6 +117,17 @@ class StructLib extends TikiLib {
 		return true;
 	}
 
+	function s_move_page_up($page_ref_id) {
+    $page_info = $this->get_page_info($page_ref_id);
+  
+  }
+  
+	function s_move_page_down($page_ref_id) {
+    $page_info = $this->get_page_info($page_ref_id);
+  }
+  
+  
+    
     /** \brief Create a structure entry with the given name
 	
 	    \param parent_id The parent entry to add this to. 
@@ -574,7 +585,7 @@ class StructLib extends TikiLib {
     $query .= "where tp.`page_id`=ts.`page_id` and `parent_id`=?";
  	  $result = $this->query($query,array($page_ref_id));
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res["page"];
+			$ret[] = $res["pageName"];
 			$ret2 = $this->get_structure_pages($structID, $res["page"]);
 			$ret = array_unique(array_merge($ret, $ret2));
 		}
