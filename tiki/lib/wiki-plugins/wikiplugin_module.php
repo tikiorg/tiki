@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.16 2004-01-13 14:27:14 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.17 2004-01-28 05:30:18 chealer Exp $
 Displays a module inlined in page
 
 Parameters
@@ -11,7 +11,7 @@ module args : arg=>value (depends on module)
 
 Example:
 {MODULE(module=>last_modified_pages,align=>left,max=>3,maxlen=>22)}
-{/MODULE}
+{MODULE}
 
 about module params : all params are passed in $module_params
 so if you need to use parmas just add them in MODULE()
