@@ -2218,6 +2218,14 @@ function get_topic_image($topicId) {
 }
 
 /*shared*/
+function get_article_image($id) {
+    $query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_articles` where `articleId`=?";
+    $result = $this->query($query, array((int) $id));
+    $res = $result->fetchRow();
+    return $res;
+}
+
+/*shared*/
 function get_featured_links($max = 10) {
     $query = "select * from `tiki_featured_links` where `position` > ? order by ".$this->convert_sortmode("position_asc");
     $result = $this->query($query, array(0), (int)$max, 0 );
