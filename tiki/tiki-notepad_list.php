@@ -66,10 +66,12 @@ if(isset($_REQUEST["delete"])) {
 }
 
 $quota = $userfileslib->userfiles_quota($user);
+
 $limit = $userfiles_quota * 1024 * 1000;
 if($limit==0) $limit=999999999;
 $percentage = ($quota/$limit)*100;
 $cellsize = round($percentage/100*200);
+if($cellsize==0) $cellsize=1;
 $percentage = round($percentage);
 $smarty->assign('cellsize',$cellsize);
 $smarty->assign('percentage',$percentage);

@@ -52,6 +52,10 @@
   <div class="wikitext">
   {eval var="$info.data"}
   </div>
+{elseif $smarty.request.parse_mode eq 'raw'}
+  <div class="wikitext">
+  {$info.data}
+  </div>
 {else}
   <div class="wikitext">
   {$info.parsed}

@@ -415,7 +415,7 @@ class Comments extends TikiLib {
   
   /*****************/
     
-  function get_comments($objectId, $parentId, $offset = 0,$maxRecords = -1,$sort_mode = 'commentDate_desc', $find='', $threshold=0)
+  function get_comments($objectId, $parentId, $offset = 0,$maxRecords = -1,$sort_mode = 'commentDate_desc', $find='', $threshold=0,$id=0)
   {
     $hash = md5($objectId);   
    
@@ -432,7 +432,11 @@ class Comments extends TikiLib {
       $offset = 0;
       $maxRecords = -1;
     }
-    
+	if($id) {
+	  $extra = " and $id ";
+	} else {
+	  $extra = '';
+	}   
     $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold";
     $below = $this->getOne($query);
     if($find) {
@@ -440,7 +444,7 @@ class Comments extends TikiLib {
     } else {
       $mid=" where type='s' and average>=$threshold and object='$hash' and parentId=$parentId "; 
     }
-    $query = "select * from tiki_comments $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from tiki_comments $mid $extra order by $sort_mode,threadId limit $offset,$maxRecords";
     //print("$query<br/>");
     $query_cant = "select count(*) from tiki_comments $mid";
     $result = $this->query($query);
