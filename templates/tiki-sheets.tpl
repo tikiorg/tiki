@@ -10,7 +10,7 @@
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
 
-{if $tiki_p_edit_sheet eq 'y'}
+{if $tiki_p_edit_sheet eq 'y' or $tiki_p_admin_sheet eq 'y' or $tiki_p_admin eq 'y'}
 {if $edit_mode eq 'y'}
 {if $sheetId eq 0}
 <h3>{tr}Create a sheet{/tr}</h3>

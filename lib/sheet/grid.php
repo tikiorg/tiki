@@ -854,9 +854,27 @@ class SheetLib extends TikiLib
 	{
 		switch( $sort_mode )
 		{
+			case "author_asc":
+				$sort = "`author` ASC";
+				break;
+			case "author_desc":
+				$sort = "`author` DESC";
+				break;
+			case "description_asc":
+				$sort = "`description` ASC";
+				break;
+			case "description_desc":
+				$sort = "`description` DESC";
+				break;
+			case "title_asc":
+				$sort = "`title` ASC";
+				break;
 			case "title_desc":
-			default:
 				$sort = "`title` DESC";
+				break;
+			default:
+				$sort = "`title` ASC";
+				break;
 		}
 
 		$result = $this->query( "SELECT * FROM `tiki_sheets`  ORDER BY $sort", array(), $maxRecord, $offset );
