@@ -19,7 +19,7 @@
 </div>
 <div class="cbox-data">
 {$msg}<br /><br />
-<form action="{$self}{if $query}?{$query|escape:"url"}{/if}" method="post">
+<form action="{$self}{if $query}?{$query|escape}{/if}" method="post">
 {foreach key=k item=i from=$post}
 <input type="hidden" name="{$k}" value="{$i|escape}" />
 {/foreach}
