@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.11 2004-07-30 22:08:26 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.12 2004-07-30 22:31:50 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,7 @@ class StaticLib extends TikiLib {
 	}
 
 	// build the static html page
-	function update_page($pagename) {
+	function update_page($pagename, $rebuildall = FALSE) {
 		
 		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $style_base, $feature_categories, $feature_categorypath, $feature_categoryobjects;
 		
@@ -63,8 +63,16 @@ class StaticLib extends TikiLib {
 		$user = NULL;
 		$smarty->assign('user', $user);
 		// reset all perms
-		$allperms = $userlib->get_permissions();
-		foreach ($allperms['data'] as $perm) {
+		global $cachelib;
+		include_once('lib/cache/cachelib.php');
+		if(!$cachelib->isCached("allperms")) {
+			$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
+			$cachelib->cacheItem("allperms",serialize($allperms));
+		} else {
+			$allperms = unserialize($cachelib->getCached("allperms"));
+		}
+		$allperms = $allperms["data"];
+		foreach ($allperms as $perm) {
 			$perm = $perm['permName'];
 			$smarty->assign("$perm", 'n');
 			$$perm = 'n';
@@ -233,6 +241,21 @@ class StaticLib extends TikiLib {
 		if(!file_exists($style_path)) {
 			copy("styles/$style", $style_path);
 		}
+		
+		if (!$rebuildall) {
+			// restore the permissions for the user since we have finished building the static page
+			global $user;
+			$smarty->assign('user', $user);
+			$perms = $userlib->get_user_permissions($user);
+			foreach ($perms as $perm) {
+			    $smarty->assign("$perm", 'y');
+			    $$perm = 'y';
+			}
+			if ($user == 'admin') {
+				$tiki_p_admin = 'y';
+			}
+			include('tiki-modules.php');
+		}
 		return TRUE;
 		
 	}
@@ -274,8 +297,26 @@ class StaticLib extends TikiLib {
 		
 		$pages = $this->list_pages();
 		foreach ($pages['data'] as $page) {
-			$this->update_page($page['pageName']);
+			$rebuildall = TRUE;
+			$this->update_page($page['pageName'], $rebuildall);
 		}
+		
+		// restore the permissions for the user since we have finished building the static page
+		global $user, $smarty;
+		$smarty->assign('user', $user);
+		global $userlib;
+		include_once('lib/userslib.php');
+		$perms = $userlib->get_user_permissions($user);
+		foreach ($perms as $perm) {
+		    $smarty->assign("$perm", 'y');
+		    $$perm = 'y';
+		}
+		if ($user == 'admin') {
+			$tiki_p_admin = 'y';
+		}
+		global $user_assigned_modules, $modallgroups, $modseparateanon, $tikidomain, $language;
+		$tikilib = $this;
+		include('tiki-modules.php');
 		return TRUE;
 		
 	}
