@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.15 2003-09-25 01:05:19 rlpowell Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.16 2003-10-02 23:07:36 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -13,6 +13,7 @@ body {
 }
 
 table {
+width: 100%;
 }
 
 /*
@@ -24,8 +25,6 @@ This div encloses the whole Tiki application
 */
 DIV#tiki-main {
 	background-color:    #EFEFE7;
-	height:   100%;
-	width:   100%;
 	margin:   0px;
 	padding:   0;
 }
@@ -37,6 +36,7 @@ This is the header
 	font-size:    10px;
 	color:   #7a6a59;
 	background-color:    #DED6C6;
+	width: 100%;
 }
 
 #tiki-top a.linkh {
@@ -102,7 +102,6 @@ TD#rightcolumn {
 }
 
 TD#centercolumn {
-	width:   100%;
 	background:   #EFEFE7;
 	vertical-align:   top;
 	border-top:   1px solid #5A4A39;
@@ -117,9 +116,6 @@ DIV#tiki-center {
 	vertical-align:   top;
 	margin-left:    12px;
 	margin-right:   12px;
-	padding-left:   5px;
-	padding-right:   5px;
-	width:   100%;
 }
 
 div#debugconsole {
@@ -252,7 +248,6 @@ div.cbox {
 	border:   1px solid black;
 	padding-bottom:   10px;
 	overflow:   hidden;
-	width:   100%;
 }
 
 /* 
@@ -268,7 +263,6 @@ div.cbox-title {
 	padding-left:   10px;
 	padding-right:   0px;
 	margin-bottom:   0px;
-	width:   100%;
 }
 
 /* 
@@ -301,7 +295,6 @@ div.cbox-data {
 	margin-right:   5px;
 	font-size:   11px;
 	color:   black;
-	width:   100%;
 }
 
 /* 
@@ -517,6 +510,7 @@ table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, tabl
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
 	border: 1px solid #5A4A39;
 	width: 100%;
+	margin: 10px;
 }
 
 TABLE.normalnoborder {
