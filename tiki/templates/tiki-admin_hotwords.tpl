@@ -47,16 +47,16 @@
 <td class="odd">{$words[user].word}</td>
 <td class="odd">{$words[user].url}</td>
 <td class="odd">
-<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}">{tr}remove{/tr}</a>
-</td>                                   
+<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+</td>
 </tr>
 {else}
 <tr>
 <td class="even">{$words[user].word}</td>
 <td class="even">{$words[user].url}</td>
 <td class="even">
-<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}">{tr}remove{/tr}</a>
-</td>                                   
+<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+</td>
 </tr>
 {/if}
 {sectionelse}
@@ -80,4 +80,3 @@
 {/section}
 {/if}
 </div>
-

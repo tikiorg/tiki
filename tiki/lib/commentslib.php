@@ -1001,6 +1001,7 @@ class Comments extends TikiLib {
 
 	$result = $this->query($query, array( (int) $id ) );
 	$res = $result->fetchRow();
+	if($res) { //if there is a comment with that id
 	$res["parsed"] = $this->parse_comment_data($res["data"]);
 
 	$res['user_posts'] = $this->getOne("select `posts` from
@@ -1026,6 +1027,7 @@ class Comments extends TikiLib {
 	    $res['user_online'] = $this->getOne("select count(*) from
 		    `tiki_sessions` where `user`=?", array( $res['userName'] ) )
 		? 'y' : 'n';
+	}
 	}
 
 	return $res;

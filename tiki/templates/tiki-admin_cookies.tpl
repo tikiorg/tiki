@@ -2,14 +2,14 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=FortuneCookieDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin FortuneCookie{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=FortuneCookieDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin FortuneCookie{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_cookies.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin FortuneCookie tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_cookies.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin FortuneCookie tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+{/if}
 
 <!-- begin -->
 
@@ -62,8 +62,8 @@
 <td class="odd">{$channels[user].cookieId}</td>
 <td class="odd">{$channels[user].cookie}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -71,8 +71,8 @@
 <td class="even">{$channels[user].cookieId}</td>
 <td class="even">{$channels[user].cookie}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
@@ -96,4 +96,3 @@
 {/if}
 </div>
 </div>
-

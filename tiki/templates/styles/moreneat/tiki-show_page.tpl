@@ -182,6 +182,9 @@
 	</td>
 </tr>
 <tr>
+		<td>
+			<table width='100%'>
+				<tr>
 	<td width='33%'>
 		{if $prev_info and $prev_info.page_ref_id}
 			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt; 
@@ -220,6 +223,9 @@
 			{else}
 				&nbsp;
 			{/if}</td>
+				</tr>
+			</table>
+		</td>
 	</tr>
 </table>
 </div>

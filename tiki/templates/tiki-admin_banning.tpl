@@ -3,13 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Banning{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- beginning of next bit -->
 
@@ -146,7 +146,7 @@
 {/section}
 </td>
 <td class="{cycle}">
-<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link"><img src='img/icons2/delete.gif' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' border='0' /></a>
+<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 </td>
 </tr>
 {sectionelse}
@@ -173,4 +173,4 @@
 {/section}
 {/if}
 </div>
-</div> 
+</div>

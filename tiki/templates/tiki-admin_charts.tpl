@@ -5,14 +5,14 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Charts" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Charts{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=Charts" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Charts{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+{/if}
 
 <!-- beginning of next bit -->
 
@@ -40,25 +40,21 @@
 		<td class="formcolor"><input type="checkbox" name="isActive" {if $info.isActive eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td class="formcolor">{tr}Users can vote only one item from this chart per period{/tr}</td>
+		<td class="formcolor">{tr}Users can vote for only one item from this chart per period{/tr}</td>
 		<td class="formcolor"><input id='chksc' type="checkbox" name="singleChartVotes" {if $info.singleChartVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td class="formcolor">{tr}Prevent users from voting same item more than one time{/tr}</td>
+		<td class="formcolor">{tr}Prevent users from voting for the same item more than once{/tr}</td>
 		<td class="formcolor"><input id='chksi' type="checkbox" name="singleItemVotes" {if $info.singleItemVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>	
 
 	<tr>
 		<td class="formcolor">{tr}Users can suggest new items{/tr}</td>
-		
 		<td class="formcolor"><input {literal}onchange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id='chksug' type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
-		
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Auto validate user suggestions{/tr}</td>
-		
 		<td class="formcolor"><input {literal}onchange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id='chkaut' type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
-		
 	</tr>
 	
 	<tr>
@@ -198,4 +194,4 @@
 {/section}
 {/if}
 </div>
-</div> 
+</div>

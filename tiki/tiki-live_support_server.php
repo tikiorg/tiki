@@ -20,6 +20,8 @@
 include_once("lib/init/initlib.php");
 include_once ('db/tiki-db.php');
 
+//lslib inherits from tikilib, so we need that ...
+include_once ('lib/tikilib.php');
 include_once ('lib/live_support/lslib.php');
 header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");             // Date in the past
 header ("Last-Modified: " . gmdate("D, d M Y H:i:s"). " GMT"); // always modified

@@ -327,8 +327,9 @@ go
 
 
 CREATE TABLE "sessions"(
-  "SESSKEY" varchar(32) default '' NOT NULL,
-  "EXPIRY" numeric(11,0) default '0' NOT NULL,
+  "SESSKEY" char(32) NOT NULL,
+  "EXPIRY" numeric(11,0) NOT NULL,
+  "EXPIREREF" varchar(64) default '',
   "DATA" text NOT NULL,
   PRIMARY KEY ("SESSKEY")
 
@@ -3039,7 +3040,7 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-forums_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-forum_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','')
 go
 
 
@@ -6082,7 +6083,7 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editors', 'maps')
 go
 
 

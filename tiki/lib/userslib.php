@@ -1299,6 +1299,25 @@ class UsersLib extends TikiLib {
 	$result = $this->query($query, $bindvars);
 	return $result;
     }
+
+    // damian aka damosoft
+    function count_users($group) {
+        static $rv = array();
+                                                                                                                                                                    
+        if (!isset($rv[$group])) {
+            if ($group == '') {
+                $query = "select count(login) from `users_users`";
+                $result = $this->getOne($query);
+            } else {
+                $query = "select count(userId) from `users_usergroups` where `groupName` = ?";
+                $result = $this->getOne($query, array($group));
+            }
+            $rv[$group] = $result;
+        }
+                                                                                                                                                                    
+        return $rv[$group];
+    }
+
 }
 
 ?>

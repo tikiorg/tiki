@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Script to grab a nightly backup of the tikiwiki cvs area on sf.net
+# and rename it to a suitable identifier e.g. Sunday.tikiwiki-cvsroot.tar.bz2
+# this way we have a 7 day rotation backup of the cvs tree
+
+# Copy this file into your /etc/cron.daily and 
+# change this location to your backup dump
+BACKUPDUMP='/home/webmaster/nightbackups'
+
+cd $BACKUPDUMP
+wget -q http://cvs.sourceforge.net/cvstarballs/tikiwiki-cvsroot.tar.bz2
+cp $BACKUPDUMP/tikiwiki-cvsroot.tar.bz2 $BACKUPDUMP/`date +%A`.tikiwiki-cvsroot.tar.bz2
+rm -f $BACKUPDUMP/tikiwiki-cvsroot.tar.bz2
