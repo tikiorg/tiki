@@ -353,6 +353,31 @@
     <div class="simplebox">
     <a class="link" href="tiki-admin.php?rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
     </div>
+    
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php">
+    <table><tr>
+    <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage}" />
+    <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
+    </td>
+    </tr></table>
+    </form>
+    </div>
+    
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php">
+    <table><tr>
+    <td class="form">{tr}Wiki Page Names{/tr}</td><td class="form">
+    <select name="wiki_page_regex">
+    <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
+    <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}strict{/tr}</option>
+    </select>
+    <input type="submit" name="setwikiregex" value="{tr}set{/tr}" />
+    </td>
+    </tr></table>
+    </form>
+    </div>
+    
     </td>
     
     <td width="40%" valign="top">
