@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.8 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.9 2003-09-12 21:17:00 sylvieg Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -6,12 +6,17 @@
 </div>
 <div class="box-data">
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">
-<inpt type="hidden" name="hl" value="en"/>
-<inpt type="hidden" name="oe" value="UTF-8"/>
-<inpt type="hidden" name="ie" value="UTF-8"/>
-<inpt type="hidden" name="btnG" value="Google Search"/>
+<input type="hidden" name="hl" value="en"/>
+<input type="hidden" name="oe" value="UTF-8"/>
+<input type="hidden" name="ie" value="UTF-8"/>
+<input type="hidden" name="btnG" value="Google Search"/>
 <input name="googles" type="image" width='16' height='16' src="img/googleg.gif" border="0" alt="Google" align="left" vspace="0" hspace="4"/>
 <input type="text" name="q" size="12"  maxlength="100" style="height:16px;"/>
+{if $http_domain ne ''}
+<input type="hidden" name="domains" value="{$http_domain}" />
+<input type="radio" name="sitesearch" value="{$http_domain}" checked>{$http_domain}</input><br />
+<input type="radio" name="sitesearch" value="">WWW</input>
+{/if}
 </form>
 </div>
 </div>
