@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.5 2004-08-12 16:04:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.6 2004-08-13 15:31:59 sylvieg Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -19,7 +19,7 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     function _startDiff()
     {
         ob_start();
-        echo '<table class="normal diff">';
+        //echo '<table class="normal diff">';
     }
 
     function _endDiff()
@@ -38,14 +38,14 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     function _startBlock($header)
     {
         $h = split(",", $header);
-        echo '<tr class="diffheader"><td>&nbsp;</td><td>';
+        echo '<tr class="diffheader"><td colspan="2">';
         if ($h[1] == 1)
            echo tra('Line:').$h[0];
         else {
            $h[1] = $h[0]+$h[1]-1;
            echo tra('Lines:').$h[0].'-'.$h[1];
         }
-        echo '</td><td>&nbsp;</td><td>';
+        echo '</td><td colspan="2">';
         if ($h[3] == 1)
            echo tra('Line:').$h[2];
         else {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.20 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.21 2004-08-13 15:31:58 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,37 +85,44 @@ if (isset($_REQUEST["preview"])) {
 	}
 }
 
-$smarty->assign('diff_style', '');
-
-if (isset($_REQUEST["compare"])) {
-	$diff = $histlib->get_version($page, $_REQUEST["oldver"]);
-	if ($_REQUEST["newver"] == 0)
-		$info = $tikilib->get_page_info($page);
-	else
-		$info = $histlib->get_version($page, $_REQUEST["newver"]);
-	$smarty->assign('oldver', $_REQUEST["oldver"]);
-	$smarty->assign('newver', $_REQUEST["newver"]);
-	if (!isset($_REQUEST["diff_style"]))
-		$_REQUEST["diff_style"] = 'sidediff';
-	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
-	if ($_REQUEST["diff_style"] == "sideview") {
-		$diff["data"] = $tikilib->parse_data($diff["data"]);
-		$smarty->assign_by_ref('diff', $diff["data"]);
-		$pdata = $tikilib->parse_data($info["data"]);
-		$smarty->assign_by_ref('parsed', $pdata);
-	}
-	else {
-		require_once('lib/diff/difflib.php');
-		$html = diff2($diff["data"], $info["data"], $_REQUEST["diff_style"]);
-		$smarty->assign_by_ref('diffdata', $html);
-	}
-}
-
 $info = $tikilib->get_page_info($page);
 $smarty->assign_by_ref('info', $info);
 
 $history = $histlib->get_page_history($page);
 $smarty->assign_by_ref('history', $history);
+
+if (isset($_REQUEST["compare"])) {
+	foreach ($history as $old) {
+		if ($old["version"] == $_REQUEST["oldver"])
+			break;
+	}
+	$smarty->assign_by_ref('old', $old);
+	if ($_REQUEST["newver"] == 0) {
+		$new =& $info;
+		$smarty->assign_by_ref('new', $info);
+	}
+	else {
+		foreach ($history as $new) {
+			if ($new["version"] == $_REQUEST["newver"])
+				break;
+		}
+		$smarty->assign_by_ref('new', $new);
+	}
+	if (!isset($_REQUEST["diff_style"]))
+		$_REQUEST["diff_style"] = 'sidediff';
+	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
+	if ($_REQUEST["diff_style"] == "sideview") {
+		$old["data"] = $tikilib->parse_data($old["data"]);
+		$new["data"] = $tikilib->parse_data($new["data"]);
+	}
+	else {
+		require_once('lib/diff/difflib.php');
+		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
+		$smarty->assign_by_ref('diffdata', $html);
+	}
+}
+else
+	$smarty->assign('diff_style', '');
 
 if($info["flag"] == 'L')
     $smarty->assign('lock',true);  
