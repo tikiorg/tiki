@@ -206,7 +206,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 {assign var=fca value=$ins_fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=$fca}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="{$ku}[]" value="{$iu.categId}" {if $ins_fields[ix].value.$ku eq 'y'}checked="checked"{/if}/>{$iu.name}</td>{cycle name=$fca}
 {/foreach}
 </table>
 
