@@ -3200,9 +3200,14 @@ class TikiLib {
 
   function lock_page($page)
   {
+    global $user;
     $page = addslashes($page);
     $query = "update tiki_pages set flag='L' where pageName='$page'";
     $result = $this->query($query);
+    if($user) {
+    $query = "update tiki_pages set user='$user' where pageName='$page'";
+    $result = $this->query($query);
+    }
     return true;
   }
 

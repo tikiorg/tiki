@@ -14,6 +14,9 @@ class WikiLib extends TikiLib {
   // If you think this is easy you are very very wrong
   function wiki_rename_page($oldName,$newName)
   {
+    if($this->page_exists($newName)) {
+      return false;
+    }
   	// 1st rename the page in tiki_pages
   	$query = "update tiki_pages set pageName='$newName' where pageName='$oldName'";
   	$this->query($query);
@@ -35,11 +38,11 @@ class WikiLib extends TikiLib {
     // correct toPage and fromPage in tiki_links
   	$query = "update tiki_links set fromPage='$newName' where fromPage='$oldName'";
     $this->query($query);	  	
-  	$query = "update tiki_links set toPage='$toPage' where toPage='$toPage'";
+  	$query = "update tiki_links set toPage='$newName' where toPage='$oldName'";
     $this->query($query);	    	
   	
   	// tiki_footnotes change pageName
-  	$query = "update tiki_footnotes set pageName='$newName' where pageName='$oldName'";
+  	$query = "update tiki_page_footnotes set pageName='$newName' where pageName='$oldName'";
     $this->query($query);	  	  	
   	
   	// tiki_structures change page and parent
@@ -55,7 +58,7 @@ class WikiLib extends TikiLib {
 	$newId = 'wiki page' + md5($newName);
   	
   	// in tiki_categorized_objects update objId
-	$query = "update tiki_categorized objects set objId='$newId' where objId='$oldId'";
+	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
     $this->query($query);	  	  	  	
   	
   	// in tiki_comments update object  
