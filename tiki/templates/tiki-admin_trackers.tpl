@@ -142,7 +142,13 @@ src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channel
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Member of the default group of creator can modify items?{/tr}</td><td><input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td><input type="text" name="defaultOrderKey" value="{$defaultOrderKey}" /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td>
+<select name="defaultOrderKey">
+{section name=x loop=$fields}
+<option value="{$fields[x].fieldId}"{if $defaultOrderKey eq $fields[x].fieldId} selected="selected"{/if}>{$fields[x].name|truncate:42:" ..."}</option>
+{/section}
+</select>
+</td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What is default sort order in list?{/tr}</td><td>
 <select name="defaultOrderDir">
 <option value="asc" {if $defaultOrderDir eq 'asc'}selected="selected"{/if}/>{tr}ascending{/tr}</option>
