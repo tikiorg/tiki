@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.36 2004-07-11 15:52:58 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.37 2004-07-16 18:30:27 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -139,6 +139,40 @@ if (isset($_REQUEST["newuser"])) {
 	if (isset($tikifeedback[0]['msg'])) {
 		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
 	}					
+} elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
+	if ($_REQUEST["submit_mult"] == "remove_users") {
+		foreach ($_REQUEST["checked"] as $deleteuser) {
+			$userslibadmin->remove_user($deleteuser);
+			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
+		}
+	} elseif ($_REQUEST['submit_mult'] == 'assign_groups') {
+		$group_management_mode = TRUE;
+		$smarty->assign('group_management_mode', 'y');
+		$numrows = $maxRecords;
+		$sort_mode = 'groupName_asc';
+		$offset = 0;
+		$initial = '';
+		$find = '';
+
+		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+		$smarty->assign('groups', $groups['data']);
+	}
+} elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
+	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
+		foreach ($_REQUEST['checked'] as $user) {
+			foreach ($_REQUEST["checked_groups"] as $group) {
+				$userlib->assign_user_to_group($user, $group);
+			}
+		}
+	}
+} elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
+	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
+		foreach ($_REQUEST['checked'] as $user) {
+			foreach ($_REQUEST["checked_groups"] as $group) {
+				$userslibadmin->remove_user_from_group($user, $group);
+			}
+		}
+	}
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -179,6 +213,16 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial);
+
+if (!empty($group_management_mode)) {
+	$arraylen = count($users['data']);
+	for ($i=0; $i<$arraylen; $i++) {
+		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {
+			$users['data'][$i]['checked'] = 'y';
+		}
+	}
+}
+
 $smarty->assign_by_ref('users', $users["data"]);
 $cant_pages = ceil($users["cant"] / $numrows);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
