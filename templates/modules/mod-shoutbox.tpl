@@ -1,16 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.13 2003-10-02 20:38:05 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.14 2003-11-18 09:38:01 luciash Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
   <div class="box">
     <div class="box-title">
       {include file="modules/module-title.tpl" module_title="{tr}Shoutbox{/tr}" module_name="shoutbox"}
-
     </div>
     <div class="box-data">
     {if $tiki_p_post_shoutbox eq 'y'}
       <form action="{$shout_ownurl}" method="post">
       <div align="center">
-        <textarea rows="3" class="tshoutbox"  name="shout_msg" maxlength="250"></textarea>
+        <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
 	<br/>
 	<input type="submit" name="shout_send" value="{tr}send{/tr}" />
       </div><br/>
@@ -43,7 +42,9 @@
         {/if}
       </div>
     {/section}
-    <a href="tiki-shoutbox.php">{tr}Older Messages{/tr}</a>
+      <div style="text-align: center">
+        <a href="tiki-shoutbox.php" class="linkmodule">{tr}Read More{/tr}&hellip;</a>
+      </div>
     </div>
   </div>
 {/if}
