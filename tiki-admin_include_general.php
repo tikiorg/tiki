@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.12 2003-11-02 12:07:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.13 2003-11-10 00:04:01 gongo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,7 +90,10 @@ if (isset($_REQUEST["prefs"])) {
 		$tikilib->set_preference("tmpDir", $tdir);
 		$smarty->assign("tmpDir", $tdir);
 	}
-	$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
+	
+	// not needed anymore? -- gongo
+	//$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
+	$smarty->assign('pagetop_msg', "");
 }
 
 // Handle Password Change Request
