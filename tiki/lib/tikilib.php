@@ -5374,6 +5374,10 @@ Per http://www.w3.org/TR/NOTE-datetime
 			'Italian',
 			tra("Italian")
 		),
+			'ja' => array(
+			'Japanese',
+			tra("Japanese")
+		),
 			'nl' => array(
 			'Dutch',
 			tra("Dutch")
