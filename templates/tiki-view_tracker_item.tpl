@@ -131,6 +131,13 @@
 {assign var=stick value="n"}
 {/if}
 
+{elseif $ins_fields[ix].type eq 'm'}
+{if $ins_fields[ix].options_array[0] eq '1'}
+{mailto address=$ins_fields[ix].value encode="javascript"}
+{else}
+{$ins_fields[ix].value|default:"&nbsp;"}
+{/if}
+
 {else}
 {$ins_fields[ix].value|default:"&nbsp;"}
 </td></tr>
@@ -321,7 +328,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/foreach}
 </table>
 
-{elseif $ins_fields[ix].type eq 't'}
+{elseif $ins_fields[ix].type eq 't' || $ins_fields[ix].type eq 'm'}
 {if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}" maxlength="{$ins_fields[ix].options_array[1]}"{/if} />
 {if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}

@@ -157,6 +157,10 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}" alt="" />
 
+{elseif $items[user].field_values[ix].type eq 'm'}
+{* Here we don't mailto the address so as far as I understood the code, if we reach here we are becoming a link to view_item.php *}
+{$items[user].field_values[ix].value|default:"&nbsp;"}
+
 {else}
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 
@@ -168,7 +172,15 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' or $items[user].field_values[ix].linkId}</a>{/if}
 </td>
 {else}
-{if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
+{if $items[user].field_values[ix].type eq 'm'}
+<td class="auto">
+{if $items[user].field_values[ix].options_array[0] eq '1'}
+{mailto address=$items[user].field_values[ix].value encode="javascript"}
+{else}
+{$items[user].field_values[ix].value|default:"&nbsp;"}
+{/if}
+</td>
+{elseif $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="auto">
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 </td>
@@ -299,7 +311,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $fields[ix].type eq 'i'}
 <input type="file" name="{$fields[ix].ins_id}"/>
 
-{elseif $fields[ix].type eq 't'}
+{elseif $fields[ix].type eq 't' || $fields[ix].type eq 'm'}
 {if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}" maxlength="{$fields[ix].options_array[1]}"{/if} value="{$defaultvalues.$fid|escape}" />
 {if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
