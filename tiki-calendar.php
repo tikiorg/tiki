@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.21 2003-12-04 13:08:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.22 2003-12-04 13:14:58 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -529,8 +529,8 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 	}
 }
 
-$hrow = array();
-if ($viewmode == 'day') {
+$hrows = array();
+if ($_SESSION['CalendarViewMode'] == 'day') {
 	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
 		$rawhour = substr($dayitems['time'],0,2);
 		$dayitems['mins'] = substr($dayitems['time'],2);
@@ -559,5 +559,5 @@ include_once ('tiki-section_options.php');
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");
 
-echo "<pre>";print_r($cell);echo "</pre>";
+//echo "<pre>";print_r($cell);echo "</pre>";
 ?>
