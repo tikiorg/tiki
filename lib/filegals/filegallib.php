@@ -164,6 +164,7 @@ class FileGalLib extends TikiLib {
     global $fgal_use_dir;
     $description = addslashes($description);
     include_once('lib/pclzip.lib.php');
+    include_once('lib/mime/mimelib.php');
     $archive = new PclZip($file);
     $archive->extract('temp');
     $files=Array();
@@ -208,8 +209,8 @@ class FileGalLib extends TikiLib {
       }
       $size = filesize('temp/'.$file);
       $name = $file;
-      $type = '';
-      $fileId = $this->insert_file($galleryId,$name,$description,$name, $data, $size, '', $user,$fhash);
+      $type = tiki_get_mime('temp/'.$file);
+      $fileId = $this->insert_file($galleryId,$name,$description,$name, $data, $size, $type, $user,$fhash);
       unlink('temp/'.$file);
     }
   }
