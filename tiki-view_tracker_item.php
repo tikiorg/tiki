@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.68 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.69 2004-06-16 19:40:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,7 +110,8 @@ $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
 
-for ($i = 0; $i < count($fields["data"]); $i++) {
+$temp_max = count($fields["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
 	
 	$ins_id = 'ins_' . $fid;
@@ -311,7 +312,8 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
 		$_REQUEST['show']  = 'view';
-		for ($i = 0; $i < count($fields["data"]); $i++) {
+		$temp_max = count($fields["data"]);
+		for ($i = 0; $i < $temp_max; $i++) {
 			$fid = $fields["data"][$i]["fieldId"];
 			$ins_id = 'ins_' . $fid;
 			$ins_fields["data"][$i]["value"] = '';
@@ -341,7 +343,8 @@ if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$last = array();
 	$lst = '';
-	for ($i = 0; $i < count($fields["data"]); $i++) {
+	$temp_max = count($fields["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers) {
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];

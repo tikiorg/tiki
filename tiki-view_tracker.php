@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.71 2004-06-14 05:40:15 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.72 2004-06-16 19:40:48 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -146,7 +146,8 @@ $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
 
-for ($i = 0; $i < count($fields["data"]); $i++) {
+$temp_max = count($fields["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
 	
 	$ins_id = 'ins_' . $fid;

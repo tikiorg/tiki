@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.24 2004-05-27 21:58:17 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.25 2004-06-16 19:40:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,8 @@ include_once ("lib/webmail/htmlMimeMail.php");
 
 function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
-		for ($i = 0; $i < count($obj->parts); $i++)
+		$temp_max = count($obj->parts);
+		for ($i = 0; $i < $temp_max; $i++)
 			parse_output($obj->parts[$i], $parts, $i);
 	} else {
 		$ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;
@@ -190,7 +191,8 @@ if ($_REQUEST["section"] == 'read') {
 		$bodies = $parts["text"];
 	}
 
-	for ($i = 0; $i < count($bodies); $i++) {
+	$temp_max = count($bodies);
+	for ($i = 0; $i < $temp_max; $i++) {
 		$bodies[$i] = strip_tags(
 			$bodies[$i], "<a><b><i><table><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select>");
 	}
@@ -212,7 +214,8 @@ if ($_REQUEST["section"] == 'read') {
 	// Get email addresses from the "from" portion
 	$to_addresses = split(',', $to_addresses);
 
-	for ($i = 0; $i < count($to_addresses); $i++) {
+	$temp_max = count($to_addresses);
+	for ($i = 0; $i < $temp_max; $i++) {
 		preg_match("/<([^>]+)>/", $to_addresses[$i], $add);
 
 		if (isset($add[1])) {
@@ -233,7 +236,8 @@ if ($_REQUEST["section"] == 'read') {
 		$cc_addresses .= $output->headers["to"];
 		$cc_addresses = split(',', $cc_addresses);
 
-		for ($i = 0; $i < count($cc_addresses); $i++) {
+		$temp_max = count($cc_addresses);
+		for ($i = 0; $i < $temp_max; $i++) {
 			preg_match("/<([^>]+)>/", $cc_addresses[$i], $add);
 
 			if (isset($add[1])) {
@@ -622,7 +626,8 @@ if ($_REQUEST["section"] == 'compose') {
 		} else {
 			if (is_array($mail->errors)) {
 				$msg = "";
-				for ($i = 0; $i < count($mail->errors); $i ++) {
+				$temp_max = count($mail->errors);
+				for ($i = 0; $i < $temp_max; $i ++) {
 					$msg .= $mail->errors[$i]."<br />";
 				}
 			} else {
