@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.10 2003-08-07 21:35:11 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.11 2003-08-10 22:52:07 sylvieg Exp $ *}
 
 {if $feature_search eq 'y'}
 <div class="box">
@@ -6,7 +6,7 @@
 {include file="modules/module-title.tpl" module_title="{tr}Search{/tr}" module_name="search_box"}
 </div>
 <div class="box-data">
-    <form class="forms" method="post" action="tiki-searchresults.php">
+    <form class="forms" method="get" action="tiki-searchresults.php">
     <input id="fuser" name="words" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>

@@ -32,7 +32,7 @@
 ]
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
-<form class="forms" method="post" action="tiki-searchresults.php">
+<form class="forms" method="get" action="tiki-searchresults.php">
     {tr}Find{/tr}: <input id="fuser" name="words" size="14" type="text" accesskey="s" />
     <input type="hidden" name="where" value="{$where|escape}" />
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
