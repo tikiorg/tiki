@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/bookmarks/bookmarklib.php');
 
 if($tiki_p_create_bookmarks != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -26,8 +27,8 @@ if(!isset($_REQUEST["parentId"])) {
 }
 
 if($_REQUEST["parentId"]) {
-  $path = $tikilib->get_folder_path($_REQUEST["parentId"],$user);
-  $p_info = $tikilib->get_folder($_REQUEST["parentId"],$user);
+  $path = $bookmarklib->get_folder_path($_REQUEST["parentId"],$user);
+  $p_info = $bookmarklib->get_folder($_REQUEST["parentId"],$user);
   $father = $p_info["parentId"];
 } else {
   $path = tra("TOP");
@@ -38,7 +39,7 @@ $smarty->assign('path',$path);
 
 //chekck for edit folder
 if(isset($_REQUEST["editfolder"])) {
-  $folder_info = $tikilib->get_folder($_REQUEST["editfolder"],$user);
+  $folder_info = $bookmarklib->get_folder($_REQUEST["editfolder"],$user);
 } else {
   $folder_info["name"]='';
   $_REQUEST["editfolder"]=0;
@@ -47,7 +48,7 @@ $smarty->assign('foldername',$folder_info["name"]);
 $smarty->assign('editfolder',$_REQUEST["editfolder"]);
 
 if(isset($_REQUEST["editurl"])) {
-  $url_info = $tikilib->get_url($_REQUEST["editurl"]);
+  $url_info = $bookmarklib->get_url($_REQUEST["editurl"]);
 } else {
   $url_info["name"]='';
   $url_info["url"]='';
@@ -61,25 +62,25 @@ $smarty->assign('editurl',$_REQUEST["editurl"]);
 // Create a folder inside the parentFolder here
 if(isset($_REQUEST["addfolder"])) {
   if($_REQUEST["editfolder"]) {
-    $tikilib->update_folder($_REQUEST["editfolder"],$_REQUEST["foldername"],$user);
+    $bookmarklib->update_folder($_REQUEST["editfolder"],$_REQUEST["foldername"],$user);
     $smarty->assign('editfolder',0);
     $smarty->assign('foldername','');
   } else {
-    $tikilib->add_folder($_REQUEST["parentId"],$_REQUEST["foldername"],$user);
+    $bookmarklib->add_folder($_REQUEST["parentId"],$_REQUEST["foldername"],$user);
   }
 }
 if(isset($_REQUEST["removefolder"])) {
-  $tikilib->remove_folder($_REQUEST["removefolder"],$user);
+  $bookmarklib->remove_folder($_REQUEST["removefolder"],$user);
 }
 
 if(isset($_REQUEST["refreshurl"])) {
-  $tikilib->refresh_url($_REQUEST["refreshurl"]);
+  $bookmarklib->refresh_url($_REQUEST["refreshurl"]);
 }
 
 if(isset($_REQUEST["addurl"])) {
-    $urlid = $tikilib->replace_url($_REQUEST["editurl"],$_REQUEST["parentId"],$_REQUEST["urlname"],$_REQUEST["urlurl"],$user);
+    $urlid = $bookmarklib->replace_url($_REQUEST["editurl"],$_REQUEST["parentId"],$_REQUEST["urlname"],$_REQUEST["urlurl"],$user);
     if($_REQUEST["editurl"]==0 && $tiki_p_cache_bookmarks=='y') {
-      $tikilib->refresh_url($urlid);
+      $bookmarklib->refresh_url($urlid);
     }
     $smarty->assign('editurl',0);
     $smarty->assign('urlname','');
@@ -90,9 +91,9 @@ if(isset($_REQUEST["removeurl"])) {
 }
 
 
-$urls = $tikilib->list_folder($_REQUEST["parentId"],0,-1,'name_asc','',$user);
+$urls = $bookmarklib->list_folder($_REQUEST["parentId"],0,-1,'name_asc','',$user);
 $smarty->assign('urls',$urls["data"]);
-$folders = $tikilib->get_child_folders($_REQUEST["parentId"],$user);
+$folders = $bookmarklib->get_child_folders($_REQUEST["parentId"],$user);
 $pf = Array(
   "name" => "..",
   "folderId" => $father,

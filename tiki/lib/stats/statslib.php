@@ -11,6 +11,95 @@ class StatsLib extends TikiLib {
     $this->db = $db;  
   }
   
+    function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',$find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($sort_mode == 'size desc') {
+      $sort_mode = ' length(data) desc';
+    }
+    if($sort_mode == 'size asc') {
+      $sort_mode = ' length(data) asc';
+    }
+    $old_sort_mode ='';
+    if(in_array($sort_mode,Array('versions desc','versions asc','links asc','links desc','backlinks asc','backlinks desc'))) {
+      $old_offset = $offset;
+      $old_maxRecords = $maxRecords;
+      $old_sort_mode = $sort_mode;
+      $sort_mode ='user desc';
+      $offset = 0;
+      $maxRecords = -1;
+    }
+
+    if($find) {
+      $mid=" where pageName like '%".$find."%' ";
+    } else {
+      $mid="";
+    }
+
+    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+    $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit 0,-1";
+    $query_cant = "select count(*) from tiki_pages $mid";
+    $result = $this->query($query);
+    $result_cant = $this->query($query_cant);
+    $res2 = $result_cant->fetchRow();
+    $cant = $res2[0];
+    $ret = Array();
+    $num_or = 0;
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $pageName = $res["pageName"];
+      $queryc = "select count(*) from tiki_links where toPage='$pageName'";
+      $cant = $this->getOne($queryc);
+      if($cant==0) {
+        $num_or++;
+        $aux = Array();
+        $aux["pageName"] = $pageName;
+        $page = $aux["pageName"];
+        $aux["hits"] = $res["hits"];
+        $aux["lastModif"] = $res["lastModif"];
+        $aux["user"] = $res["user"];
+        $aux["ip"] = $res["ip"];
+        $aux["len"] = $res["len"];
+        $aux["comment"] = $res["comment"];
+        $aux["version"] = $res["version"];
+        $aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
+        $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page'");
+        $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page'");
+        $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page'");
+        $ret[] = $aux;
+      }
+    }
+    // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
+    if($old_sort_mode == 'versions asc') {
+      usort($ret,'compare_versions');
+    }
+    if($old_sort_mode == 'versions desc') {
+      usort($ret,'r_compare_versions');
+    }
+    if($old_sort_mode == 'links desc') {
+      usort($ret,'compare_links');
+    }
+    if($old_sort_mode == 'links asc') {
+      usort($ret,'r_compare_links');
+    }
+    if($old_sort_mode == 'backlinks desc') {
+      usort($ret,'compare_backlinks');
+    }
+    if($old_sort_mode == 'backlinks asc') {
+      usort($ret,'r_compare_backlinks');
+    }
+    if(in_array($old_sort_mode,Array('versions desc','versions asc','links asc','links desc','backlinks asc','backlinks desc'))) {
+      $ret = array_slice($ret, $old_offset, $old_maxRecords);
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $num_or;
+    return $retval;
+  }
+
+
+  
   function wiki_stats()
   {
     $stats=Array();

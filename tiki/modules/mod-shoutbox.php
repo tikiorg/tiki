@@ -1,5 +1,6 @@
 <?php
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/shoutbox/shoutboxlib.php');
 
 if($feature_shoutbox=='y' && $tiki_p_view_shoutbox == 'y') {
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
@@ -27,17 +28,17 @@ $smarty->assign('shout_ownurl',$shout_father);
 
 if($tiki_p_admin_shoutbox == 'y') {
   if(isset($_REQUEST["shout_remove"])) {
-    $tikilib->remove_shoutbox($_REQUEST["shout_remove"]);
+    $shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
   }
 }
 
 if($tiki_p_post_shoutbox == 'y') {
   if(isset($_REQUEST["shout_send"])) {
-    $tikilib->replace_shoutbox(0, $user,$_REQUEST["shout_msg"]);
+    $shoutboxlib->replace_shoutbox(0, $user,$_REQUEST["shout_msg"]);
   }
 }  
 
-$shout_msgs = $tikilib->list_shoutbox(0,$module_rows,'timestamp_desc','');
+$shout_msgs = $shoutboxlib->list_shoutbox(0,$module_rows,'timestamp_desc','');
 $smarty->assign('shout_msgs',$shout_msgs["data"]);
 }
 ?>

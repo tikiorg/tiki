@@ -1,6 +1,6 @@
 <?php
 require_once('lib/tikilib.php'); # httpScheme()
-
+include_once('lib/bookmarks/bookmarklib.php');
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 if(isset($setup_parsed_uri["query"])) {
   parse_str($setup_parsed_uri["query"],$setup_query_data);
@@ -31,7 +31,7 @@ if(isset($_REQUEST["bookmark_removeurl"])) {
 }
 
 if(isset($_REQUEST["bookmark_create_folder"])) {
-  $tikilib->add_folder($_SESSION["bookmarks_parent"],$_REQUEST['bookmark_urlname'],$user);
+  $bookmarklib->add_folder($_SESSION["bookmarks_parent"],$_REQUEST['bookmark_urlname'],$user);
 }
 
 if(isset($_REQUEST["bookmark_mark"])) {
@@ -89,16 +89,16 @@ if(isset($_REQUEST["bookmark_mark"])) {
     
   }
   if(!empty($_REQUEST["bookmark_urlname"])) {
-    $tikilib->replace_url(0,$_SESSION["bookmarks_parent"],$_REQUEST["bookmark_urlname"],$ownurl,$user);
+    $bookmarklib->replace_url(0,$_SESSION["bookmarks_parent"],$_REQUEST["bookmark_urlname"],$ownurl,$user);
   }
 }
 
-$modb_p_info = $tikilib->get_folder($_SESSION["bookmarks_parent"],$user);
+$modb_p_info = $bookmarklib->get_folder($_SESSION["bookmarks_parent"],$user);
 $modb_father = $modb_p_info["parentId"];
 // get folders for the parent
-$modb_urls = $tikilib->list_folder($_SESSION["bookmarks_parent"],0,-1,'name_asc','',$user);
+$modb_urls = $bookmarklib->list_folder($_SESSION["bookmarks_parent"],0,-1,'name_asc','',$user);
 $smarty->assign('modb_urls',$modb_urls["data"]);
-$modb_folders = $tikilib->get_child_folders($_SESSION["bookmarks_parent"],$user);
+$modb_folders = $bookmarklib->get_child_folders($_SESSION["bookmarks_parent"],$user);
 $modb_pf = Array(
   "name" => "..",
   "folderId" => $modb_father,

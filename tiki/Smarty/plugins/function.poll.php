@@ -1,6 +1,6 @@
 <?php
-
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/polls/polllib.php');
 
 function smarty_function_poll($params, &$smarty)
 {
@@ -9,11 +9,11 @@ function smarty_function_poll($params, &$smarty)
     // Param = zone
 
     if (empty($id)) { 
-      $id = $tikilib->get_random_active_poll();
+      $id = $polllib->get_random_active_poll();
     }
     if($id) {
-      $menu_info = $tikilib->get_poll($id);
-      $channels = $tikilib->list_poll_options($id,0,-1,'pollId_asc','');
+      $menu_info = $polllib->get_poll($id);
+      $channels = $polllib->list_poll_options($id,0,-1,'pollId_asc','');
       $smarty->assign('ownurl',httpPrefix().$_SERVER["REQUEST_URI"]);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels["data"]);

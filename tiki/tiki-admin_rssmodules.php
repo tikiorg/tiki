@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/rss/rsslib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -16,8 +17,8 @@ $smarty->assign('rssId',$_REQUEST["rssId"]);
 $smarty->assign('preview','n');
 if(isset($_REQUEST["view"])) {
   $smarty->assign('preview','y');
-  $data = $tikilib->get_rss_module_content($_REQUEST["view"]);
-  $items = $tikilib->parse_rss_data($data);
+  $data = $rsslib->get_rss_module_content($_REQUEST["view"]);
+  $items = $rsslib->parse_rss_data($data);
   
   $smarty->assign_by_ref('items',$items);
 }
@@ -38,11 +39,11 @@ $smarty->assign('url',$info["url"]);
 $smarty->assign('refresh',$info["refresh"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_rss_module($_REQUEST["remove"]);
+  $rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
-  $tikilib->replace_rss_module($_REQUEST["rssId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["refresh"]);
+  $rsslib->replace_rss_module($_REQUEST["rssId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["refresh"]);
   $smarty->assign('rssId',0);
   $smarty->assign('name','');
   $smarty->assign('description','');

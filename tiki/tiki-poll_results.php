@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/polls/polllib.php');
 
 if($feature_polls != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,8 +16,8 @@ if(!isset($_REQUEST["pollId"])) {
 }
 
 $poll_info = $tikilib->get_poll($_REQUEST["pollId"]);
-$polls = $tikilib->list_active_polls(0,-1,'publishDate_desc','');
-$options = $tikilib->list_poll_options($_REQUEST["pollId"],0,-1,'title_desc','');
+$polls = $polllib->list_active_polls(0,-1,'publishDate_desc','');
+$options = $polllib->list_poll_options($_REQUEST["pollId"],0,-1,'title_desc','');
 for($i=0;$i<count($options["data"]);$i++)
 {
   if($poll_info["votes"]==0) {

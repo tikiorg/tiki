@@ -3,6 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/categories/categlib.php');
 include_once('lib/filegals/filegallib.php');
+include_once('lib/polls/polllib.php');
 
 if($feature_categories != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -164,7 +165,7 @@ $smarty->assign_by_ref('file_galleries',$file_galleries["data"]);
 $forums = $tikilib->list_forums(0,-1,'name_asc',$find_objects);
 $smarty->assign_by_ref('forums',$forums["data"]);
 
-$polls = $tikilib->list_polls(0,-1,'title_asc',$find_objects);
+$polls = $polllib->list_polls(0,-1,'title_asc',$find_objects);
 $smarty->assign_by_ref('polls',$polls["data"]);
 
 $blogs = $tikilib->list_blogs(0,-1,'title_asc',$find_objects);

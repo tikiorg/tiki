@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/polls/polllib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -14,13 +15,13 @@ if(!isset($_REQUEST["pollId"])) {
 $smarty->assign('pollId',$_REQUEST["pollId"]);
 
 if(isset($_REQUEST["setlast"])) {
-  $tikilib->set_last_poll();
+  $polllib->set_last_poll();
 }
 if(isset($_REQUEST["closeall"])) {
-  $tikilib->close_all_polls();
+  $polllib->close_all_polls();
 }
 if(isset($_REQUEST["activeall"])) {
-  $tikilib->active_all_polls();
+  $polllib->active_all_polls();
 }
 
 
@@ -38,14 +39,14 @@ $smarty->assign('publishDate',$info["publishDate"]);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_poll($_REQUEST["remove"]);
+  $polllib->remove_poll($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
   
   $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
                         $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $pid = $tikilib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
+  $pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
   
   $cat_type='poll';
   $cat_objid = $pid;
@@ -76,7 +77,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_polls($offset,$maxRecords,$sort_mode,$find);
+$channels = $polllib->list_polls($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

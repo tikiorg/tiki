@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/notifications/notificationlib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -9,11 +10,11 @@ if($tiki_p_admin != 'y') {
 }
 
 if(isset($_REQUEST["add"])) {
-  $tikilib->add_mail_event($_REQUEST["event"],'*',$_REQUEST["email"]);
+  $notificationlib->add_mail_event($_REQUEST["event"],'*',$_REQUEST["email"]);
 }
 
 if(isset($_REQUEST["removeevent"])) {
-  $tikilib->remove_mail_event($_REQUEST["removeevent"],$_REQUEST["object"],$_REQUEST["email"]);
+  $notificationlib->remove_mail_event($_REQUEST["removeevent"],$_REQUEST["object"],$_REQUEST["email"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -37,7 +38,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_mail_events($offset,$maxRecords,$sort_mode,$find);
+$channels = $notificationlib->list_mail_events($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

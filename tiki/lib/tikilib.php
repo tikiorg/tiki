@@ -466,66 +466,7 @@ class TikiLib {
     $ret["users"]  = $this->getOne("select count(*) from users_users where registrationDate>$last");
     return $ret;
   }
-
-  // ShoutBox ////
-  function list_shoutbox($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (message like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_shoutbox $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_shoutbox $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      if(!$res["user"]) $res["user"]='Anonymous';
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function replace_shoutbox($msgId,$user,$message)
-  {
-    $hash = md5($message);
-    $cant = $this->getOne("select count(*) from tiki_shoutbox where hash = '$hash' and user='$user'");
-    if($cant) return;
-    $message=addslashes(strip_tags($message,'<a>'));
-    // Check the name
-    $now=date("U");
-    if($msgId) {
-      $query = "update tiki_shoutbox set user='$user', message='$message', hash='$hash' where msgId=$msgId";
-    } else {
-      $query = "replace into tiki_shoutbox(message,user,timestamp,hash)
-                values('$message','$user',$now,'$hash')";
-    }
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_shoutbox($msgId)
-  {
-    $query = "delete from tiki_shoutbox where msgId=$msgId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_shoutbox($msgId)
-  {
-    $query = "select * from tiki_shoutbox where msgId=$msgId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-  // ShoutBox ////
-
+  
   // Templates ////
   /*shared*/ function list_templates($section,$offset,$maxRecords,$sort_mode,$find)
   {
@@ -665,148 +606,7 @@ class TikiLib {
     $ret[] = "Anonymous";
     return $ret;
   }
-
-  // User assigned modules ////
-  // User bookmarks ////
-  function get_folder_path($folderId,$user)
-  {
-    $path = '';
-    $info = $this->get_folder($folderId,$user);
-    $path = '<a class="link" href=tiki-user_bookmarks.php?parentId="'.$info["folderId"].'">'.$info["name"].'</a>';
-    while($info["parentId"]!=0) {
-      $info = $this->get_folder($info["parentId"],$user);
-      $path = $path = '<a class="link" href=tiki-user_bookmarks.php?parentId="'.$info["folderId"].'">'.$info["name"].'</a>'.'>'.$path;
-    }
-    return $path;
-  }
-
-  function get_folder($folderId,$user)
-  {
-    $query = "select * from tiki_user_bookmarks_folders where folderId=$folderId and user='$user'";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function get_url($urlId)
-  {
-    $query = "select * from tiki_user_bookmarks_urls where urlId=$urlId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function remove_url($urlId,$user)
-  {
-    $query = "delete from tiki_user_bookmarks_urls where urlId=$urlId and user='$user'";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_folder($folderId,$user)
-  {
-    // Delete the category
-    $query = "delete from tiki_user_bookmarks_folders where folderId=$folderId and user='$user'";
-    $result = $this->query($query);
-    // Remove objects for this category
-    $query = "delete from tiki_user_bookmarks_urls where folderId=$folderId and user='$user'";
-    $result = $this->query($query);
-    // SUbfolders
-    $query = "select folderId from tiki_user_bookmarks_folders where parentId=$folderId and user='$user'";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      // Recursively remove the subcategory
-      $this->remove_folder($res["folderId"],$user);
-    }
-    return true;
-  }
-
-  function update_folder($folderId,$name,$user)
-  {
-    $name = addslashes($name);
-    $query = "update tiki_user_bookmarks_folders set name='$name' where folderId=$folderId and user='$user'";
-    $result = $this->query($query);
-  }
-
-  function add_folder($parentId,$name,$user)
-  {
-    $name = addslashes($name);
-    $query = "insert into tiki_user_bookmarks_folders(name,parentId,user) values('$name',$parentId,'$user')";
-    $result = $this->query($query);
-  }
-
-  function replace_url($urlId,$folderId,$name,$url,$user)
-  {
-    $now = date("U");
-    $name = addslashes($name);
-    if($urlId) {
-      $query = "update tiki_user_bookmarks_urls set user='$user',lastUpdated=$now,folderId=$folderId,name='$name',url='$url' where urlId=$urlId";
-    } else {
-      $query = " insert into tiki_user_bookmarks_urls(name,url,data,lastUpdated,folderId,user)
-      values('$name','$url','',$now,$folderId,'$user')";
-    }
-    $result = $this->query($query);
-    $id = $this->getOne("select max(urlId) from tiki_user_bookmarks_urls where url='$url' and lastUpdated=$now");
-    return $id;
-  }
-
-  function refresh_url($urlId)
-  {
-    $info = $this->get_url($urlId);
-    @$fp = fopen($info["url"],"r");
-    if(!$fp) return;
-    $data = '';
-    while(!feof($fp)) {
-      $data .= fread($fp,4096);
-    }
-    fclose($fp);
-    $data = addslashes($data);
-    $now = date("U");
-    $query = "update tiki_user_bookmarks_urls set lastUpdated=$now, data='$data' where urlId=$urlId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function list_folder($folderId,$offset,$maxRecords,$sort_mode='name_asc',$find,$user)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" and name like '%".$find."%' or url like '%".$find."% '";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_user_bookmarks_urls where folderId=$folderId and user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select  * from tiki_user_bookmarks_urls where folderId=$folderId and user='$user' $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["datalen"]=strlen($res["data"]);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function get_child_folders($folderId,$user)
-  {
-    $ret=Array();
-    $query = "select * from tiki_user_bookmarks_folders where parentId=$folderId and user='$user'";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $cant = $this->getOne("select count(*) from tiki_user_bookmarks_urls where folderId=".$res["folderId"]);
-      $res["urls"]=$cant;
-      $ret[]=$res;
-    }
-    return $ret;
-  }
-
-  // User bookmarks ////
-
+  
   // Functions for FAQs ////
   /*shared*/ function list_faqs($offset,$maxRecords,$sort_mode,$find)
   {
@@ -856,94 +656,7 @@ class TikiLib {
         return $r;
   }
 
-  // Get a listing of orphan pages
-  function list_orphan_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',$find='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($sort_mode == 'size desc') {
-      $sort_mode = ' length(data) desc';
-    }
-    if($sort_mode == 'size asc') {
-      $sort_mode = ' length(data) asc';
-    }
-    $old_sort_mode ='';
-    if(in_array($sort_mode,Array('versions desc','versions asc','links asc','links desc','backlinks asc','backlinks desc'))) {
-      $old_offset = $offset;
-      $old_maxRecords = $maxRecords;
-      $old_sort_mode = $sort_mode;
-      $sort_mode ='user desc';
-      $offset = 0;
-      $maxRecords = -1;
-    }
-
-    if($find) {
-      $mid=" where pageName like '%".$find."%' ";
-    } else {
-      $mid="";
-    }
-
-    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit 0,-1";
-    $query_cant = "select count(*) from tiki_pages $mid";
-    $result = $this->query($query);
-    $result_cant = $this->query($query_cant);
-    $res2 = $result_cant->fetchRow();
-    $cant = $res2[0];
-    $ret = Array();
-    $num_or = 0;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $pageName = $res["pageName"];
-      $queryc = "select count(*) from tiki_links where toPage='$pageName'";
-      $cant = $this->getOne($queryc);
-      if($cant==0) {
-        $num_or++;
-        $aux = Array();
-        $aux["pageName"] = $pageName;
-        $page = $aux["pageName"];
-        $aux["hits"] = $res["hits"];
-        $aux["lastModif"] = $res["lastModif"];
-        $aux["user"] = $res["user"];
-        $aux["ip"] = $res["ip"];
-        $aux["len"] = $res["len"];
-        $aux["comment"] = $res["comment"];
-        $aux["version"] = $res["version"];
-        $aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
-        $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page'");
-        $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page'");
-        $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page'");
-        $ret[] = $aux;
-      }
-    }
-    // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
-    if($old_sort_mode == 'versions asc') {
-      usort($ret,'compare_versions');
-    }
-    if($old_sort_mode == 'versions desc') {
-      usort($ret,'r_compare_versions');
-    }
-    if($old_sort_mode == 'links desc') {
-      usort($ret,'compare_links');
-    }
-    if($old_sort_mode == 'links asc') {
-      usort($ret,'r_compare_links');
-    }
-    if($old_sort_mode == 'backlinks desc') {
-      usort($ret,'compare_backlinks');
-    }
-    if($old_sort_mode == 'backlinks asc') {
-      usort($ret,'r_compare_backlinks');
-    }
-    if(in_array($old_sort_mode,Array('versions desc','versions asc','links asc','links desc','backlinks asc','backlinks desc'))) {
-      $ret = array_slice($ret, $old_offset, $old_maxRecords);
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $num_or;
-    return $retval;
-  }
-
+  
   // This function calculates the pageRanks for the tiki_pages
   // it can be used to compute the most relevant pages
   // according to the number of links they have
@@ -998,7 +711,7 @@ class TikiLib {
   // where: where to replace (maybe the same text)
   // language: language to use
   // element: element where the text is going to be replaced (a textarea or similar)
-  function spellcheckreplace($what,$where,$language,$element)
+  /*shared*/ function spellcheckreplace($what,$where,$language,$element)
   {
     global $smarty;
     $trl='';
@@ -1052,7 +765,7 @@ class TikiLib {
     return $where;
   }
 
-  function spellcheckword($word,$lang)
+  /*shared*/ function spellcheckword($word,$lang)
   {
     include_once("bablotron.php");
     $b = new bablotron($this->db,$lang);
@@ -1075,7 +788,7 @@ class TikiLib {
       return $html;
   }
 
-  function get_forum($forumId)
+  /*shared*/ function get_forum($forumId)
   {
     $query = "select * from tiki_forums where forumId='$forumId'";
     $result = $this->query($query);
@@ -1083,7 +796,7 @@ class TikiLib {
     return $res;
   }
 
-  function list_all_forum_topics($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_all_forum_topics($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1106,7 +819,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_forum_topics($forumId,$offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_forum_topics($forumId,$offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1129,7 +842,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_forums($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_forums($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1169,7 +882,6 @@ class TikiLib {
     return $retval;
   }
 
-  // Functions for categories ////
   /*shared*/ function remove_object($type,$id)
   {
     $this->uncategorize_object($type,$id);
@@ -1182,20 +894,6 @@ class TikiLib {
     $result = $this->query($query);
     return true;
    }
-
-
-
-  
-
-  // Functions for categories end ////
-
-  // Functions for the communication center ////
-
-  // This function moves a page from the received pages to the wiki if the page does not exist if the
-  // page already exists then the page must be renamed before being inserted in the wiki and this function
-  // returns false
-//cut  
-  
 
   /*shared*/ function list_received_pages($offset,$maxRecords,$sort_mode='pageName_asc',$find)
   {
@@ -1226,164 +924,7 @@ class TikiLib {
 
 
   // Functions for polls ////
-  function list_polls($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (title like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_polls $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "select count(*) from tiki_poll_options where pollId=".$res["pollId"];
-      $res["options"]=$this->getOne($query);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_active_polls($offset,$maxRecords,$sort_mode,$find)
-  {
-    $now = date("U");
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (active='a' or active='c') and publishDate<=$now and (title like '%".$find."%)'";
-    } else {
-      $mid=" where (active='a' or active='c') and publishDate<=$now ";
-    }
-    $query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_polls $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_current_polls($offset,$maxRecords,$sort_mode,$find)
-  {
-    $now = date("U");
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where active='c' and publishDate<=$now and (title like '%".$find."%')";
-    } else {
-      $mid=" where active='c' and publishDate<=$now ";
-    }
-    $query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_polls $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_all_polls($offset,$maxRecords,$sort_mode,$find)
-  {
-    $now = date("U");
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where publishDate<=$now and (title like '%".$find."%')";
-    } else {
-      $mid=" where publishDate<=$now ";
-    }
-    $query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_polls $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_poll_options($pollId,$offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where pollId=$pollId and (title like '%".$find."%')";
-    } else {
-      $mid=" where pollId=$pollId ";
-    }
-    $query = "select * from tiki_poll_options $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_poll_options $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function remove_poll($pollId)
-  {
-    $query = "delete from tiki_polls where pollId=$pollId";
-    $result = $this->query($query);
-    $query = "delete from tiki_poll_options where pollId=$pollId";
-    $result = $this->query($query);
-    $this->remove_object('poll',$pollId);
-    return true;
-  }
-
-  function set_last_poll()
-  {
-    $now = date("U");
-    $query = "select max(publishDate) from tiki_polls where publishDate<=$now";
-    $last = $this->getOne($query);
-    $query = "update tiki_polls set active='c' where publishDate=$last";
-    $result = $this->query($query);
-  }
-
-  function close_all_polls()
-  {
-    $now = date("U");
-    $query = "select max(publishDate) from tiki_polls where publishDate<=$now";
-    $last = $this->getOne($query);
-    $query = "update tiki_polls set active='x' where publishDate<$last and publishDate<=$now";
-    $result = $this->query($query);
-  }
-
-  function active_all_polls()
-  {
-    $now = date("U");
-    $query = "update tiki_polls set active='a' where publishDate<=$now";
-    $result = $this->query($query);
-  }
-
-  function remove_poll_option($optionId)
-  {
-    $query = "delete from tiki_poll_options where optionId=$optionId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_poll($pollId)
+  /*shared*/ function get_poll($pollId)
   {
     $query = "select * from tiki_polls where pollId=$pollId";
     $result = $this->query($query);
@@ -1392,58 +933,8 @@ class TikiLib {
     return $res;
   }
 
-  function get_poll_option($optionId)
-  {
-    $query = "select * from tiki_poll_options where optionId=$optionId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function replace_poll($pollId, $title, $active, $publishDate)
-  {
-    $title = addslashes($title);
-    // Check the name
-    if($pollId) {
-      $query = "update tiki_polls set title='$title',active='$active',publishDate=$publishDate where pollId=$pollId";
-      $result = $this->query($query);
-    } else {
-      $query = "replace into tiki_polls(title,active,publishDate,votes)
-                values('$title','$active',$publishDate,0)";
-      $result = $this->query($query);
-      $pollId=$this->getOne("select max(pollId) from tiki_polls where title='$title' and publishDate=$publishDate");
-    }
-
-    return $pollId;
-  }
-
-  function replace_poll_option($pollId,$optionId, $title)
-  {
-    $title = addslashes($title);
-    // Check the name
-    if($optionId) {
-      $query = "update tiki_poll_options set title='$title' where optionId=$optionId";
-    } else {
-      $query = "replace into tiki_poll_options(pollId,title,votes)
-                values($pollId,'$title',0)";
-    }
-
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_random_active_poll()
-  {
-    // Get pollid from polls where active = 'y' and publishDate is less than now
-    $res = $this->list_current_polls(0,-1,'title_desc','');
-    $data = $res["data"];
-    $bid = rand(0,count($data)-1);
-    $pollId  = $data[$bid]["pollId"];
-    return $pollId;
-  }
-
-  function poll_vote($pollId,$optionId)
+  //This should be moved to a poll module (currently in tiki-setup.php
+  /*shared*/ function poll_vote($pollId,$optionId)
   {
     $query = "update tiki_poll_options set votes=votes+1 where optionId=$optionId";
     $result = $this->query($query);
@@ -1453,213 +944,7 @@ class TikiLib {
 
   // end polls ////
 
-  // Functions for email notifications ////
-  function list_mail_events($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (event like '%".$find."%' or email like '%".$find."%')";
-    } else {
-      $mid=" ";
-    }
-    $query = "select * from tiki_mail_events $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_mail_events $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function add_mail_event($event,$object,$email)
-  {
-    $query = "replace into tiki_mail_events(event,object,email) values('$event','$object','$email')";
-    $result = $this->query($query);
-  }
-
-  function remove_mail_event($event,$object,$email)
-  {
-    $query = "delete from tiki_mail_events where event='$event' and object='$object' and email='$email'";
-    $result = $this->query($query);
-  }
-
-  function get_mail_events($event,$object)
-  {
-    $query = "select email from tiki_mail_events where event='$event' and object='$object'";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["email"];
-    }
-    return $ret;
-  }
-
-  // End email notification functions ////
-
-  // Functions for the RSS modules ////
-  function list_rss_modules($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_rss_modules $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_rss_modules $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["minutes"]=$res["refresh"]/60;
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function replace_rss_module($rssId, $name, $description, $url, $refresh)
-  {
-    //if($this->rss_module_name_exists($name)) return false;
-    $description = addslashes($description);
-    $name = addslashes($name);
-    // Check the name
-
-    $refresh = 60*$refresh;
-    if($rssId) {
-      $query = "update tiki_rss_modules set name='$name',description='$description',refresh=$refresh,url='$url' where rssId=$rssId";
-    } else {
-      $query = "replace into tiki_rss_modules(name,description,url,refresh,content,lastUpdated)
-                values('$name','$description','$url',$refresh,'',1000000)";
-    }
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_rss_module($rssId)
-  {
-    $query = "delete from tiki_rss_modules where rssId=$rssId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_rss_module($rssId)
-  {
-    $query = "select * from tiki_rss_modules where rssId=$rssId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function startElementHandler($parser, $name,$attribs) {
-    if($this->flag) {
-      $this->buffer.='<'.$name.'>';
-    }
-    if($name=='item' || $name=='items') {
-      $this->flag=1;
-    }
-
-  }
-
-  function endElementHandler($parser, $name) {
-    if($name=='item' || $name=='items') {
-      $this->flag=0;
-    }
-    if($this->flag) {
-      $this->buffer.='</'.$name.'>';
-    }
-  }
-
-  function characterDataHandler($parser, $data) {
-    if($this->flag) {
-      $this->buffer.=$data;
-    }
-  }
-
-  function NewsFeed ($data) {
-    $news = Array();
-    $this->buffer = '';
-    $this->flag=0;
-    $this->parser=xml_parser_create();
-    xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
-    xml_set_object($this->parser,$this);
-    xml_set_element_handler($this->parser,"startElementHandler","endElementHandler");
-    xml_set_character_data_handler($this->parser,"characterDataHandler");
-    if (!xml_parse($this->parser, $data, 1)) {
-                    return $news;
-    }
-    xml_parser_free($this->parser);
-    preg_match_all("/<title>(.*)<\/title>/",$this->buffer,$titles);
-    preg_match_all("/<link>(.*)<\/link>/",$this->buffer,$links);
-    for($i=0;$i<count($titles[1]);$i++) {
-      $anew["title"]=$titles[1][$i];
-      if(isset($links[1][$i])) {
-        $anew["link"] = $links[1][$i];
-      } else {
-        $anew["link"]='';
-      }
-      $news[]=$anew;
-    }
-    return $news;
-  }
-
-  function parse_rss_data($rssdata)
-  {
-    return $this->NewsFeed($rssdata);
-  }
-
-  function refresh_rss_module($rssId)
-  {
-    $info = $this->get_rss_module($rssId);
-    @$fp = fopen($info["url"],"r");
-    if(!$fp) return false;
-    $data = '';
-    while(!feof($fp)) {
-      $data .= fread($fp,4096);
-    }
-    $datai = addslashes($data);
-    $now = date("U");
-    $query = "update tiki_rss_modules set content='$datai', lastUpdated=$now where rssId=$rssId";
-    $result = $this->query($query);
-    return $data;
-  }
-
-  function rss_module_name_exists($name)
-  {
-    $query = "select name from tiki_rss_modules where name='$name'";
-    $result = $this->query($query);
-    return $result->numRows();
-  }
-
-  function get_rss_module_id($name)
-  {
-    $query = "select rssId from tiki_rss_modules where name='$name'";
-    $id = $this->getOne($query);
-    return $id;
-  }
-
-  function get_rss_module_content($rssId)
-  {
-
-   $info = $this->get_rss_module($rssId);
-   $now = date("U");
-   if($info["lastUpdated"]+$info["refresh"]<$now) {
-     $data = $this->refresh_rss_module($rssId);
-   }
-   $info = $this->get_rss_module($rssId);
-   return $info["content"];
-  }
-
-  // rSS modules end ////
-
+  
   // Functions for the menubuilder and polls////
   /*Shared*/ function get_menu($menuId)
   {

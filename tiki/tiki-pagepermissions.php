@@ -1,5 +1,6 @@
 <?php
 include_once("tiki-setup.php");
+include_once('lib/notifications/notificationlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -30,12 +31,12 @@ if(!isset($_REQUEST["page"])) {
 }
 
 if(isset($_REQUEST["addemail"])) {
-  $tikilib->add_mail_event('wiki_page_changes','wikipage'.$_REQUEST["page"],$_REQUEST["email"]);
+  $notificationlib->add_mail_event('wiki_page_changes','wikipage'.$_REQUEST["page"],$_REQUEST["email"]);
 }
 if(isset($_REQUEST["removeemail"])) {
-  $tikilib->remove_mail_event('wiki_page_changes','wikipage'.$_REQUEST["page"],$_REQUEST["removeemail"]);
+  $notificationlib->remove_mail_event('wiki_page_changes','wikipage'.$_REQUEST["page"],$_REQUEST["removeemail"]);
 }
-$emails=$tikilib->get_mail_events('wiki_page_changes','wikipage'.$_REQUEST["page"]);
+$emails=$notificationlib->get_mail_events('wiki_page_changes','wikipage'.$_REQUEST["page"]);
 $smarty->assign('emails',$emails);
 
 if(!$tikilib->page_exists($page)) {

@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/shoutbox/shoutboxlib.php');
 
 if($feature_shoutbox != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -28,7 +28,7 @@ if($_REQUEST["msgId"]) {
     $smarty->display("styles/$style_base/error.tpl");
     die;
   }
-  $info = $tikilib->get_shoutbox($_REQUEST["msgId"]);
+  $info = $shoutboxlib->get_shoutbox($_REQUEST["msgId"]);
 } else {
   $info = Array();
   $info["message"]='';
@@ -39,7 +39,7 @@ $smarty->assign('user',$info["user"]);
 
 if($tiki_p_admin_shoutbox == 'y') {
   if(isset($_REQUEST["remove"])) {
-    $tikilib->remove_shoutbox($_REQUEST["remove"]);
+    $shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
   }
 }
 
@@ -47,7 +47,7 @@ if($tiki_p_admin_shoutbox == 'y') {
 
 if($tiki_p_post_shoutbox == 'y') {
   if(isset($_REQUEST["save"])) {
-    $tikilib->replace_shoutbox($_REQUEST["msgId"], $user,$_REQUEST["message"]);
+    $shoutboxlib->replace_shoutbox($_REQUEST["msgId"], $user,$_REQUEST["message"]);
     $smarty->assign("msgId",'0');
     $smarty->assign('message','');
   } 
@@ -74,7 +74,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_shoutbox($offset,$maxRecords,$sort_mode,$find);
+$channels = $shoutboxlib->list_shoutbox($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
