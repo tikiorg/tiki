@@ -1937,7 +1937,7 @@ function list_files($offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function get_file($id) {
-    $query = "select `path` ,`galleryId`,`filename`,`filetype`,`data` from `tiki_files` where `fileId`=?";
+    $query = "select `path` ,`galleryId`,`filename`,`filetype`,`data`,`filesize` from `tiki_files` where `fileId`=?";
     $result = $this->query($query,array((int) $id));
     $res = $result->fetchRow();
     return $res;
