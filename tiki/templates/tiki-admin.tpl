@@ -149,7 +149,7 @@
 <tr><td class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}
-        <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+        <option value="{$languages[ix]}" {if $site_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
 <tr><td class="form">{tr}Server name (for absolute URIs){/tr}:</td><td><input type="text" name="feature_server_name" value="{$feature_server_name}" /></td></tr>        

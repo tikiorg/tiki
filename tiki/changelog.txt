@@ -1,4 +1,4 @@
-Version 1.5 -TBA-
+Version 1.5 -Regulus-
 
 * [NEW] Added a phpinfo link to check your php installation in the admin menu.
 * [NEW] Now you can make batch uploads of zip files for file galleries. If you have the right permission just

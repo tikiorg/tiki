@@ -199,7 +199,7 @@ if(isset($_REQUEST["prefs"])) {
   
   if(isset($_REQUEST["language"])) {
     $tikilib->set_preference("language",$_REQUEST["language"]); 
-    $smarty->assign_by_ref('language',$_REQUEST["language"]);
+    $smarty->assign_by_ref('site_language',$_REQUEST["language"]);
   }
 
   if(isset($_REQUEST['display_timezone'])) {
@@ -1236,6 +1236,7 @@ while($file=readdir($h)) {
 }
 closedir($h);
 $smarty->assign_by_ref('languages',$languages);
+$smarty->assign('site_language',$tikilib->get_preference("language",'en'));
 
 $timezone_options = $tikilib->get_timezone_list(false);
 $smarty->assign_by_ref('timezone_options',$timezone_options);

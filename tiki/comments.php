@@ -109,6 +109,10 @@ if($tiki_p_post_comments == 'y') {
           $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
         }
       }
+    } else {
+      $smarty->assign('msg',tra("Missing title or body when trying to post a comment"));
+      $smarty->display("styles/$style_base/error.tpl");
+      die;
     }
   }
 }
