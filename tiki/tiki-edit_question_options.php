@@ -18,6 +18,7 @@ $smarty->assign('questionId',$_REQUEST["questionId"]);
 $quiz_info=$quizlib->get_quiz_question($_REQUEST["questionId"]);
 $smarty->assign('question_info',$quiz_info);
 $_REQUEST["quizId"]=$quiz_info["quizId"];
+$smarty->assign('quizId',$_REQUEST["quizId"]);
 
 $smarty->assign('individual','n');
 if($userlib->object_has_one_permission($_REQUEST["quizId"],'quiz')) {

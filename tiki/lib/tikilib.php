@@ -421,7 +421,7 @@ class TikiLib {
       $timesTaken = $this->getOne("select count(*) from tiki_user_quizzes where quizId=$quizId");
       $avgpoints = $this->getOne("select avg(points) from tiki_user_quizzes where quizId=$quizId");
       $maxPoints = $this->getOne("select max(maxPoints) from tiki_user_quizzes where quizId=$quizId");
-      $avgavg = $avgpoints/$maxPoints*100;
+      $avgavg = ($maxPoints!=0) ? $avgpoints/$maxPoints*100 : 0.0;
       $avgtime = $this->getOne("select avg(timeTaken) from tiki_user_quizzes where quizId=$quizId");
       $query2 = "replace into tiki_quiz_stats_sum(quizId,quizName,timesTaken,avgpoints,avgtime,avgavg)
       values($quizId,'$quizName',$timesTaken,$avgpoints,$avgtime,$avgavg)";
