@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.31 2003-10-13 21:22:50 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.32 2003-10-13 23:03:15 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -255,6 +255,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_file_ga
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_file_gallery', '10');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_forum', '10');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_forums', '10');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_mapfiles', '10');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_image_galleries', '10');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_image_gallery', '10');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('max_rss_wiki', '10');
@@ -280,6 +281,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_file_galler
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_file_gallery', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_forums', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_forum', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_mapfiles', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_image_galleries', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_image_gallery', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_wiki', 'y');

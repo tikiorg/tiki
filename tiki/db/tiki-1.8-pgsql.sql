@@ -5200,6 +5200,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forum','10');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forums','10');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_image_galleries','10');
 
 
@@ -5273,6 +5276,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forums','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forum','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_mapfiles','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_image_galleries','y');
