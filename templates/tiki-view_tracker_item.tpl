@@ -315,7 +315,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ins_fields[ix].value|escape}</textarea>
 
 {elseif $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].id time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
+{html_select_date prefix=$ins_fields[ix].id time=$ins_fields[ix].value end_year="+1"} {html_select_time prefix=$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
 
 {elseif $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].id}">
@@ -358,16 +358,16 @@ align       : "bR"
 {else}
 <form action="{$ins_fields[ix].options_array[2]}" method="get" target="_blank">
 {/if}
-<table class="normal">
 {section name=tl loop=$ins_fields[ix].options_array start=3}
 {assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
-{if $item_info.$valvar eq ''}
+{if $info.$valvar eq ''}
 {assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
 <input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
 {else}
-<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$item_info.$valvar|escape}" />
+<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$info.$valvar|escape}" />
 {/if}
 {/section}
+<table class="normal">
 <tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
 </table>
 </form>
