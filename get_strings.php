@@ -1,4 +1,5 @@
-<?
+<?php
+
 require_once('tiki-setup.php');
 
 if($tiki_p_admin != 'y') {

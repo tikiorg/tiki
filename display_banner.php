@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.3 2003-01-04 19:34:15 rossta Exp $
+
 // Only to be called from edit_banner or view_banner to display the banner without adding
 // impressions to the banner
 

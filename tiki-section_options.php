@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+
 if($layout_section == 'y') {
 $section_top_bar=$section.'_top_bar';
 $section_bot_bar=$section.'_bot_bar';

@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.2 2003-01-04 19:34:15 rossta Exp $
+
 if($feature_categories == 'y') {
    $smarty->assign('cat_categorize','n');
    if(isset($_REQUEST["cat_categorize"])&&$_REQUEST["cat_categorize"]=='on') {

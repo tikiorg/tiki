@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
 

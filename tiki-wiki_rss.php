@@ -1,4 +1,5 @@
-<?
+<?php
+
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
 
@@ -20,13 +21,13 @@ print('>');
 ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns="http://purl.org/rss/1.0/">
-<channel rdf:about="<?=$home?>">
+<channel rdf:about="<?php echo $home?>">
   <title>Tiki RSS feed for the Wiki</title>
-  <link><?=$home?></link>
+  <link><?php echo $home?></link>
   <description>
     Last modifications to the Wiki.
   </description>
-  <image rdf:resource="<?=$img?>" />
+  <image rdf:resource="<?php echo $img?>" />
   <items>
     <rdf:Seq>
       <?php

@@ -1,9 +1,6 @@
-<?
-if(isset($page)) {
-  $check = true; 
-} else {
-  $check = false; 
-}
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+
+$check = isset($page);
 
 $ppps = Array(
 'tiki_p_view',
