@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.4 2004-06-30 20:25:33 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.5 2004-07-01 19:21:18 teedog Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -90,7 +90,8 @@
 </tr>
 </table>
 
-<div class="wikitext">
+<div class="wikitext"
+{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
 {if $structure eq 'y'}
 <div class="tocnav">
 <table>
