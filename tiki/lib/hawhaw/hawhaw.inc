@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 24. November 2003
+// Last modified: 3. December 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,20 +20,9 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
-//
-// changes against V5.2:
-// - enhanced browser detection: PublicVoiceXML voice browser
-// - new method in HAW_deck: smooth_voice()
-// - bugfix: added <prompt> element in various VoiceXML output scenarios
-// - optimization: inhibit <break> tag for PVX voice browser
-// - bugfix: create voice <break> tags for empty HAW_text objects
-// - optimization: added catch handler for HAW_voicerecorder class
-// - bugfix: consider noinput event handler in decks (do not force exit)
-// - enhanced browser detection: PalmOS ==> PDA
-// - optimization: XHTML-conform img tags
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.3b");
+define("HAW_VERSION", "HAWHAW V5.3");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
