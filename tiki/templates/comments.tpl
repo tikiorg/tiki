@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.29 2003-11-21 11:54:19 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.30 2003-11-28 02:45:04 luciash Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -127,7 +127,7 @@
   		{$comments_coms[com].parsed}
   		<br /><br />
   		[<a class="commentslink"
-		href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}&amp;post_reply=1#threadId{$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
+		href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comments_coms[com].threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}&amp;post_reply=1#threadId{$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
   		{if $comments_parentId > 0}
   			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}#threadId{$comments_coms[com].parentId}">{tr}parent{/tr}</a>
   		{/if}
@@ -234,8 +234,8 @@
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Title{/tr} <span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span></td>
-      <td class="formcolor"><input type="text" size="40"name="comments_title" value="{$comment_title|escape}" /></td>
+      <td class="formcolor">{tr}Title{/tr} <span style="color: red">{tr}Required{/tr}</span></td>
+      <td class="formcolor"><input type="text" size="40" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
 
 {* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
@@ -281,8 +281,8 @@
   <b>{tr}Posting comments{/tr}:</b>
   <br />
   <br />
-  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
-  {tr}HTML tags are not allowed inside comments{/tr}<br />
+  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}.<br />
+  {tr}HTML tags are not allowed inside comments{/tr}.<br />
   </td>
   </tr>
   </table>
