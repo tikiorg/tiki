@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.10 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.11 2004-02-17 08:54:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,6 @@ if ($feature_newsletters != 'y') {
 }
 
 if (isset($_REQUEST["confirm_subscription"])) {
-	check_ticket('newsletters');
 	$conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
 
 	if ($conf) {
