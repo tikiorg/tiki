@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.73 2003-11-21 10:09:39 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.74 2003-11-21 17:44:03 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -813,4 +813,5 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','DSN','tiki-admin_dsn.php',1220,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
 
-
+# added on 2003-11-21 by mose because ; bring problems
+UPDATE tiki_menu_options SET url='javascript:toggle(\'debugconsole\')' WHERE name='(debug)';
