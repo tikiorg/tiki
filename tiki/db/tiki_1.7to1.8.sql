@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.65 2003-11-12 00:32:25 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.66 2003-11-12 19:42:49 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -286,6 +286,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_image_galle
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_image_gallery', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('rss_wiki', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('sender_email', '');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('email_encoding', 'utf-8');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('session_db', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('session_lifetime', '0');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('short_date_format', '%a %d of %b,  %Y');

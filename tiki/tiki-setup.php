@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.158 2003-11-12 01:00:57 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.159 2003-11-12 19:43:40 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -692,6 +692,8 @@ $smarty->assign('contact_user', $contact_user);
 $default_sender_email = $tikilib->get_user_email($contact_user);
 $sender_email = $tikilib->get_preference('sender_email', $default_sender_email);
 $smarty->assign('sender_email', $sender_email);
+$email_encoding = $tikilib->get_preference('email_encoding', 'utf-8');
+$smarty->assign('email_encoding', $email_encoding);
 
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html', $webmail_view_html);
@@ -1616,7 +1618,7 @@ if ($feature_referer_stats == 'y') {
 
 //Check for an update of dynamic vars
 if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
-	if(isset($_REQUEST['_dyn_update'])) {
+	if(isset($_REQUEST['_dyn_update'])) { echo "****";
 		foreach($_REQUEST as $name => $value) {
 			if(substr($name,0,4)=='dyn_' and $name!='_dyn_update') {
 				$tikilib->update_dynamic_variable(substr($name,4),$_REQUEST[$name]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.13 2003-11-10 00:04:01 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.14 2003-11-12 19:42:49 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ if (isset($_REQUEST["prefs"])) {
 		"feature_server_name",
 		"maxRecords",
 		"sender_email",
+		"email_encoding",
 		"system_os",
 		"urlIndex",
 		"proxy_host",
