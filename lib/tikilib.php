@@ -3767,7 +3767,8 @@ function parse_data($data) {
     // Dynamic variables are similar to dynamic content but they are editable
     // from the page directly, intended for short data, not long text but text
     // will work too
-    if (preg_match_all("/%([^% ]+)%/",$data,$dvars)) {
+    //     Now won't match HTML-style '%nn' letter codes.
+    if (preg_match_all("/%([^% 0-9][^% 0-9][^% ]*)%/",$data,$dvars)) {
 	// remove repeated elements
 	$dvars = array_unique($dvars[1]);
 	// Now replace each dynamic variable by a pair composed of the
