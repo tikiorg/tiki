@@ -295,3 +295,6 @@ tc.message_id,
 tc.in_reply_to
 from old_tiki_comments tc, tiki_polls tp
 where tc.object = md5(concat('poll', tp.pollId));
+
+drop table old_tiki_comments;
+
