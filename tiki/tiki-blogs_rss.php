@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.15 2003-09-02 18:08:38 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.16 2003-09-02 19:01:53 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,11 +113,7 @@ foreach ($changes["data"] as $chg) {
 	}
 	print ('  <title>'.htmlspecialchars($chg["blogtitle"].': '.$tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["created"])).'</title>'."\n");
 	print ('  <link>'.htmlspecialchars($read.$chg["blogId"]."&postId=".$chg["postId"]).'</link>'."\n");
-	if (!empty($chg["comment"])) {
-		$comment = "(".htmlspecialchars($chg["data"]).")";
-	} else {
-		$comment = '';
-	}
+
 	if ($rss_version == 2) {
 		$date = gmdate('D, d M Y H:i:s T', $chg["created"]);
 		print ('<description>'.htmlspecialchars($chg["data"]).'</description>'."\n");
