@@ -52,7 +52,7 @@
 
   <br /><br />
   <b>{tr}Information about your site{/tr}:</b><br />
-  <form action="tiki-directory_add_tiki_site.php" method="post">
+  <form action="http://tikiwiki.org/tiki-directory_add_tiki_site.php" method="post">
   <input type="hidden" name="registertiki" value="true" />
   <table class="normal">
   <tr>
