@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.41 2004-02-21 20:34:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.42 2004-03-02 07:11:54 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -144,24 +144,44 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 </select>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
-{if $groupTracker eq 'y' and $eligibleGroupTrackers}
+{if $groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
-<select name="groupstracker" id="groupsTracker">
+<select name="groupstracker">
 <option value="0">{tr}choose a group tracker ...{/tr}</option>
 {foreach key=tid item=tit from=$trackers}
 <option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit}</option>
 {/foreach}
-</select> <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ggr}</a>
+</select>
+{if $grouptrackerid}
+<br />
+<select name="groupfield">
+<option value="0">{tr}choose a field ...{/tr}</option>
+{section name=ix loop=$groupFields}
+<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name}</option>
+{/section}
+</select>
+{/if}
+<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ggr}</a>
 </td></tr>
 {/if}
 {if $userTracker eq 'y'}
 <tr class="formcolor"><td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td><td>
-<select name="userstracker" id="usersTracker">
+<select name="userstracker">
 <option value="0">{tr}choose a users tracker ...{/tr}</option>
 {foreach key=tid item=tit from=$trackers}
 <option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit}</option>
 {/foreach}
-</select> <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ugr}</a>
+</select>
+{if $userstrackerid}
+<br />
+<select name="usersfield">
+<option value="0">{tr}choose a field ...{/tr}</option>
+{section name=ix loop=$usersFields}
+<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].name}</option>
+{/section}
+</select>
+{/if}
+<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ugr}</a>
 </td></tr>
 {/if}
 {if $group ne ''}

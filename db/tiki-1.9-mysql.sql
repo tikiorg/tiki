@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.11 2004-02-28 03:47:02 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.12 2004-03-02 07:11:53 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -503,7 +503,7 @@ CREATE TABLE tiki_blogs (
   add_date char(1) default NULL,
   add_poster char(1) default NULL,
   allow_comments char(1) default NULL,
-	show_avatar char(1) default NULL,
+  show_avatar char(1) default NULL,
   PRIMARY KEY  (blogId),
   KEY title (title),
   KEY description (description(255)),
@@ -2054,6 +2054,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Content templates','tiki-admin_content_templates.php',1180,'','tiki_p_edit_content_templates','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','HTML pages','tiki-admin_html_pages.php',1185,'','tiki_p_edit_html_pages','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'','tiki_p_admin_shoutbox','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Referer stats','tiki-referer_stats.php',1195,'','tiki_p_view_referer_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Edit languages','tiki-edit_languages.php',1200,'','tiki_p_edit_languages,lang_use_db','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','');
@@ -2729,6 +2730,18 @@ CREATE TABLE tiki_shoutbox (
   hash varchar(32) default NULL,
   PRIMARY KEY  (msgId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_shoutbox_words`
+#
+
+DROP TABLE IF EXISTS tiki_shoutbox_words;
+CREATE TABLE `tiki_shoutbox_words` (
+  word VARCHAR( 40 ) NOT NULL ,
+  qty INT DEFAULT '0' NOT NULL ,
+  PRIMARY KEY ( `word` )
+) TYPE=MyISAM;
 # --------------------------------------------------------
 
 #
@@ -3567,6 +3580,8 @@ CREATE TABLE users_groups (
   groupHome varchar(255),
   usersTrackerId int(11),
   groupTrackerId int(11),
+  usersFieldId int(11),
+  groupFieldId int(11),
   PRIMARY KEY  (groupName(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------

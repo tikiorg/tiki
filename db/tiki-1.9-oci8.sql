@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.8 2004-02-28 03:47:02 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.9 2004-03-02 07:11:53 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -588,7 +588,7 @@ CREATE TABLE "tiki_blogs" (
   "add_date" char(1) default NULL,
   "add_poster" char(1) default NULL,
   "allow_comments" char(1) default NULL,
-	show_avatar char(1) default NULL,
+  "show_avatar" char(1) default NULL,
   PRIMARY KEY ("blogId")
 )   ;
 
@@ -2536,6 +2536,8 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox','tiki-shoutbox.php',1190,'','tiki_p_admin_shoutbox','');
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
+
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Referer stats','tiki-referer_stats.php',1195,'','tiki_p_view_referer_stats','');
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Edit languages','tiki-edit_languages.php',1200,'','tiki_p_edit_languages,lang_use_db','');
@@ -3340,6 +3342,18 @@ BEGIN
 SELECT "tiki_shoutbox_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
+-- --------------------------------------------------------
+--
+-- Table structure for table `tiki_shoutbox_words`
+--
+DROP TABLE "tiki_shoutbox_words";
+
+CREATE TABLE `tiki_shoutbox_words` (
+  "word" VARCHAR( 40 ) NOT NULL ,
+  "qty" INT DEFAULT '0' NOT NULL ,
+  PRIMARY KEY ( `word` )
+) ;
+
 -- --------------------------------------------------------
 --
 -- Table structure for table `tiki_structures`
@@ -4314,6 +4328,8 @@ CREATE TABLE "users_groups" (
   "groupHome" varchar(255),
   "usersTrackerId" number(11),
   "groupTrackerId" number(11),
+  "usersFieldId" number(11),
+  "groupFieldId" number(11),
   PRIMARY KEY ("groupName")
 ) ;
 
