@@ -1,18 +1,20 @@
 <?php
 
-error_reporting (E_ALL);
-// require_once("ggg-trace.php");
-// $ggg_tracer->outln(__FILE__." line: ".__LINE__);
-
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.2 2004-02-22 14:28:28 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// tiki-hw_teacher_assignment_edit.php
-
 // Adapted from tiki-edit_article.php
+
+// Todo:
+//   When editing a pre-existing article, use the due date.  Maybe it already does?
+
+error_reporting (E_ALL);
+require_once("doc/devtools/ggg-trace.php");
+$ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
 // Requires (among other things):
 // templates/tiki-hw_teacher_assignment_edit.tpl
@@ -21,10 +23,13 @@ error_reporting (E_ALL);
 // Bugs:
 //   This feature should be known as Writers' Workshop rather than homework.
 
+// Todo:
+//   When editing an existing assignment, overwrite it instead of creating a new one.
+
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/articles/artlib.php');
+include_once ('lib/articles/artlib.php'); // GGG Remove later
 require_once ('lib/homework/homeworklib.php');
 
 if ($feature_homework != 'y') {
@@ -81,31 +86,6 @@ $fields = array(
 foreach ($fields as $f) {
   $article_data[$f] = "";
 }
-
-/* $article_data = array(
-					  "articleId"=>"",
-					  "publishDate"=>"",
-					  "expireDate"=>"",
-					  "title"=>"",
-					  "authorName"=>"",
-					  "topicId"=>"",
-					  "useImage"=>"",
-					  "isfloat"=>"",
-					  "image_name"=>"",
-					  "image_type"=>"",
-					  "image_size"=>"",
-					  "image_data"=>"",
-					  "image_x"=>"",
-					  "image_y"=>"",
-					  "reads"=>"",
-					  "type"=>"",
-					  "author"=>"",
-					  "creator_edit"=>"",
-					  "rating"=>"",
-					  "heading"=>"",
-					  "body"=>""
-					  );
-*/
 
 $useImage = 'n';
 
@@ -169,7 +149,7 @@ if (isset($_REQUEST["assignmentId"]) and ($_REQUEST["assignmentId"] > 0) and $ho
   $expireDate = $article_data["expireDate"];
 
   foreach ($article_data as $key=>$val ){ // GGG This replaces the assignments below
-	$smarty->assign($key, $val);
+		$smarty->assign($key, $val);
   }
   // $smarty->assign('title', $article_data["title"]);
   // $smarty->assign('authorName', $article_data["authorName"]);
@@ -245,6 +225,7 @@ if (isset($_REQUEST["preview"])) {
   $smarty->assign('preview', 1);
   $smarty->assign('edit_data', 'y');
   $smarty->assign('title', strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'));
+  $_REQUEST["authorName"] = $user; // GGG The author is the teacher is the user.
   $smarty->assign('authorName', $_REQUEST["authorName"]);
   $smarty->assign('topicId', $_REQUEST["topicId"]);
 
@@ -349,7 +330,9 @@ if (isset($_REQUEST["preview"])) {
 
 // Pro
 if (isset($_REQUEST["save"])) {
-  check_ticket('edit-article');
+	$ggg_tracer->out(__FILE__." line: ".__LINE__.' $_REQUEST = ');
+	$ggg_tracer->outvar($_REQUEST);
+  check_ticket('edit-assignment');
   include_once ("lib/imagegals/imagegallib.php");
   # convert from the displayed 'site' time to 'server' time
   $publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
@@ -414,22 +397,11 @@ if (isset($_REQUEST["save"])) {
 	$_REQUEST['rating'] = 0;
   if (!isset($_REQUEST['topicId']) || $_REQUEST['topicId'] == '') $_REQUEST['topicId'] = 0;
   // If page exists
-  //  $artid = $tikilib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
-  //  $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
-  //	$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
-  //  $ggg_tracer->outln(__FILE__." line: ".__LINE__);
-  $artid = $homeworklib->replace_assignment(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
-  	$_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
-  	$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
-
-  //  $ggg_tracer->outln("$artid = ".$artid);
-  $cat_type = 'article';
-  $cat_objid = $artid;
-  $cat_desc = substr($_REQUEST["heading"], 0, 200);
-  $cat_name = $_REQUEST["title"];
-  $cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
-  include_once ("categorize.php");
-
+	$artid = $homeworklib->replace_assignment(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
+																							$_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
+																							$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
+		
+	$artid = $articleId; // GGG Scaffolding
   header ("location: tiki-hw_teacher_assignments.php");
 }
 
@@ -464,12 +436,10 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
-ask_ticket('edit-article');
+ask_ticket('edit-assignment');
 
-// Display the Index Template
-// GGG $smarty->assign('mid', 'tiki-edit_article.tpl');
-$smarty->assign('mid', 'tiki-hw_teacher_assignment_edit.tpl'); // GGG
-$smarty->assign('show_page_bar', 'n');
+$smarty->assign('mid', 'tiki-hw_teacher_assignment_edit.tpl');
+$smarty->assign('show_page_bar', 'n'); // Do not show the wiki-specific tiki-page_bar.tpl
 $smarty->display("tiki.tpl");
 
 ?>
