@@ -605,7 +605,7 @@ CREATE TABLE "tiki_blog_posts" (
 postId numeric(8 ,0) identity,
   "blogId" numeric(8,0) default '0' NOT NULL,
   "data" text default '',
-  "data_size" numeric(11,0) unsigned default '0' NOT NULL,
+  "data_size" numeric(11,0) default '0' NOT NULL,
   "created" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   "trackbacks_to" text default '',
@@ -2961,7 +2961,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" numeric(14,0) default NULL NULL,
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
-  "page_size" numeric(10,0) unsigned default 0,
+  "page_size" numeric(10,0) default 0,
   PRIMARY KEY ("pageName")
 
 
