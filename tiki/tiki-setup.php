@@ -329,6 +329,10 @@ $smarty->assign('feature_directory',$feature_directory);
 
 $feature_usermenu = 'n';
 $smarty->assign('feature_usermenu',$feature_usermenu);
+
+$feature_wiki_notepad = 'n';
+$smarty->assign('feature_wiki_notepad',$feature_wiki_notepad);
+
 $feature_minical = 'n';
 $smarty->assign('feature_minical',$feature_minical);
 
