@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.60 2004-07-01 20:59:59 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.61 2004-07-01 22:33:42 teedog Exp $
 
 MoreNeat theme
 */
@@ -1930,6 +1930,20 @@ background-color: #ffcccc;
 }
 .diffadded {
 border-color: #A9B8C2;
+color: black;
+background-color: #ccffcc;
+}
+tr.diffdeleted {
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #ffcccc;
+}
+tr.diffadded {
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
 color: black;
 background-color: #ccffcc;
 }

@@ -155,7 +155,7 @@ class Text_Diff_Renderer {
     	echo '</div>';
     }
 
-    function _lines($lines, $prefix = ' ', $suffix = '')
+    function _lines($lines, $prefix = '', $suffix = '')
     {
         foreach ($lines as $line) {
             echo "$prefix$line$suffix\n";

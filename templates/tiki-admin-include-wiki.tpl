@@ -347,6 +347,12 @@
     <table class="admin">
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /></td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions|escape}" /></td></tr>
+    <tr><td class="form">{tr}Wiki page version diff style{/tr}:</td><td>
+      <select name="feature_wiki_diff_style">
+        <option value="sidebyside" {if $feature_wiki_diff_style eq 'sidebyside'}selected="selected"{/if}>{tr}Side-by-side (like Wikipedia){/tr}</option>
+        <option value="unified" {if $feature_wiki_diff_style eq 'unified'}selected="selected"{/if}>{tr}Unified (traditional Tiki style){/tr}</option>
+      </select>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
