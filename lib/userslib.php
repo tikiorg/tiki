@@ -111,10 +111,13 @@ class UsersLib extends TikiLib {
   
   function genPass()
   {
-        $vocales="aeiou";
-        $consonantes="bcdfghjklmnpqrstvwxyz";
+    // AWC: enable mixed case and digits, don't return too short password
+        global $min_pass_length;                                         //AWC
+        $vocales="AaEeIiOoUu13580";                                      //AWC
+        $consonantes="BbCcDdFfGgHhJjKkLlMmNnPpQqRrSsTtVvWwXxYyZz24679";  //AWC
         $r='';
-        for($i=0; $i<5; $i++){
+        $passlen = ($min_pass_length > 5) ? $min_pass_length : 5;        //AWC
+        for($i=0; $i<$passlen; $i++){                                    //AWC
                 if ($i%2){
                         $r.=$vocales{rand(0,strlen($vocales)-1)};
                 }else{
