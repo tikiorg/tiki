@@ -37,6 +37,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+{include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Show status when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show creation date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show lastModif date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.5 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.6 2003-11-10 17:21:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -152,6 +152,11 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+// block for categorization
+$cat_type = 'tracker';
+$cat_objid = $_REQUEST["trackerId"];
+include_once ("categorize_list.php");
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_trackers.tpl');
