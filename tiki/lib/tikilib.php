@@ -2136,6 +2136,7 @@ class TikiLib {
     if(strstr($url,"tiki-edit")) {
       return false;
     }
+    $url=addslashes($url);
     $query = "select cacheId from tiki_link_cache where url='$url'";
     $result = $this->query($query);
     $cant = $result->numRows();
