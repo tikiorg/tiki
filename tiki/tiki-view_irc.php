@@ -5,18 +5,22 @@
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 # \TODO rewrite dates to be local to the user
+# \TODO max lines = 20/50/100/all
+# \TODO refresh = 10/30/60/never
 
 #error_reporting(E_ALL);
 
 require_once('tiki-setup.php');
 require_once('lib/irc/irclib.php');
 
-$r_log		= !empty($_REQUEST['log']) ? $_REQUEST['log']			: null;
-$r_channel	= !empty($_REQUEST['channel']) ? $_REQUEST['channel']	: null;
-$r_date		= !empty($_REQUEST['date']) ? $_REQUEST['date']			: null;
+$r_log		= !empty($_REQUEST['log'])		? $_REQUEST['log']			: false;
+$r_channel	= !empty($_REQUEST['channel'])	? $_REQUEST['channel']		: false;
+$r_date		= !empty($_REQUEST['date'])		? $_REQUEST['date']			: false;
+$r_showall	= !empty($_REQUEST['showall'])	? $_REQUEST['showall']		: false;
+$r_filter	= !empty($_REQUEST['filter'])	? $_REQUEST['filter']		: false;
 
 if ($r_log) {
-	if (preg_match('/(.*)\/(.*)\/(.*)/', $r_log, $m)) {
+	if (preg_match('/^([^\/]+)\/([^\/]+)\/(.*)/', $r_log, $m)) {
 		$r_log = $m[1];
 		if (!$r_date) {
 			$r_date = $m[2];
@@ -72,17 +76,10 @@ foreach ($dfiles as $file) {
 		}
 	}		
 
-#echo "<pre>\n";		
 	$date = $start_date;
-#echo '1date=',$date,"\n";
 	$a = getdate($date);
-#echo '2date=',$date,"\n";
 	while ($date <= $end_date) {
-#echo '3date=',$date,"\n";
 		$key = (1000000 - date('ymd', $date)) . $channel;
-#echo '4key=',$key,"\n";
-#echo '5date=',$date,"\n";
-
 		$e = array(
 			'file'		=> $file,
 			'date'		=> $date,
@@ -94,16 +91,11 @@ foreach ($dfiles as $file) {
 			$last_date_by_file[$file] = $date;
 		}		
 
-#echo '6date=',$date,"\n";
 		$a['mday']++;
-#echo '7date=',$date,"\n";
-		
 		$date = mktime($a['hours'], $a['minutes'], $a['seconds'], 
 			$a['mon'], $a['mday'], $a['year']);
-#echo '8date=',$date,"\n";
 	}
 		
-/*
 	if (!$r_log) {
 		if ($r_channel && !$r_date && $r_channel == $channel) {
 			$r_log = $file;
@@ -117,16 +109,14 @@ foreach ($dfiles as $file) {
 			$r_log = $file;
 		}
 	}
-*/
-}
 
-#print_r($files);
+}
 
 ksort($files);
 
-#print_r($files);
-
 $irc_log_options = array();
+$first_file = '';
+
 foreach ($files as $key => $value) {
 	$file = $value['file'];
 	$date = $value['date'];
@@ -134,31 +124,44 @@ foreach ($files as $key => $value) {
 	
 	$yymmdd = date('ymd', $date);
 	
-	$fullname = IRC_LOG_DIR . '/' . $file;
-	$irc_log_options[$file . '/' . $yymmdd . '/' . $channel] = strftime('%a %d %b %Y', $date) . ' #' . $channel . 
-		' (' . @filesize($fullname) . ')';
+	$f = IRC_LOG_DIR . '/' . $file;
+	$irc_log_options[$file . '/' . $yymmdd . '/' . $channel] = $tikilib->get_long_date($date, $user) . ' #' . $channel . 
+		' (' . @filesize($f) . ')';
+	if (!$first_file) {
+		$first_file = $file;
+	}
+
 }
 
 $file = '';
-if ($irc_log_options) {
-	foreach($irc_log_options as $file => $dummy) {
-		break;
+if ($r_log) {
+	$fullname = IRC_LOG_DIR . '/' . $r_log;
+	if (@is_file($fullname)) {
+		$file = $r_log;
 	}
 }
 
-$irc_log_selected = $r_log ? $r_log : $file;
-
-if (!$r_date) {
-	$r_date = @$last_date_by_file[$irc_log_selected];
+if (!$file) {
+	$file = $first_file;
 }
 
-$fullname = IRC_LOG_DIR . '/' . $irc_log_selected;
+$fullname = IRC_LOG_DIR . '/' . $file;
 
-$irc_log_selected = $irc_log_selected . '/' . $r_date . '/' . $r_channel;
+if (!$r_date) {
+	$a = @$last_date_by_file[$file];
+	$r_date = $a['date'];
+}
+
+if (!$r_channel) {
+	$a = @$last_date_by_file[$file];
+	$r_channel = $a['channel'];
+}
+
+$irc_log_selected = $file . '/' . $r_date . '/' . $r_channel;
 
 $irc_log_rows = array();
-if (is_file($fullname)) {
-	$irc_log_rows = IRC_Log_Parser::parseFile($fullname, $r_date);
+if (@is_file($fullname)) {
+	$irc_log_rows = IRC_Log_Parser::parseFile($fullname, $r_date, $r_filter);
 }
 
 $irc_log_channel = '#' . $r_channel;
@@ -169,6 +172,8 @@ $smarty->assign('irc_log_time', 	$irc_log_time);
 $smarty->assign('irc_log_options',	$irc_log_options);
 $smarty->assign('irc_log_rows',		$irc_log_rows);
 $smarty->assign('irc_log_selected',	$irc_log_selected);
+$smarty->assign('showall',			$r_showall);
+$smarty->assign('filter',			$r_filter);
 
 // Display the template
 $smarty->assign('mid','tiki-view_irc.tpl');

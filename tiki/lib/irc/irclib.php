@@ -29,11 +29,11 @@ class IRC_Logger extends Net_IRC_Event {
 	}
 	
 	function connect($options) {
-		$this->nick		= isset($this->options['nick']) ? $this->options['nick'] : false;
-		$this->channel	= isset($this->options['channel']) ? $this->options['channel'] : false;
-
-		$rv = parent::connect($options);
+		$this->nick		= isset($options['nick'])	 ? $options['nick'] : false;
+		$this->channel	= isset($options['channel']) ? $options['channel'] : false;
 		
+		$rv = parent::connect($options);
+
 		if (!$rv) {
 			return false;
 		}
@@ -41,6 +41,7 @@ class IRC_Logger extends Net_IRC_Event {
 		$this->start();
 
 		if ($this->channel) {
+			echo 'Joining #', $this->channel, "\n";
 			$this->command('JOIN #' . $this->channel);
 		}
 
@@ -175,9 +176,11 @@ class IRC_Log_Parser {
 	/**
 	 * \static
 	 */
-	function parse($lines, $date_filter = null) {
+	function parse($lines, $date_filter = null, $filter = null) {
 		$rows		= array();
 		$name_hash	= array();
+		$filter		= trim($filter);
+		$match		= '/'.preg_quote(trim($filter)).'/i';
 
 		foreach($lines as $line) {
 			$original	= $line;
@@ -190,6 +193,11 @@ class IRC_Log_Parser {
 			$time		= '';
 
 			$line		= trim($line);
+
+			if ($filter && preg_match($match, $line, $matches) === 0) {
+				continue;
+			}
+			
 			$pre_date	= '';
 			if (preg_match('/^\s*\[([^\]]*)\](.*)/', $line, $m)) {
 				$pre_date	= trim($m[1]);
@@ -302,12 +310,12 @@ class IRC_Log_Parser {
 	/**
 	 * \static
 	 */
-	function parseFile($file, $date_filter = null) {
+	function parseFile($file, $date_filter = null, $filter = null) {
 		$lines = file($file);
 		if (!$lines) {
 			return false;
 		}
-		return IRC_Log_Parser::parse($lines);
+		return IRC_Log_Parser::parse($lines, $date_filter, $filter);
 	}
 
 	/**

@@ -9,19 +9,47 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 </a>
 <br/><br/>
 <div>
+<form method="get" action="tiki-view_irc.php">
 <table>
 <tr>
    <td valign='bottom'>{tr}Select{/tr}</td>
    <td class="findtable" valign='top'>
-     <form method="get" action="tiki-view_irc.php">
         <select name="log" onchange="this.form.submit()">
-        {html_options options="$irc_log_options" selected="$irc_log_selected"}
+          {html_options options="$irc_log_options" selected="$irc_log_selected"}
         </select>
        <input type="submit" value="{tr}display{/tr}" />
-     </form>
    </td>
+
+   <td valign='bottom'>{tr}Filter{/tr}</td>
+   <td class="findtable" valign='top'>
+        <input type="text" name="filter" value="{$filter}" />
+   </td>
+
+   <td valign='bottom'>{tr}Show All{/tr}</td>
+   <td class="findtable" valign='top'>
+        <input type="hidden" name="showall" value="" />
+        <input type="checkbox" name="showall" {if $showall > ''}checked="checked"{/if} />
+	{*html_checkboxes name="showall" options=$showall_options checked=$showall*}
+   </td>
+
+{*
+   <td valign='bottom'>{tr}Maximum Rows{/tr}</td>
+   <td class="findtable" valign='top'>
+        <select name="maxrows" onchange="this.form.submit()">
+          {html_options options="$max_row_options" selected="$maxrows"}
+        </select>
+   </td>
+   <td valign='bottom'>{tr}Refresh Every{/tr}</td>
+   <td class="findtable" valign='top'>
+        <select name="refresh" onchange="this.form.submit()">
+          {html_options options="$refresh_options" selected="$refresh"}
+        </select>
+   </td>
+   <td valign='bottom'>{tr}Seconds{/tr}</td>
+*}
 </tr>
 </table>
+</form>
 </div>
 
 {cycle values="#dedede,#eeeeee" print=false}
@@ -34,9 +62,11 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 	<tt>{$irc_log_rows[b].time} </tt><i><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}</i>
 	</div>
 {elseif $irc_log_rows[b].action eq 'v'}
-	<div style="color:#898989;background-color:{cycle};padding:1px;">
-	<tt>{$irc_log_rows[b].time} {$irc_log_rows[b].data}
-	</div>
+	{if $showall > ''}
+		<div style="color:#898989;background-color:{cycle};padding:1px;">
+		<tt>{$irc_log_rows[b].time} {$irc_log_rows[b].data}
+		</div>
+	{/if}	
 {else}
 	<div style="background-color:{cycle};padding:1px;">
 	<tt>{$irc_log_rows[b].time} </tt><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}
