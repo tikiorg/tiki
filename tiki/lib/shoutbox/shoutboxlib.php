@@ -29,6 +29,13 @@ class ShoutboxLib extends TikiLib {
 				$res["user"] = tra('Anonymous');
 
 			$res["message"] = htmlspecialchars($res["message"]);
+      /* we replace urls starting with http(s)|ftp(s) to active links */
+      $res["message"] = preg_replace("/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\">\\0</a>", $res["message"]);
+      /* we replace also urls starting with www. only to active links */
+      $res["message"] = preg_replace("/(?<!http|ftp)(?<!s)(?<!:\/\/)(www\.[^ )\s\r\n]+)/i","<a href=\"http://\\0\">\\0</a>",$res["message"]);
+      /* we replace also urls longer than 30 chars with translantable string as link description instead the URL itself to prevent breaking the layout */
+      $res["message"] = preg_replace("/(<a href=\")((http|ftp)+(s)?:\/\/[^\"]+)(\">)([^<]){30,}<\/a>/i", "<a href=\"\\2\">[".tra('Link')."]</a>", $res["message"]);
+      
 			$ret[] = $res;
 		}
 		$retval = array();
