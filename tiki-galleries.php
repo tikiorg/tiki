@@ -134,6 +134,9 @@ if(isset($_REQUEST["edit"])) {
   } else {
     $visible ='n';
   }
+  if(!isset($_REQUEST["visible"])) {
+    $visible = 'y';
+  }
   $smarty->assign_by_ref('visible',$visible);
   if(isset($_REQUEST["public"]) && $_REQUEST["public"]=="on") {
     $smarty->assign('public','y');
@@ -216,8 +219,6 @@ for($i=0;$i<count($galleries["data"]);$i++) {
     $galleries["data"][$i]["individual"]='n';
   }
 }
-
-
 
 // If there're more records then assign next_offset
 $cant_pages = ceil($galleries["cant"] / $maxRecords);
