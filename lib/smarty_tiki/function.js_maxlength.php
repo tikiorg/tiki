@@ -1,5 +1,11 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.js_maxlength.php,v 1.2 2004-03-07 23:12:09 mose Exp $
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.js_maxlength.php,v 1.3 2004-07-08 12:50:37 damosoft Exp $
 /**
  * \brief Smarty {js_maxlength} function handler
  *

@@ -43,7 +43,7 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
-  <table>
+  <table class="admin">
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
@@ -97,7 +97,7 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
-  <table>
+  <table class="admin">
   <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
   <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
 {if $userinfo.email}

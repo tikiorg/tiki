@@ -1,8 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.9 2004-01-20 06:30:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.10 2004-07-08 12:50:39 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-browse_categories.php">{tr}Categories{/tr}</a>
 <br /><br />
 
+{if $tiki_p_admin_categories eq 'y'}
+<a class="linkbut" href="tiki-admin_categories.php?parentId={$parentId}" title="admin the category system">{tr}admin category{/tr}</a>
+{/if}
 
 <div align="center">
 <form method="post" action="tiki-browse_categories.php">
@@ -13,6 +16,7 @@
                             <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 </div>
+
 
 <br /><br />
 <div class="treetitle">{tr}Current category{/tr}: 

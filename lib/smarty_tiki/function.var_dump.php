@@ -1,6 +1,12 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.var_dump.php,v 1.1 2003-09-04 10:15:16 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/function.var_dump.php,v 1.2 2004-07-08 12:50:37 damosoft Exp $
  *
  * \author zaufi <zaufi@sendmail.ru>
  */

@@ -1,4 +1,5 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.4 2004-07-08 12:50:36 damosoft Exp $
 
 function diff2($page1, $page2) {
 	$page1 = split("\n", $page1);
@@ -19,6 +20,19 @@ function diff2($page1, $page2) {
 		$html = $renderer->render($z);
 	}
 	return $html;
+}
+
+// Tiki's current PHP requirement is 4.1, but is_a() requires PHP 4.2+,
+// so we define it here if function doesn't exist
+if (!function_exists('is_a')) {
+	function is_a($object, $class_name) {
+		$class = get_class($object);
+		if ($class == $class_name) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 }
 
 //Code below taken from PEAR's Text_Diff, released under the LGPL

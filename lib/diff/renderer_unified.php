@@ -1,4 +1,6 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.4 2004-07-08 12:50:37 damosoft Exp $
+
 /**
  * "Unified" diff renderer.
  *

@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.10 2004-02-23 21:35:01 techtonik Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.11 2004-07-08 12:50:39 damosoft Exp $ *}
 {* Index we display a wiki page here *}
 
 <div id="tiki-main">
@@ -26,14 +26,9 @@
     </table>
   </div>
   <div class="articletrailer">
-    ({$size} bytes
-    {if $tiki_p_edit_article}
-      [<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit{/tr}</a>] 
+    {if $show_size eq 'y'}
+    ({$size} bytes)
     {/if}
-    {if $tiki_p_remove_article}
-      [<a class="trailer" href="tiki-list_articles.php?remove={$articleId}">{tr}Remove{/tr}</a>]
-    {/if}
-    )
   </div>
   <div class="articlebody">
     {$parsed_body}

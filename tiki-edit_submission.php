@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.40 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.41 2004-07-08 12:50:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -401,7 +401,7 @@ $_SESSION["thedate"] = date("U");
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
-$types = $artlib->list_types();
+$types = $artlib->list_types_byname();
 $smarty->assign_by_ref('types', $types);
 
 if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {

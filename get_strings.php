@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.37 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.38 2004-07-08 12:50:32 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -206,12 +206,12 @@ $wordlist = Array ();
 
 ## When collecting files we need to add a file since the directory which it
 ## is placed in is excluded. We should keep hardwiring to a minimum.
-## In a normal case a file that should be translated shuold not exist in
+## In a normal case a file that should be translated should not exist in
 ## a (sub)directory that is excluded. In this (unfortunate) case it seems that
-## the file is placed in a logical location.
+## the files are placed in a logical location.
 collect_files ('.');
 hardwire_file ('./lang/langmapping.php');
-
+hardwire_file ('./img/flags/flagnames.php');
 
 
 $oldEndMarker = '##end###';

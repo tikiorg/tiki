@@ -19,7 +19,7 @@
       <tr>
         <td colspan="2" bgcolor="#67767d" height="50">
           <!-- The slide title -->
-          <h1>&nbsp;{$page_info.pageName}</h1>
+          <h1>{$slide_title}</h1>
         </td>
 	<td height="50" valign="top" style="border-left:solid 2px #67767d">
 	  &nbsp;

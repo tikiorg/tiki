@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.9 2004-06-28 16:16:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.10 2004-07-08 12:50:39 damosoft Exp $ *}
 
 {tikimodule title="{tr}Online users{/tr}" name="who_is_there"}
 <div>
@@ -15,9 +15,9 @@
 {/if}
 {if $online_users[ix].user_information eq 'public'}
 {math equation="x - y" x=$smarty.now y=$online_users[ix].timestamp assign=idle}
-<a class="linkmodule" href="tiki-user_information.php?view_user={$online_users[ix].user}" title="{tr}More info about{/tr} {$online_users[ix].user} ({tr}idle{/tr} {$idle} {tr}seconds{/tr})">{$online_users[ix].user|userlink}</a><br />
+{$online_users[ix].user|userlink:"linkmodule":$idle}<br />
 {else}
-{$online_users[ix].user|userlink}<br />
+{$online_users[ix].user|userlink:"linkmodule"}<br />
 {/if}
 {/section}
 {/tikimodule}

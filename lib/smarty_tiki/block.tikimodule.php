@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.4 2004-06-11 19:33:10 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.5 2004-07-08 12:50:37 damosoft Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -24,6 +24,13 @@ error was used only in case the name was not there.
 I fixed that error case. -- mose
  
  */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
+
 function smarty_block_tikimodule($params, $content, &$smarty) {
 	extract($params);
 	if (!isset($content))   return "";

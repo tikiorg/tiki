@@ -431,6 +431,18 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 
 		return $ret;
 	}
+
+	function list_types_byname() {
+		$query = "select * from `tiki_article_types`";
+		$result = $this->query($query,array());
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[$res['type']] = $res;
+		}
+
+		return $ret;
+	}
 }
 
 global $dbTiki;

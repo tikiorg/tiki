@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.15 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.16 2004-07-08 12:50:39 damosoft Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -6,7 +6,7 @@
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y' and $tiki_p_edit_templates eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-shoutbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Tiki Shoutbox tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
@@ -27,6 +27,7 @@
 {js_maxlength textarea=message maxlength=255}
 <form action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 <input type="hidden" name="msgId" value="{$msgId|escape}" />
+<input type="hidden" name="user" value="{$user}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -84,4 +85,3 @@
 
 </div>
 </div>
-

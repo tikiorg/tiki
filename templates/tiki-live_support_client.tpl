@@ -17,15 +17,13 @@
   <body onunload="client_close();">
   	<div id='request_chat' align="center">
   		<input type="hidden" id="reqId" />
-{if $user}
-		<input type="hidden" id="username" value="{$user|escape}" />
-		<input type="hidden" id="emailaddress" value="{$user_email|escape}" />
-{/if}
 		<input type="hidden" id="tiki_user" value="{$user|escape}" />
 		
 		<h2>{tr}Request live support{/tr}</h2>
 		<table>
 			{if $user}
+				<input type="hidden" id="username" value="{$user|escape}" />
+				<input type="hidden" id="emailaddress" value="{$user_email|escape}" />
 				<tr>
 					<td>{tr}User{/tr}</td>
 					<td>

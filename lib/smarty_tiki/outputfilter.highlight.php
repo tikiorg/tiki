@@ -1,4 +1,10 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
 /*
  * Smarty plugin
  * -------------------------------------------------------------
@@ -31,12 +37,12 @@
     // Pull out the script blocks
     preg_match_all("!<script[^>]+>.*?</script>!is", $source, $match);
     $_script_blocks = $match[0];
-    $source = preg_replace("!<script[^>]+>.*?</script>!is", '@@@SMARTY:TRIM:SCRIPT@@@', $source);
+    $source = preg_replace("!<script[^>]+>.*?</script>!is", '@@@=====@@@', $source);
 
     // pull out all html tags
     preg_match_all("'<[\/\!]*?[^<>]*?>'si", $source, $match);
     $_tag_blocks = $match[0];
-    $source = preg_replace("'<[\/\!]*?[^<>]*?>'si", '@@@SMARTY:TRIM:TAG@@@', $source);
+    $source = preg_replace("'<[\/\!]*?[^<>]*?>'si", '@@@:=====:@@@', $source);
 
     // This array is used to choose colors for supplied highlight terms
     $colorArr = array('#ffff66','#ff9999','#A0FFFF','#ff66ff','#99ff99');
@@ -53,11 +59,11 @@
 
     // replace script blocks
     foreach($_script_blocks as $curr_block) {
-			$source = preg_replace("!@@@SMARTY:TRIM:SCRIPT@@@!",$curr_block,$source,1);
+			$source = preg_replace("!@@@=====@@@!",$curr_block,$source,1);
     }
 
     foreach($_tag_blocks as $curr_block) {
-			$source = preg_replace("!@@@SMARTY:TRIM:TAG@@@!",$curr_block,$source,1);
+			$source = preg_replace("!@@@:=====:@@@!",$curr_block,$source,1);
     }
 
     return $source;

@@ -1,6 +1,11 @@
 <?php
 
-function smarty_modifier_userlink($other_user,$class='link')
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
+function smarty_modifier_userlink($user,$class='link',$idletime='not_set')
 {
     global $tikilib, $userlib, $user, $feature_score, $feature_friends;
     
@@ -20,7 +25,11 @@ function smarty_modifier_userlink($other_user,$class='link')
     }
     
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
-	return "<a class='$class' href='tiki-user_information.php?view_user=$other_user'>$other_user</a>$friend$star";
+		if (is_numeric($idletime)) {
+			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='More info about $other_user (idle for $idletime seconds)'>$other_user</a>$friend$star";
+		} else {
+			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user'>$other_user</a>$friend$star";
+		}
     } else {
 	return "<span class='$class'>$other_user</span>$friend$star";
     }
