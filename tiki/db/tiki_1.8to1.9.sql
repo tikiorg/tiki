@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.46 2004-04-28 04:28:53 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.47 2004-04-28 06:20:31 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -248,6 +248,20 @@ ALTER TABLE `users_groups` ADD `usersFieldId` INT( 11 ), ADD `groupFieldId` INT(
 ALTER TABLE `tiki_tracker_fields` ADD `isMandatory` varchar ( 1 ) DEFAULT 'n' NOT NULL ;
 UPDATE `tiki_tracker_fields` set `isMandatory`='y' where `isMandatory`='';
 
+# added on 2004-03-09 by mose for keeping track of what happens
+DROP TABLE IF EXISTS `tiki_logs`;
+CREATE TABLE tiki_logs (
+  logId int(8) NOT NULL auto_increment,
+  logtype varchar(20) NOT NULL,
+  logmessage text NOT NULL,
+  loguser varchar(200) NOT NULL,
+  logip varchar(200) NOT NULL,
+  logclient text NOT NULL,
+  logtime int(14) NOT NULL,
+  PRIMARY KEY  (logId),
+  KEY logtype (logtype)
+) TYPE=MyISAM;
+
 # added on 2004-03-24 by mose for fixing an error in perm label
 UPDATE `users_permissions` set `permDesc`='Can view trackers closed items' where `permName`='tiki_p_view_trackers_closed';
 
@@ -342,7 +356,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 #added on 2004-4-27 ggeller
 #
 
-DROP TABLE IF EXISTS hw_actionlog;
 CREATE TABLE hw_actionlog (
   action varchar(255) NOT NULL default '',
   lastModif int(14) NOT NULL default '0',
@@ -353,7 +366,6 @@ CREATE TABLE hw_actionlog (
   PRIMARY KEY  (lastModif)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_assignments;
 CREATE TABLE hw_assignments (
   assignmentId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
@@ -368,7 +380,6 @@ CREATE TABLE hw_assignments (
   KEY dueDate (dueDate)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_grading_queue;
 CREATE TABLE hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
@@ -382,7 +393,6 @@ CREATE TABLE hw_grading_queue (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_grading_queue;
 CREATE TABLE hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
@@ -396,7 +406,6 @@ CREATE TABLE hw_grading_queue (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_history;
 CREATE TABLE hw_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
@@ -408,7 +417,6 @@ CREATE TABLE hw_history (
   PRIMARY KEY  (id,version)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS hw_pages;
 CREATE TABLE hw_pages (
   id int(14) NOT NULL auto_increment,
   assignmentId int(14) NOT NULL default '0',
