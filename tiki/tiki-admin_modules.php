@@ -99,6 +99,7 @@ if(isset($_REQUEST["assign"])) {
   }
   $smarty->assign('module_groups',$grps);
   $tikilib->assign_module($_REQUEST["assign_name"],'',$_REQUEST["assign_position"],$_REQUEST["assign_order"],$_REQUEST["assign_cache"],$_REQUEST["assign_rows"],serialize($module_groups));
+  header("location: tiki-admin_modules.php");
 }
 
 if(isset($_REQUEST["um_remove"])) {
@@ -136,7 +137,8 @@ for($i=0;$i<count($groups["data"]);$i++) {
   }	
 }
 $smarty->assign_by_ref("groups",$groups["data"]);
-
+$galleries = $tikilib->list_galleries(0,-1,'lastModif_desc', $user,'');
+$smarty->assign('galleries',$galleries["data"]);
 $polls = $tikilib->list_active_polls(0,-1,'publishDate_desc','');
 $smarty->assign('polls',$polls["data"]);
 $contents = $tikilib->list_content(0,-1,'contentId_desc','');

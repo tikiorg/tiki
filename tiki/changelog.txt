@@ -1,4 +1,56 @@
+Version 1.4 -Mira-
+
+* [NEW] Quizzes, you can create quizzes with as many multiple-choice questions as you want and program specific answers
+  to be displayed to the user depending on the Quiz score. Quiz results can be stored and you can control if Quizzes can
+  be repeated and stablish a time limit for Quizzes if you want. Useful for fun or for learning, courses, etc.
+* [NEW] Smileys can now be disabled enabled from the Admin screen. (Dedicated to Tom)
+* [NEW] Templates can be edited and used for Wiki pages and CMS articles. A simple way of creating pre-formatted Wiki
+  pages and Articles, you can template articles to review CDs, sites, etc
+* [NEW] Optionally you can make the user enter a special passcode to let him register into your site, this can be
+  used for semi-privates sites or for sites where users are only added by invitation. 
+* [NEW] Users can now suggest FAQ questions and FAQ admins can add the questions to the FAQ if they want.
+* [NEW] You can specify the opening type for featured links, the link can be opened in a new window, in the same
+  window or in a frame inside the window.
+* [NEW] Script to export the wiki link-structure, tiki-link_structure.php can be called to get a txt representation
+  of the Wiki structure each line is formatted in the form PageName LinkToPage LinkToPage LinkToPage...
+  This can be used to construct a graph of the Wiki, to make stats, etc. This is useful specially for the TouchGraph
+  Wiki browser which uses this format of link structure to draw a graphical representation of the Wiki pages.
+* [NEW] Underline syntax for Wiki pages (I don't like underlined text in web sites because it seems like a broken
+  link to me but...)  Use ===text=== to underline
+* [NEW] Now lists can include arbitrary nesting using *,#,**,***,##,### etc.
+* [NEW] The current date can be included in any module or template using {showdate mode="d/m/Y [h:i]"}, the mode
+  follows the syntax to format dates using the PHP date function.
+* [NEW] You can filter by article topic and type in the articles listing
+* [NEW] You can categorize objects from the screens were the objects are created, just select the categories and
+  the object will be assigned to that categories.
+* [NEW] Top games module
+* [NEW] When creating a group you can make the group "include" other groups, so permissions from included groups
+  are automatically assigned to the new group. This can be used as an easy way to extend groups by adding some
+  new permissions to an existing group.
+* [NEW] Random images syntax for modules use {gallery id=n} to include a random image from gallery n (Evan)
+* [NEW] Improved thumbnail generation keeping aspect ratio and using GD2+ functions if GD2+ is installed (Evan)
+* [NEW] You can edit images names and descriptions (Evan)
+* [NEW] Extended the syntax for Wiki internal references to support ((page|description)
+* [NEW] Imrpoved and simplified application menu, now links are more intuitive and the admin functions are better
+  organized in the user space if you have the right permissions.
+* [NEW] Added a cancel button when editing wiki pages
+* [NEW] Mail notifications screen where you can pick email addresses to be notified when specific events occur, for
+  example when a user registers or when a submission is received
+* [NEW] New theme jalist inspired in www.jalist.com
+* [NEW] ShoutBox, a graffiti wall where users can send messages, a module to display the last "n" messages and to
+  add new messages is included. This is nice :-)
+* [NEW] Templates for mail notifications, all the Tiki mails that can be sent can now be customized by editing the
+  templates in templates/mail so you can write whatever you want and personalize the emails.
+* [NEW] Dual storing policy for uploads. As an admin you can choose between storing file uploads on the database or
+  a directory. If it is a directory make sure your PHP can read/write to the dir but the users can't list the dir
+  (or they will be able to download all the files from your site). It's your choice, Tiki is flexible.
+* [NEW] Now modules are inmediately displayed after assigning them from the admin-modules screen (remember that if
+  you have personalized modules you will have to assign them from your user preferences page)
+* [NEW] Since your last visit module showing new items on the site after the user last login date.
+* [NEW] Now assigned permissions are identified from unassigned permissions when assigning permissions to a group.          
+
 Version 1.3 -Pollux-
+
 
 * [NEW] Spellchecking, now you can spellcheck your articles, submissions, wiki_pages and blog_posts before saving them,
   the spellchecking dictionary for your language must be downloaded and installed to make this work, dictionaries will

@@ -188,6 +188,8 @@ create table users_users(
   realname varchar(80),
   homePage varchar(200),
   lastLogin integer(14),
+  currentLogin integer(14),
+  registrationDate integer(14),
   country varchar(80),
   primary key(userId)
 );

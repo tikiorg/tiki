@@ -68,7 +68,7 @@ if(!isset($_REQUEST["type"])) {
 } 
 $smarty->assign('type',$_REQUEST["type"]);
 
-$perms = $userlib->get_permissions($offset,$maxRecords,$sort_mode,$find,$_REQUEST["type"]);
+$perms = $userlib->get_permissions($offset,$maxRecords,$sort_mode,$find,$_REQUEST["type"],$group);
 $cant_pages = ceil($perms["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

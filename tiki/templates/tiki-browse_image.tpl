@@ -6,6 +6,9 @@
   
   <div class="gallerylink">
     <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}return to gallery{/tr}</a>
+    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+    | <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}">{tr}edit image{/tr}</a>
+    {/if}
   </div>
   
   <div class="showimage">

@@ -27,7 +27,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastLogin_desc'}lastLogin_asc{else}lastLogin_desc{/if}">{tr}last_login{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}last_login{/tr}</a></td>
 <td class="heading">{tr}Groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -36,7 +36,7 @@
 <tr>
 <td class="odd">{$users[user].user}</td>
 <td class="odd">{$users[user].email}</td>
-<td class="odd">{$users[user].lastLogin|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$users[user].currentLogin|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td>
 <td class="odd">
 {section name=grs loop=$users[user].groups}
 {$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;
@@ -51,7 +51,7 @@
 <tr>
 <td class="even">{$users[user].user}</td>
 <td class="even">{$users[user].email}</td>
-<td class="even">{$users[user].lastLogin|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td>
+<td class="even">{$users[user].currentLogin|date_format:"%A %d of %B [%H:%M]"}</td>
 <td class="even">
 {section name=grs loop=$users[user].groups}
 {$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;

@@ -164,6 +164,11 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("style",$_REQUEST["style"]); 
     $smarty->assign_by_ref('style',$_REQUEST["style"]);
   }
+  if(isset($_REQUEST["siteTitle"])) {
+    $tikilib->set_preference("siteTitle",$_REQUEST["siteTitle"]); 
+    $smarty->assign_by_ref('siteTitle',$_REQUEST["siteTitle"]);
+  }
+  
   if(isset($_REQUEST["language"])) {
     $tikilib->set_preference("language",$_REQUEST["language"]); 
     $smarty->assign_by_ref('language',$_REQUEST["language"]);
