@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.12 2003-09-08 08:03:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.13 2003-09-27 08:42:08 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -241,18 +241,34 @@ $smarty->assign('comments_cant_pages', $comments_cant_pages);
 $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 
 if ($comments_coms["cant"] > ($comments_offset + $comments_maxRecords)) {
-	$smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
+    $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
 } else {
-	$smarty->assign('comments_next_offset', -1);
+    $smarty->assign('comments_next_offset', -1);
 }
 
 // If offset is > 0 then prev_offset
 if ($comments_offset > 0) {
-	$smarty->assign('comments_prev_offset', $comments_offset - $comments_maxRecords);
+    $smarty->assign('comments_prev_offset', $comments_offset - $comments_maxRecords);
 } else {
-	$smarty->assign('comments_prev_offset', -1);
+    $smarty->assign('comments_prev_offset', -1);
 }
 
-$smarty->assign('comments_coms', $comments_coms["data"]);
+$smarty->assign('comments_coms', $comments_coms["data"] );
+
+// Grab the parent comment to show.  -rlpowell
+if (!isset($_REQUEST["comments_parent_parentId"])) {
+    $_REQUEST["comments_parent_parentId"] = 0;
+} else {
+    $parent_coms = $commentslib->get_comments(
+	    $comments_objectId,
+	    $_REQUEST["comments_parent_parentId"],
+	    $comments_offset, $_REQUEST["comments_maxComments"],
+	    $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
+	    $_REQUEST['comments_threshold']);
+
+    $smarty->assign('parent_coms', $parent_coms["data"] );
+}
+
+$smarty->assign('comments_parent_parentId', $_REQUEST["comments_parent_parentId"]);
 
 ?>
