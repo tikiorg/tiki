@@ -80,6 +80,9 @@
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br/>
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br/>
     {/if}
+    {if $tiki_p_admin_code_hilight eq 'y'}
+    &nbsp;<a href="tiki-admin_code_syntax.php" class="linkmenu">{tr}Syntax highlighting{/tr}</a><br/>
+    {/if}
   </div>
 {/if}
 

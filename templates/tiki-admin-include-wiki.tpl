@@ -271,6 +271,7 @@
     <option value="new" {if $feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}\n for rows{/tr}</option>
     </select>
     </td></tr>
+    <tr><td class="form"><code>&#123;CODE&#125;</code> {tr}syntax highlighting{/tr}:</td><td><input type="checkbox" name="feature_wiki_code_hilight" {if $feature_wiki_code_hilight eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>
