@@ -113,6 +113,20 @@ if(isset($_REQUEST['messprefs'])) {
   
 }
 
+if(isset($_REQUEST['tasksprefs'])) {
+  $tikilib->set_user_preference($userwatch,'tasks_maxRecords',$_REQUEST['tasks_maxRecords']);
+  if(isset($_REQUEST['tasks_useDates'])&&$_REQUEST['tasks_useDates']=='on') {
+    $tikilib->set_user_preference($userwatch,'tasks_useDates','y');
+  } else {
+    $tikilib->set_user_preference($userwatch,'tasks_useDates','n');
+  }
+}
+
+$tasks_maxRecords = $tikilib->get_user_preference($userwatch,'tasks_maxRecords');
+$tasks_useDates = $tikilib->get_user_preference($userwatch,'tasks_useDates');
+$smarty->assign('tasks_maxRecords',$tasks_maxRecords);
+$smarty->assign('tasks_useDates',$tasks_useDates);
+
 $mess_maxRecords = $tikilib->get_user_preference($userwatch,'mess_maxRecords',20);
 $smarty->assign('mess_maxRecords',$mess_maxRecords);
 $allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
