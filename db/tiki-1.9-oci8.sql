@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.19 2004-06-01 12:11:10 lfagundes Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.20 2004-06-03 18:57:08 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3112,7 +3112,27 @@ CREATE TABLE "tiki_quizzes" (
   "shuffleAnswers" char(1) default NULL,
   "publishDate" number(14) default NULL,
   "expireDate" number(14) default NULL,
-  PRIMARY KEY ("quizId")
+  "bDeleted" char(1) default NULL,
+  "nVersion" number(4) NOT NULL,
+  "nAuthor" number(4) default NULL,
+  "bOnline" char(1) default NULL,
+  "bRandomQuestions" char(1) default NULL,
+  "nRandomQuestions" number(4) default NULL,
+	bLimitQuestionsPerPage char(1) default NULL,
+  "nLimitQuestionsPerPage" number(4) default NULL,
+	bMultiSession char(1) default NULL,
+	nCanRepeat number(4) default NULL,
+	sGradingMethod varchar(80) default NULL,
+	sShowScore varchar(80) default NULL,
+	sShowCorrectAnswers varchar(80) default NULL,
+	sPublishStats varchar(80) default NULL,
+	bAdditionalQuestions char(1) default NULL,
+	bForum char(1) default NULL,
+	sForum varchar(80) default NULL,
+	sPrologue text,
+	sData text,
+	sEpilogue text
+  PRIMARY KEY ("quizId"," nVersion")
 )   ;
 
 CREATE TRIGGER "tiki_quizzes_trig" BEFORE INSERT ON "tiki_quizzes" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW

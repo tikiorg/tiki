@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.19 2004-06-01 12:11:10 lfagundes Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.20 2004-06-03 18:57:08 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3839,7 +3839,27 @@ quizId numeric(10 ,0) identity,
   "shuffleAnswers" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
   "expireDate" numeric(14,0) default NULL NULL,
-  PRIMARY KEY ("quizId")
+  "bDeleted" char(1) default NULL NULL,
+  "nVersion" numeric(4,0) NOT NULL,
+  "nAuthor" numeric(4,0) default NULL NULL,
+  "bOnline" char(1) default NULL NULL,
+  "bRandomQuestions" char(1) default NULL NULL,
+  "nRandomQuestions" numeric(4,0) default NULL NULL,
+	bLimitQuestionsPerPage char(1) default NULL NULL,
+  "nLimitQuestionsPerPage" numeric(4,0) default NULL NULL,
+	bMultiSession char(1) default NULL NULL,
+	nCanRepeat numeric(4,0) default NULL NULL,
+	sGradingMethod varchar(80) default NULL NULL,
+	sShowScore varchar(80) default NULL NULL,
+	sShowCorrectAnswers varchar(80) default NULL NULL,
+	sPublishStats varchar(80) default NULL NULL,
+	bAdditionalQuestions char(1) default NULL NULL,
+	bForum char(1) default NULL NULL,
+	sForum varchar(80) default NULL NULL,
+	sPrologue text,
+	sData text,
+	sEpilogue text
+  PRIMARY KEY ("quizId"," nVersion")
 )   
 go
 

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.65 2004-05-30 11:04:10 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.66 2004-06-03 18:57:09 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -472,12 +472,32 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # Improved Quizzes start
 #
 
-ALTER TABLE `tiki_quizzes` ADD `immediateFeedback` char(1) ;
-ALTER TABLE `tiki_quizzes` ADD `showAnswers` char(1) ;
-ALTER TABLE `tiki_quizzes` ADD `shuffleQuestions` char(1) ;
-ALTER TABLE `tiki_quizzes` ADD `shuffleAnswers` char(1) ;
-ALTER TABLE `tiki_quizzes` ADD `publishDate` int(14) ;
-ALTER TABLE `tiki_quizzes` ADD `expireDate` int(14) ;
+ALTER TABLE `tiki_quizzes` ADD `immediateFeedback` char(1) default NULL ;
+ALTER TABLE `tiki_quizzes` ADD `showAnswers` char(1) default NULL ;
+ALTER TABLE `tiki_quizzes` ADD `shuffleQuestions` char(1) default NULL ;
+ALTER TABLE `tiki_quizzes` ADD `shuffleAnswers` char(1) default NULL ;
+ALTER TABLE `tiki_quizzes` ADD `publishDate` int(14) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `expireDate` int(14) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bDeleted` char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `nVersion` int(4) NOT NULL ;
+ALTER TABLE `tiki_quizzes` ADD `nAuthor` int(4) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bOnline` char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bRandomQuestions char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `nRandomQuestions tinyint(4) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bLimitQuestionsPerPage char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `nLimitQuestionsPerPage tinyint(4) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bMultiSession char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `nCanRepeat tinyint(4) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sGradingMethod varchar(80) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sShowScore varchar(80) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sShowCorrectAnswers varchar(80) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sPublishStats varchar(80) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bAdditionalQuestions char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `bForum char(1) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sForum varchar(80) default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sPrologue text default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sData text default NULL;
+ALTER TABLE `tiki_quizzes` ADD `sEpilogue text default NULL;
 
 #
 # Improved Quizzes end
