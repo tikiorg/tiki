@@ -1,6 +1,7 @@
-<div class="forumspagetitle">
-<a class="forumspagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
-</div>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.16 2003-11-15 06:34:24 zaufi Exp $ *}
+
+<a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
+
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 <br /><br />
@@ -17,25 +18,25 @@
    </td>
 </tr>
 </table>
-<table class="forumstable">
+<table class="normal">
 <tr>
-<td  class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td  class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 {if $forum_list_topics eq 'y'}
-	<td class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
 {/if}	
 {if $forum_list_posts eq 'y'}
-	<td class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
 {/if}	
-<!--<td class="forumheading">{tr}users{/tr}</td>-->
-<!--<td class="forumheading">{tr}age{/tr}</td>-->
+<!--<td class="heading">{tr}users{/tr}</td>-->
+<!--<td class="heading">{tr}age{/tr}</td>-->
 {if $forum_list_ppd eq 'y'}
-	<td class="forumheading">{tr}ppd{/tr}</td>
+	<td class="heading">{tr}ppd{/tr}</td>
 {/if}	
 {if $forum_list_lastpost eq 'y'}	
-	<td class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
 {/if}
 {if $forum_list_visits eq 'y'}
-	<td class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
 {/if}	
 </tr>
 {assign var=section_old value=""}
@@ -48,9 +49,9 @@
 {/if}
 <tr>
 {if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-<td class="forumstable{cycle advance=false}"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
+<td class="{cycle advance=false}"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
 {else}
-<td class="forumstable{cycle advance=false}">{$channels[user].name}
+<td class="{cycle advance=false}">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 <a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}adm{/tr}</a>
@@ -58,24 +59,24 @@
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>
 {if $forum_list_topics eq 'y'}
-	<td style="text-align:right;" class="forumstableinfo{cycle advance=false}">{$channels[user].threads}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 {/if}
 {if $forum_list_posts eq 'y'}
-	<td style="text-align:right;" class="forumstableinfo{cycle advance=false}">{$channels[user].comments}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 {/if}
-<!--<td class="forumstableinf{cycle advance=false}">{$channels[user].users}</td> -->
-<!--<td class="forumstableinfo{cycle advance=false}">{$channels[user].age}</td> -->
+<!--<td class="inf{cycle advance=false}">{$channels[user].users}</td> -->
+<!--<td class="{cycle advance=false}">{$channels[user].age}</td> -->
 {if $forum_list_ppd eq 'y'}
-	<td style="text-align:right;" class="forumstableinfo{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 {/if}
 {if $forum_list_lastpost eq 'y'}	
-<td class="forumstableinfo{cycle advance=false}">
+<td class="{cycle advance=false}">
 {$channels[user].lastPost|tiki_short_datetime}<br />
 <small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 </td>
 {/if}
 {if $forum_list_visits eq 'y'}
-	<td style="text-align:right;" class="forumstableinfo{cycle}">{$channels[user].hits}</td>
+	<td style="text-align:right;" class="{cycle}">{$channels[user].hits}</td>
 {/if}	
 </tr>
 {/section}
