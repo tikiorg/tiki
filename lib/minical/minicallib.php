@@ -25,7 +25,7 @@ class MiniCalLib extends TikiLib {
       $aux['start']=$start;
       $end_p = $start+$interval;
       $aux['end']=$end_p;
-      $query = "select * from tiki_minical_events where user='$user' and start>=$start and start<$end_p";
+      $query = "select * from tiki_minical_events where user='$user' and start>=$start and start<$end_p order by start asc";
       //print($query);print("<br/>");
       $result = $this->query($query);
       $events=Array();
