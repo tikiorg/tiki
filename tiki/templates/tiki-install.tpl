@@ -24,6 +24,12 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 </div>
 {/foreach}
 </div></div>
+
+<div class="box">
+<div class="box-title">To add a new virtual host</div>
+<div class="box-data">
+To add a new virtual host run the setup.sh with the domain name of the new host as a last parameter.
+</div>
 </td>
 <td valign="top">
 {/if}
