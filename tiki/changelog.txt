@@ -1,76 +1,87 @@
 Version 1.6 -Tau Ceti-
 
-* [NEW] Alternative syntax for tables, you can sepparate rows using line returns instead
-  of ||. You have to select which syntax to use in the admin screen.
+* [NEW] Alternative syntax for tables, you can sepparate rows using line 
+  returns instead of ||. You have to select which syntax to use in the admin 
+  screen.
 * [NEW] Admin menu submit buttons now get back to the admin section where the
   submited information was found.
-* [NEW] User menus, the user can add items to the application menu, an option to
-  automatically add top-level bookmarks to the menu is provided.
-* [NEW] Theme control center: if activated you can control the theme
-  by section, by category or by specific object.
-* [NEW] Ephemerides feature: admin can set up images/texts for specific
-  dates, users can browse using the calendar to get the images/texts for
-  any day. A module is provided to display the image/text for the day,
-  if many one is choosen randomly.
-* [NEW] User files section, users can store personal files and download
-  them whenever they want, files are only visible to the user. Admin can
-  control a disk quota for each user.
-* [NEW] User Notepads section added, users can sketch notes view them and remove them,
-  the notes can be viewed as parsed wiki pages or unparsed. Useful to keep memos,
-  user personal information, etc.
-* [NEW] Newsreader added, users can add newsservers, browse groups from the servers
-  and read the articles from any group. A save position option is provided to highlight
-  new messages per group/user
-* [NEW] SnowChekMail the function used to validate email addresses can be disabled if
-  you configure your system as Windows in the main admin panel.
-* [NEW] My Tiki section added as a refurbished user_preferences section, this new section
-  includes webmail, user_preferences, modules, bookmarks, tasks and all the per-user sections of
-  Tiki.
+* [NEW] User menus, the user can add items to the application menu, an option 
+  to automatically add top-level bookmarks to the menu is provided.
+* [NEW] Theme control center: if activated you can control the theme by 
+  section, by category or by specific object.
+* [NEW] Ephemerides feature: admin can set up images/texts for specific dates, 
+  users can browse using the calendar to get the images/texts for any day. A 
+  module is provided to display the image/text for the day, if many one is 
+  choosen randomly.
+* [NEW] User files section, users can store personal files and download them 
+  whenever they want, files are only visible to the user. Admin can control a 
+  disk quota for each user.
+* [NEW] User Notepads section added, users can sketch notes view them and 
+  remove them, the notes can be viewed as parsed wiki pages or  unparsed. 
+  Useful to keep memos, user personal information, etc.
+* [NEW] Newsreader added, users can add newsservers, browse groups from the 
+  servers and read the articles from any group. A save position option is 
+  provided to highlight new messages per group/user
+* [NEW] SnowChekMail the function used to validate email addresses can be 
+  disabled if you configure your system as Windows in the main admin panel.
+* [NEW] My Tiki section added as a refurbished user_preferences section, this 
+  new section includes webmail, user_preferences, modules, bookmarks, tasks and 
+  all the per-user sections of Tiki.
 * [NEW] Wiki plugin added: SPLIT used to split a wiki page in two columns.
-* [NEW] Wiki plugin added: SQL can be used to display the result of an SQL query to the
-  tiki database, useful for reports and others. If you don't use tiki as an intranet you
-  may want to remove this plugin for security reasons (!!).
-* [NEW] User tasks, users can set-up tasks and mark tasks as completed or remove tasks, 
-  a user module is provided. This can be used as a simple to-do list for users.
-* [NEW] Wiki page footnotes, wiki pages can have footnotes, footnotes are kept at user
-  level (each user only sees his footnotes for each page). This allow users to keep his
-  private comments and notes for Wiki pages. 
+* [NEW] Wiki plugin added: SQL can be used to display the result of an SQL 
+  query to the tiki database, useful for reports and others. If you don't use 
+  tiki as an intranet you may want to remove this plugin for security reasons 
+  (!!).
+* [NEW] User tasks, users can set-up tasks and mark tasks as completed or 
+  remove tasks,  a user module is provided. This can be used as a simple to-do 
+  list for users.
+* [NEW] Wiki page footnotes, wiki pages can have footnotes, footnotes are kept 
+  at user level (each user only sees his footnotes for each page). This allow 
+  users to keep his private comments and notes for Wiki pages. 
 * [NEW] Plugins added to normal distribution: code, avatar, center
 * [NEW] Plugins can be nested
 * [NEW] Plugins are re-entrant, a plugin can generate another plugin code. 
 * [NEW] Wiki structures can be used to generate slide shows
-* [NEW] Changed translation routines to a Smarty prefilter, the first time the screen is
-  generated it will be slower but then all the pages will be rendered very fast. Performance
-  improvement.
-* [NEW] Permissions interface improved supporting multiple permission settings in one operation (the famous
-  checkboxes are here)
-* [NEW] Permission levels added to the permissions, allowing the admin to classify permissions by level and
-  then assign/remove all the permissions in some level to a group
-* [NEW] Who is online module added displaying a list of registered users currently online
+* [NEW] Changed translation routines to a Smarty prefilter, the first time the 
+  screen is generated it will be slower but then all the pages will be rendered 
+  very fast. Performance improvement.
+* [NEW] Permissions interface improved supporting multiple permission settings 
+  in one operation (the famous checkboxes are here)
+* [NEW] Permission levels added to the permissions, allowing the admin to 
+  classify permissions by level and then assign/remove all the permissions in 
+  some level to a group
+* [NEW] Who is online module added displaying a list of registered users 
+  currently online
 * [NEW] Tooltips added when text is truncated
-* [NEW] Optional remember-me feature added to the login box. The lifetime of the cookie can be configured.
-* [NEW] Contact-us feature added showing the user an option to send a message to the admin unser (configurable)
-  and an option to send an email to admin.
-* [NEW] Inter-user messaging added, users can read,write messages to other Tiki users.
-  an option and permissions are provided to broadcast a message to a group of users or
-  to all the users.
-* [NEW] User information page added to see information about a user. The user can make his information
-  public/private from his user preferences
+* [NEW] Optional remember-me feature added to the login box. The lifetime of 
+  the cookie can be configured.
+* [NEW] Contact-us feature added showing the user an option to send a message 
+  to the admin unser (configurable) and an option to send an email to admin.
+* [NEW] Inter-user messaging added, users can read,write messages to other Tiki 
+  users. an option and permissions are provided to broadcast a message to a 
+  group of users or to all the users.
+* [NEW] User information page added to see information about a user. The user 
+  can make his information public/private from his user preferences
 * [NEW] Tiki tags are now allowed in FAQ answers
 * [NEW] Smarty version distributed with Tiki upgraded to 2.4.3
-* [NEW] Caching mechanism for wiki pages. Wiki pages can be cached for a specified time before they have to be
-  parsed again by the wiki engine. This does not affect undos,rollbacks and edits that are inmediately reflected.
-  This option can be turned on/off. For sites using large or complex wiki pages it can show a good performance
-  improvement.
-* [NEW] Directory feature added to Tiki. Links can be organized in categories, users can add links to be validated
-  by admin, many options for display and functionality.
-* [NEW] "su" option added to let admin login as any user once logged as admin, in this way he can configure or
-  fix a user problem without never asking for the user password.
-* [NEW] Country added to user preferences, the country flag is also displayed in forum posts of the user.
-* [NEW] Wiki structures. You can create structures of wiki pages and the new tag {toc} can be used to display
-  a table of contents for the structure in a wiki page. When a page is part of a structure links to the next
-  and previous page are provided as well as a link to the first page of the structure, where you should place
-  the {toc} and other information.
+* [NEW] Caching mechanism for wiki pages. Wiki pages can be cached for a 
+  specified time before they have to be  parsed again by the wiki engine. This 
+  does not affect undos,rollbacks and edits that are immediately reflected. 
+  This option can be turned on/off. For sites using large or complex wiki pages 
+  it can show a good performance improvement.
+* [NEW] Directory feature added to Tiki. Links can be organized in categories, 
+  users can add links to be validated by admin, many options for display and 
+  functionality.
+* [NEW] "su" option added to let admin login as any user once logged as admin, 
+  in this way he can configure or fix a user problem without never asking for 
+  the user password.
+* [NEW] Country added to user preferences, the country flag is also displayed 
+  in forum posts of the user.
+* [NEW] Wiki structures. You can create structures of wiki pages and the new 
+  tag {toc} can be used to display a table of contents for the structure in a 
+  wiki page. When a page is part of a structure links to the next and previous 
+  page are provided as well as a link to the first page of the structure, where 
+  you should place the {toc} and other information.
 
 
 Version 1.5 -Regulus-
@@ -78,463 +89,629 @@ Version 1.5 -Regulus-
 * [FIX] Several Minor Typos (jaw959 et al.)
 * [NEW DEVLEOPER] Joseph Witthuhn (jaw959) can be contacted at
   jaw959@users.sourceforge.net
-* [NEW] You can select the name of your Wiki home page. Can be other than HomePage.
-* [NEW] Now admin has an option to enable full wiki page names allowing spaces and accents and other chatacters
-  to be part of a wiki page.
-* [NEW] Quick image uploads to wiki pages, you can upload a picture from the editpage feature and 
-  have it displayed in the page inmediately
-* [NEW] Added a login screen that can be used in columnless layouts or for emergency purposes if the login box
-  or the columns have problems. The file is tiki-login_scr.php.
+* [NEW] You can select the name of your Wiki home page. Can be other than 
+  HomePage.
+* [NEW] Now admin has an option to enable full wiki page names allowing spaces 
+  and accents and other chatacters to be part of a wiki page.
+* [NEW] Quick image uploads to wiki pages, you can upload a picture from the 
+  editpage feature and  have it displayed in the page inmediately
+* [NEW] Added a login screen that can be used in columnless layouts or for 
+  emergency purposes if the login box or the columns have problems.  The file 
+  is tiki-login_scr.php.
 * [NEW] Added a phpinfo link to check your php installation in the admin menu.
-* [NEW] Now you can make batch uploads of zip files for file galleries. If you have the right permission just
-  upload a zip file and all the files will be added to the gallery.
+* [NEW] Now you can make batch uploads of zip files for file galleries.  If you 
+  have the right permission just upload a zip file and all the files will be 
+  added to the gallery.
 * [NEW] Now you can use comments for inividual blog posts.
-* [FIX] Tikilib code reduced splitting it into smaller libraries reducing memory consumption. (stage1)
-* [NEW] Added a description field for Wiki pages (optional) when this feature is disabled the description is
-  displayed below the page name and as the title of a link to the page (form other pages).
-* [NEW] Added direct link to pages in paginations (optional) if enabled you can jump to any page of a multi
-  page listing by following a link.  
-* [NEW] Newsletters added, admins can setup newsletters and users can subscribe, emails are requiered to confirm
-  subscriptions and prevent spamming. Then admin can simply send an HTML based newsletter to the subscribed (and
-  confirmed) users. Users can unsubscribe using a URL.
+* [FIX] Tikilib code reduced splitting it into smaller libraries reducing 
+  memory consumption. (stage1)
+* [NEW] Added a description field for Wiki pages (optional) when this feature 
+  is disabled the description is displayed below the page name and as the title 
+  of a link to the page (form other pages).
+* [NEW] Added direct link to pages in paginations (optional) if enabled you can 
+  jump to any page of a multi page listing by following a link.  
+* [NEW] Newsletters added, admins can setup newsletters and users can 
+  subscribe, emails are requiered to confirm subscriptions and prevent 
+  spamming. Then admin can simply send an HTML based newsletter to the 
+  subscribed (and confirmed) users. Users can unsubscribe using a URL.
 * [NEW] Added an option to generate gzipped output to the browser.
-* [NEW] Base templates can now be defined by theme so you can create a theme presenting
-  a whole different layout for Tiki. You can also use this to create themes including images
-  and other decoration elements in Tiki. Since only base templates are classified by theme
-  you can do it changing just a few files. If you don't want to change the layout just copy
-  the templates from the templates directory if you are creating a theme.
+* [NEW] Base templates can now be defined by theme so you can create a theme 
+  presenting a whole different layout for Tiki. You can also use this to create 
+  themes including images and other decoration elements in Tiki. Since only 
+  base templates are classified by theme you can do it changing just a few 
+  files. If you don't want to change the layout just copy the templates from 
+  the templates directory if you are creating a theme.
 * [NEW] Changed wiki page names to support up to 150 characters
-* [NEW] Menus now preserve their state between pages (using cookies) if cookies are disabled
-  then menus wont preserve state but will still work as they did before.
-* [NEW] Added plugins to the Wiki, now you can create your own plugins for the wiki to 
-  suit your needs. The syntax is simple, see lib/wiki_plugins/example.php for a
-  description and example.
-* [NEW] Admin can choose if passwords are stored in plaintext or not. If not, a hash will be used to authenticate
-  users and the remind-password feature will generate a new password and send it by email. The new password will
-  be immediately due so the user will be forced to change it.
+* [NEW] Menus now preserve their state between pages (using cookies) if cookies 
+  are disabled then menus wont preserve state but will still work as they did 
+  before.
+* [NEW] Added plugins to the Wiki, now you can create your own plugins for the 
+  wiki to suit your needs. The syntax is simple, see 
+  lib/wiki_plugins/example.php for a description and example.
+* [NEW] Admin can choose if passwords are stored in plaintext or not. If not, a 
+  hash will be used to authenticate users and the remind-password feature will 
+  generate a new password and send it by email. The new password will be 
+  immediately due so the user will be forced to change it.
 * [NEW] All the Javascript code has been packed into a library
-* [NEW] BiDi support. Added support for BiDi languages. 
-  Added BiDi.css file to control BiDi directionality and layout.
-* [NEW] Added ~np~ ~/np~ syntax to the Wiki to make page sections unparsed. Can be used to put HTML code or
-  anything that you want as-is without wiki syntax being parsed.
-* [NEW] Fulltext searching added (optional). By enabling this feature, results will be sorted by the relevance of the
-  match to the search query.  Also, search results will be ordered first by relevance, and then by section
-  (wiki, blog, etc.). Non-fulltext searching continues to sort first by section, and then by 'hits'.
-* [NEW] PHPWikiImport feature. You can export pages from a PHPWiki dump into tiki even versions will be created.
-* [NEW] Export all wiki feature. As admin you can export the whole wiki as a text dump that can later be imported
-  into this or another Tiki site.
-* [NEW] Import/export wiki pages. Wiki pages can now be exported to a .txt Mime-alike format and imported from an
-  exported file.
-* [NEW] Slideshows added, if a wiki page contains more than one -=titlebar=- then you can display it as a slide show.
-  This is a very cool feature.
+* [NEW] BiDi support. Added support for BiDi languages. Added BiDi.css file to 
+  control BiDi directionality and layout.
+* [NEW] Added ~np~ ~/np~ syntax to the Wiki to make page sections unparsed. Can 
+  be used to put HTML code or anything that you want as-is without wiki syntax 
+  being parsed.
+* [NEW] Fulltext searching added (optional). By enabling this feature, results 
+  will be sorted by the relevance of the match to the search query.  Also, 
+  search results will be ordered first by relevance, and then by section (wiki, 
+  blog, etc.). Non-fulltext searching continues to sort first by  section, and 
+  then by 'hits'.
+* [NEW] PHPWikiImport feature. You can export pages from a PHPWiki dump into 
+  tiki even versions will be created.
+* [NEW] Export all wiki feature. As admin you can export the whole wiki as a 
+  text dump that can later be imported into this or another Tiki site.
+* [NEW] Import/export wiki pages. Wiki pages can now be exported to a .txt 
+  Mime-alike format and imported from an exported file.
+* [NEW] Slideshows added, if a wiki page contains more than one -=titlebar=- 
+  then you can display it as a slide show. This is a very cool feature.
 * [NEW] Admin can select the minimum length for a password to be valid
-* [NEW] Admin can choose if user passwords must include letters and numbers to be valid
-* [NEW] Admin can setup passwords lifetime and Tiki will force the user to change his password once the password
-  is expired. 
-* [NEW] Challenge-response authentication added, if enabled and the browser support Javascript then user passwords
-  are never send across the network being replaced by a challenge-response authentication algorithm. This improves
-  security since the chance of password eavesdropping is reduced a lot.
-* [NEW] Added sections to forums, now you can put forums into sections and the forums listing will list forums for
-  each existing section. (As phpBB and other forum software does).
+* [NEW] Admin can choose if user passwords must include letters and numbers to 
+  be valid
+* [NEW] Admin can setup passwords lifetime and Tiki will force the user to 
+  change his password once the password is expired. 
+* [NEW] Challenge-response authentication added, if enabled and the browser 
+  support Javascript then user passwords are never send across the network 
+  being replaced by a challenge-response authentication algorithm. This 
+  improves security since the chance of password eavesdropping is reduced a 
+  lot.
+* [NEW] Added sections to forums, now you can put forums into sections and the 
+  forums listing will list forums for each existing section. (As phpBB and 
+  other forum software does).
 * [NEW] Improved forum layout to be nicer (Roger)
-* [NEW] Avatars added to forums. Users can configure their avatars from their user preferences screen, pick an
-  avatar from the library (more than 500) or upload an image to be used as your avatar.
-* [NEW] Surveys, create surveys to get a better understanding on your users opinions, many survey question types,
-  users can fill surveys and stats are stored. 
-* [NEW] Many bugs fixed, google module now works, definition lists fixed, wiki lists fixed, etc., etc.
-* [NEW] Webmail, set-up as many POP-accounts as you want, select a "current" account and you will be able to read
-  emails, write emails, delete emails, download attachments, use attachments, write or read HTML based emails. Manage
-  your address book, automatically add addresses to your address book and all the regular cool webmail features.
-* [NEW] Trackers, trackers are a flexible way to track user-requests and groupware tasks, you can define the fields
-  for each tracker. Many field-types supported. Tracker items can be commented and can have file attachments, tracker
-  items can be assigned to a user or group and will appear in the user preferences page (the user's home). Trackers
-  and tracker items can be monitored and Tiki will send you an email when something is changed. You can open-close
-  tracker items.
-* [NEW] HTTPS protocol is now supported. Tiki can now run over HTTPS connections.
+* [NEW] Avatars added to forums. Users can configure their avatars from their 
+  user preferences screen, pick an avatar from the library (more than 500) or 
+  upload an image to be used as your avatar.
+* [NEW] Surveys, create surveys to get a better understanding on your users 
+  opinions, many survey question types, users can fill surveys and stats are 
+  stored. 
+* [NEW] Many bugs fixed, google module now works, definition lists fixed, wiki 
+  lists fixed, etc., etc.
+* [NEW] Webmail, set-up as many POP-accounts as you want, select a "current" 
+  account and you will be able to read emails, write emails, delete emails, 
+  download attachments, use attachments, write or read HTML based emails. 
+  Manage your address book, automatically add addresses to your address book 
+  and all the regular cool webmail features.
+* [NEW] Trackers, trackers are a flexible way to track user-requests and 
+  groupware tasks, you can define the fields for each tracker. Many field-types 
+  supported. Tracker items can be commented and can have file attachments, 
+  tracker items can be assigned to a user or group and will appear in the user 
+  preferences page (the user's home). Trackers and tracker items can be 
+  monitored and Tiki will send you an email when something is changed. You can 
+  open-close tracker items.
+* [NEW] HTTPS protocol is now supported. Tiki can now run over HTTPS 
+  connections.
 * [NEW] Tiki can now be run on any web server port, not just 80/443.
-* [NEW] Dates and times are displayed in the time zone specified by the user and/or the administrator.
-  The administrator (but not the user) can also specify the date and time format strings.
-  Month and weekday names are also localized, if locales are configured correctly on the server.
-* [NEW] The administrator can allow or require HTTPS logins.
-  The user can choose to stay in HTTPS mode after logging in.
+* [NEW] Dates and times are displayed in the time zone specified by the user 
+  and/or the administrator. The administrator (but not the user) can also 
+  specify the date and time format strings. Month and weekday names are also 
+  localized, if locales are configured correctly on the server.
+* [NEW] The administrator can allow or require HTTPS logins. The user can 
+  choose to stay in HTTPS mode after logging in.
+
 
 Version 1.4.2 -Mira- 
 
 * [FIX] Fixed a bug that crashed image caching
-* [FIX] Fixed a bug that allowed admins with permission to edit templates to
-   edit any file
-* [FIX] Fixed a bug that made unassigned modules remain assigned for
-  registered users
+* [FIX] Fixed a bug that allowed admins with permission to edit templates to 
+  edit any file
+* [FIX] Fixed a bug that made unassigned modules remain assigned for registered 
+  users
 * [FIX] Now you can use ' in the browser title and other preferences
-  
+
 
 Version 1.4.1 -Mira-
 
-* [FIX] Fixed a bug that made Tiki unaware of links using the new
-  ((name|description)) syntax resulting in orphan pages and fake
-  link structure for the Wiki.
-* [FIX] Corrected an error in tiki_1.3to1.4.sql, added the params
-  column to tiki_user_assigned_modules that was missing
-* [FIX] Fixed a bug related to an incorrect link when editing the
-  user personal page as admin fro the user_preferences page
+* [FIX] Fixed a bug that made Tiki unaware of links using the new 
+  ((name|description)) syntax resulting in orphan pages and fake link structure 
+  for the Wiki.
+* [FIX] Corrected an error in tiki_1.3to1.4.sql, added the params column to 
+  tiki_user_assigned_modules that was missing
+* [FIX] Fixed a bug related to an incorrect link when editing the user personal 
+  page as admin fro the user_preferences page
+
 
 Version 1.4 -Mira-
 
-* [NEW] Quizzes, you can create quizzes with as many multiple-choice questions as you want and program specific answers
-  to be displayed to the user depending on the Quiz score. Quiz results can be stored and you can control if Quizzes can
-  be repeated and establish a time limit for Quizzes if you want. Useful for fun or for learning, courses, etc.
-* [NEW] Smileys can now be disabled enabled from the Admin screen. (Dedicated to Tom)
-* [NEW] Templates can be edited and used for Wiki pages and CMS articles. A simple way of creating pre-formatted Wiki
-  pages and Articles, you can template articles to review CDs, sites, etc
-* [NEW] Optionally you can make the user enter a special passcode to let him register into your site, this can be
-  used for semi-privates sites or for sites where users are only added by invitation. 
-* [NEW] Users can now suggest FAQ questions and FAQ admins can add the questions to the FAQ if they want.
-* [NEW] You can specify the opening type for featured links, the link can be opened in a new window, in the same
-  window or in a frame inside the window.
-* [NEW] Script to export the wiki link-structure, tiki-link_structure.php can be called to get a txt representation
-  of the Wiki structure each line is formatted in the form PageName LinkToPage LinkToPage LinkToPage...
-  This can be used to construct a graph of the Wiki, to make stats, etc. This is useful specially for the TouchGraph
-  Wiki browser which uses this format of link structure to draw a graphical representation of the Wiki pages.
-* [NEW] Underline syntax for Wiki pages (I don't like underlined text in web sites because it seems like a broken
-  link to me but...)  Use ===text=== to underline
+* [NEW] Quizzes, you can create quizzes with as many multiple-choice questions 
+  as you want and program specific answers to be displayed to the user 
+  depending on the Quiz score. Quiz results can be stored and you can control 
+  if Quizzes can be repeated and establish a time limit for Quizzes if you 
+  want. Useful for fun or for learning, courses, etc.
+* [NEW] Smileys can now be disabled enabled from the Admin screen. 
+  (Dedicated to Tom)
+* [NEW] Templates can be edited and used for Wiki pages and CMS articles. A 
+  simple way of creating pre-formatted Wiki pages and Articles, you can 
+  template articles to review CDs, sites, etc
+* [NEW] Optionally you can make the user enter a special passcode to let him 
+  register into your site, this can be used for semi-privates sites or for 
+  sites where users are only added by invitation.
+* [NEW] Users can now suggest FAQ questions and FAQ admins can add the 
+  questions to the FAQ if they want.
+* [NEW] You can specify the opening type for featured links, the link can be 
+  opened in a new window, in the same window or in a frame inside the window.
+* [NEW] Script to export the wiki link-structure, tiki-link_structure.php can 
+  be called to get a txt representation of the Wiki structure each line is 
+  formatted in the form PageName LinkToPage LinkToPage LinkToPage... This can 
+  be used to construct a graph of the Wiki, to make stats, etc. This is useful 
+  specially for the TouchGraph Wiki browser which uses this format of link 
+  structure to draw a graphical representation of the Wiki pages.
+* [NEW] Underline syntax for Wiki pages (I don't like underlined text in web 
+  sites because it seems like a broken link to me but...)  Use ===text=== to 
+  underline
 * [NEW] Now lists can include arbitrary nesting using *,#,**,***,##,### etc.
-* [NEW] The current date can be included in any module or template using {showdate mode="d/m/Y [h:i]"}, the mode
-  follows the syntax to format dates using the PHP date function.
+* [NEW] The current date can be included in any module or template using 
+  {showdate mode="d/m/Y [h:i]"}, the mode follows the syntax to format dates 
+  using the PHP date function.
 * [NEW] You can filter by article topic and type in the articles listing
-* [NEW] You can categorize objects from the screens were the objects are created, just select the categories and
-  the object will be assigned to that categories.
+* [NEW] You can categorize objects from the screens were the objects are 
+  created, just select the categories and the object will be assigned to that 
+  categories.
 * [NEW] Top games module
-* [NEW] When creating a group you can make the group "include" other groups, so permissions from included groups
-  are automatically assigned to the new group. This can be used as an easy way to extend groups by adding some
-  new permissions to an existing group.
-* [NEW] Random images syntax for modules use {gallery id=n} to include a random image from gallery n (Evan)
-* [NEW] Improved thumbnail generation keeping aspect ratio and using GD2+ functions if GD2+ is installed (Evan)
+* [NEW] When creating a group you can make the group "include" other groups, so 
+  permissions from included groups are automatically assigned to the new group. 
+  This can be used as an easy way to extend groups by adding some new 
+  permissions to an existing group.
+* [NEW] Random images syntax for modules use {gallery id=n} to include a random 
+  image from gallery n (Evan)
+* [NEW] Improved thumbnail generation keeping aspect ratio and using GD2+ 
+  functions if GD2+ is installed (Evan)
 * [NEW] You can edit images names and descriptions (Evan)
-* [NEW] Extended the syntax for Wiki internal references to support ((page|description)
-* [NEW] Imrpoved and simplified application menu, now links are more intuitive and the admin functions are better
-  organized in the user space if you have the right permissions.
+* [NEW] Extended the syntax for Wiki internal references to support 
+  ((page|description)
+* [NEW] Imrpoved and simplified application menu, now links are more intuitive 
+  and the admin functions are better organized in the user space if you have 
+  the right permissions.
 * [NEW] Added a cancel button when editing wiki pages
-* [NEW] Mail notifications screen where you can pick email addresses to be notified when specific events occur, for
-  example when a user registers or when a submission is received
+* [NEW] Mail notifications screen where you can pick email addresses to be 
+  notified when specific events occur, for example when a user registers or 
+  when a submission is received
 * [NEW] New theme jalist inspired in www.jalist.com
-* [NEW] ShoutBox, a graffiti wall where users can send messages, a module to display the last "n" messages and to
-  add new messages is included. This is nice :-)
-* [NEW] Templates for mail notifications, all the Tiki mails that can be sent can now be customized by editing the
-  templates in templates/mail so you can write whatever you want and personalize the emails.
-* [NEW] Dual storing policy for uploads. As an admin you can choose between storing file uploads on the database or
-  a directory. If it is a directory make sure your PHP can read/write to the dir but the users can't list the dir
-  (or they will be able to download all the files from your site). It's your choice, Tiki is flexible.
-* [NEW] Now modules are inmediately displayed after assigning them from the admin-modules screen (remember that if
-  you have personalized modules you will have to assign them from your user preferences page)
-* [NEW] Since your last visit module showing new items on the site after the user last login date.
-* [NEW] Now assigned permissions are identified from unassigned permissions when assigning permissions to a group.          
-* [NEW] The page layout can be configured different for each section (blogs, galleries, etc)
-* [NEW] HTML pages and dynamic pages, you can create any HTML page and display it using a URI,
-  pages can have dynamic zones that can be edited from an admin screen, you can create 
-  dynamic pages that will be updated live without the need to refresh the browser. This can
-  be used to show sports scores, stock info, weather, etc.
-* [NEW] You can set any URI as your home page so you can make any section of Tiki your home.
-* [NEW] You can activate stats for the search module and you will be able to see the number
-  of times each word was searched by users.
-* [NEW] Usage graph in the stats page, you can see how many hits you have in different sections
-  of your site.
-* [NEW] You can enable disable the users ability to change the theme or language from the
-  user preferences screen
-* [NEW] You can setup filters for file names that can or cannot be uplaoded, the filter
-  accepts a Perl-style regular expression and you can set positive matches and negative 
-  matches (accept only files matching xx or reject files matching xx)
+* [NEW] ShoutBox, a graffiti wall where users can send messages, a module to 
+  display the last "n" messages and to add new messages is included. This is 
+  nice :-)
+* [NEW] Templates for mail notifications, all the Tiki mails that can be sent 
+  can now be customized by editing the templates in templates/mail so you can 
+  write whatever you want and personalize the emails.
+* [NEW] Dual storing policy for uploads. As an admin you can choose between 
+  storing file uploads on the database or a directory. If it is a directory 
+  make sure your PHP can read/write to the dir but the users can't list the dir 
+  (or they will be able to download all the files from your site). It's your 
+  choice, Tiki is flexible.
+* [NEW] Now modules are inmediately displayed after assigning them from the 
+  admin-modules screen (remember that if you have personalized modules you will 
+  have to assign them from your user preferences page)
+* [NEW] Since your last visit module showing new items on the site after the 
+  user last login date.
+* [NEW] Now assigned permissions are identified from unassigned permissions 
+  when assigning permissions to a group.          
+* [NEW] The page layout can be configured different for each section (blogs, 
+  galleries, etc)
+* [NEW] HTML pages and dynamic pages, you can create any HTML page and display 
+  it using a URI, pages can have dynamic zones that can be edited from an admin 
+  screen, you can create  dynamic pages that will be updated live without the 
+  need to refresh the browser. This can be used to show sports scores, stock 
+  info, weather, etc.
+* [NEW] You can set any URI as your home page so you can make any section of 
+  Tiki your home.
+* [NEW] You can activate stats for the search module and you will be able to 
+  see the number of times each word was searched by users.
+* [NEW] Usage graph in the stats page, you can see how many hits you have in 
+  different sections of your site.
+* [NEW] You can enable disable the users ability to change the theme or 
+  language from the user preferences screen
+* [NEW] You can setup filters for file names that can or cannot be uplaoded, 
+  the filter accepts a Perl-style regular expression and you can set positive 
+  matches and negative  matches (accept only files matching xx or reject files 
+  matching xx)
 * [NEW] Google search module
 * [NEW] Preview feature when assigning modules
-* [NEW] Modules can now receive parameters in the form of a query string ex: foo=1&bar=3    
-  this can be used to alter the behaviour of modules.
-* [NEW] The last_files module now accepts the galleryId parameter, if set the module will
-  list the last "n" files for the specified gallery only.
-* [NEW] Added the number of articles for each topic when listing topics (submissions too)
+* [NEW] Modules can now receive parameters in the form of a query string 
+  ex: foo=1&bar=3     this can be used to alter the behaviour of modules.
+* [NEW] The last_files module now accepts the galleryId parameter, if set the 
+  module will list the last "n" files for the specified gallery only.
+* [NEW] Added the number of articles for each topic when listing topics 
+  (submissions too)
 * [NEW] Added quiz stats to the stats page    
-* [NEW] You can now select the default ordering for the blog listing from the admin menu
-* [NEW] Raw mode navigation added to the wiki, you can use tiki-index_raw.php instead
-  of tiki-index.php to get a raw representation of wiki pages without the columns, bars
-  and decorations. This can be used to feed an application that navigates wikis such
-  as the Touchgraph Wiki browser.
-* [NEW] Improved forums section, some bugs fixed and now the information baout the last
-  forum post or last topic message shows the title of that post and the author.
-* [NEW] Option added in the admin screen to prevent counting admin pageviews for the
-  site stats.        
-* [NEW] New syntax for tables you can use ||r1-c1|r1-c2c3||r1c1c2||r1-c1|r1-c2|r1-c3|| [Ross]
-* [NEW] Editable drawings can be included in Wiki pages, articles and blog posts using {draw name=foo}, a permission
-  is needed to be able to edit_drawings. Drawings are stored in a directory and identified by their name. The drawings
-  are edited using a Java applet called jHotDraw. This feature can be disabled
-* [NEW] Referer stats, you can enable an option to store statistics about referers to your site, a screen where the
-  referers are listed is provided to see the stats.
-* [NEW] Batch upload of Images. If you have the permission you can upload .zip files and all the images in the zip
-  file are automatically added to the gallery.
-* [NEW] File attachments for wiki pages, with the right permissions you can upload files to wiki pages and a list of
-  attached files will be displayed at the bottom of the wiki page and they can be downloaded.
-* [NEW] Now images for the image galleries can be stored optionally in a directory instead of the database, the same
-  recommendations and tips about storing file uploads should be observed.
-* [NEW] Improved spellchecker, now the spellchecker suggest several options for miss-spelled words and you can choose
-  the option that you prefer from the list.
+* [NEW] You can now select the default ordering for the blog listing from the 
+  admin menu
+* [NEW] Raw mode navigation added to the wiki, you can use tiki-index_raw.php 
+  instead of tiki-index.php to get a raw representation of wiki pages without 
+  the columns, bars and decorations. This can be used to feed an application 
+  that navigates wikis such as the Touchgraph Wiki browser.
+* [NEW] Improved forums section, some bugs fixed and now the information about 
+  the last forum post or last topic message shows the title of that post and 
+  the author.
+* [NEW] Option added in the admin screen to prevent counting admin pageviews 
+  for the site stats.        
+* [NEW] New syntax for tables you can use 
+  ||r1-c1|r1-c2c3||r1c1c2||r1-c1|r1-c2|r1-c3|| [Ross]
+* [NEW] Editable drawings can be included in Wiki pages, articles and blog 
+  posts using {draw name=foo}, a permission is needed to be able to 
+  edit_drawings. Drawings are stored in a directory and identified by their 
+  name. The drawings are edited using a Java applet called jHotDraw. This 
+  feature can be disabled
+* [NEW] Referer stats, you can enable an option to store statistics about 
+  referers to your site, a screen where the referers are listed is provided to 
+  see the stats.
+* [NEW] Batch upload of Images. If you have the permission you can upload .zip 
+  files and all the images in the zip file are automatically added to the 
+  gallery.
+* [NEW] File attachments for wiki pages, with the right permissions you can 
+  upload files to wiki pages and a list of attached files will be displayed at 
+  the bottom of the wiki page and they can be downloaded.
+* [NEW] Now images for the image galleries can be stored optionally in a 
+  directory instead of the database, the same recommendations and tips about 
+  storing file uploads should be observed.
+* [NEW] Improved spellchecker, now the spellchecker suggest several options for 
+  miss-spelled words and you can choose the option that you prefer from the 
+  list.
 * [NEW] Icons are displayed for file extensions when listing files
-* [NEW] You can enable/disable an option to display the page title for wiki pages
+* [NEW] You can enable/disable an option to display the page title for wiki 
+  pages
 * [NEW] Improved menu builder
 * [NEW] You can now choose if hotword links are opened in a new window
-* [OPT] Reduced the number of queries that tiki makes when loading preferences, if not changed preferences are loaded
-  from a file now this is controlled automatically and you don't have to do anything.
-* [FIX] Fixed a terrible bug that broke file and image uploads on SOME windows systems.
-* [NEW] Search entire site feature added to the search box and improved the search mechanism. [Ross]  
+* [OPT] Reduced the number of queries that tiki makes when loading preferences, 
+  if not changed preferences are loaded from a file now this is controlled 
+  automatically and you don't have to do anything.
+* [FIX] Fixed a terrible bug that broke file and image uploads on SOME windows 
+  systems.
+* [NEW] Search entire site feature added to the search box and improved the 
+  search mechanism. [Ross]  
 
 Version 1.3 -Pollux-
 
 
-* [NEW] Spellchecking, now you can spellcheck your articles, submissions, wiki_pages and blog_posts before saving them,
-  the spellchecking dictionary for your language must be downloaded and installed to make this work, dictionaries will
-  be provided as simple .sql dumps and can be downloaded from SourceForge. In this edition the english dictionary is
-  provided. (Read the documentation to learn how to install the dictionary). Spellchecking can be enabled/disabled for
-  Articles, Submissions, WikiPages and blogs from the admin screen.
-* [NEW] Orphan pages listing, list pages that are not linked from any other wiki page.
+* [NEW] Spellchecking, now you can spellcheck your articles, submissions, 
+  wiki_pages and blog_posts before saving them, the spellchecking dictionary 
+  for your language must be downloaded and installed to make this work, 
+  dictionaries will be provided as simple .sql dumps and can be downloaded from 
+  SourceForge. In this edition the english dictionary is provided. (Read the 
+  documentation to learn how to install the dictionary). Spellchecking can be 
+  enabled/disabled for Articles, Submissions, WikiPages and blogs from the 
+  admin screen.
+* [NEW] Orphan pages listing, list pages that are not linked from any other 
+  wiki page.
 * [NEW] RSS feeds for forums listing the last post to any forum in your site
 * [NEW] RSS feed for individual forums listing the last posts to a given forum
-* [NEW] New Diff routine taken from PHPWiki in the Wiki history for a page, now you can see the diff or compare 
-  two versions side-by-side as before.
-* [NEW] New syntax for colored text in the Wiki ~~#0000FF:text~~ to insert text using colors
+* [NEW] New Diff routine taken from PHPWiki in the Wiki history for a page, now 
+  you can see the diff or compare two versions side-by-side as  before.
+* [NEW] New syntax for colored text in the Wiki ~~#0000FF:text~~ to insert text 
+  using colors
 * [NEW] Syntax to center text ::text:: will center the text
 * [NEW] Relevance ranking for WikiPages based on a PageRanking algorithm
-* [NEW] You can now send/receive articles from/to other Tiki sites from the communications center
-* [NEW] You can now search deep into subcategories from the category browser
+* [NEW] You can now send/receive articles from/to other Tiki sites from the 
+  communications center
+* [NEW] You can now search deep into subcategories from the category  browser
 * [NEW] Added a tool to produce a printable version of multiple Wiki pages
-* [NEW] Now you can preview comment postings in any "commentable" area or in the forums
-* [NEW] BreadCrumb navigation module listing the last "n" pages that you visited
-* [NEW] New feature: FAQs, create and edit faqs, list faqs, popular faqs module and last faqs module, search for
-  text in faqs.
+* [NEW] Now you can preview comment postings in any "commentable" area or in 
+  the forums
+* [NEW] BreadCrumb navigation module listing the last "n" pages that you 
+  visited
+* [NEW] New feature: FAQs, create and edit faqs, list faqs, popular faqs module 
+  and last faqs module, search for text in faqs.
 * [FIX] Several fixes regarding "find" functions in listings
 * [NEW] Find feature in the listing of Wiki pages
-* [NEW] New syntax for WikiPages ((any)) can be used to create the "any" page, now page names are NOT limited
-  to the CapitalizedWordsSmashedTogether rule
-* [NEW] Syntax to prevent converting Smashed words into wiki names use: ))SomeIdea((
+* [NEW] New syntax for WikiPages ((any)) can be used to create the "any" page, 
+  now page names are NOT limited to the 
+  CapitalizedWordsSmashedTogether rule
+* [NEW] Syntax to prevent converting Smashed words into wiki names use: 
+  ))SomeIdea((
 * [NEW] Now you can double-click on a wiki page to edit it (some browsers only)
-* [NEW] Filter added in the communication center to find specific objects to be sent
-* [NEW] A tool to autogenerate passwords was added in the resgistration screen for lazy users
-* [NEW] New feature: Backups, you can create backups of your entire Tiki base, download backups to be saved in some
-  safe place, upload a backup and restore backups. Backups are encrypted to prevent a user from stealing information
+* [NEW] Filter added in the communication center to find specific objects to be 
+  sent
+* [NEW] A tool to autogenerate passwords was added in the resgistration screen 
+  for lazy users
+* [NEW] New feature: Backups, you can create backups of your entire Tiki base, 
+  download backups to be saved in some safe place, upload a backup and restore 
+  backups. Backups are encrypted to prevent a user from stealing information 
   from your site.
-* [NEW] New registration mode, now you can make Tiki validate users email address by sending them an email with a
-  link to first-login in Tiki, once activated the user will login normally with his password. Of course this feature
-  is optional and can be enabled/disabled from the Admin screen.
-* [NEW] QuickEdit module, where you can type the name of a WikiPage and quickly edit/create the page without finding
-  a link to the page, this can create a lot of orphan pages but can also be very very helpful to people mantaining
+* [NEW] New registration mode, now you can make Tiki validate users email 
+  address by sending them an email with a link to first-login in Tiki, 
+  once activated the user will login normally with his password. Of course this 
+  feature is optional and can be enabled/disabled from the Admin screen.
+* [NEW] QuickEdit module, where you can type the name of a WikiPage and quickly 
+  edit/create the page without finding a link to the page, this can create a 
+  lot of orphan pages but can also be very very helpful to people maintaining 
   the Wiki to quickly create pages and edit them.    
-* [NEW] Optinally Tiki can display a "I forgot my password link" for unregistered users to allow users that have
-  forgotten their password to get it by email. You can enable/disable this feature from the Admin screen.
-* [NEW] User Bookmarks, users with the proper permission can create bookmarks and store them in folders, they can
-  admin their bookmarks as they want, a cache is provided for user bookmarks. A user module to display bookmarks
-  with an option to quick-add a Tiki page to the bookmarks is also included. 
-* [NEW] Users with the right permission can configure the modules that will be displayed in the left/right columns
-  and the order in which modules will appear. This can be used to let users configure their modules as they want,
-  as an admin you must make all the modules that the users can configure available by default. 
-* [NEW] Statistics, a page where you (or anyone with permission) can view a lot of statistics about the site including
-  a graph showing the number of pageviews per day. Statistics can be enabled/disabled from the admin screen, please
-  suggest new (useful) statistics that can be added in future versions    
-* [NEW] Fortune cookies (taglines), you can enter taglines or upload from a textfile, the {cookie} syntax can be
-  used to display a random cookie in articles, posts, wiki pages,etc or any template.
-* [NEW] Games section to play flash games, upload games or use the provided additional game-pack. You can upload new
-  games, edit the descriptions and play. 
+* [NEW] Optinally Tiki can display a "I forgot my password link" for 
+  unregistered users to allow users that have forgotten their password to get 
+  it by email. You can enable/disable this feature from the Admin screen.
+* [NEW] User Bookmarks, users with the proper permission can create bookmarks 
+  and store them in folders, they can admin their bookmarks as they want, a 
+  cache is provided for user bookmarks. A user module to display bookmarks with 
+  an option to quick-add a Tiki page to the bookmarks is also included. 
+* [NEW] Users with the right permission can configure the modules that will be 
+  displayed in the left/right columns and the order in which modules will 
+  appear. This can be used to let users configure their modules as they want,
+  as an admin you must make all the modules that the users can configure 
+  available by default. 
+* [NEW] Statistics, a page where you (or anyone with permission) can view a lot 
+  of statistics about the site including a graph showing the number of 
+  pageviews per day. Statistics can be enabled/disabled from the admin screen, 
+  please suggest new (useful) statistics that can be added in future versions
+* [NEW] Fortune cookies (taglines), you can enter taglines or upload from a 
+  textfile, the {cookie} syntax can be used to display a random cookie in 
+  articles, posts, wiki pages,etc or any template.
+* [NEW] Games section to play flash games, upload games or use the provided 
+  additional game-pack. You can upload new games, edit the descriptions and 
+  play.
 * [NEW] Added a new theme: dblue.
-* [NEW] Now the list of users in the current chat channel is displayed in the chatrooms.\
-* [NEW] Now you can send private messages in the chatrooms using ":username:message"
-* [NEW] Reviews added, now articles can be normal articles or reviews, for reviews the editor can rate whatever
-  he is reviewing.
-* [NEW] Undo feature in the wiki, if a user can edit pages then he can undo what he edited pressing an undo button,
-  users without permission to remove versions won't be able to undo what other users edited only his editions can
+* [NEW] Now the list of users in the current chat channel is displayed in the 
+  chatrooms.
+* [NEW] Now you can send private messages in the chatrooms using 
+  ":username:message"
+* [NEW] Reviews added, now articles can be normal articles or reviews, for 
+  reviews the editor can rate whatever he is reviewing.
+* [NEW] Undo feature in the wiki, if a user can edit pages then he can undo 
+  what he edited pressing an undo button, users without permission to remove 
+  versions won't be able to undo what other users edited only his editions can
   be undone.
-* [NEW] Individual permissions for CMS topics added, you can now control who can read some topics, if the topic
-  has no individual permissions then it will be displayed to all the groups. But if you want you can assign the
-  tiki_p_read_topic permission to some groups for a topic and only those groups will be able to read that topic.
-* [NEW] A mini-popup window can be opened when editing objects to help the user insert special characters in the
-  text, specially latin characters, accents, etc. This is taken from the horde project and submited by Marc Laporte.
+* [NEW] Individual permissions for CMS topics added, you can now control who 
+  can read some topics, if the topic has no individual permissions then it will 
+  be displayed to all the groups. But if you want you can assign the
+  tiki_p_read_topic permission to some groups for a topic and only those groups 
+  will be able to read that topic.
+* [NEW] A mini-popup window can be opened when editing objects to help the user 
+  insert special characters in the text, specially latin characters, accents, 
+  etc. This is taken from the horde project and submited by Marc Laporte.
 * [CHG] Tiki is now using Smarty 2.3.1 the last stable Smarty release        
 
 Version 1.2 -Antares-
 
-
-* [THANKS] Special thanks to AlBrown,MarcLaporte,Yakumo,Ramiro,Tom,Tesla2k and others ! for submitting many bugs 
-  that  are now fixed and for suggesting many features that are now implemented. If some feature is not yet
-  included don't worry it will be addressed in a future version. Thanks!
+* [THANKS] Special thanks to AlBrown,MarcLaporte,Yakumo,Ramiro,Tom,Tesla2k and 
+  others ! for submitting many bugs that are now fixed and for suggesting many 
+  features that are now implemented. If some feature is not yet included don't 
+  worry it will be addressed in a future version. Thanks!
 * [FIX] Fixed a bug when adding new topics  
 * [NEW] Added a find feature to the lastchanges section in the Wiki (Ramiro)
-* [NEW] Categories: You can create categories and subcategories building a category tree, objects (pages, forums,
-  blogs, image galleries, file galleries, etc) can be assigned to one/many categories, the user can browse
+* [NEW] Categories: You can create categories and subcategories building a 
+  category tree, objects (pages, forums, blogs, image galleries, file 
+  galleries, etc) can be assigned to one/many categories, the user can browse
   categories finding objects for each specific category.
-* [NEW] Communication center: Now you can send/receive Wiki pages from/to other Tiki-enabled sites using a simple
-  XMLRPC API, received pages are stored in an "ibox" where an admin can view,edit,remove,accept the pages. 
-  This new feature can be used to send a Tiki page from one site to another one!   
-* [NEW] Consolidated CSS file, there're two CSS files in this distribution: subSilver and default2, if you want
-  to produce a new theme you can change any of these, subSilver is longer and uses an individual style for every
-  element in Tiki while default2 applies the same style to multiple elements (ie: tables) and thus is a faster
-  way to get a theme ready.
-* [FIXED] Fixed bugs in the registration screen and now the username is validated.
-* [NEW] Forums!, now you can set-up mesage forums, forums are organized by topics and topics by threads, users
-  can post, reply and quote messages in forums, messages can be voted using the same karma system used in
-  comments. Many features are "copied" from phpBB since it is the best forum software for PHP, we copied those
-  features and integrated the forums with the Tiki permission system, rankings, modules and search engine.
-  There's a lot about forums so I guess it's best to stop the description here, the documentation will introduce
-  all the features in forums.
-* [NEW] Now you can upload the thumbnail of an image when uploading an image, this will prevent automatic
-  thumbnail generation. Some users wanted this feature because thumbnail generation didn't work or they
-  wanted to upload their own thumbnails. Maybe you want to have a thumbnail that is not the same as the
-  full image so you can use this feature. Thumbnails will be displayed using the size assignated for thumbnails
-  to the image gallery.   
-* [NEW] Now you can set up how old must a version be at least to be removed from the history, this can prevent
-  a user from saving a page "n" times destroying a previous version. (Thanks to tesla2k for the tip)
-* [NEW] Links to help including objects in user modules where added to the admin_modules screen.
-* [NEW] Next and prev buttons where added to view the next/prev image when browsing images from a gallery
-* [NEW] Now you can control which groups can view image galleries and filegalleries
-* [NEW] Individual permissions for image galleries, as an admin you can control which groups can view,
-  admin, upload to a specific gallery overriding global permissions.
-* [NEW] Individual permissions for file galleries, as an admin you can control which groups can view,
-  admin, upload and download to a specific gallery overriding global permissions.  
-* [NEW] Individual permissions can be set up by admins to weblogs, so you can control which groups can read,
-  admin and post to specific weblogs.  
+* [NEW] Communication center: Now you can send/receive Wiki pages from/to other 
+  Tiki-enabled sites using a simple XMLRPC API, received pages are stored in an 
+  "inbox" where an admin can view,edit,remove,accept the pages.  This new 
+  feature can be used to send a Tiki page from one site to another one!   
+* [NEW] Consolidated CSS file, there're two CSS files in this distribution: 
+  subSilver and default2, if you want to produce a new theme you can change any 
+  of these, subSilver is longer and uses an individual style for every element 
+  in Tiki while default2 applies the same style to multiple elements (ie: 
+  tables) and thus is a faster way to get a theme ready.
+* [FIXED] Fixed bugs in the registration screen and now the username is 
+  validated.
+* [NEW] Forums!, now you can set-up mesage forums, forums are organized by 
+  topics and topics by threads, users can post, reply and quote messages in 
+  forums, messages can be voted using the same karma system used in comments. 
+  Many features are "copied" from phpBB since it is the best forum software for 
+  PHP, we copied those features and integrated the forums with the Tiki 
+  permission system, rankings, modules and search engine. There's a lot about 
+  forums so I guess it's best to stop the description here, the documentation 
+  will introduce all the features in forums.
+* [NEW] Now you can upload the thumbnail of an image when uploading an image, 
+  this will prevent automatic thumbnail generation. Some users wanted this 
+  feature because thumbnail generation didn't work or they wanted to upload 
+  their own thumbnails. Maybe you want to have a thumbnail that is not the same 
+  as the full image so you can use this feature. Thumbnails will be displayed 
+  using the size assignated for thumbnails to the image gallery.   
+* [NEW] Now you can set up how old must a version be at least to be removed 
+  from the history, this can prevent a user from saving a page "n" times 
+  destroying a previous version. (Thanks to tesla2k for the tip)
+* [NEW] Links to help including objects in user modules where added to the 
+  admin_modules screen.
+* [NEW] Next and prev buttons where added to view the next/prev image when 
+  browsing images from a gallery
+* [NEW] Now you can control which groups can view image galleries and 
+  filegalleries
+* [NEW] Individual permissions for image galleries, as an admin you can control 
+  which groups can view, admin, upload to a specific gallery overriding global 
+  permissions.
+* [NEW] Individual permissions for file galleries, as an admin you can control 
+  which groups can view, admin, upload and download to a specific gallery 
+  overriding global permissions.  
+* [NEW] Individual permissions can be set up by admins to weblogs, so you can 
+  control which groups can read, admin and post to specific weblogs.  
 * [NEW] Module: last blog posts listing the last "n" posts to any weblog.
-* [NEW] From the page-permissions screen admins can set up email addresses that will receive an email when
-  the page changes. If you want to remotely monitor some page this is for you. 
-* [NEW] Chatrooms feature (experimental), you can create chatrooms and the users can enter chatrooms and chat,
-  the refreshing time for each chatroom can be configured and the page is not reloaded, only an invisible frame
-  with size 0 is reloaded to get fresh chat messages.
-* [NEW] RSS modules, create RSS modules to display news/events from other sites,  you can display RSS feeds in 
-  user modules using {rss id=n}, you can set up which feeds can be displayed and the refreshing time for each feed. 
+* [NEW] From the page-permissions screen admins can set up email addresses that 
+  will receive an email when the page changes. If you want to remotely monitor 
+  some page this is for you. 
+* [NEW] Chatrooms feature (experimental), you can create chatrooms and the 
+  users can enter chatrooms and chat, the refreshing time for each chatroom can 
+  be configured and the page is not reloaded, only an invisible frame with size 
+  0 is reloaded to get fresh chat messages.
+* [NEW] RSS modules, create RSS modules to display news/events from other 
+  sites,  you can display RSS feeds in  user modules using {rss id=n}, you can 
+  set up which feeds can be displayed and the refreshing time for each feed.  
   RSS 0.91 and 1.0 are supported.
-* [NEW] Polls, you can create polls, set polls to be "active,closed,current". Polls can be displayed in modules
-  using {poll id=n} or {poll} to select a random poll from the "current" polls. There's a page to view poll results
-  and old poll results and old polls not closed can be voted. A mechanism to prevent a user from voting many times is
-  also included.
-* [NEW] Menu builder section, you can build menus using sections and options, menus can be static (no javascript) or
-  dynamic. Menus can be displayed in user modules using {menu id=n}
-* [NEW] If you give a group the tiki_p_edit_comments permission then the group can edit comments (useful for admins
-  to fix bad comments or if you want someone to censor comments)
+* [NEW] Polls, you can create polls, set polls to be "active,closed,current". 
+  Polls can be displayed in modules using {poll id=n} or {poll} to select a 
+  random poll from the "current" polls. There's a page to view poll results and 
+  old poll results and old polls not closed can be voted. A mechanism to 
+  prevent a user from voting many times is also included.
+* [NEW] Menu builder section, you can build menus using sections and options, 
+  menus can be static (no javascript) or dynamic. Menus can be displayed in 
+  user modules using {menu id=n}
+* [NEW] If you give a group the tiki_p_edit_comments permission then the group 
+  can edit comments (useful for admins to fix bad comments or if you want 
+  someone to censor comments)
 * [NEW] Comments can now be filtered by threshold
-* [NEW] Comments for weblogs and you can enable/disable weblog comments from the admin screen
-* [NEW] Comments for articles, you can enable/disable article commenting from the admin screen
-* [NEW] Comments for image galleries you can enable/disable comments for image galleries from the admin screen
-* [NEW] Comments for file galleries you can enable/disable comments for file galleries from the admin screen
+* [NEW] Comments for weblogs and you can enable/disable weblog comments from 
+  the admin screen
+* [NEW] Comments for articles, you can enable/disable article commenting from 
+  the admin screen
+* [NEW] Comments for image galleries you can enable/disable comments for image 
+  galleries from the admin screen
+* [NEW] Comments for file galleries you can enable/disable comments for file 
+  galleries from the admin screen
 * [NEW] A selected file gallery can be used as the home page for the site
-* [NEW] Now you can enable/disble RSS feeds from the admin screen and limit the maximum number of items 
-  for any feed
-* [NEW] RSS feed for individual file galleries listing the last images uploaded to a given gallery
-* [NEW] RSS feed for individual image galleries listing the last images uploaded to a given gallery
+* [NEW] Now you can enable/disble RSS feeds from the admin screen and limit the 
+  maximum number of items  for any feed
+* [NEW] RSS feed for individual file galleries listing the last images uploaded 
+  to a given gallery
+* [NEW] RSS feed for individual image galleries listing the last images 
+  uploaded to a given gallery
 * [NEW] RSS feed for weblogs listing last posts to any weblog
 * [NEW] RSS feed for file galleries listing last files uploaded
 * [NEW] RSS feed for image galleries listing last images uploaded
 * [NEW] Random pages module
-* [NEW] Now you can include dynamic content blocks in wiki pages using {content id=n} or {rcontent id=n}
-* [NEW] Now you can use {rcontent id=n} to select a random content from a dynamic block content, the {content id=3}
-  syntax can also be used to select the last current content for a block
+* [NEW] Now you can include dynamic content blocks in wiki pages using {content 
+  id=n} or {rcontent id=n}
+* [NEW] Now you can use {rcontent id=n} to select a random content from a 
+  dynamic block content, the {content id=3} syntax can also be used to select 
+  the last current content for a block
 * [FIX] Fixed typos in the editing rules for Wiki pages
 * [NEW] New Wiki element: ^some^ will render "some" inside a simple box
-* [NEW] The layout can be configured from the admin screen you can enable disable the columns, top bar and footer
-* [NEW] Added a new theme: classic based on white-blue simple colors similar to Kuro5hin.org
+* [NEW] The layout can be configured from the admin screen you can enable 
+  disable the columns, top bar and footer
+* [NEW] Added a new theme: classic based on white-blue simple colors similar to 
+  Kuro5hin.org
 * [FIX] Fixed a wrong link in the weblogs
 * [FIX] Fixed wrong links for images in the image galleries
 * [FIX] Fixed a bug that broke image uploads
 
 Version 1.1 -Capella-
 
-* [NEW FEATURE] The edit button now shows on red if someone may be editing the page, this helps preventing
-  two users from editing the same page. This feature can be enabled/disabled from the admin menu.
-* [CHANGE] Now HTML tags are filtered out from weblog posts except normal tags such as a,p,img,br,table,i,b,etc
+* [NEW FEATURE] The edit button now shows on red if someone may be editing the 
+  page, this helps preventing two users from editing the same page. This 
+  feature can be enabled/disabled from the admin menu.
+* [CHANGE] Now HTML tags are filtered out from weblog posts except normal tags 
+  such as a,p,img,br,table,i,b,etc
 * [CHANGE] Link added to edit the page from the wiki pagelist
 * [NEW FEATURE] Page generation time was added below the footer
-* [CHANGE] The featured links admin screen has been revamped, now featured links can be enabled/disabled
-  and ordered as you want, an automatic ordering feature by link-hits was also added. Hits are now counted
-  and displayed for featured links.
-* [CHANGE] The titlebars in wikipages are now brown instead of the terrible blue ones.
-* [NEW FEATURE] File galleries, create galleries, add files to galleries, download files. Permissions configurable,
-  rankings for file galleries and modules available.
+* [CHANGE] The featured links admin screen has been revamped, now featured 
+  links can be enabled/disabled and ordered as you want, an automatic ordering 
+  feature by link-hits was also added. Hits are now counted and displayed for 
+  featured links.
+* [CHANGE] The titlebars in wikipages are now brown instead of the terrible 
+  blue ones.
+* [NEW FEATURE] File galleries, create galleries, add files to galleries, 
+  download files. Permissions configurable, rankings for file galleries and 
+  modules available.
 * [CHANGE] Module names are now sorted in the admin modules screen
-* [CHANGE] Now you can see permissions according to categories when assigning permissions to groups, the
-  assign permissions was revamped
-* [NEW FEATURE] Wiki page comments, now you can activate/deactivate comments for wiki pages, comments can be
-  voted and replied, configurable permissions and karma system for comment points(!)
+* [CHANGE] Now you can see permissions according to categories when assigning 
+  permissions to groups, the assign permissions was revamped
+* [NEW FEATURE] Wiki page comments, now you can activate/deactivate comments 
+  for wiki pages, comments can be voted and replied, configurable permissions 
+  and karma system for comment points(!)
 * [FIX] Fixed minor layout problems and xhtml glitches
 * [FIXES] Several bugfixes and minor improvements on the code.
 
 Version 1.0 -Ras Algheti-
 
-* [NEW FEATURE] Dynamic content system: create, edit or program dynamic blocks, dynamic blocks can be
-  included in any template or in a user module using a very simple syntax via a smarty plugin, this
-  can be used for news, programmed announcements, results of sports, important news, quotes, messaging
-  and many other features.
-* [CHANGE] User modules are now parsed by smarty allowing the user to create user modules to display
-  dynamic content (using the dynamic content system), banners, lists loops, etc.
-* [NEW FEATURE] Edit templates: templates can now be edited with appropiate permission, this allows the admin
-  to change any layout or presentation aspect of the site dynamically. (Use it carefully)
-* [NEW FEATURE] Banners and text adds: edit and admin banners, banners can be placed in any template and
-  distributed in zones. Many configuration and control settings for banners, HTML banners, Image banners
-  and text adds supported. Banner stats page accesible by normal users if they are the banner client.
-* [NEW FEATURE] Added an option to remove images in the system gallery not being used in actual Wiki pages,
-  articles, submissions or blog_posts (this can be used to clean up the images gallery table from time to 
-  time since users may have removed pages, blog_posts or articles and the cached version of images used in
-  those pages will still be present)
+* [NEW FEATURE] Dynamic content system: create, edit or program dynamic blocks, 
+  dynamic blocks can be included in any template or in a user module using a 
+  very simple syntax via a smarty plugin, this can be used for news, programmed 
+  announcements, results of sports, important news, quotes, messaging and many 
+  other features.
+* [CHANGE] User modules are now parsed by smarty allowing the user to create 
+  user modules to display dynamic content (using the dynamic content system), 
+  banners, lists loops, etc.
+* [NEW FEATURE] Edit templates: templates can now be edited with appropiate 
+  permission, this allows the admin to change any layout or presentation aspect 
+  of the site dynamically. (Use it carefully)
+* [NEW FEATURE] Banners and text adds: edit and admin banners, banners can be 
+  placed in any template and distributed in zones. Many configuration and 
+  control settings for banners, HTML banners, Image banners and text adds 
+  supported. Banner stats page accesible by normal users if they are the banner 
+  client.
+* [NEW FEATURE] Added an option to remove images in the system gallery not 
+  being used in actual Wiki pages, articles, submissions or blog_posts (this 
+  can be used to clean up the images gallery table from time to  time since 
+  users may have removed pages, blog_posts or articles and the cached version 
+  of images used in those pages will still be present)
 * [NEW FEATURE] Added a mechanism to prevent caching some images 
-* [NEW FEATURE] Added a nocache option to external links to prevent displaying the cache link for some links
-* [NEW FEATURE] Topics, edit topics, associate an image with a topic. (Topics are used by articles)
-* [NEW FEATURE] Articles, edit articles, program articles to be published, visit a home where the last
-  "n" articles are displayed.
-* [NEW FEATURE] Submissions, send submissions, edit submissions, approve/remove submissions.  
-* [NEW FEATURE] Blogs, create a weblog, post to weblogs, list weblogs, view a weblog.
-* [NEW FEATURE] The home page of the application can be now the Wiki HomePage, the Articles HomePage,
-  any weblog or any Image gallery
+* [NEW FEATURE] Added a nocache option to external links to prevent displaying 
+  the cache link for some links
+* [NEW FEATURE] Topics, edit topics, associate an image with a topic. (Topics 
+  are used by articles)
+* [NEW FEATURE] Articles, edit articles, program articles to be published, 
+  visit a home where the last "n" articles are displayed.
+* [NEW FEATURE] Submissions, send submissions, edit submissions, approve/remove 
+  submissions.  
+* [NEW FEATURE] Blogs, create a weblog, post to weblogs, list weblogs, view a 
+  weblog.
+* [NEW FEATURE] The home page of the application can be now the Wiki HomePage, 
+  the Articles HomePage, any weblog or any Image gallery
 * [NEW FEATURE] Articles rankings: top articles, last articles, top authors
 * [NEW FEATURE] Wiki rankings: top pages, top authors
-* [NEW FEATURE] Image galleries rankings: top images, top galleries, last modified galleries
-* [NEW FEATURE] Blog ranklings: top visited weblogs, most active weblogs, last changed weblogs.
-* [NEW MODULES] Last articles, old articles, top articles, las submissions, number of submissions waiting
+* [NEW FEATURE] Image galleries rankings: top images, top galleries, last 
+  modified galleries
+* [NEW FEATURE] Blog ranklings: top visited weblogs, most active weblogs, last 
+  changed weblogs.
+* [NEW MODULES] Last articles, old articles, top articles, las submissions, 
+  number of submissions waiting
 * [NEW MODULES] Last modified weblogs, top visited weblogs, most active weblogs
 * [NEW FEATURE] Enable/disable rankings for articles, wiki, galleries and Blogs
 * [NEW FEATURE] RSS feed for articles
 * [NEW FEATURE] RSS feed for weblogs
 * [NEW FEATURE] The ALT-s key can be used to access the searchbox
-* [CHANGED] New search engine that can search in Wikipages, galleries, images, blogs and articles
-* [CHANGED] Added pagination and tabs to search other features to the search results page
+* [CHANGED] New search engine that can search in Wikipages, galleries, images, 
+  blogs and articles
+* [CHANGED] Added pagination and tabs to search other features to the search 
+  results page
 * [NEW FEATURE] The Wiki can be enabled/disabled
 * [NEW FEATURE] Articles can be enabled/disabled
 * [NEW FEATURE] Submissions can be enabled/disabled
 * [NEW FEATURE] Blogs can be enabled/disabled
-* [CHANGED] The application menu now is divided into expandable/collapsable sections
-* [NEW FEATURE] Implemented the Blogger XMLRPC api, now you can use desktop applications compatible with
-  blogger to edit Tiki weblogs
+* [CHANGED] The application menu now is divided into expandable/collapsable 
+  sections
+* [NEW FEATURE] Implemented the Blogger XMLRPC api, now you can use desktop 
+  applications compatible with blogger to edit Tiki weblogs
 * [NEW FEATURE] The XMLRPC API can be enabled/disabled
 * [CHANGES] Documentation updated and enhanced
-* [FIX] Fixed a bug that returned users with admin permission to tiki-index if the login name was not 'admin'
-* [FIX] Fixed a bug that prevented recognition of wiki pages if the name had a number
+* [FIX] Fixed a bug that returned users with admin permission to tiki-index if 
+  the login name was not 'admin'
+* [FIX] Fixed a bug that prevented recognition of wiki pages if the name had a 
+  number
 * [FIX] User preferences is not shown if the user is not logged
-* [FIX] Fixed wrong link to show the image in an HTML page when browsing an image
-* [FIX] Fixed a very Nasty bug that was breaking pages where a link to an internal wiki page was used
-  and breaking links to URLS that contained names that may have been matched as wikipages.
+* [FIX] Fixed wrong link to show the image in an HTML page when browsing an 
+  image
+* [FIX] Fixed a very Nasty bug that was breaking pages where a link to an 
+  internal wiki page was used and breaking links to URLS that contained names 
+  that may have been matched as wikipages.
 
 
 Version 0.95 -Shaula-
 
-* [NEW FEATURE] User personal page in the Wiki with a page editable only by the user
-* [NEW FEATURE] User preferences screen where users can set-up personal info, choose a theme
-  and they can also view their pages/blogs/articles.
-* [FIX] Changed several layout problems specific to some browsers, fixed layout now
-  whould work ok with mozilla, IE and Netscape
+* [NEW FEATURE] User personal page in the Wiki with a page editable only by the 
+  user
+* [NEW FEATURE] User preferences screen where users can set-up personal info, 
+  choose a theme and they can also view their pages/blogs/articles.
+* [FIX] Changed several layout problems specific to some browsers, fixed layout 
+  now whould work ok with mozilla, IE and Netscape
 * [CHANGE] Re-designed the admin screen to make it modular and clear
-* [CHANGE] Allow HTML is now turned on unless checked out ir the user has tiki_p_allow_HTML permission
-* [FIX] Fixed bugs in the modules administration screen that prevented editing & removing user modules
-* [FIX] Fixed a bug with -=titlebars=- in  wiki pages, now they work using the titlebar style from CSS
-* [NEW FEATURE] Added featured links as a feature that can be disabled from the admin screen
-* Modules for galleries and images are now not shown if the image galleries feature is disabled
+* [CHANGE] Allow HTML is now turned on unless checked out ir the user has 
+  tiki_p_allow_HTML permission
+* [FIX] Fixed bugs in the modules administration screen that prevented editing 
+  & removing user modules
+* [FIX] Fixed a bug with -=titlebars=- in  wiki pages, now they work using the 
+  titlebar style from CSS
+* [NEW FEATURE] Added featured links as a feature that can be disabled from the 
+  admin screen
+* Modules for galleries and images are now not shown if the image galleries 
+  feature is disabled
 * [FIX] Fixed several bugs regarding the appearance of ' characters in pages
-* [NEW FEATURE] Added and option in the admin screen to turn off caching external pages 
-* [NEW FEATURE] Added and option in the admin screen to turn off caching external images
+* [NEW FEATURE] Added and option in the admin screen to turn off caching
+  external pages 
+* [NEW FEATURE] Added and option in the admin screen to turn off caching 
+  external images
 * [NEW FEATURE] Added the option to set-up modules for specific groups
-* [NEW FEATURE] Added an option in the admin screen to show modules to all users ignoring groups 
-* [NEW FEATURE] Added hotwords allowing you to make some words appear as a link to a URL
+* [NEW FEATURE] Added an option in the admin screen to show modules to all 
+  users ignoring groups 
+* [NEW FEATURE] Added hotwords allowing you to make some words appear as a link 
+  to a URL
 * [NEW FEATURE] Added an option to turn on/off hotwords from the admins screen
-* [NEW FEATURE] Added a SandBox a wikipage where no versions are stored to be used as a practice page
+* [NEW FEATURE] Added a SandBox a wikipage where no versions are stored to be 
+  used as a practice page
 * [NEW FEATURE] Added an option to turn on/off the SandBox
-* [FIX] Changed thumbnail generation to a new bicubic funcion producing better quality thumbnails (Jen Jensen)
+* [FIX] Changed thumbnail generation to a new bicubic funcion producing better 
+  quality thumbnails (Jen Jensen)
 * [FIX] Fixed a bug when links contain a question mark "?"
 * [FIX] Fixed a bug when uploading images without entering any data
 * [FIX] Fixed a bug with thumbnails
