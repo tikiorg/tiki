@@ -241,17 +241,17 @@
 		{tr}Store attachments in:{/tr}
 		<table>
 			<tr>
-				<td>
+				<td class="formcolor">
 				<input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if} /> {tr}Database{/tr}
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="formcolor">
 				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Path{/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="formcolor">
 				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" />
 				</td>
 			</tr>
