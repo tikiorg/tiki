@@ -508,6 +508,18 @@ TD.heading {
 	padding-right:   5px;
 }
 
+th {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #006699;
+	height:   25px;
+	background-image:   url(subsilver/cellpic3.gif);
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 /* Links to view an object from a table listing objects can be generalized to this link */
 .tablename {
 	font-weight:    bold;

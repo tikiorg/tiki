@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.35 2004-01-31 14:10:45 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.36 2004-02-01 21:42:24 musus Exp $
 
 MoreNeat theme
 */
@@ -350,6 +350,16 @@ TABLE.normalnoborder {  width: 97%;}
 /* Table headings */
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
 td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
+{
+  color: black; font-size: 10px;
+  background-color: #C7D0D9; 
+  border: 1px solid #8CACBB;
+  padding-left: 2px;
+  padding-right: 5px;
+}
+
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading,
+th.listfilesheading, th.listartheading, th.forumheading, th.viewthread
 {
   color: black; font-size: 10px;
   background-color: #C7D0D9; 

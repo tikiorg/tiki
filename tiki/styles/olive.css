@@ -511,6 +511,17 @@ TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfga
 	padding-right: 5px;
 }
 
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.viewthread, th.jukeboxlistheading {
+	background-color: #9cba00;
+	color: white;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	padding-left: 2px;
+	padding-right: 5px;
+}
+
 TD.button {
 	background-color: #f2f6e5;
 	color: white;

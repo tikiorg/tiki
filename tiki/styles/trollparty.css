@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.21 2004-01-20 23:04:06 damosoft Exp $
+$Id: trollparty.css,v 1.22 2004-02-01 21:42:25 musus Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -573,6 +573,23 @@ td.jukeboxlistheading,
 td.listartheading,
 td.forumheading,
 td.thead
+{
+font-weight : bold;
+padding-left: 2px;
+padding-right: 5px;
+border-bottom: 1px dashed #777750;
+}
+
+th,
+th.gallistheading,
+th.listgalheading,
+th.bloglistheading,
+th.listfgalheading,
+th.listfilesheading,
+th.jukeboxlistheading,
+th.listartheading,
+th.forumheading,
+th.thead
 {
 font-weight : bold;
 padding-left: 2px;
