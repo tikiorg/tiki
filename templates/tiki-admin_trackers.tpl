@@ -7,7 +7,7 @@
 
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=tracker%20{$name}&amp;objectType=Tracker&amp;permType=trackers&amp;objectId={$trackerId}">{tr}There are inddividual permissions set for this tracker{/tr}</a>
+<a class="link" href="tiki-objectpermissions.php?objectName=tracker%20{$name}&amp;objectType=Tracker&amp;permType=trackers&amp;objectId={$trackerId}">{tr}There are individual permissions set for this tracker{/tr}</a>
 {/if}
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId}" />

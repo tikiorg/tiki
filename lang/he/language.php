@@ -471,7 +471,7 @@ $lang = Array(
 
 //  tiki-admin_forums.tpl
 "min" => "דקה",
-"There are inddividual permissions set for this forum" => "הרשאות ספציפיות בתוקף עבור פורום זה",
+"There are individual permissions set for this forum" => "הרשאות ספציפיות בתוקף עבור פורום זה",
 "Admin Forums" => "ניהול פורומים",
 "Create/edit Forums" => "יצירת/עריכת פורומים",
 "Prevent flooding" => "מניעת הצפה",
