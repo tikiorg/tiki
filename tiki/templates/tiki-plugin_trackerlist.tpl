@@ -62,7 +62,7 @@
 <a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].field_values[ix].linkId}" class="link">
 
 {elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}
-<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}}&amp;itemId={$items[user].itemId}&amp;show=view">
+<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].itemId}&amp;show=view">
 {/if}
 
 {if $items[user].field_values[ix].type eq 'f'}
