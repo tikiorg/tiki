@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.57 2004-09-08 19:52:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.58 2004-09-15 17:47:34 ggeller Exp $
 var feature_no_cookie = 'n';
 
 function getElementById(id) {
@@ -726,7 +726,15 @@ function insertImg(elementId, fileId, oldfileId) {
     }
     // @todo - here's a hack: we know its ending up in img/wiki_up. 
     //      replace with dyn. variable once in a while to respect the tikidomain 
-    str = "{img src=\"img/wiki_up/" + filename + "\" }";
+    // GGG - 20040915 It appears that in Tiki 1.10 the tikidomain name is inserted automatically
+    //       by tiki-index.php, so we don't worry about that here.  Also, tiki-index.php wants
+    //       the string, typically something like img/wiki_up/image001.jpg,
+    //       to NOT be enclosed in quotes by tiki-editpage.php.
+    //       Summary: tiki-editpage.php stores something like:
+    //       {img src=img/wiki_up/image001.jpg}
+    //       and tiki-index.php sends html that looks something like:
+    //       <img alt="Image" src="img/wiki_up/dan.wikiplanet.com/image001.jpg" border="0"  />
+    str = "{img src=img/wiki_up/" + filename + "}";
     insertAt(elementId, str);
 }
 
