@@ -46,7 +46,7 @@
   {if $info.graph neq ''}
     <table class="normal">
       <tr>
-        <td class="formcolor">
+        <td>
           <center>
             {if $info.map neq ''}
               <img src="{$info.graph}" alt="{$info.name}" border="0" usemap="#procmap" />
