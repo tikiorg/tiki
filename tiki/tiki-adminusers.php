@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.35 2004-07-11 13:45:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.36 2004-07-11 15:52:58 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -119,7 +119,7 @@ if (isset($_REQUEST["newuser"])) {
 		$area = 'deluser';
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 			key_check($area);
-			$userlib->remove_user($_REQUEST["user"]);
+			$userslibadmin->remove_user($_REQUEST["user"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
 		} else {
 			key_get($area);
@@ -129,7 +129,7 @@ if (isset($_REQUEST["newuser"])) {
 		$area = 'deluserfromgroup';
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 			key_check($area);
-			$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
+			$userslibadmin->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
 		} else {
 			key_get($area);

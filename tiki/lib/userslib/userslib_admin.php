@@ -17,6 +17,20 @@ class UsersLibAdmin extends UsersLib {
                 return true;
         }
 
+    function remove_group($group) {
+        global $cachelib;
+        $query = "delete from `users_groups` where `groupName` = ?";
+        $result = $this->query($query, array($group));
+        $query = "delete from `tiki_group_inclusion` where `groupName` = ? or `includeGroup` = ?";
+        $result = $this->query($query, array($group, $group));
+        $query = "delete from `users_grouppermissions` where `groupName` = ?";
+        $result = $this->query($query, array($group));
+        $query = "delete from `users_usergroups` where `groupName` = ?";
+        $result = $this->query($query, array($group));
+        $cachelib->invalidate('grouplist');
+        return true;
+    }
+
         function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0) {
                 global $cachelib;
                 if (!$this->group_exists($olgroup))
@@ -96,6 +110,29 @@ class UsersLibAdmin extends UsersLib {
                         $cachelib->invalidate('userslist');
         return true;
     }
+
+
+    function remove_user($user) {
+                global $cachelib;
+        $userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
+
+        $query = "delete from `users_users` where `login` = ?";
+        $result = $this->query($query, array( $user ) );
+        $query = "delete from `users_usergroups` where `userId`=?";
+        $result = $this->query($query, array( $userId ) );
+
+        $cachelib->invalidate('userslist');
+        return true;
+    }
+
+    function remove_user_from_group($user, $group) {
+        $userid = $this->get_user_id($user);
+
+        $query = "delete from `users_usergroups` where `userId` = ? and
+                `groupName` = ?";
+        $result = $this->query($query, array($userid, $group));
+    }
+
 
 
     function validate_user(&$user, $pass, $challenge, $response) {
@@ -594,6 +631,60 @@ class UsersLibAdmin extends UsersLib {
                     ));
 
         return true;
+    }
+
+    function assign_level_permissions($group, $level) {
+    global $cachelib;
+    $cachelib->invalidate("allperms");
+
+        $query = "select `permName` from `users_permissions` where `level` = ?";
+        $result = $this->query($query, array($level));
+        $ret = array();
+
+        while ($res = $result->fetchRow()) {
+            $this->assign_permission_to_group($res['permName'], $group);
+        }
+    }
+
+
+    function assign_permission_to_group($perm, $group) {
+    global $cachelib; 
+
+    $cachelib->invalidate("allperms");
+    
+        $query = "delete from `users_grouppermissions` where `groupName` = ?
+                and `permName` = ?";
+        $result = $this->query($query, array($group, $perm));
+        $query = "insert into `users_grouppermissions`(`groupName`, `permName`)
+                values(?, ?)";
+        $result = $this->query($query, array($group, $perm));
+        return true;
+    }
+
+    function remove_permission_from_group($perm, $group) {
+    global $cachelib;
+
+    $cachelib->invalidate("allperms");
+
+        $query = "delete from `users_grouppermissions` where `permName` = ?
+                and `groupName` = ?";
+        $result = $this->query($query, array($perm, $group));
+        return true;
+    }
+
+    function remove_level_permissions($group, $level) {
+    global $cachelib;
+            
+    $cachelib->invalidate("allperms");
+            
+        $query = "select `permName` from `users_permissions` where `level` = ?";
+
+        $result = $this->query($query, array($level));
+        $ret = array();
+    
+        while ($res = $result->fetchRow()) {
+            $this->remove_permission_from_group($res['permName'], $group);
+        }
     }
 
 
