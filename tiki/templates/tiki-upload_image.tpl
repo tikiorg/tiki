@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.19 2004-05-01 01:06:34 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.20 2004-05-21 09:18:38 damosoft Exp $ *}
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
@@ -53,13 +53,12 @@
 	<h2>{tr}Upload successful!{/tr}</h2>
 	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
 	<div align="center">
-	<img src="{$url_show}?id={$imageId}" alt='{tr}Image ID{/tr}'/><br />
+	<img src="{$url_show}?id={$imageId}" alt="{tr}Image ID{/tr}" /><br />
 	<b>{tr}Thumbnail{/tr}:</b><br />
-	<img src="{$url_show}?id={$imageId}&amp;thumb=1"
-		alt='{tr}Image ID thumb{/tr}'/><br /><br />
+	<img src="{$url_show}?id={$imageId}&amp;thumb=1" alt="{tr}Image ID thumb{/tr}" /><br /><br />
 	<div class="wikitext">
 	{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br /><br />
-	{tr}You can include the image in an Wiki page using{/tr}:  <textarea rows="3" cols="60">{literal}{{/literal}img src={$url_show}?id={$imageId}{literal}}{/literal}</textarea>
+	{tr}You can include the image in an Wiki page using{/tr}:  <form><textarea rows="3" cols="60" style="width: 90%">{literal}{{/literal}img src={$url_show}?id={$imageId}{literal}}{/literal}</textarea></form>
 	</div>
 	</div>
 	{/if}

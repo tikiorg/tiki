@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.224 2004-05-17 08:50:22 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.225 2004-05-21 09:18:33 damosoft Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1709,16 +1709,21 @@ $user_preferences = array();
 //tiki-handlers.php is empty right now.  uncomment the line below if you need to use it
 //include_once ('tiki-handlers.php');
 
+// no compression at all
+$smarty->assign('gzip','Disabled');
+$smarty->assign('gzip_handler','none');
+// php compression enabled?
 if (ini_get('zlib.output_compression') == 1) {
     $smarty->assign('gzip','Enabled');
+    $smarty->assign('gzip_handler','php');
+// if not, check if tiki compression is enabled
 } elseif ($feature_obzip == 'y') {
-    $smarty->assign('gzip','Enabled');
-} else {
-    $smarty->assign('gzip','Disabled');
-}
-
-if ($feature_obzip == 'y') {
-    ob_start ("ob_gzhandler");
+	// tiki compression is enabled, then let activate the handler
+	if ($feature_obzip == 'y') {
+	    ob_start ("ob_gzhandler");
+			$smarty->assign('gzip_handler','tiki');
+    	$smarty->assign('gzip','Enabled');
+	}
 }
 
 //print("tiki-setup: before include debugger.php:".$tiki_timer->elapsed()."<br />");

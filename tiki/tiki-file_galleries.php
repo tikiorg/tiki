@@ -151,9 +151,6 @@
 	  } else {
 	    $visible ='n';
 	  }
-	  if(!isset($_REQUEST["visible"])) {
-	    $visible = 'y';
-	  }
 	  if(isset($_REQUEST["public"]) && $_REQUEST["public"]=="on") {
 	    $smarty->assign('public','y');
 	    $public ='y';

@@ -4242,8 +4242,9 @@ function parse_data($data) {
 
     // Replace Dynamic content with random selection
     if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
-  for ($i = 0; $i < count($dcs[0]); $i++) {
-      $repl = $this->get_random_content($dcs[1][$i]);
+	include_once("dcs/dcslib.php");
+	for ($i = 0; $i < count($dcs[0]); $i++) {
+	    $repl = $dcslib->get_random_content($dcs[1][$i]);
 
       $data = str_replace($dcs[0][$i], $repl, $data);
   }

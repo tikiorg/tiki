@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.18 2004-05-03 15:34:36 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.19 2004-05-21 09:18:37 damosoft Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -183,6 +183,12 @@ div.box-title table {
  */
 .titlea {
  font-size: medium;
+}
+/*
+ * image galleries
+ */
+.showimage {
+ text-align: center;
 }
 
 /*

@@ -36,7 +36,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 $lang=Array(
@@ -4096,8 +4096,8 @@ $lang=Array(
 "idle" => "inactif depuis",
 "Last `\$module_rows` wiki comments" => "Les `\$module_rows` derniers commentaires Wiki",
 "Last wiki comments" => "Les derniers commentaires Wiki",
-"Last `\$module_rows` forum posts" => "Derniers `\$module_rows` articles de forum",
-"Last forum posts" => "Derniers articles de forum",
+"Last `\$module_rows` forum posts" => "Derniers  `\$module_rows` articles de forum",
+"Last forum posts" => "Derniers messages dans les forums",
 "Page generated in" => "Page générée en",
 "Go \r\n                    back" => "Revenir à la dernière page",
 "Return to home \r\n                    page" => "Retourner à la page d'accueil",

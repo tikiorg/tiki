@@ -137,7 +137,7 @@
 {if $gal_list_visits eq 'y'}     
   <td style="text-align:right;" class="{cycle advance=false}">{$galleries[changes].hits}</td>
 {/if}  
-  <td class="{cycle}">
+  <td class="{cycle}" nowrap="nowrap">
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
     <a class="gallink" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src='img/icons/config.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' height="16" width="16" border='0' /></a>
@@ -155,7 +155,11 @@
   <a class="gallink" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}"><img border='0' height="16" width="18" src='img/icons/ico_table.gif' title='{tr}List{/tr}' alt='{tr}List{/tr}' /></a>
   {/if}
   {if $tiki_p_admin eq 'y'}
-    {if $galleries[changes].individual eq 'y'}({/if}<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$galleries[changes].name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>{if $galleries[changes].individual eq 'y'}){/if}
+    {if $galleries[changes].individual eq 'y'}
+	<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$galleries[changes].name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' height="16" width="17" border='0' /></a>
+    {else}
+	<a class="gallink" href="tiki-objectpermissions.php?objectName=gallery%20{$galleries[changes].name}&amp;objectType=image%20gallery&amp;permType=image%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' height="16" width="17" border='0' /></a>
+    {/if}
   {/if}
   </td>
 </tr>

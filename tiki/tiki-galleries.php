@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.22 2004-05-12 13:15:28 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.23 2004-05-21 09:18:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,14 +158,9 @@ if (isset($_REQUEST["edit"])) {
 
 	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
 		$smarty->assign('visible', 'y');
-
 		$visible = 'y';
 	} else {
 		$visible = 'n';
-	}
-
-	if (!isset($_REQUEST["visible"])) {
-		$visible = 'y';
 	}
 
 	$smarty->assign_by_ref('visible', $visible);
