@@ -3,7 +3,7 @@
 {if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
 |<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
-{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">top</a>] {/if}{tr}Current folder{/tr}: {$path}<br/>
+{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br/>
 <table class="normal">
 <tr>
   <td class="heading">{tr}name{/tr}</td>
@@ -24,7 +24,7 @@
 <tr>
   <td><a class="link" target="_blank" href="{$urls[ix].url}">{$urls[ix].name}</a>
   {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-  (<a href="tiki-user_cached_bookmark.php?urlid={$urls[ix].urlId}" class="link" target="_blank">cache</a>)
+  (<a href="tiki-user_cached_bookmark.php?urlid={$urls[ix].urlId}" class="link" target="_blank">{tr}cache{/tr}</a>)
   {/if}
   </td>
   <td>{$urls[ix].url}</td>

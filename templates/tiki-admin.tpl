@@ -314,7 +314,7 @@
     
     <div class="simplebox">
     <form action="tiki-admin.php" method="post">
-    {tr}Remove a tag{tr}<br/>
+    {tr}Remove a tag{/tr}<br/>
     {tr}Tag Name{/tr}<select name="tagname">
           {section name=sel loop=$tags}
           <option value="{$tags[sel]}">{$tags[sel]}</option>
@@ -423,7 +423,7 @@
     <option value="10" {if $warn_on_edit_time eq 2}selected="selected"{/if}>10</option>
     <option value="15" {if $warn_on_edit_time eq 2}selected="selected"{/if}>15</option>
     <option value="30" {if $warn_on_edit_time eq 2}selected="selected"{/if}>30</option>
-    </select> mins
+    </select> {tr}mins{/tr}
     </td></tr>
     <tr><td class="form">{tr}Pictures{/tr}:</td><td><input type="checkbox" name="feature_wiki_pictures" {if $feature_wiki_pictures eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use page description{/tr}:</td><td><input type="checkbox" name="feature_wiki_description" {if $feature_wiki_description eq 'y'}checked="checked"{/if}/></td></tr>
@@ -434,7 +434,7 @@
     </div>
     
     <div class="simplebox">
-    Wiki History
+    {tr}Wiki History{/tr}
     <form action="tiki-admin.php" method="post">
     <table>
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions}" /></td></tr>

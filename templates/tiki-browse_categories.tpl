@@ -1,8 +1,8 @@
-<a class="pagetitle" href="tiki-browse_categories.php">Categories</a><br/><br/>
+<a class="pagetitle" href="tiki-browse_categories.php">{tr}Categories{/tr}</a><br/><br/>
 <table class="tcategpath">
 <tr>
   <td class="tdcategpath">{tr}Current category{/tr}: {$path}</td>
-  <td class="tdcategpath" align="right">[<a class="categpath" href="tiki-browse_categories.php?parentId={$father}">up</a>|<a class="categpath" href="tiki-browse_categories.php?parentId=0">top</a>]</td>
+  <td class="tdcategpath" align="right">[<a class="categpath" href="tiki-browse_categories.php?parentId={$father}">{tr}up{/tr}</a>|<a class="categpath" href="tiki-browse_categories.php?parentId=0">{tr}top{/tr}</a>]</td>
 </tr>  
 </table>
 <div align="center">
@@ -24,12 +24,12 @@
 </tr>
 </table>
 </div>
-<h3>Objects ({$cantobjects})</h3>
+<h3>{tr}Objects{/tr} ({$cantobjects})</h3>
 <table class="catobjects">
 {section name=ix loop=$objects}
 <tr>
   <td class="categobjectsname" valign="top"><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a><br/>
-  ({$objects[ix].type|replace:"wiki_page":"Wiki"|replace:"article":"Article"})
+  ({$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"})
   </td>
   <td class="categobjectsdata" valign="top">{$objects[ix].description}</td>
 </tr>

@@ -16,8 +16,8 @@
 <tr><td class="odd">{tr}Days online{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.days}</td></tr>
 <tr><td class="even">{tr}Total pageviews{/tr}</td><td class="even" style="text-align:right;">{$site_stats.pageviews}</td></tr>
 <tr><td class="odd">{tr}Average pageviews per day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.ppd|string_format:"%.2f"}</td></tr>
-<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_short_date} ({$site_stats.bestpvs} pvs)</td></tr>
-<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_short_date} ({$site_stats.worstpvs} pvs)</td></tr>
+<tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_short_date} ({$site_stats.bestpvs} {tr}pvs{/tr})</td></tr>
+<tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_short_date} ({$site_stats.worstpvs} {tr}pvs{/tr})</td></tr>
 </table>
 <br/>
 <form action="tiki-stats.php" method="post">
@@ -42,8 +42,8 @@
 <table class="normal">
 <tr><td class="heading" colspan="2">{tr}Wiki Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Wiki Pages{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.pages}</td></tr>
-<tr><td class="odd">{tr}Size of Wiki Pages{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.size} Mb</td></tr>
-<tr><td class="even">{tr}Average page length{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.bpp|string_format:"%.2f"} b</td></tr>
+<tr><td class="odd">{tr}Size of Wiki Pages{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.size} {tr}Mb{/tr}</td></tr>
+<tr><td class="even">{tr}Average page length{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.bpp|string_format:"%.2f"} {tr}bytes{/tr}</td></tr>
 <tr><td class="odd">{tr}Versions{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.versions}</td></tr>
 <tr><td class="even">{tr}Average versions per page{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.vpp|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Visits to wiki pages{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.visits}</td></tr>
@@ -62,8 +62,8 @@
 <tr><td class="even">{tr}Galleries{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.galleries}</td></tr>
 <tr><td class="odd">{tr}Images{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.images}</td></tr>
 <tr><td class="even">{tr}Average images per gallery{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.ipg|string_format:"%.2f"}</td></tr>
-<tr><td class="odd">{tr}Total size of images{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.size} Mb</td></tr>
-<tr><td class="even">{tr}Average image size{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.bpi|string_format:"%.2f"} b</td></tr>
+<tr><td class="odd">{tr}Total size of images{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.size} {tr}Mb{/tr}</td></tr>
+<tr><td class="even">{tr}Average image size{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.bpi|string_format:"%.2f"} {tr}bytes{/tr}</td></tr>
 <tr><td class="odd">{tr}Visits to image galleries{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.visits}</td></tr>
 </table>  
 <!-- Image gallleries stats -->
@@ -78,8 +78,8 @@
 <tr><td class="even">{tr}Galleries{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.galleries}</td></tr>
 <tr><td class="odd">{tr}Files{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.files}</td></tr>
 <tr><td class="even">{tr}Average files per gallery{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.fpg|string_format:"%.2f"}</td></tr>
-<tr><td class="odd">{tr}Total size of files{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.size} Mb</td></tr>
-<tr><td class="even">{tr}Average file size{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.bpf|string_format:"%.2f"} Mb</td></tr>
+<tr><td class="odd">{tr}Total size of files{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.size} {tr}Mb{/tr}</td></tr>
+<tr><td class="even">{tr}Average file size{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.bpf|string_format:"%.2f"} {tr}Mb{/tr}</td></tr>
 <tr><td class="odd">{tr}Visits to file galleries{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.visits}</td></tr>
 <tr><td class="even">{tr}Downloads{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.downloads}</td></tr>
 </table>
@@ -95,8 +95,8 @@
 <tr><td class="even">{tr}Articles{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.articles}</td></tr>
 <tr><td class="odd">{tr}Total reads{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.reads}</td></tr>
 <tr><td class="even">{tr}Average reads per article{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.rpa|string_format:"%.2f"}</td></tr>
-<tr><td class="odd">{tr}Total articles size{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.size} bytes</td></tr>
-<tr><td class="even">{tr}Average article size{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.bpa|string_format:"%.2f"} bytes</td></tr>
+<tr><td class="odd">{tr}Total articles size{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.size} {tr}bytes{/tr}</td></tr>
+<tr><td class="even">{tr}Average article size{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.bpa|string_format:"%.2f"} {tr}bytes{/tr}</td></tr>
 <tr><td class="odd">{tr}Topics{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.topics}</td></tr>
 </table>
 <!-- CMS stats -->
@@ -184,7 +184,7 @@
 <tr><td class="even">{tr}Average questions per quiz{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.qpq|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Quizzes taken{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.visits}</td></tr>
 <tr><td class="even">{tr}Average quiz score{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.avg|string_format:"%.2f"}</td></tr>
-<tr><td class="odd">{tr}Average time per quiz{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.avgtime|string_format:"%.2f"} secs</td></tr>
+<tr><td class="odd">{tr}Average time per quiz{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.avgtime|string_format:"%.2f"} {tr}secs{/tr}</td></tr>
 </table>
 <!-- Quiz stats -->
 

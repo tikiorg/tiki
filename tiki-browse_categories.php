@@ -22,7 +22,7 @@ if($_REQUEST["parentId"]) {
   $p_info = $tikilib->get_category($_REQUEST["parentId"]);
   $father = $p_info["parentId"];
 } else {
-  $path = "TOP";
+  $path = tra("TOP");
   $father = 0;
 }
 $smarty->assign('path',$path);
