@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.7 2003-08-15 22:09:27 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.8 2003-09-20 18:39:30 zaufi Exp $
  *
  */
 
@@ -32,12 +32,18 @@ div.box {
 	color: MenuText;
 	background-color: Menu;
 	width: 176px;
-	margin-bottom: 6px;
+	margin-top: 6px;
 	border-top: 2px outset ThreeDLightShadow;
 	border-left: 2px outset ThreeDLightShadow;
 	border-bottom: 2px outset ThreeDShadow;
 	border-right: 2px outset ThreeDShadow;
 	font-size: small;
+}
+/* No margin at top for fist boxes at both sides */
+div#leftcolumn  > div.box:first-child,
+div#rightcolumn > div.box:first-child
+{
+    margin-top: 0px;
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -136,13 +142,13 @@ div.separator + div[id] {
 }
 
 div.box-title img {
-	/*  visibility: hidden; */
-	display: none;
+    visibility: hidden; 
+/*	display: none;*/
 }
 
 div.box-title:hover img {
-	/*  visibility: visible; */
-	display: inline;
+	visibility: visible;
+/*	display: inline;*/
 }
 
 div.box-title td {
