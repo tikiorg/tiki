@@ -3070,7 +3070,7 @@ CREATE TABLE tiki_tracker_options (
 DROP TABLE IF EXISTS tiki_trackers;
 CREATE TABLE tiki_trackers (
   trackerId int(12) NOT NULL auto_increment,
-  name varchar(80) default NULL,
+  name varchar(255) default NULL,
   description text,
   created int(14) default NULL,
   lastModif int(14) default NULL,
