@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.20 2003-11-12 19:42:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.21 2003-11-13 08:52:16 markusvk Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -7,7 +7,7 @@
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
       <table ><tr>
-        <td class="heading" colspan=2 
+        <td class="heading" colspan=2
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Theme{/tr}:</td>
@@ -29,13 +29,13 @@
             {/section}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr/></td></tr>      
+      </tr><tr><td colspan=2><hr/></td></tr>
       <tr>
         <td class="form">{tr}Use group homepages{/tr}:</td>
         <td><input type="checkbox" name="useGroupHome"
               {if $useGroupHome eq 'y'}checked="checked"{/if}/>
         </td>
-      </tr>  
+      </tr>
       <tr>
         <td class="form">{tr}Use URI as Home Page{/tr}:</td>
         <td><input type="checkbox" name="useUrlIndex"
@@ -116,7 +116,7 @@
         </td>
       </tr></table>
       <table ><tr>
-        <td class="heading" colspan=5 
+        <td class="heading" colspan=5
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
         <td class="form" >
@@ -125,8 +125,8 @@
               {if $site_closed eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-      	<td class="form">
-      		{tr}Message to display when site is closed{/tr}:</td>
+        <td class="form">
+            {tr}Message to display when site is closed{/tr}:</td>
         <td><input type="text" name="site_closed_msg"
              value="{$site_closed_msg}" size="60"/></td>
       </tr>
@@ -143,7 +143,7 @@
         <td class="form">{tr}Max average server load threshold in the last minute{/tr}:</td>
         <td><input type="text" name="load_threshold" value="{$load_threshold}" size="5" /></td>
       </tr><tr>
-      	<td class="form">{tr}Message to display when server is too busy{/tr}:</td>
+        <td class="form">{tr}Message to display when server is too busy{/tr}:</td>
         <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
       </tr>
       </table>
@@ -191,6 +191,12 @@
         <td><input type="checkbox" name="count_admin_pvs"
               {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
         </td>
+      </tr><tr>
+        <td class="form">{tr}Hide anonymous-only modules from registered users{/tr}:</td>
+        <td><input type="checkbox" name="modseparateanon"
+              {if $modseparateanon eq 'y'}checked="checked"{/if}/>
+        </td>
+        <td>&nbsp;</td>
       </tr></table>
       <table ><tr>
         <td colspan=2><hr/></td>
@@ -252,7 +258,7 @@
                    value="{$maxRecords|escape}" />
       </tr></table>
       <table ><tr>
-        <td class="heading" colspan=2 
+        <td class="heading" colspan=2
             align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Long date format{/tr}:</td>
@@ -277,14 +283,14 @@
           <a class="link" target="strftime" href="{$fcnlink}">
             {tr}Date and Time Format Help{/tr}</a></td>
       </tr>
-	  <tr>
+      <tr>
         <td colspan="2" class="button">
           <input type="submit" name="prefs" value="{tr}Update{/tr}" />
         </td>
       </tr></table>
-	  <!-- Obsolete from 1.7 timezone changes
+      <!-- Obsolete from 1.7 timezone changes
       <table ><tr>
-        <td class="heading" colspan=2 
+        <td class="heading" colspan=2
             align="center">{tr}Time Zone{/tr}</td>
       </tr><tr>
         <td class="form"  style="vertical-align:middle;">
@@ -302,8 +308,8 @@
           <a class="link" target="wtz" href="http://www.worldtimezone.com/">
             {tr}Time Zone Map{/tr}</a></td>
       </tr>
-	  </table>
-	  -->
+      </table>
+      -->
     </form>
   </div>
 </div>

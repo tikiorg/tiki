@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.14 2003-11-12 19:42:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.15 2003-11-13 08:52:16 markusvk Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,116 +9,117 @@
 
 // Handle Update
 if (isset($_REQUEST["prefs"])) {
-	$pref_toggles = array(
-		"anonCanEdit",
-		"cacheimages",
-		"cachepages",
-		"count_admin_pvs",
-		"direct_pagination",
-		"feature_menusfolderstyle",
-		"feature_obzip",
-		"lang_use_db",
-		"modallgroups",
-		"popupLinks",
-		"record_untranslated",
-		"site_closed",
-		"useGroupHome",
-		"useUrlIndex",
-		"use_load_threshold",
-		"use_proxy",
-		"session_db"
-	);
+    $pref_toggles = array(
+        "anonCanEdit",
+        "cacheimages",
+        "cachepages",
+        "count_admin_pvs",
+        "direct_pagination",
+        "feature_menusfolderstyle",
+        "feature_obzip",
+        "lang_use_db",
+        "modallgroups",
+        "modseparateanon", // MGvK
+        "popupLinks",
+        "record_untranslated",
+        "site_closed",
+        "useGroupHome",
+        "useUrlIndex",
+        "use_load_threshold",
+        "use_proxy",
+        "session_db"
+    );
 
-	foreach ($pref_toggles as $toggle) {
-		simple_set_toggle ($toggle);
-	}
+    foreach ($pref_toggles as $toggle) {
+        simple_set_toggle ($toggle);
+    }
 
-	$pref_simple_values = array(
-		"contact_user",
-		"feature_server_name",
-		"maxRecords",
-		"sender_email",
-		"email_encoding",
-		"system_os",
-		"urlIndex",
-		"proxy_host",
-		"proxy_port",
-		"session_lifetime",
-		"load_threshold",
-		"site_busy_msg",
-		"site_closed_msg"
-	);
+    $pref_simple_values = array(
+        "contact_user",
+        "feature_server_name",
+        "maxRecords",
+        "sender_email",
+        "email_encoding",
+        "system_os",
+        "urlIndex",
+        "proxy_host",
+        "proxy_port",
+        "session_lifetime",
+        "load_threshold",
+        "site_busy_msg",
+        "site_closed_msg"
+    );
 
-	foreach ($pref_simple_values as $svitem) {
-		simple_set_value ($svitem);
-	}
+    foreach ($pref_simple_values as $svitem) {
+        simple_set_value ($svitem);
+    }
 
-	$pref_byref_values = array(
-		"display_timezone",
-		"language",
-		"long_date_format",
-		"long_time_format",
-		"short_date_format",
-		"short_time_format",
-		"siteTitle",
-		"slide_style",
-		"tikiIndex"
-	);
+    $pref_byref_values = array(
+        "display_timezone",
+        "language",
+        "long_date_format",
+        "long_time_format",
+        "short_date_format",
+        "short_time_format",
+        "siteTitle",
+        "slide_style",
+        "tikiIndex"
+    );
 
-	foreach ($pref_byref_values as $britem) {
-		byref_set_value ($britem);
-	}
+    foreach ($pref_byref_values as $britem) {
+        byref_set_value ($britem);
+    }
 
-	// Set value(s) with alternate pref name
-	byref_set_value("site_style", "style");
+    // Set value(s) with alternate pref name
+    byref_set_value("site_style", "style");
 
-	// Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
-	if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
-		$_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
+    // Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
+    if (!empty($_REQUEST["urlIndex"]) && isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"] == 'on') {
+        $_REQUEST["tikiIndex"] = $_REQUEST["urlIndex"];
 
-		$tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
-		$smarty->assign_by_ref("tikiIndex", $_REQUEST["tikiIndex"]);
-	}
+        $tikilib->set_preference("tikiIndex", $_REQUEST["tikiIndex"]);
+        $smarty->assign_by_ref("tikiIndex", $_REQUEST["tikiIndex"]);
+    }
 
-	// Special handling for tmpDir, which has a default value
-	if (isset($_REQUEST["tmpDir"])) {
-		$tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
+    // Special handling for tmpDir, which has a default value
+    if (isset($_REQUEST["tmpDir"])) {
+        $tikilib->set_preference("tmpDir", $_REQUEST["tmpDir"]);
 
-		$smarty->assign_by_ref("tmpDir", $_REQUEST["tmpDir"]);
-	} else {
-		$tdir = TikiSetup::tempdir();
+        $smarty->assign_by_ref("tmpDir", $_REQUEST["tmpDir"]);
+    } else {
+        $tdir = TikiSetup::tempdir();
 
-		$tikilib->set_preference("tmpDir", $tdir);
-		$smarty->assign("tmpDir", $tdir);
-	}
-	
-	// not needed anymore? -- gongo
-	//$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
-	$smarty->assign('pagetop_msg', "");
+        $tikilib->set_preference("tmpDir", $tdir);
+        $smarty->assign("tmpDir", $tdir);
+    }
+    
+    // not needed anymore? -- gongo
+    //$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
+    $smarty->assign('pagetop_msg', "");
 }
 
 // Handle Password Change Request
 elseif (isset($_REQUEST["newadminpass"])) {
-	if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
-		$smarty->assign("msg", tra("The passwords don't match"));
+    if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
+        $smarty->assign("msg", tra("The passwords don't match"));
 
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+    }
 
-	// Validate password here
-	if (strlen($_REQUEST["adminpass"]) < $min_pass_length) {
-		$text = tra("Password should be at least");
+    // Validate password here
+    if (strlen($_REQUEST["adminpass"]) < $min_pass_length) {
+        $text = tra("Password should be at least");
 
-		$text .= " " . $min_pass_length . " ";
-		$text .= tra("characters long");
-		$smarty->assign("msg", $text);
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
+        $text .= " " . $min_pass_length . " ";
+        $text .= tra("characters long");
+        $smarty->assign("msg", $text);
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+    }
 
-	$userlib->change_user_password("admin", $_REQUEST["adminpass"]);
-	$smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
+    $userlib->change_user_password("admin", $_REQUEST["adminpass"]);
+    $smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
 
 // Get list of available styles
@@ -126,9 +127,9 @@ $styles = array();
 $h = opendir("styles/");
 
 while ($file = readdir($h)) {
-	if (strstr($file, "css")) {
-		$styles[] = $file;
-	}
+    if (strstr($file, "css")) {
+        $styles[] = $file;
+    }
 }
 closedir( $h );
 sort($styles);
@@ -139,9 +140,9 @@ $slide_styles = array();
 $h = opendir("styles/slideshows");
 
 while ($file = readdir($h)) {
-	if (strstr($file, "css")) {
-		$slide_styles[] = $file;
-	}
+    if (strstr($file, "css")) {
+        $slide_styles[] = $file;
+    }
 }
 
 closedir ($h);
@@ -186,39 +187,39 @@ $smarty->assign("home_gallery_url", "tiki-browse_gallery.php?galleryId=" . $home
 $smarty->assign("home_file_gallery_url", "tiki-list_file_gallery.php?galleryId=" . $home_file_gallery);
 
 if ($home_blog) {
-	$hbloginfo = $tikilib->get_blog($home_blog);
+    $hbloginfo = $tikilib->get_blog($home_blog);
 
-	$smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
+    $smarty->assign("home_blog_name", substr($hbloginfo["title"], 0, 20));
 } else {
-	$smarty->assign("home_blog_name", '');
+    $smarty->assign("home_blog_name", '');
 }
 
 if ($home_gallery) {
-	include_once ("lib/imagegals/imagegallib.php");
-	$hgalinfo = $imagegallib->get_gallery($home_gallery);
+    include_once ("lib/imagegals/imagegallib.php");
+    $hgalinfo = $imagegallib->get_gallery($home_gallery);
 
-	$smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
+    $smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
 } else {
-	$smarty->assign("home_gal_name", '');
+    $smarty->assign("home_gal_name", '');
 }
 
 if ($home_forum) {
-	include_once ("lib/commentslib.php");
-	$commentslib = new Comments($dbTiki);
-	$hforuminfo = $commentslib->get_forum($home_forum);
+    include_once ("lib/commentslib.php");
+    $commentslib = new Comments($dbTiki);
+    $hforuminfo = $commentslib->get_forum($home_forum);
 
-	$smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
+    $smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
 } else {
-	$smarty->assign("home_forum_name", '');
+    $smarty->assign("home_forum_name", '');
 }
 
 if ($home_file_gallery) {
-	include_once ("lib/imagegals/imagegallib.php");
-	$hgalinfo = $imagegallib->get_gallery($home_file_gallery);
+    include_once ("lib/imagegals/imagegallib.php");
+    $hgalinfo = $imagegallib->get_gallery($home_file_gallery);
 
-	$smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
+    $smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
 } else {
-	$smarty->assign("home_fil_name", '');
+    $smarty->assign("home_fil_name", '');
 }
 
 // Get Date/Time preferences
