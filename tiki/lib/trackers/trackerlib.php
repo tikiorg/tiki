@@ -328,7 +328,13 @@ class TrackerLib extends TikiLib {
 				$corder = "asc";
 			} elseif ($filtervalue) {
 				$mid.= "and ttif.`value` like ?";
-				$bindvars[] = '%'.$filtervalue.'%';
+				if (substr($filtervalue,0,1) == '*') {
+					$bindvars[] = '%'. substr($filtervalue,1);
+				} elseif (substr($filtervalue,-1,1) == '*') {
+					$bindvars[] = substr($filtervalue,0,strlen($filtervalue)-1). '%';
+				} else {
+					$bindvars[] = '%'.$filtervalue.'%';
+				}
 				$csort_mode = $filterfield;
 				$corder = "asc";
 			} else {
