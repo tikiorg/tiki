@@ -607,6 +607,11 @@ CREATE TABLE tiki_calendars (
   name varchar(80) NOT NULL default '',
   description varchar(255) default NULL,
   user varchar(40) NOT NULL default '',
+  customlocations enum('n','y') NOT NULL default 'n',
+  customcategories enum('n','y') NOT NULL default 'n',
+  customlanguages enum('n','y') NOT NULL default 'n',
+  custompriorities enum('n','y') NOT NULL default 'n',
+  customparticipants enum('n','y') NOT NULL default 'n',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   PRIMARY KEY  (calendarId)
