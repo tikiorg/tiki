@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.39 2004-02-03 16:07:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.40 2004-02-04 08:47:48 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,7 @@ $ins_fields = $fields;
 
 $usecategs = false;
 $ins_categs = array();
+$textarea_options = false;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
@@ -128,7 +129,9 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if ($fields["data"][$i]["type"] == 'i')	{
+		if ($fields["data"][$i]["type"] == 'a' and $fields["data"][$i]["options_array"][0])	{
+			$textarea_options = true;
+		} elseif ($fields["data"][$i]["type"] == 'i')	{
 			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 				if (!empty($gal_match_regex)) {
 					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
@@ -158,6 +161,12 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 if (!isset($mainfield)) {
 	$mainfield = $fields["data"][0]["value"];
 }
+if ($textarea_options) {
+	include_once ('lib/quicktags/quicktagslib.php');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
+	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+}
+
 if ($tiki_p_admin_trackers == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');

@@ -63,8 +63,6 @@
 <div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
 {/foreach}
 
-{$ins_fields[ix].pvalue|default:"&nbsp;"}
-
 {elseif $ins_fields[ix].type eq 'a'}
 {$ins_fields[ix].pvalue|default:"&nbsp;"}
 
@@ -95,12 +93,12 @@
 
 {elseif $ins_fields[ix].type eq 't'}
 {if $ins_fields[ix].options_array[2]}
-{$ins_fields[ix].value} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
+{$ins_fields[ix].value} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]|escape}</span>
 {else}
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
 {else}
-{$ins_fields[ix].value|default:"&nbsp;"}
+{$ins_fields[ix].value|escape|default:"&nbsp;"}
 {/if}
 {/if}
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
@@ -260,7 +258,13 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$ins_fields[ix].name}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td colspan="3" nowrap="nowrap">
+<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}
+{if $ins_fields[ix].type eq 'a' and $ins_fields[ix].options_array[0] eq 1}
+<br />
+{assign var=area_name value="area_"|cat:$ins_fields[ix].id}
+{include file=tiki-edit_help_tool.tpl}
+{/if}
+</td><td colspan="3" nowrap="nowrap">
 {/if}
 {/if}
 
@@ -299,10 +303,11 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $ins_fields[ix].options_array[2]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>{/if}
 
 {elseif $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].id}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
+<textarea name="ins_{$ins_fields[ix].id}" id="area_{$ins_fields[ix].id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
+rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ins_fields[ix].value|escape}</textarea>
 
 {elseif $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].ins_id time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].ins_id time=$ins_fields[ix].value display_seconds=false}
+{html_select_date prefix=$ins_fields[ix].id time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
 
 {elseif $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].id}">

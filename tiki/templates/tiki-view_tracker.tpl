@@ -92,10 +92,12 @@ $fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"u
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
-<th><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></th>
+<th><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if 
+$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></th>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<th><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
+<th><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section 
+name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <th width="5%">{tr}coms{/tr}</th>
@@ -168,11 +170,13 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 <td  style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}{section name=mix loop=$fields}{if
-$fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=att" link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
+$fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=att" 
+link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
+<td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section 
+name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker item?{/tr}');" 
 title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a></td>
 {/if}
@@ -183,17 +187,20 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <br />
 <div align="center" class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{section 
+name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{section 
+name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">
+<a class="prevnext" href="tiki-view_tracker.php?initial={$initial}&amp;status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{section 
+name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
@@ -201,7 +208,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {/if}
 </div>
 
-{* --- tab with edit --- *}
+{* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
 <div id="content{cycle name=content}" class="content">
 <form action="tiki-view_tracker.php" method="post">
@@ -227,7 +234,13 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$fields[ix].name}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td colspan="3">
+<tr class="formcolor"><td class="formlabel">{$fields[ix].name}
+{if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
+<br />
+{assign var=area_name value=$fields[ix].ins_id}
+{include file=tiki-edit_help_tool.tpl}
+{/if}
+</td><td colspan="3">
 {/if}
 {/if}
 
@@ -267,7 +280,8 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {if $fields[ix].options_array[2]}<span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>{/if}
 
 {elseif $fields[ix].type eq 'a'}
-<textarea name="{$fields[ix].ins_id}" rows="4" cols="50">{$defaultvalues.$fid|escape}</textarea>
+<textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
+rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$defaultvalues.$fid|escape}</textarea>
 
 {elseif $fields[ix].type eq 'f'}
 {html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
