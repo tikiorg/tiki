@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.10 2003-08-07 04:34:17 rossta Exp $
+/* $Id: wikiplugin_module.php,v 1.11 2003-08-08 12:47:49 zaufi Exp $
 Displays a module inlined in page
 
 Parameters
@@ -77,7 +77,7 @@ function wikiplugin_module($data, $params) {
 			}
 
 			$template_file = 'templates/' . $template;
-
+            $smarty->assign('no_module_controls', 'y');
 			if (file_exists($template_file)) {
 				$out = $smarty->fetch($template);
 			} else {
@@ -89,6 +89,7 @@ function wikiplugin_module($data, $params) {
 					$out = $smarty->fetch('modules/user_module.tpl');
 				}
 			}
+            $smarty->clear_assign('no_module_controls');
 
 			$fp = fopen($cachefile, "w+");
 			fwrite($fp, $data, strlen($data));
