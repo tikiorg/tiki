@@ -631,6 +631,7 @@ postId numeric(8 ,0) identity,
   "data_size" numeric(11,0) default '0' NOT NULL,
   "created" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
+  "priv" varchar(1) default NULL NULL,
   "trackbacks_to" text default '',
   "trackbacks_from" text default '',
   "title" varchar(80) default NULL NULL,
@@ -3508,6 +3509,29 @@ go
 
 
 
+-- Tiki Jukebox
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '')
+go
+
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -4803,6 +4827,7 @@ fieldId numeric(12 ,0) identity,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
   "isSearchable" char(1) default NULL NULL,
+  "isPublic" char(1) default NULL NULL,
   PRIMARY KEY ("fieldId")
 )   
 go
@@ -4921,6 +4946,31 @@ go
 
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_tracker_options`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 08, 2003 at 01:48 PM
+--
+
+-- DROP TABLE "tiki_tracker_options"
+go
+
+
+
+CREATE TABLE "tiki_tracker_options" (
+  "trackerId" numeric(12,0) default '0' NOT NULL,
+  "name" varchar(80) default NULL NULL,
+  "value" text default NULL NULL,
+  PRIMARY KEY (trackerId,name(30))
+)  
+go
+
+
+
+-- --------------------------------------------------------
+
 
 --
 -- Table structure for table `tiki_trackers`
@@ -5616,8 +5666,8 @@ CREATE TABLE "users_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL NULL,
   "groupHome" varchar(255) default '',
-	usersTrackerId numeric(11,0),
-	groupTrackerId numeric(11,0),
+  "usersTrackerId" numeric(11,0) default NULL NULL,
+  "groupTrackerId" numeric(11,0) default NULL NULL,
   PRIMARY KEY ("groupName")
 ) 
 go
@@ -5827,6 +5877,11 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages')
 go
 
 
@@ -6423,6 +6478,39 @@ go
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki')
 go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages')
+go
+
+
+
+
+-- TikiJukebox permissions - Damosoft aka Damian
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox')
+go
+
 
 
 
@@ -8477,6 +8565,124 @@ go
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif')
 go
 
+
+
+
+--
+-- Tiki Jukebox tables
+--
+
+-- DROP TABLE "tiki_jukebox_genres"
+go
+
+
+
+CREATE TABLE "tiki_jukebox_genres" (
+genreId numeric(14 ,0) identity,
+  "genreName" varchar(80) default '',
+  "genreDescription" text default '',
+  PRIMARY KEY (genreId)
+)   
+go
+
+
+
+
+-- DROP TABLE "tiki_jukebox_albums"
+go
+
+
+
+CREATE TABLE "tiki_jukebox_albums" (
+albumId numeric(14 ,0) identity,
+  "title" varchar(80) default NULL NULL,
+  "description" text default '',
+  "created" numeric(14,0) default NULL NULL,
+  "lastModif" numeric(14,0) default NULL NULL,
+  "user" varchar(200) default '',
+  "visits" numeric(14,0) default NULL NULL,
+  "public" char(1),
+  "genreId" numeric(14,0) default NULL NULL,
+  PRIMARY KEY(albumId)
+)   
+go
+
+
+
+
+-- DROP TABLE "tiki_jukebox_tracks"
+go
+
+
+
+CREATE TABLE "tiki_jukebox_tracks" (
+trackId numeric(14 ,0) identity,
+  "albumId" numeric(14,0) default NULL NULL,
+  "artist" varchar(200) default '',
+  "title" varchar(200) default '',
+  "created" numeric(14,0) default NULL NULL,
+  "url" varchar(255) default '',
+  "filename" varchar(80) default '',
+  "filesize" numeric(14,0) default NULL NULL,
+  "filetype" varchar(250) default '',
+  "genreId" numeric(14,0) default NULL NULL,
+  "plays" numeric(14,0) default NULL NULL,
+  PRIMARY KEY(trackId)
+)  
+go
+
+
+
+
+--
+-- End of tiki jukebox tables
+--
+
+--
+-- moved from tiki-mysql autogenerated file into here
+--
+
+-- DROP TABLE "hw_assignments"
+go
+
+
+
+CREATE TABLE `hw_assignments` (
+  `articleId` numeric(8,0) NOT NULL auto_increment,
+  `title` varchar(80) default NULL NULL,
+  `state` char(1) default 's',
+  `authorName` varchar(60) default NULL NULL,
+  `topicId` numeric(14,0) default NULL NULL,
+  `topicName` varchar(40) default NULL NULL,
+  `size` numeric(12,0) default NULL NULL,
+  `useImage` char(1) default NULL NULL,
+  `image_name` varchar(80) default NULL NULL,
+  `image_type` varchar(80) default NULL NULL,
+  `image_size` numeric(14,0) default NULL NULL,
+  `image_x` numeric(4,0) default NULL NULL,
+  `image_y` numeric(4,0) default NULL NULL,
+  `image_data` image,
+  `publishDate` numeric(14,0) default NULL NULL,
+  `expireDate` numeric(14,0) default NULL NULL,
+  `created` numeric(14,0) default NULL NULL,
+  `heading` text,
+  `body` text,
+  `hash` varchar(32) default NULL NULL,
+  `author` varchar(200) default NULL NULL,
+  `reads` numeric(14,0) default NULL NULL,
+  `votes` numeric(8,0) default NULL NULL,
+  `points` numeric(14,0) default NULL NULL,
+  `type` varchar(50) default NULL NULL,
+  `rating` decimal(3,2) default NULL NULL,
+  `isfloat` char(1) default NULL NULL,
+  PRIMARY KEY ("`articleId`")
+  KEY `title` (`title`),
+  KEY `heading` (`heading`(255)),
+  KEY `body` (`body`(255)),
+  KEY `reads` (`reads`),
+  FULLTEXT KEY `ft` (`title`,`heading`,`body`)
+) 
+go
 
 
 

@@ -444,6 +444,7 @@ CREATE TABLE tiki_blog_posts (
   data_size int(11) unsigned NOT NULL default '0',
   created int(14) default NULL,
   user varchar(200) default NULL,
+  priv varchar(1) default NULL,
   trackbacks_to text,
   trackbacks_from text,
   title varchar(80) default NULL,
@@ -2041,6 +2042,13 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Bugs','tiki-mantis-view_bugs.php',192,'feature_mantis','tiki_p_mantis_view','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-mantis-admin.php',198,'feature_mantis','tiki_p_mantis_admin','');
 
+# Tiki Jukebox
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
+
 # --------------------------------------------------------
 
 #
@@ -2948,6 +2956,7 @@ CREATE TABLE tiki_tracker_fields (
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   isSearchable char(1) default NULL,
+  isPublic char(1) default NULL,
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3030,6 +3039,23 @@ CREATE TABLE tiki_tracker_items (
   PRIMARY KEY  (itemId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
+
+#
+# Table structure for table `tiki_tracker_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 01:48 PM
+#
+
+DROP TABLE IF EXISTS tiki_tracker_options;
+CREATE TABLE tiki_tracker_options (
+  trackerId int(12) NOT NULL default '0',
+  name varchar(80) default NULL,
+  value text default NULL,
+  PRIMARY KEY (trackerId,name(30))
+) TYPE=MyISAM ;
+# --------------------------------------------------------
+
 
 #
 # Table structure for table `tiki_trackers`
@@ -3517,8 +3543,8 @@ CREATE TABLE users_groups (
   groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
-	usersTrackerId int(11),
-	groupTrackerId int(11),
+  usersTrackerId int(11),
+  groupTrackerId int(11),
   PRIMARY KEY  (groupName(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3588,6 +3614,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoapprove_submission', 'Submited articles automatically approved', 'editors', 'cms');
@@ -3707,6 +3734,15 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
+
+# TikiJukebox permissions - Damosoft aka Damian
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
+
 # --------------------------------------------------------
 
 #
@@ -4204,9 +4240,53 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic varia
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
 
 #
-# Table structure for table `hw_assignments`
+# Tiki Jukebox tables
 #
-# Author: ggeller 20040120 Jan 20 2004
+
+DROP TABLE IF EXISTS tiki_jukebox_genres;
+CREATE TABLE tiki_jukebox_genres (
+  genreId int(14) unsigned NOT NULL auto_increment,
+  genreName varchar(80),
+  genreDescription text,
+  PRIMARY KEY (genreId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_albums;
+CREATE TABLE tiki_jukebox_albums (
+  albumId int(14) unsigned NOT NULL auto_increment,
+  title varchar(80) default NULL,
+  description text,
+  created int(14),
+  lastModif int(14),
+  user varchar(200),
+  visits int(14),
+  public char(1),
+  genreId int(14),
+  PRIMARY KEY(albumId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_tracks;
+CREATE TABLE tiki_jukebox_tracks (
+  trackId int(14) unsigned NOT NULL auto_increment,
+  albumId int(14),
+  artist varchar(200),
+  title varchar(200),
+  created int(14),
+  url varchar(255),
+  filename varchar(80),
+  filesize int(14),
+  filetype varchar(250),
+  genreId int(14),
+  plays int(14),
+  PRIMARY KEY(trackId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
+#
+# End of tiki jukebox tables
+#
+
+#
+# moved from tiki-mysql autogenerated file into here
 #
 
 DROP TABLE IF EXISTS hw_assignments;
@@ -4245,4 +4325,3 @@ CREATE TABLE `hw_assignments` (
   KEY `reads` (`reads`),
   FULLTEXT KEY `ft` (`title`,`heading`,`body`)
 ) TYPE=MyISAM;
-# --------------------------------------------------------
