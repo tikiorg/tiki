@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">Admin FAQ: {$faq_info.title}</a><br/><br/>
+<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a><br/><br/>
 [<a href="tiki-list_faqs.php" class="link">{tr}List FAQs{/tr}</a>
 |<a href="tiki-view_faq.php?faqId={$faqId}" class="link">{tr}View FAQ{/tr}</a>
 |<a href="tiki-list_faqs.php?faqId={$faqId}" class="link">{tr}Edit this FAQ{/tr}</a>
