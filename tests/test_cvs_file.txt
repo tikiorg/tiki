@@ -1,0 +1,22 @@
+tests !
+
+that is a file just to
+test how your client commit !
+
+change it use it do it !
+
+chouette on peut rigoler alors !
+
+Test for beerlounge. Greets from munich to berlin :-)
+
+this is musus, performing his first commit (hopefully)! :)
+
+chealer makes test_cvs_file enter 2004
+
+WE'RE ALL DOOMED!
+
+right?
+
+yep.
+
+COLORADO TESTS THIS
