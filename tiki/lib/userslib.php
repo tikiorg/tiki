@@ -456,8 +456,14 @@ class UsersLib {
   
   function confirm_user($user)
   {
+    global $feature_clear_passwords;
+    
     $provpass = $this->db->getOne("select provpass from users_users where login='$user'");
-    $query = "update users_users set password='$provpass' where login='$user'";
+    $hash=md5($provpass);
+    if($feature_clear_passwords == 'n') {
+      $provpass='';
+    }
+    $query = "update users_users set password='$provpass',hash='$hash' where login='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
   }
@@ -506,7 +512,11 @@ class UsersLib {
   
   function change_user_password($user,$pass)
   {
-    $query = "update users_users set password='$pass' where login='$user'";
+    $hash = md5($hash);
+    if($feature_clear_passwords == 'n') {
+      $pass='';
+    }
+    $query = "update users_users set hash='$hash',password='$pass' where login='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
   }
