@@ -1,5 +1,5 @@
 <!-- tiki-copyright.tpl /-->
-<table width="90%"><tr><td></td><td>
+<table width="100%" align="center"><tr><td></td><td align="center">
 <div id="tiki-foot">
 Copyright &#169; 2004&#8211;2005 the Kuro-Box Community
 <br />
