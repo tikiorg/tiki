@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignments.php,v 1.3 2004-02-20 22:58:27 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignments.php,v 1.4 2004-02-22 14:32:23 ggeller Exp $
 
-// Copyright (c) 2004, George Geller
+// Copyright (c) 2004, George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -15,6 +15,8 @@
 //   Replace $listpages with $listassignments
 //   Change the table structure from the article stuff to assignment stuff
 //     expireDate => dueDate
+//   Put in the ticket-checking stuff.
+//   Test with a large number of assignments.
 
 error_reporting(E_ALL);
 
@@ -23,8 +25,6 @@ error_reporting(E_ALL);
 
 // Initialization
 require_once ('tiki-setup.php');
-
-include_once("lib/commentslib.php");      // GGG remove later
 
 require_once("lib/homework/homeworklib.php");
 
@@ -43,28 +43,11 @@ if ($tiki_p_hw_teacher != 'y') {
 }
 
 if (isset($_REQUEST["remove"])) {
-  // check_ticket('view-article');
-  //  $artlib->remove_article($_REQUEST["remove"]);
-  $smarty->assign('msg', tra("Removing assignments is not yet implemented!."));
-  $smarty->display("error.tpl");
-  die;
+  // TODO: Add the check ticket stuff
+  $homeworklib->hw_assignment_remove($_REQUEST["remove"]);
 }
-
-// This script can receive the thresold
-// for the information as the number of
-// days to get in the log 1,3,4,etc
-// it will default to 1 recovering information for today
-if (!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'publishDate_desc';
-} else {
-  $sort_mode = $_REQUEST["sort_mode"];
-}
-
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 // If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -73,6 +56,7 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
+/*
 $now = date("U");
 
 if (isset($_SESSION["thedate"])) {
@@ -88,6 +72,7 @@ if (isset($_SESSION["thedate"])) {
 } else {
 	$pdate = $now;
 }
+*/
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
@@ -101,25 +86,19 @@ if (isset($_REQUEST["type"])) {
 	$type = '';
 }
 
-if (isset($_REQUEST["topic"])) {
-	$topic = $_REQUEST["topic"];
-} else {
-	$topic = '';
-}
-
 // Get a list of last changes to the Wiki database
-$listpages = $homeworklib->list_assignments(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic);
+$listassignments = $homeworklib->hw_assignments_list(0, $maxArticles);
 
-for ($i = 0; $i < count($listpages["data"]); $i++) {
-	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
-	$listpages["data"][$i]["show_author"] = 'n';
-	$listpages["data"][$i]["show_expdate"] = 'y';
+for ($i = 0; $i < count($listassignments["data"]); $i++) {
+	$listassignments["data"][$i]["parsed_heading"] = $tikilib->parse_data($listassignments["data"][$i]["heading"]);
+	$listassignments["data"][$i]["show_author"] = 'n';
+	$listassignments["data"][$i]["show_expdate"] = 'y';
 	$comments_prefix_var='article:';
-	$comments_object_var=$listpages["data"][$i]["articleId"];
+	$comments_object_var=$listassignments["data"][$i]["articleId"];
 	$comments_objectId = $comments_prefix_var.$comments_object_var;
 }
 
-$smarty->assign_by_ref('listpages', $listpages["data"]);
+$smarty->assign_by_ref('listpages', $listassignments["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-hw_teacher_assignments.tpl');
