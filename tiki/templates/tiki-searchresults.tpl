@@ -1,6 +1,7 @@
 <h2>{tr}Search results{/tr}:</h2>
 {tr}Search in{/tr}:
 [
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=all">{tr}Entire site{/tr}</a> |
 {if $feature_wiki eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}pages{/tr}</a> |
 {/if}

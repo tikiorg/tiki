@@ -1,3 +1,37 @@
+CREATE INDEX pageName     ON tiki_pages (pageName);
+CREATE INDEX data         ON tiki_pages (data(255));
+CREATE INDEX pageRank     ON tiki_pages (pageRank);
+CREATE INDEX name         ON tiki_galleries (name);
+CREATE INDEX description  ON tiki_galleries (description(255));
+CREATE INDEX hits         ON tiki_galleries (hits);
+CREATE INDEX title        ON tiki_faqs (title);
+CREATE INDEX description  ON tiki_faqs (description(255));
+CREATE INDEX hits         ON tiki_faqs (hits);
+CREATE INDEX faqId        ON tiki_faq_questions (faqId);
+CREATE INDEX question     ON tiki_faq_questions (question(255));
+CREATE INDEX answer       ON tiki_faq_questions (answer(255));
+CREATE INDEX name         ON tiki_images (name);
+CREATE INDEX description  ON tiki_images (description(255));
+CREATE INDEX hits         ON tiki_images (hits);
+CREATE INDEX title        ON tiki_comments (title);
+CREATE INDEX data         ON tiki_comments (data(255));
+CREATE INDEX object       ON tiki_comments (object);
+CREATE INDEX hits         ON tiki_comments (hits);
+CREATE INDEX name         ON tiki_files (name);
+CREATE INDEX description  ON tiki_files (description(255));
+CREATE INDEX downloads    ON tiki_files (downloads);
+CREATE INDEX title        ON tiki_blogs (title);
+CREATE INDEX description  ON tiki_blogs (description(255));
+CREATE INDEX hits         ON tiki_blogs (hits);
+CREATE INDEX title        ON tiki_articles (title);
+CREATE INDEX heading      ON tiki_articles (heading(255));
+CREATE INDEX body         ON tiki_articles (body(255));
+CREATE INDEX reads        ON tiki_articles (reads);
+CREATE INDEX data         ON tiki_blog_posts (data(255));
+CREATE INDEX blogId       ON tiki_blog_posts (blogId);
+CREATE INDEX created      ON tiki_blog_posts (created);
+
+
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_referer_stats','tiki','Can view referer stats');
 
 DROP TABLE IF EXISTS tiki_referer_stats;
