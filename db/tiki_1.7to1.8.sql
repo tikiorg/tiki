@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.50 2003-10-28 22:05:34 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.51 2003-11-03 03:17:19 dgdaniels Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -494,6 +494,9 @@ INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y')
 # blogs had the same problem than wiki pages : adding a field for size to avoid run-time calculation
 ALTER TABLE `tiki_blog_posts` ADD `data_size` int(10) unsigned default 0;
 UPDATE `tiki_blog_posts` set `data_size`=length(`data`);
+
+#so admin  and users have option of viewing the tpl for a page
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 
 
 
