@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.29 2003-09-28 14:06:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.30 2003-09-29 15:28:38 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,7 +73,8 @@ if (isset($_REQUEST["prefs"])) {
 
 			$smarty->assign('language', $_REQUEST["language"]);
 			include ('lang/' . $_REQUEST["language"] . '/language.php');
-                  $modlib->clear_cache();
+                  //$modlib->clear_cache();// Until the module cache is not function of the language or the cache keeps the {tr} or the module cache is replaced by the Smarty cache,
+									// the bug "when you change the language, some modules don't change language before a while " will remain
 		}
 	}
 
