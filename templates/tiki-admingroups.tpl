@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.16 2003-08-21 00:51:21 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.17 2003-09-05 20:14:10 mose Exp $ *}
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
@@ -24,7 +24,7 @@
 <tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
 <select name="include_groups[]" multiple="multiple" size="4">
 {section name=ix loop=$users}
-{assign var="inced" value="$users[ix].groupName"}
+{assign var=inced value=$users[ix].groupName}
 <option value="{$inced|escape}" {if $inc.$inced eq 'y'} selected="selected"{/if}>{$inced}</option>
 {/section}
 </select>
