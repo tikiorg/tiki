@@ -23,7 +23,7 @@ class WebMailLib extends TikiLib {
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 		$retval = array();
@@ -59,7 +59,7 @@ class WebMailLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -78,7 +78,7 @@ class WebMailLib extends TikiLib {
 				$result = $this->query($query, array($dirs[$i]));
 
 				if ($result->numRows()) {
-					$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+					$res = $result->fetchRow();
 					$dirs[$i] = $res["email"];
 				}
 			}
@@ -120,7 +120,7 @@ class WebMailLib extends TikiLib {
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
@@ -160,7 +160,7 @@ class WebMailLib extends TikiLib {
 			);
 		}
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return array(
 			$res["isRead"],
 			$res["isFlagged"],
@@ -193,7 +193,7 @@ class WebMailLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -230,7 +230,7 @@ class WebMailLib extends TikiLib {
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
@@ -247,7 +247,7 @@ class WebMailLib extends TikiLib {
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 } # class WebMailLib
