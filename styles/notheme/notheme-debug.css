@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.8 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.9 2003-11-07 23:49:06 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -120,7 +120,7 @@ span.dbgerror:hover {
 }
 
 /* make all text fields full sized */
-div.debugconsole * input[type = text] {
+div.debugconsole * input[type="text"] {
 	width: 99%;
 	font: normal 12px courier, Fixed, monospace;
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.6 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.7 2003-11-07 23:49:06 zaufi Exp $
  *
  */
 
@@ -105,4 +105,13 @@ caption {
 	font-weight: bold;
 	text-align: right;
 	vertical-align: middle;
+}
+
+table.wikitopline {
+    width: 100%;
+}
+
+/* Input fields inside forms */
+table.normal input[type="text"] {
+    width: 100%;
 }
