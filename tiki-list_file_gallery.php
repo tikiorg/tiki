@@ -85,6 +85,63 @@ if(isset($_REQUEST["remove"])) {
   $filegallib->remove_file($_REQUEST["remove"]);
 }
 
+$foo = parse_url($_SERVER["REQUEST_URI"]);
+$smarty->assign('url',httpPrefix().$foo["path"]);
+
+// Init smarty variables to blank values
+$smarty->assign('fname','');
+$smarty->assign('fdescription','');
+
+if (isset($_REQUEST["edit_mode"]) and ($_REQUEST['edit_mode'])) {
+	$smarty->assign('edit_mode','y');
+	$smarty->assign('edited','y');
+	if ($_REQUEST['fileId']>0) {
+		$info = $filegallib->get_file_info($_REQUEST['fileId']);
+		$smarty->assign('fileId',$fileId);
+		$smarty->assign('galleryId',$galleryId);
+		$smarty->assign_by_ref('fname',$info['name']);
+		$smarty->assign_by_ref('fdescription',$info['description']);
+	}
+}
+
+if (isset($_REQUEST['edit'])) {
+  if($tiki_p_admin_file_galleries != 'y') {
+    if($tiki_p_upload_images != 'y') {
+      // If you can't upload files then you can't edit a file you can't have a file
+      $smarty->assign('msg',tra("Permission denied you can't upload files so you can't edit them"));
+      $smarty->display("styles/$style_base/error.tpl");
+      die;  
+    }
+    // If the user can upload a file then check if he can edit THIS file
+    if($_REQUEST["fileId"]>0) {
+      $info = $filegallib->get_file_info($_REQUEST["fileId"]);
+      if(!$user || $info["user"]!=$user) {
+        $smarty->assign('msg',tra("Permission denied you cannot edit this file"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;  
+      }
+    }
+  }
+  // Everything is ok so we proceed to edit the file
+  $smarty->assign('edit_mode','y');
+  $smarty->assign_by_ref('fname',$_REQUEST["fname"]);
+  $smarty->assign_by_ref('fdescription',$_REQUEST["fdescription"]);
+
+  $fid = $filegallib->replace_file($_REQUEST["fileId"], $_REQUEST["fname"], $_REQUEST["fdescription"]);
+  
+/*
+  $cat_type='file gallery';
+  $cat_objid = $fgid;
+  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_name = $_REQUEST["name"];
+  $cat_href="tiki-list_file_gallery.php?galleryId=".$cat_objid;
+  include_once("categorize.php");
+*/
+  
+  $smarty->assign('edit_mode','n');
+}
+
+
 if(!isset($gal_info["maxRows"])) $gal_info["maxRows"]=10;
 if($gal_info["maxRows"]==0) $gal_info["maxRows"]=10;
 $maxRecords = $gal_info["maxRows"];

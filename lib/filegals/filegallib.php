@@ -220,7 +220,35 @@ class FileGalLib extends TikiLib {
   closedir($h);
   }
   
+  // Added by LeChuck, May 2, 2003
+  
+  function get_file_info($id) {
+    $query = "select * from tiki_files where fileId='$id'";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }	
+  
+  function replace_file($id,$name,$description) {
+  	
+  	// Update the fields in the database
+  	$name = addslashes(strip_tags($name));
+  	$description = addslashes(strip_tags($description));
+    $query = "update tiki_files set name='$name', description='$description' where fileId=$id";
+    $result = $this->query($query);
+    
+    // Get the gallery id for the file and update the last modified field
+    $now = date("U");
+    $galleryId = $this->getOne("select galleryId from tiki_files where fileId='$id'");
+    if ($galleryId) {
+	    $query = "update tiki_file_galleries set lastModif=$now where galleryId=$galleryId";
+	    $this->query($query);
+	}
+	return $result;
+  }
+  
 }
 
 $filegallib= new FileGalLib($dbTiki);
+
 ?>
