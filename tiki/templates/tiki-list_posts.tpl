@@ -1,4 +1,22 @@
-<a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Blog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Blog{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-list_posts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list posts tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!--- beginning of next bit --->
+
+
+<br/><br/>
 [<a class="link" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
 |<a class="link" href="tiki-blog_post.php">{tr}post{/tr}</a>
 |<a class="link" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
