@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.27 2004-02-23 23:16:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.28 2004-02-25 05:26:23 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -295,15 +295,8 @@ TABLE.normal, table.listgallery, table.creategalform, table.gallerylisting, tabl
 TABLE.normalnoborder {
 	width: 100%;
 }
-TD.heading, td.jukeboxlistheading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
+.heading, .jukeboxlistheading, .gallistheading, .listgalheading, .bloglistheading, .listfgalheading, .listfilesheading, .listartheading,
 	td.forumheading, td.thead {
-	background-color: #1c60a8;
-	color: #ddd7c6;
-	font-weight: bold;
-	padding 0 5px 0 5px;
-}
-th, th.jukeboxlistheading, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
-	th.forumheading, th.thead {
 	background-color: #1c60a8;
 	color: #ddd7c6;
 	font-weight: bold;
