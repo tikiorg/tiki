@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.12 2003-09-08 14:52:23 sylvieg Exp $
+/* $Id: wikiplugin_module.php,v 1.13 2003-09-30 13:05:01 sylvieg Exp $
 Displays a module inlined in page
 
 Parameters
@@ -18,12 +18,12 @@ so if you need to use parmas just add them in MODULE()
 like the trackerId in the above example.
 */
 function wikiplugin_module_help() {
-	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,align=>left|center|right,max)>)}{MODULE}~/np~";
+	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,align=>left|center|right,max=>,np=>0|1,args...)}{MODULE}~/np~";
 }
 
 function wikiplugin_module($data, $params) {
 	global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, $tikidomain, $user,
-		$feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
+		$feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $language;
 
 	$out = '';
 	extract ($params);
@@ -63,7 +63,7 @@ function wikiplugin_module($data, $params) {
 			$args = '';
 		}
 
-		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $module . '.tpl.cache';
+		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $module . '.tpl.'.$language.'.cache';
 		$phpfile = 'modules/mod-' . $module . '.php';
 		$template = 'modules/mod-' . $module . '.tpl';
 		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
@@ -89,11 +89,12 @@ function wikiplugin_module($data, $params) {
 					$out = $smarty->fetch('modules/user_module.tpl');
 				}
 			}
-            $smarty->clear_assign('no_module_controls');
-
-			$fp = fopen($cachefile, "w+");
-			fwrite($fp, $data, strlen($data));
-			fclose ($fp);
+            	$smarty->clear_assign('no_module_controls');
+			if (!file_exists($nocache)) {
+				$fp = fopen($cachefile, "w+");
+				fwrite($fp, $data, strlen($data));
+				fclose ($fp);
+			}
 		} else {
 			$fp = fopen($cachefile, "r");
 

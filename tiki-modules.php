@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.17 2003-09-29 20:09:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.18 2003-09-30 13:05:01 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,9 +106,11 @@ for ($i = 0; $i < count($left_modules); $i++) {
 			}
 
 			$r["data"] = $data;
-			$fp = fopen($cachefile, "w+");
-			fwrite($fp, $data, strlen($data));
-			fclose ($fp);
+			if (!file_exists($nocache)) {
+				$fp = fopen($cachefile, "w+");
+				fwrite($fp, $data, strlen($data));
+				fclose ($fp);
+			}
 		} else {
 			//print("Usando cache<br/>");
 			$fp = fopen($cachefile, "r");
@@ -185,9 +187,11 @@ for ($i = 0; $i < count($right_modules); $i++) {
 			}
 
 			$r["data"] = $data;
-			$fp = fopen($cachefile, "w+");
-			fwrite($fp, $data, strlen($data));
-			fclose ($fp);
+			if (!file_exists($nocache)) {
+				$fp = fopen($cachefile, "w+");
+				fwrite($fp, $data, strlen($data));
+				fclose ($fp);
+			}
 		} else {
 			//print("Usando cache<br/>");
 			$fp = fopen($cachefile, "r");
