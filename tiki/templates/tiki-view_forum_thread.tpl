@@ -11,6 +11,10 @@ a moderator approves it.{/tr}</small>
 </div>
 {/if}
 <a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
+<div align="right">
+[{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+{if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
+ </div>
 <br/><br/>
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
@@ -133,10 +137,7 @@ a moderator approves it.{/tr}</small>
 {if $tiki_p_admin_form eq 'y' or $thread_info.type ne 'l'}
 {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_post eq 'y'}
 
-[<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
- <a class="forumbutlink" href="javascript:hide('{$postclass}');">{tr}Hide Post Form{/tr}</a>]
-[{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
-{if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
+<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="show('{$postclass}');"/>
  
  {if $comment_preview eq 'y'}
   <br/><br/>
@@ -182,14 +183,7 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
-    <table class="forumformtable">
-    <tr>
-      <td class="forumform">{tr}Post{/tr}</td>
-      <td class="forumform">
-      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
-      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/></td>
-      {if $feature_smileys eq 'y'}<td class="forumform">{tr}smileys{/tr}</td>{/if}
-    </tr>
+    <table class="forumformtable">	
     <tr>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
@@ -238,6 +232,7 @@ a moderator approves it.{/tr}</small>
     	</td>
     </tr>
     {/if}
+    
 {if $feature_forum_parse eq 'y'}        
     <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="editpost"}
@@ -257,6 +252,13 @@ a moderator approves it.{/tr}</small>
 	  </td>   
     </tr>
     {/if}
+    <tr>
+      <td class="forumform">{tr}Post{/tr}</td>
+      <td class="forumform">
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/></td>
+    </tr>
     </table>
     </form>
     

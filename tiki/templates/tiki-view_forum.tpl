@@ -11,18 +11,19 @@
 {else}
 {assign var="postclass" value="forumpost"}
 {/if}
-<table >
+<table width="100%">
 <tr>
 <td>
-[{if $tiki_p_forum_post_topic eq 'y'}
-<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
-<a class="forumbutlink" href="javascript:hide('{$postclass}');">{tr}Hide Post Form{/tr}</a> |
+{if $tiki_p_forum_post_topic eq 'y'}
+<input type="button" name="comments_postComment" value="{tr}new topic{/tr}" onclick="show('{$postclass}');"/>
 {/if}
-<a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a> |
+<div align="right">
+[<a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a> |
 <a class="forumbutlink" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
 {if $tiki_p_admin_forum eq 'y'}
-| <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
-{/if}]
+| <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>]
+</div>
+{/if}
 </td>
 <td style="text-align:right;">
 {if $user and $feature_user_watches eq 'y'}
@@ -95,14 +96,6 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="forumformtable">
-    <tr>
-      <td class="forumform">{tr}Post{/tr}</td>
-      <td class="forumform">
-      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
-      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
-      </td>
-      {if $feature_smileys eq 'y'}<td class="forumform">{tr}smileys{/tr}</td>{/if}
-    </tr>
     <tr>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
@@ -205,6 +198,14 @@ a moderator approves it.{/tr}</small>
 	  </td>   
     </tr>
     {/if}
+    <tr>
+      <td class="forumform">{tr}Post{/tr}</td>
+      <td class="forumform">
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/></td>
+      </td>
+    </tr>
     </table>
     </form>
 <br/>    
