@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.36 2004-01-20 09:10:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.37 2004-01-21 20:52:29 mose Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -19,6 +19,22 @@ function chgArtType() {
 		document.getElementById('isreview').style.display = "none";
 	} else {
 		document.getElementById('isreview').style.display = "block";
+	}
+}
+
+function toggleSpan(id) {
+	if (document.getElementById(id).style.display == "inline") {
+		document.getElementById(id).style.display = "none";
+	} else {
+		document.getElementById(id).style.display = "inline";
+	}
+}
+
+function toggleBlock(id) {
+	if (document.getElementById(id).style.display == "block") {
+		document.getElementById(id).style.display = "none";
+	} else {
+		document.getElementById(id).style.display = "block";
 	}
 }
 
