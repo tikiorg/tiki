@@ -1,4 +1,5 @@
-{if $feature_wiki}
+{if $user}
+{if $feature_wiki eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}My Pages{/tr}
@@ -9,4 +10,5 @@
 {/section}
 </div>
 </div>
+{/if}
 {/if}

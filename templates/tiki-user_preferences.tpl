@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a></h1>
 
 <table width="100%">
 <tr>

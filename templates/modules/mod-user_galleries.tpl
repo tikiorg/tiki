@@ -1,3 +1,4 @@
+{if $user}
 {if $feature_galleries eq 'y'}
 <div class="box">
 <div class="box-title">
@@ -9,4 +10,5 @@
 {/section}
 </div>
 </div>
+{/if}
 {/if}

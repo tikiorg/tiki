@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-list_posts.php">{tr}Blogs{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a></h1>
 <a class="link" href="tiki-edit_blog.php">edit blog</a>
 <a class="link" href="tiki-blog_post.php">post</a>
 <a class="link" href="tiki-list_blogs.php">list blogs</a>
@@ -33,7 +33,7 @@
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_posts.php?remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
 <a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
 </td>
 {else}
@@ -43,7 +43,7 @@
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
-<a class="link" href="tiki-list_posts.php?remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
 <a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
 </td>
 {/if}
@@ -56,11 +56,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-list_posts.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_posts.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-list_posts.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_posts.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-list_articles.php">{tr}Articles{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a></h1>
 <a class="link" href="tiki-edit_article.php">edit article</a>
 <a class="link" href="tiki-view_articles.php">view articles</a>
 <br/><br/>
@@ -44,7 +44,7 @@
 <a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
 {/if}
 {if $tiki_p_remove_article}
-<a class="link" href="tiki-list_articles.php?remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">{tr}Read{/tr}</a>
 </td>
@@ -63,7 +63,7 @@
 <a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
 {/if}
 {if $tiki_p_remove_article}
-<a class="link" href="tiki-list_articles.php?remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">{tr}Read{/tr}</a>
 </td>
@@ -77,11 +77,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-list_articles.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_articles.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-list_articles.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

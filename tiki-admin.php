@@ -389,14 +389,20 @@ $smarty->assign_by_ref("tags",$tags);
 // Preferences to load
 // anonCanEdit
 // maxVersions
-$home_blog = $tikilib->get_preference("home_blog",1);
-$home_gallery = $tikilib->get_preference("home_gallery",1);
+$home_blog = $tikilib->get_preference("home_blog",0);
+$home_gallery = $tikilib->get_preference("home_gallery",0);
 $smarty->assign('home_blog_url','tiki-view_blog.php?blogId='.$home_blog);
 $smarty->assign('home_gallery_url','tiki-browse_gallery.php?galleryId='.$home_gallery);
-$hbloginfo = $tikilib->get_blog($home_blog);
-$hgalinfo = $tikilib->get_gallery($home_gallery);
-$smarty->assign('home_blog_name',substr($hbloginfo["title"],0,20));
-$smarty->assign('home_gal_name',substr($hgalinfo["name"],0,20));
+$smarty->assign('home_blog_name','');
+$smarty->assign('home_gal_name','');
+if($home_blog) {
+  $hbloginfo = $tikilib->get_blog($home_blog);
+  $smarty->assign('home_blog_name',substr($hbloginfo["title"],0,20));
+}
+if($home_gallery) {
+  $hgalinfo = $tikilib->get_gallery($home_gallery);
+  $smarty->assign('home_gal_name',substr($hgalinfo["name"],0,20));
+}
 
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');

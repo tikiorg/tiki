@@ -3,7 +3,7 @@
 {$user_title}
 </div>
 <span class="user-box-text"><div class="box-data"></span>
-{$user_data}
+{eval var=$user_data}
 </div>
 </div>
 

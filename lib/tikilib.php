@@ -287,7 +287,7 @@ class TikiLib {
       $raw = $res["HTMLData"];
       break;
     case 'useImage':
-      $raw = "<a target='_blank' href='banner_click.php?id=".$res["bannerId"]."&amp;url=".urlencode($res["url"])."'><img border='0' src=\"banner_image.php?id=".$id."\" /></a>";
+      $raw = "<a target='_blank' href='banner_click.php?id=".$res["bannerId"]."&amp;url=".urlencode($res["url"])."'><img alt='banner' border='0' src=\"banner_image.php?id=".$id."\" /></a>";
       break;
     case 'useFixedURL':
       $fp = fopen($res["fixedURLData"],"r");
@@ -3050,7 +3050,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
       //print("todo el tag es: ".$page."<br/>");
       //print_r($imgdata);
-      $repl = "<div class=\"innerimg\"><img src='".$imgdata["src"]."' border='0' ";
+      $repl = "<div class=\"innerimg\"><img alt='an image' src='".$imgdata["src"]."' border='0' ";
       if($imgdata["width"]) $repl.=" width='".$imgdata["width"]."'";
       if($imgdata["height"]) $repl.=" height='".$imgdata["height"]."'";
       $repl.= " /></div>";

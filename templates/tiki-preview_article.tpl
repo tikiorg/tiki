@@ -1,4 +1,4 @@
-<h1>{tr}Preview{/tr}: {$page}</h1>
+<h2>{tr}Preview{/tr}: {$page}</h2>
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
 <span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"} ({$reads} {tr}reads{/tr})</span>

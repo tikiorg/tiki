@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-list_banners.php">{tr}Banners{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a></h1>
 <a class="link" href="tiki-edit_banner.php">Create banner</a>
 <br/><br/>
 <div align="center">
@@ -41,7 +41,7 @@
 <td class="odd">
 {if $tiki_p_admin_banners eq 'y'}
 <a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-list_banners.php?remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
 </td>
@@ -58,7 +58,7 @@
 <td class="even">
 {if $tiki_p_admin_banners eq 'y'}
 <a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a class="link" href="tiki-list_banners.php?remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
 </td>
@@ -72,11 +72,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-list_articles.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_articles.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-list_articles.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_articles.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

@@ -1,4 +1,4 @@
-<h1>{tr}Browsing Gallery{/tr}: {$name}</h1>
+<h2>{tr}Browsing Gallery{/tr}: {$name}</h2>
   {if $system eq 'n'}
   {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
       <a  href="tiki-galleries.php?editgal={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
@@ -40,7 +40,7 @@
 <td class="odd">
 <a class="link" href="tiki-browse_image.php?imageId={$images[changes].imageId}">browse</a>
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
-<a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;remove={$images[changes].imageId}">[x]</a>
+<a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>
 {else}
@@ -53,7 +53,7 @@
 <td class="even">
 <a class="link" href="tiki-browse_image.php?imageId={$images[changes].imageId}">browse</a>
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
-<a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;remove={$images[changes].imageId}">[x]</a>
+<a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>
 {/if}
@@ -67,11 +67,11 @@
 
   <div class="mini">
       {if $prev_offset >= 0}
-        [<a class="paglink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+        [<a class="prevnext" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
       {/if}
       {tr}Page{/tr}: {$actual_page}/{$cant_pages}
       {if $next_offset >= 0}
-      &nbsp;[<a class="paglink" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+      &nbsp;[<a class="prevnext" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
       {/if}
   </div>
 </div>

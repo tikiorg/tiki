@@ -1,6 +1,6 @@
-<h1><a class="wiki" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a></h1>
+<h1><a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a></h1>
 <h4{tr}>Block description: {/tr}{$description}</h4>
-<h3>Create or edit content</h3>
+<h3>{tr}Create or edit content{/tr}</h3>
 {if $pId}
 {tr}You are editing block:{/tr}{$pId}<br/>
 {/if}
@@ -56,8 +56,8 @@
 <td width="34%" class="{$class}">&nbsp;{$listpages[changes].publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
 <td width="40%" class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
 <td class="{$class}">
-<a class="link" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
+<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
 </td>
 </tr>
 {sectionelse}
@@ -69,11 +69,11 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

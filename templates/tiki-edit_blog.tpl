@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-edit_blog.php">{tr}Edit Blog{/tr}: {$title}</a></h1>
+<h1><a class="pagetitle" href="tiki-edit_blog.php">{tr}Edit Blog{/tr}: {$title}</a></h1>
 <a class="link" href="tiki-list_blogs.php">list blogs</a>
 <br/><br/>
 <form method="post" action="tiki-edit_blog.php">

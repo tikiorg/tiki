@@ -1,7 +1,7 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<h1><a class="wiki" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a></h1>
+<h1><a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a></h1>
 <a class="link" href="tiki-list_articles.php">list articles</a>
 <a class="link" href="tiki-view_articles.php">view articles</a>
 <br/><br/>

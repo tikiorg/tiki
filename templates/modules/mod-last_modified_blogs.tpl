@@ -1,4 +1,4 @@
-{if $feature_galleries eq 'y'}
+{if $feature_blogs eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Last Modified blogs{/tr}

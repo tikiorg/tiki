@@ -30,7 +30,7 @@
 {tr}You can access the gallery using the following URL{/tr}: <a href="http://{$url}?galleryId={$editgal}">http://{$url}?galleryId={$editgal}</a>
 </div>
 {/if}
-<h1><a class="wiki" href="tiki-galleries.php">{tr}Available Galleries{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-galleries.php">{tr}Available Galleries{/tr}</a></h1>
 {if $edit_mode ne 'y'}
 <a class="link" href="tiki-galleries.php?edit_mode=1">create new gallery</a><br/><br/>
 {/if}
@@ -71,14 +71,14 @@
 <td class="odd">{$galleries[changes].hits}&nbsp;</td>
 <td class="odd">
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $galleries[changes].user eq $user}
-<a class="link" href="tiki-galleries.php?editgal={$galleries[changes].id}">Edit</a>
-<a class="link" href="tiki-galleries.php?removegal={$galleries[changes].id}">Remove</a>
+<a class="link" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editgal={$galleries[changes].id}">Edit</a>
+<a class="link" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}">Remove</a>
 {/if}
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $galleries[changes].user eq $user or $galleries[changes].public eq 'y'}
 <a class="link" href="tiki-upload_image.php?galleryId={$galleries[changes].id}">Upload</a>
 {/if}
-<a class="link" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">Browse</a>
-<a class="link" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}">List</a>
+<a class="link" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{tr}Browse{/tr}</a>
+<a class="link" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}">{tr}List{/tr}</a>
 </td>
 {else}
 <td class="even">{$galleries[changes].name}&nbsp;</td>
@@ -91,14 +91,14 @@
 <td class="even">{$galleries[changes].hits}&nbsp;</td>
 <td class="even">
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $galleries[changes].user eq $user}
-<a class="link" href="tiki-galleries.php?editgal={$galleries[changes].id}">{tr}Edit{/tr}</a> 
-<a class="link" href="tiki-galleries.php?removegal={$galleries[changes].id}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editgal={$galleries[changes].id}">{tr}Edit{/tr}</a> 
+<a class="link" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}">{tr}Remove{/tr}</a>
 {/if}
 {if $user eq 'admin' or $tiki_p_admin eq 'y' or $galleries[changes].user eq $user or $galleries[changes].public eq 'y'}
 <a class="link" href="tiki-upload_image.php?galleryId={$galleries[changes].id}">Upload</a>
 {/if}
 <a class="link" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{tr}Browse{/tr}</a>
-<a class="link" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}">List</a></td>
+<a class="link" href="tiki-list_gallery.php?galleryId={$galleries[changes].id}">{tr}List{/tr}</a></td>
 {/if}
 </tr>
 {sectionelse}
@@ -109,11 +109,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-galleries.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-galleries.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-galleries.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-galleries.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

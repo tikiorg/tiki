@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a></h1>
 <a class="link" href="tiki-edit_submission.php">edit submission</a>
 <br/><br/>
 <div align="center">
@@ -43,7 +43,7 @@
 <a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{tr}Edit{/tr}</a>
 {/if}
 {if $tiki_p_remove_submission eq 'y'}
-<a class="link" href="tiki-list_submissions.php?remove={$listpages[changes].subId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{tr}Remove{/tr}</a>
 {/if}
 {if $tiki_p_approve_submission eq 'y'}
 <a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}">{tr}Approve{/tr}</a>
@@ -64,7 +64,7 @@
 <a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{tr}Edit{/tr}</a>
 {/if}
 {if $tiki_p_remove_submission eq 'y'}
-<a class="link" href="tiki-list_submissions.php?remove={$listpages[changes].subId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}">{tr}Remove{/tr}</a>
 {/if}
 {if $tiki_p_approve_submission eq 'y'}
 <a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}">{tr}Approve{/tr}</a>
@@ -80,11 +80,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-list_submissions.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_submissions.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-list_submissions.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_submissions.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

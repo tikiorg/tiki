@@ -1,4 +1,4 @@
-<h2><a class="wiki" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a></h2>
+<h2><a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a></h2>
 <h3>Add Hotword</h3>
 <form method="post" action="tiki-admin_hotwords.php">
 <table>
@@ -32,7 +32,7 @@
 <td class="odd">{$words[user].word}</td>
 <td class="odd">{$words[user].url}</td>
 <td class="odd">
-<a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word}">{tr}remove{/tr}</a>
+<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}">{tr}remove{/tr}</a>
 </td>                                   
 </tr>
 {else}
@@ -40,7 +40,7 @@
 <td class="even">{$words[user].word}</td>
 <td class="even">{$words[user].url}</td>
 <td class="even">
-<a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word}">{tr}remove{/tr}</a>
+<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}">{tr}remove{/tr}</a>
 </td>                                   
 </tr>
 {/if}
@@ -50,11 +50,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="link" href="tiki-admin_hotwords.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" class="link" href="tiki-admin_hotwords.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="link" href="tiki-admin_hotwords.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" class="link" href="tiki-admin_hotwords.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 
