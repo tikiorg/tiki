@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.3 2004-04-29 15:09:53 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.4 2004-04-29 15:46:35 mose Exp $
 
 	-----------------------------------------------------------
   -> Multi-tiki trick for virtualhosting
@@ -19,17 +19,18 @@
 
 	the use 
 
-	$tikipath = $_SERVER['REQUEST_URI'];
+	$tikipath = split('/',$_SERVER['REQUEST_URI']);
 	// or
-	$tikipath = $_SERVER['PHP_SELF'];
+	$tikipath = split('/',$_SERVER['PHP_SELF']);
+
 	// and
-	$tikidomain = $tikipath[0];
+	$tikidomain = $tikipath[1];
 
 	then $tikidomain variable will be the name of the top dir
 
 */
 
-// if (isset($tikidomain_multi) and $tikidomain_multi) {
+//if (isset($tikidomain_multi) and $tikidomain_multi) {
 	if (isset($_SERVER['SERVER_NAME'])) {
 		$tikidomain = $_SERVER['SERVER_NAME'];
 	} elseif (isset($_SERVER['HTTP_HOST'])) {
@@ -42,5 +43,5 @@
 	if (is_file($file_multi)) {
 		$file_local_php = $file_multi;
 	}
-// }
+//}
 ?>
