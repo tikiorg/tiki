@@ -137,7 +137,6 @@
 {/if}
 <tr><td class="formcolor">{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
-{tr}Quicklinks{/tr}:<br /><br />
 {include file=tiki-edit_help_tool.tpl}
 </td>
 <td class="formcolor">

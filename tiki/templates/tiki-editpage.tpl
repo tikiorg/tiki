@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.43 2004-02-20 08:38:36 koobla Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.44 2004-02-22 20:45:36 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -52,7 +52,6 @@
 {/if}
 <tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
-{tr}Quicklinks{/tr}:<br /><br />
 {include file=tiki-edit_help_tool.tpl}
 </td>
 <td>
