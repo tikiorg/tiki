@@ -79,6 +79,9 @@ if(isset($_REQUEST["send"])) {
     $to_array=array();
     $to_array[]=$email;
     $unsubmsg=$nllib->get_unsub_msg($_REQUEST["nlId"],$email);
+	$mail->setHeadCharset("utf-8");
+	$mail->setTextCharset("utf-8");
+	$mail->setHtmlCharset("utf-8");
     $mail->setHTML($_REQUEST["data"].$unsubmsg,strip_tags($_REQUEST["data"]));    
     if($mail->send($to_array,'mail')) $sent++;
   }
