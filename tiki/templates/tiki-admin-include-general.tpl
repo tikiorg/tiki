@@ -130,6 +130,22 @@
       </tr>
       </table>
       <table width="99%"><tr>
+        <td colspan=2><hr></td>
+      </tr><tr>
+        <td class="form" width="43%">
+          {tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</td>
+        <td width="57%"><input type="checkbox" name="use_load_threshold"
+              {if $use_load_threshold eq 'y'}checked="checked"{/if}/>
+      </td>
+      </tr><tr>
+        <td class="form">{tr}Max average server load threshold in the last minute{/tr}:</td>
+        <td><input type="text" name="load_threshold" value="{$load_threshold}" size="10" /></td>
+      </tr><tr>
+      	<td class="form">{tr}Message to display when server is too busy{/tr}:</td>
+        <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
+      </tr>
+      </table>
+      <table width="99%"><tr>
         <td colspan=5><hr></td></tr>
         <tr>
         <td class="form" width="43%">

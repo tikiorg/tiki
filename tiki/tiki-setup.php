@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.135 2003-08-21 23:11:48 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.136 2003-08-22 02:43:44 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -299,19 +299,30 @@ include_once ("tiki-setup_base.php");
 
 //check to see if admin has closed the site
 $site_closed = $tikilib->get_preference('site_closed','n');
-$site_closed_msg = $tikilib->get_preference('site_closed_msg','This site is closed for maintainance.');
-if ($site_closed == 'y' and $tiki_p_access_closed_site != 'y'
-	 and !isset($_REQUEST['display_closed_site_msg']) and !isset($bypass_siteclose_check)) {
-	$url = 'tiki-error.php?error=' . urlencode(tra("$site_closed_msg")) . '&display_closed_site_msg=yes';
+if ($site_closed == 'y' and $tiki_p_access_closed_site != 'y' and !isset($bypass_siteclose_check)) {
+	$site_closed_msg = $tikilib->get_preference('site_closed_msg','Site is closed for maintainance; please come back later.');
+	$url = 'tiki-error_simple.php?error=' . urlencode("$site_closed_msg");
 	header('location: ' . $url);
 	exit;
 }
 
+//check to see if max server load threshold is enabled
+$use_load_threshold = $tikilib->get_preference('use_load_threshold','n');
 // get average server load in the last minute
 if ($load = @file('/proc/loadavg')) {
 	list($server_load) = explode(' ', $load[0]);
 	$smarty->assign('server_load',$server_load);
+	if ($use_load_threshold == 'y' and $tiki_p_access_closed_site != 'y' and !isset($bypass_siteclose_check)) {
+		$load_threshold = $tikilib->get_preference('load_threshold',3);
+		if ($server_load > $load_threshold) {
+			$site_busy_msg = $tikilib->get_preference('site_busy_msg','Server is currently too busy; please come back later.');
+			$url = 'tiki-error_simple.php?error=' . urlencode($site_busy_msg);
+			header('location: ' . $url);
+			exit;
+		}
+	}
 }
+
 
 // The votes array stores the votes the user has made
 if (!isset($_SESSION["votes"])) {
