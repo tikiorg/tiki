@@ -6,8 +6,9 @@
  */
 
 // include phpDB library
-//include_once('DB.php');
-
+if (!class_exists('DB')) {
+  include_once('DB.php');
+}
 /**
  * @class PGTStorageDB
  * The PGTStorageDB class is a class for PGT database storage. An instance of 

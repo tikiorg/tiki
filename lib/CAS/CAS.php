@@ -20,7 +20,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 /**
  * phpCAS version. accessible for the user by phpCAS::getVersion().
  */
-define('PHPCAS_VERSION','0.4.7-1');
+define('PHPCAS_VERSION','0.4.8-RC1');
 
 // ------------------------------------------------------------------------
 //  CAS VERSIONS
