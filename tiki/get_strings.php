@@ -8,7 +8,8 @@ if($tiki_p_admin != 'y') {
 
 // Cambiar lo que busca segun sea .php o .tpl
 
-$languages = Array('tw');
+//$languages = Array('tw','dk','ru','de','en','sp','fr');
+$languages = Array('dk','ru');
 
 $files = Array();
   

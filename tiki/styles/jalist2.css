@@ -155,7 +155,7 @@ div.fgaldesc, div.galdesc, div.simplebox {
 FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  padding-right : 0px;  padding-top : 0px; background: transparent;}
 
 /* General form elements */
-input,textarea, select {color : #000000; font: normal 10px Verdana, Arial, Helvetica, sans-serif;}
+file,input,textarea, select {color : #000000; font: normal 10px Verdana, Arial, Helvetica, sans-serif;}
 input { text-indent : 2px; }
 
 /* General tables */

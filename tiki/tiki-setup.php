@@ -227,6 +227,9 @@ $smarty->assign('t_use_dir',$t_use_dir);
 $feature_trackers = 'n';
 $smarty->assign('feature_trackers',$feature_trackers);
 
+$feature_directory = 'n';
+$smarty->assign('feature_directory',$feature_directory);
+
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html',$webmail_view_html);
 $webmail_max_attachment = 1500000;
