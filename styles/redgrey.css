@@ -123,6 +123,8 @@ TD#centercolumn {
         border: 1px solid #c4c4c4;
 	-moz-border-radius: 2em 2em 2em 2em;
 	width:   100%;
+	padding-top: 20px;
+	padding-bottom: 10px;
 }
 
 /* And this is what lies inside the centercolumn */
@@ -237,7 +239,7 @@ div.cbox {
 	margin-right:   8px;
 	margin-top:   4px;
 	margin-bottom:   0px;
-	border:   1px solid black;
+/*	border:   1px solid black;*/
 	padding-bottom:   10px;
 	overflow:   hidden;
 }
@@ -245,8 +247,8 @@ div.cbox {
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
 	background-color:    #e0e0e0;
-	color:   white;
-	border-bottom:   1px solid black;
+	color:   #848484;
+/*	border-bottom:   1px solid black;*/
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
 	font-weight:   bold;
