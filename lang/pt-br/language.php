@@ -3440,6 +3440,7 @@ $lang=Array(
 "Slideshows theme" => "Tema para slides",
 "Use URI as Home Page" => "Utilizar URI como página inicial",
 "Custom home" => "Página inicial personalizada",
+"Detect browser language" => "Detectar idioma do navegador",
 "Use database for translation" => "Usar banco de dados para tradução",
 "Record untranslated" => "Gravar sem tradução",
 "OS" => "Sistema Operacional",

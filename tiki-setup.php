@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.225 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.226 2004-05-30 02:52:56 lfagundes Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1226,6 +1226,14 @@ if($feature_mailin == 'y' && $mailin_autocheck == 'y')
   }
 }
 
+if ($feature_detect_language == "y") {
+    $browser_language = detect_browser_language();
+    if (!empty($browser_language)) {
+	$language = $browser_language;
+	$smarty->assign('language', $language);
+    }
+}
+
 $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $group = '';
@@ -1271,7 +1279,8 @@ if ($feature_userPreferences == 'y') {
     }
 
     $smarty->assign('language', $language);
-} 	
+}
+
 $stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];
 

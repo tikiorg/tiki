@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.25 2004-05-13 08:13:17 russwilde Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.26 2004-05-30 02:52:56 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if (isset($_REQUEST["prefs"])) {
         "direct_pagination",
         "feature_menusfolderstyle",
         "feature_obzip",
+        "feature_detect_language",
         "lang_use_db",
         "modallgroups",
         "modseparateanon", // MGvK
@@ -199,6 +200,7 @@ $smarty->assign_by_ref("timezone_server", $timezone_server);
 
 // Set defaults
 $smarty->assign("language", $tikilib->get_preference("language", "en"));
+$smarty->assign("feature_detect_language", $tikilib->get_preference("feature_detect_language", 'n'));
 $smarty->assign("lang_use_db", $tikilib->get_preference("lang_use_db", 'n'));
 $smarty->assign("useUrlIndex", $tikilib->get_preference("useUrlIndex", 'n'));
 $smarty->assign("urlIndex", $tikilib->get_preference("urlIndex", ''));

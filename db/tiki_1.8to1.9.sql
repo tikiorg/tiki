@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.62 2004-05-29 21:53:49 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.63 2004-05-30 02:52:59 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -494,6 +494,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_st
 
 # 
 # Changing language code from 'br' to 'pt-br'
+# 29 May 2004 by lfagundes
 # 
 
 UPDATE tiki_calendar_items SET lang = 'pt-br' WHERE lang='br';
@@ -503,4 +504,7 @@ UPDATE tiki_menu_languages SET language = 'pt-br' WHERE language='br';
 UPDATE tiki_untranslated SET lang = 'pt-br' WHERE lang='br';
 UPDATE tiki_preferences SET value = 'pt-br' WHERE value='br' and name='language';
 UPDATE tiki_user_preferences SET value = 'pt-br' WHERE value='br' and prefName='language';
+
+# Added 29 May 2004 by lfagundes; new feature
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','y');
 

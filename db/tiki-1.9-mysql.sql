@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.24 2004-05-29 21:32:22 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.25 2004-05-30 02:52:58 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4548,3 +4548,5 @@ CREATE TABLE tiki_hw_pages (
 #
 # Homework tables end
 #
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','y');
