@@ -5272,6 +5272,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_default_or
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_per_page','10');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comments','n');
 
 
