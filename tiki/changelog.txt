@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.103 2003-09-18 20:41:24 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.104 2003-09-21 18:12:30 lueders Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,7 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] assign page permissions to whole structures 
 * [NEW] added an optional &highlight=word+otherword to highlight some words 
   in any page
 * [NEW] admin topics now allows existing topics to be changed
