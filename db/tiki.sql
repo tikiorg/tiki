@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-10-15 15:54:46 $
-# $Author: damosoft $
+# $Date: 2004-12-02 22:41:29 $
+# $Author: jburleyebuilt $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1667,6 +1667,7 @@ CREATE TABLE tiki_link_cache (
   refresh int(14) default NULL,
   PRIMARY KEY  (cacheId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+CREATE INDEX urlindex ON tiki_link_cache (url(250));
 # --------------------------------------------------------
 
 #

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.92 2004-10-15 15:54:46 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.93 2004-12-02 22:41:29 jburleyebuilt Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -688,4 +688,5 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
+CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
