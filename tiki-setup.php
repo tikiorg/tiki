@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.202 2004-03-25 06:19:08 dabright Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.203 2004-03-26 21:27:20 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1234,13 +1234,6 @@ if ($feature_userPreferences == 'y') {
 
     $smarty->assign('style', $style);
     $smarty->assign('language', $language);
-}
-
-if ($lang_use_db != 'y') {
-    // check if needed!!!
-    global $lang;
-
-    include_once ('lang/' . $language . '/language.php');
 }
 
 $feature_babelfish = $tikilib->get_preference('feature_babelfish', 'y');

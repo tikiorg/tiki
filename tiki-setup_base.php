@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.55 2004-03-25 21:02:45 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.56 2004-03-26 21:27:20 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,8 +101,10 @@ function tra($content, $lg="") {
     global $language;
 
     if ($lang_use_db != 'y') {
-        if ($lg == "" || $lg == $language)
+        if ($lg == "" || $lg == $language) {
            global $lang;
+	      include_once("lang/$language/language.php");
+        }
         else
            include ("lang/$lg/language.php");
         if ($content) {
@@ -191,13 +193,22 @@ if(!$cachelib->isCached("allperms")) {
 }
 $allperms = $allperms["data"];
 
-//Initializes permissions
-foreach ($allperms as $vperm) {
-	$perm = $vperm["permName"];
-	$$perm = 'n';
 
-	$smarty->assign("$perm", 'n');
+foreach ($allperms as $vperm) {
+    $perm = $vperm["permName"];
+
+    if ($user != 'admin' && (!$user || !$userlib->user_has_permission($user, 'tiki_p_admin'))) {
+        $$perm = 'n';
+
+        $smarty->assign("$perm", 'n');
+    } else {
+        $$perm = 'y';
+
+        $smarty->assign("$perm", 'y');
+    }
 }
+
+unset($allperms);
 
 // Permissions
 // Get group permissions here
@@ -362,18 +373,6 @@ if ($tiki_p_admin_cms == 'y') {
     }
 }
 
-//Gives admins all permissions
-if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {
-	foreach ($allperms as $vperm) {
-		$perm = $vperm["permName"];
-		$$perm = 'y';
-
-		$smarty->assign("$perm", 'y');
-	}
-}
-
-unset($allperms);
-
 $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
 $style = $tikilib->get_preference("style", 'moreneat.css');
@@ -430,13 +429,6 @@ if (!isset($_SERVER['QUERY_STRING']))
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
     $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
 }
-
-//really needed? (todo: check)
-//if ($lang_use_db!='y') {
-global $lang;
-include_once('lang/' . $language . '/language.php');
-
-//}
 
 // added for wirtual hosting suport
 if (!isset($tikidomain)) {
