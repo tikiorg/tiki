@@ -64,7 +64,8 @@
                                         {assign var=THEimageId value=$images[idx].imageId}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;desp=$desp&amp;offset=$offset&amp;imageId=$THEimageId&amp;popup=1"} class="gallink"><img src='img/icons2/admin_unhide.gif' border='0' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
           <br />
-         ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits} {tr}hits{/tr}]</small>
+         ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits}
+				 {if $images[idx].hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
          </td>
          {if $smarty.section.idx.index % $rowImages eq $rowImages2}
            </tr><tr>

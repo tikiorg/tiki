@@ -1,8 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.14 2003-12-28 11:41:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.15 2004-06-28 16:16:30 mose Exp $ *}
 
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
 
 <div id="page-bar">
+<p>
 <span class="button2"> <a class="linkbut" href="#site_stats">{tr}Site{/tr}</a></span>
 {if $wiki_stats}<span class="button2"> <a class="linkbut" href="#wiki_stats">{tr}Wiki{/tr}</a></span>{/if}
 {if $igal_stats}<span class="button2"> <a class="linkbut" href="#igal_stats">{tr}Image galleries{/tr}</a></span>{/if}
@@ -14,6 +15,7 @@
 {if $faq_stats}<span class="button2"> <a class="linkbut" href="#faq_stats">{tr}FAQs{/tr}</a></span>{/if}
 {if $user_stats}<span class="button2"> <a class="linkbut" href="#user_stats">{tr}User{/tr}</a></span>{/if}
 {if $quiz_stats}<span class="button2"> <a class="linkbut" href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
+</p>
 </div>
 
 <table class="normal">

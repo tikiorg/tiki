@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-06-27 03:05:48 $
+# $Date: 2004-06-28 16:16:24 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2030,7 +2030,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_admin_newsletters','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Ephemerides','tiki-eph.php',950,'feature_eph','','');
@@ -3825,7 +3825,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'editors', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
@@ -3908,7 +3908,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_rollback', 'Can rollback pages', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_articles', 'Can send articles to other sites', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_instance', 'Can send instances after completion', 'registered', 'workflow');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'admin', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'editors', 'newsletters');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_pages', 'Can send pages to other sites', 'registered', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_sendme_articles', 'Can send articles to this site', 'registered', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_sendme_pages', 'Can send pages to this site', 'registered', 'comm');
@@ -4670,55 +4670,18 @@ CREATE TABLE tiki_score (
   event varchar(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
   expiration int(11) NOT NULL default '0',
-  category text NOT NULL,
-  description text NOT NULL,
-  ord int(11) NOT NULL default '0',
   PRIMARY KEY  (event),
-  KEY ord (ord)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_users_score;
 CREATE TABLE tiki_users_score (
   user char(40) NOT NULL default '',
   event_id char(40) NOT NULL default '',
-  score int(11) NOT NULL default '0',
   expire int(14) NOT NULL default '0',
   tstamp timestamp(14) NOT NULL,
   PRIMARY KEY  (user,event_id),
   KEY user (user,event_id,expire)
 ) TYPE=MyISAM;
-
-INSERT INTO tiki_score VALUES ('login',1,0,'General','Login',1);
-INSERT INTO tiki_score VALUES ('login_remain',2,60,'General','Stay logged',2);
-INSERT INTO tiki_score VALUES ('profile_fill',10,0,'General','Fill each profile field',3);
-INSERT INTO tiki_score VALUES ('profile_see',2,0,'General','See other user\'s profile',4);
-INSERT INTO tiki_score VALUES ('profile_is_seen',1,0,'General','Have your profile seen',5);
-INSERT INTO tiki_score VALUES ('friend_new',10,0,'General','Make friends (feature not available yet)',6);
-INSERT INTO tiki_score VALUES ('message_receive',1,0,'General','Receive message',7);
-INSERT INTO tiki_score VALUES ('message_send',2,0,'General','Send message',8);
-INSERT INTO tiki_score VALUES ('article_read',2,0,'Articles','Read an article',9);
-INSERT INTO tiki_score VALUES ('article_comment',5,0,'Articles','Comment an article',10);
-INSERT INTO tiki_score VALUES ('article_new',20,0,'Articles','Publish an article',11);
-INSERT INTO tiki_score VALUES ('article_is_read',1,0,'Articles','Have your article read',12);
-INSERT INTO tiki_score VALUES ('article_is_commented',2,0,'Articles','Have your article commented',13);
-INSERT INTO tiki_score VALUES ('fgallery_new',10,0,'File galleries','Create new file gallery',14);
-INSERT INTO tiki_score VALUES ('fgallery_new_file',10,0,'File galleries','Upload new file to gallery',15);
-INSERT INTO tiki_score VALUES ('fgallery_download',5,0,'File galleries','Download other user\'s file',16);
-INSERT INTO tiki_score VALUES ('fgallery_is_downloaded',5,0,'File galleries','Have your file downloaded',17);
-INSERT INTO tiki_score VALUES ('igallery_new',10,0,'Image galleries','Create a new image gallery',18);
-INSERT INTO tiki_score VALUES ('igallery_new_img',6,0,'Image galleries','Upload new image to gallery',19);
-INSERT INTO tiki_score VALUES ('igallery_see_img',3,0,'Image galleries','See other user\'s image',20);
-INSERT INTO tiki_score VALUES ('igallery_img_seen',1,0,'Image galleries','Have your image seen',21);
-INSERT INTO tiki_score VALUES ('blog_new',20,0,'Blogs','Create new blog',22);
-INSERT INTO tiki_score VALUES ('blog_post',5,0,'Blogs','Post in a blog',23);
-INSERT INTO tiki_score VALUES ('blog_read',2,0,'Blogs','Read other user\'s blog',24);
-INSERT INTO tiki_score VALUES ('blog_comment',2,0,'Blogs','Comment other user\'s blog',25);
-INSERT INTO tiki_score VALUES ('blog_is_read',3,0,'Blogs','Have your blog read',26);
-INSERT INTO tiki_score VALUES ('blog_is_commented',3,0,'Blogs','Have your blog commented',27);
-INSERT INTO tiki_score VALUES ('wiki_new',10,0,'Wiki','Create a new wiki page',28);
-INSERT INTO tiki_score VALUES ('wiki_edit',5,0,'Wiki','Edit an existing page',29);
-INSERT INTO tiki_score VALUES ('wiki_attach_file',3,0,'Wiki','Attach file',30);
-
 
 
 #

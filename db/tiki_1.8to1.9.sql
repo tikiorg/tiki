@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.80 2004-06-27 03:05:48 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.81 2004-06-28 16:16:25 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -593,3 +593,31 @@ update `tiki_menu_options` set type='r' where `menuId`=42 and `name`='Admin (cli
 
 #Added June 26th lfagundes aka batawata, making score db independent
 alter table `tiki_users_score` modify `expire` int(14) not null;
+
+#Added June 27th lfagundes, refactoring score to have static data in php instead of db
+alter table `tiki_score` drop description;
+alter table `tiki_score` drop category;
+alter table `tiki_score` drop ord;
+
+#Added June 27th lfagundes, removing uneeded
+alter table `tiki_users_score` drop score;
+
+#Added June 27th marclaporte, changing menu option to take into account new tiki_p_send_newsletters perm
+# uncomment and use these if you didnt alter the default Application menu 
+#UPDATE tiki_menu_options SET perm = 'tiki_p_send_newsletters' WHERE position='905';
+#UPDATE users_permissions SET level = 'admin' WHERE permName='tiki_p_admin_newsletters';
+#UPDATE users_permissions SET level = 'editors' WHERE permName='tiki_p_send_newsletters';
+
+CREATE TABLE tiki_searchsyllable(
+  syllable varchar(80) NOT NULL default '',
+  lastUsed int(11) NOT NULL default '0',
+  lastUpdated int(11) NOT NULL default '0',
+  PRIMARY KEY  (syllable),
+  KEY lastUsed (lastUsed)
+) TYPE=MyISAM;
+
+CREATE TABLE tiki_searchwords(
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
+  PRIMARY KEY  (syllable,searchword)
+) TYPE=MyISAM;

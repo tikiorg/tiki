@@ -11,7 +11,7 @@
   </div>
   {/if}
   <div id="tiki-mid">
-    <table border="0" cellpadding="0" cellspacing="0" >
+    <table border="0" cellpadding="0" cellspacing="0" id="tikimidtbl">
     <tr>
       {if $feature_left_column eq 'y'}
       <td id="leftcolumn">

@@ -1813,8 +1813,6 @@ function get_included_groups($group) {
     // TODO: if there's already a friendship request from friend to user, accept it
     function request_friendship($user, $friend)
     {
-	global $messulib;
-
 	if (empty($user) || empty($friend) || $user == $friend) {
 	    return false;
 	}
@@ -1833,8 +1831,6 @@ function get_included_groups($group) {
 
     function accept_friendship($user, $friend)
     {
-	global $messulib;
-
 	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
 				array($user, $friend));
 
@@ -1860,21 +1856,11 @@ function get_included_groups($group) {
 	$this->score_event($user,'friend_new',$friend);
 	$this->score_event($friend,'friend_new',$user);
 
-	$messulib->post_message($friend,
-				$user,
-				$friend,
-				'',
-				tra('AcceptFriendshipSubject'),
-				tra('AcceptFriendshipMessage'),
-				3);
-
 	return true;
     }
 
     function refuse_friendship($user, $friend)
     {
-	global $messulib;
-
 	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
 				array($user, $friend));
 
@@ -1884,15 +1870,6 @@ function get_included_groups($group) {
 	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
 	$this->query($query, array($user, $friend));
 	$this->query($query, array($friend, $user));
-
-	$messulib->post_message($friend,
-				$user,
-				$friend,
-				'',
-				tra('RefuseFriendshipSubject'),
-				tra('RefuseFriendshipMessage'),
-				3);
-
 
 	return true;
     }
@@ -1928,19 +1905,11 @@ function get_included_groups($group) {
 
     function break_friendship($user, $friend)
     {
-	global $messulib;
 
 	$query = "delete from `tiki_friends` where `user`=? and `friend`=?";
 	$this->query($query, array($user, $friend));
 	$this->query($query, array($friend, $user));
 
-	$messulib->post_message($friend,
-				$user,
-				$friend,
-				'',
-				tra('BreakFriendshipSubject'),
-				tra('BreakFriendshipMessage'),
-				3);
     }
 
   

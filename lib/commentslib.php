@@ -1011,7 +1011,7 @@ class Comments extends TikiLib {
 	    $now = date("U");
 	    $oldage = $now - $age;
 	    $query = "select `threadId` from `tiki_comments` where
-		`parentId`=0  and commentDate<?";
+	    `parentId`=0  and `commentDate`<?";
 	    $result = $this->query($query, array( (int) $oldage ));
 
 	    while ($res = $result->fetchRow()) {

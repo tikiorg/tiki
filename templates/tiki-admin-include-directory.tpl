@@ -1,4 +1,6 @@
-<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your directory, find "Admin directory" under "Directory" on the left menu, or{/tr} <a class="link" href="tiki-directory_admin.php">{tr}click here{/tr}</a>.</div><br />
+{if $feature_help eq "y"}
+<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your directory, find "Admin directory" under "Directory" on the application menu, or{/tr} <a class="link" href="tiki-directory_admin.php">{tr}click here{/tr}</a>.</div><br />
+{/if}
 <div class="cbox">
   <div class="cbox-title">{tr}Directory{/tr}</div>
   <div class="cbox-data">

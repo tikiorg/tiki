@@ -16,7 +16,7 @@
 
 <h3>{tr}Ephemerides{/tr}</h3>
 {if $tiki_p_eph_admin eq 'y'}
-<a class="linkbut" href="tiki-eph_admin.php">{tr}Admin{/tr}</a>
+<p><a class="linkbut" href="tiki-eph_admin.php">{tr}Admin{/tr}</a></p>
 {/if}
 <table class="normal">
 <tr>
@@ -38,6 +38,8 @@
 	</table>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="2">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

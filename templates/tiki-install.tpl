@@ -10,7 +10,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 {if $virt}
 <table><tr><td width="180">
 <div class="box">
-<div class="box-title">MultiTiki setup</div>
+<div class="box-title">
+<a title='help' href='http://tikiwiki.org/MultiTiki19' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
+MultiTiki setup</div>
 <div class="box-data">
 <div><a href="tiki-install.php">default</a></div><br />
 {foreach key=k item=i from=$virt}
