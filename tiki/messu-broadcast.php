@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.16 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.17 2004-01-29 01:47:39 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,8 +132,8 @@ if (isset($_REQUEST['send'])) {
 }
 ask_ticket('messu-broadcast');
 
-$groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
-$smarty->assign_by_ref('groups', $groups["data"]);
+$groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('groups', $groups);
 
 $section = 'user_messages';
 include_once ('tiki-section_options.php');

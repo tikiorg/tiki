@@ -27,7 +27,7 @@
     <option value="all" selected="selected">{tr}All users{/tr}</option>
     {/if}
 	{section name=ix loop=$groups}
-	<option value="{$groups[ix].groupName|escape}">{$groups[ix].groupName}</option>
+	<option value="{$groups[ix]|escape}">{$groups[ix]}</option>
 	{/section}
     </select>
     </td>
