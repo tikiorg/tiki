@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.16 2003-11-24 00:07:24 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.17 2003-11-24 00:55:14 zaufi Exp $ *}
 
 {if $feature_wiki eq 'y'}
-{tikimodule title="{tr}Last changes{/tr}" name="last_modif_pages"}
+{if $nonums eq 'y'}
+{eval var="{tr}Last `$module_rows` changes{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Last changes{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="last_modif_pages"}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastModif}
      <tr>
