@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.1 2004-01-20 17:03:20 halon Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.2 2004-01-20 19:09:09 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,19 +58,19 @@ $smarty->assign('pid', $_REQUEST['pid']);
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["delete"])) {
-	check_ticket('g-admin-processes');
+	check_ticket('g-admin-graph');
 	foreach (array_keys($_REQUEST["process"])as $item) {
 		$processManager->remove_process($item);
 	}
 }
 
 if (isset($_REQUEST['newminor'])) {
-	check_ticket('g-admin-processes');
+	check_ticket('g-admin-graph');
 	$processManager->new_process_version($_REQUEST['newminor']);
 }
 
 if (isset($_REQUEST['newmajor'])) {
-	check_ticket('g-admin-processes');
+	check_ticket('g-admin-graph');
 	$processManager->new_process_version($_REQUEST['newmajor'], false);
 }
 
@@ -139,7 +139,9 @@ if ($offset > 0) {
 $smarty->assign_by_ref('items', $items["data"]);
 
 if ($_REQUEST['pid']) {
-	check_ticket('g-admin-graph');
+    //if we are linked from, lets say tiki-g-admin_processes.php, then we get a CSRF protection error.
+	//this shouldn't be?
+    //check_ticket('g-admin-graph');
 	$valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 
 	$errors = array();
