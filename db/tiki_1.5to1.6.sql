@@ -1,5 +1,16 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+drop table if exists tiki_newsreader_servers;
+create table tiki_newsreader_servers(
+  user varchar(200) not null,
+  serverId integer(12) not null auto_increment,
+  server varchar(250),
+  port integer(4),
+  username varchar(200),
+  password varchar(200),
+  primary key(serverId)
+);
+
 
 ## Wiki footnotes
 drop table if exists tiki_page_footnotes;
