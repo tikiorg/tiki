@@ -25,7 +25,7 @@
                     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                       <tr> 
                         <td width="158" align="center" valign="middle"> 
-<div align="left"><img src="http://tikiwiki.org/img/wiki_up/tikibutton2.png" border="0" /></div></td>
+<div align="left"><img src="img/tiki/tikibutton2.png" border="0" /></div></td>
                         <td width="100%" align="center" valign="middle"></td>
                       </tr>
                     </table>
