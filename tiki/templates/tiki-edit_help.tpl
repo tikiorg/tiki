@@ -10,7 +10,7 @@
 <tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> "{literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
 <tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an{/tr} {tr}external link{/tr}: [URL] {tr}or{/tr} [URL|{tr}link_description{/tr}] {tr}or{/tr} [URL|{tr}description{/tr}|nocache].</td></tr>
-<tr><td><strong>{tr}Multi-page pages{/tr}:</strong></td><td>{tr}use ...page... to sepparate pages{/tr}</td></tr>
+<tr><td><strong>{tr}Multi-page pages{/tr}:</strong></td><td>{tr}use ...page... to separate pages{/tr}</td></tr>
 <tr><td><strong>{tr}Misc{/tr}:</strong></td><td> "!", "!!", "!!!" {tr}make_headings{/tr}, "-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr} "==={tr}text{/tr}===" {tr}underlines text{/tr}</td></tr>
 <tr><td><strong>{tr}Title bar{/tr}:</strong></td><td> "-={tr}title{/tr}=-" {tr}creates a title bar{/tr}.</td></tr>
 <tr><td><strong>{tr}Images{/tr}:</strong></td><td> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}</td></tr>

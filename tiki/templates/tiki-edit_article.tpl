@@ -91,7 +91,7 @@
 </td>
 </tr>
 <tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor">
-<b>{tr}Use ...page... to sepparate pages in a multi-page article{/tr}</b><br/>
+<b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br/>
 <textarea class="wikiedit" id="body" name="body" rows="25" cols="80" id='subbody' wrap="virtual">{$body}</textarea></td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
