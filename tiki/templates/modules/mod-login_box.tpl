@@ -8,7 +8,9 @@
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br/>
       {if $tiki_p_admin eq 'y'}
         <form action="{$login_url}" method="post">
-        {tr}user{/tr}: <input type="text" name="username" size="8" /><input type="submit" name="su" value="set" />
+        {tr}user{/tr}:
+        <input type="text" name="username" size="8" />
+        <input type="submit" name="su" value="set" />
         </form>
       {/if}
     {else}
@@ -76,17 +78,21 @@
           </tr>
           {/if}
           {if $show_stay_in_ssl_mode eq 'y'}
-          <tr><td>{tr}stay in ssl mode{/tr}:&nbsp;
-            <input type="checkbox" name="stay_in_ssl_mode" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
-          </td>
-          </tr>
-          {else}
-          <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode}" />
+            <tr>
+              <td>
+                {tr}stay in ssl mode{/tr}:&nbsp;
+                <input type="checkbox" name="stay_in_ssl_mode" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
+              </td>
+            </tr>
           {/if}
           </table>
         </td>
       </tr>
       </table>
+
+      {if $show_stay_in_ssl_mode ne 'y'}
+        <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode}" />
+      {/if}
       </form>
     {/if}
 </div>
