@@ -11,6 +11,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
+// NOTE: Use of this page is deprecated; please use $categlib->get_object_categories_perms() instead
+// ToDo: remove this page after when page is no longer used
+
 if ($tiki_p_admin != 'y') {
 	$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 	foreach ($perms["data"] as $perm) {

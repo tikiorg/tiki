@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.33 2004-06-13 02:42:16 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.34 2004-06-13 04:35:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,22 +39,21 @@ if (!isset($_REQUEST["articleId"])) {
 // if (isset($_REQUEST["articleId"])) {
 
 if ($feature_categories == 'y') {
-	$objId = $_REQUEST['articleId'];
-	$is_categorized = $categlib->is_categorized('article',$objId);
-
-	if ($is_categorized) {
-		$parents = $categlib->get_object_categories('article',$objId);
-		require_once('tiki-categsetup.php');
-		if ($tiki_p_view_categories != 'y') {
-			if (!isset($user)){
-				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-				$smarty->assign('errortitle',tra("Please login"));
-		    } else {
-				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-	    	}
-		    $smarty->display("error.tpl");
-		    die;
-		}
+	$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
+   	if ($perms_array) {
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	}
+	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y' && $tiki_p_admin != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
 	}
 }
 	
@@ -176,6 +175,9 @@ if ($feature_article_comments == 'y') {
 	$comments_object_var = 'articleId';
 	include_once ("comments.php");
 }
+
+$objId = $_REQUEST['articleId'];
+$is_categorized = $categlib->is_categorized('article',$objId);
 
 // Display category path or not (like {catpath()})
 if (isset($is_categorized) && $is_categorized) {
