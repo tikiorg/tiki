@@ -53,7 +53,7 @@ if(isset($_REQUEST["bookmark_mark"])) {
     
     // Check if we are bookmarking an image gallery
     if(strstr($_SERVER["REQUEST_URI"],'tiki-browse_gallery') || strstr($_SERVER["REQUEST_URI"],'tiki-list_gallery')) {
-      $info = $tikilib->get_gallery($setup_query_data["galleryId"]);
+      $info = $imagegallib->get_gallery($setup_query_data["galleryId"]);
       $_REQUEST["bookmark_urlname"] = $info["name"];
     }
     
@@ -65,7 +65,7 @@ if(isset($_REQUEST["bookmark_mark"])) {
     
     // Check if we are bookmarking an image
     if(strstr($_SERVER["REQUEST_URI"],'tiki-browse_image')) {
-      $info = $tikilib->get_image($setup_query_data["imageId"]);
+      $info = $imagegallib->get_image($setup_query_data["imageId"]);
       $_REQUEST["bookmark_urlname"] = $info["name"];
     }
     
