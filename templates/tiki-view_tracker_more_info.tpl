@@ -2,16 +2,18 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
-<div id="tiki-main" class="simplebox">
+<div id="tiki-main">
 <h3>{tr}Details{/tr}</h3>
 <table class="normal">
-{foreach key=l item=v from=$info}
-<tr class="formcolor"><td>{$l}</td>
-<td>
-{$v}
-</td>
-</tr>
-{/foreach}
+{if $info.name}
+<tr class="formcolor"><td>{tr}Name{/tr}</td><td><b>{$info.name}</b></td></tr>
+{/if}
+{if $info.version}
+<tr class="formcolor"><td>{tr}Version{/tr}</td><td><b>{$info.version}</b></td></tr>
+{/if}
+{if $info.longdesc}
+<tr class="formcolor"><td colspan="2">{$info.longdesc}</td></tr>
+{/if}
 </table>
 <div class="cbox">
 <a href="#" onclick="javascript:window.close();" class="link">{tr}close{/tr}</a>
