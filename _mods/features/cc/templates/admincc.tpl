@@ -1,0 +1,3 @@
+Administer a cc
+
+{$list}

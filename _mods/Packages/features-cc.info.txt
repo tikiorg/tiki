@@ -1,0 +1,86 @@
+contributor:
+$Author: mose $
+
+revision:
+1.2.3
+
+lastmodif:
+$Date: 2004-11-07 23:57:22 $
+
+files: 
+features/cc/lib/auth.php lib/cc/auth.php
+features/cc/lib/cc_date.php lib/cc_date.php
+features/cc/lib/db_account.php lib/cc/db_account.php
+features/cc/lib/db_cc.php lib/cc/db_cc.php
+features/cc/lib/db_history.php lib/cc/db_history.php
+features/cc/lib/db_journal.php lib/cc/db_journal.php
+features/cc/lib/db_ledger.php lib/cc/db_ledger.php
+features/cc/lib/db_tr_summary.php lib/cc/db_tr_summary.php
+features/cc/lib/db_transaction.php lib/cc/db_transaction.php
+features/cc/lib/dbhandle.php lib/cc/dbhandle.php
+features/cc/lib/dictionary.php lib/cc/dictionary.php
+features/cc/lib/list_admincc.php lib/cc/list_admincc.php
+features/cc/lib/list_cc.php lib/cc/list_cc.php
+features/cc/lib/list_regcc.php lib/cc/list_regcc.php
+features/cc/lib/listbrowser.php lib/cc/listbrowser.php
+features/cc/htdocs/cc.php cc.php
+features/cc/htdocs/templates/admincc.tpl templates/cc/admincc.tpl
+features/cc/htdocs/templates/app.tpl templates/cc/app.tpl
+features/cc/htdocs/templates/createcc.tpl templates/cc/createcc.tpl
+features/cc/htdocs/templates/help.tpl templates/cc/help.tpl
+features/cc/htdocs/templates/history.tpl templates/cc/history.tpl
+features/cc/htdocs/templates/index.tpl templates/cc/index.tpl
+features/cc/htdocs/templates/internal.tpl templates/cc/internal.tpl
+features/cc/htdocs/templates/login.tpl templates/cc/login.tpl
+features/cc/htdocs/templates/menu.tpl templates/cc/menu.tpl
+features/cc/htdocs/templates/newcc.tpl templates/cc/newcc.tpl
+features/cc/htdocs/templates/page.tpl templates/cc/page.tpl
+features/cc/htdocs/templates/registercc.tpl templates/cc/registercc.tpl
+features/cc/htdocs/templates/registered.tpl templates/cc/registered.tpl
+features/cc/htdocs/templates/tr_failed.tpl templates/cc/tr_failed.tpl
+features/cc/htdocs/templates/tr_record.tpl templates/cc/tr_record.tpl
+features/cc/htdocs/templates/tr_recorded.tpl templates/cc/tr_recorded.tpl
+
+sql-install:
+create table if not exists cc_cc ( seq int not null primary key auto_increment, id varchar(10) not null unique, cc_name varchar(20) not null, cc_description text, owner_id varchar(10), requires_approval char(1) not null, index ( id ), index ( cc_name(6) ));
+create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(10) null, cc_id varchar(10) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date datetime, index ( acct_id ), index ( cc_id ), index ( last_tr_date));
+create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date datetime not null, acct_id varchar(10) not null, other_id varchar(10) not null, other_domain varchar(10) not null, cc_id varchar(10) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cc','n');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_use', 'Can use community currencies', 'registered', 'cc');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_create', 'Can create new community currencies', 'editor', 'cc');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_admin', 'Administrate the currencies system', 'admin', 'cc');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Currencies','',1400,'','tiki_p_cc_use','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Status','',1410,'','tiki_p_cc_use','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Transaction','',1420,'','tiki_p_cc_use','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Register for CC','',1430,'','tiki_p_cc_use','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Create new CC','',1440,'','tiki_p_cc_create','');
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin CC','',1450,'','tiki_p_cc_admin','');
+
+sql-upgrade:
+: 1.2.3
+update tiki_menu_options set url='cc.php?page=app' where menuId=42 and name='Status';
+update tiki_menu_options set url='cc.php?page=tr_record' where menuId=42 and name='Transaction';
+update tiki_menu_options set url='cc.php?page=registercc' where menuId=42 and name='Register for CC';
+update tiki_menu_options set url='cc.php?page=newcc' where menuId=42 and name='Create new CC';
+update tiki_menu_options set url='cc.php?page=admincc' where menuId=42 and name='Admin CC';
+: 1.2.2
+update tiki_menu_options set type='s' where menuId=42 and name='Currencies';
+: 1.2
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cc','n');
+
+sql-remove:
+drop table if exists cc_cc;
+drop table if exists cc_ledger;
+drop table if exists cc_transaction;
+
+author:
+openmoney.org
+
+licence:
+GNU/LGPL
+
+Description: 
+Multi-currencies management system
+
+Changelog:
+1 initial package
