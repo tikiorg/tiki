@@ -2637,13 +2637,13 @@ function get_user_info($user) {
     $aux["email"] = $res["email"];
     $aux["lastLogin"] = $res["lastLogin"];
     // Obtain lastChanged
-    $query2 = "select count(*) from `tiki_pages` where `user`='$user'";
-    $result2 = $this->query($query2);
+    $query2 = "select count(*) from `tiki_pages` where `user`=?";
+    $result2 = $this->query($query2, array($user));
     $res2 = $result2->fetchRow();
     $aux["versions"] = $res2[0];
     // Obtain versions
-    $query3 = "select count(*) from `tiki_history` where `user`='$user'";
-    $result3 = $this->query($query3);
+    $query3 = "select count(*) from `tiki_history` where `user`=?";
+    $result3 = $this->query($query3, array($user));
     $res3 = $result3->fetchRow();
     $aux["lastChanged"] = $res3[0];
     $ret[] = $aux;
