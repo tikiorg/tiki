@@ -19,7 +19,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_activities"
+-- DROP TABLE "galaxia_activities"
 go
 
 
@@ -50,7 +50,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_activity_roles"
+-- DROP TABLE "galaxia_activity_roles"
 go
 
 
@@ -73,7 +73,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instance_activities"
+-- DROP TABLE "galaxia_instance_activities"
 go
 
 
@@ -100,7 +100,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instance_comments"
+-- DROP TABLE "galaxia_instance_comments"
 go
 
 
@@ -130,7 +130,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_instances"
+-- DROP TABLE "galaxia_instances"
 go
 
 
@@ -160,7 +160,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_processes"
+-- DROP TABLE "galaxia_processes"
 go
 
 
@@ -189,7 +189,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_roles"
+-- DROP TABLE "galaxia_roles"
 go
 
 
@@ -215,7 +215,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_transitions"
+-- DROP TABLE "galaxia_transitions"
 go
 
 
@@ -239,7 +239,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_user_roles"
+-- DROP TABLE "galaxia_user_roles"
 go
 
 
@@ -263,7 +263,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "galaxia_workitems"
+-- DROP TABLE "galaxia_workitems"
 go
 
 
@@ -292,7 +292,7 @@ go
 -- Last update: Jul 12, 2003 at 08:29 PM
 --
 
-DROP TABLE "messu_messages"
+-- DROP TABLE "messu_messages"
 go
 
 
@@ -327,7 +327,7 @@ go
 -- Last update: Jul 13, 2003 at 12:29 AM
 --
 
-DROP TABLE "tiki_actionlog"
+-- DROP TABLE "tiki_actionlog"
 go
 
 
@@ -354,7 +354,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_articles"
+-- DROP TABLE "tiki_articles"
 go
 
 
@@ -415,7 +415,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banners"
+-- DROP TABLE "tiki_banners"
 go
 
 
@@ -465,7 +465,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banning"
+-- DROP TABLE "tiki_banning"
 go
 
 
@@ -499,7 +499,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_banning_sections"
+-- DROP TABLE "tiki_banning_sections"
 go
 
 
@@ -522,7 +522,7 @@ go
 -- Last update: Jul 12, 2003 at 04:52 PM
 --
 
-DROP TABLE "tiki_blog_activity"
+-- DROP TABLE "tiki_blog_activity"
 go
 
 
@@ -547,7 +547,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blog_posts"
+-- DROP TABLE "tiki_blog_posts"
 go
 
 
@@ -588,7 +588,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blog_posts_images"
+-- DROP TABLE "tiki_blog_posts_images"
 go
 
 
@@ -616,7 +616,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_blogs"
+-- DROP TABLE "tiki_blogs"
 go
 
 
@@ -666,7 +666,7 @@ go
 -- Last update: Jul 12, 2003 at 07:05 AM
 --
 
-DROP TABLE "tiki_calendar_categories"
+-- DROP TABLE "tiki_calendar_categories"
 go
 
 
@@ -693,7 +693,7 @@ go
 -- Last update: Jul 12, 2003 at 07:43 AM
 --
 
-DROP TABLE "tiki_calendar_items"
+-- DROP TABLE "tiki_calendar_items"
 go
 
 
@@ -732,7 +732,7 @@ go
 -- Last update: Jul 12, 2003 at 07:05 AM
 --
 
-DROP TABLE "tiki_calendar_locations"
+-- DROP TABLE "tiki_calendar_locations"
 go
 
 
@@ -760,7 +760,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_calendar_roles"
+-- DROP TABLE "tiki_calendar_roles"
 go
 
 
@@ -784,7 +784,7 @@ go
 -- Last update: Jul 05, 2003 at 02:03 PM
 --
 
-DROP TABLE "tiki_calendars"
+-- DROP TABLE "tiki_calendars"
 go
 
 
@@ -816,7 +816,7 @@ go
 -- Last update: Jul 04, 2003 at 09:47 PM
 --
 
-DROP TABLE "tiki_categories"
+-- DROP TABLE "tiki_categories"
 go
 
 
@@ -842,7 +842,7 @@ go
 -- Last update: Jul 13, 2003 at 01:09 AM
 --
 
-DROP TABLE "tiki_categorized_objects"
+-- DROP TABLE "tiki_categorized_objects"
 go
 
 
@@ -871,7 +871,7 @@ go
 -- Last update: Jul 13, 2003 at 01:09 AM
 --
 
-DROP TABLE "tiki_category_objects"
+-- DROP TABLE "tiki_category_objects"
 go
 
 
@@ -894,7 +894,7 @@ go
 -- Last update: Jul 07, 2003 at 01:53 AM
 --
 
-DROP TABLE "tiki_category_sites"
+-- DROP TABLE "tiki_category_sites"
 go
 
 
@@ -917,7 +917,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chart_items"
+-- DROP TABLE "tiki_chart_items"
 go
 
 
@@ -947,7 +947,7 @@ go
 -- Last update: Jul 06, 2003 at 08:14 AM
 --
 
-DROP TABLE "tiki_charts"
+-- DROP TABLE "tiki_charts"
 go
 
 
@@ -987,7 +987,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_charts_rankings"
+-- DROP TABLE "tiki_charts_rankings"
 go
 
 
@@ -1016,7 +1016,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_charts_votes"
+-- DROP TABLE "tiki_charts_votes"
 go
 
 
@@ -1041,7 +1041,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_channels"
+-- DROP TABLE "tiki_chat_channels"
 go
 
 
@@ -1070,7 +1070,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_messages"
+-- DROP TABLE "tiki_chat_messages"
 go
 
 
@@ -1096,7 +1096,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_chat_users"
+-- DROP TABLE "tiki_chat_users"
 go
 
 
@@ -1121,7 +1121,7 @@ go
 -- Last check: Jul 11, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_comments"
+-- DROP TABLE "tiki_comments"
 go
 
 
@@ -1179,7 +1179,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_content"
+-- DROP TABLE "tiki_content"
 go
 
 
@@ -1202,7 +1202,7 @@ go
 -- Last update: Jul 12, 2003 at 12:37 AM
 --
 
-DROP TABLE "tiki_content_templates"
+-- DROP TABLE "tiki_content_templates"
 go
 
 
@@ -1227,7 +1227,7 @@ go
 -- Last update: Jul 12, 2003 at 12:37 AM
 --
 
-DROP TABLE "tiki_content_templates_sections"
+-- DROP TABLE "tiki_content_templates_sections"
 go
 
 
@@ -1250,7 +1250,7 @@ go
 -- Last update: Jul 10, 2003 at 04:00 AM
 --
 
-DROP TABLE "tiki_cookies"
+-- DROP TABLE "tiki_cookies"
 go
 
 
@@ -1273,7 +1273,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_copyrights"
+-- DROP TABLE "tiki_copyrights"
 go
 
 
@@ -1301,7 +1301,7 @@ go
 -- Last update: Jul 12, 2003 at 08:59 PM
 --
 
-DROP TABLE "tiki_directory_categories"
+-- DROP TABLE "tiki_directory_categories"
 go
 
 
@@ -1333,7 +1333,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_directory_search"
+-- DROP TABLE "tiki_directory_search"
 go
 
 
@@ -1356,7 +1356,7 @@ go
 -- Last update: Jul 12, 2003 at 07:32 PM
 --
 
-DROP TABLE "tiki_directory_sites"
+-- DROP TABLE "tiki_directory_sites"
 go
 
 
@@ -1391,7 +1391,7 @@ go
 -- Last update: Jul 08, 2003 at 05:02 AM
 --
 
-DROP TABLE "tiki_drawings"
+-- DROP TABLE "tiki_drawings"
 go
 
 
@@ -1419,7 +1419,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_dsn"
+-- DROP TABLE "tiki_dsn"
 go
 
 
@@ -1443,7 +1443,7 @@ go
 -- Last update: Jul 06, 2003 at 08:23 AM
 --
 
-DROP TABLE "tiki_eph"
+-- DROP TABLE "tiki_eph"
 go
 
 
@@ -1474,7 +1474,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_extwiki"
+-- DROP TABLE "tiki_extwiki"
 go
 
 
@@ -1499,7 +1499,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_faq_questions"
+-- DROP TABLE "tiki_faq_questions"
 go
 
 
@@ -1538,7 +1538,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_faqs"
+-- DROP TABLE "tiki_faqs"
 go
 
 
@@ -1578,7 +1578,7 @@ go
 -- Last update: Jul 12, 2003 at 11:08 PM
 --
 
-DROP TABLE "tiki_featured_links"
+-- DROP TABLE "tiki_featured_links"
 go
 
 
@@ -1605,7 +1605,7 @@ go
 -- Last update: Jul 13, 2003 at 01:13 AM
 --
 
-DROP TABLE "tiki_file_galleries"
+-- DROP TABLE "tiki_file_galleries"
 go
 
 
@@ -1647,7 +1647,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_files"
+-- DROP TABLE "tiki_files"
 go
 
 
@@ -1697,7 +1697,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forum_attachments"
+-- DROP TABLE "tiki_forum_attachments"
 go
 
 
@@ -1729,7 +1729,7 @@ go
 -- Last update: Jul 12, 2003 at 07:17 PM
 --
 
-DROP TABLE "tiki_forum_reads"
+-- DROP TABLE "tiki_forum_reads"
 go
 
 
@@ -1754,7 +1754,7 @@ go
 -- Last update: Jul 12, 2003 at 11:14 PM
 --
 
-DROP TABLE "tiki_forums"
+-- DROP TABLE "tiki_forums"
 go
 
 
@@ -1826,7 +1826,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forums_queue"
+-- DROP TABLE "tiki_forums_queue"
 go
 
 
@@ -1860,7 +1860,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_forums_reported"
+-- DROP TABLE "tiki_forums_reported"
 go
 
 
@@ -1888,7 +1888,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_galleries"
+-- DROP TABLE "tiki_galleries"
 go
 
 
@@ -1935,7 +1935,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_galleries_scales"
+-- DROP TABLE "tiki_galleries_scales"
 go
 
 
@@ -1959,7 +1959,7 @@ go
 -- Last update: Jul 05, 2003 at 08:23 PM
 --
 
-DROP TABLE "tiki_games"
+-- DROP TABLE "tiki_games"
 go
 
 
@@ -1984,7 +1984,7 @@ go
 -- Last update: Jul 05, 2003 at 02:03 AM
 --
 
-DROP TABLE "tiki_group_inclusion"
+-- DROP TABLE "tiki_group_inclusion"
 go
 
 
@@ -2007,7 +2007,7 @@ go
 -- Last update: Jul 13, 2003 at 12:29 AM
 --
 
-DROP TABLE "tiki_history"
+-- DROP TABLE "tiki_history"
 go
 
 
@@ -2036,7 +2036,7 @@ go
 -- Last update: Jul 10, 2003 at 11:04 PM
 --
 
-DROP TABLE "tiki_hotwords"
+-- DROP TABLE "tiki_hotwords"
 go
 
 
@@ -2059,7 +2059,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_html_pages"
+-- DROP TABLE "tiki_html_pages"
 go
 
 
@@ -2085,7 +2085,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_html_pages_dynamic_zones"
+-- DROP TABLE "tiki_html_pages_dynamic_zones"
 go
 
 
@@ -2111,7 +2111,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_images"
+-- DROP TABLE "tiki_images"
 go
 
 
@@ -2162,7 +2162,7 @@ go
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_images_data"
+-- DROP TABLE "tiki_images_data"
 go
 
 
@@ -2194,7 +2194,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_language"
+-- DROP TABLE "tiki_language"
 go
 
 
@@ -2218,7 +2218,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_languages"
+-- DROP TABLE "tiki_languages"
 go
 
 
@@ -2247,7 +2247,7 @@ go
 -- Last update: Jul 12, 2003 at 06:06 PM
 --
 
-DROP TABLE "tiki_link_cache"
+-- DROP TABLE "tiki_link_cache"
 go
 
 
@@ -2272,7 +2272,7 @@ go
 -- Last update: Jul 12, 2003 at 11:39 PM
 --
 
-DROP TABLE "tiki_links"
+-- DROP TABLE "tiki_links"
 go
 
 
@@ -2295,7 +2295,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_events"
+-- DROP TABLE "tiki_live_support_events"
 go
 
 
@@ -2323,7 +2323,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_message_comments"
+-- DROP TABLE "tiki_live_support_message_comments"
 go
 
 
@@ -2348,7 +2348,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_messages"
+-- DROP TABLE "tiki_live_support_messages"
 go
 
 
@@ -2381,7 +2381,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_modules"
+-- DROP TABLE "tiki_live_support_modules"
 go
 
 
@@ -2440,7 +2440,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_operators"
+-- DROP TABLE "tiki_live_support_operators"
 go
 
 
@@ -2472,7 +2472,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_live_support_requests"
+-- DROP TABLE "tiki_live_support_requests"
 go
 
 
@@ -2507,7 +2507,7 @@ go
 -- Last update: Jul 11, 2003 at 05:28 AM
 --
 
-DROP TABLE "tiki_mail_events"
+-- DROP TABLE "tiki_mail_events"
 go
 
 
@@ -2530,7 +2530,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_mailin_accounts"
+-- DROP TABLE "tiki_mailin_accounts"
 go
 
 
@@ -2563,7 +2563,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_menu_languages"
+-- DROP TABLE "tiki_menu_languages"
 go
 
 
@@ -2586,7 +2586,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_menu_options"
+-- DROP TABLE "tiki_menu_options"
 go
 
 
@@ -2613,7 +2613,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_menus"
+-- DROP TABLE "tiki_menus"
 go
 
 
@@ -2638,7 +2638,7 @@ go
 -- Last update: Jul 09, 2003 at 04:06 AM
 --
 
-DROP TABLE "tiki_minical_events"
+-- DROP TABLE "tiki_minical_events"
 go
 
 
@@ -2669,7 +2669,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_minical_topics"
+-- DROP TABLE "tiki_minical_topics"
 go
 
 
@@ -2699,7 +2699,7 @@ go
 -- Last update: Jul 12, 2003 at 11:44 PM
 --
 
-DROP TABLE "tiki_modules"
+-- DROP TABLE "tiki_modules"
 go
 
 
@@ -2740,7 +2740,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsletter_subscriptions"
+-- DROP TABLE "tiki_newsletter_subscriptions"
 go
 
 
@@ -2766,7 +2766,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsletters"
+-- DROP TABLE "tiki_newsletters"
 go
 
 
@@ -2799,7 +2799,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsreader_marks"
+-- DROP TABLE "tiki_newsreader_marks"
 go
 
 
@@ -2824,7 +2824,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_newsreader_servers"
+-- DROP TABLE "tiki_newsreader_servers"
 go
 
 
@@ -2852,7 +2852,7 @@ go
 -- Last check: Jul 12, 2003 at 10:00 AM
 --
 
-DROP TABLE "tiki_page_footnotes"
+-- DROP TABLE "tiki_page_footnotes"
 go
 
 
@@ -2877,7 +2877,7 @@ go
 -- Last check: Jul 12, 2003 at 10:01 AM
 --
 
-DROP TABLE "tiki_pages"
+-- DROP TABLE "tiki_pages"
 go
 
 
@@ -2924,7 +2924,7 @@ go
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_pageviews"
+-- DROP TABLE "tiki_pageviews"
 go
 
 
@@ -2947,7 +2947,7 @@ go
 -- Last update: Jul 06, 2003 at 07:57 PM
 --
 
-DROP TABLE "tiki_poll_options"
+-- DROP TABLE "tiki_poll_options"
 go
 
 
@@ -2972,7 +2972,7 @@ go
 -- Last update: Jul 06, 2003 at 07:57 PM
 --
 
-DROP TABLE "tiki_polls"
+-- DROP TABLE "tiki_polls"
 go
 
 
@@ -2998,7 +2998,7 @@ go
 -- Last update: Jul 12, 2003 at 12:04 PM
 --
 
-DROP TABLE "tiki_preferences"
+-- DROP TABLE "tiki_preferences"
 go
 
 
@@ -3021,7 +3021,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_private_messages"
+-- DROP TABLE "tiki_private_messages"
 go
 
 
@@ -3047,7 +3047,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_programmed_content"
+-- DROP TABLE "tiki_programmed_content"
 go
 
 
@@ -3072,7 +3072,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_question_options"
+-- DROP TABLE "tiki_quiz_question_options"
 go
 
 
@@ -3097,7 +3097,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_questions"
+-- DROP TABLE "tiki_quiz_questions"
 go
 
 
@@ -3124,7 +3124,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_results"
+-- DROP TABLE "tiki_quiz_results"
 go
 
 
@@ -3150,7 +3150,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_stats"
+-- DROP TABLE "tiki_quiz_stats"
 go
 
 
@@ -3175,7 +3175,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quiz_stats_sum"
+-- DROP TABLE "tiki_quiz_stats_sum"
 go
 
 
@@ -3202,7 +3202,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_quizzes"
+-- DROP TABLE "tiki_quizzes"
 go
 
 
@@ -3233,7 +3233,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_received_articles"
+-- DROP TABLE "tiki_received_articles"
 go
 
 
@@ -3276,7 +3276,7 @@ go
 -- Last update: Jul 09, 2003 at 03:56 AM
 --
 
-DROP TABLE "tiki_received_pages"
+-- DROP TABLE "tiki_received_pages"
 go
 
 
@@ -3305,7 +3305,7 @@ go
 -- Last update: Jul 13, 2003 at 01:30 AM
 --
 
-DROP TABLE "tiki_referer_stats"
+-- DROP TABLE "tiki_referer_stats"
 go
 
 
@@ -3329,7 +3329,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_related_categories"
+-- DROP TABLE "tiki_related_categories"
 go
 
 
@@ -3352,7 +3352,7 @@ go
 -- Last update: Jul 12, 2003 at 10:19 AM
 --
 
-DROP TABLE "tiki_rss_modules"
+-- DROP TABLE "tiki_rss_modules"
 go
 
 
@@ -3380,7 +3380,7 @@ go
 -- Last update: Jul 12, 2003 at 10:55 PM
 --
 
-DROP TABLE "tiki_search_stats"
+-- DROP TABLE "tiki_search_stats"
 go
 
 
@@ -3403,7 +3403,7 @@ go
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_semaphores"
+-- DROP TABLE "tiki_semaphores"
 go
 
 
@@ -3427,7 +3427,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_sent_newsletters"
+-- DROP TABLE "tiki_sent_newsletters"
 go
 
 
@@ -3454,7 +3454,7 @@ go
 -- Last update: Jul 13, 2003 at 01:52 AM
 --
 
-DROP TABLE "tiki_sessions"
+-- DROP TABLE "tiki_sessions"
 go
 
 
@@ -3478,7 +3478,7 @@ go
 -- Last update: Jul 12, 2003 at 08:21 PM
 --
 
-DROP TABLE "tiki_shoutbox"
+-- DROP TABLE "tiki_shoutbox"
 go
 
 
@@ -3504,7 +3504,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_structures"
+-- DROP TABLE "tiki_structures"
 go
 
 
@@ -3529,7 +3529,7 @@ go
 -- Last update: Jul 08, 2003 at 04:16 PM
 --
 
-DROP TABLE "tiki_submissions"
+-- DROP TABLE "tiki_submissions"
 go
 
 
@@ -3575,7 +3575,7 @@ go
 -- Last update: Jul 11, 2003 at 08:52 PM
 --
 
-DROP TABLE "tiki_suggested_faq_questions"
+-- DROP TABLE "tiki_suggested_faq_questions"
 go
 
 
@@ -3602,7 +3602,7 @@ go
 -- Last update: Jul 11, 2003 at 12:55 AM
 --
 
-DROP TABLE "tiki_survey_question_options"
+-- DROP TABLE "tiki_survey_question_options"
 go
 
 
@@ -3627,7 +3627,7 @@ go
 -- Last update: Jul 11, 2003 at 11:55 PM
 --
 
-DROP TABLE "tiki_survey_questions"
+-- DROP TABLE "tiki_survey_questions"
 go
 
 
@@ -3657,7 +3657,7 @@ go
 -- Last update: Jul 12, 2003 at 07:40 PM
 --
 
-DROP TABLE "tiki_surveys"
+-- DROP TABLE "tiki_surveys"
 go
 
 
@@ -3685,7 +3685,7 @@ go
 -- Last update: Jul 06, 2003 at 02:58 AM
 --
 
-DROP TABLE "tiki_tags"
+-- DROP TABLE "tiki_tags"
 go
 
 
@@ -3717,7 +3717,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_categs"
+-- DROP TABLE "tiki_theme_control_categs"
 go
 
 
@@ -3740,7 +3740,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_objects"
+-- DROP TABLE "tiki_theme_control_objects"
 go
 
 
@@ -3765,7 +3765,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_theme_control_sections"
+-- DROP TABLE "tiki_theme_control_sections"
 go
 
 
@@ -3788,7 +3788,7 @@ go
 -- Last update: Jul 04, 2003 at 10:10 PM
 --
 
-DROP TABLE "tiki_topics"
+-- DROP TABLE "tiki_topics"
 go
 
 
@@ -3817,7 +3817,7 @@ go
 -- Last update: Jul 08, 2003 at 01:48 PM
 --
 
-DROP TABLE "tiki_tracker_fields"
+-- DROP TABLE "tiki_tracker_fields"
 go
 
 
@@ -3845,7 +3845,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_tracker_item_attachments"
+-- DROP TABLE "tiki_tracker_item_attachments"
 go
 
 
@@ -3877,7 +3877,7 @@ go
 -- Last update: Jul 12, 2003 at 08:12 AM
 --
 
-DROP TABLE "tiki_tracker_item_comments"
+-- DROP TABLE "tiki_tracker_item_comments"
 go
 
 
@@ -3904,7 +3904,7 @@ go
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_tracker_item_fields"
+-- DROP TABLE "tiki_tracker_item_fields"
 go
 
 
@@ -3928,7 +3928,7 @@ go
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_tracker_items"
+-- DROP TABLE "tiki_tracker_items"
 go
 
 
@@ -3954,7 +3954,7 @@ go
 -- Last update: Jul 12, 2003 at 08:26 AM
 --
 
-DROP TABLE "tiki_trackers"
+-- DROP TABLE "tiki_trackers"
 go
 
 
@@ -3986,7 +3986,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_untranslated"
+-- DROP TABLE "tiki_untranslated"
 go
 
 
@@ -4016,7 +4016,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_answers"
+-- DROP TABLE "tiki_user_answers"
 go
 
 
@@ -4041,7 +4041,7 @@ go
 -- Last update: Jul 12, 2003 at 08:25 PM
 --
 
-DROP TABLE "tiki_user_assigned_modules"
+-- DROP TABLE "tiki_user_assigned_modules"
 go
 
 
@@ -4072,7 +4072,7 @@ go
 -- Last update: Jul 11, 2003 at 08:35 AM
 --
 
-DROP TABLE "tiki_user_bookmarks_folders"
+-- DROP TABLE "tiki_user_bookmarks_folders"
 go
 
 
@@ -4097,7 +4097,7 @@ go
 -- Last update: Jul 11, 2003 at 08:36 AM
 --
 
-DROP TABLE "tiki_user_bookmarks_urls"
+-- DROP TABLE "tiki_user_bookmarks_urls"
 go
 
 
@@ -4125,7 +4125,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_mail_accounts"
+-- DROP TABLE "tiki_user_mail_accounts"
 go
 
 
@@ -4158,7 +4158,7 @@ go
 -- Last update: Jul 11, 2003 at 10:58 PM
 --
 
-DROP TABLE "tiki_user_menus"
+-- DROP TABLE "tiki_user_menus"
 go
 
 
@@ -4185,7 +4185,7 @@ go
 -- Last update: Jul 05, 2003 at 03:16 AM
 --
 
-DROP TABLE "tiki_user_modules"
+-- DROP TABLE "tiki_user_modules"
 go
 
 
@@ -4209,7 +4209,7 @@ go
 -- Last update: Jul 12, 2003 at 07:52 AM
 --
 
-DROP TABLE "tiki_user_notes"
+-- DROP TABLE "tiki_user_notes"
 go
 
 
@@ -4238,7 +4238,7 @@ go
 -- Last update: Jul 13, 2003 at 01:12 AM
 --
 
-DROP TABLE "tiki_user_postings"
+-- DROP TABLE "tiki_user_postings"
 go
 
 
@@ -4264,7 +4264,7 @@ go
 -- Last update: Jul 13, 2003 at 01:09 AM
 --
 
-DROP TABLE "tiki_user_preferences"
+-- DROP TABLE "tiki_user_preferences"
 go
 
 
@@ -4288,7 +4288,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_quizzes"
+-- DROP TABLE "tiki_user_quizzes"
 go
 
 
@@ -4317,7 +4317,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_user_taken_quizzes"
+-- DROP TABLE "tiki_user_taken_quizzes"
 go
 
 
@@ -4340,7 +4340,7 @@ go
 -- Last update: Jul 08, 2003 at 05:30 PM
 --
 
-DROP TABLE "tiki_user_tasks"
+-- DROP TABLE "tiki_user_tasks"
 go
 
 
@@ -4370,7 +4370,7 @@ go
 -- Last update: Jul 11, 2003 at 11:55 PM
 --
 
-DROP TABLE "tiki_user_votings"
+-- DROP TABLE "tiki_user_votings"
 go
 
 
@@ -4393,7 +4393,7 @@ go
 -- Last update: Jul 12, 2003 at 08:07 AM
 --
 
-DROP TABLE "tiki_user_watches"
+-- DROP TABLE "tiki_user_watches"
 go
 
 
@@ -4422,7 +4422,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_userfiles"
+-- DROP TABLE "tiki_userfiles"
 go
 
 
@@ -4454,7 +4454,7 @@ go
 -- Last update: Jul 11, 2003 at 05:47 AM
 --
 
-DROP TABLE "tiki_userpoints"
+-- DROP TABLE "tiki_userpoints"
 go
 
 
@@ -4477,7 +4477,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_users"
+-- DROP TABLE "tiki_users"
 go
 
 
@@ -4502,7 +4502,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_webmail_contacts"
+-- DROP TABLE "tiki_webmail_contacts"
 go
 
 
@@ -4529,7 +4529,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_webmail_messages"
+-- DROP TABLE "tiki_webmail_messages"
 go
 
 
@@ -4556,7 +4556,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_wiki_attachments"
+-- DROP TABLE "tiki_wiki_attachments"
 go
 
 
@@ -4588,7 +4588,7 @@ go
 -- Last update: Jul 03, 2003 at 07:42 PM
 --
 
-DROP TABLE "tiki_zones"
+-- DROP TABLE "tiki_zones"
 go
 
 
@@ -4610,7 +4610,7 @@ go
 -- Last update: Jul 11, 2003 at 07:22 AM
 --
 
-DROP TABLE "users_grouppermissions"
+-- DROP TABLE "users_grouppermissions"
 go
 
 
@@ -4634,7 +4634,7 @@ go
 -- Last update: Jul 03, 2003 at 08:57 PM
 --
 
-DROP TABLE "users_groups"
+-- DROP TABLE "users_groups"
 go
 
 
@@ -4658,7 +4658,7 @@ go
 -- Last update: Jul 12, 2003 at 07:20 AM
 --
 
-DROP TABLE "users_objectpermissions"
+-- DROP TABLE "users_objectpermissions"
 go
 
 
@@ -4683,7 +4683,7 @@ go
 -- Last update: Jul 11, 2003 at 07:22 AM
 --
 
-DROP TABLE "users_permissions"
+-- DROP TABLE "users_permissions"
 go
 
 
@@ -5441,7 +5441,7 @@ go
 -- Last update: Jul 12, 2003 at 09:31 PM
 --
 
-DROP TABLE "users_usergroups"
+-- DROP TABLE "users_usergroups"
 go
 
 
@@ -5475,7 +5475,7 @@ go
 -- Last update: Jul 13, 2003 at 01:07 AM
 --
 
-DROP TABLE "users_users"
+-- DROP TABLE "users_users"
 go
 
 

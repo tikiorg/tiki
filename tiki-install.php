@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.16 2003-10-14 12:07:01 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.17 2003-10-14 13:21:10 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.16 2003-10-14 12:07:01 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.17 2003-10-14 13:21:10 mose Exp $
 session_start();
 
 // Define and load Smarty components
@@ -29,17 +29,18 @@ function process_sql_file($file,$db_tiki) {
 	
 	switch ($db_tiki) {
 	  case "sybase":
-	    $statements=preg_split("/^go$/",$command);
+	    $statements=split("(\r|\n)go(\r|\n)",$command);
 	    break;
 	  default:
 	    $statements=split(";",$command);
 	    break;
 	}
 	foreach ($statements as $statement) {
-		$result = $dbTiki->query($statement);
+	  //echo "executing $statement </br>";
+		$result = $dbTiki->Execute($statement);
 
-		if (DB::isError($result)) {
-			trigger_error("DB error:  " . $result->getMessage(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
+		if (!$result) {
+			//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
 		// Do not die at the moment. Wen need some better error checking here
 		//die;
 		} else {
@@ -323,8 +324,16 @@ if (strstr($current_path, ';')) {
 if ($separator == '')
 	$separator = ':'; // guess
 
-ini_set('include_path', $current_path . $separator . 'lib/pear');
-include_once ('DB.php');
+ini_set('include_path', $current_path . $separator . 'lib/pear' . $separator . 'lib/adodb');
+
+//adodb settings
+
+define('ADODB_FORCE_NULLS', 1);
+define('ADODB_ASSOC_CASE', 2);
+define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
+include_once ('adodb.inc.php');
+//include_once ('adodb-pear.inc.php'); //really needed?
+
 
 if (!file_exists('db/local.php')) {
 	$dbcon = false;
@@ -333,10 +342,16 @@ if (!file_exists('db/local.php')) {
 	// include the file to get the variables
 	include ('db/local.php');
 
-	$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
-	$dbTiki = DB::connect($dsn);
+	if ($db_tiki == 'sybase') {
+	        // avoid database change messages
+		ini_set('sybct.min_server_severity', '11');
+	}
 
-	if (DB::isError($dbTiki)) {
+	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+	
+	$dbTiki = &ADONewConnection($db_tiki);
+
+	if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 		$dbcon = false;
 
 		$smarty->assign('dbcon', 'n');
@@ -386,9 +401,9 @@ if ((!$dbcon or $_REQUEST['resetdb']=='y') && isset($_REQUEST['dbinfo'])) {
 	fclose ($fw);
 	include ('db/local.php');
 	$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
-	$dbTiki = DB::connect($dsn);
+	$dbTiki = &ADONewConnection($db_tiki);
 
-	if (DB::isError($dbTiki)) {
+	if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 		$dbcon = false;
 
 		$smarty->assign('dbcon', 'n');
@@ -410,15 +425,15 @@ if ($dbcon) {
 	// Try to see if we have an admin account
 	$query = "select hash from users_users where login='admin'";
 
-	@$result = $dbTiki->query($query);
+	@$result = $dbTiki->Execute($query);
 
-	if (DB::isError($result)) {
+	if (!$result) {
 		$admin_acc = 'n';
 
 		$noadmin = true;
 	} else {
 		if ($result->numRows()) {
-			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$res = $result->fetchRow();
 
 			if (isset($res['hash'])) {
 				$admin_acc = 'y';
@@ -466,11 +481,11 @@ if (!$noadmin && $admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
 		$hash = md5($_REQUEST['pass1']);
 
 		$query = "delete from users_users where login='admin'";
-		$dbTiki->query($query);
+		$dbTiki->Execute($query);
 		$pass1 = $_REQUEST['pass1'];
 		$query = "insert into users_users(login,password,hash) 
     values('admin','$pass1','$hash')";
-		$dbTiki->query($query);
+		$dbTiki->Execute($query);
 		$admin_acc = 'y';
 	}
 }
@@ -486,7 +501,7 @@ if (isset($_REQUEST['login'])) {
 
 	// first verify that the user exists
 	$query = "select email from users_users where lower(login) = 'admin'";
-	$result = $dbTiki->query($query);
+	$result = $dbTiki->Execute($query);
 
 	if (!$result->numRows()) {
 		$logged = 'n';
@@ -497,7 +512,7 @@ if (isset($_REQUEST['login'])) {
 		$hash2 = md5($pass);
 		// next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
 		$query = "select login from users_users where lower(login) = 'admin' and hash in ('$hash', '$hash2')";
-		$result = $dbTiki->query($query);
+		$result = $dbTiki->Execute($query);
 
 		if ($result->numRows()) {
 			$logged = 'y';
