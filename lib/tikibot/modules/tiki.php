@@ -114,6 +114,17 @@ class tiki extends Wollabot_Module {
 			return "Directory [ $arg ]:[ ".$dir['data'][0]['name']." ]:[ ".$dir['data'][0]['url']." ].";
 		}
 	}
+
+	function tiki_find($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T find] Finds a wiki page including string";
+		} else {
+			global $tikilib;
+			if (!isset($args[0]) or $args[0] < 0 or $args[0] > 20) { $args[0] = 0; }
+			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg);
+			return "Page [ ".$arg." ".$args[0]." ]:[ http://tikiwiki.org/".$page['data'][0]['pageName']." ]";
+		}
+	}
 	
 	function tiki_help($arg,$args) {
 		$help = "tiki_$arg";
@@ -125,6 +136,8 @@ class tiki extends Wollabot_Module {
 	}
 
 }
+
+function tra($s) { return $s; }
 
 $wollabot->register_module("tiki");
 
