@@ -73,6 +73,7 @@
 {/if}
 {/section}
 </table>
+<br/>
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-list_faqs.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;

@@ -16,7 +16,7 @@
 <div class="shoutboxmodmsg">
 <a class="linkmodule" href="tiki-user_information.php?view_user={$shout_msgs[ix].user}"><b>{$shout_msgs[ix].user}</b></a> at {$shout_msgs[ix].timestamp|tiki_long_time}
 <br/>
-{$shout_msgs[ix].message}{if $tiki_p_admin_shoutbox eq 'y'} [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="link">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="link">e</a>]{/if}
+{$shout_msgs[ix].message}{if $tiki_p_admin_shoutbox eq 'y'} [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]{/if}
 </div>
 {/section}
 </div>
