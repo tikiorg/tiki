@@ -164,8 +164,6 @@ if(isset($_REQUEST["move_image"])) {
   $imagegallib->move_image($_REQUEST["imageId"],$_REQUEST["newgalleryId"]);
 }
 
-
-
 $smarty->assign_by_ref('owner',$gal_info["user"]);
 $smarty->assign_by_ref('imageId',$_REQUEST["imageId"]);
 $smarty->assign_by_ref('name',$info["name"]);
@@ -180,6 +178,20 @@ $smarty->assign_by_ref('image_user',$info["user"]);
 
 $galleries = $imagegallib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign_by_ref('galleries',$galleries["data"]);
+
+// Init vars
+$smarty->assign('popup','');
+$smarty->assign('popupsize','');
+$winxsize = 0; $winysize = 0;
+
+// now set it if needed
+if (isset($_REQUEST['popup']) and ($_REQUEST['popup'])) {
+	$smarty->assign('popup','y');
+	$smarty->assign('feature_top_bar','n');
+	$smarty->assign('feature_left_column','n');
+	$smarty->assign('feature_right_column','n');
+	$smarty->assign('feature_bot_bar','n');
+}
 
 $section='galleries';
 include_once('tiki-section_options.php');
