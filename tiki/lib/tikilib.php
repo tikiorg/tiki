@@ -3140,22 +3140,15 @@ class TikiLib {
     // Now tokenize the expression and process the tokens
     // Use tab and newline as tokenizing characters as well  ////
     $lines = explode("\n",$data);
-    $data = ''; $listbeg='';
-    $listlevel = 0;
-    $oldlistlevel = 0;
-    $listbeg='';
+    $data = '';
+    $listbeg=array();
     foreach ($lines as $line) {
 
       // If the first character is ' ' and we are not in pre then we are in pre
       if(substr($line,0,1)==' ') {
-        if($listbeg) {
-          while($listlevel>0) {
-            $data.=$listbeg;
-            $listlevel--;
-            $oldlistlevel=0;
-          }
-          $listbeg='';
-        }
+				while(count($listbeg)) {
+					$data.=array_shift($listbeg);
+				}
         // If the first character is space then
         // change spaces for &nbsp;
         $line = '<font face="courier" size="2">'.str_replace(' ','&nbsp;',substr($line,1)).'</font>';
@@ -3175,75 +3168,43 @@ class TikiLib {
 
         // This line is parseable then we have to see what we have
         if(substr($line,0,3)=='---') {
-          if($listbeg) {
-            while($listlevel>0) {
-            $data.=$listbeg;
-            $listlevel--;
-            $oldlistlevel=0;
-          }
-          $listbeg='';
-          }
+					while(count($listbeg)) $data.=array_shift($listbeg);
           $line='<hr/>';
         } else {
-          if(substr($line,0,1)=='*') {
-            // Get the list level examining the number of asterisks
-
-            // If another list had started then end it
-            if($listbeg && $listbeg!='</ul>') {
-              while($listlevel>0) {
-                $data.=$listbeg;
-                $listlevel--;
-                $oldlistlevel=0;
+					$litype=substr($line,0,1);
+					if ($litype=='*'||$litype=='#') {
+						$listlevel=$this->how_many_at_start($line,$litype);
+						$liclose='</li>';
+						if ($listlevel<count($listbeg)) {
+							while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
+							if(substr(current($listbeg),0,5)!='</li>') $liclose='';
+						} elseif($listlevel>count($listbeg)) {
+							while ($listlevel!=count($listbeg)) {
+								$data.=($litype=='*'?'<ul>':'<ol>');
+								array_unshift($listbeg,($litype=='*'?'</ul>':'</ol>'));
               }
+							$liclose='';
             }
 
-            $listlevel=$this->how_many_at_start($line,'*');
-
-            // If the list level is new add ul's
-            while($listlevel>$oldlistlevel) {
-              $data.='<ul>';
-              $listbeg='</ul>';
-              $oldlistlevel++;
+						if ($litype == '*'&&!strstr(current($listbeg),'</ul>')) {
+							$data.=array_shift($listbeg).($litype=='*'?'<ul>':'<ol>');
+							$liclose='';
             }
 
-            // If the list level is lower
-            while($listlevel<$oldlistlevel) {
-              $data.='</ul>';
-              $oldlistlevel--;
-            }
-
-            $line = '<li>'.substr($line,$listlevel).'</li>';
-
-          } elseif(substr($line,0,1)=='#') {
-                    // If another list had started then end it
-            if($listbeg && $listbeg!='</ol>') {
-              while($listlevel>0) {
-                $data.=$listbeg;
-                $listlevel--;
-                $oldlistlevel=0;
-              }
-            }
-
-            $listlevel=$this->how_many_at_start($line,'#');
-
-            // If the list level is new add ul's
-            while($listlevel>$oldlistlevel) {
-
-              $data.='<ol>';
-              $listbeg='</ol>';
-              $oldlistlevel++;
-            }
-
-            // If the list level is lower
-            while($listlevel<$oldlistlevel) {
-              $data.='</ol>';
-              $oldlistlevel--;
-            }
-
-            //
-
-            $line = '<li>'.substr($line,$listlevel).'</li>';
-
+						$line=$liclose.'<li>'.substr($line,$listlevel);
+						if(substr(current($listbeg),0,5)!='</li>')
+							array_unshift($listbeg,'</li>'.array_shift($listbeg));
+					} elseif(substr($line,0,1)=='+') {
+						$listlevel=$this->how_many_at_start($line,$litype);
+						if($listlevel<count($listbeg))
+							while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
+						if(count($listbeg)) {
+							if(substr(current($listbeg),0,5) != '</li>') {
+								array_unshift($listbeg,'</li>'.array_shift($listbeg));
+								$liclose='<li>';
+							} else $liclose='<br>';
+						} else $liclose='';
+						$line=$liclose.substr($line,count($listbeg));
           } elseif(substr($line,0,3)=='!!!') {
             $line = '<h3>'.substr($line,3).'</h3>';
           } elseif(substr($line,0,2)=='!!') {
@@ -3251,22 +3212,15 @@ class TikiLib {
           } elseif(substr($line,0,1)=='!') {
             $line = '<h1>'.substr($line,1).'</h1>';
           } else {
-            if($listbeg) {
-              while($listlevel>0) {
-              $data.=$listbeg;
-              $listlevel--;
-              $oldlistlevel=0;
-              }
-              $listbeg='';
-            } else {
-              $line.='<br/>';
-            }
+						while(count($listbeg)) $data.=array_shift($listbeg);
+						$line.='<br/>';
           }
         }
       }
       $data.=$line;
     }
-
+		// Close lists may remains opened
+		while(count($listbeg)) $data.=array_shift($listbeg);
 
     
     // Replace rss modules
