@@ -5,6 +5,7 @@
 		<a href="http://pear.php.net/"><img style="border: 0" alt="{tr}powered by{/tr} pear" src="img/pear.png" /></a>
 		<a href="http://www.php.net"><img style="border: 0" alt="{tr}powered by{/tr} PHP" src="img/php.png" /></a>
 		<a href="http://smarty.php.net/"><img style="border: 0" alt="{tr}powered by{/tr} smarty" src="img/smarty.gif"  /></a>
+		<a href="http://www.w3.org/RDF/"><img style="border: 0" alt="{tr}powered by{/tr} RDF" src="img/rdf.gif"  /></a>
 	</div>
 	<div id="rss" style="text-align: center">
 		{if $rss_wiki eq 'y'}
