@@ -204,6 +204,24 @@
     <a class="link" href="javascript:setUserModuleFromCombo('list_polls');">{tr}use poll{/tr}</a>
   </td>
 </tr>
+
+<tr>
+  <td class="form">
+   {tr}Random image from{/tr}:
+  </td>
+  <td>
+   <select name="galleries" id='list_galleries'>
+   <option value="{literal}{{/literal}gallery id=-1 showgalleryname=1{literal}}{/literal}">All galleries</option>
+   {section name=ix loop=$galleries}
+   <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId} showgalleryname=0{literal}}{/literal}">{$galleries[ix].name}</option>
+   {/section}
+  </td>
+  <td class="form">
+   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');">{tr}use gallery{/tr}</a>
+  </td>
+</tr>
+
+
 <tr>
   <td class="form">
     {tr}Dynamic content blocks{/tr}:

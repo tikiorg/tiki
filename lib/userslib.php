@@ -100,6 +100,14 @@ class UsersLib {
     return $result->numRows();
   }
   
+  function user_logout($user)
+  {
+    $t = date("U");
+    $query = "update users_users set lastLogin=$t where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+  }
+  
   function validate_user($user,$pass)
   {
     $query = "select login from users_users where login='$user' and password='$pass'"; 
@@ -107,7 +115,7 @@ class UsersLib {
     if(DB::isError($result)) $this->sql_error($query,$result);
     if($result->numRows()) {
     $t = date("U");
-    $query = "update users_users set lastLogin='$t' where login='$user'";
+    $query = "update users_users set currentLogin=$t where login='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
       return true; 
@@ -124,7 +132,7 @@ class UsersLib {
     } else {
       $mid=''; 
     }
-    $query = "select login, email, lastLogin from users_users $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from users_users $mid order by $sort_mode limit $offset,$maxRecords";
     
     $query_cant = "select count(*) from users_users";
     $result = $this->db->query($query);
@@ -139,6 +147,7 @@ class UsersLib {
       $aux["lastLogin"] = $res["lastLogin"];
       $groups = $this->get_user_groups($user);
       $aux["groups"] = $groups;
+      $aux["currentLogin"]=$res["currentLogin"];
       $ret[] = $aux;
     }
     $retval = Array();
@@ -277,7 +286,7 @@ class UsersLib {
     return $res;
   }
   
-  function get_permissions($offset = 0,$maxRecords = -1,$sort_mode = 'permName_desc', $find='',$type='')
+  function get_permissions($offset = 0,$maxRecords = -1,$sort_mode = 'permName_desc', $find='',$type='',$group='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
@@ -304,6 +313,13 @@ class UsersLib {
       $aux["permName"] = $res["permName"];
       $aux["permDesc"] = $res["permDesc"];
       $aux["type"] = $res["type"];
+      if($group) {
+        if($this->group_has_permission($group,$aux["permName"])) {
+          $aux["hasPerm"]='y';
+        } else {
+          $aux["hasPerm"]='n';
+        }
+      }
       $ret[] = $aux;
     }
     $retval = Array();
@@ -406,7 +422,8 @@ class UsersLib {
   function add_user($user,$pass,$email,$provpass='')
   {
     if($this->user_exists($user)) return false;  
-    $query = "insert into users_users(login,password,email,provpass) values('$user','$pass','$email','$provpass')";
+    $now=date("U");
+    $query = "insert into users_users(login,password,email,provpass,registrationDate) values('$user','$pass','$email','$provpass',$now)";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $this->assign_user_to_group($user,'Registered');

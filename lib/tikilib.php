@@ -21,6 +21,23 @@ class TikiLib {
     die;
   }
   
+  /* Last visit module */
+  function get_news_from_last_visit($user)
+  {
+    if(!$user) return false;
+    $last = $this->db->getOne("select lastLogin from users_users where login='$user'");
+    $ret = Array();
+    $ret["lastVisit"] = $this->db->getOne("select lastLogin from users_users where login='$user'");
+    $ret["images"] = $this->db->getOne("select count(*) from tiki_images where created>$last");
+    $ret["pages"] = $this->db->getOne("select count(*) from tiki_pages where lastModif>$last");
+    $ret["files"]  = $this->db->getOne("select count(*) from tiki_files where created>$last");
+    $ret["comments"]  = $this->db->getOne("select count(*) from tiki_comments where commentDate>$last");
+    $ret["users"]  = $this->db->getOne("select count(*) from users_users where registrationDate>$last");
+    return $ret;
+  }
+  
+  /* Last visit module */
+  
   /* ShoutBox */
   function list_shoutbox($offset,$maxRecords,$sort_mode,$find)
   {
@@ -1765,6 +1782,7 @@ class TikiLib {
   // Functions to backup the database (mysql?)
   function backup_database($filename)
   {
+    ini_set("max_execution_time", "3000");
     $query = "select password from users_users where login='Admin'";
     $pwd = $this->db->getOne($query);
     @$fp = fopen($filename,"w");
@@ -3729,6 +3747,7 @@ class TikiLib {
   
   function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) 
   {
+    global $tiki_p_admin_file_galleries;
     // If $user is admin then get ALL galleries, if not only user galleries are shown
     $sort_mode = str_replace("_"," ",$sort_mode);
     $old_sort_mode ='';
@@ -3742,12 +3761,12 @@ class TikiLib {
     }
     
     // If the user is not admin then select it's own galleries or public galleries
-    if($user != 'admin') {
-      $whuser = "where user='$user' or public='y'";
+    if (($tiki_p_admin_file_galleries == 'y') or ($user == 'admin')) {
+       $whuser = "";
     } else {
-      $whuser = "";
+      $whuser = "where user='$user' or public='y'";
     }
-    
+   
     if($find) {
       if(empty($whuser)) {
         $whuser = "where name like '%".$find."%' or description like '%".$find.".%'";
@@ -5689,8 +5708,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 }
 }
     
-   function rebuild_thumbnails($galleryId)
+  function rebuild_thumbnails($galleryId)
   {
+    ini_set("max_execution_time", "300");
     if(!function_exists("ImageCreateFromString")) return false;
     $gal_info = $this->get_gallery($galleryId);
     $query = "select * from tiki_images where galleryId=$galleryId";
@@ -5721,17 +5741,15 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
       $tw = ((int)($res["xsize"] / $tscale));
       $ty = ((int)($res["ysize"] / $tscale));
-      //print("From: ".$res["xsize"]."x".$res["ysize"]." to: ".$tw."x".$ty."<br/>");
-      //imagecopyresized ( $t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
-      /*
-      if (function_exists("imagecreatetruecolor") and function_exists("imagecopyresampled")) {
-        $t = imagecreatetruecolor($tw,$ty);
-        imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
-      } else {  
-      */
-        $t = imagecreate($tw,$ty);
-        $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
-      /*}*/
+      
+      if(chkgd2()) {
+       $t = imagecreatetruecolor($tw,$ty);
+       imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
+     } else {  
+       $t = imagecreate($tw,$ty);
+       $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
+     }
+      
       $tmpfname = tempnam ("/tmp", "FOO").'.jpg';
       // Patch ends
       
@@ -5752,6 +5770,39 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
     }
     return true;
+  }
+
+
+  function edit_image($id,$name,$description) {
+   $name = addslashes(strip_tags($name));
+   $description = addslashes(strip_tags($description));
+    $query = "update tiki_images set name='$name', description='$description' where imageId = $id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) {
+      $this->sql_error($query,$result);
+      return false;
+    }
+    return true;
+  }
+
+  function get_random_image($galleryId = -1)
+  {
+    $whgal = "";
+    if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
+    $query = "select count(*) from tiki_images" . $whgal;
+    $cant = $this->db->getOne($query);
+    $pick = rand(0,$cant-1);
+    $ret = Array();
+    $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
+    $result=$this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $ret["galleryId"] = $res["galleryId"];
+    $ret["imageId"] = $res["imageId"];
+    $ret["name"] = $res["name"];
+    $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
+    $ret["gallery"] = $this->db->getOne($query);
+    return($ret);
   }
 
 
@@ -6638,6 +6689,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) 
   {
     // If $user is admin then get ALL galleries, if not only user galleries are shown
+    global $tiki_p_admin_galleries;
     $sort_mode = str_replace("_"," ",$sort_mode);
     $old_sort_mode ='';
     if(in_array($sort_mode,Array('images desc','images asc'))) {
@@ -6650,11 +6702,12 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     // If the user is not admin then select it's own galleries or public galleries
-    if($user != 'admin') {
-      $whuser = "where user='$user' or public='y'";
+     if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
+       $whuser = "";
     } else {
-      $whuser = "";
-    }
+      $whuser = "where user='$user' or public='y'";
+     }
+
     
     if($find) {
       if(empty($whuser)) {
@@ -8070,4 +8123,28 @@ function compare_changed($ar1, $ar2) {
 function r_compare_changed($ar1, $ar2) {
   return $ar2["lastChanged"] - $ar1["lastChanged"];
 }
+
+function chkgd2() {
+  if(isset($_SESSION['havegd2'])) {
+  $havegd2 = $_SESSION['havegd2'];
+  } else {
+  $havegd2 = 'no';
+  }
+  if ($havegd2 == 'yes') { return true; }
+  if ($havegd2 == 'no') { return false; }
+
+  ob_start();
+  phpinfo();
+  $phpinfo = ob_get_contents();
+  ob_end_clean();
+  if (preg_match('/GD Version.*2.0/',$phpinfo)) {
+    $_SESSION['havegd2'] = 'yes';
+    return true;
+  }
+
+  $_SESSION['havegd2'] = 'no';
+  return false;
+}
+
+
 ?>

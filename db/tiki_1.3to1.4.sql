@@ -1,3 +1,8 @@
+alter table users_users add currentLogin integer(14);
+update users_users set currentLogin=lastLogin;
+alter table users_users add registrationDate integer(14);
+update users_users set registrationDate=lastLogin;
+
 alter table tiki_files add path varchar(255);
 update tiki_files set path='';
 

@@ -38,11 +38,16 @@
           &nbsp;&nbsp;<br/>
           
           
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" width="{$thx}" height="{$thy}" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
           <br/>
-          <small class="caption">{$images[idx].name}&nbsp;&nbsp;
+          <small class="caption">{$images[idx].name}
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}">[x]</a>
+            <br>
+            [
+            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}">x</a>
+            |
+            <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}">edit</a>
+            ]
           {/if}
           <br/>
          ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits} {tr}hits{/tr}]</small>

@@ -6,7 +6,7 @@ if(isset($setup_parsed_uri["query"])) {
   $setup_query_data = Array();	
 }
 
-if ($user_assigned_modules=='y' && $tiki_p_configure_modules=='y') {
+if ($feature_user_bookmarks=='y' && $user && $tiki_p_create_bookmarks=='y') {
 // check the session to get the parent or create parent =0
 $smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 if(!isset($_SESSION["bookmarks_parent"])) {
