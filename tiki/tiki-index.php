@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.98 2004-06-07 19:43:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.99 2004-06-07 20:37:33 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,6 +91,26 @@ $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);
 
 require_once('tiki-pagesetup.php');
+
+// Check to see if page is categorized
+$objId = urldecode($page);
+$is_categorized = $categlib->is_categorized('wiki page',$objId);
+$categId = $is_categorized;
+
+if ($is_categorized) {
+	require_once('tiki-categsetup.php');
+	// Only consider parent category permissions if child object has no permissions
+	if (!$has_object_perms && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+	    } else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	} 
+	    $smarty->display("error.tpl");
+	    die;  
+	}
+}
 
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
@@ -480,11 +500,6 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
     include_once("lib/hawhaw/hawtikilib.php");
     HAWTIKI_index($info);
 }
-
-// Check to see if page is categorized
-$objId = urldecode($page);
-$is_categorized = $categlib->is_categorized('wiki page',$objId);
-
 
 // Display category path or not (like {catpath()})
 if ($is_categorized) {

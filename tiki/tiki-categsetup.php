@@ -15,7 +15,7 @@ if ($tiki_p_admin != 'y' && isset($categId) && $userlib->object_has_one_permissi
 	$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 	foreach ($perms["data"] as $perm) {
 		$perm = $perm["permName"];
-		if ($userlib->object_has_permission($user, $page, 'category', $perm)) {
+		if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
 			$smarty->assign("$perm", 'y');
     		$$perm = 'y';
 		} else {
