@@ -63,7 +63,8 @@ class SearchLib extends TikiLib {
 					$h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
 		
 		$id = $h['id'];
-		for ($i = 0; $i < count($id); ++$i)
+		$temp_max = count($id);
+		for ($i = 0; $i < $temp_max; ++$i)
 			$sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
 		if (count($id) < 2)
 			$sql .= ',1 AS id2';
@@ -90,7 +91,8 @@ class SearchLib extends TikiLib {
 
 				$sql2 .= ' AND (';
 
-				for ($i = 0; $i < count($h['search']); ++$i) {
+				$temp_max = count($h['search']);
+				for ($i = 0; $i < $temp_max; ++$i) {
 					if ($i)
 						$sql2 .= ' OR ';
 
