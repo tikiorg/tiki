@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.21 2004-08-13 15:31:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.22 2004-08-17 16:33:30 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if (!isset($_REQUEST["page"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if ($tiki_p_view != 'y' || $tiki_p_wiki_view_author != 'y') {
+if ($tiki_p_view != 'y' || $tiki_p_view_wiki_history == 'n') {
 	$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
 
 	$smarty->display("error.tpl");
@@ -62,31 +62,41 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
 	}
 }
 
+$info = $tikilib->get_page_info($page);
+$smarty->assign_by_ref('info', $info);
+
+$smarty->assign('source', false);
 if (isset($_REQUEST['source'])) {
-	$smarty->assign('source', true);
-	$smarty->assign('oldver', $_REQUEST['source']);
-
-	$version = $histlib->get_version($page, $_REQUEST["source"]);
-	$smarty->assign('sourcev', nl2br($version["data"]));
-}
-else
-	$smarty->assign('source', false);
-
-$smarty->assign('preview', false);
-
-if (isset($_REQUEST["preview"])) {
-	$version = $histlib->get_version($page, $_REQUEST["preview"]);
-
-	if ($version) {
-		$version["data"] = $tikilib->parse_data($version["data"]);
-		$smarty->assign_by_ref('preview', $version);
-
-		$smarty->assign('oldver', $_REQUEST["preview"]);
+	if ($_REQUEST["source"] == $info["version"]) {
+		$smarty->assign('sourced', nl2br($info["data"]));
+		$smarty->assign('source', $_REQUEST['source']);
+	}
+	else {
+		$version = $histlib->get_version($page, $_REQUEST["source"]);
+		if ($version) {
+			$smarty->assign('sourced', nl2br($version["data"]));
+			$smarty->assign('source', $_REQUEST['source']);
+		}
 	}
 }
 
-$info = $tikilib->get_page_info($page);
-$smarty->assign_by_ref('info', $info);
+$smarty->assign('preview', false);
+if (isset($_REQUEST["preview"])) {
+	if ($_REQUEST["preview"] == $info["version"]) {
+		$previewd = $tikilib->parse_data($info["data"]);
+		$smarty->assign_by_ref('previewd', $previewd);
+		$smarty->assign('preview', $_REQUEST["preview"]);
+	}
+	else {
+		$version = $histlib->get_version($page, $_REQUEST["preview"]);
+		if ($version) {
+			$previewd = $tikilib->parse_data($version["data"]);
+			$smarty->assign_by_ref('previewd', $previewd);
+			$smarty->assign('preview', $_REQUEST["preview"]);
+		}
+	}
+}
+
 
 $history = $histlib->get_page_history($page);
 $smarty->assign_by_ref('history', $history);
@@ -109,7 +119,7 @@ if (isset($_REQUEST["compare"])) {
 		$smarty->assign_by_ref('new', $new);
 	}
 	if (!isset($_REQUEST["diff_style"]))
-		$_REQUEST["diff_style"] = 'sidediff';
+		$_REQUEST["diff_style"] = 'minsidediff';
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
 		$old["data"] = $tikilib->parse_data($old["data"]);

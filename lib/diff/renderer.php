@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.6 2004-08-12 16:06:23 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.7 2004-08-17 16:33:31 sylvieg Exp $
 
 /**
  * A class to render Diffs in different formats.
@@ -67,7 +67,8 @@ class Text_Diff_Renderer {
                 $context = $edit->orig;
             } else {
                 if (!is_array($block)) {
-                    $context = array_slice($context, count($context) - $nlead);
+                    //$context = array_slice($context, count($context) - $nlead);The original line in the library. It doesn't work. we want the last $nlead lines
+                    $context = array_slice($context, -$nlead, $nlead);
                     $x0 = $xi - count($context);
                     $y0 = $yi - count($context);
                     $block = array();

@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.6 2004-08-12 16:04:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.7 2004-08-17 16:33:31 sylvieg Exp $
 
 function diff2($page1, $page2, $type='sidediff') {
 	$page1 = split("\n", $page1);
 	$page2 = split("\n", $page2);
 	$z = new Text_Diff($page1, $page2);
 	if ($z->isEmpty()) {
-		$html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
+		$html = '';
 	} else {
 //echo "<pre>";print_r($z);echo "</pre>";
 		require_once('renderer.php');
