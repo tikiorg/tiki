@@ -1,5 +1,6 @@
-<a href="cc.php?page=ledgers{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}" class="pagetitle">Main Ledger</a>
+<a href="cc.php?page=ledgers{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}" class="pagetitle">{tr}Main Ledger{/tr}</a>
 {if $userid} for {$userid}{/if}
+{if $ccid}in <b>{$ccid}</b>{/if}
 <br /><br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}
@@ -17,7 +18,7 @@
 {cycle values="odd,even" print=false}
 {section name=i loop=$thelist}
 <tr class="{cycle}">
-<td title="{$thelist[i].age|duration} ago">{$thelist[i].last_tr_date|tiki_short_date}</td>
+<td title="{$thelist[i].age|duration} ago">{$thelist[i].last_tr_date|date_format:"%d/%m/%Y"}</td>
 <td>{$thelist[i].acct_id|userlink}</td>
 <td>{$thelist[i].cc_id}</td>
 <td>{$thelist[i].balance}</td>

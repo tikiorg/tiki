@@ -167,17 +167,18 @@ class CcLib extends UsersLib {
 	}
 
 	function get_registered_cc($user,$app='y') {
-		$query = "select `cc_id` from `cc_ledger` where `acct_id`=? and `approved`=?";
+		$query = "select * from `cc_ledger` where `acct_id`=? and `approved`=?";
 		$result = $this->query($query,array($user,$app));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret["{$res['cc_id']}"] = true;
+			$ret["{$res['cc_id']}"] = $res;
 		}
 		return $ret;
 	}
 
-	function is_registered($cc,$user,$app='y') {
-		return $this->query("select count(*) from `cc_ledger` where `acct_id`=? and `cc_id`=? and `approved`=?",array($user,$cc,$app));
+	function is_registered($user,$cc,$app='y') {
+		$back = $this->getOne("select count(*) from `cc_ledger` where `acct_id`=? and `cc_id`=? and `approved`=?",array($user,$cc,$app));
+		return $back;
 	}
 
 	function update_ledger($cc,$user,$amount,$ledger=false,$date=false) {
@@ -189,8 +190,8 @@ class CcLib extends UsersLib {
 			$balance = $ledger['balance'] + $amount;
 			$tr_total = $ledger['tr_total'] + abs($amount);
 			$tr_count = $ledger['tr_count'] + 1;
-			$query = "update `cc_ledger` set `balance`=?,`tr_total`=?,`tr_count`=?,`last_tr_date`=? where `acct_id`=? and `cc_id`=?";
-			$this->query($query,array($balance,$tr_total,$tr_count,$date,$user,$cc));
+			$query = "update `cc_ledger` set `balance`=?,`tr_total`=?,`tr_count`=?,`last_tr_date`=? where `acct_id`=? and `cc_id`=? and `approved`=?";
+			$this->query($query,array($balance,$tr_total,$tr_count,$date,$user,$cc,'y'));
 			return true;
 		} else {
 			return false;
@@ -198,16 +199,34 @@ class CcLib extends UsersLib {
 	}
 
 	function register_cc($cc,$user) {
-		$query = "insert into `cc_ledger`(`acct_id`,`cc_id`,`last_tr_date`,`approved`) values(?,?,?,?)";
-		$approval = $this->is_moderated($cc);
-		if ($approval == 'y') {
-			$approved = 'n';
+		if ($this->is_registered($user,$cc)) {
+			$this->msg = "User $user is already registered to $cc";
+			return false;
+		} elseif ($this->is_registered($user,$cc,'n')) {
+			$this->msg = "User $user is waiting for approval for registration to $cc";
+			return false;
+		} elseif ($this->is_registered($user,$cc,'c')) {
+			$approval = $this->is_moderated($cc);
+			if ($approval == 'y') {
+				$approved = 'n';
+			} else {
+				$approved = 'y';
+			}
+			$query = "update `cc_ledger` set `approved`=? where `acct_id`=? and `cc_id`=?";
+			$this->query($query,array($approved,$user,$cc));
+			return true;
 		} else {
-			$approved = 'y';
+			$query = "insert into `cc_ledger`(`acct_id`,`cc_id`,`last_tr_date`,`approved`) values(?,?,?,?)";
+			$approval = $this->is_moderated($cc);
+			if ($approval == 'y') {
+				$approved = 'n';
+			} else {
+				$approved = 'y';
+			}
+			$this->query($query,array($user,$cc,$this->date,$approved));
+			$last = $this->getOne("select max(seq) from `cc_ledger`");
+			return $last;
 		}
-		$this->query($query,array($user,$cc,$this->date,$approved));
-		$last = $this->getOne("select max(seq) from `cc_ledger`");
-		return $last;
 	}
 	
 	function unregister_cc($cc,$user) {

@@ -1,18 +1,18 @@
-<a href="cc.php?page=tr_record" class="pagetitle">Record a transaction</a>
+<a href="cc.php?page=my_tr&amp;new" class="pagetitle">Record a transaction</a>
 <br /><br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}
 
-<form action="cc.php?page=tr_record" method="post">
+<form action="cc.php?page=my_tr" method="post">
 <table class="formcolor">
 
 <tr class="formrow">
 <td>Currency</td>
 <td><select name="cc_id" style="font-style:italic;">
 <option value="">Select a Currency</option>
-{section name=i loop=$currencies}
-<option value="{$currencies[i].id}" style="font-style:normal;"{if $currencies[i].id eq $smarty.request.cc_id} selected="selected"{/if}>{$currencies[i].cc_name}</option>
-{/section}
+{foreach key=ccid item=ccinfo from=$currencies}
+<option value="{$ccid}" style="font-style:normal;"{if $ccid eq $smarty.request.cc_id} selected="selected"{/if}>{$ccid}</option>
+{/foreach}
 </select></td>
 </tr>
 <tr class="formrow">

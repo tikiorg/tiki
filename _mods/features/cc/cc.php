@@ -25,14 +25,59 @@ if ($user) {
 
 	// ---------------- TRANSACTIONS -------------------------------------------
 	} elseif ($page == 'transactions' or $page == 'my_tr') {
-		if ($page == 'transactions' and $tiki_p_cc_admin == 'y') {
-			$thelist = $cclib->get_transactions();
-		} else {
-			$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
-			$smarty->assign("userid",$user);
+		if (isset($_REQUEST['tr_amount'])) {
+			if (isset($_REQUEST['from_id']) and isset($_REQUEST['to_id']) and isset($_REQUEST['cc_id'])) {
+				$from_user = $_REQUEST['from_id'];
+				$to_user = $_REQUEST['to_id'];
+				$cc_id = $_REQUEST['cc_id'];
+				$from = $to = false;
+				if (!$cc_id) {
+					$smarty->assign('msg',"You need to select a currency to record your transaction.");
+				} else {
+					if ($cclib->user_exists($from_user)) {
+						if ($cclib->is_registered($from_user,$cc_id)) {
+							$from = true;
+						} else {
+							$smarty->assign('msg',"User $from_user not registered in $cc_id.");
+						}
+					} else {
+						$smarty->assign('msg',"User $from_user not found");
+					}
+					if ($from) {
+						if ($cclib->user_exists($to_user)) {
+							if ($cclib->is_registered($to_user,$cc_id)) {
+								$to = true;
+							} else {
+								$smarty->assign('msg',"User $to_user not registered in $cc_id.");
+							}
+						} else {
+							$smarty->assign('msg',"User $to_user not found.");
+						}
+					}
+				}
+				if ($from and $to) {
+					$cclib->record_transaction($cc_id,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
+					$_GET = array();
+					$page = 'my_tr';
+				} else {
+					$_REQUEST['new'] = true;
+				}
+			}
 		}
-		$smarty->assign('thelist',$thelist['data']);
-		$mid = "cc/transactions.tpl";
+		if (isset($_REQUEST['new'])) {
+			$currencies = $cclib->get_registered_cc($user);
+			$smarty->assign('currencies',$currencies);
+			$mid = 'cc/transactions_form.tpl';
+		} else {
+			if ($page == 'transactions' and $tiki_p_cc_admin == 'y') {
+				$thelist = $cclib->get_transactions();
+			} else {
+				$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
+				$smarty->assign("userid",$user);
+			}
+			$smarty->assign('thelist',$thelist['data']);
+			$mid = "cc/transactions.tpl";
+		}
 	
 	// ---------------- CURRENCIES ----------------------------------------------
 	} elseif ($page == 'currencies' or $page == 'my_cc') {
@@ -103,42 +148,6 @@ if ($user) {
 			$smarty->assign('thelist', $thelist['data']);
 			$mid = "cc/currencies.tpl";
 		}
-	
-	} elseif ($page == 'tr_record') {
-		if (isset($_REQUEST['tr_amount'])) {
-			if (isset($_REQUEST['from_id']) and isset($_REQUEST['to_id']) and isset($_REQUEST['cc_id'])) {
-				$from_user = $_REQUEST['from_id'];
-				$to_user = $_REQUEST['to_id'];
-				$cc_id = $_REQUEST['cc_id'];
-				$from = $to = false;
-				if ($cclib->user_exists($from_user)) {
-					if ($cclib->is_registered($from_user,$cc_id)) {
-						$from = true;
-					} else {
-						$smarty->assign('msg',"User $from_user not registered in $cc_id");
-						$mid = "error_simple.tpl";
-					}
-				} else {
-					$smarty->assign('msg',"User $from_user not found");
-				}
-				if ($from and $cclib->user_exists($to_user)) {
-					if ($cclib->is_registered($to_user,$cc_id)) {
-						$to = true;
-					} else {
-						$smarty->assign('msg',"User $to_user not registered in $cc_id");
-					}
-				} else {
-					$smarty->assign('msg',"User $to_user not found");
-				}
-				if ($from and $to) {
-					$cclib->record_transaction($cc_id,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
-					$_GET = array();
-				}
-			}
-		}
-		$currencies = $cclib->get_currencies(true,0,1000,'cc_name_asc','',$user);
-		$smarty->assign('currencies',$currencies['data']);
-		$mid = "cc/transactions_form.tpl";
 	}
 }
 

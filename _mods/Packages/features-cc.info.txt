@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-1.2.12
+1.2.13
 
 lastmodif:
-$Date: 2004-11-15 00:17:10 $
+$Date: 2004-11-16 08:17:37 $
 
 files: 
 features/cc/cc.php cc.php
@@ -36,6 +36,9 @@ INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Transactions','cc.php?page=transactions',1480,'','tiki_p_cc_admin','');
 
 sql-upgrade:
+: 1.2.13
+delete from tiki_menu_options where url='cc.php?page=tr_record';
+INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Add Transaction','cc.php?page=my_tr&new',1420,'','tiki_p_cc_use','');
 : 1.2.12
 delete from tiki_menu_options where url='cc.php%';
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_admin', 'Administrate the currencies system', 'admin', 'cc');

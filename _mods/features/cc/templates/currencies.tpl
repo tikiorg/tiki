@@ -25,8 +25,10 @@
 {section name=i loop=$thelist}
 <tr class="{cycle}">
 {assign var=ccid value=$thelist[i].id}
-{if $ccuser.registered_cc.$ccid}
+{if $ccuser.registered_cc.$ccid.approved eq 'y'}
 <td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$thelist[i].id}">Unregister</a></td>
+{elseif $ccuser.registered_cc.$ccid.approved eq 'c'}
+<td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">Reregister</a></td>
 {else}
 <td><a href="cc.php?page={$page}&amp;register={$thelist[i].id}">{tr}Register{/tr}</a></td>
 {/if}
