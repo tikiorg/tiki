@@ -305,6 +305,7 @@ function convert_query(&$query) {
 
 	case "postgres7":
 	    case "sybase":
+	    case "sqlite":
 	    $query = preg_replace("/`/", "\"", $query);
 
 	break;
@@ -334,6 +335,7 @@ function convert_sortmode($sort_mode) {
 	    case "postgres7":
 	    case "oci8":
 	    case "sybase":
+	    case "sqlite":
 	    // Postgres needs " " around column names
 	    //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
 	    $sort_mode = str_replace("_asc", "\" asc", $sort_mode);
@@ -363,6 +365,7 @@ function convert_binary() {
 	case "pgsql72":
 	    case "oci8":
 	    case "postgres7":
+	    case "sqlite":
 	    return;
 
 	break;
