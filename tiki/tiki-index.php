@@ -138,6 +138,9 @@ if(count($slides)>1) {
 	$smarty->assign('show_slideshow','n');
 }
 
+if(isset($_REQUEST['refresh'])) {
+  $tikilib->invalidate_cache($page);	
+}
 // Here's where the data is parsed
 // if using cache
 //
@@ -147,11 +150,13 @@ if(count($slides)>1) {
 // pdata is parse_data 
 //   if using cache then update the cache
 // assign_by_ref
+$smarty->assign('cached_page','n');
 if($wiki_cache>0) {
  $cache_info = $wikilib->get_cache_info($page);
  $now = date('U');
  if($cache_info['cache_timestamp']+$wiki_cache > $now) {
    $pdata = $cache_info['cache'];
+   $smarty->assign('cached_page','y');
  } else {
    $pdata = $tikilib->parse_data($info["data"]);
    $wikilib->update_cache($page,$pdata);
