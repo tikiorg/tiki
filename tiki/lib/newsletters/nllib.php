@@ -74,6 +74,9 @@ class NlLib extends TikiLib {
 			$smarty->assign('url_subscribe', $url_subscribe);
 			$smarty->assign('server_name', $_SERVER["SERVER_NAME"]);
 			$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
 			$mail = new TikiMail($user);
 			$mail->setSubject(tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"]);
 			$mail->setText($mail_data);
@@ -112,6 +115,9 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('code', $res["code"]);
 		$smarty->assign('url_subscribe', $url_subscribe);
+		if (!isset($_SERVER["SERVER_NAME"])) {
+			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+		}
 		$mail = new TikiMail($user);
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
@@ -147,6 +153,9 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
+		if (!isset($_SERVER["SERVER_NAME"])) {
+			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+		}
 		$mail = new TikiMail();
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
 		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));

@@ -162,6 +162,10 @@ class TrackerLib extends TikiLib {
 		
 		include_once ('lib/mail/maillib.php');
 
+		if (!isset($_SERVER["SERVER_NAME"])) {
+			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+		}
+
 		foreach ($emails as $email) {
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 
@@ -504,6 +508,9 @@ class TrackerLib extends TikiLib {
 		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
 		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
 		$emails = array_merge($emails, $emails2);
+		if (!isset($_SERVER["SERVER_NAME"])) {
+			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+		}
 		if (count($emails) > 0) {
 			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
 			$smarty->assign('mail_date', $now);
@@ -518,6 +525,8 @@ class TrackerLib extends TikiLib {
 			}
 			$smarty->assign('mail_action', $mail_action);
 			$smarty->assign('mail_data', $the_data);
+
+
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 			
 			include_once ('lib/mail/maillib.php');

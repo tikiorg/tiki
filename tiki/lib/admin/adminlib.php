@@ -344,13 +344,14 @@ class AdminLib extends TikiLib {
 		$result = $this->query($query,array($tagname));
 
 		while ($res = $result->fetchRow()) {
-			$query="delete from `tiki_pages` where `pageName`=?";
-			$this->query($query,array($res["pageName"]),-1,-1,false);
+			//$query="delete from `tiki_pages` where `pageName`=?";
+			//$this->query($query,array($res["pageName"]),-1,-1,false);
+			// update current page rather than delete and re-insert the page;
+			// increment the version number so history is kept in tact
 			$query
-				= "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)
-                		values(?,?,?,?,?,?,?,?,?,?)";
+				= "update `tiki_pages` set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=? where `pageName`=?";
 
-			$result2 = $this->query($query,array($res["pageName"],$res["hits"],$res["data"],$res["lastModif"],$res["comment"],$res["version"],$res["user"],$res["ip"],$res["flag"],$res["description"]));
+			$result2 = $this->query($query,array($res["hits"],$res["data"],$res["lastModif"],$res["comment"],$res["user"],$res["ip"],$res["flag"],$res["description"],$res["pageName"]));
 		}
 
 		$action = "recovered tag: $tagname";

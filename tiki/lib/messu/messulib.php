@@ -43,6 +43,9 @@ class Messu extends TikiLib {
 		$machine = httpPrefix(). $foo["path"];
 
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
 			$email = $userlib->get_user_email($user);
 			if ($email) {
 				include_once('lib/webmail/tikimaillib.php');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.239 2004-06-19 10:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.240 2004-06-20 09:33:25 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1091,6 +1091,9 @@ $smarty->assign('cacheimages', $cacheimages);
 
 $smarty->assign('wiki_extras', 'n');
 
+if (!isset($_SERVER['SERVER_NAME'])) {
+	$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+}
 $feature_server_name = $tikilib->get_preference('feature_server_name', $_SERVER["SERVER_NAME"]);
 
 //print($_SERVER["REQUEST_URI"]);

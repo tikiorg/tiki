@@ -39,7 +39,7 @@ class MiniCalLib extends TikiLib {
 				$res['end'] = $res['start'] + $res['duration'];
 				$res2 = array();
 				if ($res['topicId']) {
-					$query2 = "select `topicId`,`isIcon`,`path,name` from `tiki_minical_topics` where `topicId`=?";
+					$query2 = "select `topicId`,`isIcon`,`path`,`name` from `tiki_minical_topics` where `topicId`=?";
 					$result = $this->query($query2, array((int)$res['topicId']));
 					$res2 = $result->fetchRow();
 				}

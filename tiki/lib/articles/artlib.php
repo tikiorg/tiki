@@ -151,10 +151,14 @@ class ArtLib extends TikiLib {
 		$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
 		$id = $this->getOne($query,array((int) $now,$title,$hash));
 		$emails = $notificationlib->get_mail_events('article_submitted', '*');
+		if (!isset($_SERVER["SERVER_NAME"])) {
+			$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+		}
 		if (count($emails)) {
 			include_once("lib/notifications/notificationemaillib.php");
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = httpPrefix(). $foo["path"];
+
 			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 			$smarty->assign('mail_user', $user);

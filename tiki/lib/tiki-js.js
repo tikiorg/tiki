@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.49 2004-06-17 20:00:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.50 2004-06-20 09:33:26 mose Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -27,7 +27,7 @@ function chgArtType() {
 	if (document.getElementById('articletype').value != 'Review') {
 		document.getElementById('isreview').style.display = "none";
 	} else {
-		document.getElementById('isreview').style.display = "block";
+		document.getElementById('isreview').style.display = "";
 	}
 }
 

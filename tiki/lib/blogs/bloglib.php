@@ -322,8 +322,12 @@ class BlogLib extends TikiLib {
 
 		if ($feature_user_watches == 'y') {
 			$nots = $this->get_event_watches('blog_post', $blogId);
+			if (!isset($_SERVER["SERVER_NAME"])) {
+				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			}
 			if (count($nots)) {
 				include_once("lib/notifications/notificationemaillib.php");
+
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));

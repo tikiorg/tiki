@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.53 2004-06-19 15:16:35 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.54 2004-06-20 09:33:39 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -78,7 +78,7 @@
 			
 			<tr>
         <td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Faq" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">{/if}
+				{if $feature_help eq 'y'}<a href="{$helpurl}FAQ" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">{/if}
 				{tr}FAQs{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
