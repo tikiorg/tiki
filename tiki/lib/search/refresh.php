@@ -5,11 +5,11 @@ function refresh_search_index() {
   session_write_close();
 
   // check if we have to run. Run every n-th click:
-  $n=5; //todo: make it configurable
-  //$n=1; //debug
+  global $search_refresh_rate;
+  //$search_refresh_rate=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
-  if(rand(1,$n)==1) {
+  if(rand(1,$search_refresh_rate)==1) {
     // get a random location
     $locs=array();
     global $feature_wiki;

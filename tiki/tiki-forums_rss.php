@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.13 2003-10-14 22:11:44 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.14 2004-01-15 09:56:26 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,15 +9,13 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 
 if ($rss_forums != 'y') {
-	$smarty -> assign('msg', tra("This feature is disabled"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: rss disabled
+        $errmsg=tra("rss feed disabled");
+        require_once ('tiki-rss_error.php');
 }
 
 if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
-	$smarty -> assign('msg', tra("Permission denied you can not view this section"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: permission denied
+        $errmsg=tra("Permission denied you cannot view this section");
+        require_once ('tiki-rss_error.php');
 }
 
 $feed = "forums";

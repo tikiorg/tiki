@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.19 2004-01-09 19:47:48 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.20 2004-01-15 09:56:29 redflo Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
@@ -93,7 +93,7 @@
         </a>
         &nbsp;&nbsp;<a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}"  
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this repository?{/tr}')" 
-title="{tr}Click here to delete this repository{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}Click here to delete this repository{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" border="0" /></a>&nbsp;&nbsp;
       </td>
 
     {* Show description as colspaned row if it is not an empty *}

@@ -2285,9 +2285,9 @@ function update_session($sessionId) {
     $now = date("U");
     $oldy = $now - (5 * 60);
     if ($user) {
-    	$this->query('delete from `tiki_sessions` where `user`=?', array($user), -1, -1, false);
+    	$this->query("delete from `tiki_sessions` where `user`=?", array($user), -1, -1, false);
     }
-    $this->query('delete from `tiki_sessions` where `sessionId`=?', array($sessionId), -1, -1, false);
+    $this->query("delete from `tiki_sessions` where `sessionId`=?", array($sessionId), -1, -1, false);
     $query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`) values(?,?,?)";
     $result = $this->query($query, array( $sessionId, (int)$now, $user));
     $query = "delete from `tiki_sessions` where `timestamp`<?";

@@ -84,6 +84,9 @@ class SearchLib extends TikiLib {
         }
 	
 	function &refresh_lru_wordlist($syllable) {
+		global $search_max_syllwords;
+		global $search_lru_length;
+		global $search_lru_purge_rate;
 		// delete from wordlist and lru list
 		$this->query("delete from `tiki_searchwords` where `syllable`=?",array($syllable),-1,-1,false);
 		$this->query("delete from `tiki_searchsyllable` where `syllable`=?",array($syllable),-1,-1,false);
@@ -91,7 +94,7 @@ class SearchLib extends TikiLib {
 		$ret=array();
 		$query="select `searchword`,sum(`count`) as `cnt` from `tiki_searchindex` 
 			where `searchword` like ? group by `searchword` order by `cnt` desc";
-		$result=$this->query($query,array('%'.$syllable.'%'),100); // 100: how many different searchwords that contain the syllable are taken into account?. Sortet by number of occurences.
+		$result=$this->query($query,array('%'.$syllable.'%'),$search_max_syllwords); // search_max_syllwords: how many different searchwords that contain the syllable are taken into account?. Sortet by number of occurences.
 		while ($res = $result->fetchRow()) {
 			$ret[]=$res["searchword"];
 		}
@@ -107,14 +110,13 @@ class SearchLib extends TikiLib {
 		// at random rate: check length of lru list and purge these that
 		// have not been used for long time. This is what a lru list 
 		// basically does
-		$n=5; //todo: make it configurable
 		list($usec, $sec) = explode(" ",microtime());
 		srand (ceil($sec+100*$usec));
-		if(rand(1,$n)==1) {
+		if(rand(1,$search_lru_purge_rate)==1) {
 			$lrulength=$this->getOne("select count(*) from `tiki_searchsyllable`",array());
-			if ($lrulength > 100) { // only purge if lru list is long. todo: make configurable
+			if ($lrulength > $search_lru_length) { // only purge if lru list is long.
 				//purge oldest
-				$diff=$lrulength-100;
+				$diff=$lrulength-$search_lru_length;
 				$oldwords=array();
 				$query="select `syllable` from `tiki_searchsyllable` order by `lastUsed` asc";
 				$result=$this->query($query,array(),$diff);
@@ -146,11 +148,12 @@ class SearchLib extends TikiLib {
 
 	function &get_wordlist_from_syllables($syllables) {
 		$ret=array();
+		global $search_syll_age;
 		foreach($syllables as $syllable) {
 		  //Have a look at the lru list (tiki_searchsyllable)
 		  $bindvars=array($syllable);
 		  $age=time()-$this->getOne("select `lastUpdated` from `tiki_searchsyllable` where `syllable`=?",$bindvars);
-		  if(!$age || $age>172800) {// older than 2 days. to be configured
+		  if(!$age || $age>($search_syll_age*3600)) {// older than search_syll_age hours
 		  	$a=$this->refresh_lru_wordlist($syllable);
 			$ret=array_merge($ret,$a);
 		  } else {
@@ -359,9 +362,9 @@ class SearchLib extends TikiLib {
 		  s.`page`=t.`itemId`";
 	      $cant2=$this->getOne($querycant,$words);
 	      while ($res = $result->fetchRow()) {
-	        $href = "tiki-view_tracker_item.php?trackerId=".urlencode($res["tr"])."&amp;itemId=".urlencode($res["pa"]);
+	        $href = "tiki-view_tracker_item.php?trackerId=".urlencode($res["trackerId"])."&amp;itemId=".urlencode($res["page"]);
 	        $ret2[] = array(
-	          'pageName' => $res["pa"],
+	          'pageName' => $res["page"],
 		  'location' => tra("Trackeritem"),
 		  'data' => tra("Unknown"),
 		  'hits' => tra("Unknown"),

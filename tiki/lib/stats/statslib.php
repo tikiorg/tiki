@@ -59,6 +59,8 @@ class StatsLib extends TikiLib {
 			$pageName = $res["pageName"];
 			$queryc = "select count(*) from `tiki_links` where `toPage`=?";
 			$cant = $this->getOne($queryc,array($pageName));
+			$queryc = "select count(*) from `tiki_structures` ts, `tiki_pages` tp where ts.`page_id`=tp.`page_id` and tp.`pageName`=?";
+			$cant += $this->getOne($queryc,array($pageName));
 
 			if ($cant == 0) {
 				$num_or++;

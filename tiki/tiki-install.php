@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.47 2004-01-09 00:17:38 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.48 2004-01-15 09:56:26 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.47 2004-01-09 00:17:38 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.48 2004-01-15 09:56:26 redflo Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -44,7 +44,7 @@ function process_sql_file($file,$db_tiki) {
 	    $statements=preg_split("#(;\n)|(\n/\n)#",$command);
 	    break;
 	  default:
-	    $statements=preg_split("#(;\n)#",$command);
+		$statements=preg_split("#(;\n)|(;\r\n)#",$command);
 	    break;
 	}
 	$prestmt="";
@@ -83,6 +83,24 @@ function process_sql_file($file,$db_tiki) {
 
 	$smarty->assign_by_ref('succcommands', $succcommands);
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
+}
+
+function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.8") {
+	$db_tiki=addslashes($db_tiki);
+	$host_tiki=addslashes($host_tiki);
+	$user_tiki=addslashes($user_tiki);
+	$pass_tiki=addslashes($pass_tiki);
+	$dbs_tiki=addslashes($dbs_tiki);
+	$fw = fopen('db/local.php', 'w');
+	$filetowrite="<?php\n\$db_tiki=\"$db_tiki\";\n";
+	$filetowrite.="\$dbversion_tiki=\"$dbversion_tiki\";\n";
+	$filetowrite.="\$host_tiki=\"$host_tiki\";\n";
+	$filetowrite.="\$user_tiki=\"$user_tiki\";\n";
+	$filetowrite.="\$pass_tiki=\"$pass_tiki\";\n";
+	$filetowrite.="\$dbs_tiki=\"$dbs_tiki\";\n";
+	$filetowrite.="?>";
+        fwrite($fw, $filetowrite);
+	fclose ($fw);
 }
 
 function create_dirs(){
@@ -386,6 +404,12 @@ if (!file_exists('db/local.php')) {
 	// include the file to get the variables
 	include ('db/local.php');
 
+	if (!isset($db_tiki)) {
+		//upgrade from 1.7.X
+		$db_tiki="mysql";
+		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);
+	}
+
 	if ($db_tiki == 'sybase') {
 	        // avoid database change messages
 		ini_set('sybct.min_server_severity', '11');
@@ -436,13 +460,8 @@ if ((!$dbcon or $_REQUEST['resetdb']=='y') && isset($_REQUEST['dbinfo'])) {
                 break;
 	}
 
-	$filetowrite .= '$user_tiki="' . $_REQUEST['user'] . '";' . "\n";
-	$filetowrite .= '$pass_tiki="' . $_REQUEST['pass'] . '";' . "\n";
-	$filetowrite .= '$dbs_tiki="' . $_REQUEST['name'] . '";' . "\n";
-	$filetowrite .= '?' . '>';
-	$fw = fopen('db/local.php', 'w');
-	fwrite($fw, $filetowrite);
-	fclose ($fw);
+	write_local_php($dbtodsn[$_REQUEST['db']],$_REQUEST['host'],
+		$_REQUEST['user'],$_REQUEST['pass'],$_REQUEST['name']);
 	include ('db/local.php');
 	$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 	$dbTiki = &ADONewConnection($db_tiki);

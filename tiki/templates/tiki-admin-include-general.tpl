@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.26 2003-11-20 23:47:51 markusvk Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.27 2004-01-15 09:56:29 redflo Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -10,8 +10,8 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
-        <td class="form" >{tr}Theme{/tr}:</td>
-        <td width="%67%"><select name="site_style">
+        <td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
+        <td width="%67%"><select name="site_style" id="general-theme">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
                 {if $style_site eq $styles[ix]}selected="selected"{/if}>
@@ -20,8 +20,8 @@
             </select>
         </td>
       </tr><tr>
-        <td class="form">{tr}Slideshows theme{/tr}:</td>
-        <td><select name="slide_style">
+        <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
+        <td><select name="slide_style" id="general-slideshows">
             {section name=ix loop=$slide_styles}
               <option value="{$slide_styles[ix]|escape}"
                 {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>
@@ -31,20 +31,20 @@
         </td>
       </tr><tr><td colspan="2"><hr/></td></tr>
       <tr>
-        <td class="form">{tr}Use group homepages{/tr}:</td>
-        <td><input type="checkbox" name="useGroupHome"
+        <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
+        <td><input type="checkbox" name="useGroupHome" id="general-homepages"
               {if $useGroupHome eq 'y'}checked="checked"{/if}/>
         </td>
       </tr>
       <tr>
-        <td class="form">{tr}Use URI as Home Page{/tr}:</td>
-        <td><input type="checkbox" name="useUrlIndex"
+        <td class="form"><label for="general-uri">{tr}Use URI as Home Page{/tr}:</label></td>
+        <td><input type="checkbox" name="useUrlIndex" id="general-uri"
               {if $useUrlIndex eq 'y'}checked="checked"{/if}/>
             <input type="text" name="urlIndex" value="{$urlIndex|escape}" size="50" />
         </td>
       </tr><tr>
-        <td class="form">{tr}Home page{/tr}:</td>
-        <td><select name="tikiIndex">
+        <td class="form"><label for="general-homepage">{tr}Home page{/tr}:</label></td>
+        <td><select name="tikiIndex" id="general-homepage">
             <option value="tiki-index.php"
               {if $tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>
               {tr}Wiki{/tr}</option>
@@ -73,45 +73,39 @@
             {/if}
             {if $feature_custom_home eq 'y'}
               <option value="tiki-custom_home.php"
-                {if $tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>
-                {tr}Custom home{/tr}</option>
+                {if $tikiIndex eq 'tiki-custom_home.php'}selected="selected"{/if}>{tr}Custom home{/tr}</option>
             {/if}
             </select>
         </td>
       </tr><tr><td colspan="2"><hr/></td></tr><tr>
-        <td class="form">{tr}Language{/tr}:</td>
+        <td class="form"><label for="general-lang">{tr}Language{/tr}:</label></td>
         <td>
-        <select name="language">
+        <select name="language" id="general-lang">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"
-          {if $language eq $languages[ix].value}selected="selected"{/if}>
-          {$languages[ix].name}
-        </option>
+          {if $language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
         {/section}
         </select>
         </td>
       </tr><tr>
-        <td class="form">{tr}Use database for translation{/tr}:</td>
-        <td><input type="checkbox" name="lang_use_db"
+        <td class="form"><label for="general-db_translation">{tr}Use database for translation{/tr}:</label></td>
+        <td><input type="checkbox" name="lang_use_db" id="general-db_translation"
               {if $lang_use_db eq 'y'}checked="checked"{/if}/></td>
         {if $lang_use_db eq 'y'}
           </tr><tr>
-            <td class="form">{tr}Record untranslated{/tr}:</td>
-            <td><input type="checkbox" name="record_untranslated"
+            <td class="form"><label for="general-untranslated">{tr}Record untranslated{/tr}:</label></td>
+            <td><input type="checkbox" name="record_untranslated" id="general-untranslated"
                   {if $record_untranslated eq 'y'}checked="checked"{/if}/></td>
         {/if}
       </tr><tr>
-        <td class="form">{tr}OS{/tr}:</td>
-        <td><select name="system_os">
+        <td class="form"><label for="general-os">{tr}OS{/tr}:</label></td>
+        <td><select name="system_os" id="general-os">
             <option value="unix"
-              {if $system_os eq 'unix'}selected="selected"{/if}>
-              {tr}Unix{/tr}</option>
+              {if $system_os eq 'unix'}selected="selected"{/if}>{tr}Unix{/tr}</option>
             <option value="windows"
-              {if $system_os eq 'windows'}selected="selected"{/if}>
-              {tr}Windows{/tr}</option>
+              {if $system_os eq 'windows'}selected="selected"{/if}>{tr}Windows{/tr}</option>
             <option value="unknown"
-              {if $system_os eq 'unknown'}selected="selected"{/if}>
-              {tr}Unknown/Other{/tr}</option>
+              {if $system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
             </select>
         </td>
       </tr></table>
@@ -120,14 +114,14 @@
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
         <td class="form" >
-          {tr}Disallow access to the site (except for those with permission){/tr}:</td>
-        <td ><input type="checkbox" name="site_closed"
+          <label for="general-access">{tr}Disallow access to the site (except for those with permission){/tr}:</label></td>
+        <td ><input type="checkbox" name="site_closed" id="general-access"
               {if $site_closed eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
         <td class="form">
-            {tr}Message to display when site is closed{/tr}:</td>
-        <td><input type="text" name="site_closed_msg"
+            <label for="general-site_closed">{tr}Message to display when site is closed{/tr}:</label></td>
+        <td><input type="text" name="site_closed_msg" id="general-site_closed"
              value="{$site_closed_msg}" size="60"/></td>
       </tr>
       </table>
@@ -135,155 +129,153 @@
         <td colspan="2"><hr/></td>
       </tr><tr>
         <td class="form" >
-          {tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</td>
-        <td ><input type="checkbox" name="use_load_threshold"
+          <label for="general-load">{tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</label></td>
+        <td ><input type="checkbox" name="use_load_threshold" id="general-load"
               {if $use_load_threshold eq 'y'}checked="checked"{/if}/>
       </td>
       </tr><tr>
-        <td class="form">{tr}Max average server load threshold in the last minute{/tr}:</td>
-        <td><input type="text" name="load_threshold" value="{$load_threshold}" size="5" /></td>
+        <td class="form"><label for="general-max_load">{tr}Max average server load threshold in the last minute{/tr}:</label></td>
+        <td><input type="text" name="load_threshold" id="general-max_load" value="{$load_threshold}" size="5" /></td>
       </tr><tr>
-        <td class="form">{tr}Message to display when server is too busy{/tr}:</td>
-        <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
+        <td class="form"><label for="general-load_mess">{tr}Message to display when server is too busy{/tr}:</label></td>
+        <td><input type="text" name="site_busy_msg" id="general-load_mess" value="{$site_busy_msg}" size="60" /></td>
       </tr>
       </table>
       <table class="admin"><tr>
         <td colspan="5"><hr/></td></tr>
         <tr>
         <td class="form" >
-          {tr}Open external links in new window{/tr}:</td>
-        <td ><input type="checkbox" name="popupLinks"
+          <label for="general-ext_links">{tr}Open external links in new window{/tr}:</label></td>
+        <td ><input type="checkbox" name="popupLinks" id="general-ext_links"
               {if $popupLinks eq 'y'}checked="checked"{/if}/>
         </td>
         <td >&nbsp;</td>
         <td class="form" >
-          {tr}Display modules to all groups always{/tr}:</td>
-        <td ><input type="checkbox" name="modallgroups"
+          <label for="general-modules">{tr}Display modules to all groups always{/tr}:</label></td>
+        <td ><input type="checkbox" name="modallgroups" id="general-modules"
               {if $modallgroups eq 'y'}checked="checked"{/if} {popup text="Warning! New admins, there is currently a bug
 that should remove your login module if you disable this, making you unable to get back in Tiki. Use tiki-login_scr.php to
 get back in if this happens to you. The corresponding SF bug tracker is 835233." textcolor=red}/>
         </td>
       </tr><tr>
-        <td class="form">{tr}Use cache for external pages{/tr}:</td>
-        <td><input type="checkbox" name="cachepages"
+        <td class="form"><label for="general-cache_ext_pages">{tr}Use cache for external pages{/tr}:</label></td>
+        <td><input type="checkbox" name="cachepages" id="general-cache_ext_pages"
               {if $cachepages eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
-        <td class="form">{tr}Use cache for external images{/tr}:</td>
-        <td><input type="checkbox" name="cacheimages"
+        <td class="form"><label for="general-cache_ext_imgs">{tr}Use cache for external images{/tr}:</label></td>
+        <td><input type="checkbox" name="cacheimages" id="general-cache_ext_imgs"
               {if $cacheimages eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-        <td class="form">{tr}Use direct pagination links{/tr}:</td>
-        <td><input type="checkbox" name="direct_pagination"
+        <td class="form"><label for="general-pagination">{tr}Use direct pagination links{/tr}:</label></td>
+        <td><input type="checkbox" name="direct_pagination" id="general-pagination"
               {if $direct_pagination eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
-        <td class="form">{tr}Display menus as folders{/tr}:</td>
-        <td><input type="checkbox" name="feature_menusfolderstyle"
+        <td class="form"><label for="general-menu_folders">{tr}Display menus as folders{/tr}:</label></td>
+        <td><input type="checkbox" name="feature_menusfolderstyle" id="general-menu_folders"
               {if $feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-        <td class="form">{tr}Use gzipped output{/tr}:</td>
-        <td><input type="checkbox" name="feature_obzip"
+        <td class="form"><label for="general-gzip">{tr}Use gzipped output{/tr}:</label></td>
+        <td><input type="checkbox" name="feature_obzip" id="general-gzip"
               {if $feature_obzip eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
-        <td class="form">{tr}Count admin pageviews{/tr}:</td>
-        <td><input type="checkbox" name="count_admin_pvs"
+        <td class="form"><label for="general-pageviews">{tr}Count admin pageviews{/tr}:</label></td>
+        <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews"
               {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
         </td>
-<!-- Still under discussion     
+<!-- Still under discussion
       </tr><tr>
-        <td class="form">{tr}Hide anonymous-only modules from registered users{/tr}:</td>
-        <td><input type="checkbox" name="modseparateanon"
+        <td class="form"><label for="general-anon_modules">{tr}Hide anonymous-only modules from registered users{/tr}:</label></td>
+        <td><input type="checkbox" name="modseparateanon" id="general-anon_modules"
               {if $modseparateanon eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
--->     
+-->
       </tr></table>
       <table class="admin"><tr>
         <td colspan="2"><hr/></td>
       </tr><tr>
         <td class="form" >
-          {tr}Server name (for absolute URIs){/tr}:</td>
-        <td ><input type="text" name="feature_server_name"
+          <label for="general-server_name">{tr}Server name (for absolute URIs){/tr}:</label></td>
+        <td ><input type="text" name="feature_server_name" id="general-server_name"
                                value="{$feature_server_name|escape}" size="40" /></td>
       </tr><tr>
-        <td class="form">{tr}Browser title{/tr}:</td>
-        <td><input type="text" name="siteTitle" value="{$siteTitle|escape}" size="40" /></td>
+        <td class="form"><label for="general-browser_title">{tr}Browser title{/tr}:</label></td>
+        <td><input type="text" name="siteTitle" id="general-browser_title" value="{$siteTitle|escape}" size="40" /></td>
       </tr><tr>
 <!--
-        <td class="form">{tr}Wiki_Tiki_Title{/tr}: </td>
-        <td><input type="text" size="5" name="title" value="{$title|escape}" size="40" /></td>
+        <td class="form"><label for="general-tiki_title">{tr}Wiki_Tiki_Title{/tr}: </label></td>
+        <td><input type="text" size="5" name="title" id="general-tiki_title" value="{$title|escape}" size="40" /></td>
       </tr><tr>
 -->
-        <td class="form">{tr}Temporary directory{/tr}:</td>
-        <td><input type="text" name="tmpDir" value="{$tmpDir|escape}" size="50" /></td>
+        <td class="form"><label for="general-temp">{tr}Temporary directory{/tr}:</label></td>
+        <td><input type="text" name="tmpDir" id="general-temp" value="{$tmpDir|escape}" size="50" /></td>
       </tr><tr>
-        <td class="form">{tr}Sender Email{/tr}:</td>
-        <td><input type="text" name="sender_email" value="{$sender_email|escape}" size="50" /></td>
+        <td class="form"><label for="general-send_email">{tr}Sender Email{/tr}:</label></td>
+        <td><input type="text" name="sender_email" id="general-send_email" value="{$sender_email|escape}" size="50" /></td>
       </tr><tr>
-<!--        <td class="form">{tr}Email Encoding{/tr}:</td>
-        <td><select name="email_encoding">
+<!--        <td class="form"><label for="general-encoding">{tr}Email Encoding{/tr}:</label></td>
+        <td><select name="email_encoding" id="general-encoding">
                   <option value="utf-8" {if $email_encoding != "iso-8859-1"}selected="selected"{/if}>utf-8</option>
                   <option value="iso-8859-1"{if $email_encoding == "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
         </select></td>
       </tr><tr>
 -->
-        <td class="form">{tr}Contact user{/tr}:</td>
+        <td class="form"><label for="general-contact">{tr}Contact user{/tr}:</label></td>
         <td>{if $feature_contact eq 'y'}
-              <input type="text" name="contact_user" value="{$contact_user|escape}" size="40" />
+              <input type="text" name="contact_user" id="general-contact" value="{$contact_user|escape}" size="40" />
             {else}
               {tr}contact feature disabled{/tr}
             {/if}
         </td>
       </tr><tr>
-        <td class="form">{tr}Store session data in database{/tr}:</td>
-        <td><input type="checkbox" name="session_db"
+        <td class="form"><label for="general-session_db">{tr}Store session data in database{/tr}:</label></td>
+        <td><input type="checkbox" name="session_db" id="general-session_db"
               {if $session_db eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-        <td class="form">{tr}Session lifetime in minutes{/tr}:</td>
-        <td><input size="5" type="text" name="session_lifetime" value="{$session_lifetime|escape}" /></td>
+        <td class="form"><label for="general-session_life">{tr}Session lifetime in minutes{/tr}:</label></td>
+        <td><input size="5" type="text" name="session_lifetime" id="general-session_life" value="{$session_lifetime|escape}" /></td>
       </tr><tr>
-        <td class="form">{tr}Use proxy{/tr}:</td>
-        <td><input type="checkbox" name="use_proxy"
+        <td class="form"><label for="general-proxy">{tr}Use proxy{/tr}:</label></td>
+        <td><input type="checkbox" name="use_proxy" id="general-proxy"
               {if $use_proxy eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-        <td class="form">{tr}Proxy Host{/tr}:</td>
-        <td><input type="text" name="proxy_host" value="{$proxy_host|escape}" size="40" /></td>
+        <td class="form"><label for="general-proxy_host">{tr}Proxy Host{/tr}:</label></td>
+        <td><input type="text" name="proxy_host" id="general-proxy_host" value="{$proxy_host|escape}" size="40" /></td>
       </tr><tr>
-        <td class="form">{tr}Proxy port{/tr}:</td>
-        <td><input size="5" type="text" name="proxy_port" value="{$proxy_port|escape}" /></td>
+        <td class="form"><label for="general-proxy_port">{tr}Proxy port{/tr}:</label></td>
+        <td><input size="5" type="text" name="proxy_port" id="general-proxy_port" value="{$proxy_port|escape}" /></td>
       </tr><tr>
-        <td class="form">{tr}Maximum number of records in listings{/tr}:</td>
-        <td><input size="5" type="text" name="maxRecords"
+        <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
+        <td><input size="5" type="text" name="maxRecords" id="general-max_records"
                    value="{$maxRecords|escape}" />
       </tr></table>
       <table class="admin"><tr>
-        <td class="heading" colspan="2"
-            align="center">{tr}Date and Time Formats{/tr}</td>
+        <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
-        <td class="form" >{tr}Long date format{/tr}:</td>
-        <td ><input type="text" name="long_date_format"
+        <td class="form" ><label for="general-long_date">{tr}Long date format{/tr}:</label></td>
+        <td ><input type="text" name="long_date_format" id="general-long_date"
              value="{$long_date_format|escape}" size="40"/></td>
       </tr><tr>
-        <td class="form">{tr}Short date format{/tr}:</td>
-        <td><input type="text" name="short_date_format"
+        <td class="form"><label for="general-short_date">{tr}Short date format{/tr}:</label></td>
+        <td><input type="text" name="short_date_format" id="general-short_date"
              value="{$short_date_format|escape}" size="40"/></td>
       </tr><tr>
-        <td class="form">{tr}Long time format{/tr}:</td>
-        <td><input type="text" name="long_time_format"
+        <td class="form"><label for="general-long_time">{tr}Long time format{/tr}:</label></td>
+        <td><input type="text" name="long_time_format" id="general-long_time"
              value="{$long_time_format|escape}" size="40"/></td>
       </tr><tr>
-        <td class="form">{tr}Short time format{/tr}:</td>
-        <td><input type="text" name="short_time_format"
+        <td class="form"><label for="general-short_time">{tr}Short time format{/tr}:</label></td>
+        <td><input type="text" name="short_time_format" id="general-short_time"
              value="{$short_time_format|escape}" size="40"/></td>
       </tr><tr>
-        {assign var="fcnlink"
-                value="http://www.php.net/manual/en/function.strftime.php"}
+        {assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
         <td colspan="2" align="center">
           <a class="link" target="strftime" href="{$fcnlink}">
             {tr}Date and Time Format Help{/tr}</a></td>
@@ -303,8 +295,8 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
         <td >
           <div class="simplebox">{$timezone_server}</div></td>
       </tr><tr>
-        <td class="form">{tr}Displayed time zone{/tr}:</td>
-        <td><select name='display_timezone'>
+        <td class="form"><label for="general-displayed_zone">{tr}Displayed time zone{/tr}:</label></td>
+        <td><select name='display_timezone' id="general-displayed_zone">
             {html_options options=$timezone_options selected=$display_timezone}
             </select>
         </td>
@@ -335,15 +327,14 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
   <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=general">
       <table class="admin"><tr>
-        <td class="form" >{tr}New password{/tr}:</td>
-        <td ><input type="password" name="adminpass" /></td>
+        <td class="form" ><label for="general-new_pass">{tr}New password{/tr}:</label></td>
+        <td ><input type="password" name="adminpass" id="general-new_pass" /></td>
       </tr><tr>
-        <td class="form">{tr}Repeat password{/tr}:</td>
-        <td><input type="password" name="again" /></td>
+        <td class="form"><label for="general-repeat_pass">{tr}Repeat password{/tr}:</label></td>
+        <td><input type="password" name="again" id="general-repeat_pass" /></td>
       </tr><tr>
         <td colspan="2" class="button">
-          <input type="submit" name="newadminpass"
-                 value="{tr}Change password{/tr}" />
+          <input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
         </td>
       </tr></table>
     </form>

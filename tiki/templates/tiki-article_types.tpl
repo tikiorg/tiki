@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.12 2004-01-02 23:19:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.13 2004-01-15 09:56:29 redflo Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -33,23 +33,23 @@
 <h3>{tr}List of types{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
-<tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Rate{/tr}</td>
-<td class="heading">{tr}Show before publish date{/tr}</td>
-<td class="heading">{tr}Show after expire date{/tr}</td>
-<td class="heading">{tr}Heading only{/tr}</td>
-<td class="heading">{tr}Comments{/tr}</td>
-<td class="heading">{tr}Comment Can Rate Article{/tr}</td>
-<td class="heading">{tr}Show image{/tr}</td>
-<td class="heading">{tr}Show avatar{/tr}</td>
-<td class="heading">{tr}Show author{/tr}</td>
-<td class="heading">{tr}Show publish date{/tr}</td>
-<td class="heading">{tr}Show expire date{/tr}</td>
-<td class="heading">{tr}Show reads{/tr}</td>
-<td class="heading">{tr}Show size{/tr}</td>
-<td class="heading">{tr}Creator can edit{/tr}</td>
-<td class="heading">{tr}# Articles / Delete{/tr}</td>
+<tr class="heading">
+<td>{tr}Name{/tr}</td>
+<td>{tr}Rate{/tr}</td>
+<td>{tr}Show before publish date{/tr}</td>
+<td>{tr}Show after expire date{/tr}</td>
+<td>{tr}Heading only{/tr}</td>
+<td>{tr}Comments{/tr}</td>
+<td>{tr}Comment Can Rate Article{/tr}</td>
+<td>{tr}Show image{/tr}</td>
+<td>{tr}Show avatar{/tr}</td>
+<td>{tr}Show author{/tr}</td>
+<td>{tr}Show publish date{/tr}</td>
+<td>{tr}Show expire date{/tr}</td>
+<td>{tr}Show reads{/tr}</td>
+<td>{tr}Show size{/tr}</td>
+<td>{tr}Creator can edit{/tr}</td>
+<td>{tr}Delete{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}

@@ -37,7 +37,7 @@
   <tr>
     <td class="formcolor">{tr}Category{/tr}:</td>
     <td class="formcolor">
-    <select name="categId" />
+    <select name="categId">
     {section name=ix loop=$categs}
       <option value="{$categs[ix].categId|escape}">{$categs[ix].path}</option>
     {/section}

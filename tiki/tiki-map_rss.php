@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.4 2003-10-14 22:12:24 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.5 2004-01-15 09:56:26 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,10 +9,14 @@
 require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 
+if ($rss_mapfiles != 'y') {
+        $errmsg=tra("rss feed disabled");
+        require_once ('tiki-rss_error.php');
+}
+
 if($tiki_p_map_view != 'y') {
-	$smarty -> assign('msg', tra("Permission denied you cannot view this section"));
-	$smarty -> display("styles/$style_base/error.tpl");
-	die; // TODO: output of rss file with message: permission denied
+        $errmsg=tra("Permission denied you cannot view this section");
+        require_once ('tiki-rss_error.php');
 }
 
 $feed = "map";
