@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.3 2004-04-24 05:30:40 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.4 2004-04-25 15:11:24 ggeller Exp $
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
@@ -25,11 +25,28 @@ import re
 # THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE TIKI ADMINS!
 # sys.exit(0)
 
-# Invoke as something like: ./newTiki.py password new.wikiplanet.com
+# Invoke as something like: ./add1tiki2multi.py.py password new.wikiplanet.com
 
-sMySQLPassword = sys.argv[1]
+def usage():
+    print sys.argv[0], "[-p <mysql-root-password>] <new-tiki-domainname>"
 
-sNewDomain = sys.argv[2]
+if len(sys.argv) == 4:
+    if sys.argv[1] == "-p":
+        sMySQLPassword = sys.argv[2]
+        sNewDomain = sys.argv[3]
+    else:
+        usage()
+        sys.exit(-1)
+elif len(sys.argv) == 2:
+    sNewDomain = sys.argv[1]
+    os.system("stty -echo")
+    sMySQLPassword = raw_input("mysql root password:")
+    os.system("stty echo")
+    print ""
+else:
+    usage()
+    sys.exit(-1);
+
 sNewDomain = sNewDomain.lower()
 
 # This script must be run as root
