@@ -53,7 +53,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?section=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
-[<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename">edit</a>]
+[<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename">{tr}edit{/tr}</a>]
 </td>
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
 <td class="{cycle}">{$accounts[ix].user}</td>
