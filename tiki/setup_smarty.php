@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.24 2004-04-26 17:55:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.25 2004-05-06 00:18:14 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,7 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 class Smarty_TikiWiki extends Smarty {
 	
 	function Smarty_TikiWiki($tikidomain = "") {
+		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = 'templates/';
 		$this->compile_dir = "templates_c/$tikidomain";
 		$this->config_dir = "configs/";
@@ -36,8 +37,8 @@ class Smarty_TikiWiki extends Smarty {
 		global $style, $style_base, $tikidomain;
 
 		if (isset($style) && isset($style_base)) {
-			if ($tikidomain and file_exists("templates/$tikidomain/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "$tikidomain/$style_base/".$params['smarty_include_tpl_file'];
+			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "$tikidomain/styles/$style_base/".$params['smarty_include_tpl_file'];
 			} elseif ($tikidomain and file_exists("templates/$tikidomain/".$params['smarty_include_tpl_file'])) {
 				$params['smarty_include_tpl_file'] = "$tikidomain/".$params['smarty_include_tpl_file'];
 			} elseif (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
