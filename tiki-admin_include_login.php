@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.9 2004-01-14 06:12:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.10 2004-01-15 06:32:47 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,11 @@ if (isset($_REQUEST["loginprefs"])) {
 		
 	if (isset($_REQUEST["userTracker"]) && $_REQUEST["userTracker"] == "on") {
 		$tikilib->set_preference("userTracker", 'y');
-		$tikilib->set_preference("eligibleUserTrackers", implode(',',$_REQUEST["eligibleUserTrackers"]));
+		if (isset($_REQUEST["eligibleUserTrackers"])) {
+			$tikilib->set_preference("eligibleUserTrackers", implode(',',$_REQUEST["eligibleUserTrackers"]));
+		} else {
+			$tikilib->set_preference("eligibleUserTrackers", '');
+		}
 	} else {
 		$tikilib->set_preference("userTracker", 'n');
 		$tikilib->set_preference("eligibleUserTrackers", '');
@@ -42,7 +46,11 @@ if (isset($_REQUEST["loginprefs"])) {
 
 	if (isset($_REQUEST["groupTracker"]) && $_REQUEST["groupTracker"] == "on") {
 		$tikilib->set_preference("groupTracker", 'y');
-		$tikilib->set_preference("eligibleGroupTrackers", implode(',',$_REQUEST["eligibleGroupTrackers"]));
+		if (isset($_REQUEST["eligibleGroupTrackers"])) {
+			$tikilib->set_preference("eligibleGroupTrackers", implode(',',$_REQUEST["eligibleGroupTrackers"]));
+		} else {
+			$tikilib->set_preference("eligibleGroupTrackers", '');
+		}
 	} else {
 		$tikilib->set_preference("groupTracker", 'n');
 		$tikilib->set_preference("eligibleGroupTrackers", '');
