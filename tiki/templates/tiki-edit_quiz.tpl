@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.16 2004-05-15 19:45:34 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.17 2004-06-04 04:59:11 dgdaniels Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -17,7 +17,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_quiz.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin quizzes tpl{/tr}">
+<a href="tiki-edit_templates.php?template=/tiki-edit_quiz.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin quizzes tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
 <!-- beginning of next bit -->
@@ -48,7 +48,7 @@
 <label for="quiz-name">{tr}Name{/tr}:</label>
 </td>
 <td class="formcolor">
-<input type="text" name="name" id="quiz-name" value="{$name|escape}" />
+	<input type="text" size ="80" name="name" id="quiz-name" value="{$name|escape}" />
 </td>
 </tr>
 <tr>
@@ -56,7 +56,7 @@
 <label for="quiz-desc">{tr}Description{/tr}:</label>
 </td>
 <td class="formcolor">
-<textarea name="description" id="quiz-desc" rows="4" cols="40">{$description|escape}</textarea>
+<textarea name="description" id="quiz-desc" rows="4" cols="75">{$description|escape}</textarea>
 </td>
 </tr>
 {include file=categorize.tpl}
@@ -153,6 +153,7 @@
 <td class="heading">{tr}results{/tr}</td>
 
 {* still stuck on being able to sort by number of questions and results! 
+Results need to be sortable so as to give admin quick idea of user participation
 <a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}results{/tr}</a>
 </td>
 *}
@@ -198,6 +199,9 @@
 {/if}
 {/section}
 </table>
+
+<! -- this is the page advance part -->
+
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-edit_quiz.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
