@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.21 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.22 2003-08-10 14:13:12 sylvieg Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -30,7 +30,8 @@ $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
 // The format is S M T W T F S
 $c = new Calendar("en");
-$v = substr(tra($c->nameOfMonth($mon)),0,4);
+if (function_exists(mb_substr)) $v = mb_substr(tra($c->nameOfMonth($mon)),0,3, "UTF-8");
+else $v = substr(tra($c->nameOfMonth($mon)),0,4);
 $dayofweek = tra($c->dayOfWeekStr($day,$mon,$year));
 
 
