@@ -1,0 +1,6 @@
+This is linking tests
+[http://www.google.com|google|nocache]
+((A link to a wiki page))
+))Not a link((
+((Test2_Link|with a description))
+TestSmashedWordsMakeALink

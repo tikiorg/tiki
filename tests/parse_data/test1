@@ -1,0 +1,20 @@
+* Item 1
+* Item 2
+** Item 21
+** Item 22
+*** Item 221
+*** Item 222
+** Item 23
+* Item 3
+
+# Item 1
+# Item 2
+## Item 21
+## Item 22
+### Item 221
+### Item 222
+## Item 23
+# Item 3
+
+;foo1:definition1
+;foo2:definition2
