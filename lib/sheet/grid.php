@@ -93,7 +93,7 @@ class TikiSheet
 	 */
 	var $headerRow;
 	var $footerRow;
-	var $className;
+	var $cssName;
 
 	/**
 	 * Internal values.
@@ -158,7 +158,7 @@ class TikiSheet
 	 */
 	function configureLayout( $className, $headerRow = 0, $footerRow = 0 )
 	{
-		$this->className = $className;
+		$this->cssName = $className;
 		$this->headerRow = $headerRow;
 		$this->footerRow = $footerRow;
 	}
@@ -871,10 +871,13 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		}
 
 		// Fetching the layout informations.
-		$result = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+		$result2 = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
-		if( $row = $result->fetchRow() )
-			$sheet->configureLayout( $row['className'], $row['headerRow'], $row['footerRow'] );
+		if( $row = $result2->fetchRow() )
+		{
+			extract( $row );
+			$sheet->configureLayout( $className, $headerRow, $footerRow );
+		}
 
 		return true;
 	}
@@ -1092,7 +1095,7 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 			return false;
 
-		$class = empty( $sheet->className ) ? "" : " class='{$sheet->className}'";
+		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		echo "<table{$class}>\n";
 		
 		if( $sheet->headerRow > 0 )
