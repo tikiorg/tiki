@@ -138,7 +138,7 @@
 </form>
 <br /><br /><br /><br /><br /><br />
 <div align="left" class="simplebox">
-<h2{tr}>Remove Zones (you lose entered info for the banner){/tr}</h2>
+<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 {section name=ix loop=$zones}
 {$zones[ix].zone}   <a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone}">remove</a><br />
 {/section}
