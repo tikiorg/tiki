@@ -11,7 +11,7 @@
  * XML schema.
  *
  * @author Richard Tango-Lowy
- * @version $Revision: 1.1.1.2 $
+ * @version $Revision: 1.2 $
  * @package xmlschema
  */
  
