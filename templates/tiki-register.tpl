@@ -1,5 +1,10 @@
 <h2>{tr}Register as a new user{/tr}</h2>
 <br/>
+{if $rnd_num_reg eq 'y'}
+<small>{tr}Your registration code:{/tr}</small>
+<img src="tiki-random_num_img.php" />
+<br/>
+{/if}
 {if $showmsg eq 'y'}
 {$msg}
 {else}
@@ -8,6 +13,10 @@
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input  type="text" name="name" /></td></tr>
 {if $useRegisterPasscode eq 'y'}
 <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td><td class="formcolor"><input  type="password" name="passcode" /></td></tr>
+{/if}
+{if $rnd_num_reg eq 'y'}
+<tr><td class="formcolor">{tr}Registration code{/tr}:</td>
+<td class="formcolor"><input  type="text" maxlength="5" size="5" name="regcode" /></td></tr>
 {/if}
 <tr><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor"><input id='pass1' type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Again{/tr}:</td><td class="formcolor"><input id='pass2' type="password" name="pass2" /></td></tr>

@@ -509,6 +509,8 @@ $pass_chr_num='n';
 $smarty->assign('pass_chr_num',$pass_chr_num);
 $pass_due=999;
 $smarty->assign('pass_due',$pass_due);
+$rnd_num_reg='n';
+$smarty->assign('rnd_num_reg',$rnd_num_reg);
 
 $smarty->assign('feature_page_title',$feature_page_title);
 $smarty->assign('w_use_db',$w_use_db);

@@ -404,13 +404,21 @@ if(isset($_REQUEST["loginprefs"])) {
   
   $tikilib->set_preference("pass_due",$_REQUEST["pass_due"]);
   $smarty->assign('pass_due',$_REQUEST["pass_due"]);
-
+  
   if(isset($_REQUEST["validateUsers"]) && $_REQUEST["validateUsers"]=="on") {
     $tikilib->set_preference("validateUsers",'y'); 
     $smarty->assign('validateUsers','y');
   } else {
     $tikilib->set_preference("validateUsers",'n');
     $smarty->assign('validateUsers','n');
+  }
+
+  if(isset($_REQUEST["rnd_num_reg"]) && $_REQUEST["rnd_num_reg"]=="on") {
+    $tikilib->set_preference("rnd_num_reg",'y'); 
+    $smarty->assign('rnd_num_reg','y');
+  } else {
+    $tikilib->set_preference("rnd_num_reg",'n');
+    $smarty->assign('rnd_num_reg','n');
   }
   
   if(isset($_REQUEST["pass_chr_num"]) && $_REQUEST["pass_chr_num"]=="on") {
