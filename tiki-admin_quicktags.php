@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.5 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.6 2004-04-16 05:53:35 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,12 +45,13 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
-	$quicktagslib->replace_quicktag($_REQUEST["tagId"], $_REQUEST["taglabel"], $_REQUEST['taginsert'], $_REQUEST['tagicon']);
+	$quicktagslib->replace_quicktag($_REQUEST["tagId"], $_REQUEST["taglabel"], $_REQUEST['taginsert'], $_REQUEST['tagicon'],$_REQUEST['tagcategory']);
 
 	$info = array();
 	$info["taglabel"] = '';
 	$info['taginsert'] = '';
 	$info['tagicon'] = '';
+	$info['tagcategory'] = '';
 	$smarty->assign('name', '');
 }
 
@@ -78,8 +79,16 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
+if (isset($_REQUEST["category"])) {
+	$category = $_REQUEST["category"];
+} else {
+	$category = '';
+}
+
+$smarty->assign('category', $category);
+
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find);
+$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find, $category);
 
 $cant_pages = ceil($quicktags["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.12 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.13 2004-04-16 05:53:35 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,7 +114,7 @@ if ($tiki_p_map_edit != 'y') {
 		die;
 	}
 
-	fwrite($fp, $_REQUEST["data"]);
+	fwrite($fp, $_REQUEST["pagedata"]);
 	fclose ($fp);
 	
 	if ($feature_user_watches == 'y') {
@@ -160,9 +160,9 @@ if ($tiki_p_map_edit != 'y') {
 		die;
 	}
 
-	$data = fread($fp, filesize($mapfile));
+	$pagedata = fread($fp, filesize($mapfile));
 	fclose ($fp);
-	$smarty->assign('data', $data);
+	$smarty->assign('pagedata', $pagedata);
 	$smarty->assign('mapfile', $_REQUEST["mapfile"]);
 }
 
@@ -208,6 +208,16 @@ if($feature_user_watches == 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-map_edit.php", "tiki-map.phtml", $foo["path"]);
 $smarty->assign('url_browse', httpPrefix(). $foo1);
+
+
+include_once("textareasize.php");
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','maps');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+$smarty->assign('quicktagscant', $quicktags["cant"]);
+
+ask_ticket('edit-map');
 
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');

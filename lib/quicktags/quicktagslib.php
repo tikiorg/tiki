@@ -14,7 +14,7 @@ class QuickTagsLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_quicktags($offset, $maxRecords, $sort_mode, $find) {
+	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category) {
 		
 		$bindvars=array();
 		if ($find) {
@@ -24,6 +24,14 @@ class QuickTagsLib extends TikiLib {
 		} else {
 			$mid = "";
 		}
+		if ($category) {
+			if ($mid) {
+				$mid = " and (`tagcategory` like ?)";
+			} else {
+			   $mid = " where (`tagcategory` like ?)";
+			}
+			$bindvars[]=$category;
+	   }
 		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quicktags` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -40,16 +48,16 @@ class QuickTagsLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_quicktag($tagId, $taglabel, $taginsert, $tagicon) {
+	function replace_quicktag($tagId, $taglabel, $taginsert, $tagicon, $tagcategory) {
 		if ($tagId) {
-			$bindvars=array($taglabel, $taginsert, $tagicon, $tagId);
-			$query = "update `tiki_quicktags` set `taglabel`=?,`taginsert`=?,`tagicon`=? where `tagId`=?";
+			$bindvars=array($taglabel, $taginsert, $tagicon, $tagcategory, $tagId);
+			$query = "update `tiki_quicktags` set `taglabel`=?,`taginsert`=?,`tagicon`=?,`tagcategory`=? where `tagId`=?";
 			$result = $this->query($query,$bindvars);
 		} else {
-			$bindvars=array($taglabel, $taginsert, $tagicon);
-			$query = "delete from `tiki_quicktags` where `taglabel`=? and `taginsert`=? and `tagicon`=?";
+			$bindvars=array($taglabel, $taginsert, $tagicon, $tagcategory);
+			$query = "delete from `tiki_quicktags` where `taglabel`=? and `taginsert`=? and `tagicon`=? and `tagcategory`=? ";
 			$result = $this->query($query,$bindvars);
-			$query = "insert into `tiki_quicktags`(`taglabel`,`taginsert`,`tagicon`) values(?,?,?)";
+			$query = "insert into `tiki_quicktags`(`taglabel`,`taginsert`,`tagicon`,`tagcategory`) values(?,?,?,?)";
 			$result = $this->query($query,$bindvars);
 		}
 		return true;

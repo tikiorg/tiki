@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.8 2003-11-23 22:27:35 gongo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.9 2004-04-16 05:53:36 franck Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br/><br/>
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
@@ -63,11 +63,22 @@
 {/if}
 {/if}
 {if $mode eq 'editing'}
-<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br/>
-<form action="tiki-map_edit.php" method="post">
-<textarea name="data" rows="25" cols="80">{$data|escape}</textarea>
+<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br/><br/>
+<form enctype="multipart/form-data" action="tiki-map_edit.php" method="post" id='editpageform'>
+{assign var=area_name value="mapdata"}
+<table class="normal">
+<tr class="formcolor">
+<td>
+{include file="textareasize.tpl" area_name='mapdata' formId='editpageform'}<br /><br />
+{include file=tiki-edit_help_tool.tpl}<br/><br/>
+</td><td>
+<textarea id='mapdata' class="wikiedit" name="pagedata" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="mapfile" value="{$mapfile}" />
 <input type="hidden" name="mode" value="{$mode}" />
+</td></tr>
+</table>
 <div align="center">
 <input type="submit" name="save" value="{tr}save{/tr}" /> 
 {if $tiki_p_map_delete eq 'y'}
