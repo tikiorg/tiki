@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-simple_plugin.tpl,v 1.3 2003-08-02 20:41:16 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-simple_plugin.tpl,v 1.4 2003-08-02 22:17:07 zaufi Exp $ *}
 
-<div id="catlists">
+<div class="catlists">
   <div class="cbox-title">{$title}</div>
 
   <div class="cbox-data">
@@ -15,3 +15,8 @@
   {/foreach}
   </div>
 </div>
+{dbg}
+  {dbg2}
+    {$title|dbg}
+  {/dbg2}
+{/dbg}
