@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.18 2003-08-17 21:05:30 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.19 2003-09-24 06:17:30 rlpowell Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -12,7 +12,9 @@
         <form action="{$login_url}" method="post">
         {tr}user{/tr}:
         <input type="text" name="username" size="8" />
-        <input type="submit" name="su" value="{tr}set{/tr}" />
+	<!'' IE doesn't pass values from submit, apparently. -->
+        <input type="hidden" name="su" value="{tr}set{/tr}" />
+        <input type="submit" value="{tr}su{/tr}" />
         </form>
       {/if}
     {else}
