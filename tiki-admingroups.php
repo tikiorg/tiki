@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.26 2004-01-28 12:17:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.27 2004-01-28 12:43:38 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -184,8 +184,6 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 						} else {
 							$fields["data"][$i]["value"] = $info["$name"];
 						}
-					} else {
-						unset($fields["data"][$i]);
 					}
 				}
 			}
