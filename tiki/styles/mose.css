@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.39 2004-02-17 02:17:41 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.40 2004-02-21 16:27:12 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -76,13 +76,12 @@ input {
 a {
 color: #000000;
 text-decoration: none;
-border-bottom: 0;
-padding-bottom: 1px;
+border-bottom: 1px dashed #6A5A49;
 }
 a:hover {
 color: #772200;
 background-color: #ffffaa;
-border-bottom: 1px dashed #6A5A49;
+border-bottom: 1px solid #000000;
 }
 a:active {
 color: #990000;
@@ -487,18 +486,8 @@ TABLE.normalnoborder {
 /* 
 Table headings 
 */
-TD.heading, td.jukeboxlistheading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
-	td.forumheading, td.thead {
-	color:    white;
-	font-size:   11px;
-	font-weight:   bold;
-	background-color:   #5a4a39;
-	padding-left:   2px;
-	padding-right:   5px;
-}
-
-th, th.jukeboxlistheading, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
-	th.forumheading, th.thead {
+.heading, .jukeboxlistheading, .gallistheading, .listgalheading, .bloglistheading, .listfgalheading, .listfilesheading, .listartheading,
+	.forumheading, .thead {
 	color:    white;
 	font-size:   11px;
 	font-weight:   bold;
@@ -2625,13 +2614,14 @@ div#loadstats {
 	padding: 2px 5px 2px 5px;
 	position: relative;
 	display: block;
+	border-bottom: 0;
 }
 
 .mdkitem a:visited	{
 }
 
 .mdkitem a:hover	{
-	padding: 2px 5px 1px 5px;
+	padding: 2px 5px 2px 5px;
 }
 
 .mdkitem a:active	{
