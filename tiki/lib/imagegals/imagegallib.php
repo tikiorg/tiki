@@ -897,6 +897,74 @@ class ImageGalsLib extends TikiLib {
 		return $retval;
 	}
 
+        function get_subgalleries($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
+
+                if ($find) {
+                        $findesc = '%' . $find . '%';
+
+                        $mid = " and (`name` like ? or `description` like ?)";
+                        $bindvars=array($galleryId,$findesc,$findesc);
+                } else {
+                        $mid = "";
+                        $bindvars=array($galleryId);
+                }
+
+                $query = "select * from `tiki_galleries` 
+                 where `parentgallery`=? $mid
+                order by ".$this->convert_sortmode($sort_mode);
+                $result = $this->query($query,$bindvars,$maxRecords,$offset);
+                $ret = array();
+
+                while ($res = $result->fetchRow()) {
+			// get the number of the gallery representation image
+			$res['imageId']=$this->get_gallery_image($res['galleryId'],$res['galleryimage']);
+                        $ret[] = $res;
+                }
+
+                $retval = array();
+                $retval["data"] = $ret;
+                $query_cant = "select count(*) from `tiki_galleries` where `parentgallery`=? $mid";
+                $cant = $this->getOne($query_cant,$bindvars);
+                $retval["cant"] = $cant;
+                return $retval;
+        }
+	
+	function get_gallery_image($galleryId,$rule='') {
+		switch($rule) {
+			case 'firstu':
+				//todo first uploaded image
+				break;
+			case 'lastu':
+				//todo last uploaded image
+				break;
+			case 'first':
+				//todo first image in gallery default sortorder
+				break;
+			case 'last':
+				//todo last image in gallery default sortorder
+				break;
+			case 'random':
+				//todo random image og gallery
+				break;
+			case 'default':
+				//check gallery settings and re-run this function
+				$query='select `galleryimage` from `tiki-galleries` where `galleryId`=?';
+				$rule=$this->getOne($query,array($galleryId));
+				$imageId=$this->get_gallery_image($galleryId,$rule);
+				break;
+			default:
+				// imageId is listed in gallery settings
+				if (is_numeric($rule)) {
+					$imageId=(int) $rule;
+				} else {
+					// unknown.
+					$imageId=-1;
+				}
+				break;
+			}
+			return($imageId);
+	}
+
 	function get_first_image($sort_mode, $find, $galleryId = -1) {
 
 		if ($find) {

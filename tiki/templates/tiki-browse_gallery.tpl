@@ -38,43 +38,53 @@
   <div class="thumbnails">
     <table class="galtable"  cellpadding="0" cellspacing="0">
       <tr>
-        {section name=idx loop=$images}
-          <td align="center" {if (($smarty.section.idx.index / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
+        {if $num_objects > 0}
+        {foreach from=$subgals key=key item=item}
+          <td align="center" {if (($key / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
+          &nbsp;&nbsp;<br />
+          <a href="tiki-browse_gallery.php?galleryId={$item.galleryId}"><img alt="subgallery {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+	  <br />
+	  <small class="caption">{tr}Subgallery{/tr}: {$item.name}
+	  <br />
+        {/foreach}
+        {foreach from=$images key=key item=item}
+          <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
           
           {if $nextx==0}
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$key}&amp;offset={$offset}&amp;imageId={$item.imageId}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  {else}
-          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$key}&amp;offset={$offset}&amp;imageId={$item.imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  {/if}
           <br />
-          <small class="caption">{$images[idx].name}
+          <small class="caption">{$item.name}
           <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
-            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
+            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$key}&amp;offset={$offset}&amp;imageId={$item.imageId}" title="{tr}original size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
 	    		{/if}
             	{if $imagerotate}
-            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
+            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
             	{/if}
-            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
-            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
           {/if}
-					{assign var=desp value=$smarty.section.idx.index}
-                                        {assign var=THEimageId value=$images[idx].imageId}
+					{assign var=desp value=$key}
+                                        {assign var=THEimageId value=$item.imageId}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;desp=$desp&amp;offset=$offset&amp;imageId=$THEimageId&amp;popup=1"} class="gallink"><img src='img/icons2/admin_unhide.gif' border='0' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
           <br />
-         ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits}
-				 {if $images[idx].hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
+         ({$item.xsize}x{$item.ysize})[{$item.hits}
+				 {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
          </td>
-         {if $smarty.section.idx.index % $rowImages eq $rowImages2}
+         {if ($key + $num_subgals) % $rowImages eq $rowImages2}
            </tr><tr>
          {/if}
-        {sectionelse}
+        {/foreach}
+        {else}
           <tr><td colspan="6">
             <p class="norecords">{tr}No records found{/tr}</p>
           </td></tr>
-        {/section}
+        {/if}
       </tr>
     </table>
   </div>
