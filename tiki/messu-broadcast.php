@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.17 2004-01-29 01:47:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.18 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,10 +102,10 @@ if (isset($_REQUEST['send'])) {
 					$users[] = $a_user;
 				} else {
 					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message .= "User $a_user can not receive messages<br/>";
+					$message .= "User $a_user can not receive messages<br />";
 				}
 			} else {
-				$message .= tra("Invalid user"). "$a_user<br/>";
+				$message .= tra("Invalid user"). "$a_user<br />";
 			}
 		}
 	}
@@ -114,7 +114,7 @@ if (isset($_REQUEST['send'])) {
 
 	// Validation: either to, cc or bcc must have a valid user
 	if (count($users) > 0) {
-		$message .= tra("Message will be sent to: "). implode(',', $users). "<br/>";
+		$message .= tra("Message will be sent to: "). implode(',', $users). "<br />";
 	} else {
 		$message = tra('ERROR: No valid users to send the message');
 

@@ -66,15 +66,15 @@ function parse_output(&$obj, &$parts, $i) {
 // Get a list of ACTIVE emails accounts configured for mailin procedures
 $accs = $mailinlib->list_active_mailin_accounts(0, -1, 'account_desc', '');
 
-//print ('<a href="tiki-admin_mailin.php">Admin</a><br/><br/>');
-$content = '<br/><br/>';
+//print ('<a href="tiki-admin_mailin.php">Admin</a><br /><br />');
+$content = '<br /><br />';
 
 // foreach account
 foreach ($accs['data'] as $acc) {
-  $content .= "<b>Processing account</b><br/>";
-  $content .= "Account :" . $acc['account'] . "<br/>";
-  $content .= "Type    :" . $acc['type'] . "<br/>";
-  $content .= "--------------------------<br/>";
+  $content .= "<b>Processing account</b><br />";
+  $content .= "Account :" . $acc['account'] . "<br />";
+  $content .= "Type    :" . $acc['type'] . "<br />";
+  $content .= "--------------------------<br />";
   $pop3 = new POP3($acc["pop"], $acc["username"], $acc["pass"]);
   $pop3->Open();
   $s = $pop3->Stats();
@@ -86,22 +86,22 @@ foreach ($accs['data'] as $acc) {
     $aux["msgid"] = $i;
     $aux["realmsgid"] = $pop3->GetMessageID($i);
     $message = $pop3->GetMessage($i);
-    $content .= "Reading a request. From: " . $aux["sender"]["email"] . "Subject: " . $aux["subject"] . "<br/>";
+    $content .= "Reading a request. From: " . $aux["sender"]["email"] . "Subject: " . $aux["subject"] . "<br />";
 
-    $content .= "sender email:&nbsp;" . $aux["sender"]["email"] . "<br/>";
+    $content .= "sender email:&nbsp;" . $aux["sender"]["email"] . "<br />";
     $aux["sender"]["user"] = $userlib->get_user_by_email($aux["sender"]["email"]);
-    $content .= "sender user:&nbsp;" .  $aux["sender"]["user"] . "<br/>";
+    $content .= "sender user:&nbsp;" .  $aux["sender"]["user"] . "<br />";
 
     $cantUseMailIn = $acc["anonymous"]=='n' && empty($aux["sender"]["user"]);
     if($cantUseMailIn) {
-      $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["sender"]["email"] . "<br/>";
+      $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["sender"]["email"] . "<br />";
       $mail = new htmlMimeMail();
       $mail->setFrom($acc["account"]);
       $mail->setSubject(tra('Tiki mail-in auto-reply'));
       $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
       $mail->setText("Sorry, you can't use this feature.");
       $res = $mail->send(array($aux["sender"]["email"]), 'mail');
-      $content .= "Response sent<br/>";
+      $content .= "Response sent<br />";
     } else {
       if (empty($aux["sender"]["user"]))
         $aux["sender"]["user"] = $aux["sender"]["email"];
@@ -132,7 +132,7 @@ foreach ($accs['data'] as $acc) {
         $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
         $mail->setHTML($data, strip_tags($data));
         $res = $mail->send(array($aux["sender"]["email"]), 'mail');
-        $content .= "Response sent<br/>";
+        $content .= "Response sent<br />";
       // Send the email
       }
   
@@ -157,7 +157,7 @@ foreach ($accs['data'] as $acc) {
   
         if (isset($body)) {
           if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br/>";
+            $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
               0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
@@ -191,7 +191,7 @@ foreach ($accs['data'] as $acc) {
   
         if (isset($body)) {
           if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br/>";
+            $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
               0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
@@ -236,7 +236,7 @@ foreach ($accs['data'] as $acc) {
   
         if ($method == 'PUT') {
           if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br/>";
+            $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
               0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
@@ -262,13 +262,13 @@ foreach ($accs['data'] as $acc) {
             $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
             $mail->setHTML($info['data'], strip_tags($data));
             $res = $mail->send(array($aux["sender"]["email"]), 'mail');
-            $content .= "Response sent<br/>";
+            $content .= "Response sent<br />";
           } else {
             $data = 'Page not found';
           }
         } elseif ($method == 'APPEND' || $method == 'PREPEND') {
           if (!$tikilib->page_exists($page)) {
-            $content .= "Page: $page has been created<br/>";
+            $content .= "Page: $page has been created<br />";
   
             $tikilib->create_page($page,
               0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');

@@ -67,8 +67,8 @@ if(isset($_REQUEST['create'])) {
   $top=$_REQUEST['top'];
   $top='foo1';
   $output='';
-  $output.="TikiHelp WebHelp generation engine<br/>";
-  $output.="Generating WebHelp using <b>$name</b> as index. Directory: $name<br/>";
+  $output.="TikiHelp WebHelp generation engine<br />";
+  $output.="Generating WebHelp using <b>$name</b> as index. Directory: $name<br />";
   $base = "whelp/$dir";
   
   // added 2003-12-19 Checking the permission to write. epolidor
@@ -79,7 +79,7 @@ if(isset($_REQUEST['create'])) {
   }
   
   if(!is_dir("whelp/$dir")) { 
-    $output.="Creating directory structure in $base<br/>";
+    $output.="Creating directory structure in $base<br />";
     mkdir("whelp/$dir");
     mkdir("$base/js");
     mkdir("$base/css");
@@ -89,7 +89,7 @@ if(isset($_REQUEST['create'])) {
     mkdir("$base/pages/img");
     mkdir("$base/pages/img/wiki_up");
   }
-  $output.="Eliminating previous files<br/>";
+  $output.="Eliminating previous files<br />";
   deldirfiles("$base/js");
   deldirfiles("$base/css");
   deldirfiles("$base/icons");

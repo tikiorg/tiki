@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.49 2004-01-26 14:49:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.50 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.49 2004-01-26 14:49:31 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.50 2004-01-30 08:30:15 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -72,7 +72,7 @@ function process_sql_file($file,$db_tiki) {
 
 			if (!$result) {
 				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
-				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
+				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br /><pre>" . $command . "<pre/><br />", E_USER_WARNING);
 				// Do not die at the moment. We need some better error checking here
 				//die;
 			} else {
@@ -550,7 +550,7 @@ if (isset($_REQUEST['install_pkg'])) {
 		if (isset($_REQUEST['runScript'])) {
 			$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
 			if (is_file("db/".$pkg_sql_install_file)) {
-				print "Running ".$pkg_sql_install_file."<br>";
+				print "Running ".$pkg_sql_install_file."<br />";
 				process_sql_file ($pkg_sql_install_file,$db_tiki);
 			}
 		}
@@ -565,7 +565,7 @@ if (isset($_REQUEST['remove_pkg'])) {
 	if (isset($_REQUEST['runScript'])) {
 		$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
 		if (is_file("db/".$pkg_sql_remove_file)) {
-			print "Running ".$pkg_sql_remove_file."<br>";
+			print "Running ".$pkg_sql_remove_file."<br />";
 			process_sql_file ($pkg_sql_remove_file,$db_tiki);
 		}
 	}
@@ -576,11 +576,11 @@ if (isset($_REQUEST['remove_pkg'])) {
 		for ($i = 0; $i < sizeof($ziplist); $i++) {
 			$file = $ziplist["$i"]["filename"];
 			unlink($file);
-			print $file." removed<br>";
+			print $file." removed<br />";
 		}
 	}
 	else {
-		print "Nothing to remove for ".$_REQUEST['pkgs']."<br>";
+		print "Nothing to remove for ".$_REQUEST['pkgs']."<br />";
 	}
 	$smarty->assign('packages', 'y');
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.19 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.20 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,7 +169,7 @@ if ($_REQUEST["section"] == 'read') {
 
 	for ($i = 0; $i < count($bodies); $i++) {
 		$bodies[$i] = strip_tags(
-			$bodies[$i], "<a><b><i><table><tr><td><th><ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select>");
+			$bodies[$i], "<a><b><i><table><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select>");
 	}
 
 	if (isset($parts["attachments"])) {
@@ -266,7 +266,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 	$pop3->Open();
 
 	if ($pop3->has_error) { //new
-		echo '<b><br><center><a href="tiki-webmail.php?section=settings">Click here for settings.</a></center></b>';
+		echo '<b><br /><center><a href="tiki-webmail.php?section=settings">Click here for settings.</a></center></b>';
 
 		die;
 	}
@@ -396,7 +396,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 		} else {
 			$aux = $pop3->ListMessage($i);
 
-			//print_r($aux);print("<br/>");
+			//print_r($aux);print("<br />");
 			$aux["realmsgid"] = $pop3->GetMessageID($i);
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
 			list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"]) = $webmaillib->get_mail_flags($current["accountId"], $user, $aux["realmsgid"]);

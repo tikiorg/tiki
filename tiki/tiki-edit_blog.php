@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.18 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.19 2004-01-30 08:30:15 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,8 +83,8 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = '<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>' . "\n";
 
 	$heading .= '<div class="bloginfo">' . "\n";
-	$heading .= '{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>' . "\n";
-	$heading .= '{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>' . "\n";
+	$heading .= '{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />' . "\n";
+	$heading .= '{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />' . "\n";
 	$heading .= '({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})' . "\n";
 	$heading .= '{if $tiki_p_blog_post eq "y"}' . "\n";
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}' . "\n";
