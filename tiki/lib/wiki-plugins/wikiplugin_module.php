@@ -1,15 +1,22 @@
 <?php
+/* $Id: wikiplugin_module.php,v 1.8 2003-07-06 11:07:50 mose Exp $
+Displays a module inlined in page
 
-// Displays a module inlined in page
-// Parameters: module name, align, max, module args
-// Example:
-// {MODULE(module=>logged_users,align=>left,max=>3,trackerId=>1)}
-// {/MODULE}
-//
-// about module params : all params are passed in $module_params
-// so if you need to use parmas just add them in MODULE()
-// like the trackerId in the above example.
+Parameters
+module name : module=>lambda
+align : align=>(left|center|right)
+max : max=>20
+np : np=>(0|1) # (for non-parsed content)
+module args : arg=>value (depends on module)
 
+Example:
+{MODULE(module=>last_modified_pages,align=>left,max=>3,maxlen=>22)}
+{/MODULE}
+
+about module params : all params are passed in $module_params
+so if you need to use parmas just add them in MODULE()
+like the trackerId in the above example.
+*/
 
 function wikiplugin_module_help() {
   return tra("Displays a module inlined in page");
@@ -22,6 +29,7 @@ function wikiplugin_module($data,$params) {
   extract($params);
 	if(!isset($align)) {$align='left';}
 	if(!isset($max)) {$max='10';}
+	if(!isset($np)) {$np='0';}
   if(!isset($module)) {
 		$out = '<form class="box" id="modulebox">';
 		$out.= '<br><select name="choose">';
@@ -70,7 +78,11 @@ function wikiplugin_module($data,$params) {
 		$out = eregi_replace("\n","",$out);
 	}
 	if ($out) {
-  	$data = "<div style='float:$align;'>$out</div>".$data;
+		if ($np) {
+  		$data = "<div style='float:$align;'>~pp~$out~/pp~</div>".$data;
+		} else {
+  		$data = "<div style='float:$align;'>$out</div>".$data;
+		}
 	} else {
 		$data = "<div style='float:$align;color:#AA2200;'>".tra("Sorry no such module")."<br/><b>$module</b></div>".$data;
 	}
