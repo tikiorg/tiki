@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.9 2003-10-13 21:29:01 awcolley Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.10 2003-11-04 09:25:15 gillesm Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -212,7 +212,12 @@
           <td class="form">{tr}faq{/tr}:</td>
           <td class="form"><select name="faqId">{section name=ix loop=$faqs}<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:40:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfaq" value="{tr}add{/tr}" /></td>
-        </tr>        
+        </tr> 
+	   <tr>
+          <td class="form">{tr}tracker{/tr}:</td>
+          <td class="form"><select name="trackerId">{section name=ix loop=$trackers}<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
+          <td class="form"><input type="submit" name="addtracker" value="{tr}add{/tr}" /></td>
+        </tr>          
         <tr>
           <td class="form">{tr}quiz{/tr}:</td>
           <td class="form"><select name="quizId">{section name=ix loop=$quizzes}<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:40:"(...)":true}</option>{/section}</select></td>
