@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.30 2004-09-19 19:37:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.31 2004-09-24 15:48:11 sylvieg Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -471,7 +471,8 @@
  $tiki_p_admin_drawings eq 'y' or
  $tiki_p_admin_shoutbox eq 'y' or
  $tiki_p_admin_live_support eq 'y' or
- $user_is_operator eq 'y'
+ $user_is_operator eq 'y' or
+ $tiki_p_admin_users
  }
  
   <div class="separator">
@@ -497,8 +498,10 @@
 		  &nbsp;<a href="tiki-admin_calendars.php" class="linkmenu">{tr}Calendar{/tr}</a><br />
 	{/if}
 					
-    {if $tiki_p_admin eq 'y'}
+    {if $tiki_p_admin_users eq 'y'}
       &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br />
+    {/if}
+    {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br />
       &nbsp;<a href="tiki-list_cache.php" class="linkmenu">{tr}Cache{/tr}</a><br />
       &nbsp;<a href="tiki-admin_modules.php" class="linkmenu">{tr}Modules{/tr}</a><br />
