@@ -244,8 +244,12 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 </div>
 {section name=items loop=$cell[w][d].items}
 <div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}">
-<a href="{$cell[w][d].items[items].url}" {popup caption="&nbsp;$cell[w][d].items[items].descriptionhead" text="$cell[w][d].items[items].descriptionbody" width="100" capicon="images/plus.gif"} 
-class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a><br/>
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$cell[w][d].items[items].descriptionbody"} 
+class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
+{if $cell[w][d].items[items].web}
+<a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
+{/if}
+<br/>
 </div>
 {/section}
 </td>
@@ -260,7 +264,8 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <h2>{tr}Edit Calendar Item{/tr} : <span style="font-size:80%;">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
 <div class="mini">
 <span style="color:#666666;">{tr}Created{/tr}:</span> {$created|tiki_long_date} {$created|tiki_long_time} 
-<span style="color:#666666;">{tr}Modified{/tr}:</span> {$lastModif|tiki_long_date} {$lastModif|tiki_long_time}
+<span style="color:#666666;">{tr}Modified{/tr}:</span> {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} 
+<span style="color:#666666;">{tr}by{/tr}:</span> {$lastUser} 
 </div>
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
@@ -275,59 +280,78 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 {/if}
 {/section}
 </select>
-<input type="submit" name="refresh" value="{tr}refresh{/tr}" /><br/>
+<input type="submit" name="refr" value="{tr}refresh{/tr}" />
+{if $calendarId}
+<span class="mini">( {$calname} )</span>
+{/if}
+<br/>
 {tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people.{/tr}<br/>
 </td></tr>
 <tr><td class="form">{tr}Category{/tr}</td><td class="form">
 <select name="categoryId">
 {section name=t loop=$listcat}
 {if $listcat[t]}
-<option value="{$listcat[t].calcatId}" {if $categoryId eq $listcat[t].calcatId}selected="selected"{/if}>{$listcat[t].name}</option>
+<option value="{$listcat[t].categoryId}" {if $categoryId eq $listcat[t].categoryId}selected="selected"{/if}>{$listcat[t].name}</option>
 {/if}
 {/section}
 </select>
 {tr}or create a new category{/tr} 
 <input type="text" name="newcat" value="">
+{if $categoryId}
+<span class="mini">( {$categoryName})</span>
+{/if}
 </td></tr>
 <tr><td class="form">{tr}Location{/tr}</td><td class="form">
 <select name="locationId">
 {section name=l loop=$listloc}
 {if $listloc[l]}
-<option value="{$listloc[l].callocId}" {if $locationId eq $listloc[l].callocId}selected="selected"{/if}>{$listloc[l].name}</option>
+<option value="{$listloc[l].locationId}" {if $locationId eq $listloc[l].locationId}selected="selected"{/if}>{$listloc[l].name}</option>
 {/if}
 {/section}
 </select>
 {tr}or create a new location{/tr} 
 <input type="text" name="newloc" value="">
+{if $locationId}
+<span class="mini">( {$locationName} )</span>
+{/if}
 </td></tr>
 
 <tr><td class="form">{tr}Organized by{/tr}</td><td class="form">
-<input type="text" name="organizer" value="{$organizers}" id="organizers">
-{tr}comma separated usernames from the list{/tr}:
-<select name="organizer" onchange="javascript:document.getElementById('organizers').value+=this.options[this.selectedIndex].value+',';">
+<input type="text" name="organizers" value="{$organizers}" id="organizers">
+{tr}comma separated usernames{/tr}
+{if $groupname ne 'Anonymous'}
+ {tr}from the list{/tr}:
+<select name="organizerrole" onchange="javascript:document.getElementById('organizers').value+=this.options[this.selectedIndex].value+',';">
 <option value="">{tr}choose{/tr}</option>
 {section name=lp loop=$listpeople}
 <option value="{$listpeople[lp]}">{$listpeople[lp]}</option>
 {/section}
 </select>
+{/if}
 </td></tr>
 
 <tr><td class="form">{tr}Participants{/tr}</td><td class="form">
 <input type="text" name="participants" value="{$participants}" id="participants">
-{tr}comma separated role:username from the list{/tr}:
-<select name="roles" id="roles">
-<option value="0">{tr}0: Chair{/tr}</option>
-<option value="1">{tr}1: Required{/tr}</option>
-<option value="2">{tr}2: Optionnal{/tr}</option>
-<option value="3">{tr}3: None{/tr}</option>
-</select>
+{tr}comma separated username:role{/tr} 
+{if $groupname ne 'Anonymous'}
+{tr}from the list{/tr}:
 <select name="participants" 
-onchange="javascript:document.getElementById('participants').value+=document.getElementById('roles').options[document.getElementById('roles').selectedIndex].value+':'+this.options[this.selectedIndex].value+',';">
+onchange="javascript:document.getElementById('participants').value+=this.options[this.selectedIndex].value+':'+document.getElementById('roles').options[document.getElementById('roles').selectedIndex].value+',';">
 <option value="">{tr}choose{/tr}</option>
 {section name=lp loop=$listpeople}
 <option value="{$listpeople[lp]}">{$listpeople[lp]}</option>
 {/section}
 </select>
+ {tr}with role{tr} 
+ <select name="roles" id="roles">
+<option value="0">{tr}Chair{/tr}:0 </option>
+<option value="1">{tr}Required{/tr}:1 </option>
+<option value="2">{tr}Optional{/tr}:2 </option>
+<option value="3">{tr}None{/tr}:3 </option>
+</select>
+{else}
+ {tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
+{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
@@ -340,34 +364,40 @@ onchange="javascript:document.getElementById('participants').value+=document.get
 {html_select_time minute_interval=10 time=$end prefix="endh_" display_seconds=false use_24_hours=true}
 </td></tr>
 
-<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name}" />
+{if $name}<span class="mini">( {$name} )</span>{/if}
+</td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor">
 <textarea class="wikiedit" name="description" rows="8" cols="80" id="description" wrap="virtual">{$description}</textarea>
+{if $description}<div class="mini">( {$description} )</div>{/if}
 </td></tr>
 
-<tr><td class="formcolor">{tr}Url{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url}" /></td></tr>
+<tr><td class="formcolor">{tr}Url{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url}" />
+{if $url}<span class="mini">( <a href="{$url}">{$url}</a> )</span>{/if}
+</td></tr>
 
 <tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
 <select name="priority">
-<option value="1" {if $priority eq 1}selected="selected"{/if}>1</option>
-<option value="2" {if $priority eq 2}selected="selected"{/if}>2</option>
-<option value="3" {if $priority eq 3}selected="selected"{/if}>3</option>
-<option value="4" {if $priority eq 4}selected="selected"{/if}>4</option>
-<option value="5" {if $priority eq 5}selected="selected"{/if}>5</option>
-<option value="6" {if $priority eq 6}selected="selected"{/if}>6</option>
-<option value="7" {if $priority eq 7}selected="selected"{/if}>7</option>
-<option value="8" {if $priority eq 8}selected="selected"{/if}>8</option>
-<option value="9" {if $priority eq 9}selected="selected"{/if}>9</option>
+<option value="1" {if $priority eq 1}selected="selected"{/if} class="calprio1">1</option>
+<option value="2" {if $priority eq 2}selected="selected"{/if} class="calprio2">2</option>
+<option value="3" {if $priority eq 3}selected="selected"{/if} class="calprio3">3</option>
+<option value="4" {if $priority eq 4}selected="selected"{/if} class="calprio4">4</option>
+<option value="5" {if $priority eq 5}selected="selected"{/if} class="calprio5">5</option>
+<option value="6" {if $priority eq 6}selected="selected"{/if} class="calprio6">6</option>
+<option value="7" {if $priority eq 7}selected="selected"{/if} class="calprio7">7</option>
+<option value="8" {if $priority eq 8}selected="selected"{/if} class="calprio8">8</option>
+<option value="9" {if $priority eq 9}selected="selected"{/if} class="calprio9">9</option>
 </select>
+{if $priority}<span class="mini">( <span class="calprio{$priority}">{$priority}</span> )</span>{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
 <select name="status">
-<option value="0" {if $status eq 0}selected="selected"{/if}>0:{tr}Tentative{/tr}</option>
+<option value="0" {if $status eq 0}selected="selected"{/if}><span class=""></span>0:{tr}Tentative{/tr}</option>
 <option value="1" {if $status eq 1}selected="selected"{/if}>1:{tr}Confirmed{/tr}</option>
 <option value="2" {if $status eq 2}selected="selected"{/if}>2:{tr}Cancelled{/tr}</option>
 </select>
-{if $status}<span class="mini">( {$status} )</span>{/if}
+{if $calitemId}<span class="Cal{$status}"><span class="mini">( {$status} )</span></span>{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Language{/tr}</td><td class="formcolor">
@@ -375,13 +405,14 @@ onchange="javascript:document.getElementById('participants').value+=document.get
 {section name=ix loop=$languages}
 <option value="{$languages[ix]}" {if $lang eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
 {/section}
-{if $lang}<span class="mini">( {$lang} )</span>{/if}
 </select>
+{if $lang}<span class="mini">( {$lang} )</span>{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Public{/tr}</td><td class="formcolor">
 <input type=radio name=public value="y" {if $public eq 'y'}checked="checked"{/if}> {tr}Yes{/tr}
 <input type=radio name=public value="n" {if $public eq 'n'}checked="checked"{/if}> {tr}No{/tr}
+{if $public}<span class="mini">( {$public} )</span>{/if}
 </td></tr>
 
 <tr><td class="formcolor"></td><td class="formcolor">

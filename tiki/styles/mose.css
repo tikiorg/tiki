@@ -2093,17 +2093,20 @@ text-decoration: none;
 
 /* Links to vote */
 .forumvotelink
-{font-size: 12px;
+{
+font-size: 12px;
 color : black;
 }
 
 .forumvotelink:active
-{font-size: 12px;
+{
+font-size: 12px;
 color : black;
 }
 
 .forumvotelink:hover
-{font-size: 12px;
+{
+font-size: 12px;
 color : black;
 }
 
@@ -2501,19 +2504,22 @@ background-color: #DAD0D0;
 td.prio2
 {
 font-size: 11px;
-padding-left: 2px;background-color: #DAC0C0;
+padding-left: 2px;
+background-color: #DAC0C0;
 }
 
 td.prio3
 {
 font-size: 11px;
-padding-left: 2px;background-color: #DABABA;
+padding-left: 2px;
+background-color: #DABABA;
 }
 
 td.prio4
 {
 font-size: 11px;
-padding-left: 2px;background-color: #DAAAAA;
+padding-left: 2px;
+background-color: #DAAAAA;
 }
 
 td.prio5
@@ -2559,26 +2565,33 @@ text-decoration: underline;
 }
 
 /* calendar styles */
-.Calcalitem
+.Cal0, 
+.Cal1, 
+.Cal2
 {
 border-top:1px dashed #cccccc;
+color: #425262;
 font-size:10px;
-padding-left:3px;
-padding-right:3px;
-padding-top: 0;
+padding-right:0px;
+}
+.Cal0:before
+{
+content: "? ";
 }
 
-.Calcalitem a
+.Cal1:before
 {
-color: #333333;
-}
-
-.Calcalitem:before
-{
-content: ">";
-font-family: monospace;
+content: "+ ";
 background-color: #FFCC77;
 }
+
+.Cal2:before
+{
+content: "X ";
+background-color: #eeeeaa;
+}
+
+
 
 .Calwiki
 {
@@ -2884,4 +2897,61 @@ background-color: #FFFF00;
 color: #000000;
 }
 
+.calweb
+{
+font-weight: bold;
+font-size: 10px;
+text-decoration: none;
+padding-left: 3px;
+padding-right: 3px;
+color: #336699;
+}
+.calweb:hover
+{
+color: #996633;
+}
 
+.calprio1
+{
+background-color: #DAE0E0;
+}
+
+.calprio2
+{
+background-color: #DADCDC;
+}
+
+.calprio3
+{
+background-color: #DAD0D0;
+}
+
+.calprio4
+{
+background-color: #DACACA;
+}
+
+.calprio5
+{
+background-color: #DAC0D0;
+}
+
+.calprio6
+{
+background-color: #DABABA;
+}
+
+.calprio7
+{
+background-color: #DAB0B0;
+}
+
+.calprio8
+{
+background-color: #DAAAAA;
+}
+
+.calprio9
+{
+background-color: #DA9A9A;
+}
