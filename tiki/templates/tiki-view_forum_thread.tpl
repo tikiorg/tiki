@@ -372,13 +372,13 @@ a moderator approves it.{/tr}</small>
 	</tr>
 </table>
 {/if}
+{/if}
 
 <table class="normal" >
 <tr>
   <td class="forumheading">{tr}author{/tr}</td>
   <td class="forumheading">{tr}message{/tr}</td>
 </tr>
-{/if}
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 <tr>
