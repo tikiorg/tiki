@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.6 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.7 2003-12-04 10:40:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+include_once("lib/init/initlib.php");
 include_once ('tiki-setup_base.php');
 
 include_once ('lib/minical/minicallib.php');

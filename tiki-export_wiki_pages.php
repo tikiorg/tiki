@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_wiki_pages.php,v 1.5 2003-09-22 06:52:08 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_wiki_pages.php,v 1.6 2003-12-04 10:40:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,8 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
-include_once ("tiki-setup_base.php");
 
 include_once ("lib/ziplib.php");
 include_once ('lib/wiki/exportlib.php');
