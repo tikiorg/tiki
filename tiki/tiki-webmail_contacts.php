@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.5 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.6 2003-12-28 18:06:16 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,10 +33,12 @@ if ($_REQUEST["contactId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('webmail-contact');
 	$webmaillib->remove_contact($_REQUEST["remove"], $user);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('webmail-contact');
 	$webmaillib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"],
 		$_REQUEST["nickname"], $user);
 
@@ -101,6 +103,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+ask_ticket('webmail-contact');
 
 //$smarty->display("tiki-webmail_contacts.tpl");
 $smarty->display("tiki-webmail_contacts.tpl");
