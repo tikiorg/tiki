@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.7 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.8 2003-09-24 03:58:43 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,10 +34,10 @@ if (isset($_REQUEST["addtopic"])) {
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
 	} else {
-		$smarty->assign('msg', tra("No image uploaded"));
-
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
+		$data = '';
+		$imgtype = '';
+		$imgsize = '';
+		$imgname = '';
 	}
 
 	// Store the image
