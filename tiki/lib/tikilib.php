@@ -8006,7 +8006,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     // Now search for plugins
-    preg_match_all("/\{([A-Z]+)\(([^\)]+)\)\}/",$data,$plugins);
+    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
+    //print_r($plugins);
     for($i=0;$i<count($plugins[0]);$i++) {
       $plugin_start = $plugins[0][$i];
       $plugin_end = '{'.$plugins[1][$i].'}';
@@ -8017,12 +8018,15 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
         $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
         $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
-        $params = split(',',$plugins[2][$i]);
+        $params = split(',',trim($plugins[2][$i]));
         $arguments=Array();
+        
         foreach($params as $param) {
           $parts=explode('=>',$param);
-          $name=trim($parts[0]);
-          $arguments[$name]=trim($parts[1]);
+          if(isset($parts[0])&&isset($parts[1])) {
+            $name=trim($parts[0]);
+            $arguments[$name]=trim($parts[1]);
+          }
         }
         if(file_exists($php_name)) {
           include_once($php_name);
