@@ -100,7 +100,7 @@ function smarty_function_html_select_date($params, &$smarty)
         $month_values = array();
 
         for ($i = 1; $i <= 12; $i++) {
-            $month_names[] = strftime($month_format, mktime(0, 0, 0, $i, 1, 2000));
+            $month_names[] = tra(strftime($month_format, mktime(0, 0, 0, $i, 1, 2000)));
             $month_values[] = strftime($month_value_format, mktime(0, 0, 0, $i, 1, 2000));
         }
 

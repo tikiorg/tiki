@@ -200,7 +200,7 @@ $lang = Array(
 
 "My blogs" => "הבלוגים שלי",
 
-"Bookmakrs" => "סימניות",
+"Bookmarks" => "סימניות",
 "mark" => "סימון",
 "new" => "חדש",
 "My galleries" => "הספריות שלי",

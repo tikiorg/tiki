@@ -111,7 +111,7 @@
         <form action="tiki-user_preferences.php" method="post">
 <table class="normal">
 <tr>
-  <td class="form">Messages per page</td>
+  <td class="form">{tr}Messages per page{/tr}</td>
   <td class="form">
     <select name="mess_maxRecords">
       <option value="2" {if $mess_maxRecords eq 2}selected="selected"{/if}>2</option>
@@ -125,11 +125,11 @@
   </td>
 </tr>
 <tr>
-  <td class="form">Allow messages from other users</td>
+  <td class="form">{tr}Allow messages from other users{/tr}</td>
   <td class="form"><input type="checkbox" name="allowMsgs" {if $allowMsgs eq 'y'}checked="checked"{/if}/></td>
 </tr>
 <tr>
-  <td class="form">Send me an email for messages with priority equal or greater than:</td>
+  <td class="form">{tr}Send me an email for messages with priority equal or greater than{/tr}:</td>
   <td class="form">
     <select name="minPrio">
       <option value="1" {if $minPrio eq 1}selected="selected"{/if}>1</option>
@@ -137,13 +137,13 @@
       <option value="3" {if $minPrio eq 3}selected="selected"{/if}>3</option>
       <option value="4" {if $minPrio eq 4}selected="selected"{/if}>4</option>
       <option value="5" {if $minPrio eq 5}selected="selected"{/if}>5</option>
-      <option value="6" {if $minPrio eq 6}selected="selected"{/if}>none</option>
+      <option value="6" {if $minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
     </select>
   </td>
 </tr>
 <tr>
   <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="messprefs" value="set" /></td>
+  <td class="form"><input type="submit" name="messprefs" value="{tr}set{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -167,7 +167,7 @@
         <form action="tiki-user_preferences.php" method="post">
 <table class="normal">
 <tr>
-  <td class="form">Tasks per page</td>
+  <td class="form">{tr}Tasks per page{/tr}</td>
   <td class="form">
     <select name="tasks_maxRecords">
       <option value="2" {if $tasks_maxRecords eq 2}selected="selected"{/if}>2</option>
@@ -182,14 +182,14 @@
 </tr>
 
 <tr>
-  <td class="form">Use dates</td>
+  <td class="form">{tr}Use dates{/tr}</td>
   <td class="form"><input type="checkbox" name="tasks_useDates" {if $tasks_useDates eq 'y'}checked="checked"{/if}/></td>
 </tr>
 
 
 <tr>
   <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="tasksprefs" value="set" /></td>
+  <td class="form"><input type="submit" name="tasksprefs" value="{tr}set{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -216,7 +216,7 @@
 <tr><td class="form">{tr}My items{/tr}</td><td class="form"><input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
 <tr>
   <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="mytikiprefs" value="set" /></td>
+  <td class="form"><input type="submit" name="mytikiprefs" value="{tr}set{/tr}" /></td>
 </tr>
 </table>
 </form>

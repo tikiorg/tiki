@@ -1080,7 +1080,7 @@ In questo caso è necessario aumentare il massimo tempo di esecuzione dello scri
 "Last Created FAQs" => "Ultime FAQs create",
 "Top Visited FAQs" => "FAQs più visitate",
 "Quick edit a Wiki page" => "Edita una pagina del wiki",
-"Bookmakrs" => "Bookmarks",
+"Bookmarks" => "Bookmarks",
 "mark" => "mark",
 "new" => "nuovo",
 "Permision denied" => "Permesso negato",
