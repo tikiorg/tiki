@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.1 2003-10-13 17:17:22 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.2 2003-10-14 22:49:11 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -29,6 +29,9 @@
   </tr><tr>
     <td class="formcolor">{tr}CSS file{/tr}</td>
     <td class="formcolor"><input type="text" name="cssfile" value="{$cssfile|escape}" /></td>
+  </tr><tr>
+    <td class="formcolor">{tr}Visible{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} /></td>
   </tr><tr>
     <td class="formcolor">{tr}Description{/tr}</td>
     <td class="formcolor"><textarea name="description" rows="4">{$description|escape}</textarea></td>

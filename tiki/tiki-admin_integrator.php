@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.1 2003-10-13 17:17:49 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.2 2003-10-14 22:49:10 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -16,16 +16,17 @@ $path        = isset($_REQUEST["path"])        ? $_REQUEST["path"]        : '';
 $start       = isset($_REQUEST["start"])       ? $_REQUEST["start"]       : '';
 $cssfile     = isset($_REQUEST["cssfile"])     ? $_REQUEST["cssfile"]     : '';
 $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
+$vis         = isset($_REQUEST["vis"])         ? ($_REQUEST["vis"] == 'on' ? 'y' : 'n')  : 'n';
 
 // Check if 'submit' pressed ...
 if (isset($_REQUEST["save"]))
 {
     // ... and all mandatory paramaters r OK
-    if ((strlen($name)  > 0) && (strlen($path) > 0) && (strlen($start) > 0))
-        $integrator->add_replace_repository($repID, $name, $path, $start, $cssfile, $description);
+    if (strlen($name)  > 0)
+        $integrator->add_replace_repository($repID, $name, $path, $start, $cssfile, $vis, $description);
     else
     {
-        $smarty->assign('msg',tra("Name, path and start page are mandatory fields"));
+        $smarty->assign('msg',tra("Repository name can't be an empty"));
         $smarty->display("styles/$style_base/error.tpl");
         die;
     }
@@ -44,6 +45,7 @@ if (isset($_REQUEST["action"]))
             $smarty->assign('path', $rep["path"]);
             $smarty->assign('start', $rep["start_page"]);
             $smarty->assign('cssfile', $rep["css_file"]);
+            $smarty->assign('vis', $rep["visibility"]);
             $smarty->assign('description', $rep["description"]);
         }
         break;
@@ -57,10 +59,9 @@ if (isset($_REQUEST["action"]))
         break;
     }
 }
-//
 
 // Fill list of repositories
-$repositories = $integrator->list_repositories();
+$repositories = $integrator->list_repositories(false);
 $smarty->assign_by_ref('repositories', $repositories);
 
 // Display the template

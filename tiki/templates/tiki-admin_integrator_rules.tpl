@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.3 2003-10-14 22:13:14 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.4 2003-10-14 22:49:11 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -26,18 +26,15 @@
 {if count($reps) gt 0}
 <div id="rules-copy-panel">
 <form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
-<table class="normal">
-  <tr>
-    <td class="formcolor" colspan="2">{tr}Copy options{/tr}</td>
-  </tr><tr>
-    <td class="formcolor">{tr}Source repository{/tr}</td>
-    <td class="formcolor"><select name="srcrep">{html_options options=$reps}</select></td>
-  </tr><tr>
-    <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="copy" value="{tr}Copy{/tr}" /></td>
-  </tr>
-</table>
+<table class="normal"><tr>
+  <td class="formcolor">{tr}Source repository{/tr}</td>
+  <td class="formcolor">
+    <select name="srcrep">{html_options options=$reps}</select> &nbsp; &nbsp;
+    <input type="submit" name="copy" value="{tr}Copy{/tr}" />
+  </td>
+</tr> </table>
 </form>
+<br /><br />
 </div>
 {/if}
 
@@ -61,7 +58,7 @@
   </tr><tr>
     <td class="formcolor">{tr}Case sensitive{/tr}</td>
     <td class="formcolor">
-      <input type="checkbox" name="casesense" {if $type eq 'y'}checked="checked"{/if} /> &nbsp;&nbsp;
+      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} /> &nbsp;&nbsp;
       {tr}Use case sensitive str_replace{/tr}
     </td>
   </tr><tr>
