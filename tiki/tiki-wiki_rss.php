@@ -8,7 +8,7 @@ if($rss_wiki != 'y') {
 }
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1=str_replace("tiki-wiki_rss.php",$tikiIndex,$foo["path"]);
+$foo1=str_replace("tiki-wiki_rss.php","tiki-index.php",$foo["path"]);
 $foo2=str_replace("tiki-wiki_rss.php","img/tiki.jpg",$foo["path"]);
 $home = httpPrefix().$foo1;
 $img = httpPrefix().$foo2;
