@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.56 2004-07-20 17:46:35 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.57 2004-07-29 17:38:10 mose Exp $
  *
  * \brief Categories support class
  *
@@ -145,8 +145,12 @@ class CategLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$object = $res["catObjectId"];
 
+			$query_cant = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
+			$cant = $this->getOne($query_cant,array($object));
+			if ($cant <= 1) {
 			$query2 = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 			$result2 = $this->query($query2,array($object));
+			}
 		}
 
 		$query = "delete from `tiki_category_objects` where `categId`=?";

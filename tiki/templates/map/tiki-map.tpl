@@ -1,9 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.20 2004-07-22 13:08:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.21 2004-07-29 17:38:17 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
 <h1><a href="tiki-map.phtml">TikiMap</a></h1><br />
-
 <div align="center">
    <form name="frmmap" action="tiki-map.phtml" method="get">
    <input type="hidden" name="mapfile" value="{$mapfile}" />
@@ -73,16 +72,18 @@
 		  <br />
 		  <small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
-		<tr><td align="center">
-		  <input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
-		  {if $tiki_p_map_edit eq 'y'}
-     &nbsp; 
-     <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
-     <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
-     </a>
-     {/if}
+		<tr><td align="center"> 
+		<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
+		 {if $tiki_p_map_edit eq 'y'}
+     			&nbsp; 
+     			<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
+     			<img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+     			</a>
+     		{/if}
      &nbsp;
      <input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" />
+     &nbsp;
+     <a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a>
      <br />
 		  <small>{tr}Click on the map or click redraw{/tr}</small>
 		  <input type="hidden" name="minx" value="{$minx}" />
@@ -99,7 +100,7 @@
 		  <table class="normal">
 		  <tr><td align="left" valign="middle">
 		  <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
-		  </td></tr>
+		  </td ></tr>
 		  <tr><td>
 		  <img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" />
 		  </td></tr>
@@ -114,7 +115,8 @@
 		  <div id='layermenu' style="{$mnu_layermenu}">
 		  <table class="normal">
 		  <tr><td class="heading">
-		  <b>Layer</b></td><td class="heading"><b>{tr}On{/tr}</b></td>
+		  <b>Layer</b></td>
+		  <td class="heading"><b>{tr}On{/tr}</b></td>
 		  <td class="heading"><img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></td>
 		  <td class="heading"><img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></td>
 		  <td class="heading"><img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></td></tr>
@@ -125,14 +127,14 @@
 		  {else}
 		  <td class="even">
 		  {/if}
-     {$layer_wiki[j]}
-		  </td>
+		{tr}{$layer_wiki[j]}{/tr}
+		  </td>	
 		  {if $smarty.section.j.index % 2}
 		  <td class="odd">
 		  {else}
 		  <td class="even">
 		  {/if}
-		  <input type="checkbox" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} />
+		   <input type="checkbox" name="{$my_layers[j]->name}" value="1" {$my_layers_checked[j]} /> 
 		  </td>
 		  {if $smarty.section.j.index % 2}
 		  <td class="odd">

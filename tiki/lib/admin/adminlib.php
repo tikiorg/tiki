@@ -319,7 +319,7 @@ class AdminLib extends TikiLib {
 			$data = $res["data"];
 			$pageName = $res["pageName"];
 			$description = $res["description"];
-			$query = "delete from `tiki_tags`where `tagName`=? and ".$this->convert_binary()." `pageName`=?";
+			$query = "delete from `tiki_tags`where `tagName`=? and `pageName`=?";
 			$this->query($query,array($tagname,$pageName),-1,-1,false);
 			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)
                 		values(?,?,?,?,?,?,?,?,?,?,?)";
@@ -349,7 +349,7 @@ class AdminLib extends TikiLib {
 			// update current page rather than delete and re-insert the page;
 			// increment the version number so history is kept in tact
 			$query
-				= "update `tiki_pages` set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=? where ".$this->convert_binary()." `pageName`=?";
+				= "update `tiki_pages` set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=? where `pageName`=?";
 
 			$result2 = $this->query($query,array($res["hits"],$res["data"],$res["lastModif"],$res["comment"],$res["user"],$res["ip"],$res["flag"],$res["description"],$res["pageName"]));
 		}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.15 2004-05-01 01:06:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.16 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,11 +22,9 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["rssId"])) {
-	$_REQUEST["rssId"] = 0;
+if (isset($_REQUEST["rssId"])) {
+	$smarty->assign('rssId', $_REQUEST["rssId"]);
 }
-
-$smarty->assign('rssId', $_REQUEST["rssId"]);
 
 $smarty->assign('preview', 'n');
 
@@ -34,12 +32,16 @@ if (isset($_REQUEST["view"])) {
 	$smarty->assign('preview', 'y');
 
 	$data = $rsslib->get_rss_module_content($_REQUEST["view"]);
-	$items = $rsslib->parse_rss_data($data, $_REQUEST["rssId"]);
+	$items = $rsslib->parse_rss_data($data, $_REQUEST["view"]);
 
+	if ($items[0]["isTitle"]=="y") {
+		$smarty->assign_by_ref('feedtitle', $items[0]);
+		$items = array_slice ($items,1);
+	}
 	$smarty->assign_by_ref('items', $items);
 }
 
-if ($_REQUEST["rssId"]) {
+if (isset($_REQUEST["rssId"])) {
 	$info = $rsslib->get_rss_module($_REQUEST["rssId"]);
 } else {
 	$info = array();
@@ -147,6 +149,11 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
 	$smarty->assign('prev_offset', -1);
+}
+
+$temp_max = count($channels["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
+  $channels['data'][$i]['size'] = strlen($channels['data'][$i]['content']);
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);

@@ -15,6 +15,7 @@ class RSSLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	/* get (a part of) the list of existing rss feeds from db */
 	function list_rss_modules($offset, $maxRecords, $sort_mode, $find) {
 
 		if ($find) {
@@ -44,6 +45,7 @@ class RSSLib extends TikiLib {
 		return $retval;
 	}
 
+	/* replace rss feed in db */
 	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate) {
 		//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 		$refresh = 60 * $refresh;
@@ -62,6 +64,7 @@ class RSSLib extends TikiLib {
 		return true;
 	}
 
+	/* remove rss feed from db */
 	function remove_rss_module($rssId) {
 		$query = "delete from `tiki_rss_modules` where `rssId`=?";
 
@@ -69,6 +72,7 @@ class RSSLib extends TikiLib {
 		return true;
 	}
 
+	/* read rss feed data from db */
 	function get_rss_module($rssId) {
 		$query = "select * from `tiki_rss_modules` where `rssId`=?";
 
@@ -81,94 +85,61 @@ class RSSLib extends TikiLib {
 		return $res;
 	}
 
-	function startElementHandler($parser, $name, $attribs) {
-		if ($this->flag) {
-			// for Atom <link>s: ignore those with no HREF
-			if (($name == 'link') &&
-					(array_key_exists("href",$attribs)) && 
-					(array_key_exists("rel",$attribs)) &&
-					($attribs["rel"] == "alternate"))
-			{
-			  	   $this->buffer .= '<' . $name . '>';
-						 $this->buffer .= $attribs["href"];
-				// all tags except <link>:
-			} else $this->buffer .= '<' . $name . '>';
-		}
+	/* parse xml data and return it in an array */
+	function parse_rss_data($data, $rssId) {
+		$showPubDate = $this->get_rss_showPubDate($rssId);
+		$showTitle = $this->get_rss_showTitle($rssId);
 
-		if ($name == 'item' || $name == 'items' || $name == 'entry') {
-			$this->flag = 1;
-		}
-	}
-
-	function endElementHandler($parser, $name) {
-		if ($name == 'item' || $name == 'items' || $name == 'entry') {
-			$this->flag = 0;
-		}
-
-		if ($this->flag) {
-			$this->buffer .= '</' . $name . '>';
-		}
-	}
-
-	function characterDataHandler($parser, $data) {
-		if ($this->flag) {
-			$this->buffer .= $data;
-		}
-	}
-
-	function NewsFeed($data, $rssId) {
 		$news = array();
 
-		$showPubDate = $this->get_rss_showPubDate($rssId);
+		// get title and link of the feed:
+		preg_match("/<title>(.*?)<\/title>/i", $data, $title);
+ 		preg_match("/<link>(.*?)<\/link>/i", $data, $link);
 
-		$this->buffer = '';
-		$this->flag = 0;
-		$this->parser = xml_parser_create("UTF-8");
-		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
-		xml_set_object($this->parser, $this);
-		xml_set_element_handler($this->parser, "startElementHandler", "endElementHandler");
-		xml_set_character_data_handler($this->parser, "characterDataHandler");
+		// set "y" if title should be shown:
+		$anew["isTitle"]=$showTitle;
+		$anew["title"] = $title[1];
+		$anew["link"] = "";
+		if (isset($link[1])) { $anew["link"] = $link[1]; }
+		$news[] = $anew;
+ 		
+		// get all items / entries of the feed:		
+		preg_match_all("/<item[^s].*?>(.*?)<\/item>/ms", $data, $items);
+		if (count($items[1])<1)				
+			preg_match_all("/<entry.*?>(.*?)<\/entry>/ms", $data, $items);
 
-		if (!xml_parse($this->parser, $data, 1)) {
-			print ("Xml error: " . xml_error_string(xml_get_error_code($this->parser))."-".xml_get_current_line_number($this->parser). "<br />");
+		// get data from all items:
+		for ($it = 0; $it < count($items[1]); $it++) {
+		
+			preg_match_all("/<title>(.*?)<\/title>/i", $items[0][$it], $titles);
+	 		preg_match_all("/<link>(.*?)<\/link>/i", $items[0][$it], $links);
+			if (count($links[1])<1)
+		 		preg_match_all("/<link.*?href=\"(.*?)\".*?>/i", $items[0][$it], $links);
 
-			return $news;
-		}
+			$pubdate = array();
+			preg_match_all("/<dc:date>(.*?)<\/dc:date>/i", $items[0][$it], $pubdate);
+			if (count($pubdate[1])<1)				
+				preg_match_all("/<pubDate>(.*?)<\/pubDate>/i", $items[0][$it], $pubdate);
+			if (count($pubdate[1])<1)				
+				preg_match_all("/<issued>(.*?)<\/issued>/i", $items[0][$it], $pubdate);
 
-		xml_parser_free ($this->parser);
-		preg_match_all("/<title>(.*?)<\/title>/i", $this->buffer, $titles);
- 		preg_match_all("/<link>(.*?)<\/link>/i", $this->buffer, $links);
-
-		$pubdate = array();
-		preg_match_all("/<dc:date>(.*?)<\/dc:date>/i", $this->buffer, $pubdate);
-		if (count($pubdate[1])<1)				
-		preg_match_all("/<pubDate>(.*?)<\/pubDate>/i", $this->buffer, $pubdate);
-		if (count($pubdate[1])<1)				
-		preg_match_all("/<issued>(.*?)<\/issued>/i", $this->buffer, $pubdate);
-
-		for ($i = 0; $i < count($titles[1]); $i++) {
-			$anew["title"] = $titles[1][$i];
-
-			if (isset($links[1][$i])) {
-				$anew["link"] = $links[1][$i];
-			} else {
+				$anew["title"] = $titles[1][0];
 				$anew["link"] = '';
-			}
-			if ( isset($pubdate[1][$i]) && ($showPubDate == 'y') )
-			{
-				$anew["pubdate"] = $pubdate[1][$i];
-			} else {
-				$anew["pubdate"] = '';
-			}
-			$news[] = $anew;
+				if (isset($links[1][0])) {
+					$anew["link"] = $links[1][0];
+				}
+				$anew["pubDate"] = '';
+				if ( isset($pubdate[1][0]) && ($showPubDate == 'y') )
+				{
+					$anew["pubDate"] = $pubdate[1][0];
+				}
+				$anew["isTitle"]="n";
+				$news[] = $anew;
 		}
 		return $news;
 	}
 
-	function parse_rss_data($rssdata, $rssId) {
-		return $this->NewsFeed($rssdata, $rssId);
-	}
-
+	/* refresh content of a certain rss feed */
 	function refresh_rss_module($rssId) {
 		$info = $this->get_rss_module($rssId);
 		if ($info) {
@@ -182,6 +153,7 @@ class RSSLib extends TikiLib {
 		}
 	}
 
+	/* check if an rss feed name already exists */
 	function rss_module_name_exists($name) {
 		$query = "select `name` from `tiki_rss_modules` where `name`=?";
 
@@ -189,6 +161,7 @@ class RSSLib extends TikiLib {
 		return $result->numRows();
 	}
 
+	/* get rss feed id by name */
 	function get_rss_module_id($name) {
 		$query = "select `rssId` from `tiki_rss_modules` where `name`=?";
 
@@ -196,6 +169,7 @@ class RSSLib extends TikiLib {
 		return $id;
 	}
 
+	/* check if 'showTitle' for an rss feed is enabled */
 	function get_rss_showTitle($rssId) {
 		$query = "select `showTitle` from `tiki_rss_modules` where `rssId`=?";
 
@@ -203,6 +177,7 @@ class RSSLib extends TikiLib {
 		return $showTitle;
 	}
 
+	/* check if 'showPubdate' for an rss feed is enabled */
 	function get_rss_showPubDate($rssId) {
 		$query = "select `showPubDate` from `tiki_rss_modules` where `rssId`=?";
 
@@ -210,6 +185,7 @@ class RSSLib extends TikiLib {
 		return $showPubDate;
 	}
 
+	/* retrieve the content of an rss feed, first try cache, then http request (may be forced) */
 	function get_rss_module_content($rssId, $refresh=false) {
 		$info = $this->get_rss_module($rssId);
 		$now = date("U");
@@ -224,6 +200,7 @@ class RSSLib extends TikiLib {
 		return $info["content"];
 	}
 
+	/* encode rss feed content */
 	function rss_iconv($xmlstr, $tencod = "UTF-8") {
 		if (preg_match("/<\?xml.*encoding=\"(.*)\".*\?>/", $xmlstr, $xml_head)) {
 			$sencod = strtoupper($xml_head[1]);

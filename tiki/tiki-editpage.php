@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.97 2004-07-23 22:05:42 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.98 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -350,16 +350,14 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     }
     $_REQUEST['edit'] .= $sdta;
 }
-//
-if ($feature_wiki_userpage == 'y') {
+// Checks if a "UserPagesomething" can be edited
+if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
 	if(strcasecmp(substr($page,0,strlen($feature_wiki_userpage_prefix)),$feature_wiki_userpage_prefix)==0) {
 		$name = substr($page,strlen($feature_wiki_userpage_prefix));
-		if(strcasecmp($user,$name)!=0) {
-			if($tiki_p_admin != 'y') {
-				$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
-				$smarty->display("error.tpl");
-				die;
-			}
+		if(strcasecmp($user,$name)!=0 && $name != '') {
+			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
+			$smarty->display("error.tpl");
+			die;
 		}
 	}
 }
@@ -375,16 +373,8 @@ if (!isset($_REQUEST["comment"])) {
   $_REQUEST["comment"] = '';
 }
 
-/*
-if(!page_exists($page)) {
-  $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display("error.tpl");
-  die;
-}
-*/
 include_once ("tiki-pagesetup.php");
 
-/* this doesn't seem necessary since the check is done a few lines down
 // Now check permissions to access this page
 if ($page != 'SandBox') {
   if ($tiki_p_edit != 'y') {
@@ -394,7 +384,6 @@ if ($page != 'SandBox') {
     die;
   }
 }
-*/
 
 // Get page data
 $info = $tikilib->get_page_info($page);

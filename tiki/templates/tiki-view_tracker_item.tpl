@@ -250,10 +250,16 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h3>{tr}Edit item{/tr}</h3>
 <form action="tiki-view_tracker_item.php" method="post">
+{if $special}
+<input type="hidden" name="view" value="{$special}" />
+{else}
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
+{/if}
 {section name=ix loop=$fields}
+{if $fields[ix].value}
 <input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
+{/if}
 {/section}
 
 <table class="normal">

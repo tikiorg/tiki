@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_structuredtext.php,v 1.2 2004-07-22 13:08:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_structuredtext.php,v 1.3 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,10 +46,10 @@ if (isset($_REQUEST["import"])) {
 
 		foreach ($parts as $part) {
 
-			$part["body"] = preg_replace("/\[([^\]]*)\]/", "(($1))", $part["body"]);
+			$part["body"] = preg_replace("/\[([^\]]*)\]/e", "str_replace(' ','',ucwords('(($1))'))", $part["body"]);
 			$part["body"] = preg_replace("/(\(\([^\)]*\)\))/e", "str_replace(' ','',ucwords('$1'))", $part["body"]);
 			
-			$part["body"] = preg_replace("/( |\n|^)(http:\/\/[^ ]+) /", "$1[$2] ", $part["body"]);
+			$part["body"] = preg_replace("/( |\n|^)(http:\/\/[^ ]+)( |\n)/", "$1[$2]$3", $part["body"]);
 			
 			// "A link to Google":http://google.com
 			$part["body"] = preg_replace("~\"([^\"]*)\":(((ht|f)tps?://|mailto:)[^\s]*)~", "[$2|$1]", $part["body"]);
@@ -77,9 +77,9 @@ if (isset($_REQUEST["import"])) {
 			// change <hr>
 			$part["body"] = preg_replace("/<hr(\s*\/)?>(\r?\n)?/", "---\n", $part["body"]);
 
-
      // manage formatting
-			$part["body"] = preg_replace("/(\n\n|^)([^\n]{1,200})(\n\n) /","$1!$2$3", $part["body"]);
+			$part["body"] = preg_replace("/^(\n*)([^\n]+)(\n\n) /","!$2$3", $part["body"]);
+			$part["body"] = preg_replace("/(\n\n)([^\n]{1,200})(\n\n) /","$1!!$2$3", $part["body"]);
 			$part["body"] = preg_replace("/\n +/","\n", $part["body"]);
 
 			$pagename = urldecode($part["pagename"]);

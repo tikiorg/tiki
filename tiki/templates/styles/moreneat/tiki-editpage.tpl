@@ -179,15 +179,15 @@
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 
-<tr class="formcolor">
-  <td>{tr}Import HTML{/tr}:</td>
-  <td>
+<tr>
+  <td class="formcolor">{tr}Import HTML{/tr}:</td>
+  <td class="formcolor">
     <input class="wikitext" type="text" name="suck_url" value="{$suck_url|escape}" size="80" />&nbsp;
   </td>
 </tr>
-<tr class="formcolor">
-  <td>&nbsp;</td>
-  <td>
+<tr>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">
     <input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" />&nbsp;
     <input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
     {tr}Try to convert HTML to wiki{/tr}

@@ -21,8 +21,7 @@ if($tiki_p_map_view != 'y') {
 
 $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 
-if (isset($_REQUEST['mapfile']))
-{
+if (isset($_REQUEST['mapfile'])) {
   // Validate to prevent displaying any file
   if (strstr($_REQUEST["mapfile"], '..')) {
     $smarty->assign('msg', tra("You dont have permission to do that"));
@@ -30,14 +29,12 @@ if (isset($_REQUEST['mapfile']))
     die;
   }
   $mapfile = $_REQUEST['mapfile'];
-} else
-{
+} else {
   $mapfile = $default_map;
 }
 
 //checking the mapfile
-if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile))
-{
+if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
   $smarty->assign('msg',tra("invalid mapfile name"));
   $smarty->display("error.tpl");
   die;
@@ -108,13 +105,15 @@ $layerbol=FALSE;
 if (isset($_REQUEST['Redraw'])) {
 	$_REQUEST['x'] = floor($map->width / 2);
 	$_REQUEST['y'] = floor($map->height / 2);
-	
 }
 
-if (isset($_REQUEST['size'])&&(is_numeric($_REQUEST['size']))&& ($_REQUEST['size']>0) &&($_REQUEST['size']<2000)){//check a non negative numeric less than 2000 
-       $xsize=floor($_REQUEST['size']);
-       $ysize=floor(($_REQUEST['size']*$map->height/$map->width));
-       $layerbol=TRUE;
+if (isset($_REQUEST['zoom'])) {
+	$layerbol=TRUE;
+}
+
+if (isset($_REQUEST['size'])&&(is_numeric($_REQUEST['size']))&& ($_REQUEST['size']>0) &&($_REQUEST['size']<2000)){
+    $xsize=floor($_REQUEST['size']);
+    $ysize=floor(($_REQUEST['size']*$map->height/$map->width));
  	 $size = $_REQUEST['size'];
 } 
 else {
@@ -139,6 +138,7 @@ if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])
 
 $query=FALSE;
 $map_querymsg='<table class="normal">';
+
 if (isset($_REQUEST['zoom']))
 {
   $zoom=$_REQUEST['zoom'];
@@ -295,6 +295,8 @@ $smarty->assign('maxx',$maxx);
 $smarty->assign('maxy',$maxy);
 
 $smarty->assign('size',$size);
+$smarty->assign('xsize',$xsize);
+$smarty->assign('ysize',$ysize);
 $smarty->assign('possiblesizes',array(200,300,400,600,800,1000));
 $smarty->assign('displaysizes',array(200,300,400,600,800,1000));
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.55 2004-07-17 12:49:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.56 2004-07-29 17:38:16 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <td>
@@ -82,7 +82,7 @@
         <select name="comments_style" id="comments-style">
           <option value="commentStyle_plain" {if $comments_style eq 'commentStyle_plain'}selected="selected"{/if}>{tr}Plain{/tr}</option>
           <option value="commentStyle_threaded" {if $comments_style eq 'commentStyle_threaded'}selected="selected"{/if}>{tr}Threaded{/tr}</option>
-          <option value="commentsStyle_headers" {if $comments_style eq 'commentsStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
+          <option value="commentStyle_headers" {if $comments_style eq 'commentStyle_headers'}selected="selected"{/if}>{tr}Headers Only{/tr}</option>
         </select>
     </td>
     <td class="heading"><label for="comments-sort">{tr}Sort{/tr}</label>

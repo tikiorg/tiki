@@ -8,8 +8,8 @@
 <table class="normal"><tr><td valign="top" class="odd" colspan="2">
 <h2>{tr}Edit menu options{/tr}</h2>
 <div style="text-align: right;">
-<a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">ShowUrls</a>
-<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">Hide Urls</a>
+<a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">{tr}Show Quick Urls{/tr}</a>
+<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">{tr}Hide Quick Urls{/tr}</a>
 </div>
 </td>
 <td valign="top" class="even" id="urltop" style="display:none;">

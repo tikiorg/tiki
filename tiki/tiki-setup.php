@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.255 2004-07-28 20:16:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.256 2004-07-29 17:37:46 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -227,6 +227,14 @@ TikiSetup::check($tikidomain);
 if ( $user ) { // load users_users and user_preferences cache for logged-in user
     $tikilib->load_user_cache($user, 'all');
 }
+
+// patch for Case-sensitivity perm issue
+$case_patched = $tikilib->get_preference('case_patched','n');
+if ($case_patched == 'n') {
+	include_once 'db/case_patch.php';
+	$tikilib->set_preference('case_patched','y');
+}
+// end of patch
 
 //check to see if admin has closed the site
 $site_closed = $tikilib->get_preference('site_closed','n');

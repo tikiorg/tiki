@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.74 2004-06-29 20:50:53 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.75 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,6 +21,21 @@ if ($feature_forums != 'y') {
 
     $smarty->display("error.tpl");
     die;
+}
+
+// the following code is needed to pass $_REQUEST variables that are not passed as URL parameters
+$phpself = $_SERVER['PHP_SELF'];
+if (isset($_POST['daconfirm']) && !empty($_SESSION["requestvars_$phpself"])) {
+	if (!empty($_REQUEST['ticket'])) {
+		$ticket = $_REQUEST['ticket'];
+	} else {
+		// even if there is no ticket, let tikiticketlib handle it
+		$ticket = NULL;
+	}
+	$_REQUEST = $_SESSION["requestvars_$phpself"];
+	$_REQUEST['ticket'] = $ticket;
+	unset($ticket);
+	unset($_SESSION["requestvars_$phpself"]);
 }
 
 if (!isset($_REQUEST["forumId"])) {
@@ -139,11 +154,19 @@ if ($tiki_p_admin_forum == 'y') {
 	}
 
 	if (isset($_REQUEST['delsel_x'])) {
+		$area = 'delforumtopics';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
 		if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
 				$commentslib->remove_comment($topic);
 				$commentslib->register_remove_post($_REQUEST['forumId'], 0);
 	    }
+		}
+		} else {
+			// this SESSION var passes the current REQUEST variables since they are not passed by URL
+			$_SESSION["requestvars_$phpself"] = $_REQUEST;
+			key_get($area);
 		}
 	}
 

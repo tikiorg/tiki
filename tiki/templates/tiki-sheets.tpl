@@ -37,7 +37,7 @@
 </div>
 <br />
 {else}
-<a href="tiki-sheets.php?edit_mode=edit&sheetId=0" class="linkbut">Create new Sheet</a>
+<a href="tiki-sheets.php?edit_mode=edit&sheetId=0" class="linkbut">{tr}Create new Sheet{/tr}</a>
 {/if}
 {/if}
 {if $sheetId > 0}

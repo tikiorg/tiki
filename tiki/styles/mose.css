@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.57 2004-07-11 10:27:48 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.58 2004-07-29 17:38:15 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -487,7 +487,7 @@ div.simplebox {
 /*
 MSIE inheritence pb
 */
-.form, #tiki-center table {
+.form, #tiki-center table, #tiki-bot table, #tiki-mid table{
 	font-size: 11px;
 }
 
@@ -2773,13 +2773,13 @@ div#loadstats {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 /**** coloration for c o d e plugin *****/
 .codelisting 

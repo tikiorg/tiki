@@ -153,7 +153,6 @@ span.off-option {
 
 /* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {
-	background-color:    white;
 	margin-left:   4px;
 	margin-right:   4px;
 	margin-top:   4px;
@@ -166,7 +165,6 @@ div.box {
 }
 
 div.box_right {
-        background-color:    white;
         margin-left:   4px;
         margin-right:   4px;
         margin-top:   4px;
@@ -201,7 +199,6 @@ div.box-title table {
 /* And this is the data */
 div.box-data {
 	overflow:    hidden;
-	background-color:   white;
 	color:   black;
 	margin-left:   5px;
 	margin-right:   5px;

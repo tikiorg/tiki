@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.24 2004-07-15 22:55:16 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.25 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,7 +92,7 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}' . "\n";
 	$heading .= '<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src="img/icons/edit.gif" border="0" alt="{tr}Post{/tr}" title="{tr}post{/tr}" /></a>{/if}{/if}' . "\n";
 	$heading .= '{if $rss_blog eq "y"}' . "\n";
-	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src="img/icons/mode_desc.gif" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
+	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver=2&amp;css=y"><img src="img/icons/mode_desc.gif" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}' . "\n";
 	$heading .= '<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src="img/icons/config.gif" border="0" alt="{tr}Edit blog{/tr}" title="{tr}Edit blog{/tr}" /></a>{/if}' . "\n";
 	$heading .= '{if $user and $feature_user_watches eq "y"}' . "\n";
