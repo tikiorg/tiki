@@ -4,15 +4,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Forums" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Forums{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin forums tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
 
@@ -27,7 +25,7 @@
 
 {if $forumId > 0}
 <h2>{tr}Edit this Forum:{/tr} {$name}</h2>
-<a href="tiki-admin_forums.php">Create new forum</a>
+<a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {else}
 <h2>{tr}Create New Forum{/tr}</h2>
 {/if}

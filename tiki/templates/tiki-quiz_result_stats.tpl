@@ -1,9 +1,9 @@
 <a class="pagetitle" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$resultId}&amp;userResultId={$userResultId}">{tr}Quiz result stats{/tr}:</a><br /><br />
-[<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
-|<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
-|<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
-|<a class="link" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
-|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br /><br />
+<a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
 <table class="normal">
 <tr> 
   <td colspan="2" class="heading">{tr}Quiz stats{/tr}</td>

@@ -3,15 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Newsletters" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Newsletters{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin newsletters tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
 
@@ -22,9 +20,9 @@
 
 
 <br/><br/>
-[<a class="link" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
-|<a class="link" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
-]<br/><br/>
+<a class="linkbut" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
+<a class="linkbut" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
+<br/><br/>
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$info.name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$info.nlId}">{tr}There are individual permissions set for this newsletter{/tr}</a><br/><br/>

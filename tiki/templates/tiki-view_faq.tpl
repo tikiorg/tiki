@@ -2,18 +2,16 @@
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=FAQ" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}view faq{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
-{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-view_faq.tpl" target="tikihelp" class="tikihelp" title="{tr}view faq tpl{/tr}: {tr}admin menus tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>{/if}
 
 
 
 <br /><br />
-[<a class="link" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>]<br /><br />
+<a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a><br /><br />
 <h2>{tr}FAQ Questions{/tr}</h2>
 <div class="faqlistquestions">
 <ol>
