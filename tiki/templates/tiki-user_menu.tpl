@@ -5,7 +5,7 @@
   {if $opensec eq 'y'}</div>{/if}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('userm{$channels[ix].name}');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:icntoggle('userm{$channels[ix].name}');"><img src="img/icons/fo.gif" border="0" name="userm{$channels[ix].name}">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('userm{$channels[ix].name}');">[-]</a>{/if} 
   <a href="{$channels[ix].url}" class="separator">{tr}{$channels[ix].name}{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('userm{$channels[ix].name}');">[+]</a>{/if} 
