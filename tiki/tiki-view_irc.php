@@ -9,7 +9,7 @@
 #error_reporting(E_ALL);
 
 require_once('tiki-setup.php');
-require_once('lib/ircbot/ircbotlib.php');
+require_once('lib/irc/irclib.php');
 
 $r_log		= !empty($_REQUEST['log']) ? $_REQUEST['log']			: null;
 $r_channel	= !empty($_REQUEST['channel']) ? $_REQUEST['channel']	: null;
