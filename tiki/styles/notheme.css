@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.9 2004-01-04 06:22:08 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.10 2004-02-16 20:01:40 mose Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -30,28 +30,25 @@ div.tabs {
 
 .content {
 	position: relative;
-	border: 1px solid #666;
-	width: 600px;
+	border: 2px outset WindowFrame;
+	min-width: 400px;
 	padding: 10px;
 	margin-bottom: 25px;
 	z-index: 80;
-	background-color: #f3f6f9;
-	-moz-border-radius: 0px 4px 4px 4px;
 	}
 	
 .tab {
-	border: 1px solid #347;
+	border: 2px outset WindowFrame;
 	padding: 2px 5px 1px 5px;
-	background-color: #bcd;
-	color: #303036;
+	color: WindowText;
 	z-index: 100;
 	border-bottom-width: 0;
 	-moz-border-radius: 4px 4px 0px 0px;
 	}
 
 .tabHover {
-	background-color: #46596f;
-	color:#fff;
+	color: HighlightText;
+	background-color: Highlight;
 	z-index: 90;
 	border-bottom-width: 0;
 	cursor: pointer;
@@ -59,8 +56,8 @@ div.tabs {
 
 .tabActive { 
 	padding: 3px 5px 2px 5px;
-	color: #060610 ;
-	background-color: #f3f6f9;
+	color: HighlightText;
+	background-color: Highlight;
 	z-index: 100;
 	}
       
