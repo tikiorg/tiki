@@ -46,6 +46,9 @@
 	  <br />
 	  <small class="caption">{tr}Subgallery{/tr}: {$item.name}
 	  <br />
+	  ({$item.numimages} Images) [{$item.hits}
+                                {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
+	  </td>
         {/foreach}
         {foreach from=$images key=key item=item}
           <td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
