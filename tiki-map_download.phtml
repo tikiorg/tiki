@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.2 2003-10-12 19:49:14 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.3 2003-11-13 23:42:08 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,11 @@ if (isset($_REQUEST['mapfile']))
       if($my_layers->getMetadata("DOWNLOAD")=='T')
       {
         $download=TRUE;
-        $download_path=$map_path.$my_layers->connection;
+        if ($my_layers->connection!="") {
+          $download_path=$map_path.$my_layers->connection;
+        } else {
+          $download_path=$map_path.$my_layers->data;
+        }
       }
     }
   }
