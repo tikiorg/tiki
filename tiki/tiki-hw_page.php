@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.5 2004-04-29 03:41:19 ggeller Exp $
 
 // Initialization
 
@@ -22,7 +22,7 @@
 //
 // Wiki features not needed: structures, backlinks, rollbacks, wiki-style lock,
 //   notepad, undos, slides, theme control, custom layout, attachments,
-//   footnotes, watches, hawhaw (mobility), catagories.
+//   footnotes, watches, hawhaw (mobility), categories.
 
 error_reporting (E_ALL);
 
