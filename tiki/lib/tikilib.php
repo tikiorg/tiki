@@ -798,10 +798,10 @@ class TikiLib {
 
   /*shared*/ function genPass()
   {
-        $vocales="aeiou";
-        $consonantes="bcdfghjklmnpqrstvwxyz";
+        $vocales="aeiouAEIOU";
+        $consonantes="bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0123456789_";
         $r='';
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<8; $i++){
                 if ($i%2){
                         $r.=$vocales{rand(0,strlen($vocales)-1)};
                 }else{
