@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/acl_tree.php,v 1.1 2003-08-24 00:42:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/acl_tree.php,v 1.2 2003-08-24 01:58:34 teedog Exp $
  *
  * \brief Tiki Objects Tree and associated ACL
  *
@@ -45,7 +45,17 @@ class TikiCoreObjectsManagement
     {
     }
     /**
-     * \brief Add custom object type to system
+     * \brief Remove custom object type from system
+     *
+     * \param $objtype int -- unique identifier of object type
+     *
+     * \return boolean true/false
+     */
+    function unregister_object_type($objtype)
+    {
+    }
+    /**
+     * \brief Get list of object types
      *
      * \return array vector of object types
      */
@@ -130,8 +140,9 @@ class TikiCoreObjectsManagement
 
     // === ONE BIG QUESTION WHAT AND HOW TO IMPLEMENT ===
     function add_acl()   {}
+    function edit_acl()  {}
     function del_acl()   {}
-    function checl_acl() {}
+    function check_acl() {}
 }
 
 ?>
