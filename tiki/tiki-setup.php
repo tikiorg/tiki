@@ -568,6 +568,45 @@ if($wiki_page_regex == 'strict') {
   $page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';	
 }
 
+// PEAR::Auth support
+$auth_method = "tiki";
+$smarty->assign('auth_method',$auth_method);
+$auth_pear = "tiki";
+$smarty->assign('auth_pear',$auth_pear);
+$auth_create_user_tiki = "n";
+$smarty->assign('auth_create_user_tiki',$auth_create_user_tiki);
+$auth_create_user_auth = "n";
+$smarty->assign('auth_create_user_auth',$auth_create_user_auth);
+$auth_skip_admin = "y";
+$smarty->assign('auth_skip_admin',$auth_skip_admin);
+$auth_ldap_host = "localhost";
+$smarty->assign('auth_ldap_host',$auth_ldap_host);
+$auth_ldap_port = "389";
+$smarty->assign('auth_ldap_port',$auth_ldap_port);
+$auth_ldap_scope = "sub";
+$smarty->assign('auth_ldap_scope',$auth_ldap_scope);
+$auth_ldap_basedn = "";
+$smarty->assign('auth_ldap_basedn',$auth_ldap_basedn);
+$auth_ldap_userdn = "";
+$smarty->assign('auth_ldap_userdn',$auth_ldap_userdn);
+$auth_ldap_userattr = "uid";
+$smarty->assign('auth_ldap_userattr',$auth_ldap_userattr);
+$auth_ldap_useroc = "posixAccount";
+$smarty->assign('auth_ldap_useroc',$auth_ldap_useroc);
+$auth_ldap_groupdn = "";
+$smarty->assign('auth_ldap_groupdn',$auth_ldap_groupdn);
+$auth_ldap_groupattr = "cn";
+$smarty->assign('auth_ldap_groupattr',$auth_ldap_groupattr);
+$auth_ldap_groupoc = "grouOfUniqueNames";
+$smarty->assign('auth_ldap_groupoc',$auth_ldap_groupoc);
+$auth_ldap_memberattr = "uniqueMember";
+$smarty->assign('auth_ldap_memberattr',$auth_ldap_memberattr);
+$auth_ldap_memberisdn = "y";
+$smarty->assign('auth_ldap_memberisdn',$auth_ldap_memberisdn);
+$auth_ldap_adminuser = "";
+$smarty->assign('auth_ldap_adminuser',$auth_ldap_adminuser);
+$auth_ldap_adminpass = "";
+$smarty->assign('auth_ldap_adminpass',$auth_ldap_adminpass);
 
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');

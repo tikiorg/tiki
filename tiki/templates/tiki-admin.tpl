@@ -262,6 +262,12 @@
 <div class="simplebox">
 <form action="tiki-admin.php#login" method="post">
 <table width="100%">
+<tr><td class="form">{tr}Authentication method{/tr}</td><td>
+<select name="auth_method">
+<option value="tiki" {if $auth_method eq 'tiki'} selected="selected"{/if}>{tr}Just Tiki{/tr}</option>
+<option value="auth" {if $auth_method eq 'auth'} selected="selected"{/if}>{tr}Tiki and PEAR::Auth{/tr}</option>
+<!--option value="http" {if $auth_method eq 'http'} selected="selected"{/if}>{tr}Tiki and HTTP Auth{/tr}</option-->
+</select></td></tr>
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
@@ -304,6 +310,54 @@
 </tr></tr>
 
 <tr><td>&nbsp;</td><td><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+
+
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
+<a href="#directory" class="link">{tr}directory{/tr}</a>
+]
+<a name="auth_pear"></a>
+<div class="cbox">
+<div class="cbox-title">{tr}PEAR::Auth{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td>{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td>{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td>{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_ldap_host" value="{$auth_ldap_host}" /></td></tr>
+<tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_ldap_port" value="{$auth_ldap_port}" /></td></tr>
+<tr><td class="form">{tr}LDAP Scope{/tr}:</td><td><input type="text" name="auth_ldap_scope" value="{$auth_ldap_scope}" /></td></tr>
+<tr><td class="form">{tr}LDAP Base DN{/tr}:</td><td><input type="text" name="auth_ldap_basedn" value="{$auth_ldap_basedn}" /></td></tr>
+<tr><td class="form">{tr}LDAP User DN{/tr}:</td><td><input type="text" name="auth_ldap_userdn" value="{$auth_ldap_userdn}" /></td></tr>
+<tr><td class="form">{tr}LDAP User Attribute{/tr}:</td><td><input type="text" name="auth_ldap_userattr" value="{$auth_ldap_userattr}" /></td></tr>
+<tr><td class="form">{tr}LDAP User OC{/tr}:</td><td><input type="text" name="auth_ldap_useroc" value="{$auth_ldap_useroc}" /></td></tr>
+<tr><td class="form">{tr}LDAP Group DN{/tr}:</td><td><input type="text" name="auth_ldap_groupdn" value="{$auth_ldap_groupdn}" /></td></tr>
+<tr><td class="form">{tr}LDAP Group Atribute{/tr}:</td><td><input type="text" name="auth_ldap_groupattr" value="{$auth_ldap_groupattr}" /></td></tr>
+<tr><td class="form">{tr}LDAP Group OC{/tr}:</td><td><input type="text" name="auth_ldap_groupoc" value="{$auth_ldap_groupoc}" /></td></tr>
+<tr><td class="form">{tr}LDAP Member Attribute{/tr}:</td><td><input type="text" name="auth_ldap_memberattr" value="{$auth_ldap_memberattr}" /></td></tr>
+<tr><td class="form">{tr}LDAP Member Is DN{/tr}:</td><td><input type="text" name="auth_ldap_memberisdn" value="{$auth_ldap_memberisdn}" /></td></tr>
+<tr><td class="form">{tr}LDAP Admin User{/tr}:</td><td><input type="text" name="auth_ldap_adminuser" value="{$auth_ldap_adminuser}" /></td></tr>
+<tr><td class="form">{tr}LDAP Admin Pwd{/tr}:</td><td><input type="password" name="auth_ldap_adminpass" value="{$auth_ldap_adminpass}" /></td></tr>
+<tr><td align="center" colspan="2"><input type="submit" name="auth_pear" value="{tr}Set prefs{/tr}" /></td></tr>
 </table>
 </form>
 </div>
