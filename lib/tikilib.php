@@ -2568,9 +2568,9 @@ function get_article($articleId) {
 }
 
 function get_submission($subId) {
-    $query = "select * from `tiki_submissions` where `subId`=$subId";
+    $query = "select * from `tiki_submissions` where `subId`=?";
 
-    $result = $this->query($query);
+    $result = $this->query($query,array((int) $subId));
 
     if ($result->numRows()) {
 	$res = $result->fetchRow();
@@ -2621,24 +2621,24 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 	$result = $this->query($query, array(
 		    $title,
 		    $authorName,
-		    $topicId,
+		    (int) $topicId,
 		    $topicName,
-		    $size,
+		    (int) $size,
 		    $useImage,
 		    $imgname,
 		    $imgtype,
-		    $imgsize,
+		    (int) $imgsize,
 		    $imgdata,
 		    $isfloat,
-		    $image_x,
-		    $image_y,
+		    (int) $image_x,
+		    (int) $image_y,
 		    $heading,
 		    $body,
-		    $publishDate,
-		    $now,
+		    (int) $publishDate,
+		    (int) $now,
 		    $user,
 		    $type,
-		    $rating, $articleId ) );
+		    (float) $rating, (int) $articleId ) );
     } else {
 	// Fixed query. -rlpowell
 	// Insert the article
@@ -2693,14 +2693,14 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 	    $result = $this->query($query, array(
 			$title,
 			$authorName,
-			$topicId,
+			(int) $topicId,
 			$useImage,
 			$imgname,
-			$imgsize,
+			(int) $imgsize,
 			$imgtype,
 			$imgdata,
-			$publishDate,
-			$now,
+			(int) $publishDate,
+			(int) $now,
 			$heading,
 			$body,
 			$hash,
@@ -2708,12 +2708,12 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 			0,
 			0,
 			0,
-			$size,
+			(int) $size,
 			$topicName,
-			$image_x,
-			$image_y,
+			(int) $image_x,
+			(int) $image_y,
 			$type,
-			$rating,
+			(float) $rating,
 			$isfloat
 			    )
 			    );
@@ -2722,7 +2722,7 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 			$query2 = "select max(`articleId`) from `tiki_articles`
 			    where `created` = ? and
 			    `title`=? and `hash`=?";
-			$articleId = $this->getOne($query2, array( $now,
+			$articleId = $this->getOne($query2, array( (int) $now,
 				    $title, $hash ) );
     }
 
@@ -2735,7 +2735,7 @@ function get_topic_image($topicId) {
     $query = "select `image_name` ,`image_size`,`image_type`,
     `image_data` from `tiki_topics` where `topicId`=?";
 
-    $result = $this->query($query, array($topicId));
+    $result = $this->query($query, array((int) $topicId));
 
     $res = $result->fetchRow();
     return $res;

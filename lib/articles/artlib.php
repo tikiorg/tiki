@@ -125,7 +125,7 @@ class ArtLib extends TikiLib {
 		if ($subId) {
 			$query = "delete from `tiki_submissions` where `subId`=?";
 
-			$result = $this->query($query,array($subId));
+			$result = $this->query($query,array((int) $subId));
 
 			return true;
 		}
@@ -141,7 +141,7 @@ class ArtLib extends TikiLib {
 		$hash = md5($title . $heading . $body);
 		$now = date("U");
 		$query = "select `name` from `tiki_topics` where `topicId` = ?";
-		$topicName = $this->getOne($query,array($topicId));
+		$topicName = $this->getOne($query,array((int) $topicId));
 		$size = strlen($body);
 
 		if ($subId) {
@@ -169,17 +169,17 @@ class ArtLib extends TikiLib {
                 `rating` = ?
                 where `subId` = ?";
 
-			$result = $this->query($query,array($title,$authorName,$topicId,$topicName,$size,$useImage,$isfloat,$imgname,$imgtype,$imgsize,$imgdata,$image_x,$image_y,$heading,$body,$publishDate,$now,$user,$type,$rating,$subId));
+			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,$heading,$body,(int) $publishDate,(int) $now,$user,$type,(float) $rating,(int) $subId));
 		} else {
 			// Insert the article
 			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`)
                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$publishDate,$now,$heading,$body,$hash,$user,0,0,0,$size,$topicName,$image_x,$image_y,$type,$rating,$isfloat));
+			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,$imgdata,(int) $publishDate,(int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,(int) $image_y,$type,(float) $rating,$isfloat));
 		}
 
 		$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
-		$id = $this->getOne($query,array($now,$title,$hash));
+		$id = $this->getOne($query,array((int) $now,$title,$hash));
 		$emails = $notificationlib->get_mail_events('article_submitted', '*');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = httpPrefix(). $foo["path"];
@@ -207,10 +207,10 @@ class ArtLib extends TikiLib {
 
 		$query = "insert into `tiki_topics`(`name`,`image_name`,`image_type`,`image_size`,`image_data`,`active`,`created`)
                      values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($name,$imagename,$imagetype,$imagesize,$imagedata,'y',$now));
+		$result = $this->query($query,array($name,$imagename,$imagetype,(int) $imagesize,$imagedata,'y',(int) $now));
 
 		$query = "select max(`topicId`) from `tiki_topics` where `created`=? and `name`=?";
-		$topicId = $this->getOne($query,array($now,$name));
+		$topicId = $this->getOne($query,array((int) $now,$name));
 		return $topicId;
 	}
 
