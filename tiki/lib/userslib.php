@@ -71,9 +71,9 @@ class UsersLib extends TikiLib {
     }
 
     function object_has_permission($user, $objectId, $objectType, $permName, $group = NULL) {	// the last parameter $group is optional, used when we specify a group but not a user
-	if (!empty($group)) {
+	if (!empty($group) && empty($user)) {	// only use the provided $group if $group is non-empty and $user is empty
 		$groups = array($group);
-	} else {
+	} else {	// get groups by looking up the database with $user
 	$groups = $this->get_user_groups($user);
 	}
 
