@@ -38,7 +38,7 @@
 </table>
 <br/>
 <a name="assign"></a>
-<h3>Assign module</h3>
+<h3>{tr}Assign module{/tr}</h3>
 {if $preview eq 'y'}
 {tr}Preview{/tr}<br/>
 {$preview_data}
@@ -55,8 +55,8 @@
 <!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title}"></td></tr>-->
 <tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
 <select name="assign_position">
-<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>left</option>
-<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>right</option>
+<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}left{/tr}</option>
+<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}right{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
@@ -80,9 +80,9 @@
 </table>
 </form>
 <br/>
-<h3>Assigned Modules</h3>
+<h3>{tr}Assigned Modules{/tr}</h3>
 <a name="leftmod"></a>
-<h3>Left Modules</h3>
+<h3>{tr}Left Modules{/tr}</h3>
 <table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
@@ -130,7 +130,7 @@
 {/section}
 </table>
 <a name="rightmod"></a>
-<h3>Right Modules</h3>
+<h3>{tr}Right Modules{/tr}</h3>
 
 <table class="normal">
 <tr>
@@ -181,7 +181,7 @@
 <br/>
 <a name="editcreate"></a>
 <table class="normal"><tr><td valign="top" class="odd">
-<h3>Edit/Create user module</h3>
+<h3>{tr}Edit/Create user module{/tr}</h3>
 <form method="post" action="tiki-admin_modules.php">
 <table>
 <tr><td class="form">Name</td><td><input type="text" name="um_name" value="{$um_name}" /></td></tr>
@@ -215,7 +215,7 @@
   </td>
   <td>
    <select name="galleries" id='list_galleries'>
-   <option value="{literal}{{/literal}gallery id=-1 showgalleryname=1{literal}}{/literal}">All galleries</option>
+   <option value="{literal}{{/literal}gallery id=-1 showgalleryname=1{literal}}{/literal}">{tr}All galleries{tr}</option>
    {section name=ix loop=$galleries}
    <option value="{literal}{{/literal}gallery id={$galleries[ix].galleryId} showgalleryname=0{literal}}{/literal}">{$galleries[ix].name}</option>
    {/section}

@@ -1,9 +1,9 @@
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br/><br/>
-<h3>User Information</h3>
+<h3>{tr}User Information{/tr}</h3>
 <table class="normal">
-<tr><td class="even">Login:</td><td class="odd">{$user_info.login}</td></tr>
-<tr><td class="even">Email:</td><td class="odd">{$user_info.email}</td></tr>
-<tr><td class="even">Groups:</td><td class="odd">
+<tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
+<tr><td class="even">{tr}Email{/tr}:</td><td class="odd">{$user_info.email}</td></tr>
+<tr><td class="even">{tr}Groups{/tr}:</td><td class="odd">
 {section name=grp loop=$user_info.groups}
 {$user_info.groups[grp]}{if $user_info.groups[grp] != "Anonymous"}(<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;group={$user_info.groups[grp]}">x</a>){/if}&nbsp;&nbsp;
 {/section}

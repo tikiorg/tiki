@@ -52,7 +52,7 @@
 {/section}
 </td>                                 
 <td class="odd"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
-                                   <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">assign_perms</a></td>
+                                   <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">{tr}assign_perms{/tr}</a></td>
 </tr>
 {else}
 <tr>
@@ -71,7 +71,7 @@
 </td>                                 
 
 <td class="even"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
-                 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">assign_perms</a></td>
+                 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">{tr}assign_perms{/tr}</a></td>
 
 </tr>
 {/if}

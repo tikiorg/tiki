@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-list_posts.php">{tr}Blogs{/tr}</a><br/><br/>
-[<a class="link" href="tiki-edit_blog.php">edit blog</a>
-|<a class="link" href="tiki-blog_post.php">post</a>
-|<a class="link" href="tiki-list_blogs.php">list blogs</a>]
+[<a class="link" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
+|<a class="link" href="tiki-blog_post.php">{tr}post{/tr}</a>
+|<a class="link" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
 <br/><br/>
 <div align="center">
 <table class="findtable">
