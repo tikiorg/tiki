@@ -41,6 +41,45 @@ if(!$info) {
 }
 print_r($info);
 
+//Now calculate all the offsets using maxRecords and offset
+//then load headers for messages between the first and last message to be displayed
+//Assign the headers information to the articles array to be displayed in the template
+//calculate next and prev offsets, page number and so...
+if(!isset($_REQUEST["offset"])) {
+  $offset = 0;
+} else {
+  $offset = $_REQUEST["offset"]; 
+}
+$smarty->assign_by_ref('offset',$offset);
+$cant = $info['last']-$info['first']+1;
+$cant_pages = ceil($cant / $maxRecords);
+$smarty->assign_by_ref('cant_pages',$cant_pages);
+$smarty->assign('actual_page',1+($offset/$maxRecords));
+if($cant > ($offset+$maxRecords)) {
+  $smarty->assign('next_offset',$offset + $maxRecords);
+} else {
+  $smarty->assign('next_offset',-1); 
+}
+// If offset is > 0 then prev_offset
+if($offset>0) {
+  $smarty->assign('prev_offset',$offset - $maxRecords);  
+} else {
+  $smarty->assign('prev_offset',-1); 
+}
+// Since the first message is the last one...
+$count=0;
+$articles=Array();
+for($i=$info['last']-$offset;$count<$maxRecords&&$i>=$info['first'];$i--) {
+  $count++;
+  $art=$newslib->news_split_headers($i);
+  $art['loopid']=$i;
+  $articles[]=$art;
+  
+}
+$smarty->assign('articles',$articles);
+print_r(array_keys($articles[0]));
+
+
 $smarty->assign('mid','tiki-newsreader_news.tpl');
 $smarty->display('tiki.tpl');
 ?>

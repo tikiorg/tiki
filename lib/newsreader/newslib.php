@@ -81,6 +81,16 @@ class Newslib extends Tikilib {
     return $this->nntp->selectGroup($group);
   }
   
+  function news_split_headers($id)
+  {
+    return $this->nntp->splitHeaders($id);
+  }
+  
+  function news_get_body($id)
+  {
+    return $this->nntp->getBody($id);
+  }
+  
   function news_set_server($server,$port,$user,$pass)
   {
     
