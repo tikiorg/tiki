@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.37 2003-10-17 00:05:20 redflo Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.38 2003-10-19 02:22:53 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -447,4 +447,26 @@ CREATE TABLE tiki_rss_feeds (
 ALTER TABLE `tiki_pages` ADD `page_size` int(10) unsigned default 0;
 UPDATE tiki_pages set page_size=length(data);
 
+DROP TABLE IF EXISTS tiki_article_types;
+CREATE TABLE tiki_article_types (
+  type varchar(50) NOT NULL,
+  use_ratings varchar(1) default NULL,
+  show_pre_publ varchar(1) default NULL,
+  show_post_expire varchar(1) default 'y',
+  heading_only varchar(1) default NULL,
+  allow_comments varchar(1) default 'y',
+  show_image varchar(1) default 'y',
+  show_avatar varchar(1) default NULL,
+  show_author varchar(1) default 'y',
+  show_pubdate varchar(1) default 'y',
+  show_expdate varchar(1) default NULL,
+  show_reads varchar(1) default 'y',
+  PRIMARY KEY  (type)
+) TYPE=MyISAM ;
 
+INSERT IGNORE INTO tiki_article_types(type) VALUES ('Article');
+INSERT IGNORE INTO tiki_article_types(type,use_ratings) VALUES ('Review','y');
+INSERT IGNORE INTO tiki_article_types(type,show_post_expire) VALUES ('Event','n');
+INSERT IGNORE INTO tiki_article_types(type,show_post_expire,heading_only,allow_comments) VALUES ('Classified','n','y','n');
+
+ALTER TABLE tiki_articles ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.17 2003-10-13 21:29:03 awcolley Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.18 2003-10-19 02:22:53 dheltzel Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -51,10 +51,16 @@
 	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {/if}
 {if $art_list_topic eq 'y'}	
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Type{/tr}</a></td>
+{/if}
+{if $art_list_topic eq 'y'}	
 	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
 {/if}
 {if $art_list_date eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
+{/if}
+{if $art_list_date eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Visible{/tr}</a></td>
 {/if}
 {if $art_list_author eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
@@ -86,10 +92,16 @@
 	</td>
 {/if}
 {if $art_list_topic eq 'y'}	
+	<td class="{cycle advance=false}">{$listpages[changes].type}</td>
+{/if}
+{if $art_list_topic eq 'y'}	
 	<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>
 {/if}
 {if $art_list_date eq 'y'}
 	<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+{/if}
+{if $art_list_date eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].disp_article}</td>
 {/if}
 {if $art_list_author eq 'y'}	
 	<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>

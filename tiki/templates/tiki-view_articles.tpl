@@ -1,4 +1,5 @@
 {section name=ix loop=$listpages}
+{if $listpages[ix].disp_article eq 'y'}
 <div class="articletitle">
 {if $art_view_title eq 'y'}
 <span class="titlea">{$listpages[ix].title}</span><br />
@@ -6,7 +7,7 @@
 {if ($art_view_author eq 'y') or ($art_view_date eq 'y') or ($art_view_reads eq 'y')}	
 <span class="titleb">
 {if $art_view_author eq 'y'}	
-{tr}By:{/tr} {$listpages[ix].authorName} 
+{tr}By:{/tr} {$listpages[ix].authorName}
 {/if}
 {if $art_view_date eq 'y'}
 {tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime} 
@@ -86,5 +87,6 @@
 </tr>
 </table>
 </div>
+{/if}
 {/section}
 

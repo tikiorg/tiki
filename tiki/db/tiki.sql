@@ -271,6 +271,7 @@ CREATE TABLE tiki_articles (
   image_y int(4) default NULL,
   image_data longblob,
   publishDate int(14) default NULL,
+  expireDate int(14) default NULL,
   created int(14) default NULL,
   heading text,
   body text,
@@ -290,6 +291,28 @@ CREATE TABLE tiki_articles (
   FULLTEXT KEY ft (title,heading,body)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
+
+DROP TABLE IF EXISTS tiki_article_types;
+CREATE TABLE tiki_article_types (
+  type varchar(50) NOT NULL,
+  use_ratings varchar(1) default NULL,
+  show_pre_publ varchar(1) default NULL,
+  show_post_expire varchar(1) default 'y',
+  heading_only varchar(1) default NULL,
+  allow_comments varchar(1) default 'y',
+  show_image varchar(1) default 'y',
+  show_avatar varchar(1) default NULL,
+  show_author varchar(1) default 'y',
+  show_pubdate varchar(1) default 'y',
+  show_expdate varchar(1) default NULL,
+  show_reads varchar(1) default 'y',
+  PRIMARY KEY  (type)
+) TYPE=MyISAM ;
+
+INSERT IGNORE INTO tiki_article_types(type) VALUES ('Article');
+INSERT IGNORE INTO tiki_article_types(type,use_ratings) VALUES ('Review','y');
+INSERT IGNORE INTO tiki_article_types(type,show_post_expire) VALUES ('Event','n');
+INSERT IGNORE INTO tiki_article_types(type,show_post_expire,heading_only,allow_comments) VALUES ('Classified','n','y','n');
 
 #
 # Table structure for table `tiki_banners`
