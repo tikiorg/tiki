@@ -164,7 +164,7 @@ class TrackerLib extends TikiLib {
     $smarty->assign('mail_data',$title."\n\n".$data);
     foreach ($emails as $email) {      
       $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
     }
     return $commentId;
   }
@@ -317,7 +317,7 @@ class TrackerLib extends TikiLib {
     $smarty->assign('mail_data',$the_data);
     foreach ($emails as $email) {      
       $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
     }
     $cant_items = $this->getOne("select count(*) from tiki_tracker_items where trackerId=$trackerId");
     $query = "update tiki_trackers set items=$cant_items where trackerId=$trackerId";

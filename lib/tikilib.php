@@ -3626,7 +3626,7 @@ class TikiLib {
         $smarty->assign('mail_machine',$machine);
         $smarty->assign('mail_pagedata',$edit_data);
         $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-        @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email");
+        @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
       }
       if($feature_user_watches == 'y') {
         $nots = $this->get_event_watches('wiki_page_changed',$pageName);
@@ -3648,7 +3648,7 @@ class TikiLib {
 	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $smarty->assign('mail_pagedata',$edit_data);
 	        $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
-	        @mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email");          
+	        @mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");          
         }
       }
     }  

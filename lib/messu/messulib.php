@@ -54,7 +54,7 @@ class Messu extends Tikilib {
       $mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
       $email = $userlib->get_user_email($user);
       if($email) {
-        @mail($email, 'New message arrived from '.$_SERVER["SERVER_NAME"], $mail_data, "From: $sender_email");
+        @mail($email, tra('New message arrived from ').$_SERVER["SERVER_NAME"], $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
       }
     }
     
