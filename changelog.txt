@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.126 2003-11-05 06:25:49 caustin_ats Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.127 2003-11-11 00:23:44 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,8 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [MOD] submissions can now be edited by the creator, even if they do not
+  have the p_edit_submission permission.
 * [FIX] Fixed bug that caused all subscriptions to a newsletter to be deleted
   if a new address was added.
 * [FIX] lots of tempfile naming fixes
