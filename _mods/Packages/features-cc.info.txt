@@ -2,10 +2,10 @@ contributor:
 $Author: mlinton $
 
 revision:
-1.3.4
+1.3.5
 
 lastmodif:
-$Date: 2004-12-01 12:57:23 $
+$Date: 2004-12-12 20:14:49 $
 
 files: 
 features/cc/cc.php cc.php
@@ -70,6 +70,7 @@ Description:
 Multi-currencies management system
 
 Changelog:
+1.3.5 layout changes, prevent self credit transaction
 1.3.4 added possibility to register an unlisted currency
 1.3.3 added help link and transaction from currencies list
 1 initial package
