@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.55 2003-12-05 11:53:21 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.56 2003-12-08 05:26:45 gongo Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -23,7 +23,7 @@
     <td align="right">{$display_catpath}</td>
     </tr><tr><td>&nbsp;</td>
   {/if}
-  {if $print_page !== 'y'}
+  {if $print_page ne 'y'}
 	<td style="text-align:right;">
 
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}

@@ -1,4 +1,4 @@
-{if $print_page !== 'y'}
+{if $print_page ne 'y'}
 <div class="tabt1">
 
 {if $feature_backlinks eq 'y'}
@@ -53,6 +53,7 @@
 
 {if $show_page_bar !== 'n'}
 <div class="tabt2">
+{if $print_page ne 'y'}
 {if !$lock}
 	{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 		{if $beingEdited eq 'y'}
@@ -62,7 +63,8 @@
 		{/if}
 	{/if}
 {/if}
-
+{/if}
+{if $print_page ne 'y'}
 {if $page ne 'SandBox'}
 	{if $tiki_p_remove eq 'y'}
 		<span class="tabbut"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="tablink">{tr}remove{/tr}</a></span>
@@ -71,7 +73,9 @@
 		<span class="tabbut"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="tablink">{tr}rename{/tr}</a></span>
 	{/if}
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $page ne 'SandBox'}
 	{if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
 		{if $lock}
@@ -84,21 +88,29 @@
 		<span class="tabbut"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="tablink">{tr}perms{/tr}</a></span>
 	{/if}
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $page ne 'SandBox'}
 	{if $feature_history eq 'y'}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $feature_likePages eq 'y'}
 	<span class="tabbut"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="tablink">{tr}similar{/tr}</a></span>
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
 	<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="tablink">{tr}undo{/tr}</a></span>
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
 	<span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
@@ -106,15 +118,21 @@
 	<span class="tabbut"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}}" class="tablink">{tr}slides{/tr}</a></span>
 {/if}
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $tiki_p_admin_wiki eq 'y'}
         <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $feature_wiki_discuss eq 'y'}
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
+{/if}
 
+{if $print_page ne 'y'}
 {if $show_page eq 'y'}
 <span class="tabbut">
 {if $comments_cant > 0}
@@ -123,8 +141,12 @@
 	<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
 {/if}
 {/if}
+{/if}
+
+{if $print_page ne 'y'}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{/if}
 {/if}
 </div>
 {/if}

@@ -1,5 +1,6 @@
 <div align="right">
 <div class="button2top">
+{if $print_page ne 'y'}
 {if $cached_page eq 'y'}
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}cached{/tr}</a>
 {/if}
@@ -28,6 +29,7 @@
 	{else}
 		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
 	{/if}
+{/if}
 {/if}
 </div>
 </div>

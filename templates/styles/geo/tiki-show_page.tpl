@@ -1,3 +1,4 @@
+{if $print_page ne 'y'}
 <div align="right">
 <div class="button2top">
 {if $cached_page eq 'y'}
@@ -31,11 +32,13 @@
 {/if}
 </div>
 </div>
-
+{/if}
 {if $feature_wiki_description eq 'y'}
 <div class="toptitledesc">
+{if $print_page ne 'y'}
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+{/if}
 {/if}
 {if $feature_page_title eq 'y'}
 <a href="tiki-index.php?page={$page}" class="link" style="font-weight:bold;">{$page}</a> :: 
