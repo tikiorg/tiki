@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.39 2003-11-12 20:02:10 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.40 2003-11-13 10:10:14 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -763,7 +763,8 @@ if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
 }
 
 if ($tiki_p_admin_forum == 'y') {
-    $topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
+    $topics = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, 200,
+		    "commentDate_desc");
 
     $smarty->assign_by_ref('topics', $topics);
 }
