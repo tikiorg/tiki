@@ -27,7 +27,7 @@ if(strstr($ownurl,'?')) {
 $smarty->assign('modb_sep',$modb_sep);
 
 if(isset($_REQUEST["bookmark_removeurl"])) {
-  $tikilib->remove_url($_REQUEST["bookmark_removeurl"],$user);
+  $bookmarklib->remove_url($_REQUEST["bookmark_removeurl"],$user);
 }
 
 if(isset($_REQUEST["bookmark_create_folder"])) {
