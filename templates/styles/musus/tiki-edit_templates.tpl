@@ -3,14 +3,14 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplates" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}EditTemplates{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<a class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}EditTemplates{/tr}" href="http://tikiwiki.org/tiki-index.php?page=EditTemplates" target="tikihelp">
+<img src="img/icons/help.gif" alt="help" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}EditTemplates tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a class="tikihelp" title="{tr}View tpl{/tr}: {tr}EditTemplates tpl{/tr}" href="tiki-edit_templates.php?template=templates/tiki-edit_templates.tpl" target="tikihelp">
+<img src="img/icons/info.gif" alt="edit tpl" /></a>{/if}
 
 <!-- begin -->
 
@@ -38,7 +38,7 @@
 </table>
 {/if}
 {if $mode eq 'editing'}
-<a href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br />
+<a title="" href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br />
 <form action="tiki-edit_templates.php" method="post">
 <textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">

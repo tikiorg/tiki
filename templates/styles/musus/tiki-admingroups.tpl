@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admingroups.tpl,v 1.2 2004-01-13 19:13:55 musus Exp $ *}
-<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admingroups.tpl,v 1.3 2004-01-18 00:45:14 musus Exp $ *}
+<a class="pagetitle" title="" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
+<a class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}" href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp">
 <img src="img/icons/help.gif" alt="{tr}help{/tr}" />{/if}
 {if $feature_help eq 'y'}</a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}">
-<img src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
+<a class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}" href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp">
+<img src="img/icons/info.gif" alt="{tr}edit template{/tr}" />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 <br />
 <br />
@@ -15,7 +15,7 @@
 <h3>{tr}Add New Group{/tr}</h3>
 {else}
 <h3>{tr}Edit this group:{/tr} {$groupname}</h3>
-<a href="tiki-admingroups.php">{tr}Add new group{/tr}</a>
+<a title="" href="tiki-admingroups.php">{tr}Add new group{/tr}</a>
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table>
@@ -28,9 +28,9 @@
 		<option value="{$inced|escape}" {if $inc.$inced eq 'y'} selected="selected"{/if}>{$inced}</option>
 	{/section}
 	</select></td></tr>
-<tr><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" /></td>
+<tr><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" id="groups_home" value="{$grouphome|escape}" /></td>
 {if $group ne ''}
-	<tr><td><input type="hidden" name="olgroup" value="{$group|escape}"></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+	<tr><td><input type="hidden" value="{$group|escape}"></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 	{else}
 	<tr><td>&nbsp;</td><td><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td></tr>
 {/if}

@@ -2,11 +2,13 @@
 <a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Messages{/tr}"><img alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Messages{/tr}">
+<img alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}messages tpl{/tr}"><img alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}messages tpl{/tr}">
+<img alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 {include file="tiki-mytiki_bar.tpl"}
@@ -79,10 +81,10 @@
 <br />
 <div align="center" class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
 {/if}
 </div>
