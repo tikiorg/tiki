@@ -564,6 +564,7 @@ function list_trackers($offset, $maxRecords, $sort_mode, $find) {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
+		$list = array();
 		while ($res = $result->fetchRow()) {
 			// Tracker fields are automatically counted when adding/removing fields to trackers
 			$ret[] = $res;
