@@ -4570,159 +4570,122 @@ function parse_data($data) {
 
 	// This line is parseable then we have to see what we have
 	if (substr($line, 0, 3) == '---') {
-	    // This is not list item -- must close lists currently opened
-	    while (count($listbeg))
-		$data .= array_shift($listbeg);
-
-	    $line = '<hr/>';
+		// This is not list item -- must close lists currently opened
+		while (count($listbeg)) $data .= array_shift($listbeg);
+		$line = '<hr/>';
 	} else {
-	    $litype = substr($line, 0, 1);
-
-	    if ($litype == '*' || $litype == '#') {
-		$listlevel = $this->how_many_at_start($line, $litype);
-
-		$liclose = '</li>';
-		$addremove = 0;
-
-		if ($listlevel < count($listbeg)) {
-		    while ($listlevel != count($listbeg))
-			$data .= array_shift($listbeg);
-
-		    if (substr(current($listbeg), 0, 5) != '</li>')
-			$liclose = '';
-		} elseif ($listlevel > count($listbeg)) {
+		$litype = substr($line, 0, 1);
+		if ($litype == '*' || $litype == '#') {
+			$listlevel = $this->how_many_at_start($line, $litype);
+			$liclose = '</li>';
+			$addremove = 0;
+			if ($listlevel < count($listbeg)) {
+		    while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
+		    if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
+			} elseif ($listlevel > count($listbeg)) {
 		    $listyle = '';
-
 		    while ($listlevel != count($listbeg)) {
-			array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
-
-			if ($listlevel == count($listbeg)) {
-			    $listate = substr($line, $listlevel, 1);
-
-			    if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-				$thisid = 'id' . microtime() * 1000000;
-
-				$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-				$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-				$addremove = 1;
-			    }
+					array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
+					if ($listlevel == count($listbeg)) {
+						$listate = substr($line, $listlevel, 1);
+						if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+							$thisid = 'id' . microtime() * 1000000;
+							$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+							$addremove = 1;
+						}
+					}
+					$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+				}
+				$liclose='';
 			}
+			if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
+				$data .= array_shift($listbeg);
+				$listyle = '';
+				$listate = substr($line, $listlevel, 1);
+				if (($listate == '+' || $listate == '-')) {
+					$thisid = 'id' . microtime() * 1000000;
+					$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+					$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+					$addremove = 1;
+				}
+				$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+				$liclose = '';
+				array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
+			}
+			$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
+			if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
+		} elseif ($litype == '+') {
+			// Must append paragraph for list item of given depth...
+			$listlevel = $this->how_many_at_start($line, $litype);
+			// Close lists down to requested level
+			while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+			if (count($listbeg)) {
+				if (substr(current($listbeg), 0, 5) != '</li>') {
+					array_unshift($listbeg, '</li>' . array_shift($listbeg));
+					$liclose = '<li>';
+				} else $liclose = '<br/>';
+			} else $liclose = '';
+			$line = $liclose . substr($line, count($listbeg));
+		} else {
+			// This is not list item -- must close lists currently opened
+			while (count($listbeg))
+				$data .= array_shift($listbeg);
+				// Get count of (possible) header signs at start
+				$hdrlevel = $this->how_many_at_start($line, '!');
+				// If 1st char on line is '!' and its count less than 6 (max in HTML)
+				if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
+				// Remove possible hotwords replaced :)
+				//   Umm, *why*?  Taking this out lets page
+				//   links in headers work, which can be nice.
+				//   -rlpowell
+				// $line = strip_tags($line);
 
-    if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
-        $data .= array_shift($listbeg);
+				// OK. Parse headers here...
+				$anchor = '';
+				$aclose = '';
+				$addremove = 0;
 
-        $listyle = '';
-        $listate = substr($line, $listlevel, 1);
-
-        if (($listate == '+' || $listate == '-')) {
-      $thisid = 'id' . microtime() * 1000000;
-
-      $data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-      $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-      $addremove = 1;
-        }
-
-        $data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-        $liclose = '';
-        array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
-    }
-
-    $line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
-
-    if (substr(current($listbeg), 0, 5) != '</li>')
-        array_unshift($listbeg, '</li>' . array_shift($listbeg));
-      } elseif ($litype == '+') {
-    // Must append paragraph for list item of given depth...
-    $listlevel = $this->how_many_at_start($line, $litype);
-
-    // Close lists down to requested level
-    while ($listlevel < count($listbeg))
-        $data .= array_shift($listbeg);
-
-    if (count($listbeg)) {
-        if (substr(current($listbeg), 0, 5) != '</li>') {
-      array_unshift($listbeg, '</li>' . array_shift($listbeg));
-
-      $liclose = '<li>';
-        } else
-      $liclose = '<br/>';
-    } else
-        $liclose = '';
-
-    $line = $liclose . substr($line, count($listbeg));
-      } else {
-    // This is not list item -- must close lists currently opened
-    while (count($listbeg))
-        $data .= array_shift($listbeg);
-
-    // Get count of (possible) header signs at start
-    $hdrlevel = $this->how_many_at_start($line, '!');
-
-    // If 1st char on line is '!' and its count less than 6 (max in HTML)
-    if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
-        // Remove possible hotwords replaced :)
-        //   Umm, *why*?  Taking this out lets page
-        //   links in headers work, which can be nice.
-        //   -rlpowell
-        // $line = strip_tags($line);
-
-        // OK. Parse headers here...
-        $anchor = '';
-        $aclose = '';
-        $addremove = 0;
-
-        // Close lower level divs if opened
-        for (;current($divdepth) >= $hdrlevel; array_shift($divdepth))
-      $data .= '</div>';
-
-        // May be spesial signs present after '!'s?
-        $divstate = substr($line, $hdrlevel, 1);
-
-        if ($divstate == '+' || $divstate == '-') {
-      // OK. Must insert flipper after HEADER, and then open new div...
-      $thisid = 'id' . microtime() * 1000000;
-
-      $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-      $aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-      array_unshift($divdepth, $hdrlevel);
-      $addremove = 1;
-        }
-
-        // Is any {maketoc} present on page?
-        if (count($tocs[0]) > 0) {
-      // OK. Must insert <a id=...> before HEADER and collect TOC entry
-      $thisid = 'id' . microtime() * 1000000;
-
-      array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-      $anchor = "<a id='$thisid'>";
-      $aclose = '</a>' . $aclose;
-        }
-
-        $line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
-    } elseif (!strcmp($line, "...page...")) {
-        // Close lists and divs currently opened
-        while (count($listbeg))
-      $data .= array_shift($listbeg);
-
-        while (count($divdepth)) {
-      $data .= '</div>';
-
-      array_shift ($divdepth);
-        }
-
-        // Leave line unchanged... tiki-index.php will split wiki here
-        $line = "...page...";
-    } else {
-        // Usual paragraph.
-        if ($inTable == 0) {
-      $line .= '<br/>';
-        }
-    }
-      }
-  }
-
-  $data .= $line;
-    }
+				// Close lower level divs if opened
+				for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
+				// May be spesial signs present after '!'s?
+				$divstate = substr($line, $hdrlevel, 1);
+				if ($divstate == '+' || $divstate == '-') {
+				// OK. Must insert flipper after HEADER, and then open new div...
+					$thisid = 'id' . microtime() * 1000000;
+					$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+					$aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+					array_unshift($divdepth, $hdrlevel);
+					$addremove = 1;
+				}
+				// Is any {maketoc} present on page?
+				if (count($tocs[0]) > 0) {
+					// OK. Must insert <a id=...> before HEADER and collect TOC entry
+					$thisid = 'id' . microtime() * 1000000;
+					array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
+					$anchor = "<a id='$thisid'>";
+					$aclose = '</a>' . $aclose;
+				}
+				$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+			} elseif (!strcmp($line, "...page...")) {
+				// Close lists and divs currently opened
+				while (count($listbeg)) $data .= array_shift($listbeg);
+				while (count($divdepth)) {
+					$data .= '</div>';
+					array_shift ($divdepth);
+				}
+				// Leave line unchanged... tiki-index.php will split wiki here
+				$line = "...page...";
+			} else {
+				// Usual paragraph.
+				if ($inTable == 0) {
+					$line .= '<br/>';
+				}
+			}
+		}
+	}
+	$data .= $line;
+}
 
     // Close lists may remains opened
     while (count($listbeg))
