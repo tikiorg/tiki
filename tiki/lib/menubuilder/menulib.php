@@ -108,6 +108,35 @@ class MenuLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
+
+	/*
+         * gets the result of list_menu_options and create the field "type_description"
+         * with description of the type.
+         */
+	function describe_menu_types($channels) {
+
+	    if (isset($channels['data'])) {
+		$cant = $channels['cant'];
+		$channels = $channels['data'];
+	    }
+
+	    $types = array("o" => "option",
+			   "s" => "section",
+			   "r" => "sorted section",
+			   "-" => "separator");
+
+	    for ($i=0; $i<sizeof($channels); $i++) {
+		$channels[$i]["type_description"] = tra($types[$channels[$i]["type"]]);
+	    }
+
+	    if (isset($cant)) {
+		$channels = array ('data' => $channels,
+				   'cant' => $cant);
+	    }
+
+	    return $channels;
+	
+	}
 }
 
 $menulib = new MenuLib($dbTiki);
