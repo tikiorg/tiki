@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.97 2004-01-18 20:22:23 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.98 2004-03-08 03:20:31 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,6 +89,8 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_login.php');
 	} else if ($adminPage == "wiki") {
 		include_once ('tiki-admin_include_wiki.php');
+	} else if ($adminPage == "wikiatt") {
+		include_once ('tiki-admin_include_wikiatt.php');
 	} else if ($adminPage == "gal") {
 		include_once ('tiki-admin_include_gal.php');
 	} else if ($adminPage == "fgal") {
