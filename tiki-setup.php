@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.226 2004-05-30 02:52:56 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.227 2004-05-30 20:57:40 sylvieg Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1274,11 +1274,11 @@ if ($feature_userPreferences == 'y') {
             }
         }
     }
-      elseif (isset($_SESSION['language'])) { // users not logged that change the preference
-        $language = $_SESSION['language'];
-    }
-
     $smarty->assign('language', $language);
+}
+if (!isset($user) && isset($_SESSION['language']) ) { // users not logged that change the preference
+	$language = $_SESSION['language'];
+	$smarty->assign('language', $language);
 }
 
 $stlstl = split("-|\.", $style);
