@@ -8,7 +8,7 @@ $ADODB_INCLUDED_CSV = 1;
 
 /* 
 
-  V4.55 3 Jan 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.61 24 Feb 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -70,10 +70,12 @@ $ADODB_INCLUDED_CSV = 1;
 	
 		$savefetch = isset($rs->adodbFetchMode) ? $rs->adodbFetchMode : $rs->fetchMode;
 		$class = $rs->connection->arrayClass;
-		$rs =& new $class();
-		$rs->InitArrayFields($rows,$flds);
-		$rs->fetchMode = $savefetch;
-		return $line.serialize($rs);
+		$rs2 =& new $class();
+		$rs2->sql = $rs->sql;
+		$rs2->oldProvider = $rs->dataProvider; 
+		$rs2->InitArrayFields($rows,$flds);
+		$rs2->fetchMode = $savefetch;
+		return $line.serialize($rs2);
 	}
 
 	

@@ -1,6 +1,6 @@
 <?php
 /*
- V4.55 3 Jan 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
+ V4.61 24 Feb 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -405,8 +405,13 @@ select viewname,'V' from pg_views where viewname like $mask";
 		// note that there is a pg_escape_bytea function only for php 4.2.0 or later
 	}
 	
+	// assumes bytea for blob, and varchar for clob
 	function UpdateBlob($table,$column,$val,$where,$blobtype='BLOB')
 	{
+	
+		if ($blobtype == 'CLOB') {
+    		return $this->Execute("UPDATE $table SET $column=" . $this->qstr($val) . " WHERE $where");
+		}
 		// do not use bind params which uses qstr(), as blobencode() already quotes data
 		return $this->Execute("UPDATE $table SET $column='".$this->BlobEncode($val)."'::bytea WHERE $where");
 	}

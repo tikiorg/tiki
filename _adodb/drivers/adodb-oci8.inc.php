@@ -1,7 +1,7 @@
 <?php
 /*
 
-  version V4.55 3 Jan 2005 (c) 2000-2005 John Lim. All rights reserved.
+  version V4.61 24 Feb 2005 (c) 2000-2005 John Lim. All rights reserved.
 
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
@@ -902,7 +902,7 @@ NATSOFT.DOMAIN =
 					$bindarr = array();
 					foreach($inputarr as $k => $v) {
 						$bindarr[$k] = $v;
-						OCIBindByName($stmt,":$k",$bindarr[$k],4000);
+						OCIBindByName($stmt,":$k",$bindarr[$k],is_string($v) && strlen($v)>4000 ? -1 : 4000);
 					}
 					$this->_bind[$bindpos] = &$bindarr;
 				}
@@ -997,10 +997,10 @@ NATSOFT.DOMAIN =
 		if (!$this->_connectionID) return;
 		
 		if (!$this->autoCommit) OCIRollback($this->_connectionID);
-		if (count($this -> _refLOBs) > 0) {
-			foreach ($this -> _refLOBs as $key => $value) {
-				$this -> _refLOBs[$key] -> free();
-				unset($this -> _refLOBs[$key]);
+		if (count($this->_refLOBs) > 0) {
+			foreach ($this ->_refLOBs as $key => $value) {
+				$this->_refLOBs[$key]['LOB']->free();
+				unset($this->_refLOBs[$key]);
 			}
 		}
 		OCILogoff($this->_connectionID);

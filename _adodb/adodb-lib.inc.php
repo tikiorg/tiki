@@ -7,7 +7,7 @@ global $ADODB_INCLUDED_LIB;
 $ADODB_INCLUDED_LIB = 1;
 
 /* 
- @version V4.55 3 Jan 2005 (c) 2000-2005 John Lim (jlim\@natsoft.com.my). All rights reserved.
+ @version V4.61 24 Feb 2005 (c) 2000-2005 John Lim (jlim\@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -794,8 +794,6 @@ function _adodb_column_sql(&$zthis, $action, $type, $fname, $fnameq, $arrFields,
 	return $sql;
 }
 
-
-
 function _adodb_debug_execute(&$zthis, $sql, $inputarr)
 {
 global $HTTP_SERVER_VARS;
@@ -813,14 +811,16 @@ global $HTTP_SERVER_VARS;
 	// check if running from browser or command-line
 	$inBrowser = isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']);
 	
+	$dbt = $zthis->databaseType;
+	if (isset($zthis->dsnType)) $dbt .= '-'.$zthis->dsnType;
 	if ($inBrowser) {
 		$ss = htmlspecialchars($ss);
 		if ($zthis->debug === -1)
-			ADOConnection::outp( "<br>\n($zthis->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<br>\n",false);
+			ADOConnection::outp( "<br>\n($dbt): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<br>\n",false);
 		else 
-			ADOConnection::outp( "<hr>\n($zthis->databaseType): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<hr>\n",false);
+			ADOConnection::outp( "<hr>\n($dbt): ".htmlspecialchars($sqlTxt)." &nbsp; <code>$ss</code>\n<hr>\n",false);
 	} else {
-		ADOConnection::outp("-----\n($zthis->databaseType): ".$sqlTxt."\n-----\n",false);
+		ADOConnection::outp("-----\n($dbt): ".$sqlTxt."\n-----\n",false);
 	}
 	
 	$qID = $zthis->_query($sql,$inputarr);

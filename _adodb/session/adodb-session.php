@@ -33,6 +33,58 @@ if (defined('ADODB_SESSION')) return 1;
 
 define('ADODB_SESSION', dirname(__FILE__));
 
+
+/* 
+	Unserialize session data manually. See http://phplens.com/lens/lensforum/msgs.php?id=9821 
+	
+	From Kerr Schere, to unserialize session data stored via ADOdb. 
+	1. Pull the session data from the db and loop through it. 
+	2. Inside the loop, you will need to urldecode the data column. 
+	3. After urldecode, run the serialized string through this function:
+
+*/
+function adodb_unserialize( $serialized_string ) 
+{
+	$variables = array( );
+	$a = preg_split( "/(\w+)\|/", $serialized_string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+	for( $i = 0; $i < count( $a ); $i = $i+2 ) {
+		$variables[$a[$i]] = unserialize( $a[$i+1] );
+	}
+	return( $variables );
+}
+
+/*
+	Thanks Joe Li. See http://phplens.com/lens/lensforum/msgs.php?id=11487&x=1
+	Since adodb 4.61.
+*/
+function adodb_session_regenerate_id() 
+{
+	$conn =& ADODB_Session::_conn();
+	if (!$conn) return false;
+
+	$old_id = session_id();
+	if (function_exists('session_regenerate_id')) {
+		session_regenerate_id();
+	} else {
+		session_id(md5(uniqid(rand(), true)));
+		$ck = session_get_cookie_params();
+		setcookie(session_name(), session_id(), false, $ck['path'], $ck['domain'], $ck['secure']);
+		//@session_start();
+	}
+	$new_id = session_id();
+	$ok =& $conn->Execute('UPDATE '. ADODB_Session::table(). ' SET sesskey='. $conn->qstr($new_id). ' WHERE sesskey='.$conn->qstr($old_id));
+	
+	/* it is possible that the update statement fails due to a collision */
+	if (!$ok) {
+		session_id($old_id);
+		if (empty($ck)) $ck = session_get_cookie_params();
+		setcookie(session_name(), session_id(), false, $ck['path'], $ck['domain'], $ck['secure']);
+		return false;
+	}
+	
+	return true;
+}
+
 /*!
 	\static
 */
@@ -542,11 +594,12 @@ class ADODB_Session {
 		$filter			= ADODB_Session::filter();
 		$lifetime		= ADODB_Session::lifetime();
 		$table			= ADODB_Session::table();
-
+	
 		if (!$conn) {
 			return false;
 		}
-
+		$qkey = $conn->qstr($key);
+	
 		assert('$table');
 
 		$expiry = time() + $lifetime;
@@ -603,7 +656,7 @@ class ADODB_Session {
 					$lob_value = 'null';
 					break;
 			}
-
+			
 			// do we insert or update? => as for sesskey
 			$rs =& $conn->Execute("SELECT COUNT(*) AS cnt FROM $table WHERE $binary sesskey = $qkey");
 			ADODB_Session::_dumprs($rs);

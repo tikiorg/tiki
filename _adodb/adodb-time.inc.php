@@ -494,13 +494,13 @@ Thursday, October 4, 1582 (Julian) was followed immediately by Friday, October 1
 	    $year--;
 	}
 	
-	$day =  ( floor((13 * $month - 1) / 5) +
+	$day =  floor((13 * $month - 1) / 5) +
 	        $day + ($year % 100) +
 	        floor(($year % 100) / 4) +
 	        floor(($year / 100) / 4) - 2 *
-	        floor($year / 100) + 77);
+	        floor($year / 100) + 77 + $greg_correction;
 	
-	return (($day - 7 * floor($day / 7))) + $greg_correction;
+	return $day - 7 * floor($day / 7);
 }
 
 
