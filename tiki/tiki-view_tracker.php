@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.34 2004-01-29 06:33:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.35 2004-01-29 16:52:48 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,9 @@ $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
-$ins_fields = $fields;
+//$ins_fields = $fields;
+$ins_fields = array();
+$orderkey = false;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
@@ -76,6 +78,9 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	$filter_id = 'filter_' . $fid;
 	$fields["data"][$i]["filter_id"] = $filter_id;
 
+	if ($tracker_info['defaultOrderKey'] == $fields["data"][$i]['name']) {
+		$orderkey = true;
+	}
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
 		$ins_fields["data"][$i]["value"] = '';
@@ -94,6 +99,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			
 		}
 		$ins_fields["data"][$i]["value"] = '';
+
 	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
@@ -190,7 +196,16 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign_by_ref('fields', $fields["data"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = '';
+	if ($orderkey) {
+		$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+		if (isset($tracker_info['defaultOrderDir'])) {
+			$sort_mode.= "_".$tracker_info['defaultOrderDir'];
+		} else {
+			$sort_mode.= "_asc";
+		}
+	} else {
+		$sort_mode = '';
+	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -211,13 +226,20 @@ if (isset($_REQUEST["initial"])) {
 $smarty->assign('initial', $initial);
 $smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
-if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+if (isset($_REQUEST["filterfield"])) {
+	$filterfield = $_REQUEST["filterfield"];
 } else {
-	$find = '';
+	$filterfield = '';
 }
+$smarty->assign('filterfield', $filterfield);
 
-$smarty->assign('find', $find);
+if (isset($_REQUEST["filtervalue"])) {
+	$filtervalue = $_REQUEST["filtervalue"];
+} else {
+	$filtervalue = '';
+}
+$smarty->assign('filtervalue', $filtervalue);
+
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["status"]))
@@ -225,7 +247,7 @@ if (!isset($_REQUEST["status"]))
 
 $smarty->assign('status', $_REQUEST["status"]);
 
-$items = $trklib->list_tracker_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $fields, $_REQUEST["status"],$initial);
+$items = $trklib->list_trackeritems($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $filterfield, $filtervalue, $_REQUEST["status"],$initial);
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));

@@ -606,6 +606,96 @@ $ret[] = $res;
 	return $retval;
 }
 
+/* experimental */
+function list_trackeritems($trackerId, $offset, $maxRecords, $sort_mode, $filterfield='', $filtervalue='', $status = '', $initial = '') {
+	$filters = array();
+
+	
+	$mid = " where tti.`trackerId`=? ";
+	$bindvars = array((int) $trackerId);
+
+	if ($status) {
+		$mid.= " and tti.`status`=? ";
+		$bindvars[] = $status;
+	}
+	if (!$sort_mode) {
+		$sort_mode = "lastModif_desc";
+	}
+
+	$csort_mode = '';
+	$corder = "asc";
+	if (substr($sort_mode,0,2) == "f_" or $filtervalue) {
+		if ($initial) {
+			$mid.= "and ttif.`value` like ?";
+			$bindvars[] = $initial.'%';
+		} 
+		if ($filtervalue) {
+			$mid.= "and ttif.`value` like ?";
+			$bindvars[] = '%'.$filtervalue.'%';
+			$csort_mode = $filterfield;
+			$corder = "asc";
+		} else {
+			list($a,$csort_mode,$corder) = split('_',$sort_mode);
+		}
+		$bindvars[] = $csort_mode;
+		$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+		$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+		$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+		$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? ";
+	} else {
+		$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
+	}
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
+
+	while ($res = $result->fetchRow()) {
+		$fields = array();
+		$itid = $res["itemId"];
+		$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain`,`position` 
+			from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
+			where ttif.`fieldId`=ttf.`fieldId` and `isTblVisible`=? and`itemId`=? order by `position` asc";
+		$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
+		$pass = true;
+
+		$kx = "";
+		while ($res2 = $result2->fetchRow()) {
+			// Check if the field is visible!
+			$fieldId = $res2["fieldId"];
+			if ($filtervalue) {
+				if ($res2["fieldId"] == $filterfield) {
+					if (strtolower($res2["value"]) != strtolower($filtervalue)) {
+						$pass = false;
+					}
+				}
+			}
+			if ($res2["name"] == $csort_mode) {
+				$kx = $res2["value"].$itid;
+			}
+			$fields[] = $res2;
+		}
+		$res["field_values"] = $fields;
+		$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
+		if ($pass) {
+			$kl = $kx.$itid;
+			$ret["$kl"] = $res;
+		}
+	}
+
+	if ($corder == 'asc') {
+		ksort($ret);
+	} else {
+		krsort($ret);
+	}
+	//$ret=$this->sort_items_by_condition($ret,$sort_mode);
+	$retval = array();
+	$retval["data"] = array_values($ret);
+	$retval["cant"] = $cant;
+	return $retval;
+}
+
+
 /*shared*/
 function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '') {
 	$filters = array();
