@@ -121,11 +121,14 @@
     <p>{tr}Strict allows page names with only letters, numbers, underscore,
     dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{tr}<br />
     {tr}Full adds accented characters.{/tr}<br />
-    {tr}Very full adds single and double quotes, and allows periods at the beginning and the end of a page name.{/tr}
-    <br />{tr}Note that this does not affect WikiWord recognition, only page names surrounded by (( and )).{/tr}
+    {tr}Complete allows <em>anything at all</em>.  I (<a
+    href="http://www.lojban.org/tiki/tiki-view_forum_thread.php">rlpowell</a>)
+    cannot guarantee that it is bug-free or secure.{/tr}
+    </p>
+    <p>{tr}Note that this does not affect WikiWord recognition, only page names surrounded by (( and )).{/tr}
     </p>
     <select name="wiki_page_regex">
-    <option value='very full' {if $wiki_page_regex eq 'very_full'}selected="selected"{/if}>{tr}very full{/tr}</option>
+    <option value='complete' {if $wiki_page_regex eq 'complete'}selected="selected"{/if}>{tr}complete{/tr}</option>
     <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
     <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}strict{/tr}</option>
     </select>
