@@ -21,7 +21,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle}"><a class="link" href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}">{$channels[user].server}</a>
- [<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}">edit</a>|<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">del</a>]
+ [<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}">{tr}edit{/tr}</a>|<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">{tr}del{/tr}</a>]
 </td>
 </tr>
 {/section}
