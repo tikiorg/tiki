@@ -9,31 +9,31 @@
 	</div>
 	<div id="rss" style="text-align: center">
 		{if $rss_wiki eq 'y'}
-				<a href="tiki-wiki_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-wiki_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Wiki{/tr}</small>
 		{/if}
 		{if $rss_blogs eq 'y'}
-				<a href="tiki-blogs_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-blogs_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Blogs{/tr}</small>
 		{/if}
 		{if $rss_articles eq 'y'}
-				<a href="tiki-articles_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-articles_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Articles{/tr}</small>
 		{/if}
 		{if $rss_image_galleries eq 'y'}
-				<a href="tiki-image_galleries_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-image_galleries_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Image galleries{/tr}</small>
 		{/if}
 		{if $rss_file_galleries eq 'y'}
-				<a href="tiki-file_galleries_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-file_galleries_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}File galleries{/tr}</small>
 		{/if}
 		{if $rss_forums eq 'y'}
-				<a href="tiki-forums_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-forums_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Forums{/tr}</small>
 		{/if}
 		{if $rss_mapfiles eq 'y'}
-				<a href="tiki-map_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<a href="tiki-map_rss.php?ver=2&amp;css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Maps{/tr}</small>
 		{/if}
 	</div>
