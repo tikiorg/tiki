@@ -3045,7 +3045,7 @@ CREATE TABLE tiki_trackers (
   showComments char(1) default NULL,
   useAttachments char(1) default NULL,
   showAttachments char(1) default NULL,
-	orderAttachments varchar(255) NOT NULL default 'name,created,filesize,downloads,desc',
+	orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
   items int(10) default NULL,
   PRIMARY KEY  (trackerId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

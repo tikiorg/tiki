@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.92 2003-12-16 07:26:07 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.93 2003-12-16 07:29:23 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -848,5 +848,5 @@ ALTER TABLE tiki_mailin_accounts ADD anonymous CHAR(1) NOT NULL DEFAULT 'y';
 ALTER TABLE `tiki_tracker_item_attachments` ADD `longdesc` blob after `data` ;
 ALTER TABLE `tiki_tracker_item_attachments` ADD `version` varchar(40) after `downloads` ;
 ALTER TABLE `tiki_tracker_item_attachments` CHANGE `itemId` `itemId` INT( 12 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `tiki_trackers` ADD `orderAttachments` VARCHAR( 255 ) DEFAULT 'name,created,filesize,downloads,desc' NOT NULL AFTER `showAttachments` ;
+ALTER TABLE `tiki_trackers` ADD `orderAttachments` VARCHAR( 255 ) DEFAULT 'filename,created,filesize,downloads,desc' NOT NULL AFTER `showAttachments` ;
 
