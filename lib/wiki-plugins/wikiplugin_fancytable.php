@@ -15,7 +15,7 @@
 // row 2 column 1 ~|~ row 2 column 2 ~|~ row 2 column 3
 // {FANCYTABLE}
 function wikiplugin_fancytable_help() {
-	return tra("Displays the data using the TikiWiki odd/even table style");
+	return tra("Displays the data using the TikiWiki odd/even table style").":<br />~np~{FANCYTABLE(head=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by ~|~")."''";
 }
 
 function wikiplugin_fancytable($data, $params) {

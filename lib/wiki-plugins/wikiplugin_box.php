@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.4 2003-08-07 04:34:16 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.5 2003-09-08 14:52:23 sylvieg Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -12,7 +12,7 @@
  * 
  */
 function wikiplugin_box_help() {
-	return tra("Insert theme styled box on wiki page");
+	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>,bg=>,width=>)}".tra("text")."{BOX}~/np~";
 }
 
 function wikiplugin_box($data, $params) {

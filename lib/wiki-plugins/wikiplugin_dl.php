@@ -1,7 +1,7 @@
 <?php
 
 function wikiplugin_dl_help() {
-	return tra("Creates a definition list").": ~np~{DL()}".tra("term").":".tra("definition")."{DL}~/np~ - ".tra("one definition per line");
+	return tra("Creates a definition list").":<br />~np~{DL()}".tra("term").":".tra("definition")."{DL}~/np~ - ''".tra("one definition per line")."''";
 }
 function wikiplugin_dl($data, $params) {
 	global $tikilib;

@@ -8,7 +8,7 @@
 //
 // If no avatar nothing is displayed
 function wikiplugin_avatar_help() {
-	return tra("Displays the user Avatar");
+	return tra("Displays the user Avatar").":<br :>~np~{AVATAR(page=>,float=>left|right)}".tra("username")."{AVATAR}~/np~";
 }
 
 function wikiplugin_avatar($data, $params) {

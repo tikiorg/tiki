@@ -1,6 +1,6 @@
 <?php
 function wikiplugin_sql_help() {
-	return tra("Run a sql query").": ~np~{SQL db=>}".tra("sql query")."{SQL}~/np~";
+	return tra("Run a sql query").":<br />~np~{SQL db=>}".tra("sql query")."{SQL}~/np~";
 }
 
 function wikiplugin_sql($data, $params) {

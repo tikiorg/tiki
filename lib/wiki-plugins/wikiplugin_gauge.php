@@ -16,7 +16,7 @@
 //
 // {GAUGE(perc=>true,value=>35,bgcolor=>#EEEEEE,height=>20)}happy users over total{GAUGE}
 function wikiplugin_gauge_help() {
-	return tra("Displays a graphical GAUGE");
+	return tra("Displays a graphical GAUGE").":<br />~np~{GAUGE(color=>,bgcolor=>,max=>,value=>,size=>,perc=>,height=>)}".tra("description")."{GAUGE}~/np~";
 }
 
 function wikiplugin_gauge($data, $params) {

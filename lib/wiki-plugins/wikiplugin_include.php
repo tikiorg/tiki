@@ -4,7 +4,7 @@
 // Usage:
 // {INCLUDE(page=>name)}{INCLUDE}
 function wikiplugin_include_help() {
-	return tra("Include a page").": ~np~{INCLUDE(page=>)}{INCLUDE}~/np~";
+	return tra("Include a page").":<br />~np~{INCLUDE(page=>)}{INCLUDE}~/np~";
 }
 function wikiplugin_include($data, $params) {
 	global $tikilib;

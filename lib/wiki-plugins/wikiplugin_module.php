@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.11 2003-08-08 12:47:49 zaufi Exp $
+/* $Id: wikiplugin_module.php,v 1.12 2003-09-08 14:52:23 sylvieg Exp $
 Displays a module inlined in page
 
 Parameters
@@ -18,7 +18,7 @@ so if you need to use parmas just add them in MODULE()
 like the trackerId in the above example.
 */
 function wikiplugin_module_help() {
-	return tra("Displays a module inlined in page");
+	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,align=>left|center|right,max)>)}{MODULE}~/np~";
 }
 
 function wikiplugin_module($data, $params) {

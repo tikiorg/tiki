@@ -17,7 +17,7 @@
 //      browser-specified "monospace" font
 //
 function wikiplugin_mono_help() {
-	return tra("Displays the data using a monospace font");
+	return tra("Displays the data using a monospace font").":<br />~np~{MONO(font=>}".tra("text")."{MONO}~/np~";
 }
 
 function wikiplugin_mono($data, $params) {

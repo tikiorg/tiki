@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.9 2003-09-07 20:49:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.10 2003-09-08 14:52:23 sylvieg Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -7,11 +7,12 @@
 //  print("foo");
 // {CODE}
 function wikiplugin_code_help() {
-	$help = "Displays a snippet of code.\n";
-	$help.= "Parameters\n";
-	$help.= "* ln=>1 provides line-numbering\n";
-	$help.= "* colors=>php highlights phpcode (other syntaxes to come)\n";
-	$help.= "( note : those parameters are exclusive for now )\n";
+//	$help = "Displays a snippet of code.\n";
+//	$help.= "Parameters\n";
+//	$help.= "* ln=>1 provides line-numbering\n";
+//	$help.= "* colors=>php highlights phpcode (other syntaxes to come)\n";
+//	$help.= "( note : those parameters are exclusive for now )\n";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|highlights|phpcode)}".tra("code")."{CODE}~/np~ - ''".tra("note: those parameters are exclusive")."''";
 	return tra($help);
 }
 
