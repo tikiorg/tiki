@@ -629,29 +629,53 @@ class UsersLibAdmin extends UsersLib {
 		$parser = new XMLParser('$xmloutput', 'raw', 1);
 		$tree = $parser->getTree();
 
-		global $auth_ext_xml_login_isvalid, $auth_ext_xml_login_isadmin;
+		global $auth_ext_xml_group_management, $auth_ext_xml_login_isvalid, $auth_ext_xml_group_management_checked;
 		$auth_ext_xml_login_isvalid = false;
-		$auth_ext_xml_login_isadmin = false;
+		$auth_ext_xml_group_management = false;
+		$auth_ext_xml_group_management_checked = false;
 		
 		function walk($value, $key, $data = null) {
-			global $auth_ext_xml_login_isvalid;
+			global $auth_ext_xml_login_isvalid, $auth_ext_xml_group_management, $auth_ext_xml_group_management_checked;
 			if (!$auth_ext_xml_login_isvalid && is_array($value)) {
 				global $auth_ext_xml_login_element, $auth_ext_xml_login_element_value, $auth_ext_xml_login_attribute, $auth_ext_xml_login_attribute_value;
-				global $auth_ext_xml_admin_element, $auth_ext_xml_admin_element_value, $auth_ext_xml_admin_attribute, $auth_ext_xml_admin_attribute_value;
+				global $auth_ext_xml_group_element, $auth_ext_xml_group_element_value, $auth_ext_xml_group_attribute, $auth_ext_xml_group_attribute_value;
 				if (array_key_exists($auth_ext_xml_login_element, $value)) {
 					foreach ($value[$auth_ext_xml_login_element] as $node) {
 						if (empty($auth_ext_xml_login_attribute) || empty($auth_ext_xml_login_attribute_value) ||
 							(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
-							if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) || (isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
+							if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) ||
+								(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
 								$auth_ext_xml_login_isvalid = true;
-								break 1;
+								// check to see if we have found whether we should manage group
+								// if so, break out of foreach
+								if ($auth_ext_xml_group_management_checked == true || $auth_ext_xml_manage_admin != 'y') {
+									break 1;
+								}
+							}
+						}
+						if ($auth_ext_xml_group_management_checked != true || $auth_ext_xml_manage_admin == 'y') {
+							if (empty($auth_ext_xml_group_attribute) || empty($auth_ext_xml_group_attribute_value) ||
+								(isset($node['ATTRIBUTES'][$auth_ext_xml_group_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_group_attribute] == $auth_ext_xml_group_attribute_value)) {
+								if (empty($auth_ext_xml_group_element) || empty($auth_ext_xml_group_element_value) ||
+									(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_group_element_value)) {
+									$auth_ext_xml_group_management = true;
+									// check to see if we have found whether user has access; if so, break out of foreach
+									if ($auth_ext_xml_login_isvalid == true) {
+										break 1;
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+		// apply the above function walk() to each node of the array
 		array_walk_recursive($tree, "walk");
+		
+		if ($auth_ext_xml_group_management == 'y') {
+			// add user to or remove user from group according to permissions from the XML
+		}
 		
 		global $user, $auth_ext_xml_delete_user_tiki;
 		if (!$auth_ext_xml_login_isvalid && $auth_ext_xml_delete_user_tiki == 'y' && $this->user_exists($user)) {

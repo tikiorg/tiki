@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.23 2004-08-05 21:42:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.24 2004-08-05 22:39:12 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -450,12 +450,12 @@ if (isset($_REQUEST['auth_ext_xml'])) {
         $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'n');
         $smarty->assign('auth_ext_xml_delete_user_tiki', 'n');
     }
-    if (isset($_REQUEST['auth_ext_xml_manage_admin']) && $_REQUEST['auth_ext_xml_manage_admin'] ==  'on') {
-        $tikilib->set_preference('auth_ext_xml_manage_admin', 'y');
-        $smarty->assign('auth_ext_xml_manage_admin', 'y');
+    if (isset($_REQUEST['auth_ext_xml_manage_group']) && $_REQUEST['auth_ext_xml_manage_group'] ==  'on') {
+        $tikilib->set_preference('auth_ext_xml_manage_group', 'y');
+        $smarty->assign('auth_ext_xml_manage_group', 'y');
     } else {
-        $tikilib->set_preference('auth_ext_xml_manage_admin', 'n');
-        $smarty->assign('auth_ext_xml_manage_admin', 'n');
+        $tikilib->set_preference('auth_ext_xml_manage_group', 'n');
+        $smarty->assign('auth_ext_xml_manage_group', 'n');
     }
     if (isset($_REQUEST['auth_ext_xml_skip_admin']) && $_REQUEST['auth_ext_xml_skip_admin'] == 'on') {
         $tikilib->set_preference('auth_ext_xml_skip_admin', 'y');
@@ -529,6 +529,14 @@ if (!is_object($trklib)) {
 }
 $listTrackers = $trklib->list_trackers(0,-1,"name_desc","");
 $smarty->assign("listTrackers",$listTrackers['list']);
+
+$numrows = $maxRecords;
+$sort_mode = 'groupName_asc';
+$offset = 0;
+$initial = '';
+$find = '';
+$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+$smarty->assign('groups', $groups['data']);
 
 $smarty->assign("change_theme", $tikilib->get_preference("change_theme", "n"));
 $smarty->assign("change_language", $tikilib->get_preference("change_language", "n"));
