@@ -1,5 +1,4 @@
 <a name="rss"></a>
-{include file="tiki-admin-include-anchors-empty.tpl"}
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>
 <div class="cbox-data">

@@ -1,5 +1,4 @@
 <a name="forums"></a>
-{include file="tiki-admin-include-anchors-empty.tpl"}
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
 <div class="cbox-data">

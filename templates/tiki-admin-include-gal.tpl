@@ -1,21 +1,4 @@
 <a name="gal"></a>
-[ <a href="#features" class="link">{tr}feat{/tr}</a> |
-<a href="#general" class="link">{tr}gral{/tr}</a> |
-<a href="#login" class="link">{tr}login{/tr}</a> |
-<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}img gls{/tr}</a> |
-<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
-<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}frms{/tr}</a> |
-<a href="#polls" class="link">{tr}polls{/tr}</a> |
-<a href="#rss" class="link">{tr}rss{/tr}</a> |
-<a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
-<a href="#directory" class="link">{tr}directory{/tr}</a> |
-<a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
-]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
 <div class="cbox-data">
