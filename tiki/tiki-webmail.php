@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.15 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.16 2003-08-08 09:10:31 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -583,10 +583,17 @@ if ($_REQUEST["section"] == 'compose') {
 		//print_r($not_contacts);
 		$smarty->assign('not_contacts', $not_contacts);
 
-		if ($mail->send($to_array, 'smtp')) {
-			$msg = tra('Your email was sent');
+		if ($mail->send($to_array,'smtp')) {
+			$msg=tra('Your email was sent');
 		} else {
-			$msg = $mail->errors;
+			if (is_array($mail->errors)) {
+				$msg = "";
+				for ($i = 0; $i < count($mail->errors); $i ++) {
+					$msg .= $mail->errors[$i]."<br />";
+				}
+			} else {
+				$msg=$mail->errors;
+			}
 		}
 
 		$smarty->assign('sent', 'y');
