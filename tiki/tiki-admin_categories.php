@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.25 2004-06-13 22:03:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.26 2004-06-13 23:02:00 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.25 2004-06-13 22:03:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.26 2004-06-13 23:02:00 teedog Exp $
 //
 
 // Initialization
@@ -19,10 +19,15 @@ include_once('lib/polls/polllib.php');
 include_once('lib/tree/categ_admin_tree.php');
 include_once('lib/directory/dirlib.php');
 include_once('lib/trackers/trackerlib.php');
+include_once('lib/commentslib.php');
 
 
 if (!isset($polllib)) {
 	$polllib = new PollLib($dbTiki);
+}
+
+if (!isset($commentslib)) {
+	$commentslib = new Comments($dbTiki);
 }
 
 if ($feature_categories != 'y') {
@@ -172,6 +177,7 @@ if ($_REQUEST["parentId"]) {
 } else {
 	$path = "";
 	$father = 0;
+	$categ_name = 'Top';
 }
 
 $smarty->assign('path', $path);
@@ -289,7 +295,7 @@ $smarty->assign_by_ref('galleries', $galleries["data"]);
 $file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
-$forums = $tikilib->list_forums(0, -1, 'name_asc', $find_objects);
+$forums = $commentslib->list_forums(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('forums', $forums["data"]);
 
 $polls = $polllib->list_polls(0, -1, 'title_asc', $find_objects);
