@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.37 2004-06-14 20:13:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.38 2004-06-15 15:49:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,9 +11,9 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/blogs/bloglib.php');
 if ($feature_categories == 'y') {
-	include_once('lib/categories/categlib.php');
-	if (!isset($categlib)) {
-		$categlib = new CategLib($dbTiki);
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
 	}
 }
 
