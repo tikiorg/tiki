@@ -1102,15 +1102,15 @@ class TikiLib {
 	function add_pageview() {
 		$dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 
-		$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=$dayzero");
+		$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array($dayzero));
 
 		if ($cant) {
-			$query = "update `tiki_pageviews` set `pageviews`=pageviews+1 where `day`=$dayzero";
+			$query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
 		} else {
-			$query = "replace into tiki_pageviews(day,pageviews) values($dayzero,1)";
+			$query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($dayzero));
 	}
 
 	function get_pv_chart_data($days) {
@@ -3226,9 +3226,9 @@ class TikiLib {
 		static $preferences;
 
 		if (!$preferences) {
-			$query = "select `name` ,value from `tiki_preferences`";
+			$query = "select `name` ,`value` from `tiki_preferences`";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array());
 			$preferences = array();
 
 			while ($res = $result->fetchRow()) {
