@@ -1,3 +1,34 @@
+### tiki  banning system
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_banning','tiki','Can ban users or ips','admin');
+drop table if exists tiki_banning;
+create table tiki_banning(
+	banId integer(12) not null auto_increment,
+	mode enum('user','ip'),
+	title varchar(200),
+	ip1 varchar(3),
+	ip2 varchar(3),
+	ip3 varchar(3),
+	ip4 varchar(3),
+	user varchar(200),
+	date_from timestamp,
+	date_to timestamp,
+	use_dates char(1),
+	created integer(14),
+	message text,
+	primary key(banId)
+);
+
+drop table if exists tiki_banning_sections;
+create table tiki_banning_sections(
+	banId integer(12) not null,
+	section varchar(100) not null,
+	primary key(banId,section)
+);
+### banning
+
+alter table tiki_comments add user_ip varchar(15);
+update tiki_comments set user_ip = '127.0.0.1';
+
 ### Forum attachments (!) ###
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_attach','forums','Can attach to forum posts','editor');
 

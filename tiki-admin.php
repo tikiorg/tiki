@@ -1524,6 +1524,15 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_live_support",'n');
     $smarty->assign("feature_live_support",'n');
   }
+
+  if(isset($_REQUEST["feature_banning"]) && $_REQUEST["feature_banning"]=="on") {
+    $tikilib->set_preference("feature_banning",'y'); 
+    $smarty->assign("feature_banning",'y');
+  } else {
+    $tikilib->set_preference("feature_banning",'n');
+    $smarty->assign("feature_banning",'n');
+  }
+
   
   if(isset($_REQUEST["feature_contact"]) && $_REQUEST["feature_contact"]=="on") {
     $tikilib->set_preference("feature_contact",'y'); 

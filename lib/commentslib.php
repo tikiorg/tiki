@@ -4,6 +4,7 @@
 // This is just a test
 class Comments extends TikiLib {
 #  var $db;  // The PEAR db object used to access the database
+  var $time_control=0;
     
   function Comments($db) 
   {
@@ -707,6 +708,10 @@ class Comments extends TikiLib {
   }    
   
   /*****************/
+  function set_time_control($time)
+  {
+  	$this->time_control = $time;
+  }
     
   function get_comments($objectId, $parentId, $offset = 0,$maxRecords = -1,$sort_mode = 'commentDate_desc', $find='', $threshold=0,$id=0)
   {
@@ -714,6 +719,12 @@ class Comments extends TikiLib {
    
     if($sort_mode == 'points_desc') {
       $sort_mode = 'average_desc';
+    }
+    if($this->time_control) {
+    	$limit =date("U") - $this->time_control;
+    	$time_cond = " and commentDate > $limit ";
+    } else {
+    	$time_cond='';
     }
     $sort_mode = str_replace("_"," ",$sort_mode);
     $old_sort_mode ='';
@@ -730,16 +741,16 @@ class Comments extends TikiLib {
 	} else {
 	  $extra = '';
 	}   
-    $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold";
+    $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold $time_cond";
     $below = $this->getOne($query);
     if($find) {
       $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold and (title like '%".$find."%' or data like '%".$find."%') ";  
     } else {
       $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold "; 
     }
-    $query = "select * from tiki_comments $mid $extra order by $sort_mode,threadId limit $offset,$maxRecords";
+    $query = "select * from tiki_comments $mid $extra $time_cond order by $sort_mode,threadId limit $offset,$maxRecords";
     //print("$query<br/>");
-    $query_cant = "select count(*) from tiki_comments $mid";
+    $query_cant = "select count(*) from tiki_comments $mid $extra $time_cond";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret1 = Array();
@@ -789,9 +800,9 @@ class Comments extends TikiLib {
     } else {
       $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold "; 
     }
-    $query = "select * from tiki_comments $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from tiki_comments $mid $extra $time_cond order by $sort_mode limit $offset,$maxRecords";
     //print("$query<br/>");
-    $query_cant = "select count(*) from tiki_comments $mid";
+    $query_cant = "select count(*) from tiki_comments $mid $extra $time_cond";
     $result = $this->query($query);
     $cant += $this->getOne($query_cant);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -903,6 +914,10 @@ class Comments extends TikiLib {
     if(!$userName) {
       $_SESSION["lastPost"]=date("U");
     }
+    if(!isset($_SERVER['REMOTE_ADDR'])) $_SERVER['REMOTE_ADDR']='127.0.0.1';
+    
+    // Check for banned userName or banned IP or IP in banned range
+    
     // Check for duplicates.
     $title = addslashes(strip_tags($title));
     $data = addslashes($data);
@@ -954,8 +969,8 @@ class Comments extends TikiLib {
     if(!$result->numRows()) {
       $now = date("U");
       $object = md5($objectId);
-      $query = "insert into tiki_comments(object,commentDate,userName,title,data,votes,points,hash,parentId,average,hits,type,summary,smiley)
-                          values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type','$summary','$smiley')";
+      $query = "insert into tiki_comments(object,commentDate,userName,title,data,votes,points,hash,parentId,average,hits,type,summary,smiley,user_ip)
+                          values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type','$summary','$smiley','".$_SERVER["REMOTE_ADDR"]."')";
       
       $result = $this->query($query);
     } else {

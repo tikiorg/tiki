@@ -494,20 +494,43 @@ a moderator approves it.{/tr}</small>
   <br/>
   </div>
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
-  
+
+<table width="100%">  
+<tr>
+<td style="text-align:left;">
+<form id='time_control' method="post" action="tiki-view_forum_thread.php">
+    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
+    <input type="hidden" name="forumId" value="{$forumId}" />
+    <small>{tr}Show posts{/tr}:</small>
+    <select name="time_control" onChange="javascript:document.getElementById('time_control').submit();">
+    	<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+    	<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+    	<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+    	<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+    </select>
+</form>
+</td>
+<td style="text-align:right;">
 {if $feature_forum_quickjump eq 'y'}
 <form id='quick' method="post" action="tiki-view_forum.php">
-<table width="100%">
-<tr>
-<td style="text-align:right;">
 <small>{tr}Jump to forum{/tr}:</small>
 <select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
 {section name=ix loop=$all_forums}
 <option value="{$all_forums[ix].forumId}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
 {/section}
 </select>
+</form>
+{else}
+&nbsp;
+{/if}
 </td>
 </tr>
 </table>
-</form>
-{/if}

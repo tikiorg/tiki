@@ -104,11 +104,11 @@
 	<td class="formcolor">
 		<table class="normal">
 			<tr>
-				<td>{tr}Replies{/tr}</td>
-				<td>{tr}Reads{/tr}</td>
-				<td>{tr}Points{/tr}</td>
-				<td>{tr}Last post{/tr}</td>
-				<td>{tr}author{/tr}</td>
+				<td class="formcolor">{tr}Replies{/tr}</td>
+				<td class="formcolor">{tr}Reads{/tr}</td>
+				<td class="formcolor">{tr}Points{/tr}</td>
+				<td class="formcolor">{tr}Last post{/tr}</td>
+				<td class="formcolor">{tr}author{/tr}</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if} /></td>
@@ -131,10 +131,20 @@
 <tr>
 	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
 	<td class="formcolor">
-		{tr}POP3 server{/tr}:<input type="text" name="inbound_pop_server" value="{$inbound_pop_server}" />
-		<!--{tr}port{/tr}: <input type="text" name="inbound_pop_port" value="{$inbound_pop_port}" size="4" />--><br/>
-		{tr}User{/tr}: <input type="text" name="inbound_pop_user" value="{$inbound_pop_user}" /><br/>
-		{tr}Password{/tr}: <input type="text" name="inbound_pop_password" value="{$inbound_pop_password}"
+		<table>
+		<tr>
+			<td class="formcolor">{tr}POP3 server{/tr}:</td>
+			<td><input type="text" name="inbound_pop_server" value="{$inbound_pop_server}" /></td>
+		</tr>
+		<tr>
+			<td class="formcolor">{tr}User{/tr}:</td>
+			<td><input type="text" name="inbound_pop_user" value="{$inbound_pop_user}" /></td>
+		</tr>
+		<tr>
+			<td class="formcolor">{tr}Password{/tr}:</td>
+			<td><input type="text" name="inbound_pop_password" value="{$inbound_pop_password}" /></td>
+		</tr>
+		</table>
 	</td>
 </tr>
 <tr>
@@ -149,14 +159,14 @@
 <tr>
 	<td class="formcolor">{tr}User information display{/tr}</td>
 	<td class="formcolor">
-	<table>
+	<table width="100%">
 	<tr>
-		<td>{tr}avatar{/tr}</td>
-		<td>{tr}flag{/tr}</td>
-		<td>{tr}posts{/tr}</td>
-		<td>{tr}user level{/tr}</td>
-		<td>{tr}email{/tr}</td>
-		<td>{tr}online{/tr}</td>
+		<td class="formcolor">{tr}avatar{/tr}</td>
+		<td class="formcolor">{tr}flag{/tr}</td>
+		<td class="formcolor">{tr}posts{/tr}</td>
+		<td class="formcolor">{tr}user level{/tr}</td>
+		<td class="formcolor">{tr}email{/tr}</td>
+		<td class="formcolor">{tr}online{/tr}</td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} /></td>
@@ -238,7 +248,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
-{cycle values="odd,even" print="false"}
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
 <td class="odd"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>

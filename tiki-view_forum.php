@@ -490,6 +490,8 @@ if(!isset($_REQUEST["comments_parentId"])) {
   $_REQUEST["comments_parentId"] = 0;
 }
 $smarty->assign('comments_parentId',$_REQUEST["comments_parentId"]);
+if(!isset($_REQUEST['time_control'])) $_REQUEST['time_control']=0;
+$commentslib->set_time_control($_REQUEST['time_control']);
 $comments_coms = $commentslib->get_comments($comments_objectId,$_REQUEST["comments_parentId"],$comments_offset,$_REQUEST["comments_maxComments"],$_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],$_REQUEST['comments_threshold']);
 $comments_cant = $commentslib->count_comments($comments_objectId);
 $smarty->assign('comments_below',$comments_coms["below"]);
