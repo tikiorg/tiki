@@ -151,6 +151,8 @@ $feature_wiki_rankings = 'y';
 $feature_wiki_undo = 'n';
 $feature_wiki_multiprint = 'n';
 $feature_forum_rankings = 'y';
+$feature_forum_parse = 'n';
+$feature_forum_topicd = 'y';
 $feature_lastChanges =  'y';
 $feature_dump =  'y';
 $feature_ranking = 'y';
@@ -469,6 +471,8 @@ $smarty->assign('feature_wiki_templates',$feature_wiki_templates);
 $smarty->assign('feature_cms_templates',$feature_cms_templates);
 
 $smarty->assign('feature_forum_rankings',$feature_forum_rankings);
+$smarty->assign('feature_forum_parse',$feature_forum_parse);
+$smarty->assign('feature_forum_topicd',$feature_forum_topicd);
 $smarty->assign('feature_hotwords',$feature_hotwords);
 $smarty->assign('feature_hotwords_nw',$feature_hotwords_nw);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);

@@ -164,13 +164,15 @@
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">{tr}x{/tr}</a>
   {/if}
+  {if $feature_forum_topicd eq 'y'}
   <br/>
   <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
+  {/if}
   </td>
   <td class="topicrepliesodd">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadsodd">{$comments_coms[ix].hits}</td>
   <td class="topicscoreodd">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|tiki_short_datetime}
+  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
   {if $comments_coms[ix].replies.numReplies}
   <br/>
   <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
@@ -194,13 +196,15 @@
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">{tr}x{/tr}</a>
   {/if}     
+  {if $feature_forum_topicd eq 'y'}
   <br/>
   <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
+  {/if}
   </td>
   <td class="topicreplieseven">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadseven">{$comments_coms[ix].hits}</td>
   <td class="topicscoreeven">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastposteven">{$comments_coms[ix].lastPost|tiki_short_datetime}
+  <td class="topiclastposteven">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
   {if $comments_coms[ix].replies.numReplies}
   <br/>
   <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>

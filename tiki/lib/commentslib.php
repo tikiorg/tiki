@@ -353,6 +353,13 @@ class Comments extends TikiLib {
   
   function parse_comment_data($data)
   {
+     global $feature_forum_parse;
+     global $tikilib;
+     
+     if($feature_forum_parse == 'y') {
+       return $tikilib->parse_data($data);
+     }
+
      // Cookies
      
      if(preg_match_all("/\{cookie\}/",$data,$rsss)) {

@@ -1,5 +1,6 @@
 Version 1.6 -Tau Ceti-
-
+* [NEW] Forums: Option to allow wiki markup in forum/comment posts.
+* [NEW] Forums: the topic description can be disabled when browsing forums.
 * [NEW] Checkboxes added in page history to remove many versions of a page.
 * [NEW] View page source option from page history for any version. 
 * [NEW] Inter wiki links, admin can define URLS in the format 
