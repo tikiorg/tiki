@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_workitems.php,v 1.7 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_workitems.php,v 1.8 2004-01-25 00:44:32 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,7 +110,7 @@ $sameurl_elements = array(
 	'filter_activity',
 	'filter_process',
 	'filter_instance',
-	'processId',
+	'pid',
 	'filter_process'
 );
 
