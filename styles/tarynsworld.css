@@ -1,4 +1,4 @@
-/* 
+/*
    This is TarynsWorld theme by Damian aka Damosoft
    written for my daughters website at http://tarynsworld.damosoft.homelinux.net
 
@@ -15,7 +15,7 @@ body {
 
 /* GENERAL LAYOUT EXPLANATION
  *
- * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top, 
+ * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top,
  * tiki-mid and tiki-botthat will be used for the header, application and footer.
  *
  * tiki-mid contains a 3-column table, the columns are called (ids) leftcolumn, centercolumn and rightcolumn
@@ -23,7 +23,7 @@ body {
  *
  */
 
-/********************************************* GENERAL LAYOUT *********************************************************/
+/****************** GENERAL LAYOUT *************************************/
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
@@ -141,10 +141,10 @@ span.off-option {
 	color: #005000;
 }
 
-/********************************************* GENERAL STYLE PROPERTIES **********************************************/
+/***************** GENERAL STYLE PROPERTIES **************************/
 
 /* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
-   are also used in the rankings, admin screen etc. 
+   are also used in the rankings, admin screen etc.
    The box class is used for modules while the cbox class is used for other boxes
 */
 
@@ -2680,3 +2680,10 @@ div#rules-copy-panel {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+padding : 2ex;
+background-color : #ffe4e1;
+margin : 1ex;
+border : 1px dashed #adacaf; }
