@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/htmlpages/htmlpageslib.php');  
 
 if($feature_html_pages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -26,10 +27,10 @@ if(!isset($_REQUEST["zone"])) {
 }
 $smarty->assign('zone',$_REQUEST["zone"]);
 
-$page_info = $tikilib->get_html_page($_REQUEST["pageName"]);
+$page_info = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 
 if($_REQUEST["zone"]) {
-  $info = $tikilib->get_html_page_content($_REQUEST["pageName"],$_REQUEST["zone"]);
+  $info = $htmlpageslib->get_html_page_content($_REQUEST["pageName"],$_REQUEST["zone"]);
 } else {
   $info = Array();
   $info["content"]='';
@@ -41,15 +42,15 @@ $smarty->assign('type',$info["type"]);
 
 /* NO REMOVAL
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_html_page_content($_REQUEST["pageName"],$_REQUEST["remove"]);
+  $htmlpageslib->remove_html_page_content($_REQUEST["pageName"],$_REQUEST["remove"]);
 }
 */
 
 if(isset($_REQUEST["editmany"])) {
-  $zones = $tikilib->list_html_page_content($_REQUEST["pageName"],0,-1,'zone_asc','');
+  $zones = $htmlpageslib->list_html_page_content($_REQUEST["pageName"],0,-1,'zone_asc','');
   for($i=0;$i<count($zones["data"]);$i++) {
     if(isset($_REQUEST[$zones["data"][$i]["zone"]])) {
-      $tikilib->replace_html_page_content($_REQUEST["pageName"], $zones["data"][$i]["zone"],$_REQUEST[$zones["data"][$i]["zone"]]);
+      $htmlpageslib->replace_html_page_content($_REQUEST["pageName"], $zones["data"][$i]["zone"],$_REQUEST[$zones["data"][$i]["zone"]]);
     }
   }
   
@@ -57,7 +58,7 @@ if(isset($_REQUEST["editmany"])) {
 
 if(isset($_REQUEST["save"])) {
   
-  $tikilib->replace_html_page_content($_REQUEST["pageName"], $_REQUEST["zone"],$_REQUEST["content"]);
+  $htmlpageslib->replace_html_page_content($_REQUEST["pageName"], $_REQUEST["zone"],$_REQUEST["content"]);
   $smarty->assign('zone','');
   $smarty->assign('content','');
 }
@@ -83,7 +84,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_html_page_content($_REQUEST["pageName"],$offset,$maxRecords,$sort_mode,$find);
+$channels = $htmlpageslib->list_html_page_content($_REQUEST["pageName"],$offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

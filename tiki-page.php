@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/htmlpages/htmlpageslib.php');  
 
 if($feature_html_pages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -21,11 +22,11 @@ if(!isset($_REQUEST["pageName"])) {
     die;
 }
 
-$page_data = $tikilib->get_html_page($_REQUEST["pageName"]);
+$page_data = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 $smarty->assign('type',$page_data["type"]);
 $smarty->assign('refresh',$page_data["refresh"]);
 $smarty->assign('pageName',$_REQUEST["pageName"]);
-$parsed=$tikilib->parse_html_page($_REQUEST["pageName"],$page_data["content"]);
+$parsed=$htmlpageslib->parse_html_page($_REQUEST["pageName"],$page_data["content"]);
 $smarty->assign_by_ref('parsed',$parsed);
 
 $section='html_pages';
