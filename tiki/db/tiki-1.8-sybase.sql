@@ -320,6 +320,26 @@ go
 
 -- --------------------------------------------------------
 
+
+-- DROP TABLE "sessions"
+go
+
+
+
+CREATE TABLE "sessions"(
+  "SESSKEY" varchar(32) default '' NOT NULL,
+  "EXPIRY" numeric(11,0) default '0' NOT NULL,
+  "DATA" text NOT NULL,
+  PRIMARY KEY ("SESSKEY")
+
+) 
+go
+
+
+CREATE  INDEX "sessions_EXPIRY" ON "sessions"("EXPIRY")
+go
+
+
 --
 -- Table structure for table `tiki_actionlog`
 --
@@ -3464,6 +3484,28 @@ go
 
 -- --------------------------------------------------------
 
+-- DROP TABLE "tiki_searchindex"
+go
+
+
+
+CREATE TABLE "tiki_searchindex"(
+  "searchword" varchar(80) default '' NOT NULL,
+  "location" varchar(80) default '' NOT NULL,
+  "page" varchar(255) default '' NOT NULL,
+  "count" numeric(11,0) default '1' NOT NULL,
+  "last_update" numeric(11,0) default '0' NOT NULL,
+  PRIMARY KEY ("searchword","location","page")
+
+) 
+go
+
+
+CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update")
+go
+
+
+
 --
 -- Table structure for table `tiki_search_stats`
 --
@@ -3601,6 +3643,7 @@ go
 
 
 CREATE TABLE "tiki_structures" (
+  "structID" varchar(40) default '' NOT NULL,
   "page" varchar(240) default '' NOT NULL,
   "page_alias" varchar(240) default '' NOT NULL,
   "parent" varchar(240) default '' NOT NULL,
@@ -6421,6 +6464,11 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_showstructs','n')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n')
 go
 
@@ -7378,12 +7426,12 @@ go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path')
+INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path')
 go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.')
+INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(--|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.')
 go
 
 

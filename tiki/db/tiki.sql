@@ -235,8 +235,8 @@ CREATE TABLE sessions(
   SESSKEY varchar(32) NOT NULL default '',
   EXPIRY int(11) unsigned NOT NULL default '0',
   DATA text NOT NULL,
-  PRIMARY KEY (SESSKEY),
-  KEY (EXPIRY)
+  PRIMARY KEY  (SESSKEY),
+  KEY EXPIRY (EXPIRY)
 ) TYPE=MyISAM;
 
 #
@@ -2414,6 +2414,18 @@ CREATE TABLE tiki_rss_feeds (
   PRIMARY KEY  (name, rssVer)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+
+DROP TABLE IF EXISTS tiki_searchindex;
+CREATE TABLE tiki_searchindex(
+  searchword varchar(80) NOT NULL default '',
+  location varchar(80) NOT NULL default '',
+  page varchar(255) NOT NULL default '',
+  count int(11) NOT NULL default '1',
+  last_update int(11) NOT NULL default '0',
+  PRIMARY KEY  (searchword,location,page),
+  KEY last_update (last_update)
+) TYPE=MyISAM;
+
 
 #
 # Table structure for table `tiki_search_stats`

@@ -229,6 +229,16 @@ CREATE TABLE messu_messages (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
+
+DROP TABLE IF EXISTS sessions;
+CREATE TABLE sessions(
+  SESSKEY varchar(32) NOT NULL default '',
+  EXPIRY int(11) unsigned NOT NULL default '0',
+  DATA text NOT NULL,
+  PRIMARY KEY  (SESSKEY),
+  KEY EXPIRY (EXPIRY)
+) TYPE=MyISAM;
+
 #
 # Table structure for table `tiki_actionlog`
 #
@@ -2405,6 +2415,18 @@ CREATE TABLE tiki_rss_feeds (
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
+DROP TABLE IF EXISTS tiki_searchindex;
+CREATE TABLE tiki_searchindex(
+  searchword varchar(80) NOT NULL default '',
+  location varchar(80) NOT NULL default '',
+  page varchar(255) NOT NULL default '',
+  count int(11) NOT NULL default '1',
+  last_update int(11) NOT NULL default '0',
+  PRIMARY KEY  (searchword,location,page),
+  KEY last_update (last_update)
+) TYPE=MyISAM;
+
+
 #
 # Table structure for table `tiki_search_stats`
 #
@@ -2498,6 +2520,7 @@ CREATE TABLE tiki_shoutbox (
 
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
+  structID varchar(40) NOT NULL default '',
   page varchar(240) NOT NULL default '',
   page_alias varchar(240) NOT NULL default '',
   parent varchar(240) NOT NULL default '',
@@ -3702,6 +3725,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_showstructs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');
@@ -3925,6 +3949,6 @@ INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by
 INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>');
 INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
 INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
