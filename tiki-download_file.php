@@ -1,5 +1,6 @@
 <?php
 // Initialization
+include_once("lib/init/initlib.php");
 require_once('tiki-setup_base.php');
 /*
 if($feature_file_galleries != 'y') {
