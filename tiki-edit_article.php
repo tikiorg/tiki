@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.27 2003-11-11 01:34:14 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.28 2003-11-11 18:47:15 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,6 @@ include_once ('lib/articles/artlib.php');
 
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
-}
-
-// Now check permissions to access this page
-if ($tiki_p_edit_article != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
@@ -67,6 +59,7 @@ $smarty->assign('image_x', 0);
 $smarty->assign('image_y', 0);
 $smarty->assign('heading', '');
 $smarty->assign('body', '');
+$smarty->assign('author', '');
 $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
@@ -90,6 +83,8 @@ if (isset($_REQUEST["articleId"])) {
 	$smarty->assign('image_y', $article_data["image_y"]);
 	$smarty->assign('reads', $article_data["reads"]);
 	$smarty->assign('type', $article_data["type"]);
+	$smarty->assign('author', $article_data["author"]);
+	$smarty->assign('creator_edit', $article_data["creator_edit"]);
 	$smarty->assign('rating', $article_data["rating"]);
 
 	if (strlen($article_data["image_data"]) > 0) {
@@ -121,6 +116,14 @@ if (isset($_REQUEST["articleId"])) {
 	$heading = $article_data["heading"];
 	$smarty->assign('parsed_body', $tikilib->parse_data($body));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
+}
+
+// Now check permissions to access this page
+if ($tiki_p_edit_article != 'y' and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
+	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
 if (isset($_REQUEST["allowhtml"])) {

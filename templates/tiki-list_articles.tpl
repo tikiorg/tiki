@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.20 2003-10-29 05:19:59 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.21 2003-11-11 18:47:17 dheltzel Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -122,7 +122,7 @@
 	<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 {/if}
 <td class="{cycle}">
-{if $tiki_p_edit_article eq 'y'}
+{if $tiki_p_edit_article eq 'y' or ($listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
 	<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
