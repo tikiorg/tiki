@@ -1783,6 +1783,16 @@ div.code {
 	background-color:   #F4F4F4;
 	font-family:   courier;
 }
+/*****the plugin {CODE} tag ******dgd*********/
+
+.codelisting {
+font-family : monospace;
+padding : 2ex;
+background-color : #edeeef;
+margin : 1ex;
+border : 1px dashed #adacaf;
+}
+
 
 pre {
 	font-size:    14px;
@@ -2747,3 +2757,6 @@ TABLE.admin { width: 100%; }
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
