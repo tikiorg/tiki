@@ -38,9 +38,9 @@
   		{$comment.parsed}
   		{if $comment.replies.numReplies > 0}
 			{foreach from=$comment.replies.replies item="comment"}
-					<div class="subcomment">
+					<ul class="subcomment">
 					{include file="comment.tpl"  comment=$comment}
-					</div>
+					</ul>
 			{/foreach}
   		{/if}
   	</td>

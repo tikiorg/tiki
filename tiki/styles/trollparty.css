@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.30 2004-05-01 01:06:33 damosoft Exp $
+$Id: trollparty.css,v 1.31 2004-05-03 15:34:36 sylvieg Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -1788,7 +1788,7 @@ span.commentstitle
 font-weight: bold;
 width: 98%;
 }
-
+ul.subcomment{margin-left: 10px;}
 /* The comment */
 div.commentscomment
 {
