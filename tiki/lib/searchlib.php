@@ -77,7 +77,19 @@ class SearchLib extends TikiLib {
 		if ($fulltext) {
 			$qwords = $this->db->quote($words);
 
-			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords . ')';
+			global $feature_search_mysql4_boolean;
+			if ($feature_search_mysql4_boolean) {
+				$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords;
+				global $db_tiki;
+				if ($db_tiki='mysql') {
+					$sqlft .= ' IN BOOLEAN MODE)';
+				} else {
+					$sqlft .= ' )';
+				}
+			} else {
+				$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords . ')';
+			}
+			
 			$sql2 .= ' AND ' . $sqlft ;
 			$sql .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
@@ -106,6 +118,8 @@ class SearchLib extends TikiLib {
 		}
 		$cant = $this->getOne('SELECT COUNT(*)' . $sql2);
 
+		global $feature_search_mysql4_boolean;
+		if ($feature_search_mysql4_boolean != 'y') {
 		if (!$cant) { // no result
 			if ($fulltext && $words) // try a simple search
 				return $this->_find($h, $words, $offset, $maxRecords, false);
@@ -114,6 +128,7 @@ class SearchLib extends TikiLib {
 					'data' => array(),
 					'cant' => 0
 				);
+		}
 		}
 
 		$sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;

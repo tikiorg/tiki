@@ -15,6 +15,14 @@
           <td><input type="checkbox" name="feature_search_fulltext"
                 {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
+	  <td class="form">
+	{if $feature_help eq 'y'}<a href="{$helpurl}MySQL4Boolean" target="tikihelp" class="tikihelp" title="{tr}Boolean search for MySQL4{/tr}">{/if}
+		{tr}Boolean search for MySQL4 (only works with search_box module, not search_new){/tr}
+		{if $feature_help eq 'y'}</a>{/if}
+	        :</td>
+          <td><input type="checkbox" name="feature_search_mysql4_boolean"
+                {if $feature_search_mysql4_boolean eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
 	<td>
 {if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
                         {tr}Search stats{/tr}

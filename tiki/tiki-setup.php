@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.251 2004-07-12 22:00:36 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.252 2004-07-14 20:08:08 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -365,6 +365,7 @@ $feature_backlinks = 'y';
 $feature_likePages = 'y';
 $feature_search = 'y';
 $feature_search_fulltext = 'y';
+$feature_search_mysql4_boolean = 'n';
 $feature_sandbox = 'y';
 $feature_userPreferences = 'n';
 $feature_userVersions = 'y';
