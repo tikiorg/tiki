@@ -68,7 +68,7 @@ class MenuLib extends TikiLib {
 		// Check the name
 		if ($optionId) {
 			$query
-				= "update `tiki_menu_options` set `name`=?,url=?,type=?,position=? where `optionId`=?";
+				= "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=? where `optionId`=?";
 				$bindvars=array($name,$url,$type,$position,$optionId);
 		} else {
 			// was: replace into ...
