@@ -49,13 +49,14 @@ class StatsLib extends TikiLib {
     $num_or = 0;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $pageName = $res["pageName"];
-      $queryc = "select count(*) from tiki_links where toPage='$pageName'";
+      $queryc = "select count(*) from tiki_links where toPage='".addslashes($pageName)."'";
       $cant = $this->getOne($queryc);
       if($cant==0) {
         $num_or++;
         $aux = Array();
         $aux["pageName"] = $pageName;
         $page = $aux["pageName"];
+	$page_as=addslashes($page);
         $aux["hits"] = $res["hits"];
         $aux["lastModif"] = $res["lastModif"];
         $aux["user"] = $res["user"];
@@ -64,9 +65,9 @@ class StatsLib extends TikiLib {
         $aux["comment"] = $res["comment"];
         $aux["version"] = $res["version"];
         $aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
-        $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page'");
-        $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page'");
-        $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page'");
+        $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page_as'");
+        $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page_as'");
+        $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page_as'");
         $ret[] = $aux;
       }
     }

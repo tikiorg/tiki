@@ -2263,6 +2263,7 @@ class TikiLib {
       $aux = Array();
       $aux["pageName"] = $res["pageName"];
       $page = $aux["pageName"];
+      $page_as=addslashes($page);
       $aux["hits"] = $res["hits"];
       $aux["lastModif"] = $res["lastModif"];
       $aux["user"] = $res["user"];
@@ -2271,9 +2272,9 @@ class TikiLib {
       $aux["comment"] = $res["comment"];
       $aux["version"] = $res["version"];
       $aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
-      $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page'");
-      $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page'");
-      $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page'");
+      $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page_as'");
+      $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page_as'");
+      $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page_as'");
       $ret[] = $aux;
     }
     // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
