@@ -69,6 +69,8 @@ class TrackerLib extends TikiLib {
   
   function add_item_attachment_hit($id) 
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_tracker_item_attachments set downloads=downloads+1 where attId=$id";
       $result = $this->query($query);

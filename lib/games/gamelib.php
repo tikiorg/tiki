@@ -12,6 +12,8 @@ class GameLib extends TikiLib {
   
   function add_game_hit($game)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
       if($cant) {

@@ -565,6 +565,8 @@ class Comments extends TikiLib {
   
   function forum_add_hit($forumId)
   {
+    global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_forums set hits=hits+1 where forumId=$forumId";
       $result = $this->query($query);
@@ -575,6 +577,8 @@ class Comments extends TikiLib {
   
   function comment_add_hit($threadId)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_comments set hits=hits+1 where threadId=$threadId";
       $result = $this->query($query);
