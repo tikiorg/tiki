@@ -64,7 +64,7 @@ class HtmlParser {
     $this->tagreg=array();
     $this->wasquot=0;
 
-    if(is_array($this->data)) {
+    if(isset($this->data) && is_array($this->data)) {
       $this->content=&$data;
       $this->allreadyparsed=1;
       return;
