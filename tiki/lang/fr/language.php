@@ -46,6 +46,7 @@ $lang=Array(
 // ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for furhter info.
 "Updated" => "Mis à jour",
 "Removed" => "Supprimé",
+"Created" => "Créé",
 "January" => "Janvier",
 "February" => "Février",
 "Feb" => "Fév",
