@@ -55,9 +55,10 @@
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page}" method="post">
 <table class="normal">
 <tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">
- {tr}comment{/tr}: <input type="text" name="attach_comment" maxlenght="250" />
- <input type="submit" name="attach" value="{tr}attach{/tr}" />
+ <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16
+ " name="userfile1" type="file">
+ {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlenght="250" />
+ <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
  </td>
 </tr>
 </table>
