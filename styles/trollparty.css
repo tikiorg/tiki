@@ -1,5 +1,5 @@
-/* 
-$Id: trollparty.css,v 1.31 2004-05-03 15:34:36 sylvieg Exp $
+/*
+$Id: trollparty.css,v 1.32 2004-06-21 03:16:21 dgdaniels Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -3079,3 +3079,10 @@ TABLE.admin {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+padding : 2ex;
+background-color : #400099; /***kinda purple***/
+margin : 1ex;
+border : 1px dashed #adacaf; }
