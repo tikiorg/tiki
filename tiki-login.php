@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.20 2003-12-10 23:08:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.21 2003-12-17 10:29:14 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.20 2003-12-10 23:08:30 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.21 2003-12-17 10:29:14 wolff_borg Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -100,7 +100,7 @@ if ($isvalid) {
 		// Redirect the user to the screen where he must change his password.
 		// Note that the user is not logged in he's just validated to change his password
 		// The user must re-enter his old password so no secutiry risk involved
-		$url = 'tiki-change_password.php?user=' . urlencode($user). '&amp;oldpass=' . urlencode($pass);
+		$url = 'tiki-change_password.php?user=' . urlencode($user). '&oldpass=' . urlencode($pass);
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);
