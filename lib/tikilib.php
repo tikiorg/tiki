@@ -2974,7 +2974,12 @@ class TikiLib extends TikiDB {
 
     function plugin_match(&$data, &$plugins)
     {
+    global $feature_wiki_plugins_allcaps;
+    if (!empty($feature_wiki_plugins_allcaps) && $feature_wiki_plugins_allcaps == 'y') {
 	$matcher = "/\{([A-Z]+)\(|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+    } else {
+    	$matcher = "/\{([A-Z]+)\(|~pp~|~np~|&lt;[pP][rR][eE]&gt;/i";
+    }
 
 	preg_match( $matcher, $data, $plugins, PREG_OFFSET_CAPTURE );
 
