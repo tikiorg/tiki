@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.2 2003-12-16 08:59:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.3 2003-12-19 06:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,7 @@ if ($tiki_p_view_trackers != 'y') {
 	die;
 }
 
-$qmarty->assign("info",$info);
+$smarty->assign("info",$info);
 $smarty->display("tiki-view_tracker_more_info.tpl");
 
 ?>
