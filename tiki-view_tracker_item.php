@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.23 2004-01-14 20:34:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.24 2004-01-20 06:33:14 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -194,11 +194,12 @@ if($offset>0) {
 
 $smarty->assign_by_ref('items',$items["data"]);
 */
+/*
 $users = $userlib->get_users_names(0, -1, 'login_asc', '');
 $smarty->assign_by_ref('users', $users);
 $groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
 $smarty->assign_by_ref('groups', $groups["data"]);
-
+*/
 $smarty->assign('mail_msg', '');
 $smarty->assign('email_mon', '');
 

@@ -592,6 +592,23 @@ class TrackerLib extends TikiLib {
 		return $res;
 	}
 
+	function field_types() {
+		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>false);
+		$type['t'] = array('label'=>tra('text field'),    'opt'=>false);
+		$type['a'] = array('label'=>tra('textarea'),      'opt'=>false);
+		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options : list of items separated with commas') );
+		$type['u'] = array('label'=>tra('user selector'), 'opt'=>false);
+		$type['g'] = array('label'=>tra('group selector'),'opt'=>false);
+		$type['f'] = array('label'=>tra('date and time'), 'opt'=>false);
+		$type['j'] = array('label'=>tra('jscalendar'),    'opt'=>false);
+		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options : xSize,ySize indicated in pixels')  );
+		$type['x'] = array('label'=>tra('action'),        'opt'=>true, 'help'=>tra('Action options : Label,post,tiki-index.php,page:fieldname,highlight=test') );
+		$type['h'] = array('label'=>tra('header'),        'opt'=>false);
+		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options : parentId') );
+		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker options : trackerId,fieldname') );
+		return $type;
+	}
+	
 }
 
 $trklib = new TrackerLib($dbTiki);
