@@ -526,6 +526,7 @@ function MimeMultipart ($parts)
 function MimeifyPageRevision ($page) {
     //$page = $revision->getPage();
     // FIXME: add 'hits' to $params 
+    
     $params = array('pagename'     => $page["pageName"],
                     'flags'        => "",
                     'author'       => $page["user"],
@@ -535,7 +536,9 @@ function MimeifyPageRevision ($page) {
     $params["author_id"]=$page["ip"];
     $params["summary"]=$page["comment"];
     if(isset($page["hits"])) $params["hits"]=$page["hits"];
+    
     $params["description"]=$page["description"];
+    
     $params['charset'] = 'iso-8859-1';
 
     // Non-US-ASCII is not allowed in Mime headers (at least not without

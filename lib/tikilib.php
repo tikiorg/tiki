@@ -285,10 +285,12 @@ class TikiLib {
     
     $parts = array();
     $parts[]=MimeifyPageRevision($info);
+    if($nversions>1 || $nversions==0) {
     foreach ($iter as $revision) {
         $parts[] = MimeifyPageRevision($revision);
         if ($nversions > 0 && count($parts) >= $nversions)
             break;
+    }
     }
     if (count($parts) > 1)
         return $head . MimeMultipart($parts);
@@ -5556,8 +5558,8 @@ class TikiLib {
     preg_match_all("/src=\"([^\"]+)\"/",$data,$reqs1);
     preg_match_all("/src=\'([^\']+)\'/",$data,$reqs2);
     preg_match_all("/src=([A-Za-z0-9\:\?\=\/\\\.\-\_]+)\}/",$data,$reqs3);
-    preg_match_all("/src=([A-Za-z0-9\:\?\=\/\\\.\-\_]+) /",$data,$reqs3);
-    $merge = array_merge($reqs1[1],$reqs2[1],$reqs3[1]);
+    preg_match_all("/src=([A-Za-z0-9\:\?\=\/\\\.\-\_]+) /",$data,$reqs4);
+    $merge = array_merge($reqs1[1],$reqs2[1],$reqs3[1],$reqs4[1]);
     $merge = array_unique($merge);
     //print_r($merge);
     // Now for each element in the array capture the image and
@@ -5589,6 +5591,9 @@ class TikiLib {
             $img = imagecreatefromstring($data);
             $size_x = imagesx($img);
             $size_y = imagesy($img);
+	    // Fix the ratio values for system gallery
+	    $gal_info["thumbSizeX"]=90;
+	    $gal_info["thumbSizeY"]=90;
             if ($size_x > $size_y)
               $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
             else
@@ -5620,6 +5625,7 @@ class TikiLib {
           } else {
             //print("No GD detected generating image without thumbnail<br/>");
             $imageId = $this->insert_image(0,'','',$name, $type, $data, $size, 100, 100, 'admin','','');
+	    //print("Imagen en $imageId<br/>");
           }
           // Now change it!
           //print("Changing $url to imageId: $imageId");
@@ -5699,6 +5705,9 @@ class TikiLib {
   function unassign_module($name) 
   {
     $query = "delete from tiki_modules where name='$name'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $query = "delete from tiki_user_assigned_modules where name='$name'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -6155,7 +6164,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   {
     global $gal_use_db;
     global $gal_use_dir;
-    
     $name = addslashes(strip_tags($name));
     $description = addslashes(strip_tags($description));
     
@@ -6185,7 +6193,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $data='';
       $path=$fhash;
     }
-    
     $query = "insert into tiki_images(galleryId,name,description,filename,filetype,filesize,data,xsize,ysize,user,created,t_data,t_type,hits,path)
                           values($galleryId,'$name','$description','$filename','$filetype',$size,'$data',$xsize,$ysize,'$user',$now,'$t_data','$t_type',0,'$path')";
     $result = $this->db->query($query);
@@ -7469,7 +7476,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $aux["ip"] = $res["ip"];
       $aux["data"] = $res["data"];
       $aux["pageName"] = $res["pageName"];
-      
+      $aux["description"] = $res["description"];
       $aux["comment"] = $res["comment"];
       //$aux["percent"] = levenshtein($res["data"],$actual);
       $ret[]=$aux; 
@@ -8443,7 +8450,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function get_pages($data) {
     preg_match_all("/[ \n\t\r^]([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r])/",$data,$pages);
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages2);
-    $pages = array_merge($pages[1],$pages2[1]);
+    preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages3);
+    $pages = array_unique(array_merge($pages[1],$pages2[1],$pages3[1]));
     return $pages;
   }
 

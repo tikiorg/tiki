@@ -73,6 +73,26 @@ Version 1.5 -Regulus-
   The administrator (but not the user) can also specify the date and time format strings.
   Month and weekday names are also localized, if locales are configured correctly on the server.
 
+Version 1.4.2 -Mira- 
+
+* [FIX] Fixed a bug that crashed image caching
+* [FIX] Fixed a bug that allowed admins with permission to edit templates to
+   edit any file
+* [FIX] Fixed a bug that made unassigned modules remain assigned for
+  registered users
+* [FIX] Now you can use ' in the browser title and other preferences
+  
+
+Version 1.4.1 -Mira-
+
+* [FIX] Fixed a bug that made Tiki unaware of links using the new
+  ((name|description)) syntax resulting in orphan pages and fake
+  link structure for the Wiki.
+* [FIX] Corrected an error in tiki_1.3to1.4.sql, added the params
+  column to tiki_user_assigned_modules that was missing
+* [FIX] Fixed a bug related to an incorrect link when editing the
+  user personal page as admin fro the user_preferences page
+
 Version 1.4 -Mira-
 
 * [NEW] Quizzes, you can create quizzes with as many multiple-choice questions as you want and program specific answers

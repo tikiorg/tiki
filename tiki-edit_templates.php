@@ -19,6 +19,17 @@ if(!isset($_REQUEST["mode"])) {
   $mode = 'listing';
 }
 
+// Validate to prevent editing any file
+if(isset($_REQUEST["template"])) {
+  if((substr($_REQUEST["template"],0,10)!='templates/')||(strstr($_REQUEST["template"],'..'))) {
+     $smarty->assign('msg',tra("You dont have permission to do that"));
+     $smarty->display('error.tpl');
+     die;
+       
+  }
+
+}
+
 if(isset($_REQUEST["save"])) {
   $fp = fopen($_REQUEST["template"],"w");
   if(!$fp) {
