@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 19. October 2003
+// Last modified: 21. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -24,6 +24,9 @@
 // changes against V5.2:
 // - enhanced browser detection: OpenVXI voice browser
 // - new method in HAW_deck: smooth_voice()
+// - bugfix: added <prompt> element in various VoiceXML output scenarios
+// - optimization: inhibit <break> tag for PVX voice browser
+// - bugfix: create voice <break> tags for empty HAW_text objects
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.3b");
@@ -214,7 +217,7 @@ function HAW_specchar($input, $deck)
 }
 
 
-function HAW_voice_audio($text, $audio_src, $pause)
+function HAW_voice_audio($text, $audio_src, $pause, $deck)
 {
   // print VoiceXML tags for audio output
 
@@ -225,7 +228,7 @@ function HAW_voice_audio($text, $audio_src, $pause)
     // speak text only
     echo $text;
 
-  if ($pause > 0)
+  if (($pause > 0) && $deck->supportsVXMLBreakTag)
     printf("<break time=\"%dms\"/>", $pause);
 }
 
@@ -245,7 +248,7 @@ function HAW_voice_eventhandler($handler, $audio_array, $deck)
 
       printf("<catch%s event=\"%s\">", $count, $handler);
 
-      HAW_voice_audio(HAW_specchar($val["text"], $deck), $val["src"], 0);
+      HAW_voice_audio(HAW_specchar($val["text"], $deck), $val["src"], 0, $deck);
 
       if ($val["url"])
         printf("<goto next=\"%s\"/>", $val["url"]);
@@ -505,6 +508,7 @@ class HAW_deck
   var $MMLstyle = false;		// Mobile Markup Language
   var $gif_enabled = false;             // browser can not deal with GIF images
   var $submitViaLink = false;           // use link instead of <do>
+  var $supportsVXMLBreakTag = true;     // false for PublicVoiceXML browser only
   var $debug = false;                   // HAWHAW debugger off
 
   // device simulator properies
@@ -632,6 +636,10 @@ class HAW_deck
         $HTTP_ACCEPT = "text/x-vxml";
         $HTTP_USER_AGENT = "Tellme";
       }
+      elseif ($this->debug == "pvx")
+      {
+        $HTTP_USER_AGENT = "OpenVXI"; // default user agent header of PublicVoiceXML
+      }
 
       $this->output = HAW_OUTPUT_AUTOMATIC; // turn off forced output for debugging
     }
@@ -673,7 +681,13 @@ class HAW_deck
             strstr(strtolower($HTTP_ACCEPT), "voicexml") || // alternative accept header
             strstr($HTTP_USER_AGENT, "OpenVXI") ||          // Speechworks/PublicVoiceXML browser
             strstr($HTTP_USER_AGENT, "Tellme"))             // Tellme studio voice browser
+    {
       $this->ml = HAW_VXML; // create VoiceXML
+
+      // PublicVoiceXML browser cannot handle <break> elements!!!
+      if (strstr($HTTP_USER_AGENT, "OpenVXI"))
+        $this->supportsVXMLBreakTag = false;
+    }
     else
     {
       if (strstr($HTTP_USER_AGENT, "Mozilla") ||
@@ -1813,12 +1827,12 @@ class HAW_deck
         {
           // create introducing audio output for VoiceXML deck
 
-          echo "<block>";
+          echo "<block><prompt>";
 
-          HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+          HAW_voice_audio(HAW_specchar($this->voice_text, $this),
+                        $this->voice_audio_src, HAW_VOICE_PAUSE, $this);
 
-          echo "</block>\n";
+          echo "</prompt></block>\n";
         }
       }
     }
@@ -2388,12 +2402,12 @@ class HAW_form
       {
         // create introducing audio output for VoiceXML form
     
-        echo "<block>";
+        echo "<block><prompt>";
   
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+                        $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
 
-        echo "</block>\n";
+        echo "</prompt></block>\n";
       }
     }
 
@@ -2628,20 +2642,15 @@ class HAW_text
     {
       // VoiceXML
 
-      if ($this->voice_text || $this->voice_audio_src)
-      {
-        // create audio output for VoiceXML text
-
-        echo "<block>";
+      echo "<block><prompt>";
   
-        $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
+      $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
 
-        // remove leading commas, dots etc. which may appear after link objects
-        HAW_voice_audio(ereg_replace("^[\?!,;.]", " ", HAW_specchar($this->voice_text, $deck)),
-                        $this->voice_audio_src, $pause);
+      // remove leading commas, dots etc. which may appear after link objects
+      HAW_voice_audio(ereg_replace("^[\?!,;.]", " ", HAW_specchar($this->voice_text, $deck)),
+                      $this->voice_audio_src, $pause, $deck);
   
-        echo "</block>\n";
-      }
+      echo "</prompt></block>\n";
     }
   }
 };
@@ -2886,12 +2895,12 @@ class HAW_image
       {
         // create image-related audio output for VoiceXML images
 
-        echo "<block>";
+        echo "<block><prompt>";
 
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+                        $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
   
-        echo "</block>\n";
+        echo "</prompt></block>\n";
       }
     }
   }
@@ -3012,12 +3021,12 @@ class HAW_table
       {
         // create introducing audio output for VoiceXML table
   
-        echo "<block>";
+        echo "<block><prompt>";
   
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+                        $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
       
-        echo "</block>\n";
+        echo "</prompt></block>\n";
       }
     }
 
@@ -3516,7 +3525,7 @@ class HAW_input
         echo "<prompt>";
 
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, 0);
+                        $this->voice_audio_src, 0, $deck);
 
         echo "</prompt>\n";
       }
@@ -3930,7 +3939,7 @@ class HAW_select
           echo "<prompt>";
 
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                          $this->voice_audio_src, 0);
+                          $this->voice_audio_src, 0, $deck);
 
           echo "</prompt>\n";
         }
@@ -3943,8 +3952,12 @@ class HAW_select
         else
           $dtmf = "";
 
-        printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
-               HAW_specchar($val["label"], $deck), HAW_VOICE_PAUSE);
+        if ($deck->supportsVXMLBreakTag)
+          $breakTag = sprintf("<break time=\"%dms\"/>", HAW_VOICE_PAUSE);
+        else
+          $breakTag = "";
+
+        printf("<prompt>%s%s</prompt>\n", HAW_specchar($val["label"], $deck), $breakTag);
 
         printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
                ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
@@ -4176,7 +4189,7 @@ class HAW_radio
           echo "<prompt>";
 
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                          $this->voice_audio_src, 0);
+                          $this->voice_audio_src, 0, $deck);
 
           echo "</prompt>\n";
         }
@@ -4189,8 +4202,12 @@ class HAW_radio
         else
           $dtmf = "";
 
-        printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
-               HAW_specchar($val["label"], $deck), HAW_VOICE_PAUSE);
+        if ($deck->supportsVXMLBreakTag)
+          $breakTag = sprintf("<break time=\"%dms\"/>", HAW_VOICE_PAUSE);
+        else
+          $breakTag = "";
+
+        printf("<prompt>%s%s</prompt>\n", HAW_specchar($val["label"], $deck), $breakTag);
 
         printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
                 ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
@@ -4398,7 +4415,7 @@ class HAW_checkbox
         echo "<prompt>";
 
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, 0);
+                        $this->voice_audio_src, 0, $deck);
 
         echo "</prompt>\n";
       }
@@ -4886,7 +4903,7 @@ class HAW_link
         {
           // create audio output for VoiceXML link
   
-          echo "<block>";
+          echo "<block><prompt>";
   
           if ($deck->voice_jingle)
           {
@@ -4897,9 +4914,9 @@ class HAW_link
           $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
   
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                          $this->voice_audio_src, $pause);
+                          $this->voice_audio_src, $pause, $deck);
     
-          echo "</block>\n";
+          echo "</prompt></block>\n";
         }
   
         // update deck timeout
@@ -5017,12 +5034,12 @@ class HAW_phone
       {
         // create audio output for VoiceXML text
 
-        echo "<block>";
+        echo "<block><prompt>";
 
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+                        $this->voice_audio_src, HAW_VOICE_PAUSE, $deck);
   
-        echo "</block>\n";
+        echo "</prompt></block>\n";
       }
     }
   }
@@ -5277,7 +5294,7 @@ class HAW_linkset
             echo "<prompt>";
   
             HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                            $this->voice_audio_src, 0);
+                            $this->voice_audio_src, 0, $deck);
   
             echo "</prompt>\n";
           }
@@ -5293,9 +5310,13 @@ class HAW_linkset
               $dtmf = sprintf(" dtmf=\"%s\"", $val->get_accesskey());
             else
               $dtmf = "";
+
+            if ($deck->supportsVXMLBreakTag)
+              $breakTag = sprintf("<break time=\"%dms\"/>", HAW_VOICE_PAUSE);
+            else
+              $breakTag = "";
   
-            printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
-                   HAW_specchar($val->get_label(), $deck), HAW_VOICE_PAUSE);
+            printf("<prompt>%s%s</prompt>\n", HAW_specchar($val->get_label(), $deck), $breakTag);
   
             printf("<option%s value=\"%s\">%s</option>\n",
                    $dtmf, HAW_specchar($val->get_url(), $deck),
@@ -5525,7 +5546,9 @@ class HAW_rule
     elseif ($deck->ml == HAW_VXML)
     {
       // make a longer speech pause
-      printf("<block><break time=\"%dms\"/></block>\n", 3 * HAW_VOICE_PAUSE);
+      if ($deck->supportsVXMLBreakTag)
+        printf("<block><prompt><break time=\"%dms\"/></prompt></block>\n",
+                3 * HAW_VOICE_PAUSE);
     }
   }
 };
@@ -5693,7 +5716,7 @@ class HAW_voicerecorder
         echo "<prompt>";
   
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                        $this->voice_audio_src, 0);
+                        $this->voice_audio_src, 0, $deck);
   
         echo "</prompt>\n";
       }
