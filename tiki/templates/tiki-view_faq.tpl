@@ -12,7 +12,7 @@
 
 <br /><br />
 <a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a><br /><br />
-<h2>{tr}FAQ Questions{/tr}</h2>
+<h2>{tr}Questions{/tr}</h2>
 <div class="faqlistquestions">
 <ol>
 {section name=ix loop=$channels}
@@ -20,7 +20,7 @@
 {/section}
 </ol>
 </div>
-<h2>{tr}FAQ Answers{/tr}</h2>
+<h2>{tr}Answers{/tr}</h2>
 {section name=ix loop=$channels}
 <a name="q{$channels[ix].questionId}"></a>
 <div class="faqqa">
@@ -33,9 +33,34 @@
 </div>
 {/section}
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
-[&nbsp;<a href="javascript:show('faqsugg');" class="opencomlink">{tr}Show suggested questions/suggest a question{/tr}</a>&nbsp;|&nbsp;
-<a href="javascript:hide('faqsugg');" class="opencomlink">{tr}Hide suggested questions{/tr}</a>&nbsp;]<br /><br />
+<a href="javascript:flip('faqsugg');" class="linkbut">
+{if $suggested_cant == 0}
+{tr}add suggestion{/tr}
+{elseif $suggested_cant == 1}
+<span class="highlight">{tr}1 suggestion{/tr}</span>
+{else}
+<span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>
+{/if}
+</a>
+{/if}
+{if $feature_faq_comments == 'y'
+&& (($tiki_p_read_comments  == 'y'
+&& $comments_cant != 0)
+||  $tiki_p_post_comments  == 'y'
+||  $tiki_p_edit_comments  == 'y')}
+    <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
+{if $comments_cant == 0}
+{tr}add comment{/tr}
+{elseif $comments_cant == 1}
+<span class="highlight">{tr}1 comment{/tr}</span>
+{else}
+<span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+{/if}
+</a>
+{/if}
+{if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <div class="faq_suggestions" id="faqsugg" style="display:none;">
+<br />
 <form action="tiki-view_faq.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
@@ -44,6 +69,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="sugg" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
+{if count($suggested) != 0}
 <br />
 <table class="normal">
 <tr><td class="heading">{tr}Suggested questions{/tr}</td></tr>
@@ -54,27 +80,11 @@
 </table>
 </div>
 {/if}
-
+{/if}
 {if $feature_faq_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
 && $comments_cant != 0)
 ||  $tiki_p_post_comments  == 'y'
 ||  $tiki_p_edit_comments  == 'y')}
-<div id="page-bar">
-<table>
-<tr><td>
-<div class="button2">
-      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
-	{if $comments_cant == 0}
-          {tr}add comment{/tr}
-        {elseif $comments_cant == 1}
-          <span class="highlight">{tr}1 comment{/tr}</span>
-        {else}
-          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
-        {/if}
-      </a>
-</div>
-</td></tr></table>
-</div>
 {include file=comments.tpl}
 {/if}
