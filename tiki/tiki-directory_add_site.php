@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.4 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.5 2003-11-07 20:03:17 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,49 +80,35 @@ $smarty->assign('save', 'n');
 
 // Replace (add or edit) a site
 if (isset($_REQUEST["save"])) {
-	$smarty->assign('save', 'y');
+	$msg = "";
 
 	if (empty($_REQUEST["name"])) {
-		$smarty->assign('msg', tra("Must enter a name to add a site"));
-
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
+		$msg = tra("Must enter a name to add a site. ");
 	}
 
 	if (empty($_REQUEST["url"])) {
-		$smarty->assign('msg', tra("Must enter a url to add a site"));
-
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
+		$msg .= tra("Must enter a url to add a site. ");
 	}
+	else {
+		if (substr($_REQUEST["url"], 0, 7) <> 'http://' && substr($_REQUEST["url"], 0, 8) <> 'https://') {
+			$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
+		}
 
-	if (substr($_REQUEST["url"], 0, 7) <> 'http://') {
-		$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
-	}
+		if ($dirlib->dir_url_exists($_REQUEST['url'])) {
+			$msg .= tra("URL already added to the directory. Duplicate site? ");
+		}
 
-	if ($dirlib->dir_url_exists($_REQUEST['url'])) {
-		$smarty->assign('msg', tra("URL already added to the directory. Duplicate site?"));
+		if ($directory_validate_urls == 'y') {
+			@$fsh = fopen($_REQUEST['url'], 'r');
 
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
-
-	if ($directory_validate_urls == 'y') {
-		@$fsh = fopen($_REQUEST['url'], 'r');
-
-		if (!$fsh) {
-			$smarty->assign('msg', tra("URL cannot be accessed wrong URL or site is offline and cannot be added to the directory"));
-
-			$smarty->display("styles/$style_base/error.tpl");
-			die;
+			if (!$fsh) {
+				$msg .= tra("URL cannot be accessed wrong URL or site is offline and cannot be added to the directory. ");
+			}
 		}
 	}
 
 	if (!isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
-		$smarty->assign('msg', tra("Must select a category"));
-
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
+		$msg .= tra("Must select a category. ");
 	}
 
 	if (isset($_REQUEST["isValid"]) && $_REQUEST["isValid"] == 'on')
@@ -133,13 +119,20 @@ if (isset($_REQUEST["save"])) {
 	if ($tiki_p_autosubmit_link == 'y') {
 		$_REQUEST["isValid"] = 'y';
 	}
+	if ($msg == "") { // no error
+		$siteId = $dirlib->dir_replace_site($_REQUEST["siteId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"],
+			$_REQUEST["country"], $_REQUEST["isValid"]);
+		$dirlib->remove_site_from_categories($siteId);
 
-	$siteId = $dirlib->dir_replace_site($_REQUEST["siteId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"],
-		$_REQUEST["country"], $_REQUEST["isValid"]);
-	$dirlib->remove_site_from_categories($siteId);
-
-	foreach ($_REQUEST["siteCats"] as $acat) {
-		$dirlib->dir_add_site_to_category($siteId, $acat);
+		foreach ($_REQUEST["siteCats"] as $acat) {
+			$dirlib->dir_add_site_to_category($siteId, $acat);
+		}
+		$info["isValid"] = 'y';
+		$smarty->assign('save', 'y');
+	}
+	else {
+		$info["isValid"] = 'n';
+		$smarty->assign('msg', $msg);
 	}
 
 	$info = array();
@@ -147,7 +140,6 @@ if (isset($_REQUEST["save"])) {
 	$info["description"] = $_REQUEST['description'];
 	$info["url"] = $_REQUEST['url'];
 	$info["country"] = $_REQUEST['country'];
-	$info["isValid"] = 'y';
 	$smarty->assign('siteId', 0);
 }
 
@@ -201,6 +193,13 @@ if ($offset > 0) {
 $smarty->assign_by_ref('items', $items["data"]);
 
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
+if (isset($_REQUEST["save"]) && $msg != "") { // an error occured, the chosen categs have to be set again
+	foreach ($_REQUEST["siteCats"] as $acat)
+		for ($ix = 0; $ix < sizeof($categs) ; ++$ix) {
+			if ($categs[$ix]["categId"] == $acat)
+				$categs[$ix]["belongs"] = 'y';
+		}
+}
 $smarty->assign('categs', $categs);
 
 $countries = array();

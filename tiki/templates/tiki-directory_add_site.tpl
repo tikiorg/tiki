@@ -30,22 +30,24 @@
 <form action="tiki-directory_add_site.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
-{$msg}
 <table class="normal">
+{if $msg}
+	<tr><td class="formcolor" colspan="2"><span class="hightlight">{$msg}</span></td></tr>
+{/if}
   <tr>
-    <td class="formcolor">{tr}Name {/tr}<span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span>:</td>
+    <td class="formcolor">{tr}Name:{/tr}</td>
     <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Description {/tr}<span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span>:</td>
+    <td class="formcolor">{tr}Description:{/tr}</td>
     <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}URL {/tr}<span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span>:</td>
+    <td class="formcolor">{tr}URL:{/tr}</td>
     <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Categories {/tr}<span style="color: rgb(255, 0, 0);">{tr}Required{/tr}:</td>
+    <td class="formcolor">{tr}Categories:{/tr}</td>
     <td class="formcolor">
     <select name="siteCats[]" multiple="multiple" size="4" />
     {section name=ix loop=$categs}
