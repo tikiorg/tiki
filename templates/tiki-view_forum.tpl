@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.58 2004-03-15 21:57:29 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.59 2004-03-16 16:47:44 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -21,15 +21,13 @@
 <input type="button" name="comments_postComment" value="{tr}new topic{/tr}" onclick="show('{$postclass}');"/>
 {/if}
 <div align="right">
- [
   {if $rss_forum eq 'y'}
-   <a class="forumbutlink" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a> |
+   <a class="linkbut" href="tiki-forum_rss.php?forumId={$forumId}">{tr}RSS feed{/tr}</a>
   {/if}
-  <a class="forumbutlink" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
+  <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
   {if $tiki_p_admin_forum eq 'y'}
-   | <a class="forumbutlink" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
+  <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
   {/if}
- ]
 </div>
 </td>
 <td style="text-align:right;">
