@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.f.css,v 1.4 2003-08-07 04:34:18 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.f.css,v 1.5 2003-11-15 06:52:19 zaufi Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -12,25 +12,25 @@
  * Define backgrounds (the only difference between two themes)
  */
 div.cbox, div.separator:hover, div#tiki-center > div.simplebox {
-	background: url(img/ltgreen.png) repeat;
+    background: url(img/ltgreen.png) repeat;
 }
 
 div.box, div.separator {
-	background: url(img/dark.png) repeat;
+    background: url(img/dark.png) repeat;
 }
 
 div.separator {
-	background: url(img/grey.png) repeat;
+    background: url(img/grey.png) repeat;
 }
 
 div.box:hover {
-	border: 1px outset #00FF00;
+    border: 1px outset #00FF00;
 }
 
 div.cbox#error-box {
-	background: url(img/red.png) repeat;
+    background: url(img/red.png) repeat;
 }
 
 .linkmenu:hover {
-	background: #70B080;
+    background: #70B080;
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.l.css,v 1.9 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.l.css,v 1.10 2003-11-15 06:52:19 zaufi Exp $
  *
  * Backgrounds for light version of 'Matrix' theme
  *
@@ -16,7 +16,7 @@ td.comform,
 div.commentsedithelp,
 div.commentstoolbar,
 div.commentscomment > div.commentheader {
-	background: #507050;
+    background: #507050;
 }
 
 div.titlebar,
@@ -27,9 +27,9 @@ div.codelisting,
 td.userstoryid,
 td.userstorystatus,
 td.userstorytitle {
-	background: #70B080;
+    background: #70B080;
 }
 
 td.userstoryidwarn {
-	background: #300000;
+    background: #300000;
 }

@@ -1,66 +1,23 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.css,v 1.5 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.css,v 1.6 2003-11-15 06:52:19 zaufi Exp $
  *
  * Directory styles
  *
  */
 
-/* The list of categories */
-div.dircategs {
-}
-
-/* Links to categories */
-.dirlink {
-}
-
-.dirlink:hover {
-}
-
-/* Links to subcategories */
-.dirsublink {
-}
-
-.dirsublink:hover {
-}
-
-/* The list of sites in any category */
-div.dirlistsites {
-}
-
-/* each site in the list of sites */
-div.dirsite {
-}
-
-span.dirsitedesc {
-}
-
 span.dirsitetrail {
-	font-size: 10px;
-}
-
-span.dirsitecats {
-}
-
-/* Links to sites */
-.dirsitelink {
-}
-
-.dirsitelink:hover {
-}
-
-/* Related categories */
-div.dirrelated {
+    font-size: 10px;
 }
 
 /* Footer with stats for the directory */
 td.dirfooter {
-	font-size: 9px;
-	color: #001000;
+    font-size: 9px;
+    color: #001000;
 }
 
 div.dirfooter {
-	color: #001000;
-	border: 2px ridge #00B000;
-	font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+    color: #001000;
+    border: 2px ridge #00B000;
+    font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }

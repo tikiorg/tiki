@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.5 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.6 2003-11-15 06:52:19 zaufi Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -24,13 +24,13 @@ div.codelisting,
 td.userstoryid,
 td.userstorystatus,
 td.userstorytitle {
-	background: url(img/ltgreen.png) repeat;
+    background: url(img/ltgreen.png) repeat;
 }
 
 div.commenttext {
-	background: url(img/dark.png) repeat;
+    background: url(img/dark.png) repeat;
 }
 
 td.userstoryidwarn {
-	background: url(img/red.png) repeat;
+    background: url(img/red.png) repeat;
 }
