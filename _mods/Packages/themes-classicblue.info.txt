@@ -1,0 +1,29 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 20:36:53 $
+
+files: 
+themes/classicblue/theme/styles/classicblue.css styles/classicblue.css
+themes/classicblue/theme/templates/styles/classicblue/error.tpl templates/styles/classicblue/error.tpl
+themes/classicblue/theme/templates/styles/classicblue/tiki-editpage.tpl templates/styles/classicblue/tiki-editpage.tpl
+themes/classicblue/theme/templates/styles/classicblue/tiki-show_page.tpl templates/styles/classicblue/tiki-show_page.tpl
+themes/classicblue/theme/templates/styles/classicblue/tiki-user_menu.tpl templates/styles/classicblue/tiki-user_menu.tpl
+themes/classicblue/theme/templates/styles/classicblue/tiki.tpl templates/styles/classicblue/tiki.tpl
+themes/classicblue/theme/templates/styles/classicblue/modules/mod-login_box.tpl templates/styles/classicblue/modules/mod-login_box.tpl
+
+author:
+colorado
+
+licence:
+GNU/GPL
+
+Description: 
+Variation of BlueMetal
+
+Changelog:
+1 initial package
