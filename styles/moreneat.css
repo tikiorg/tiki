@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.39 2004-03-05 21:33:49 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.40 2004-03-07 23:12:10 mose Exp $
 
 MoreNeat theme
 */
@@ -21,13 +21,12 @@ margin-bottom: 6px;
 }
 a {
 color: #436976;
-padding: 1px;
+padding: 0px;
 }
 a:hover {
 color: #000000;
 background-color: #E9ECEF;
-border: 1px solid #dedede;
-padding: 0;
+padding: 0px;
 }
 span.tabbut {
 	border-top: 1px solid #99bec6;
@@ -143,8 +142,8 @@ div#debugconsole {
   border: 6px ridge #996600;
   font-size: 12px;
 } 
-span.on-option { color: #00C000; }
-span.off-option { color: #005000; }
+span.on-option { color: #0000C0; }
+span.off-option { color: #7B8B44; }
 
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
 

@@ -88,7 +88,7 @@ class ShoutboxLib extends TikiLib {
 		} else {
 			$query = "delete from `tiki_shoutbox` where `user`=? and `timestamp`=? and `hash`=?";
 			$bindvars = array($user,(int)$now,$hash);
-			$this->getOne($query,$bindvars,false);
+			$this->query($query,$bindvars);
 			$query = "insert into `tiki_shoutbox`(`message`,`user`,`timestamp`,`hash`) values(?,?,?,?)";
 			$bindvars = array($message,$user,(int)$now,$hash);
 		}

@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.15 2004-02-09 18:20:22 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.16 2004-03-07 23:12:09 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -15,24 +15,15 @@
  */
 
 function wikiplugin_split_help() {
-	return tra("Split a page into rows and columns").":<br />~np~{SPLIT()}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
+	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1])}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
 }
 
 /*
- * \note This plugin should carefuly change text it have
- *       bcose some of wiki synataxes are sensitive for
- *       start of line (like lists and headers)... such
- *       user lines must stay with the same layout after
- *       this plugin...
- *
- * Attention: (by zaufi)
- *  Smbd can explain what for this __nasty__ hack needed?
- *  The only result I see is that many wiki syntaxes become
- *  broken... like lists, -=titles=- and some others...
- *
- * $sections[$i] = preg_replace("/([\r\n])/","<br />",$sections[$i]);
- *
- * so in refactored plugin this code not present...
+ * \note This plugin should carefuly change text it have to parse
+ *       because some of wiki syntaxes are sensitive for
+ *       start of new line ('\n' character - e.g. lists and headers)... such
+ *       user lines must stay with the same layout when applying
+ *       this plugin to render them properly after...
  */
 function wikiplugin_split($data, $params) {
 	global $tikilib;
@@ -40,8 +31,8 @@ function wikiplugin_split($data, $params) {
 
     // Remove first <ENTER> if exists...
     // it may be here if present after {SPLIT()} in original text
-	if (substr($data, 0, 1) == "\n") $data = substr($data, 1);
-
+	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
+	
 	extract ($params);
     $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
     $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
@@ -74,14 +65,17 @@ function wikiplugin_split($data, $params) {
         $idx = 1;
 	    foreach ($r as $i)
         {
+					// Remove first <ENTER> if exists
+					if (substr($i, 0, 2) == "\r\n") $i = substr($i, 2);
             // Generate colspan for last element if needed
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
             // Add cell to table
     		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.'>'
-			.preg_replace("/\\n/", "<br />", $i)
-//                     . ((substr($i, 0, 1) == "\n") || (substr($i, 0, 1) == "\r") ? $i : "\n".$i)
-//                     . ((substr($i, -1) == "\n") || (substr($i, -1) == "\r") ? '' : "\n")
+				// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
+				."\n"
+				// now prepend any carriage return and newline char with br
+				.preg_replace("/\\r\\n/", "<br />\r\n", $i)
                      . '</td>';
         }
         

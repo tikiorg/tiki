@@ -94,6 +94,29 @@ class RankLib extends TikiLib {
 		return $ret;
 	}
 
+	function forums_ranking_last_posts($limit) {
+		$query = "select * from
+		`tiki_comments`,`tiki_forums` where
+		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
+		order by `commentDate` desc";
+
+		$result = $this->query($query,array(),$limit,0);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$aux["name"] = $res["name"] . ': ' . $res["title"];
+
+			$aux["hits"] = $this->get_long_datetime($res["commentDate"]);
+			$aux["href"] = 'tiki-view_forum_thread.php?forumId=' . $res["forumId"] . '&amp;comments_parentId=' . $res["threadId"];
+			$ret[] = $aux;
+		}
+
+		$ret["data"] = $ret;
+		$ret["title"] = tra("Forums last posts");
+		$ret["y"] = tra("Topic date");
+		return $ret;
+	}
+
 	function forums_ranking_most_read_topics($limit) {
 		$query = "select
 		tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`

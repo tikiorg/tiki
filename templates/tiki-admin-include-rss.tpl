@@ -20,7 +20,9 @@
         <tr><td class="form">{tr}Feed for mapfiles{/tr}:</td><td><input type="checkbox" name="rss_mapfiles" {if $rss_mapfiles eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_mapfiles" size="5" value="{$max_rss_mapfiles|escape}" /></td></tr>
 
         <tr><td class="form" colspan="3">&nbsp;</td></tr>
-        <tr><td class="form">{tr}Default RDF version{/tr}:</td><td class="form"><input type="text" name="rssfeed_default_version" size="1" value="{$rssfeed_default_version|escape}" />.0</td><td class="form">{tr}Specification{/tr} <a href="http://www.w3.org/TR/rdf-schema/" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>, <a href="http://blogs.law.harvard.edu/tech/rss" class="tikihelp" title="{tr}Specification{/tr}: RDF 2.0">RDF 2.0</a></td></tr>
+        <tr><td class="form">{tr}Default RDF version{/tr}:</td><td class="form"><input type="text" name="rssfeed_default_version" size="1" value="{$rssfeed_default_version|escape}" />.0</td><td class="form">{tr}Specification{/tr} 1: <a href="http://www.w3.org/TR/rdf-schema/" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>,
+        2: <a href="http://blogs.law.harvard.edu/tech/rss" class="tikihelp" title="{tr}Specification{/tr}: RDF 2.0">RDF 2.0</a>,
+        5: <a href="http://bitworking.org/rfc/draft-gregorio-07.html" class="tikihelp" title="{tr}Specification{/tr}: Atom 0.3">Atom 0.3</a>
         <tr><td class="form">{tr}Append CSS file to feed urls{/tr}:</td><td class="form"><input type="checkbox" name="rssfeed_css" {if $rssfeed_css eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Language{/tr}</a>:</td><td class="form"><input type="text" name="rssfeed_language" size="10" length="40" value="{$rssfeed_language|escape}" /></td></tr>
         <tr><td class="form" colspan="3">&nbsp;</td></tr>

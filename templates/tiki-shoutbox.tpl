@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.12 2004-01-30 08:49:22 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.13 2004-03-07 23:12:10 mose Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -24,10 +24,11 @@
 
 {if $tiki_p_post_shoutbox eq 'y'}
 <h2>{tr}Post or edit a message{/tr}</h2>
-<form action="tiki-shoutbox.php" method="post">
+{js_maxlength textarea=message maxlength=255}
+<form action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 <input type="hidden" name="msgId" value="{$msgId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message" maxlength="250">{$message|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

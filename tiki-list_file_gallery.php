@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.16 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.17 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($feature_file_galleries != 'y') {
 }
 
 if ($_REQUEST["galleryId"] == 0) {
-	$smarty->assign('msg', tra("Unexistant gallery"));
+	$smarty->assign('msg', tra("Non-existent gallery"));
 
 	$smarty->display("error.tpl");
 	die;

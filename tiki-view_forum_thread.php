@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.55 2004-02-09 18:20:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.56 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -430,6 +430,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					$_REQUEST["comments_title"] .
 					"\n\n" . $_REQUEST["comments_data"],
 					"From: " . $from . "\r\n" .
+					"Reply-To: " . $from . "\r\n" .
 					"Message-Id: <" . $message_id . ">\r\n" .
 					$in_reply_line .
 					"Content-type: text/plain;charset=utf-8\r\n"

@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.27 2004-03-01 17:21:29 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.28 2004-03-07 23:12:11 mose Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
-
+<div id="mainmenu" style="display: block">
 <div><a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a></div>
 {if $feature_chat eq 'y'}
 {if $tiki_p_chat eq 'y'}
@@ -463,6 +463,6 @@
   </div>
   
 {/if}
-
+</div>
 {/tikimodule} 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.30 2004-02-26 06:30:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.31 2004-03-07 23:12:10 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -76,7 +76,8 @@
 
   {* don't show comments if feature disabled or not enough rights *}
   {if $feature_wiki_comments == 'y'
-  && ($tiki_p_read_comments  == 'y'
+  && (($tiki_p_read_comments  == 'y'
+  && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
    <td>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.23 2004-01-15 09:56:26 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.24 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,6 +28,7 @@ $descId = "data";
 $dateId = "created";
 $titleId = "blogtitle";
 $readrepl = "tiki-view_blog_post.php?$id=";
+$uniqueid = $feed;
 
 require ("tiki-rss_readcache.php");
 

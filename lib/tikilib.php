@@ -40,35 +40,44 @@ class TikiLib extends TikiDB {
 
 /*shared*/
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
-    global $use_proxy,$proxy_host,$proxy_port;
-    // test url :
-    if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%]*$/",$url)) return false;
-    // rewrite url if sloppy # added a case for https urls
-    if ( (substr($url,0,7) <> "http://") and
-         (substr($url,0,8) <> "https://")
-       ) {
-      $url = "http://" . $url;
-    }
-    // (cdx) params for HTTP_Request.
-    // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
-    $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
+	  global $use_proxy,$proxy_host,$proxy_port;
+		// test url :
+		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+]*$/",$url)) return false;
+	  // rewrite url if sloppy # added a case for https urls
+	  if ( (substr($url,0,7) <> "http://") and
+	       (substr($url,0,8) <> "https://")
+	     ) {
+			$url = "http://" . $url;
+	  }
+	  // (cdx) params for HTTP_Request.
+	  // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
+	  $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
+	
+	  if (substr_count($url, "/") < 3) {
+			$url .= "/";
+	  }
+	  // Proxy settings
+	  if ($use_proxy == 'y') {
+			$aSettingsRequest["proxy_host"]=$proxy_host;
+			$aSettingsRequest["proxy_port"]=$proxy_port;
+	  }
+	  $req = &new HTTP_Request($url, $aSettingsRequest);
+	  $data="";
+	  // (cdx) return false when can't connect
+	  // I prefer throw a PEAR_Error. You decide ;)
+	  if (PEAR::isError($oError=$req->sendRequest())) {
+			$fp = fopen($url, "r");
 
-    if (substr_count($url, "/") < 3) {
-      $url .= "/";
-    }
-    // Proxy settings
-    if ($use_proxy == 'y') {
-      $aSettingsRequest["proxy_host"]=$proxy_host;
-      $aSettingsRequest["proxy_port"]=$proxy_port;
-    }
-    $req = &new HTTP_Request($url, $aSettingsRequest);
-    // (cdx) return false when can't connect
-    // I prefer throw a PEAR_Error. You decide ;)
-    if (PEAR::isError($oError=$req->sendRequest())) {
-      return false;
-    }
-    $data = $req->getResponseBody();
-    return $data;
+			if ($fp) {
+				$data = '';
+				while(!feof($fp)) {
+					$data .= fread($fp,4096);
+				}
+			fclose ($fp);
+			}
+			if ($data =="") return false;
+	  } else $data = $req->getResponseBody();
+	  return $data;
 }
 
 /*shared*/
@@ -1119,17 +1128,25 @@ function get_faq($faqId) {
 
 /*shared*/
 function genPass() {
+	  $length=8;
     $vocales = "aeiouAEIOU";
     $consonantes = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0123456789_";
     $r = '';
-    for ($i = 0; $i < 8; $i++) {
-  if ($i % 2) {
-      $r .= $vocales{rand(0, strlen($vocales) - 1)};
-  } else {
-      $r .= $consonantes{rand(0, strlen($consonantes) - 1)};
-  }
+    for ($i = 0; $i < $length; $i++) {
+	if ($i % 2) {
+	    $r .= $vocales{rand(0, strlen($vocales) - 1)};
+	} else {
+	    $r .= $consonantes{rand(0, strlen($consonantes) - 1)};
+	}
     }
     return $r;
+}
+
+// generate a random string (for unsubscription code etc.)
+function genRandomString($base="") {
+		if ($base == "") $base = $this->genPass();
+		$base .= date("U");
+    return md5($base);
 }
 
 // This function calculates the pageRanks for the tiki_pages
@@ -4463,139 +4480,133 @@ function parse_data($data) {
     // loop: process all lines
     foreach ($lines as $line) {
 
-  // Check for titlebars...
-  // NOTE: that title bar should be start from begining of line and
-  //     be alone on that line to be autoaligned... else it is old styled
-  //     styled title bar...
-  if (substr(ltrim($line), 0, 2) == '-=' && substr(rtrim($line), -2, 2) == '=-') {
-      // This is not list item -- must close lists currently opened
-      while (count($listbeg))
-    $data .= array_shift($listbeg);
+	// Check for titlebars...
+	// NOTE: that title bar should be start from begining of line and
+	//	   be alone on that line to be autoaligned... else it is old styled
+	//	   styled title bar...
+	if (substr(ltrim($line), 0, 2) == '-=' && substr(rtrim($line), -2, 2) == '=-') {
+	    // This is not list item -- must close lists currently opened
+	    while (count($listbeg))
+		$data .= array_shift($listbeg);
 
-      //
-      $align_len = strlen($line) - strlen(ltrim($line));
+	    //
+	    $align_len = strlen($line) - strlen(ltrim($line));
 
-      // My textarea size is about 120 space chars.
-      //define('TEXTAREA_SZ', 120);
+	    // My textarea size is about 120 space chars.
+	    //define('TEXTAREA_SZ', 120);
 
-      // NOTE: That strict math formula (split into 3 areas) gives
-      //     bad visual effects...
-      // $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
-      //    : (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
-      //
-      // Going to introduce some heuristic here :)
-      // Visualy (remember that space char is thin) center starts at 25 pos
-      // and 'right' from 60 (HALF of full width!) -- thats all :)
-      //
-      // NOTE: Guess align only if more than 10 spaces before -=title=-
-      if ($align_len > 10) {
-    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+	    // NOTE: That strict math formula (split into 3 areas) gives
+	    //	   bad visual effects...
+	    // $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left" 
+	    //		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+	    //
+	    // Going to introduce some heuristic here :)
+	    // Visualy (remember that space char is thin) center starts at 25 pos
+	    // and 'right' from 60 (HALF of full width!) -- thats all :)
+	    //
+	    // NOTE: Guess align only if more than 10 spaces before -=title=-
+	    if ($align_len > 10) {
+		$align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
 
-    $align = ' style="text-align: ' . $align . ';"';
-      } else
-    $align = '';
+		$align = ' style="text-align: ' . $align . ';"';
+	    } else
+		$align = '';
 
-      //
-      $line = trim($line);
-      $line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-      $data .= $line;
-      // TODO: Case is handled ...  no need to check other conditions
-      //     (it is apriory known all they false, moreover sometimes
-      //     check procedure need > O(0) of compexity)
-      //     -- continue to next line...
-      //     MUST replace all remaining parse blocks to the same logic...
-      continue;
-  }
+	    //
+	    $line = trim($line);
+	    $line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+	    $data .= $line;
+	    // TODO: Case is handled ...  no need to check other conditions
+	    //	   (it is apriory known all they false, moreover sometimes
+	    //	   check procedure need > O(0) of compexity)
+	    //	   -- continue to next line...
+	    //	   MUST replace all remaining parse blocks to the same logic...
+	    continue;
+	}
 
-  // Replace old styled titlebars
-  if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
-      $data .= $line;
+	// Replace old styled titlebars 
+	if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
+	    $data .= $line;
 
-      continue;
-  }
+	    continue;
+	}
 
-  // check if we are inside a table, if so, ignore monospaced and do
-  // not insert <br/>
-  $inTable += substr_count($line, "<table");
-  $inTable -= substr_count($line, "</table");
+	// check if we are inside a table, if so, ignore monospaced and do
+	// not insert <br/>
+	$inTable += substr_count($line, "<table");
+	$inTable -= substr_count($line, "</table");
 
-  // If the first character is ' ' and we are not in pre then we are in pre
-  global $feature_wiki_monosp;
+	// If the first character is ' ' and we are not in pre then we are in pre
+	global $feature_wiki_monosp;
 
-  if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
-      // This is not list item -- must close lists currently opened
-      while (count($listbeg))
-    $data .= array_shift($listbeg);
+	if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
+	    // This is not list item -- must close lists currently opened
+	    while (count($listbeg))
+		$data .= array_shift($listbeg);
 
-      // If the first character is space then
-      // change spaces for &nbsp;
-      $line = '<font face="courier">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
-  }
+	    // If the first character is space then
+	    // change spaces for &nbsp;
+	    $line = '<font face="courier">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
+	}
 
-  // Replace Hotwords before begin
-  $line = $this->replace_hotwords($line, $words);
+	// Replace Hotwords before begin
+	$line = $this->replace_hotwords($line, $words);
 
-  // Replace monospaced text
-  $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
-  // Replace bold text
-  $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-  $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-  // Replace definition lists
-  $line = preg_replace("/^;([^:]+):([^\n]+)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+	// Replace monospaced text
+	$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+	// Replace bold text
+	$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+	$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+	// Replace definition lists
+	$line = preg_replace("/^;(.*):[^\/\/](.*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
-  if (0) {
-      $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
+	if (0) {
+	    $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
 
-      // Segundo intento reemplazar los [link] comunes
-      $line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
-      $line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
-  }
+	    // Segundo intento reemplazar los [link] comunes
+	    $line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
+	    $line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
+	}
 
-  // This line is parseable then we have to see what we have
-  if (substr($line, 0, 3) == '---') {
-      // This is not list item -- must close lists currently opened
-      while (count($listbeg))
-    $data .= array_shift($listbeg);
+	// This line is parseable then we have to see what we have
+	if (substr($line, 0, 3) == '---') {
+	    // This is not list item -- must close lists currently opened
+	    while (count($listbeg))
+		$data .= array_shift($listbeg);
 
-      $line = '<hr/>';
-  } else {
-      $litype = substr($line, 0, 1);
+	    $line = '<hr/>';
+	} else {
+	    $litype = substr($line, 0, 1);
 
-      if ($litype == '*' || $litype == '#') {
-    $listlevel = $this->how_many_at_start($line, $litype);
+	    if ($litype == '*' || $litype == '#') {
+		$listlevel = $this->how_many_at_start($line, $litype);
 
-    $liclose = '</li>';
-    $addremove = 0;
+		$liclose = '</li>';
+		$addremove = 0;
 
-    if ($listlevel < count($listbeg)) {
-        while ($listlevel != count($listbeg))
-      $data .= array_shift($listbeg);
+		if ($listlevel < count($listbeg)) {
+		    while ($listlevel != count($listbeg))
+			$data .= array_shift($listbeg);
 
-        if (substr(current($listbeg), 0, 5) != '</li>')
-      $liclose = '';
-    } elseif ($listlevel > count($listbeg)) {
-        $listyle = '';
+		    if (substr(current($listbeg), 0, 5) != '</li>')
+			$liclose = '';
+		} elseif ($listlevel > count($listbeg)) {
+		    $listyle = '';
 
-        while ($listlevel != count($listbeg)) {
-      array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
+		    while ($listlevel != count($listbeg)) {
+			array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
 
-      if ($listlevel == count($listbeg)) {
-          $listate = substr($line, $listlevel, 1);
+			if ($listlevel == count($listbeg)) {
+			    $listate = substr($line, $listlevel, 1);
 
-          if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-        $thisid = 'id' . microtime() * 1000000;
+			    if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+				$thisid = 'id' . microtime() * 1000000;
 
-        $data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-        $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-        $addremove = 1;
-          }
-      }
-
-      $data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-        }
-
-        $liclose = '';
-    }
+				$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+				$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+				$addremove = 1;
+			    }
+			}
 
     if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
         $data .= array_shift($listbeg);
@@ -5445,9 +5456,9 @@ function list_languages($path = false) {
     $h = opendir($path);
 
     while ($file = readdir($h)) {
-  if ($file != '.' && $file != '..' && $file != 'CVS' && is_dir("$path/$file") ) {
-      $languages[] = $file;
-  }
+	if ($file != '.' && $file != '..' && $file != 'CVS' && is_dir("$path/$file") ) {
+	    $languages[] = $file;
+	}
     }
 
     closedir ($h);

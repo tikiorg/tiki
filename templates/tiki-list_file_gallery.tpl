@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.19 2004-03-07 06:26:40 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.20 2004-03-07 23:12:10 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
@@ -198,16 +198,28 @@
 
   </div>
 </div>
-{if $feature_file_galleries_comments eq 'y'}
-{if $tiki_p_read_comments eq 'y'}
+{if $feature_file_galleries_comments == 'y'
+  && (($tiki_p_read_comments  == 'y'
+  && $comments_cant != 0)
+  ||  $tiki_p_post_comments  == 'y'
+  ||  $tiki_p_edit_comments  == 'y')}
 <div id="page-bar">
 <table>
 <tr><td>
 <div class="button2">
-<a href="javascript:toggle('comzone');" class="linkbut">{$comments_cant} {tr}comments{/tr}</a>
+      <a title="View/post comments"
+         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+         class="linkbut">
+	{if $comments_cant == 0}
+          {tr}add comment{/tr}
+        {elseif $comments_cant == 1}
+          <span class="highlight">{tr}1 comment{/tr}</span>
+        {else}
+          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+        {/if}
+      </a>
 </div>
 </td></tr></table>
 </div>
 {include file=comments.tpl}
-{/if}
 {/if}

@@ -10,14 +10,25 @@
 {tr}Total{/tr}: {$poll_info.votes} {tr}votes{/tr}<br /><br />
 <a href="tiki-old_polls.php" class="link">{tr}Other Polls{/tr}</a><br /><br />
 </div>
-{if $feature_poll_comments eq 'y'}
-{if $tiki_p_read_comments eq 'y'}
+{if $feature_poll_comments == 'y'
+&& (($tiki_p_read_comments  == 'y'
+&& $comments_cant != 0)
+||  $tiki_p_post_comments  == 'y'
+||  $tiki_p_edit_comments  == 'y')}
 <div id="page-bar">
 <span class="button2">
-<a href="javascript:toggle('comzone');" class="linkbut">{$comments_cant} {tr}comments{/tr}</a>
+      <a title="View/post comments"
+         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+         class="linkbut">
+	{if $comments_cant == 0}
+          {tr}add comment{/tr}
+        {elseif $comments_cant == 1}
+          <span class="highlight">{tr}1 comment{/tr}</span>
+        {else}
+          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+        {/if}
+      </a>
 </span>
 </div>
 {include file=comments.tpl}
 {/if}
-{/if}
-

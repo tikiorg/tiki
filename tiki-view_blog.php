@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.31 2004-01-30 22:47:47 swillie Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.32 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -177,6 +177,7 @@ $maxRecords = $blog_data["maxPosts"];
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('maxRecords', $maxRecords);
 
 if ($listpages["cant"] > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);

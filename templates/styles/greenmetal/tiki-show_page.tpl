@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.4 2004-02-26 06:30:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.5 2004-03-07 23:12:11 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
@@ -57,6 +57,38 @@
 {/if}
 
 </td>
+{if $feature_backlinks eq 'y' and $backlinks}
+  <td style="text-align:right;">
+    <form href="tiki-index.php">
+      <select name="page" onchange="page.form.submit()">
+            <option value="{$page}">{tr}backlinks{/tr}...</option>
+                {section name=back loop=$backlinks}
+                  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+                {/section}
+          </select>
+    </form>
+  </td>
+{/if}
+{if isset($showstructs) and (count($showstructs) ne 0)}
+  <td style="text-align:right;">
+    <form href="tiki-index.php">
+      <select name="page_ref_id" onchange="page_ref_id.form.submit()">
+            <option>{tr}Structures{/tr}...</option>
+                {section name=struct loop=$showstructs}
+                  <option value="{$showstructs[struct].req_page_ref_id}">
+{if $showstructs[struct].page_alias}
+{$showstructs[struct].page_alias}
+{else}
+{$showstructs[struct].pageName}
+{/if}
+          </option>
+                {/section}
+          </select>
+    </form>
+  </td>
+{else}
+    <td>&nbsp;</td>
+{/if}
 </tr>
 </table>
 

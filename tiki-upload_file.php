@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.24 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.25 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,7 +122,17 @@ if (isset($_REQUEST["upload"])) {
 				}
 			}
 
-			$fp = fopen($_FILES["userfile$i"]['tmp_name'], "rb");
+			$file_name = $_FILES["userfile$i"]['name'];
+			$file_tmp_name = $_FILES["userfile$i"]['tmp_name'];
+			$tmp_dest = $tmpDir . "/" . $file_name;
+			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+				$smarty->assign('msg', tra('Errors detected'));
+				$smarty->display("error.tpl");
+				die();
+			}
+			
+			
+			$fp = fopen($tmp_dest, "rb");
 
 			if (!$fp) {
 				$errors[] = tra('Cannot read file');

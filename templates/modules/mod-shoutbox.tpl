@@ -1,9 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.23 2004-02-18 16:41:28 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.24 2004-03-07 23:12:10 mose Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox"}
     {if $tiki_p_post_shoutbox eq 'y'}
-      <form action="{$shout_ownurl}" method="post">
+      {js_maxlength textarea=shout_msg maxlength=255}
+      <form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">
       <div align="center">
         <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
 	<br />

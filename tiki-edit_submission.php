@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.34 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.35 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -196,9 +196,19 @@ if (isset($_REQUEST["preview"])) {
 
 	// Parse the information of an uploaded file and use it for the preview
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+		
+		$file_name = $_FILES['userfile1']['name'];
+		$file_tmp_name = $_FILES['userfile1']['tmp_name'];
+		$tmp_dest = $tmpDir . "/" . $file_name;
+		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+			$smarty->assign('msg', tra('Errors detected'));
+			$smarty->display("error.tpl");
+			die();
+		}
 
-		$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
+		$fp = fopen($tmp_dest, "rb");
+		$data = fread($fp, filesize($tmp_dest));
+		
 		fclose ($fp);
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];

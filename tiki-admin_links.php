@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.11 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.12 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,7 +43,7 @@ if ($_REQUEST["editurl"] != 'n') {
 	$info = $flinkslib->get_featured_link($_REQUEST["editurl"]);
 
 	if (!$info) {
-		$smarty->assign('msg', tra("Unexistant link"));
+		$smarty->assign('msg', tra("Non-existent link"));
 
 		$smarty->display("error.tpl");
 		die;

@@ -49,7 +49,7 @@ class NlLib extends TikiLib {
 		global $sender_email;
 		$info = $this->get_newsletter($nlId);
 		$smarty->assign('info', $info);
-		$code = md5($this->genPass());
+		$code = $this->genRandomString($sender_email);
 		$now = date("U");
 		if ($info["validateAddr"] == 'y') {
 			// Generate a code and store it and send an email  with the

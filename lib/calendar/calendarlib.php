@@ -245,11 +245,11 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "forum":
-				// have to fix that query. tehre is distinction to do beetween comments and forum item ?
+				// have to fix that query. tehre is distinction to do between comments and forum item ?
 				$query = "select c.`commentDate` as created, c.`threadId` as threadId, c.`userName` as user, c.`title` as name, f.`name` as forum, f.`forumId` as forumid ";
 				$query.= "from `tiki_comments` as c left join `tiki_forums` as f on c.`object`=f.`forumId` and c.`objectType` = ?  ";
-				$query.= "where f.`forumId` != ? and (c.`commentDate`>? and c.`commentDate`<?)";
-				$result = $this->query($query,array('forum','',$tstart,$tstop));
+				$query.= "where (c.`commentDate`>? and c.`commentDate`<?)";
+				$result = $this->query($query,array('forum',$tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -402,7 +402,7 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "nl":
-				$query = "select count(s.`email`) as count, FROM_UNIXTIME(s.`subscribed`,'%d') as d, max(s.`subscribed`) as day, s.`nlId` as nlId, n.`name` as name ";
+				$query = "select count(s.`email`) as count, max(s.`subscribed`) as day, s.`nlId` as nlId, n.`name` as name ";
 				$query.= " from `tiki_newsletter_subscriptions` as s left join `tiki_newsletters` as n ";
 				$query.= " on n.`nlId`=s.`nlId`  where (`subscribed`>? and `subscribed`<?) group by s.`nlId`, d";
 				$result = $this->query($query,array($tstart,$tstop));
@@ -476,7 +476,7 @@ class CalendarLib extends TikiLib {
 	function get_item($calitemId) {
 		$query = "select i.`calitemId` as calitemId, i.`calendarId` as calendarId, i.`user` as user, i.`start` as start, i.`end` as end, t.`name` as calname, ";
 		$query.= "i.`locationId` as locationId, l.`name` as locationName, i.`categoryId` as categoryId, c.`name` as categoryName, i.`priority` as priority, ";
-		$query.= "i.`status` as status, i.`url` as url, i.`lang` as lang, i.`name` as name, i.`description` as description, i.`created` as created, i.`lastModif` as lastModif, ";
+		$query.= "i.`status` as status, i.`url` as url, i.`lang` as lang, i.`name` as name, i.`description` as description, i.`created` as created, i.`lastmodif` as lastModif, ";
 		$query.= "t.`customlocations` as customlocations, t.`customcategories` as customcategories, t.`customlanguages` as customlanguages, t.`custompriorities` as custompriorities, ";
 		$query.= "t.`customparticipants` as customparticipants from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
 		$query.= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` where `calitemId`=?";

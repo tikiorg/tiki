@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.5 2004-01-30 08:17:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_wiki_attachment.php,v 1.6 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,6 +33,11 @@ $content = &$info["data"];
 //die;
 header ("Content-type: $type");
 header ("Content-Disposition: attachment; filename=\"$file\"");
+
+// Added March04 Damian, Akira123 reported test
+header ("Expires: 0");
+header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header ("Pragma: public");
 
 if ($info["path"]) {
 	header("Content-Length: ". filesize( $w_use_dir.$info["path"] ) );
