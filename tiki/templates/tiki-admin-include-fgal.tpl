@@ -72,7 +72,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
               {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Description{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_descripton"
+          <td class="form"><input type="checkbox" name="fgal_list_description"
               {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Created{/tr}</td>
