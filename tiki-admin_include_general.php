@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.22 2004-04-08 06:20:17 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.23 2004-05-05 18:26:47 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,7 +163,7 @@ $icon_styles = array();
 $h = opendir("img/icons/");
 
 while ($file = readdir($h)) {
-    if (is_dir("img/icons/".$file) && !('.'==$file || '..'==$file)) {
+    if (is_dir("img/icons/".$file) && !('.'==$file || '..'==$file || 'CVS'==$file)) {
         $icon_styles[] = $file;
     }
 }
