@@ -94,7 +94,7 @@ class UsersLib extends TikiLib {
   	static $rv = array();
   	
   	if (!isset($rv[$user])) {
-  	  $query = "select `login` from `users_users` where `login`=?";
+  	  $query = "select `login` from `users_users` where `login` = ?";
       $result = $this->query($query,array($user));
       $rv[$user] = $result->numRows();
     }
@@ -349,12 +349,12 @@ class UsersLib extends TikiLib {
         return USER_NOT_FOUND;
 		
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $hash=md5($user.$pass.$res['login']);
+    $hash=md5($user.$pass);
 		$hash2 = md5($pass);
     // next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
     if($feature_challenge=='n' || empty($response)) {
-      $query = "select `login` from `users_users` where ".$this->convert_binary()." `login` = ? and `hash`=?";
-      $result = $this->query($query,array($user,$hash));
+      $query = "select `login` from `users_users` where ".$this->convert_binary()." `login` = ? and (`hash`=? or `hash`=?)";
+      $result = $this->query($query,array($user,$hash,$hash2));
       if($result->numRows()) {
         $t = date("U");
         // Check
