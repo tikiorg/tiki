@@ -963,7 +963,8 @@ DROP TABLE "tiki_comments";
 
 CREATE TABLE "tiki_comments" (
   "threadId" bigserial,
-  "object" varchar(32) NOT NULL default '',
+  "object" varchar(255) NOT NULL default '',
+  "objectType" varchar(32) NOT NULL default '',
   "parentId" bigint default NULL,
   "userName" varchar(200) default NULL,
   "commentDate" bigint default NULL,
@@ -978,6 +979,8 @@ CREATE TABLE "tiki_comments" (
   "user_ip" varchar(15) default NULL,
   "summary" varchar(240) default NULL,
   "smiley" varchar(80) default NULL,
+  "message_id" varchar(250) default NULL,
+  "in_reply_to" varchar(250) default NULL,
   PRIMARY KEY ("threadId")
 
 
@@ -1524,6 +1527,7 @@ CREATE TABLE "tiki_forums" (
   "moderator_group" varchar(200) default NULL,
   "approval_type" varchar(20) default NULL,
   "outbound_address" varchar(250) default NULL,
+  "outbound_from" varchar(250) default NULL,
   "inbound_pop_server" varchar(250) default NULL,
   "inbound_pop_port" smallint default NULL,
   "inbound_pop_user" varchar(200) default NULL,
@@ -1542,6 +1546,7 @@ CREATE TABLE "tiki_forums" (
   "topics_list_lastpost" char(1) default NULL,
   "topics_list_author" char(1) default NULL,
   "vote_threads" char(1) default NULL,
+  "forum_last_n" smallint default 0,
   PRIMARY KEY ("forumId")
 )   ;
 
@@ -1816,7 +1821,6 @@ CREATE TABLE "tiki_images" (
 
 
 
-
 )   ;
 
 CREATE  INDEX "tiki_images_name" ON "tiki_images"("name");
@@ -1824,7 +1828,6 @@ CREATE  INDEX "tiki_images_description" ON "tiki_images"("description");
 CREATE  INDEX "tiki_images_hits" ON "tiki_images"("hits");
 CREATE  INDEX "tiki_images_ti_gId" ON "tiki_images"("galleryId");
 CREATE  INDEX "tiki_images_ti_cr" ON "tiki_images"("created");
-CREATE  INDEX "tiki_images_ti_hi" ON "tiki_images"("hits");
 CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user");
 CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
 
@@ -2352,7 +2355,10 @@ CREATE TABLE "tiki_newsletters" (
   "lastSent" bigint default NULL,
   "editions" bigint default NULL,
   "users" bigint default NULL,
+  "allowUserSub" char(1) default 'y',
   "allowAnySub" char(1) default NULL,
+  "unsubMsg" char(1) default 'y',
+  "validateAddr" char(1) default 'y',
   "frequency" bigint default NULL,
   PRIMARY KEY ("nlId")
 )   ;
@@ -2450,6 +2456,7 @@ CREATE TABLE "tiki_pages" (
   "points" integer default NULL,
   "votes" integer default NULL,
   "cache" text,
+  "wiki_cache" bigint default 0,
   "cache_timestamp" bigint default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
@@ -2457,10 +2464,8 @@ CREATE TABLE "tiki_pages" (
 
 
 
-
 ) ;
 
-CREATE  INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
 CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","data");
@@ -3935,6 +3940,7 @@ DROP TABLE "users_groups";
 CREATE TABLE "users_groups" (
   "groupName" varchar(30) NOT NULL default '',
   "groupDesc" varchar(255) default NULL,
+  "groupHome" varchar(255),
   PRIMARY KEY ("groupName")
 ) ;
 
@@ -4406,6 +4412,22 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_css', 'Can create new css suffixed with -user', 'registered', 'tiki');
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -4451,6 +4473,7 @@ CREATE TABLE "users_users" (
   "password" varchar(30) NOT NULL default '',
   "provpass" varchar(30) default NULL,
   "realname" varchar(80) default NULL,
+  "default_group" varchar(255),
   "homePage" varchar(200) default NULL,
   "lastLogin" bigint default NULL,
   "currentLogin" bigint default NULL,
@@ -4665,6 +4688,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comment
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_articles','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_babelfish','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_babelfish_logo','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_backlinks','y');
@@ -5418,6 +5447,23 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'y');
+
+
+
+-- Dynamic variables
+CREATE  "TABLE" tiki_dynamic_variables( name varchar( 40  ) not null,  "DATA" text,  PRIMARY  KEY ( name )  );
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 
 ;
