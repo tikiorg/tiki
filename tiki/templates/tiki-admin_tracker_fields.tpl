@@ -1,11 +1,11 @@
 <a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a><br /><br />
-[<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
+<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
-|<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
-|<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="link">{tr}Edit this tracker{/tr}</a>
+<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
+<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a>
 {/if}
-|<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="link">{tr}View this tracker items{/tr}</a>
-]<br /><br />
+<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a>
+<br /><br />
 <h2>{tr}Edit tracker fields{/tr}</h2>
 <form action="tiki-admin_tracker_fields.php" method="post">
 <input type="hidden" name="fieldId" value="{$fieldId|escape}" />
