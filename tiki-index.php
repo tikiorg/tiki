@@ -35,11 +35,6 @@ if(!isset($_REQUEST["page"])) {
 }
 $smarty->assign_by_ref('page',$page);
 
-require_once('tiki-pagesetup.php');
-
-$creator = $wikilib->get_creator($page);
-$smarty->assign('creator',$creator);
-
 // Let creator set permissions
 if($wiki_creator_admin == 'y') {
   if ($creator && $user && ($creator==$user)) {
@@ -74,6 +69,10 @@ if(empty($info)) {
   $page = $info['pageName'];
 }
 
+require_once('tiki-pagesetup.php');
+
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
