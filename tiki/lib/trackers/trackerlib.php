@@ -314,7 +314,7 @@ class TrackerLib extends TikiLib {
 				if (isset($fopt["options"])) {
 					$fopt["options_array"] = split(',',$fopt["options"]);
 				}
-				if ($fieldId == $csort_mode) {
+				if (!$csort_mode || ($fieldId == $csort_mode)) {
 					$kx = $fopt["value"].'.'.$itid;
 				}
 				$last[$fieldId] = $fopt["value"];
