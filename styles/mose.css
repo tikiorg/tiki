@@ -13,7 +13,9 @@ margin-left: 0px;
 margin-bottom: 0px;
 margin-right: 0px;
 }
-
+table
+{
+}
 /* 
 GENERAL LAYOUT EXPLANATION
 
@@ -42,27 +44,61 @@ background-color: #EFEFE7;
 height: 100%;
 width: 100%;
 margin: 0px;
+padding: 0;
 }
 
 /* 
 This is the header 
 */
-DIV#tiki-top
+TABLE#tiki-top
 {
 font-size: 10px;
+color: #7a6a59;
+width: 100%;
+}
+#tiki-top .linkh
+{
+color: #FFFFFF;
+font-weight: bold;
+letter-spacing: 2px;
+text-decoration: none;
+padding-left: 4px;
+padding-right: 4px;
+}
+#tiki-top .left
+{
+border: 1px solid black;
+background-color: #000000;
+color: #FFFFFF;
+padding-left: 3px;
+padding-right: 3px;
+width: 180px;
+}
+#tiki-top .right
+{
+border: 1px solid black;
+background-color: #000000;
+color: #FFFFFF;
+padding-left: 4px;
+padding-right: 2px;
+width: 180px;
+font-size: 9px;
+vertical-align: bottom;
+}
+#tiki-top .center
+{
 background-color: #DED6C6;
 color: #5A4A39;
-padding-right: 5px;
-padding-left: 6px;
+vertical-align: bottom;
+width: auto;
 }
-
 #tiki-top .link
 {
 background-color: #5A4A39;
 color: #FFFFFF;
-padding-left: 10px;
-padding-right: 10px;
-margin-left: 4px;
+padding-left: 6px;
+padding-right: 6px;
+paddin-bottom: 2px;
 }
 
 #tiki-top .link:hover
@@ -70,6 +106,7 @@ margin-left: 4px;
 background-color: #000000;
 text-decoration: none;
 }
+
 
 /* 
 This is the middle 
@@ -97,37 +134,30 @@ The three columns
 */
 TD#leftcolumn
 {
-padding-left: 2px;
-padding-right: 2px;
+margin: 0;
+padding: 0;
 vertical-align: top;
 background: #DED6C6;
 width: 180px;
-background-image: url(/styles/mose/shadowfeu.png);
-background-position: top right;
-background-repeat: no-repeat;
 }
 
 TD#rightcolumn
 {
-padding-left: 2px;
+margin: 0;
+padding: 0;
 vertical-align: top;
 background: #DED6C6;
 width: 180px;
-background-image: url(/styles/mose/shadowfeu.png);
-background-position: top left;
-background-repeat: no-repeat;
 }
 
 TD#centercolumn
 {
-padding-right: 2px;
+margin: 0;
+padding: 0;
 background: #EFEFE7;
 vertical-align: top;
 width: auto;
 border-top: 1px solid #5A4A39;
-background-image: url(/styles/mose/lightfeu.png);
-background-position: top ;
-background-repeat: repeat-x;
 }
 
 /* 
@@ -135,9 +165,9 @@ centercolumn
 */
 DIV#tiki-center
 {
-margin-left: 2px;
-margin-right: 5px;
-padding-left: 7px;
+margin-left: 12px;
+margin-right: 12px;
+padding-left: 5px;
 padding-right: 5px;
 }
 
@@ -158,12 +188,10 @@ Boxes used for modules
 div.box 
 {
 background: white;
-margin: 0 4px 0 4px;
 border: 1px solid black;
 padding-bottom: 3px;
-
 overflow: hidden;
-width: 170px;
+width: 178px;
 }
 
 /* 
@@ -176,10 +204,10 @@ color: #ffffff;
 font-size: 10px;
 overflow: hidden;
 text-align: left;
-padding-left: 6px;
-padding-right: 0px;
+padding-left: 5px;
+padding-right: 5px;
 margin-bottom: 1px;
-width: 170px;
+width: 168px;
 background-image: url(/styles/mose/bgtitlebox.png);
 background-position: top;
 background-repeat: repeat-x;
@@ -196,7 +224,7 @@ background: #FFFFFF;
 margin-left: 5px;
 margin-right: 5px;
 font-size: 11px;
-width: 170px;
+width: 168px;
 }
 
 div.box-data li:before
@@ -260,7 +288,7 @@ margin-bottom: 0px;
 border: 1px solid black;
 padding-bottom: 10px;
 overflow: hidden;
-width: 99%;
+width: 100%;
 }
 
 /* 
@@ -314,7 +342,7 @@ margin-left: 5px;
 margin-right: 5px;
 font-size: 11px;
 color: black;
-width: 99%;
+width: 100%;
 }
 
 /* 
@@ -335,14 +363,11 @@ menu and user created menus
 */
 div.separator
 {
-background: #DFDFDF;
+background: #dadac9;
 color: #003163;
-font-size: 10px;
-margin-left: 2px;
-margin-right: 2px;
-margin-top: 6px;
-margin-bottom: 2px;
-width: 90%;
+font-size: 11px;
+margin-top: 2px;
+width: 170px;
 }
 
 /* 
@@ -428,21 +453,21 @@ as links using the following style
 */
 .bannertext
 {
-font-size: 11px;
-color : black;
+font-size: 10px;
+color : #545444;
 text-decoration: none;
 }
 
 .bannertext:active
 {
-font-size: 11px;
-color : black;
+font-size: 10px;
+color : #863210;
 text-decoration: none;
 }
 
 .bannertext:hover
 {
-font-size: 11px;
+font-size: 10px;
 color : black;
 text-decoration: none;
 }
@@ -2936,3 +2961,4 @@ background-color: #EFEFE7;
 
 div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
+
