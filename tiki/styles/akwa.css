@@ -306,7 +306,7 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
 	margin: 0;
 }
 
-/* adding duplicate class for above class to ensure table header are formatted consistantly as before.  the above class should be deleted upon completion of transition to accessibility in tiki.)
+/* adding duplicate class for above class to ensure table header are formatted consistantly as before.  the above class should be deleted upon completion of transition to accessibility in tiki.) */
 th {
 	background-image: url(akwa/aqua-menubar.png);
 	border-bottom: 1px solid #999999;
