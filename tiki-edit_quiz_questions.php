@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.10 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.11 2004-04-28 23:42:31 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,8 +11,19 @@ require_once('tiki-setup.php');
 
 include_once('lib/quizzes/quizlib.php');
 
+include_once('lib/homework/homeworklib.php');
+
+require_once('doc/devtools/ggg-trace.php');
+
 if ($feature_quizzes != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+if ($tiki_p_admin_quizzes != 'y') {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -49,13 +60,6 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 			}
 		}
 	}
-}
-
-if ($tiki_p_admin_quizzes != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
 }
 
 $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
@@ -95,6 +99,38 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
 	$quizlib->replace_quiz_question($_REQUEST["questionId"], $_REQUEST["question"],
 		'o', $_REQUEST["quizId"], $_REQUEST["position"]);
+
+	$smarty->assign('question', '');
+	$smarty->assign('questionId', 0);
+}
+
+if (isset($_REQUEST["import"])) {
+	check_ticket('edit-quiz-question');
+	$input = $_REQUEST["input_data"];
+
+	$input_array = preg_split("/\r\n/", $input);
+
+	for ($i = 0; $i < count($input_array); $i++)
+		$input_array[$i] = trim($input_array[$i]);
+
+	$questions = TextToQuestions($input_array);
+
+	// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $_REQUEST["questionId"] = '.$_REQUEST["questionId"]);
+	// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $_REQUEST["quizId"] = '.$_REQUEST["quizId"]);
+	foreach ($questions as $question){
+		$question_text = $question->getQuestion();
+		// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $question_text = ');
+		// $ggg_tracer->outvar($question_text);
+		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
+		for ($i = 0; $i < $question->getChoiceCount(); $i++){
+			$a = $question->GetChoice($i);
+			// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $a = ');
+			// $ggg_tracer->outln("  ".$a);
+			$b = $question->GetCorrect($i);
+			// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $p = '.$b);
+			$quizlib->replace_question_option(0, $a, $b, $id);
+		}
+	}
 
 	$smarty->assign('question', '');
 	$smarty->assign('questionId', 0);
