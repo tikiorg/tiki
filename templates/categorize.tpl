@@ -2,8 +2,8 @@
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $cols} colspan="{$cols}"{/if}>
-  [ <a class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
-  | <a class="link" href="javascript:hide('categorizator');">{tr}hide categories{/tr}</a> ]
+  [ <a title="{tr}Click here to show the categories{/tr}" class="link" href="javascript:show('categorizator');">{tr}show categories{/tr}</a>
+  | <a title="{tr}Click here to hide the categories{/tr}" class="link" href="javascript:hide('categorizator');">{tr}hide categories{/tr}</a> ]
   <div id="categorizator" {if $cat_categorize eq 'n' and $categ_checked ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
   {if count($categories) gt 0}
    <select name="cat_categories[]" multiple="multiple" size="5">
@@ -17,7 +17,7 @@
     {tr}No categories defined{/tr} <br />
   {/if}
   {if $tiki_p_admin_categories eq 'y'}
-    <a href="tiki-admin_categories.php" class="link">{tr}Admin categories{/tr}</a>
+    <a title="{tr}Click here to administer categories{/tr}" href="tiki-admin_categories.php" class="link">{tr}Admin categories{/tr}</a>
   {/if}
   </div>
   </td>
