@@ -282,6 +282,21 @@ if($feature_user_watches == 'y') {
 	}
 }
 
+if($feature_forum_quickjump == 'y') {
+	$all_forums = $commentslib->list_forums(0,-1,'name_asc','');
+	for($i=0;$i<count($all_forums["data"]);$i++) {
+	  if($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"],'forum')) {
+	    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$all_forums["data"][$i]["forumId"],'forum','tiki_p_admin_forum')||$userlib->object_has_permission($user,$all_forums["data"][$i]["forumId"],'forum','tiki_p_forum_read')) {
+	      $all_forums["data"][$i]["can_read"]='y';
+	    } else {
+	      $all_forums["data"][$i]["can_read"]='n';
+	    }
+	  } else {
+	    $all_forums["data"][$i]["can_read"]='y';
+	  }
+	}
+	$smarty->assign('all_forums',$all_forums['data']);
+}
 
 // Display the template
 $smarty->assign('mid','tiki-view_forum.tpl');

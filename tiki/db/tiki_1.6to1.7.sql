@@ -1,5 +1,22 @@
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_charts','charts','Can admin charts','admin');
+drop table if exists tiki_forums_queue;
+create table tiki_forums_queue(
+	qId integer(14) not null auto_increment,
+	object char(32),
+	parentId integer(14),
+	timestamp integer(14),
+	user varchar(200),
+	title varchar(240),
+	data text,
+	type varchar(60),
+	topic_smiley varchar(80),
+	summery varchar(240),
+	primary key(qId)
+);
 
+alter table tiki_forums add approval_type varchar(20);
+update tiki_forums set approval_type='all_posted';
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_charts','charts','Can admin charts','admin');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_chart','charts','Can view charts','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_vote_chart','charts','Can vote','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_suggest_chart_item','charts','Can suggest items','basic');

@@ -289,3 +289,19 @@
   </div>
   <br/>
   </div>
+{if $feature_forum_quickjump eq 'y'}
+<form id='quick' method="post" action="tiki-view_forum.php">
+<table width="100%">
+<tr>
+<td style="text-align:right;">
+<small>{tr}Jump to forum{/tr}:</small>
+<select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
+{section name=ix loop=$all_forums}
+<option value="{$all_forums[ix].forumId}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+{/section}
+</select>
+</td>
+</tr>
+</table>
+</form>
+{/if}

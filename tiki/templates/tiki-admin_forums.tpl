@@ -145,7 +145,16 @@
 	</table>
 	</td>
 </tr>
-
+<tr>
+	<td class="formcolor">{tr}Approval type{/tr}</td>
+	<td class="formcolor">
+		<select name="approval_type">
+			<option value="all_posted" {if $approval_type eq 'all_posted'}selected="selected"{/if}>{tr}All posted{/tr}</option>
+			<option value="queue_anon" {if $approval_type eq 'queue_anon'}selected="selected"{/if}>{tr}Queue anonymous posts{/tr}</option>
+			<option value="queue_all" {if $approval_type eq 'queue_all'}selected="selected"{/if}>{tr}Queue all posts{/tr}</option>
+		</select>
+	</td>
+</tr>
 
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

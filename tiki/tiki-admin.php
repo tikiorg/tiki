@@ -628,6 +628,14 @@ if(isset($_REQUEST["forumprefs"])) {
     $tikilib->set_preference("feature_forum_parse",'n');
     $smarty->assign("feature_forum_parse",'n');
   }  
+  if(isset($_REQUEST["feature_forum_quickjump"]) && $_REQUEST["feature_forum_quickjump"]=="on") {
+    $tikilib->set_preference("feature_forum_quickjump",'y'); 
+    $smarty->assign("feature_forum_quickjump",'y');
+  } else {
+    $tikilib->set_preference("feature_forum_quickjump",'n');
+    $smarty->assign("feature_forum_quickjump",'n');
+  }  
+
   if(isset($_REQUEST["feature_forum_topicd"]) && $_REQUEST["feature_forum_topicd"]=="on") {
     $tikilib->set_preference("feature_forum_topicd",'y'); 
     $smarty->assign("feature_forum_topicd",'y');

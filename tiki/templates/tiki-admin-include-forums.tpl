@@ -26,6 +26,7 @@
     <table>
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_forum_rankings" {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Accept wiki syntax{/tr}:</td><td><input type="checkbox" name="feature_forum_parse" {if $feature_forum_parse eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Forum quick jumps{/tr}:</td><td><input type="checkbox" name="feature_forum_quickjump" {if $feature_forum_quickjump eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Ordering for forums in the forum listing{/tr}
     </td><td>
     <select name="forums_ordering">
