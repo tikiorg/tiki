@@ -40,7 +40,7 @@
 <select name="filterfield">
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
-<option value="{$fields[ix].name|escape}">{$fields[ix].name|truncate:26:"..."}</option>
+<option value="{$fields[ix].name|escape}">{$fields[ix].name|truncate:52:"..."}</option>
 {/if}
 {/section}
 </select>
@@ -82,12 +82,12 @@ class="prevnext">{tr}All{/tr}</a>
 <td style="width:20px;">&nbsp;</td>
 {/if}
 {section name=ix loop=$fields}
-{if $fields[ix].type eq 'l'}
+{if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
 $fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"url"}{/if}{/section}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$fields[ix].name|cat:'_asc'}{$fields[ix].name|escape:"url"}_desc{else}{$fields[ix].name|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:26:"..."|default:"&nbsp;"}</a></td>
+'f_'|cat:$fields[ix].name|cat:'_asc'}{$fields[ix].name|escape:"url"}_desc{else}{$fields[ix].name|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:52:"..."|default:"&nbsp;"}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -124,7 +124,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel|truncate:26:"..."}</a></div>
+<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel|truncate:52:"..."}</a></div>
 {/foreach}
 </td>
 {elseif $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
@@ -139,7 +139,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/if}
 
 {if $items[user].field_values[ix].type eq 'f'}
-{$items[user].field_values[ix].value|tiki_short_datetime|truncate:26:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|tiki_short_datetime|truncate:52:"..."|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
@@ -148,7 +148,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 <img src="{$items[user].field_values[ix].value}" alt="" />
 
 {else}
-{$items[user].field_values[ix].value|truncate:26:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:52:"..."|default:"&nbsp;"}
 
 {/if}
 
@@ -161,7 +161,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 </td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
-{$items[user].field_values[ix].value|truncate:26:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:52:"..."|default:"&nbsp;"}
 </td>
 {/if}
 {/if}
