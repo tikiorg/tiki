@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.9 2003-10-23 22:58:12 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.10 2003-10-24 15:40:11 zaufi Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  *
@@ -51,7 +51,7 @@ function wikiplugin_split($data, $params) {
     // Attention: origianl text must be placed between \n's!!!
 	foreach ($sections as $i)
 		$result .= "<td valign='top' width='" . $columnSize . "%'>
-                   \n".substr($i, 1)."\n</td>";
+                   \n".((substr($data, 0, 1) == "\n") ? substr($i, 1) : $i)."\n</td>";
 
     // Close HTML table (no \n at end!)
 	$result .= "</tr></table>";
