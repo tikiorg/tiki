@@ -47,6 +47,7 @@ div.tabs {
 	color: #060610 ;
 	background-color: #f3f6f9;
 	z-index: 100;
+	cursor: pointer;
 	}
       
 div.tabsClone .tab, div.tabsClone .tabActive {
