@@ -510,7 +510,7 @@ class UsersLib extends TikiLib {
 	// get all of the PAM options from the database
 	$pam_service = $tikilib->get_preference("pam_service", "tikiwiki");
 
-	if (pam_auth($user, $pass, &$error)) {
+	if (pam_auth($user, $pass, $error)) {
 		return USER_VALID;
 	} else {
 	// Uncomment the following to see errors on that
