@@ -194,13 +194,13 @@ class WikiLib extends TikiLib {
 		$this->query($query, array(
 			$newName_as,
 			$oldName_as
-		), false);
+		));
 
 		$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
 		$this->query($query, array(
 			$newName_as,
 			$oldName_as
-		), false);
+		));
 
 		// tiki_footnotes change pageName
 		$query = "update `tiki_page_footnotes` set `pageName`='$newName_as' where `pageName`='$oldName_as'";
