@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Date.php,v 1.1 2003-01-03 06:22:14 rossta Exp $
+// $Id: Date.php,v 1.2 2003-02-25 23:25:09 rossta Exp $
 //
 // Date Class
 //
@@ -131,12 +131,38 @@ class Date
     {
         switch($format) {
             case DATE_FORMAT_ISO:
-                list($this->year, $this->month, $this->day, $this->hour, $this->minute, $this->second) =
-                    sscanf($date, "%04u-%02u-%02u %02u:%02u:%02u");
+                if (ereg("([0-9]{4})-([0-9]{2})-([0-9]{2})[ ]([0-9]{2}):([0-9]{2}):([0-9]{2})",$date,$regs)) {
+                    $this->year   = $regs[1];
+                    $this->month  = $regs[2];
+                    $this->day    = $regs[3];
+                    $this->hour   = $regs[4];
+                    $this->minute = $regs[5];
+                    $this->second = $regs[6];
+                } else {
+                    $this->year   = 0;
+                    $this->month  = 1;
+                    $this->day    = 1;
+                    $this->hour   = 0;
+                    $this->minute = 0;
+                    $this->second = 0;
+                }
                 break;
             case DATE_FORMAT_TIMESTAMP:
-                list($this->year, $this->month, $this->day, $this->hour, $this->minute, $this->second) =
-                    sscanf($date, "%04u%02u%02u%02u%02u%02u");
+                if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})",$date,$regs)) {
+                    $this->year   = $regs[1];
+                    $this->month  = $regs[2];
+                    $this->day    = $regs[3];
+                    $this->hour   = $regs[4];
+                    $this->minute = $regs[5];
+                    $this->second = $regs[6];
+                } else {
+                    $this->year   = 0;
+                    $this->month  = 1;
+                    $this->day    = 1;
+                    $this->hour   = 0;
+                    $this->minute = 0;
+                    $this->second = 0;
+                }
                 break;
             case DATE_FORMAT_UNIXTIME:
                 $this->setDate(date("Y-m-d H:i:s", $date));
