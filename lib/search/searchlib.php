@@ -234,63 +234,66 @@ class SearchLib extends TikiLib {
 
         function &find_part_all($words,$offset, $maxRecords) {
         	
-			global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries, $feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+			global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
+				$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+			global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
+				$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
-			if ($feature_wiki == 'y') {
+			if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 				$wikiresults=$this->find_part_wiki($words,$offset, $maxRecords);
 			} else {
 				$wikiresults['data'] = NULL;
 				$wikiresults['cant'] = 0;
 			}
-			if ($feature_articles == 'y') {
+			if ($feature_articles == 'y' && $tiki_p_read_article == 'y') {
 				$artresults=$this->find_part_articles($words,$offset, $maxRecords);
 			} else {
 				$artresults['data'] = NULL;
 				$artresults['cant'] = 0;
 			}
-			if ($feature_forums == 'y') {
+			if ($feature_forums == 'y' && $tiki_p_forum_read == 'y') {
 				$forumresults=$this->find_part_forums($words,$offset, $maxRecords);
 			} else {
 				$forumresults['data'] = NULL;
 				$forumresults['cant'] = 0;
 			}
-			if ($feature_blogs == 'y') {
+			if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 				$blogresults=$this->find_part_blogs($words,$offset, $maxRecords);
 			} else {
 				$blogresults['data'] = NULL;
 				$blogresults['cant'] = 0;
 			}
-			if ($feature_blogs == 'y') {
+			if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 				$blogpostsresults=$this->find_part_blog_posts($words,$offset, $maxRecords);
 			} else {
 				$blogpostsresults['data'] = NULL;
 				$blogpostsresults['cant'] = 0;
 			}
-			if ($feature_faqs == 'y') {
+			if ($feature_faqs == 'y' && $tiki_p_view_faqs == 'y') {
 				$faqresults=$this->find_part_faqs($words,$offset, $maxRecords);
 			} else {
 				$faqresults['data'] = NULL;
 				$faqresults['cant'] = 0;
 			}
-			if ($feature_directory == 'y') {
+			if ($feature_directory == 'y' && $tiki_p_view_directory == 'y') {
 				$dirresults=$this->find_part_directory($words,$offset, $maxRecords);
 			} else {
 				$dirresults['data'] = NULL;
 				$dirresults['cant'] = 0;
 			}
-			if ($feature_galleries == 'y') {
+			if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 				$imggalsresults=$this->find_part_imggals($words,$offset, $maxRecords);
 			} else {
 				$imggalsresults['data'] = NULL;
 				$imggalsresults['cant'] = 0;
 			}
-			if ($feature_galleries == 'y') {
+			if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 				$imgresults=$this->find_part_img($words,$offset, $maxRecords);
 			} else {
 				$imgresults['data'] = NULL;
 				$imgresults['cant'] = 0;
 			}
-			if ($feature_trackers == 'y') {
+			if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
 				$trackerresults=$this->find_part_trackers($words,$offset, $maxRecords);
 			} else {
 				$trackerresults['data'] = NULL;
@@ -368,63 +371,66 @@ class SearchLib extends TikiLib {
 	}
 
 	function &find_exact_all($words,$offset, $maxRecords) {
-		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries, $feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries,
+			$feature_articles, $feature_forums, $feature_blogs, $feature_faqs, $feature_trackers;
+		global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
+			$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs, $tiki_p_view_trackers;
 		
-		if ($feature_wiki == 'y') {
+		if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
 			$wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
 		} else {
 			$wikiresults['data'] = NULL;
 			$wikiresults['cant'] = 0;
 		}
-		if ($feature_articles == 'y') {
+		if ($feature_articles == 'y' && $tiki_p_read_article == 'y') {
 			$artresults=$this->find_exact_articles($words,$offset, $maxRecords);
 		} else {
 			$artresults['data'] = NULL;
 			$artresults['cant'] = 0;
 		}
-		if ($feature_forums == 'y') {
+		if ($feature_forums == 'y' && $tiki_p_forum_read == 'y') {
 			$forumresults=$this->find_exact_forums($words,$offset, $maxRecords);
 		} else {
 			$forumresults['data'] = NULL;
 			$forumresults['cant'] = 0;
 		}
-		if ($feature_blogs == 'y') {
+		if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 			$blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
 		} else {
 			$blogresults['data'] = NULL;
 			$blogresults['cant'] = 0;
 		}
-		if ($feature_blogs == 'y') {
+		if ($feature_blogs == 'y' && $tiki_p_read_blog == 'y') {
 			$blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
 		} else {
 			$blogpostsresults['data'] = NULL;
 			$blogpostsresults['cant'] = 0;
 		}
-		if ($feature_faqs == 'y') {
+		if ($feature_faqs == 'y' && $tiki_p_view_faqs == 'y') {
 			$faqresults=$this->find_exact_faqs($words,$offset, $maxRecords);
 		} else {
 			$faqresults['data'] = NULL;
 			$faqresults['cant'] = 0;
 		}
-		if ($feature_directory == 'y') {
+		if ($feature_directory == 'y' && $tiki_p_view_directory == 'y') {
 			$dirresults=$this->find_exact_directory($words,$offset, $maxRecords);
 		} else {
 			$dirresults['data'] = NULL;
 			$dirresults['cant'] = 0;
 		}
-		if ($feature_galleries == 'y') {
+		if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 			$imggalsresults=$this->find_exact_imggals($words,$offset, $maxRecords);
 		} else {
 			$imggalsresults['data'] = NULL;
 			$imggalsresults['cant'] = 0;
 		}
-		if ($feature_galleries == 'y') {
+		if ($feature_galleries == 'y' && $tiki_p_view_image_gallery == 'y') {
 			$imgresults=$this->find_exact_img($words,$offset, $maxRecords);
 		} else {
 			$imgresults['data'] = NULL;
 			$imgresults['cant'] = 0;
 		}
-		if ($feature_trackers == 'y') {
+		if ($feature_trackers == 'y' && $tiki_p_view_trackers == 'y') {
 			$trackerresults=$this->find_exact_trackers($words,$offset, $maxRecords);
 		} else {
 			$trackerresults['data'] = NULL;
