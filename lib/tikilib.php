@@ -2785,7 +2785,7 @@ class TikiLib extends TikiDB {
 
 	    // Pages are collected before adding slashes
 	    foreach ($pages as $a_page) {
-		$this->replace_link($name, $a_page);
+		$this->replace_link($name, $a_page, false);
 	    }
 
 	    // Update the log
@@ -4551,11 +4551,16 @@ class TikiLib extends TikiDB {
 	    $result = $this->query($query, array($page));
 	}
 
-	function replace_link($pageFrom, $pageTo) {
-	    $query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
-	    $result = $this->query($query, array($pageFrom,$pageTo));
-	    $query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-	    $result = $this->query($query, array($pageFrom,$pageTo));
+	//Adds a link from $pageFrom to $pageTo. Passing $check=false will consider that this link was not already present (and avoid a query)
+	function replace_link($pageFrom, $pageTo,  $check=true) {
+		if ($check == true) {
+			$query = "select count(*) from `tiki_links` where `fromPage`=? and `toPage`=?";
+			$result = $this->getOne($query, array($pageFrom, $pageTo));
+		}
+		if (empty($result)) {
+			$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
+			$result = $this->query($query, array($pageFrom,$pageTo));
+		}
 	}
 
 	function invalidate_cache($page) {
@@ -4611,7 +4616,7 @@ class TikiLib extends TikiDB {
 	    $this->clear_links($pageName);
 	    // Pages collected above
 	    foreach ($pages as $page) {
-		$this->replace_link($pageName, $page);
+		$this->replace_link($pageName, $page, false);
 	    }
 	    
 	    if (!$minor) {
