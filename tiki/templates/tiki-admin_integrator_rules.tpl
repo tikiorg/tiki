@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.13 2003-11-12 00:32:25 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.14 2003-11-19 15:45:35 sylvieg Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -69,7 +69,7 @@
     <td class="formcolor"><span title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</span></td>
     <td class="formcolor"><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}Is this regular expression or simpel search/replacer{/tr}">{tr}Regex{/tr}</span></td>
+    <td class="formcolor"><span title="{tr}Is this regular expression or simple search/replacer{/tr}">{tr}Regex{/tr}</span></td>
     <td class="formcolor">
       <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simpel search/replacer{/tr}" />
     </td>
