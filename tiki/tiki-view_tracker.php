@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.65 2004-04-17 19:02:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.66 2004-04-29 10:07:27 telenieko Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -340,7 +340,7 @@ if (isset($_REQUEST["save"])) {
 		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 			$_REQUEST["status"] = '';
 		}
-		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
+		$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
 		setcookie("tab","1");
 		$smarty->assign('itemId', '');
 		
@@ -358,6 +358,10 @@ if (isset($_REQUEST["save"])) {
 				}
 				$categlib->categorize($catObjectId, $cats);
 			}
+		}
+		if(isset($_REQUEST["viewitem"])) {
+			header("location: tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid);
+			die;
 		}
 	}
 }
