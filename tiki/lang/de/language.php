@@ -2135,15 +2135,15 @@ in Admin-Allgemein abgestellt haben.
 "Minor" => "geringf&uuml;gig",
 "Top pages" => "Top Seiten",
 "Wiki top pages" => "Wiki Top Seiten",
-"Most relevant pages" => "Relevanteste Seiten",
+"Most relevant pages" => "Relevanteste Seiten", // TODO
 "Last pages" => "Letzte Seiten",
 "Wiki top galleries" => "Wiki Top Galerien",
 "You have to create a gallery first!" => "Sie m&uuml;ssen erst eine Galerie erstellen!",
 "gal_ranking_last_images" => "gal_ranking_last_images",
 "gal_ranking_top_galleries" => "gal_ranking_top_galleries",
 "gal_ranking_top_images" => "gal_ranking_top_images",
-"Allow viewing HTML mails?" => "Anzeigen von HTML mails erlauben?",
-"Workflow engine" => "Workflow engine",
+"Allow viewing HTML mails?" => "Anzeigen von HTML Mails erlauben?",
+"Workflow engine" => "Workflow engine", // TODO
 "You have to enter a title and text" => "Sie m&uuml;ssen Titel und Text eingeben",
 "Re:" => "Aw:",
 "Monitor" => "&Uuml;berwachen",
@@ -2270,5 +2270,6 @@ in Admin-Allgemein abgestellt haben.
 "Forum listing configuration" => "Konfiguration Forenliste",
 "Posts per day" => "Eintr&auml;ge pro Tag",
 "Last post" => "Neuester Eintrag",
+"Go back" => "zur&uuml;ck",
 "##end###" => "###end###");
 ?>
