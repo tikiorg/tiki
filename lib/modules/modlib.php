@@ -1,4 +1,5 @@
 <?php
+include_once('lib/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
 	function ModLib($db) {
@@ -24,7 +25,7 @@ class ModLib extends TikiLib {
 		}
 	}
 
-	function assign_module($name, $title, $position, $order, $cache_time = 0, $rows = 10, $groups, $params) {
+	function assign_module($name, $title, $position, $order, $cache_time = 0, $rows = 10, $groups, $params,$type) {
 		$params = addslashes($params);
 
 		$name = addslashes($name);
@@ -34,8 +35,12 @@ class ModLib extends TikiLib {
 		//check for valid values
 		$cache_time = is_numeric($cache_time) ? $cache_time : 0;
 		$rows = is_numeric($rows) ? $rows : 10;
-		$query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params')";
+		$query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params,type) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params','$type')";
 		$result = $this->query($query);
+		if ($type == "D" || $type == "P") {
+			global $usermoduleslib;
+			$usermoduleslib->add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
+		}
 		return true;
 	}
 

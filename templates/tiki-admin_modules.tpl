@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.14 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.15 2003-08-11 18:32:11 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a><br/><br/>
 [<a class="link" href="#assign">{tr}assign module{/tr}</a>|
@@ -86,6 +86,16 @@ from Admin->General
 {/section}
 </select>
 </td></tr>
+{if $user_assigned_modules eq 'y'}
+<tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
+<select name="assign_type">
+<option value="d" {if $assign_type eq 'd'}selected="selected"{/if}>{tr}Displayed for the eligible users with no personal assigned modules{/tr}</option>
+<option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</option>
+<option value="P" {if $assign_type eq 'P'}selected="selected"{/if}>{tr}Displayed now, can't be unassigned{/tr}</option>
+<option value="h" {if $assign_type eq 'h'}selected="selected"{/if}>{tr}Not displayed until a user chooses it{/tr}</option>
+</select>
+</td></tr>
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
 </table>
 </form>

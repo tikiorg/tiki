@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.15 2003-08-07 21:57:30 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.16 2003-08-11 18:32:10 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,9 +29,9 @@ if ($user_assigned_modules == 'y' && $tiki_p_configure_modules == 'y' && $user &
 
 	$right_modules = $usermoduleslib->get_assigned_modules_user($user, 'r');
 } else {
-	$left_modules = $tikilib->get_assigned_modules('l');
+	$left_modules = $tikilib->get_assigned_modules('l', 'y');
 
-	$right_modules = $tikilib->get_assigned_modules('r');
+	$right_modules = $tikilib->get_assigned_modules('r', 'y');
 }
 
 //var_dump($left_modules);
