@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.18 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.19 2004-06-13 21:27:20 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,11 +101,8 @@ for ($i = 0; $i < count($listpages["data"]); $i++) {
 	if ($userlib->object_has_one_permission($listpages["data"][$i]["blogId"], 'blog')) {
 		$listpages["data"][$i]["individual"] = 'y';
 
-		if ($userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_read_blog')) {
-			$listpages["data"][$i]["individual_tiki_p_read_blog"] = 'y';
-		} else {
-			$listpages["data"][$i]["individual_tiki_p_read_blog"] = 'n';
-		}
+		// blogs that user cannot read are not displayed at all
+		$listpages["data"][$i]["individual_tiki_p_read_blog"] = 'y';
 
 		if ($userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_blog_post')) {
 			$listpages["data"][$i]["individual_tiki_p_blog_post"] = 'y';
@@ -122,9 +119,7 @@ for ($i = 0; $i < count($listpages["data"]); $i++) {
 		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_blog_admin'))
 			{
 			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'y';
-
 			$listpages["data"][$i]["individual_tiki_p_blog_post"] = 'y';
-			$listpages["data"][$i]["individual_tiki_p_read_blog"] = 'y';
 		}
 	} else {
 		$listpages["data"][$i]["individual"] = 'n';
