@@ -5078,7 +5078,6 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 
     $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
     $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
-echo "EEEEE".$lang;
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
 
