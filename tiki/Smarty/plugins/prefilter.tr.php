@@ -29,7 +29,7 @@ function _translate_lang($key) {
     $query="select tran from tiki_language where source='".addslashes($content)."' and lang='".$language."'";
     $result=$tikilib->db->query($query);
     $res=$result->fetchRow();
-    if(!$res) { echo $content ; return; }
+    if(!$res) { return $content; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
