@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.5 2004-05-25 00:29:24 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_sheets.php,v 1.6 2004-06-05 17:05:31 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -85,7 +85,7 @@ else
 	$handler = &new TikiSheetDatabaseHandler( $_REQUEST["sheetId"] );
 	$grid->import( $handler );
 
-	if( $_REQUEST['mode'] == 'edit' )
+	if( isset( $_REQUEST['mode'] ) && $_REQUEST['mode'] == 'edit' )
 	{
 		$handler = &new TikiSheetFormHandler;
 

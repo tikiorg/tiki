@@ -100,7 +100,7 @@ function processValue( id )
 	cell.calc = true;
 
 	if( field )
-		field.value = cell.endValue;
+		field.value = cell.getDisplayValue();
 
 	return cell.endValue;
 }
@@ -164,6 +164,7 @@ function Cell( grid, row, column )
 
 	this.endValue = "";
 	this.value = "";
+	this.format = '';
 
 	this.calc = false;
 
@@ -727,6 +728,21 @@ Grid.prototype.identify = function()
 		current = current.next;
 	}
 }
+
+// getDisplayValue {{{2
+Cell.prototype.getDisplayValue = function()
+{
+	if( this.format == null )
+		return this.endValue;
+
+	var fnc;
+	fnc = display[this.format];
+
+	if( !fnc )
+		return this.endValue;
+
+	return fnc( this.endValue );
+}
 // }}}1
 
 // Draw {{{1
@@ -805,7 +821,7 @@ Grid.prototype.prepareSubmit = function()
 	for( var key = 0; this.cells.length > key; key++ )
 	{
 		var c = this.cells[key];
-		append = "<<<" + String(c.width) + "," + String(c.height) + ">>>";
+		append = "<<<" + String(c.width) + "," + String(c.height) + ">>>" + String( c.format );
 
 		if( this.target[ c.getId() ] == null )
 			continue;
