@@ -61,6 +61,9 @@
       <td style="text-align:center;"><a href="tiki-admin.php?page=maps"
           class="link"><img border='0' src='img/icons/admin_maps.png'
           alt='icon' /><br/>{tr}Maps{/tr}</a></td>
+      <td style="text-align:center;"><a href="tiki-admin.php?page=metatags"
+          class="link"><img border='0' src='img/icons/admin_metatags.png'
+          alt='icon' /><br/>{tr}Meta Tags{/tr}</a></td>
     </tr></table>
   </div>
 </div>
