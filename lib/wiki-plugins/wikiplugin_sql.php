@@ -1,6 +1,6 @@
 <?php
 function wikiplugin_sql_help() {
-	return tra("Run a sql query").":<br />~np~{SQL(db=>dsnname)}".tra("sql query")."{SQL}~/np~";
+	return tra("Run a sql query").":<br />~np~{SQL(db=>dsnname, 0=>$user)}".tra("sql query")."{SQL}~/np~";
 }
 
 function wikiplugin_sql($data, $params) {
@@ -14,7 +14,6 @@ function wikiplugin_sql($data, $params) {
 
 	$perm_name = 'tiki_p_dsn_' . $db;
 	global $$perm_name;
-
 	if ($$perm_name != 'y') {
 		return (tra('You do not have permission to use this feature'));
 	}
