@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.23 2004-06-20 21:02:51 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.24 2004-06-20 21:09:45 teedog Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -413,7 +413,7 @@
   </div>
   <div id='admmnu' style="{$mnu_admmnu}">
 	{if $tiki_p_admin eq 'y'}
-		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a><br />
+		<div class="separated"><a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a></div>
 	{/if}
 	{sortlinks}
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
