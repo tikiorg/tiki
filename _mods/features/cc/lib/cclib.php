@@ -148,7 +148,6 @@ class CcLib extends UsersLib {
 			$query = "update `cc_cc` set `cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=? where `seq`=?";
 			$this->query($query,array($name,$description,$owner,$approval,$listed,$seq));
 			$this->tracklog("$user changed $id");
-			var_dump($this);
 			return true;
 		} else {
 			if ($this->is_currency($id)) {
