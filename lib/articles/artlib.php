@@ -296,6 +296,47 @@ class ArtLib extends TikiLib {
 
 		return $ret;
 	}
+
+// Article Type functions
+	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads) {
+
+		$query = "insert into `tiki_article_types`(`$type`,`$use_ratings`,`$show_pre_publ`,`$show_post_expire`,`$heading_only`,`$allow_comments`,`$show_image`,`$show_avatar`,`$show_author`,`$show_pubdate`,`$show_expdate`,`$show_reads`)
+                     values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads));
+
+		//$query = "select max(`topicId`) from `tiki_topics` where `created`=? and `name`=?";
+		//$topicId = $this->getOne($query,array((int) $now,$name));
+		return true;
+	}
+
+	function remove_type($type) {
+		$query = "delete from `tiki_article_types` where `type`=?";
+
+		$result = $this->query($query,array($topicId));
+
+		return true;
+	}
+
+	function get_type($type) {
+		$query = "select * from `tiki_article_types` where `type`=?";
+
+		$result = $this->query($query,array($type));
+
+		$res = $result->fetchRow();
+		return $res;
+	}
+
+	function list_types() {
+		$query = "select * from `tiki_article_types`";
+		$result = $this->query($query,array());
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		return $ret;
+	}
 }
 
 $artlib = new ArtLib($dbTiki);
