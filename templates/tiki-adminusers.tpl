@@ -5,12 +5,17 @@
 <tr><td class="formcolor">{tr}User{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
 <tr><td class="formcolor">{tr}Pass{/tr}:</td><td class="formcolor"><input type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Again{/tr}:</td><td class="formcolor"><input type="password" name="pass2" /></td></tr>
-<tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" /></td></tr>
+<tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" size="30" /></td></tr>
 <tr><td class="formcolor">{tr}Batch upload (CSV file){/tr}:</td><td class="formcolor"><input type="file" name="csvlist" /><br>Overwrite: <input type="checkbox" name="overwrite" checked></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
-<br/><br/>
+<br/>
+<table class="normal">
+<tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass1','pass2');">{tr}Generate a password{/tr}</a></td>
+<td class="formcolor"><input id='genepass' type="text" /></td></tr>
+</table>
+<br/>
 {if (($added != "") || ($discarded != "")) }
 	<h3>{tr}Batch Upload Results{/tr}</h3>
 	Added users: {$added}
