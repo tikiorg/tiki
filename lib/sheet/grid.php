@@ -248,11 +248,16 @@ class TikiSheet
 		for( $y = 0; $this->rowCount > $y; $y++ )
 			for( $x = 0; $this->columnCount > $x; $x++ )
 			{
+				if( !isset( $this->dataGrid[$y][$x] ) )
+					$this->dataGrid[$y][$x] = '';
+				if( !isset( $this->calcGrid[$y][$x] ) )
+					$this->calcGrid[$y][$x] = '';
+
 				if( empty( $this->mergeInfo[$y][$x]['width'] ) )
-					$this->mergeInfo[$y][$x]['width'];
+					$this->mergeInfo[$y][$x]['width'] = 1;
 
 				if( empty( $this->mergeInfo[$y][$x]['height'] ) )
-					$this->mergeInfo[$y][$x]['height'];
+					$this->mergeInfo[$y][$x]['height'] = 1;
 			}
 
 		return true;
@@ -534,7 +539,7 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 		{
 			if( $sheet->initCell( $key ) )
 			{
-				$this->convert( $value, $v, $c, $w, $h );
+				$this->convert( $value, $v, $c, $w, $h, $f );
 				$sheet->setValue( $v );
 				$sheet->setCalculation( $c );
 				$sheet->setSize( $w, $h );
@@ -599,27 +604,30 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 
 	/** convert {{{2
 	 * Converts the form cell format to readable data.
-	 * [value]=[calc]<<<[width],[height]>>>
+	 * [value]=[calc]<<<[width],[height]>>>format_name
 	 * @param $formString The direct value from the form.
 	 * @param $value Will contain the end value.
 	 * @param $calc Will contain the calculation without the equal.
 	 * @param $width Will contain the colspan.
 	 * @param $height Will contain the rowspan.
+	 * @param $format The format to be used to render the cell
+	 *			indicates there is no limit.
 	 * @return False on error.
 	 */
-	function convert( $formString, &$value, &$calc, &$width, &$height )
+	function convert( $formString, &$value, &$calc, &$width, &$height, &$format )
 	{
 		$value = "";
 		$calc = "";
 		$width = 1;
 		$height = 1;
 		
-		if( preg_match( "/^(.*[^\\\\])?=(.*[^\\\\])?<<<([0-9]+),([0-9]+)>>>$/", stripslashes($formString), $parts ) )
+		if( preg_match( "/^(.*[^\\\\])?=(.*[^\\\\])?<<<([0-9]+),([0-9]+)>>>([a-z0-9_]*)$/", stripslashes($formString), $parts ) )
 		{
 			$value = str_replace( "\\=", "=", $parts[1] );
 			$calc = trim( $parts[2] );
 			$width = $parts[3];
 			$height = $parts[4];
+			$format = $parts[5];
 
 			return true;
 		}
@@ -1165,7 +1173,11 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 				if( $height > 1 )
 					$append .= " rowspan='{$height}'";
 
-				echo "			<td$append>{$sheet->dataGrid[$i][$j]}</td>\n";
+				if( isset( $sheet->dataGrid[$i][$j] ) )
+					$data = $sheet->dataGrid[$i][$j];
+				else
+					$data = '';
+				echo "			<td$append>$data</td>\n";
 			}
 			
 			echo "		</tr>\n";
