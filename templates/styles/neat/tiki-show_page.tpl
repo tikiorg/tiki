@@ -7,7 +7,7 @@
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <tr>
 <td>
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
@@ -21,7 +21,7 @@
 {else}
 <tr>
 <td>
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
