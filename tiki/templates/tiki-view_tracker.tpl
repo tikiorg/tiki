@@ -51,11 +51,11 @@ class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata
 <td class="formcolor" style="width:100%;"><input type="text" name="filtervalue" value="{$filtervalue}" /></td>
 <td>
 <select name="filterfield">
-{section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
-<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq $filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:255:"..."}</option>
+{foreach key=fid item=field from=$listfields}
+{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
+<option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:255:"..."}</option>
 {/if}
-{/section}
+{/foreach}
 </select>
 </td>
 {/if}
@@ -123,6 +123,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 {section name=ix loop=$items[user].field_values}
 
+{if $items[user].field_values[ix].isTblVisible eq 'y'}
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
@@ -178,6 +179,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <td class="auto">
 {$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 </td>
+{/if}
 {/if}
 {/if}
 {/section}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.58 2004-03-07 19:37:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.59 2004-03-08 13:37:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -160,11 +160,13 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $fields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
-	if ($fields["data"][$i]['isTblVisible'] == 'y' and ($fields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y')) {
+	if (($fields["data"][$i]['isTblVisible'] == 'y' or $fields["data"][$i]['isSearchable'] == 'y') and ($fields["data"][$i]['isPublic'] == 'y' or $tiki_p_admin_trackers == 'y')) {
 		$listfields[$fid]['type'] = $fields["data"][$i]["type"];
 		$listfields[$fid]['name'] = $fields["data"][$i]["name"];
 		$listfields[$fid]['options'] = $fields["data"][$i]["options"];
 		$listfields[$fid]['isMain'] = $fields["data"][$i]["isMain"];
+		$listfields[$fid]['isTblVisible'] = $fields["data"][$i]["isTblVisible"];
+		$listfields[$fid]['isSearchable'] = $fields["data"][$i]["isSearchable"];
 	}
 	
 	if ($fields["data"][$i]["type"] == 'f') {
@@ -437,6 +439,7 @@ $cant = $items["cant"];
 include "tiki-pagination.php";
 
 $smarty->assign_by_ref('items', $items["data"]);
+$smarty->assign_by_ref('listfields', $listfields);
 
 
 $users = $userlib->list_all_users();
