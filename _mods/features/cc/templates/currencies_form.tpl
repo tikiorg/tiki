@@ -39,7 +39,6 @@
 <td><textarea cols='40' rows='10' name='cc_description'>{$info.cc_description}</textarea></td>
 </tr>
 
-<!-- --------  commented out while editing of currencies defective 
 <tr class="formrow">
 <td>{tr}Requires approval{/tr}</td>
 <td><select name='requires_approval'>
@@ -48,7 +47,6 @@
 </select>
 </td>
 </tr>
-------------------------------------                                              -->
 
 <tr class="formrow">
 <td>{tr}Listed publicly{/tr}</td>
