@@ -199,14 +199,15 @@ class CcLib extends UsersLib {
 		return $back;
 	}
 
-	function update_ledger($cc,$user,$amount,$ledger=false,$date=false) {
+	function update_ledger($cc,$type,$user,$amount,$ledger=false,$date=false) {
 		if (!$ledger) {
 			$ledger = $this->get_ledger($cc,$user);
 		}
 		if ($ledger and $amount) {
 			if (!$date) $date = $this->date;
 			$balance = $ledger['balance'] + $amount;
-			$tr_total = $ledger['tr_total'] + abs($amount);
+			if ($type == 'record') $tr_total = $ledger['tr_total'] + abs($amount);
+			if ($type == 'revert') 	$tr_total = $ledger['tr_total'] - abs($amount);
 			$tr_count = $ledger['tr_count'] + 1;
 			$query = "update `cc_ledger` set `balance`=?,`tr_total`=?,`tr_count`=?,`last_tr_date`=? where `acct_id`=? and `cc_id`=? and `approved`=?";
 			$this->query($query,array($balance,$tr_total,$tr_count,$date,$user,$cc,'y'));
@@ -252,16 +253,26 @@ class CcLib extends UsersLib {
 		$this->query($query,array('c',$user,$cc));
 	}
 
-	function record_transaction($cc,$from_user,$to_user,$amount,$item,$date=false) {
+	function record_transaction($cc,$type,$from_user,$to_user,$amount,$item,$date=false) {
 		if (!$date) $date = $this->date;
 		$from_ledger = $this->get_ledger($cc,$from_user);
 		$to_ledger = $this->get_ledger($cc,$to_user);
 		$query = "insert into `cc_transaction`(`tr_date`,`acct_id`,`other_id`,`cc_id`,`amount`,`item`,`balance`)";
 		$query.= " values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($date,$from_user,$to_user,$cc,-$amount,$item,$from_ledger['balance']-$amount));
-		$result = $this->query($query,array($date,$to_user,$from_user,$cc,$amount,$item,$to_ledger['balance']+$amount));
-		$this->update_ledger($cc,$from_user,-$amount,$from_ledger,$date);
-		$this->update_ledger($cc,$to_user,$amount,$to_ledger,$date);
+		if ($type == 'record') {
+			$result = $this->query($query,array($date,$from_user,$to_user,$cc,-$amount,$item,$from_ledger['balance']-$amount));
+			$result = $this->query($query,array($date,$to_user,$from_user,$cc,$amount,$item,$to_ledger['balance']+$amount));
+			$this->update_ledger($cc,$type,$from_user,-$amount,$from_ledger,$date);
+			$this->update_ledger($cc,$type,$to_user,$amount,$to_ledger,$date);
+		}
+		if ($type == 'revert') {
+			$result = $this->query($query,array($date,$from_user,$to_user,$cc,$amount,$item,$from_ledger['balance']+$amount));
+			$result = $this->query($query,array($date,$to_user,$from_user,$cc,-$amount,$item,$to_ledger['balance']-$amount));
+			$this->update_ledger($cc,$type,$from_user,$amount,$from_ledger,$date);
+			$this->update_ledger($cc,$type,$to_user,-$amount,$to_ledger,$date);
+		}
+
+
 	}
 	
 }

@@ -5,6 +5,14 @@ require_once ('lib/cc/cclib.php');
 if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
 
+if (!isset($_REQUEST["sort_mode"])) {
+	$sort_mode = 'last_tr_date_desc';
+	$_REQUEST["sort_mode"] = $sort_mode;
+} else {
+	$sort_mode = $_REQUEST["sort_mode"];
+}
+
+
 $mid = "cc/index.tpl";
 $view = '';
 
@@ -16,9 +24,9 @@ if ($user) {
 	// ----------------- LEDGERS ----------------------------------------------
 	if ($page == 'ledgers' or $page == 'my_ledgers') {
 		if ($page == 'ledgers' and $tiki_p_cc_admin == 'y') {
-			$thelist = $cclib->get_ledgers();
+			$thelist = $cclib->get_ledgers(0,-1,$sort_mode);
 		} else {
-			$thelist = $cclib->get_ledgers(0,-1,'last_tr_date_desc',$user);
+			$thelist = $cclib->get_ledgers(0,-1,$sort_mode,$user);
 			$smarty->assign("userid",$user);
 		}
 		$smarty->assign("thelist",$thelist['data']);
@@ -31,44 +39,47 @@ if ($user) {
 				$_REQUEST['from_id'] = $user;
 			}
 			if (isset($_REQUEST['from_id']) and isset($_REQUEST['to_id']) and isset($_REQUEST['cc_id'])) {
+				$type = $_REQUEST['tr_type'];
 				$from_user = $_REQUEST['from_id'];
 				$to_user = $_REQUEST['to_id'];
+				$amount = $_REQUEST['tr_amount'];
 				$cc_id = $_REQUEST['cc_id'];
 				$from = $to = false;
-				if (!$cc_id) {
-					$smarty->assign('msg',"You need to select a currency to record your transaction.");
-				} else {
-				
-					if ($from_user == $to_user) {
-						$smarty->assign('msg',"Both accounts are the same.");
-					} else {
-						
-						if ($cclib->user_exists($from_user)) {
-							if ($cclib->is_registered($from_user,$cc_id)) {
-								$from = true;
-							} else {
-								$smarty->assign('msg',"User $from_user not registered in $cc_id.");
-							}
-						} else {
-							$smarty->assign('msg',"User $from_user not found");
-						}
-						if ($from) {
-							if ($cclib->user_exists($to_user)) {
-								if ($cclib->is_registered($to_user,$cc_id)) {
-									$to = true;
-								} else {
-									$smarty->assign('msg',"User $to_user not registered in $cc_id.");
-								}
-							} else {
-								$smarty->assign('msg',"User $to_user not found.");
-							}
-						}
-					
-					}
 
+				if (!$cc_id) {
+					$smarty->assign('msg',"You must select a cc system.");
+				} else {
+					if (!$amount > 0) {
+						$smarty->assign('msg',"Amount must be positive.");
+					} else {
+						if ($from_user == $to_user) {
+								$smarty->assign('msg',"Both accounts are the same.");
+						} else {
+							if (!$cclib->user_exists($from_user)) {
+								$smarty->assign('msg',"User $from_user not found");
+							} else {
+								if (!$cclib->is_registered($from_user,$cc_id)) {
+									$smarty->assign('msg',"User $from_user not registered in $cc_id.");
+								} else {
+									$from = true;
+								}
+							}
+							if ($from) {
+								if ($cclib->user_exists($to_user)) {
+									if ($cclib->is_registered($to_user,$cc_id)) {
+										$to = true;
+									} else {
+										$smarty->assign('msg',"User $to_user not registered in $cc_id.");
+									}
+								} else {
+									$smarty->assign('msg',"User $to_user not found.");
+								}
+							}
+						}
+					}
 				}
 				if ($from and $to) {
-					$cclib->record_transaction($cc_id,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
+					$cclib->record_transaction($cc_id,$type,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
 					$_GET = array();
 				} else {
 					$_REQUEST['new'] = true;

@@ -1,4 +1,4 @@
-{if $info and ($tiki_p_cc_admin eq 'y' or $info.owner eq $user)}
+{if $info and ($tiki_p_cc_admin eq 'y' or $info.owner_id eq $user)}
 <a href="cc.php?page=currencies&amp;cc_id={$info.id}" class="pagetitle">{tr}Modify a Currency{/tr}</a>
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 <br /><br />
@@ -39,7 +39,7 @@
 <td><textarea cols='40' rows='10' name='cc_description'>{$info.cc_description}</textarea></td>
 </tr>
 
-<!--
+<!-- --------  commented out while editing of currencies defective 
 <tr class="formrow">
 <td>{tr}Requires approval{/tr}</td>
 <td><select name='requires_approval'>
@@ -48,7 +48,7 @@
 </select>
 </td>
 </tr>
--->
+------------------------------------                                              -->
 
 <tr class="formrow">
 <td>{tr}Listed publicly{/tr}</td>
@@ -79,7 +79,7 @@
 {/if}
 
 <tr>
-<td></td><td><input type='submit' value='{if $info and ($tiki_p_cc_admin eq 'y' or $info.owner eq $user)}{tr}Save{/tr}{else}{tr}Create{/tr}{/if}'></td>
+<td></td><td><input type='submit' value='{if $info and ($tiki_p_cc_admin eq 'y' or $info.owner_id eq $user)}{tr}Save{/tr}{else}{tr}Create{/tr}{/if}'></td>
 </tr>
 </table>
 </form>
