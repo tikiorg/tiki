@@ -513,6 +513,17 @@ TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.blog
 	padding-right:   5px;
 }
 
+/* adding duplicate class for above class to ensure table header are formatted consistantly as before.  the above class should be deleted upon completion of transition to accessibility in tiki.) */
+th {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   white;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #ADBABD;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	color:   white;
