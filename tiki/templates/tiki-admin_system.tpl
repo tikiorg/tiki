@@ -1,9 +1,9 @@
-<h1><a class="pagetitle" href="tiki-admin_system.php">{tr}Admin System{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Backups" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin backups{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=SystemAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system admin{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_system.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 </h1>
 <br/><br/>
