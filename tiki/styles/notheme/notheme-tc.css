@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.8 2003-11-07 23:49:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.9 2003-11-15 06:42:15 zaufi Exp $
  *
  */
 
@@ -9,57 +9,57 @@
 
 /* This div encloses the whole Tiki application */
 div#tiki-main {
-	height: 100%;
-	width: 100%;
-	margin: 0px;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
 }
 
 /* This is the header */
 div#tiki-top {
-	text-align: right;
-	position: absolute;
-	right: 200px;
-	margin-top: 0px;
-	padding: 0px;
+    text-align: right;
+    position: absolute;
+    right: 200px;
+    margin-top: 0px;
+    padding: 0px;
 }
 
 /* This is the middle */
 div#tiki-mid {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 /* And this is the footer */
 div#tiki-bot {
-	margin-top: 10px;
-	font-size: small;
+    margin-top: 10px;
+    font-size: small;
 }
 
 div#tiki-bot > table {
-	width: 100%;
+    width: 100%;
 }
 
 div#tiki-bot > table td {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 /* The three columns (now divs) */
 div#leftcolumn {
-	position: absolute;
-	color: WindowText;
-	background: transparent;
-	left: 0px;
-	top: 5px;
-	width: 180px;
+    position: absolute;
+    color: WindowText;
+    background: transparent;
+    left: 0px;
+    top: 5px;
+    width: 180px;
     padding: 4px;
 }
 
 div#rightcolumn {
-	position: absolute;
-	color: WindowText;
-	background: transparent;
-	right: 0px;
-	top: 5px;
-	width: 180px;
+    position: absolute;
+    color: WindowText;
+    background: transparent;
+    right: 0px;
+    top: 5px;
+    width: 180px;
     padding: 4px;
 }
 
@@ -68,11 +68,11 @@ div#rightcolumn {
  *       Look into tiki.tpl for details...
  */
 div#tiki-center {
-	/*  color: WindowText;
-	  background: AppWorkspace;*/
-	padding-left: 2px;
-	padding-right: 2px;
-	width: auto;
+    /*  color: WindowText;
+      background: AppWorkspace;*/
+    padding-left: 2px;
+    padding-right: 2px;
+    width: auto;
 }
 div#tiki-center > table {
     width: 100%;

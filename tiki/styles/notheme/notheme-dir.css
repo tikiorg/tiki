@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-dir.css,v 1.6 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-dir.css,v 1.7 2003-11-15 06:42:15 zaufi Exp $
  *
  * Directory styles
  *
@@ -35,7 +35,7 @@ span.dirsitedesc {
 }
 
 span.dirsitetrail {
-	font-size: 10px;
+    font-size: 10px;
 }
 
 span.dirsitecats {
@@ -54,13 +54,13 @@ div.dirrelated {
 
 /* Footer with stats for the directory */
 td.dirfooter {
-	font-size: 9px;
+    font-size: 9px;
 }
 
 div.dirfooter {
-	color: InfoText;
-	background-color: InfoBackground;
-	border: 2px ridge WindowFrame;
-	font-family: sans-serif;
-	font-size: small;
+    color: InfoText;
+    background-color: InfoBackground;
+    border: 2px ridge WindowFrame;
+    font-family: sans-serif;
+    font-size: small;
 }

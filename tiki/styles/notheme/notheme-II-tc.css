@@ -1,24 +1,24 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-II-tc.css,v 1.5 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-II-tc.css,v 1.6 2003-11-15 06:42:15 zaufi Exp $
  *
  */
 
 /* The three columns (now divs) */
 div#leftcolumn {
-	  position: absolute;
-  	color: WindowText;
-	  left: 5px;
-  	top: 5px;
-	  width: 180px;
+    position: absolute;
+    color: WindowText;
+    left: 5px;
+    top: 5px;
+    width: 180px;
     z-index: 1;
 }
 
 div#rightcolumn {
-  	position: absolute;
-	  color: WindowText;
-  	right: 5px;
-	  top: 5px;
-  	width: 180px;
+    position: absolute;
+    color: WindowText;
+    right: 5px;
+    top: 5px;
+    width: 180px;
     z-index: 1;
 }
 
