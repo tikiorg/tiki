@@ -71,8 +71,8 @@ class tar {
 	// Processed Archive Information
 	var $files;
 	var $directories;
-	var $numFiles;
-	var $numDirectories;
+	var $numFiles = 0;
+	var $numDirectories = 0;
 
 
 	// Class Constructor -- Does nothing...

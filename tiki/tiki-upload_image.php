@@ -104,21 +104,28 @@ if(isset($_REQUEST["upload"])) {
       $size = $_FILES['userfile1']['size'];
       $name = $_FILES['userfile1']['name'];
       
+
+
       // Check for a zip file.....
-      
+      // Fixed by Flo
       if(substr($name,strlen($name)-3)=='zip') {
         if($tiki_p_batch_upload_images == 'y') {
-        $tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user);
+        if($tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user) == 0) {
+          $smarty->assign('msg',tra('Error processing zipped image package'));
+          $smarty->display("styles/$style_base/error.tpl");
+          die;
+        }
         
         header("location: tiki-browse_gallery.php?galleryId=".$_REQUEST["galleryId"]);
-        
+        die();
+
         } else {
            $smarty->assign('msg',tra('No permission to upload zipped image packages'));
            $smarty->display("styles/$style_base/error.tpl");
-           die;  	
+           die;         
         }
       }
-    
+   
       $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
       $data = fread($fp,filesize($_FILES['userfile1']['tmp_name']));
       fclose($fp);
