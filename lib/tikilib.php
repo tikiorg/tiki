@@ -3709,6 +3709,52 @@ function replace_hotwords($line, $words) {
 	return true;
 }
 
+
+// split string into a list of 
+function split_tag($string) {
+     $_splts = split('&quot;', $string);
+     $inside = FALSE;
+     $cleanup= TRUE;  // @todo: make this an option for other code
+     $parts = array();
+     $index=0;
+     
+     foreach ($_splts as $i)  {
+	 if ($cleanup) {
+	     $i = str_replace('}', '', $i);
+	     $i = str_replace('{', '', $i);
+	     $i = str_replace('\'', '', $i);
+	 }
+
+	 if ($inside) {  // inside "foo bar" - append
+	     if ($index>0) {
+		 $parts[$index-1] .= $i;
+	     } else {    // else: first element (should never happen)
+		 $parts[] = $i;
+	     }
+	 } else {        // 
+	     $_spl = split(" ", $i);
+	     foreach($_spl as $j) {
+		 $parts[$index++] = $j;
+	     }
+	 }
+	 $inside = ! $inside;
+     }
+     return $parts;
+}
+
+function split_assoc_array($parts, $assoc) {
+    //$assoc = array();
+    foreach($parts as $part) {
+	if ( (strpos($part, "=") == FALSE) ) {
+	    $assoc[$part] = '';
+	} else {
+	    list($key, $val) = split("=", $part);
+	    $assoc[$key] = $val;
+	}
+    }
+    return $assoc;
+}
+
 //PARSEDATA
 function parse_data($data) {
     global $page_regex;
@@ -4102,8 +4148,21 @@ function parse_data($data) {
     preg_match_all("/(\{img [^\}]+})/", $data, $pages);
 
     foreach (array_unique($pages[1])as $page_parse) {
-	$parts = explode(" ", $page_parse);
+	//$parts = explode(" ", $page_parse);
+	$parts = $this->split_tag( $page_parse);
 
+$repl="";
+	$imgdata = array();      // pre-set preferences
+	$imgdata["src"] = '';
+	$imgdata["height"] = '';
+	$imgdata["width"] = '';
+	$imgdata["link"] = '';
+	$imgdata["align"] = '';
+	$imgdata["desc"] = '';
+	$imgdata["imalign"] = '';
+
+        $imgdata = $this->split_agssoc_array( $parts, $imgdata);
+/*old stuff: should go away when the above works
 	$imgdata = array();
 	$imgdata["src"] = '';
 	$imgdata["height"] = '';
@@ -4114,6 +4173,7 @@ function parse_data($data) {
 	$imgdata["imalign"] = '';
 
 	foreach ($parts as $part) {
+$repl .="($part) ";
 	    $part = str_replace('}', '', $part);
 
 	    $part = str_replace('{', '', $part);
@@ -4126,10 +4186,11 @@ function parse_data($data) {
 		$imgdata[$subs[0]] = $subs[1];
 	    }
 	}
-
+ 
+*/
 	//print("todo el tag es: ".$page_parse."<br/>");
 	//print_r($imgdata);
-	$repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
+	$repl .= '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
 
 	if ($imgdata["width"])
 	    $repl .= ' width="' . $imgdata["width"] . '"';
