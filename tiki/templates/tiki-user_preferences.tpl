@@ -37,9 +37,11 @@
   <tr><td class="form">{tr}Country{/tr}:</td><td>
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
-  {section name=ix loop=$flags}
-  <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
+  {sortlinks}
+  {section name=ix loop=$flags}  
+  <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>  
   {/section}
+  {/sortlinks}
   </select>
   </td></tr>
   {if $change_theme eq 'y'}
