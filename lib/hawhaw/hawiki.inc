@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 18. October 2003
+// Last modified: 2. November 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -71,6 +71,16 @@ function HAWIKI_specchar($string)
   $trans = get_html_translation_table(HTML_ENTITIES);
   $trans = array_flip ($trans);
   return(strtr(utf8_decode($string), $trans));
+}
+
+
+function HAWIKI_unhtmlentities($string)
+{
+  // special character hnadling without utf8-decoding (see above)
+  // &amp; -> &, ü->ü (will be destroyed by utf8_decode)
+  $trans = get_html_translation_table (HTML_ENTITIES);
+  $trans = array_flip ($trans);
+  return(strtr($string, $trans));
 }
 
 
@@ -213,7 +223,7 @@ class HAWIKI_page
           if (strlen($po["text"]) == 0)
             die("length of text is 0"); // for test only
 
-          $text = new HAW_text($po["text"], $this->textformat);
+          $text = new HAW_text(HAWIKI_unhtmlentities($po["text"]), $this->textformat);
           $text->set_br(0);
           $this->deck->add_text($text);
 
