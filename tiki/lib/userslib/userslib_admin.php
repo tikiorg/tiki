@@ -634,6 +634,13 @@ class UsersLibAdmin extends UsersLib {
 		$auth_ext_xml_group_management = false;
 		$auth_ext_xml_group_management_checked = false;
 
+		$numrows = $maxRecords;
+		$sort_mode = 'groupName_asc';
+		$offset = 0;
+		$initial = '';
+		$find = '';
+		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+
 		// apply the function walk() at the bottom to each node of the array
 		array_walk_recursive($tree, "walk");
 		
@@ -756,47 +763,61 @@ function walk($value, $key, $data = null) {
 		global $auth_ext_xml_login_element, $auth_ext_xml_login_element_value, $auth_ext_xml_login_attribute, $auth_ext_xml_login_attribute_value;
 		global $auth_ext_xml_group_element, $auth_ext_xml_group_element_value, $auth_ext_xml_group_attribute, $auth_ext_xml_group_attribute_value;
 		if (array_key_exists($auth_ext_xml_login_element, $value)) {
-			$node = $value[$auth_ext_xml_login_element]; // this is the case when the element only appears once in the XML
+			$node = $value["$auth_ext_xml_login_element"]; // this is the case when the element only appears once in the XML
 			if (empty($auth_ext_xml_login_attribute) || empty($auth_ext_xml_login_attribute_value) ||
-				(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
+				(isset($node['ATTRIBUTES']["$auth_ext_xml_login_attribute"]) && $node['ATTRIBUTES']["$auth_ext_xml_login_attribute"] == $auth_ext_xml_login_attribute_value)) {
 				if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) ||
 					(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
 					$auth_ext_xml_login_isvalid = true;
 				}
 			}
-			if ($auth_ext_xml_group_management_checked != true || $auth_ext_xml_manage_admin == 'y') {
-				if (empty($auth_ext_xml_group_attribute) || empty($auth_ext_xml_group_attribute_value) ||
-					(isset($node['ATTRIBUTES'][$auth_ext_xml_group_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_group_attribute] == $auth_ext_xml_group_attribute_value)) {
-					if (empty($auth_ext_xml_group_element) || empty($auth_ext_xml_group_element_value) ||
-						(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_group_element_value)) {
-						$auth_ext_xml_group_management = true;
+		}
+		if ($auth_ext_xml_group_management_checked != true || $auth_ext_xml_manage_group == 'y') {
+			for ($i=0; $i<$group_arraylen; $i++) {
+				$groupname = $groups['data'][$i]['groupName'];
+				$auth_ext_xml_group_element = 'auth_ext_xml_element_' . $groupname;
+				$auth_ext_xml_group_element_value = 'auth_ext_xml_element_val_' . $groupname;
+				$auth_ext_xml_group_attribute = 'auth_ext_xml_attr_' . $groupname;
+				$auth_ext_xml_group_attribute_value = 'auth_ext_xml_attr_val_' . $groupname;
+				global $$auth_ext_xml_group_element;
+				global $$auth_ext_xml_group_element_value;
+				global $$auth_ext_xml_group_attribute;
+				global $$auth_ext_xml_group_attribute_value;
+				if (array_key_exists($$auth_ext_xml_group_element, $value)) {
+					$node = $value["$$auth_ext_xml_group_element"];
+					if (empty($$auth_ext_xml_group_attribute) || empty($$auth_ext_xml_group_attribute_value) ||
+						(isset($node['ATTRIBUTES']["$$auth_ext_xml_group_attribute"]) && $node['ATTRIBUTES']["$$auth_ext_xml_group_attribute"] == $$auth_ext_xml_group_attribute_value)) {
+						if (empty($$auth_ext_xml_group_element) || empty($$auth_ext_xml_group_element_value) ||
+							(isset($node['VALUE']) && $node['VALUE'] == $$auth_ext_xml_group_element_value)) {
+							$auth_ext_xml_group_management = true;
+						}
 					}
 				}
 			}
-			if ($auth_ext_xml_login_isvalid != true) {
-				foreach ($value[$auth_ext_xml_login_element] as $node) { // when the same element appears more than once, each instance is $value[element][n] where n is an integer
-					if (empty($auth_ext_xml_login_attribute) || empty($auth_ext_xml_login_attribute_value) ||
-						(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
-						if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) ||
-							(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
-							$auth_ext_xml_login_isvalid = true;
-							// check to see if we have found whether we should manage group
-							// if so, break out of foreach
-							if ($auth_ext_xml_group_management_checked == true || $auth_ext_xml_manage_admin != 'y') {
-								break 1;
-							}
+		}
+		if ($auth_ext_xml_login_isvalid != true) {
+			foreach ($value[$auth_ext_xml_login_element] as $node) { // when the same element appears more than once, each instance is $value[element][n] where n is an integer
+				if (empty($auth_ext_xml_login_attribute) || empty($auth_ext_xml_login_attribute_value) ||
+					(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
+					if (empty($auth_ext_xml_login_element) || empty($auth_ext_xml_login_element_value) ||
+						(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
+						$auth_ext_xml_login_isvalid = true;
+						// check to see if we have found whether we should manage group
+						// if so, break out of foreach
+						if ($auth_ext_xml_group_management_checked == true || $auth_ext_xml_manage_admin != 'y') {
+							break 1;
 						}
 					}
-					if ($auth_ext_xml_group_management_checked != true || $auth_ext_xml_manage_admin == 'y') {
-						if (empty($auth_ext_xml_group_attribute) || empty($auth_ext_xml_group_attribute_value) ||
-							(isset($node['ATTRIBUTES'][$auth_ext_xml_group_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_group_attribute] == $auth_ext_xml_group_attribute_value)) {
-							if (empty($auth_ext_xml_group_element) || empty($auth_ext_xml_group_element_value) ||
-								(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_group_element_value)) {
-								$auth_ext_xml_group_management = true;
-								// check to see if we have found whether user has access; if so, break out of foreach
-								if ($auth_ext_xml_login_isvalid == true) {
-									break 1;
-								}
+				}
+				if ($auth_ext_xml_group_management_checked != true || $auth_ext_xml_manage_group == 'y') {
+					if (empty($auth_ext_xml_group_attribute) || empty($auth_ext_xml_group_attribute_value) ||
+						(isset($node['ATTRIBUTES'][$auth_ext_xml_group_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_group_attribute] == $auth_ext_xml_group_attribute_value)) {
+						if (empty($auth_ext_xml_group_element) || empty($auth_ext_xml_group_element_value) ||
+							(isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_group_element_value)) {
+							$auth_ext_xml_group_management = true;
+							// check to see if we have found whether user has access; if so, break out of foreach
+							if ($auth_ext_xml_login_isvalid == true) {
+								break 1;
 							}
 						}
 					}
@@ -805,6 +826,7 @@ function walk($value, $key, $data = null) {
 		}
 	}
 }
+
 
 // create a global instance.
 global $userslibadmin;

@@ -209,14 +209,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <table class="admin">
 <tr><td class="form">{tr}Enable secondary validation through external XML source?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_enabled" {if $auth_ext_xml_enabled eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Delete user if permission denied (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_delete_user_tiki" {if $auth_ext_xml_delete_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Add or remove user from this group (according to XML)?{/tr}</td><td>
-<select name="auth_ext_xml_group">
-<option value="feature_disabled" {if $auth_ext_xml_group eq 'feature_disabled'} selected="selected"{/if}>-- {tr}Feature Disabled{/tr} --</option>
-{section name=ix loop=$groups}
-<option value="{$groups[ix].groupName}" {if $groups[ix].groupName eq $auth_ext_xml_group} selected="selected"{/if}>{$groups[ix].groupName}</option>
-{/section}
-</select>
-</td></tr>
+<tr><td class="form">{tr}Add or remove user from groups (according to XML)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_manage_group" {if $auth_ext_xml_manage_group eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_skip_admin" {if $auth_ext_xml_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Pass a CAS Proxy Ticket to XML source (if using CAS auth)?{/tr}</td><td><input type="checkbox" name="auth_ext_xml_cas_proxy" {if $auth_ext_xml_cas_proxy eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}External XML source URL{/tr}:</td><td><input type="text" name="auth_ext_xml_url" value="{$auth_ext_xml_url|escape}" size="50" /></td></tr>
@@ -228,10 +221,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Expected login permission ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element_value" value="{$auth_ext_xml_login_element_value|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected login permission ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute" value="{$auth_ext_xml_login_attribute|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected login permission ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute_value" value="{$auth_ext_xml_login_attribute_value|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected group management ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_group_element" value="{$auth_ext_xml_group_element|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected group management ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_group_element_value" value="{$auth_ext_xml_group_element_value|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected group management ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_group_attribute" value="{$auth_ext_xml_group_attribute|escape}" size="20" /></td></tr>
-<tr><td class="form">{tr}Expected group management ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_group_attribute_value" value="{$auth_ext_xml_group_attribute_value|escape}" size="20" /></td></tr>
+{section name=ix loop=$groups}
+<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_element_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_element_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element_value|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute_value|escape}" size="20" /></td></tr>
+{/section}
+
 <tr><td colspan="2" class="button"><input type="submit" name="auth_ext_xml" value="{tr}Change Secondary Validation preferences{/tr}" /></td></tr>
 </table>
 </form>
