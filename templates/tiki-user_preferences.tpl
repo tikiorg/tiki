@@ -19,7 +19,7 @@
   <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td><input type="checkbox" name="email_isPublic" {if $email_isPublic eq 'y'}checked="checked"{/if} /></td></tr>
   </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td>
-  <img alt="flag" src="img/flags/{$country}.gif" />
+  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
   {section name=ix loop=$flags}
   <option name="{$flags[ix]}" {if $country eq $flags[ix]}selected="selected"{/if}>{$flags[ix]}</option>
