@@ -27,11 +27,36 @@ if(!isset($_SESSION["thedate"])) {
   $thedate = $_SESSION["thedate"];
 }
 
+
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $page = $_REQUEST["page"]=$wikiHomePage;
 } else {
   $page = $_REQUEST["page"];
+}
+
+$smarty->assign('structure','n');
+//Has a structure page been requested  
+if (isset($_REQUEST["page_ref_id"])) {
+  $page_ref_id = $_REQUEST["page_ref_id"];
+}
+else {
+  //if not then check if page is the head of a structure
+  $page_ref_id = $structlib->get_struct_ref_if_head($page);
+}
+if(isset($page_ref_id)) {
+ 	$smarty->assign('structure','y');
+ 	$page_info = $structlib->get_page_info($page_ref_id);
+ 	$smarty->assign('page_info', $page_info);
+  $structure_info = $structlib->get_structure_info($page_ref_id);
+ 	$smarty->assign('structure_info', $structure_info);
+  $parent_info = $structlib->get_parent_info($page_ref_id);
+ 	$smarty->assign('parent_info', $parent_info);
+ 	$prev_next_pages = $structlib->get_prev_next_pages($page_ref_id);
+ 	$smarty->assign('struct_prev_next', $prev_next_pages);
+  $page = $page_info["pageName"];
+  $structure_path = $structlib->get_structure_path($page_ref_id);
+ 	$smarty->assign('structure_path', $structure_path);
 }
 $smarty->assign_by_ref('page',$page);
 
@@ -336,17 +361,6 @@ if($feature_wiki_footnotes == 'y') {
 }
 
 $smarty->assign('wiki_extras','y');
-$smarty->assign('structure','n');   
-if($structlib->page_is_in_structure($page)) {   
-	$smarty->assign('structure','y');
-	if (isset($_REQUEST["structID"]))	{
-		$prev_next_pages = $structlib->get_prev_next_pages($page, $_REQUEST["structID"]);
-	}
-	else {
-		$prev_next_pages = $structlib->get_prev_next_pages($page);
-	}
-	$smarty->assign('struct_prev_next', $prev_next_pages);
-}
 
 if($feature_theme_control == 'y') {
 	$cat_type='wiki page';

@@ -448,7 +448,7 @@ CREATE TABLE tiki_blog_posts (
   KEY data (data(255)),
   KEY blogId (blogId),
   KEY created (created),
-  FULLTEXT KEY ft (data)
+  FULLTEXT KEY ft (data, title)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -2049,6 +2049,7 @@ CREATE TABLE tiki_page_footnotes (
 
 DROP TABLE IF EXISTS tiki_pages;
 CREATE TABLE tiki_pages (
+  page_id int(14) NOT NULL auto_increment,
   pageName varchar(160) NOT NULL default '',
   hits int(8) default NULL,
   data text,
@@ -2067,11 +2068,12 @@ CREATE TABLE tiki_pages (
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
   page_size int(10) unsigned default 0,
-  PRIMARY KEY  (pageName),
+  PRIMARY KEY  (page_id),
+  UNIQUE KEY (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
-  FULLTEXT KEY ft (pageName,data)
-) TYPE=MyISAM;
+  FULLTEXT KEY ft (pageName, description, data)
+) TYPE=MyISAM AUTO_INCREMENT=1;
 # --------------------------------------------------------
 
 #
@@ -2520,13 +2522,14 @@ CREATE TABLE tiki_shoutbox (
 
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
-  structID varchar(40) NOT NULL default '',
-  page varchar(240) NOT NULL default '',
+  page_ref_id int(14) NOT NULL auto_increment,
+  parent_id int(14) default NULL,
+  page_id int(14) NOT NULL,
   page_alias varchar(240) NOT NULL default '',
-  parent varchar(240) NOT NULL default '',
   pos int(4) default NULL,
-  PRIMARY KEY  (page,parent)
-) TYPE=MyISAM;
+  PRIMARY KEY  (page_ref_id),
+  INDEX KEY (page_id, parent_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
 #

@@ -4,13 +4,10 @@
 	<td class="formcolor">
   [ <a class="link" href="javascript:show('showstructs');">{tr}show structures{/tr}</a>
   | <a class="link" href="javascript:hide('showstructs');">{tr}hide structures{/tr}</a> ]
-	<div id="showstructs" style="display:block;">
-	This page is in the following Structures:
-	<br/>
-	<table border="1" cellpadding="0" cellspacing="0">
-		<tr><td class="heading">Structure ID:</td><td class="heading">Page Alias</td><td class="heading">Tags</td></tr>
-		{foreach from=$showstructs item=page_alias key=structID}
-			<tr><td class="odd">{$structID}</td><td class="odd">{$page_alias}</td><td class="odd"> </td></tr>
+	<div id="showstructs" >
+	<table>
+		{foreach from=$showstructs item=page_info }
+			<tr><td>{$page_info.pageName}{if !empty($page_info.page_alias)}({$page_info.page_alias}){/if}</td></tr>
 		{/foreach}  
 	</table>
   

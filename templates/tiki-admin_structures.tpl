@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.13 2003-11-10 02:26:52 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.14 2003-11-11 10:01:31 chris_holman Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info --->
@@ -23,11 +23,6 @@
 <table class="normal">
 <tr>
    <td class="formcolor">{tr}Structure ID{/tr}:</td>
-   <td class="formcolor"><input type="text" name="structID" /></td>
-   <td colspan=2 class="formcolor"></td>
-</tr>
-<tr>
-   <td class="formcolor">{tr}First page in structure{/tr}:</td>
    <td class="formcolor"><input type="text" name="name" /></td>
    <td class="formcolor">{tr}Alias{/tr}:</td>
    <td class="formcolor"><input type="text" name="alias" /></td>
@@ -55,12 +50,18 @@
 {section loop=$channels name=ix}
 <tr>
   <td class="{cycle advance=false}">
-  <a class="tablename" href="tiki-edit_structure.php?structID={$channels[ix].structID|escape:"url"}">{$channels[ix].structID}</a>
+  <a class="tablename" href="tiki-edit_structure.php?structure_id={$channels[ix].page_ref_id}">
+	  {if $channels[ix].page_alias}
+        {$channels[ix].page_alias}
+	  {else}
+		{$channels[ix].pageName}
+	  {/if}
+  </a>
   </td>
   <td class="{cycle}">
-  <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page|escape:"url"}"><img src='img/icons/export.gif' alt="{tr}export pages{/tr}" title="{tr}export pages{/tr}" border='0' /></a>
-  <a class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page|escape:"url"}"><img src='img/icons/expand.gif' alt="{tr}dump tree{/tr}" title="{tr}dump tree{/tr}" border='0' /></a>
-  <a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page|escape:"url"}"><img src='img/icons2/delete.gif' alt="{tr}remove{/tr}" title="{tr}remove{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/export.gif' alt="{tr}export pages{/tr}" title="{tr}export pages{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons/expand.gif' alt="{tr}dump tree{/tr}" title="{tr}dump tree{/tr}" border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}"><img src='img/icons2/delete.gif' alt="{tr}remove{/tr}" title="{tr}remove{/tr}" border='0' /></a>
   </td>
 </tr>
 {/section}

@@ -1,13 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.49 2003-11-10 14:01:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.50 2003-11-11 10:01:32 chris_holman Exp $ *}
 
-{if $feature_page_title eq 'y'}
-  <h1>
-    <a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
-      {if $structure eq 'y' and $struct_alias ne ''}{$struct_alias}{else}{$page}{/if}
-    </a>
-    {if $lock}
-      <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
-    {/if}
+{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
+  {if $structure eq 'y' and $page_info.page_alias ne ''}
+    {$page_info.page_alias}
+  {else}
+    {$page}
+  {/if}</a>
+  {if $lock}
+    <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+  {/if}
   </h1>
 {/if}
 <table class="wikitopline">
@@ -66,47 +67,70 @@
 </table>
 
 <div class="wikitext">
-  {if $structure eq 'y'}
-  <div class="tocnav">
-    <table width='100%'>
-      {foreach from=$struct_prev_next item=struct name=str key=key}
-	  <tr><td width='33%'>
-         {if $struct.prev_page}
-           <a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&structID={$key}"> &lt;&lt;
-             {if $struct.prev_page_alias}{$struct.prev_page_alias}{else}{$struct.prev_page}{/if} 
-           </a>
-         {else}
-           &nbsp;
-         {/if}
-      </td>
-      <td align='center' width='33%'>
-{*		<a class="tocnavlink" href="tiki-index.php?page=">{$key}</a> *}
-        {$key}
-      </td>
-      <td align='right' width='33%'>
-        {if $struct.next_page}
-          <a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&structID={$key}">
-            {if $struct.next_page_alias}{$struct.next_page_alias}{else}{$struct.next_page}{/if} &gt;&gt;
-          </a>
+{if $structure eq 'y'}
+<div class="tocnav">
+<table>
+<tr><td>
+    {if $struct_prev_next and $struct_prev_next.prev_page_ref_id}
+		<a href="tiki-index.php?page_ref_id={$struct_prev_next.prev_page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' 
+   			{if $struct_prev_next.prev_page_alias}
+   				title='{$struct_prev_next.prev_page_alias}'
+   			{else}
+   				title='{$struct_prev_next.prev_pageName}'
+   			{/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>{/if}
+	{if $parent_info}
+   	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}' 
+        {if $parent_info.page_alias}
+   	      title='{$parent_info.page_alias}'
         {else}
-          &nbsp;
-        {/if}
-      </td></tr>
-    {/foreach}
-  </table>
+   	      title='{$parent_info.pageName}'
+        {/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>{/if}
+   	{if $struct_prev_next and $struct_prev_next.next_page_ref_id}
+      <a href="tiki-index.php?page_ref_id={$struct_prev_next.next_page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
+		  {if $struct_prev_next.next_page_alias}
+			  title='{$struct_prev_next.next_page_alias}'
+		  {else}
+			  title='{$struct_prev_next.next_pageName}'
+		  {/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>
+	{/if}
+	{if $structure_info}
+   	<a href="tiki-index.php?page_ref_id={$structure_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
+		  {if $structure_info.page_alias}
+			  title='{$structure_info.page_alias}'
+		  {else}
+			  title='{$structure_info.pageName}'
+		  {/if}/></a>{/if}
+  </td>
+  <td>
+    {section loop=$structure_path name=ix}
+      {if $structure_path[ix].parent_id}->{/if}
+	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
+      {if $structure_path[ix].page_alias}
+        {$structure_path[ix].page_alias}
+	  {else}
+        {$structure_path[ix].pageName}
+	  {/if}
+	  </a>
+	{/section}
+  </td>
+</tr>
+</table>
 </div>
-{/if}
-{$parsed}
-
+{/if}{$parsed}
 {if $pages > 1}
-  <br />
-  <div align="center">
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
-    <small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
-    <a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
-  </div>
+	<br />
+	<div align="center">
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+
+		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+
+
+		<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+	</div>
 {/if}
 </div> {* End of main wiki page *}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.10 2003-11-04 10:03:03 caustin_ats Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.11 2003-11-11 10:01:17 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,19 +47,13 @@ if (isset($_REQUEST['remove'])) {
 }
 
 if (isset($_REQUEST["create"])) {
-	if ((empty($_REQUEST['structID']))) {
-		$smarty->assign('msg', tra("No structure ID indicated"));
-
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
 	if ((empty($_REQUEST['name']))) {
 		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
 	}
-	$structlib->s_create_page('', '', $_REQUEST["name"], $_REQUEST["structID"], $_REQUEST["alias"]);
+	$structlib->s_create_page(null, null , $_REQUEST["name"], $_REQUEST["alias"]);
 }
 
 //
@@ -108,7 +102,7 @@ if (isset($_REQUEST["create_from_tree"])) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'page_asc';
+	$sort_mode = 'pageName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
