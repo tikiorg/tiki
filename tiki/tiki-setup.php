@@ -4,7 +4,15 @@
 
 #error_reporting(E_ALL);
 
+/*!
+	\static
+*/
 class TikiSetup {
+	/*!
+		Return 'windows' if windows, otherwise 'unix'
+		
+		\static
+	*/
 	function os() {
 		static $os;
 		
@@ -19,6 +27,11 @@ class TikiSetup {
 		return $os;
 	}
 
+	/*!
+		Return true if windows, otherwise false
+		
+		\static
+	*/
 	function isWindows() {
 		static $windows;
 		
@@ -28,7 +41,65 @@ class TikiSetup {
 		
 		return $windows;
 	}
+
+	/*!
+		Return ';' if windows otherwise ':'
+		
+		\static
+	*/
+	function pathSeparator() {
+		static $separator;
+		
+		if (!isset($separator)) {
+			if (substr(PHP_OS, 0, 3) == 'WIN') {
+				$separator = ';';
+			} else {
+				$separator = ':';
+			}
+		}
+		
+		return $separator;
+	}
+
+	/*!
+		Prepend $path to the include path
+
+		\static
+	*/
+	function prependIncludePath($path) {
+		$include_path = ini_get('include_path');
+		if ($include_path) {
+			$include_path = $path . TikiSetup::pathSeparator() . $include_path;
+		} else {
+			$include_path = $path;
+		}
+		
+		return ini_set('include_path', $include_path);
+	}
+
+	/*!
+		Append $path to the include path
+		\static
+
+	*/
+	function appendIncludePath($path) {
+		$include_path = ini_get('include_path');
+		if ($include_path)
+			$include_path .= TikiSetup::pathSeparator() . $path;
+		else
+			$include_path = $path;
+		
+		return ini_set('include_path', $include_path);
+	}
 	
+	/*!
+		Return system defined temporary directory.
+		
+		In Unix, this is usually /tmp
+		In Windows, this is usually c:\windows\temp or c:\winnt\temp
+
+		\static
+	*/
 	function tempdir() {
 		static $tempdir;
 		
@@ -39,6 +110,11 @@ class TikiSetup {
 		return $tempdir;
 	}
 	
+	/*!
+		Check that everything is set up properly
+		
+		\static
+	*/
 	function check() {
 		static $checked;
 		
@@ -100,7 +176,10 @@ class TikiSetup {
 			'img/wiki_up',
 			'modules/cache',
 			'temp',
-			'templates_c', 
+			'templates_c',
+			# 'var',
+			# 'var/log',
+			# 'var/log/irc',
 		);
 		
 		foreach ($dirs as $dir) {
@@ -113,6 +192,15 @@ class TikiSetup {
 		}
 		
 		if ($errors) {
+			$PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
+			ob_start();
+			phpinfo(INFO_MODULES);
+			$httpd_conf = 'httpd.conf';
+			if (preg_match('/Server Root<\/b><\/td><td\s+align="left">([^<]*)</', ob_get_contents(), $m)) {
+				$httpd_conf = $m[1] . '/' . $httpd_conf;
+			}
+			ob_end_clean();
+
 			print "
 <pre>
 Your tiki is not properly set up:
@@ -120,9 +208,8 @@ Your tiki is not properly set up:
 $errors
 ";
 
-                        if (!TikiSetup::isWindows()) {
-                          print "
-To set up your tiki, log in to the system running tiki,
+			if (!TikiSetup::isWindows()) {
+				print "To set up your tiki, log in to the system running tiki,
 and type the following commands:
 
 \$ bash
@@ -137,18 +224,21 @@ or if you can't become root, but are a member of the group $wwwgroup:
 \$ chmod +x setup.sh
 \$ ./setup.sh mylogin $wwwgroup
 
-If you have problems accessing a directory, check open_basedir entry in php.ini or apache.conf.
+If you have problems accessing a directory, check the open_basedir entry in 
+$PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 Once you have executed these commands, this message will disappear!
 
 	";
-                        }
-                        exit;
+			}
+			exit;
 		}
 	}
 }
 
 TikiSetup::check();
+TikiSetup::prependIncludePath(dirname(__FILE__) . '/lib/pear');
+TikiSetup::prependIncludePath(dirname(__FILE__) . '/lib');
 
 $tmpDir = TikiSetup::tempdir();
 
