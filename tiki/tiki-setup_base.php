@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.70 2004-04-09 10:49:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.71 2004-04-09 17:01:17 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -228,12 +228,7 @@ function tra($content, $lg='') {
     if ($lang_use_db != 'y') {
         if ($lg == "" || $lg == $language) {
            global $lang;
-		if (file_exists("lang/$language/language_tra.php")) {
-			include_once("lang/$language/language_tra.php");
-		}
-		else {
-		      include_once("lang/$language/language.php");
-		}
+	      include_once("lang/$language/language.php");
         }
         else
            include ("lang/$lg/language.php");
