@@ -16,15 +16,8 @@
 
 <!-- begin -->
 
-
-
-
-
-
-
-
 <br /><br />
-<a class="link" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
 
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
