@@ -370,7 +370,7 @@ class TrackerLib extends TikiLib {
 			} else {
 				// We add an item
 				$this->getOne("delete from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?",array((int) $new_itemId,(int) $fieldId),false);
-				$query = "replace into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+				$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 
 				$result = $this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
 			}
