@@ -105,7 +105,7 @@ class SearchLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$href = sprintf($h['href'], $res['id1'], $res['id2']);
+			$href = sprintf(urldecode($h['href']), $res['id1'], $res['id2']);
 
 			$ret[] = array(
 				'pageName' => $res["pageName"],
