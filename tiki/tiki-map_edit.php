@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.7 2003-11-12 04:36:07 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.8 2003-11-13 23:42:08 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,9 +47,9 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
 	}
-
+  ini_set("display_errors","0");
 	$fp = @fopen($newmapfile, "r");
-
+  ini_set("display_errors","1");
 	if ($fp) {
 		$smarty->assign('msg', tra("This mapfile already exists"));
 
@@ -57,11 +57,11 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 		fclose ($fp);
 		die;
 	}
-
+  ini_set("display_errors","0");
 	$fp = fopen($newmapfile, "w");
-
+  ini_set("display_errors","1");
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to write the mapfile"));
+		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
 
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
@@ -87,10 +87,12 @@ if ($tiki_p_map_edit != 'y') {
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
-	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
 
+  ini_set("display_errors","0");
+	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
+  ini_set("display_errors","1");
 	if (!$fp) {
-		$smarty->assign('msg', tra("You dont have permission to write the mapfile"));
+		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
 
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
@@ -133,9 +135,9 @@ if ($tiki_p_map_edit != 'y') {
 	die;
 }
  $mapfile = $map_path .$_REQUEST["mapfile"];
- 
+  ini_set("display_errors","0"); 
 	$fp = fopen($mapfile, "r");
-
+  ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to read the mapfile"));
 		$smarty->display("styles/$style_base/error.tpl");
