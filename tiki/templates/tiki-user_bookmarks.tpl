@@ -53,7 +53,7 @@
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
     {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='img/icons/refresh.gif' alt='{tr}refresh cache{/tr}' title='{tr}refresh cache{/tr}' border='0' /></a>
+    <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}"><img src='img/icons/refresh.gif' alt="{tr}refresh cache{/tr}" title="{tr}refresh cache{/tr}" border='0' /></a>
     {/if}
   </td>
 </tr>
