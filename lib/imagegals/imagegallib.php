@@ -504,7 +504,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   }
 
 
-  function insert_image($galleryId,$name,$description,$filename, $filetype, $data, $size, $xsize, $ysize, $user,$t_data,$t_type)
+  function insert_image($galleryId,$name,$description,$filename, $filetype, &$data, $size, $xsize, $ysize, $user,&$t_data,$t_type)
   {
     global $gal_use_db;
     global $gal_use_dir;
@@ -569,11 +569,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $this->get_image($id);
 
     $this->rotateimage();
-    // Prepare to store data in database
-    $data= addslashes($data);
-    $query = "update tiki_images_data set data='$data' where imageId=$id and type='o'";
-    $result = $this->query($query);
-    if (DB::isError($result)) $this->sql_error($query,$result);
+    $this->store_image_data(true);
     // delete all scaled images. Will be rebuild when requested
     $query = "delete from tiki_images_data where imageId=$id and type !='o'";
     $result = $this->query($query);
@@ -774,12 +770,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       if($ext==".thumb" && filesize($gal_use_dir.$res["path"].$ext)==0 ) {
         $ext='';
       }
-      //@$fp = fopen($gal_use_dir.$res["path"].$ext,'rb');
-      //if(!$fp) {die;}
-      //while(!feof($fp)) {
-      //  $res["data"].=fread($fp,8192*16);
-      //}
-      //fclose($fp);
       $this->readimagefromfile($gal_use_dir.$res["path"].$ext);
     } else {
       $this->image=$res["data"];
