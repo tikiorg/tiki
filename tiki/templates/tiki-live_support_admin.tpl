@@ -48,7 +48,7 @@
 					<td>{$online_operators[ix].accepted_requests}</td>
 				</tr>
 				<tr>
-					<td>{$online_operators[ix].status} {tr}since{/tr}:</td>
+					<td>{tr}{$online_operators[ix].status}{/tr} {tr}since{/tr}:</td>
 					<td>{$online_operators[ix].status_since|tiki_short_datetime}</td>
 					
 				</tr>
@@ -94,7 +94,7 @@
 					<td>{$offline_operators[ix].accepted_requests}</td>
 				</tr>
 				<tr>
-					<td>{$offline_operators[ix].status} {tr}since{/tr}:</td>
+					<td>{tr}{$offline_operators[ix].status}{/tr} {tr}since{/tr}:</td>
 					<td>{$offline_operators[ix].status_since|tiki_short_datetime}</td>
 				</tr>
 			</table>
