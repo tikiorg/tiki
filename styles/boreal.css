@@ -373,6 +373,17 @@ TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.jukebox
 	padding-right:   5px;
 }
 
+/* adding th so formatting doesn't get messed up while we transition to an accessible tiki */
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.jukeboxlistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.thead {
+	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:   white;
+	font-size:   10px;
+	background:   #606371;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	color:   white;
