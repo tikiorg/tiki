@@ -3004,6 +3004,18 @@ function last_pages($maxRecords = -1) {
   return $ret;
 }
 
+
+function last_major_pages($maxRecords = -1) {
+  $query = "select tp.`pageName`,tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta 
+		on tp.`pageName`=ta.`pageName` and tp.`lastModif`=ta.`lastModif` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
+  $result = $this->query($query,array(),$maxRecords,0);
+  $ret = array();
+  while ($res = $result->fetchRow()) {
+    $ret[] = $res;
+  }
+  return $ret;
+}
+
 function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
 
     if ($sort_mode == 'size_desc') {
