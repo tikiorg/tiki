@@ -210,7 +210,7 @@ $errors
 
 			if (!TikiSetup::isWindows()) {
 				print "You may either chmod the directories above manually to 777, or run one of the sets of commands below.
-<b><a href='tiki-install.php'>Procceed to the Tiki installer</a></b> after you run the commands below.
+<b><a href='tiki-install.php'>Proceed to the Tiki installer</a></b> after you run the commands below.
 
 If you cannot become root, and are NOT part of the group $wwwgroup:
 	\$ bash
@@ -242,7 +242,7 @@ to delete them for you if needed.
 
 <a href='http://tikiwiki.org/InstallTiki' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help.
 
-<b><a href='tiki-install.php'>Procceed to the Tiki installer</a></b> if you've completed the steps above.
+<b><a href='tiki-install.php'>Proceed to the Tiki installer</a></b> if you've completed the steps above.
 </pre></body></html>";
 			}
 			exit;

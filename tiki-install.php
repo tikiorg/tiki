@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.7 2003-08-01 10:30:45 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.8 2003-08-03 10:15:51 sylvieg Exp $
 
 session_start();
 // Define and load Smarty components
@@ -97,7 +97,7 @@ if(isset($_REQUEST['kill'])) {
 	<html><body>
 	<p><font color='red'><b>Security Alert!</b><br />
 	Tiki installer failed to rename <b>tiki-install.php</b>.  Please remove or rename the file, <b>tiki-install.php</b>, manually.  Others can potentially wipe out your Tiki database if you do not remove or rename this file.</b></font><br />
-	<a href='index.php'>Procceed to your site</a> after you have removed or renamed <b>tiki-install.php</b></p>
+	<a href='index.php'>Proceed to your site</a> after you have removed or renamed <b>tiki-install.php</b></p>
 	</body></html>
 	";
   }
