@@ -16,36 +16,31 @@ class ActivityManager extends BaseManager {
     Constructor takes a PEAR::Db object to be used
     to manipulate activities in the database.
   */
-  function ActivityManager($db) 
-  {
+  function ActivityManager($db) {
     if(!$db) {
       die("Invalid db object passed to activityManager constructor");  
     }
     $this->db = $db;  
   }
   
-  function get_error()
-  {
+  function get_error() {
     return $this->error;
   }
   
   /*!
    Asociates an activity with a role
   */
-  function add_activity_role($activityId, $roleId)
-  {
-    $query = "replace into galaxia_activity_roles(activityId, roleId)
-    values($activityId, $roleId)";
-    $this->query($query);
+  function add_activity_role($activityId, $roleId) {
+    $query = "replace into `galaxia_activity_roles`(`activityId`,`roleId`) values(?,?)";
+    $this->query($query,array($activityId, $roleId));
   }
   
   /*!
    Gets the roles asociated to an activity
   */
-  function get_activity_roles($activityId)
-  {
+  function get_activity_roles($activityId) {
     $query = "select activityId,roles.roleId,roles.name from galaxia_activity_roles gar, galaxia_roles roles where roles.roleId = gar.roleId and activityId=$activityId";
-	$result = $this->query($query);
+		$result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
       $ret[] = $res;

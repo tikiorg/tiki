@@ -574,7 +574,7 @@ class Instance extends Base {
 		}
   	$iid = $this->instanceId;
   	if ($cId) {
-  		$query = "update `galaxia_instance_comments` set `title`=?,`comment`=? where `iid`=? and `cId`=?";
+  		$query = "update `galaxia_instance_comments` set `title`=?,`comment`=? where `instanceId`=? and `cId`=?";
 			$this->query($query,array($title,$comment,$iid,$cId));
   	} else {
   		$hash = md5($title.$comment);

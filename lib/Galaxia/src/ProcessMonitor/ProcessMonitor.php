@@ -3,20 +3,21 @@ class ProcessMonitor extends Base {
 
   function monitor_stats() {
     $res = Array();
-    $res['active_processes']=$this->getOne("select count(*) from `galaxia_processes` where `isActive`=$",array('y'));
-    $res['processes']=$this->getOne("select count(*) from `galaxia_processes`");
-    $result=$this->query("select distinct(`pId`) from `galaxia_instances` where `status`=?",array("active"));
-    $res['running_processes']=$result->numRows();
-    $res['active_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("active"));
-    $res['completed_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("completed"));
-    $res['exception_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("exception"));
-    $res['aborted_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("aborted"));
+    $res['active_processes'] = $this->getOne("select count(*) from `galaxia_processes` where `isActive`=?",array('y'));
+    $res['processes'] = $this->getOne("select count(*) from `galaxia_processes`");
+    $result = $this->query("select distinct(`pId`) from `galaxia_instances` where `status`=?",array('active'));
+		// echo"<pre>";print_r($result);echo"</pre>";
+    $res['running_processes'] = $result->numRows();
+    $res['active_instances'] = $this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("active"));
+    $res['completed_instances'] = $this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("completed"));
+    $res['exception_instances'] = $this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("exception"));
+    $res['aborted_instances'] = $this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("aborted"));
     return $res;
   }
   
   function update_instance_status($iid,$status) {
   	$query = "update `galaxia_instances` set `status`=? where `instanceId`=?";
-  	$this->query($queryi,array($status,$iid));
+  	$this->query($query,array($status,$iid));
   }
   
   function update_instance_activity_status($iid,$activityId,$status) {
@@ -105,8 +106,7 @@ class ProcessMonitor extends Base {
     return $retval;
   }
 
-  function monitor_list_activities($offset,$maxRecords,$sort_mode,$find,$where='')
-  {
+  function monitor_list_activities($offset,$maxRecords,$sort_mode,$find,$where='') {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
 	$findesc = $this->qstr('%'.$find.'%');
@@ -143,12 +143,11 @@ class ProcessMonitor extends Base {
     return $retval;
   }
 
-  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
+  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars) {
     if($find) {
-	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where ((properties like $findesc)";
+			$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((`properties` like ?)";
+			$wherevars[] = $findesc;
     } else {
       $mid="";
     }
@@ -159,38 +158,20 @@ class ProcessMonitor extends Base {
         $mid.= " where ($where) ";
       }
     }
-    
-    $query = "
-    		select  gp.pId,
-                     ga.isInteractive,
-                     gi.owner,
-                     gp.name as procname,
-                     gp.version,
-                     ga.type,
-                     ga.activityId,
-                     ga.name,
-                     gi.instanceId,
-                     gi.status,
-                     gia.activityId,
-                     gia.user,
-                     gi.started,
-                     gia.status as actstatus 
-       		from 
-    		   galaxia_instances gi LEFT JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId 
-    		   LEFT JOIN galaxia_activities ga ON gia.activityId = ga.activityId 
-    		   LEFT JOIN galaxia_processes gp ON gp.pId=gi.pId 
-    		$mid order by $sort_mode limit $offset,$maxRecords";   
+    $query = "select gp.`pId`, ga.`isInteractive`, gi.`owner`, gp.`name` as `procname`, gp.`version`, ga.`type`,";
+		$query.= " ga.`activityId`, ga.`name`, gi.`instanceId`, gi.`status`, gia.`activityId`, gia.`user`, gi.`started`, gia.`status` as actstatus ";
+		$query.=" from `galaxia_instances` gi LEFT JOIN `galaxia_instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
+		$query.= "LEFT JOIN `galaxia_activities` ga ON gia.`activityId` = ga.`activityId` ";
+		$query.= "LEFT JOIN `galaxia_processes` gp ON gp.`pId`=gi.`pId` $mid order by ".$this->convert_sortmode($sort_mode);   
 
-    $query_cant = "select count(*) from 
-    		   galaxia_instances gi LEFT JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId 
-    		   LEFT JOIN galaxia_activities ga ON gia.activityId = ga.activityId 
-    		   LEFT JOIN galaxia_processes gp ON gp.pId=gi.pId             $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $query_cant = "select count(*) from `galaxia_instances` gi LEFT JOIN `galaxia_instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
+		$query_cant.= "LEFT JOIN `galaxia_activities` ga ON gia.`activityId` = ga.`activityId` LEFT JOIN `galaxia_processes` gp ON gp.`pId`=gi.`pId` $mid";
+    $result = $this->query($query,$wherevars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$wherevars);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $iid = $res['instanceId'];
-      $res['workitems']=$this->getOne("select count(*) from galaxia_workitems where instanceId=$iid");
+      $res['workitems']=$this->getOne("select count(*) from `galaxia_workitems` where `instanceId`=?",array($iid));
       $ret[] = $res;
     }
     $retval = Array();
@@ -200,10 +181,8 @@ class ProcessMonitor extends Base {
   }
 
 
-  function monitor_list_all_processes($sort_mode)
-  {
-      
-    $query = "select distinct(name),pId from galaxia_processes order by $sort_mode";
+  function monitor_list_all_processes($sort_mode) {
+    $query = "select distinct(`name`),`pId` from `galaxia_processes` order by ".$this->convert_sortmode($sort_mode);
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -212,9 +191,8 @@ class ProcessMonitor extends Base {
     return $ret;
   }
   
-  function monitor_list_statuses()
-  {
-    $query = "select distinct(status) from galaxia_instances";
+  function monitor_list_statuses() {
+    $query = "select distinct(`status`) from `galaxia_instances`";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -223,9 +201,8 @@ class ProcessMonitor extends Base {
     return $ret;
   }
   
-  function monitor_list_users()
-  {
-    $query = "select distinct(user) from galaxia_instance_activities";
+  function monitor_list_users() {
+    $query = "select distinct(`user`) from `galaxia_instance_activities`";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -234,9 +211,8 @@ class ProcessMonitor extends Base {
     return $ret;
   }
 
-  function monitor_list_wi_users()
-  {
-    $query = "select distinct(user) from galaxia_workitems";
+  function monitor_list_wi_users() {
+    $query = "select distinct(`user`) from `galaxia_workitems`";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -246,9 +222,8 @@ class ProcessMonitor extends Base {
   }
 
   
-  function monitor_list_owners()
-  {
-    $query = "select distinct(owner) from galaxia_instances";
+  function monitor_list_owners() {
+    $query = "select distinct(`owner`) from `galaxia_instances`";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -258,9 +233,8 @@ class ProcessMonitor extends Base {
   }
   
   
-  function monitor_list_activity_types()
-  {
-    $query = "select distinct(type) from galaxia_activities";
+  function monitor_list_activity_types() {
+    $query = "select distinct(`type`) from `galaxia_activities`";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -269,36 +243,34 @@ class ProcessMonitor extends Base {
     return $ret;  
   }
   
-  function monitor_get_workitem($itemId)
-  {
-    $query = "select gw.orderId,ga.name,ga.type,ga.isInteractive,gp.name as procname,gp.version,gw.itemId,gw.properties,gw.user,started,ended-started as duration from galaxia_workitems gw,galaxia_activities ga,galaxia_processes gp where ga.activityId=gw.activityId and ga.pId=gp.pId and itemId=$itemId";
-    $result = $this->query($query);    
+  function monitor_get_workitem($itemId) {
+    $query = "select gw.`orderId`,ga.`name`,ga.`type`,ga.`isInteractive`,gp.`name` as `procname`,gp.`version`,";
+		$query.= "gw.`itemId`,gw.`properties`,gw.`user`,`started`,`ended`-`started` as duration ";
+		$query.= "from `galaxia_workitems` gw,`galaxia_activities` ga,`galaxia_processes` gp where ga.`activityId`=gw.`activityId` and ga.`pId`=gp.`pId` and `itemId`=?";
+    $result = $this->query($query, array($itemId));
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $res['properties']=unserialize($res['properties']);
+    $res['properties'] = unserialize($res['properties']);
     return $res;
   }
 
   // List workitems per instance, remove workitem, update_workitem
-  function monitor_list_workitems($offset,$maxRecords,$sort_mode,$find,$where='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
+  function monitor_list_workitems($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars=array()) {
+		$mid = '';
+    if ($where) {
+			$mid.= " and ($where) ";
+    }
     if($find) {
-	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" and ((properties like $findesc) or (name like $findesc))";
-    } else {
-      $mid="";
+			$findesc = $this->qstr('%'.$find.'%');
+      $mid.=" and ((`properties` like ?) or (`name` like ?))";
+			$wherevars[] = $findesc;
+			$wherevars[] = $findesc;
     }
-    if($where) {
-      if($mid) {
-        $mid.= " and ($where) ";
-      } else {
-        $mid.= " and ($where) ";
-      }
-    }
-    $query = "select itemId,ended-started as duration,ga.isInteractive, ga.type,gp.name as procname,gp.version,ga.name as actname, ga.activityId,instanceId,orderId,properties,started,ended,user from galaxia_workitems gw,galaxia_activities ga,galaxia_processes gp where gw.activityId=ga.activityId and ga.pId=gp.pId $mid order by gp.pId,$sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from galaxia_workitems gw,galaxia_activities ga,galaxia_processes gp where gw.activityId=ga.activityId and ga.pId=gp.pId  $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $query = "select `itemId`,`ended`-`started` as duration,ga.`isInteractive`, ga.`type`,gp.`name` as procname,gp.`version`,ga.`name` as actname,";
+		$query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` from `galaxia_workitems` gw,`galaxia_activities` ga,`galaxia_processes` gp ";
+		$query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `galaxia_workitems` gw,`galaxia_activities` ga,`galaxia_processes` gp where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid";
+    $result = $this->query($query,$wherevars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$wherevars);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
