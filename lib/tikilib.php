@@ -2571,11 +2571,9 @@ class TikiLib {
   }
 
   function add_hit($pageName) {
-    if($count_admin_pvs == 'y' || $user!='admin') {
-      $pageName = addslashes($pageName);
-      $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
-      $result = $this->query($query);
-    }
+    $pageName = addslashes($pageName);
+    $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
+    $result = $this->query($query);
     return true;
   }
   
