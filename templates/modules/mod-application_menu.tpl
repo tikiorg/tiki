@@ -231,6 +231,16 @@
   </div>
 {/if}
 
+{if $feature_newsletters eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('nlmenu','c');hide('nlmenu');">[-]</a> 
+  <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
+  <a class='separator' href="javascript:setCookie('nlmenu','o');show('nlmenu');">[+]</a></div>
+  <div id='nlmenu' style="{$mnu_nlmenu}">
+  {if $tiki_p_admin_newsletters eq 'y'}
+  &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
