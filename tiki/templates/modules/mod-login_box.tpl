@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.29 2004-06-09 21:11:42 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.30 2004-06-13 01:08:19 teedog Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box"}
 
@@ -54,7 +54,11 @@
         <td>
           <table>
           <tr><td class="module"><label for="login-user">{tr}user{/tr}:</label></td></tr>
+		{if $loginuser eq ''}
           <tr><td><input type="text" name="user" id="login-user" size="20" /></td></tr>
+		{else}
+		  <tr><td><input type="hidden" name="user" id="login-user" value="{$loginuser}" /><b>{$loginuser}</b></td></tr>
+		{/if}
           {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
           <tr><td class="module"><label for="login-email">{tr}email{/tr}:</label></td></tr>
           <tr><td><input type="text" name="email" id="login-email" size="20" /></td></tr>
