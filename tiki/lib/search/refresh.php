@@ -10,7 +10,7 @@ function refresh_search_index() {
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   if(rand(1,$search_refresh_rate)==1) {
-    require_once('refresh-functions.php');
+    require_once(dirname(__FILE__).'/refresh-functions.php');
     // get a random location
     $locs=array();
     global $feature_wiki;
