@@ -1,7 +1,7 @@
 <?php
 
 // HAWHAW function library for TikiWiki
-// Last modified: 8. November 2003
+// Last modified: 3. December 2003
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -191,6 +191,26 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
 
   $pagetitle = new HAW_text(hawtra("Articles"), HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_BOXED);
   $articleList->add_text($pagetitle);
+
+  $home = new HAW_link(hawtra("Home"),"tiki-mobile.php");
+  $articleList->add_link($home);
+
+  if ($offset > 0)
+  {
+    // previous articles are available
+    $prev_offset = $offset - $maxRecords;
+    $prev = new HAW_link(hawtra("previous page"),"tiki-list_articles.php?mode=mobile&offset=" . $prev_offset);
+    $articleList->add_link($prev);
+  }
+
+  if ($cant > ($offset + $maxRecords))
+  {
+    // next articles are available
+    $next_offset = $offset + $maxRecords;
+    $next = new HAW_link(hawtra("next page"),"tiki-list_articles.php?mode=mobile&offset=" . $next_offset);
+    $articleList->add_link($next);
+  }
+
   $rule = new HAW_rule();
   $articleList->add_rule($rule);
 
@@ -216,24 +236,12 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
     $articleList->add_rule($rule);
   }
 
-  if ($offset > 0)
-  {
-    // previous articles are available
-    $prev_offset = $offset - $maxRecords;
-    $prev = new HAW_link(hawtra("prev"),"tiki-list_articles.php?mode=mobile&offset=" . $prev_offset);
-    $articleList->add_link($prev);
-  }
-
-  if ($cant > ($offset + $maxRecords))
-  {
-    // next articles are available
-    $next_offset = $offset + $maxRecords;
-    $next = new HAW_link(hawtra("next"),"tiki-list_articles.php?mode=mobile&offset=" . $next_offset);
-    $articleList->add_link($next);
-  }
-
-  $home = new HAW_link(hawtra("Home"),"tiki-mobile.php");
+  // repeat navigation links from above
   $articleList->add_link($home);
+  if (isset($prev))
+    $articleList->add_link($prev);
+  if (isset($next))
+    $articleList->add_link($next);
 
   $articleList->create_page();
 
