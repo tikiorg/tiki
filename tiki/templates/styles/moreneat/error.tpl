@@ -21,6 +21,7 @@
       </td>
       {/if}
       <td id="centercolumn"><div id="tiki-center">
+			<!-- content -->
       <br/>
         <div class="cbox">
         <div class="cbox-title">
@@ -32,7 +33,9 @@
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>
-      </div></td>
+      </div>
+			<!-- end of content -->
+			</td>
       {if $feature_right_column eq 'y'}
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}

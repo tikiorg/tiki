@@ -57,7 +57,9 @@
 	  {if $pagetop_msg ne ''}
       <span class="pagetop_msg">{$pagetop_msg}</div>
 	  {/if}
+			<!-- content -->
       {include file=$mid}
+			<!-- end of content -->
       </div>
       </td>
       {if $feature_right_column eq 'y'}
