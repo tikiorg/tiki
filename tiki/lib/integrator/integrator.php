@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.4 2003-10-14 22:49:11 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.5 2003-10-15 16:10:36 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -20,7 +20,7 @@ class TikiIntegrator extends TikiLib
     function list_repositories($visible_only)
     {
         $cond = ($visible_only == true) ? "where visibility='y'" : '';
-        $query = "select * from tiki_integrator_repositories ".$cond." order by 'name'";
+        $query = "select * from tiki_integrator_reps ".$cond." order by 'name'";
         $result = $this->query($query);
         $ret = Array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
@@ -35,10 +35,10 @@ class TikiIntegrator extends TikiLib
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_repositories(name,path,start_page,css_file,visibility,description)
+            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,description)
                       values('$name','$path','$start','$css','$vis','$descr')";
         else
-            $query = "update tiki_integrator_repositories 
+            $query = "update tiki_integrator_reps 
                       set name='$name',path='$path',start_page='$start',
                       css_file='$css',visibility='$vis',description='$descr'
                       where repID='$repID'";
@@ -47,7 +47,7 @@ class TikiIntegrator extends TikiLib
     /// Get one entry by ID
     function get_repository($repID)
     {
-        $query = "select * from tiki_integrator_repositories where repID='$repID'";
+        $query = "select * from tiki_integrator_reps where repID='$repID'";
         $result = $this->query($query);
         if (!$result->numRows()) return false;
         $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -58,7 +58,7 @@ class TikiIntegrator extends TikiLib
     {
         $query = "delete from tiki_integrator_rules where repID=$repID";
         $result = $this->query($query);
-        $query = "delete from tiki_integrator_repositories where repID=$repID";
+        $query = "delete from tiki_integrator_reps where repID=$repID";
         $result = $this->query($query);
     }
     //\}

@@ -1,8 +1,8 @@
 --
--- Table structure for table 'tiki_integrator_repositories'
+-- Table structure for table 'tiki_integrator_reps'
 --
 
-CREATE TABLE tiki_integrator_repositories (
+CREATE TABLE tiki_integrator_reps (
   repID int(11) NOT NULL auto_increment,
   name varchar(255) NOT NULL default '',
   path varchar(255) NOT NULL default '',
@@ -14,11 +14,11 @@ CREATE TABLE tiki_integrator_repositories (
 ) TYPE=MyISAM;
 
 --
--- Dumping data for table 'tiki_integrator_repositories'
+-- Dumping data for table 'tiki_integrator_reps'
 --
 
 
-INSERT INTO tiki_integrator_repositories VALUES (1,'Doxygened (1.3.4) Documentation','unexisted','index.html','doxygen.css','n','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
+INSERT INTO tiki_integrator_reps VALUES (1,'Doxygened (1.3.4) Documentation','unexisted','index.html','doxygen.css','n','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 --
 -- Table structure for table 'tiki_integrator_rules'
