@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.18 2004-05-05 13:55:08 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.19 2004-06-01 12:11:10 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3353,6 +3353,8 @@ CREATE TABLE "tiki_sessions" (
 
 -- --------------------------------------------------------
 -- Tables for TikiSheet
+DROP TABLE "tiki_sheet_layout";
+
 CREATE TABLE "tiki_sheet_layout" (
   "sheetId" number(8) default '0' NOT NULL,
   "begin" number(10) default '0' NOT NULL,
@@ -3363,6 +3365,8 @@ CREATE TABLE "tiki_sheet_layout" (
 ) ;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
+
+DROP TABLE "tiki_sheet_values";
 
 CREATE TABLE "tiki_sheet_values" (
   "sheetId" number(8) default '0' NOT NULL,
@@ -3378,8 +3382,10 @@ CREATE TABLE "tiki_sheet_values" (
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
 CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex");
-CREATE SEQUENCE "tiki_sheet_values_sequ" INCREMENT BY 1 START WITH 1;
 
+DROP TABLE "tiki_sheets";
+
+CREATE SEQUENCE "tiki_sheets_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_sheets" (
   "sheetId" number(8) NOT NULL,
   "title" varchar(200) default '' NOT NULL,
@@ -3388,9 +3394,9 @@ CREATE TABLE "tiki_sheets" (
   PRIMARY KEY ("sheetId")
 ) ;
 
-CREATE TRIGGER "tiki_sheet_values_trig" BEFORE INSERT ON "tiki_sheet_values" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+CREATE TRIGGER "tiki_sheets_trig" BEFORE INSERT ON "tiki_sheets" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "tiki_sheet_values_sequ".nextval into :NEW."sheetId" FROM DUAL;
+SELECT "tiki_sheets_sequ".nextval into :NEW."sheetId" FROM DUAL;
 END;
 /
 
@@ -3431,6 +3437,27 @@ CREATE TABLE "tiki_shoutbox_words" (
 
 -- --------------------------------------------------------
 --
+-- Table structure for table `tiki_structure_versions`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 03, 2003 at 07:42 PM
+--
+DROP TABLE "tiki_structure_versions";
+
+CREATE SEQUENCE "tiki_structure_versions_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_structure_versions" (
+  "structure_id" number(14) NOT NULL,
+  "version" number(14) default NULL,
+  PRIMARY KEY ("structure_id")
+)   ;
+
+CREATE TRIGGER "tiki_structure_versions_trig" BEFORE INSERT ON "tiki_structure_versions" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_structure_versions_sequ".nextval into :NEW."structure_id" FROM DUAL;
+END;
+/
+-- --------------------------------------------------------
+--
 -- Table structure for table `tiki_structures`
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
@@ -3441,8 +3468,10 @@ DROP TABLE "tiki_structures";
 CREATE SEQUENCE "tiki_structures_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_structures" (
   "page_ref_id" number(14) NOT NULL,
+  "structure_id" number(14) NOT NULL,
   "parent_id" number(14) default NULL,
   "page_id" number(14) NOT NULL,
+  "page_version" number(8) default NULL,
   "page_alias" varchar(240) default '' NOT NULL,
   "pos" number(4) default NULL,
   PRIMARY KEY ("page_ref_id")
@@ -5243,6 +5272,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_open_as_structure','n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_comments','n');
@@ -5367,7 +5398,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('https_port','443');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('https_prefix','/');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_orderin','points_desc');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_order','points_desc');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_per_page','10');
 
@@ -5614,6 +5645,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_detect_language','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a:0:{}');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}');
 
 
 -- Dynamic variables

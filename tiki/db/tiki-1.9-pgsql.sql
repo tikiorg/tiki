@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.18 2004-05-05 13:55:08 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.19 2004-06-01 12:11:10 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3218,6 +3218,8 @@ CREATE TABLE "tiki_sessions" (
 -- --------------------------------------------------------
 
 -- Tables for TikiSheet
+DROP TABLE "tiki_sheet_layout";
+
 CREATE TABLE "tiki_sheet_layout" (
   "sheetId" integer NOT NULL default '0',
   "begin" bigint NOT NULL default '0',
@@ -3229,6 +3231,8 @@ CREATE TABLE "tiki_sheet_layout" (
 ) ;
 
 CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin");
+
+DROP TABLE "tiki_sheet_values";
 
 CREATE TABLE "tiki_sheet_values" (
   "sheetId" integer NOT NULL default '0',
@@ -3246,6 +3250,8 @@ CREATE TABLE "tiki_sheet_values" (
 
 CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex");
 CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex");
+
+DROP TABLE "tiki_sheets";
 
 CREATE TABLE "tiki_sheets" (
   "sheetId" serial,
@@ -3291,6 +3297,23 @@ CREATE TABLE "tiki_shoutbox_words" (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tiki_structure_versions`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 03, 2003 at 07:42 PM
+--
+
+DROP TABLE "tiki_structure_versions";
+
+CREATE TABLE "tiki_structure_versions" (
+  "structure_id" bigserial,
+  "version" bigint default NULL,
+  PRIMARY KEY ("structure_id")
+)   ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tiki_structures`
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
@@ -3301,8 +3324,10 @@ DROP TABLE "tiki_structures";
 
 CREATE TABLE "tiki_structures" (
   "page_ref_id" bigserial,
+  "structure_id" bigint NOT NULL,
   "parent_id" bigint default NULL,
   "page_id" bigint NOT NULL,
+  "page_version" integer default NULL,
   "page_alias" varchar(240) NOT NULL default '',
   "pos" smallint default NULL,
   PRIMARY KEY ("page_ref_id")
@@ -5060,6 +5085,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_open_as_structure','n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_comments','n');
@@ -5184,7 +5211,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('https_port','443');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('https_prefix','/');
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_orderin','points_desc');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_default_order','points_desc');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('image_galleries_comments_per_page','10');
 
@@ -5431,6 +5458,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_detect_language','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a:0:{}');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}');
 
 
 -- Dynamic variables
