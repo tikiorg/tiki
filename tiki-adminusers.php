@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.40 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.41 2004-09-24 11:20:14 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ $tikifeedback = array();
 require_once ('tiki-setup.php');
 require_once ('lib/userslib/userslib_admin.php');
 
-if ($user != 'admin') {
+if (!($tiki_p_admin_users == 'y')) {
 	if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("You dont have permission to use this feature"));
 		$smarty->display("error.tpl");
