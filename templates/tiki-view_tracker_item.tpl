@@ -43,9 +43,9 @@
 
 {elseif $ins_fields[ix].type ne 'x'}
 {if $ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
+<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
-<td>{$ins_fields[ix].name}</td><td>
+<td class="formlabel right">{$ins_fields[ix].name}</td><td>
 {else}
 <tr class="formcolor"><td>{$ins_fields[ix].name}</td>
 <td colspan="3">
@@ -66,6 +66,20 @@
 
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{elseif $ins_fields[ix].type eq 't'}
+{if $ins_fields[ix].options_array[2]}
+{$ins_fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
+{else}
+{$ins_fields[ix].value}
+{/if}
 {if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
@@ -214,11 +228,11 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 <table class="normal">
 {else}
 {if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
+<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
-<td>{$ins_fields[ix].name}</td><td>
+<td class="formlabel right">{$ins_fields[ix].name}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td colspan="3">
+<tr class="formcolor"><td class="formlabel">{$ins_fields[ix].name}</td><td colspan="3" nowrap="nowrap">
 {/if}
 {/if}
 
@@ -247,7 +261,8 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 </table>
 
 {elseif $ins_fields[ix].type eq 't'}
-<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" />
+<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}"{/if} />
+{if $ins_fields[ix].options_array[2]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>{/if}
 
 {elseif $ins_fields[ix].type eq 'a'}
 <textarea name="ins_{$ins_fields[ix].id}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
