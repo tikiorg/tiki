@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.46 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.47 2003-10-13 22:20:35 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -384,12 +384,14 @@ if (isset($_REQUEST["save"])) {
   include_once("lib/imagegals/imagegallib.php");
   $cat_type='wiki page';
   $cat_objid = $_REQUEST["page"];
-  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_desc = ($feature_wiki_description == 'y') ? substr($_REQUEST["description"],0,200) : '';
   $cat_name = $_REQUEST["page"];
   $cat_href="tiki-index.php?page=".$cat_objid;
   include_once("categorize.php");
 
-  if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["data"]) != md5($_REQUEST["edit"])) ) {
+  if ((($feature_wiki_description == 'y')
+    && (md5($info["description"]) != md5($_REQUEST["description"])))
+    || (md5($info["data"]) != md5($_REQUEST["edit"]))) {
 
     $page = $_REQUEST["page"];
 
