@@ -95,8 +95,8 @@ class ChartLib extends TikiLib {
 			$newPeriod = $maxPeriod + 1;
 			// Now just loop the items table and get the topN
 			$topN = $info['topN'];
-			$query = "select * from `tiki_chart_items` order by `average` desc";
-			$result = $this->query($query,array(),$topN);
+                        $query = "select * from `tiki_chart_items` where `chartId`=? order by `average` desc";
+                        $result = $this->query($query,array((int) $chartId),$topN);
 			$position = 1;
 
 			while ($res = $result->fetchRow()) {
