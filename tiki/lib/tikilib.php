@@ -739,8 +739,9 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
       return '';
   }
 
-  $type = $this->getOne("select `avatarType`  from `users_users` where `login`=?",array($user));
-  $libname = $this->getOne("select `avatarLibName`  from `users_users` where `login`=?",array($user));
+  $type = $this->get_user_details('avatarType', $user);
+  $libname = $this->get_user_details('avatarLibName', $user);
+  
   $ret = '';
   $style = '';
 
@@ -2025,12 +2026,17 @@ function semaphore_unset($semName, $lock) {
 // Hot words methods ////
 /*shared*/
 function get_hotwords() {
+    static $cache_hotwords;
+    if ( isset($cache_hotwords) ) {
+        return $cache_hotwords;
+    }
     $query = "select * from `tiki_hotwords`";
     $result = $this->query($query, array(),-1,-1, false);
     $ret = array();
     while ($res = $result->fetchRow()) {
   $ret[$res["word"]] = $res["url"];
     }
+    $cache_hotwords = $ret;
     return $ret;
 }
 
@@ -2796,14 +2802,9 @@ function remove_user($user) {
 }
 
 function user_exists($user) {
-    $query = "select count(*) from `users_users` where `login`=?";
 
-    $result = $this->getOne($query, array($user));
+    return $this->get_user_details('userId', $user) ? true : false;
 
-    if ($result)
-  return true;
-
-    return false;
 }
 
 function add_user($user, $pass, $email) {
@@ -3290,6 +3291,55 @@ function set_preference($name, $value) {
     $query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
     $result = $this->query($query,array($name,$value));
     return true;
+}
+
+function load_user_cache($login, $all=false) {
+    global $user_details;
+    global $user_preferences;
+
+    if ( !is_array($login) ) {
+        $login = array($login);
+    }
+
+    $query  = 'SELECT `login` , `userId` , `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` ,  `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users`';
+    $query .= ' WHERE ' . str_repeat('`login` = ? OR ', count($login)-1) . '`login` = ?';
+    $result = $this->query($query, $login);
+
+    while ( $row = $result->fetchRow() ) {
+        $alogin = $row['login'];
+        unset($row['login']);
+        $user_details[$alogin] = $row;
+    }
+
+    $query  = 'SELECT `user` , `prefName` , `value` FROM `tiki_user_preferences`';
+    if ( $all ) {
+        $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ?';
+        $result = $this->query($query, $login);
+    } else {
+        $query .= ' WHERE ( `prefName` = ? OR `prefName` = ? ) AND ( ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ? )';
+        $result = $this->query($query, array_merge( array('user_information', 'country'), $login));
+    }
+
+    while ( $row = $result->fetchRow() ) {
+        $alogin = $row['user'];
+        unset($row['login']);
+        $user_preferences[$row['user']][$row['prefName']] = $row['value'];
+    }
+}
+
+function get_user_details($item, $login) {
+    global $user_details;
+
+    if (!isset($user_details[$login])) {
+        $this->load_user_cache($login);
+    }
+        
+    if ( isset($user_details[$login][$item]) ) {
+        return $user_details[$login][$item];
+    } else {
+        return false;
+    }
+
 }
 
 function get_user_preference($user, $name, $default = '') {
