@@ -374,6 +374,18 @@ class StructLib extends TikiLib {
 		return $page_ref_id;
 	}
 	
+
+ //Get reference id for a page
+function get_struct_ref_id($pageName) {
+    $query =  "select `page_ref_id` ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
+    $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
+    $page_ref_id = $this->getOne($query,array($pageName));
+    return $page_ref_id;
+}
+
+
+
 	function get_next_page($page_ref_id, $deep = true) {
 		
 		// If we have children then get the first child

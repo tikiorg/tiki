@@ -32,7 +32,7 @@ $smarty->assign('structure','n');
 if (isset($_REQUEST["page_ref_id"])) {
   $page_ref_id = $_REQUEST["page_ref_id"];
 } else {
-  $page_ref_id = $structlib->get_struct_ref_if_head($page);
+  $page_ref_id = $structlib->get_struct_ref_id($page);
 }
 if(isset($page_ref_id)) {
  	$smarty->assign('structure','y');
