@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map_edit.tpl,v 1.3 2004-01-17 01:23:36 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/map/tiki-map_edit.tpl,v 1.4 2004-01-19 18:20:21 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br /><br />
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
@@ -38,14 +38,14 @@
 <td class="even">
 {if $tiki_p_map_edit eq 'y'}
 <a href="tiki-map_edit.php?mapfile={$files[user]}&amp;mode=editing">
-<img src="img/icons/config.gif" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+<img src="img/icons/config.gif" alt="{tr}edit{/tr}" />
 </a>
 {/if}
 {if $user and $feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
-  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
+  	<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=add"><img alt="{tr}monitor this map{/tr}" src="img/icons/icon_watch.png" /></a>
 	{else}
-		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		<a href="tiki-map_edit.php?watch_event=map_changed&amp;watch_object={$files[user]}&amp;watch_action=remove"><img alt="{tr}stop monitoring this map{/tr}" src="img/icons/icon_unwatch.png" /></a>
 	{/if}
 {/if}	
 </td>
@@ -71,7 +71,7 @@
 <div align="center">
 <input type="submit" name="save" value="{tr}save{/tr}" /> 
 {if $tiki_p_map_delete eq 'y'}
-&nbsp&nbsp&nbsp
+&nbsp;&nbsp;&nbsp;
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 {/if}
   <br />
