@@ -5018,7 +5018,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editors', 'maps');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
@@ -5953,6 +5953,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('gal_use_dir','');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('gal_use_lib','gd');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTracker','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTrackerId','0');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('home_file_gallery','');
 
 
@@ -6203,6 +6209,12 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('useRegisterPasscode','n
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTracker','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTrackerId','0');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n');

@@ -6083,7 +6083,7 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editors', 'maps')
 go
 
 
@@ -6420,7 +6420,6 @@ go
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki')
 go
-
 
 
 
@@ -7608,6 +7607,16 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTracker','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTrackerId','0')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('home_file_gallery','')
 go
 
@@ -8024,6 +8033,16 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTracker','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTrackerId','0')
 go
 
 
