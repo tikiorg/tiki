@@ -571,6 +571,22 @@ if(isset($_REQUEST["forumprefs"])) {
     $tikilib->set_preference("feature_forum_rankings",'n');
     $smarty->assign("feature_forum_rankings",'n');
   }  
+  if(isset($_REQUEST["feature_forum_parse"]) && $_REQUEST["feature_forum_parse"]=="on") {
+    $tikilib->set_preference("feature_forum_parse",'y'); 
+    $smarty->assign("feature_forum_parse",'y');
+  } else {
+    $tikilib->set_preference("feature_forum_parse",'n');
+    $smarty->assign("feature_forum_parse",'n');
+  }  
+  if(isset($_REQUEST["feature_forum_topicd"]) && $_REQUEST["feature_forum_topicd"]=="on") {
+    $tikilib->set_preference("feature_forum_topicd",'y'); 
+    $smarty->assign("feature_forum_topicd",'y');
+  } else {
+    $tikilib->set_preference("feature_forum_topicd",'n');
+    $smarty->assign("feature_forum_topicd",'n');
+  }  
+
+
   if(isset($_REQUEST["forums_ordering"])) {
     $tikilib->set_preference("forums_ordering",$_REQUEST["forums_ordering"]);
     $smarty->assign('forums_ordering',$_REQUEST["forums_ordering"]);

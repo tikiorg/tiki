@@ -189,7 +189,11 @@ if(isset($_REQUEST["quote"])) {
 $smarty->assign('comment_preview','n');
 if(isset($_REQUEST["comments_previewComment"])) {
   $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
+  if($feature_forum_parse == 'y') {
+  $smarty->assign('comments_preview_data',nl2br($tikilib->parse_data($_REQUEST["comments_data"])));
+  } else {
   $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  }
   $smarty->assign('comment_title',$_REQUEST["comments_title"]);
   $smarty->assign('comment_data',$_REQUEST["comments_data"]);
   $smarty->assign('openpost','y');

@@ -884,7 +884,7 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
 <div class="cbox-data">
-    {tr}Forums settings{/tr}
+    {tr}Forum settings{/tr}
     <div class="simplebox">
     <form method="post" action="tiki-admin.php#forums">
     <table>
@@ -906,6 +906,8 @@
     <form method="post" action="tiki-admin.php#forums">
     <table>
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_forum_rankings" {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Allow wiki markup{/tr}:</td><td><input type="checkbox" name="feature_forum_parse" {if $feature_forum_parse eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Describe topics in listing{/tr}:</td><td><input type="checkbox" name="feature_forum_topicd" {if $feature_forum_topicd eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Ordering for forums in the forum listing{/tr}
     </td><td>
     <select name="forums_ordering">
