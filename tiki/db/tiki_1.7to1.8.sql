@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.90 2003-12-10 03:51:45 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.91 2003-12-15 18:24:33 bburgaud Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -840,3 +840,6 @@ ALTER TABLE `tiki_tracker_fields` ADD `position` INT( 4 ) AFTER `options` ;
 # added on 2003-12-10 by mose (adding options for trackers listing)
 ALTER TABLE `tiki_trackers` ADD `showComments` CHAR( 1 ) AFTER `useComments` ;
 ALTER TABLE `tiki_trackers` ADD `showAttachments` CHAR( 1 ) AFTER `useAttachments` ;
+
+# added on 2003-12-15 by baptiste (adding anonymous posts discard possibility to mail-in feature)
+ALTER TABLE tiki_mailin_accounts ADD anonymous CHAR(1) NOT NULL DEFAULT 'y';
