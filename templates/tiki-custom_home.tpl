@@ -1,4 +1,7 @@
 {popup_init src="lib/overlib.js"}
+<script>
+{popup text="foo"}
+</script>
 <!--
 <textarea id="fooz">Hola a todos</textarea>
 <input type="button" value="set" onMouseOver="return overlib('das');" onMouseOut="nd();" />

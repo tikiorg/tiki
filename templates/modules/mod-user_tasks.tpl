@@ -17,6 +17,10 @@
 <input type="submit" name="modTasksCom" value="{tr}done{/tr}" />
 <input type="submit" name="modTasksDel" value="{tr}del{/tr}" />
 </form>
+<form action="{$ownurl}" method="post">
+<input type="text" name="modTasksTitle" />
+<input type="submit" name="modTasksSave" value="{tr}add{/tr}" />
+</form>
 </div>
 </div>
 {/if}

@@ -61,6 +61,31 @@ class TikiLib {
     die;
   }
   
+   function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
+  {
+    $title = addslashes($title);	
+    $descrpition = addslashes($description);
+    if($taskId) {
+      $query = "update tiki_user_tasks set
+      title = '$title',
+      description = '$description',
+      date = $date,
+      status = '$status',
+      priority = $priority,
+      percentage = $percentage,
+      completed = $completed
+      where user='$user' and taskId=$taskId";	
+      $this->query($query);
+      return $taskId;
+    } else {
+      $query = "insert into tiki_user_tasks(user,taskId,title,description,date,status,priority,completed,percentage)
+      values('$user',$taskId,'$title','$description',$date,'$status',$priority,$completed,$percentage)";	
+      $this->query($query);
+      $taskId = $this->getOne("select max(taskId) from tiki_user_tasks where user='$user' and title='$title' and date=$date");
+      return $taskId;
+    }
+  }
+   
   function complete_task($user,$taskId)
   {
     $now = date("U");
