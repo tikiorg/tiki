@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.235 2004-06-11 14:09:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.236 2004-06-11 22:17:36 redflo Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1241,8 +1241,8 @@ if (!file_exists("templates_c/" . $tikidomain . "preferences.php")) {
 */
 // end of preferences.php removal
 // start of replacement : get all prefs from db once
-$prefs = $tikilib->get_all_preferences();
-foreach ($prefs as $name => $val) {
+$tikilib->get_all_preferences();
+foreach ($preferences as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
 }
