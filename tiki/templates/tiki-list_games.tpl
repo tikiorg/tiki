@@ -78,23 +78,23 @@
 {if $play eq 'n'}
 
 <table class="normal">
-{section name=ix loop=$games}
+{foreach from=$games item=ix}
    <tr><td class="even">
-      <a href="tiki-list_games.php?game={$games[ix].game}"><img border='0' src="games/thumbs/{$games[ix].game}" alt=''/></a>
+      <a href="tiki-list_games.php?game={$ix.game}"><img border='0' src="games/thumbs/{$ix.game}" alt=''/></a>
 
   {if $tiki_p_admin_games eq 'y'}
   <div align="center"><small>
-  [<a href="tiki-list_games.php?remove={$games[ix].game}" class="link">{tr}x{/tr}</a>
-  |<a href="tiki-list_games.php?edit={$games[ix].game}" class="link">{tr}edit{/tr}</a>]
+  [<a href="tiki-list_games.php?remove={$ix.game}" class="link">{tr}x{/tr}</a>
+  |<a href="tiki-list_games.php?edit={$ix.game}" class="link">{tr}edit{/tr}</a>]
   </small></div>
   {/if}
 
        </td>
-       <td class="even" > <small>{$games[ix].desc}</small> </td>
-       <td class="even" > {tr}Played{/tr} {$games[ix].hits} {tr}times{/tr} </td>
+       <td class="even" > <small>{$ix.desc}</small> </td>
+       <td class="even" > {tr}Played{/tr} {$ix.hits} {tr}times{/tr} </td>
    </tr>
    <tr><td colspan="3">&nbsp;</td></tr>
-{/section}
+{/foreach}
 </table>
 
 {else}
