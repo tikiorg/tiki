@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.31 2004-01-21 07:07:23 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.32 2004-01-26 23:41:11 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -28,6 +28,7 @@
 <span id="tab{cycle name=tabs}" class="tab">{tr}Members{/tr}</span>
 {/if}
 </div>
+
 
 {cycle name=content values="1,2,3,4" print=false advance=false}
 
