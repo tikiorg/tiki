@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.150 2003-10-14 16:01:32 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.151 2003-10-15 17:56:36 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1211,6 +1211,9 @@ if ($feature_userPreferences == 'y') {
 			}
 		}
 	}
+      elseif (isset($_SESSION['language'])) { // users not logged that change the preference
+		$language = $_SESSION['language'];
+ 	}
 
 	$smarty->assign('style', $style);
 	$smarty->assign('language', $language);
