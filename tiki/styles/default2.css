@@ -476,10 +476,10 @@ span.posthead {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fo
 div.postbody {
   overflow: hidden;
   background: white;
-  padding-left: 5px;
   border: 1px solid black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
   width: 98%;
+  padding-left: 5px;padding-top: 5px; padding-bottom: 5px; 
   margin-bottom: 10px;
 }
 
@@ -494,6 +494,7 @@ div.blogtitle {
   margin-top: 10px;
   border: 1px solid black;
   border-bottom: 0px;
+  width: 97%;
 }
 
 /* The weblog information */

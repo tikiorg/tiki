@@ -1,4 +1,6 @@
 <?php
+ include_once('diff.php');
+ 
 class TikiLib {
   var $db;  // The PEAR db object used to access the database
   var $buffer;
@@ -18,6 +20,80 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
+
+  // Spellchecking routine
+  // Parameters:
+  // what: what to spell check (a text)
+  // where: where to replace (maybe the same text)
+  // language: language to use
+  // element: element where the text is going to be replaced (a textarea or similar)
+  function spellcheckreplace($what,$where,$language,$element) 
+  {
+    $words = preg_split("/\s/",$what);
+    foreach($words as $word) {
+    if(preg_match("/^[A-Z]?[a-z]+$/",$word) && strlen($word)>1) {
+      $result = $this->spellcheckword($word,$language);
+        if(count($result)>0) {
+          // Replace the word with a warning color in the edit_data
+          // Prepare the replacement
+          $sugs = $result[$word];
+          $first=1;
+          $repl='';
+          //foreach($sugs as $sug=>$lev) {
+          //  if($first) {
+          //    $repl.=' <span style="color:red;">'.$word.'</span>'.'<a title="'.$sug.'" style="text-decoration: none; color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">.</a>';
+          //    $first = 0;
+          //  } else {
+          //    $repl.='<a title="'.$sug.'" style="text-decoration: none; color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">.</a>';
+          //    //$repl.='|'.'<a style="color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">'.$sug.'</a>';
+          //  }
+          //}
+          //if($repl) {
+          //  $repl.=' ';
+          //}
+          if(count($sugs)>0) {
+            $asugs = array_keys($sugs);
+            $sug = $asugs[0];
+            $repl.=' <a title="'.$sug.'" style="text-decoration:none; color:red;" href="javascript:replaceSome(\''.$element.'\',\''.$word.'\',\''.$sug.'\');">'.$word.'</a> ';    
+          }
+          if($repl) {
+            $where = preg_replace("/\s$word\s/",$repl,$where);
+          } else {
+            $where = preg_replace("/\s$word\s/",' <span style="color:red;">'.$word.'</span> ',$where);
+          }
+      
+          //$parsed = preg_replace("/\s$word\s/",' <a style="color:red;">'.$word.'</a> ',$parsed);
+        }
+      }
+    }
+    return $where;
+  }
+
+  function spellcheckword($word,$lang)
+  {
+    include_once("bablotron.php");
+    $b = new bablotron($this->db,$lang);
+    $result = $b->spellcheck_word($word);
+    return $result;
+  }
+  
+    
+  function diff2($page1,$page2) 
+  {
+      $page1 = split("\n",$page1);
+      $page2 = split("\n",$page2);
+      
+      $z = new WikiDiff($page1, $page2);
+      if ($z->isEmpty()) {
+	  $html = '<hr><br/>[' . tra("Versions are identical") . ']<br/><br/>';
+      } else {
+	  //$fmt = new WikiDiffFormatter;
+	  $fmt = new WikiUnifiedDiffFormatter;
+	  $html = $fmt->format($z, $page1);
+      }
+      return $html;
+  }
+  
   
   function get_forum($forumId) 
   {
@@ -2752,12 +2828,14 @@ class TikiLib {
   function capture_images($data)
   {
     $cacheimages = $this->get_preference("cacheimages",'y');
-    if($cacheimages != 'y') return $data;	
+    if($cacheimages != 'y') return $data;
     preg_match_all("/src=\"([^\"]+)\"/",$data,$reqs1);
     preg_match_all("/src=\'([^\']+)\'/",$data,$reqs2);
-    preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$data,$reqs3);
+    preg_match_all("/src=([A-Za-z0-9\:\?\=\/\\\.\-\_]+)\}/",$data,$reqs3);
+    preg_match_all("/src=([A-Za-z0-9\:\?\=\/\\\.\-\_]+) /",$data,$reqs3);
     $merge = array_merge($reqs1[1],$reqs2[1],$reqs3[1]);
     $merge = array_unique($merge);
+    //print_r($merge);
     // Now for each element in the array capture the image and
     // if the capture was succesful then change the reference to the
     // internal image
@@ -3042,10 +3120,10 @@ class TikiLib {
   function is_cached($url)
   {
     if(strstr($url,"tiki-index")) {
-      return true;
+      return false;
     }
     if(strstr($url,"tiki-edit")) {
-      return true;
+      return false;
     }
     $query = "select cacheId from tiki_link_cache where url='$url'";
     $result = $this->db->query($query);
@@ -4952,6 +5030,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }	
     
     //$data = strip_tags($data);
+    
+    // smileys
+    $data = $this->parse_smileys($data);
+    
     // tables
     preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page) {
@@ -5033,7 +5115,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       } else {
         $repl = "$page<a href='tiki-editpage.php?page=$page' class='wiki'>?</a>";
       } 
-      $data = str_replace($page,$repl,$data);
+      $data = preg_replace("/([ \n\t\r^])$page($|[ \n\t\r])/","$1"."$repl"."$2",$data);
+      //$data = str_replace($page,$repl,$data);
     }
     // Images
     preg_match_all("/(\{img [^\}]+})/",$data,$pages);
@@ -5080,6 +5163,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     $links = $this->get_links($data);
+    
         
     // Note that there're links that are replaced 
         
