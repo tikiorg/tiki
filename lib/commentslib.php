@@ -327,7 +327,7 @@ class Comments extends TikiLib {
 	$hash2 = md5($title . $data);
 
 	if ($qId == 0 && $this->getOne("select count(*) from
-		    `tiki_forums_queue` where `title`=?' and `data`=",array($hash2)))
+		    `tiki_forums_queue` where `title`=? and `data`=?",array($title,$hash2)))
 	    return false;
 
 	$now = date("U");
