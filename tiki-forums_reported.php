@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 
 // Forums must be active
 if ($feature_forums != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

@@ -17,7 +17,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header ("Pragma: no-cache");                                   // HTTP/1.0
 
 if ($feature_live_support != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_live_support");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

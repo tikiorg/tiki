@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/ban/banlib.php');
 
 if ($feature_banning != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_banning");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

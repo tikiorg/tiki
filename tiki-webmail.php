@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.16 2003-08-08 09:10:31 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.17 2003-10-08 03:53:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/webmail/webmaillib.php');
 
 if ($feature_webmail != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

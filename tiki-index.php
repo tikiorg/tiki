@@ -8,7 +8,7 @@ include_once('lib/wiki/histlib.php');
 include_once('lib/categories/categlib.php');
 
 if($feature_wiki != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }

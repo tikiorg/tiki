@@ -3,7 +3,7 @@ require_once('tiki-setup.php');
 include_once('lib/articles/artlib.php');
 
 if($feature_articles != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-usermenu.php,v 1.5 2003-09-16 15:43:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-usermenu.php,v 1.6 2003-10-08 03:53:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/usermenu/usermenulib.php');
 
 if ($feature_usermenu != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_usermenu");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

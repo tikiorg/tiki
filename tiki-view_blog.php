@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.26 2003-10-03 22:10:49 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.27 2003-10-08 03:53:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/blogs/bloglib.php');
 
 if ($feature_blogs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
