@@ -25,6 +25,7 @@ if(!isset($_REQUEST["serverId"])) {
 if($_REQUEST["serverId"]) {
   $info = $newslib->get_server($user,$_REQUEST["serverId"]);
 } 
+
 $smarty->assign('serverId',$_REQUEST["serverId"]);
 $smarty->assign('info',$info);
 

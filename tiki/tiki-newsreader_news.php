@@ -27,6 +27,11 @@ $smarty->assign('port',$_REQUEST['port']);
 $smarty->assign('username',$_REQUEST['username']);
 $smarty->assign('password',$_REQUEST['password']);
 $smarty->assign('group',$_REQUEST['group']);
+if(isset($_REQUEST['serverId'])) {
+  $smarty->assign('serverId',$_REQUEST['serverId']);
+} else {
+  $smarty->assign('serverId',0);
+}
 
 if(!$newslib->news_set_server($_REQUEST['server'],$_REQUEST['port'],$_REQUEST['username'],$_REQUEST['password'])) {
   $smarty->assign('msg',tra("Cannot connect to").':'.$info['server']);
