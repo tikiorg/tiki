@@ -2023,7 +2023,7 @@ CREATE TABLE tiki_pages (
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
-	page_size int(10) unsigned default 0,
+  page_size int(10) unsigned default 0,
   PRIMARY KEY  (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),

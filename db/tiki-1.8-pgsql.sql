@@ -2460,7 +2460,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" bigint default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
-	page_size bigint unsigned default 0
+  "page_size" bigint unsigned default 0,
   PRIMARY KEY ("pageName")
 
 

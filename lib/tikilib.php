@@ -3126,7 +3126,7 @@ function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select `creator` ,`pageName`, `hits`, `page_size` as len, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` ";
+    $query = "select `creator` ,`pageName`, `hits`, `page_size` as `len`, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` ";
     $query.= " from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_pages` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
