@@ -974,7 +974,7 @@ class ImageGalsLib extends TikiLib {
 			$bindvars=array($id,$itype,$xsize,$ysize);
 		}
 		
-		if(!isset($bindvars)) {
+		if(!@is_array($bindvars)) {
 			$bindvars=array($id,$itype);
 		}
 
@@ -1021,7 +1021,7 @@ class ImageGalsLib extends TikiLib {
 			$bindvars=array($id,$itype,$xsize,$ysize);
 		}
 		
-		if(!is_array($bindvars)) {
+		if(!@is_array($bindvars)) {
 			$bindvars=array($id,$itype);
 		}
 
