@@ -28,7 +28,7 @@ if(isset($_REQUEST["subId"])) {
   $subId = 0;
 }
 $smarty->assign('subId',$subId);
-$smarty->assign('allowhtml','n');
+$smarty->assign('allowhtml','y');
 $publishDate=date("U");
 $smarty->assign('title','');
 $smarty->assign('authorName','');
@@ -46,12 +46,14 @@ $smarty->assign('body','');
 $smarty->assign('publishDate',$publishDate);
 $smarty->assign('edit_data','n');
 
+if(isset($_REQUEST["subId"])) {
 if($_REQUEST["subId"]>0) {
-  if($tiki_p_edit_submissions != 'y') {
+  if($tiki_p_edit_submission != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot edit submissions"));
     $smarty->display('error.tpl');
     die;  
   }
+}
 }
 
 // If the submissionId is passed then get the submission data
@@ -168,7 +170,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('heading',$_REQUEST["heading"]);
   $smarty->assign('edit_data','y');
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $body = $_REQUEST["edit"];  
+    $body = $_REQUEST["body"];  
     $heading = $_REQUEST["heading"];
   } else {
     $body = strip_tags($_REQUEST["body"]);

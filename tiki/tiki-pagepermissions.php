@@ -1,6 +1,13 @@
 <?php
 include_once("tiki-setup.php");
 
+if($feature_wiki != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 include_once("tiki-pagesetup.php");
 // Now check permissions to access this page
 if($user != 'admin') {

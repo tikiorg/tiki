@@ -84,6 +84,7 @@ if(isset($_SESSION["thedate"])) {
   $pdate = $now;
 }
 
+
 if(isset($_REQUEST["find"])) {
   $find = $_REQUEST["find"];  
 } else {

@@ -29,7 +29,7 @@ if(isset($_REQUEST["articleId"])) {
 }
 $smarty->assign('articleId',$articleId);
 
-$smarty->assign('allowhtml','n');
+$smarty->assign('allowhtml','y');
 $publishDate=date("U");
 $smarty->assign('title','');
 $smarty->assign('authorName','');
@@ -161,7 +161,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('heading',$_REQUEST["heading"]);
   $smarty->assign('edit_data','y');
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $body = $_REQUEST["edit"];  
+    $body = $_REQUEST["body"];  
     $heading = $_REQUEST["heading"];
   } else {
     $body = strip_tags($_REQUEST["body"]);

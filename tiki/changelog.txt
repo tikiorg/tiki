@@ -1,5 +1,6 @@
 Version 0.95 -Shaula-
 
+* [NEW FEATURE] User personal page in the Wiki with a page editable only by the user
 * [NEW FEATURE] User preferences screen where users can set-up personal info, choose a theme
   and they can also view their pages/blogs/articles.
 * [FIX] Changed several layout problems specific to some browsers, fixed layout now

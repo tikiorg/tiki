@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_wiki != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // Create the HomePage if it doesn't exist
 if(!$tikilib->page_exists("HomePage")) {
   $tikilib->create_page("HomePage",0,'',date("U"),'Tiki initialization'); 

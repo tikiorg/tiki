@@ -367,7 +367,7 @@ create table tiki_submissions(
   publishDate integer(14),
   created integer(14),
   heading text,
-  data longblob,
+  body longblob,
   hash char(32),
   author varchar(200),
   reads integer(14),

@@ -1,4 +1,5 @@
 <?php
-header("location: tiki-index.php");
+require_once('tiki-setup.php');
+header("location: $tikiIndex");
 die;
 ?>

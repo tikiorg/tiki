@@ -8,22 +8,72 @@ if($feature_search != 'y') {
   die;  
 }
 
-// Now check permissions to view pages
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
+if(!isset($_REQUEST["where"])) {
+  $where = 'pages';
+} else {
+  $where = $_REQUEST["where"];
+}
+$find_where='find_'.$where;
+
+if($where=='pages' and $feature_wiki != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
+if($where=='articles' and $feature_articles != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+if(($where=='galleries' || $where=='images') and $feature_galleries != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+if(($where=='blogs' || $where=='posts') and $feature_blogs != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+$smarty->assign('where',$where);
+
+
+if(!isset($_REQUEST["offset"])) {
+  $offset = 0;
+} else {
+  $offset = $_REQUEST["offset"]; 
+}
+$smarty->assign_by_ref('offset',$offset);
 
 // Build the query using words
 if( (!isset($_REQUEST["words"])) || (empty($_REQUEST["words"])) ) {
-  $results = $tikilib->find_pages();
+  $results = $tikilib->$find_where(' ',$offset,$maxRecords);
+  $smarty->assign('words','');
 } else {
-  $results = $tikilib->find_pages($_REQUEST["words"]);
+  $results = $tikilib->$find_where($_REQUEST["words"],$offset,$maxRecords);
+  $smarty->assign('words',$_REQUEST["words"]);
 }
 
+$cant_pages = ceil($results["cant"] / $maxRecords);
+$smarty->assign_by_ref('cant_results',$results["cant"]);
+$smarty->assign_by_ref('cant_pages',$cant_pages);
+$smarty->assign('actual_page',1+($offset/$maxRecords));
+if($results["cant"] > ($offset+$maxRecords)) {
+  $smarty->assign('next_offset',$offset + $maxRecords);
+} else {
+  $smarty->assign('next_offset',-1); 
+}
+// If offset is > 0 then prev_offset
+if($offset>0) {
+  $smarty->assign('prev_offset',$offset - $maxRecords);  
+} else {
+  $smarty->assign('prev_offset',-1); 
+}
+
+
+
 // Find search results (build array)
-$smarty->assign_by_ref('results',$results);
+$smarty->assign_by_ref('results',$results["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-searchresults.tpl');

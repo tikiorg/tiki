@@ -80,6 +80,10 @@ if(isset($_REQUEST["um_update"])) {
   $tikilib->replace_user_module($_REQUEST["um_name"],$_REQUEST["um_title"],$_REQUEST["um_data"]);
 }
 
+if(!isset($_REQUEST["groups"])) {
+  $_REQUEST["groups"]=Array();
+}
+
 if(isset($_REQUEST["assign"])) {
   $_REQUEST["assing"]=urldecode($_REQUEST["assign"]);	
   $smarty->assign_by_ref('assign_name',$_REQUEST["assign_name"]);

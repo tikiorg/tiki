@@ -49,6 +49,7 @@ for($i=0;$i<count($left_modules);$i++) {
     //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
     if(!$r["rows"]) $r["rows"]=10;
     $module_rows=$r["rows"];
+    
     //$mnm = $r["name"]."_module_title";
     //$smarty->assign_by_ref($mnm,$r["title"]);
     //$smarty->assign_by_ref('module_rows',$r["rows"]);
@@ -114,9 +115,10 @@ for($i=0;$i<count($right_modules);$i++) {
     $phpfile = 'modules/mod-'.$r["name"].'.php';
     $template= 'modules/mod-'.$r["name"].'.tpl';
     $nocache= 'templates/modules/mod-'.$r["name"].'.tpl.nocache';
+    if(!$r["rows"]) $r["rows"]=10;
+    $module_rows=$r["rows"];
     //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
     if((!file_exists($cachefile)) || (file_exists($nocache)) || ( ($now - filemtime($cachefile))>$r["cache_time"] )){
-      //print("Refrescar cache<br/>");
       $r["data"]='';
       if(file_exists($phpfile)) {
         //print("Haciendo el include<br/>");
@@ -133,6 +135,7 @@ for($i=0;$i<count($right_modules);$i++) {
         if($tikilib->is_user_module($r["name"])) {
           //print("Es user module");
           $info = $tikilib->get_user_module($r["name"]);
+          
           // Ahora usar el template de user
           $smarty->assign_by_ref('user_title',$info["title"]);
           $smarty->assign_by_ref('user_data',$info["data"]);

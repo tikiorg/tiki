@@ -2,6 +2,12 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_wiki != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 if($feature_ranking != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
