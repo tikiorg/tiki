@@ -29,10 +29,12 @@
        <a href="tiki-hw_student_assignment.php?assignmentId={$listpages[ix].articleId}" class="trailer">{tr}Details{/tr}</a>
       </td>
       <td>
-       <a href="tiki-hw_student.php?assignmentId={$listpages[ix].articleId}" class="trailer">{tr}My Work{/tr}</a>
+       <a href="tiki-hw_page.php?assignmentId={$listpages[ix].articleId}" class="trailer">{tr}My Work{/tr}</a>
       </td>
       <td style="text-align:right;">
-       <a class="trailer" href="tiki-hw_student_assignment_print.php?assignmentId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+        {* TODO IN VERSION2
+          <a class="trailer" href="tiki-hw_student_assignment_print.php?assignmentId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+        TODO IN VERSION 2 *}
       </td>
      </tr>
     </table>
