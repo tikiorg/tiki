@@ -2,7 +2,7 @@
 {include file="tiki-preview.tpl"}
 {/if}
 <h1>{tr}Edit{/tr}: {$page}</h1>
-<form method="post" action="tiki-editpage.php">
+<form  method="post" action="tiki-editpage.php">
 <textarea class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
 <br/>
 <div align="center">{tr}Comment{/tr}: <input size="50" class="wikitext" name="comment" value="{$commentdata}" /></div>

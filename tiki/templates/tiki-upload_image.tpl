@@ -8,7 +8,7 @@
 <select name="galleryId">
 {section name=idx loop=$galleries}
 $galleries = $tikilib->list_galleries($offset,$maxRecords,$sort_mode, $user);
-<option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+<option  value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 {/section}
 </select></td></tr>
 <tr><td colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}

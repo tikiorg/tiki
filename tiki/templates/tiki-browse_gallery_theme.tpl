@@ -1,4 +1,4 @@
-<div id="browsegallery">
+<div  id="browsegallery">
   <div class="gallerytitle">{tr}Browsing Gallery{/tr}: {$name}</div>
   {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
     <div class="adminoptions">

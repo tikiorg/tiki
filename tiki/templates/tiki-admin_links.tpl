@@ -32,8 +32,8 @@
 <h3>Add Featured Link</h3>
 <form action="tiki-admin_links.php" method="post">
 <table>
-<tr><td>URL</td><td><input type="text" name="url" /></td>
-<tr><td>Title</td><td><input type="text" name="title" /></td>
-<tr><td>&nbsp;</td><td><input type="submit" name="add" value="add" /></td>
+<tr><td>URL</td><td><input type="text" name="url" /></td></tr>
+<tr><td>Title</td><td><input type="text" name="title" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="add" value="add" /></td></tr>
 </table>
 </form>

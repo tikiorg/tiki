@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a></h1>
+<h1><a  class="wiki" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a></h1>
 <a class="link" href="#assign">{tr}assign module{/tr}</a>
 <a class="link" href="#leftmod">{tr}left modules{/tr}</a>
 <a class="link" href="#rightmod">{tr}right modules{/tr}</a>

@@ -1,5 +1,5 @@
 <iframe
- src="{$url}"
+  src="{$url}"
  name="{$title}"
  width="98%"
  height="90%"

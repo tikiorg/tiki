@@ -1,5 +1,5 @@
 <h1>{tr}Last Changes{/tr}</h1>
-<a class="wiki" href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>|
+<a  class="wiki" href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>|
 <a class="wiki" href="tiki-lastchanges.php?days=2">{tr}Last{/tr} 2 {tr}days{/tr}</a>|
 <a class="wiki" href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>|
 <a class="wiki" href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}Days{/tr}</a>|

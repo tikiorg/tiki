@@ -1,4 +1,4 @@
-<div id="tiki-menu">
+<div  id="tiki-menu">
   <table>
   <tr>
   <td><div class="button"><a href="tiki-index.php" class="linkbut">{tr}home{/tr}</a></div></td>

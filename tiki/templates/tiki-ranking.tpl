@@ -5,7 +5,7 @@
 <a href="tiki-ranking.php?limit=-1" class="wiki">{tr}All pages{/tr}</a>|
 <br/><br/>
 {section name=rank loop=$ranking}
-<a href="tiki-index.php?page={$ranking[rank].pageName}" class="wiki">{$ranking[rank].pageName}</a>({$ranking[rank].hits})<br/>
+<a  href="tiki-index.php?page={$ranking[rank].pageName}" class="wiki">{$ranking[rank].pageName}</a>({$ranking[rank].hits})<br/>
 {sectionelse}
 {tr}No pages found{/tr}
 {/section}

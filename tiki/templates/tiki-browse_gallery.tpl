@@ -1,5 +1,5 @@
 <div class="browsegallery">
-  <div class="gallerytitle">
+  <div  class="gallerytitle">
     {tr}Browsing Gallery{/tr}: {$name}
   </div>
   {if $system eq 'n'}

@@ -1,7 +1,7 @@
 <h1>{tr}Browsing Gallery{/tr}: {$name}</h1>
   {if $system eq 'n'}
   {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
-      <a href="tiki-galleries.php?editgal={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
+      <a  href="tiki-galleries.php?editgal={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
       &nbsp;
       <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
   {/if}

@@ -87,16 +87,6 @@
         </td>
       </tr>
       <tr>
-        <td class="text">{tr}Language{/tr}:</td><td>
-        <select name="style">
-        {section name=ix loop=$languages}
-        <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
-        {/section}
-        </select>
-        </td>
-      </tr>
-
-      <tr>
         <td align="center" class="text" colspan="2"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td>
       </tr>
     </table>
