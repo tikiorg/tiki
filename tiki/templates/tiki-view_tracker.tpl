@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">Tracker: {$tracker_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a><br/><br/>
 [<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
 |<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
