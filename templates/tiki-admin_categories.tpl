@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.22 2004-02-05 11:44:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.23 2004-03-04 21:41:22 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -60,7 +60,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 {/section}
 </div>
 </div>
-
+</div>
 
 <br />
 <a name="editcreate"></a>
