@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.1 2003-10-06 08:13:47 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.2 2003-10-28 20:00:51 mose Exp $
  *
  * TikiWiki SF auto-links.
  * 
@@ -73,10 +73,12 @@ function wikiplugin_sf($data, $params) {
 		$tag = DEFAULT_TAG;
 	}
 	if (!isset($aid)) {
-		return "__please use (aid=>xxx) as parameters__";
+		//return "__please use (aid=>xxx) as parameters__";
+		return "<b>please use (aid=>xxx) as parameters</b>";
 	}
 	$label = get_artifact_label($sf_group_id,$sf_atid,$aid);
-	$back = "[http://sf.net/tracker/index.php?func=detail&aid=$aid&group_id=$sf_group_id&atid=$sf_atid|$tag:#$aid: $label|nocache]";
+	//$back = "[http://sf.net/tracker/index.php?func=detail&aid=$aid&group_id=$sf_group_id&atid=$sf_atid|$tag:#$aid: $label|nocache]";
+	$back = "<a href='http://sf.net/tracker/index.php?func=detail&aid=$aid&group_id=$sf_group_id&atid=$sf_atid' target='_blank' title='$tag:#$aid' class='wiki'>$label</a>";
 
 	return $back;
 }
