@@ -1,6 +1,6 @@
 TikiWiki DevTools 
 -----------------
-$Id: README.txt,v 1.3 2003-08-30 11:19:47 mose Exp $
+$Id: README.txt,v 1.4 2004-01-25 00:31:30 ggeller Exp $
 
 The content of this directory is intended to be used for 
 TikiWiki development. It's included in the package for use
@@ -18,3 +18,7 @@ of developers whose task is to release new versions of tikiwiki.
 * tikirelease.sh
   made by mose
 	script for lazy release manager. edit it before use !!
+
+* ggg-trace.php
+  made by George G. Geller
+  For tracing and debugging php code -- output a text file.
