@@ -319,6 +319,7 @@ CREATE TABLE tiki_article_types (
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
   creator_edit varchar(1) default NULL,
+  comment_rating varchar(1) default NULL,
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
