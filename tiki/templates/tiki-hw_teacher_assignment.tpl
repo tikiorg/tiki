@@ -1,12 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.2 2004-03-19 18:09:59 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.3 2004-06-19 15:19:04 ohertel Exp $ *}
 {* Copyright 2004 George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignment.tpl start -->
 
 <div class="articletitle">
   <span class="titlea">{$title}</span><br />
-  <span style="color: rgb(0, 0, 255);">
-    {tr}Due Date:{/tr} {$dueDate|tiki_long_datetime}
+  <span class="titleb">
+    <span style="color: rgb(0, 0, 255);">
+      {tr}Due Date{/tr}: {$dueDate|tiki_long_datetime}
+    </span><br/ >
   </span>
 </div>
 
