@@ -7319,7 +7319,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'hits'      => '1',
       'orderby'   => 'p.created',
       'lastModif' => 'p.created',
-      'href'      => 'tiki-read_article.php?articleId=%d',
+      # TODO double up %'s from urlencode() return value
+      'href'      => 'tiki-view_blog.php?blogId=%d&amp;find='.urlencode($words),
+
       'id'        => array('p.blogId'),
       'pageName'  => $pagename,
       'search'    => array(),
@@ -8478,7 +8480,6 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 #printf("server_tzid='%s', site_tzid='%s'", $server_tzid, $site_tzid);
       $server_tz	=& new Date_TimeZone($server_tzid);
       $site_tz		=& new Date_TimeZone($site_tzid);
-      
 #printf("server_tz=");
 #print_r($server_tz);
 #printf("site_tz=");
