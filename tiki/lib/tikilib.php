@@ -244,6 +244,15 @@ class TikiLib {
     return $ret;
   }
 
+  /*shared*/ function get_quiz($quizId) 
+  {
+    $query = "select * from tiki_quizzes where quizId=$quizId";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
   /*shared*/ function compute_quiz_stats()
   {
     $query = "select quizId from tiki_user_quizzes";
@@ -1518,6 +1527,8 @@ class TikiLib {
   function replace_submission ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$subId,$image_x,$image_y,$type,$rating=0)
   {
     global $smarty;
+    global $dbTiki;
+    include_once('lib/notifications/notificationlib.php');
     $title = addslashes($title);
     $heading = addslashes($heading);
     $authorName = addslashes($authorName);
@@ -1564,7 +1575,7 @@ class TikiLib {
     }
     $query = "select max(subId) from tiki_submissions where created = $now and title='$title' and hash='$hash'";
     $id=$this->getOne($query);
-    $emails = $this->get_mail_events('article_submitted','*');
+    $emails = $notificationlib->get_mail_events('article_submitted','*');
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $machine =httpPrefix().$foo["path"];
     foreach ($emails as $email)
@@ -4600,6 +4611,8 @@ function parse_data($data)
   function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip,$description='')
   {
     global $smarty;
+    global $dbTiki;
+    include_once('lib/notifications/notificationlib.php');
     $this->invalidate_cache($pageName);
     // Collect pages before modifying edit_data (see update of links below)
     $pages = $this->get_pages($edit_data);
@@ -4630,7 +4643,7 @@ function parse_data($data)
     // Update the pages table with the new version of this page
     $version += 1;
     //$edit_data = addslashes($edit_data);
-    $emails = $this->get_mail_events('wiki_page_changes','wikipage'.$pageName);
+    $emails = $notificationlib->get_mail_events('wiki_page_changes','wikipage'.$pageName);
     foreach($emails as $email) {
       $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
       $smarty->assign('mail_page',$pageName);

@@ -26,7 +26,7 @@ $smarty->assign('legend','');
 if(!isset($_REQUEST['msgId'])) {
   $smarty->assign('legend','No more messages');
   $smarty->assign('mid','messu-read.tpl');
-  $smarty->display('tiki.tpl');
+  $smarty->display("styles/$style_base/tiki.tpl");
   die;
 }
 
@@ -62,5 +62,5 @@ $section='user_messages';
 include_once('tiki-section_options.php');
 
 $smarty->assign('mid','messu-read.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

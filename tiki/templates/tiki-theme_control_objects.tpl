@@ -1,0 +1,95 @@
+{*Smarty template*}
+<a class="pagetitle" href="tiki-theme_control_objects.php">{tr}Theme Control Center: Objects{/tr}</a><br/><br/>
+<br/><br/>
+[<a class="link" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
+ | <a class="link" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>]
+<h3>{tr}Assign themes to objects{/tr}</h3>
+<form id='objform' action="tiki-theme_control_objects.php" method="post">
+<select name="type" onChange="javascript:document.getElementById('objform').submit();">
+{section name=ix loop=$types}
+<option value="{$types[ix]}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
+{/section}
+</select>
+<!--<input type="submit" name="settype" value="{tr}set{/tr}" />-->
+<table class="normal">
+<tr>
+  <td class="formcolor">{tr}Object{/tr}</td>
+  <td class="formcolor">{tr}Theme{/tr}</td>
+  <td class="formcolor">&nbsp;</td>
+</tr>
+<tr>
+  <td class="formcolor">
+    <select name="objdata">
+      {section name=ix loop=$objects}
+      <option value="{$objects[ix].objId}|{$objects[ix].objName}">{$objects[ix].objName}</option>
+      {/section}
+    </select>
+  </td>
+  <td class="formcolor">
+    <select name="theme">
+      {section name=ix loop=$styles}
+      <option value="{$styles[ix]}">{$styles[ix]}</option>
+      {/section}
+    </select>
+  </td>
+  <td class="formcolor">
+    <input type="submit" name="assign" value="{tr}assign{/tr}" />
+  </td>
+</tr>
+</table>
+</form> 
+
+<h3>{tr}Assigned objects{/tr}</h3>
+<table class="findtable">
+<tr><td class="findtable">{tr}Find{/tr}</td>
+   <td class="findtable">
+   <form method="get" action="tiki-theme_control_objects.php">
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+   </form>
+   </td>
+</tr>
+</table>
+<form action="tiki-theme_control_objects.php" method="post">
+<input type="hidden" name="type" value="{$type}" />
+<table class="normal">
+<tr>
+<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading" width="80%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
+<td class="heading" width="80%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading" width="10%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=user loop=$channels}
+<tr>
+<td class="{cycle advance=false}">
+<input type="checkbox" name="obj[{$channels[user].objId}]" />
+</td>
+<td class="{cycle advance=false}">{$channels[user].type}</td>
+<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle}">{$channels[user].theme}</td>
+</tr>
+{/section}
+</table>
+</form>
+<div class="mini">
+<div align="center">
+{if $prev_offset >= 0}
+[<a class="prevnext" href="tiki-theme_control_objects.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+{/if}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{if $next_offset >= 0}
+&nbsp;[<a class="prevnext" href="tiki-theme_control_objects.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+{/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-theme_control_objects.php?tasks_useDates={$tasks_useDates}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+</div>
+</div>
+ 

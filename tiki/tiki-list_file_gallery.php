@@ -152,6 +152,13 @@ if($feature_file_galleries_comments == 'y') {
 $section='file_galleries';
 include_once('tiki-section_options.php');
 
+if($feature_theme_control == 'y') {
+	$cat_type='file gallery';
+	$cat_objid = $_REQUEST["galleryId"];
+	include('tiki-tc.php');
+}
+
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_file_gallery.tpl');

@@ -100,5 +100,5 @@ include_once('tiki-section_options.php');
 include_once('tiki-mytiki_shared.php');
 
 $smarty->assign('mid','tiki-newsreader_servers.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

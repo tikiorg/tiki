@@ -267,6 +267,13 @@ $smarty->assign('comments_coms',$comments_coms["data"]);
 $section='forums';
 include_once('tiki-section_options.php');
 
+if($feature_theme_control == 'y') {
+	$cat_type='forum';
+	$cat_objid = $_REQUEST["forumId"];
+	include('tiki-tc.php');
+}
+
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_forum_thread.tpl');

@@ -1,15 +1,15 @@
 {php}
-include("lib/class_calendar.php");
+include_once("lib/class_calendar.php");
 //if(!isset($_SESSION["thedate"])) {
   $day = date("d");
   $mon = date("m");
   $year = date("Y");
 //}
-//if(isset($_SESSION["thedate"])) {
-//  $day=date("d",$_SESSION["thedate"]);
-//  $mon=date("m",$_SESSION["thedate"]);
-//  $year=date("Y",$_SESSION["thedate"]);
-//}
+if(isset($_SESSION["thedate"])) {
+  $day=date("d",$_SESSION["thedate"]);
+  $mon=date("m",$_SESSION["thedate"]);
+  $year=date("Y",$_SESSION["thedate"]);
+}
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
 }
@@ -19,7 +19,6 @@ if(isset($_REQUEST["mon"])) {
 if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
 }
-
 $thedate = mktime(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
@@ -27,7 +26,6 @@ $_SESSION["thedate"] = $thedate;
 $c=new Calendar("en");
 $v=substr($c->nameOfMonth($mon),0,3);
 $dayofweek=$c->dayOfWeekStr($day,$mon,$year);
-
 
 $parsed=parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($parsed["query"])) {

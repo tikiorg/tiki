@@ -143,6 +143,12 @@ $smarty->assign_by_ref('questions',$questions["data"]);
 $section='quizzes';
 include_once('tiki-section_options.php');
 
+if($feature_theme_control == 'y') {
+	$cat_type='quiz';
+	$cat_objid = $_REQUEST["quizId"];
+	include('tiki-tc.php');
+}
+
 
 // Display the template
 $smarty->assign('mid','tiki-take_quiz.tpl');

@@ -23,7 +23,6 @@ if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $u
   $left_modules = $tikilib->get_assigned_modules('l');
   $right_modules = $tikilib->get_assigned_modules('r');
 }
-
 for($i=0;$i<count($left_modules);$i++) {
     $r=&$left_modules[$i];
     

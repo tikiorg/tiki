@@ -331,6 +331,8 @@ $feature_notepad = 'n';
 $smarty->assign('feature_notepad',$feature_notepad);
 $feature_userfiles = 'n';
 $smarty->assign('feature_userfiles',$feature_userfiles);
+$feature_theme_control = 'n';
+$smarty->assign('feature_theme_control',$feature_theme_control);
 $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
 
@@ -750,6 +752,22 @@ if(isset($_COOKIE["nlmenu"])) {
     $smarty->assign('mnu_nlmenu','display:block;');
   }	
 }
+
+$smarty->assign('mnu_ephmenu','display:none;');
+if(isset($_COOKIE["ephmenu"])) {
+  if($_COOKIE["ephmenu"]=='o') {
+    $smarty->assign('mnu_ephmenu','display:block;');
+  }	
+}
+
+$smarty->assign('mnu_mymenu','display:none;');
+if(isset($_COOKIE["mymenu"])) {
+  if($_COOKIE["mymenu"]=='o') {
+    $smarty->assign('mnu_mymenu','display:block;');
+  }	
+}
+
+
 $smarty->assign('mnu_wikimenu','display:none;');
 if(isset($_COOKIE["wikimenu"])) {
   if($_COOKIE["wikimenu"]=='o') {

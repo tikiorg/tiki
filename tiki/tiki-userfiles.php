@@ -21,10 +21,10 @@ if($tiki_p_userfiles != 'y') {
 }
 
 $quota = $userfileslib->userfiles_quota($user);
-
 $limit = $userfiles_quota * 1024 * 1000;
 if($limit==0) $limit=999999999;
-$percentage = $quota/$limit*100;
+$percentage = ($quota/$limit)*100;
+
 $cellsize = round($percentage/100*200);
 $percentage = round($percentage);
 $smarty->assign('cellsize',$cellsize);
@@ -82,6 +82,7 @@ if($limit==0) $limit=999999999;
 $percentage = $quota/$limit*100;
 $cellsize = round($percentage/100*200);
 $percentage = round($percentage);
+if($cellsize==0) $cellsize=1;
 $smarty->assign('cellsize',$cellsize);
 $smarty->assign('percentage',$percentage);
 
@@ -136,7 +137,7 @@ include_once('tiki-mytiki_shared.php');
 
 
 $smarty->assign('mid','tiki-userfiles.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>
 
 

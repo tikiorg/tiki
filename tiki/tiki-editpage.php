@@ -371,6 +371,11 @@ $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 include_once("categorize_list.php");
 
+if($feature_theme_control == 'y') {
+	include('tiki-tc.php');
+}
+
+
 $section='wiki';
 include_once('tiki-section_options.php');
 

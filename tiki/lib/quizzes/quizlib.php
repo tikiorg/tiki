@@ -330,14 +330,7 @@ class QuizLib extends TikiLib {
   }
 
 
-  function get_quiz($quizId) 
-  {
-    $query = "select * from tiki_quizzes where quizId=$quizId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
+  
   
   function get_quiz_question($questionId) 
   {

@@ -1,4 +1,47 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
+
+drop table if exists tiki_theme_control_sections;
+create table tiki_theme_control_sections(
+  section varchar(250) not null,
+  theme varchar(250) not null,
+  primary key(section)
+);
+
+drop table if exists tiki_theme_control_objects;
+create table tiki_theme_control_objects(
+  objId varchar(250) not null,
+  type varchar(250) not null,
+  name varchar(250) not null,
+  theme varchar(250) not null,
+  primary key(objId)
+);
+
+
+drop table if exists tiki_theme_control_categs;
+create table tiki_theme_control_categs(
+  categId integer(12) not null,
+  theme varchar(250) not null,
+  primary key(categId)
+);
+
+drop table if exists tiki_eph;
+create table tiki_eph(
+  ephId integer(12) not null auto_increment,
+  title varchar(250),
+  isFile char(1),
+  filename varchar(250),
+  filetype varchar(250),
+  filesize varchar(250),
+  data longblob,
+  textdata longblob,
+  publish integer(14),
+  hits integer(10),
+  primary key(ephId)
+);
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_eph_admin','tiki','Can admin ephemerides','editor');
+
+
 alter table users_permissions add level varchar(80);
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered');

@@ -1,4 +1,8 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-section_options.php,v 1.3 2003-03-22 22:39:07 lrargerich Exp $
+
+if($feature_theme_control == 'y') {
+	include('tiki-tc.php');
+}
 
 if($layout_section == 'y') {
 $section_top_bar=$section.'_top_bar';

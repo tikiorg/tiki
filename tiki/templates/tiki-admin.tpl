@@ -73,6 +73,7 @@
 <tr><td class="form">{tr}User Notepad{/tr}:</td><td><input type="checkbox" name="feature_notepad" {if $feature_notepad eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}User files{/tr}:</td><td><input type="checkbox" name="feature_userfiles" {if $feature_userfiles eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Ephemerides{/tr}:</td><td><input type="checkbox" name="feature_eph" {if $feature_eph eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Theme control{/tr}:</td><td><input type="checkbox" name="feature_theme_control" {if $feature_theme_control eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>

@@ -51,5 +51,5 @@ include_once('tiki-mytiki_shared.php');
 
 
 $smarty->assign('mid','tiki-notepad_write.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>
