@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.73 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.74 2004-06-29 20:50:53 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -206,6 +206,10 @@ $commentslib->process_inbound_mail($_REQUEST['forumId']);
 /******************************/
 if (!isset($_REQUEST['comments_threshold'])) {
     $_REQUEST['comments_threshold'] = 0;
+    $smarty->assign('topics_threshold_param', NULL);
+} else {
+	$topics_threshold_param = '&topics_threshold=' . $_REQUEST['comments_threshold'];
+	$smarty->assign('topics_threshold_param', htmlspecialchars($topics_threshold_param));
 }
 
 $smarty->assign('comments_threshold', $_REQUEST['comments_threshold']);
@@ -648,7 +652,10 @@ if (!isset($_REQUEST["comments_maxComments"])) {
 
 if (!isset($_REQUEST["comments_sort_mode"])) {
     $_REQUEST["comments_sort_mode"] = $comments_default_ordering;
+    $smarty->assign('topics_sort_mode_param', NULL);
 } else {
+	$topics_sort_mode_param = '&topics_sort_mode=' . $_REQUEST["comments_sort_mode"];
+	$smarty->assign('topics_sort_mode_param', htmlspecialchars($topics_sort_mode_param));
     $comments_show = 'y';
 }
 
@@ -773,6 +780,15 @@ if ($tiki_p_admin_forum == 'y') {
 
     $smarty->assign('reported', $commentslib->get_num_reported($_REQUEST['forumId']));
 }
+
+if (empty($_REQUEST['comments_find'])) {
+	$_REQUEST['comments_find'] = NULL;
+	$smarty->assign('topics_find_param', NULL);
+} else {
+	$topics_find_param = '&topics_find=' . $_REQUEST['comments_find'];
+	$smarty->assign('topics_find_param', htmlspecialchars($topics_find_param));
+}
+$smarty->assign('comments_find', $_REQUEST['comments_find']);
 
 include_once("textareasize.php");
 
