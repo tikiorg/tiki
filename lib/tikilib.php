@@ -1489,6 +1489,33 @@ function get_categorypath($cats) {
     return $catpath;
 }
 
+function get_categorypath_array($cats,$focus=0) {
+	global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
+	if (!is_object($categlib)) {
+		require_once ("lib/categories/categlib.php");
+	}
+	foreach ($cats as $categId) {
+		$focused = false;
+		$info = $categlib->get_category($categId);
+		$out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
+		while ($info["parentId"] != 0) {
+			$info = $categlib->get_category($info["parentId"]);
+			if ($focus and $info["categId"] == $focus) {
+				$focused = $categId;
+				break;
+			} else {
+				$out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
+			}
+		}
+	}
+	if ($focused) {
+		return $out[$focused];
+	} else {
+		return $out;
+	}
+}
+
+
 /*shared*/
 // function enhancing php in_array() function
 function in_multi_array($needle, $haystack) {
