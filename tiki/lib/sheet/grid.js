@@ -915,6 +915,17 @@ Cell.prototype.isSelected = function()
 
 // }}}1
 
+// Format cells {{{1
+Grid.prototype.format = function( type )
+{
+	if( type == '' ) type = null;
+	
+	for( var key = 0; this.cells.length > key; key++ )
+		if( this.cells[key].isSelected() )
+			this.cells[key].format = type;
+}
+// }}}1
+
 // Merge {{{1
 // Cell.changeSize {{{2
 Cell.prototype.changeSize = function( row, col )

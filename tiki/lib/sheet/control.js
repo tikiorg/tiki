@@ -184,3 +184,26 @@ function copyCalculationSubmit( form )
 
 	return false;
 }
+
+// Format Cell
+function formatCellClick()
+{
+    element = document.getElementById( 'detail' );
+	
+	var str = controlFormatCellBefore;
+	for( key in display )
+		str += '<option>' + key + '</option>';
+	str += controlFormatCellAfter;
+
+	element.innerHTML = str;
+}
+
+function formatCellSubmit( form )
+{
+	g.format( form.format.value );
+	g.refresh();
+
+    document.getElementById( 'detail' ).innerHTML = "";
+
+	return false;
+}

@@ -56,19 +56,27 @@ function SUM( list )
 var display;
 display = new Object;
 
-display.currency_us = function( value )
+display.currency = function( value, before, after )
 {
+	if( before == null ) before = '';
+	if( after == null ) after = '';
+
 	var strval = String( Math.round( value * 100 ) / 100 );
+
+	if( strval.lastIndexOf( "." ) == -1 )
+		strval += ".00";
+	
 	while( strval.length - strval.lastIndexOf( "." ) < 3 )
 		strval += "0";
 
-	return "$" + strval;
+	return before + strval + after;
+}
+
+display.currency_us = function( value )
+{
+	return display.currency( value, '$' );
 }
 display.currency_ca = function( value )
 {
-	var strval = String( Math.round( value * 100 ) / 100 );
-	while( strval.length - strval.lastIndexOf( "." ) < 3 )
-		strval += "0";
-
-	return strval + "$";
+	return display.currency( value, '', '$' );
 }
