@@ -1,4 +1,5 @@
 <?php
+// $Header$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -26,38 +27,30 @@ class Cachelib {
     }
   }
 	
-  function cacheItem($key,$data)
-  {
-	$cache_folder = $this->folder;
-	$key = md5($key);
-	$fw = fopen($this->folder."/$key","w");
-	fwrite($fw,$data);
-	fclose($fw);
-	return true;
+  function cacheItem($key,$data) {
+		$key = md5($key);
+		$fw = fopen($this->folder."/$key","w");
+		fwrite($fw,$data);
+		fclose($fw);
+		return true;
   }
 	
-  function isCached($key)
-  {
-	$cache_folder = $this->folder;
-	$key = md5($key);
-	return file_exists($this->folder."/$key");
+  function isCached($key) {
+		$key = md5($key);
+		return is_file($this->folder."/$key");
   }
 	
-  function getCached($key)
-  {
-	$cache_folder = $this->folder;
-	$key = md5($key);
-	$fw = fopen("$cache_folder/$key","r");
-	$data = fread($fw,filesize($this->folder."/$key"));
-	fclose($fw);
-	return $data;
+  function getCached($key) {
+		$key = md5($key);
+		$fw = fopen($this->folder."/$key","r");
+		$data = fread($fw,filesize($this->folder."/$key"));
+		fclose($fw);
+		return $data;
   }
 	
-  function invalidate($key)
-  {
-	$cache_folder = $this->folder;
-	$key = md5($key);
-	@unlink($this->folder."/$key");
+  function invalidate($key) {
+		$key = md5($key);
+		@unlink($this->folder."/$key");
   }
 }
 
