@@ -56,9 +56,24 @@
 	<td class="{cycle}">
 		<form method="post">
 		{if $chart_info.maxVoteValue eq '5'}
-		5
+		<input type="radio" name="points" value="1" />
+		<input type="radio" name="points" value="2" />
+		<input type="radio" name="points" value="3" />
+		<input type="radio" name="points" value="4" />
+		<input type="radio" name="points" value="5" />
 		{elseif $chart_info.maxVoteValue eq '10'}
-		10
+		{tr}Lowest{/tr}
+		<input type="radio" name="points" value="1" />
+		<input type="radio" name="points" value="2" />
+		<input type="radio" name="points" value="3" />
+		<input type="radio" name="points" value="4" />
+		<input type="radio" name="points" value="5" />
+		<input type="radio" name="points" value="6" />
+		<input type="radio" name="points" value="7" />
+		<input type="radio" name="points" value="8" />
+		<input type="radio" name="points" value="9" />
+		<input type="radio" name="points" value="10" />
+		{tr}Highest{/tr}
 		{/if}
 		<input type="submit" name="vote" value="{tr}vote{/tr}" />
 		</form>

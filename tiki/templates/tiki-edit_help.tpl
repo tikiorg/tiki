@@ -8,6 +8,7 @@
 <strong>{tr}Drawings{/tr}:</strong> "{literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}<br/>
 {/if}
 <strong>{tr}External links{/tr}:</strong> {tr}use square brackets for an{/tr} {tr}external link{/tr}: [URL] {tr}or{/tr} [URL|{tr}link_description{/tr}] {tr}or{/tr} [URL|{tr}description{/tr}|nocache].<br />
+<strong>{tr}Multi-page pages{/tr}:</strong>{tr}use ...page... to sepparate pages{/tr}<br/>
 <strong>{tr}Misc{/tr}:</strong> "!", "!!", "!!!" {tr}make_headings{/tr}, "-<em></em>-<em></em>-<em></em>-" {tr}makes a horizontal rule{/tr} "==={tr}text{/tr}===" {tr}underlines text{/tr}<br />
 <strong>{tr}Title bar{/tr}:</strong> "-={tr}title{/tr}=-" {tr}creates a title bar{/tr}.<br/>
 <strong>{tr}Images{/tr}:</strong> "{literal}{{/literal}img src=http://example.com/foo.jpg width=200 height=100 align=center link=http://www.yahoo.com desc=foo}" {tr}displays an image{/tr} {tr}height width desc link and align are optional{/tr}<br/> 

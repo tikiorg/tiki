@@ -10,6 +10,23 @@ class WikiLib extends TikiLib {
     $this->db = $db;  
   }
   
+  //Special parsing for multipage articles
+  function get_number_of_pages($data)
+  {
+  	$parts = explode("...page...",$data);
+  	return count($parts);	
+  }
+  
+  function get_page($data,$i)
+  {
+  	$parts = explode("...page...",$data);
+  	if(substr($parts[$i-1],1,5)=="<br/>") {
+  		return substr($parts[$i-1],6);
+  	} else {
+  		return $parts[$i-1];
+  	}
+  }
+  
   function get_creator($name) 
   {
     $name = addslashes($name);

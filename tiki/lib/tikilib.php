@@ -605,6 +605,8 @@ class TikiLib {
   // File attachments functions for the wiki ////
   /*shared*/ function add_wiki_attachment_hit($id)
   {
+	global $count_admin_pvs;
+	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_wiki_attachments set downloads=downloads+1 where attId=$id";
       $result = $this->query($query);
@@ -1289,6 +1291,8 @@ class TikiLib {
 
   /*shared*/ function add_file_hit($id)
   {
+	global $count_admin_pvs;
+	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_files set downloads=downloads+1 where fileId=$id";
       $result = $this->query($query);

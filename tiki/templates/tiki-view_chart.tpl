@@ -101,6 +101,7 @@
 </form>
 </td>
 </tr>
+<!--
 <tr>
 <td>
 <form method="post" action="tiki-suggest_chart_item.php">
@@ -109,4 +110,5 @@
 </form>
 </td>
 </tr>
+-->
 </table>

@@ -115,6 +115,10 @@ if($tiki_p_admin_wiki == 'y') {
 //Now process the pages
 preg_match_all("/-=([^=]+)=-/",$info["data"],$reqs);
 $slides = split("-=[^=]+=-",$info["data"]);
+if(count($slides)<2) {
+	$slides = explode('...page...',$info["data"]);
+	array_unshift($slides,'');
+}
 
 if(!isset($_REQUEST["slide"])) {
   $_REQUEST["slide"]=0;
@@ -122,19 +126,23 @@ if(!isset($_REQUEST["slide"])) {
 $smarty->assign('prev_slide',$_REQUEST["slide"]-1);
 $smarty->assign('next_slide',$_REQUEST["slide"]+1);
 
-$slide_title = $reqs[1][$_REQUEST["slide"]];
+if(isset($reqs[1][$_REQUEST["slide"]])) {
+	$slide_title = $reqs[1][$_REQUEST["slide"]];
+} else {
+	$slide_title = '';
+}
 $slide_data = $tikilib->parse_data($slides[$_REQUEST["slide"]+1]);
 
 if(isset($reqs[1][$_REQUEST["slide"]-1])) {
   $slide_prev_title = $reqs[1][$_REQUEST["slide"]-1];
 } else {
-  $slide_prev_title = '';
+  $slide_prev_title = 'prev';
 }
 
 if(isset($reqs[1][$_REQUEST["slide"]+1])) {
   $slide_next_title = $reqs[1][$_REQUEST["slide"]+1];
 } else {
-  $slide_next_title = '';
+  $slide_next_title = 'next';
 }
 $smarty->assign('slide_prev_title',$slide_prev_title);
 $smarty->assign('slide_next_title',$slide_next_title);
