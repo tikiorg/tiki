@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.8 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.9 2004-03-13 02:22:08 aurel42 Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -116,7 +116,7 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 //Get all the statistics for this quiz
-$questions = $quizlib->list_quiz_question_stats($_REQUEST["quizId"], 0, -1, 'position_desc', '');
+$questions = $quizlib->list_quiz_question_stats($_REQUEST["quizId"], 0, -1, 'position_asc', '');
 $smarty->assign_by_ref('questions', $questions);
 
 $section = 'quizzes';
