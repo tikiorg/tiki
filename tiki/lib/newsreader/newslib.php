@@ -26,7 +26,7 @@ class Newslib extends Tikilib {
 		$now = date("U");
 		if ($this->getOne( "select count(*) from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName))) {
 			$query = "update `tiki_newsreader_marks` set `timestamp`=? where `user`=? and `serverId`=? and `groupName`=?";
-			$this->query($query,array(array((int)$now,$user,(int)$serverId,$groupName));
+			$this->query($query,array(array((int)$now,$user,(int)$serverId,$groupName)));
 		} else {
 			$query = "insert into `tiki_newsreader_marks`(`user`,`serverId`,`groupName`,`timestamp`) values(?,?,?,?)";
 			$this->query($query,array($user,(int)$serverId,$groupName,(int)$now));
