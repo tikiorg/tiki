@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.13 2003-12-04 19:12:57 mose Exp $
+$Id: trollparty.css,v 1.14 2003-12-07 12:45:46 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -990,7 +990,7 @@ padding-right: 1px;
 padding-top: 1px;
 padding-bottom: 1px;
 margin: 1px 1px;
-width: 100%%;
+width: 100%;
 clear: both;
 font-weight: bold;
 }
