@@ -4,6 +4,14 @@
 {/if}
 </h1>{/if}
 <table class="wikibar">
+
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
+<tr>
+<td align="right" colspan="2">
+{$display_catpath}
+</td>
+</tr>
+{/if}
 <tr>
 <td>
 {if $feature_wiki_description}
@@ -14,8 +22,6 @@
 {/if}
 </td>
 <td style="text-align:right;">
-
-
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
@@ -156,4 +162,7 @@
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
+{/if}
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+{$display_catobjects}
 {/if}
