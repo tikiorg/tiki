@@ -158,9 +158,14 @@
         {section name=ix loop=$languages}
         <option value="{$languages[ix]}" {if $site_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
+<tr><td class="form">{tr}Use database for translation{/tr}:</td><td><input type="checkbox" name="lang_use_db" {if $lang_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+{if $lang_use_db eq 'y'}
+<tr><td class="form">{tr}Record untranslated{/tr}:</td><td><input type="checkbox" name="record_untranslated" {if $record_untranslated eq 'y'}checked="checked"{/if}/></td></tr>
+{/if}
         </select></td></tr>
 <tr><td class="form">{tr}Server name (for absolute URIs){/tr}:</td><td><input type="text" name="feature_server_name" value="{$feature_server_name}" /></td></tr>        
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
+<tr><td class="form">{tr}Temporary directory{/tr}:</td><td><input type="text" name="tmpDir" value="{$tmpDir}" /></td></tr>
 <tr><td class="form">{tr}Server time zone{/tr}:</td><td>{$timezone_server}
 &nbsp;<a class="link" target="http://www.worldtimezone.com/" href="http://www.worldtimezone.com/">Map</a>
 </td></tr>

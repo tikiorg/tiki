@@ -31,25 +31,25 @@
 <tr id='isreview' {if $type eq 'Article'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
-<option value="9.5" {if $rating eq 9.5}selected="selected"{/if}>9.5</option>
+<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
 <option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
-<option value="8.5" {if $rating eq 8.5}selected="selected"{/if}>8.5</option>
+<option value="8.5" {if $rating eq "8.5"}selected="selected"{/if}>8.5</option>
 <option value="8" {if $rating eq 8}selected="selected"{/if}>8</option>
-<option value="7.5" {if $rating eq 7.5}selected="selected"{/if}>7.5</option>
+<option value="7.5" {if $rating eq "7.5"}selected="selected"{/if}>7.5</option>
 <option value="7" {if $rating eq 7}selected="selected"{/if}>7</option>
-<option value="6.5" {if $rating eq 6.5}selected="selected"{/if}>6.5</option>
+<option value="6.5" {if $rating eq "6.5"}selected="selected"{/if}>6.5</option>
 <option value="6" {if $rating eq 6}selected="selected"{/if}>6</option>
-<option value="5.5" {if $rating eq 5.5}selected="selected"{/if}>5.5</option>
+<option value="5.5" {if $rating eq "5.5"}selected="selected"{/if}>5.5</option>
 <option value="5" {if $rating eq 5}selected="selected"{/if}>5</option>
-<option value="4.5" {if $rating eq 4.5}selected="selected"{/if}>4.5</option>
+<option value="4.5" {if $rating eq "4.5"}selected="selected"{/if}>4.5</option>
 <option value="4" {if $rating eq 4}selected="selected"{/if}>4</option>
-<option value="3.5" {if $rating eq 3.5}selected="selected"{/if}>3.5</option>
+<option value="3.5" {if $rating eq "3.5"}selected="selected"{/if}>3.5</option>
 <option value="3" {if $rating eq 3}selected="selected"{/if}>3</option>
-<option value="2.5" {if $rating eq 2.5}selected="selected"{/if}>2.5</option>
+<option value="2.5" {if $rating eq "2.5"}selected="selected"{/if}>2.5</option>
 <option value="2" {if $rating eq 2}selected="selected"{/if}>2</option>
-<option value="1.5" {if $rating eq 1.5}selected="selected"{/if}>1.5</option>
+<option value="1.5" {if $rating eq "1.5"}selected="selected"{/if}>1.5</option>
 <option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
-<option value="0.5" {if $rating eq 0.5}selected="selected"{/if}>0.5</option>
+<option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">

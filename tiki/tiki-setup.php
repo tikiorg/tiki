@@ -1,5 +1,6 @@
 <?php
 
+
 function system_check() {
 	if (!function_exists('posix_getuid'))
 		return true;
@@ -222,6 +223,9 @@ $smarty->assign('wiki_cache',$wiki_cache);
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
 $language = 'en';
+$lang_use_db = 'n';
+
+if (strstr(PHP_OS,'Windows')) $tmpDir='C:/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
 
 $feature_left_column = 'y';
 $feature_right_column = 'y';
@@ -394,6 +398,8 @@ $smarty->assign('feature_bot_bar',$feature_bot_bar);
 $smarty->assign('feature_file_galleries',$feature_file_galleries);
 $smarty->assign('feature_file_galleries_rankings',$feature_file_galleries_rankings);
 $smarty->assign('language',$language);
+$smarty->assign('lang_use_db',$lang_use_db);
+$smarty->assign('tmpDir',$tmpDir);
 $smarty->assign('home_blog',$home_blog);
 $smarty->assign('home_forum',$home_forum);
 $smarty->assign('home_gallery',$home_gallery);
@@ -655,6 +661,11 @@ if(!file_exists('templates_c/preferences.php')) {
   include_once('templates_c/preferences.php');
 }
 
+if ($lang_use_db!='y') {
+  // check if needed!!!
+  global $lang;
+  include_once('lang/'.$language.'/language.php');
+}
 
 
 if($feature_userPreferences == 'y') {

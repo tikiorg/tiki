@@ -94,7 +94,7 @@ if(isset($_REQUEST["subId"])) {
   $imgname = $article_data["image_name"];
   
   if($hasImage=='y') {
-     $tmpfname = tempnam ("/tmp", "TMPIMG").$imgname;     
+     $tmpfname = tempnam ($tmpDir, "TMPIMG").$imgname;     
      $fp = fopen($tmpfname,"w");
      if($fp) {
        fwrite($fp,$data);
@@ -178,7 +178,7 @@ if(isset($_REQUEST["preview"])) {
   }
   
   if($hasImage=='y') {
-     $tmpfname = tempnam ("/tmp", "TMPIMG").$imgname;     
+     $tmpfname = tempnam ($tmpDir, "TMPIMG").$imgname;     
      $fp = fopen($tmpfname,"w");
      if($fp) {
        fwrite($fp,$data);

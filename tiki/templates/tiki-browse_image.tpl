@@ -12,14 +12,25 @@
   </div>
   
   <div class="showimage">
+    {if $itype=='o'}
     <img alt="image" src="show_image.php?id={$imageId}" />
+    {else}
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;xsize={$nextx}&amp;ysize={$nexty}&amp;scaled" title="{tr}Klick to enlarge{/tr}">
+    <img alt="image" src="show_image.php?id={$imageId}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}" /></a>
+    {/if}
   </div>
   
   <div align="center">
+    [{if $prevx != 0}
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$prevx}&amp;ysize={$prevy}" class="gallink"> {tr}smaller{/tr}</a>|{/if}
+    {if $itype !='o'}
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}" class="gallink"> {tr}original size{/tr}</a>{/if}
+    {if $nextx != 0}
+    |<a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}" class="gallink"> {tr}bigger{/tr}</a>{/if}]
     [{if $previmg}
-    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
     {if $nextimg}
-    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}" class="gallink">{tr}next image{/tr}</a> {/if}]
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}" class="gallink">{tr}next image{/tr}</a>{/if}]
   </div>
 
   

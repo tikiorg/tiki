@@ -37,16 +37,28 @@
           <td align="center" {if (($smarty.section.idx.index / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br/>
           
-          
+          {if $nextx==0}
           <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
+	  {else}
+          <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
+	  {/if}
           <br/>
           <small class="caption">{$images[idx].name}
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
             <br>
             [
-            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}">x</a>
+	    {if $nextx!=0}
+            <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}">o</a>|
+	    {/if}
+            {if $imagerotate}
+            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}">r</a>
             |
-            <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}">edit</a>
+            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateleft={$images[idx].imageId}" title="{tr}rotate left{/tr}">l</a>
+            |
+            {/if}
+            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}">x</a>
+            |
+            <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}">edit</a>
             ]
           {/if}
           <br/>

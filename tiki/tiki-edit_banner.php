@@ -55,7 +55,7 @@ if(isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"]>0) {
   $smarty->assign("imageType",$info["imageType"]);
   $smarty->assign("hasImage",'n');
   if(strlen($info["imageData"])>0) {
-     $tmpfname = tempnam ("/tmp", "TMPIMG").$info["imageName"];     
+     $tmpfname = tempnam ($tmpDir, "TMPIMG").$info["imageName"];     
      $fp = fopen($tmpfname,"w");
      if($fp) {
        fwrite($fp,urldecode($info["imageData"]));
@@ -211,7 +211,7 @@ if(isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
   $smarty->assign('imageData',$_REQUEST["imageData"]);
   $smarty->assign('tempimg','n');  
   if(strlen($_REQUEST["imageData"])>0) {
-     $tmpfname = tempnam ("/tmp", "TMPIMG").$imgname;     
+     $tmpfname = tempnam ($tmpDir , "TMPIMG").$imgname;     
      $fp = fopen($tmpfname,"w");
      if($fp) {
        fwrite($fp,urldecode($_REQUEST["imageData"]));

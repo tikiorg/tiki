@@ -94,11 +94,31 @@ if(isset($_REQUEST["remove"])) {
 if(isset($_REQUEST["rebuild"])) {
  // To remove an image the user must be the owner or admin
   if(($tiki_p_admin_galleries != 'y') && (!$user || $user!=$gal_info["user"])) {
-    $smarty->assign('msg',tra("Permission denied you cannot remove images from this gallery"));
+    $smarty->assign('msg',tra("Permission denied you cannot rebuild thumbnails in this gallery"));
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->rebuild_thumbnails($_REQUEST["rebuild"]);
+}
+
+if(isset($_REQUEST["rotateright"])) {
+ // To rotate an image the user must be the owner or admin
+  if(($tiki_p_admin_galleries != 'y') && (!$user || $user!=$gal_info["user"])) {
+    $smarty->assign('msg',tra("Permission denied you cannot rotate images in this gallery"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die; 
+  }
+  $tikilib->rotate_right_image($_REQUEST["rotateright"]);
+}
+
+if(isset($_REQUEST["rotateleft"])) {
+ // To rotate an image the user must be the owner or admin
+  if(($tiki_p_admin_galleries != 'y') && (!$user || $user!=$gal_info["user"])) {
+    $smarty->assign('msg',tra("Permission denied you cannot rotate images in this gallery"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die; 
+  }
+  $tikilib->rotate_left_image($_REQUEST["rotateleft"]);
 }
 
 $smarty->assign('system','n');
@@ -113,10 +133,14 @@ if($_REQUEST["galleryId"]==0) {
   $smarty->assign('system','y');
 } else {
   $info = $tikilib->get_gallery($_REQUEST["galleryId"]);
+  $nextscaleinfo = $tikilib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
 
 if(!isset($info["maxRows"])) $info["maxRows"]=10;
 if(!isset($info["rowImages"])) $info["rowImages"]=5;
+if(!isset($nextscaleinfo["xsize"])) {
+  $nextscaleinfo["xsize"]=0;
+  $nextscaleinfo["ysize"]=0;}
 if($info["maxRows"]==0) $info["maxRows"]=10;
 if($info["rowImages"]==0) $info["rowImages"]=6;
 $maxRecords = $info["maxRows"] * $info["rowImages"];
@@ -126,7 +150,19 @@ $smarty->assign_by_ref('thx',$info["thumbSizeX"]);
 $smarty->assign_by_ref('thy',$info["thumbSizeY"]);
 $smarty->assign_by_ref('name',$info["name"]);
 $smarty->assign_by_ref('description',$info["description"]);
+$smarty->assign_by_ref('nextx',$nextscaleinfo["xsize"]);
+$smarty->assign_by_ref('nexty',$nextscaleinfo["ysize"]);
 
+// Can we rotate images
+/*
+if (function_exists("imagerotate")) {
+  $smarty->assign('imagerotate',true);
+} else {
+  $smarty->assign('imagerotate',false);
+}
+*/
+// Above disabled until imagerotate is bug-free
+$smarty->assign('imagerotate',false);
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'created_desc'; 
