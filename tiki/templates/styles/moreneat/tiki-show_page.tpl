@@ -1,3 +1,4 @@
+{if $tiki_p_wiki_view_header eq 'y'}
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
     {$page_info.page_alias}
@@ -101,6 +102,9 @@
 </tr>
 {/if}
 </table>
+{else}
+<br />
+{/if}
 
 {if $print_page ne 'y'}
 {if !$lock}
