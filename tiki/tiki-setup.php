@@ -693,7 +693,8 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 		$http_login_url .= ':' . $http_port;
 	$http_login_url .= $http_prefix . $tikiIndex;
 	if (SID)
-		$http_login_url .= '?' . SID;
+		$http_login_url .= '?' . SID;    $edit_data = htmlentities($_REQUEST["edit"], ENT_QUOTES);
+
 
 	$https_login_url = 'https://' . $https_domain;
 	if ($https_port != 443)
@@ -747,12 +748,6 @@ if(!file_exists('templates_c/preferences.php')) {
   include_once('templates_c/preferences.php');
 }
 
-if ($lang_use_db!='y') {
-  // check if needed!!!
-  global $lang;
-  include_once('lang/'.$language.'/language.php');
-}
-
 $user_dbl='y';
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
@@ -776,6 +771,12 @@ if($feature_userPreferences == 'y') {
   $smarty->assign('style',$style);
   $smarty->assign('language',$language);
 }
+if ($lang_use_db!='y') {
+  // check if needed!!!
+  global $lang;
+  include_once('lang/'.$language.'/language.php');
+}
+
 $smarty->assign('user_dbl',$user_dbl);
 
 $stlstl=explode('.',$style);
