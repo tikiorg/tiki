@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.34 2004-06-14 14:38:27 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.35 2004-06-16 01:36:54 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -314,7 +314,8 @@ $smarty->assign('find', $find);
 
 $channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
 
-for ($i = 0; $i < count($channels["data"]); $i++) {
+$temp_max = count($channels["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["trackerId"], 'tracker')) {
 		$channels["data"][$i]["individual"] = 'y';
 	} else {

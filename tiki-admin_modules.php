@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.32 2004-06-10 16:15:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.33 2004-06-16 01:34:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -253,7 +253,8 @@ $smarty->assign_by_ref('orders', $orders);
 
 $groups = $userlib->list_all_groups();
 $allgroups = array();
-for ($i = 0; $i < count($groups); $i++) {
+$temp_max = count($groups);
+for ($i = 0; $i < $temp_max; $i++) {
 	if (in_array($groups[$i], $module_groups)) {
 		$allgroups[$i]["groupName"] = $groups[$i];
 		$allgroups[$i]["selected"] = 'y';
