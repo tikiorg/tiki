@@ -8,6 +8,12 @@ header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");                          // HTTP/1.0
 
+if($feature_live_support != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
 
 $max_active_request = $lslib->get_max_active_request();
 $smarty->assign('new_requests','n');

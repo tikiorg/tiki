@@ -21,10 +21,10 @@
 	{if $role eq 'user'}
 		<table>
 			<tr>
-				<td style="text-align:center;">{$req_info.operator|avatarize}<br/>
+				<td  valign="top" style="text-align:center;">{$req_info.operator|avatarize}<br/>
 					<b>{$req_info.operator}</b>
 				</td>
-				<td>
+				<td valign="top" >
 					{tr}Chat started{/tr}<br/>
 					<i>{$req_info.reason}</i>
 				</td>
@@ -32,12 +32,52 @@
 		</table>
 	{elseif $role eq 'operator'}
 		{if $req_info.tiki_user}
-			{tr}Chatting with: {$req_info.tiki_user}{/tr}
+			<table>
+			<tr>
+				<td  valign="top" style="text-align:center;">{$req_info.tiki_user|avatarize}<br/>
+					<b>{$req_info.tiki_user}</b>
+				</td>
+				<td valign="top" >
+					{tr}Chat started{/tr}<br/>
+					<i>{$req_info.reason}</i>
+				</td>
+			</tr>
+			</table>
 		{else}
-			{tr}Chatting with: {$req_info.user}{/tr}
+			<table>
+			<tr>
+				<td valign="top" style="text-align:center;">
+					<b>{$req_info.user}</b>
+				</td>
+				<td valign="top" >
+					{tr}Chat started{/tr}<br/>
+					<i>{$req_info.reason}</i>
+				</td>
+			</tr>
+			</table>
 		{/if}
 	{else}
-		Observer: display operator and user
+		<table width="100%">
+			<tr>
+				<td width="2%" style="text-align:center;" valign="top">
+					<b>{tr}User:{/tr}</b><br/>
+					{if $req_info.tiki_user}
+						{$req_info.tiki_user|avatarize}<br/>
+						<b>{$req_info.tiki_user}</b>
+					{else}
+						<b>{$req_info.user}</b>
+					{/if}
+				</td>
+				<td valign="top">
+					<i>{$req_info.reason}</i>
+				</td>
+				<td width="2%" style="text-align:center;" valign="top">
+					<b>{tr}Operator:{/tr}</b><br/>
+					{$req_info.operator|avatarize}<br/>
+					<b>{$req_info.operator}</b>				
+				</td>
+			</tr>
+		</table>
 	{/if}
   	<iframe name='chat_data' src='tiki-live_support_chat_frame.php' width="290" height="300" scrolling="yes">
   	</iframe>
