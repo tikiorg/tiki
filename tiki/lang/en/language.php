@@ -1311,5 +1311,10 @@ from your php.ini file",
 "Permission denied you can edit images but not in this gallery" => "Permission denied you can edit images but not in this gallery",
 "Failed to edit the image" => "Failed to edit the image",
 "No question indicated" => "No question indicated",
+'Article' => 'Article',
+'FAQ' => 'FAQ',
+'File' => 'File',
+'Gallery' => 'Gallery',
+'Post' => 'Post',
 "##end###" => "###end###");
 ?>
