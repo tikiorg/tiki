@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.10 2003-11-25 23:05:49 marcius Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.11 2003-11-27 00:19:16 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,7 +121,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 					$_REQUEST["edit_edt_tran_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_tran_$i"]), ENT_NOQUOTES);
 					$_REQUEST["edit_edt_source_$i"] = htmlentities(strip_tags($_REQUEST["edit_edt_source_$i"]), ENT_NOQUOTES);
 					$query = "update `tiki_language` set `tran`=? where `source`=? and `lang`=?";
-					$result = $tikilib->query($query,$_REQUEST["edit_edt_tran_$i"],$_REQUEST["edit_edt_source_$i"],$edit_language);
+					$result = $tikilib->query($query,array($_REQUEST["edit_edt_tran_$i"],$_REQUEST["edit_edt_source_$i"],$edit_language));
 
 					//if ($result->numRows()== 0 ) 
 					if (!isset($result)) {
@@ -171,6 +171,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$squeryedit = "";
 	$squeryrec = "";
 	$bindvars = array($edit_language);
+	$bindvars2 = array($edit_language);
 
 	if (isset($_REQUEST["tran_search"])) {
 		$tran_search = htmlentities(strip_tags($_REQUEST["tran_search"]), ENT_NOQUOTES);
@@ -193,20 +194,18 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	$sort_mode = "source_asc";
 
 	if ($whataction == "edit_tran_sw") {
-		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$tikilib->convert_sortmode($sort_mode);
 		$nquery = "select count(*) from `tiki_language` where `lang`=? $squeryedit";
-		$result = $tikilib->query($nquery,$bindvars,$maxRecords,$tr_recnum);
+		$untr_numrows= $tikilib->getOne($nquery,$bindvars);
+	        $result = $tikilib->query($query,$bindvars,$maxRecords,$tr_recnum);
 	} elseif ($whataction == "edit_rec_sw") {
-		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryedit order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `source` from `tiki_untranslated` where `lang`=? $squeryedit order by ".$tikilib->convert_sortmode($sort_mode);
 		$nquery = "select count(*) from `tiki_untranslated` where `lang`=? $squeryrec";
-		$result = $tikilib->query($nquery,$bindvars2,$maxRecords,$tr_recnum);
+		$untr_numrows= $tikilib->getOne($nquery,$bindvars2);
+	        $result = $tikilib->query($query,$bindvars2,$maxRecords,$tr_recnum);
 	}
 
-	$res = $result->fetchRow();
-	$untr_numrows = $res["0"];
 	$smarty->assign('untr_numrows', $untr_numrows);
-
-	$result = $tikilib->query($query);
 
 	//$i=$tr_recnum;
 	if ($whataction == "edit_rec_sw") {
@@ -227,7 +226,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		$translation = array();
 		$i = 0;
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$untranslated[] = $res["source"];
 
 			$translation[] = $res["tran"];
