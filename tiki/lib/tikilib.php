@@ -989,8 +989,9 @@ class TikiLib {
 		$last = $this->getOne("select `lastLogin`  from `users_users` where `login`='$user'");
 		$ret = array();
 
-		if (!$last)
+		if (!$last) {
 			$last = time();
+		}
 
 		$ret["lastVisit"] = $last;
 		$ret["images"] = $this->getOne("select count(*) from `tiki_images` where `created`>$last");
@@ -1795,10 +1796,10 @@ class TikiLib {
 	//This should be moved to a poll module (currently in tiki-setup.php
 	/*shared*/
 	function poll_vote($pollId, $optionId) {
-		$query = "update `tiki_poll_options` set `votes`=votes+1 where `optionId`=$optionId";
+		$query = "update `tiki_poll_options` set `votes`= (`votes` + 1) where `optionId`=$optionId";
 
 		$result = $this->query($query);
-		$query = "update `tiki_polls` set `votes`=votes+1 where `pollId`=$pollId";
+		$query = "update `tiki_polls` set `votes`=(`votes`+1) where `pollId`=$pollId";
 		$result = $this->query($query);
 	}
 
