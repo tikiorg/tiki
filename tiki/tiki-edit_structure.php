@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.15 2003-11-23 11:41:20 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.16 2003-11-29 21:26:26 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,7 +97,7 @@ $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
 
-$subpages = $structlib->get_pages($_REQUEST["page_ref_id"]);
+$subpages = $structlib->s_get_pages($_REQUEST["page_ref_id"]);
 $max = $structlib->get_max_children($structure_info["page_ref_id"], $_REQUEST["page_ref_id"]);
 $smarty->assign_by_ref('subpages', $subpages);
 $smarty->assign('max', $max);
