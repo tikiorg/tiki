@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.61 2004-01-26 23:11:32 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.62 2004-01-30 09:13:07 damosoft Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -79,7 +79,7 @@
       </form>
       </td>
 	{/if}
-	</td>
+{*	</td>  *}
   {else}
     <td>&nbsp;</td>
   {/if}
@@ -97,21 +97,21 @@
    				title='{$prev_info.page_alias}'
    			{else}
    				title='{$prev_info.pageName}'
-   			{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
+   			{/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>{/if}
 	{if $parent_info}
    	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}' 
         {if $parent_info.page_alias}
    	      title='{$parent_info.page_alias}'
         {else}
    	      title='{$parent_info.pageName}'
-        {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
+        {/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>{/if}
    	{if $next_info and $next_info.page_ref_id}
       <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
 		  {if $next_info.page_alias}
 			  title='{$next_info.page_alias}'
 		  {else}
 			  title='{$next_info.pageName}'
-		  {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>
+		  {/if}/></a>{else}<img src='img/icons2/8.gif' alt="{tr}spacer{/tr}" border='0'/>
 	{/if}
 	{if $home_info}
    	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
