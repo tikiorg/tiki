@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.4 2003-11-12 04:36:07 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.5 2003-11-13 05:55:46 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ if(@$feature_maps != 'y') {
   die;
 }
 
-if (!$tiki_p_map_edit) {
+if ($tiki_p_map_edit !='y') {
   $smarty->assign('msg',tra("You do not have permissions to view the layers"));
   $smarty->display("styles/$style_base/error.tpl");
   die;      
@@ -54,13 +54,18 @@ if (isset($_REQUEST["upload"])) {
 //Do we have a file to delete?
 if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
   if ($_REQUEST["action"]=="delete") {
-    if (is_file($directory_path."/".$_REQUEST["file"])) {
-      if (!$tiki_p_map_delete) {
+    if (is_file($directory_path."/".$_REQUEST["file"]) &&
+        !preg_match("/^\./", $_REQUEST["file"])) {
+      if ($tiki_p_map_delete !='y') {
         $smarty->assign('msg',tra("You do not have permissions to delete a file"));
         $smarty->display("styles/$style_base/error.tpl");
         die;      
       }
       unlink($directory_path."/".$_REQUEST["file"]);
+    } else {
+        $smarty->assign('msg',tra("File not found"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;    
     }
   }
 }
@@ -68,8 +73,8 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
 //Do we have a directory to create or delete?
 if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
   if ($_REQUEST["action"]=="createdir") {
-    if(!preg_match("/^\./", $_REQUEST["directory"])){
-      if (!$tiki_p_map_create) {
+    if(!preg_match("/\./", $_REQUEST["directory"])){
+      if ($tiki_p_map_create !='y') {
         $smarty->assign('msg',tra("You do not have permissions to create a directory"));
         $smarty->display("styles/$style_base/error.tpl");
         die;      
@@ -79,11 +84,16 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
         $smarty->display("styles/$style_base/error.tpl");
         die;      
       }
+    } else {
+      $smarty->assign('msg',tra("Invalid directory name"));
+      $smarty->display("styles/$style_base/error.tpl");
+      die;    
     }
   }
   if ($_REQUEST["action"]=="deldir") {
-    if(!preg_match("/^\./", $_REQUEST["directory"])){
-      if (!$tiki_p_map_delete) {
+    if(!preg_match("/^\./", $_REQUEST["directory"]) || 
+       !preg_match("/\.\//", $_REQUEST["directory"])){
+      if ($tiki_p_map_delete !='y') {
         $smarty->assign('msg',tra("You do not have permissions to delete a directory"));
         $smarty->display("styles/$style_base/error.tpl");
         die;      
@@ -96,6 +106,44 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
     }
   }  
 }
+
+//Do we have an index to create?
+if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"]) 
+    && isset($_REQUEST["filestoindex"])) {
+  if ($_REQUEST["action"]=="createindex") {
+      if ($tiki_p_map_create !='y') {
+        $smarty->assign('msg',tra("You do not have permissions to create an index file"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;      
+      }
+      
+      if (preg_match("/\.\//", $_REQUEST["indexfile"]) || 
+          !preg_match("/\.shp/", $_REQUEST["indexfile"])) {
+        $smarty->assign('msg',tra("Invalid file name"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;      
+      }
+      if (preg_match("/\.\//", $_REQUEST["filestoindex"])) {
+        $smarty->assign('msg',tra("Invalid files to index"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;      
+      }
+				 if (!isset($gdaltindex)) {
+        $smarty->assign('msg',tra("I do not know where is gdaltindex. Set correctly the Map feature"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;      
+      }				
+      
+      $command=$gdaltindex." ".$directory_path."/".$indexfile." ".$directory_path."/".$filestoindex;
+      $output=array();
+      exec($command,$output,$return);
+      if ($return<>0) {
+        $smarty->assign('msg',tra("I could not create the index file"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;      
+      }
+  }
+}  
 
 // Get layers from the layers directory
 $files = array();
