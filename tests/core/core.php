@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.2 2003-08-24 00:42:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.3 2003-08-25 22:57:43 zaufi Exp $
  *
  * \brief Main file
  *
@@ -13,7 +13,7 @@ require_once('extensions.php');
 require_once('acl_tree.php');
 
 // Some defines
-define('TIKI_HARDCODED_CONFIG_FILE', 'tiki-hardcoded-config.php');
+define('TIKI_HARDCODED_CONFIG_FILE', dirname(__FILE__) . '/tiki-hardcoded-config.php');
 
 /**
  * \brief The main class of Tiki core
@@ -42,7 +42,7 @@ class TikiCore
     function initialize()
     {
         // Get hardcoded globals before exec init scripts
-        $tiki_conf = dirname(__FILE__) . '/' . TIKI_HARDCODED_CONFIG_FILE;
+        $tiki_conf = TIKI_HARDCODED_CONFIG_FILE;
         if (file_exists($tiki_conf))
             require_once($tiki_conf);
         else
