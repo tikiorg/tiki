@@ -26,21 +26,22 @@ class TikiLib {
     $this->db = $db;
   }
 
-  // This is only for performance collection of all queries
-  // uncomment it if you want to profile queries
+  // These functions are only for performance collection of all queries
+  // uncomment them if you want to profile queries
+  // to record the query stats, create a table:
+  // create table tiki_querystats(qcount number,qtext varchar(255),qtime float);
+  // to show queries to tune use queries like this one:
+  // select qcount*qtime , qtext from tiki_querystats order by 1 ;
   /*
-  function query($query) {
+  function query($query,$reporterrors=true) {
     //for performance stats
     list($micro,$sec)=explode(' ',microtime());
     $query_start=$sec+$micro;
     $result = $this->db->query($query);
     list($micro,$sec)=explode(' ',microtime());
     $query_stop=$sec+$micro;
-    //$fpq=fopen("/tmp/tikiquerystats",'a');
-    //fwrite($fpq,$query_stop-$query_start."\t".$query."\n");
-    //fclose($fpq);
     $qdiff=$query_stop-$query_start;
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->query($querystat);
     if(DB::isError($qresult)) {
@@ -49,6 +50,25 @@ class TikiLib {
     }
     return $result;
   }
+
+  function getOne($query,$reporterrors=true) {
+    //for performance stats
+    list($micro,$sec)=explode(' ',microtime());
+    $query_start=$sec+$micro;
+    $result = $this->db->getOne($query);
+    list($micro,$sec)=explode(' ',microtime());
+    $query_stop=$sec+$micro;
+    $qdiff=$query_stop-$query_start;
+    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
+    $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
+    $qresult=$this->db->query($querystat);
+    if(DB::isError($qresult)) {
+      $querystat="update tiki_querystats set qcount=qcount+1, qtime=qtime+$qdiff where qtext='".addslashes($query)."'";
+      $qresult=$this->db->query($querystat);
+    }
+    return $result;
+  }
+
   */
 
   // Queries the database reporting an error if detected
