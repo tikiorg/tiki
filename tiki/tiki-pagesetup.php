@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.6 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.7 2004-01-04 14:18:18 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.6 2003-08-07 04:33:57 rossta Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.7 2004-01-04 14:18:18 redflo Exp $
 $check = isset($page);
 
 $ppps = array(
@@ -21,10 +21,7 @@ $ppps = array(
 );
 
 // If we are in a page then get individual permissions
-foreach ($allperms as $vperm) {
-	$perm = $vperm["permName"];
-
-	if (in_array($perm, $ppps)) {
+foreach ($ppps as $perm) {
 		if ($tiki_p_admin != 'y') {
 			// Check for individual permissions if this is a page
 			if ($check) {
@@ -45,7 +42,6 @@ foreach ($allperms as $vperm) {
 
 			$smarty->assign("$perm", 'y');
 		}
-	}
 }
 
 ?>
