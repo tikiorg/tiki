@@ -98,7 +98,7 @@ class WikiLib extends TikiLib {
 		));
 
 		$graph->addNode("$page", array(
-			'URL' => "tiki-index.php?page=" . addslashes($page),
+			'URL' => "tiki-index.php?page=" . urlencode(addslashes($page)),
 			'label' => "$page",
 			'fontname' => (isset($garg['node']['fontname']))?$garg['node']['fontname']:"Arial",
 			'fontsize' => (isset($garg['node']['fontsize']))?$garg['node']['fontsize']:'9',
@@ -114,7 +114,7 @@ class WikiLib extends TikiLib {
 		foreach ($str['pages'] as $neig) {
 			$this->wiki_page_graph($neig, $graph, $garg);
 
-			$graph->addEdge(array($page => $neig['name']), array(
+			$graph->addEdge(array("$page" => $neig['name']), array(
 				'color' => '#998877',
 				'style' => 'solid'
 			));
@@ -124,16 +124,15 @@ class WikiLib extends TikiLib {
 
 	function get_graph_map($page, $level, $garg) {
 		$str = $this->wiki_get_link_structure($page, $level);
-
 		$graph = new Image_GraphViz();
 		$this->wiki_page_graph($str, $graph, $garg);
 		return $graph->map();
 	}
 
 	function wiki_get_link_structure($page, $level) {
-		$query = "select `toPage` from `tiki_links` where `fromPage`='$page'";
+		$query = "select `toPage` from `tiki_links` where `fromPage`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($page));
 		$aux['pages'] = array();
 		$aux['name'] = $page;
 

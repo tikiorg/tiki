@@ -82,8 +82,8 @@ $garg = array(
     'style' => isset($edgestyle) ? $edgestyle : "solid"
 ));
 
-	$ret .= "<div align='center'><img border='0' src='tiki-wiki_graph.php?page=$data&amp;level=$level$add' alt='graph' usemap='#$mapname' />";
-	$mapdata = $wikilib->get_graph_map($page, $level,$garg);
+	$ret .= "<div align='center'><img border='0' src='tiki-wiki_graph.php?page=".urlencode($data)."&amp;level=$level$add' alt='graph' usemap='#$mapname' />";
+	$mapdata = $wikilib->get_graph_map($data, $level, $garg);
 	$mapdata = preg_replace("/\n|\r/", '', $mapdata);
 	$ret .= "<map name='$mapname'>$mapdata</map></div>";
 	return $ret;
