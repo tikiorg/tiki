@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-forums_most_commented_forums.tpl,v 1.2 2004-01-09 15:29:32 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-forums_most_commented_forums.tpl,v 1.3 2004-01-16 18:02:37 musus Exp $ *}
 
 {if $feature_forums eq 'y'}
 {if $nonums eq 'y'}
@@ -9,9 +9,9 @@
 {tikimodule title=$tpl_module_title name="forums_most_commented_forums"}
   <table>
     {section name=ix loop=$modForumsMostCommentedForums}
-      <tr>
-        {if $nonums != 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
-        <td class="module">
+      <tr class="module">
+        {if $nonums != 'y'}<td valign="top">{$smarty.section.ix.index_next})</td>{/if}
+        <td>
           <a class="linkmodule" href="{$modForumsMostCommentedForums[ix].href}">
             {$modForumsMostCommentedForums[ix].name}
           </a>
