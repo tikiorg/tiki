@@ -194,6 +194,16 @@ if (isset($_REQUEST['popup']) and ($_REQUEST['popup'])) {
 	$smarty->assign('feature_bot_bar','n');
 }
 
+// Calculate PopUp Window size for the popup link
+$winx = $info['xsize']; if ($winx < 320) { $winx = 320; }
+$winy = $info['ysize']; if ($winy < 200) { $winy = 200; }
+// Give it some more pixels for the links and a little margin
+$winx += 40;
+$winy += 80;
+// Now get'em to the template
+$smarty->assign('winx',$winx);
+$smarty->assign('winy',$winy);
+
 $section='galleries';
 include_once('tiki-section_options.php');
 if($feature_theme_control == 'y') {
