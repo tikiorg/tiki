@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_permissions.tpl,v 1.1 2004-01-07 04:21:56 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_permissions.tpl,v 1.2 2004-01-13 19:46:43 musus Exp $ *}
 {* Show permissions table *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}
@@ -28,5 +28,4 @@
 
 </table>
 <small>Total {$smarty.section.i.total} permissions matched</small>
-
 {/if}{* if count($command_result) > 0 *}

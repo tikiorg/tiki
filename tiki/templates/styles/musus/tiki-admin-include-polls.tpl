@@ -1,6 +1,6 @@
-<div class="cbox">
-<div class="cbox-title">{tr}Poll settings{/tr}</div>
-<div class="cbox-data">
+<div class="tiki">
+<div class="tiki-title">{tr}Poll settings{/tr}</div>
+<div class="tiki-content">
     <div class="simplebox">
     {tr}Poll comments settings{/tr}
     <form method="post" action="tiki-admin.php?page=polls">
@@ -21,5 +21,3 @@
     </div>
 </div>
 </div>
-
-

@@ -15,7 +15,7 @@
 </table>
 </form>
 <h2>Options</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -30,10 +30,10 @@
 </table>
 <table>
 <tr>
-<td class="heading"><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}text{/tr}</a></td>
-<td class="heading"><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></th>
+<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}text{/tr}</a></th>
+<th><a href="tiki-edit_question_options.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}

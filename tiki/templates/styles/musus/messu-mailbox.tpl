@@ -2,11 +2,11 @@
 <a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Messages{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Messages{/tr}"><img alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}messages tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}messages tpl{/tr}"><img alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 {include file="tiki-mytiki_bar.tpl"}

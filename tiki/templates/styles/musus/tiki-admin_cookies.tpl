@@ -14,23 +14,22 @@
 <!-- begin -->
 
 <br/>
-
 <h2>{tr}Create/edit cookies{/tr}</h2>
 <form action="tiki-admin_cookies.php" method="post">
 <input type="hidden" name="cookieId" value="{$cookieId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Cookie{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table>
+<tr><td>{tr}Cookie{/tr}:</td><td><input type="text" maxlength="255" size="40" name="cookie" value="{$cookie|escape}" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 
 <h2>{tr}Upload Cookies from textfile{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-admin_cookies.php" method="post">
-<table class="normal">
-<tr><td class="formcolor">{tr}Upload from disk:{/tr}</td><td class="formcolor">
+<table>
+<tr><td>{tr}Upload from disk:{/tr}</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 <input name="userfile1" type="file"></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>
 </form>
 <br/>
@@ -39,8 +38,8 @@
 <a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a><br/><br/>
 <div  align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_cookies.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -49,33 +48,33 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a></th>
+<th><a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].cookieId}</td>
-<td class="odd">{$channels[user].cookie}</td>
-<td class="odd">
+<tr class="odd">
+<td>{$channels[user].cookieId}</td>
+<td>{$channels[user].cookie}</td>
+<td>
    &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
-title="{tr}Click here to delete this cookie{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
-<tr>
-<td class="even">{$channels[user].cookieId}</td>
-<td class="even">{$channels[user].cookie}</td>
-<td class="even">
+<tr class="even">
+<td>{$channels[user].cookieId}</td>
+<td>{$channels[user].cookie}</td>
+<td>
    &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
-title="{tr}Click here to delete this cookie{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}

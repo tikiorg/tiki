@@ -1,6 +1,6 @@
-<div class="cbox">
-  <div class="cbox-title">{tr}CMS settings{/tr}</div>
-  <div class="cbox-data">
+<div class="tiki">
+  <div class="tiki-title">{tr}CMS settings{/tr}</div>
+  <div class="tiki-content">
     <div class="simplebox">
       {tr}CMS features{/tr}<br />
       <form action="tiki-admin.php?page=cms" method="post">

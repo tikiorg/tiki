@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_watch_tab.tpl,v 1.1 2004-01-07 04:21:56 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_watch_tab.tpl,v 1.2 2004-01-13 19:48:10 musus Exp $ *}
 
-<table  id="watchlist">
-  <caption> {tr}Watchlist{/tr} </caption>
+<table id="watchlist">
+  <caption>{tr}Watchlist{/tr}</caption>
   <tr>
     <td class="heading">Variable</td>
     <td class="heading">Value</td>

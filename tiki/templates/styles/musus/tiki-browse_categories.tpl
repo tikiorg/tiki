@@ -1,13 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-browse_categories.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-browse_categories.tpl,v 1.2 2004-01-13 19:30:15 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-browse_categories.php">{tr}Categories{/tr}</a>
 <br /><br />
 
 {* Current position and basic navigation *}
 
-
 {* Search form *}
-
 <div align="center">
 <form method="post" action="tiki-browse_categories.php">
   {tr}search category{/tr}: <input type="text" name="find" value="{$find|escape}" size="35" />
@@ -17,7 +15,6 @@
                             <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 </form>
 </div>
-
 <br /><br /><br />
 
 <div class="tree" id="top">
@@ -75,9 +72,7 @@
       <br />
       {section loop=$cant_pages name=foo}
         {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-        <a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;parentId={$parentId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-          {$smarty.section.foo.index_next}
-        </a>&nbsp;
+        <a class="prevnext" href="tiki-browse_categories.php?find={$find}&amp;deep={$deep}&amp;parentId={$parentId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>&nbsp;
       {/section}
     {/if}
  </div>
