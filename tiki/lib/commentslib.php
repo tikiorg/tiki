@@ -456,7 +456,7 @@ class Comments extends TikiLib {
 		$sort_mode = 'average_asc';
 	}
 	if ($this->time_control) {
-		$limit = date("U") - $this->time_control;
+		$limit = time() - $this->time_control;
 		$time_cond = " and `commentDate` > ? ";
 		$bind_time = array($limit);
 	} else {
@@ -488,8 +488,8 @@ class Comments extends TikiLib {
 			and `parentId` = ? $time_cond
 			order by ".$this->convert_sortmode($sort_mode).
 			", `threadId`";
-		$result = $this->query($query, array($forumId, 's', 0) +
-				$bind_time, $max, $offset);
+		$result = $this->query($query, array_merge(array($forumId, 's', 0),
+				$bind_time), $max, $offset);
 
 		while ($res = $result->fetchRow()) {
 		    $tid = $res['threadId'];
