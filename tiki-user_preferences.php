@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.57 2004-07-11 13:45:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.58 2004-07-15 22:55:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,10 @@ require_once ('tiki-setup.php');
 include_once('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/userprefs/userprefslib.php');
+global $bloglib;
+if (!is_object($bloglib)) {
+	include_once('lib/blogs/bloglib.php');
+}
 
 // User preferences screen
 if ($feature_userPreferences != 'y') {
@@ -303,7 +307,7 @@ $smarty->assign("available_languages", unserialize($tikilib->get_preference("ava
 
 // Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
-$user_blogs = $tikilib->list_user_blogs($userwatch, false);
+$user_blogs = $bloglib->list_user_blogs($userwatch, false);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
 $smarty->assign_by_ref('user_blogs', $user_blogs);

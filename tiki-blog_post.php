@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.35 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.36 2004-07-15 22:55:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 if (isset($_REQUEST["blogId"])) {
 	$blogId = $_REQUEST["blogId"];
 
-	$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
+	$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
 } else {
 	$blogId = 0;
 }
@@ -197,7 +197,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	if ($_REQUEST["postId"] > 0) {
 		$data = $bloglib->get_post($_REQUEST["postId"]);
 
-		$blog_data = $tikilib->get_blog($data["blogId"]);
+		$blog_data = $bloglib->get_blog($data["blogId"]);
 
 		if ($user && $user == $blog_data["user"]) {
 			$data["user"] = $user;

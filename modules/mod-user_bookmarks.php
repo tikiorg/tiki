@@ -117,7 +117,11 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 
 			// Check if we are bookmarking a weblog
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-view_blog')) {
-				$info = $tikilib->get_blog($setup_query_data["blogId"]);
+				global $bloglib;
+				if (!is_object($bloglib)) {
+					include_once('lib/blogs/bloglib.php');
+				}
+				$info = $bloglib->get_blog($setup_query_data["blogId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["title"];
 			}

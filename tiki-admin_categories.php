@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.29 2004-07-15 22:21:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.30 2004-07-15 22:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.29 2004-07-15 22:21:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.30 2004-07-15 22:55:15 teedog Exp $
 //
 
 // Initialization
@@ -326,7 +326,11 @@ $smarty->assign_by_ref('forums', $forums["data"]);
 $polls = $polllib->list_polls(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('polls', $polls["data"]);
 
-$blogs = $tikilib->list_blogs(0, -1, 'title_asc', $find_objects);
+global $bloglib;
+if (!is_object($bloglib)) {
+	include_once('lib/blogs/bloglib.php');
+}
+$blogs = $bloglib->list_blogs(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('blogs', $blogs["data"]);
 
 $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
