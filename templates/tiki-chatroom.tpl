@@ -11,16 +11,16 @@
   <iframe frameborder="0" height="200" scrolling="auto" marginwidth="0" marginheight="0" width="100%" src="tiki-chat_users.php?channelId={$channelId}"></iframe>
   </td>
   <td class="chatarea" valign="top" width="80%">
-  <iframe width="100%" name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">Browser not supported</iframe>
-  <iframe width='0' height='0' frameborder="0" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">Browser not supported</iframe>
+  <iframe width="100%" name="chatdata" scrolling="auto" frameborder="0" height="360" src="tiki-chat_center.html">{tr}Browser not supported{/tr}</iframe>
+  <iframe width='0' height='0' frameborder="0" src="tiki-chat_loader.php?refresh={$refresh}&amp;enterTime={$now}&amp;nickname={$nickname}&amp;channelId={$channelId}">{tr}Browser not supported{/tr}</iframe>
   </td>
   <!--
   <td width="20%" valign="top">
     <div class="texthead">{tr}Channel Information{/tr}<a class="link" href="chat.php">(re)</a></div>
     <div class="text">
-    Channel: {$channel_info.name}<br/>
-    Ratio: {$channel_info.ratio} <br/><br/>
-    Desc: {$channel_info.description}
+    {tr}Channel{/tr}: {$channel_info.name}<br/>
+    {tr}Ratio{/tr}: {$channel_info.ratio} <br/><br/>
+    {tr}Desc{/tr}: {$channel_info.description}
     </div>
   </td>
   -->

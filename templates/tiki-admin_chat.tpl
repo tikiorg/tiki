@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_chat.php">Chat Administration</a></h1>
+<h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a></h1>
 <h2>{tr}Create/edit channel{/tr}</h2>
 <form action="tiki-admin_chat.php" method="post">
 <input type="hidden" name="channelId" value="{$channelId}" />
@@ -24,7 +24,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>Chat channels</h2>
+<h2>{tr}Chat channels{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
