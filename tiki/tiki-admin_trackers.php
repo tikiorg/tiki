@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.31 2004-04-16 06:25:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.32 2004-04-29 18:15:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
 
-setcookie("tab",1);
+$cookietab = '1';
 
 if (isset($_REQUEST["remove"])) {
   $area = 'deltracker';
@@ -244,7 +244,7 @@ $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
-	setcookie("tab",2);
+	$cookietab = '2';
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 }
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
@@ -330,10 +330,13 @@ include "tiki-pagination.php";
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
+setcookie('tab',$cookietab);
+$smarty->assign('cookietab',$cookietab);
 $smarty->assign('uses_tabs', 'y');
 
 // block for categorization
 include_once ("categorize_list.php");
+
 ask_ticket('admin-trackers');
 
 // Display the template
