@@ -42,13 +42,23 @@ function since_last_visit_new($user) {
   {
     $ret["items"]["comments"]["label"] = tra("new comments");
     $ret["items"]["comments"]["cname"] = "slvn_comments_menu";
-    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName` from `tiki_comments` where `commentDate`>? order by `commentDate` desc";
+    $query = "select `object`,`objectType`,`title`,`commentDate`,`userName`,`threadId`, `parentId` from `tiki_comments` where `commentDate`>? order by `commentDate` desc";
     $result = $tikilib->query($query, array((int)$last));
 
     $count = 0;
     while ($res = $result->fetchRow())
     {
       switch($res["objectType"]){
+      	case "forum":
+          $ret["items"]["comments"]["list"][$count]["href"]
+            = "tiki-view_forum_thread.php?forumId=" . $res["object"] . "&comments_parentId=";
+	  if ($res["parentId"]) {
+          	$ret["items"]["comments"]["list"][$count]["href"].=$res["parentId"];
+	  } else {
+          	$ret["items"]["comments"]["list"][$count]["href"].=$res["threadId"];
+	    # threadId gives the link to the particular comment, parentId gives the thread of the forum, I prefer this one 
+	  }
+	  break;
         case "article":
           $ret["items"]["comments"]["list"][$count]["href"]
             = "tiki-read_article.php?articleId=" . $res["object"];

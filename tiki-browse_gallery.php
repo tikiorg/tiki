@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.20 2004-05-17 08:50:22 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.21 2004-05-21 09:18:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -214,9 +214,7 @@ if ($imagegallib->canrotate) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'created_desc';
-
-	$_REQUEST["sort_mode"] = 'created_desc';
+	$sort_mode = 'created_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -228,8 +226,6 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 // if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
-
-	$_REQUEST["offset"] = 0;
 } else {
 	$offset = $_REQUEST["offset"];
 }
@@ -240,8 +236,6 @@ if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
-
-	$_REQUEST["find"] = '';
 }
 
 $images = $imagegallib->get_images($offset, $maxImages, $sort_mode, $find, $_REQUEST["galleryId"]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.23 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.24 2004-05-21 09:18:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -165,6 +165,10 @@ if (count($image_next["data"]) == 1) {
 } else {
 	$smarty->assign('nextimg', '');
 }
+
+$images_count = $imagegallib->get_images($offset,$maxRecords,$sort_mode,'',$_REQUEST["galleryId"]);
+$lastdesp = count($images_count["data"]) - 1;
+$smarty->assign('lastdesp', $lastdesp);
 
 $smarty->assign('firstId', $imagegallib->get_first_image($sort_mode, '', $_REQUEST['galleryId']));
 $smarty->assign('lastId', $imagegallib->get_last_image($sort_mode, '', $_REQUEST['galleryId']));

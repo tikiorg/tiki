@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.32 2004-05-13 08:12:23 russwilde Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.33 2004-05-21 09:18:37 damosoft Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -196,9 +196,21 @@
               {if $feature_menusfolderstyle eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
-        <td class="form"><label for="general-gzip">{tr}Use gzipped output{/tr}:</label></td>
+        <td class="form"><label for="general-gzip">
+        {if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:" >{/if}
+        {tr}Use gzipped output{/tr}
+        {if $feature_help eq 'y'}</a>{/if}
+        :</label>
+          {if $gzip_handler ne 'none'}
+          <br /><div class="highlight">
+          {tr}output compression is active.{/tr}<br />
+          {tr}compression is handled by{/tr}: {$gzip_handler}
+          {/if}</div>
+        </td>
         <td><input type="checkbox" name="feature_obzip" id="general-gzip"
               {if $feature_obzip eq 'y'}checked="checked"{/if}/>
+
+
         </td>
         <td>&nbsp;</td>
         <td class="form"><label for="general-pageviews">{tr}Count admin pageviews{/tr}:</label></td>
@@ -214,6 +226,7 @@
         <td>&nbsp;</td>
 -->
       </tr></table>
+
       <table class="admin"><tr>
         <td colspan="2"><hr/></td>
       </tr><tr>

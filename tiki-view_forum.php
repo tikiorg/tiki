@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.70 2004-04-04 03:07:54 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.71 2004-05-21 09:18:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -426,11 +426,10 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			}
 			//END ATTACHMENT PROCESSING
 			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
-		    } else {
-			if ($tiki_p_admin_forum == 'y') {
+		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
 			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley']);
 
-			    // PROCESS ATTACHMENT HERE        
+			    // PROCESS ATTACHMENT HERE
 			    if (($forum_info['att'] == 'att_all') || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
 				if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 	check_ticket('view-forum');
@@ -494,7 +493,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				}
 			    }
 			    //END ATTACHMENT PROCESSING
-			}
 		    }
 		}
 	    } else {

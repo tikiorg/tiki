@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.24 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.25 2004-05-21 09:18:38 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -179,7 +179,7 @@
 	{/if}
 	
 	
-	<td class="{cycle}">
+	<td class="{cycle}" nowrap="nowrap">
 	{if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 		{if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
 			<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src='img/icons/config.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
@@ -196,7 +196,11 @@
 	{/if}
 
 	{if $tiki_p_admin eq 'y'}
-	    {if $galleries[changes].individual eq 'y'}({/if}<a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$galleries[changes].name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' border='0' /></a>{if $galleries[changes].individual eq 'y'}){/if}
+	    {if $galleries[changes].individual eq 'y'}
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$galleries[changes].name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' title='{tr}active perms{/tr}' border='0' /></a>
+	    {else}
+		<a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$galleries[changes].name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleries[changes].id}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' border='0' /></a>
+	    {/if}
 	{/if}
 	
 	</td>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.39 2004-04-29 18:40:29 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.40 2004-05-21 09:18:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,14 +138,15 @@ if (isset($_REQUEST["subId"])) {
 
 if (isset($_REQUEST["subId"])) {
 	if ($_REQUEST["subId"] > 0) {
-		if ($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) {
+		if (($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) or $user == "") {
 			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
-
 			$smarty->display("error.tpl");
 			die;
 		}
 	}
 }
+
+
 
 if (isset($_REQUEST["allowhtml"])) {
 	if ($_REQUEST["allowhtml"] == "on") {
