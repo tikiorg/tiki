@@ -20,7 +20,7 @@ a moderator approves it.{/tr}</small>
 
 <table class="normal">
 <tr>
-  <td class="viewthreadl" width="15%">
+  <td class="viewthreadl" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
   {$thread_info.userName|avatarize}<br/>
@@ -37,8 +37,8 @@ a moderator approves it.{/tr}</small>
   {/if}
   </div>
   </td>
-  <td class="viewthreadr" width="85%">
-  <table width="100%">
+  <td class="viewthreadr" >
+  <table >
   <tr>
   	<td>
   		<b>{$thread_info.title}</b>
@@ -142,7 +142,7 @@ a moderator approves it.{/tr}</small>
   <b>{tr}Preview{/tr}</b>
   <div class="commentscomment">
   <div class="commentheader">
-  <table width="97%">
+  <table >
   <tr>
   <td>
   <div class="commentheader">
@@ -150,7 +150,7 @@ a moderator approves it.{/tr}</small>
   {tr}by{/tr} {$user}
   </div>
   </td>
-  <td valign="top" align="right" width="20%">
+  <td valign="top" align="right" >
   <div class="commentheader">
   </div>
   </td>
@@ -378,7 +378,7 @@ a moderator approves it.{/tr}</small>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 <tr>
-  <td  class="threads{cycle advance=false}l" width="15%">
+  <td  class="threads{cycle advance=false}l" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
   {$comments_coms[ix].userName|avatarize}<br/>
@@ -396,8 +396,8 @@ a moderator approves it.{/tr}</small>
 
   </div>
   </td>
-  <td  class="threads{cycle advance=false}r" width="85%">
-  <table width="100%">
+  <td  class="threads{cycle advance=false}r" >
+  <table >
   <tr>
   	<td>
   		<b>{$comments_coms[ix].title}</b>
@@ -465,7 +465,7 @@ a moderator approves it.{/tr}</small>
 
   </td>
   <td class="threads{cycle}r">
-  <table style="border: 1px solid black;" width="100%">
+  <table style="border: 1px solid black;" >
   <tr>
     <td style="font-size:8pt;">
     {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  
@@ -520,7 +520,7 @@ a moderator approves it.{/tr}</small>
   </div>
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
 
-<table width="100%">  
+<table >  
 <tr>
 <td style="text-align:left;">
 <form id='time_control' method="post" action="tiki-view_forum_thread.php">

@@ -11,7 +11,7 @@
 {else}
 {assign var="postclass" value="forumpost"}
 {/if}
-<table width="100%">
+<table >
 <tr>
 <td>
 [{if $tiki_p_forum_post_topic eq 'y'}
@@ -54,7 +54,7 @@ a moderator approves it.{/tr}</small>
   <b>{tr}Preview{/tr}</b>
   <div class="commentscomment">
   <div class="commentheader">
-  <table width="97%">
+  <table >
   <tr>
   <td>
   <div class="commentheader">
@@ -62,7 +62,7 @@ a moderator approves it.{/tr}</small>
   {tr}by{/tr} {$user}
   </div>
   </td>
-  <td valign="top" align="right" width="20%">
+  <td valign="top" align="right" >
   <div class="commentheader">
   </div>
   </td>
@@ -286,13 +286,13 @@ a moderator approves it.{/tr}</small>
 {/if}
 <tr>
   {if $tiki_p_admin_forum eq 'y'}
-  <td width="2%" class="forumheading">&nbsp;</td>
+  <td  class="forumheading">&nbsp;</td>
   {/if}
-  <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
+  <td  class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
   {if $forum_info.topic_smileys eq 'y'}
-  <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}mot{/tr}</a></td>
+  <td  class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'smiley_desc'}smiley_asc{else}smiley_desc{/if}">{tr}mot{/tr}</a></td>
   {/if}
-  <td width="40%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
+  <td  class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
   {if $forum_info.topics_list_replies eq 'y'}
   	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
   {/if}
@@ -318,7 +318,7 @@ a moderator approves it.{/tr}</small>
 {/if}
 <tr>
   {if $tiki_p_admin_forum eq 'y'}
-  <td width="2%" class="topictitle{cycle advance=false}">
+  <td  class="topictitle{cycle advance=false}">
   	
 	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}"  {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
   </td>
@@ -341,7 +341,7 @@ a moderator approves it.{/tr}</small>
   {/if}  
   
   <td class="topictitle{cycle advance=false}">
-  <table width="100%"><tr><td>
+  <table ><tr><td>
   <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
   <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
@@ -416,7 +416,7 @@ a moderator approves it.{/tr}</small>
   <br/>
   </div>
 
-<table width="100%">  
+<table >  
 <tr>
 <td style="text-align:left;">
 
