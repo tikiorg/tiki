@@ -138,6 +138,7 @@ class Lslib {
   	$query = "update tiki_live_support_requests set operator_id='$operator_id',operator='$user',status='op_accepted',timestamp=$now,chat_started=$now where reqId='$reqId'";
   	$this->query($query);
   	$query = "update tiki_live_support_operators set accepted_requests = accepted_requests + 1 where operator='$user'";
+  	$this->query($query);
   }
   
   
