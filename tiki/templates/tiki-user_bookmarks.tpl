@@ -1,19 +1,21 @@
 <a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
-
+ <!-- help links -->
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Bookmarks{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
-
+ <!-- link to tpl for editing -->
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
 
-
+<!-- links to options-->
 {include file=tiki-mytiki_bar.tpl}
-<br /><br />
+<br />
+<br />
+<!-- folder list, not quite a tree-->
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
 <h3>{tr}Folders{/tr}</h3>
 <table class="normal">
@@ -32,6 +34,8 @@
 </tr>
 {/section}
 </table>
+
+<!-- all of a users bookmarks, no sorting on the headers easy enough to add though-->
 
 <h3>{tr}Bookmarks{/tr}</h3>
 <table class="normal">
@@ -62,7 +66,7 @@
 <br />
 <h3>{tr}Admin folders and bookmarks{/tr}</h3>
 <table class="normal" cellpadding="0" cellspacing="0">
-<tr> 
+<tr>
   <td >
     <b>{tr}Add or edit folder{/tr}</b>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}new{/tr}</a>
@@ -72,10 +76,11 @@
       <input type="hidden" name="editfolder" value="{$editfolder|escape}" />
       <input type="hidden" name="parentId" value="{$parentId|escape}" />
       <tr><td class="formcolor">{tr}name{/tr}:</td>
-          <td class="formcolor"><input type="text" name="foldername" value="{$foldername|escape}" /></td>
+          <td class="formcolor"><input type="text" size = "40" name="foldername" value="{$foldername|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
-          <td class="formcolor"><input type="submit" name="addfolder" value="{tr}add{/tr}" /></td>
+          <td class="formcolor">
+	  <input type="submit" name="addfolder"  value="{tr}add{/tr}" /></td>
       </tr>
       </form>
     </table>
@@ -89,10 +94,10 @@
       <input type="hidden" name="editurl" value="{$editurl|escape}" />
       <input type="hidden" name="parentId" value="{$parentId|escape}" />
       <tr><td class="formcolor">{tr}Name{/tr}:</td>
-          <td class="formcolor"><input type="text" name="urlname" value="{$urlname|escape}" /></td>
+          <td class="formcolor"><input type="text" size = "40"  name="urlname" value="{$urlname|escape}" /></td>
       </tr>
       <tr><td class="formcolor">{tr}URL{/tr}:</td>
-          <td class="formcolor"><input type="text" name="urlurl" value="{$urlurl|escape}" /></td>
+          <td class="formcolor"><input type="text" size = "40" name="urlurl" value="{$urlurl|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
           <td class="formcolor"><input type="submit" name="addurl" value="{tr}add{/tr}" /></td>
