@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cd temp
-latex $1 
-dvips -E -f $1.dvi > $1.ps
-convert -density 110 $1.ps $1.png
