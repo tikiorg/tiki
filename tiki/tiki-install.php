@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.14 2003-08-14 03:09:03 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.15 2003-08-15 22:28:01 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.14 2003-08-14 03:09:03 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.15 2003-08-15 22:28:01 redflo Exp $
 session_start();
 
 // Define and load Smarty components
@@ -241,7 +241,7 @@ $errors
 ";
 
 	if (!isWindows()) {
-		print "You may either chmod the directories above manually to 777, or run one of the sets of commands below.
+		print "You may either create missing directories and chmod directories manually to 777, or run one of the sets of commands below.
 <b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> after you run the commands below.
 
 If you cannot become root, and are NOT part of the group $wwwgroup:

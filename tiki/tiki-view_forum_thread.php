@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.24 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.25 2003-08-15 22:37:48 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (!isset($_REQUEST['topics_offset'])) {
 	$_REQUEST['topics_offset'] = 1;
 }
 
-if (!isset($_REQUEST['topics_sort_mode'])) {
+if(!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode'])) {
 	$_REQUEST['topics_sort_mode'] = 'commentDate_desc';
 }
 
@@ -42,7 +42,7 @@ if (!isset($_REQUEST['topics_find'])) {
 	$_REQUEST['topics_find'] = '';
 }
 
-if (!isset($_REQUEST['topics_threshold'])) {
+if(!isset($_REQUEST['topics_threshold']) || empty($_REQUEST['topics_threshold'])) {
 	$_REQUEST['topics_threshold'] = 0;
 }
 
