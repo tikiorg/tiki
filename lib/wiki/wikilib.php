@@ -251,6 +251,7 @@ class WikiLib extends TikiLib {
   
 }
 
+global $wikilib;
 $wikilib= new WikiLib($dbTiki);
 
 ?>
