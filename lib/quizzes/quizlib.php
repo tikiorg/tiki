@@ -541,6 +541,7 @@ function NextBlank($text){
 }
 
 function quizlib_error_exit($s){
+	global $smarty;
 	$smarty->assign('msg', $s);
 
 	$smarty->display("error.tpl");
