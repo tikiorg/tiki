@@ -155,6 +155,7 @@ if(
     ($user and ($tiki_p_lock == 'y') and ($feature_wiki_usrlock == 'y'))
    ) {
 if(isset($_REQUEST["action"])) {
+	check_ticket('index');
   if($_REQUEST["action"]=='lock') {
     $wikilib->lock_page($page);
     $info["flag"] = 'L';
@@ -169,6 +170,7 @@ if(
     ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_usrlock == 'y'))
    ) {
 if(isset($_REQUEST["action"])) {
+	check_ticket('index');
   if ($_REQUEST["action"]=='unlock') {
     $wikilib->unlock_page($page);
     $smarty->assign('lock',false);  
@@ -183,6 +185,7 @@ if($user
 	&& $tiki_p_notepad == 'y' 
 	&& $feature_notepad == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
+	check_ticket('index');
   $tikilib->replace_note($user,0,$page,$info['data']);
 }
 
@@ -204,6 +207,7 @@ if($tiki_p_admin_wiki == 'y') {
 
 // Process an undo here
 if(isset($_REQUEST["undo"])) {
+	check_ticket('index');
 if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
   // Remove the last version	
   $wikilib->remove_last_version($page);
@@ -233,17 +237,20 @@ if ($wiki_uses_slides == 'y') {
 }
 
 if(isset($_REQUEST['refresh'])) {
+	check_ticket('index');
   $tikilib->invalidate_cache($page);	
 }
 
 if($feature_wiki_attachments == 'y') {
   if(isset($_REQUEST["removeattach"])) {
+		check_ticket('index');
     $owner = $wikilib->get_attachment_owner($_REQUEST["removeattach"]);
     if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
       $wikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
     }
   }
   if(isset($_REQUEST["attach"]) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
+		check_ticket('index');
     // Process an attachment here
     if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
       $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
@@ -355,7 +362,6 @@ if($feature_wiki_comments == 'y') {
 $section='wiki';
 include_once('tiki-section_options.php');
 
-
 $smarty->assign('footnote','');
 $smarty->assign('has_footnote','n');
 if($feature_wiki_footnotes == 'y') {
@@ -378,6 +384,7 @@ if($feature_theme_control == 'y') {
 // Watches
 if($feature_user_watches == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
+		check_ticket('index');
 	  if($_REQUEST['watch_action']=='add') {
 	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('Wiki page'),$page,"tiki-index.php?page=$page");
 	  } else {
@@ -446,6 +453,7 @@ if ($is_categorized) {
 // Flag for 'page bar' that currently 'Page view' mode active
 // so it is needed to show comments & attachments panels
 $smarty->assign('show_page','y');
+ask_ticket('index');
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');

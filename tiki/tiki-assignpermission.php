@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.13 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.14 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,7 @@ if (!$userlib->group_exists($group)) {
 $smarty->assign_by_ref('group', $group);
 
 if (isset($_REQUEST['allper'])) {
+	check_ticket('admin-perms');
 	if ($_REQUEST['oper'] == 'assign') {
 		$userlib->assign_level_permissions($group, $_REQUEST['level']);
 	} else {
@@ -47,6 +48,7 @@ if (isset($_REQUEST['allper'])) {
 }
 
 if (isset($_REQUEST["action"])) {
+	check_ticket('admin-perms');
 	if ($_REQUEST["action"] == 'assign') {
 		$userlib->assign_permission_to_group($_REQUEST["perm"], $group);
 	}
@@ -95,10 +97,12 @@ if (!isset($_REQUEST["type"])) {
 $smarty->assign('type', $_REQUEST["type"]);
 
 if (isset($_REQUEST["createlevel"])) {
+	check_ticket('admin-perms');
 	$userlib->create_dummy_level($_REQUEST['level']);
 }
 
 if (isset($_REQUEST['update'])) {
+	check_ticket('admin-perms');
 	foreach (array_keys($_REQUEST['permName'])as $per) {
 		$userlib->change_permission_level($per, $_REQUEST['level'][$per]);
 
@@ -134,6 +138,7 @@ if ($offset > 0) {
 
 // Get users (list of users)
 $smarty->assign_by_ref('perms', $perms["data"]);
+ask_ticket('admin-perms');
 
 // Display the template
 $smarty->assign('mid', 'tiki-assignpermission.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.9 2003-11-17 17:08:24 awcolley Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.10 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,11 +80,13 @@ $smarty->assign_by_ref('info', $info);
 
 // Remove a category
 if (isset($_REQUEST["remove"])) {
+	check_ticket('dir-admin-sites');
 	$dirlib->dir_remove_site($_REQUEST["remove"]);
 }
 
 // Replace (add or edit) a category
 if (isset($_REQUEST["save"])) {
+	check_ticket('dir-admin-sites');
 	if (empty($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Mus enter a name to add a site"));
 
@@ -204,6 +206,7 @@ $smarty->assign_by_ref('countries', $countries);
 // This page should be displayed with Directory section options
 $section='directory';
 include_once('tiki-section_options.php');
+ask_ticket('dir-admin-sites');
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_admin_sites.tpl');

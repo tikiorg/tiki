@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-usermenu.php,v 1.7 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-usermenu.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ if (!isset($_REQUEST["menuId"]))
 	$_REQUEST["menuId"] = 0;
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
+	check_ticket('user-menu');
 	foreach (array_keys($_REQUEST["menu"])as $men) {
 		$usermenulib->remove_usermenu($user, $men);
 	}
@@ -43,6 +44,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
 }
 
 if (isset($_REQUEST['addbk'])) {
+	check_ticket('user-menu');
 	$usermenulib->add_bk($user);
 
 	if (isset($_SESSION['usermenu']))
@@ -61,6 +63,7 @@ if ($_REQUEST["menuId"]) {
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('user-menu');
 	$usermenulib->replace_usermenu(
 		$user, $_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST['position'], $_REQUEST['mode']);
 
@@ -127,6 +130,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 include_once ('tiki-mytiki_shared.php');
+
+ask_ticket('user-menu');
 
 $smarty->assign('mid', 'tiki-usermenu.tpl');
 $smarty->display("tiki.tpl");

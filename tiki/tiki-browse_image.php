@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.21 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.22 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,6 +190,7 @@ $gal_info = $imagegallib->get_gallery($info["galleryId"]);
 
 // Everybody can browse images
 if (isset($_REQUEST["move_image"])) {
+	check_ticket('browse-image');
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot move images from this gallery"));
 
@@ -260,6 +261,7 @@ if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
 	$smarty->assign('feature_right_column', 'n');
 	$smarty->assign('feature_bot_bar', 'n');
 }
+ask_ticket('browse-image');
 
 // Display the template
 $smarty->assign('mid', 'tiki-browse_image.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.12 2003-11-27 00:24:47 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.13 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,6 +55,8 @@ if (isset($_REQUEST["exp_language"])) {
 
 // Import
 if (isset($_REQUEST["import"])) {
+	check_ticket('import-lang');
+
 	include_once ('lang/' . $imp_language . '/language.php');
 
 	$impmsg = "Included lang/" . $imp_language . "/language.php";
@@ -71,6 +73,7 @@ if (isset($_REQUEST["import"])) {
 
 // Export
 if (isset($_REQUEST["export"])) {
+	check_ticket('import-lang');
 	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
 	$result = $tikilib->query($query,array($exp_language));
 	$data = "<?php\n\$lang=Array(\n";
@@ -86,6 +89,7 @@ if (isset($_REQUEST["export"])) {
 	exit (0);
 	$smarty->assign('expmsg', $expmsg);
 }
+ask_ticket('import-lang');
 
 $smarty->assign('mid', 'tiki-imexport_languages.tpl');
 $smarty->display("tiki.tpl");

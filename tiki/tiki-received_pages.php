@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_pages.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,6 +33,7 @@ if (!isset($_REQUEST["receivedPageId"])) {
 $smarty->assign('receivedPageId', $_REQUEST["receivedPageId"]);
 
 if (isset($_REQUEST["accept"])) {
+	check_ticket('received-pages');
 	// CODE TO ACCEPT A PAGE HERE
 	$commlib->accept_page($_REQUEST["accept"]);
 }
@@ -70,10 +71,12 @@ $smarty->assign('comment', $info["comment"]);
 $smarty->assign('parsed', $tikilib->parse_data($info["data"]));
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('received-pages');
 	$commlib->remove_received_page($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('received-pages');
 	$commlib->update_received_page($_REQUEST["receivedPageId"], $_REQUEST["pageName"], $_REQUEST["data"], $_REQUEST["comment"]);
 
 	$smarty->assign('pageName', $_REQUEST["pageName"]);
@@ -126,6 +129,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+ask_ticket('received-pages');
 
 // Display the template
 $smarty->assign('mid', 'tiki-received_pages.tpl');

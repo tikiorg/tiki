@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.13 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.14 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,24 +46,28 @@ if (!isset($_REQUEST["taskId"]))
 	$_REQUEST["taskId"] = 0;
 
 if (isset($_REQUEST["complete"]) && isset($_REQUEST["task"])) {
+	check_ticket('user-tasks');
 	foreach (array_keys($_REQUEST["task"])as $task) {
 		$tasklib->complete_task($user, $task);
 	}
 }
 
 if (isset($_REQUEST["open"]) && isset($_REQUEST["task"])) {
+	check_ticket('user-tasks');
 	foreach (array_keys($_REQUEST["task"])as $task) {
 		$tasklib->open_task($user, $task);
 	}
 }
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["task"])) {
+	check_ticket('user-tasks');
 	foreach (array_keys($_REQUEST["task"])as $task) {
 		$tasklib->remove_task($user, $task);
 	}
 }
 
 if (isset($_REQUEST["update"])) {
+	check_ticket('user-tasks');
 	foreach ($_REQUEST["task_perc"] as $task => $perc) {
 		$tasklib->update_task_percentage($user, $task, $perc);
 	}
@@ -195,6 +199,8 @@ for ($i = 0; $i <= 100; $i += 10) {
 }
 
 $smarty->assign_by_ref('percs', $percs);
+
+ask_ticket('user-tasks');
 
 $smarty->assign('mid', 'tiki-user_tasks.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.9 2003-12-01 11:13:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.10 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,7 @@ $smarty->assign('url_edit', httpPrefix(). $foo1);
 $smarty->assign('url_visit', httpPrefix(). $foo2);
 
 if (isset($_REQUEST['messprefs'])) {
+	check_ticket('my-tiki');
 	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
@@ -60,6 +61,7 @@ if (isset($_REQUEST['messprefs'])) {
 }
 
 if (isset($_REQUEST['tasksprefs'])) {
+	check_ticket('my-tiki');
 	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 
 	if (isset($_REQUEST['tasks_useDates']) && $_REQUEST['tasks_useDates'] == 'on') {
@@ -191,6 +193,7 @@ $smarty->assign('mytiki_tasks', $tikilib->get_user_preference($user, 'mytiki_tas
 
 $section = 'mytiki';
 include_once ('tiki-section_options.php');
+ask_ticket('my-tiki');
 
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-my_tiki.tpl');

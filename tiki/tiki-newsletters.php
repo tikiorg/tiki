@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.9 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.10 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,7 @@ if ($feature_newsletters != 'y') {
 }
 
 if (isset($_REQUEST["confirm_subscription"])) {
+	check_ticket('newsletters');
 	$conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
 
 	if ($conf) {
@@ -32,6 +33,7 @@ if (isset($_REQUEST["confirm_subscription"])) {
 $smarty->assign('unsub', 'n');
 
 if (isset($_REQUEST["unsubscribe"])) {
+	check_ticket('newsletters');
 	$conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
 
 	if ($conf) {
@@ -98,6 +100,7 @@ $smarty->assign('confirm', 'n');
 
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {
+	check_ticket('newsletters');
 		$smarty->assign('subscribed', 'y');
 
 		if ($tiki_p_subscribe_email != 'y') {
@@ -178,6 +181,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+ask_ticket('newsletters');
 
 // Display the template
 $smarty->assign('mid', 'tiki-newsletters.tpl');

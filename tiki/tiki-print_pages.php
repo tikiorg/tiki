@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print_pages.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,8 @@ $smarty->assign('form_printpages', $form_printpages);
 
 $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find);
 $smarty->assign_by_ref('pages', $pages["data"]);
+
+ask_ticket('print-pages');
 
 // Display the template
 $smarty->assign('mid', 'tiki-print_pages.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_banners.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_banners.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,8 @@ if (!$user) {
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('list-banners'); 
+
 	if ($tiki_p_admin_banners != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove banners"));
 
@@ -103,6 +105,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
+ask_ticket('list-banners');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_banners.tpl');

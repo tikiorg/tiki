@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.16 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.17 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 
 // Handle Update
 if (isset($_REQUEST["prefs"])) {
+	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",
         "cacheimages",
@@ -100,6 +101,7 @@ if (isset($_REQUEST["prefs"])) {
 
 // Handle Password Change Request
 elseif (isset($_REQUEST["newadminpass"])) {
+	check_ticket('admin-inc-general');
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
         $smarty->assign("msg", tra("The passwords don't match"));
 
@@ -234,5 +236,5 @@ $smarty->assign_by_ref("long_time_format", $long_time_format);
 
 $short_time_format = $tikilib->get_preference("short_time_format", "%H:%M %Z");
 $smarty->assign_by_ref("short_time_format", $short_time_format);
-
+ask_ticket('admin-inc-general');
 ?>

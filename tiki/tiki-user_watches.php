@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.6 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,10 +22,12 @@ if ($feature_user_watches != 'y') {
 }
 
 if (isset($_REQUEST['hash'])) {
+	check_ticket('user-watches');
 	$tikilib->remove_user_watch_by_hash($_REQUEST['hash']);
 }
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
+	check_ticket('user-watches');
 	foreach (array_keys($_REQUEST["watch"])as $item) {
 		$tikilib->remove_user_watch_by_hash($item);
 	}
@@ -44,6 +46,8 @@ $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
 $smarty->assign('watches', $watches);
 
 include_once ('tiki-mytiki_shared.php');
+
+ask_ticket('user-watches');
 
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");

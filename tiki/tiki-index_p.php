@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.10 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -112,6 +112,7 @@ $smarty->assign('page_user', $info['user']);
 // for example lock/unlock
 if (($tiki_p_admin_wiki == 'y') || ($user and ($tiki_p_lock == 'y') and ($feature_wiki_userlock == 'y'))) {
 	if (isset($_REQUEST["action"])) {
+		check_ticket('index-p');
 		if ($_REQUEST["action"] == 'lock') {
 			$wikilib->lock_page($page);
 		}
@@ -121,6 +122,7 @@ if (($tiki_p_admin_wiki == 'y') || ($user and ($tiki_p_lock == 'y') and ($featur
 if (($tiki_p_admin_wiki == 'y')
 	|| ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_userlock == 'y'))) {
 	if (isset($_REQUEST["action"])) {
+		check_ticket('index-p');
 		if ($_REQUEST["action"] == 'unlock') {
 			$wikilib->unlock_page($page);
 		}
@@ -129,6 +131,7 @@ if (($tiki_p_admin_wiki == 'y')
 
 // Save to notepad if user wants to
 if ($user && $feature_wiki_notepad == 'y' && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+		check_ticket('index-p');
 	include_once('lib/notepad/notepadlib.php');
 
 	$notepadlib->replace_note($user, 0, $_REQUEST['page'], $info['data']);
@@ -245,6 +248,7 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["page"];
 	include('tiki-tc.php');
 }
+ask_ticket('index-p');
 
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.8 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_charts.php,v 1.9 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,12 +53,14 @@ $smarty->assign('chartId', $_REQUEST['chartId']);
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["delete"])) {
+	check_ticket('admin-charts'); 
 	foreach (array_keys($_REQUEST["chart"])as $item) {
 		$chartlib->remove_chart($item);
 	}
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('admin-charts'); 
 	$vars = array();
 
 	$_REQUEST['singleItemVotes'] = isset($_REQUEST['singleItemVotes']) ? 'y' : 'n';
@@ -170,6 +172,7 @@ $sameurl_elements = array(
 	'find',
 	'chartId'
 );
+ask_ticket('admin-charts'); 
 
 $smarty->assign('mid', 'tiki-admin_charts.tpl');
 $smarty->display("tiki.tpl");

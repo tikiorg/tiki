@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.8 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.9 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,14 +29,17 @@ if (!isset($_REQUEST["pollId"])) {
 $smarty->assign('pollId', $_REQUEST["pollId"]);
 
 if (isset($_REQUEST["setlast"])) {
+	check_ticket('admin-polls');
 	$polllib->set_last_poll();
 }
 
 if (isset($_REQUEST["closeall"])) {
+	check_ticket('admin-polls');
 	$polllib->close_all_polls();
 }
 
 if (isset($_REQUEST["activeall"])) {
+	check_ticket('admin-polls');
 	$polllib->active_all_polls();
 }
 
@@ -55,10 +58,12 @@ $smarty->assign('active', $info["active"]);
 $smarty->assign('publishDate', $info["publishDate"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-polls');
 	$polllib->remove_poll($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-polls');
 	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
@@ -119,6 +124,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $cat_type = 'poll';
 $cat_objid = $_REQUEST["pollId"];
 include_once ("categorize_list.php");
+ask_ticket('admin-polls');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_polls.tpl');

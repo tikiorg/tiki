@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.5 2003-12-27 14:05:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.6 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -147,12 +147,14 @@ default:
 $smarty->assign_by_ref('objects', $objects);
 
 if (isset($_REQUEST['assign'])) {
+	check_ticket('tc-objects');
 	list($id, $name) = explode('|', $_REQUEST['objdata']);
 
 	$tcontrollib->tc_assign_object($id, $_REQUEST['theme'], $_REQUEST['type'], $name);
 }
 
 if (isset($_REQUEST["delete"])) {
+	check_ticket('tc-objects');
 	foreach (array_keys($_REQUEST["obj"])as $obj) {
 		$tcontrollib->tc_remove_object($obj);
 	}
@@ -203,6 +205,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 //$sections=Array('wiki','galleries','file_galleries','cms','blogs','forums','chat','categories','games','faqs','html_pages','quizzes','surveys','webmail','trackers','featured_links','directory','user_messages','newsreader','mytiki');
+
+ask_ticket('tc-objects');
 
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control_objects.tpl');

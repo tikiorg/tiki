@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.16 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.17 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,6 +102,7 @@ $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('browse-gallery');
 	// To remove an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
@@ -114,6 +115,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["rebuild"])) {
+	check_ticket('browse-gallery');
 	// To rebuild thumbnails the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot rebuild thumbnails in this gallery"));
@@ -126,6 +128,7 @@ if (isset($_REQUEST["rebuild"])) {
 }
 
 if (isset($_REQUEST["rotateright"])) {
+	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
@@ -138,6 +141,7 @@ if (isset($_REQUEST["rotateright"])) {
 }
 
 if (isset($_REQUEST["rotateleft"])) {
+	check_ticket('browse-gallery');
 	// To rotate an image the user must be the owner or admin
 	if (($tiki_p_admin_galleries != 'y') && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot rotate images in this gallery"));
@@ -288,7 +292,7 @@ if ($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST["galleryId"];
 	include ('tiki-tc.php');
 }
-
+ask_ticket('browse-gallery');
 // Display the template
 $smarty->assign('mid', 'tiki-browse_gallery.tpl');
 $smarty->display("tiki.tpl");

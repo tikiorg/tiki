@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-orphan_pages.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-orphan_pages.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,6 +86,8 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
+
+ask_ticket('orphan-pages');
 
 // Display the template
 $smarty->assign('mid', 'tiki-orphan_pages.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.6 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ if (!$userlib->user_exists($assign_user)) {
 }
 
 if (isset($_REQUEST["action"])) {
+	check_ticket('admin-assign-user');
 	if ($_REQUEST["action"] == 'assign') {
 		$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 	}
@@ -101,6 +102,7 @@ if ($offset > 0) {
 
 // Get users (list of users)
 $smarty->assign_by_ref('users', $users["data"]);
+ask_ticket('admin-assign-user');
 
 // Display the template
 $smarty->assign('mid', 'tiki-assignuser.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.13 2003-12-07 22:09:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.14 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,6 +23,7 @@ if ($tiki_p_edit_languages != 'y') {
 
 // Create a language
 if (isset($_REQUEST["createlang"])) {
+	check_ticket('edit-languages');
 	$_REQUEST["cr_lang_short"] = addslashes($_REQUEST["cr_lang_short"]);
 
 	if (strlen($_REQUEST["cr_lang_short"]) != 2) {
@@ -77,6 +78,7 @@ if (isset($_REQUEST["whataction"])) {
 
 // Adding strings
 if (isset($_REQUEST["add_tran"])) {
+	check_ticket('edit-languages');
 	$add_tran_source = $_REQUEST["add_tran_source"];
 	$add_tran_tran = $_REQUEST["add_tran_tran"];
 
@@ -100,6 +102,7 @@ if (isset($_REQUEST["whataction"])) {
 
 if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 
+	check_ticket('edit-languages');
 	//check if user has translated something
 	if (isset($_REQUEST["tr_recnum"])) {
 		$tr_recnum = $_REQUEST["tr_recnum"];
@@ -238,6 +241,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 		$smarty->assign_by_ref('translation', $translation);
 	}
 }
+ask_ticket('edit-languages');
 
 $smarty->assign('mid', 'tiki-edit_languages.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.49 2003-12-10 23:08:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.50 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -157,6 +157,7 @@ if (count($prev_thread)) {
 if($tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST['delsel'])) {
 	if (isset($_REQUEST['forumthread'])) {
+		check_ticket('view-forum-thread');
 	    foreach(array_values($_REQUEST['forumthread']) as $thread) {
 		$commentslib->remove_comment($thread);
 		$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
@@ -165,11 +166,13 @@ if($tiki_p_admin_forum == 'y') {
     }
 
     if (isset($_REQUEST['remove_attachment'])) {
+	check_ticket('view-forum-thread');
 	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
     }
 
     if(isset($_REQUEST['movesel'])) {
 	if (isset($_REQUEST['forumthread'])) {
+		check_ticket('view-forum-thread');
 	    foreach(array_values($_REQUEST['forumthread']) as $thread) {
 		$commentslib->set_parent($thread,$_REQUEST['moveto']);
 	    }
@@ -179,6 +182,7 @@ if($tiki_p_admin_forum == 'y') {
 
 if ($tiki_p_forums_report == 'y') {
     if (isset($_REQUEST['report'])) {
+	check_ticket('view-forum-thread');
 	$commentslib->report_post($_REQUEST['forumId'], $_REQUEST['comments_parentId'], $_REQUEST['report'], $user, '');
     }
 }
@@ -222,6 +226,7 @@ $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
     if ($thread_info["type"] <> 'l' || $tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST["comments_postComment"])) {
+		check_ticket('view-forum-thread');
 	    if (!empty($_REQUEST["comments_data"])) {
 		if (empty($_REQUEST["comments_title"])) {
 		    $_REQUEST["comments_title"] = tra('Re:').' '.$thread_info["title"];
@@ -563,6 +568,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_vote == 'y') {
     // Process a vote here
     if (isset($_REQUEST["comments_vote"]) && isset($_REQUEST["comments_threadId"])) {
+	check_ticket('view-forum-thread');
 	$comments_show = 'y';
 
 	if (!$tikilib->user_has_voted($user, 'comment' . $_REQUEST["comments_threadId"])) {
@@ -723,6 +729,7 @@ if ($feature_theme_control == 'y') {
 }
 
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+	check_ticket('view-forum-thread');
     $info = $commentslib->get_comment($_REQUEST['savenotepad']);
 
     $tikilib->replace_note($user, 0, $info['title'], $info['data']);
@@ -730,6 +737,7 @@ if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUES
 
 if ($feature_user_watches == 'y') {
     if ($user && isset($_REQUEST['watch_event'])) {
+	check_ticket('view-forum-thread');
 	if ($_REQUEST['watch_action'] == 'add') {
 	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], tra('forum topic'), $forum_info['name'] . ':' . $thread_info['title'], "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&amp;comments_parentId=" . $_REQUEST['comments_parentId']);
 	} else {
@@ -788,6 +796,8 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+
+ask_ticket('view-forum-thread');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum_thread.tpl');

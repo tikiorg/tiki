@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.18 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.19 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,6 +96,7 @@ $smarty->assign('section', $_REQUEST["section"]);
 // Search if we have to add some contacts
 if (isset($_REQUEST["add_contacts"])) {
 	if (isset($_REQUEST["add"])) {
+		check_ticket('webmail');
 		foreach (array_keys($_REQUEST["add"])as $i) {
 			$webmaillib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i],
 				$_REQUEST["addNickname"][$i], $user);
@@ -117,6 +118,7 @@ if ($_REQUEST["section"] == 'read') {
 	$pop3->Open();
 
 	if (isset($_REQUEST["delete_one"])) {
+		check_ticket('webmail');
 		$realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
 
 		$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
@@ -271,6 +273,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 
 	if (isset($_REQUEST["delete"])) {
 		if (isset($_REQUEST["msg"])) {
+			check_ticket('webmail');
 			// Now we can delete the messages
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
 				$realmsgid = $pop3->GetMessageID($msg);
@@ -282,6 +285,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 	}
 
 	if (isset($_REQUEST["delete_one"])) {
+		check_ticket('webmail');
 		$realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
 
 		$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
@@ -297,6 +301,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 
 	if (isset($_REQUEST["operate"])) {
 		if (isset($_REQUEST["msg"])) {
+			check_ticket('webmail');
 			// Now we can operate the messages
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
 				$realmsg = $_REQUEST["realmsg"][$msg];
@@ -471,12 +476,14 @@ if ($_REQUEST["section"] == 'settings') {
 	$smarty->assign('accountId', $_REQUEST["accountId"]);
 
 	if (isset($_REQUEST["new_acc"])) {
+		check_ticket('webmail');
 		$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"]);
 
 		$_REQUEST["accountId"] = 0;
 	}
 
 	if (isset($_REQUEST["remove"])) {
+		check_ticket('webmail');
 		$webmaillib->remove_webmail_account($user, $_REQUEST["remove"]);
 	}
 
@@ -517,6 +524,7 @@ if ($_REQUEST["section"] == 'compose') {
 
 	// Send a message
 	if (isset($_REQUEST["reply"]) || isset($_REQUEST["replyall"])) {
+		check_ticket('webmail');
 		$webmaillib->set_mail_flag($current["accountId"], $user, $_REQUEST["realmsgid"], 'isReplied', 'y');
 	}
 
@@ -532,6 +540,7 @@ if ($_REQUEST["section"] == 'compose') {
 		$mail->setSubject($_REQUEST["subject"]);
 
 		if ($_REQUEST["attach1"]) {
+			check_ticket('webmail');
 			$a1 = $mail->getFile('temp/mail_attachs/' . $_REQUEST["attach1file"]);
 
 			$mail->addAttachment($a1, $_REQUEST["attach1"], $_REQUEST["attach1type"]);
@@ -539,6 +548,7 @@ if ($_REQUEST["section"] == 'compose') {
 		}
 
 		if ($_REQUEST["attach2"]) {
+			check_ticket('webmail');
 			$a2 = $mail->getFile('temp/mail_attachs/' . $_REQUEST["attach2file"]);
 
 			$mail->addAttachment($a2, $_REQUEST["attach2"], $_REQUEST["attach2type"]);
@@ -546,6 +556,7 @@ if ($_REQUEST["section"] == 'compose') {
 		}
 
 		if ($_REQUEST["attach3"]) {
+			check_ticket('webmail');
 			$a3 = $mail->getFile('temp/mail_attachs/' . $_REQUEST["attach3file"]);
 
 			$mail->addAttachment($a3, $_REQUEST["attach3"], $_REQUEST["attach3type"]);
@@ -605,6 +616,7 @@ if ($_REQUEST["section"] == 'compose') {
 	}
 
 	if (isset($_REQUEST["remove_attach1"])) {
+		check_ticket('webmail');
 		@unlink ($_REQUEST["attach1file"]);
 
 		$_REQUEST["attach1"] = '';
@@ -613,6 +625,7 @@ if ($_REQUEST["section"] == 'compose') {
 	}
 
 	if (isset($_REQUEST["remove_attach2"])) {
+		check_ticket('webmail');
 		@unlink ($_REQUEST["attach2file"]);
 
 		$_REQUEST["attach2"] = '';
@@ -621,6 +634,7 @@ if ($_REQUEST["section"] == 'compose') {
 	}
 
 	if (isset($_REQUEST["remove_attach3"])) {
+		check_ticket('webmail');
 		@unlink ($_REQUEST["attach3file"]);
 
 		$_REQUEST["attach3"] = '';
@@ -631,6 +645,7 @@ if ($_REQUEST["section"] == 'compose') {
 	if (isset($_REQUEST["attached"])) {
 		// Now process the uploads
 		if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+			check_ticket('webmail');
 			$size = $_FILES['userfile1']['size'];
 
 			if ($size < 1500000) {
@@ -645,6 +660,7 @@ if ($_REQUEST["section"] == 'compose') {
 		}
 
 		if (isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
+			check_ticket('webmail');
 			$size = $_FILES['userfile2']['size'];
 
 			if ($size < 1500000) {
@@ -659,6 +675,7 @@ if ($_REQUEST["section"] == 'compose') {
 		}
 
 		if (isset($_FILES['userfile3']) && is_uploaded_file($_FILES['userfile3']['tmp_name'])) {
+			check_ticket('webmail');
 			$size = $_FILES['userfile3']['size'];
 
 			if ($size < 1500000) {
@@ -754,10 +771,12 @@ if ($_REQUEST["section"] == 'contacts') {
 	$smarty->assign('info', $info);
 
 	if (isset($_REQUEST["remove"])) {
+		check_ticket('webmail');
 		$webmaillib->remove_contact($_REQUEST["remove"], $user);
 	}
 
 	if (isset($_REQUEST["save"])) {
+		check_ticket('webmail');
 		$webmaillib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"], $_REQUEST["lastName"], $_REQUEST["email"], $_REQUEST["nickname"], $user);
 
 		$info["firstName"] = '';
@@ -826,6 +845,8 @@ include_once ('tiki-mytiki_shared.php');
 
 $section = 'webmail';
 include_once ('tiki-section_options.php');
+
+ask_ticket('webmail');
 
 $smarty->assign('mid', 'tiki-webmail.tpl');
 $smarty->display("tiki.tpl");

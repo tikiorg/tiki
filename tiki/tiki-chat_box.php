@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_box.php,v 1.5 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_box.php,v 1.6 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,7 @@ if ($tiki_p_chat != 'y') {
 // else write the message into messages
 // use send_message(userId,channelId,data)
 if (isset($_REQUEST["channelId"]) && isset($_REQUEST["nickname"])) {
+	check_ticket('chat');
 	if (isset($_REQUEST["data"])) {
 		$data = $_REQUEST["data"];
 

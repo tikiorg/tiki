@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.6 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,10 +71,12 @@ if ($_REQUEST["nlId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-nl');
 	$nllib->remove_newsletter($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-nl');
 	if (isset($_REQUEST["allowUserSub"]) && $_REQUEST["allowUserSub"] == 'on') {
 		$_REQUEST["allowUserSub"] = 'y';
 	} else {
@@ -181,6 +183,7 @@ $cat_type='newsletter';
 $cat_objid = $_REQUEST["nlId"];
 include_once("categorize_list.php");
 */
+ask_ticket('admin-nl');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_newsletters.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.11 2003-12-10 23:08:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.12 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,6 +25,7 @@ if ($tiki_p_admin_cms != 'y') {
 }
 
 if (isset($_REQUEST["addtopic"])) {
+	check_ticket('admin-topics');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
@@ -45,17 +46,21 @@ if (isset($_REQUEST["addtopic"])) {
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-topics');
 	$artlib->remove_topic($_REQUEST["remove"]);
 }
 if (isset($_REQUEST["removeall"])) {
+	check_ticket('admin-topics');
 	$artlib->remove_topic($_REQUEST["removeall"], 1);
 }
 
 if (isset($_REQUEST["activate"])) {
+	check_ticket('admin-topics');
 	$artlib->activate_topic($_REQUEST["activate"]);
 }
 
 if (isset($_REQUEST["deactivate"])) {
+	check_ticket('admin-topics');
 	$artlib->deactivate_topic($_REQUEST["deactivate"]);
 }
 
@@ -80,6 +85,7 @@ for ($i = 0; $i < count($topics); $i++) {
 }
 
 $smarty->assign('topics', $topics);
+ask_ticket('admin-topics');
 
 $smarty->assign('mid', 'tiki-admin_topics.tpl');
 $smarty->display("tiki.tpl");

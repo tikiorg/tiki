@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.19 2003-12-19 06:55:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.20 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,12 +107,14 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 
 if ($tiki_p_admin_trackers == 'y') {
 	if (isset($_REQUEST["remove"])) {
+		check_ticket('view-trackers-items');
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
 
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
+		check_ticket('view-trackers-items');
 		// Save here the values for this item
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
 
@@ -196,6 +198,7 @@ $smarty->assign('email_mon', '');
 
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
+		check_ticket('view-trackers-items');
 		$user_email = $tikilib->get_user_email($user);
 		$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
 		if (in_array($user_email, $emails)) {
@@ -220,6 +223,7 @@ if ($user) {
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y') {
 		if (isset($_REQUEST["remove_comment"])) {
+			check_ticket('view-trackers-items');
 			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
 		}
 	}
@@ -238,7 +242,10 @@ if ($tracker_info["useComments"] == 'y') {
 	}
 	if ($tiki_p_comment_tracker_items == 'y') {
 		if (isset($_REQUEST["save_comment"])) {
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user);
+			check_ticket('view-trackers-items');
+			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"],
+				$_REQUEST["comment_data"], $user);
+
 			$smarty->assign('comment_title', '');
 			$smarty->assign('comment_data', '');
 			$smarty->assign('commentId', 0);
@@ -250,6 +257,7 @@ if ($tracker_info["useComments"] == 'y') {
 
 if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
+		check_ticket('view-trackers-items');
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
 			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
@@ -309,10 +317,14 @@ $section = 'trackers';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
+
 if ($feature_jscalendar) {
 	$smarty->assign('uses_jscalendar', 'y');
 }
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
+
+
+ask_ticket('view-trackers-items');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');

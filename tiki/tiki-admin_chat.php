@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chat.php,v 1.6 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chat.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,10 +41,12 @@ $smarty->assign('active', $info["active"]);
 $smarty->assign('refresh', $info["refresh"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-chat');
 	$chatlib->remove_channel($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-chat');
 	if (isset($_REQUEST["active"]) && $_REQUEST["active"] == 'on') {
 		$active = 'y';
 	} else {
@@ -99,6 +101,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+ask_ticket('admin-chat');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_chat.tpl');

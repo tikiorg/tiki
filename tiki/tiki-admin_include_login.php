@@ -1,11 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.6 2003-11-17 02:48:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.7 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 if (isset($_REQUEST["loginprefs"])) {
+	check_ticket('admin-inc-login');
     if (isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"] == "on") {
 	$tikilib->set_preference("change_theme", 'y');
 
@@ -199,6 +200,7 @@ if (isset($_REQUEST["loginprefs"])) {
 }
 
 if (isset($_REQUEST["auth_pear"])) {
+	check_ticket('admin-inc-login');
     if (isset($_REQUEST["auth_create_user_tiki"]) && $_REQUEST["auth_create_user_tiki"] == "on") {
 	$tikilib->set_preference("auth_create_user_tiki", 'y');
 
@@ -326,5 +328,5 @@ $smarty->assign("useRegisterPasscode", $tikilib->get_preference("useRegisterPass
 $smarty->assign("registerPasscode", $tikilib->get_preference("registerPasscode", ''));
 $smarty->assign("validateUsers", $tikilib->get_preference("validateUsers", 'n'));
 $smarty->assign("forgotPass", $tikilib->get_preference("forgotPass", 'n'));
-
+ask_ticket('admin-inc-login');
 ?>

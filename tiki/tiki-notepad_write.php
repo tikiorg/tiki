@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_write.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ if (!isset($_REQUEST["noteId"]))
 	$_REQUEST["noteId"] = 0;
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('notepad-write');
 	$notepadlib->remove_note($user, $_REQUEST['remove']);
 }
 
@@ -47,6 +48,7 @@ if ($_REQUEST["noteId"]) {
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('notepad-write');
 	$notepadlib->replace_note($user, $_REQUEST["noteId"], $_REQUEST["name"], $_REQUEST["data"]);
 
 	//:TODO: replace this putting the code in notepad-list
@@ -58,6 +60,7 @@ $smarty->assign('noteId', $_REQUEST["noteId"]);
 $smarty->assign('info', $info);
 
 include_once ('tiki-mytiki_shared.php');
+ask_ticket('notepad-write');
 
 $smarty->assign('mid', 'tiki-notepad_write.tpl');
 $smarty->display("tiki.tpl");

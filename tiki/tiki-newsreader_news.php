@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.15 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_news.php,v 1.16 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,6 +127,7 @@ include_once ('tiki-mytiki_shared.php');
 
 $section = 'newsreader';
 include_once ('tiki-section_options.php');
+ask_ticket('newsreader');
 
 $smarty->assign('mid', 'tiki-newsreader_news.tpl');
 $smarty->display("tiki.tpl");

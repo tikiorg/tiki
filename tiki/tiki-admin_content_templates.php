@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.8 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.9 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,10 +64,12 @@ if ($_REQUEST["templateId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-content-templates');
 	$templateslib->remove_template($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["removesection"])) {
+	check_ticket('admin-content-templates');
 	$templateslib->remove_template_from_section($_REQUEST["rtemplateId"], $_REQUEST["removesection"]);
 }
 
@@ -112,6 +114,7 @@ if (isset($_REQUEST["preview"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-content-templates');
 	$tid = $templateslib->replace_template($_REQUEST["templateId"], $_REQUEST["name"], $_REQUEST["content"]);
 
 	$smarty->assign("templateId", '0');
@@ -191,6 +194,8 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+ask_ticket('admin-content-templates');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_content_templates.tpl');

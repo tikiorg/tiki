@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.20 2003-12-22 04:53:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.21 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,7 @@ if (!isset($_REQUEST["page_ref_id"])) {
 $smarty->assign('remove', 'n');
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('edit-structure');
 	$smarty->assign('remove', 'y');
   $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
 	$smarty->assign('removepage', $_REQUEST["remove"]);
@@ -35,11 +36,13 @@ if (isset($_REQUEST["remove"])) {
 
 $page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 if (isset($_REQUEST["rremove"])) {
+	check_ticket('edit-structure');
 	$structlib->s_remove_page($_REQUEST["rremove"], false);
   $_REQUEST["page_ref_id"] = $page_info["parent_id"];
 }
 
 if (isset($_REQUEST["sremove"])) {
+	check_ticket('edit-structure');
 	$structlib->s_remove_page($_REQUEST["sremove"], true);
   $_REQUEST["page_ref_id"] = $page_info["parent_id"];
 }
@@ -58,6 +61,7 @@ $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
 if (isset($_REQUEST["create"])) {
+	check_ticket('edit-structure');
 	if (isset($_REQUEST["pageAlias"]))	{
 		$structlib->set_page_alias($_REQUEST["page_ref_id"], $_REQUEST["pageAlias"]);
 	}
@@ -117,6 +121,7 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 $subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 $smarty->assign('subtree', $subtree);
+ask_ticket('edit-structure');
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_structure.tpl');

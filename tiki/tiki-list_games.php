@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.14 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,7 @@ if (isset($_REQUEST["uploadform"]) && $tiki_p_admin_games == 'y') {
 }
 
 if (isset($_REQUEST["upload"])) {
+	check_ticket('list-games');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])
 		&& isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
 		$name1 = $_FILES['userfile1']['name'];
@@ -111,6 +112,7 @@ if (isset($_REQUEST["edit"]) && $tiki_p_admin_games == 'y') {
 }
 
 if (isset($_REQUEST["save"]) && $tiki_p_admin_games == 'y') {
+	check_ticket('list-games');
 	$file = $_REQUEST["editable"];
 
 	@$fp = fopen("games/thumbs/$file" . '.txt', "wb");
@@ -189,6 +191,7 @@ if(isset($_REQUEST["game"])) {
 
 $section = 'games';
 include_once('tiki-section_options.php');
+ask_ticket('list-games');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_games.tpl');

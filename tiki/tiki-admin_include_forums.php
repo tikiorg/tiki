@@ -1,17 +1,19 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_forums.php,v 1.4 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 if (isset($_REQUEST["homeforumprefs"]) && isset($_REQUEST["homeForum"])) {
+	check_ticket('admin-inc-forums');
 	$tikilib->set_preference("home_forum", $_REQUEST["homeForum"]);
 
 	$smarty->assign('home_forum', $_REQUEST["homeForum"]);
 }
 
 if (isset($_REQUEST["forumprefs"])) {
+	check_ticket('admin-inc-forums');
 	if (isset($_REQUEST["feature_forum_rankings"]) && $_REQUEST["feature_forum_rankings"] == "on") {
 		$tikilib->set_preference("feature_forum_rankings", 'y');
 
@@ -60,6 +62,7 @@ if (isset($_REQUEST["forumprefs"])) {
 }
 
 if (isset($_REQUEST["forumlistprefs"])) {
+	check_ticket('admin-inc-forums');
 	if (isset($_REQUEST["forum_list_topics"]) && $_REQUEST["forum_list_topics"] == "on") {
 		$tikilib->set_preference("forum_list_topics", 'y');
 
@@ -125,5 +128,5 @@ include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 $forums = $commentslib->list_forums(0, -1, 'name_desc', '');
 $smarty->assign_by_ref('forums', $forums["data"]);
-
+ask_ticket('admin-inc-forums');
 ?>

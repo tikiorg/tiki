@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-survey_stats.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-survey_stats.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,6 +107,8 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 $section = 'surveys';
 include_once ('tiki-section_options.php');
+
+ask_ticket('survey-stats');
 
 // Display the template
 $smarty->assign('mid', 'tiki-survey_stats.tpl');

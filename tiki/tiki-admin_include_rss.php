@@ -1,11 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.5 2003-10-25 00:46:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.6 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 if (isset($_REQUEST["rss"])) {
+	check_ticket('admin-inc-rss');
 	$tikilib->set_preference('max_rss_articles', $_REQUEST["max_rss_blogs"]);
 
 	$smarty->assign("max_rss_blogs", $_REQUEST["max_rss_blogs"]);
@@ -184,5 +185,5 @@ if (isset($_REQUEST["rss"])) {
 	$smarty->assign("rssfeed_creator", $tikilib->get_preference("rssfeed_creator",""));
 	$smarty->assign("rssfeed_css", $tikilib->get_preference("rssfeed_css","y"));
 }
-
+ask_ticket('admin-inc-rss');
 ?>

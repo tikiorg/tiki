@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.18 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.19 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,10 +162,12 @@ $users = $userlib->get_users_names(0, -1, 'login_desc', '');
 $smarty->assign_by_ref('users', $users);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-forums');
 	$commentslib->remove_forum($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-forums');
 	if (isset($_REQUEST["controlFlood"]) && $_REQUEST["controlFlood"] == 'on') {
 		$controlFlood = 'y';
 	} else {
@@ -423,6 +425,7 @@ include_once ("categorize_list.php");
 
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
+ask_ticket('admin-forums');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_forums.tpl');

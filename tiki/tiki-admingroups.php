@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.12 2003-12-15 00:08:03 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 
 // Process the form to add a group
 if (isset($_REQUEST["newgroup"])) {
+	check_ticket('admin-groups');
 	// Check if the user already exists
 	if ($userlib->group_exists($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Group already exists"));
@@ -46,6 +47,7 @@ if (isset($_REQUEST["newgroup"])) {
 
 // modification
 if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
+	check_ticket('admin-groups');
 	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home);
 
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
@@ -65,6 +67,7 @@ if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
 
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
+	check_ticket('admin-groups');
 	if ($_REQUEST["action"] == 'delete') {
 		$userlib->remove_group($_REQUEST["group"]);
 	}
@@ -158,6 +161,7 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+ask_ticket('admin-groups');
 
 // Assign the list of groups
 $smarty->assign_by_ref('users', $users["data"]);

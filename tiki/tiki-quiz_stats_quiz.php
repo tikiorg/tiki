@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,10 +61,12 @@ $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
 $smarty->assign('quiz_info', $quiz_info);
 
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_quizzes == 'y') {
+	check_ticket('quiz-stats-quiz');
 	$quizlib->remove_quiz_stat($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["clear"]) && $tiki_p_admin_quizzes == 'y') {
+	check_ticket('quiz-stats-quiz');
 	$quizlib->clear_quiz_stats($_REQUEST["clear"]);
 }
 
@@ -119,6 +121,8 @@ $smarty->assign_by_ref('questions', $questions);
 
 $section = 'quizzes';
 include_once ('tiki-section_options.php');
+
+ask_ticket('quiz_stats_quiz');
 
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_stats_quiz.tpl');

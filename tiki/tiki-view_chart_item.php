@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_chart_item.php,v 1.8 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_chart_item.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,7 @@ $user_voted_item = $chartlib->user_has_voted_item($user, $info['itemId']) ? 'y' 
 if (isset($_REQUEST['vote'])) {
 	if (($tiki_p_admin_charts == 'y') || (($chart_info['singleChartVotes'] == 'n' || $user_voted_chart == 'n')
 		&& ($chart_info['singleItemVotes'] == 'n' || $user_voted_item == 'n'))) {
+		check_ticket('view-chart-item');
 		if (!isset($_REQUEST['points']))
 			$_REQUEST['points'] = 0;
 
@@ -60,6 +61,8 @@ $sameurl_elements = array(
 	'chartId',
 	'itemId'
 );
+
+ask_ticket('view-chart-item');
 
 $smarty->assign('mid', 'tiki-view_chart_item.tpl');
 $smarty->display("tiki.tpl");

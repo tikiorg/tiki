@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.18 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.19 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,6 +95,8 @@ $smarty->assign('edit_mode', 'n');
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
+	check_ticket('galleries');
+
 	// Get information about this galleryID and fill smarty variables
 	$smarty->assign('edit_mode', 'y');
 
@@ -119,6 +121,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 
 // Process the insertion or modification of a gallery here
 if (isset($_REQUEST["edit"])) {
+	check_ticket('galleries');
 	// Saving information
 	// If the user is not gallery admin
 	if ($tiki_p_admin_galleries != 'y') {
@@ -209,6 +212,7 @@ if (isset($_REQUEST["edit"])) {
 }
 
 if (isset($_REQUEST["removegal"])) {
+	check_ticket('galleries');
 	if ($tiki_p_admin_galleries != 'y') {
 		$info = $imagegallib->get_gallery_info($_REQUEST["removegal"]);
 
@@ -308,6 +312,7 @@ include_once ("categorize_list.php");
 
 $section = 'galleries';
 include_once ('tiki-section_options.php');
+ask_ticket('galleries');
 
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');

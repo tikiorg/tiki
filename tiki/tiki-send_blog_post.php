@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -152,6 +152,7 @@ $smarty->assign('addresses', $_REQUEST['addresses']);
 $smarty->assign('sent', 'n');
 
 if (isset($_REQUEST['send'])) {
+	check_ticket('send-blog-post');
 	$emails = explode(',', $_REQUEST['addresses']);
 
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -171,6 +172,8 @@ if (isset($_REQUEST['send'])) {
 
 	$smarty->assign('sent', 'y');
 }
+
+ask_ticket('send-blog-post');
 
 // Display the template
 $smarty->assign('mid', 'tiki-send_blog_post.tpl');

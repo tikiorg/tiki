@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.9 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_submissions.php,v 1.10 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,7 @@ if($tiki_p_view != 'y') {
 }
 */
 if (isset($_REQUEST["remove"])) {
+	check_ticket('list-submissions');
 	if ($tiki_p_remove_submission != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot remove submissions"));
 
@@ -45,6 +46,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["approve"])) {
+	check_ticket('list-submissions');
 	if ($tiki_p_approve_submission != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot approve submissions"));
 
@@ -121,6 +123,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
+ask_ticket('list-submissions');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_submissions.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.12 2003-12-19 04:13:38 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.13 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,7 @@ $features_toggles = array(
 	"feature_chat",
 	"feature_comm",
 	"feature_contact",
+	"contact_anon",
 	"feature_custom_home",
 	"feature_debug_console",
 	"feature_directory",
@@ -85,9 +86,10 @@ $features_toggles = array(
 
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
+	check_ticket('admin-inc-features');
 	foreach ($features_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
 }
-
+ask_ticket('admin-inc-features');
 ?>

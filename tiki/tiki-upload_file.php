@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.23 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.24 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,6 +37,7 @@ $smarty->assign('show', 'n');
 
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
+	check_ticket('upload-file');
 	// Check here if it is an upload or an URL
 	$smarty->assign('individual', 'n');
 
@@ -260,6 +261,8 @@ $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $section = 'file_galleries';
 include_once ('tiki-section_options.php');
+
+ask_ticket('upload-file');
 
 // Display the template
 $smarty->assign('mid', 'tiki-upload_file.tpl');

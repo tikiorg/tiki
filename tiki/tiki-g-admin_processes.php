@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,6 +51,7 @@ $smarty->assign('info', $info);
 
 //Check here for an uploaded process
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('g-admin-processes');
 	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 	$data = '';
@@ -78,20 +79,24 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 }
 
 if (isset($_REQUEST["delete"])) {
+	check_ticket('g-admin-processes');
 	foreach (array_keys($_REQUEST["process"])as $item) {
 		$processManager->remove_process($item);
 	}
 }
 
 if (isset($_REQUEST['newminor'])) {
+	check_ticket('g-admin-processes');
 	$processManager->new_process_version($_REQUEST['newminor']);
 }
 
 if (isset($_REQUEST['newmajor'])) {
+	check_ticket('g-admin-processes');
 	$processManager->new_process_version($_REQUEST['newmajor'], false);
 }
 
 if (isset($_REQUEST['save'])) {
+	check_ticket('g-admin-processes');
 	$vars = array(
 		'name' => $_REQUEST['name'],
 		'description' => $_REQUEST['description'],
@@ -194,6 +199,7 @@ if ($offset > 0) {
 $smarty->assign_by_ref('items', $items["data"]);
 
 if ($_REQUEST['pid']) {
+	check_ticket('g-admin-processes');
 	$valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 
 	$errors = array();
@@ -218,6 +224,7 @@ $sameurl_elements = array(
 
 $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', '');
 $smarty->assign_by_ref('all_procs', $all_procs['data']);
+ask_ticket('g-admin-processes');
 
 $smarty->assign('mid', 'tiki-g-admin_processes.tpl');
 $smarty->display("tiki.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.9 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.10 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,6 +65,7 @@ $smarty->assign('sections', $sections_smt);
 
 foreach ($sections as $section) {
 	if (isset($_REQUEST["${section}_layout"])) {
+		check_ticket('admin-layout');
 		if (isset($_REQUEST["${section}_left_column"]) && $_REQUEST["${section}_left_column"] == "on") {
 			$tikilib->set_preference("${section}_left_column", 'y');
 
@@ -121,6 +122,7 @@ for ($i = 0; $i < count($sections); $i++) {
 }
 
 $smarty->assign('sections', $sections_smt);
+ask_ticket('admin-layout');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_layout.tpl');

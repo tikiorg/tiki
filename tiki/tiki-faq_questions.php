@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.11 2003-12-04 09:01:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.12 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,6 +53,7 @@ if ($_REQUEST["questionId"]) {
 // $smarty->assign('question',$info["question"]);  AWC moved this
 // $smarty->assign('answer',$info["answer"]);      AWC moved this
 if (isset($_REQUEST["remove"])) {
+	check_ticket('faq-questions');
 	$faqlib->remove_faq_question($_REQUEST["remove"]);
 }
 
@@ -63,6 +64,7 @@ if (!isset($_REQUEST["filter"])) {
 $smarty->assign('filter', $_REQUEST["filter"]);
 
 if (isset($_REQUEST["useq"])) {
+	check_ticket('faq-questions');
 	$quse = $faqlib->get_faq_question($_REQUEST["usequestionId"]);
 
 	$faqlib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
@@ -70,6 +72,7 @@ if (isset($_REQUEST["useq"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('faq-questions');
 	$faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
 
 	$info["question"] = '';
@@ -142,7 +145,7 @@ $smarty->assign_by_ref('suggested', $suggested["data"]);
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
-
+ask_ticket('faq-questions');
 
 // Display the template
 $smarty->assign('mid', 'tiki-faq_questions.tpl');

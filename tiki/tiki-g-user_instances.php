@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.5 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.6 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,22 +29,27 @@ if ($tiki_p_use_workflow != 'y') {
 // filter_active, filter_valid, find, sort_mode,
 // filter_process
 if (isset($_REQUEST['send'])) {
+	check_ticket('g-user-instances');
 	$GUI->gui_send_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['abort'])) {
+	check_ticket('g-user-instances');
 	$GUI->gui_abort_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['exception'])) {
+	check_ticket('g-user-instances');
 	$GUI->gui_exception_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['grab'])) {
+	check_ticket('g-user-instances');
 	$GUI->gui_grab_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
 if (isset($_REQUEST['release'])) {
+	check_ticket('g-user-instances');
 	$GUI->gui_release_instance($user, $_REQUEST['aid'], $_REQUEST['iid']);
 }
 
@@ -144,6 +149,7 @@ $sameurl_elements = array(
 	'filter_owner',
 	'filter_activity'
 );
+ask_ticket('g-user-instances');
 
 $smarty->assign('mid', 'tiki-g-user_instances.tpl');
 $smarty->display("tiki.tpl");

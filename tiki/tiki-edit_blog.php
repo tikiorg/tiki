@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.17 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.18 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -139,6 +139,7 @@ if (isset($_REQUEST['preview'])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('edit-blog');
 	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == 'on') {
 		$public = 'y';
 	} else {
@@ -172,6 +173,7 @@ if (isset($_REQUEST["save"])) {
 $cat_type = 'blog';
 $cat_objid = $blogId;
 include_once ("categorize_list.php");
+ask_ticket('edit-blog');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_blog.tpl');

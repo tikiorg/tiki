@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.14 2003-12-08 05:26:16 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,7 @@ require_once ('tiki-pagesetup.php');
 // Check if we have to perform an action for this page
 // for example lock/unlock
 if (isset($_REQUEST["action"])) {
+	check_ticket('print');
 	if ($_REQUEST["action"] == 'lock') {
 		$wikilib->lock_page($page);
 	} elseif ($_REQUEST["action"] == 'unlock') {
@@ -110,6 +111,8 @@ if ($http_domain) {
 	$prefix .= $https_prefix;
 	$smarty->assign('urlprefix', $prefix);
 }
+
+ask_ticket('print');
 
 // Display the Index Template
 $creator = $wikilib->get_creator($page);

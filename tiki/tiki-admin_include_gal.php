@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.4 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,12 +8,14 @@
 include_once('lib/imagegals/imagegallib.php');
 
 if (isset($_REQUEST["galset"]) && isset($_REQUEST["homeGallery"])) {
+	check_ticket('admin-inc-gal');
 	$tikilib->set_preference("home_gallery", $_REQUEST["homeGallery"]);
 
 	$smarty->assign('home_gallery', $_REQUEST["homeGallery"]);
 }
 
 if (isset($_REQUEST["galfeatures"])) {
+	check_ticket('admin-inc-gal');
 	if (isset($_REQUEST["feature_gal_rankings"]) && $_REQUEST["feature_gal_rankings"] == "on") {
 		$tikilib->set_preference("feature_gal_rankings", 'y');
 
@@ -48,10 +50,12 @@ if (isset($_REQUEST["galfeatures"])) {
 }
 
 if (isset($_REQUEST["rmvorphimg"])) {
+	check_ticket('admin-inc-gal');
 	$adminlib->remove_orphan_images();
 }
 
 if (isset($_REQUEST['imagegallistprefs'])) {
+	check_ticket('admin-inc-gal');
 	if (isset($_REQUEST["gal_list_name"]) && $_REQUEST["gal_list_name"] == "on") {
 		$tikilib->set_preference("gal_list_name", 'y');
 
@@ -124,6 +128,7 @@ if (isset($_REQUEST['imagegallistprefs'])) {
 }
 
 if (isset($_REQUEST["imagegalcomprefs"])) {
+	check_ticket('admin-inc-gal');
 	if (isset($_REQUEST["image_galleries_comments_per_page"])) {
 		$tikilib->set_preference("image_galleries_comments_per_page", $_REQUEST["image_galleries_comments_per_page"]);
 
@@ -142,5 +147,5 @@ $galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $smarty->assign("gal_match_regex", $tikilib->get_preference("gal_match_regex", ''));
-
+ask_ticket('admin-inc-gal');
 ?>

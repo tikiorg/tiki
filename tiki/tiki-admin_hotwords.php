@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.7 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_hotwords.php,v 1.8 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,10 +29,12 @@ if ($user != 'admin') {
 
 // Process the form to add a user here
 if (isset($_REQUEST["add"])) {
+	check_ticket('admin-hotwords');
 	$hotwordlib->add_hotword($_REQUEST["word"], $_REQUEST["url"]);
 }
 
 if (isset($_REQUEST["remove"]) && !empty($_REQUEST["remove"])) {
+	check_ticket('admin-hotwords');
 	$hotwordlib->remove_hotword($_REQUEST["remove"]);
 }
 
@@ -83,6 +85,8 @@ if ($offset > 0) {
 
 // Get users (list of users)
 $smarty->assign_by_ref('words', $words["data"]);
+
+ask_ticket('admin-hotwords');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_hotwords.tpl');

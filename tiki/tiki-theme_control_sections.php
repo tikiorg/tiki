@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.4 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.5 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,10 +39,12 @@ closedir ($h);
 $smarty->assign_by_ref('styles', $styles);
 
 if (isset($_REQUEST['assign'])) {
+	check_ticket('tc-sections');
 	$tcontrollib->tc_assign_section($_REQUEST['section'], $_REQUEST['theme']);
 }
 
 if (isset($_REQUEST["delete"])) {
+	check_ticket('tc-sections');
 	foreach (array_keys($_REQUEST["sec"])as $sec) {
 		$tcontrollib->tc_remove_section($sec);
 	}
@@ -76,6 +78,8 @@ $sections = array(
 
 sort ($sections);
 $smarty->assign('sections', $sections);
+
+ask_ticket('tc-sections');
 
 // Display the template
 $smarty->assign('mid', 'tiki-theme_control_sections.tpl');

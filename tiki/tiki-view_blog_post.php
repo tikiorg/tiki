@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.18 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.19 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,6 +208,7 @@ if ($feature_theme_control == 'y') {
 }
 
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
+	check_ticket('view-blog-post');
 	$tikilib->replace_note($user,
 		0, $post_info['title'] ? $post_info['title'] : date("d/m/Y [h:i]", $post_info['created']), $post_info['data']);
 }
@@ -217,6 +218,8 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 
 	HAWTIKI_view_blog_post ($post_info);
 }
+
+ask_ticket('view-blog-post');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog_post.tpl');

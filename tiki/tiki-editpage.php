@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.64 2003-12-22 08:02:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.65 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,7 @@ function compare_import_versions($a1, $a2) {
 }
 
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('edit-page');
 	require ("lib/webmail/mimeDecode.php");
 
 	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
@@ -429,6 +430,7 @@ if ($feature_wiki_footnotes == 'y') {
 		$smarty->assign('parsed_footnote', $tikilib->parse_data($footnote));
 
 		if (isset($_REQUEST['footnote'])) {
+			check_ticket('edit-page');
 			$smarty->assign('parsed_footnote', $tikilib->parse_data($_REQUEST['footnote']));
 
 			$smarty->assign('footnote', $_REQUEST['footnote']);
@@ -564,6 +566,7 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 if (isset($_REQUEST["save"])) {
+	check_ticket('edit-page');
   // Check if all Request values are delivered, and if not, set them
   // to avoid error messages. This can happen if some features are 
   // disabled
@@ -714,6 +717,7 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+ask_ticket('edit-page');
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-editpage.tpl');

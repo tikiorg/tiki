@@ -96,6 +96,7 @@ if (isset($_REQUEST['qId'])) {
 $smarty->assign('form', 'y');
 
 if (isset($_REQUEST['del']) && isset($_REQUEST['msg'])) {
+	check_ticket('forum-reported');
 	foreach (array_keys($_REQUEST['msg'])as $msg) {
 		$commentslib->remove_reported($msg);
 	}
@@ -172,6 +173,7 @@ $smarty->assign_by_ref('items', $items["data"]);
 
 $topics = $commentslib->get_forum_topics($_REQUEST['forumId']);
 $smarty->assign_by_ref('topics', $topics);
+ask_ticket('forum-reported');
 
 // Display the template
 $smarty->assign('mid', 'tiki-forums_reported.tpl');

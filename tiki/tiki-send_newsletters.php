@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.9 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,7 @@ if ($_REQUEST["editionId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('send-newsletter');
 	$nllib->remove_edition($_REQUEST["remove"]);
 }
 
@@ -83,6 +84,7 @@ if (isset($_REQUEST["preview"])) {
 $smarty->assign('presend', 'n');
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('send-newsletter');
 	// Now send the newsletter to all the email addresses and save it in sent_newsletters
 	$smarty->assign('presend', 'y');
 
@@ -97,6 +99,7 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign('emited', 'n');
 
 if (isset($_REQUEST["send"])) {
+	check_ticket('send-newsletter');
 	$subscribers = $nllib->get_subscribers($_REQUEST["nlId"]);
 
 	$mail = new htmlMimeMail();
@@ -178,10 +181,11 @@ if ($tiki_p_use_content_templates == 'y') {
 
 $smarty->assign_by_ref('templates', $templates["data"]);
 
+ask_ticket ('send-newsletter');
+
 // Display the template
 $smarty->assign('mid', 'tiki-send_newsletters.tpl');
 $smarty->display("tiki.tpl");
 
 ?>
 
-?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.6 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.7 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,6 +61,7 @@ $smarty->assign('info', $info);
 
 // Remove a role from the activity
 if (isset($_REQUEST['remove_role']) && $_REQUEST['activityId']) {
+	check_ticket('g-admin-activities');
 	$activityManager->remove_activity_role($_REQUEST['activityId'], $_REQUEST['remove_role']);
 }
 
@@ -68,6 +69,7 @@ $role_to_add = 0;
 
 // Add a role to the process
 if (isset($_REQUEST['addrole'])) {
+	check_ticket('g-admin-activities');
 	$isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 'y' : 'n';
 
 	$isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 'y' : 'n';
@@ -100,6 +102,7 @@ if (isset($_REQUEST['addrole'])) {
 
 // Delete activities
 if (isset($_REQUEST["delete_act"])) {
+	check_ticket('g-admin-activities');
 	foreach (array_keys($_REQUEST["activity"])as $item) {
 		$activityManager->remove_activity($_REQUEST['pid'], $item);
 	}
@@ -107,6 +110,7 @@ if (isset($_REQUEST["delete_act"])) {
 
 // If we are adding an activity then add it!
 if (isset($_REQUEST['save_act'])) {
+	check_ticket('g-admin-activities');
 	$isInteractive = (isset($_REQUEST['isInteractive']) && $_REQUEST['isInteractive'] == 'on') ? 'y' : 'n';
 
 	$isAutoRouted = (isset($_REQUEST['isAutoRouted']) && $_REQUEST['isAutoRouted'] == 'on') ? 'y' : 'n';
@@ -220,6 +224,7 @@ $smarty->assign('where', $_REQUEST['where']);
 
 // Transitions
 if (isset($_REQUEST["delete_tran"])) {
+	check_ticket('g-admin-activities');
 	foreach (array_keys($_REQUEST["transition"])as $item) {
 		$parts = explode("_", $item);
 
@@ -228,6 +233,7 @@ if (isset($_REQUEST["delete_tran"])) {
 }
 
 if (isset($_REQUEST['add_trans'])) {
+	check_ticket('g-admin-activities');
 	$activityManager->add_transition($_REQUEST['pid'], $_REQUEST['actFromId'], $_REQUEST['actToId']);
 }
 
@@ -247,12 +253,14 @@ $valid = $activityManager->validate_process_activities($_REQUEST['pid']);
 $proc_info['isValid'] = $valid ? 'y' : 'n';
 
 if ($valid && isset($_REQUEST['activate_proc'])) {
+	check_ticket('g-admin-activities');
 	$processManager->activate_process($_REQUEST['pid']);
 
 	$proc_info['isActive'] = 'y';
 }
 
 if (isset($_REQUEST['deactivate_proc'])) {
+	check_ticket('g-admin-activities');
 	$processManager->deactivate_process($_REQUEST['pid']);
 
 	$proc_info['isActive'] = 'n';
@@ -313,6 +321,7 @@ if (isset($_REQUEST["update_act"])) {
 $smarty->assign_by_ref('items', $activities['data']);
 
 $activityManager->build_process_graph($_REQUEST['pid']);
+ask_ticket('g-admin-activities');
 
 $smarty->assign('mid', 'tiki-g-admin_activities.tpl');
 $smarty->display("tiki.tpl");

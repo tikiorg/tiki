@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.26 2003-12-19 04:22:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.27 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -260,11 +260,13 @@ if (!isset($_REQUEST["status"]))
 	$_REQUEST["status"] = 0;
 
 if (isset($_REQUEST["copy"])and ($_REQUEST["copy"])) {
+	check_ticket('calendar');
 	$_REQUEST["calitemId"] = 0;
 	$_REQUEST["save"] = true;
 }
 
 if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
+	check_ticket('calendar');
 	if (!isset($_REQUEST["name"])or !(trim($_REQUEST["name"]))) {
 		$_REQUEST["name"] = tra("event without name");
 	}
@@ -417,6 +419,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 if (isset($_REQUEST['drop'])) {
+	check_ticket('calendar');
 	if (is_array($_REQUEST['drop'])) {
 		foreach ($_REQUEST['drop'] as $dropme) {
 			$calendarlib->drop_item($user, $dropme);
@@ -591,6 +594,7 @@ $smarty->assign('var', '');
 
 $section = 'calendar';
 include_once ('tiki-section_options.php');
+ask_ticket('calendar');
 
 if ($feature_jscalendar == 'y') {
 	$smarty->assign('uses_jscalendar', 'y');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.15 2003-12-05 10:55:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.16 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,8 @@ if($tiki_p_view != 'y') {
 }
 */
 if (isset($_REQUEST["remove"])) {
+	check_ticket('list-blogs');
+
 	// Check if it is the owner
 	$data = $tikilib->get_blog($_REQUEST["remove"]);
 
@@ -153,6 +155,7 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 
 	HAWTIKI_list_blogs($listpages, $tiki_p_read_blog);
 }
+ask_ticket('list-blogs');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_blogs.tpl');

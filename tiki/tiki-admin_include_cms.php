@@ -1,11 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.5 2003-10-19 02:48:28 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.6 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 if (isset($_REQUEST["cmsfeatures"])) {
+	check_ticket('admin-inc-cms');
 	if (isset($_REQUEST["feature_cms_rankings"]) && $_REQUEST["feature_cms_rankings"] == "on") {
 		$tikilib->set_preference("feature_cms_rankings", 'y');
 
@@ -48,6 +49,7 @@ if (isset($_REQUEST["cmsfeatures"])) {
 }
 
 if (isset($_REQUEST["cmsprefs"])) {
+	check_ticket('admin-inc-cms');
 	if (isset($_REQUEST["maxArticles"])) {
 		$tikilib->set_preference("maxArticles", $_REQUEST["maxArticles"]);
 
@@ -56,6 +58,7 @@ if (isset($_REQUEST["cmsprefs"])) {
 }
 
 if (isset($_REQUEST["articlecomprefs"])) {
+	check_ticket('admin-inc-cms');
 	if (isset($_REQUEST["article_comments_per_page"])) {
 		$tikilib->set_preference("article_comments_per_page", $_REQUEST["article_comments_per_page"]);
 
@@ -70,6 +73,7 @@ if (isset($_REQUEST["articlecomprefs"])) {
 }
 
 if (isset($_REQUEST['artlist'])) {
+	check_ticket('admin-inc-cms');
 	if (isset($_REQUEST['art_list_title'])) {
 		$tikilib->set_preference('art_list_title', 'y');
 	} else {
@@ -151,5 +155,5 @@ if (isset($_REQUEST['artlist'])) {
 	$smarty->assign('art_list_img', isset($_REQUEST['art_list_img']) ? 'y' : 'n');
 
 }
-
+ask_ticket('admin-inc-cms');
 ?>

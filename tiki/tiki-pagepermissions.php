@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.14 2003-12-05 11:51:37 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.15 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,10 +53,12 @@ if ($tiki_p_admin_wiki != 'y') {
 }
 
 if (isset($_REQUEST["addemail"])) {
+	check_ticket('page-perms');
 	$notificationlib->add_mail_event('wiki_page_changes', 'wikipage' . $_REQUEST["page"], $_REQUEST["email"]);
 }
 
 if (isset($_REQUEST["removeemail"])) {
+	check_ticket('page-perms');
 	$notificationlib->remove_mail_event('wiki_page_changes', 'wikipage' . $_REQUEST["page"], $_REQUEST["removeemail"]);
 }
 
@@ -111,6 +113,8 @@ $smarty->assign_by_ref('groups', $groups["data"]);
 // Get a list of permissions
 $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
 $smarty->assign_by_ref('perms', $perms["data"]);
+
+ask_ticket('page-perms');
 
 $smarty->assign('mid', 'tiki-pagepermissions.tpl');
 $smarty->assign('show_page_bar', 'y');

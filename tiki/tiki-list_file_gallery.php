@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.15 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.16 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,12 +80,14 @@ if ($tiki_p_admin_file_galleries == 'y') {
 	$smarty->assign("tiki_p_create_file_galleries", 'y');
 
 	if (isset($_REQUEST['delsel_x'])) {
+		check_ticket('list-fgal');
 		foreach (array_values($_REQUEST['file'])as $file) {
 			$filegallib->remove_file($file);
 		}
 	}
 
 	if (isset($_REQUEST['movesel'])) {
+		check_ticket('list-fgal');
 		foreach (array_values($_REQUEST['file'])as $file) {
 			// To move a topic you just have to change the object
 			$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
@@ -108,6 +110,7 @@ $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
+		check_ticket('list-fgal');
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
@@ -142,6 +145,7 @@ if (isset($_REQUEST["edit_mode"])and ($_REQUEST['edit_mode'])) {
 }
 
 if (isset($_REQUEST['edit'])) {
+		check_ticket('list-fgal');
 	if ($tiki_p_admin_file_galleries != 'y') {
 		if ($tiki_p_upload_images != 'y') {
 			// If you can't upload files then you can't edit a file you can't have a file
@@ -272,6 +276,7 @@ if ($feature_theme_control == 'y') {
 
 $all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
 $smarty->assign('all_galleries', $all_galleries['data']);
+ask_ticket('list-fgal');
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');

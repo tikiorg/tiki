@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.14 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.15 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,18 +20,22 @@ if ($tiki_p_edit_structures != 'y') {
 }
 
 if (isset($_REQUEST['rremove'])) {
+	check_ticket('admin-structures');
 	$structlib->s_remove_page($_REQUEST["rremove"], false);
 }
 
 if (isset($_REQUEST['rremovex'])) {
+	check_ticket('admin-structures');
 	$structlib->s_remove_page($_REQUEST["rremovex"], true);
 }
 
 if (isset($_REQUEST['export'])) {
+	check_ticket('admin-structures');
 	$structlib->s_export_structure($_REQUEST['export']);
 }
 
 if (isset($_REQUEST['export_tree'])) {
+	check_ticket('admin-structures');
 	header ("content-type: text/plain");
 
 	$structlib->s_export_structure_tree($_REQUEST['export_tree']);
@@ -41,12 +45,14 @@ if (isset($_REQUEST['export_tree'])) {
 $smarty->assign('askremove', 'n');
 
 if (isset($_REQUEST['remove'])) {
+	check_ticket('admin-structures');
 	$smarty->assign('askremove', 'y');
 
 	$smarty->assign('remove', $_REQUEST['remove']);
 }
 
 if (isset($_REQUEST["create"])) {
+	check_ticket('admin-structures');
 	if ((empty($_REQUEST['name']))) {
 		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 
@@ -138,6 +144,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+ask_ticket('admin-structures');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.10 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-userfiles.php,v 1.11 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,6 +46,7 @@ $smarty->assign('percentage', $percentage);
 // Process upload here
 for ($i = 0; $i < 5; $i++) {
 	if (isset($_FILES["userfile$i"]) && is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
+		check_ticket('user-files');
 		$fp = fopen($_FILES["userfile$i"]['tmp_name'], "rb");
 
 		$data = '';
@@ -100,6 +101,7 @@ for ($i = 0; $i < 5; $i++) {
 
 // Process removal here
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["userfile"])) {
+	check_ticket('user-files');
 	foreach (array_keys($_REQUEST["userfile"])as $file) {
 		$userfileslib->remove_userfile($user, $file);
 	}
@@ -175,6 +177,8 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign('tasks_useDates', $tasks_useDates);
 
 include_once ('tiki-mytiki_shared.php');
+
+ask_ticket('user-files');
 
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");

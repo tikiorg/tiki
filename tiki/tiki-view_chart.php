@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_chart.php,v 1.12 2003-11-17 15:44:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_chart.php,v 1.13 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,6 +94,9 @@ if (!isset($_REQUEST['find']))
 
 $all_items = $chartlib->list_chart_items(0, -1, 'title_asc', $_REQUEST['find'], "chartId", $chart_info['chartId']);
 $smarty->assign_by_ref('all_items', $all_items['data']);
+
+ask_ticket('view-chart');
+
 $smarty->assign('mid', 'tiki-view_chart.tpl');
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.37 2003-12-03 05:58:43 markusvk Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.38 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,6 +58,7 @@ $smarty->assign('url_edit', httpPrefix(). $foo1);
 $smarty->assign('url_visit', httpPrefix(). $foo2);
 
 if (isset($_REQUEST["prefs"])) {
+	check_ticket('user-prefs');
 	// setting preferences
 	//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
 	if ($change_theme == 'y') {
@@ -123,6 +124,7 @@ if (isset($_REQUEST["prefs"])) {
 }
 
 if (isset($_REQUEST['chgemail'])) {
+	check_ticket('user-prefs');
 	// check user's password
 	if (!$userlib->validate_user($userwatch, $_REQUEST['pass'], '', '')) {
 		$smarty->assign('msg', tra("Invalid password.  You current password is required to change your email address."));
@@ -135,6 +137,7 @@ if (isset($_REQUEST['chgemail'])) {
 }
 
 if (isset($_REQUEST["chgpswd"])) {
+	check_ticket('user-prefs');
 	if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
 		$smarty->assign('msg', tra("The passwords didn't match"));
 
@@ -171,6 +174,7 @@ if (isset($_REQUEST["chgpswd"])) {
 }
 
 if (isset($_REQUEST['messprefs'])) {
+	check_ticket('user-prefs');
 	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
 
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
@@ -183,6 +187,7 @@ if (isset($_REQUEST['messprefs'])) {
 }
 
 if (isset($_REQUEST['mytikiprefs'])) {
+	check_ticket('user-prefs');
 	if (isset($_REQUEST['mytiki_pages']) && $_REQUEST['mytiki_pages'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mytiki_pages', 'y');
 	} else {
@@ -228,6 +233,7 @@ $smarty->assign('mytiki_msgs', $tikilib->get_user_preference($userwatch, 'mytiki
 $smarty->assign('mytiki_tasks', $tikilib->get_user_preference($userwatch, 'mytiki_tasks'), 'y');
 
 if (isset($_REQUEST['tasksprefs'])) {
+	check_ticket('user-prefs');
 	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 
 	if (isset($_REQUEST['tasks_useDates']) && $_REQUEST['tasks_useDates'] == 'on') {
@@ -341,6 +347,8 @@ if ($display_timezone != "UTC")
 	$display_timezone = "Local";
 
 $smarty->assign_by_ref('display_timezone', $display_timezone);
+
+ask_ticket('user-prefs');
 
 $smarty->assign('mid', 'tiki-user_preferences.tpl');
 $smarty->display("tiki.tpl");

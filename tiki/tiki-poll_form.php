@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.9 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.10 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,8 @@ $smarty->assign_by_ref('menu_info', $poll_info);
 //$smarty->assign_by_ref('polls',$polls["data"]);
 $smarty->assign_by_ref('channels', $options["data"]);
 $smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
+
+ask_ticket('poll-form');
 
 // Display the template
 $smarty->assign('mid', 'tiki-poll_form.tpl');

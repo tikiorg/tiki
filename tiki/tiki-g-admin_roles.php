@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_roles.php,v 1.7 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_roles.php,v 1.8 2003-12-28 20:12:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,7 @@ $smarty->assign('info', $info);
 
 // Delete roles
 if (isset($_REQUEST["delete"])) {
+	check_ticket('g-admin-roles');
 	foreach (array_keys($_REQUEST["role"])as $item) {
 		$roleManager->remove_role($_REQUEST['pid'], $item);
 	}
@@ -64,6 +65,7 @@ if (isset($_REQUEST["delete"])) {
 
 // If we are adding an activity then add it!
 if (isset($_REQUEST['save'])) {
+	check_ticket('g-admin-roles');
 	$vars = array(
 		'name' => $_REQUEST['name'],
 		'description' => $_REQUEST['description'],
@@ -95,6 +97,7 @@ $roles = $roleManager->list_roles($_REQUEST['pid'], 0, -1, 'name_asc', '');
 $smarty->assign_by_ref('roles', $roles['data']);
 
 if (isset($_REQUEST["delete_map"])) {
+	check_ticket('g-admin-roles');
 	foreach (array_keys($_REQUEST["map"])as $item) {
 		$parts = explode(':::', $item);
 
@@ -103,6 +106,7 @@ if (isset($_REQUEST["delete_map"])) {
 }
 
 if (isset($_REQUEST['mapg'])) {
+	check_ticket('g-admin-roles');
 	if ($_REQUEST['op'] == 'add') {
 		$users = $userlib->get_group_users($_REQUEST['group']);
 
@@ -119,6 +123,7 @@ if (isset($_REQUEST['mapg'])) {
 }
 
 if (isset($_REQUEST['save_map'])) {
+	check_ticket('g-admin-roles');
 	if (isset($_REQUEST['user']) && isset($_REQUEST['role'])) {
 		foreach ($_REQUEST['user'] as $a_user) {
 			foreach ($_REQUEST['role'] as $role) {
@@ -201,6 +206,7 @@ $sameurl_elements = array(
 	'where2',
 	'processId'
 );
+ask_ticket('g-admin-roles');
 
 $smarty->assign('mid', 'tiki-g-admin_roles.tpl');
 $smarty->display("tiki.tpl");

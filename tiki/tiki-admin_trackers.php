@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.9 2003-12-16 07:26:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.10 2003-12-28 20:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -81,10 +81,12 @@ foreach (split(',',$info["orderPopup"]) as $it) {
 $smarty->assign('ui', $outatt);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-trackers');
 	$trklib->remove_tracker($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-trackers');
 	if (isset($_REQUEST["showCreated"]) && $_REQUEST["showCreated"] == 'on') {
 		$showCreated = 'y';
 	} else {
@@ -206,6 +208,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $cat_type = 'tracker';
 $cat_objid = $_REQUEST["trackerId"];
 include_once ("categorize_list.php");
+ask_ticket('admin-trackers');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_trackers.tpl');
