@@ -14,30 +14,30 @@ var globalGrid;
 // decrement {{{2
 function decrement( val )
 {
-	var nChar = COLCHAR.indexOf( val[ val.length - 1 ] ) - 1;
+	var nChar = COLCHAR.indexOf( val.charAt( val.length - 1 ) ) - 1;
 	
 	if( nChar >= 0 )
 	{
-		return val.substr( 0, val.length - 1 ) + COLCHAR[ nChar ];
+		return val.substr( 0, val.length - 1 ) + COLCHAR.charAt( nChar );
 	}
 	else
 	{
-		return decrement( val.substr( 0, val.length - 1 ) ) + COLCHAR[ COLCHAR.length - 1 ];
+		return decrement( val.substr( 0, val.length - 1 ) ) + COLCHAR.charAt( COLCHAR.length - 1 );
 	}
 }
 
 // increment {{{2
 function increment( val )
 {
-	var nChar = COLCHAR.indexOf( val[ val.length - 1 ] ) + 1;
+	var nChar = COLCHAR.indexOf( val.charAt( val.length - 1 ) ) + 1;
 	
 	if( nChar < COLCHAR.length )
 	{
-		return val.substr( 0, val.length - 1 ) + COLCHAR[ nChar ];
+		return val.substr( 0, val.length - 1 ) + COLCHAR.charAt( nChar );
 	}
 	else
 	{
-		return increment( val.substr( 0, val.length - 1 ) ) + COLCHAR[0];
+		return increment( val.substr( 0, val.length - 1 ) ) + COLCHAR.charAt(0);
 	}
 }
 
@@ -710,7 +710,7 @@ Grid.prototype.identify = function()
 	while( current != null )
 	{
 		if( current.previous == null )
-			current.id = COLCHAR[0];
+			current.id = COLCHAR.charAt(0);
 		else
 			current.id = increment( current.previous.id );
 
