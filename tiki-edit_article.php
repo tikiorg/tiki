@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.19 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.20 2003-08-15 21:50:34 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -300,6 +300,7 @@ if (isset($_REQUEST["save"])) {
 
 	if (!isset($_REQUEST["rating"]))
 		$_REQUEST['rating'] = 0;
+	  if (!isset($_REQUEST['topicId'])) $_REQUEST['topicId'] = 0;
 
 	// If page exists
 	$artid = $tikilib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
@@ -311,12 +312,7 @@ if (isset($_REQUEST["save"])) {
 	$notcachedlinks = $tikilib->get_links_nocache($body);
 	$cachedlinks = array_diff($links, $notcachedlinks);
 	$tikilib->cache_links($cachedlinks); 
-
-$links = $tikilib->get_links($heading);
-$notcachedlinks = $tikilib->get_links_nocache($heading);
-$cachedlinks = array_diff($links, $notcachedlinks);
-$tikilib->cache_links($cachedlinks); 
-*/
+	*/
 	$cat_type = 'article';
 	$cat_objid = $artid;
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
