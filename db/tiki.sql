@@ -4221,3 +4221,50 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text'
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
 
+#
+# Tiki Jukebox tables
+#
+
+DROP TABLE IF EXISTS tiki_jukebox_genres;
+CREATE TABLE tiki_jukebox_genres (
+	genreId int(14) unsigned NOT NULL auto_increment,
+	genreName varchar(80),
+	genreDescription text,
+	PRIMARY KEY (genreId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_albums;
+CREATE TABLE tiki_jukebox_albums (
+	albumId int(14) unsigned NOT NULL auto_increment,
+	title varchar(80) default NULL,
+	description text,
+	created int(14),
+	lastModif int(14),
+	user varchar(200),
+	visits int(14),
+	public char(1),
+	genreId int(14),
+	PRIMARY KEY(albumId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_tracks;
+CREATE TABLE tiki_jukebox_tracks (
+	trackId int(14) unsigned NOT NULL auto_increment,
+	albumId int(14),
+	artist varchar(200),
+	title varchar(200),
+	created int(14),
+	url varchar(255),
+	filename varchar(80),
+	filesize int(14),
+	filetype varchar(250),
+	genreId int(14),
+	plays int(14),
+	PRIMARY KEY(trackId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
+#
+# End of tiki jukebox tables
+#
+
+
