@@ -2,33 +2,23 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a>
+<a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a><br /><br />
 
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit articl tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
-
-<!--- beginning of next bit --->
-
-
-
-
-
-
-
-<br /><br />
-[<a class="link" href="tiki-list_articles.php">{tr}list articles{/tr}</a>|
-<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>]
+<br />
+[
+<a class="link" href="tiki-list_articles.php">{tr}list articles{/tr}</a> |
+<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
+]
 <br /><br />
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='tikieditarticle'>
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
@@ -48,7 +38,7 @@
 </select></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onChange='javascript:chgArtType();'>
-<option value='Article' {if $type eq 'Article'}sselected="selected"{/if}>{tr}Article{/tr}</option>
+<option value='Article' {if $type eq 'Article'}selected="selected"{/if}>{tr}Article{/tr}</option>
 <option value='Review' {if $type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
 </select>
 </select></td></tr>
@@ -79,12 +69,12 @@
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-<tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
-{if $tempimg ne 'n'}
-<tr><td class="formcolor">Own Image:</td><td class="formcolor">
-<img alt="theimage" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
-</td></tr>
-{/if}
+  <tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  {if $tempimg ne 'n'}
+    <tr><td class="formcolor">Own Image:</td><td class="formcolor">
+    <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
+    </td></tr>
+  {/if}
 {/if}
 <tr><td class="formcolor">{tr}Use own image{/tr}</td><td class="formcolor">
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
