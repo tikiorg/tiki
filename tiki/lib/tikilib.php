@@ -1218,19 +1218,15 @@ class TikiLib {
 
   function semaphore_set($semName)
   {
-    global $user;
-    if(!$user) {
-      $user='anonymous';
+	global $user;
+    if($user == '') {
+      $user = 'anonymous';
     }
     $now=date("U");
 //    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
     $query = "delete from tiki_semaphores where semName='$semName'";
     $this->query($query);
-//    if($cant) {
-//      $query = "update tiki_semaphores set timestamp='$now',user='$user' where semName='$semName'";
-//    } else {
-      $query = "insert into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
-//    }
+    $query = "insert into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
     $result = $this->query($query);
     return $now;
   }
@@ -3200,13 +3196,13 @@ class TikiLib {
 
   function lock_page($page)
   {
-    global $user;
+    
     $page = addslashes($page);
     $query = "update tiki_pages set flag='L' where pageName='$page'";
     $result = $this->query($query);
     if($user) {
-    $query = "update tiki_pages set user='$user' where pageName='$page'";
-    $result = $this->query($query);
+    	$query = "update tiki_pages set user='$user' where pageName='$page'";
+    	$result = $this->query($query);
     }
     return true;
   }
@@ -3380,6 +3376,7 @@ class TikiLib {
     global $rsslib;
     global $dbTiki;
     global $structlib;
+    global $user;
 
 	// Process pre_handlers here
 	foreach($this->pre_handlers as $handler) {
@@ -3701,13 +3698,16 @@ class TikiLib {
       $pattern=str_replace('(','\(',$pattern);
       $pattern=str_replace(')','\)',$pattern);
       $pattern=str_replace('/','\/',$pattern);
+
       $pattern = "/".$pattern."/";
       // Replace links to external wikis
+
       $repl2=true;
       if(strstr($pages[1][$i],':')) {
         $wexs = explode(':',$pages[1][$i]);
         if(count($wexs)==2) {
           $wkname = $wexs[0];       
+
           if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
 			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
 			$wkurl = '<a href="'.str_replace('$page',$wexs[1],$wkurl).'" class="wiki">'.$wexs[1].'</a>';
@@ -3716,7 +3716,7 @@ class TikiLib {
           }
         }
       }
-      
+
       if($repl2) {
 	      if($desc = $this->page_exists_desc($pages[1][$i])) {
 	      	$uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
@@ -3798,10 +3798,6 @@ class TikiLib {
       $data = str_replace($page_parse,$repl,$data);
     }
 
-    $target='';
-    if($this->get_preference('popupLinks','n')=='y') {
-      $target='target="_blank"';
-    }
 
     $links = $this->get_links($data);
     
@@ -3816,6 +3812,16 @@ class TikiLib {
 
 
     foreach($links as $link) {
+      $target='';
+      if($this->get_preference('popupLinks','n')=='y') {
+        $target='target="_blank"';
+      }
+	  if(strstr($link,$_SERVER["SERVER_NAME"])) {
+		$target='';
+	  }
+	  if(!strstr($link,'//')) {
+	    $target='';
+	  }
       if( $this->is_cached($link) && $cachepages == 'y') {
         $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
         $link2 = str_replace("/","\/",$link);

@@ -885,7 +885,6 @@ if($user && $feature_usermenu == 'y') {
 include_once("tiki-modules.php");
 $smarty->assign('beingEdited','n');
 
-
 if($feature_warn_on_edit == 'y') {
   // Check if the page is being edited
   if(isset($_REQUEST["page"])) {
@@ -922,7 +921,6 @@ if($feature_warn_on_edit == 'y') {
       $purlquery["page"]='HomePage';
     }
     $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
-    
   } 
   
   
@@ -973,8 +971,15 @@ $smarty->assign('ownurl',httpPrefix().$_SERVER["REQUEST_URI"]);
 $allowMsgs = 'n';
 if($user) {
   $allowMsgs = $tikilib->get_user_preference($user,'allowMsgs','y');
+  $tasks_useDates = $tikilib->get_user_preference($user,'tasks_useDates');
+  $tasks_maxRecords = $tikilib->get_user_preference($user,'tasks_maxRecords');
+  $smarty->assign('tasks_useDates',$tasks_useDates);
+  $smarty->assign('tasks_maxRecords',$tasks_maxRecords);
+  $smarty->assign('allowMsgs',$allowMsgs);
 } 
-$smarty->assign('allowMsgs',$allowMsgs);
+
+
+
 
 if($feature_referer_stats != 'y') {
 // Referer tracking

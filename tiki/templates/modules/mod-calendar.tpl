@@ -4,6 +4,11 @@ if(isset($_SESSION["thedate"])) {
   $day=date("d",$_SESSION["thedate"]);
   $mon=date("m",$_SESSION["thedate"]);
   $year=date("Y",$_SESSION["thedate"]);
+} else {
+  $day=date("d");
+  $mon=date("m");
+  $year=date("Y");
+
 }
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
@@ -11,9 +16,10 @@ if(isset($_REQUEST["day"])) {
 if(isset($_REQUEST["mon"])) {
  $mon = $_REQUEST["mon"];
 }
+
 if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
-}
+} 
 $thedate = mktime(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
