@@ -1,6 +1,6 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.2 2003-11-09 13:56:14 sylvieg Exp $
- * Displays the content data only if the language matched the current language
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.3 2004-04-13 16:18:25 sylvieg Exp $
+ * Displays the content data only if the language matched the current language or the language is the URI
  * {LANG(lang=fr)}Bon appétit{LANG}
  * 
  */
@@ -12,10 +12,13 @@ function wikiplugin_lang($data, $params) {
 	global $language;
 
 	extract ($params);
-	if (!isset($lang) || $lang == $language)
-		return $data;
+	if (isset($_REQUEST['lang']))
+		return ($lang == $_REQUEST['lang'])? $data: "";
 	else
-		return "";
+		if (!isset($lang) || $lang == $language)
+			return $data;
+		else
+			return "";
 }
 
 ?>
