@@ -2435,12 +2435,14 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
     if ($topicId) {
 	$bindvars[]=$topicId;
 	if ($mid) {
-	    $mid .= " and `topicId`=?";
+	    $mid .= " and `topicId`=? ";
 	} else {
-	    $mid = '';
-	    $bindvars=array();
+	    $mid = " where `topicId`=? ";
+	    //$mid = '';
+	    //$bindvars=array($topicId);
 	}
 
+/*
 	$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_blog_posts` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -2459,6 +2461,7 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	    $res["size"] = strlen($res["data"]);
 	    $ret[] = $res;
 	}
+*/
     }
 
     $query = "select * from `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
