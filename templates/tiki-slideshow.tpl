@@ -36,14 +36,21 @@
         <tr><td colspan="3" height="50" bgcolor="#7d554b">
         <table width="100%" bgcolor="#7d554b"><tr><td width="100">
         <font class="buttons">
-        {if $slide_prev_title}
-        <a class="buttons" href="tiki-slideshow.php?page={$page}&amp;slide={$prev_slide}">{$slide_prev_title}</a></font>
-        {/if}
-        </td>
-        <td align="center"><font class="buttons">{$current_slide} of {$total_slides}</font></td>
+        {if $structure eq 'y'}
+        <a class="buttons" href="tiki-slideshow2.php?page={$struct_prev}">{$struct_prev}</a></font></td>
+        <td align="center"><font class="buttons"><a class="buttons" href="tiki-slideshow2.php?page={$struct_struct}">{$struct_struct}</a></font></td>
         <td width="100" align="right">
-        {if $slide_next_title}
-        <a class="buttons" href="tiki-slideshow.php?page={$page}&amp;slide={$next_slide}">{$slide_next_title}</a>
+        <a class="buttons" href="tiki-slideshow2.php?page={$struct_next}">{$struct_next}</a>
+        {else}
+          {if $slide_prev_title}
+            <a class="buttons" href="tiki-slideshow.php?page={$page}&amp;slide={$prev_slide}">{$slide_prev_title}</a></font>
+          {/if}
+          </td>
+          <td align="center"><font class="buttons">{$current_slide} of {$total_slides}</font></td>
+          <td width="100" align="right">
+          {if $slide_next_title}
+            <a class="buttons" href="tiki-slideshow.php?page={$page}&amp;slide={$next_slide}">{$slide_next_title}</a>
+          {/if}
         {/if}
         </td></tr>
         </table>

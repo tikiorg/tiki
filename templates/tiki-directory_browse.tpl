@@ -91,7 +91,9 @@
 <div class="dirsite">
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
 <a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_new'{/if}>{$items[ix].name}</a>
-{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">edit</a>]{/if} <br/>
+{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">edit</a>]{/if} 
+{if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_new">{tr}cache{/tr}</a>){/if}
+<br/>
 <span class="dirsitedesc">{$items[ix].description}</span><br/>
 {assign var=fsfs value=1}
 <span class="dirsitecats">

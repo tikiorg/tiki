@@ -7619,6 +7619,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 function parse_data($data)
   {
     global $page_regex;
+    global $slidemode;
     global $feature_hotwords;
     global $cachepages;
     global $ownurl_father;
@@ -7666,7 +7667,11 @@ function parse_data($data)
       include_once("lib/structures/structlib.php");
       if($structlib->page_is_in_structure($page)) {
         $html='';
+        if($slidemode) {
+        $toc=$structlib->get_subtree_toc_slide($page,$page,$html);
+        } else {
         $toc=$structlib->get_subtree_toc($page,$page,$html);
+        } 
         $data=str_replace('{toc}',$html,$data);
       }
     }

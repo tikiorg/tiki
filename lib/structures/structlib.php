@@ -130,6 +130,38 @@ class StructLib extends TikiLib {
     return $ret;
   }
   
+  function get_subtree_toc_slide($structure,$page,&$html,$level='')
+  {
+    $ret = Array();
+    $first=true;
+    //$level++;
+    $sublevel=0;
+    $query = "select page from tiki_structures where parent='$page' order by pos asc";
+    $result = $this->query($query);
+    $subs=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	if($first) {
+    	  $html.='<ul>';
+    	  $first=false;	
+    	}
+    	$sublevel++;
+    	if($level) {$plevel=$level.'.'.$sublevel;} else {$plevel=$sublevel;}
+    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=${res["page"]}'>$plevel&nbsp;".$res["page"]."</a>";
+    	//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
+    	$html.="</li>";
+    	
+    	$subs[]=$this->get_subtree_toc($structure,$res["page"],$html,$plevel);
+    } 	
+    if(!$first) {
+      $html.='</ul>';
+    }
+    $aux["name"]=$page;
+    $aux["cant"]=count($subs);
+    $aux["pages"]=$subs;
+    $ret[]=$aux;
+    return $ret;
+  }
+  
   function page_is_in_structure($page)
   {
     $cant = $this->getOne("select count(*) from tiki_structures where page='$page'");
