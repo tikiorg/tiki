@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.124 2003-10-31 16:12:36 redflo Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.125 2003-11-05 00:30:59 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,10 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [FIX] Fixed bug that caused all subscriptions to a newsletter to be deleted
+  if a new address was added.
+* [FIX] lots of tempfile naming fixes
+* [FIX] Avatars in articles now show correctly
 - (rc1) ------------------------------------------------------------
 * [MOD] tiki-install.php now tries to create the dirs it needs. Less need to run
   setup.sh
