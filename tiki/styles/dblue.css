@@ -451,15 +451,17 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+.form {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
 }
+TD.form { }
+
 /* Cells in forms using a background color */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	color:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background:   #4682B4;
@@ -467,6 +469,7 @@ TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forum
 	vertical-align:   top;
 	text-align:   left;
 }
+TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform { }
 
 /* The table */
 table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
@@ -2733,7 +2736,7 @@ div#loadstats {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: #FFFFFF;
+  background-color: #100852;
   visibility: hidden;
 }
 .mdksubmenu table {
@@ -2758,13 +2761,15 @@ div#loadstats {
   padding: 2px 5px 2px 5px;
   position: relative;
   display: block;
+	text-decoration: none;
+	color: #ffffff;
 }
 
 .mdkitem a:visited  {
 }
 
 .mdkitem a:hover  {
-  padding: 2px 5px 1px 5px;
+	background-color: #6495ED;
 }
 
 .mdkitem a:active {
