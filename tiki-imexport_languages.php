@@ -46,10 +46,10 @@ if (isset($_REQUEST["import"])) {
   include_once('lang/'.$imp_language.'/language.php');
   $impmsg="Included lang/".$imp_language."/language.php";
   $query="insert into tiki_languages values ('".$imp_language."','')";
-  $result=$tikilib->query($query,false);
+  $result=$tikilib->query($query,array(),-1,-1,false);
   while (list ($key, $val) = each($lang)) {
     $query="insert into tiki_language values ('".addslashes($key)."','".$imp_language."','".addslashes($val)."')";
-    $result=$tikilib->query($query,false);
+    $result=$tikilib->query($query,array(),-1,-1,false);
 
   }
   $smarty->assign('impmsg',$impmsg);

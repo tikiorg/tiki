@@ -91,15 +91,27 @@ class UsersLib extends TikiLib {
   
 
   function user_exists($user) {
-    $query = "select `login` from `users_users` where `login`=?";
-    $result = $this->query($query,array("$user"));
-    return $result->numRows();
+  	static $rv = array();
+  	
+  	if (!isset($rv[$user])) {
+  	  $query = "select `login` from `users_users` where `login`=?";
+      $result = $this->query($query,array($user));
+      $rv[$user] = $result->numRows();
+    }
+    
+    return $rv[$user];
   }
   
   function group_exists($group) {
-    $query = "select `groupName`  from `users_groups` where `groupName`='$group'";
-    $result = $this->query($query);
-    return $result->numRows();
+  	static $rv = array();
+  	
+  	if (!isset($rv[$group])) {
+      $query = "select `groupName`  from `users_groups` where `groupName` = ?";
+      $result = $this->query($query, array($group));
+      $rv[$group] = $result->numRows();
+    }
+    
+    return $rv[$group];
   }
   
   function user_logout($user)
@@ -337,7 +349,7 @@ class UsersLib extends TikiLib {
         return USER_NOT_FOUND;
 		
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $hash=md5($user.$pass.$res["email"]);
+    $hash=md5($user.$pass.$res['login']);
 		$hash2 = md5($pass);
     // next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
     if($feature_challenge=='n' || empty($response)) {
@@ -702,52 +714,53 @@ class UsersLib extends TikiLib {
     return $res;
   }
   
-  function get_permissions($offset = 0,$maxRecords = -1,$sort_mode = 'permName_desc', $find='',$type='',$group='')
+  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '')
   {
-    $values=array();
-    $sort_mode = $this->convert_sortmode($sort_mode);
-    // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
-    $mid='';
-    if($type) {
-      $mid = " where `type`=? ";
-      $values[]=$type;
-    } 
-    if($find) {
-    	$findesc = $this->qstr('%'.$find.'%');
-      if($mid) {
-      $mid.=" and `permName` like '%?%'";  
-      $values[]=$find;
-      } else {
-      $mid.=" where `permName` like '%?%'";  
-      $values[]=$find;
-      }
-    } 
-    
-    $query = "select `permName`,`type`,`level`,`permDesc` from `users_permissions` $mid order by $sort_mode ";
+	$values = array();
+	$sort_mode = $this->convert_sortmode($sort_mode);
 
-    $query_cant = "select count(*) from `users_permissions` $mid";
-    $result = $this->query($query,$values,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant,$values);
-    $ret = Array();
-    while($res = $result->fetchRow()) {
-      $aux = Array();
-      $aux["permName"] = $res["permName"];
-      $aux["permDesc"] = $res["permDesc"];
-      $aux["type"] = $res["type"];
-      $aux['level'] = $res["level"];
-      if($group) {
-        if($this->group_has_permission($group,$aux["permName"])) {
-          $aux["hasPerm"]='y';
-        } else {
-          $aux["hasPerm"]='n';
-        }
-      }
-      $ret[] = $aux;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+	$mid = '';
+	if ($type) {
+		$mid = ' where `type`= ? ';
+		$values[] = $type;
+	} 
+	if ($find) {
+		$findesc = $this->qstr('%'. $find . '%');
+		if ($mid) {
+			$mid .= " and `permName` like '%?%'";  
+			$values[] = $find;
+		} else {
+			$mid .= " where `permName` like '%?%'";  
+			$values[] = $find;
+		}
+	} 
+
+	$query = "select `permName`,`type`,`level`,`permDesc` from `users_permissions` $mid order by $sort_mode ";
+
+#	$query_cant = "select count(*) from `users_permissions` $mid";
+	$result = $this->query($query, $values, $maxRecords, $offset);
+#	$cant = $this->getOne($query_cant, $values);
+	$cant = 0;
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		if ($group && $this->group_has_permission($group, $aux['permName'])) {
+			$hasPerm = 'y';
+		} else {
+			$hasPerm = 'n';
+		}
+		
+		$ret[] = array(
+			'permName'	=> $res['permName'],
+			'permDesc'	=> $res['permDesc'],
+			'type'		=> $res['type'],
+			'level'		=> $res['level'],
+			'hashPerm'	=> $hasPerm,
+		);
+	}
+	return array(
+		'data' => $ret,
+		'cant' => $cant,
+	);
   }
   
   function get_group_permissions($group)
