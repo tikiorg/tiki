@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.90 2004-02-02 06:24:41 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.91 2004-02-07 14:08:18 damosoft Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -460,6 +460,9 @@
   <div id="jukeboxmenu" style="{$mnu_jukeboxmenu}">
   {if $tiki_p_jukebox_genres eq 'y'}
   &nbsp;<a href="tiki-jukebox_genres.php" class="linkmenu">{tr}Genres Admin{/tr}</a><br />
+  {/if}
+  {if $tiki_p_jukebox_tracks eq 'y'}
+  &nbsp;<a href="tiki-jukebox_tracks.php" class="linkmenu">{tr}Tracks{/tr}</a><br />
   {/if}
   {if $tiki_p_jukebox_admin eq 'y'}
   &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br />
