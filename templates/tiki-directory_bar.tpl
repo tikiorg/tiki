@@ -8,7 +8,7 @@
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=created_desc" class="linkbut">{tr}new sites{/tr}</a></div></td>
 <td><div  class="button2"><a href="tiki-directory_ranking.php?sort_mode=hits_desc" class="linkbut">{tr}cool sites{/tr}</a></div></td>
 {if $tiki_p_submit_link eq 'y' or $tiki_p_autosubmit_link eq 'y'}
-<td><div  class="button2"><a href="tiki-directory_add_site.php" class="linkbut">{tr}add a site{/tr}</a></div></td>
+<td><div  class="button2"><a href="tiki-directory_add_site.php{if $parent}?parent={$parent}{/if}" class="linkbut">{tr}add a site{/tr}</a></div></td>
 {/if}
 </tr>
 </table>
