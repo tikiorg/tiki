@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.38 2004-04-28 12:46:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.39 2004-05-04 02:02:47 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,6 +18,7 @@ if ($user != 'admin') {
 	}
 }
 
+$cookietab = "1";
 list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield) = array(array(),0,0,0,0);
 
 if (isset($groupTracker) and $groupTracker == 'y') {
@@ -208,17 +209,17 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$inc["$rr"] = "y";
 		}
 	}
-	setcookie("tab","2");
+	$cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	setcookie("tab","1");
+	$cookietab = "1";
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {
-	setcookie("tab","2");
+	$cookietab = "2";
 }
 
 if ($_REQUEST['group']) {
@@ -249,6 +250,10 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+
+setcookie('tab',$cookietab);
+$smarty->assign('cookietab',$cookietab);
+
 ask_ticket('admin-groups');
 
 $smarty->assign('uses_tabs', 'y');
