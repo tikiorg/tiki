@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.21 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.22 2004-01-26 23:11:32 redflo Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info -->
@@ -45,6 +45,25 @@
 </tr>
 {/section}
 </table>
+
+<div class="mini">
+      {if $prev_offset >= 0}
+        [<a class="galprevnext" href="tiki-admin_structures.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp; 
+      {/if}
+      {tr}Page{/tr}: {$actual_page}/{$cant_pages}
+      {if $next_offset >= 0}
+      &nbsp;[<a class="galprevnext" href="tiki-admin_structures.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+      {/if}
+      {if $direct_pagination eq 'y'}
+<br />
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-admin_structures.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+  </div>
+
 {if $askremove eq 'y'}
 <br/>
 <a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.22 2004-01-15 22:03:16 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.23 2004-01-26 23:11:26 redflo Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -109,9 +109,9 @@ class UserModulesLib extends TikiLib {
 	function get_assigned_modules_user($user, $position) {
                 //changed 10/14/03 by dheltzel to use the tiki_modules table for non-customizable fields.
 		//$query = "select * from `tiki_user_assigned_modules` where `user`=? and `position`=? order by `ord` asc";
-		$query = "select `umod`.`name` `name`, `umod`.`position` `position`, `umod`.`ord` `ord`, `umod`.`type` `type`,
-                  `mod`.`title` `title`, `mod`.`cache_time` `cache_time`, `mod`.`rows` `rows`, `mod`.`params` `params`,
-                  `mod`.`groups` `groups`, `umod`.`user` `user` 
+		$query = "select `umod`.`name`, `umod`.`position`, `umod`.`ord`, `umod`.`type`,
+                  `mod`.`title`, `mod`.`cache_time`, `mod`.`rows`, `mod`.`params`,
+                  `mod`.`groups`, `umod`.`user` 
                   from `tiki_user_assigned_modules` `umod`, `tiki_modules` `mod`
                   where `umod`.`name`=`mod`.`name` and `umod`.`user`=? and `umod`.`position`=? order by `umod`.`ord` asc";
 

@@ -2136,8 +2136,8 @@ CREATE TABLE tiki_modules (
   PRIMARY KEY  (name)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
-INSERT INTO tiki_modules (name,position,ord,cache_time) VALUES ('login_box','r',1,0);
-INSERT INTO tiki_modules (name,position,ord,cache_time) VALUES ('application_menu','l',1,0);
+INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
+INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('application_menu','l',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 # --------------------------------------------------------
 
 #

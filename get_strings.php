@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.29 2004-01-06 11:10:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.30 2004-01-26 23:09:01 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,12 +10,13 @@
  * $Header: /cvsroot/tikiwiki/tiki/get_strings.php
  * \brief Update the language.php files
  * call example: get_strings.php?lang=fr&close
- * \param lang=xx : only translate lang 'xx' - if the parameter is not given all languages are translated
- * \param comments : generate all comments (equal to close&module)
- * \param close    : look for similar strings that are allready translated and generate a commet if a 'match' is made
- * \param module   : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
- * \param patch    : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
- * \param spelling : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
+ * \param lang=xx    : only translate lang 'xx' - if the parameter is not given all languages are translated
+ * \param comments   : generate all comments (equal to close&module)
+ * \param close      : look for similar strings that are allready translated and generate a commet if a 'match' is made
+ * \param module     : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
+ * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
+ * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
+ * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
  */
 
 
@@ -149,6 +150,7 @@ $close    = isset ($_REQUEST['close'])  || $comments;
 $module   = isset ($_REQUEST['module']) || $comments;
 $patch    = isset ($_REQUEST['patch']);
 $spelling = isset ($_REQUEST['spelling']);
+$group_w  = isset ($_REQUEST['groupwrite']);
 
 $nohelp     = isset ($_REQUEST['nohelp']);
 $nosections = isset ($_REQUEST['nosections']);
@@ -224,6 +226,13 @@ foreach ($languages as $sel) {
   $unused     = $lang;
   $dictionary = $lang;
 
+
+  if ($group_w) {
+    // We set umask to zero value to allow proper chmod later
+    // (Is this really nesserary? Does not chmod work independently of umask?)
+    $old_umask = umask (0); 
+  }
+
   $fw = fopen("lang/$sel/new_language.php",'w');
   
   print("&lt;");
@@ -239,24 +248,36 @@ foreach ($languages as $sel) {
     // Good to have instructions for translators in the release file.
     // The comments get filtered away by Smarty anyway
     writeFile_and_User ($fw, "// parameters:\n");
-    writeFile_and_User ($fw, "// lang=xx  : only tranlates language 'xx',\n");
-    writeFile_and_User ($fw, "//            if not given all languages are translated\n");
-    writeFile_and_User ($fw, "// comments : generate all comments (equal to close&module)\n");
-    writeFile_and_User ($fw, "// close    : look for similar strings that are allready translated and\n");
-    writeFile_and_User ($fw, "//            generate a commet if a 'match' is made\n");
-    writeFile_and_User ($fw, "// module   : generate comments that describes in which .php and/or .tpl\n");
-    writeFile_and_User ($fw, "//            module(s) a certain string was found (useful for checking\n");
-    writeFile_and_User ($fw, "//            translations in context)\n");
+    writeFile_and_User ($fw, "// lang=xx    : only tranlates language 'xx',\n");
+    writeFile_and_User ($fw, "//              if not given all languages are translated\n");
+    writeFile_and_User ($fw, "// comments   : generate all comments (equal to close&module)\n");
+    writeFile_and_User ($fw, "// close      : look for similar strings that are allready translated and\n");
+    writeFile_and_User ($fw, "//              generate a commet if a 'match' is made\n");
+    writeFile_and_User ($fw, "// module     : generate comments that describes in which .php and/or .tpl\n");
+    writeFile_and_User ($fw, "//              module(s) a certain string was found (useful for checking\n");
+    writeFile_and_User ($fw, "//              translations in context)\n");
 
-    writeFile_and_User ($fw, "// patch    : looks for the file 'language.patch' in the same directory\n");
-    writeFile_and_User ($fw, "//            as the corresponding language.php and overrides any strings\n");
-    writeFile_and_User ($fw, "//            in language.php - good if a user does not agree with\n");
-    writeFile_and_User ($fw, "//            some translations or if only changes are sent to the maintaner\n");
+    writeFile_and_User ($fw, "// patch      : looks for the file 'language.patch' in the same directory\n");
+    writeFile_and_User ($fw, "//              as the corresponding language.php and overrides any strings\n");
+    writeFile_and_User ($fw, "//              in language.php - good if a user does not agree with\n");
+    writeFile_and_User ($fw, "//              some translations or if only changes are sent to the maintaner\n");
 
-    writeFile_and_User ($fw, "// spelling : generates a file 'spellcheck_me.txt' that contains the\n");
-    writeFile_and_User ($fw, "//            words used in the translation.It is then easy to check this\n");
-    writeFile_and_User ($fw, "//            file for spelling errors (corrections must be done in\n ");
-    writeFile_and_User ($fw, "//            'language.php, however)\n");
+    writeFile_and_User ($fw, "// spelling   : generates a file 'spellcheck_me.txt' that contains the\n");
+    writeFile_and_User ($fw, "//              words used in the translation.It is then easy to check this\n");
+    writeFile_and_User ($fw, "//              file for spelling errors (corrections must be done in\n ");
+    writeFile_and_User ($fw, "//              'language.php, however)\n");
+
+
+    writeFile_and_User ($fw, "// groupwrite : Sets the generated files permissions to allow the generated\n");
+    writeFile_and_User ($fw, "//              language.php also be group writable. This is good for\n");
+    writeFile_and_User ($fw, "//              translators if they do not have root access to tiki but\n");
+    writeFile_and_User ($fw, "//              are in the same group as the webserver. Please remember\n");
+    writeFile_and_User ($fw, "//              to have write access removed when translation is finished\n");
+    writeFile_and_User ($fw, "//              for security reasons. (Run script again without this\n");
+    writeFile_and_User ($fw, "//              parameter)\n");
+
+
+
 
     writeFile_and_User ($fw, "// Examples:\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?lang=sv\n");
@@ -401,8 +422,11 @@ foreach ($languages as $sel) {
 
   unset ($unused['']);
   if (count ($unused) > 0) {
-    writeFile_and_User ($fw, "// ### start of unused words\n");
-    writeFile_and_User ($fw, "// ### please remove manually!\n");
+    writeFile_and_User ($fw, "// ### Start of unused words\n");
+    writeFile_and_User ($fw, "// ### Please remove manually!\n");
+    writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
+    writeFile_and_User ($fw, "// ### as unused!\n");
+    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for furhter info.\n");
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
       addToWordlist ($wordlist, $val);
@@ -438,7 +462,8 @@ foreach ($languages as $sel) {
 	  }
 	  
 	  if ($dist < 1 + strlen ($key)/5) {
-	    $closeText = " // ## CLOSE: $closeEnglish=>$closeTrans";
+	    $closeText = ' // ## CLOSE: "' . addphpslashes ($closeEnglish) .
+	                 '" => "' . addphpslashes ($closeTrans) . '"';
 	  }
 	}
 
@@ -506,5 +531,13 @@ foreach ($languages as $sel) {
   @unlink ("lang/$sel/old.php");
   rename ("lang/$sel/language.php","lang/$sel/old.php");
   rename ("lang/$sel/new_language.php","lang/$sel/language.php");
+
+  if ($group_w) {
+    // chmod the file to be writeable also by group for users that do not
+    // have root acces
+    chmod ("lang/$sel/language.php", 0664); 
+
+    umask($old_umask); // Reset umask back to original value
+  }
 }
 ?>

@@ -325,16 +325,21 @@ class StructLib extends TikiLib {
 
 	// that is intended to replace the get_subtree_toc and get_subtree_toc_slide
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
-	function build_subtree_toc($id,$slide=false,$order='asc') {
+	// the $tocPrefix can be used to Prefix a subtree as it would start from a given number (e.g. 2.1.3)
+	function build_subtree_toc($id,$slide=false,$order='asc',$tocPrefix='') {
 		$ret = array();
 		$cant = $this->getOne("select count(*) from `tiki_structures` where `parent_id`=?",array((int)$id));
 		if ($cant) {
 			$query = "select `page_ref_id`, `pageName`, `page_alias`, tp.`description` from `tiki_structures` ts, `tiki_pages` tp ";
 			$query.= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_".$order);
 			$result = $this->query($query,array((int)$id));
+			$prefix=1;
 			while ($res = $result->fetchRow()) {
+				$res['prefix']=($tocPrefix=='')?'':"$tocPrefix.";
+				$res['prefix'].=$prefix;
+				$prefix++;
 				if ($res['page_ref_id'] != $id) {
-					$sub = $this->build_subtree_toc($res['page_ref_id'],$slide,$order);
+					$sub = $this->build_subtree_toc($res['page_ref_id'],$slide,$order,$res['prefix']);
 					if (is_array($sub)) {
 						$res['sub'] = $sub;	
 					}
@@ -347,12 +352,27 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id,$order='asc',$showdesc=false) {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='') {
+		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order,$numberPrefix);
+		return $this->fetch_toc($structure_tree,$showdesc,$numbering);
+	}
+
+	function fetch_toc($structure_tree,$showdesc,$numbering) {
 		global $smarty;
-		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order);
-		$smarty->assign('structure_tree',$structure_tree);
-		$smarty->assign('showdesc',$showdesc);
-		return $smarty->fetch("structures_toc.tpl");
+		$ret='';
+		$ret.=$smarty->fetch("structures_toc-startul.tpl");
+		foreach($structure_tree as $leaf) {
+			//echo "<br />";print_r($leaf);echo "<br />";
+			$smarty->assign_by_ref('structure_tree',$leaf);
+			$smarty->assign('showdesc',$showdesc);
+			$smarty->assign('numbering',$numbering);
+			$ret.=$smarty->fetch("structures_toc-leaf.tpl");
+			if(isset($leaf["sub"]) && is_array($leaf["sub"])) {
+				$ret.=$this->fetch_toc($leaf["sub"],$showdesc,$numbering);
+			}
+		}
+		$ret.=$smarty->fetch("structures_toc-endul.tpl");
+		return $ret;
 	}
 	// end of replacement
 	
@@ -508,7 +528,7 @@ function get_struct_ref_id($pageName) {
 
     /** Get a list of all structures this page is a member of
 	*/
-	function get_page_structures($pageName) {
+	function get_page_structures($pageName,$structure='') {
 		$ret = array();
 		$structures_added = array();
 		$query = "select `page_ref_id` ";
@@ -519,9 +539,11 @@ function get_struct_ref_id($pageName) {
 			$next_page = $this->s_get_structure_info($res["page_ref_id"]);
 			//Add each structure head only once
 			if (!in_array($next_page["page_ref_id"], $structures_added)) {
+				if(empty($structure) || $structure == $next_page["pageName"]) {
 				$structures_added[] = $next_page["page_ref_id"];
 				$next_page["req_page_ref_id"] = $res["page_ref_id"];
 				$ret[] = $next_page;
+				}
 			}
 		}
 		return $ret;

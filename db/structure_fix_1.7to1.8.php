@@ -99,7 +99,7 @@ $result = $database->query($query);
 #Copy child nodes
 #Cannot enter parent_id until table is populated, use non-null dummy
 $query  = "insert into temp_tiki_structures(parent_id, page_id, pos) select ";
-$query  .= "tp1.page_id,";
+$query  .= "tp2.page_id,";
 $query  .= "tp1.page_id,";
 $query  .= "ts.pos ";
 $query  .= "from original_tiki_structures  ts, tiki_pages  tp1, tiki_pages  tp2 ";
@@ -140,7 +140,8 @@ $query  .= ") TYPE=MyISAM AUTO_INCREMENT=1 ";
 $result = $database->query($query);
 
 #Copy structure heads (parent == '')
-$query  = "insert into tiki_structures(page_id, page_alias, pos) select ";
+$query  = "insert into tiki_structures(parent_id, page_id, page_alias, pos) select ";
+$query  .= "NULL,";
 $query  .= "ts.page_id,";
 $query  .= "ts.page_alias,";
 $query  .= "ts.pos ";

@@ -34,6 +34,22 @@ if (isset($_REQUEST["page_ref_id"])) {
 } else {
   $page_ref_id = $structlib->get_struct_ref_id($page);
 }
+
+if (!isset($page_ref_id)) {
+        //Get the structures this page is a member of
+	if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
+		$structure=$_REQUEST['structure'];
+	} else {
+		$structure='';
+	}
+        $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
+        $smarty->assign('showstructs', $structs);
+        if (count($structs)==1) {
+                $page_ref_id=$structs[0]['req_page_ref_id'];
+		$_REQUEST["page_ref_id"]=$page_ref_id;
+        }
+}
+
 if(isset($page_ref_id)) {
  	$smarty->assign('structure','y');
  	$page_info = $structlib->s_get_page_info($page_ref_id);
@@ -44,6 +60,9 @@ if(isset($page_ref_id)) {
  	$smarty->assign('parent_info', $navigation_info["parent"]);
  	$smarty->assign('home_info', $navigation_info["home"]);
 	$page = $page_info["pageName"];
+	// others still need a good set page name or they will get confused.
+	// comments of home page were all visible on every structure page
+	$_REQUEST["page"]=$page;
 	$structure_path = $structlib->get_structure_path($page_ref_id);
  	$smarty->assign('structure_path', $structure_path);
 } else {
@@ -69,12 +88,6 @@ if(isset($_REQUEST["copyrightpage"])) {
   $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
 }
 
-//If not currently viewing a structure 
-if (!$page_ref_id) {
-	//Get the structures this page is a member of
-	$structs = $structlib->get_page_structures($_REQUEST["page"]);
-	$smarty->assign('showstructs', $structs);
-}
 // Get the backlinks for the page "page"
 $backlinks = $wikilib->get_backlinks($page);
 $smarty->assign_by_ref('backlinks', $backlinks);

@@ -312,7 +312,7 @@ class Comments extends TikiLib {
 
 	    // post
 	    $this->post_new_comment( 'forum:' . $forumId,
-		    $parentId, $userName, $title, '', $body,
+		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
 
 	    $pop3->DeleteMessage($i);
@@ -433,7 +433,7 @@ class Comments extends TikiLib {
 	$message_id = '';
 	$threadId = $this->post_new_comment(
 		'forum:' . $info['forumId'], $info['parentId'],
-		$info['user'], $info['title'], '', $info['data'], 
+		$info['user'], $info['title'], $info['data'], 
 		$message_id, '', //in_reply_to
 		$info['type'],
 		$info['summary'], $info['topic_smiley']
@@ -470,15 +470,15 @@ class Comments extends TikiLib {
 		$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 			a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
 			a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
-			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,
-			greatest(max(b.`commentDate`),a.`commentDate`) as `lastPost`,
+			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,".
+			$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,
 			count(b.`threadId`) as `replies`
 			from `tiki_comments` a left join `tiki_comments` b 
 			on b.`parentId`=a.`threadId`
 			where a.`object`=?
 			and a.`type` $stickytest ?  and a.`objectType` = 'forum'
 			and a.`parentId` = ? $time_cond
-			group by a.`threadId`
+			group by a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`
 			order by ".$this->convert_sortmode($sort_mode).
 			", `threadId`";
 		$result = $this->query($query, array_merge(array($forumId, 's', 0),
@@ -1328,7 +1328,7 @@ class Comments extends TikiLib {
     // the old comment instead, if it finds one.  The threadId is
     // returned in the $getold variable iteslf. -Robin
     function post_new_comment($objectId, $parentId, $userName,
-	    $title, $comment_rating, $data, &$message_id, $in_reply_to = '', $type = 'n',
+	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 	    $summary = '', $smiley = '', $getold = false
 	    )
     {
@@ -1432,15 +1432,15 @@ class Comments extends TikiLib {
 		`commentDate`, `userName`, `title`, `data`, `votes`,
 		`points`, `hash`, `parentId`, `average`, `hits`,
 		`type`, `summary`, `smiley`, `user_ip`,
-		`message_id`, `in_reply_to`, `comment_rating` )
+		`message_id`, `in_reply_to`)
 		values ( ?, ?, ?, ?, ?, ?,
 			0, 0, ?, ?, 0, 0, ?, ?, 
-			?, ?, ?, ?, ?)";
+			?, ?, ?, ?)";
 	    $result = $this->query($query, 
-		    array( $object[0], $object[1], $now, $userName,
+		    array( $object[0], (string) $object[1],(int) $now, $userName,
 		    $title, $data, $hash, (int) $parentId, $type,
 		    $summary, $smiley, $_SERVER["REMOTE_ADDR"],
-		    $message_id, $in_reply_to, $comment_rating )
+		    $message_id, $in_reply_to)
 		    );
 	} else {
 	    // If we have been asked to get the old page threadId, we don't quit here.

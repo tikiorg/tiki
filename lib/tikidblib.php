@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.4 2003-12-28 11:41:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.5 2004-01-26 23:10:35 redflo Exp $
 //
 
 
@@ -131,6 +131,10 @@ function sql_error($query, $values, $result) {
     if(empty($result)) echo "<br>\$result is empty";
     // end only for debugging
     die;
+}
+
+function ifNull($narg1,$narg2) {
+  return $this->db->ifNull($narg1,$narg2);
 }
 
 // functions to support DB abstraction

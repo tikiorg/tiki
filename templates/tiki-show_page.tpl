@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.60 2004-01-15 09:56:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.61 2004-01-26 23:11:32 redflo Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -62,7 +62,7 @@
       </form>
       </td>
 	{/if}
-	{if count($showstructs) ne 0}
+	{if count($showstructs) > 1}
   	  <td style="text-align:right;">
       <form href="tiki-index.php">
 	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">

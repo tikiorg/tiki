@@ -21,7 +21,7 @@ echo "<br/>\n";
 
 // split into statements
 
-$statements=split(";",$data);
+$statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
 // step though statements
@@ -126,6 +126,8 @@ function do_updates($tab,$content)
 
 function do_inserts($tab,$content,$tail)
 {
+  // for some reason are the quotes in $tail addslashed. i dont know why
+  $tail=preg_replace('/\\\"/','"',$tail);
   $ret="INSERT INTO \"".$tab."\" (";
   $cols=split(",",$content);
   foreach ($cols as $vals) {
