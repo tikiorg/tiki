@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.1 2003-07-13 00:09:14 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.2 2003-07-13 05:35:21 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -24,6 +24,7 @@ div#debugconsole
   font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
+/* Permissions in table */
 span.on-option
 {
   color: #00C000;

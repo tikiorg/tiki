@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.3 2003-07-13 00:09:14 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
  *
  */
 
@@ -32,8 +32,6 @@ td.form
 td.formcolor
 {
   color: #001000;
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
   font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   text-align: left;
@@ -45,8 +43,6 @@ td.formcolor
 td.heading
 {
   color: #001000;
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
   font-weight : bold;
@@ -76,25 +72,14 @@ td.findtitle {}
 td.odd
 {
   color: lightgreen;
-  background-image: url(module.data.png);
-  background-repeat: repeat;
   border: 1px outset #00A000;
 }
 td.even
 {
   color: lightgreen;
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
   border: 1px outset #00A000;
 }
 /* currently unused as `grep` shows */
 td.third
 {
-}
-
-/* Hack to make timesone selector smaller */
-select[name='display_timezone']
-{
-    display: block;
-    width: 450px;
 }

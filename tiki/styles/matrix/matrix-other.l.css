@@ -1,57 +1,33 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.l.css,v 1.3 2003-07-13 00:09:14 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.l.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ *
+ * Backgrounds for light version of 'Matrix' theme
  *
  */
 
+/* Get styles w/o backgrounds */
+@import "matrix-other.css";
+
 /*
- * Messages
+ * Define backgrounds (the only difference between two themes)
  */
 
-td.prio1 { border: 1px outset #00A000; background-color: #004000; }
-td.prio2 { border: 1px outset #00A000; background-color: #006000; }
-td.prio3 { border: 1px outset #00A000; background-color: #008000; }
-td.prio4 { border: 1px outset #00A000; background-color: #805000; }
-td.prio5 { border: 1px outset #00A000; background-color: #803000; }
-
-/* Div containing links to flag/unflag messages when reading a message */
-div.messureadflag
-{
-  padding: 5px;
-}
-
-/* Header when reading a message */
 div.messureadhead
 {
   background: #202020;
-  border: 1px outset #00A000;
-  margin-top: 20px;
 }
+
 div.messureadhead td[style="font-weight:bold;"]
 {
-  color: #001000;
   background: #507050;
-  border: 1px outset #00A000;
 }
-div.messureadhead > table
-{
-  width: 100%;
-}
+
 div.messureadhead td[style="font-weight:bold;"] + td
 {
   background: #404040;
-  border: 1px outset #00A000;
-  width: 100%;
 }
 
-/* Message body when reading */
 div.messureadbody
 {
-  color: #001000;
   background: #70B080;
-  border: 1px outset #00A000;
-  margin-top: 5px;
 }
-
-/* Links to read emails (the subject in the mailbox listing) */
-.readlink, .readlink:active, .readlink:visited { color: #00E000; text-decoration: none; }
-.readlink:hover, .readlink:visited:hover       { background-color: green; text-decoration: none; }
