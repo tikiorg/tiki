@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.23 2003-08-10 22:38:47 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.24 2003-08-13 16:41:59 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,9 @@
 /** \file
  * $Header: /cvsroot/tikiwiki/tiki/get_strings.php
  * \brief Update the language.php files
- * \param lang the abbrevaitaion of the language - if no parameter all the languages are processed
+ * call example get_strings.php?lang=fr&close=1
+ * \param lang=languageName - if no parameter all the languages are processed
+ * \close - if this parameter is set, look for close strings that are already translated
  */
 /// known bug: keeps collecting "\n for rows" and "...snippet of code.\n..."
 require_once ('tiki-setup.php');
@@ -45,7 +47,7 @@ if (isset($_REQUEST["lang"])) {
 print ("Languages:");
 
 foreach ($languages as $sel) {
-	print ($sel);
+	print ($sel)." ";
 }
 
 print ("</br>");
@@ -206,7 +208,26 @@ foreach ($languages as $sel) {
 		// backslash $ and \n
 		fwrite($fw, '"' . str_replace("\$",
 			"\\\$", str_replace("\n", "\\n", $key)). '" => "' . str_replace("\$", "\\\$", str_replace("\n", "\\n", $val)). '",');
-
+		if (isset($_REQUEST["close"]) && $nb >= $nbTrads && strlen($key) < 255) {
+		/// a new string to translate : look if something already translated is close
+			$dist = 255;
+			$txt = "";
+			$i = 0;
+			foreach ($lang as $en => $trad) {
+				if (++$i == $nbTrads)
+					break;
+				if (strlen($en) >= 255)
+					continue;
+				$d = levenshtein($key, $en);
+				if ($d < $dist) {
+					$txt = $trad;
+					$txtEn=$en;
+					$dist = $d;
+				}
+			}
+			if ($dist < 1+ strlen($key)/5)
+				fwrite($fw, "//##close: $txtEn=>$txt");	
+		}
 		if (++$nb == $nbTrads)
 			fwrite($fw, "//##First new line");
 
