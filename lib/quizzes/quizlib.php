@@ -411,10 +411,10 @@ class QuizLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 
 			$mid = " where `quizId`=? and `question` like ? ";
-			$bindvars=array($quizId,$findesc);
+			$bindvars=array((int) $quizId,$findesc);
 		} else {
 			$mid = " where `quizId`=? ";
-			$bindvars=array($quizId);
+			$bindvars=array((int) $quizId);
 		}
 
 		$query = "select * from `tiki_quiz_questions` $mid order by ".$this->convert_sortmode($sort_mode);

@@ -776,7 +776,7 @@ function get_actual_content($contentId) {
 function get_quiz($quizId) {
     $query = "select * from `tiki_quizzes` where `quizId`=?";
 
-    $result = $this->query($query,array($quizId));
+    $result = $this->query($query,array((int) $quizId));
 
     if (!$result->numRows())
 	return false;
@@ -2377,8 +2377,8 @@ function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', 
 
 	$query = "select `title`  from `tiki_blogs` where `blogId`=?";
 	$cant_com = $this->getOne("select count(*) from
-		`tiki_comments` where `object`=? and `objectType` =
-		'blog'",array($res["postId"]));
+		`tiki_comments` where `object`=? and `objectType` = ?",
+		array((string) $res["postId"],'blog'));
 	$res["comments"] = $cant_com;
 	$res["blogTitle"] = $this->getOne($query,array($blogId));
 	$res["size"] = strlen($res["data"]);
