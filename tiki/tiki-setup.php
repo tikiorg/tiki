@@ -1,6 +1,7 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.208 2004-04-03 09:36:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.209 2004-04-04 03:53:15 chealer Exp $
+
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -271,6 +272,7 @@ if (isset($_REQUEST["PHPSESSID"])) {
     $tikilib->update_session(session_id());
 }
 
+/* Commented on revision 1.208 because not used, log message said more
 if (!isset($_SESSION["last_forum_visit"])) {
     $now = date("U");
 
@@ -284,6 +286,7 @@ if (!isset($_SESSION["last_forum_visit"])) {
 
     $_SESSION["last_forum_visit"] = $last_forum_visit;
 }
+*/
 
 if (file_exists('lib/bablotron.php')) {
 	$lib_spellcheck = 'y';
@@ -638,12 +641,9 @@ $smarty->assign('feature_theme_control', $feature_theme_control);
 $feature_workflow = 'n';
 $smarty->assign('feature_workflow', $feature_workflow);
 $feature_charts = 'n';
+$smarty->assign('feature_charts', $feature_charts);
 $feature_user_watches = 'n';
 $smarty->assign('feature_user_watches', $feature_user_watches);
-
-$smarty->assign('feature_charts', $feature_charts);
-$feature_phpopentracker = 'n';
-$smarty->assign('feature_phpopentracker', $feature_phpopentracker);
 
 $feature_eph = 'n';
 $smarty->assign('feature_eph', $feature_eph);
@@ -1667,14 +1667,6 @@ if ($feature_stats == 'y') {
     }
 }
 
-/*
-if($feature_phpopentracker == 'y') {
-
-    include_once('lib/phpOpenTracker/phpOpenTracker.php');
-    // log access
-    phpOpenTracker::log();
-}
-*/
 $smarty->assign('uses_tabs', 'n');
 $smarty->assign('uses_jscalendar', 'n');
 $smarty->assign('uses_phplayers', 'n');
