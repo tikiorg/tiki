@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.27 2003-12-22 08:02:36 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.28 2004-02-25 15:34:13 musus Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -67,7 +67,15 @@
   <td>
     <div class="button2">
       <a title="Show quick help for wiki syntax"
-         href="javascript:flip('edithelpzone');" class="linkbut">{tr}wiki help{/tr}</a>
+         href="javascript:flip('edithelpzone');
+hide('helpimg');
+hide('helplinks');
+hide('helplists');
+hide('helpdraw');
+hide('helpmisc');
+hide('helpdynamic');
+hide('helpplugins');
+hide('helptboxes');" class="linkbut">{tr}wiki help{/tr}</a>
     </div>
   </td>
 {/if}
@@ -85,7 +93,7 @@
          href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');"
          class="linkbut">
 	{if $comments_cant == 0}
-          {tr}add comment{/tr}
+          {tr}comment{/tr}
         {elseif $comments_cant == 1}
           <span class="highlight">{tr}1 comment{/tr}</span>
         {else}
