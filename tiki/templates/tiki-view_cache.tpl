@@ -1,3 +1,11 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  <base href="{$info.url}" />
+  </head>
+  <body>
 <br/>
 <div align="center">
 <table  border="1" bgcolor="#EAEAEA" width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -10,3 +18,5 @@
 <div class="cachedpage">
 {$info.data}
 </div>
+</body>
+</html>

@@ -1,3 +1,6 @@
+alter table tiki_forums add section varchar(200);
+update tiki_forums set section="";
+
 ### Webmail ###
 drop table if exists tiki_webmail_contacts;
 create table tiki_webmail_contacts (

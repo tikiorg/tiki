@@ -24,7 +24,13 @@
 <td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
 <td class="forumheading"><a class="lforumheading href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
 </tr>
+{assign var=section_old value=""}
 {section name=user loop=$channels}
+{assign var=section value=$channels[user].section}
+{if $section <> $section_old}
+  {assign var=section_old value=$section}
+  <tr><td class="third" colspan="6"><div align="center">{$section}</div></td></tr>
+{/if}
 {if $smarty.section.user.index % 2}
 <tr>
 {if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}

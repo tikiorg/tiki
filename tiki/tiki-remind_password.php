@@ -12,10 +12,10 @@ if($forgotPass != 'y') {
 $smarty->assign('showmsg','n');
 if(isset($_REQUEST["remind"])) {
   if($tikilib->user_exists($_REQUEST["username"])) {
-    if($feature_clear_password == 'y') {
-    $pass = $userlib->get_user_password($_REQUEST["username"]);
+    if($feature_clear_passwords == 'y') {
+      $pass = $userlib->get_user_password($_REQUEST["username"]);
     } else {
-    $pass = $userlib->renew_user_password($_REQUEST["username"]);
+      $pass = $userlib->renew_user_password($_REQUEST["username"]);
     }
     $email = $tikilib->get_user_email($_REQUEST["username"]);
     //$msg = tra('Someone from ').$_SERVER["SERVER_NAME"].tra(' requested to send the password for ').$_REQUEST["username"].tra(' by email to our registered email address')."\n".tra(' and the requested password is ').$pass;

@@ -663,6 +663,7 @@ create table tiki_forums(
   hits integer(8),
   mail varchar(200),
   useMail char(1),
+  section varchar(200),
   usePruneUnreplied char(1),
   pruneUnrepliedAge integer(8),
   usePruneOld char(1),
