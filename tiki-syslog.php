@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.1 2004-03-17 03:35:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-syslog.php,v 1.2 2004-03-31 10:07:56 mose Exp $
 
 require_once ('tiki-setup.php');
 
@@ -32,6 +32,9 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset', $offset);
+if (isset($_REQUEST["max"])) {
+	$maxRecords = $_REQUEST["max"];
+}
 
 $list = $logslib->list_logs('','',$offset, $maxRecords, $sort_mode, $find);
 $smarty->assign('list', $list['data']);
