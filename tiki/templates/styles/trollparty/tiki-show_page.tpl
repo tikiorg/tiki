@@ -24,9 +24,9 @@
 
 {if $user and $feature_user_watches eq 'y'}
 	{if $user_watching_page eq 'n'}
-		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&watch_object={$page}&watch_action=add" class="linkbuttop">{tr}monitor this page{/tr}</a>
+		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=add" class="linkbuttop">{tr}monitor this page{/tr}</a>
 	{else}
-		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&watch_object={$page}&watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
+		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
 	{/if}
 {/if}
 </div>
@@ -51,7 +51,7 @@
 	<tr>
 		<td width='33%'>
 			{if $struct.prev_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&structID={$key}">&lt;&lt; 
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt; 
 					{if $struct.prev_page_alias}
 						{$struct.prev_page_alias}
 					{else}
@@ -69,7 +69,7 @@
 		</td>
 		<td align='right' width='33%'>
 			{if $struct.next_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&structID={$key}">
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&amp;structID={$key}">
 					{if $struct.next_page_alias}
 						{$struct.next_page_alias}
 					{else}
@@ -116,7 +116,7 @@
 <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
 {/if}
 {else}
-<p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&copyrightpage={$page}">{$wikiLicensePage}</a>.</p>
+<p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page}">{$wikiLicensePage}</a>.</p>
 {/if}
 {/if}
 {if $wiki_extras eq 'y'}
