@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.14 2004-02-27 01:56:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.15 2004-03-12 22:04:09 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,23 @@ class Smarty_TikiWiki extends Smarty {
 		$_smarty_cache_id = $language . $_smarty_cache_id;
 		$_smarty_compile_id = $language . $_smarty_compile_id;
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+	}
+	/* fetch in a specific language */
+	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)  {
+		global $language, $style, $style_base;
+
+		$lgSave = $language;
+		$language = $lg; // the global var needs to be changed in case the tpl needs to be compiled
+		if (isset($style) && isset($style_base)) {
+			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
+			}
+		}
+		$_smarty_cache_id = $language . $_smarty_cache_id;
+		$_smarty_compile_id = $language . $_smarty_compile_id;
+		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+		$language = $lgSave;
+		return $res;
 	}
 }
 
