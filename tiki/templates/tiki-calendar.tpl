@@ -5,29 +5,35 @@
 <span class="mini"><a href="tiki-admin_calendars.php" class="link">{tr}admin{/tr}</a></span>
 {/if}
 <br/>
-<table cellpadding="0" cellspacing="1" border="0" width="100%" style="border-bottom:1px dashed #424242;">
-<tr><td class="heading">
-<div id="morecal" class="heading" style="padding-top:4px;">
-<a href="javascript:toggle('refreshopened');toggle('refreshclosed');toggle('morecal');toggle('lesscal');" class="tableheading">{tr}more{/tr}</a>
+
+<div id="tab">
+<a href="javascript:show('tabcal');hide('tabnav');hide('tab');" class="caltab">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:hide('tabcal');show('tabnav');hide('tab');" class="caltab">{tr}Navigation Panel{/tr}</a>
+<a href="javascript:hide('tabcal');hide('tabnav');show('tab');" class="caltabon">{tr}Hide Panels{/tr}</a>
 </div>
-<div id="lesscal" class="heading" style="padding-top:4px;display:none;">
-<a href="javascript:toggle('refreshopened');toggle('refreshclosed');toggle('morecal');toggle('lesscal');" class="tableheading">{tr}less{/tr}</a>
+
+<div id="tabcal" style="display:none;">
+<div>
+<a href="javascript:show('tabcal');hide('tabnav');hide('tab');" class="caltabon">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:hide('tabcal');show('tabnav');hide('tab');" class="caltab">{tr}Navigation Panel{/tr}</a>
+<a href="javascript:hide('tabcal');hide('tabnav');show('tab');" class="caltab">{tr}Hide Panels{/tr}</a>
 </div>
-</td>
-<td colspan="7">
-<div id="refreshopened" style="display:none;">
+<div class="tabcal">
 <form class="box" method="get" action="tiki-calendar.php" name="f">
-<table border="0" width="100%" style="border:1px dashed #666666;border-left:0;">
+<table border="0" width="100%">
 <tr>
 <td>
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}"><br/>
 </td>
 <td>
-{tr}Group Calendars{/tr} :<br/>
+<div class="caltitle">{tr}Group Calendars{/tr}</div>
+<div class="caltoggle"
+onclick="document.getElementById('calswitch').click();document.getElementById('calswitch').checked=!document.getElementById('calswitch').checked;document.getElementById('calswitch').click();"
+><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'calIds[]','calswitch');"> check / uncheck all</a></div>
 {foreach item=k from=$listcals}
-<div style="background-color:#ffffff;" 
+<div class="calcheckbox"
 onclick="document.getElementById('groupcal_{$k}').checked=!document.getElementById('groupcal_{$k}').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';" 
+onmouseout="this.style.backgroundColor='none';" 
 onmouseover="this.style.backgroundColor='#cccccc';"
 ><input type="checkbox" name="calIds[]" value="{$k}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}
 onclick="this.checked=!this.checked;"/>
@@ -44,42 +50,44 @@ tiki_p_add_events : {$tiki_p_add_events.$loopcal}<br/>
 {/foreach}
 </td>
 <td>
-{tr}Tools Calendars{/tr} :<br/>
+<div class="caltitle">{tr}Tools Calendars{/tr}</div>
+<div class="caltoggle"
+onclick="document.getElementById('tikiswitch').click();document.getElementById('tikiswitch').checked=!document.getElementById('tikiswitch').checked;document.getElementById('tikiswitch').click();"
+><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;"> check / uncheck all</a></div>
 {foreach from=$tikiItems key=ki item=vi}
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
-<div style="background-color:#ffffff;" 
+<div class="calcheckbox"
 onclick="document.getElementById('tikical_{$ki}').checked=!document.getElementById('tikical_{$ki}').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';"  
 onmouseover="this.style.backgroundColor='#cccccc';" 
 ><input type="checkbox" name="tikicals[]" value="{$ki}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
-{$vi.label}</div>
+<span class="Cal{$ki}"> = {$vi.label}</span></div>
 {/if}
 {/foreach}
-
 </td>
 </form>
 </tr></table>
+</div></div>
+<div id="tabnav" style="display:none;">
+<div>
+<a href="javascript:hide('tabnav');hide('tab');show('tabcal');" class="caltab">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:show('tabnav');hide('tab');hide('tabcal');" class="caltabon">{tr}Navigation Panel{/tr}</a>
+<a href="javascript:hide('tabnav');show('tab');hide('tabcal');" class="caltab">{tr}Hide Panels{/tr}</a>
 </div>
-<div id="refreshclosed">
-<table border="0" width="100%" style="border:1px dashed #666666;border-left:0;">
-<tr><td>
-<div class="mini">
+<div class="tabnav">
 {if $displayedcals}
-<b>{tr}Group Calendars{/tr} :</b>
+<br/><b>{tr}Group Calendars{/tr} :</b>
 {foreach item=dc from=$displayedcals}
 {$infocals.$dc.name} <a href="tiki-calendar.php?hidegroup={$infocals.$dc.calendarId}" class="link" title="{tr}hide from display{/tr}">x</a>, 
 {/foreach}
 {/if}
 {if $displayedtikicals}
-<b>{tr}Tiki Calendars{/tr}:</b>
+<br/><b>{tr}Tiki Calendars{/tr}:</b>
 {foreach item=dc from=$displayedtikicals}
 <span class="Cal{$dc}">={$dc} <a href="tiki-calendar.php?hidetiki={$dc}" class="link" title="{tr}hide from display{/tr}">x</a></span>, 
 {/foreach}
 {/if}
-</div>
-</td></tr></table>
-</div>
-<div align="center" style="font-size:10px;height:16px;">
+<div align="center" style="margin-top:10px;">
 <span style="float:right;">
 {tr}today{tr}: <a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{$now|tiki_long_date}</a>
 </span>
@@ -92,16 +100,17 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 <a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
 <a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
 </span>
-<a href="tiki-calendar.php?display=table" title="{tr}table view{/tr}"><img src="img/icons/ico_table.gif" width="16" height="16" border="0" hspace="0" vspace="0" alt="{tr}table view{/tr}" align="middle"></a>
-<a href="tiki-calendar.php?display=list" title="{tr}list view{/tr}"><img src="img/icons/ico_ulist.gif" width="16" height="16" border="0" hspace="0" vspace="0" alt="{tr}list view{/tr}" align="middle"></a>
 {tr}browse by{/tr}
 <!-- <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}">{tr}day{/tr}</a> -->
 <a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}">{tr}week{/tr}</a>
 <a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}">{tr}month{/tr}</a>
 <br/>
 </div>
-</td></tr>
+</div>
+</div>
 
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-bottom:1px dashed #424242;">
 {if $viewmode eq 'day'}
 
 {else}
