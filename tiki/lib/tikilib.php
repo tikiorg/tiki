@@ -439,8 +439,8 @@ class TikiLib {
 	function complete_task($user, $taskId) {
 		$now = date("U");
 
-		$query = "update `tiki_user_tasks` set `completed`=$now, `status`='c', `percentage`=100 where `user`='$user' and `taskId`=$taskId";
-		$this->query($query);
+		$query = "update `tiki_user_tasks` set `completed`=?, `status`='c', `percentage`=100 where `user`=? and `taskId`=?";
+		$this->query($query,array($now,$user,$taskId));
 	}
 
 	/*shared*/
@@ -570,8 +570,8 @@ class TikiLib {
 	function get_user_items($user) {
 		$items = array();
 
-		$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
-		$result = $this->query($query);
+		$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value=?";
+		$result = $this->query($query,array($user));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -598,9 +598,9 @@ class TikiLib {
 		$groups = $this->get_user_groups($user);
 
 		foreach ($groups as $group) {
-			$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
+			$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($group));
 
 			while ($res = $result->fetchRow()) {
 				$itemId = $res["itemId"];
@@ -2104,10 +2104,10 @@ class TikiLib {
 
 		$now = date("U");
 		//    $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
-		$query = "delete from `tiki_semaphores` where `semName`='$semName'";
-		$this->query($query);
-		$query = "replace into tiki_semaphores(semName,timestamp,user) values($semNameEsc,$now,'$user')";
-		$result = $this->query($query);
+		$query = "delete from `tiki_semaphores` where `semName`=?";
+		$this->query($query,array($semName));
+		$query = "replace into tiki_semaphores(semName,timestamp,user) values(?,?,?)";
+		$result = $this->query($query,array($semName,$now,$user));
 		return $now;
 	}
 
