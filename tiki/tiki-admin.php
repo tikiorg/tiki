@@ -3,6 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/wiki/exportlib.php');
 include_once('lib/admin/adminlib.php');
+include_once('lib/imagegals/imagegallib.php');
 include_once ("lib/webmail/htmlMimeMail.php");
 include_once ("lib/ziplib.php");
 
@@ -1105,6 +1106,24 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_userfiles",'n');
   }
 
+  if(isset($_REQUEST["feature_usermenu"]) && $_REQUEST["feature_usermenu"]=="on") {
+    $tikilib->set_preference("feature_usermenu",'y'); 
+    $smarty->assign("feature_usermenu",'y');
+  } else {
+    $tikilib->set_preference("feature_usermenu",'n');
+    $smarty->assign("feature_usermenu",'n');
+  }
+  
+  if(isset($_REQUEST["feature_minical"]) && $_REQUEST["feature_minical"]=="on") {
+    $tikilib->set_preference("feature_minical",'y'); 
+    $smarty->assign("feature_minical",'y');
+  } else {
+    $tikilib->set_preference("feature_minical",'n');
+    $smarty->assign("feature_minical",'n');
+  }
+
+
+
   if(isset($_REQUEST["feature_theme_control"]) && $_REQUEST["feature_theme_control"]=="on") {
     $tikilib->set_preference("feature_theme_control",'y'); 
     $smarty->assign("feature_theme_control",'y');
@@ -1525,11 +1544,11 @@ if($home_blog) {
   $smarty->assign('home_blog_name',substr($hbloginfo["title"],0,20));
 }
 if($home_gallery) {
-  $hgalinfo = $tikilib->get_gallery($home_gallery);
+  $hgalinfo = $imagegallib->get_gallery($home_gallery);
   $smarty->assign('home_gal_name',substr($hgalinfo["name"],0,20));
 }
 if($home_file_gallery) {
-  $hgalinfo = $tikilib->get_gallery($home_file_gallery);
+  $hgalinfo = $imagegallib->get_gallery($home_file_gallery);
   $smarty->assign('home_fil_name',substr($hgalinfo["name"],0,20));
 }
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');

@@ -59,6 +59,9 @@
   {if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
     &nbsp;<a href="tiki-userfiles.php" class="linkmenu">{tr}My files{/tr}</a><br/>  
   {/if}
+  {if $feature_usermenu eq 'y'}
+     &nbsp;<a href="tiki-usermenu.php" class="linkmenu">{tr}User menu{/tr}</a><br/>    
+  {/if}
   </div>
 {/if}
 
@@ -381,6 +384,17 @@
     &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br/>
   </div>
 {/if}
+{if $feature_usermenu eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:setCookie('usrmenu','c');hide('usrmenu');">[-]</a> 
+  <a href="tiki-usermenu.php" class="separator">{tr}User Menu{/tr}</a>
+  <a class='separator' href="javascript:setCookie('usrmenu','o');show('usrmenu');">[+]</a></div>
+  <div id='usrmenu' style="{$mnu_usrmenu}">
+  {section name=ix loop=$usr_user_menus}
+  &nbsp;<a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="linkmenu">{$usr_user_menus[ix].name}</a><br/>
+  {/section}
+  </div>
+{/if}
+
 
 </div>
 </div>

@@ -1,5 +1,7 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] User menus, the user can add items to the application menu, an option to
+  automatically add top-level bookmarks to the menu is provided.
 * [NEW] Theme control center: if activated you can control the theme
   by section, by category or by specific object.
 * [NEW] Ephemerides feature: admin can set up images/texts for specific

@@ -1,5 +1,19 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_usermenu','user','Can create items in personal menu','registered');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minical','user','Can use the mini event calendar','registered');
+
+drop table if exists tiki_user_menus;
+create table tiki_user_menus(
+  user varchar(200) not null,
+  menuId integer(12) not null auto_increment,
+  url varchar(250),
+  name varchar(40),
+  position integer(4),
+  mode char(1),
+  primary key(menuId)
+);
+
 drop table if exists tiki_theme_control_sections;
 create table tiki_theme_control_sections(
   section varchar(250) not null,

@@ -83,6 +83,3 @@ class NotepadLib extends TikiLib {
 
 $notepadlib= new NotepadLib($dbTiki);
 ?>
-
-
-
