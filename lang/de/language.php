@@ -2163,5 +2163,59 @@ in Admin-Allgemein abgestellt haben.
 "If none of the above was selected the user theme is used" => "Wenn nicht, dann wird die Theme des Benutzers gew&auml;hlt",
 "Finally if the user didn't select a theme the default theme is used" => "Trifft nichts der obrigen Punkte zu, dann wird die default-Theme benutzt",
 "No more messages" => "Keine Nachrichten vorhanden",
+"Charts" => "Hitlisten",
+"No charts defined yet" => "Noch keine Hitlisten definiert",
+"Admin charts" => "Admin Hitlisten",
+"Add or edit a chart" => "Hitliste hinzuf&uuml;gen/bearbeiten",
+"Users can vote only one item from this chart per period" => "Benutzer kann nur f&uuml;r einen Eintrag pro Periode stimmen.",
+"Prevent users from voting same item more than one time" => "Benutzer d&uuml;rfen nur einmal f&uuml;r einen Eintrag stimmen.",
+"Users can suggest new items" => "Benutzer k&ouml;nnen neue Eintr&auml;ge vorschlagen.",
+"Auto validate user suggestions" => "Vorschl&auml;ger der Benutzer automatisch validieren.",
+"Ranking shows" => "Rangliste zeigt",
+"Voting system" => "Wahlsystem",
+"Ranking frequency" => "Wahlh&auml;ufigkeit",
+"Show Average" => "Zeige Durchschnitt",
+"Show Votes" => "Zeige Stimmen",
+"Use Cookies for unregistered users" => "Bei nicht angemeldeten Benutzern Cookies verwenden.",
+"Users can vote again after" => "Benutzer k&ouml;nnen erneut abstimmen nach",
+"Items" => "Eintr&auml;ge",
+"Ranks" => "R&auml;nge",
+"All items" => "Alle Eintr&auml;ge",
+"Top 10 items" => "Top 10 Eintr&auml;ge",
+"Top 20 items" => "Top 20 Eintr&auml;ge",
+"Top 40 items" => "Top 40 Eintr&auml;ge",
+"Top 50 items" => "Top 50 Eintr&auml;ge",
+"Top 100 items" => "Top 100 Eintr&auml;ge",
+"Top 250 items" => "Top 250 Eintr&auml;ge",
+"Vote items" => "Eintr&auml;ge w&auml;hlen",
+"Rank 1..5" => "Rang 1..5 vergeben",
+"Rank 1..10" => "Rang 1..10 vergeben",
+"Realtime" => "Echtzeit",
+"Each 5 minutes" => "alle 5 Minuten",
+"Monthly" => "monatlich",
+"Anytime" => "jederzeit",
+"5 minutes" => "5 Minuten",
+"1 day" => "1 Tag",
+"1 week" => "1 Woche",
+"1 month" => "1 Monat",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 "##end###" => "###end###");
 ?>

@@ -2,7 +2,7 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
 <br/><br/>
-<h3>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">new</a>
+<h3>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
 </h3>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="chartId" value="{$info.chartId}" />
