@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.37 2004-05-01 01:06:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.38 2004-05-06 00:55:17 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,7 +85,9 @@ for ($i = 0; $i < count($these_modules); $i++) {
 		}
 	}
 	if ($pass == 'y') {
-		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
+		$cachefile = 'modules/cache/';
+		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
+		$cachefile.= 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 		$phpfile = 'modules/mod-' . $r["name"] . '.php';
 		$template = 'modules/mod-' . $r["name"] . '.tpl';
 		$nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';

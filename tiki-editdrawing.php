@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.13 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.14 2004-05-06 00:55:17 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.13 2004-03-28 07:32:23 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.14 2004-05-06 00:55:17 mose Exp $
 require_once ("tiki-setup.php");
 
 if (($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y')) {
@@ -34,9 +34,9 @@ $path = $_REQUEST["path"];
 
 	<body>
 		<applet archive = "lib/jgraphpad/jgraphpad.jar" code = "org.jgraph.JGraphpad.class"  height="40">
-			<param name = "drawpath" value = "<?php echo $path?>/img/wiki/<?php echo $tikidomain.$name?>.pad_xml">
+			<param name = "drawpath" value = "<?php echo $path?>/img/wiki/<?php echo ($tikidomain)?"$tikidomain/.$name":$name; ?>.pad_xml">
 
-			<param name = "gifpath" value = "<?php echo $path?>/img/wiki/<?php echo $tikidomain.$name?>.gif">
+			<param name = "gifpath" value = "<?php echo $path?>/img/wiki/<?php echo ($tikidomain)?"$tikidomain/.$name":$name; ?>.gif">
 
 			<param name = "savepath" value = "<?php echo $path?>/jhot.php">
 

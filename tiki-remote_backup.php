@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.5 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.6 2004-05-06 00:55:17 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if(isset($_REQUEST["generate"])) {
     if(isset($_REQUEST["my_word"]) &&
        $_REQUEST["my_word"] == "YOUR PASSWORD FOR BACKUPS HERE" ) {
         $filename = md5($tikilib->genPass()).'.sql';
-        $backuplib->backup_database("backups/$tikidomain$filename");
+        $backuplib->backup_database("backups/$tikidomain/$filename");
         echo "Done";
     }
 }
