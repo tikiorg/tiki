@@ -88,7 +88,7 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 	//include_once('adodb-error.inc.php');
 	//include_once('adodb-errorhandler.inc.php');
 	//include_once('adodb-errorpear.inc.php');
-	include_once ('adodb-pear.inc.php');
+	//include_once ('adodb-pear.inc.php');
 
 	if ($db_tiki == 'pgsql') {
 		$db_tiki = 'postgres7';
