@@ -30,6 +30,7 @@
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
+<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}sorted section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 <option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
@@ -161,7 +162,7 @@ title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gi
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
 <td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
-<td>{$channels[user].type}</td>
+<td>{$channels[user].type_description}</td>
 <td>{$channels[user].section}</td>
 <td>{$channels[user].perm}</td>
 <td>{$channels[user].groupname}</td>
@@ -178,7 +179,7 @@ title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gi
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
 <td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
-<td>{$channels[user].type}</td>
+<td>{$channels[user].type_description}</td>
 <td>{$channels[user].section}</td>
 <td>{$channels[user].perm}</td>
 <td>{$channels[user].groupname}</td>
