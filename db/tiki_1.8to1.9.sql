@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.70 2004-06-08 05:15:53 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.71 2004-06-13 11:19:21 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -567,3 +567,5 @@ CREATE TABLE tiki_friendship_requests (
   PRIMARY KEY  (userFrom,userTo)
 ) TYPE=MyISAM;
 
+#Added June13th 2004 sylvie
+UPDATE tiki_pages set lang=null where lang="NULL";
