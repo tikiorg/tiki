@@ -2173,6 +2173,7 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 
     $hash = md5($title . $heading . $body);
     $now = date("U");
+    if(empty($imgdata)) $imgdata='';
     // Fixed query. -rlpowell
     $query = "select `name`  from `tiki_topics` where `topicId` = ?";
     $topicName = $this->getOne($query, array($topicId) );
