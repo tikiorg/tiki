@@ -196,7 +196,7 @@ class UsersLib extends TikiLib {
 		$cas_path = $tikilib->get_preference('cas_path');
 		
 		// import phpCAS lib
-		include_once('CAS/CAS.php');
+		include_once('phpcas/CAS.php');
 
 		phpCAS::setDebug();
 
@@ -534,7 +534,7 @@ class UsersLib extends TikiLib {
 		$cas_path = $tikilib->get_preference('cas_path');
 		
 		// import phpCAS lib
-		include_once('CAS/CAS.php');
+		include_once('phpcas/CAS.php');
 
 		phpCAS::setDebug();
 
