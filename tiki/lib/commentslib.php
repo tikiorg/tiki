@@ -775,12 +775,15 @@ class Comments extends TikiLib {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $res['forumId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
