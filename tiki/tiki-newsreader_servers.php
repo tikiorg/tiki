@@ -18,7 +18,6 @@ if($feature_newsreader != 'y') {
 if(!isset($_REQUEST["serverId"])) $_REQUEST["serverId"]=0;
 
 
-
 if(isset($_REQUEST["remove"])) {
     $newslib->remove_server($user, $_REQUEST['remove']);
 }
