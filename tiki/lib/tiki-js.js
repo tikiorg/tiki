@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.24 2003-11-12 20:42:53 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.25 2003-11-13 06:45:47 mose Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -23,10 +23,18 @@ function chgArtType() {
 }
 
 function chgTrkFld() {
-	if (document.getElementById('trkfldtype').value == 'd' || document.getElementById('trkfldtype').value == 'i' ) {
-		document.getElementById('trkfldoptions').style.display = "block";
+	if (document.getElementById('trkfldtype').value == 'd'){
+		document.getElementById('trkfldoptions').style.display = "inline";
+		document.getElementById('trkflddropdown').style.display = "inline";
+		document.getElementById('trkfldimage').style.display = "none";
+	} else if (document.getElementById('trkfldtype').value == 'i' ) {
+		document.getElementById('trkfldoptions').style.display = "inline";
+		document.getElementById('trkflddropdown').style.display = "none";
+		document.getElementById('trkfldimage').style.display = "inline";
 	} else {
 		document.getElementById('trkfldoptions').style.display = "none";
+		document.getElementById('trkflddropdown').style.display = "none";
+		document.getElementById('trkfldimage').style.display = "none";
 	}
 }
 
