@@ -1,6 +1,13 @@
 Version 1.5 -TBA-
 
-* [NEW] Added an option to generate gzipper output to the browser.
+* [NEW] Added a description field for Wiki pages (optional) when this feature is disabled the description is
+  displayed below the page name and as the title of a link to the page (form other pages).
+* [NEW] Added direct link to pages in paginations (optional) if enabled you can jump to any page of a multi
+  page listing by following a link.  
+* [NEW] Newsletters added, admins can setup newsletters and users can subscribe, emails are requiered to confirm
+  subscriptions and prevent spamming. Then admin can simply send an HTML based newsletter to the subscribed (and
+  confirmed) users. Users can unsubscribe using a URL.
+* [NEW] Added an option to generate gzipped output to the browser.
 * [NEW] Base templates can now be defined by theme so you can create a theme presenting
   a whole different layout for Tiki. You can also use this to create themes including images
   and other decoration elements in Tiki. Since only base templates are classified by theme

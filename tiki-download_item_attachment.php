@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup_base.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($tiki_p_view_trackers !='y' ) {
   die;  
@@ -10,7 +11,7 @@ if($tiki_p_view_trackers !='y' ) {
 if(!isset($_REQUEST["attId"])) {
   die;
 }
-$info = $tikilib->get_item_attachment($_REQUEST["attId"]);
+$info = $trklib->get_item_attachment($_REQUEST["attId"]);
 
 $t_use_db=$tikilib->get_preference('t_use_db','y');
 $t_use_dir=$tikilib->get_preference('t_use_dir','');
@@ -18,7 +19,7 @@ $t_use_dir=$tikilib->get_preference('t_use_dir','');
 
 
 
-$tikilib->add_item_attachment_hit($_REQUEST["attId"]);
+$trklib->add_item_attachment_hit($_REQUEST["attId"]);
 
 $type=&$info["filetype"];
 $file=&$info["filename"];

@@ -18,13 +18,6 @@ if(isset($_REQUEST["clear"])) {
   $tikilib->clear_search_stats();	
 }
 
-/*
-if($tiki_p_take_quiz != 'y') {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
-}
-*/
 
 
 if(!isset($_REQUEST["sort_mode"])) {

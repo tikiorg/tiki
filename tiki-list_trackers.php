@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -22,7 +23,7 @@ if(!isset($_REQUEST["trackerId"])) {
 $smarty->assign('trackerId',$_REQUEST["trackerId"]);
 
 if($_REQUEST["trackerId"]) {
-  $info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+  $info = $trklib->get_tracker($_REQUEST["trackerId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -54,7 +55,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_trackers($offset,$maxRecords,$sort_mode,$find);
+$channels = $trklib->list_trackers($offset,$maxRecords,$sort_mode,$find);
 
 for($i=0;$i<count($channels["data"]);$i++) {
   if($userlib->object_has_one_permission($channels["data"][$i]["trackerId"],'tracker')) {

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/quizzes/quizlib.php');
 
 /*
 if($tiki_p_admin != 'y') {
@@ -45,7 +46,7 @@ $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$channels = $tikilib->list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find);
+$channels = $quizlib->list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find);
 
 for($i=0;$i<count($channels["data"]);$i++) {
   if($userlib->object_has_one_permission($channels["data"][$i]["quizId"],'quiz')) {

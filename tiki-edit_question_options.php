@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/quizzes/quizlib.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,7 +15,7 @@ if(!isset($_REQUEST["questionId"])) {
   die;
 }
 $smarty->assign('questionId',$_REQUEST["questionId"]);
-$quiz_info=$tikilib->get_quiz_question($_REQUEST["questionId"]);
+$quiz_info=$quizlib->get_quiz_question($_REQUEST["questionId"]);
 $smarty->assign('question_info',$quiz_info);
 $_REQUEST["quizId"]=$quiz_info["quizId"];
 
@@ -52,7 +52,7 @@ if(!isset($_REQUEST["optionId"])) {
 $smarty->assign('optionId',$_REQUEST["optionId"]);
 
 if($_REQUEST["optionId"]) {
-  $info = $tikilib->get_quiz_question_option($_REQUEST["optionId"]);
+  $info = $quizlib->get_quiz_question_option($_REQUEST["optionId"]);
 } else {
   $info = Array();
   $info["optionText"]='';
@@ -62,11 +62,11 @@ $smarty->assign('optionText',$info["optionText"]);
 $smarty->assign('points',$info["points"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_quiz_question_option($_REQUEST["remove"]);
+  $quizlib->remove_quiz_question_option($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
-  $tikilib->replace_question_option($_REQUEST["optionId"],$_REQUEST["optionText"],$_REQUEST["points"],$_REQUEST["questionId"]);
+  $quizlib->replace_question_option($_REQUEST["optionId"],$_REQUEST["optionText"],$_REQUEST["points"],$_REQUEST["questionId"]);
   $smarty->assign('optionText','');
   $smarty->assign('optionId',0);
 }
@@ -92,7 +92,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_quiz_question_options($_REQUEST["questionId"],$offset,$maxRecords,$sort_mode,$find);
+$channels = $quizlib->list_quiz_question_options($_REQUEST["questionId"],$offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/quizzes/quizlib.php');
 
 
 if($feature_quizzes != 'y') {
@@ -46,7 +46,7 @@ if($tiki_p_admin_quizzes != 'y') {
 $_REQUEST["questionsPerPage"]=999;
 
 if($_REQUEST["quizId"]) {
-  $info = $tikilib->get_quiz($_REQUEST["quizId"]);
+  $info = $quizlib->get_quiz($_REQUEST["quizId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -67,7 +67,7 @@ $smarty->assign('timeLimit',$info["timeLimit"]);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_quiz($_REQUEST["remove"]);
+  $quizlib->remove_quiz($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -87,7 +87,7 @@ if(isset($_REQUEST["save"])) {
     $_REQUEST["timeLimited"]='n';
   }
   
-  $qid = $tikilib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["canRepeat"],$_REQUEST["storeResults"],$_REQUEST["questionsPerPage"],$_REQUEST["timeLimited"],$_REQUEST["timeLimit"]);
+  $qid = $quizlib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["canRepeat"],$_REQUEST["storeResults"],$_REQUEST["questionsPerPage"],$_REQUEST["timeLimited"],$_REQUEST["timeLimit"]);
   
   $cat_type='quiz';
   $cat_objid = $qid;
@@ -118,7 +118,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_quizzes($offset,$maxRecords,$sort_mode,$find);
+$channels = $quizlib->list_quizzes($offset,$maxRecords,$sort_mode,$find);
 
 for($i=0;$i<count($channels["data"]);$i++) {
   if($userlib->object_has_one_permission($channels["data"][$i]["quizId"],'quiz')) {

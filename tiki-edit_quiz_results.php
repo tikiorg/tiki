@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/quizzes/quizlib.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -41,7 +42,7 @@ if($tiki_p_admin_quizzes != 'y') {
 
 
 $smarty->assign('quizId',$_REQUEST["quizId"]);
-$quiz_info=$tikilib->get_quiz_result($_REQUEST["quizId"]);
+$quiz_info=$quizlib->get_quiz_result($_REQUEST["quizId"]);
 $smarty->assign('quiz_info',$quiz_info);
 
 if(!isset($_REQUEST["resultId"])) {
@@ -50,7 +51,7 @@ if(!isset($_REQUEST["resultId"])) {
 $smarty->assign('resultId',$_REQUEST["resultId"]);
 
 if($_REQUEST["resultId"]) {
-  $info = $tikilib->get_quiz_result($_REQUEST["resultId"]);
+  $info = $quizlib->get_quiz_result($_REQUEST["resultId"]);
 } else {
   $info = Array();
   $info["fromPoints"]=0;
@@ -62,11 +63,11 @@ $smarty->assign('fromPoints',$info["fromPoints"]);
 $smarty->assign('toPoints',$info["toPoints"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_quiz_result($_REQUEST["remove"]);
+  $quizlib->remove_quiz_result($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
-  $tikilib->replace_quiz_result($_REQUEST["resultId"], $_REQUEST["quizId"], $_REQUEST["fromPoints"],$_REQUEST["toPoints"],$_REQUEST["answer"]);
+  $quizlib->replace_quiz_result($_REQUEST["resultId"], $_REQUEST["quizId"], $_REQUEST["fromPoints"],$_REQUEST["toPoints"],$_REQUEST["answer"]);
   $smarty->assign('answer','');
   $smarty->assign('resultId',0);
 }
@@ -93,7 +94,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_quiz_results($_REQUEST["quizId"],$offset,$maxRecords,$sort_mode,$find);
+$channels = $quizlib->list_quiz_results($_REQUEST["quizId"],$offset,$maxRecords,$sort_mode,$find);
 
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/surveys/surveylib.php');
 
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -39,15 +40,15 @@ if(!isset($_REQUEST["surveyId"])) {
   die;
 }
 $smarty->assign('surveyId',$_REQUEST["surveyId"]);
-$survey_info=$tikilib->get_survey($_REQUEST["surveyId"]);
+$survey_info=$srvlib->get_survey($_REQUEST["surveyId"]);
 $smarty->assign('survey_info',$survey_info);
 
 if(isset($_REQUEST["remove"]) && $tiki_p_admin_surveys=='y') {
-  $tikilib->clear_survey_stats($_REQUEST["remove"]);
+  $srvlib->clear_survey_stats($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["clear"]) && $tiki_p_admin_surveys=='y') {
-  $tikilib->clear_survey_stats($_REQUEST["clear"]);
+  $srvlib->clear_survey_stats($_REQUEST["clear"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -72,7 +73,7 @@ $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
-$channels = $tikilib->list_survey_questions($_REQUEST["surveyId"],0,-1,$sort_mode,$find);
+$channels = $srvlib->list_survey_questions($_REQUEST["surveyId"],0,-1,$sort_mode,$find);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

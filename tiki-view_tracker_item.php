@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,7 +16,7 @@ if(!isset($_REQUEST["itemId"])) {
     die;
 }
 $smarty->assign('itemId',$_REQUEST["itemId"]);
-$item_info=$tikilib->get_tracker_item($_REQUEST["itemId"]);
+$item_info=$trklib->get_tracker_item($_REQUEST["itemId"]);
 $smarty->assign('item_info',$item_info);
 
 if(!isset($_REQUEST["trackerId"])) {
@@ -49,10 +50,10 @@ if($tiki_p_view_trackers != 'y') {
     die;
 }
 
-$tracker_info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info',$tracker_info);
 
-$fields = $tikilib->list_tracker_fields($_REQUEST["trackerId"],0,-1,'fieldId_asc','');
+$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"],0,-1,'fieldId_asc','');
 $ins_fields=$fields;
 
 for($i=0;$i<count($fields["data"]);$i++ ) {
@@ -93,7 +94,7 @@ for($i=0;$i<count($fields["data"]);$i++ ) {
 
 if($tiki_p_admin_trackers == 'y') {
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_tracker_item($_REQUEST["remove"]);
+  $trklib->remove_tracker_item($_REQUEST["remove"]);
 }
 }
 
@@ -102,19 +103,19 @@ if(isset($_REQUEST["remove"])) {
 if($tiki_p_modify_tracker_items == 'y') {
 if(isset($_REQUEST["save"])) {
   // Save here the values for this item
-  $tikilib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields,$status);
+  $trklib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields,$status);
   for($i=0;$i<count($fields["data"]);$i++ ) {
     $name=$fields["data"][$i]["name"];
     $ins_name='ins_'.$name;
     $ins_fields["data"][$i]["value"]='';
   } 
-  $item_info=$tikilib->get_tracker_item($_REQUEST["itemId"]);
+  $item_info=$trklib->get_tracker_item($_REQUEST["itemId"]);
   $smarty->assign('item_info',$item_info);
 }
 }
 
 if($_REQUEST["itemId"]) {
-  $info = $tikilib->get_tracker_item($_REQUEST["itemId"]);
+  $info = $trklib->get_tracker_item($_REQUEST["itemId"]);
   for($i=0;$i<count($fields["data"]);$i++ ) {
     $name=$fields["data"][$i]["name"];
     $ins_name='ins_'.$name;
@@ -149,7 +150,7 @@ $smarty->assign('find',$find);
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
 /*
-$items=$tikilib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields);
+$items=$trklib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields);
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
@@ -203,12 +204,12 @@ if($tracker_info["useComments"] == 'y') {
   
   if($tiki_p_admin_trackers == 'y') {
   if(isset($_REQUEST["remove_comment"])) {
-    $tikilib->remove_item_comment($_REQUEST["remove_comment"]);
+    $trklib->remove_item_comment($_REQUEST["remove_comment"]);
   }
   }
 
   if(isset($_REQUEST["commentId"])) {
-    $comment_info=$tikilib->get_item_comment($_REQUEST["commentId"]);
+    $comment_info=$trklib->get_item_comment($_REQUEST["commentId"]);
     $smarty->assign('comment_title',$comment_info["title"]);
     $smarty->assign('comment_data',$comment_info["data"]);
   } else {
@@ -224,23 +225,23 @@ if($tracker_info["useComments"] == 'y') {
 
   if($tiki_p_comment_tracker_items == 'y') {  
   if(isset($_REQUEST["save_comment"])) {
-    $tikilib->replace_item_comment($_REQUEST["commentId"],$_REQUEST["itemId"],$_REQUEST["comment_title"],$_REQUEST["comment_data"],$user);
+    $trklib->replace_item_comment($_REQUEST["commentId"],$_REQUEST["itemId"],$_REQUEST["comment_title"],$_REQUEST["comment_data"],$user);
     $smarty->assign('comment_title','');
     $smarty->assign('comment_data','');
     $smarty->assign('commentId',0);
   }
   }
   
-  $comments=$tikilib->list_item_comments($_REQUEST["itemId"],0,-1,'posted_desc','');
+  $comments=$trklib->list_item_comments($_REQUEST["itemId"],0,-1,'posted_desc','');
   $smarty->assign_by_ref('comments',$comments["data"]);
 }
 
 if($tracker_info["useAttachments"] == 'y') {
   
   if(isset($_REQUEST["removeattach"])) {
-    $owner = $tikilib->get_item_attachment_owner($_REQUEST["removeattach"]);
+    $owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
     if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
-      $tikilib->remove_item_attachment($_REQUEST["removeattach"]);
+      $trklib->remove_item_attachment($_REQUEST["removeattach"]);
     }
   }
   if(isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y' )) {
@@ -274,11 +275,11 @@ if($tracker_info["useAttachments"] == 'y') {
       $size = $_FILES['userfile1']['size'];
       $name = $_FILES['userfile1']['name'];
       $type = $_FILES['userfile1']['type'];
-      $tikilib->item_attach_file($_REQUEST["itemId"],$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
+      $trklib->item_attach_file($_REQUEST["itemId"],$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
     }
   }
 
-  $atts = $tikilib->list_item_attachments($_REQUEST["itemId"],0,-1,'created_desc','');
+  $atts = $trklib->list_item_attachments($_REQUEST["itemId"],0,-1,'created_desc','');
   $smarty->assign('atts',$atts["data"]);
 }
 
