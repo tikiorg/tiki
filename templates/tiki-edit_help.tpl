@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.12 2003-08-15 21:09:55 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.13 2003-08-30 13:04:49 sylvieg Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -15,7 +15,7 @@
 <table width=100%>
 <tr><td width=20%><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
 <tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
-<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr} )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
+<tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
 {if $feature_drawings eq 'y'}
 <tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
