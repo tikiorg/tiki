@@ -16,7 +16,7 @@
 // | Authors: Jan Wagner <wagner@netsols.de>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: LDAP.php,v 1.1 2003-04-09 14:05:57 damienmckenna Exp $
+// $Id: LDAP.php,v 1.2 2003-04-09 14:14:45 damienmckenna Exp $
 //
 
 require_once "Auth/Container.php";
@@ -86,7 +86,7 @@ require_once "PEAR.php";
  *
  * @author   Jan Wagner <wagner@netsols.de>
  * @package  Auth
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 class Auth_Container_LDAP extends Auth_Container
 {
@@ -458,7 +458,7 @@ class Auth_Container_LDAP extends Auth_Container
         if($this->debug != false)
         mail($this->debug, "adduser", $status);
 
-        return PEAR::raiseError("Auth_Container_LDAP: ".$status, ", -1, PEAR_ERROR_PRINT)
+        return PEAR::raiseError("Auth_Container_LDAP: ".$status, -1, PEAR_ERROR_PRINT);
     }
 
     /**
