@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.40 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.41 2004-07-26 22:49:05 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,7 +93,7 @@ if ($tiki_p_read_blog != 'y') {
 	die;
 }
 
-$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
+$blog_data = $bloglib->get_blog($_REQUEST["blogId"]);
 $ownsblog = 'n';
 
 if ($user && $user == $blog_data["user"]) {
