@@ -187,7 +187,7 @@ div.box {
 /* 
 Boxes are divided in title and data, this is the title 
 */
-.box-title {
+div.box-title {
 	border-bottom:    1px dashed #999970;
 	font-size:   10px;
 	overflow:   hidden;
@@ -196,6 +196,10 @@ Boxes are divided in title and data, this is the title
 	padding-right:   6px;
 	margin-bottom:   1px;
 	width:   180px;
+}
+
+div.box-title table {
+    width: 100%;
 }
 
 /* 

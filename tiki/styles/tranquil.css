@@ -138,7 +138,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.box-title {
+div.box-title {
 	background-color:    #00CC99;
 	border:   #FFFFCC;
 	border-style:   solid;
@@ -154,6 +154,10 @@ div.box {
 	padding-right:   0px;
 	margin-bottom:   0px;
 	width:   170px;
+}
+
+div.box-title table {
+    width: 100%;
 }
 
 /* And this is the data */

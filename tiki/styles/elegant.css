@@ -140,7 +140,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.box-title {
+div.box-title {
 	/*background-image: url(dblue/dbluetop.jpg);  */
 	background-repeat:    no-repeat;
 	height:   19px;
@@ -158,6 +158,10 @@ div.box {
 	padding-right:   0px;
 	margin-bottom:   1px;
 	width:   170px;
+}
+
+div.box-title table {
+    width: 100%;
 }
 
 /* And this is the data */
