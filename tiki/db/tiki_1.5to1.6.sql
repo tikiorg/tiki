@@ -2,6 +2,7 @@
 
 alter table users_permissions add level varchar(80);
 
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minor','wiki','Can save as minor edit','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editor');
 

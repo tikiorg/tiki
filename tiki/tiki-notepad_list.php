@@ -104,7 +104,6 @@ if($offset>0) {
 }
 $smarty->assign_by_ref('channels',$channels["data"]);
 
-$smarty->assign('tasks_useDates',$tasks_useDates);
 
 include_once('tiki-mytiki_shared.php');
 

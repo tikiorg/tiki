@@ -354,7 +354,12 @@ if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["da
     /*
     $tikilib->cache_links($links);
     */
-    $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
+    if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
+      $minor=true;
+    } else {
+      $minor=false;
+    }
+    $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor);
   }
   
   
