@@ -149,152 +149,163 @@ class WikiLib extends TikiLib {
     }
 
 
-    // This method renames a wiki page
-    // If you think this is easy you are very very wrong
-    function wiki_rename_page($oldName, $newName) {
-	if ($this->page_exists($newName)) {
-	    return false;
+	// This method renames a wiki page
+	// If you think this is easy you are very very wrong
+	function wiki_rename_page($oldName, $newName) {
+		// if page already exists, stop here
+		if ($this->page_exists($newName)) {
+			// if it is a case change of same page: allow it, else stop here
+			if (strcasecmp($oldName, $newName) <> 0) return false;
+		}
+
+		// Since page link have HTML chars fixed;
+		$newName = htmlspecialchars( $newName );
+		$tmpName = "TmP".$newName."TmP";
+
+		// 1st rename the page in tiki_pages, using a tmpname inbetween for
+		// rename pages like ThisTestpage to ThisTestPage
+		$query = "update `tiki_pages` set `pageName`=? where `pageName`=?";
+		$this->query($query, array( $tmpName, $oldName ) );
+
+		$query = "update `tiki_pages` set `pageName`=? where `pageName`=?";
+		$this->query($query, array( $newName, $tmpName ) );
+
+		// correct pageName in tiki_history, using a tmpname inbetween for
+		// rename pages like ThisTestpage to ThisTestPage
+		$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
+		$this->query($query, array( $tmpName, $oldName ) );
+
+		$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
+		$this->query($query, array( $newName, $tmpName ) );
+		
+		// get pages linking to the old page
+		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
+		$result = $this->query($query, array( $oldName ) );
+
+		while ($res = $result->fetchRow()) {
+		    $page = $res['fromPage'];
+	
+		    $info = $this->get_page_info($page);
+		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
+		    $data = $info['data'];
+		    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
+		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+		    $this->query($query, array( $data,(int) strlen($data), $page));
+		    $this->invalidate_cache($page);
+		}
+
+		// correct toPage and fromPage in tiki_links
+		$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
+		$this->query($query, array( $newName, $oldName));
+	
+		$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
+		$this->query($query, array( $newName, $oldName));
+	
+		// tiki_footnotes change pageName
+		$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
+		$this->query($query, array( $newName, $oldName ));
+	
+		// tiki_structures change page and parent
+		$query = "update `tiki_structures` set `page`=? where `page`=?";
+		$this->query($query, array( $newName, $oldName ));
+		$query = "update `tiki_structures` set `parent`=? where `parent`=?";
+		$this->query($query, array( $newName, $oldName ));
+	
+		// user_bookmarks_urls (url)
+	
+		// user notes (data)
+	
+		// Build objectId using 'wiki page' and the name
+		$oldId = 'wiki page' + md5($oldName);
+		$newId = 'wiki page' + md5($newName);
+	
+		// in tiki_categorized_objects update objId
+		$newcathref = 'tiki-index.php?page=' . urlencode($newName);
+		$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
+		$this->query($query, array( $newName, $newName, $newcathref, $oldName));
+	
+		// old code that doesn't seem to be working
+		//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
+		//    $this->query($query);	  	  	  	
+	
+		// in tiki_comments update object  
+		$query = "update `tiki_comments` set `object`=? where `object`=?";
+		$this->query($query, array( $newName, $oldName ) );
+	
+		// in tiki_mail_events by object
+		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
+		$this->query($query, array( $newId, $oldId ) );
+	
+		// theme_control_objects(objId,name)
+		$query = "update `tiki_theme_control_objects` set `objId`='newId',name=? where `objId`=?";
+		$this->query($query, array( $newName, $oldId ) );
+	
+		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
+		$this->query($query, array( $newName, $oldName ) );
+	
+		//update structures
+		$query = "update `tiki_structures` set `page`=? where `page`=?";
+		$this->query($query, array( $newName, $oldName ) );
+		$query = "update `tiki_structures` set `parent`=? where `parent`=?";
+		$this->query($query, array( $newName, $oldName ) );
+	
+		return true;
 	}
 
-	// Since page link have HTML chars fixed;
-	$newName = htmlspecialchars( $newName );
-
-	// 1st rename the page in tiki_pages
-	$query = "update `tiki_pages` set `pageName`=? where `pageName`=?";
-	$this->query($query, array( $newName, $oldName ) );
-	// correct pageName in tiki_history
-	$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
-	$this->query($query, array( $newName, $oldName ) );
-	// get pages linking to the old page
-	$query = "select `fromPage` from `tiki_links` where `toPage`=?";
-	$result = $this->query($query, array( $oldName ) );
-
-	while ($res = $result->fetchRow()) {
-	    $page = $res['fromPage'];
-
-	    $info = $this->get_page_info($page);
-	    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
-	    $data = $info['data'];
-	    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
-	    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
-	    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
-	    $this->query($query, array( $data,(int) strlen($data), $page));
-	    $this->invalidate_cache($page);
+	function set_page_cache($page,$cache) {
+		$query = "update `tiki_pages` set `wiki_cache`=? where `pageName`=?";
+		$this->query($query, array( $cache, $page));
 	}
 
-	// correct toPage and fromPage in tiki_links
-	$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
-	$this->query($query, array( $newName, $oldName));
-
-	$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
-	$this->query($query, array( $newName, $oldName));
-
-	// tiki_footnotes change pageName
-	$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
-	$this->query($query, array( $newName, $oldName ));
-
-	// tiki_structures change page and parent
-	$query = "update `tiki_structures` set `page`=? where `page`=?";
-	$this->query($query, array( $newName, $oldName ));
-	$query = "update `tiki_structures` set `parent`=? where `parent`=?";
-	$this->query($query, array( $newName, $oldName ));
-
-	// user_bookmarks_urls (url)
-
-	// user notes (data)
-
-	// Build objectId using 'wiki page' and the name
-	$oldId = 'wiki page' + md5($oldName);
-	$newId = 'wiki page' + md5($newName);
-
-	// in tiki_categorized_objects update objId
-	$newcathref = 'tiki-index.php?page=' . urlencode($newName);
-	$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
-	$this->query($query, array( $newName, $newName, $newcathref, $oldName));
-
-	// old code that doesn't seem to be working
-	//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
-	//    $this->query($query);	  	  	  	
-
-	// in tiki_comments update object  
-	$query = "update `tiki_comments` set `object`=? where `object`=?";
-	$this->query($query, array( $newName, $oldName ) );
-
-	// in tiki_mail_events by object
-	$query = "update `tiki_mail_events` set `object`=? where `object`=?";
-	$this->query($query, array( $newId, $oldId ) );
-
-	// theme_control_objects(objId,name)
-	$query = "update `tiki_theme_control_objects` set `objId`='newId',name=? where `objId`=?";
-	$this->query($query, array( $newName, $oldId ) );
-
-	$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
-	$this->query($query, array( $newName, $oldName ) );
-
-	//update structures
-	$query = "update `tiki_structures` set `page`=? where `page`=?";
-	$this->query($query, array( $newName, $oldName ) );
-	$query = "update `tiki_structures` set `parent`=? where `parent`=?";
-	$this->query($query, array( $newName, $oldName ) );
-
-	return true;
-    }
-
-    function set_page_cache($page,$cache) {
-	$query = "update `tiki_pages` set `wiki_cache`=? where `pageName`=?";
-	$this->query($query, array( $cache, $page));
-
-    }
-
-    function save_notepad($user, $title, $data) {
-	$data = addslashes($data);
-
-	$title = addslashes($data);
-    }
-
-    // Methods to cache and handle the cached version of wiki pages
-    // to prevent parsing large pages.
-    function get_cache_info($page) {
-	$query = "select `cache`,`cache_timestamp` from `tiki_pages` where `pageName`=?";
-
-	$result = $this->query($query, array( $page ) );
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    function update_cache($page, $data) {
-	$now = date('U');
-
-	$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
-	$result = $this->query($query, array( $data, $page ) );
-	return true;
-    }
-
-    function get_attachment_owner($attId) {
-	return $this->getOne("select `user` from `tiki_wiki_attachments` where `attId`=$attId");
-    }
-
-    function remove_wiki_attachment($attId) {
-	global $w_use_dir;
-
-	$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
-
-	if ($path) {
-	    @unlink ($w_use_dir . $path);
+	function save_notepad($user, $title, $data) {
+		$data = addslashes($data);
+		$title = addslashes($data);
 	}
 
-	$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
-	$result = $this->query($query);
-    }
+	// Methods to cache and handle the cached version of wiki pages
+	// to prevent parsing large pages.
+	function get_cache_info($page) {
+		$query = "select `cache`,`cache_timestamp` from `tiki_pages` where `pageName`=?";
 
-    function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
-	$comment = strip_tags($comment);
-	$now = date("U");
-	$query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path) values(?,?,?,?,?,?,0,?,?,?)";
-	$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
-    }
+		$result = $this->query($query, array( $page ) );
+		$res = $result->fetchRow();
+		return $res;
+	}
 
-    function list_wiki_attachments($page, $offset, $maxRecords, $sort_mode, $find) {
+	function update_cache($page, $data) {
+		$now = date('U');
+
+		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
+		$result = $this->query($query, array( $data, $page ) );
+		return true;
+	}
+
+	function get_attachment_owner($attId) {
+		return $this->getOne("select `user` from `tiki_wiki_attachments` where `attId`=$attId");
+	}
+
+	function remove_wiki_attachment($attId) {
+		global $w_use_dir;
+
+		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
+
+		if ($path) {
+			@unlink ($w_use_dir . $path);
+		}
+
+		$query = "delete from `tiki_wiki_attachments` where `attId`='$attId'";
+		$result = $this->query($query);
+	}
+
+	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
+		$comment = strip_tags($comment);
+		$now = date("U");
+		$query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path) values(?,?,?,?,?,?,0,?,?,?)";
+		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
+	}
+
+	function list_wiki_attachments($page, $offset, $maxRecords, $sort_mode, $find) {
 
 	if ($find) {
 	    $mid = " where `page`=? and (`filename` like ?)"; // why braces?

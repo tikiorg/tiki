@@ -3422,10 +3422,17 @@ function validate_user($user, $pass) {
 
 // This implements all the functions needed to use Tiki
 /*shared*/
-function page_exists($pageName) {
+function page_exists($pageName, $casesensitive=false) {
     $query = "select `pageName` from `tiki_pages` where `pageName` = ?";
     $result = $this->query($query, array($pageName));
-    return $result->numRows();
+		
+		// if casesensitive, check the name of the returned page:
+		if ( ($casesensitive) && ($result->numRows()) ) {
+	    $res = $result->fetchRow();
+	    if ($res["pageName"] <> $pageName) return 0;
+		}
+		
+		return $result->numRows();
 }
 
 function page_exists_desc($pageName) {
