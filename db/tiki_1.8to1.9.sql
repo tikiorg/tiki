@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.87 2004-08-12 22:31:26 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.88 2004-09-03 19:54:39 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -367,8 +367,10 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # Homework tables start
 #
 #added on 2004-4-27 ggeller
-#revised  2004-5-03 ggeller
+#revised  20040903 ggeller
 #
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 
 CREATE TABLE tiki_hw_actionlog (
   action varchar(255) NOT NULL default '',
