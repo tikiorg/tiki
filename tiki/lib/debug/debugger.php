@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.3 2003-08-05 17:33:06 zaufi Exp $
  *
  * \brief Tiki internal debugger 
  *
@@ -123,7 +123,8 @@ class Debugger extends ResultType
           $result[0][] = array('cmd' => 'help', 
             'description'=>'Display list of commands or help for specified command (<code>help print</code> for example)');
           foreach ($this->commands as $cmdobj)
-          $result[0][] = array('cmd' => $cmdobj->name(), 'description' => $cmdobj->description());
+            if (strlen(trim($cmdobj->name())) > 0)
+              $result[0][] = array('cmd' => $cmdobj->name(), 'description' => $cmdobj->description());
         }
         else
         {
