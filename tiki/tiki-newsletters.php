@@ -27,7 +27,7 @@ if(isset($_REQUEST["unsubscribe"])) {
 }
 
 
-if(!$user && $tiki_p_subscribe_email != 'y') {
+if(!$user && $tiki_p_subscribe_newsletters != 'y' && !isset($_REQUEST["confirm_subscription"])) {
   $smarty->assign('msg',tra("You must be logged in to subscribe to newsletters"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
