@@ -19,7 +19,7 @@
   &nbsp;<a href="tiki-stats.php" class="linkmenu">{tr}stats{/tr}</a><br />
 {/if}
 
-{if $feature_categories eq 'y'}
+{if $feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
   &nbsp;<a href="tiki-browse_categories.php" class="linkmenu">{tr}categories{/tr}</a><br />
 {/if}
 
