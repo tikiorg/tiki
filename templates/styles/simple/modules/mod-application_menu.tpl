@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.25 2004-10-08 10:00:33 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.26 2004-10-15 15:54:53 damosoft Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -567,7 +567,7 @@
       <a href="tiki-admin_dsn.php" class="linkmenu">{tr}DSN{/tr}</a><br />
       <a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
 		  <a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
-			<a href="tiki-mods.php" class="linkmenu">{tr}Mods Management{/tr}</a><br />
+			<a href="tiki-mods.php" class="linkmenu">{tr}Mods Admin{/tr}</a><br />
     {/if}
     {/sortlinks}
   </div>

@@ -1,4 +1,4 @@
-<h1><a href="tiki-mods.php" class="pagetitle">{tr}TikiWiki mods Management{/tr}</a></h1>
+<h1><a href="tiki-mods.php" class="pagetitle">{tr}TikiWiki mods Admin{/tr}</a></h1>
 <a href="http://mods.tikiwiki.org">check http://mods.tikiwiki.org</a><br /><br />
 
 <form>
@@ -6,7 +6,7 @@
 <span class="button2"><a href="tiki-mods.php?rebuild=1" class="linkbut">{tr}rebuild local list{/tr}</a></span>
 <input type="text" name="master" value="{$master}" size="42" />
 <input type="hidden" name="refresh" value="1" />
-<input type="submit" name="act" value="{tr}refrech servers list{/tr}" />
+<input type="submit" name="act" value="{tr}refresh servers list{/tr}" />
 <br /><br />
 {section name=u loop=$remote_masters}
 <span class="button2"><a href="{$remote_masters[u]}/Packages/" class="linkbut">{$remote_masters[u]}</a> (<a href="tiki-mods.php?reload={$remote_masters[u]|escape:"url"}">reload</a>)</span><br />

@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.4 2004-10-08 09:59:46 damosoft Exp $
+<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.5 2004-10-15 15:54:46 damosoft Exp $
 /* 
  * The listing associates country names used as filenames for flags in TikiWiki for language translation
  */
@@ -65,6 +65,7 @@ tra('Iraq');
 tra('Ireland');
 tra('Israel');
 tra('Italy');
+tra('Ivory_Coast');
 tra('Jamaica');
 tra('Japan');
 tra('Jordan');

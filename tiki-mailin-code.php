@@ -21,60 +21,8 @@ include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/tikimaillib.php");
 include_once ('lib/wiki/wikilib.php');
-/*
-That parsing is now integrated in demime
-function mailin_parse_output(&$obj, &$parts, $i) {
-  if (!empty($obj->parts)) {
-  	$temp_max = count($obj->parts);
-    for ($i = 0; $i < $temp_max; $i++)
-      mailin_parse_output($obj->parts[$i], $parts, $i);
-  } else {
-    $ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;
 
-    switch ($ctype) {
-    case 'text/plain':
-      if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
-        $names = split(';', $obj->headers["content-disposition"]);
-
-        $names = split('=', $names[1]);
-        $aux['name'] = $names[1];
-        $aux['content-type'] = $obj->headers["content-type"];
-        $aux['part'] = $i;
-        $parts['attachments'][] = $aux;
-      } else {
-        $parts['text'][] = $obj->body;
-      }
-
-      break;
-
-    case 'text/html':
-      if (!empty($obj->disposition)AND $obj->disposition == 'attachment') {
-        $names = split(';', $obj->headers["content-disposition"]);
-
-        $names = split('=', $names[1]);
-        $aux['name'] = $names[1];
-        $aux['content-type'] = $obj->headers["content-type"];
-        $aux['part'] = $i;
-        $parts['attachments'][] = $aux;
-      } else {
-        $parts['html'][] = $obj->body;
-      }
-
-      break;
-
-    default:
-      $names = split(';', $obj->headers["content-disposition"]);
-
-      $names = split('=', $names[1]);
-      $aux['name'] = $names[1];
-      $aux['content-type'] = $obj->headers["content-type"];
-      $aux['part'] = $i;
-      $parts['attachments'][] = $aux;
-    }
-  }
-}
-*/
-function check_attachments(&$output, &$out, $page, $user) {
+function mailin_check_attachments(&$output, &$out, $page, $user) {
   global  $wikilib;
   $cnt = 0;
   if (!isset($output["parts"]))
@@ -98,7 +46,7 @@ function check_attachments(&$output, &$out, $page, $user) {
   $out .= $cnt;
   $out .= " attachment(s) added<br/>";
 }
-function get_body($output) {
+function mailin_get_body($output) {
 	if (isset($output['text'][0]))
 		$body = $output["text"][0];
 	elseif (isset($output['parts'][0]) && isset($output['parts'][0]["text"][0]))
@@ -169,7 +117,7 @@ foreach ($accs['data'] as $acc) {
         // This is used to CREATE articles
         $title = trim($output['header']['subject']);
   
-        $msgbody = get_body($output);
+        $msgbody = mailin_get_body($output);
         if ($msgbody && isset($acc['discard_after'])) {
              $msgbody = preg_replace("/".$acc['discard_after'].".*$/s", "", $msgbody);
         }
@@ -257,7 +205,7 @@ foreach ($accs['data'] as $acc) {
       elseif ($acc['type'] == 'wiki-put' || ($acc['type'] == 'wiki' && $method == "PUT")) {
         // This is used to UPDATE wiki pages
     
-        $body = get_body($output);
+        $body = mailin_get_body($output);
   
         if (isset($acc['discard_after']) && $body) {
            $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
@@ -275,13 +223,13 @@ foreach ($accs['data'] as $acc) {
             $content .= "Page: $page has been updated";
           }
         }
-      check_attachments($output, $content, $page, $aux["sender"]["user"]);
+      mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
       }
   
       elseif ($acc['type'] == 'wiki-append' || $acc['type'] == 'wiki-prepend' || ($acc['type'] == 'wiki' && $method == "APPEND") || ($acc['type'] == 'wiki' && $method == "PREPEND")) {
         // This is used to UPDATE wiki pages
   
-        $body = get_body($output);
+        $body = mailin_get_body($output);
         if ($body && isset($acc['discard_after'])) {
               $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
           }
@@ -303,7 +251,7 @@ foreach ($accs['data'] as $acc) {
             $content .= "Page: $page has been updated";
           }
         }
-      check_attachments($output, $content, $page, $aux["sender"]["user"]);
+      mailin_check_attachments($output, $content, $page, $aux["sender"]["user"]);
       }
 
       else {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.62 2004-07-29 17:38:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.63 2004-10-15 15:54:51 damosoft Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -93,7 +93,7 @@ a moderator approves it.{/tr}</small>
   <td class="odd" style="text-align:center;">
   	&nbsp;
   	{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject={tr}Re:{/tr}%20{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject={tr}Re:{/tr}%20{$thread_info.title|escape:"htmlall"}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
     {/if}
 		{if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
 		  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>

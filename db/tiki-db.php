@@ -22,42 +22,56 @@ $tikidomain  = '';
 
 /*
 CVS Developers: Do not change any of the above.
-Instead, create a file, called local.php, containing any of
+Instead, create a file, called db/local.php, containing any of
 the variables listed above that are different for your 
 development environment.  This will protect you from 
 accidentally committing your username/password to CVS!
 
-For example:
-
-cd <tiki_dir>/db
-cat >local.php <<EOF
+example of db/local.php
 <?php
-\$api_tiki        = 'pear';
-\$db_tiki     = 'mysql';
-\$dbversion_tiki = 'mysql3';
-\$host_tiki   = 'myhost';
-\$user_tiki   = 'myuser';
-\$pass_tiki   = 'mypass';
-\$dbs_tiki    = 'mytiki';
+$host_tiki   = 'myhost';
+$user_tiki   = 'myuser';
+$pass_tiki   = 'mypass';
+$dbs_tiki    = 'mytiki';
 ?>
-EOF
 
 ** Multi-tiki
 **************************************
-read comments in local_multi.php
+see http://tikiwiki.org/MultiTiki19
+
+Setup of virtual tikis is done using setup.sh script
+-----------------------------------------------------------
+-> Multi-tiki trick for virtualhosting
+
+$tikidomain variable is set to :
+or TIKI_VIRTUAL
+    That is set in apache virtual conf : SetEnv TIKI_VIRTUAL myvirtual
+or SERVER_NAME
+    From apache directive ServerName set for that virtualhost block
+or HTTP_HOST
+    From the real domain name called in the browser 
+    (can be ServerAlias from apache conf)
 
 */
-// change next value to true if you use multi-domain
-$tikidomain_multi = false;
 
-$file_local_php = dirname(__FILE__). '/local.php';
-$file_local_php_multi = dirname(__FILE__). '/local_multi.php';
-
-if ($tikidomain_multi and file_exists($file_local_php_multi)) {
-	require_once ($file_local_php_multi);
+$local_php = 'db/local.php';
+if (is_file('db/virtuals.inc')) {
+	if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+		$multi = $_SERVER['TIKI_VIRTUAL'];
+	} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+		$multi = $_SERVER['SERVER_NAME'];
+	} elseif (isset($_SERVER['HTTP_HOST']) and is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+		$multi = $_SERVER['HTTP_HOST'];
+	}
+	if (isset($multi)) {
+		$local_php = "db/$multi/local.php";
+		$tikidomain = $multi;
+	}
 }
-if (file_exists($file_local_php)) {
-  require_once ($file_local_php);
+if (is_file($local_php)) {
+	require_once($local_php);
+} else {
+	die("<b style=color:red;>$local_php not found.</b><br /><br />Please run <a href=tiki-install.php>tiki-install.php</a>");
 }
 if (preg_match('/^adodb$/i', $api_tiki)) {
 	TikiInit::prependIncludePath('lib/adodb');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.39 2004-08-16 02:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.40 2004-10-15 15:54:41 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -351,10 +351,10 @@ foreach ($languages as $sel) {
       // Only extract tra () and hawtra () in .php-files
 
       // Extract from SINGLE qouted strings
-      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*\'(.+?)\'\s*\)/', $data, $sqwords);
+      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*\'(.+?)\'\s*[\),]/', $data, $sqwords);
 
       // Extract from DOUBLE quoted strings
-      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*"(.+?)"\s*\)/', $data, $dqwords);
+      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*"(.+?)"\s*[\),]/', $data, $dqwords);
     }
 
     if (preg_match ("/\.tpl$/", $file)) {

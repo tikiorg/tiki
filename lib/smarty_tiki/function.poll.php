@@ -6,20 +6,24 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once('lib/tikilib.php'); # httpScheme()
-
 function smarty_function_poll($params, &$smarty) {
-    global $tikilib;
     global $polllib;
     global $dbTiki;
 		global $commentslib;
 		global $feature_poll_comments;
     extract($params);
     // Param = zone
-	include_once('lib/polls/polllib.php');
+	if (!is_object($polllib)) {
+		include_once('lib/polls/polllib_shared.php');
+	}
 	include_once('lib/commentslib.php');
 
-    if (empty($id)) { 
+    if (isset($rate)) {
+			if (!$tikilib->page_exists($rate)) {
+				return false;
+			}
+		}
+		if (empty($id)) { 
       $id = $polllib->get_random_active_poll();
     }
     if($id) {

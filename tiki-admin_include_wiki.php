@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.45 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.46 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -436,6 +436,14 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("feature_wiki_rankings", 'n');
 	}
 
+	if (isset($_REQUEST["feature_wiki_ratings"]) && $_REQUEST["feature_wiki_ratings"] == "on") {
+		$tikilib->set_preference("feature_wiki_ratings", 'y');
+		$smarty->assign("feature_wiki_ratings", 'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_ratings", 'n');
+		$smarty->assign("feature_wiki_ratings", 'n');
+	}
+
 	if (isset($_REQUEST["feature_wiki_footnotes"]) && $_REQUEST["feature_wiki_footnotes"] == "on") {
 		$tikilib->set_preference("feature_wiki_footnotes", 'y');
 
@@ -528,16 +536,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$tikilib->set_preference("feature_wiki_pdf", 'n');
 
 		$smarty->assign("feature_wiki_pdf", 'n');
-	}
-
-	if (isset($_REQUEST["feature_ranking"]) && $_REQUEST["feature_ranking"] == "on") {
-		$tikilib->set_preference("feature_ranking", 'y');
-
-		$smarty->assign("feature_ranking", 'y');
-	} else {
-		$tikilib->set_preference("feature_ranking", 'n');
-
-		$smarty->assign("feature_ranking", 'n');
 	}
 
 	if (isset($_REQUEST["feature_listPages"]) && $_REQUEST["feature_listPages"] == "on") {

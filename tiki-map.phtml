@@ -131,31 +131,16 @@ $view_values[]=0;
 
 for($i=1;$i<$number_of_views;$i++)
  {
-   $viewdata[$i]=$map->getMetaData("VIEW".$i);
-      
-   if(!empty( $viewdata[$i])){
-     $viewlen=strcspn($viewdata[$i], ','); 
-     $view_name[$i]=substr($viewdata[$i],0,$viewlen);
-
-     $view1data=substr($viewdata[$i],$viewlen);
-     $viewExtentlen=strcspn($view1data,',');
-
-     $view2data=substr($view1data,$viewExtentlen+1);
-     $view2len=strcspn($view2data,',');
-     $v_minx=substr($view1data,$viewExtentlen+1,$view2len);
-
-     $view3data=substr($view2data,$view2len-$viewExtentlen+1);
-     $view3len=strcspn($view3data,',');
-     $v_miny=substr($view3data,$viewExtentlen, $view3len);
-
-     $view4data=substr($view3data,$view3len-$viewExtentlen+1);
-     $view4len=strcspn($view4data,',');
-     $v_maxx=substr($view4data,$viewExtentlen,$view4len);
-
-     $view5data=substr($view4data,$view4len-$viewExtentlen+1);
-     $view5len=strcspn($view5data,',');
-     $v_maxy=substr($view5data,$viewExtentlen,$view5len);
-
+   $viewdata=$map->getMetaData("VIEW".$i);
+   if(!empty($viewdata)){
+	
+	$v_data=explode(',',$viewdata,5);
+	$view_name[$i]=$v_data[0];
+	$v_minx=$v_data[1];
+	$v_miny=$v_data[2];
+	$v_maxx=$v_data[3];
+	$v_maxy=$v_data[4];
+	
      $view_values[$i]=array($v_minx,$v_miny,$v_maxx,$v_maxy);
      $counter++;
   }
@@ -489,6 +474,12 @@ $smarty->assign('userwatch',$userwatch);
 $smarty->assign('zoom',$zoom);		
 $smarty->assign_by_ref('zoom_values',$zoom_values);
 $smarty->assign_by_ref('zoom_display',$zoom_display);
+
+if(!empty($map_view)){
+$cyclone_test='<a href="cyclone_data.phtml">cyclone</a>';
+$smarty->assign('download_test',$cyclone_test);
+}
+
 
 $smarty->assign('mid','map/tiki-map.tpl');
 $smarty->display("tiki.tpl");

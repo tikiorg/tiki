@@ -6,8 +6,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-class PollLib extends TikiLib {
+include_once('lib/polls/polllib_shared.php');
 
+class PollLib extends PollLibShared {
 	function PollLib($db) {
 		if (!$db) { die ("Invalid db object passed to PollLib constructor"); }
 		$this->db = $db;

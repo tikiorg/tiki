@@ -59,19 +59,47 @@ class SearchLib extends TikiLib {
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		$words = trim($words);
 
-		$sql = sprintf(
+		$sqlFields = sprintf(
 			'SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s AS pageName',
 					$h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
 		
 		$id = $h['id'];
 		$temp_max = count($id);
 		for ($i = 0; $i < $temp_max; ++$i)
-			$sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
+			$sqlFields .= ',' . $id[$i] . ' AS id' . ($i + 1);
 		if (count($id) < 2)
-			$sql .= ',1 AS id2';
+			$sqlFields .= ',1 AS id2';
 
-		$sql2 = ' FROM ' . $h['from'] . ' WHERE ';
-		$sql2 .= (isset($h['filter']))? $h['filter'] : '1';
+		$sqlFrom = ' FROM ' . $h['from'];
+
+		
+		$sqlJoin = '';
+		$sqlGroup = '';
+		$sqlHaving = '';
+
+		// if we have these three parameters, then only viewable results should show
+		$wysiwyca = isset($h['permName']) && isset($h['objectType']) && isset($h['objectKey']);
+
+		if ($wysiwyca) {
+		    $permName = $h['permName'];
+ 		    $objType = $h['objectType'];
+		    $objKey = $h['objectKey'];
+
+		    global $$permName;
+		    
+		    $sqlJoin = " JOIN `users_objectpermissions` u ON u.objectId = md5(" . $this->db->concat("'$objType'", "lower($objKey)") . ") AND u.objectType='$objType' ";
+
+		    if ($$permName == 'y') {
+			$sqlFields .= ", count(u.objectId) as perms, max(u.permName='$permName') as allow";
+			$sqlGroup = " GROUP BY $objKey ";
+			$sqlHaving = " HAVING perms=0 or allow=1 ";
+		    } else {
+			$sqlJoin .= " AND u.permName='$permName' ";
+		    }
+		}
+
+		$sqlWhere = ' WHERE ';
+		$sqlWhere .= (isset($h['filter']))? $h['filter'] : '1';
 
 		$orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
 
@@ -95,29 +123,43 @@ class SearchLib extends TikiLib {
 			$sql .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
 		} else if ($words) {
-			$sql .= ', -1 AS relevance';
+			$sqlFields .= ', -1 AS relevance';
 
 			$vwords = split(' ', $words);
 			foreach ($vwords as $aword) {
 				//$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
 				$aword = $this->db->quote('.*' . strtoupper($aword). '.*');
 
-				$sql2 .= ' AND (';
+				$sqlWhere .= ' AND (';
 
 				$temp_max = count($h['search']);
 				for ($i = 0; $i < $temp_max; ++$i) {
 					if ($i)
-						$sql2 .= ' OR ';
+						$sqlWhere .= ' OR ';
 
-					$sql2 .= 'UPPER(' . $h['search'][$i] . ') REGEXP ' . $aword;
+					$sqlWhere .= 'UPPER(' . $h['search'][$i] . ') REGEXP ' . $aword;
 				}
 
-				$sql2 .= ')';
+				$sqlWhere .= ')';
 			}
 		} else {
-			$sql .= ', -1 AS relevance';
+			$sqlFields .= ', -1 AS relevance';
 		}
-		$cant = $this->getOne('SELECT COUNT(*)' . $sql2);
+
+		if (!$wysiwyca) {
+		    $cant = $this->getOne('SELECT COUNT(*)' . $sqlFrom . $sqlWhere);
+		} elseif ($$permName != 'y') {
+		    $cant = $this->getOne('SELECT COUNT(*)' . $sqlFrom . $sqlJoin . $sqlWhere);
+		} else {
+		    // we can't use count(*) here because of GROUP BY, so we first get all results then subtract non-viewable
+		    $total = $this->getOne('SELECT COUNT(*)' . $sqlFrom . $sqlWhere);
+		    $permissioned = $this->getOne('SELECT COUNT(DISTINCT u.objectId)' . $sqlFrom . $sqlJoin);
+		    $viewable = $this->getOne('SELECT COUNT(u.objectId)' . $sqlFrom . $sqlJoin . " AND u.permName='$permName' ");
+
+		    $cant = $total - $permissioned + $viewable;
+
+		    $sqlJoin = " LEFT $sqlJoin ";
+		}
 
 		global $feature_search_mysql4_boolean;
 		if ($feature_search_mysql4_boolean != 'y') {
@@ -132,7 +174,7 @@ class SearchLib extends TikiLib {
 		}
 		}
 
-		$sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
+		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
 
 		$result = $this->query($sql);
 		$ret = array();
@@ -169,6 +211,10 @@ class SearchLib extends TikiLib {
 			'pageName' => 'CONCAT(p.pageName, ": ", c.title)',
 			'search' => array('c.title', 'c.data'),
 			'filter' => 'c.objectType = "wiki page" AND p.pageName=c.object',
+
+			'permName' => 'tiki_p_view',
+			'objectType' => 'wiki page',
+			'objectKey' => 'p.pageName',
 		);
 		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext);
 
@@ -182,6 +228,10 @@ class SearchLib extends TikiLib {
 			'id' => array('pageName'),
 			'pageName' => 'pageName',
 			'search' => array('pageName', 'description', 'data'),
+
+			'permName' => 'tiki_p_view',
+			'objectType' => 'wiki page',
+			'objectKey' => 'tiki_pages.pageName',
 		);
 
 		// that pagerank re-calculation was speed handicap (timex30)
@@ -218,6 +268,7 @@ class SearchLib extends TikiLib {
 			'id' => array('galleryId'),
 			'pageName' => 'name',
 			'search' => array('name', 'description'),
+
 		);
 
 		return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext);
@@ -374,7 +425,7 @@ class SearchLib extends TikiLib {
 		global $tiki_p_view, $tiki_p_view_directory, $tiki_p_view_image_gallery, $tiki_p_view_file_gallery,
 				$tiki_p_read_article, $tiki_p_forum_read, $tiki_p_read_blog, $tiki_p_view_faqs;
 		
-		if ($feature_wiki == 'y' && $tiki_p_view == 'y') {
+		if ($feature_wiki == 'y') {
 		$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext);
 		foreach ($rv['data'] as $a) {
 			$a['type'] = tra('Wiki');

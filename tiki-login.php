@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.42 2004-09-28 12:59:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.43 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.42 2004-09-28 12:59:13 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.43 2004-10-15 15:54:42 damosoft Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -111,9 +111,8 @@ if ($isvalid) {
 //	this code doesn't work
 //                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
 //		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
-		if (($url == $tikiIndex || basename($url) == $tikiIndex || basename($url) == "tiki-login_scr.php") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
-			$group = $userlib->get_user_default_group($user);
-    			$groupHome = $userlib->get_group_home($group);
+		if (($url == $tikiIndex || basename($url) == $tikiIndex || urldecode(basename($url)) == $tikiIndex || basename($url) == "tiki-login_scr.php") && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+			$groupHome = $userlib->get_user_default_homepage($user);
     			if ($groupHome) {
                     $url = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}

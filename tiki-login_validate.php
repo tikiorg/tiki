@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.10 2004-07-11 13:45:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.11 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,11 +16,18 @@ if (isset($_REQUEST["user"]) && isset($_REQUEST["pass"])) {
 }
 if ($isvalid) {
 	//session_register("user",$_REQUEST["user"]); 
-	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
-	$user = $_REQUEST["user"];
-	$smarty->assign_by_ref('user', $user);
-	//Now since the user is valid we put the user provpassword as the password 
-	$userlib->confirm_user($user);
+	$userlib->confirm_user($_REQUEST['user']);
+	if ($tikilib->get_preference('validateRegistration','n') == 'y') {
+		$email = $userlib->get_user_email($user);
+		include_once("lib/webmail/tikimaillib.php");
+		$mail = new TikiMail();
+		$mail->setText($smarty->fetch('mail/moderate_welcome_mail.tpl'));					
+		$mail->setSubject($smarty->fetch('mail/moderate_welcome_mail_subject.tpl'));					
+		$mail->send(array($email));
+		$logslib->add_log('register','validated account '.$user);
+	} else {
+		$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
+	}
 	header ("location: $tikiIndex");
 	die;
 } else {

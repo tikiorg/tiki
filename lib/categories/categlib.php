@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.61 2004-10-08 10:00:00 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.62 2004-10-15 15:54:49 damosoft Exp $
  *
  * \brief Categories support class
  *
@@ -121,12 +121,7 @@ class CategLib extends TikiLib {
 	
 	function get_category_name($categId) {
 		$query = "select `name` from `tiki_categories` where `categId`=?";
-		$result = $this->query($query,array((int) $categId));
-		if (!$result->numRows()) {
-			return false;
-		}
-		$res = $result->fetchRow();
-		return $res;
+		return $this->getOne($query,array((int) $categId));
 	}
 	
 	function remove_category($categId) {
@@ -601,12 +596,15 @@ class CategLib extends TikiLib {
 	}
 
 	function categorize_poll($pollId, $categId) {
+		global $polllib;
 		// Check if we already have this object in the tiki_categorized_objects page
 		$catObjectId = $this->is_categorized('poll', $pollId);
-
 		if (!$catObjectId) {
+			if (!is_object($polllib)) {
+				require_once('lib/polls/polllib_shared.php');
+			}
 			// The page is not cateorized
-			$info = $this->get_poll($pollId);
+			$info = $pollib->get_poll($pollId);
 
 			$href = 'tiki-poll_form.php?pollId=' . $pollId;
 			$catObjectId = $this->add_categorized_object('poll', $pollId, $info["title"], $info["title"], $href);
@@ -811,7 +809,7 @@ class CategLib extends TikiLib {
     }
     
     //Moved from tikilib.php
-    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false) {
+    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false,$and=false) {
 			global $smarty;
 			global $feature_categories;
 
@@ -850,12 +848,16 @@ class CategLib extends TikiLib {
 		);
 
 		$out = "";
-		$listcat = array();
+		$listcat = $allcats = array();
 		$title = '';
 		$find = "";
 		$offset = 0;
+		$firstpassed = false;
 		$maxRecords = 500;
 		$typesallowed = array();
+		if ($and) {
+			$split = false;
+		}
 		if ($types == '*') {
 			$typesallowed = array_keys($typetitles);
 		} elseif (strpos($types,'+')) {
@@ -874,28 +876,29 @@ class CategLib extends TikiLib {
 		}
 		
 		foreach ($catids as $id) {
-			$cat = $this->get_category($id);
-
-			$titles["$id"] = $cat["name"];
+			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
 			if ($sub) {
 				$objectcat = $this->list_category_objects_deep($id, $offset, $maxRecords, $sort, $find);
 			} else {
 				$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $find);
 			}
-
+			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
 				$type = $obj["type"];
 				if (($types == '*') || in_array($type,$typesallowed)) {
-					if ($split) {
-						$listcat[$typetitles["$type"]][] = $obj;
+					if ($split or !$firstpassed) {
+						$listcat["$type"][] = $obj;
+						$cats[] = $type.'.'.$obj['name'];
+					} elseif ($and) {
+						if (in_array($type.'.'.$obj['name'], $cats)) {
+							$andcat["$type"][] = $obj;
+							$acats[] = $type.'.'.$obj['name'];
+						}
 					} else {
-						if (!($this->in_multi_array($obj['name'], $listcat))) {
-							if (isset($typetitles["$type"])) {
-								$listcat["{$typetitles["$type"]}"][] = $obj;
-							} elseif (isset($type)) {
-								$listcat["$type"][] = $obj;
-							}
+						if (!in_array($type.'.'.$obj['name'], $cats)) {
+							$listcat["$type"][] = $obj;
+							$cats[] = $type.'.'.$obj['name'];
 						}
 					}
 				}
@@ -907,7 +910,12 @@ class CategLib extends TikiLib {
 				$out .= $smarty->fetch("categobjects.tpl");
 				$listcat = array();
 				$titles = array();
+				$cats = array();
+			} elseif ($and and $firstpassed) {
+				$listcat = $andcat;
+				$cats = $acats;
 			}
+			$firstpassed = true;
 		}
 		if (!$split) {
 			$smarty->assign("id", $id);
