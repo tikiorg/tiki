@@ -2085,5 +2085,6 @@ from Admin->General
 "\n for rows" => "\n для строк",
 "Forum posts" => "Число сообщений в форуме",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "URL (Используйте  чтобы заменить именем страницы URL пример: http://www.example.com/tiki-index.php?page=)",
+"picture not found" => "picture not found",
 "##end###" => "###end###");
 ?>

@@ -2044,7 +2044,6 @@ da Admin->Generale
 "Remember me" => "Ricorda",
 "Tiki Logo" => "Logo Tiki",
 "User tasks" => "User tasks",
-<<<<<<< language.php
 "You have" => "Hai",
 "new message" => "nuovo messaggio",
 "new messages" => "nuovi messaggi",
@@ -2054,7 +2053,6 @@ da Admin->Generale
 "Sites to validate" => "Siti da validare",
 "Searches" => "Ricerche",
 "Visited links" => "Link visitati",
-=======
 "You have" => "Hai",
 "new message" => "nuovo messaggio",
 "Last Sites" => "U_ltimi Siti",
@@ -2110,7 +2108,6 @@ da Admin->Generale
 "LDAP Member Is DN" => "LDAP Member Is DN",
 "LDAP Admin User" => "LDAP Admin User",
 "LDAP Admin Pwd" => "LDAP Admin Pwd",
-=======
 "Permission denied you can not view this section" => "Permesso negato, non puoi vedere questa sezione",
 "Permission denied you cannot rebuild thumbnails in this gallery" => "Permesso negato, non puoi rigenerare i thumbnails in questa galleria",
 "Permission denied you cannot rotate images in this gallery" => "Permesso negato, non puoi ruotare le immagini in questa galleria",
@@ -2139,5 +2136,6 @@ da Admin->Generale
 "Cannot get messages" => "Errore nel caricamento dei messaggi",
 "File is too big" => "IL file è troppo grande",
 "No note indicated" => "Nessuna nota specificata",
+"picture not found" => "picture not found",
 "##end###" => "###end###");
 ?>
