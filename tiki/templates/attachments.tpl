@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.6 2003-09-25 01:05:20 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.7 2003-10-12 04:55:20 mose Exp $ *}
 
+<a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
 {if $tiki_p_wiki_view_attachments == 'y'
  || $tiki_p_wiki_admin_attachments == 'y'
