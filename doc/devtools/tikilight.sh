@@ -36,9 +36,9 @@ echo "Remove PDF fonts..."
 find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
 
 echo "Remove styles..."
-find templates/styles/* -type d | grep -v default | xargs -- rm -rf
-find styles/* -type d | grep -v default | xargs -- rm -rf
-find styles/ -type f -name "*.css" | grep -v default | xargs -- rm -f
+find templates/styles/* -type d | grep -v moreneat | xargs -- rm -rf
+find styles/* -type d | grep -v moreneat | xargs -- rm -rf
+find styles/ -type f -name "*.css" | grep -v moreneat | xargs -- rm -f
 
 # ############################################################
 
