@@ -15,7 +15,7 @@
 {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('{$channels[ix].menulabel}');">[+]</a>{/if} 
 </div>
 {assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{/if} id='{$channels[ix].menulabel}'>
+<div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if} id='{$channels[ix].menulabel}'>
 {else}
 <div>&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
 {/if}
