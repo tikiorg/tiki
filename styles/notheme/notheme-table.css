@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.8 2003-11-15 06:42:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.9 2004-02-16 20:01:23 mose Exp $
  *
  */
 
@@ -38,15 +38,16 @@ td.form {
     vertical-align: top;
 }
 /* Cells in forms using a background color */
-td.formcolor {
+.formcolor {
     color: WindowText;
     background-color: Button;
-    font-size: small;
     text-align: left;
     vertical-align: top;
     border: 1px outset WindowFrame;
 }
-
+.formcolor:hover {
+	background-color: ButtonHighlight;
+}
 /* Table headings */
 td.heading {
     color: HighlightText;
@@ -85,12 +86,12 @@ td.findtitle {
 }
 
 /* Tables odd rows */
-td.odd {
+.odd {
     background-color: Window;
     border: 1px outset WindowFrame;
 }
 
-td.even {
+.even {
     border: 1px outset WindowFrame;
 }
 /* I saw only sections n forums list with such class */
