@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.4 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.5 2003-12-27 14:05:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/themecontrol/tcontrol.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/filegals/filegallib.php');
+include_once ('lib/htmlpages/htmlpageslib.php');
 
 function correct_array(&$arr, $id, $name) {
 	for ($i = 0; $i < count($arr); $i++) {
@@ -53,6 +54,7 @@ $types = array(
 	'forum',
 	'blog',
 	'wiki page',
+	'html page',
 	'faq',
 	'quiz',
 	'article'
@@ -100,6 +102,14 @@ case 'blog':
 
 case 'wiki page':
 	$objects = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
+
+	$smarty->assign_by_ref('objects', $objects["data"]);
+	$objects = $objects['data'];
+	correct_array($objects, 'pageName', 'pageName');
+	break;
+
+case 'html page':
+	$objects = $htmlpageslib->list_html_pages(0, -1, 'pageName_asc', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
