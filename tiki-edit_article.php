@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.40 2004-05-13 18:31:57 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.41 2004-05-13 19:02:28 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -410,7 +410,7 @@ $display_timezone = $tikilib->get_user_preference($user, 'display_timezone');
 if ($display_timezone == "Local"){
 	$smarty->assign('siteTimeZone', "");
 } else {
-	$smarty->assign('siteTimeZone', "$display_timezone");
+	$smarty->assign('siteTimeZone', $display_timezone);
 }
 
 include_once("textareasize.php");
