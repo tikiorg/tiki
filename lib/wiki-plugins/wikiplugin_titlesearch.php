@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version 1.0
+    * @version $Revision: 1.13 $
     */
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -25,7 +25,7 @@
             return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
         }
         function getDefaultArguments() {
-            return array('exclude' => array(),
+            return array('exclude' => '' ,
                 'noheader' => 0,
                 'info' => false,
                 'search' => false);
@@ -35,7 +35,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.12 $");
+                "\$Revision: 1.13 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -43,7 +43,7 @@
             $params = $this->getParams($params, true);
             extract ($params);
             if (!$search) {
-                return ("You have to define a search");
+                return $this->error("You have to define a search");
             }
             //
             /////////////////////////////////
@@ -92,7 +92,7 @@
                 }
                 $sOutput  .= "\n";
             }
-            $sOutput.=PluginsLibUtil::createTablePages($aPages["data"],$info);
+            $sOutput.=PluginsLibUtil::createTable($aPages["data"],$info);
             return $sOutput;
         }
     }
