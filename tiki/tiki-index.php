@@ -358,14 +358,16 @@ if($feature_user_watches == 'y') {
 $sameurl_elements=Array('pageName','page');
 //echo $info["data"];
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 	require_once("lib/hawhaw/hawhaw.inc");
+	require_once("lib/hawhaw/hawiki_cfg.inc");
+	require_once("lib/hawhaw/hawiki_parser.inc");
 	require_once("lib/hawhaw/hawiki.inc");
 	error_reporting(E_ALL & ~E_NOTICE);
-	$myWiki = new HAWIKI_wiki($info["data"],"tiki-index.php?mode=wap&page=");
+	$myWiki = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=");
 	
-	$myWiki->set_navlink("Home", "tiki-index.php?mode=wap", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-	$myWiki->set_navlink("Menu", "tiki-wap.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+	$myWiki->set_navlink("Home", "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+	$myWiki->set_navlink("Menu", "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 	$myWiki->set_smiley_dir("img/smiles");
 	$myWiki->set_link_jingle("lib/hawhaw/link.wav");
 	$myWiki->set_hawimconv("lib/hawhaw/hawimconv.php");

@@ -174,16 +174,20 @@ if($user
   $tikilib->replace_note($user,0,$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']),$post_info['data']);
 }
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
-	require_once("lib/hawhaw/hawhaw.inc");
-	require_once("lib/hawhaw/hawiki.inc");
-	error_reporting(E_WARNING);
-	$myWiki = new HAWIKI_wiki($post_info["data"],"tiki-index.php?mode=wap&page=");
-	$myWiki->set_navlink("Blogs", "tiki-list_blogs.php?mode=wap", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-	$myWiki->set_navlink("Menu", "tiki-wap.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-	$myWiki->set_smiley_dir("img/smiles");
-	$myWiki->display();
-	die;
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
+  require_once("lib/hawhaw/hawhaw.inc");
+  require_once("lib/hawhaw/hawiki_cfg.inc");
+  require_once("lib/hawhaw/hawiki_parser.inc");
+  require_once("lib/hawhaw/hawiki.inc");
+  error_reporting(E_ALL & ~E_NOTICE);
+  $BlogPost = new HAWIKI_page($post_info["data"],"tiki-index.php?mode=mobile&page=");
+  $BlogPost->set_navlink("Blogs", "tiki-list_blogs.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  $BlogPost->set_navlink("Menu", "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  $BlogPost->set_smiley_dir("img/smiles");
+  $BlogPost->set_link_jingle("lib/hawhaw/link.wav");
+  $BlogPost->set_hawimconv("lib/hawhaw/hawimconv.php");
+  $BlogPost->display();
+  die;
 }
 
 
