@@ -1,11 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/bluemetal/tiki-show_page.tpl,v 1.6 2004-02-26 06:30:29 mose Exp $ *}
-
-{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
-{if $structure eq 'y' and $page_info.page_alias ne ''}
-{$page_info.page_alias}
-{else}
-{$page}
-{/if}</a>
+{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
@@ -35,6 +28,10 @@
 {/if}
 
 
+{if $feature_backlinks eq 'y'}
+<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
+{/if}
+
 {if $cached_page eq 'y'}
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 {/if}
@@ -60,31 +57,31 @@
 </td>
 {if $feature_backlinks eq 'y' and $backlinks}
   <td style="text-align:right;">
-    <form method="tiki-index.php">
+    <form href="tiki-index.php">
       <select name="page" onchange="page.form.submit()">
-	    <option value="{$page}">{tr}backlinks{/tr}...</option>
-		{section name=back loop=$backlinks}
-		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
-		{/section}
-	  </select>
+            <option value="{$page}">{tr}backlinks{/tr}...</option>
+                {section name=back loop=$backlinks}
+                  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+                {/section}
+          </select>
     </form>
   </td>
 {/if}
 {if isset($showstructs) and (count($showstructs) ne 0)}
   <td style="text-align:right;">
-    <form method="tiki-index.php">
+    <form href="tiki-index.php">
       <select name="page_ref_id" onchange="page_ref_id.form.submit()">
-	    <option>{tr}Structures{/tr}...</option>
-		{section name=struct loop=$showstructs}
-		  <option value="{$showstructs[struct].req_page_ref_id}">
+            <option>{tr}Structures{/tr}...</option>
+                {section name=struct loop=$showstructs}
+                  <option value="{$showstructs[struct].req_page_ref_id}">
 {if $showstructs[struct].page_alias}
 {$showstructs[struct].page_alias}
 {else}
 {$showstructs[struct].pageName}
 {/if}
           </option>
-		{/section}
-	  </select>
+                {/section}
+          </select>
     </form>
   </td>
 {else}
@@ -168,56 +165,47 @@
 
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
-<table>
-<tr><td>
-    {if $prev_info and $prev_info.page_ref_id}
-		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}'
-   			{if $prev_info.page_alias}
-   				title='{$prev_info.page_alias}'
-   			{else}
-   				title='{$prev_info.pageName}'
-   			{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
-	{if $parent_info}
-   	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}'
-        {if $parent_info.page_alias}
-   	      title='{$parent_info.page_alias}'
-        {else}
-   	      title='{$parent_info.pageName}'
-        {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
-   	{if $next_info and $next_info.page_ref_id}
-      <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}'
-		  {if $next_info.page_alias}
-			  title='{$next_info.page_alias}'
-		  {else}
-			  title='{$next_info.pageName}'
-		  {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>
-	{/if}
-	{if $home_info}
-   	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC'
-		  {if $home_info.page_alias}
-			  title='{$home_info.page_alias}'
-		  {else}
-			  title='{$home_info.pageName}'
-		  {/if}/></a>{/if}
-  </td>
-  <td>
-    {section loop=$structure_path name=ix}
-      {if $structure_path[ix].parent_id}->{/if}
-	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
-      {if $structure_path[ix].page_alias}
-        {$structure_path[ix].page_alias}
-	  {else}
-        {$structure_path[ix].pageName}
-	  {/if}
-	  </a>
-	{/section}
-  </td>
-</tr>
+<table width='100%'>
+{foreach from=$struct_prev_next item=struct name=str key=key}
+	<tr>
+		<td width='33%'>
+			{if $struct.prev_page}
+				<a href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}" class="tocnavlink">&lt;&lt;
+					{if $struct.prev_page_alias}
+						{$struct.prev_page_alias}
+					{else}
+						{$struct.prev_page}
+					{/if}
+				</a>
+
+			{else}
+				&nbsp;
+			{/if}
+		</td>
+		<td align='center' width='33%'>
+{*			<a class="tocnavlink" href="tiki-index.php?page=">{$key}</a> *}
+			{$key}
+		</td>
+		<td align='right' width='33%'>
+			{if $struct.next_page}
+				<a href="tiki-index.php?page={$struct.next_page}&amp;structID={$key}" class="tocnavlink">
+					{if $struct.next_page_alias}
+						{$struct.next_page_alias}
+					{else}
+						{$struct.next_page}
+					{/if}
+					&gt;&gt;
+				</a>
+			{else}
+				&nbsp;
+			{/if}</td>
+	</tr>
+{/foreach}
 </table>
 </div>
 {/if}{$parsed}
 {if $pages > 1}
-	<br />
+	<br/>
 	<div align="center">
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
@@ -236,7 +224,7 @@
 
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
 {if $wiki_extras eq 'y'}
-<br />
+<br/>
 {include file=attachments.tpl}
 
 {if $feature_wiki_comments eq 'y'}
