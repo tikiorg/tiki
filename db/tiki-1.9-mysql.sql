@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.36 2004-06-18 21:29:58 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.37 2004-06-18 22:33:37 teedog Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2709,6 +2709,14 @@ CREATE TABLE tiki_searchsyllable(
   lastUpdated int(11) NOT NULL default '0',
   PRIMARY KEY  (syllable),
   KEY lastUsed (lastUsed)
+) TYPE=MyISAM;
+
+# searchword caching table for search syllables
+DROP TABLE IF EXISTS tiki_searchwords;
+CREATE TABLE tiki_searchwords(
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
+  PRIMARY KEY  (syllable,searchword)
 ) TYPE=MyISAM;
 
 #
