@@ -213,6 +213,12 @@ class TikiSheet
 	 */
 	function equals( &$sheet, $rowIndex, $columnIndex )
 	{
+		if( isset( $this->dataGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->dataGrid[$rowIndex][$columnIndex] ) )
+			return false;
+
+		if( isset( $this->calcGrid[$rowIndex][$columnIndex] ) && !isset( $sheet->calcGrid[$rowIndex][$columnIndex] ) )
+			return false;
+
 		return $this->dataGrid[$rowIndex][$columnIndex] == $sheet->dataGrid[$rowIndex][$columnIndex]
 			&& $this->calcGrid[$rowIndex][$columnIndex] == $sheet->calcGrid[$rowIndex][$columnIndex]
 			&& $this->mergeInfo[$rowIndex][$columnIndex]['width'] == $sheet->mergeInfo[$rowIndex][$columnIndex]['width']
@@ -904,6 +910,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 		$current->import( $handler );
 
 		// Find differences {{{3
+		$mods = array();
 		for( $row = 0; $sheet->getRowCount() > $row; $row++ )
 		{
 			for( $col = 0; $sheet->getColumnCount() > $col; $col++ )
@@ -915,6 +922,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		$stamp = time();
 
+		$inserts = array();
 		$updates = array();
 		$updates[] = $stamp;
 		$updates[] = $this->sheetId;
