@@ -1,4 +1,30 @@
-<a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=SearchStats" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Search Stats{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-search_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}search stats tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+
+
+
+<br/><br/>
 <a class="link" href="tiki-search_stats.php?clear=1">{tr}clear stats{/tr}</a><br/><br/>
 
 <table class="findtable">
@@ -16,8 +42,15 @@
 
 <table class="normal">
 <tr>
+<!-- term -->
 <td class="heading"><a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'term_desc'}term_asc{else}term_desc{/if}">{tr}term{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}searched{/tr}</a></td>
+
+<!-- searched -->
+<td class="heading">
+<a class="tableheading" href="tiki-search_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}searched{/tr}</a></td>
+
+<!-- How can we increase the number of items displayed on a page? -->
+
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
