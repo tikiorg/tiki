@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.12 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.13 2003-10-17 16:31:30 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
@@ -51,7 +51,7 @@
 <td class="odd">&nbsp;{$info.user}&nbsp;</td>
 <td class="odd">&nbsp;{$info.ip}&nbsp;</td>
 <td class="odd">&nbsp;{$info.comment}&nbsp;</td>
-<td class="odd">&nbsp;{tr}current{/tr}&nbsp;</td>
+<td class="odd">&nbsp;<a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}current{/tr}</a>&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=hist loop=$history}
