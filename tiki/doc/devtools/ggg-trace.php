@@ -6,13 +6,13 @@
 // doc/devtools/ggg-trace.php
 // A simple debugging tool.
 // Use in your php like this:
-// require_once('/doc/devtools/ggg-trace.php');
+// require_once('doc/devtools/ggg-trace.php');
 // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 // 
 // In a Unix shell, tail -f ggg-trace.out and watch what your php is doing.
 //
-// Print variables (nested arrays are printed recursively)
-// $ggg_tracer->out('$arrayName = "); $ggg_tracer->outvar($arrayName);
+// Print variables (nested arrays are printed recursively) like this:
+// $ggg_tracer->out('$arrayName = '); $ggg_tracer->outvar($arrayName);
 
 //
 //  BE SURE TO DELETE OR COMMENT OUT ALL REFERENCES TO THIS BEFORE RELEASING 

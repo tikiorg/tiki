@@ -49,6 +49,7 @@ $lang=Array(
 "Display Tiki objects that have not been categorized" => "Display Tiki objects that have not been categorised",
 "categorize this object" => "categorise this object",
 "Categorize" => "Categorise",
+"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them\nfrom MyTiki->modules.<br />\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "\n<b>Notes</b>\n<ul><li>If you allow your users to configure modules then assigned modules won't be reflected in the screen until you configure them from MyTiki->modules.</li><li>If you assign modules to groups make sure that you have turned off the option 'display modules to all groups always' from Admin->General.",
 // ### end of untranslated words
 // ###
 

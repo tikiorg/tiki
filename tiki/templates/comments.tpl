@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.57 2004-08-12 22:31:55 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.58 2004-10-08 10:00:03 damosoft Exp $ *}
 
 {if $forum_mode eq 'y'}
-    <td>
+    <tr><td>
 {else}
     <a name="comments"></a>
     <br />
@@ -12,7 +12,7 @@
     {/if}
 {/if}
 
-{if $tiki_p_read_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y' }
 
   {* This section (comment) is only displayed * }
   {* if a reply to it is being composed * }
@@ -151,9 +151,7 @@
 
   {/if}
 
-
 {* Post dialog *}	
-
 {if $tiki_p_post_comments eq 'y'}
     {if $forum_mode eq 'y'}
 	{if $post_reply > 0 || $edit_reply > 0 || $comment_preview} {* posting a reply or editing a reply: show form *}
@@ -173,11 +171,6 @@
     {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
     {/if}
     </h2>
-{* not working     {if $comments_threadId > 0 || $parent_com}
-		<div style="text-align: right">
-			<a class="linkbut" href="{$comments_complete_father}comments_threadId=0{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}&amp;comments_postComment">{tr}post new reply{/tr}</a>
-		</div>	
-    {/if} *}
 		<br style="clear: both" />
 	</div>
 
@@ -274,7 +267,7 @@
       	{else}
       	{tr}Comment{/tr}
       	{/if}
-      </label><br /><br />{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}<br /><br /></td>
+      </label><br /><br />{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}<br /><br />{if $quicktags}{include file=tiki-edit_help_tool.tpl area_name='editpost2'}{/if}</td>
       <td class="formcolor"><textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 	<input type="hidden" name="rows" value="{$rows}"/>
 	<input type="hidden" name="cols" value="{$cols}"/>
@@ -311,7 +304,7 @@
 
   {/if}
 {if $forum_mode eq 'y'}
-    </td>
+    </td></tr>
 {else}
     </div><!-- comzone end -->
 {/if}

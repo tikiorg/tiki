@@ -1,17 +1,17 @@
 <a class="pagetitle" href="tiki-backup.php">{tr}Backups{/tr}</a>
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Backups" target="tikihelp" class="tikihelp" title="{tr}admin backups{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
-<!-- begin -->
+
 
 
 

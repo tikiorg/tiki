@@ -143,5 +143,4 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 </div>
 </div>
 {/if}
-
-
+&nbsp;

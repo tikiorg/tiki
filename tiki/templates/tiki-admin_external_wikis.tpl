@@ -1,19 +1,19 @@
 <a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}ExternalWiki" target="tikihelp" class="tikihelp" title="{tr}admin ExternalWiki{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
-<!-- begin -->
+
  
 <br /><br />
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>

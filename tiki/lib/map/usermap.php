@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.4 2004-09-28 12:59:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.5 2004-10-08 10:00:00 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function makemap($name,$datastruct,$data,$cols=0,$symbol="Symbol (34,16711680,9)") {
+function makemap($name,$datastruct,&$data,$cols=0,$symbol="Symbol (34,16711680,9)") {
 
 	global $tikilib;
 	global $map_path;

@@ -6,9 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-
-#$ranking = $tikilib->last_major_pages($module_rows);
-$ranking = $tikilib->last_pages($module_rows);
+if (isset($module_params["minor"]) && $module_params["minor"] == 'y')
+	$ranking = $tikilib->last_pages($module_rows);
+else
+	$ranking = $tikilib->last_major_pages($module_rows);
 
 $smarty->assign('modLastModif', $ranking);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);

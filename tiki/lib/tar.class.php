@@ -252,7 +252,7 @@ class tar {
 
 				// Generate tar header for this directory
 				// Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end
-				$header .= str_pad($information["name"],100,chr(0));
+				$header  = str_pad($information["name"],100,chr(0));
 				$header .= str_pad(decoct($information["mode"]),7,"0",STR_PAD_LEFT) . chr(0);
 				$header .= str_pad(decoct($information["user_id"]),7,"0",STR_PAD_LEFT) . chr(0);
 				$header .= str_pad(decoct($information["group_id"]),7,"0",STR_PAD_LEFT) . chr(0);
@@ -441,10 +441,11 @@ class tar {
 		$activeDir		= &$this->directories[];
 		$activeDir["name"]	= $dirname;
 		$activeDir["mode"]	= $file_information["mode"];
-		$activeDir["time"]	= $file_information["time"];
+		$activeDir["time"]	= $file_information["mtime"];
 		$activeDir["user_id"]	= $file_information["uid"];
 		$activeDir["group_id"]	= $file_information["gid"];
-		$activeDir["checksum"]	= $checksum;
+		//$activeDir["checksum"]	= $checksum;
+		$activeDir["checksum"]	= 0;
 
 		return true;
 	}
@@ -477,7 +478,8 @@ class tar {
 		$activeFile["group_id"]		= $file_information["gid"];
 		$activeFile["size"]		= $file_information["size"];
 		$activeFile["time"]		= $file_information["mtime"];
-		$activeFile["checksum"]		= $checksum;
+		//$activeFile["checksum"]		= $checksum;
+		$activeFile["checksum"]		= 0;
 		$activeFile["user_name"]	= "";
 		$activeFile["group_name"]	= "";
 		$activeFile["file"]		= $file_contents;

@@ -60,6 +60,10 @@
 </td>
 </tr>
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="4">
+<b>{tr}No records found{/tr}</b>
+</td></tr>
 {/section}
 </table>
 <! -- the page advance... it's set to ten by default in maxRecords... -->

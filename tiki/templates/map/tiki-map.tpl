@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.25 2004-09-28 12:59:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.26 2004-10-08 10:00:12 damosoft Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -71,11 +71,7 @@
 			</select><br />
 			<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" /><br />
 			<small>{tr}select zoom/pan/query and image size{/tr}</small>
-		</td></tr>{*
-		<tr><td align="center">
-			<INPUT type="text" name="mapsearch">
-			<INPUT name="search" type="submit" value="search">
-		</td></tr>*}	
+		</td></tr>
 			<tr><td align="center"> 
 			{if $map_view eq "" }
                   		{*if view is empty do not display empty list*} 
@@ -277,7 +273,4 @@
 	</td></tr>
 	</table>		  
   </form>
-  	{$download_test}
-	{*$map_querymsg*}
-	
 </div>

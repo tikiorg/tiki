@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.78 2004-09-19 19:36:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.79 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -600,22 +600,8 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
 } else {
     $smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
-
     $smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
     $smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
-
-    if (isset($REQUEST["comments_title"])) {
-	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
-    } else {
-	$smarty->assign('comment_title', '');
-    }
-
-    if (isset($REQUEST["comments_data"])) {
-	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
-    } else {
-	$smarty->assign('comment_data', '');
-    }
-
     $smarty->assign('comment_topictype', 'n');
     $smarty->assign('comment_topicsummary', '');
     $smarty->assign('comment_topicsmiley', '');

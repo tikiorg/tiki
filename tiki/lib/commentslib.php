@@ -719,13 +719,8 @@ class Comments extends TikiLib {
 
     function remove_forum($forumId) {
 	$query = "delete from `tiki_forums` where `forumId`=?";
-
 	$result = $this->query($query, array((int) $forumId ) );
-	// Now remove all the messages for the forum
-
-	$query = "delete from `tiki_comments` where `object`=? and
-	    `objectType` = 'forum'";
-	$result = $this->query($query, array( (string) $forumId ) );
+	$this->remove_object("forum", $forumId);
 	$query = "delete from `tiki_forum_attachments` where `forumId`=?";
 	$this->query($query, array((int) $forumId ) );
 	return true;

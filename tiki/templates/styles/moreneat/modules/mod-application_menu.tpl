@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.44 2004-09-28 12:59:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.45 2004-10-08 10:00:14 damosoft Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -498,9 +498,7 @@
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br />
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
 		&nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
-    {/if}
-    {if $feature_score eq 'y' && ($tiki_p_admin_score eq 'y' || $tiki_p_admin eq 'y')}
-      &nbsp;<a href="tiki-admin_score.php" class="linkmenu">{tr}Score{/tr}</a><br />
+		&nbsp;<a href="tiki-mods.php" class="linkmenu">{tr}Mods Management{/tr}</a><br />
     {/if}
 		{/sortlinks}
   </div>

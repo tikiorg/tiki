@@ -1,17 +1,17 @@
 <a class="pagetitle" href="tiki-admin_shoutbox_words.php">{tr}Admin Shoutbox Words{/tr}</a>
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ShoutboxWords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin shoutbox words{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_shoutbox_words.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin shoutbox words template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>{/if}
 
-<!-- begin -->
+
 
 <h2>{tr}Add Banned Word{/tr}</h2>
 

@@ -36,7 +36,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 $lang=Array(
@@ -908,7 +908,7 @@ $lang=Array(
 "Created" => "Créé",
 "__WARNING__: No such module \$plugin! " => "__ATTENTION__: Aucun module \$plugin! ",
 "new" => "créer",
-"Create page:" => "Créer une page",
+"Create page:" => "Créer la page :",
 "Updated" => "Mis à jour",
 "Unknown language" => "Langue inconnue",
 "Click here to confirm your action" => "Cliquer ici pour confirmer votre action",
@@ -1812,7 +1812,7 @@ $lang=Array(
 "|| for rows" => "|| pour les rangées",
 "\\n for rows" => "\\n pour rangées",
 "Automonospaced text" => "Texte à espacement constant automatiquement",
-"Uses Slideshow" => "Utilise les diaporamas",
+"Uses Slideshow" => "Permettre les diaporamas",
 "Allow HTML" => "Permettre le HTML",
 "Open page as structure" => "Ouvrir une page en tant que structure",
 "Use external link icons" => "Utiliser un icône pour un lien externe",
@@ -1855,6 +1855,7 @@ $lang=Array(
 "admin categories template" => "gabarit de l'administration des catégories",
 "browse category" => "parcourir les catégories",
 "Current category" => "Catégorie courante",
+"Top" => "Racine",
 "Child categories" => "Sous-catégories",
 "permissions" => "droits d'accès",
 "Edit this category:" => "Modifier cette catégorie :",
@@ -1963,7 +1964,7 @@ $lang=Array(
 "tiki admin external wikis template" => "gabarit de l'administration des Wiki externes",
 "Create/Edit External Wiki" => "Créer/modifier un Wiki externe",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=\$page)" => "Adresse Web ( \$page sera remplacé par le nom de la page- exemple : http://www.example.com/tiki-index.php?page=\$page)",
-"External Wiki" => "Wikis externe",
+"External Wiki" => "Wiki externe",
 "extwiki" => "Wiki externe",
 "Admin Forums" => "Administrer les forums",
 "admin forums template" => "gabarit de l'administration des forums",
@@ -3533,7 +3534,7 @@ $lang=Array(
 "My watches" => "Mes notifications",
 "Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed." => "Merci pour votre inscription. Vous recevrez un email bientôt pour confirmer votre inscription. Aucune newsletter ne vous sera envoyée tant que l'inscription ne sera pas confirmée.",
 "Your email address was removed from the list of subscriptors." => "Votre adresse électronique a été supprimée dans la liste des inscrits",
-"Subscription confirmed!" => "L'inscription est confirmée!",
+"Subscription confirmed!" => "Votre inscription est confirmée!",
 "Subscribe to newsletter" => "S'inscrire à une newsletter",
 "Email:" => "Adresse électronique :",
 "Subscribe" => "S'inscrire",
@@ -4810,5 +4811,7 @@ $lang=Array(
 "Wales" => "Pays de Galles",
 "Yugoslavia" => "Yougoslavie",
 "Zambia" => "Zambie",
+"For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name))" => "Pour un Wiki externe, utiliser NomWikiExterne:NomPage ou ((Nom Wiki Externe: Nom Page))",
+"Luxemburg" => "Luxembourg",
 "###end###"=>"###end###");
 ?>

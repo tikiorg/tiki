@@ -1,18 +1,18 @@
 <a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}admin Banners{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_banners.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Banners tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
-<!-- begin -->
+
 
 <br /><br />
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>

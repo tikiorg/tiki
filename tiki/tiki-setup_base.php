@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.81 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.82 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,7 +96,7 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 // mose : simulate strong var type checking for http vars
 $patterns['int']   = "/^[0-9]*$/"; // *Id, offset,
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
-$patterns['string']  = "/^[^<>\";&#]*$/"; // find, and such extended chars
+$patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
 
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support

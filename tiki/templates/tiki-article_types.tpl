@@ -1,18 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.20 2004-08-26 19:24:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.21 2004-10-08 10:00:04 damosoft Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
-<!-- the help link info -->
+
 {if $feature_help eq 'y'}
 <a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
-<!-- beginning of next bit -->
+
 <br />
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />

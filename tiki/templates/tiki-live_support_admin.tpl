@@ -1,12 +1,12 @@
 <a class="pagetitle" href="tiki-live_support_admin.php">
 {tr}Live support system{/tr}</a>
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}LiveSupport" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin live support tpl{/tr}">

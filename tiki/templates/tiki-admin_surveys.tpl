@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 
-<!-- the help link info -->
+
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">

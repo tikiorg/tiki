@@ -1,18 +1,18 @@
 <h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a></h1>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
-<!-- begin -->
+
 
 
 <h2>{tr}Create/edit channel{/tr}</h2>

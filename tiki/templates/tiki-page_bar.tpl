@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.38 2004-09-08 19:53:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.39 2004-10-08 10:00:07 damosoft Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -76,6 +76,7 @@
 
   {* don't show comments if feature disabled or not enough rights *}
   {if $feature_wiki_comments == 'y'
+	&& $tiki_p_wiki_view_comments == 'y'
   && (($tiki_p_read_comments  == 'y'
   && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
@@ -137,10 +138,10 @@
 </table>
 </div>
 
-{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y'}
 {include file=comments.tpl}
 {/if}

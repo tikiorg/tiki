@@ -1,18 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.21 2004-08-26 19:24:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.22 2004-10-08 10:00:04 damosoft Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
-<!-- the help link info -->
+
 {if $feature_help eq 'y'}
 <a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin topics template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
-<!-- beginning of next bit -->
+
 <br /><br />
 <h3>{tr}Create a new topic{/tr}</h3>
 

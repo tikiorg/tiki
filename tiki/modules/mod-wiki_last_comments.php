@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.6 2004-09-19 19:37:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.7 2004-10-08 10:00:02 damosoft Exp $
 // \brief Show last comments on wiki pages
 //
 
@@ -9,7 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+if (!function_exists("wiki_last_comments")) {
 function wiki_last_comments($limit)
 {
     $query = "select `object`,`title`,`commentDate`,`userName`
@@ -27,6 +27,7 @@ function wiki_last_comments($limit)
         $ret[] = $aux;
     }
     return $ret;
+}
 }
 
 $comments = wiki_last_comments($module_rows);

@@ -54,7 +54,7 @@ class DCSLib extends TikiLib {
 			$res["future"] = $this->getOne($query,array($now,$id));
 			$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
 			$res["actual"] = $this->getOne($query,array($id,$now));
-			$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`=?";
+			$query = "select min(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`>=?";
 			$res["next"] = $this->getOne($query,array($id,$now));
 			$query = "select count(*) from `tiki_programmed_content` where `contentId` = ? and `publishDate`<?";
 			$res["old"] = $this->getOne($query,array($id,$now));

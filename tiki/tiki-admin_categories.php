@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.33 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.34 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.33 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.34 2004-10-08 09:59:44 damosoft Exp $
 //
 
 // Initialization
@@ -197,7 +197,7 @@ if ($_REQUEST["parentId"]) {
 } else {
 	$path = "";
 	$father = 0;
-	$categ_name = 'Top';
+	$categ_name = tra('Top');
 }
 
 $smarty->assign('path', $path);

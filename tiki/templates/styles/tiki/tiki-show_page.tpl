@@ -170,7 +170,7 @@
 {/if}
 
 {if $print_page ne 'y'}
-{if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
+{if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 {/if}
@@ -258,11 +258,11 @@
 
 {if $wiki_extras eq 'y'}
 <br />
-{if $feature_wiki_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments eq 'y'}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
 {/if}

@@ -1,18 +1,18 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.25 2004-09-19 19:37:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.26 2004-10-08 10:00:07 damosoft Exp $ *}
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
-<!--help links-->
+{* help links *}
 {if $feature_help eq 'y'}
 <a href="{$helpurl}ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
-<!-- links to edit-->
+{* links to edit *}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-upload_image.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Image Gallery tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
 <br /><br />
-<!--link button-->
+{* link button *}
 
 {if $galleryId ne ''}
 	<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">

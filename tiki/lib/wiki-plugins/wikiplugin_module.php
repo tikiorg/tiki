@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.23 2004-09-19 19:37:09 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.24 2004-10-08 10:00:01 damosoft Exp $
 Displays a module inlined in page
 
 Parameters
@@ -83,7 +83,7 @@ function wikiplugin_module($data, $params) {
 				$module_rows = $max;
 
 				$module_params = $params;
-				include_once ($phpfile);
+				include ($phpfile);
 			}
 
 			$template_file = 'templates/' . $template;

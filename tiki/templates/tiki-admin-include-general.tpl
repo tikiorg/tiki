@@ -1,5 +1,24 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.38 2004-09-08 19:53:02 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.39 2004-10-08 10:00:03 damosoft Exp $ *}
 
+<script language="JavaScript">
+{literal}
+
+  function previous_site_style() {
+	var select = document.getElementById('general-theme');
+	if (select.selectedIndex > 0) {
+		select.selectedIndex--;
+	}
+  }
+
+  function next_site_style() {
+	var select = document.getElementById('general-theme');
+	if (select.selectedIndex < select.length-1) {
+		select.selectedIndex++;
+	}
+  }
+
+{/literal}
+</script>
 <div class="cbox">
   <div class="cbox-title">
     {tr}General preferences and settings{/tr}
@@ -18,6 +37,9 @@
                 {$styles[ix]}</option>
             {/section}
             </select>
+            <a class="link" href="javascript:previous_site_style();">&lt;&lt;</a>&nbsp;
+            <a class="link" href="javascript:next_site_style();">&gt;&gt;</a>&nbsp;&nbsp;
+            <input type="submit" name="style" value="{tr}Change style only{/tr}" />
         </td>
       </tr><tr>
         <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>

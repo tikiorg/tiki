@@ -1,20 +1,20 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.27 2004-09-28 12:59:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.28 2004-10-08 10:00:04 damosoft Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
-<!-- the help link info -->
+
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Structures" target="tikihelp" class="tikihelp" title="{tr}Structures{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_structures.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin structures template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>
 {/if}
 
-<!-- beginning of next bit -->
+
 
 <h2>{tr}Structures{/tr}</h2>
 <table class="normal">

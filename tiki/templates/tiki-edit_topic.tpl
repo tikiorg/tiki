@@ -1,14 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.4 2004-06-06 08:39:56 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_topic.tpl,v 1.5 2004-10-08 10:00:06 damosoft Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
-<!-- the help link info -->
+
 <a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' />
 </a>{/if}
 
-<!-- beginning of next bit -->
+
 
 <br /><br />
 <h3>{tr}Edit a topic{/tr}</h3>

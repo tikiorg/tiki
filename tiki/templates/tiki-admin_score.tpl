@@ -5,7 +5,7 @@
 <a href="http://tikiwiki.org/tiki-index.php?page=ScoreSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score System{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
-<!-- begin -->
+
 
 <br /><br />
 <div align="center">

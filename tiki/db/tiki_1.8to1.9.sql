@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.90 2004-09-19 19:36:26 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.91 2004-10-08 09:59:45 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -672,3 +672,12 @@ CREATE TABLE `tiki_download` (
 ALTER TABLE `tiki_galleries` ADD `geographic` char(1) default NULL AFTER `visible`;
 ALTER TABLE `tiki_images` ADD `lat` float default NULL AFTER `description`;
 ALTER TABLE `tiki_images` ADD `lon` float default NULL AFTER `description`;
+
+# added on 30 09 04 00:41:05 by mose
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Packages Admin','tiki-mods.php',1232,'','tiki_p_admin','');
+
+# added on 07 10 04 00:01:12 by mose
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki coments', 'basic', 'wiki');
+insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
+
+

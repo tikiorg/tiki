@@ -1,18 +1,18 @@
 <a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
 
-<!-- the help link info -->
+{* the help link info *}
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}EmailNotificationsAdmin" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+{* link to tpl *}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
-<!-- begin -->
+{* begin *}
 
 <br /><br />
 <h2>{tr}Add notification{/tr}</h2>
@@ -72,6 +72,8 @@
    <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].event}&amp;object={$channels[user].object}&amp;email={$channels[user].email}">{tr}remove{/tr}</a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="4"><b>{tr}No records found.{/tr}</b></td></tr>
 {/section}
 </table>
 <br />

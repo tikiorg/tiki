@@ -1,11 +1,11 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.31 2004-08-26 19:23:08 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.32 2004-10-08 09:59:44 damosoft Exp $
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-DIRS="backups db dump img/wiki img/wiki_up modules/cache temp temp/cache templates_c templates styles maps whelp static static/styles"
+DIRS="backups db dump img/wiki img/wiki_up modules/cache temp temp/cache templates_c templates styles maps whelp mods static static/styles"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"
@@ -26,6 +26,11 @@ if [ -f /etc/debian_version ]; then
 fi
 
 if [ -f /etc/redhat-release ]; then
+	AUSER=apache
+	AGROUP=apache
+fi
+
+if [ -f /etc/gentoo-release ]; then
 	AUSER=apache
 	AGROUP=apache
 fi
@@ -84,6 +89,16 @@ or, if you can't become root:
 
   $0 $USER $AGROUP 02777 domain1 domain2 domain3
 
+---------
+special for mods installer
+
+  $0 $AUSER all
+
+will change perms on all tiki files so you can use the tikimods power.
+Remember to run the perms setup again when mods installer use if done.
+  
+	$0 $USER $AGROUP 
+
 EOF
 	exit 1
 fi
@@ -93,6 +108,10 @@ if [ -n "$1" ]; then
 	shift
 fi
 if [ -n "$1" ]; then
+	if [ $1 = "all" ]; then
+		chown -R $AUSER *
+		exit 0
+	fi
 	AGROUP=$1
 	shift
 fi
@@ -124,7 +143,7 @@ for dir in $DIRS; do
 done
 
 # Set ownerships of the directories
-chown -R $AUSER $DIRS
+chown -R $AUSER *
 
 if [ -n "$AGROUP" ]; then
 	chgrp -R $AGROUP $DIRS

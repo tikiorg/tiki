@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.60 2004-08-26 19:24:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.61 2004-10-08 10:00:06 damosoft Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -42,8 +42,16 @@
 {/if}
 <table class="normal">
 
+{if $categIds}
+{section name=o loop=$categIds}
+<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+{/section}
+<input type="hidden" name="categId" value="{$categIdstr}" />
+<input type="hidden" name="cat_categorize" value="on" />
+{else}
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
+{/if}
 {/if}
 {include file=structures.tpl}
 
@@ -52,7 +60,7 @@
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
+<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
 {/section}
 </select>
 </td></tr>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.130 2004-09-19 19:36:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.131 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,8 @@ if (isset($_REQUEST["page_id"])) {
 //TODO: introduce a get_info_from_id to save a sql request
 }
 
+$use_best_language = false;
+
 if (!isset($_REQUEST["page"])) {
 	if ($useGroupHome == 'y') { 
 		$group = $userlib->get_user_default_group($user);
@@ -49,12 +51,16 @@ if (!isset($_REQUEST["page"])) {
 	if(!$tikilib->page_exists($wikiHomePage)) {
 		$tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
 	}
-
+	if ($feature_best_language == 'y') {
+	    $use_best_language = true;
+	}
 }
 $page = $_REQUEST["page"];
 
+$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
+
 $info = null;
-if ($feature_multilingual == 'y' && (isset($_REQUEST["bl"]) || isset($_REQUEST["best_lang"]))) { // chose the best language page
+if ($feature_multilingual == 'y' && $use_best_language) { // chose the best language page
 	global $multilinguallib;
 	include_once("lib/multilingual/multilinguallib.php");
 	$info = $tikilib->get_page_info($page);
@@ -467,7 +473,7 @@ $smarty->assign('feature_wiki_comments','y');
  */
 
 // Comments engine!
-if($feature_wiki_comments == 'y') {
+if ($feature_wiki_comments == 'y' and $tiki_p_wiki_view_comments == 'y') {
     $comments_per_page = $wiki_comments_per_page;
     $comments_default_ordering = $wiki_comments_default_ordering;
     $comments_vars=Array('page');
@@ -477,6 +483,7 @@ if($feature_wiki_comments == 'y') {
 }
 
 $section='wiki';
+$smarty->assign('section',$section);
 include_once('tiki-section_options.php');
 
 $smarty->assign('footnote','');

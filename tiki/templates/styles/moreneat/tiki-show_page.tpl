@@ -197,6 +197,8 @@
 	<span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
 {/if}</a></span>
 {/if}
+
+
 {/if}
 
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
@@ -302,7 +304,7 @@
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments eq 'y'}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
 

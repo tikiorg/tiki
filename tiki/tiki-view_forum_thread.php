@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.73 2004-09-19 19:36:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.74 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -230,6 +230,7 @@ if ($tiki_p_forums_report == 'y') {
 
 $smarty->assign_by_ref('forum_info', $forum_info);
 $thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
+
 //print_r($thread_info);
 $smarty->assign_by_ref('thread_info', $thread_info);
 
@@ -256,7 +257,6 @@ if ($feature_theme_control == 'y') {
 if ($user && $tiki_p_notepad == 'y' && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
     check_ticket('view-forum');
     $info = $commentslib->get_comment($_REQUEST['savenotepad']);
-
     $tikilib->replace_note($user, 0, $info['title'], $info['data']);
 }
 
@@ -319,9 +319,11 @@ if ($tiki_p_admin_forum == 'y') {
 
 include_once("textareasize.php");
 
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+if ($feature_forum_parse == "y") {
+	include_once ('lib/quicktags/quicktagslib.php');
+	$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
+	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+}
 $smarty->assign('forum_mode', 'y');
 
 ask_ticket('view-forum');

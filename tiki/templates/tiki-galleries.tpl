@@ -33,15 +33,14 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-<!--<tr><td class="formcolor">{tr}Theme{/tr}:</td><td class="formcolor"><select name="theme">
-       <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
-       <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
-       </select></td></tr>-->
 {if $tiki_p_admin_galleries eq 'y'}       
 <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
+{* If a user can create a gallery, but doesn't have tiki_p_admin_galleries the new gallery needs to be visible. *}
+{else}
+<input type="hidden" name="visible" value="on" />
+{/if}
 {if $feature_maps eq 'y'}
 <tr><td class="formcolor">{tr}Geographic{/tr}:</td><td class="formcolor"><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
-{/if}
 {/if}
 <tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
@@ -136,7 +135,6 @@
 {if $gal_list_lastmodif eq 'y'} 
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last modified{/tr}</a></td>
 {/if}
-<!--<td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}Theme{/tr}</a></td>-->
 {if $gal_list_user eq 'y'} 
 <td class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
@@ -164,7 +162,6 @@
 {if $gal_list_lastmodif eq 'y'} 
   <td class="{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
 {/if}  
-  <!--<td class="{cycle advance=false}">{$galleries[changes].theme}</td>-->
 {if $gal_list_user eq 'y'}   
   <td class="{cycle advance=false}">{$galleries[changes].user}</td>
 {/if}  
