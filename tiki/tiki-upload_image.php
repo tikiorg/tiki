@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 // Now check permissions to access this page
 if($tiki_p_upload_images != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot upload images"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -53,7 +53,7 @@ if(isset($_REQUEST["upload"])) {
 
   if($tiki_p_upload_images != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot upload images"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
 
@@ -64,7 +64,7 @@ if(isset($_REQUEST["upload"])) {
   // Check the user to be admin or owner or the gallery is public
   if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"]) && $gal_info["public"]!='y') {
     $smarty->assign('msg',tra("Permission denied you can upload images but not to this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $error_msg='';
@@ -89,14 +89,14 @@ if(isset($_REQUEST["upload"])) {
        if(!empty($gal_match_regex)) {
          if(!preg_match("/$gal_match_regex/",$_FILES['userfile1']['name'],$reqs)) {
            $smarty->assign('msg',tra('Invalid imagename (using filters for filenames)'));
-           $smarty->display('error.tpl');
+           $smarty->display("styles/$style_base/error.tpl");
            die;  	
          }
        }
        if(!empty($gal_nmatch_regex)) {
           if(preg_match("/$gal_nmatch_regex/",$_FILES['userfile1']['name'],$reqs)) {
            $smarty->assign('msg',tra('Invalid imagename (using filters for filenames)'));
-           $smarty->display('error.tpl');
+           $smarty->display("styles/$style_base/error.tpl");
            die;  	
          }
        }
@@ -112,7 +112,7 @@ if(isset($_REQUEST["upload"])) {
         header("location: tiki-browse_gallery.php?galleryId=".$_REQUEST["galleryId"]);
         } else {
            $smarty->assign('msg',tra('No permission to upload zipped image packages'));
-           $smarty->display('error.tpl');
+           $smarty->display("styles/$style_base/error.tpl");
            die;  	
         }
       }
@@ -141,7 +141,7 @@ if(isset($_REQUEST["upload"])) {
   }
   if($error_msg) {
     $smarty->assign('msg',$error_msg);
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   if(isset($data)) {
@@ -196,7 +196,7 @@ if(isset($_REQUEST["upload"])) {
     
     if(!$imageId) {
        $smarty->assign('msg',tra('Upload failed'));
-       $smarty->display('error.tpl');
+       $smarty->display("styles/$style_base/error.tpl");
        die;  	
     }
     
@@ -256,5 +256,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-upload_image.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

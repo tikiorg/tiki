@@ -3,17 +3,17 @@
 require_once('tiki-setup.php');
 if($feature_chat!='y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 if($tiki_p_chat!='y') {
   $smarty->assign('msg',tra("Permission denied to use this feature"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 if(!isset($_REQUEST["channelId"])) {
     $smarty->assign('msg',tra("No channel indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 $channelId=$_REQUEST["channelId"];
@@ -25,7 +25,7 @@ if($user) {
 } else {
   if(!isset($_REQUEST["nickname"]) || empty($_REQUEST["nickname"])) {
     $smarty->assign('msg',tra("No nickname indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   $nickname = $_REQUEST["nickname"];
@@ -61,5 +61,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-chatroom.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

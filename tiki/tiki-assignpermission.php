@@ -7,7 +7,7 @@ require_once('tiki-setup.php');
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -15,13 +15,13 @@ if($user != 'admin') {
 
 if(!isset($_REQUEST["group"])) {
   $smarty->assign('msg',tra("Unknown group"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die; 
 }
 $group=$_REQUEST["group"];
 if(!$userlib->group_exists($group)) {
   $smarty->assign('msg',tra("Group doesnt exist"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 $smarty->assign_by_ref('group',$group);
@@ -89,5 +89,5 @@ $smarty->assign_by_ref('perms',$perms["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-assignpermission.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

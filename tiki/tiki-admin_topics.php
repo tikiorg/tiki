@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -13,7 +13,7 @@ if($feature_articles != 'y') {
 
   if($tiki_p_admin_cms != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 
@@ -28,7 +28,7 @@ if(isset($_REQUEST["addtopic"])) {
     $imgname = $_FILES['userfile1']['name'];
   } else {
     $smarty->assign('msg',tra("No image uploaded"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   // Store the image
@@ -71,7 +71,7 @@ for($i=0;$i<count($topics);$i++) {
 $smarty->assign('topics',$topics);
 
 $smarty->assign('mid','tiki-admin_topics.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 
 ?>

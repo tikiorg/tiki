@@ -6,13 +6,13 @@ include_once("lib/xmlrpcs.inc");
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_send_pages != 'y' && $tiki_p_send_articles != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -169,5 +169,5 @@ $smarty->assign_by_ref('articles',$articles["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-send_objects.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

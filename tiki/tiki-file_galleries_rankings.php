@@ -4,19 +4,19 @@ require_once('tiki-setup.php');
 
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($feature_file_galleries_rankings != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_view_file_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -62,5 +62,5 @@ $smarty->assign_by_ref('rankings',$rankings);
 $smarty->assign('rpage','tiki-file_galleries_rankings.php');
 // Display the template
 $smarty->assign('mid','tiki-ranking.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

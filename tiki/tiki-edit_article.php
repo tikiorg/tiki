@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_articles != 'y') {
 // Now check permissions to access this page
 if($tiki_p_edit_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot edit this article"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -308,5 +308,5 @@ include_once("categorize_list.php");
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_article.tpl');
 $smarty->assign('show_page_bar','n');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

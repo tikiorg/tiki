@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_wiki_multiprint != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["printpages"])) {
   $smarty->assign('msg',tra("No pages indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 } else {
   $printpages = unserialize(urldecode($printpages));
@@ -29,5 +29,5 @@ if(isset($_REQUEST["print"])) {
 $smarty->assign_by_ref('pages',$pages);  
 
 // Display the template
-$smarty->display('tiki-print_multi_pages.tpl');
+$smarty->display("styles/$style_base/tiki-print_multi_pages.tpl");
 ?>

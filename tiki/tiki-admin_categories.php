@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_categories != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_admin_categories != 'y') {
   $smarty->assign('msg',tra("You dont have permission to use this feature"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -182,5 +182,5 @@ $smarty->assign_by_ref('articles',$articles["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_categories.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

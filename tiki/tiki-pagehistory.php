@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if($feature_history != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -19,7 +19,7 @@ if($feature_history != 'y') {
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
   header("location: tiki-index.php");
 } else {
@@ -31,7 +31,7 @@ include_once("tiki-pagesetup.php");
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot browse this page history"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -39,7 +39,7 @@ if($tiki_p_view != 'y') {
 // If the page doesn't exist then display an error
 if(!$tikilib->page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -85,5 +85,5 @@ $smarty->assign_by_ref('history',$history);
 // Display the template
 $smarty->assign('mid','tiki-pagehistory.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

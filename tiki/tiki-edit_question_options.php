@@ -5,13 +5,13 @@ require_once('tiki-setup.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["questionId"])) {
   $smarty->assign('msg',tra("No question indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $smarty->assign('questionId',$_REQUEST["questionId"]);
@@ -40,7 +40,7 @@ if($userlib->object_has_one_permission($_REQUEST["quizId"],'quiz')) {
 
 if($tiki_p_admin_quizzes != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -114,5 +114,5 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-edit_question_options.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["surveyId"])) {
   $smarty->assign('msg',tra("No survey indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -38,7 +38,7 @@ $survey_info=$tikilib->get_survey($_REQUEST["surveyId"]);
 
 if($tiki_p_take_survey != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -48,7 +48,7 @@ if($tiki_p_take_survey != 'y') {
 if($tiki_p_admin != 'y') {
 if($tikilib->user_has_voted($user,'survey'.$_REQUEST["surveyId"])) {
   $smarty->assign('msg',tra("You cannot take this survey twice"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 } else {
   $tikilib->register_user_vote($user,'survey'.$_REQUEST["surveyId"]);
@@ -99,5 +99,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-take_survey.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

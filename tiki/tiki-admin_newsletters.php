@@ -5,7 +5,7 @@ include_once('lib/newsletters/nllib.php');
 
 if($feature_newsletters != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -36,7 +36,7 @@ if($userlib->object_has_one_permission($_REQUEST["nlId"],'newsletter')) {
 
 if($tiki_p_admin_newsletters != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -138,5 +138,5 @@ include_once("categorize_list.php");
 
 // Display the template
 $smarty->assign('mid','tiki-admin_newsletters.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -6,7 +6,7 @@ require_once('tiki-setup.php');
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -16,7 +16,7 @@ if(isset($_REQUEST["newgroup"])) {
   // Check if the user already exists
   if($userlib->group_exists($_REQUEST["name"])) {
     $smarty->assign('msg',tra("Group already exists"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   } else {
     $userlib->add_group($_REQUEST["name"],$_REQUEST["desc"]);
@@ -84,7 +84,7 @@ if($offset>0) {
 $smarty->assign_by_ref('users',$users["data"]);
 // Display the template for group administration
 $smarty->assign('mid','tiki-admingroups.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 
 ?>

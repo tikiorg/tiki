@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_blogs != 'y') {
 // Now check permissions to access this page
 if($tiki_p_blog_post != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot post"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -49,7 +49,7 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   if($data["user"]!=$user || !$user) {
     if($tiki_p_blog_admin != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
   }
@@ -108,7 +108,7 @@ if(isset($_REQUEST["save"])) {
 
   if($tiki_p_blog_post != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot post"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   
@@ -121,7 +121,7 @@ if(isset($_REQUEST["save"])) {
     if($data["user"]!=$user || !$user) {
       if($tiki_p_blog_admin != 'y') {
         $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
-        $smarty->display('error.tpl');
+        $smarty->display("styles/$style_base/error.tpl");
         die;  
       }
     }
@@ -141,7 +141,7 @@ if(isset($_REQUEST["save"])) {
 $blogs = $tikilib->list_user_blogs($user,1);
 if(count($blogs)==0) {
   $smarty->assign('msg',tra("You can't post in any blog maybe you have to create a blog first"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 $smarty->assign_by_ref('blogs',$blogs);
@@ -152,5 +152,5 @@ include_once('tiki-section_options.php');
 // Display the Index Template
 $smarty->assign('mid','tiki-blog_post.tpl');
 $smarty->assign('show_page_bar','n');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

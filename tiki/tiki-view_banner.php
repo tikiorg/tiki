@@ -5,27 +5,27 @@ require_once('lib/tikilib.php'); # httpScheme()
 
 if($feature_banners != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
 if(!isset($_REQUEST["bannerId"])) {
   $smarty->assign('msg',tra("No banner indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 $info = $tikilib->get_banner($_REQUEST["bannerId"]);
 if(!$info) {
   $smarty->assign('msg',tra("Banner not found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 // Check user is admin or the client
 if( ($user != $info["client"]) && ($tiki_p_admin_banners != 'y') ){
   $smarty->assign('msg',tra("You dont have permission to edit this banner"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $smarty->assign('bannerId',$info["bannerId"]);
@@ -93,5 +93,5 @@ fclose($fp);
 $smarty->assign_by_ref('raw',$raw);
 
 $smarty->assign('mid','tiki-view_banner.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

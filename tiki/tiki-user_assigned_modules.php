@@ -5,21 +5,21 @@ require_once('tiki-setup.php');
 
 if($tiki_p_configure_modules != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 
 if($user_assigned_modules != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if(!$user) {
     $smarty->assign('msg',tra("You must log in to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -76,5 +76,5 @@ $smarty->assign_by_ref('modules',$modules);
 
 
 $smarty->assign('mid','tiki-user_assigned_modules.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

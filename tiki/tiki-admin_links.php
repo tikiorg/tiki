@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_featuredLinks != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_featuredLinks != 'y') {
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -32,7 +32,7 @@ if($_REQUEST["editurl"]!='n') {
   $info = $tikilib->get_featured_link($_REQUEST["editurl"]);
   if(!$info) {
     $smarty->assign('msg',tra("Unexistant link"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   $smarty->assign('title',$info["title"]);
@@ -61,7 +61,7 @@ $smarty->assign_by_ref('links',$links);
 
 
 $smarty->assign('mid','tiki-admin_links.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 
 ?>

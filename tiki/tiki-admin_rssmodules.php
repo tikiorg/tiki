@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -88,5 +88,5 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_rssmodules.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

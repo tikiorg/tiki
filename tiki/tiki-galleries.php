@@ -6,14 +6,14 @@ require_once('tiki-setup.php');
 /*
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages like this page"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -33,7 +33,7 @@ $smarty->assign('galleryId',$_REQUEST["galleryId"]);
 // This check should be done before checking individual permissions
 if($tiki_p_view_image_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cant view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -106,7 +106,7 @@ if(isset($_REQUEST["edit"])) {
     if($tiki_p_create_galleries != 'y') {
       // If you can't create a gallery then you can't edit a gallery because you can't have a gallery
       $smarty->assign('msg',tra("Permission denied you cannot create galleries and so you cant edit them"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
     // If the user can create a gallery then check if he can edit THIS gallery
@@ -114,7 +114,7 @@ if(isset($_REQUEST["edit"])) {
       $info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
       if(!$user || $info["user"]!=$user) {
         $smarty->assign('msg',tra("Permission denied you cannot edit this gallery"));
-        $smarty->display('error.tpl');
+        $smarty->display("styles/$style_base/error.tpl");
         die;  
       }
     }
@@ -160,7 +160,7 @@ if(isset($_REQUEST["removegal"])) {
      $info = $tikilib->get_gallery_info($_REQUEST["removegal"]);
      if(!$user || $info["user"]!=$user) {
        $smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
-       $smarty->display('error.tpl');
+       $smarty->display("styles/$style_base/error.tpl");
        die;  
      }
   }
@@ -249,5 +249,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-galleries.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

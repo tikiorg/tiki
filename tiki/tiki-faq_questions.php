@@ -4,19 +4,19 @@ require_once('tiki-setup.php');
 
 if($feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_admin_faqs != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 if(!isset($_REQUEST["faqId"])) {
     $smarty->assign('msg',tra("No menu indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -115,5 +115,5 @@ $smarty->assign_by_ref('suggested',$suggested["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-faq_questions.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -5,7 +5,7 @@ require_once('tiki-setup.php');
 // Check for admin permission
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -42,7 +42,7 @@ if(isset($_REQUEST["upload"])) {
      unlink($_FILES['userfile1']['tmp_name']);
   } else {
      $smarty->assign('msg',tra("Upload failed"));
-     $smarty->display('error.tpl');
+     $smarty->display("styles/$style_base/error.tpl");
      die;    
   }	
 }
@@ -65,6 +65,6 @@ closedir($h);
 $smarty->assign_by_ref('backups',$backups);
 
 $smarty->assign('mid','tiki-backup.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

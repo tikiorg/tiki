@@ -15,6 +15,6 @@ if($isvalid) {
   die;
 } else {
   $smarty->assign('msg',tra("Invalid username or password"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
 }
 ?>

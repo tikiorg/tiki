@@ -4,7 +4,7 @@ include_once("tiki-setup.php");
 
 if($tiki_p_admin != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot assign permissions for this page"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -15,13 +15,13 @@ $smarty->assign('referer',$_REQUEST["referer"]);
 
 if(!isset($_REQUEST["objectName"]) || !isset($_REQUEST["objectType"]) || !isset($_REQUEST["objectId"]) || !isset($_REQUEST["permType"])) {
   $smarty->assign('msg',tra("Not enough information to display this page"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($_REQUEST["objectId"]<1) {
   $smarty->assign('msg',tra("Fatal error"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -61,6 +61,6 @@ $perms = $userlib->get_permissions(0,-1,'permName_desc','',$_REQUEST["permType"]
 $smarty->assign_by_ref('perms',$perms["data"]);
 
 $smarty->assign('mid','tiki-objectpermissions.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

@@ -4,21 +4,21 @@ require_once('tiki-setup.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 // Sanity anyone?
 if (!$_REQUEST['edit'] or !$_REQUEST['galleryId']) {
   $smarty->assign('msg',tra("Invalid request to edit an image"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
 // Now check permissions to access this page
 if($tiki_p_upload_images != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot edit images"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -55,7 +55,7 @@ if (isset($_REQUEST["editimage"])) {
 
   if($tiki_p_upload_images != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot edit images"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
 
@@ -66,7 +66,7 @@ if (isset($_REQUEST["editimage"])) {
   // Check the user to be admin or owner or the gallery is public
   if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"]) && $gal_info["public"]!='y') {
     $smarty->assign('msg',tra("Permission denied you can edit images but not in this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $error_msg='';
@@ -75,7 +75,7 @@ if (isset($_REQUEST["editimage"])) {
     $smarty->assign('show','y');
   } else {
     $smarty->assign('msg',tra("Failed to edit the image"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -89,5 +89,5 @@ $smarty->assign_by_ref('description',$info['description']);
 
 // Display the template
 $smarty->assign('mid','tiki-edit_image.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

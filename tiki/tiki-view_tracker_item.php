@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if(!isset($_REQUEST["itemId"])) {
     $smarty->assign('msg',tra("No item indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 $smarty->assign('itemId',$_REQUEST["itemId"]);
@@ -20,7 +20,7 @@ $smarty->assign('item_info',$item_info);
 
 if(!isset($_REQUEST["trackerId"])) {
     $smarty->assign('msg',tra("No tracker indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 $smarty->assign('trackerId',$_REQUEST["trackerId"]);
@@ -45,7 +45,7 @@ if($userlib->object_has_one_permission($_REQUEST["trackerId"],'tracker')) {
 
 if($tiki_p_view_trackers != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -254,7 +254,7 @@ if($tracker_info["useAttachments"] == 'y') {
         $fw = fopen($t_use_dir.$fhash,"w");
         if(!$fw) {
           $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
-          $smarty->display('error.tpl');
+          $smarty->display("styles/$style_base/error.tpl");
           die;  
         }
       }
@@ -287,5 +287,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_tracker_item.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

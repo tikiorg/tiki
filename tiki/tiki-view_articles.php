@@ -5,20 +5,20 @@ require_once('tiki-setup.php');
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_read_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -27,7 +27,7 @@ if($tiki_p_read_article != 'y') {
 if(isset($_REQUEST["remove"])) {
   if($tiki_p_remove_article != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot remove articles"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->remove_article($_REQUEST["remove"]);  
@@ -96,5 +96,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_articles.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

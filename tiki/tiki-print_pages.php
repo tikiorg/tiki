@@ -5,7 +5,7 @@ require_once('tiki-setup.php');
 
 if($feature_wiki_multiprint != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -56,5 +56,5 @@ $smarty->assign_by_ref('pages',$pages["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-print_pages.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($forgotPass != 'y') {
     $smarty->assign('msg',tra("This feature is disabled"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -31,5 +31,5 @@ if(isset($_REQUEST["remind"])) {
 
 // Display the template
 $smarty->assign('mid','tiki-remind_password.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -4,20 +4,20 @@ require_once('tiki-setup.php');
 
 if($tiki_p_create_bookmarks != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 
 if(!$user) {
     $smarty->assign('msg',tra("You must log in to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 if($feature_user_bookmarks != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -106,5 +106,5 @@ if($_REQUEST["parentId"]) {
 $smarty->assign('folders',$folders);
 // Display the template
 $smarty->assign('mid','tiki-user_bookmarks.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

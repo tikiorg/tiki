@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["quizId"])) {
   $smarty->assign('msg',tra("No quiz indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -36,7 +36,7 @@ if($userlib->object_has_one_permission($_REQUEST["quizId"],'quiz')) {
 
 if($tiki_p_view_user_results != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -47,14 +47,14 @@ $smarty->assign('quiz_info',$quiz_info);
 
 if(!isset($_REQUEST["resultId"])) {
   $smarty->assign('msg',tra("No result indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $smarty->assign('resultId',$_REQUEST["resultId"]);
 
 if(!isset($_REQUEST["userResultId"])) {
   $smarty->assign('msg',tra("No result indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $smarty->assign('userResultId',$_REQUEST["userResultId"]);
@@ -72,5 +72,5 @@ include_once('tiki-section_options.php');
 
 
 $smarty->assign('mid','tiki-quiz_result_stats.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

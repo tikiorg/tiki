@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_comm != 'y') {
 
 if($tiki_p_admin_received_articles != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -190,5 +190,5 @@ $smarty->assign_by_ref('topics',$topics);
 
 // Display the template
 $smarty->assign('mid','tiki-received_articles.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

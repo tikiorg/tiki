@@ -3,7 +3,7 @@ include_once("tiki-setup.php");
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -13,7 +13,7 @@ include_once("tiki-pagesetup.php");
 
   if($tiki_p_admin_wiki != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot assign permissions for this page"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
 
@@ -22,7 +22,7 @@ include_once("tiki-pagesetup.php");
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 } else {
   $page = $_REQUEST["page"];
@@ -40,7 +40,7 @@ $smarty->assign('emails',$emails);
 
 if(!$tikilib->page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -76,6 +76,6 @@ $smarty->assign_by_ref('perms',$perms["data"]);
 
 $smarty->assign('mid','tiki-pagepermissions.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

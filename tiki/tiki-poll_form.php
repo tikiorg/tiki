@@ -5,13 +5,13 @@ require_once('lib/tikilib.php'); # httpScheme()
 
 if($feature_polls != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["pollId"])) {
     $smarty->assign('msg',tra("No poll indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -26,5 +26,5 @@ $smarty->assign('ownurl',httpPrefix().$_SERVER["REQUEST_URI"]);
 
 // Display the template
 $smarty->assign('mid','tiki-poll_form.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

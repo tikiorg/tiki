@@ -9,7 +9,7 @@ $smarty->assign('forumId',$_REQUEST["forumId"]);
 
 if($feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -34,7 +34,7 @@ if($userlib->object_has_one_permission($_REQUEST["forumId"],'forum')) {
 
 if($tiki_p_admin_forum != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -239,5 +239,5 @@ $smarty->assign_by_ref('sections',$sections);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_forums.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

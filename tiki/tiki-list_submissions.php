@@ -5,14 +5,14 @@ require_once('tiki-setup.php');
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
 
 if($feature_submissions != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -21,7 +21,7 @@ if($feature_submissions != 'y') {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
@@ -29,7 +29,7 @@ if($tiki_p_view != 'y') {
 if(isset($_REQUEST["remove"])) {
   if($tiki_p_remove_submission != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot remove submissions"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->remove_submission($_REQUEST["remove"]);  
@@ -38,7 +38,7 @@ if(isset($_REQUEST["remove"])) {
 if(isset($_REQUEST["approve"])) {
   if($tiki_p_approve_submission != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot approve submissions"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->approve_submission($_REQUEST["approve"]);  
@@ -116,5 +116,5 @@ $smarty->assign_by_ref('listpages',$listpages["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-list_submissions.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

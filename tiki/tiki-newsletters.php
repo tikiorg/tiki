@@ -6,13 +6,13 @@ include_once('lib/webmail/htmlMimeMail.php');
 
 if($feature_newsletters != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!$user && $tiki_p_subscribe_email_newsletters != 'y') {
   $smarty->assign('msg',tra("You must be logged in to subscribe to newsletters"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -125,6 +125,6 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-newsletters.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>
