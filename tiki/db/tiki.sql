@@ -1,783 +1,747 @@
-## THIS IS The Tiki 1.5 Data model
-## If you are installing from scratch you won't need
-## to fe any other SQL file since they are for upgrading
+# phpMyAdmin MySQL-Dump
+# version 2.5.1
+# http://www.phpmyadmin.net/ (download page)
+#
+# Host: localhost
+# Generation Time: Jul 13, 2003 at 02:09 AM
+# Server version: 4.0.13
+# PHP Version: 4.2.3
+# Database : `tikiwiki`
+# --------------------------------------------------------
 
-#### DATA MODEL FOR MYSQL
+#
+# Table structure for table `galaxia_activities`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-## FEATURED SITES (A collection of some bookmarks to be displayed
-DROP TABLE IF EXISTS tiki_featured_links;
-CREATE TABLE tiki_featured_links (
-  url varchar(200) not null,
-  title varchar(40),
+DROP TABLE IF EXISTS galaxia_activities;
+CREATE TABLE galaxia_activities (
+  activityId int(14) NOT NULL auto_increment,
+  name varchar(80) default NULL,
+  normalized_name varchar(80) default NULL,
+  pId int(14) NOT NULL default '0',
+  type enum('start','end','split','switch','join','activity','standalone') default NULL,
+  isAutoRouted char(1) default NULL,
+  flowNum int(10) default NULL,
+  isInteractive char(1) default NULL,
+  lastModif int(14) default NULL,
   description text,
-  hits integer(8),
-  position integer(6),
-  type char(1),
-  primary key(url)
-);
+  PRIMARY KEY  (activityId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-## SESSION INFORMATION (A SIMPLE ONLINE USERS TRACKER
-DROP TABLE IF EXISTS tiki_sessions;
-CREATE TABLE tiki_sessions (
-  sessionId char(32) not null,
-  user varchar(200),
-  timestamp integer(14),
-  primary key(sessionId)
-);
+#
+# Table structure for table `galaxia_activity_roles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-## MODULES
-DROP TABLE IF EXISTS tiki_modules;
-CREATE TABLE tiki_modules (
-  name varchar(200) not null,
-  position char(1),
-  ord integer(4),
-  type char(1),
-  title varchar(40),
-  cache_time integer(14),
-  rows integer(4),
-  params varchar(255),
-  groups text,
-  primary key(name)
-);
+DROP TABLE IF EXISTS galaxia_activity_roles;
+CREATE TABLE galaxia_activity_roles (
+  activityId int(14) NOT NULL default '0',
+  roleId int(14) NOT NULL default '0',
+  PRIMARY KEY  (activityId,roleId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-insert into tiki_modules(name,position,ord,cache_time) values('login_box','r',1,0);
-insert into tiki_modules(name,position,ord,cache_time) values('application_menu','l',1,0);
-### Removed from version 1.0 since the admin menu module can now be found at the main menu
+#
+# Table structure for table `galaxia_instance_activities`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS galaxia_instance_activities;
+CREATE TABLE galaxia_instance_activities (
+  instanceId int(14) NOT NULL default '0',
+  activityId int(14) NOT NULL default '0',
+  started int(14) NOT NULL default '0',
+  ended int(14) NOT NULL default '0',
+  user varchar(200) default NULL,
+  status enum('running','completed') default NULL,
+  PRIMARY KEY  (instanceId,activityId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-DROP TABLE IF EXISTS tiki_user_modules;
-CREATE TABLE tiki_user_modules (
-  name varchar(200) not null,
-  title varchar(40),
-  data longblob,
-  primary key(name)
-);
+#
+# Table structure for table `galaxia_instance_comments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### IMAGES AND GALLERIES
+DROP TABLE IF EXISTS galaxia_instance_comments;
+CREATE TABLE galaxia_instance_comments (
+  cId int(14) NOT NULL auto_increment,
+  instanceId int(14) NOT NULL default '0',
+  user varchar(200) default NULL,
+  activityId int(14) default NULL,
+  hash varchar(32) default NULL,
+  title varchar(250) default NULL,
+  comment text,
+  activity varchar(80) default NULL,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (cId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-# GALLERIES
-DROP TABLE IF EXISTS tiki_galleries;
-CREATE TABLE tiki_galleries (
-  galleryId integer(14) not null auto_increment,
-  name varchar(80) not null,
+#
+# Table structure for table `galaxia_instances`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS galaxia_instances;
+CREATE TABLE galaxia_instances (
+  instanceId int(14) NOT NULL auto_increment,
+  pId int(14) NOT NULL default '0',
+  started int(14) default NULL,
+  owner varchar(200) default NULL,
+  nextActivity int(14) default NULL,
+  nextUser varchar(200) default NULL,
+  ended int(14) default NULL,
+  status enum('active','exception','aborted','completed') default NULL,
+  properties longblob,
+  PRIMARY KEY  (instanceId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `galaxia_processes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS galaxia_processes;
+CREATE TABLE galaxia_processes (
+  pId int(14) NOT NULL auto_increment,
+  name varchar(80) default NULL,
+  isValid char(1) default NULL,
+  isActive char(1) default NULL,
+  version varchar(12) default NULL,
   description text,
-  created integer(14),
-  lastModif integer(14),
-  visible char(1),
-  theme varchar(60),
-  user varchar(200),
-  hits integer(14),
-  maxRows integer(10),
-  rowImages integer(10),
-  thumbSizeX integer(10),
-  thumbSizeY integer(10),
-  public char(1),
-  primary key(galleryId)
-);
+  lastModif int(14) default NULL,
+  normalized_name varchar(80) default NULL,
+  PRIMARY KEY  (pId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_images;
-CREATE TABLE tiki_images (
-  imageId integer(14) not null auto_increment,
-  galleryId integer(14) not null,
-  name varchar(40) not null,
+#
+# Table structure for table `galaxia_roles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS galaxia_roles;
+CREATE TABLE galaxia_roles (
+  roleId int(14) NOT NULL auto_increment,
+  pId int(14) NOT NULL default '0',
+  lastModif int(14) default NULL,
+  name varchar(80) default NULL,
   description text,
-  created integer(14),
-  user varchar(200),
-  hits integer(14),
-  path varchar(255),
-  primary key(imageId)
-);
+  PRIMARY KEY  (roleId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `galaxia_transitions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### Table: preferences
-DROP TABLE IF EXISTS tiki_preferences;
-CREATE TABLE tiki_preferences (
-  name varchar(40) not null,
-  value varchar(250),
-  primary key(name)
-);
+DROP TABLE IF EXISTS galaxia_transitions;
+CREATE TABLE galaxia_transitions (
+  pId int(14) NOT NULL default '0',
+  actFromId int(14) NOT NULL default '0',
+  actToId int(14) NOT NULL default '0',
+  PRIMARY KEY  (actFromId,actToId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### Table: users
-DROP TABLE IF EXISTS tiki_users;
-CREATE TABLE tiki_users (
-  user varchar(200) not null,
-  password varchar(40),
-  email varchar(200),
-  lastLogin integer(14),
-  primary key(user)
-);
+#
+# Table structure for table `galaxia_user_roles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS galaxia_user_roles;
+CREATE TABLE galaxia_user_roles (
+  pId int(14) NOT NULL default '0',
+  roleId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  PRIMARY KEY  (roleId,user)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Version 0.8 tables
-DROP TABLE IF EXISTS tiki_tags;
-CREATE TABLE tiki_tags (
-  tagName varchar(80) not null,
-  pageName varchar(160) not null,
-  hits integer(8),
-  description varchar(200),
-  data longblob,
-  lastModif integer(14),
-  comment varchar(200),
-  version integer(8) not null,
-  user varchar(200),
-  ip varchar(15),
-  flag char(1),
-  primary key(tagName,pageName)
-);
+#
+# Table structure for table `galaxia_workitems`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### Table: pages
-DROP TABLE IF EXISTS tiki_pages;
-CREATE TABLE tiki_pages (
-  pageName varchar(160) not null,
-  hits integer(8),
-  data text,
-  description varchar(200),
-  lastModif integer(14),
-  comment varchar(200),
-  version integer(8) not null,
-  user varchar(200),
-  ip varchar(15),
-  flag char(1),
-  points integer(8),
-  votes integer(8),
-  cache text,
-  cache_timestamp integer(14),
-  pageRank decimal(4,3),
-  primary key(pageName)
-);
+DROP TABLE IF EXISTS galaxia_workitems;
+CREATE TABLE galaxia_workitems (
+  itemId int(14) NOT NULL auto_increment,
+  instanceId int(14) NOT NULL default '0',
+  orderId int(14) NOT NULL default '0',
+  activityId int(14) NOT NULL default '0',
+  properties longblob,
+  started int(14) default NULL,
+  ended int(14) default NULL,
+  user varchar(200) default NULL,
+  PRIMARY KEY  (itemId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Table: history
-DROP TABLE IF EXISTS tiki_history;
-CREATE TABLE tiki_history (
-  pageName varchar(160) not null,
-  version integer(8) not null,
-  lastModif integer(14),
-  description varchar(200),
-  user varchar(200),
-  ip varchar(15),
-  comment varchar(200),
-  data longblob,
-  primary key(pageName,version)
-);
+#
+# Table structure for table `messu_messages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:29 PM
+#
 
-### Table: log
+DROP TABLE IF EXISTS messu_messages;
+CREATE TABLE messu_messages (
+  msgId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  date int(14) default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority int(2) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_actionlog`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 12:29 AM
+#
+
 DROP TABLE IF EXISTS tiki_actionlog;
 CREATE TABLE tiki_actionlog (
-  action varchar(255) not null,
-  lastModif integer(14),
-  pageName varchar(200),
-  user varchar(200),
-  ip varchar(15),
-  comment varchar(200)
-);
+  action varchar(255) NOT NULL default '',
+  lastModif int(14) default NULL,
+  pageName varchar(200) default NULL,
+  user varchar(200) default NULL,
+  ip varchar(15) default NULL,
+  comment varchar(200) default NULL
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### Table: links
-DROP TABLE IF EXISTS tiki_links;
-CREATE TABLE tiki_links (
-  fromPage varchar(160) not null,
-  toPage varchar(160) not null,
-  primary key(fromPage, toPage)
-);
-
-### Indexes ?
-
-DROP TABLE IF EXISTS users_users;
-create table users_users(
-  userId integer(8) not null auto_increment,
-  email varchar(200),
-  login varchar(40) not null,
-  password varchar(30) not null,
-  provpass varchar(30),
-  realname varchar(80),
-  homePage varchar(200),
-  lastLogin integer(14),
-  currentLogin integer(14),
-  registrationDate integer(14),
-  challenge char(32),
-  pass_due integer(14),
-  hash char(32),
-  created integer(14),
-  country varchar(80),
-  avatarName varchar(80),
-  avatarSize integer(14),
-  avatarFileType varchar(250),
-  avatarData longblob,
-  avatarLibName varchar(200),
-  avatarType char(1),
-  primary key(userId)
-);
-
-### ADministrator account
-insert into users_users(email,login,password,realname,hash) values('','admin','admin','System Administrator',md5('admin'));
-update users_users set currentLogin=lastLogin,registrationDate=lastLogin;
-
-
-DROP TABLE IF EXISTS users_groups;
-create table users_groups(
-  groupName varchar(30) not null,
-  groupDesc varchar(255),
-  primary key(groupName)
-);
-insert into users_groups(groupName,groupDesc) values('Anonymous','Public users not logged');
-insert into users_groups(groupName,groupDesc) values('Registered','Users logged into the system');
-
-DROP TABLE IF EXISTS users_usergroups;
-create table users_usergroups(
-  userId integer(8) not null,
-  groupName varchar(30) not null,
-  primary key(userId,groupName)
-);
-
-DROP TABLE IF EXISTS users_permissions;
-create table users_permissions(
-  permName varchar(30) not null,
-  permDesc varchar(250),
-  level varchar(80),
-  type varchar(20),
-  primary key(permName)
-);
-
-DROP TABLE IF EXISTS users_grouppermissions;
-create table users_grouppermissions(
-  groupName varchar(30) not null,
-  permName varchar(30) not null,
-  value varchar(1) not null,
-  primary key(groupName, permName)
-);
-
-## This table can be used to assign permissions to groups for
-## individual objects of other systems, the "type" property
-## is used to determine the type of object, types should be
-## unique among several systems and objectIds should be uique
-## for a given type
-DROP TABLE IF EXISTS users_objectpermissions;
-create table users_objectpermissions(
-  groupName varchar(30) not null,
-  permName varchar(30) not null,
-  objectType varchar(20) not null,
-  objectId varchar(32) not null,
-  primary key(objectId,groupName,permName)
-);
-
-## Caching system
-## This table is used to cache links referenced from the wiki
-DROP TABLE IF EXISTS tiki_link_cache;
-create table tiki_link_cache (
-  cacheId integer(14) not null auto_increment,
-  url varchar(250),
-  data longblob,
-  refresh integer(14),
-  primary key(cacheId)  
-);
-
-
-
-### ADDITIONS FROM VERSION 0.95
-
-DROP TABLE IF EXISTS tiki_user_preferences;
-create table tiki_user_preferences(
-  user varchar(200) not null,
-  prefName varchar(40) not null,
-  value varchar(250),
-  primary key(user,prefName)
-);
-
-DROP TABLE IF EXISTS tiki_hotwords;
-create table tiki_hotwords(
-  word varchar(40) not null,
-  url varchar(255) not null,
-  primary key(word)
-);
-
-DROP TABLE IF EXISTS tiki_blogs;
-create table tiki_blogs(
-  blogId integer(8) not null auto_increment,
-  created integer(14),
-  lastModif integer(14),
-  title varchar(200),
-  description text,
-  user varchar(200),
-  public char(1),
-  posts integer(8),
-  maxPosts integer(8),
-  hits integer(8),
-  activity decimal(4,2),
-  primary key(blogId)
-);
-
-DROP TABLE IF EXISTS tiki_blog_posts;
-create table tiki_blog_posts(
-  postId integer(8) not null auto_increment,
-  blogId integer(8) not null,
-  data text,
-  created integer(14),
-  user varchar(200),
-  primary key(postId)
-);
-
-DROP TABLE IF EXISTS tiki_blog_activity;
-create table tiki_blog_activity(
-  blogId integer(8) not null,
-  day integer(14) not null,
-  posts integer(8),
-  primary key(blogId,day)
-);
-
+#
+# Table structure for table `tiki_articles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:30 AM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_articles;
-create table tiki_articles(
-  articleId integer(8) not null auto_increment,
-  title varchar(80),
-  authorName varchar(60),
-  topicId integer(14),
-  topicName varchar(40),
-  size integer(12),
-  useImage char(1),
-  image_name varchar(80),
-  image_type varchar(80),
-  image_size integer(14),
-  image_x integer(4),
-  image_y integer(4),
+CREATE TABLE tiki_articles (
+  articleId int(8) NOT NULL auto_increment,
+  title varchar(80) default NULL,
+  authorName varchar(60) default NULL,
+  topicId int(14) default NULL,
+  topicName varchar(40) default NULL,
+  size int(12) default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size int(14) default NULL,
+  image_x int(4) default NULL,
+  image_y int(4) default NULL,
   image_data longblob,
-  publishDate integer(14),
-  created integer(14),
+  publishDate int(14) default NULL,
+  created int(14) default NULL,
   heading text,
   body text,
-  hash char(32),
-  author varchar(200),
-  reads integer(14),
-  votes integer(8),
-  points integer(14),
-  type varchar(50),
-  rating decimal(2,2),
-  primary key(articleId)
-);
+  hash varchar(32) default NULL,
+  author varchar(200) default NULL,
+  reads int(14) default NULL,
+  votes int(8) default NULL,
+  points int(14) default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
+  isfloat char(1) default NULL,
+  PRIMARY KEY  (articleId),
+  KEY title (title),
+  KEY heading (heading(255)),
+  KEY body (body(255)),
+  KEY reads (reads),
+  FULLTEXT KEY ft (title,heading,body)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-DROP TABLE IF EXISTS tiki_submissions;
-create table tiki_submissions(
-  subId integer(8) not null auto_increment,
-  title varchar(80),
-  authorName varchar(60),
-  topicId integer(14),
-  topicName varchar(40),
-  size integer(12),
-  useImage char(1),
-  image_name varchar(80),
-  image_type varchar(80),
-  image_size integer(14),
-  image_x integer(4),
-  image_y integer(4),
-  image_data longblob,
-  publishDate integer(14),
-  created integer(14),
-  heading text,
-  body text,
-  hash char(32),
-  author varchar(200),
-  reads integer(14),
-  votes integer(8),
-  points integer(14),
-  type varchar(50),
-  rating decimal(2,2),
-  primary key(subId)
-);
-
-
-DROP TABLE IF EXISTS tiki_topics;
-CREATE TABLE tiki_topics (
-  topicId integer(14) not null auto_increment,
-  name varchar(40),
-  image_name varchar(80),
-  image_type varchar(80),
-  image_size integer(14),
-  image_data longblob,
-  active char(1),
-  created integer(14),
-  primary key(topicId)
-);
-
-
-
-### ADDITIONS FOR VERSION 1.0
-
-### Dynamic content system
-DROP TABLE IF EXISTS tiki_content;
-CREATE TABLE tiki_content(
-  contentId integer(8) not null auto_increment,
-  description text,
-  primary key(contentId)
-);
-
-DROP TABLE IF EXISTS tiki_programmed_content;
-CREATE TABLE tiki_programmed_content (
-  pId integer(8) not null auto_increment,
-  contentId integer(8) not null,
-  publishDate integer(14) not null,
-  data text,
-  primary key(pId)
-);
-
-
-### Banners System
-
-
-
-DROP TABLE IF EXISTS tiki_zones;
-CREATE TABLE tiki_zones(
-  zone varchar(40) not null,
-  primary key(zone)
-);
+#
+# Table structure for table `tiki_banners`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_banners;
 CREATE TABLE tiki_banners (
-  bannerId integer(12) not null auto_increment,
-  client varchar(200) not null,
-  url varchar(255),
-  title varchar(255),
-  alt varchar(250),
-  which varchar(50),
+  bannerId int(12) NOT NULL auto_increment,
+  client varchar(200) NOT NULL default '',
+  url varchar(255) default NULL,
+  title varchar(255) default NULL,
+  alt varchar(250) default NULL,
+  which varchar(50) default NULL,
   imageData longblob,
-  imageType varchar(200),
-  imageName varchar(100),
+  imageType varchar(200) default NULL,
+  imageName varchar(100) default NULL,
   HTMLData text,
-  fixedURLData varchar(255),
+  fixedURLData varchar(255) default NULL,
   textData text,
-  fromDate integer(14),
-  toDate integer(14),
-  useDates char(1),
-  mon char(1),
-  tue char(1),
-  wed char(1),
-  thu char(1),
-  fri char(1),
-  sat char(1),
-  sun char(1),
-  hourFrom char(4),
-  hourTo char(4),
-  created integer(14),
-  maxImpressions integer(8),
-  impressions integer(8),
-  clicks integer(8),
-  zone varchar(40),
-  primary key(bannerId)
-);
+  fromDate int(14) default NULL,
+  toDate int(14) default NULL,
+  useDates char(1) default NULL,
+  mon char(1) default NULL,
+  tue char(1) default NULL,
+  wed char(1) default NULL,
+  thu char(1) default NULL,
+  fri char(1) default NULL,
+  sat char(1) default NULL,
+  sun char(1) default NULL,
+  hourFrom varchar(4) default NULL,
+  hourTo varchar(4) default NULL,
+  created int(14) default NULL,
+  maxImpressions int(8) default NULL,
+  impressions int(8) default NULL,
+  clicks int(8) default NULL,
+  zone varchar(40) default NULL,
+  PRIMARY KEY  (bannerId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### END ADDITIONS FOR VERSION 1.0  
+#
+# Table structure for table `tiki_banning`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS tiki_banning;
+CREATE TABLE tiki_banning (
+  banId int(12) NOT NULL auto_increment,
+  mode enum('user','ip') default NULL,
+  title varchar(200) default NULL,
+  ip1 char(3) default NULL,
+  ip2 char(3) default NULL,
+  ip3 char(3) default NULL,
+  ip4 char(3) default NULL,
+  user varchar(200) default NULL,
+  date_from timestamp(14) NOT NULL,
+  date_to timestamp(14) NOT NULL,
+  use_dates char(1) default NULL,
+  created int(14) default NULL,
+  message text,
+  PRIMARY KEY  (banId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-## insert new records here
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_galleries','image galleries','Can admin Image Galleries');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_file_galleries','file galleries','Can admin file galleries');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_create_file_galleries','file galleries','Can create file galleries');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_upload_files','file galleries','Can upload files');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_download_files','file galleries','Can download files');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_post_comments','comments','Can post new comments');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_read_comments','comments','Can read comments');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_remove_comments','comments','Can delete comments');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_vote_comments','comments','Can vote comments');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin','tiki','Administrator, can manage users groups and permissions and all the weblog features');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_edit','wiki','Can edit pages');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view','wiki','Can view page/pages');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_remove','wiki','Can remove');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_rollback','wiki','Can rollback pages');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_create_galleries','image galleries','Can create image galleries');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_upload_images','image galleries','Can upload images');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_use_HTML','tiki','Can use HTML in pages');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_create_blogs','blogs','Can create a blog');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_blog_post','blogs','Can post to a blog');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_blog_admin','blogs','Can admin blogs');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_edit_article','cms','Can edit articles');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_remove_article','cms','Can remove articles');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_read_article','cms','Can read articles');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_submit_article','cms','Can submit articles');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_edit_submission','cms','Can edit submissions');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_remove_submission','cms','Can remove submissions');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_approve_submission','cms','Can approve submissions');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_edit_templates','tiki','Can edit site templates');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_dynamic','tiki','Can admin the dynamic content system');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_banners','tiki','Administrator, can admin banners');
+#
+# Table structure for table `tiki_banning_sections`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-## Version 1.1 additions
-## Table for user votings system
-# This table tracks which users voted what
-drop table if exists tiki_user_votings;
-create table tiki_user_votings(
-  user varchar(200) not null,
-  id varchar(255) not null,
-  primary key(user,id)
-);
+DROP TABLE IF EXISTS tiki_banning_sections;
+CREATE TABLE tiki_banning_sections (
+  banId int(12) NOT NULL default '0',
+  section varchar(100) NOT NULL default '',
+  PRIMARY KEY  (banId,section)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### end of changes
+#
+# Table structure for table `tiki_blog_activity`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 04:52 PM
+#
 
+DROP TABLE IF EXISTS tiki_blog_activity;
+CREATE TABLE tiki_blog_activity (
+  blogId int(8) NOT NULL default '0',
+  day int(14) NOT NULL default '0',
+  posts int(8) default NULL,
+  PRIMARY KEY  (blogId,day)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-DROP TABLE IF EXISTS tiki_file_galleries;
-CREATE TABLE tiki_file_galleries (
-  galleryId integer(14) not null auto_increment,
-  name varchar(80) not null,
-  description text,
-  created integer(14),
-  visible char(1),
-  lastModif integer(14),
-  user varchar(200),
-  hits integer(14),
-  votes integer(8),
-  points decimal(8,2),
-  maxRows integer(10),
-  public char(1),
-  primary key(galleryId)
-);
+#
+# Table structure for table `tiki_blog_posts`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 04:52 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
 
-DROP TABLE IF EXISTS tiki_files;
-CREATE TABLE tiki_files (
-  fileId integer(14) not null auto_increment,
-  galleryId integer(14) not null,
-  name varchar(40) not null,
-  description text,
-  created integer(14),
-  filename varchar(80),
-  filesize integer(14),
-  filetype varchar(250),
+DROP TABLE IF EXISTS tiki_blog_posts;
+CREATE TABLE tiki_blog_posts (
+  postId int(8) NOT NULL auto_increment,
+  blogId int(8) NOT NULL default '0',
+  data text,
+  created int(14) default NULL,
+  user varchar(200) default NULL,
+  trackbacks_to text,
+  trackbacks_from text,
+  title varchar(80) default NULL,
+  PRIMARY KEY  (postId),
+  KEY data (data(255)),
+  KEY blogId (blogId),
+  KEY created (created),
+  FULLTEXT KEY ft (data)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_blog_posts_images`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_blog_posts_images;
+CREATE TABLE tiki_blog_posts_images (
+  imgId int(14) NOT NULL auto_increment,
+  postId int(14) NOT NULL default '0',
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize int(14) default NULL,
   data longblob,
-  user varchar(200),
-  downloads integer(14),
-  votes integer(8),
-  points decimal(8,2),
-  path varchar(255),
-  primary key(fileId)
-);
-# END FILE GALLERIES AND FILES
+  PRIMARY KEY  (imgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_blogs`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:07 AM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
 
-# This is a semaphore table that can be used to
-# prevent multiple users from editing the same
-# page, since a Wiki is a colaborative environment
-# the semaphore IS NOT enforced, just a signal
-drop table if exists tiki_semaphores;
-create table tiki_semaphores (
-  semName varchar(250) not null,
-  user varchar(200),
-  timestamp integer(14),
-  primary key(semName)
-);
+DROP TABLE IF EXISTS tiki_blogs;
+CREATE TABLE tiki_blogs (
+  blogId int(8) NOT NULL auto_increment,
+  created int(14) default NULL,
+  lastModif int(14) default NULL,
+  title varchar(200) default NULL,
+  description text,
+  user varchar(200) default NULL,
+  public char(1) default NULL,
+  posts int(8) default NULL,
+  maxPosts int(8) default NULL,
+  hits int(8) default NULL,
+  activity decimal(4,2) default NULL,
+  heading text,
+  use_find char(1) default NULL,
+  use_title char(1) default NULL,
+  add_date char(1) default NULL,
+  add_poster char(1) default NULL,
+  allow_comments char(1) default NULL,
+  PRIMARY KEY  (blogId),
+  KEY title (title),
+  KEY description (description(255)),
+  KEY hits (hits),
+  FULLTEXT KEY ft (title,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-# Tables for the comments system
+#
+# Table structure for table `tiki_calendar_categories`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:05 AM
+#
 
-drop table if exists tiki_comments;
-create table tiki_comments (
-threadId integer(14) not null auto_increment,
-object char(32) not null,
-parentId integer(14),
-userName varchar(200),
-commentDate integer(14),
-hits integer(8),
-type char(1),
-points decimal(8,2),
-votes integer(8),
-average decimal(8,4),
-title varchar(100),
-data text,
-hash char(32),
-primary key(threadId)
-);
+DROP TABLE IF EXISTS tiki_calendar_categories;
+CREATE TABLE tiki_calendar_categories (
+  calcatId int(11) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  PRIMARY KEY  (calcatId),
+  UNIQUE KEY catname (calendarId,name(16))
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_userpoints;
-create table tiki_userpoints (
-user varchar(200),
-points decimal(8,2),
-voted integer(8)
-);
+#
+# Table structure for table `tiki_calendar_items`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:43 AM
+#
 
-### End 1.1 versions
-### CHANGES FOR VERSION 1.2
+DROP TABLE IF EXISTS tiki_calendar_items;
+CREATE TABLE tiki_calendar_items (
+  calitemId int(14) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  start int(14) NOT NULL default '0',
+  end int(14) NOT NULL default '0',
+  locationId int(14) default NULL,
+  categoryId int(14) default NULL,
+  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
+  status enum('0','1','2') NOT NULL default '0',
+  url varchar(255) default NULL,
+  lang char(2) NOT NULL default 'en',
+  name varchar(255) NOT NULL default '',
+  description blob,
+  user varchar(40) default NULL,
+  created int(14) NOT NULL default '0',
+  lastmodif int(14) NOT NULL default '0',
+  PRIMARY KEY  (calitemId),
+  KEY calendarId (calendarId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_wiki','wiki','Can admin the wiki');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_cms','cms','Can admin the cms');
+#
+# Table structure for table `tiki_calendar_locations`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:05 AM
+#
 
+DROP TABLE IF EXISTS tiki_calendar_locations;
+CREATE TABLE tiki_calendar_locations (
+  callocId int(14) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  description blob,
+  PRIMARY KEY  (callocId),
+  UNIQUE KEY locname (calendarId,name(16))
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### CATEGORIES
+#
+# Table structure for table `tiki_calendar_roles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS tiki_calendar_roles;
+CREATE TABLE tiki_calendar_roles (
+  calitemId int(14) NOT NULL default '0',
+  username varchar(40) NOT NULL default '',
+  role enum('0','1','2','3','6') NOT NULL default '0',
+  PRIMARY KEY  (calitemId,username(16),role)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_categories','tiki','Can admin categories');
+#
+# Table structure for table `tiki_calendars`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 05, 2003 at 02:03 PM
+#
+
+DROP TABLE IF EXISTS tiki_calendars;
+CREATE TABLE tiki_calendars (
+  calendarId int(14) NOT NULL auto_increment,
+  name varchar(80) NOT NULL default '',
+  description varchar(255) default NULL,
+  user varchar(40) NOT NULL default '',
+  customlocations enum('n','y') NOT NULL default 'n',
+  customcategories enum('n','y') NOT NULL default 'n',
+  customlanguages enum('n','y') NOT NULL default 'n',
+  custompriorities enum('n','y') NOT NULL default 'n',
+  customparticipants enum('n','y') NOT NULL default 'n',
+  created int(14) NOT NULL default '0',
+  lastmodif int(14) NOT NULL default '0',
+  PRIMARY KEY  (calendarId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_categories`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 04, 2003 at 09:47 PM
+#
 
 DROP TABLE IF EXISTS tiki_categories;
-create table tiki_categories (
-  categId integer(12) not null auto_increment,
-  name varchar(100),
-  description varchar(250),
-  parentId integer(12),
-  hits integer(8),
-  primary key(categId)
-);
+CREATE TABLE tiki_categories (
+  categId int(12) NOT NULL auto_increment,
+  name varchar(100) default NULL,
+  description varchar(250) default NULL,
+  parentId int(12) default NULL,
+  hits int(8) default NULL,
+  PRIMARY KEY  (categId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-DROP TABLE IF EXISTS tiki_category_objects;
-create table tiki_category_objects (
-  catObjectId integer(12) not null,
-  categId integer(12) not null,
-  primary key(catObjectId,categId)
-);
+#
+# Table structure for table `tiki_categorized_objects`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:09 AM
+#
 
 DROP TABLE IF EXISTS tiki_categorized_objects;
-create table tiki_categorized_objects (
-  catObjectId integer(12) not null auto_increment,
-  type varchar(50),
-  objId varchar(255),
+CREATE TABLE tiki_categorized_objects (
+  catObjectId int(12) NOT NULL auto_increment,
+  type varchar(50) default NULL,
+  objId varchar(255) default NULL,
   description text,
-  created integer(14),
-  name varchar(200),
-  href varchar(200),
-  hits integer(8),
-  primary key(catObjectId)
-);
+  created int(14) default NULL,
+  name varchar(200) default NULL,
+  href varchar(200) default NULL,
+  hits int(8) default NULL,
+  PRIMARY KEY  (catObjectId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### CTEGORIES END
+#
+# Table structure for table `tiki_category_objects`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:09 AM
+#
 
+DROP TABLE IF EXISTS tiki_category_objects;
+CREATE TABLE tiki_category_objects (
+  catObjectId int(12) NOT NULL default '0',
+  categId int(12) NOT NULL default '0',
+  PRIMARY KEY  (catObjectId,categId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### COMMUNICATION CENTER
+#
+# Table structure for table `tiki_category_sites`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 07, 2003 at 01:53 AM
+#
 
-DROP TABLE IF EXISTS tiki_received_pages;
-CREATE TABLE tiki_received_pages (
-  receivedPageId integer(14) not null auto_increment,
-  pageName varchar(160) not null,
-  data longblob,
-  description varchar(200),
-  comment varchar(200),
-  receivedFromSite varchar(200),
-  receivedFromUser varchar(200),
-  receivedDate integer(14),
-  primary key(receivedPageId)
-);
+DROP TABLE IF EXISTS tiki_category_sites;
+CREATE TABLE tiki_category_sites (
+  categId int(10) NOT NULL default '0',
+  siteId int(14) NOT NULL default '0',
+  PRIMARY KEY  (categId,siteId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_send_pages','comm','Can send pages to other sites');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_sendme_pages','comm','Can send pages to this site');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_received_pages','comm','Can admin received pages');
+#
+# Table structure for table `tiki_chart_items`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### COMMUNICATION CENTER END
-
-### FORUMS BEGIN
-
-
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_forum','forums','Can admin forums');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_forum_post','forums','Can post in forums');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_forum_post_topic','forums','Can start threads in forums');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_forum_read','forums','Can read forums');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_forum_vote','forums','Can vote comments in forums');
-
-
-drop table if exists tiki_forums;
-create table tiki_forums(
-  forumId integer(8) not null auto_increment,
-  name varchar(200),
+DROP TABLE IF EXISTS tiki_chart_items;
+CREATE TABLE tiki_chart_items (
+  itemId int(14) NOT NULL auto_increment,
+  title varchar(250) default NULL,
   description text,
-  created integer(14),
-  lastPost integer(14),
-  threads integer(8),
-  comments integer(8),
-  controlFlood char(1),
-  floodInterval integer(8),
-  moderator varchar(200),
-  hits integer(8),
-  mail varchar(200),
-  useMail char(1),
-  section varchar(200),
-  usePruneUnreplied char(1),
-  pruneUnrepliedAge integer(8),
-  usePruneOld char(1),
-  pruneMaxAge integer(8),
-  topicsPerPage integer(6),
-  topicOrdering varchar(100),
-  threadOrdering varchar(100),
-  primary key(forumId)
-);
+  chartId int(14) NOT NULL default '0',
+  created int(14) default NULL,
+  URL varchar(250) default NULL,
+  votes int(14) default NULL,
+  points int(14) default NULL,
+  average decimal(4,2) default NULL,
+  PRIMARY KEY  (itemId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### FORUMS END
+#
+# Table structure for table `tiki_charts`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 06, 2003 at 08:14 AM
+#
 
-### POLLS ####
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_read_blog','blogs','Can read blogs');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view_image_gallery','image galleries','Can view image galleries');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view_file_gallery','file galleries','Can view file galleries');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_comments','comments','Can edit all comments');
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_vote_poll','tiki','Can vote polls');
-
-DROP TABLE IF EXISTS tiki_polls;
-create table tiki_polls(
-  pollId integer(8) not null auto_increment,
-  title varchar(200),
-  votes integer(8),
-  active char(1),
-  publishDate integer(14),
-  primary key(pollId)
-);
-
-DROP TABLE IF EXISTS tiki_poll_options;
-create table tiki_poll_options (
-  pollId integer(8) not null,
-  optionId integer(8) not null auto_increment,
-  title varchar(200),
-  votes integer(8),
-  primary key(optionId)
-);
-
-### POLLS ###
-
-### EMail notification ###
-DROP TABLE IF EXISTS tiki_mail_events;
-create table tiki_mail_events(
-  event varchar(200),
-  object varchar(200),
-  email varchar(200)
-);
-
-### RSS MODULES ###
-DROP TABLE IF EXISTS tiki_rss_modules;
-create table tiki_rss_modules(
-  rssId integer(8) not null auto_increment,
-  name varchar(30) not null,
+DROP TABLE IF EXISTS tiki_charts;
+CREATE TABLE tiki_charts (
+  chartId int(14) NOT NULL auto_increment,
+  title varchar(250) default NULL,
   description text,
-  url varchar(255) not null,
-  refresh integer(8),
-  lastUpdated integer(14),
-  content longblob,
-  primary key(rssId)
-);
-### /RSS MODULES ###
+  hits int(14) default NULL,
+  singleItemVotes char(1) default NULL,
+  singleChartVotes char(1) default NULL,
+  suggestions char(1) default NULL,
+  autoValidate char(1) default NULL,
+  topN int(6) default NULL,
+  maxVoteValue int(4) default NULL,
+  frequency int(14) default NULL,
+  showAverage char(1) default NULL,
+  isActive char(1) default NULL,
+  showVotes char(1) default NULL,
+  useCookies char(1) default NULL,
+  lastChart int(14) default NULL,
+  voteAgainAfter int(14) default NULL,
+  created int(14) default NULL,
+  hist int(12) default NULL,
+  PRIMARY KEY  (chartId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### MENU BUILDER ###
-DROP TABLE IF EXISTS tiki_menu_languages;
-create table tiki_menu_languages (
-  menuId integer(8) not null auto_increment,
-  language char(2) not null,
-  primary key(menuId,language)
-);
+#
+# Table structure for table `tiki_charts_rankings`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-DROP TABLE IF EXISTS tiki_menus;
-create table tiki_menus (
-  menuId integer(8) not null auto_increment,
-  name varchar(20) not null,
-  description text,
-  type char(1),
-  primary key(menuId)
-);
+DROP TABLE IF EXISTS tiki_charts_rankings;
+CREATE TABLE tiki_charts_rankings (
+  chartId int(14) NOT NULL default '0',
+  itemId int(14) NOT NULL default '0',
+  position int(14) NOT NULL default '0',
+  timestamp int(14) NOT NULL default '0',
+  lastPosition int(14) NOT NULL default '0',
+  period int(14) NOT NULL default '0',
+  rvotes int(14) NOT NULL default '0',
+  raverage decimal(4,2) NOT NULL default '0.00',
+  PRIMARY KEY  (chartId,itemId,period)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_charts_votes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-DROP TABLE IF EXISTS tiki_menu_options;
-create table tiki_menu_options (
-  optionId integer(8) not null auto_increment,
-  menuId integer(8),
-  type char(1),
-  name varchar(20),
-  url varchar(255),
-  position integer(4),
-  primary key(optionId)
-);
-### /MENU BUILDER ###
+DROP TABLE IF EXISTS tiki_charts_votes;
+CREATE TABLE tiki_charts_votes (
+  user varchar(200) NOT NULL default '',
+  itemId int(14) NOT NULL default '0',
+  timestamp int(14) default NULL,
+  chartId int(14) default NULL,
+  PRIMARY KEY  (user,itemId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_chat_channels`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-#### CHAT SYSTEM #####
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_chat','chat','Administrator, can create channels remove channels etc');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_chat','chat','Can use the chat system');
 DROP TABLE IF EXISTS tiki_chat_channels;
 CREATE TABLE tiki_chat_channels (
   channelId int(8) NOT NULL auto_increment,
@@ -787,9 +751,17 @@ CREATE TABLE tiki_chat_channels (
   mode char(1) default NULL,
   moderator varchar(200) default NULL,
   active char(1) default NULL,
-  refresh integer(6),
+  refresh int(6) default NULL,
   PRIMARY KEY  (channelId)
-); 
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_chat_messages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_chat_messages;
 CREATE TABLE tiki_chat_messages (
@@ -799,1220 +771,2705 @@ CREATE TABLE tiki_chat_messages (
   poster varchar(200) NOT NULL default 'anonymous',
   timestamp int(14) default NULL,
   PRIMARY KEY  (messageId)
-);
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_chat_users`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-#### /CHAT SYSTEM #####
+DROP TABLE IF EXISTS tiki_chat_users;
+CREATE TABLE tiki_chat_users (
+  nickname varchar(200) NOT NULL default '',
+  channelId int(8) NOT NULL default '0',
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (nickname,channelId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_comments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 10:56 PM
+# Last check: Jul 11, 2003 at 01:52 AM
+#
 
-### END OF CHANGES FOR VERSION 1.2
+DROP TABLE IF EXISTS tiki_comments;
+CREATE TABLE tiki_comments (
+  threadId int(14) NOT NULL auto_increment,
+  object varchar(32) NOT NULL default '',
+  parentId int(14) default NULL,
+  userName varchar(200) default NULL,
+  commentDate int(14) default NULL,
+  hits int(8) default NULL,
+  type char(1) default NULL,
+  points decimal(8,2) default NULL,
+  votes int(8) default NULL,
+  average decimal(8,4) default NULL,
+  title varchar(100) default NULL,
+  data text,
+  hash varchar(32) default NULL,
+  user_ip varchar(15) default NULL,
+  summary varchar(240) default NULL,
+  smiley varchar(80) default NULL,
+  PRIMARY KEY  (threadId),
+  KEY title (title),
+  KEY data (data(255)),
+  KEY object (object),
+  KEY hits (hits),
+  KEY tc_pi (parentId),
+  FULLTEXT KEY ft (title,data)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Changes for 1.3 ####
+#
+# Table structure for table `tiki_content`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_content;
+CREATE TABLE tiki_content (
+  contentId int(8) NOT NULL auto_increment,
+  description text,
+  PRIMARY KEY  (contentId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_content_templates`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 12:37 AM
+#
+
+DROP TABLE IF EXISTS tiki_content_templates;
+CREATE TABLE tiki_content_templates (
+  templateId int(10) NOT NULL auto_increment,
+  content longblob,
+  name varchar(200) default NULL,
+  created int(14) default NULL,
+  PRIMARY KEY  (templateId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_content_templates_sections`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 12:37 AM
+#
+
+DROP TABLE IF EXISTS tiki_content_templates_sections;
+CREATE TABLE tiki_content_templates_sections (
+  templateId int(10) NOT NULL default '0',
+  section varchar(250) NOT NULL default '',
+  PRIMARY KEY  (templateId,section)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_cookies`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 10, 2003 at 04:00 AM
+#
+
+DROP TABLE IF EXISTS tiki_cookies;
+CREATE TABLE tiki_cookies (
+  cookieId int(10) NOT NULL auto_increment,
+  cookie varchar(255) default NULL,
+  PRIMARY KEY  (cookieId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_copyrights`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_copyrights;
+CREATE TABLE tiki_copyrights (
+  copyrightId int(12) NOT NULL auto_increment,
+  page varchar(200) default NULL,
+  title varchar(200) default NULL,
+  year int(11) default NULL,
+  authors varchar(200) default NULL,
+  copyright_order int(11) default NULL,
+  userName varchar(200) default NULL,
+  PRIMARY KEY  (copyrightId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_directory_categories`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:59 PM
+#
+
+DROP TABLE IF EXISTS tiki_directory_categories;
+CREATE TABLE tiki_directory_categories (
+  categId int(10) NOT NULL auto_increment,
+  parent int(10) default NULL,
+  name varchar(240) default NULL,
+  description text,
+  childrenType char(1) default NULL,
+  sites int(10) default NULL,
+  viewableChildren int(4) default NULL,
+  allowSites char(1) default NULL,
+  showCount char(1) default NULL,
+  editorGroup varchar(200) default NULL,
+  hits int(12) default NULL,
+  PRIMARY KEY  (categId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_directory_search`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_directory_search;
+CREATE TABLE tiki_directory_search (
+  term varchar(250) NOT NULL default '',
+  hits int(14) default NULL,
+  PRIMARY KEY  (term)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_directory_sites`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:32 PM
+#
+
+DROP TABLE IF EXISTS tiki_directory_sites;
+CREATE TABLE tiki_directory_sites (
+  siteId int(14) NOT NULL auto_increment,
+  name varchar(240) default NULL,
+  description text,
+  url varchar(255) default NULL,
+  country varchar(255) default NULL,
+  hits int(12) default NULL,
+  isValid char(1) default NULL,
+  created int(14) default NULL,
+  lastModif int(14) default NULL,
+  cache longblob,
+  cache_timestamp int(14) default NULL,
+  PRIMARY KEY  (siteId),
+  FULLTEXT KEY ft (name,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_drawings`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 05:02 AM
+#
+
+DROP TABLE IF EXISTS tiki_drawings;
+CREATE TABLE tiki_drawings (
+  drawId int(12) NOT NULL auto_increment,
+  version int(8) default NULL,
+  name varchar(250) default NULL,
+  filename_draw varchar(250) default NULL,
+  filename_pad varchar(250) default NULL,
+  timestamp int(14) default NULL,
+  user varchar(200) default NULL,
+  PRIMARY KEY  (drawId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_dsn`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_dsn;
+CREATE TABLE tiki_dsn (
+  dsnId int(12) NOT NULL auto_increment,
+  name varchar(20) NOT NULL default '',
+  dsn varchar(255) default NULL,
+  PRIMARY KEY  (dsnId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_eph`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 06, 2003 at 08:23 AM
+#
+
+DROP TABLE IF EXISTS tiki_eph;
+CREATE TABLE tiki_eph (
+  ephId int(12) NOT NULL auto_increment,
+  title varchar(250) default NULL,
+  isFile char(1) default NULL,
+  filename varchar(250) default NULL,
+  filetype varchar(250) default NULL,
+  filesize varchar(250) default NULL,
+  data longblob,
+  textdata longblob,
+  publish int(14) default NULL,
+  hits int(10) default NULL,
+  PRIMARY KEY  (ephId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_extwiki`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_extwiki;
+CREATE TABLE tiki_extwiki (
+  extwikiId int(12) NOT NULL auto_increment,
+  name varchar(20) NOT NULL default '',
+  extwiki varchar(255) default NULL,
+  PRIMARY KEY  (extwikiId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_faq_questions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_faq_questions;
+CREATE TABLE tiki_faq_questions (
+  questionId int(10) NOT NULL auto_increment,
+  faqId int(10) default NULL,
+  position int(4) default NULL,
+  question text,
+  answer text,
+  PRIMARY KEY  (questionId),
+  KEY faqId (faqId),
+  KEY question (question(255)),
+  KEY answer (answer(255)),
+  FULLTEXT KEY ft (question,answer)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_faqs`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 09:09 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_faqs;
+CREATE TABLE tiki_faqs (
+  faqId int(10) NOT NULL auto_increment,
+  title varchar(200) default NULL,
+  description text,
+  created int(14) default NULL,
+  questions int(5) default NULL,
+  hits int(8) default NULL,
+  canSuggest char(1) default NULL,
+  PRIMARY KEY  (faqId),
+  KEY title (title),
+  KEY description (description(255)),
+  KEY hits (hits),
+  FULLTEXT KEY ft (title,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_featured_links`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 11:08 PM
+#
+
+DROP TABLE IF EXISTS tiki_featured_links;
+CREATE TABLE tiki_featured_links (
+  url varchar(200) NOT NULL default '',
+  title varchar(40) default NULL,
+  description text,
+  hits int(8) default NULL,
+  position int(6) default NULL,
+  type char(1) default NULL,
+  PRIMARY KEY  (url)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_file_galleries`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:13 AM
+#
+
+DROP TABLE IF EXISTS tiki_file_galleries;
+CREATE TABLE tiki_file_galleries (
+  galleryId int(14) NOT NULL auto_increment,
+  name varchar(80) NOT NULL default '',
+  description text,
+  created int(14) default NULL,
+  visible char(1) default NULL,
+  lastModif int(14) default NULL,
+  user varchar(200) default NULL,
+  hits int(14) default NULL,
+  votes int(8) default NULL,
+  points decimal(8,2) default NULL,
+  maxRows int(10) default NULL,
+  public char(1) default NULL,
+  show_id char(1) default NULL,
+  show_icon char(1) default NULL,
+  show_name char(1) default NULL,
+  show_size char(1) default NULL,
+  show_description char(1) default NULL,
+  max_desc int(8) default NULL,
+  show_created char(1) default NULL,
+  show_dl char(1) default NULL,
+  PRIMARY KEY  (galleryId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_files`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:13 AM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_files;
+CREATE TABLE tiki_files (
+  fileId int(14) NOT NULL auto_increment,
+  galleryId int(14) NOT NULL default '0',
+  name varchar(40) NOT NULL default '',
+  description text,
+  created int(14) default NULL,
+  filename varchar(80) default NULL,
+  filesize int(14) default NULL,
+  filetype varchar(250) default NULL,
+  data longblob,
+  user varchar(200) default NULL,
+  downloads int(14) default NULL,
+  votes int(8) default NULL,
+  points decimal(8,2) default NULL,
+  path varchar(255) default NULL,
+  reference_url varchar(250) default NULL,
+  is_reference char(1) default NULL,
+  hash varchar(32) default NULL,
+  PRIMARY KEY  (fileId),
+  KEY name (name),
+  KEY description (description(255)),
+  KEY downloads (downloads),
+  FULLTEXT KEY ft (name,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_forum_attachments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_forum_attachments;
+CREATE TABLE tiki_forum_attachments (
+  attId int(14) NOT NULL auto_increment,
+  threadId int(14) NOT NULL default '0',
+  qId int(14) NOT NULL default '0',
+  forumId int(14) default NULL,
+  filename varchar(250) default NULL,
+  filetype varchar(250) default NULL,
+  filesize int(12) default NULL,
+  data longblob,
+  dir varchar(200) default NULL,
+  created int(14) default NULL,
+  path varchar(250) default NULL,
+  PRIMARY KEY  (attId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_forum_reads`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:17 PM
+#
+
+DROP TABLE IF EXISTS tiki_forum_reads;
+CREATE TABLE tiki_forum_reads (
+  user varchar(200) NOT NULL default '',
+  threadId int(14) NOT NULL default '0',
+  forumId int(14) default NULL,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (user,threadId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_forums`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 11:14 PM
+#
+
+DROP TABLE IF EXISTS tiki_forums;
+CREATE TABLE tiki_forums (
+  forumId int(8) NOT NULL auto_increment,
+  name varchar(200) default NULL,
+  description text,
+  created int(14) default NULL,
+  lastPost int(14) default NULL,
+  threads int(8) default NULL,
+  comments int(8) default NULL,
+  controlFlood char(1) default NULL,
+  floodInterval int(8) default NULL,
+  moderator varchar(200) default NULL,
+  hits int(8) default NULL,
+  mail varchar(200) default NULL,
+  useMail char(1) default NULL,
+  section varchar(200) default NULL,
+  usePruneUnreplied char(1) default NULL,
+  pruneUnrepliedAge int(8) default NULL,
+  usePruneOld char(1) default NULL,
+  pruneMaxAge int(8) default NULL,
+  topicsPerPage int(6) default NULL,
+  topicOrdering varchar(100) default NULL,
+  threadOrdering varchar(100) default NULL,
+  att varchar(80) default NULL,
+  att_store varchar(4) default NULL,
+  att_store_dir varchar(250) default NULL,
+  att_max_size int(12) default NULL,
+  ui_level char(1) default NULL,
+  forum_password varchar(32) default NULL,
+  forum_use_password char(1) default NULL,
+  moderator_group varchar(200) default NULL,
+  approval_type varchar(20) default NULL,
+  outbound_address varchar(250) default NULL,
+  inbound_pop_server varchar(250) default NULL,
+  inbound_pop_port int(4) default NULL,
+  inbound_pop_user varchar(200) default NULL,
+  inbound_pop_password varchar(80) default NULL,
+  topic_smileys char(1) default NULL,
+  ui_avatar char(1) default NULL,
+  ui_flag char(1) default NULL,
+  ui_posts char(1) default NULL,
+  ui_email char(1) default NULL,
+  ui_online char(1) default NULL,
+  topic_summary char(1) default NULL,
+  show_description char(1) default NULL,
+  topics_list_replies char(1) default NULL,
+  topics_list_reads char(1) default NULL,
+  topics_list_pts char(1) default NULL,
+  topics_list_lastpost char(1) default NULL,
+  topics_list_author char(1) default NULL,
+  vote_threads char(1) default NULL,
+  PRIMARY KEY  (forumId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_forums_queue`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_forums_queue;
+CREATE TABLE tiki_forums_queue (
+  qId int(14) NOT NULL auto_increment,
+  object varchar(32) default NULL,
+  parentId int(14) default NULL,
+  forumId int(14) default NULL,
+  timestamp int(14) default NULL,
+  user varchar(200) default NULL,
+  title varchar(240) default NULL,
+  data text,
+  type varchar(60) default NULL,
+  hash varchar(32) default NULL,
+  topic_smiley varchar(80) default NULL,
+  topic_title varchar(240) default NULL,
+  summary varchar(240) default NULL,
+  PRIMARY KEY  (qId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_forums_reported`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_forums_reported;
+CREATE TABLE tiki_forums_reported (
+  threadId int(12) NOT NULL default '0',
+  forumId int(12) NOT NULL default '0',
+  parentId int(12) NOT NULL default '0',
+  user varchar(200) default NULL,
+  timestamp int(14) default NULL,
+  reason varchar(250) default NULL,
+  PRIMARY KEY  (threadId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_galleries`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:59 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_galleries;
+CREATE TABLE tiki_galleries (
+  galleryId int(14) NOT NULL auto_increment,
+  name varchar(80) NOT NULL default '',
+  description text,
+  created int(14) default NULL,
+  lastModif int(14) default NULL,
+  visible char(1) default NULL,
+  theme varchar(60) default NULL,
+  user varchar(200) default NULL,
+  hits int(14) default NULL,
+  maxRows int(10) default NULL,
+  rowImages int(10) default NULL,
+  thumbSizeX int(10) default NULL,
+  thumbSizeY int(10) default NULL,
+  public char(1) default NULL,
+  PRIMARY KEY  (galleryId),
+  KEY name (name),
+  KEY description (description(255)),
+  KEY hits (hits),
+  FULLTEXT KEY ft (name,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_galleries_scales`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_galleries_scales;
+CREATE TABLE tiki_galleries_scales (
+  galleryId int(14) NOT NULL default '0',
+  xsize int(11) NOT NULL default '0',
+  ysize int(11) NOT NULL default '0',
+  PRIMARY KEY  (galleryId,xsize,ysize)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_games`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 05, 2003 at 08:23 PM
+#
+
+DROP TABLE IF EXISTS tiki_games;
+CREATE TABLE tiki_games (
+  gameName varchar(200) NOT NULL default '',
+  hits int(8) default NULL,
+  votes int(8) default NULL,
+  points int(8) default NULL,
+  PRIMARY KEY  (gameName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_group_inclusion`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 05, 2003 at 02:03 AM
+#
+
+DROP TABLE IF EXISTS tiki_group_inclusion;
+CREATE TABLE tiki_group_inclusion (
+  groupName varchar(30) NOT NULL default '',
+  includeGroup varchar(30) NOT NULL default '',
+  PRIMARY KEY  (groupName,includeGroup)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_history`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 12:29 AM
+#
+
+DROP TABLE IF EXISTS tiki_history;
+CREATE TABLE tiki_history (
+  pageName varchar(160) NOT NULL default '',
+  version int(8) NOT NULL default '0',
+  lastModif int(14) default NULL,
+  description varchar(200) default NULL,
+  user varchar(200) default NULL,
+  ip varchar(15) default NULL,
+  comment varchar(200) default NULL,
+  data longblob,
+  PRIMARY KEY  (pageName,version)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_hotwords`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 10, 2003 at 11:04 PM
+#
+
+DROP TABLE IF EXISTS tiki_hotwords;
+CREATE TABLE tiki_hotwords (
+  word varchar(40) NOT NULL default '',
+  url varchar(255) NOT NULL default '',
+  PRIMARY KEY  (word)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_html_pages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_html_pages;
+CREATE TABLE tiki_html_pages (
+  pageName varchar(40) NOT NULL default '',
+  content longblob,
+  refresh int(10) default NULL,
+  type char(1) default NULL,
+  created int(14) default NULL,
+  PRIMARY KEY  (pageName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_html_pages_dynamic_zones`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_html_pages_dynamic_zones;
+CREATE TABLE tiki_html_pages_dynamic_zones (
+  pageName varchar(40) NOT NULL default '',
+  zone varchar(80) NOT NULL default '',
+  type char(2) default NULL,
+  content text,
+  PRIMARY KEY  (pageName,zone)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_images`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:29 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_images;
+CREATE TABLE tiki_images (
+  imageId int(14) NOT NULL auto_increment,
+  galleryId int(14) NOT NULL default '0',
+  name varchar(40) NOT NULL default '',
+  description text,
+  created int(14) default NULL,
+  user varchar(200) default NULL,
+  hits int(14) default NULL,
+  path varchar(255) default NULL,
+  PRIMARY KEY  (imageId),
+  KEY name (name),
+  KEY description (description(255)),
+  KEY hits (hits),
+  KEY ti_gId (galleryId),
+  KEY ti_cr (created),
+  KEY ti_hi (hits),
+  KEY ti_us (user),
+  FULLTEXT KEY ft (name,description)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_images_data`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 12:49 PM
+# Last check: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_images_data;
+CREATE TABLE tiki_images_data (
+  imageId int(14) NOT NULL default '0',
+  xsize int(8) NOT NULL default '0',
+  ysize int(8) NOT NULL default '0',
+  type char(1) NOT NULL default '',
+  filesize int(14) default NULL,
+  filetype varchar(80) default NULL,
+  filename varchar(80) default NULL,
+  data longblob,
+  PRIMARY KEY  (imageId,xsize,ysize,type),
+  KEY t_i_d_it (imageId,type)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_language`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_language;
+CREATE TABLE tiki_language (
+  source tinyblob NOT NULL,
+  lang char(2) NOT NULL default '',
+  tran tinyblob,
+  PRIMARY KEY  (source(255),lang)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_languages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_languages;
+CREATE TABLE tiki_languages (
+  lang char(2) NOT NULL default '',
+  language varchar(255) default NULL,
+  PRIMARY KEY  (lang)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+insert into tiki_languages values('en','English');
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_link_cache`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 06:06 PM
+#
+
+DROP TABLE IF EXISTS tiki_link_cache;
+CREATE TABLE tiki_link_cache (
+  cacheId int(14) NOT NULL auto_increment,
+  url varchar(250) default NULL,
+  data longblob,
+  refresh int(14) default NULL,
+  PRIMARY KEY  (cacheId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_links`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 11:39 PM
+#
+
+DROP TABLE IF EXISTS tiki_links;
+CREATE TABLE tiki_links (
+  fromPage varchar(160) NOT NULL default '',
+  toPage varchar(160) NOT NULL default '',
+  PRIMARY KEY  (fromPage,toPage)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_events`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_events;
+CREATE TABLE tiki_live_support_events (
+  eventId int(14) NOT NULL auto_increment,
+  reqId varchar(32) NOT NULL default '',
+  type varchar(40) default NULL,
+  seqId int(14) default NULL,
+  senderId varchar(32) default NULL,
+  data text,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (eventId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_message_comments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_message_comments;
+CREATE TABLE tiki_live_support_message_comments (
+  cId int(12) NOT NULL auto_increment,
+  msgId int(12) default NULL,
+  data text,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (cId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_messages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_messages;
+CREATE TABLE tiki_live_support_messages (
+  msgId int(12) NOT NULL auto_increment,
+  data text,
+  timestamp int(14) default NULL,
+  user varchar(200) default NULL,
+  username varchar(200) default NULL,
+  priority int(2) default NULL,
+  status char(1) default NULL,
+  assigned_to varchar(200) default NULL,
+  resolution varchar(100) default NULL,
+  title varchar(200) default NULL,
+  module int(4) default NULL,
+  email varchar(250) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_modules`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_modules;
+CREATE TABLE tiki_live_support_modules (
+  modId int(4) NOT NULL auto_increment,
+  name varchar(90) default NULL,
+  PRIMARY KEY  (modId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+insert into tiki_live_support_modules(name) values('wiki');
+insert into tiki_live_support_modules(name) values('forums');
+insert into tiki_live_support_modules(name) values('image galleries');
+insert into tiki_live_support_modules(name) values('file galleries');
+insert into tiki_live_support_modules(name) values('directory');
+insert into tiki_live_support_modules(name) values('workflow');
+insert into tiki_live_support_modules(name) values('charts');
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_operators`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_operators;
+CREATE TABLE tiki_live_support_operators (
+  user varchar(200) NOT NULL default '',
+  accepted_requests int(10) default NULL,
+  status varchar(20) default NULL,
+  longest_chat int(10) default NULL,
+  shortest_chat int(10) default NULL,
+  average_chat int(10) default NULL,
+  last_chat int(14) default NULL,
+  time_online int(10) default NULL,
+  votes int(10) default NULL,
+  points int(10) default NULL,
+  status_since int(14) default NULL,
+  PRIMARY KEY  (user)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_live_support_requests`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_live_support_requests;
+CREATE TABLE tiki_live_support_requests (
+  reqId varchar(32) NOT NULL default '',
+  user varchar(200) default NULL,
+  tiki_user varchar(200) default NULL,
+  email varchar(200) default NULL,
+  operator varchar(200) default NULL,
+  operator_id varchar(32) default NULL,
+  user_id varchar(32) default NULL,
+  reason text,
+  req_timestamp int(14) default NULL,
+  timestamp int(14) default NULL,
+  status varchar(40) default NULL,
+  resolution varchar(40) default NULL,
+  chat_started int(14) default NULL,
+  chat_ended int(14) default NULL,
+  PRIMARY KEY  (reqId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_mail_events`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 05:28 AM
+#
+
+DROP TABLE IF EXISTS tiki_mail_events;
+CREATE TABLE tiki_mail_events (
+  event varchar(200) default NULL,
+  object varchar(200) default NULL,
+  email varchar(200) default NULL
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_mailin_accounts`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_mailin_accounts;
+CREATE TABLE tiki_mailin_accounts (
+  accountId int(12) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  account varchar(50) NOT NULL default '',
+  pop varchar(255) default NULL,
+  port int(4) default NULL,
+  username varchar(100) default NULL,
+  pass varchar(100) default NULL,
+  active char(1) default NULL,
+  type varchar(40) default NULL,
+  smtp varchar(255) default NULL,
+  useAuth char(1) default NULL,
+  smtpPort int(4) default NULL,
+  PRIMARY KEY  (accountId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_menu_languages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_menu_languages;
+CREATE TABLE tiki_menu_languages (
+  menuId int(8) NOT NULL auto_increment,
+  language char(2) NOT NULL default '',
+  PRIMARY KEY  (menuId,language)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_menu_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_menu_options;
+CREATE TABLE tiki_menu_options (
+  optionId int(8) NOT NULL auto_increment,
+  menuId int(8) default NULL,
+  type char(1) default NULL,
+  name varchar(20) default NULL,
+  url varchar(255) default NULL,
+  position int(4) default NULL,
+  PRIMARY KEY  (optionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_menus`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_menus;
+CREATE TABLE tiki_menus (
+  menuId int(8) NOT NULL auto_increment,
+  name varchar(20) NOT NULL default '',
+  description text,
+  type char(1) default NULL,
+  PRIMARY KEY  (menuId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_minical_events`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 09, 2003 at 04:06 AM
+#
+
+DROP TABLE IF EXISTS tiki_minical_events;
+CREATE TABLE tiki_minical_events (
+  user varchar(200) default NULL,
+  eventId int(12) NOT NULL auto_increment,
+  title varchar(250) default NULL,
+  description text,
+  start int(14) default NULL,
+  end int(14) default NULL,
+  security char(1) default NULL,
+  duration int(3) default NULL,
+  topicId int(12) default NULL,
+  reminded char(1) default NULL,
+  PRIMARY KEY  (eventId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_minical_topics`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_minical_topics;
+CREATE TABLE tiki_minical_topics (
+  user varchar(200) default NULL,
+  topicId int(12) NOT NULL auto_increment,
+  name varchar(250) default NULL,
+  filename varchar(200) default NULL,
+  filetype varchar(200) default NULL,
+  filesize varchar(200) default NULL,
+  data longblob,
+  path varchar(250) default NULL,
+  isIcon char(1) default NULL,
+  PRIMARY KEY  (topicId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_modules`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 11:44 PM
+#
+
+DROP TABLE IF EXISTS tiki_modules;
+CREATE TABLE tiki_modules (
+  name varchar(200) NOT NULL default '',
+  position char(1) default NULL,
+  ord int(4) default NULL,
+  type char(1) default NULL,
+  title varchar(40) default NULL,
+  cache_time int(14) default NULL,
+  rows int(4) default NULL,
+  params varchar(255) default NULL,
+  groups text,
+  PRIMARY KEY  (name)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+insert into tiki_modules(name,position,ord,cache_time) values('login_box','r',1,0);
+insert into tiki_modules(name,position,ord,cache_time) values('application_menu','l',1,0);
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_newsletter_subscriptions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_newsletter_subscriptions;
+CREATE TABLE tiki_newsletter_subscriptions (
+  nlId int(12) NOT NULL default '0',
+  email varchar(255) NOT NULL default '',
+  code varchar(32) default NULL,
+  valid char(1) default NULL,
+  subscribed int(14) default NULL,
+  PRIMARY KEY  (nlId,email)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_newsletters`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_newsletters;
+CREATE TABLE tiki_newsletters (
+  nlId int(12) NOT NULL auto_increment,
+  name varchar(200) default NULL,
+  description text,
+  created int(14) default NULL,
+  lastSent int(14) default NULL,
+  editions int(10) default NULL,
+  users int(10) default NULL,
+  allowAnySub char(1) default NULL,
+  frequency int(14) default NULL,
+  PRIMARY KEY  (nlId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_newsreader_marks`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_newsreader_marks;
+CREATE TABLE tiki_newsreader_marks (
+  user varchar(200) NOT NULL default '',
+  serverId int(12) NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
+  timestamp int(14) NOT NULL default '0',
+  PRIMARY KEY  (user,serverId,groupName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_newsreader_servers`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_newsreader_servers;
+CREATE TABLE tiki_newsreader_servers (
+  user varchar(200) NOT NULL default '',
+  serverId int(12) NOT NULL auto_increment,
+  server varchar(250) default NULL,
+  port int(4) default NULL,
+  username varchar(200) default NULL,
+  password varchar(200) default NULL,
+  PRIMARY KEY  (serverId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_page_footnotes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 10:00 AM
+# Last check: Jul 12, 2003 at 10:00 AM
+#
+
+DROP TABLE IF EXISTS tiki_page_footnotes;
+CREATE TABLE tiki_page_footnotes (
+  user varchar(200) NOT NULL default '',
+  pageName varchar(250) NOT NULL default '',
+  data text,
+  PRIMARY KEY  (user,pageName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_pages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:52 AM
+# Last check: Jul 12, 2003 at 10:01 AM
+#
+
+DROP TABLE IF EXISTS tiki_pages;
+CREATE TABLE tiki_pages (
+  pageName varchar(160) NOT NULL default '',
+  hits int(8) default NULL,
+  data text,
+  description varchar(200) default NULL,
+  lastModif int(14) default NULL,
+  comment varchar(200) default NULL,
+  version int(8) NOT NULL default '0',
+  user varchar(200) default NULL,
+  ip varchar(15) default NULL,
+  flag char(1) default NULL,
+  points int(8) default NULL,
+  votes int(8) default NULL,
+  cache text,
+  cache_timestamp int(14) default NULL,
+  pageRank decimal(4,3) default NULL,
+  creator varchar(200) default NULL,
+  PRIMARY KEY  (pageName),
+  KEY pageName (pageName),
+  KEY data (data(255)),
+  KEY pageRank (pageRank),
+  FULLTEXT KEY ft (pageName,data)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_pageviews`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:52 AM
+#
+
+DROP TABLE IF EXISTS tiki_pageviews;
+CREATE TABLE tiki_pageviews (
+  day int(14) NOT NULL default '0',
+  pageviews int(14) default NULL,
+  PRIMARY KEY  (day)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_poll_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 06, 2003 at 07:57 PM
+#
+
+DROP TABLE IF EXISTS tiki_poll_options;
+CREATE TABLE tiki_poll_options (
+  pollId int(8) NOT NULL default '0',
+  optionId int(8) NOT NULL auto_increment,
+  title varchar(200) default NULL,
+  votes int(8) default NULL,
+  PRIMARY KEY  (optionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_polls`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 06, 2003 at 07:57 PM
+#
+
+DROP TABLE IF EXISTS tiki_polls;
+CREATE TABLE tiki_polls (
+  pollId int(8) NOT NULL auto_increment,
+  title varchar(200) default NULL,
+  votes int(8) default NULL,
+  active char(1) default NULL,
+  publishDate int(14) default NULL,
+  PRIMARY KEY  (pollId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_preferences`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 12:04 PM
+#
+
+DROP TABLE IF EXISTS tiki_preferences;
+CREATE TABLE tiki_preferences (
+  name varchar(40) NOT NULL default '',
+  value varchar(250) default NULL,
+  PRIMARY KEY  (name)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_private_messages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_private_messages;
-CREATE TABLE tiki_private_messages(
+CREATE TABLE tiki_private_messages (
   messageId int(8) NOT NULL auto_increment,
-  toNickname varchar(200) NOT NULL,
+  toNickname varchar(200) NOT NULL default '',
   data varchar(255) default NULL,
   poster varchar(200) NOT NULL default 'anonymous',
   timestamp int(14) default NULL,
   PRIMARY KEY  (messageId)
-);
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-DROP TABLE if exists tiki_chat_users;
-create table tiki_chat_users(
-  nickname varchar(200) not null,
-  channelId int(8) not null,
-  timestamp integer(14),
-  primary key(nickname,channelId)
-);
+#
+# Table structure for table `tiki_programmed_content`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_topic_read','topics','Can read a topic (Applies only to individual topic perms)');
+DROP TABLE IF EXISTS tiki_programmed_content;
+CREATE TABLE tiki_programmed_content (
+  pId int(8) NOT NULL auto_increment,
+  contentId int(8) NOT NULL default '0',
+  publishDate int(14) NOT NULL default '0',
+  data text,
+  PRIMARY KEY  (pId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_quiz_question_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-DROP TABLE IF EXISTS tiki_games;
-CREATE TABLE tiki_games (
-  gameName varchar(200) not null,
-  hits integer(8),
-  votes integer(8),
-  points integer(8),
-  primary key(gameName)
-);
+DROP TABLE IF EXISTS tiki_quiz_question_options;
+CREATE TABLE tiki_quiz_question_options (
+  optionId int(10) NOT NULL auto_increment,
+  questionId int(10) default NULL,
+  optionText text,
+  points int(4) default NULL,
+  PRIMARY KEY  (optionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_play_games','games','Can play games');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_games','games','Can admin games');
+#
+# Table structure for table `tiki_quiz_questions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### Cookies ##
-insert into users_permissions(permName,type,permDesc) values('tiki_p_edit_cookies','tiki','Can admin cookies');
-DROP TABLE IF EXISTS tiki_cookies;
-CREATE TABLE tiki_cookies (
-  cookieId integer(10) not null auto_increment,
-  cookie varchar(255),
-  primary key(cookieId)
-);
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view_stats','tiki','Can view site stats');
-
-### Statistics ###
-DROP TABLE IF EXISTS tiki_pageviews;
-CREATE TABLE tiki_pageviews (
-  day integer(14) not null,
-  pageviews integer(14),
-  primary key(day)
-);
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_create_bookmarks','user','Can create user bookmarksche user bookmarks');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_configure_modules','user','Can configure modules');
-
-### User asigned modules ###
-DROP TABLE IF EXISTS tiki_user_assigned_modules;
-CREATE TABLE tiki_user_assigned_modules (
-  name varchar(200) not null,
-  position char(1),
-  ord integer(4),
-  type char(1),
-  title varchar(40),
-  cache_time integer(14),
-  rows integer(4),
-  groups text,
-  params varchar(250),
-  user varchar(200) not null,
-  primary key(name,user)
-);
-### User asigned modules ###
-
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_cache_bookmarks','user','Can cache user bookmarks');
-
-### User Bookmarks ####
-DROP TABLE IF EXISTS tiki_user_bookmarks_urls;
-CREATE TABLE tiki_user_bookmarks_urls (
-  urlId integer(12) not null auto_increment,
-  name varchar(30),
-  url varchar(250),
-  data longblob,
-  lastUpdated integer(14),
-  folderId integer(12) not null,
-  user varchar(200) not null,
-  primary key(urlId)
-);
-
-DROP TABLE if exists tiki_user_bookmarks_folders;
-CREATE TABLE tiki_user_bookmarks_folders (
-  folderId integer(12) not null auto_increment,
-  parentId integer(12),
-  user varchar(200) not null,
-  name varchar(30),
-  primary key(user,folderId)
-);
-
-### User Bookmarks ####
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_faqs','faqs','Can admin faqs');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view_faqs','faqs','Can view faqs');
-
-### FAQS
-DROP TABLE IF EXISTS tiki_faqs;
-create table tiki_faqs(
-  faqId integer(10) not null auto_increment,
-  title varchar(200),
-  description text,
-  created integer(14),
-  questions integer(5),
-  hits integer(8),
-  canSuggest char(1),
-  primary key(faqId)
-);
-
-DROP TABLE IF EXISTS tiki_faq_questions;
-create table tiki_faq_questions(
-  questionId integer(10) not null auto_increment,
-  faqId integer(10),
-  position integer(4),
+DROP TABLE IF EXISTS tiki_quiz_questions;
+CREATE TABLE tiki_quiz_questions (
+  questionId int(10) NOT NULL auto_increment,
+  quizId int(10) default NULL,
   question text,
+  position int(4) default NULL,
+  type char(1) default NULL,
+  maxPoints int(4) default NULL,
+  PRIMARY KEY  (questionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_quiz_results`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_quiz_results;
+CREATE TABLE tiki_quiz_results (
+  resultId int(10) NOT NULL auto_increment,
+  quizId int(10) default NULL,
+  fromPoints int(4) default NULL,
+  toPoints int(4) default NULL,
   answer text,
-  primary key(questionId)
-);
-### FAQS 
+  PRIMARY KEY  (resultId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-insert into users_permissions(permName,type,permDesc) values('tiki_p_send_articles','comm','Can send articles to other sites');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_sendme_articles','comm','Can send articles to this site');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_received_articles','comm','Can admin received articles');
+#
+# Table structure for table `tiki_quiz_stats`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-DROP TABLE IF EXISTS tiki_received_articles;
-CREATE TABLE tiki_received_articles(
-  receivedArticleId integer(14) not null auto_increment,
-  receivedFromSite varchar(200),
-  receivedFromUser varchar(200),
-  receivedDate integer(14),
-  title varchar(80),
-  authorName varchar(60),
-  size integer(12),
-  useImage char(1),
-  image_name varchar(80),
-  image_type varchar(80),
-  image_size integer(14),
-  image_x integer(4),
-  image_y integer(4),
-  image_data longblob,
-  publishDate integer(14),
-  created integer(14),
-  heading text,
-  body longblob,
-  hash char(32),
-  author varchar(200),
-  type varchar(50),
-  rating decimal(2,2),
-  primary key(receivedArticleId)  
-);
+DROP TABLE IF EXISTS tiki_quiz_stats;
+CREATE TABLE tiki_quiz_stats (
+  quizId int(10) NOT NULL default '0',
+  questionId int(10) NOT NULL default '0',
+  optionId int(10) NOT NULL default '0',
+  votes int(10) default NULL,
+  PRIMARY KEY  (quizId,questionId,optionId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-
-### End of Changes for 1.3 ####
-
-### CHANGES FOR VERSION 1.4
-
-CREATE INDEX pageName     ON tiki_pages (pageName);
-CREATE INDEX data         ON tiki_pages (data(255));
-CREATE INDEX pageRank     ON tiki_pages (pageRank);
-CREATE INDEX name         ON tiki_galleries (name);
-CREATE INDEX description  ON tiki_galleries (description(255));
-CREATE INDEX hits         ON tiki_galleries (hits);
-CREATE INDEX title        ON tiki_faqs (title);
-CREATE INDEX description  ON tiki_faqs (description(255));
-CREATE INDEX hits         ON tiki_faqs (hits);
-CREATE INDEX faqId        ON tiki_faq_questions (faqId);
-CREATE INDEX question     ON tiki_faq_questions (question(255));
-CREATE INDEX answer       ON tiki_faq_questions (answer(255));
-CREATE INDEX name         ON tiki_images (name);
-CREATE INDEX description  ON tiki_images (description(255));
-CREATE INDEX hits         ON tiki_images (hits);
-CREATE INDEX title        ON tiki_comments (title);
-CREATE INDEX data         ON tiki_comments (data(255));
-CREATE INDEX object       ON tiki_comments (object);
-CREATE INDEX hits         ON tiki_comments (hits);
-CREATE INDEX name         ON tiki_files (name);
-CREATE INDEX description  ON tiki_files (description(255));
-CREATE INDEX downloads    ON tiki_files (downloads);
-CREATE INDEX title        ON tiki_blogs (title);
-CREATE INDEX description  ON tiki_blogs (description(255));
-CREATE INDEX hits         ON tiki_blogs (hits);
-CREATE INDEX title        ON tiki_articles (title);
-CREATE INDEX heading      ON tiki_articles (heading(255));
-CREATE INDEX body         ON tiki_articles (body(255));
-CREATE INDEX reads        ON tiki_articles (reads);
-CREATE INDEX data         ON tiki_blog_posts (data(255));
-CREATE INDEX blogId       ON tiki_blog_posts (blogId);
-CREATE INDEX created      ON tiki_blog_posts (created);
-
-
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_referer_stats','tiki','Can view referer stats');
-
-DROP TABLE IF EXISTS tiki_referer_stats;
-create table tiki_referer_stats (
-  referer varchar(50) not null,
-  hits integer(10),
-  last integer(14),
-  primary key(referer)
-);
-
-
-### Wiki attachments
-
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_attach_files','wiki','Can attach files to wiki pages');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_admin_attachments','wiki','Can admin attachments to wiki pages');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_view_attachments','wiki','Can view wiki attachments and download');
-
-DROP TABLE IF EXISTS tiki_wiki_attachments;
-create table tiki_wiki_attachments(
-  attId integer(12) not null auto_increment,
-  page varchar(40) not null,
-  filename varchar(80),
-  filetype varchar(80),
-  filesize integer(14),
-  user varchar(200),
-  data longblob,
-  path varchar(255),
-  downloads integer(10),
-  created integer(14),
-  comment varchar(250),
-  primary key(attId)
-);
-###
-
-
-
-
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_images','image galleries','Can upload zip files with images');
-
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_drawings','drawings','Can admin drawings');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_drawings','drawings','Can edit drawings');
-
-
-
-## search stats
-
-DROP TABLE IF EXISTS tiki_search_stats;
-create table tiki_search_stats (
-  term varchar(50) not null,
-  hits integer(10),
-  primary key(term)
-);
-
-### Static and dynamic HTML pages ###
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_html_pages','html pages','Can view HTML pages');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_html_pages','html pages','Can edit HTML pages');
-DROP TABLE IF EXISTS tiki_html_pages;
-create table tiki_html_pages (
-  pageName varchar(40) not null,
-  content longblob,
-  refresh integer(10),
-  type char(1),
-  created integer(14),
-  primary key(pageName)
-);
-
-DROP TABLE IF EXISTS tiki_html_pages_dynamic_zones;
-create table tiki_html_pages_dynamic_zones (
-  pageName varchar(40) not null,
-  zone varchar(80) not null,
-  type char(2),
-  content text,
-  primary key(pageName,zone)
-);
-###
-
-
-
-
-update tiki_files set path='';
-
-### Groups including groups ###
-DROP TABLE IF EXISTS tiki_group_inclusion;
-create table tiki_group_inclusion(
-  groupName varchar(30) not null, 
-  includeGroup varchar(30) not null,
-  primary key(groupName,includeGroup)
-);
-###
-
-### Shoutbox ####
-insert into users_permissions(permName,type,permDesc) values('tiki_p_view_shoutbox','shoutbox','Can view shoutbox');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_admin_shoutbox','shoutbox','Can admin shoutbox (Edit/remove msgs)');
-insert into users_permissions(permName,type,permDesc) values('tiki_p_post_shoutbox','shoutbox','Can pot messages in shoutbox');
-
-DROP TABLE IF EXISTS tiki_shoutbox;
-create table tiki_shoutbox(
- msgId integer(10) not null auto_increment,
- message varchar(255),
- timestamp integer(14),
- user varchar(200),
- hash char(32),
- primary key(msgId)
-);
-
-### Shoutbox ###
-
-
-update tiki_featured_links set type='f';
-
-insert into users_permissions(permName,type,permDesc) values('tiki_p_suggest_faq','faqs','Can suggest faq questions');
-
-update tiki_faqs set canSuggest='n';
-
-DROP TABLE IF EXISTS tiki_suggested_faq_questions;
-create table tiki_suggested_faq_questions (
-   sfqId integer(10) not null auto_increment,
-   faqId integer(10) not null,
-   question text,
-   answer text,
-   created integer(14),
-   user varchar(200),
-   primary key(sfqId)
-);
-
-####
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_content_templates','content templates','Can edit content templates');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_content_templates','content templates','Can use content templates');
-
-DROP TABLE IF EXISTS tiki_content_templates;
-create table tiki_content_templates (
-  templateId integer(10) not null auto_increment,
-  content longblob,
-  name varchar(200),
-  created integer(14),
-  primary key(templateId)
-);
-
-DROP TABLE IF EXISTS tiki_content_templates_sections;
-create table tiki_content_templates_sections(
-  templateId integer(10) not null,
-  section varchar(250) not null,
-  primary key(templateId,section)
-);
-
-
-### SQL PART
-
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_quizzes','quizzes','Can admin quizzes');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_take_quiz','quizzes','Can take quizzes');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_quiz_stats','quizzes','Can view quiz stats');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_user_results','quizzes','Can view user quiz results');
+#
+# Table structure for table `tiki_quiz_stats_sum`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_quiz_stats_sum;
-create table tiki_quiz_stats_sum (
-  quizId integer(10) not null,
-  quizName varchar(255),
-  timesTaken integer(10),
-  avgpoints decimal(5,2),
-  avgavg decimal(5,2),
-  avgtime decimal(5,2),
-  primary key(quizId)
-);
+CREATE TABLE tiki_quiz_stats_sum (
+  quizId int(10) NOT NULL default '0',
+  quizName varchar(255) default NULL,
+  timesTaken int(10) default NULL,
+  avgpoints decimal(5,2) default NULL,
+  avgavg decimal(5,2) default NULL,
+  avgtime decimal(5,2) default NULL,
+  PRIMARY KEY  (quizId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-
-### Quizzes
-
-## This table is used to prevent a registered user from
-## taking the same quiz twice
-drop table if exists tiki_user_taken_quizzes;
-create table tiki_user_taken_quizzes(
-  user varchar(200) not null,
-  quizId varchar(255) not null,
-  primary key(user,quizId)
-);
-
+#
+# Table structure for table `tiki_quizzes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_quizzes;
-create table tiki_quizzes(
-  quizId integer(10) not null auto_increment,
-  name varchar(255),
+CREATE TABLE tiki_quizzes (
+  quizId int(10) NOT NULL auto_increment,
+  name varchar(255) default NULL,
   description text,
-  canRepeat char(1),
-  storeResults char(1),
-  questionsPerPage integer(4),
-  timeLimited char(1),
-  timeLimit integer(14),
-  created integer(14),
-  taken integer(10),
-  primary key(quizId)
-);
+  canRepeat char(1) default NULL,
+  storeResults char(1) default NULL,
+  questionsPerPage int(4) default NULL,
+  timeLimited char(1) default NULL,
+  timeLimit int(14) default NULL,
+  created int(14) default NULL,
+  taken int(10) default NULL,
+  PRIMARY KEY  (quizId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Quiz questions
-DROP TABLE IF EXISTS tiki_quiz_questions;
-create table tiki_quiz_questions(
-  questionId integer(10) not null auto_increment,
-  quizId integer(10),
-  question text,
-  position integer(4),
-  type char(1),
-  maxPoints integer(4),
-  primary key(questionId)
-);
+#
+# Table structure for table `tiki_received_articles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### Question options
-DROP TABLE IF EXISTS tiki_quiz_question_options;
-create table tiki_quiz_question_options(
-  optionId integer(10) not null auto_increment,
-  questionId integer(10),
-  optionText text,
-  points integer(4),
-  primary key(optionId)
-);
+DROP TABLE IF EXISTS tiki_received_articles;
+CREATE TABLE tiki_received_articles (
+  receivedArticleId int(14) NOT NULL auto_increment,
+  receivedFromSite varchar(200) default NULL,
+  receivedFromUser varchar(200) default NULL,
+  receivedDate int(14) default NULL,
+  title varchar(80) default NULL,
+  authorName varchar(60) default NULL,
+  size int(12) default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size int(14) default NULL,
+  image_x int(4) default NULL,
+  image_y int(4) default NULL,
+  image_data longblob,
+  publishDate int(14) default NULL,
+  created int(14) default NULL,
+  heading text,
+  body longblob,
+  hash varchar(32) default NULL,
+  author varchar(200) default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
+  PRIMARY KEY  (receivedArticleId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Automatic quiz results shown to the user
-DROP TABLE IF EXISTS tiki_quiz_results;
-create table tiki_quiz_results (
-  resultId integer(10) not null auto_increment,
-  quizId integer(10),
-  fromPoints integer(4),
-  toPoints integer(4),
-  answer text,
-  primary key(resultId)
-);
+#
+# Table structure for table `tiki_received_pages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 09, 2003 at 03:56 AM
+#
 
-### Statistics about quizzes
-DROP TABLE IF EXISTS tiki_quiz_stats;
-create table tiki_quiz_stats (
-  quizId integer(10) not null,
-  questionId integer(10) not null,
-  optionId integer(10) not null,
-  votes integer(10),
-  primary key(quizId,questionId,optionId)
-);
-
-### Results of quizzes taken by users
-DROP TABLE IF EXISTS tiki_user_quizzes;
-create table tiki_user_quizzes (
-  user varchar(100),
-  quizId integer(10),
-  timestamp integer(14),
-  timeTaken integer(14),
-  points integer(12),
-  maxPoints integer(12),
-  resultId integer(10),
-  userResultId integer(10) not null auto_increment,
-  primary key(userResultId)
-);
-
-### What the user answered in the quiz
-DROP TABLE IF EXISTS tiki_user_answers;
-create table tiki_user_answers (
-  userResultId integer(10) not null,
-  quizId integer(10) not null,
-  questionId integer(10) not null,
-  optionId integer(10) not null,
-  primary key(userResultId,quizId,questionId,optionId)
-);
-
-### END OF CHANGES FOR VERSION 1.4
-
-
-### CHANGES FOR 1.5
-
-
-### Newsletters
-drop table if exists tiki_newsletters;
-create table tiki_newsletters(
-  nlId integer(12) not null auto_increment,
-  name varchar(200),
-  description text,
-  created integer(14),
-  lastSent integer(14),
-  editions integer(10),
-  users integer(10),
-  allowAnySub char(1),
-  frequency integer(14),
-  primary key(nlId)
-);
-
-drop table if exists tiki_newsletter_subscriptions;
-create table tiki_newsletter_subscriptions (
-  nlId integer(12) not null,
-  email varchar(255) not null,
-  code char(32),
-  valid char(1),
-  subscribed integer(14),
-  primary key(nlId,email)
-);
-
-drop table if exists tiki_sent_newsletters;
-create table tiki_sent_newsletters (
-  editionId integer(12) not null auto_increment,
-  nlId integer(12) not null,  
-  users integer(10),
-  sent integer(14),
-  subject varchar(200),
+DROP TABLE IF EXISTS tiki_received_pages;
+CREATE TABLE tiki_received_pages (
+  receivedPageId int(14) NOT NULL auto_increment,
+  pageName varchar(160) NOT NULL default '',
   data longblob,
-  primary key(editionId)
-);
+  description varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  receivedFromSite varchar(200) default NULL,
+  receivedFromUser varchar(200) default NULL,
+  receivedDate int(14) default NULL,
+  PRIMARY KEY  (receivedPageId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_newsletters','newsletters','Can admin newsletters');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_newsletters','newsletters','Can subscribe to newsletters');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_email','newsletters','Can subscribe any email to newsletters');
+#
+# Table structure for table `tiki_referer_stats`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:30 AM
+#
 
-### Newsletters
+DROP TABLE IF EXISTS tiki_referer_stats;
+CREATE TABLE tiki_referer_stats (
+  referer varchar(50) NOT NULL default '',
+  hits int(10) default NULL,
+  last int(14) default NULL,
+  PRIMARY KEY  (referer)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_webmail','webmail','Can use webmail');
-### SURVEYS
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_surveys','surveys','Can admin surveys');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_take_survey','surveys','Can take surveys');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_survey_stats','surveys','Can view survey stats');
+#
+# Table structure for table `tiki_related_categories`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-drop table if exists tiki_surveys;
-create table tiki_surveys (
-  surveyId integer(12) not null auto_increment,
-  name varchar(200),
+DROP TABLE IF EXISTS tiki_related_categories;
+CREATE TABLE tiki_related_categories (
+  categId int(10) NOT NULL default '0',
+  relatedTo int(10) NOT NULL default '0',
+  PRIMARY KEY  (categId,relatedTo)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_rss_modules`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 10:19 AM
+#
+
+DROP TABLE IF EXISTS tiki_rss_modules;
+CREATE TABLE tiki_rss_modules (
+  rssId int(8) NOT NULL auto_increment,
+  name varchar(30) NOT NULL default '',
   description text,
-  taken integer(10),
-  lastTaken integer(14),
-  created integer(14),
-  status char(1),
-  primary key(surveyId)
-);
+  url varchar(255) NOT NULL default '',
+  refresh int(8) default NULL,
+  lastUpdated int(14) default NULL,
+  content longblob,
+  PRIMARY KEY  (rssId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_survey_questions;
-create table tiki_survey_questions (
-  questionId integer(12) not null auto_increment,
-  surveyId integer(12) not null,
+#
+# Table structure for table `tiki_search_stats`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 10:55 PM
+#
+
+DROP TABLE IF EXISTS tiki_search_stats;
+CREATE TABLE tiki_search_stats (
+  term varchar(50) NOT NULL default '',
+  hits int(10) default NULL,
+  PRIMARY KEY  (term)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_semaphores`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:52 AM
+#
+
+DROP TABLE IF EXISTS tiki_semaphores;
+CREATE TABLE tiki_semaphores (
+  semName varchar(250) NOT NULL default '',
+  user varchar(200) default NULL,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (semName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_sent_newsletters`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_sent_newsletters;
+CREATE TABLE tiki_sent_newsletters (
+  editionId int(12) NOT NULL auto_increment,
+  nlId int(12) NOT NULL default '0',
+  users int(10) default NULL,
+  sent int(14) default NULL,
+  subject varchar(200) default NULL,
+  data longblob,
+  PRIMARY KEY  (editionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_sessions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:52 AM
+#
+
+DROP TABLE IF EXISTS tiki_sessions;
+CREATE TABLE tiki_sessions (
+  sessionId varchar(32) NOT NULL default '',
+  user varchar(200) default NULL,
+  timestamp int(14) default NULL,
+  PRIMARY KEY  (sessionId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_shoutbox`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:21 PM
+#
+
+DROP TABLE IF EXISTS tiki_shoutbox;
+CREATE TABLE tiki_shoutbox (
+  msgId int(10) NOT NULL auto_increment,
+  message varchar(255) default NULL,
+  timestamp int(14) default NULL,
+  user varchar(200) default NULL,
+  hash varchar(32) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_structures`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_structures;
+CREATE TABLE tiki_structures (
+  page varchar(240) NOT NULL default '',
+  parent varchar(240) NOT NULL default '',
+  pos int(4) default NULL,
+  PRIMARY KEY  (page,parent)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_submissions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 04:16 PM
+#
+
+DROP TABLE IF EXISTS tiki_submissions;
+CREATE TABLE tiki_submissions (
+  subId int(8) NOT NULL auto_increment,
+  title varchar(80) default NULL,
+  authorName varchar(60) default NULL,
+  topicId int(14) default NULL,
+  topicName varchar(40) default NULL,
+  size int(12) default NULL,
+  useImage char(1) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size int(14) default NULL,
+  image_x int(4) default NULL,
+  image_y int(4) default NULL,
+  image_data longblob,
+  publishDate int(14) default NULL,
+  created int(14) default NULL,
+  heading text,
+  body text,
+  hash varchar(32) default NULL,
+  author varchar(200) default NULL,
+  reads int(14) default NULL,
+  votes int(8) default NULL,
+  points int(14) default NULL,
+  type varchar(50) default NULL,
+  rating decimal(3,2) default NULL,
+  isfloat char(1) default NULL,
+  PRIMARY KEY  (subId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_suggested_faq_questions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 08:52 PM
+#
+
+DROP TABLE IF EXISTS tiki_suggested_faq_questions;
+CREATE TABLE tiki_suggested_faq_questions (
+  sfqId int(10) NOT NULL auto_increment,
+  faqId int(10) NOT NULL default '0',
+  question text,
+  answer text,
+  created int(14) default NULL,
+  user varchar(200) default NULL,
+  PRIMARY KEY  (sfqId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_survey_question_options`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 12:55 AM
+#
+
+DROP TABLE IF EXISTS tiki_survey_question_options;
+CREATE TABLE tiki_survey_question_options (
+  optionId int(12) NOT NULL auto_increment,
+  questionId int(12) NOT NULL default '0',
+  qoption text,
+  votes int(10) default NULL,
+  PRIMARY KEY  (optionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_survey_questions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 11:55 PM
+#
+
+DROP TABLE IF EXISTS tiki_survey_questions;
+CREATE TABLE tiki_survey_questions (
+  questionId int(12) NOT NULL auto_increment,
+  surveyId int(12) NOT NULL default '0',
   question text,
   options text,
-  type char(1),
-  position integer(5),
-  votes integer(10),
-  value integer(10),
-  average decimal(4,2),
-  primary key(questionId)
-);
+  type char(1) default NULL,
+  position int(5) default NULL,
+  votes int(10) default NULL,
+  value int(10) default NULL,
+  average decimal(4,2) default NULL,
+  PRIMARY KEY  (questionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_survey_question_options;
-create table tiki_survey_question_options (
-  optionId integer(12) not null auto_increment,
-  questionId integer(12) not null,
-  qoption text,
-  votes integer(10),
-  primary key(optionId)
-);
-### SURVEYS
+#
+# Table structure for table `tiki_surveys`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:40 PM
+#
 
+DROP TABLE IF EXISTS tiki_surveys;
+CREATE TABLE tiki_surveys (
+  surveyId int(12) NOT NULL auto_increment,
+  name varchar(200) default NULL,
+  description text,
+  taken int(10) default NULL,
+  lastTaken int(14) default NULL,
+  created int(14) default NULL,
+  status char(1) default NULL,
+  PRIMARY KEY  (surveyId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-### Webmail ###
-drop table if exists tiki_webmail_contacts;
-create table tiki_webmail_contacts (
-  contactId integer(12) not null auto_increment,
-  firstName varchar(80),
-  lastName varchar(80),
-  email varchar(250),
-  nickname varchar(200),
-  user varchar(200) not null,
-  primary key(contactId)
-);
+#
+# Table structure for table `tiki_tags`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 06, 2003 at 02:58 AM
+#
 
-drop table if exists tiki_webmail_messages;
-create table tiki_webmail_messages (
-  accountId integer(12) not null,
-  mailId varchar(255) not null,
-  user varchar(200) not null,
-  isRead char(1),
-  isReplied char(1),
-  isFlagged char(1),
-  primary key(accountId,mailId)
-);
+DROP TABLE IF EXISTS tiki_tags;
+CREATE TABLE tiki_tags (
+  tagName varchar(80) NOT NULL default '',
+  pageName varchar(160) NOT NULL default '',
+  hits int(8) default NULL,
+  description varchar(200) default NULL,
+  data longblob,
+  lastModif int(14) default NULL,
+  comment varchar(200) default NULL,
+  version int(8) NOT NULL default '0',
+  user varchar(200) default NULL,
+  ip varchar(15) default NULL,
+  flag char(1) default NULL,
+  PRIMARY KEY  (tagName,pageName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_user_mail_accounts;
-create table tiki_user_mail_accounts (
-  accountId integer(12) not null auto_increment,
-  user varchar(200) not null,
-  account varchar(50) not null,
-  pop varchar(255),
-  current char(1),
-  port integer(4),
-  username varchar(100),
-  pass varchar(100),
-  msgs integer(4),
-  smtp varchar(255),
-  useAuth char(1),
-  smtpPort integer(4),
-  primary key(accountId)
-);
+#
+# Table structure for table `tiki_theme_control_categs`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### Webmail ###
+DROP TABLE IF EXISTS tiki_theme_control_categs;
+CREATE TABLE tiki_theme_control_categs (
+  categId int(12) NOT NULL default '0',
+  theme varchar(250) NOT NULL default '',
+  PRIMARY KEY  (categId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### MODIFICATIONS TO USERS TABLE ###
+#
+# Table structure for table `tiki_theme_control_objects`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### TABLES FOR TRACKERS ###
+DROP TABLE IF EXISTS tiki_theme_control_objects;
+CREATE TABLE tiki_theme_control_objects (
+  objId varchar(250) NOT NULL default '',
+  type varchar(250) NOT NULL default '',
+  name varchar(250) NOT NULL default '',
+  theme varchar(250) NOT NULL default '',
+  PRIMARY KEY  (objId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_theme_control_sections`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_theme_control_sections;
+CREATE TABLE tiki_theme_control_sections (
+  section varchar(250) NOT NULL default '',
+  theme varchar(250) NOT NULL default '',
+  PRIMARY KEY  (section)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_topics`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 04, 2003 at 10:10 PM
+#
+
+DROP TABLE IF EXISTS tiki_topics;
+CREATE TABLE tiki_topics (
+  topicId int(14) NOT NULL auto_increment,
+  name varchar(40) default NULL,
+  image_name varchar(80) default NULL,
+  image_type varchar(80) default NULL,
+  image_size int(14) default NULL,
+  image_data longblob,
+  active char(1) default NULL,
+  created int(14) default NULL,
+  PRIMARY KEY  (topicId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_tracker_fields`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 01:48 PM
+#
+
+DROP TABLE IF EXISTS tiki_tracker_fields;
+CREATE TABLE tiki_tracker_fields (
+  fieldId int(12) NOT NULL auto_increment,
+  trackerId int(12) NOT NULL default '0',
+  name varchar(80) default NULL,
+  options text,
+  type char(1) default NULL,
+  isMain char(1) default NULL,
+  isTblVisible char(1) default NULL,
+  PRIMARY KEY  (fieldId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_tracker_item_attachments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
 DROP TABLE IF EXISTS tiki_tracker_item_attachments;
-create table tiki_tracker_item_attachments(
-  attId integer(12) not null auto_increment,
-  itemId varchar(40) not null,
-  filename varchar(80),
-  filetype varchar(80),
-  filesize integer(14),
-  user varchar(200),
+CREATE TABLE tiki_tracker_item_attachments (
+  attId int(12) NOT NULL auto_increment,
+  itemId varchar(40) NOT NULL default '',
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize int(14) default NULL,
+  user varchar(200) default NULL,
   data longblob,
-  path varchar(255),
-  downloads integer(10),
-  created integer(14),
-  comment varchar(250),
-  primary key(attId)
-);
+  path varchar(255) default NULL,
+  downloads int(10) default NULL,
+  created int(14) default NULL,
+  comment varchar(250) default NULL,
+  PRIMARY KEY  (attId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_tracker_item_comments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:12 AM
+#
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_modify_tracker_items','trackers','Can change tracker items');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_comment_tracker_items','trackers','Can insert comments for tracker items');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_create_tracker_items','trackers','Can create new items for trackers');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_trackers','trackers','Can admin trackers');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_trackers','trackers','Can view trackers');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_attach_trackers','trackers','Can attach files to tracker items');
-
-drop table if exists tiki_tracker_item_comments;
-create table tiki_tracker_item_comments(
-  commentId integer(12) not null auto_increment,
-  itemId integer(12) not null,
-  user varchar(200),
+DROP TABLE IF EXISTS tiki_tracker_item_comments;
+CREATE TABLE tiki_tracker_item_comments (
+  commentId int(12) NOT NULL auto_increment,
+  itemId int(12) NOT NULL default '0',
+  user varchar(200) default NULL,
   data text,
-  title varchar(200),
-  posted integer(14),
-  primary key(commentId)
-);
+  title varchar(200) default NULL,
+  posted int(14) default NULL,
+  PRIMARY KEY  (commentId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_trackers;
-create table tiki_trackers(
-  trackerId integer(12) not null auto_increment,
-  name varchar(80),
-  description text,
-  created integer(14),
-  lastModif integer(14),
-  showCreated char(1),
-  showStatus char(1),
-  showLastModif char(1),
-  useComments char(1),
-  useAttachments char(1),
-  items integer(10),
-  primary key(trackerId)
-);
+#
+# Table structure for table `tiki_tracker_item_fields`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:26 AM
+#
 
-drop table if exists tiki_tracker_fields;
-create table tiki_tracker_fields(
-  fieldId integer(12) not null auto_increment,
-  trackerId integer(12) not null,
-  name varchar(80),
-  options text,
-  type char(1),
-  isMain char(1),
-  isTblVisible char(1),
-  primary key(fieldId)  
-);
-
-drop table if exists tiki_tracker_items;
-create table tiki_tracker_items(
-  itemId integer(12) not null auto_increment,
-  trackerId integer(12) not null,
-  created integer(14),
-  status char(1),
-  lastModif integer(14),
-  primary key(itemId)
-);
-
-drop table if exists tiki_tracker_item_fields;
-create table tiki_tracker_item_fields(
-  itemId integer(12) not null,
-  fieldId integer(12) not null,
+DROP TABLE IF EXISTS tiki_tracker_item_fields;
+CREATE TABLE tiki_tracker_item_fields (
+  itemId int(12) NOT NULL default '0',
+  fieldId int(12) NOT NULL default '0',
   value text,
-  primary key(itemId,fieldId)
-);
+  PRIMARY KEY  (itemId,fieldId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### TABLES FOR TRACKERS END ###
+#
+# Table structure for table `tiki_tracker_items`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:26 AM
+#
 
-drop table if exists tiki_structures;
-create table tiki_structures(
-  page varchar(240) not null,
-  parent varchar(240) not null,
-  pos integer(4),
-  primary key(page,parent)
-);
+DROP TABLE IF EXISTS tiki_tracker_items;
+CREATE TABLE tiki_tracker_items (
+  itemId int(12) NOT NULL auto_increment,
+  trackerId int(12) NOT NULL default '0',
+  created int(14) default NULL,
+  status char(1) default NULL,
+  lastModif int(14) default NULL,
+  PRIMARY KEY  (itemId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_upload_picture','wiki','Can upload pictures to wiki pages');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_files','file galleries','Can upload zip files with files');
+#
+# Table structure for table `tiki_trackers`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:26 AM
+#
 
-### END OF CHANGES FOR 1.5
-
-### CHANGES FOR 1.6 ###
-
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minor','wiki','Can save as minor edit','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editors');
-
-drop table if exists tiki_extwiki;
-create table tiki_extwiki(
-  extwikiId integer(12) not null auto_increment,
-  name varchar(20) not null,
-  extwiki varchar(255),
-  primary key(extwikiId)
-);
-
-
-drop table if exists tiki_dsn;
-create table tiki_dsn(
-  dsnId integer(12) not null auto_increment,
-  name varchar(20) not null,
-  dsn varchar(255),
-  primary key(dsnId)
-);
-
-
-drop table if exists tiki_minical_topics;
-create table tiki_minical_topics(
-  user varchar(200),
-  topicId integer(12) not null auto_increment,
-  name varchar(250),
-  filename varchar(200),
-  filetype varchar(200),
-  filesize varchar(200),
-  data longblob,  
-  path varchar(250),
-  isIcon char(1),
-  primary key(topicId)
-);
-
-drop table if exists tiki_minical_events;
-create table tiki_minical_events(
-  user varchar(200),
-  eventId integer(12) not null auto_increment,
-  title varchar(250),
+DROP TABLE IF EXISTS tiki_trackers;
+CREATE TABLE tiki_trackers (
+  trackerId int(12) NOT NULL auto_increment,
+  name varchar(80) default NULL,
   description text,
-  start integer(14),
-  end integer(14),
-  security char(1),
-  duration integer(3),
-  topicId integer(12),
-  reminded char(1),
-  primary key(eventId)
-);
+  created int(14) default NULL,
+  lastModif int(14) default NULL,
+  showCreated char(1) default NULL,
+  showStatus char(1) default NULL,
+  showLastModif char(1) default NULL,
+  useComments char(1) default NULL,
+  useAttachments char(1) default NULL,
+  items int(10) default NULL,
+  PRIMARY KEY  (trackerId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_untranslated`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_usermenu','user','Can create items in personal menu','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minical','user','Can use the mini event calendar','registered');
+DROP TABLE IF EXISTS tiki_untranslated;
+CREATE TABLE tiki_untranslated (
+  id int(14) NOT NULL auto_increment,
+  source tinyblob NOT NULL,
+  lang char(2) NOT NULL default '',
+  PRIMARY KEY  (source(255),lang),
+  UNIQUE KEY id (id),
+  KEY id_2 (id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_user_menus;
-create table tiki_user_menus(
-  user varchar(200) not null,
-  menuId integer(12) not null auto_increment,
-  url varchar(250),
-  name varchar(40),
-  position integer(4),
-  mode char(1),
-  primary key(menuId)
-);
+#
+# Table structure for table `tiki_user_answers`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-drop table if exists tiki_theme_control_sections;
-create table tiki_theme_control_sections(
-  section varchar(250) not null,
-  theme varchar(250) not null,
-  primary key(section)
-);
+DROP TABLE IF EXISTS tiki_user_answers;
+CREATE TABLE tiki_user_answers (
+  userResultId int(10) NOT NULL default '0',
+  quizId int(10) NOT NULL default '0',
+  questionId int(10) NOT NULL default '0',
+  optionId int(10) NOT NULL default '0',
+  PRIMARY KEY  (userResultId,quizId,questionId,optionId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_theme_control_objects;
-create table tiki_theme_control_objects(
-  objId varchar(250) not null,
-  type varchar(250) not null,
-  name varchar(250) not null,
-  theme varchar(250) not null,
-  primary key(objId)
-);
+#
+# Table structure for table `tiki_user_assigned_modules`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:25 PM
+#
 
+DROP TABLE IF EXISTS tiki_user_assigned_modules;
+CREATE TABLE tiki_user_assigned_modules (
+  name varchar(200) NOT NULL default '',
+  position char(1) default NULL,
+  ord int(4) default NULL,
+  type char(1) default NULL,
+  title varchar(40) default NULL,
+  cache_time int(14) default NULL,
+  rows int(4) default NULL,
+  groups text,
+  params varchar(250) default NULL,
+  user varchar(200) NOT NULL default '',
+  PRIMARY KEY  (name,user)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_theme_control_categs;
-create table tiki_theme_control_categs(
-  categId integer(12) not null,
-  theme varchar(250) not null,
-  primary key(categId)
-);
+#
+# Table structure for table `tiki_user_bookmarks_folders`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 08:35 AM
+#
 
-drop table if exists tiki_eph;
-create table tiki_eph(
-  ephId integer(12) not null auto_increment,
-  title varchar(250),
-  isFile char(1),
-  filename varchar(250),
-  filetype varchar(250),
-  filesize varchar(250),
+DROP TABLE IF EXISTS tiki_user_bookmarks_folders;
+CREATE TABLE tiki_user_bookmarks_folders (
+  folderId int(12) NOT NULL auto_increment,
+  parentId int(12) default NULL,
+  user varchar(200) NOT NULL default '',
+  name varchar(30) default NULL,
+  PRIMARY KEY  (user,folderId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_user_bookmarks_urls`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 08:36 AM
+#
+
+DROP TABLE IF EXISTS tiki_user_bookmarks_urls;
+CREATE TABLE tiki_user_bookmarks_urls (
+  urlId int(12) NOT NULL auto_increment,
+  name varchar(30) default NULL,
+  url varchar(250) default NULL,
   data longblob,
-  textdata longblob,
-  publish integer(14),
-  hits integer(10),
-  primary key(ephId)
-);
+  lastUpdated int(14) default NULL,
+  folderId int(12) NOT NULL default '0',
+  user varchar(200) NOT NULL default '',
+  PRIMARY KEY  (urlId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_eph_admin','tiki','Can admin ephemerides','editors');
+#
+# Table structure for table `tiki_user_mail_accounts`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS tiki_user_mail_accounts;
+CREATE TABLE tiki_user_mail_accounts (
+  accountId int(12) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  account varchar(50) NOT NULL default '',
+  pop varchar(255) default NULL,
+  current char(1) default NULL,
+  port int(4) default NULL,
+  username varchar(100) default NULL,
+  pass varchar(100) default NULL,
+  msgs int(4) default NULL,
+  smtp varchar(255) default NULL,
+  useAuth char(1) default NULL,
+  smtpPort int(4) default NULL,
+  PRIMARY KEY  (accountId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_tasks','user','Can use tasks','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_notepad','user','Can use the notepad','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_newsreader','user','Can use the newsreader','registered');
+#
+# Table structure for table `tiki_user_menus`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 10:58 PM
+#
 
-drop table if exists tiki_userfiles;
-create table tiki_userfiles(
-  user varchar(200) not null,
-  fileId integer(12) not null auto_increment,
-  name varchar(200),
-  filename varchar(200),
-  filetype varchar(200),
-  filesize varchar(200),
+DROP TABLE IF EXISTS tiki_user_menus;
+CREATE TABLE tiki_user_menus (
+  user varchar(200) NOT NULL default '',
+  menuId int(12) NOT NULL auto_increment,
+  url varchar(250) default NULL,
+  name varchar(40) default NULL,
+  position int(4) default NULL,
+  mode char(1) default NULL,
+  PRIMARY KEY  (menuId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_user_modules`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 05, 2003 at 03:16 AM
+#
+
+DROP TABLE IF EXISTS tiki_user_modules;
+CREATE TABLE tiki_user_modules (
+  name varchar(200) NOT NULL default '',
+  title varchar(40) default NULL,
   data longblob,
-  hits integer(8),
-  isFile char(1),
-  path varchar(255),
-  created integer(14),
-  primary key(fileId)
-);
+  PRIMARY KEY  (name)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_user_notes;
-create table tiki_user_notes(
-  user varchar(200) not null,
-  noteId integer(12) not null auto_increment,
-  created integer(14),
-  name varchar(255),
-  lastModif integer(14),
+#
+# Table structure for table `tiki_user_notes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:52 AM
+#
+
+DROP TABLE IF EXISTS tiki_user_notes;
+CREATE TABLE tiki_user_notes (
+  user varchar(200) NOT NULL default '',
+  noteId int(12) NOT NULL auto_increment,
+  created int(14) default NULL,
+  name varchar(255) default NULL,
+  lastModif int(14) default NULL,
   data text,
-  size integer(14),
-  primary key(noteId)
-);
+  size int(14) default NULL,
+  parse_mode varchar(20) default NULL,
+  PRIMARY KEY  (noteId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_newsreader_marks;
-create table tiki_newsreader_marks (
-  user varchar(200) not null,
-  serverId integer(12) not null,
-  groupName varchar(255) not null,
-  timestamp integer(14) not null,
-  primary key(user,serverId,groupName)
-);
+#
+# Table structure for table `tiki_user_postings`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:12 AM
+#
 
-drop table if exists tiki_newsreader_servers;
-create table tiki_newsreader_servers(
-  user varchar(200) not null,
-  serverId integer(12) not null auto_increment,
-  server varchar(250),
-  port integer(4),
-  username varchar(200),
-  password varchar(200),
-  primary key(serverId)
-);
+DROP TABLE IF EXISTS tiki_user_postings;
+CREATE TABLE tiki_user_postings (
+  user varchar(200) NOT NULL default '',
+  posts int(12) default NULL,
+  last int(14) default NULL,
+  first int(14) default NULL,
+  level int(8) default NULL,
+  PRIMARY KEY  (user)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_user_preferences`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:09 AM
+#
 
-## Wiki footnotes
-drop table if exists tiki_page_footnotes;
-create table tiki_page_footnotes(
-  user varchar(200) not null,
-  pageName varchar(250) not null,
-  data text,
-  primary key(user,pageName)
-);
+DROP TABLE IF EXISTS tiki_user_preferences;
+CREATE TABLE tiki_user_preferences (
+  user varchar(200) NOT NULL default '',
+  prefName varchar(40) NOT NULL default '',
+  value varchar(250) default NULL,
+  PRIMARY KEY  (user,prefName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### User-tasks
-drop table if exists tiki_user_tasks;
-create table tiki_user_tasks(
-  user varchar(200),
-  taskId integer(14) not null auto_increment,
-  title varchar(250),
+#
+# Table structure for table `tiki_user_quizzes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_user_quizzes;
+CREATE TABLE tiki_user_quizzes (
+  user varchar(100) default NULL,
+  quizId int(10) default NULL,
+  timestamp int(14) default NULL,
+  timeTaken int(14) default NULL,
+  points int(12) default NULL,
+  maxPoints int(12) default NULL,
+  resultId int(10) default NULL,
+  userResultId int(10) NOT NULL auto_increment,
+  PRIMARY KEY  (userResultId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_user_taken_quizzes`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_user_taken_quizzes;
+CREATE TABLE tiki_user_taken_quizzes (
+  user varchar(200) NOT NULL default '',
+  quizId varchar(255) NOT NULL default '',
+  PRIMARY KEY  (user,quizId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_user_tasks`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 08, 2003 at 05:30 PM
+#
+
+DROP TABLE IF EXISTS tiki_user_tasks;
+CREATE TABLE tiki_user_tasks (
+  user varchar(200) default NULL,
+  taskId int(14) NOT NULL auto_increment,
+  title varchar(250) default NULL,
   description text,
-  date integer(14),
-  status char(1),
-  priority integer(2),
-  completed integer(14),
-  percentage integer(4),
-  primary key(taskId)
-);
+  date int(14) default NULL,
+  status char(1) default NULL,
+  priority int(2) default NULL,
+  completed int(14) default NULL,
+  percentage int(4) default NULL,
+  PRIMARY KEY  (taskId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_user_votings`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 11:55 PM
+#
 
+DROP TABLE IF EXISTS tiki_user_votings;
+CREATE TABLE tiki_user_votings (
+  user varchar(200) NOT NULL default '',
+  id varchar(255) NOT NULL default '',
+  PRIMARY KEY  (user,id)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### Inter-user messages
+#
+# Table structure for table `tiki_user_watches`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 08:07 AM
+#
 
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_messages','messu','Can use the messaging system','registered');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_broadcast_all','messu','Can broadcast messages to all user','admin');
+DROP TABLE IF EXISTS tiki_user_watches;
+CREATE TABLE tiki_user_watches (
+  user varchar(200) NOT NULL default '',
+  event varchar(40) NOT NULL default '',
+  object varchar(200) NOT NULL default '',
+  hash varchar(32) default NULL,
+  title varchar(250) default NULL,
+  type varchar(200) default NULL,
+  url varchar(250) default NULL,
+  email varchar(200) default NULL,
+  PRIMARY KEY  (user,event,object)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists messu_messages;
-create table messu_messages(
-  msgId integer(14) not null auto_increment,
-  user varchar(200) not null,
-  user_from varchar(200) not null,
-  user_to text,
-  user_cc text,
-  user_bcc text,
-  subject varchar(255),
-  body text,
-  hash char(32),
-  date integer(14),
-  isRead char(1),
-  isReplied char(1),
-  isFlagged char(1),
-  priority integer(2),
-  primary key(msgId)
-);
+#
+# Table structure for table `tiki_userfiles`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_mailin','tiki','Can admin mail-in accounts');
-
-### Mailin
-drop table if exists tiki_mailin_accounts;
-create table tiki_mailin_accounts (
-  accountId integer(12) not null auto_increment,
-  user varchar(200) not null,
-  account varchar(50) not null,
-  pop varchar(255),
-  port integer(4),
-  username varchar(100),
-  pass varchar(100),
-  active char(1),
-  type varchar(40),
-  smtp varchar(255),
-  useAuth char(1),
-  smtpPort integer(4),
-  primary key(accountId)
-);
-
-
-### Tiki structures permissions
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_structures','wiki','Can create and edit structures');
-
-
-### DIRECTORIES BEGIN
-
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory','directory','Can admin the directory','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_directory','directory','Can use the directory','basic');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories','editors');
-REPLACE INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory','basic');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid','editors');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_validate_links','directory','Can validate submited links','editors');
-
-
-
-
-drop table if exists tiki_directory_categories;
-create table tiki_directory_categories(
-  categId integer(10) not null auto_increment,
-  parent integer(10),
-  name varchar(240),
-  description text,
-  childrenType char(1),
-  sites integer(10),
-  viewableChildren integer(4),
-  allowSites char(1),
-  showCount char(1),
-  editorGroup varchar(200),
-  hits integer(12),
-  primary key(categId)
-);
-
-drop table if exists tiki_directory_sites;
-create table tiki_directory_sites(
-  siteId integer(14) not null auto_increment,
-  name varchar(240),
-  description text,
-  url varchar(255),
-  country varchar(255),
-  hits integer(12),
-  isValid char(1),
-  created integer(14),
-  lastModif integer(14), 
-  cache longblob,
-  cache_timestamp integer(14),
-  primary key(siteId)
-);
-
-drop table if exists tiki_category_sites;
-create table tiki_category_sites(
-  categId integer(10) not null,
-  siteId integer(14) not null,
-  primary key(categId,siteId)
-);
-
-drop table if exists tiki_related_categories;
-create table tiki_related_categories(
-  categId integer(10) not null,
-  relatedTo integer(10) not null,
-  primary key(categId,relatedTo)
-);
-
-drop table if exists tiki_directory_search;
-create table tiki_directory_search(
-  term varchar(250) not null,
-  hits integer(14),
-  primary key(term)
-);
-
-### Try to rebuild tiki_images without loss
-
-DROP TABLE IF EXISTS tiki_images_data;
-CREATE TABLE tiki_images_data (
-  imageId integer(14) not null,
-  xsize integer(8) not null,
-  ysize integer(8) not null,
-  type char(1) not null, 
-  filesize integer(14),
-  filetype varchar(80),
-  filename varchar(80),
+DROP TABLE IF EXISTS tiki_userfiles;
+CREATE TABLE tiki_userfiles (
+  user varchar(200) NOT NULL default '',
+  fileId int(12) NOT NULL auto_increment,
+  name varchar(200) default NULL,
+  filename varchar(200) default NULL,
+  filetype varchar(200) default NULL,
+  filesize varchar(200) default NULL,
   data longblob,
-  primary key(imageId,xsize,ysize,type)
-);
+  hits int(8) default NULL,
+  isFile char(1) default NULL,
+  path varchar(255) default NULL,
+  created int(14) default NULL,
+  PRIMARY KEY  (fileId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-drop table if exists tiki_galleries_scales;
-create table tiki_galleries_scales (
-	      galleryId int(14) not null,
-              xsize integer not null, 
-	      ysize integer not null, 
-	      primary key (galleryId,xsize,ysize));
+#
+# Table structure for table `tiki_userpoints`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 05:47 AM
+#
 
-# Optimaziation
-create index ti_gId on tiki_images (galleryId);
-create index ti_cr on tiki_images (created);
-create index ti_hi on tiki_images (hits);
-create index ti_us on tiki_images (user);
-create index t_i_d_it on tiki_images_data (imageId,type);
-create index tc_pi on tiki_comments(parentId);
+DROP TABLE IF EXISTS tiki_userpoints;
+CREATE TABLE tiki_userpoints (
+  user varchar(200) default NULL,
+  points decimal(8,2) default NULL,
+  voted int(8) default NULL
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-# Optimization of others -- try yourself
-#create index tg_u on tiki_galleries (user);
-#create index ti_p_hi on tiki_pages (hits);
-#create index ti_p_lm on tiki_pages (lastModif);
-#create index up_t on users_permissions(type);
-#create index tf_n on tiki_forums(name);
-#create index tf_lp on tiki_forums(lastPost);
-#create index tf_h on tiki_forums(hits);
-#create index ts_t on tiki_shoutbox(timestamp);
-#create index ta_pd on tiki_articles(publishDate);
+#
+# Table structure for table `tiki_users`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### FULLTEXT SEARCH BEGIN
+DROP TABLE IF EXISTS tiki_users;
+CREATE TABLE tiki_users (
+  user varchar(200) NOT NULL default '',
+  password varchar(40) default NULL,
+  email varchar(200) default NULL,
+  lastLogin int(14) default NULL,
+  PRIMARY KEY  (user)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-create fulltext index ft on tiki_pages (pagename,data);
-create fulltext index ft on tiki_galleries (name,description);
-create fulltext index ft on tiki_faqs (title,description);
-create fulltext index ft on tiki_faq_questions (question,answer);
-create fulltext index ft on tiki_images (name,description);
-create fulltext index ft on tiki_comments (title,data);
-create fulltext index ft on tiki_files (name,description);
-create fulltext index ft on tiki_blogs (title,description);
-alter table tiki_articles modify body text;
-create fulltext index ft on tiki_articles (title,heading,body);
-create fulltext index ft on tiki_blog_posts (data);
+#
+# Table structure for table `tiki_webmail_contacts`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-### FULLTEXT SEARCH END
+DROP TABLE IF EXISTS tiki_webmail_contacts;
+CREATE TABLE tiki_webmail_contacts (
+  contactId int(12) NOT NULL auto_increment,
+  firstName varchar(80) default NULL,
+  lastName varchar(80) default NULL,
+  email varchar(250) default NULL,
+  nickname varchar(200) default NULL,
+  user varchar(200) NOT NULL default '',
+  PRIMARY KEY  (contactId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
+#
+# Table structure for table `tiki_webmail_messages`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
-## LEVELS
-## 1-anonymous users
-## 2-registered users
-## 3-editors&friends
-## 4-admins
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_structures ';
-UPDATE users_permissions set level='registered' where permName='tiki_p_messages';
-UPDATE users_permissions set level='admin' where permName='tiki_p_broadcast';
-UPDATE users_permissions set level='admin' where permName='tiki_p_admin_mailin';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_directory';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory_cats';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory_sites';
-UPDATE users_permissions set level='basic' where permName='tiki_p_submit_link';
-UPDATE users_permissions set level='editors' where permName='tiki_p_autosubmit_link';
-UPDATE users_permissions set level='editors' where permName='tiki_p_validate_links';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_galleries';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_file_galleries';
-UPDATE users_permissions set level='editors' where permName='tiki_p_create_file_galleries';
-UPDATE users_permissions set level='registered' where permName='tiki_p_upload_files';
-UPDATE users_permissions set level='basic' where permName='tiki_p_download_files';
-UPDATE users_permissions set level='basic' where permName='tiki_p_post_comments';
-UPDATE users_permissions set level='basic' where permName='tiki_p_read_comments';
-UPDATE users_permissions set level='editors' where permName='tiki_p_remove_comments';
-UPDATE users_permissions set level='registered' where permName='tiki_p_vote_comments';
-UPDATE users_permissions set level='admin' where permName='tiki_p_admin';
-UPDATE users_permissions set level='basic' where permName='tiki_p_edit';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view';
-UPDATE users_permissions set level='editors' where permName='tiki_p_remove';
-UPDATE users_permissions set level='registered' where permName='tiki_p_rollback';
-UPDATE users_permissions set level='editors' where permName='tiki_p_create_galleries';
-UPDATE users_permissions set level='registered' where permName='tiki_p_upload_images';
-UPDATE users_permissions set level='editors' where permName='tiki_p_use_HTML';
-UPDATE users_permissions set level='editors' where permName='tiki_p_create_blogs';
-UPDATE users_permissions set level='registered' where permName='tiki_p_blog_post';
-UPDATE users_permissions set level='editors' where permName='tiki_p_blog_admin';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_article';
-UPDATE users_permissions set level='editors' where permName='tiki_p_remove_article';
-UPDATE users_permissions set level='basic' where permName='tiki_p_read_article';
-UPDATE users_permissions set level='basic' where permName='tiki_p_submit_article';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_submission';
-UPDATE users_permissions set level='editors' where permName='tiki_p_remove_submission';
-UPDATE users_permissions set level='editors' where permName='tiki_p_approve_submission';
-UPDATE users_permissions set level='admin' where permName='tiki_p_edit_templates';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_dynamic';
-UPDATE users_permissions set level='admin' where permName='tiki_p_admin_banners';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_wiki';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_cms';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_categories';
-UPDATE users_permissions set level='registered' where permName='tiki_p_send_pages';
-UPDATE users_permissions set level='registered' where permName='tiki_p_sendme_pages';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_received_pages';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_forum';
-UPDATE users_permissions set level='basic' where permName='tiki_p_forum_post';
-UPDATE users_permissions set level='basic' where permName='tiki_p_forum_post_topic';
-UPDATE users_permissions set level='basic' where permName='tiki_p_forum_read';
-UPDATE users_permissions set level='registered' where permName='tiki_p_forum_vote';
-UPDATE users_permissions set level='basic' where permName='tiki_p_read_blog';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_image_gallery';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_file_gallery';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_comments';
-UPDATE users_permissions set level='basic' where permName='tiki_p_vote_poll';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_chat';
-UPDATE users_permissions set level='basic' where permName='tiki_p_chat';
-UPDATE users_permissions set level='basic' where permName='tiki_p_topic_read';
-UPDATE users_permissions set level='basic' where permName='tiki_p_play_games';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_games';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_cookies';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_stats';
-UPDATE users_permissions set level='registered' where permName='tiki_p_create_bookmarks';
-UPDATE users_permissions set level='registered' where permName='tiki_p_configure_modules';
-UPDATE users_permissions set level='registered' where permName='tiki_p_cache_bookmarks';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_faqs';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_faqs';
-UPDATE users_permissions set level='editors' where permName='tiki_p_send_articles';
-UPDATE users_permissions set level='registered' where permName='tiki_p_sendme_articles';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_received_articles';
-UPDATE users_permissions set level='editors' where permName='tiki_p_view_referer_stats';
-UPDATE users_permissions set level='basic' where permName='tiki_p_wiki_attach_files';
-UPDATE users_permissions set level='editors' where permName='tiki_p_wiki_admin_attachments';
-UPDATE users_permissions set level='basic' where permName='tiki_p_wiki_view_attachments';
-UPDATE users_permissions set level='editors' where permName='tiki_p_batch_upload_images';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_drawings';
-UPDATE users_permissions set level='basic' where permName='tiki_p_edit_drawings';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_html_pages';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_html_pages';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_shoutbox';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_shoutbox';
-UPDATE users_permissions set level='basic' where permName='tiki_p_post_shoutbox';
-UPDATE users_permissions set level='basic' where permName='tiki_p_suggest_faq';
-UPDATE users_permissions set level='editors' where permName='tiki_p_edit_content_templates';
-UPDATE users_permissions set level='editors' where permName='tiki_p_use_content_templates';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_quizzes';
-UPDATE users_permissions set level='basic' where permName='tiki_p_take_quiz';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_quiz_stats';
-UPDATE users_permissions set level='editors' where permName='tiki_p_view_user_results';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_newsletters';
-UPDATE users_permissions set level='basic' where permName='tiki_p_subscribe_newsletters';
-UPDATE users_permissions set level='editors' where permName='tiki_p_subscribe_email';
-UPDATE users_permissions set level='registered' where permName='tiki_p_use_webmail';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_surveys';
-UPDATE users_permissions set level='basic' where permName='tiki_p_take_survey';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_survey_stats';
-UPDATE users_permissions set level='registered' where permName='tiki_p_modify_tracker_items';
-UPDATE users_permissions set level='basic' where permName='tiki_p_comment_tracker_items';
-UPDATE users_permissions set level='registered' where permName='tiki_p_create_tracker_items';
-UPDATE users_permissions set level='editors' where permName='tiki_p_admin_trackers';
-UPDATE users_permissions set level='basic' where permName='tiki_p_view_trackers';
-UPDATE users_permissions set level='registered' where permName='tiki_p_attach_trackers';
-UPDATE users_permissions set level='basic' where permName='tiki_p_upload_picture';
-UPDATE users_permissions set level='editors' where permName='tiki_p_batch_upload_files';
+DROP TABLE IF EXISTS tiki_webmail_messages;
+CREATE TABLE tiki_webmail_messages (
+  accountId int(12) NOT NULL default '0',
+  mailId varchar(255) NOT NULL default '',
+  user varchar(200) NOT NULL default '',
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  PRIMARY KEY  (accountId,mailId)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
+#
+# Table structure for table `tiki_wiki_attachments`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS tiki_wiki_attachments;
+CREATE TABLE tiki_wiki_attachments (
+  attId int(12) NOT NULL auto_increment,
+  page varchar(40) NOT NULL default '',
+  filename varchar(80) default NULL,
+  filetype varchar(80) default NULL,
+  filesize int(14) default NULL,
+  user varchar(200) default NULL,
+  data longblob,
+  path varchar(255) default NULL,
+  downloads int(10) default NULL,
+  created int(14) default NULL,
+  comment varchar(250) default NULL,
+  PRIMARY KEY  (attId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
 
-#another Optimaziation - try
-#create index up_l on users_permissions(level);
+#
+# Table structure for table `tiki_zones`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
 
+DROP TABLE IF EXISTS tiki_zones;
+CREATE TABLE tiki_zones (
+  zone varchar(40) NOT NULL default '',
+  PRIMARY KEY  (zone)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-### TABLES FOR LANGUAGES ###
+#
+# Table structure for table `users_grouppermissions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 07:22 AM
+#
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_languages','tiki','Can edit translations and create new languages');
+DROP TABLE IF EXISTS users_grouppermissions;
+CREATE TABLE users_grouppermissions (
+  groupName varchar(30) NOT NULL default '',
+  permName varchar(30) NOT NULL default '',
+  value char(1) NOT NULL default '',
+  PRIMARY KEY  (groupName,permName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_language;
-create table tiki_language(
-  source tinyblob not null,
-  lang char(2) not null,
-  tran tinyblob,
-  primary key(source(255),lang)
-);
+#
+# Table structure for table `users_groups`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 08:57 PM
+#
 
-drop table if exists tiki_untranslated;
-create table tiki_untranslated(
-  id integer(14) unique not null auto_increment,
-  source tinyblob not null,
-  lang char(2) not null,
-  key(id),
-  primary key(source(255),lang)
-);
+DROP TABLE IF EXISTS users_groups;
+CREATE TABLE users_groups (
+  groupName varchar(30) NOT NULL default '',
+  groupDesc varchar(255) default NULL,
+  PRIMARY KEY  (groupName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-drop table if exists tiki_languages;
-create table tiki_languages(
-  lang char(2) not null,
-  language varchar(255),
-  primary key(lang)
-);
+#
+# Table structure for table `users_objectpermissions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 07:20 AM
+#
 
+DROP TABLE IF EXISTS users_objectpermissions;
+CREATE TABLE users_objectpermissions (
+  groupName varchar(30) NOT NULL default '',
+  permName varchar(30) NOT NULL default '',
+  objectType varchar(20) NOT NULL default '',
+  objectId varchar(32) NOT NULL default '',
+  PRIMARY KEY  (objectId,groupName,permName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
 
-insert into tiki_languages values('en','English');
+#
+# Table structure for table `users_permissions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 11, 2003 at 07:22 AM
+#
 
-### TABLES FOR LANGUAGES END ###
+DROP TABLE IF EXISTS users_permissions;
+CREATE TABLE users_permissions (
+  permName varchar(30) NOT NULL default '',
+  permDesc varchar(250) default NULL,
+  level varchar(80) default NULL,
+  type varchar(20) default NULL,
+  PRIMARY KEY  (permName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+# Data set
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_galleries', 'Can admin Image Galleries', 'editors', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_file_galleries', 'Can admin file galleries', 'editors', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_file_galleries', 'Can create file galleries', 'editors', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_files', 'Can upload files', 'registered', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_download_files', 'Can download files', 'basic', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_comments', 'Can post new comments', 'registered', 'comments');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_comments', 'Can read comments', 'basic', 'comments');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove_comments', 'Can delete comments', 'editors', 'comments');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions and all the weblog features', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit', 'Can edit pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view', 'Can view page/pages', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove', 'Can remove', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_rollback', 'Can rollback pages', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_galleries', 'Can create image galleries', 'editors', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_images', 'Can upload images', 'registered', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_HTML', 'Can use HTML in pages', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_blogs', 'Can create a blog', 'editors', 'blogs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_admin', 'Can admin blogs', 'editors', 'blogs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove_article', 'Can remove articles', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_article', 'Can read articles', 'basic', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_submit_article', 'Can submit articles', 'basic', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove_submission', 'Can remove submissions', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_templates', 'Can edit site templates', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_dynamic', 'Can admin the dynamic content system', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_banners', 'Administrator, can admin banners', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_cms', 'Can admin the cms', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_categories', 'Can admin categories', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_pages', 'Can send pages to other sites', 'registered', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_sendme_pages', 'Can send pages to this site', 'registered', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_forum', 'Can admin forums', 'editors', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_post', 'Can post in forums', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_post_topic', 'Can start threads in forums', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_read', 'Can read forums', 'basic', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_vote', 'Can vote comments in forums', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_blog', 'Can read blogs', 'basic', 'blogs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_file_gallery', 'Can view file galleries', 'basic', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_comments', 'Can edit all comments', 'editors', 'comments');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_chat', 'Administrator, can create channels remove channels etc', 'editors', 'chat');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_chat', 'Can use the chat system', 'registered', 'chat');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_topic_read', 'Can read a topic (Applies only to individual topic perms)', 'basic', 'topics');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_cookies', 'Can admin cookies', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_stats', 'Can view site stats', 'basic', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_bookmarks', 'Can create user bookmarksche user bookmarks', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_configure_modules', 'Can configure modules', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_faqs', 'Can admin faqs', 'editors', 'faqs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_faqs', 'Can view faqs', 'basic', 'faqs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_articles', 'Can send articles to other sites', 'editors', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_sendme_articles', 'Can send articles to this site', 'registered', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_referer_stats', 'Can view referer stats', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_images', 'Can upload zip files with images', 'editors', 'image galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_drawings', 'Can admin drawings', 'editors', 'drawings');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_drawings', 'Can edit drawings', 'basic', 'drawings');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_html_pages', 'Can view HTML pages', 'basic', 'html pages');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_shoutbox', 'Can view shoutbox', 'basic', 'shoutbox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_shoutbox', 'Can pot messages in shoutbox', 'basic', 'shoutbox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_suggest_faq', 'Can suggest faq questions', 'basic', 'faqs');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_content_templates', 'Can edit content templates', 'editors', 'content templates');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_content_templates', 'Can use content templates', 'registered', 'content templates');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_take_quiz', 'Can take quizzes', 'basic', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_quiz_stats', 'Can view quiz stats', 'basic', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'editors', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_newsletters', 'Can subscribe to newsletters', 'basic', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_email', 'Can subscribe any email to newsletters', 'editors', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_surveys', 'Can admin surveys', 'editors', 'surveys');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_take_survey', 'Can take surveys', 'basic', 'surveys');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_survey_stats', 'Can view survey stats', 'basic', 'surveys');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_modify_tracker_items', 'Can change tracker items', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_comment_tracker_items', 'Can insert comments for tracker items', 'basic', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_tracker_items', 'Can create new items for trackers', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers', 'Can view trackers', 'basic', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_upload_picture', 'Can upload pictures to wiki pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_files', 'Can upload zip files with files', 'editors', 'file galleries');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_minor', 'Can save as minor edit', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_rename', 'Can rename pages', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_lock', 'Can lock pages', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_usermenu', 'Can create items in personal menu', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_minical', 'Can use the mini event calendar', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_eph_admin', 'Can admin ephemerides', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_userfiles', 'Can upload personal files', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tasks', 'Can use tasks', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_messages', 'Can use the messaging system', 'registered', 'messu');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast', 'Can broadcast messages to groups', 'admin', 'messu');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory', 'Can admin the directory', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory_cats', 'Can admin directory categories', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_directory_sites', 'Can admin directory sites', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_submit_link', 'Can submit sites to the directory', 'basic', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autosubmit_link', 'Submited links are valid', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_validate_links', 'Can validate submited links', 'editors', 'directory');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoapprove_submission', 'Submited articles automatically approved', 'editors', 'cms');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_banning', 'Can ban users or ips', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_attach', 'Can attach to forum posts', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support', 'Can use live support system', 'basic', 'support');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_autoapp', 'Auto approve forum posts', 'editors', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_suggest_chart_item', 'Can suggest items', 'basic', 'charts');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_copyrights', 'Can edit copyright notices', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_workflow', 'Can execute workflow activities', 'registered', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_exception_instance', 'Can declare an instance as exception', 'registered', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_instance', 'Can send instances after completion', 'registered', 'workflow');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_calendar', 'Can browse the calendar', 'basic', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_css', 'Can create new css suffixed with -user', 'registered', 'tiki');
+# --------------------------------------------------------
 
+#
+# Table structure for table `users_usergroups`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 12, 2003 at 09:31 PM
+#
 
-### END OF CHANGES FOR 1.6 ###
+DROP TABLE IF EXISTS users_usergroups;
+CREATE TABLE users_usergroups (
+  userId int(8) NOT NULL default '0',
+  groupName varchar(30) NOT NULL default '',
+  PRIMARY KEY  (userId,groupName)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+insert into users_groups(groupName,groupDesc) values('Anonymous','Public users not logged');
+insert into users_groups(groupName,groupDesc) values('Registered','Users logged into the system');
+# --------------------------------------------------------
+
+#
+# Table structure for table `users_users`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 13, 2003 at 01:07 AM
+#
+
+DROP TABLE IF EXISTS users_users;
+CREATE TABLE users_users (
+  userId int(8) NOT NULL auto_increment,
+  email varchar(200) default NULL,
+  login varchar(40) NOT NULL default '',
+  password varchar(30) NOT NULL default '',
+  provpass varchar(30) default NULL,
+  realname varchar(80) default NULL,
+  homePage varchar(200) default NULL,
+  lastLogin int(14) default NULL,
+  currentLogin int(14) default NULL,
+  registrationDate int(14) default NULL,
+  challenge varchar(32) default NULL,
+  pass_due int(14) default NULL,
+  hash varchar(32) default NULL,
+  created int(14) default NULL,
+  country varchar(80) default NULL,
+  avatarName varchar(80) default NULL,
+  avatarSize int(14) default NULL,
+  avatarFileType varchar(250) default NULL,
+  avatarData longblob,
+  avatarLibName varchar(200) default NULL,
+  avatarType char(1) default NULL,
+  PRIMARY KEY  (userId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+### ADministrator account
+insert into users_users(email,login,password,realname,hash) values('','admin','admin','System Administrator',md5('admin'));
+update users_users set currentLogin=lastLogin,registrationDate=lastLogin;
+# --------------------------------------------------------
+
 
