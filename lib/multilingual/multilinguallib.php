@@ -136,7 +136,7 @@ class MultilingualLib extends TikiLib {
 	function detachTranslation($type, $objId) {
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
 		$this->query($query,array($type, $objId));
-//@@a faire si 1 obj
+//@@TODO: delete the set if only one remaining object 
 	}
 	
 	/* @brief : test si lang exists in a tab of langs

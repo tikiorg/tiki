@@ -164,7 +164,7 @@ class TikiLib extends TikiDB {
 	global $userlib;
 
 	$hash = md5(uniqid('.'));
-	$email = $userlib->get_user_email($user);
+	$email = $this->get_user_email($user);
 	$query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
 	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
@@ -2894,6 +2894,7 @@ function add_pageview() {
     // Removes all the versions of a page and the page itself
     /*shared*/
     function remove_all_versions($page, $comment = '') {
+	global $dbTiki;
 	$this->invalidate_cache($page);
 	//Delete structure references before we delete the page
 	$query  = "select `page_ref_id` ";
@@ -2909,6 +2910,8 @@ function add_pageview() {
 	$result = $this->query($query, array( $page ) );
 	$query = "delete from `tiki_links` where `fromPage` = ?";
 	$result = $this->query($query, array( $page ) );
+	include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
+	$multilinguallib->detachTranslation('wiki page', $multilinguallib->get_page_id_from_name($page));
 	$action = "Removed"; //get_strings tra("Removed");
 	$t = date("U");
 	$query = "insert into ";
@@ -3714,7 +3717,13 @@ function add_pageview() {
     }
 
     function get_page_name_from_id($page_id) {
-	return $this->getOne("select `pageName`  from `tiki_pages` where `page_id`='$page_id'");
+	$query = "select `pageName`  from `tiki_pages` where `page_id`=?";
+	return $this->getOne($query, array((int)$page_id));
+    }
+
+    function get_page_id_from_name($page) {
+	$query = "select `page_id` from `tiki_pages` where `pageName`=?";
+	return $this->getOne($query, array($page));
     }
 
     function how_many_at_start($str, $car) {
