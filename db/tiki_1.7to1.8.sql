@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.64 2003-11-11 18:47:16 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.65 2003-11-12 00:32:25 zaufi Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -515,6 +515,7 @@ CREATE TABLE tiki_integrator_reps (
   css_file varchar(255) NOT NULL default '',
   visibility char(1) NOT NULL default 'y',
   cacheable char(1) NOT NULL default 'y',
+  expiration int(11) NOT NULL default '0',
   description text NOT NULL,
   PRIMARY KEY  (repID)
 ) TYPE=MyISAM;
@@ -522,7 +523,7 @@ CREATE TABLE tiki_integrator_reps (
 #
 # Dumping data for table 'tiki_integrator_reps'
 #
-INSERT INTO tiki_integrator_reps VALUES (1,'Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
+INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 #
 # Table structure for table 'tiki_integrator_rules'
@@ -546,9 +547,9 @@ CREATE TABLE tiki_integrator_rules (
 #
 # Dumping data for table 'tiki_integrator_rules'
 #
-INSERT INTO tiki_integrator_rules VALUES (1,1,1,'.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
-INSERT INTO tiki_integrator_rules VALUES (2,1,2,'img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (3,1,3,'href=(\"|\')(?!(#|(http|ftp)://|mailto:))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal (local) links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
+INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://|mailto:))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal (local) links to integrator. Dont touch an external links.');
 
 #
 # Integrator permissions
