@@ -19,6 +19,16 @@ if(isset($_COOKIE['tiki-user'])) {
 }
 }
 
+
+$auth_method = $tikilib->get_preference('auth_method','tiki');
+if($auth_method = 'ws') {
+	if(isset($_SERVER['REMOTE_USER'])) {
+		if($userlib->user_exists($_SERVER['REMOTE_USER'])) {
+			$_SESSION["user"] = $_SERVER['REMOTE_USER'];	
+		} 
+	}
+}
+
 if(isset($_SESSION["user"])) {
   $user = $_SESSION["user"];  
   

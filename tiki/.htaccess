@@ -1,4 +1,10 @@
-# $Header: /cvsroot/tikiwiki/tiki/.htaccess,v 1.2 2003/05/02 15:12:36 rossta Exp $
+#AuthUserFile "C:/Program Files/Apache Group/Apache/bin/users"
+#AuthName EnterPassword
+#AuthType Basic
+#
+#<LIMIT GET POST>
+#require valid-user
+#</LIMIT>
 
 <FilesMatch "\.(bak|inc|lib|sh|sql|tpl)$">
 	order deny,allow
@@ -101,3 +107,4 @@
 	# make sure this is the last rule!
 	RewriteRule	/([A-Za-z0-9]+)$	/tiki-index.php?page=$1 [L]
 </IfModule>
+

@@ -4,6 +4,7 @@ function wikiplugin_split($data,$params) {
   global $replacement;
   
   extract($params);
+  $data = trim($data);
   //$data=htmlspecialchars(trim($data));
   if(substr($data,0,1)=="\n") {
     $data = substr($data,1);	

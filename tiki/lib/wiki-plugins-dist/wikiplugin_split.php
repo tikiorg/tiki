@@ -1,20 +1,16 @@
 <?php
-
-// Splits the page in two colums
-// Usage:
-// {SPLIT()}
-// column1
-// ---
-// column2
-// {SPLIT}
-
 function wikiplugin_split($data,$params) {
   global $tikilib;
   global $replacement;
   
   extract($params);
+  $data = trim($data);
   //$data=htmlspecialchars(trim($data));
-  $data = str_replace("\n",'',$data);
+  if(substr($data,0,1)=="\n") {
+    $data = substr($data,1);	
+  }
+  $data = str_replace("\n---",'---',$data);
+  $data = str_replace("---\n",'---',$data);
   $percent = "\&#x25";
   $result = "<table border='0' width='100" . $percent . "'><tr>";
   $sections = preg_split("/---+/\n",$data);
