@@ -2315,41 +2315,42 @@ function add_pageview() {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $res["entrating"] = floor($res["rating"]);
 
-	    $add = 1;
+	    $add = TRUE;
 
 	    if ($userlib->object_has_one_permission($res["topicId"], 'topic')) {
-		if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
-		    $add = 0;
-		}
+			if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
+			    $add = FALSE;
+			}
 	    }
-	    if (empty($res["body"])) {
-		$res["isEmpty"] = 'y';
-	    } else {
-		$res["isEmpty"] = 'n';
-	    }
-	    if (strlen($res["image_data"]) > 0) {
-		$res["hasImage"] = 'y';
-	    } else {
-		$res["hasImage"] = 'n';
-	    }
-	    $res['count_comments'] = 0;
-
-	    // Determine if the article would be displayed in the view page
-	    $res["disp_article"] = 'y';
-	    $now = date("U");
-	    //if ($date) {
-	    if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
-		$res["disp_article"] = 'n';
-	    }
-	    if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
-		$res["disp_article"] = 'n';
-	    }
-	    //}
-
+	    // no need to do all of the following if we are not adding this article to the array
 	    if ($add) {
-		$ret[] = $res;
+		    $res["entrating"] = floor($res["rating"]);
+		    if (empty($res["body"])) {
+				$res["isEmpty"] = 'y';
+		    } else {
+				$res["isEmpty"] = 'n';
+	    	}
+		    if (strlen($res["image_data"]) > 0) {
+				$res["hasImage"] = 'y';
+		    } else {
+				$res["hasImage"] = 'n';
+		    }
+		    $res['count_comments'] = 0;
+
+		    // Determine if the article would be displayed in the view page
+		    $res["disp_article"] = 'y';
+		    $now = date("U");
+		    //if ($date) {
+		    if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
+				$res["disp_article"] = 'n';
+		    }
+		    if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
+				$res["disp_article"] = 'n';
+		    }
+		    //}
+//	    if ($add) { // moved this check to the top
+			$ret[] = $res;
 	    }
 	}
 	$retval = array();
