@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.4 2005-02-14 13:01:53 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.5 2005-02-14 15:36:21 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -36,7 +36,7 @@ and change them with
 
 /* the mid colour for titlebg and some cells */
 DIV.box-title,
-div.cbox-title,
+/*div.cbox-title,*/
 div.posthead,
 div.articletitle,
 div.forumtoolbar,
@@ -89,7 +89,7 @@ a.pagedescription:hover, a.forumspagedescription:hover, DIV#tiki-foot a:hover, D
 
 /* black */
 /*
-DIV#tiki-top a {
+DIV#tiki-top a, .highlight {
   color: black;
 }
 */
@@ -97,29 +97,38 @@ body, DIV#tiki-main {
   background-color: black;
 }
 
-/* dark red accent */
-a, h1, h2, h3, h4, h5, h6, a, DIV#tiki-top a:hover, DIV#tiki-bot a:hover, div.box-title,
+/* dark red accent, was typically 000066 */
+a, h1, h2, h3, h4, h5, h6, a, DIV#tiki-top a:hover, DIV#tiki-bot a:hover,
 	a.pagetitle, a.forumspagetitle, a.pagetitle:hover, a.forumspagetitle:hover,
 	.separator, .separator:active, .separator:hover, .flip, .flip:active, .flip:hover,
 	.bannertext, .bannertext:active, .bannertext:hover,
 	.link, .gallink, .jukeboxlink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
-	.admlink, .forumbutlink
+	.admlink, .forumbutlink, div.box-title, div.box-title a, 
+	div.box-title a:active, div.box-title a:hover, div.cbox-title,
+	div.cbox-title a, .cboxtlink, div.cbox-title a:active, .cboxtlink:active,
+	div.cbox-title a:hover, a.cboxtlink:hover
 	/*, DIV#tiki-foot a:hover */
 {
   color: #772200;
 }
-.mdksubframe {
+.mdksubframe, TD.button, TD.heading, td.gallistheading, td.listgalheading,
+	td.bloglistheading, td.listfgalheading, td.jukeboxlistheading
+	td.listfilesheading, td.listartheading, td.forumheading, td.thead,
+	th, th.gallistheading, th.listgalheading, th.bloglistheading,
+	th.listfgalheading, th.jukeboxlistheading
+	th.listfilesheading, th.listartheading, th.forumheading, th.thead
+{
   background-color: #772200;
 }
 
 /* bright red accent */
 
 /* pale red accent */
-.linkbut, .linkbut:visited {
+.linkbut, .linkbut:visited, .highlight {
   background-color: #DDCCCC;
 }
 
-/* hint red accent */
+/* hint red accent, was typically E4E7EA */
 a:hover, DIV#tiki-top a:hover, DIV.simplebox a:hover, a.pagetitle:hover,
         a.forumspagetitle:hover, div.titlebar,
 	.diffbody, .quotebody, input, input[type=submit],
@@ -135,11 +144,19 @@ a:hover, DIV#tiki-top a:hover, DIV.simplebox a:hover, a.pagetitle:hover,
 	.Calblog:before, .Calgal:before, .Calart:before, .Calforum:before,
 	.Caldir:before, .Calfgal:before, .Calfaq:before, .Calquiz:before,
 	.Caltrack:before, .Calsurv:before, .Calnl:before, .Caleph:before,
-	.Calchart:before, .viewmodeoff
+	.Calchart:before, .viewmodeoff, div.cbox-title a:active,
+	.cboxtlink:active, div.cbox-title a:hover, .cboxtlink:hover
 {
-  background-color: #EFECEC
+  background-color: #EFECEC;
 }
-
+.viewmodeon, TD#button, 
+TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading
+td.listfilesheading, td.listartheading, td.forumheading, td.thead
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading
+th.listfilesheading, th.listartheading, th.forumheading, th.thead
+{
+  color: #EFECEC;
+}
 /*
  * =================================
  */
@@ -572,7 +589,6 @@ div.box {
 div.box-title {
   background-image:    url(kuroBK/titlebg);
   border-bottom: 1px solid black;
-  color: white;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
   font-weight: bold;
@@ -582,6 +598,10 @@ div.box-title {
   margin-bottom: 1px;
   width: 160px;
   height: 19px;
+}
+div.box-title a:active, div.box-title a:hover
+{
+  text-decoration: underline;
 }
 
 /* This is the left data */
@@ -655,9 +675,8 @@ div.cbox {
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
   background-image: url(kuroBK/titlebg);
-  color: white;
-  border-bottom: 1px solid black;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  font-weight: bold;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;
+  font-weight: bold;
   overflow: hidden;
   text-align: center;
   padding-left: 0px;  padding-right: 0px;
@@ -666,9 +685,21 @@ div.cbox-title {
 }
 
 /* When there's a link in a cbox-title */
-.cboxtlink { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color : white; text-decoration: none;}
-.cboxtlink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color : white; text-decoration: none;}
-.cboxtlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #EFEFEF; text-decoration: underline; }
+div.cbox-title a, .cboxtlink {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  text-decoration: none;
+}
+div.cbox-title a:active, a.cboxtlink:active {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  text-decoration: underline;
+}
+div.cbox-title a:hover, a.cboxtlink:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  text-decoration: underline;
+}
 
 
 /* And this is the data */
@@ -879,12 +910,11 @@ table.viewthread
 TABLE.normalnoborder {  width: 100%;}
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading 
+TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading
 td.listfilesheading, td.listartheading, td.forumheading, td.thead
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  color: #E4E7EA; font-size: 11px; font-weight : bold;
-  background-color: #000066; 
+  font-size: 11px; font-weight : bold;
   padding-left: 2px;
   padding-right: 5px;
 }
@@ -894,8 +924,7 @@ th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading
 th.listfilesheading, th.listartheading, th.forumheading, th.thead
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  color: #E4E7EA; font-size: 11px; font-weight : bold;
-  background-color: #000066; 
+  font-size: 11px; font-weight : bold;
   padding-left: 2px;
   padding-right: 5px;
 }
@@ -903,8 +932,7 @@ th.listfilesheading, th.listartheading, th.forumheading, th.thead
 TD.button
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  color: #E4E7EA; font-size: 11px; font-weight : bold;
-  background-color: #000066; 
+  font-size: 11px; font-weight : bold;
   padding-left: 2px;
   padding-right: 5px;
   text-align: center; 
@@ -2206,8 +2234,8 @@ font-family: monospace;
 }
 
 .viewmodeon
-{background-color: #6A5A49;
-color: #E4E7EA;
+{
+background-color: #6A5A49;
 text-decoration: none;
 padding-left: 10px;
 padding-right: 10px;
@@ -2279,7 +2307,6 @@ background-color: #DA9A9A;
 div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }
-.highlight { background-color: #FFAAAA; color: #000000; }
 
 /*
  * Caption in tables.
