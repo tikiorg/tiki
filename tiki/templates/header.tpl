@@ -6,6 +6,16 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     {if $description ne ''}<meta name="description" content="{$description}" />{/if}
+		
+		{if $feature_phplayers eq 'y'}
+		<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
+		<style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
+		<script language="JavaScript" type="text/javascript"><!--
+		{php} include ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
+		// --></script>
+		<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
+		{/if}
+		
     {if strlen($integrator_css_file) > 0}
     <link rel="StyleSheet" href="{$integrator_css_file}" type="text/css" />
     {/if}
