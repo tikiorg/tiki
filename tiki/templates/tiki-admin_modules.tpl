@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.26 2004-02-05 20:00:08 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.27 2004-03-04 00:09:29 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin modules{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 <!-- link to tpl -->
 
