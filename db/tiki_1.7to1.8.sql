@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.46 2003-10-24 23:16:47 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.47 2003-10-25 00:54:21 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -486,4 +486,3 @@ INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
-INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('tiki_id', 'Tiki CMS/Groupware');
