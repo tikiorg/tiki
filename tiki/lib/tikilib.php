@@ -2987,7 +2987,7 @@ class TikiLib {
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
 		if ($user != 'admin') {
-			$whuser = "where `user`=? or `public`=?";
+			$whuser = "and `user`=? or `public`=?";
 			$bindvars=array('y',$user,'y');
 		} else {
 			$whuser = "";
