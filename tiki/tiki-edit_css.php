@@ -1,5 +1,5 @@
 <?php 
-// $Id: tiki-edit_css.php,v 1.1 2003-06-25 04:03:52 mose Exp $
+// $Id: tiki-edit_css.php,v 1.2 2003-07-04 17:35:32 mose Exp $
 include_once("tiki-setup.php");
 include_once("lib/csslib.php");
 // remove soon..
@@ -24,7 +24,7 @@ if (!isset($_REQUEST["sub"])) $_REQUEST["sub"] = '';
 if (!isset($_REQUEST["try"])) $_REQUEST["try"] = '';
 
 $editstyle = $_REQUEST["editstyle"];
-$styledir = "/home/mose/var/tikicvs/styles";
+$styledir = "styles";
 
 if (isset($_REQUEST["edit"]) and $_REQUEST["edit"]) {
 	$action = 'edit';
