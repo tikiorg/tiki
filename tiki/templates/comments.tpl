@@ -21,7 +21,7 @@
   	<tr>
   		<td class="odd">
   			<span class="commentstitle">{$comments_preview_title}</span><br/>
-  			{tr}by{/tr} {$user}
+  			{tr}by{/tr} {$user|userlink}
   		</td>
   	</tr>
   	<tr>
@@ -35,7 +35,7 @@
   {if $tiki_p_read_comments eq 'y'}
   {if $tiki_p_post_comments eq 'y'}
     {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="commentshlink" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
+    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="link" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
     {/if}
     <form method="post" action="{$comments_father}">
     <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
