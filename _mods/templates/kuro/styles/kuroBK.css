@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.3 2005-02-14 12:06:48 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.4 2005-02-14 13:01:53 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -104,7 +104,8 @@ a, h1, h2, h3, h4, h5, h6, a, DIV#tiki-top a:hover, DIV#tiki-bot a:hover, div.bo
 	.bannertext, .bannertext:active, .bannertext:hover,
 	.link, .gallink, .jukeboxlink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
 	.admlink, .forumbutlink
-	/*, DIV#tiki-foot a:hover */ {
+	/*, DIV#tiki-foot a:hover */
+{
   color: #772200;
 }
 .mdksubframe {
@@ -119,8 +120,23 @@ a, h1, h2, h3, h4, h5, h6, a, DIV#tiki-top a:hover, DIV#tiki-bot a:hover, div.bo
 }
 
 /* hint red accent */
-a:hover, DIV#tiki-top a:hover, DIV.simplebox a:hover, a.pagetitle:hover, a.forumspagetitle:hover,
-	.diffbody, .quotebody {
+a:hover, DIV#tiki-top a:hover, DIV.simplebox a:hover, a.pagetitle:hover,
+        a.forumspagetitle:hover, div.titlebar,
+	.diffbody, .quotebody, input, input[type=submit],
+        input[type=submit]:hover, select, textarea, checkbox, .calcheckbox,
+	radio, file, #opaque, span.tabbut, td.jukeboxlisttrackseven,
+	td.jukeboxlistvisitseven, TD#page22, tr.even, div.wiki-edithelp,
+	div.postbody, div.bloginfo, div.blogdesc, div.blogtools,
+	div.articleheading, div.articletrailer, div.articlebody, .changedate,
+	.date, div.commentsedithelp, td.chatarea, div.pollresults,
+	div.faqlistquestions, div.questionblock, div.quizdescription,
+	div.quizanswer, div.shoutboxmsg, textarea.tshoutbox, div.dirlistsites,
+	div.dirrelated, .caltabon, div.tabcal, div.tabnav, .Calwiki:before,
+	.Calblog:before, .Calgal:before, .Calart:before, .Calforum:before,
+	.Caldir:before, .Calfgal:before, .Calfaq:before, .Calquiz:before,
+	.Caltrack:before, .Calsurv:before, .Calnl:before, .Caleph:before,
+	.Calchart:before, .viewmodeoff
+{
   background-color: #EFECEC
 }
 
@@ -213,7 +229,6 @@ span.tabbut {
 	margin-left:0px;
 	padding-left:2px;
 	padding-right:2px;
-	background-color: #E4E7EA;
 }
 
 table {
@@ -485,7 +500,6 @@ TD#page10 { background-color : #BBBFC5; }
 
 
 TD#page21 { background-color : #3C5E7D; }
-TD#page22 { background-color : #E4E7EA; }
 TD#page24 { /* background-image: url(kuroBK/hr1); */ } /* ??? BBBFC5 */
 TD#page25 { background-color : #3C5E7D; }
 TD#page26 { background-image: url(kuroBK/leftbg); }
@@ -784,15 +798,16 @@ div.simplebox {
 FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  padding-right : 0px;  padding-top : 0px;}
 
 /* General form elements */
-input {color : #000000; 
-  background: #E4E7EA; 
+input {
+  color : #000000; 
   font: normal 10px Verdana, Arial, Helvetica, sans-serif;
   border: 1px solid #999999;
 }
-input[type=submit] { color : #000000; background: #E4E7EA;
+input[type=submit] {
+  color : #000000;
   -moz-border-radius: 0.8em;}
-input[type=submit]:hover { color: #000000; 
-  background: #E4E7EA;
+input[type=submit]:hover {
+  color: #000000; 
   background-image: url(mods/tab-active);
 }
 input[type=image].wikiaction {
@@ -810,30 +825,25 @@ input[type=image].wikiaction:hover {
   color: transparent;
   background: transparent;
 }
-select {color : #000000; 
-  background: #E4E7EA; 
+select {
+  color : #000000; 
   font: normal 10px Verdana, Arial, Helvetica, sans-serif;
   border: 1px solid #999999;
 }
-textarea {color : #000000; 
-  background: #E4E7EA; 
+textarea {
+  color : #000000; 
   font: normal 10px Verdana, Arial, Helvetica, sans-serif;
   border: 1px solid #999999;
 }
-checkbox {color : #000000; 
-  background: #E4E7EA;
+checkbox {
+  color : #000000; 
 }
-radio {color : #000000; 
-  background: #E4E7EA;
+radio {
+  color : #000000; 
   border: 1px solid #E4E7EA; 
 }
-file {color : #000000; 
-  background: #E4E7EA; 
-  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
-  border: 1px solid #999999;
-}
-textarea {color : #000000; 
-  background: #E4E7EA; 
+file {
+  color : #000000; 
   font: normal 10px Verdana, Arial, Helvetica, sans-serif;
   border: 1px solid #999999;
 }
@@ -938,7 +948,7 @@ tr.odd:hover {
 background-color: #FFF7E6;
 }
 tr.even {
-font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #E4E7EA; color : #000066; vertical-align: top; text-align: left;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : #000066; vertical-align: top; text-align: left;
 }
 tr.even:hover {
 background-color: #FFF7E6;
@@ -972,7 +982,7 @@ td.listartuseimageeven,td.listartactionseven,td.listartsizeeven,td.forumstableev
 td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven,
 td.jukeboxlistnameeven, td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, 
 td.jukeboxlisttrackseven, td.jukeboxlistvisitseven
-{font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #E4E7EA; color : #000066; vertical-align: top; text-align: left;}
+{font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : #000066; vertical-align: top; text-align: left;}
 
 TD.third {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : Black; background-color: #CCCCCC; vertical-align: top; text-align: left;}
 
@@ -1080,7 +1090,6 @@ span.warn {  color: red;}
 /***********************************************  THE WIKI ***********************************************************/
 
 div.titlebar {
-  color: #E4E7EA;
   border: 1px solid white;
   padding-left: 1px; 
   padding-right: 1px; 
@@ -1188,7 +1197,7 @@ p.editdate {
 }
 
 /* The edit-help used to display the wiki syntax when editing a page */
-div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt; width: 95%;}
+div.wiki-edithelp { border: 1px solid black;  font-size: smaller; padding: 6pt; width: 95%;}
 
 .wikitopline table { width: 95%; }
 
@@ -1266,7 +1275,6 @@ span.posthead {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fo
 /* The post body */
 div.postbody {
   overflow: hidden;
-  background: #E4E7EA;
   border: 1px solid black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
   padding-left: 5px;padding-top: 5px; padding-bottom: 5px; 
@@ -1288,7 +1296,6 @@ div.blogtitle {
 
 /* The weblog information */
 div.bloginfo {
-  background: #E4E7EA;
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
@@ -1302,7 +1309,6 @@ div.bloginfo {
 
 /* Weblog description */
 div.blogdesc {
-  background: #E4E7EA;
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
@@ -1316,7 +1322,6 @@ div.blogdesc {
 
 /* Links to post/edit/rss feed for the webelog are contained inside this div */
 div.blogtools {
-  background: #E4E7EA;
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
@@ -1359,7 +1364,6 @@ div.articletitle {
 
 /* The article heading */
 div.articleheading {
-  background: #E4E7EA;
   border: 1px solid black;
   padding-left: 2.8em; 
   padding-right: 2.8em; 
@@ -1372,7 +1376,6 @@ div.articleheading {
 }
 
 div.articletrailer {
-  background: #E4E7EA;
   border: 1px solid black;
   border-bottom: 1px solid black;
   border-top: thin solid #CBCBCB;
@@ -1388,7 +1391,6 @@ span.articleheading {  font-family: Verdana, Geneva, Arial, Helvetica, sans-seri
 
 /* The body */
 div.articlebody {
-  background: #E4E7EA;
   border: 1px solid black;
   padding-left: 2.8em; 
   padding-right: 2.8em; 
@@ -1428,11 +1430,10 @@ span.trailer {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fon
 .nav:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;  text-decoration: none; }
 .nav:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : black;  text-decoration: none;   font-weight : bold; background: #CCCCCC;}
 
-.changedate {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 8px;  background: #E4E7EA;  color : black;  font-weight : bold;}
+.changedate {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 8px;  color : black;  font-weight : bold;}
 .date {  
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 9px;
-  background: #E4E7EA;
   color : Black;
   font-weight : bold;
 }
@@ -1453,7 +1454,7 @@ div.commentspost {
 }
 
 /* Help box*/
-div.commentsedithelp {  background: #E4E7EA;  border: 1px solid black;  font-size: smaller;  width: 99%;}
+div.commentsedithelp { border: 1px solid black;  font-size: smaller;  width: 99%;}
 
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar {
@@ -1504,7 +1505,7 @@ div.commenttext {
 table.chatroom { border-color: #5A4A39;  border-style: solid;  border-width: 2px;  width: 98%;}
 
 td.chatchannels {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  background: #EFEFEF;  font-size: 11px;  color: black;}
-td.chatarea {  padding-left: 0px; margin-left: 0px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;  background: #E4E7EA;}
+td.chatarea {  padding-left: 0px; margin-left: 0px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;  }
 
 table.chatform {  border-color: #00639C;  border-style: solid;  border-width: 2px;  width: 98%; border-top:0px;}
 td.tdchatform { color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  background: #EFEFEF; font-size: 11px; vertical-align: top; text-align: left;}
@@ -1515,7 +1516,6 @@ span.chuser { color: blue;  font-family: Verdana, Geneva, Arial, Helvetica, sans
 /********************************************************** POLLS ********************************************************/
 
 div.pollresults {
-  background: #E4E7EA;
   border: 1px solid black;
   width: 98%;
   margin-top: 5px;
@@ -1607,7 +1607,6 @@ td.categobjectsdataeven,td.categobjectsdataodd {
 /***************************************************** FAQS **************************************************************/
 /* The list of questions */
 div.faqlistquestions {
-  background: #E4E7EA;
   color: black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -1652,7 +1651,6 @@ div.faqanswer {
 
 div.questionblock {
   border: 1px solid black;
-  background: #E4E7EA;
   margin-bottom: 10px;
 }
 
@@ -1671,7 +1669,6 @@ div.quizdescription {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   border: 1px solid black;
-  background: #E4E7EA;
   margin-bottom: 10px;
 }
 
@@ -1679,7 +1676,6 @@ div.quizanswer {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   border: 1px solid black;
-  background: #E4E7EA;
   margin-bottom: 10px;
 }
 
@@ -1688,7 +1684,6 @@ div.shoutboxmsg {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   border: 1px solid black;
-  background: #E4E7EA;
   margin-bottom: 0px;
   padding-left: 2px;
   padding-top: 1px;
@@ -1704,8 +1699,7 @@ div.shoutboxmodmsg {
   padding-bottom: 1px;
 }
 
-textarea.tshoutbox{
-	background-color: #E4E7EA;
+textarea.tshoutbox {
 	border-bottom: #5e5d63 1px solid;
 	border-left: #5e5d63 1px solid;
 	border-right: #5e5d63 1px solid;
@@ -1749,7 +1743,6 @@ div.dircategs {
 
 /* The list of sites in any category */
 div.dirlistsites {
-  background-color: #E4E7EA;
   padding-left: 5px;
   padding-top: 5px;
   padding-bottom: 10px;
@@ -1774,7 +1767,6 @@ span.dirsitecats {}
 
 /* Related categories */
 div.dirrelated {
-  background-color: #E4E7EA;
   margin-top: 10px;
   border: 0.5px solid black;
   padding-top: 5px;
@@ -1881,7 +1873,6 @@ border-bottom: 2px solid #dedede;
 {
 padding-left: 10px;
 padding-right: 10px;
-background-color: #E4E7EA;
 border: 1px solid #666666;
 border-bottom: 2px solid #E4E7EA;
 margin-right: 6px;
@@ -1908,28 +1899,21 @@ margin-bottom: 1px;
 div.tabcal, div.tabnav
 {
 padding: 10px;
-background-color: #E4E7EA;
 border: 1px solid #666666;
 border-bottom: 1px solid #aeaeae;
 font-size: 11px;
 }
 
-/* checkboxes background is required for rollover display */
-.calcheckbox
-{
-background-color: #E4E7EA;
-}
 .caltoggle
 {
 font-size: 9px;
 margin-bottom: 7px;
 }
 
-/* style of the popup background in case of transparent styles */
+/* style of the popup in case of transparent styles */
 #opaque
 {
-background-color: #E4E7EA;
-border: 1px solid black;
+  border: 1px solid black;
 }
 .calfocus
 {
@@ -1972,7 +1956,6 @@ color: #443F39;
 {
 content: "w";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calblog
@@ -1992,7 +1975,6 @@ color: #443039;
 {
 content: "b";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calgal
@@ -2012,7 +1994,6 @@ color: #303F49;
 {
 content: "i";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calart
@@ -2032,7 +2013,6 @@ color: #304F30;
 {
 content: "a";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calforum
@@ -2052,7 +2032,6 @@ color: #304F30;
 {
 content: "o";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Caldir
@@ -2072,7 +2051,6 @@ color: #304F30;
 {
 content: "d";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calfgal
@@ -2092,7 +2070,6 @@ color: #304F30;
 {
 content: "f";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calfaq
@@ -2112,7 +2089,6 @@ color: #304F30;
 {
 content: "q";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calquiz
@@ -2132,7 +2108,6 @@ color: #304F30;
 {
 content: "z";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Caltrack
@@ -2152,7 +2127,6 @@ color: #304F30;
 {
 content: "t";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calsurv
@@ -2172,7 +2146,6 @@ color: #304F30;
 {
 content: "s";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calnl
@@ -2192,7 +2165,6 @@ color: #304F30;
 {
 content: "n";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Caleph
@@ -2212,7 +2184,6 @@ color: #304F30;
 {
 content: "e";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .Calchart
@@ -2232,7 +2203,6 @@ color: #304F30;
 {
 content: "c";
 font-family: monospace;
-background-color: #E4E7EA;
 }
 
 .viewmodeon
@@ -2245,7 +2215,6 @@ padding-right: 10px;
 
 .viewmodeoff
 {
-background-color: #E4E7EA;
 color: #000000;
 text-decoration: none;
 padding-left: 10px;
