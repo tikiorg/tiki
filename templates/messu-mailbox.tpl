@@ -1,5 +1,5 @@
-<a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a><br/><br/>
 {*Smarty template*}
+<a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a><br/><br/>
 {include file="messu-nav.tpl"}
 <br/><br/>
 

@@ -21,8 +21,15 @@ class TaskLib extends TikiLib {
     $query = "select * from tiki_user_tasks where user='$user' and taskId='$taskId'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $res['parsed']=$this->parse_data($res['body']);
     return $res;	
+  }
+  
+  
+  
+  function open_task($user,$taskId)
+  {
+    $query = "update tiki_user_tasks set completed=0, status='o', percentage=0 where user='$user' and taskId=$taskId";
+    $this->query($query);
   }
   
   function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
@@ -50,41 +57,8 @@ class TaskLib extends TikiLib {
     }
   }
   
-  // Filter by date and use find
-  function list_tasks($user,$offset,$maxRecords,$sort_mode,$find,$use_date)
-  {
-    $now = date("U");
-    if($use_date) {
-     $prio = " and date<=$now ";
-    }
-    
-    $sort_mode = str_replace("_desc"," desc",$sort_mode);
-    $sort_mode = str_replace("_asc"," asc",$sort_mode);
-    if($find) {
-      $mid=" and (title like '%".$find."%' or description like '%".$find."%')".$prio;  
-    } else {
-      $mid="".$prio; 
-    }
-    $query = "select * from tiki_user_tasks where user='$user' $mid order by $sort_mode,taskId desc limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_user_tasks where user='$user' $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
   
-  function remove_task($taskId)
-  {
-    $query = "delete from tiki_user_tasks where user='$user' and taskId=$taskId";
-    $this->query($query);  	
-  }
+  
   
 }
 

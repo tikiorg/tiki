@@ -203,6 +203,11 @@ $smarty->assign('avatar',$avatar);
 $user_information = $tikilib->get_user_preference($userwatch,'user_information','public');
 $smarty->assign('user_information',$user_information);
 
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($userwatch);
+  $smarty->assign('unread',$unread);
+}
+
 $timezone_options = $tikilib->get_timezone_list(true);
 $smarty->assign_by_ref('timezone_options',$timezone_options);
 $server_time = new Date();

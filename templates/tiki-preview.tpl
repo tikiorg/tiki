@@ -3,3 +3,6 @@
 <small>{$description}</small>
 {/if}
 <div  class="wikitext">{$parsed}</div>
+{if $has_footnote}
+<div  class="wikitext">{$parsed_footnote}</div>
+{/if}
