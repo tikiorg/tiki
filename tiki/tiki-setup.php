@@ -92,10 +92,15 @@ class TikiSetup {
 		if (!$wwwgroup) {
 			$wwwgroup = 'nobody (or the group account the web server is running under)';
 		}
-
+     
 		static $dirs = array(
+			'backups',
+			'dump',
+			'img/wiki',
+			'img/wiki_up',
+			'modules/cache',
+			'temp',
 			'templates_c', 
-			'modules/cache'
 		);
 		
 		foreach ($dirs as $dir) {
