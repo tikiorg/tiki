@@ -23,7 +23,7 @@ if($user && $feature_tasks == 'y' && $tiki_p_tasks == 'y') {
     $tikilib->replace_task($user,0,$_REQUEST['modTasksTitle'],$_REQUEST['modTasksTitle'],date("U"),'o',3,0,0);
   }
   
-  $ownurl = httpPrefix().$_SERVER["REQUEST_URI"];
+  $ownurl = /*httpPrefix().*/$_SERVER["REQUEST_URI"];
   $smarty->assign('ownurl',$ownurl);
   $tasks_useDates = $tikilib->get_user_preference($user,'tasks_useDates');
   $modTasks = $tikilib->list_tasks($user,0,-1,'priority_desc','',$tasks_useDates,$pdate);
