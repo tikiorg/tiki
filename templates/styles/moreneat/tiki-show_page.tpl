@@ -116,7 +116,7 @@
 {/if}
 
 {if $feature_wiki_discuss eq 'y'}
-	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&comments_postComment=post&comments_title={$page|escape:"url"}&comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
+	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
@@ -138,7 +138,7 @@
 	<tr>
 		<td width='33%'>
 			{if $struct.prev_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&structID={$key}">&lt;&lt; 
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt; 
 					{if $struct.prev_page_alias}
 						{$struct.prev_page_alias}
 					{else}
@@ -156,7 +156,7 @@
 		</td>
 		<td align='right' width='33%'>
 			{if $struct.next_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&structID={$key}">
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&amp;structID={$key}">
 					{if $struct.next_page_alias}
 						{$struct.next_page_alias}
 					{else}
