@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/userprefs/userprefslib.php');
+include_once('lib/imagegals/imagegallib.php');
 
 // User preferences screen
 
@@ -56,7 +57,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
       imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
     } else {
       $t = imagecreate($tw,$ty);
-      $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+      $imagegallib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
     }
     // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
     $tmpfname = tempnam ($tmpDir, "FOO").'.jpg';     
