@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.5 2004-02-15 15:11:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.6 2004-02-16 21:58:02 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -178,7 +178,7 @@ textarea.small {
 #leftcolumn table {
 	width: 170px;
 }
-#vertline {
+.vertline {
 	width: 2px;
 	background-color: #f0ead8;
 	background-image: url('smartiki/checkerboard-orange.gif');
@@ -1871,7 +1871,6 @@ div.tabs {
 .content {
 	position: relative;
 	border: 1px solid #999999;
-	width: 600px  !important;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	z-index: 80;
