@@ -62,8 +62,7 @@
 {foreach from=$users[user].groups item=grs}
 {$grs}
 {if $grs != "Anonymous"}
-(<a class="link"href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegr
-oup&amp;group={$grs}">x</a>)
+(<a class="link"href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
 {/if}&nbsp;
 {/foreach}
 <td class="odd"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
@@ -80,8 +79,7 @@ oup&amp;group={$grs}">x</a>)
 {foreach from=$users[user].groups item=grs}
 {$grs}
 {if $grs != "Anonymous"}
-(<a class="link"href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegr
-oup&amp;group={$grs}">x</a>)
+(<a class="link"href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
 {/if}&nbsp;
 {/foreach}
 <td class="even"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
