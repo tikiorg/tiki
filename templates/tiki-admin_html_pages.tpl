@@ -56,7 +56,7 @@
 <tr>
 <td class="odd">{$channels[user].pageName}</td>
 <td class="odd">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
-<td class="odd">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName}">{tr}edit{/tr}</a>
@@ -68,7 +68,7 @@
 <tr>
 <td class="even">{$channels[user].pageName}</td>
 <td class="even">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
-<td class="even">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
+<td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName}">{tr}edit{/tr}</a>

@@ -46,7 +46,7 @@ Version 1.5 -TBA-
   avatar from the library (more than 500) or upload an image to be used as your avatar.
 * [NEW] Surveys, create surveys to get a better understanding on your users opinions, many survey question types,
   users can fill surveys and stats are stored. 
-* [NEW] Many bugs fixed, google module now works, definition lists fixed, wiki lists fixed, etc etc.
+* [NEW] Many bugs fixed, google module now works, definition lists fixed, wiki lists fixed, etc., etc.
 * [NEW] Webmail, set-up as many POP-accounts as you want, select a "current" account and you will be able to read
   emails, write emails, delete emails, download attachments, use attachments, write or read HTML based emails. Manage
   your address book, automatically add addresses to your address book and all the regular cool webmail features.
@@ -55,6 +55,9 @@ Version 1.5 -TBA-
   items can be assigned to a user or group and will appear in the user preferences page (the user's home). Trackers
   and tracker items can be monitored and Tiki will send you an email when something is changed. You can open-close
   tracker items.
+* [NEW] Dates and times are displayed in the time zone specified by the user and/or the administrator.
+  The administrator (but not the user) can also specify the date and time format strings.
+  Month and weekday names are also localized, if locales are configured correctly on the server.
 
 Version 1.4 -Mira-
 

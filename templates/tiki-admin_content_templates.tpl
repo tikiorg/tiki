@@ -48,7 +48,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">{$channels[user].name}</td>
-<td class="odd">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
 [{section name=ix loop=$channels[user].sections}
 ({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}">x</a>)
@@ -62,7 +62,7 @@
 {else}
 <tr>
 <td class="even">{$channels[user].name}</td>
-<td class="even">{$channels[user].created|date_format:"%d of %b [%H:%M]"}</td>
+<td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
 [{section name=ix loop=$channels[user].sections}
 ({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}">x</a>)

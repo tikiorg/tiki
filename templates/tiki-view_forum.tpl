@@ -170,7 +170,7 @@
   <td class="topicrepliesodd">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadsodd">{$comments_coms[ix].hits}</td>
   <td class="topicscoreodd">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}
+  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|tiki_short_datetime}
   {if $comments_coms[ix].replies.numReplies}
   <br/>
   <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
@@ -200,7 +200,7 @@
   <td class="topicreplieseven">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadseven">{$comments_coms[ix].hits}</td>
   <td class="topicscoreeven">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastposteven">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}
+  <td class="topiclastposteven">{$comments_coms[ix].lastPost|tiki_short_datetime}
   {if $comments_coms[ix].replies.numReplies}
   <br/>
   <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>

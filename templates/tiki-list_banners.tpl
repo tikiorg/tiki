@@ -32,7 +32,7 @@
 <td class="odd">&nbsp;{$listpages[changes].bannerId}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].client}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].zone}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].created|date_format:"%d of %b, %Y"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].which}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].useDates}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].maxImpressions}&nbsp;</td>
@@ -49,7 +49,7 @@
 <td class="even">&nbsp;{$listpages[changes].bannerId}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].client}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].zone}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].created|date_format:"%d of %b, %Y"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].which}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].useDates}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].maxImpressions}&nbsp;</td>

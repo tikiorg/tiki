@@ -51,7 +51,7 @@
 <td class="odd">{$channels[user].pageName}</td>
 {/if}
 <td class="odd">{$channels[user].comment}</td>
-<td class="odd">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$channels[user].receivedDate|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].receivedFromSite}</td>
 <td class="odd">{$channels[user].receivedFromUser}</td>
 <td class="odd">
@@ -70,7 +70,7 @@
 <td class="even">{$channels[user].pageName}</td>
 {/if}
 <td class="even">{$channels[user].comment}</td>
-<td class="even">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="even">{$channels[user].receivedDate|tiki_short_datetime}</td>
 <td class="even">{$channels[user].receivedFromSite}</td>
 <td class="even">{$channels[user].receivedFromUser}</td>
 <td class="even">

@@ -21,7 +21,7 @@
   <br/><br/>
   <table width="100%" border="1" style="border: 1px solid black; background:white;">
   <tr>
-    <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|date_format:"%d of %b [%H:%M]"}</td>
+    <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
   <b>{tr}Vote{/tr}</b>: 
@@ -231,7 +231,7 @@
   <table style="border: 1px solid black; background:white;" width="100%">
   <tr>
     <td style="font-size:8pt;">
-    {tr}on{/tr}: {$comments_coms[ix].commentDate|date_format:"%d of %b [%H:%M]"}  
+    {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  
     </td>
     <td style="font-size:8pt;">
     {tr}score{/tr}</b>: {$comments_coms[ix].points}

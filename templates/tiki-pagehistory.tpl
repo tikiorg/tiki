@@ -33,7 +33,7 @@
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 <tr>
-<td class="odd">&nbsp;{$info.lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="odd">&nbsp;{$info.lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$info.version}&nbsp;</td>
 <td class="odd">&nbsp;{$info.user}&nbsp;</td>
 <td class="odd">&nbsp;{$info.ip}&nbsp;</td>
@@ -43,7 +43,7 @@
 {section name=hist loop=$history}
 <tr>
 {if $smarty.section.hist.index % 2}
-<td class="odd">&nbsp;{$history[hist].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="odd">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$history[hist].version}&nbsp;</td>
 <td class="odd">&nbsp;{$history[hist].user}&nbsp;</td>
 <td class="odd">&nbsp;{$history[hist].ip}&nbsp;</td>
@@ -59,7 +59,7 @@
 <a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
 </td>
 {else}
-<td class="even">&nbsp;{$history[hist].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="even">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="even">&nbsp;{$history[hist].version}&nbsp;</td>
 <td class="even">&nbsp;{$history[hist].user}&nbsp;</td>
 <td class="even">&nbsp;{$history[hist].ip}&nbsp;</td>

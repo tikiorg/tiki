@@ -154,6 +154,35 @@
         </select></td></tr>
 <tr><td class="form">{tr}Server name (for absolute URIs){/tr}:</td><td><input type="text" name="feature_server_name" value="{$feature_server_name}" /></td></tr>        
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
+<tr><td class="form">{tr}Server time zone{/tr}:</td><td>{$timezone_server}
+&nbsp;<a class="link" target="http://www.worldtimezone.com/" href="http://www.worldtimezone.com/">Map</a>
+</td>
+
+<tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>
+<select name='display_timezone'>
+	{html_options options=$timezone_options selected=$display_timezone}
+</select>
+</td></tr>
+
+<tr><td class="form">{tr}Long date format{/tr}:</td><td><input type="text" name="long_date_format" value="{$long_date_format}" size="50"/>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+</td>
+</tr>
+
+<tr><td class="form">{tr}Short date format{/tr}:</td><td><input type="text" name="short_date_format" value="{$short_date_format}" size="50"/>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+</td>
+</tr>
+
+<tr><td class="form">{tr}Long time format{/tr}:</td><td><input type="text" name="long_time_format" value="{$long_time_format}" size="50"/>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+</td>
+</tr>
+
+<tr><td class="form">{tr}Short time format{/tr}:</td><td><input type="text" name="short_time_format" value="{$short_time_format}" size="50"/>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+</td>
+</tr>
 
 <tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
@@ -343,7 +372,6 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Descriptions{/tr}:</td><td><input type="checkbox" name="feature_wiki_description" {if $feature_wiki_description eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/>
     <select name="warn_on_edit_time">
     <option value="1" {if $warn_on_edit_time eq 1}selected="selected"{/if}>1</option>

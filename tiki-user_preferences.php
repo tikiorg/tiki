@@ -54,6 +54,11 @@ if(isset($_REQUEST["prefs"])) {
   }
   if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
   if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
+  
+  if(isset($_REQUEST['display_timezone'])) {
+    $tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
+    $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
+  }
 }
 
 if(isset($_REQUEST["chgpswd"])) {
@@ -143,7 +148,13 @@ $smarty->assign_by_ref('homePage',$homePage);
 $avatar = $tikilib->get_user_avatar($user);
 $smarty->assign('avatar',$avatar);
 
+$timezone_options = $tikilib->get_timezone_list(true);
+$smarty->assign_by_ref('timezone_options',$timezone_options);
+$server_time = new Date();
+$display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone', $server_time->tz->getID());
+$smarty->assign_by_ref('display_timezone',$display_timezone);
 
 $smarty->assign('mid','tiki-user_preferences.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
+
 ?>

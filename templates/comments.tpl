@@ -181,7 +181,7 @@
   <td>
   <div class="commentheader">
   <span class="commentstitle">{$comments_coms[com].title}</span><br/>
-  {tr}by{/tr} {$comments_coms[com].userName} on {$comments_coms[com].commentDate|date_format:"%A %d of %B, %Y [%H:%M:%S]"} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
+  {tr}by{/tr} {$comments_coms[com].userName} on {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
   </div>
   </td>
   <td valign="top" align="right" width="20%">
@@ -220,7 +220,7 @@
   <ul>
   {section name=rep loop=$comments_coms[com].replies.replies}
   <li><a class="commentshlink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}#threadId{$comments_coms[com].replies.replies[rep].threadId}">{$comments_coms[com].replies.replies[rep].title}</a>
-   <a class="commentshlink">{tr}by{/tr} {$comments_coms[com].replies.replies[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies.replies[rep].points}) {tr}on{/tr} {$comments_coms[com].replies.replies[rep].commentDate|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</a></li>
+   <a class="commentshlink">{tr}by{/tr} {$comments_coms[com].replies.replies[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies.replies[rep].points}) {tr}on{/tr} {$comments_coms[com].replies.replies[rep].commentDate|tiki_long_datetime}</a></li>
   {/section}
   </ul>
   {/if}

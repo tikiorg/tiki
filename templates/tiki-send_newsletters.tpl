@@ -74,7 +74,7 @@ This newsletter will be sent to {$subscribers} email addresses.
 <td class="odd">{$channels[user].name}</td>
 <td class="odd">{$channels[user].subject}</td>
 <td class="odd">{$channels[user].users}</td>
-<td class="odd">{$channels[user].sent|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].sent|tiki_short_datetime}</td>
 <td class="odd">
    <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-send_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}use{/tr}</a>

@@ -54,7 +54,7 @@
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
 <td class="{cycle advance=false}">{$channels[user].editions}</td>
-<td class="{cycle advance=false}">{$channels[user].lastSent|date_format:"%a %d of %b [%H:%M]"}</td>
+<td class="{cycle advance=false}">{$channels[user].lastSent|tiki_short_datetime}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}">{tr}edit{/tr}</a>

@@ -64,7 +64,7 @@
 <td class="odd">{$channels[user].name}</td>
 <td class="odd">{$channels[user].description}</td>
 <td class="odd">{$channels[user].url}</td>
-<td class="odd">{$channels[user].lastUpdated|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$channels[user].lastUpdated|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].minutes} min</td>
 <td class="odd">
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}remove{/tr}</a>
@@ -78,7 +78,7 @@
 <td class="even">{$channels[user].name}</td>
 <td class="even">{$channels[user].description}</td>
 <td class="even">{$channels[user].url}</td>
-<td class="even">{$channels[user].lastUpdated|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="even">{$channels[user].lastUpdated|tiki_short_datetime}</td>
 <td class="even">{$channels[user].minutes} min</td>
 <td class="even">
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}remove{/tr}</a>

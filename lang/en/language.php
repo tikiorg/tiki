@@ -1316,5 +1316,12 @@ from your php.ini file",
 'File' => 'File',
 'Gallery' => 'Gallery',
 'Post' => 'Post',
+'Server time zone' => 'Server time zone',
+'Displayed time zone' => 'Displayed time zone',
+'Long date format' => 'Long date format',
+'Short date format' => 'Short date format',
+'Long time format' => 'Long time format',
+'Short time format' => 'Short time format',
+
 "##end###" => "###end###");
 ?>

@@ -9216,8 +9216,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
     
       usort ($data, 'find_pages_cmp');
-    } else {
 /*	# this doesn't work, because 'hits' aren't the same across different sections, right?
+    } else {
       function find_pages_cmp ($a, $b) {
         return ($a['hits'] > $b['hits']) ? -1 : (($a['hits'] < $b['hits']) ? 1 : 0);
       }
@@ -10015,6 +10015,122 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
     return $retval;
+  }
+
+  function get_timezone_list($use_default = false) {
+    require_once 'lib/Date.php';
+    $timezone_options = array();
+    if ($use_default)
+    	$timezone_options['default'] = '-- Use Default Time Zone --';
+
+    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
+        $offset = $tz['offset'];
+        $absoffset = abs($offset /= 60000);
+        $plusminus = $offset < 0 ? '-' : '+';
+        $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
+        $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
+        $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+    }
+    return $timezone_options;
+  }
+  
+  function get_display_timezone($user = null) {
+  	static $display_timezone = false;
+  	
+    if (!$display_timezone) {
+      if ($user) {
+        $display_timezone = $this->get_user_preference($user, 'display_timezone');
+        if (!$display_timezone || $display_timezone == 'default')
+          $display_timezone = $this->get_preference('display_timezone');
+      } else
+        $display_timezone = $this->get_preference('display_timezone');
+    }
+    
+    return $display_timezone;
+  }
+
+  function get_long_date_format() {
+  	static $long_date_format = false;
+  	
+    if (!$long_date_format)
+      $long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
+
+    return $long_date_format;
+  }
+
+  function get_short_date_format() {
+  	static $short_date_format = false;
+  	
+    if (!$short_date_format)
+      $short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
+
+    return $short_date_format;
+  }
+
+  function get_long_time_format() {
+  	static $long_time_format = false;
+  	
+    if (!$long_time_format)
+      $long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
+
+    return $long_time_format;
+  }
+
+  function get_short_time_format() {
+  	static $short_time_format = false;
+  	
+    if (!$short_time_format)
+      $short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
+
+    return $short_time_format;
+  }
+
+  function get_long_datetime_format() {
+  	static $long_datetime_format = false;
+  	
+    if (!$long_datetime_format)
+      $long_datetime_format = $this->get_long_date_format() . ' [' . $this->get_long_time_format() . ']';
+
+    return $long_datetime_format;
+  }
+
+  function get_short_datetime_format() {
+  	static $short_datetime_format = false;
+  	
+    if (!$short_datetime_format)
+      $short_datetime_format = $this->get_short_date_format() . ' [' . $this->get_short_time_format() . ']';
+
+    return $short_datetime_format;
+  }
+
+  function get_language($user = null) {
+  	static $language = false;
+  	
+    if (!$language) {
+      if ($user) {
+        $language = $this->get_user_preference($user, 'language', 'en');
+        if (!$language || $language == 'default')
+          $language = $this->get_preference('language', 'en');
+      } else 
+        $language = $this->get_preference('language', 'en');
+	}
+	
+    return $language;
+  }
+
+  function get_locale($user = null) {
+  	static $locale = false;
+  	
+  	static $locales = array(
+  		'en' => 'en_US',
+  		'de' => 'de_DE',
+  		'fr' => 'fr_FR',
+  		'sp' => 'es_ES',
+  	);
+    if (!$locale)
+      $locale = $locales[$this->get_language($user)];
+
+    return $locale;
   }
 
 } //end of class

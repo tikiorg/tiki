@@ -26,7 +26,7 @@
   <div class="imageinfo">
       <table class="imageinfo">
       <tr><td class="imageinfo">{tr}Image Name{/tr}:</td><td class="imageinfo">{$name}</td></tr>
-      <tr><td class="imageinfo">{tr}Created{/tr}:</td><td class="imageinfo">{$created|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td></tr>
+      <tr><td class="imageinfo">{tr}Created{/tr}:</td><td class="imageinfo">{$created|tiki_long_datetime}</td></tr>
       <tr><td class="imageinfo">{tr}Hits{/tr}:</td><td class="imageinfo">{$hits}</td></tr>
       <tr><td class="imageinfo">{tr}Description{/tr}:</td><td class="imageinfo">{$description}</td></tr>
       {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}

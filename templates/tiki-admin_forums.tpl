@@ -117,7 +117,7 @@
 <td style="text-align:right;" class="odd">{$channels[user].users}</td>
 <td style="text-align:right;" class="odd">{$channels[user].age}</td>
 <td style="text-align:right;" class="odd">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td style="text-align:right;" class="odd">{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+<td style="text-align:right;" class="odd">{$channels[user].lastPost|tiki_short_datetime}</td>
 <td style="text-align:right;" class="odd">{$channels[user].hits}</td>
 <td class="odd">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
@@ -135,7 +135,7 @@
 <td style="text-align:right;" class="even">{$channels[user].users}</td>
 <td style="text-align:right;" class="even">{$channels[user].age}</td>
 <td style="text-align:right;" class="even">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td style="text-align:right;" class="even">{$channels[user].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+<td style="text-align:right;" class="even">{$channels[user].lastPost|tiki_short_datetime}</td>
 <td style="text-align:right;" class="even">{$channels[user].hits}</td>
 <td class="even">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}

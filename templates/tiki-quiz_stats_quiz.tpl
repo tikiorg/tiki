@@ -19,7 +19,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">{$channels[user].user}</td>
-<td class="odd">{$channels[user].timestamp|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].timeTaken} secs</td>
 <td class="odd">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
 <td class="odd">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}result{/tr}</a>
@@ -30,7 +30,7 @@
 {else}
 <tr>
 <td class="even">{$channels[user].user}</td>
-<td class="even">{$channels[user].timestamp|date_format:"%d of %b [%H:%M]"}</td>
+<td class="even">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="even">{$channels[user].timeTaken} secs</td>
 <td class="even">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
 <td class="even">{if $tiki_p_view_user_results eq 'y'}<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{tr}result{/tr}</a>

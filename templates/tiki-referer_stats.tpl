@@ -25,13 +25,13 @@
 <tr>
 <td class="odd">{$channels[user].referer}</td>
 <td class="odd">{$channels[user].hits}</td>
-<td class="odd">{$channels[user].last|date_format:"%d of %b [%H:%M]"}</td>
+<td class="odd">{$channels[user].last|tiki_short_datetime}</td>
 </tr>
 {else}
 <tr>
 <td class="even">{$channels[user].referer}</td>
 <td class="even">{$channels[user].hits}</td>
-<td class="even">{$channels[user].last|date_format:"%d of %b [%H:%M]"}</td>
+<td class="even">{$channels[user].last|tiki_short_datetime}</td>
 </tr>
 {/if}
 {/section}

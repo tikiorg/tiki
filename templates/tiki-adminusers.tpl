@@ -36,7 +36,7 @@
 <tr>
 <td class="odd">{$users[user].user}</td>
 <td class="odd">{$users[user].email}</td>
-<td class="odd">{$users[user].currentLogin|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$users[user].currentLogin|tiki_long_datetime}</td>
 <td class="odd">
 {section name=grs loop=$users[user].groups}
 {$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;
@@ -51,7 +51,7 @@
 <tr>
 <td class="even">{$users[user].user}</td>
 <td class="even">{$users[user].email}</td>
-<td class="even">{$users[user].currentLogin|date_format:"%A %d of %B [%H:%M]"}</td>
+<td class="even">{$users[user].currentLogin|tiki_long_datetime}</td>
 <td class="even">
 {section name=grs loop=$users[user].groups}
 {$users[user].groups[grs]}{if $users[user].groups[grs] != "Anonymous"}(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;ruser={$users[user].user}&amp;action=removegroup&amp;group={$users[user].groups[grs]}">x</a>){/if}&nbsp;

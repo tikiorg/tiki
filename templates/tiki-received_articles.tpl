@@ -3,7 +3,7 @@
 <h2>Preview</h2>
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"} (0 {tr}reads{/tr})</span>
+<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
 </div>
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
@@ -88,7 +88,7 @@
 <img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}" />
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Created{/tr}:</td><td class="formcolor">{$created|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td></tr>
+<tr><td class="formcolor">{tr}Created{/tr}:</td><td class="formcolor">{$created|tiki_short_datetime}</td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
@@ -134,7 +134,7 @@
 <td class="odd">{$channels[user].title}
 {if $channels[user].type eq 'Review'}(r){/if}
 </td>
-<td class="odd">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="odd">{$channels[user].receivedDate|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].receivedFromSite}</td>
 <td class="odd">{$channels[user].receivedFromUser}</td>
 <td class="odd">
@@ -150,7 +150,7 @@
 <td class="even">{$channels[user].title}
 {if $channels[user].type eq 'Review'}(r){/if}
 </td>
-<td class="even">{$channels[user].receivedDate|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td>
+<td class="even">{$channels[user].receivedDate|tiki_short_datetime}</td>
 <td class="even">{$channels[user].receivedFromSite}</td>
 <td class="even">{$channels[user].receivedFromUser}</td>
 <td class="even">

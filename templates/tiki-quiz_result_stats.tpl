@@ -18,7 +18,7 @@
 </tr>
 <tr> 
   <td class="even">{tr}Date{/tr}</td>
-  <td class="even">{$ur_info.timestamp|date_format:"%d of %b [%H:%M]"}</td>
+  <td class="even">{$ur_info.timestamp|tiki_short_datetime}</td>
 </tr>
 <tr> 
   <td class="even">{tr}Points{/tr}</td>

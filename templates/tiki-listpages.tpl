@@ -34,7 +34,7 @@
 {/if}
 </td>
 <td class="odd">&nbsp;{$listpages[changes].hits}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="odd">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].version}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].comment}&nbsp;</td>
@@ -58,7 +58,7 @@
 {/if}
 </td>
 <td class="even">&nbsp;{$listpages[changes].hits}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="even">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].version}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].comment}&nbsp;</td>
