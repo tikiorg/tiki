@@ -180,7 +180,7 @@ class TikiLib {
   /*shared*/ function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
   {
     $title = addslashes($title);	
-    $descrpition = addslashes($description);
+    $description = addslashes($description);
     if($taskId) {
       $query = "update tiki_user_tasks set
       title = '$title',
