@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.197 2004-05-17 08:50:20 chealer Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.198 2004-05-28 16:10:55 chris_holman Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2741,6 +2741,7 @@ CREATE TABLE tiki_sessions (
 # --------------------------------------------------------
 
 # Tables for TikiSheet
+DROP TABLE IF EXISTS tiki_sheet_layout;
 CREATE TABLE tiki_sheet_layout (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
@@ -2751,6 +2752,7 @@ CREATE TABLE tiki_sheet_layout (
   UNIQUE KEY sheetId (sheetId,begin)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_sheet_values;
 CREATE TABLE tiki_sheet_values (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
@@ -2765,6 +2767,7 @@ CREATE TABLE tiki_sheet_values (
   KEY sheetId_2 (sheetId,rowIndex,columnIndex)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_sheets;
 CREATE TABLE tiki_sheets (
   sheetId int(8) NOT NULL auto_increment,
   title varchar(200) NOT NULL default '',
@@ -2804,6 +2807,21 @@ CREATE TABLE tiki_shoutbox_words (
 # --------------------------------------------------------
 
 #
+# Table structure for table `tiki_structure_versions`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Jul 03, 2003 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS tiki_structure_versions;
+CREATE TABLE tiki_structure_versions (
+  structure_id int(14) NOT NULL auto_increment,
+  version int(14) default NULL,
+  PRIMARY KEY  (structure_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
 # Table structure for table `tiki_structures`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
@@ -2813,8 +2831,10 @@ CREATE TABLE tiki_shoutbox_words (
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
   page_ref_id int(14) NOT NULL auto_increment,
+  structure_id int(14) NOT NULL,
   parent_id int(14) default NULL,
   page_id int(14) NOT NULL,
+  page_version int(8) default NULL,
   page_alias varchar(240) NOT NULL default '',
   pos int(4) default NULL,
   PRIMARY KEY  (page_ref_id),
@@ -4130,6 +4150,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_allowhtml','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');
