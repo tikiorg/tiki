@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.16 2004-06-23 22:34:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.17 2004-07-11 10:27:48 damosoft Exp $ *}
 
-<script src="lib/map/map.js" />
+<script src="lib/map/map.js"></script>
 
 <div align="center">
    <form name="frmmap" action="tiki-map.phtml" method="get">

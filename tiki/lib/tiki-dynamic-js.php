@@ -15,4 +15,5 @@ if( is_array( $_SESSION['tiki_cookie_jar'] ) )
 ?>
 var tiki_cookie_jar = {
 	<?=implode( ",\n\t", $list )?>
+
 };

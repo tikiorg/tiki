@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.62 2004-07-08 12:50:38 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.63 2004-07-11 10:27:48 damosoft Exp $
 
 MoreNeat theme
 */
@@ -1869,10 +1869,12 @@ TABLE.admin { width: 100%; }
 .tabmark a:active {
 	background-color: white;
 	color: red;
+	padding: 1px 5px 1px 5px;
 }
 .tabmark a:hover {
 	color: black;
 	background-color: #CCCCCC;
+	padding: 1px 5px 1px 5px;
 }
 
 .tabcontent {
@@ -1883,6 +1885,7 @@ TABLE.admin { width: 100%; }
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 /* trackers specific style */

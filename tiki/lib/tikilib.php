@@ -1198,7 +1198,7 @@ class TikiLib extends TikiDB {
 	$result = $this->query("select `cookie`  from `tiki_cookies`",array(),1,$bid);
 	if ($res = $result->fetchRow()) {
 	    $cookie = str_replace("\n", "", $res['cookie']);
-	    return '<i>"' . $cookie . '"</i>';
+	    return preg_replace('/^(.+?)(\s*--.+)?$/','<i>"$1"</i>$2',$cookie);
 	}
 	else
 	    return "";

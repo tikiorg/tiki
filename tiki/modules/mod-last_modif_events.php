@@ -5,11 +5,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
+include_once ('lib/calendar/calendarlib.php');
 
-#$ranking = $tikilib->last_major_pages($module_rows);
-$ranking = $tikilib->last_pages($module_rows);
+$events = $calendarlib->last_modif_events($module_rows, isset($module_params["calendarId"]) ? $module_params["calendarId"] : 0);
 
-$smarty->assign('modLastModif', $ranking);
+$smarty->assign('modLastEvents', $events);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 

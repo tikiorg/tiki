@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.14 2004-07-01 21:07:54 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.15 2004-07-11 10:27:48 damosoft Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1920,6 +1920,7 @@ a.phplm:hover	{
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 

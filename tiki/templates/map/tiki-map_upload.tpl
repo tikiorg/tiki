@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.9 2004-06-23 22:34:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.10 2004-07-11 10:27:48 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <h3>{tr}{$dir}{/tr}</h3>
@@ -6,13 +6,18 @@
 <tr>
 <td class="heading" colspan="2">{tr}Directories{/tr}</a></td>
 </tr>
+{if $dir ne '/data'}
+<tr>
+<td class="odd">
+<a class="link" href="tiki-map_upload.php?dir={$basedir}">{tr}back to{/tr} {$basedir}</a>
+</td><td class="odd">&nbsp;</td>
+</tr>
+{/if}
 {section name=user loop=$dirs}
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">
-<a class="link" href="tiki-map_upload.php?dir={$dir}/{$dirs[user]}">
-{$dirs[user]}
-</a>
+<a class="link" href="tiki-map_upload.php?dir={$dir}/{$dirs[user]}">{$dirs[user]}</a>
 </td>
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}

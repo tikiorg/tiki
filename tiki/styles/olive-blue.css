@@ -2689,6 +2689,7 @@ table.commentinfo { width: 100%; background-color: #e5f2f6; }
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 /* trackers specific style */

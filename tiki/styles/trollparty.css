@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.33 2004-07-01 21:07:55 teedog Exp $
+$Id: trollparty.css,v 1.34 2004-07-11 10:27:48 damosoft Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -3060,6 +3060,7 @@ TABLE.admin {
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 

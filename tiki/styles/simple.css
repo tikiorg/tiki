@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.22 2004-07-01 21:07:55 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.23 2004-07-11 10:27:48 damosoft Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -269,6 +269,7 @@ TABLE.admin {
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 /* trackers specific style */

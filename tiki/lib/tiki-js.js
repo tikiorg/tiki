@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.51 2004-07-08 12:50:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.52 2004-07-11 10:27:46 damosoft Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -252,8 +252,10 @@ function show(foo,f) {
 }
 
 function hide(foo,f) {
+	if (document.getElementById(foo)) {
 	document.getElementById(foo).style.display = "none";
 	if (f) { setCookie(foo, "c"); }
+	}
 }
 
 function flip(foo) {
@@ -377,23 +379,28 @@ function setFolderIcons() {
 //		(HTTP Response Code [200,403, 404, ...])
 // method - GET or POST
 // url - The URL to open
-function getHttpRequest( callback, method, url )
+function getHttpRequest( method, url )
 {
 	var request;
 
 	if( window.XMLHttpRequest )
 		request = new XMLHttpRequest();
 	else if( window.ActiveXObject )
-		request = new ActiveXObject("Microsoft.XMLHTTP");
+	{
+		try
+		{
+			request = new ActiveXObject("MSXML2.XMLHTTP");
+		}
+		catch( ex )
+		{
+			request = new ActiveXObject( "Microsoft.XMLHTTP" );
+		}
+	}
 	else
 		return false;
 
-	request.open( method, url );
-	request.callback = callback;
-	request.onreadystatechange = function(){
-	if( request.readyState == 4 )
-		request.callback( request.status, request.responseText );
-	}
+	if( !request )
+		return false;
 
 	return request;
 }
@@ -408,21 +415,21 @@ function getHttpRequest( callback, method, url )
 // * a null placeholder is not required for trailing omitted arguments
 function setCookie(name, value, expires, path, domain, secure) {
 
-	temp = function( code, text ) {}
-	
-	var request = getHttpRequest( temp, "GET", "tiki-cookie-jar.php?" + name + "=" + escape( value ) )
+	var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape( value ) )
 
 	// Use JS cookies if XMLHttpRequest is supported
 	// Until implementation is completed, leave cookies.
-	if( request == false )
+	try
+	{
+		request.send('');
+	}
+	catch( ex )
 	{
 		var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "")
 			+ ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
 
 		document.cookie = curCookie;
 	}
-	else
-		request.send();
 }
 
 // name - name of the desired cookie
@@ -430,7 +437,9 @@ function setCookie(name, value, expires, path, domain, secure) {
 function getCookie(name) {
 	// If XMLHttpRequest is supported
 	if( window.XMLHttpRequest || window.ActiveXObject )
+	{
 		return tiki_cookie_jar[name];
+	}
 	else
 	{
 		var dc = document.cookie;
