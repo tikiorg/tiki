@@ -12,6 +12,9 @@
 <br /><br />
 <h2>{tr}Edit tracker fields{/tr}</h2>
 <form action="tiki-admin_tracker_fields.php" method="post">
+{if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
+{if $offset}<input type="hidden" name="offset" value="{$offset|escape}" />{/if}
+{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 <input type="hidden" name="fieldId" value="{$fieldId|escape}" />
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
