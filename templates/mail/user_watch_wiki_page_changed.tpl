@@ -1,4 +1,5 @@
-{tr}The page {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{if $new_page}{tr}The page {$mail_page} was created by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{else}{tr}The page {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}{/if}
 
 {if $mail_comment}{tr}Comment:{/tr} {$mail_comment}
 
@@ -6,9 +7,10 @@
 {tr}You can view the page by following this link:{/tr}
 {$mail_machine}/tiki-index.php?page={$mail_page|escape:"url"}
 
-{tr}You can view a diff back to the previous version by following this link:{/tr}
+{if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr}
 {$mail_machine}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&diff2={$mail_last_version}
 
+{/if}
 {if $mail_hash}{tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
 
