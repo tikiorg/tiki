@@ -65,7 +65,7 @@ if (!$cachelib->isCached("categories_permission_names")) {
 	$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 	$cachelib->cacheItem("categories_permission_names",serialize($perms));
 } else {
-	$perm = unserialize($cachelib->getCached("categories_permission_names"));
+	$perms = unserialize($cachelib->getCached("categories_permission_names"));
 }
 $smarty->assign_by_ref('perms', $perms['data']);
 
