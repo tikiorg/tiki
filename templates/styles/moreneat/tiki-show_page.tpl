@@ -3,7 +3,7 @@
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
-<table >
+<table class="wikibar">
 <tr>
 <td>
 {if $feature_wiki_description}
