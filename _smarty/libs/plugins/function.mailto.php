@@ -40,7 +40,7 @@
  * @link http://smarty.php.net/manual/en/language.function.mailto.php {mailto}
  *          (Smarty online manual)
  * @version  1.2
- * @author   Monte Ohrt <monte@ispi.net>
+ * @author   Monte Ohrt <monte at ohrt dot com>
  * @author   credits to Jason Sweat (added cc, bcc and subject functionality)
  * @param    array
  * @param    Smarty
@@ -105,7 +105,7 @@ function smarty_function_mailto($params, &$smarty)
             $js_encode .= '%' . bin2hex($string[$x]);
         }
 
-        return '<script type="text/javascript" language="javascript">eval(unescape(\''.$js_encode.'\'))</script>';
+        return '<script type="text/javascript">eval(unescape(\''.$js_encode.'\'))</script>';
 
     } elseif ($encode == 'hex') {
 

@@ -18,14 +18,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * @link http://smarty.php.net/
- * @version 2.6.3
- * @copyright Copyright: 2001-2004 ispi of Lincoln, Inc.
+ * @version 2.6.7
+ * @copyright Copyright: 2001-2005 New Digital Group, Inc.
  * @author Andrei Zmievski <andrei@php.net>
  * @access public
  * @package Smarty
  */
 
-/* $Id: Config_File.class.php,v 1.1.1.4 2004-06-27 11:42:48 mose Exp $ */
+/* $Id: Config_File.class.php,v 1.1.1.5 2005-03-07 19:58:47 damosoft Exp $ */
 
 /**
  * Config file reading class
