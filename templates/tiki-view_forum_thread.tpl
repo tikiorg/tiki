@@ -21,9 +21,9 @@
   <br/><br/>
   <table width="100%" border="1" style="border: 1px solid black; background:white;">
   <tr>
-    <td>{tr}on{/tr}</b>: {$thread_info.commentDate|date_format:"%d of %b [%H:%M]"}</td>
-    <td>{tr}score{/tr}</b>: {$thread_info.points}</td>
-    {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td>
+    <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|date_format:"%d of %b [%H:%M]"}</td>
+    <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
+    {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
   <b>{tr}Vote{/tr}</b>: 
   <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
   <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
@@ -31,7 +31,7 @@
   <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
   <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
   </td>{/if}
-  <td>
+  <td style="font-size:8pt;">
   {tr}reads{/tr}: {$thread_info.hits}
   </td>
   </tr>
@@ -206,29 +206,6 @@
   <td class="forumheading">{tr}author{/tr}</td>
   <td class="forumheading">{tr}message{/tr}</td>
 </tr>
-<!--
-<tr>
-  <td class="viewthreadl">
-  <b>{tr}author{/tr}</b>: {$thread_info.userName}<br/>
-  <b>{tr}on{/tr}</b>: {$thread_info.commentDate|date_format:"%d of %b [%H:%M]"}<br/>
-  <b>{tr}score{/tr}</b>: {$thread_info.points}
-  {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<br/>
-  <b>{tr}Vote{/tr}</b>: 
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
-  {/if}
-  <br/>
-  <b>{tr}reads{/tr}</b>: {$thread_info.hits}<br/>
-  </td>
-  <td class="viewthreadr">
-  <b>{$thread_info.title}</b><br/><br/>
-  {$thread_info.parsed}
-  </td>
-</tr>
--->
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 <tr>
@@ -253,14 +230,14 @@
   <br/><br/>
   <table style="border: 1px solid black; background:white;" width="100%">
   <tr>
-    <td>
+    <td style="font-size:8pt;">
     {tr}on{/tr}: {$comments_coms[ix].commentDate|date_format:"%d of %b [%H:%M]"}  
     </td>
-    <td>
+    <td style="font-size:8pt;">
     {tr}score{/tr}</b>: {$comments_coms[ix].points}
     </td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}
-    <td align="right">
+    <td align="right" style="font-size:8pt;">
     <b>{tr}Vote{/tr}</b>: 
     
   <a class="forumvotelink" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
