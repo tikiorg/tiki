@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.13 2003-08-15 21:53:38 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.14 2003-09-03 20:00:41 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,6 +65,17 @@ $smarty->assign('use_find', 'y');
 $smarty->assign('use_title', 'y');
 $smarty->assign('allow_comments', 'y');
 $smarty->assign('maxPosts', 10);
+
+
+if (!isset($created)) {
+	$created=time();
+	$smarty->assign('created', $created);
+}
+
+if (!isset($lastModif)) {
+	$lastModif=time();
+	$smarty->assign('lastModif', $lastModif);
+}
 
 if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = $_REQUEST["heading"];
