@@ -1,10 +1,30 @@
-<a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a>
+
+<! -- the help link info -->
+
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}">
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+
+<! -- link to tpl -->
+
+     {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-list_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" />
+</a>
+{/if}
+
+<br /><br />
+
+<! -- link buttons -->
+
 {if $tiki_p_view_survey_stats eq 'y'}
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a></span><br /><br />
 {/if}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading">
+<a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
 <td class="heading">{tr}questions{/tr}</td>
 <td class="heading">{tr}actions{/tr}</td>
@@ -23,18 +43,27 @@
 </td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
+
 <td style="text-align:right;"  class="{cycle}">
-{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}<a 
-href="tiki-take_survey.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}take survey{/tr}' alt='{tr}take survey{/tr}' width="16" height="16" hspace="6" vspace="0" src='img/icons/toright.gif' /></a>{/if}
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}<a 
-href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}stats{/tr}' alt='{tr}stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}<a
-href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><img border='0' title='{tr}adm{/tr}' alt='{tr}adm{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/config.gif' /></a>{/if}
+{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
+<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
+<img border='0' title='{tr}take survey{/tr}' alt='{tr}take survey{/tr}' width="16" height="16" hspace="6" vspace="0" src='img/icons/toright.gif' /></a>
+{/if}
+
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
+<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+<img border='0' title='{tr}stats{/tr}' alt='{tr}stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
+
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
+<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
+<img border='0' title='{tr}adm{/tr}' alt='{tr}adm{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/config.gif' /></a>{/if}
 </td>
 </tr>
 {/if}
 {/section}
 </table>
+<! -- the page advance... it's set to ten by default in maxRecords... -->
+
 <br />
 <div align="center" class="mini">
 {if $prev_offset >= 0}
