@@ -1786,7 +1786,7 @@ function get_included_groups($group) {
 
     function accept_friendship($user, $friend)
     {
-	global $messulib, $scorelib;
+	global $messulib;
 
 	$user = addslashes($user);
 	$friend = addslashes($friend);
@@ -1805,8 +1805,8 @@ function get_included_groups($group) {
 	$this->query("delete from tiki_friendship_requests where userTo='$user' and userFrom='$friend'");
 	$this->query("delete from tiki_friendship_requests where userTo='$friend' and userFrom='$user'");
 
-	/*$scorelib->score_event($user,'friend_new',$friend);
-	$scorelib->score_event($friend,'friend_new',$user);*/
+	$this->score_event($user,'friend_new',$friend);
+	$this->score_event($friend,'friend_new',$user);
 
 	$messulib->post_message($friend,
 				$user,

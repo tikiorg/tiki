@@ -842,6 +842,101 @@ class TikiLib extends TikiDB {
 	return $retval;
     }
 
+    /*
+     * Score methods begin
+     */
+
+    /* 
+     * Checks if an event should be scored and grants points to proper user
+     * $multiplier is for rating events, in which the score will
+     * be multiplied by other user's rating. Not yet used
+     *
+     * shared
+     */
+    function score_event($user, $event_type, $id = '', $multiplier=false) {
+	if ($user == 'admin') { return; }
+	
+	$event = $this->get_event($event_type);
+	if (!$event || !$event['score']) {
+	    return;
+	}
+
+	$score = $event['score'];
+	if ($multiplier) {
+	    $score *= $multiplier;
+	}
+
+	if ($id || $event['expiration']) {
+	    $expire = $event['expiration'];
+	    $event_id = $event_type . '_' . $id;
+
+	    $query = "select * from tiki_users_score where user='$user' and event_id='$event_id' and (not $expire || expire > now())";
+	    if ($this->getOne($query)) {
+		return;
+	    }
+
+	    $query = "replace into tiki_users_score (user, event_id, score, expire) values ('$user', '$event_id', $score, now() + interval $expire minute)";
+	    $this->query($query);
+	}
+
+	$query = "update users_users set score = score + $score where login='$user'";
+	$event['id'] = $id; // just for debug
+
+	$this->query($query);
+	return;	
+    }
+
+    // List users by best scoring
+    // shared
+    function rank_users($limit = 10, $start = 0) {
+	if (!$start) {
+	    $start = "0";
+	}
+	// admin doesn't go on ranking
+	$query = "select userId, login, score from users_users where login <> 'admin' order by score desc limit $start, $limit";
+
+	$result = $this->query($query);
+	$ranking = array();
+
+	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $res['position'] = ++$start;
+	    $ranking[] = $res;
+	}
+	return $ranking;
+    }
+
+    // Returns html <img> tag to star corresponding to user's score
+    // shared
+    function get_star($score) {
+	$star = '';
+
+	$star_colors = array(0 => 'grey',
+			     100 => 'blue',
+			     500 => 'green',
+			     1000 => 'yellow',
+			     2500 => 'orange',
+			     5000 => 'red',
+			     10000 => 'purple');
+	
+	foreach ($star_colors as $boundary => $color) {
+	    if ($score >= $boundary) {
+		$star = 'star_'.$color.'.gif';
+	    }
+	}
+                                                                                                                                            
+	if (!empty($star)) {
+	    $alt = sprintf(tra("%d points"), $score);
+	    $star = "<img src=\"images/$star\" alt=\"$alt\" />&nbsp;";
+	}
+
+	return $star;
+    }
+
+    /*
+     * Score methods end
+     */
+
+
     //shared
     // \todo remove all hardcoded html in get_user_avatar()
     function get_user_avatar($user, $float = "") {
@@ -3485,10 +3580,9 @@ function add_pageview() {
 	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
 	}
 	
-	global $scorelib, $feature_score;
+	global $feature_score;
 	if ($feature_score == 'y') {
-	    require_once('lib/score/scorelib.php');
-	    $scorelib->score_event($user, 'wiki_new');
+	    $this->score_event($user, 'wiki_new');
 	}
 
 	return true;

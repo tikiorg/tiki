@@ -2,14 +2,13 @@
 
 function smarty_modifier_star($score)
 {
-    global $feature_score, $scorelib;
+    global $feature_score, $tikilib;
 
     if ($feature_score != 'y') {
 	return '';
     }
 
-    require_once('lib/score/scorelib.php');
-    return $scorelib->get_star($score);
+    return $tikilib->get_star($score);
 }
 
 /* vim: set expandtab: */

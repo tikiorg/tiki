@@ -14,43 +14,6 @@ class ScoreLib extends TikiLib {
 	$this->db = $db;
     }
 
-    // Checks if an event should be scored and grants points
-    // to proper user
-    // $multiplier is for rating events, in which the score will
-    // be multiplied by other user's rating.
-    function score_event($user, $event_type, $id = '', $multiplier=false) {
-	if ($user == 'admin') { return; }
-	
-	$event = $this->get_event($event_type);
-	if (!$event || !$event['score']) {
-	    return;
-	}
-
-	$score = $event['score'];
-	if ($multiplier) {
-	    $score *= $multiplier;
-	}
-
-	if ($id || $event['expiration']) {
-	    $expire = $event['expiration'];
-	    $event_id = $event_type . '_' . $id;
-
-	    $query = "select * from tiki_users_score where user='$user' and event_id='$event_id' and (not $expire || expire > now())";
-	    if ($this->getOne($query)) {
-		return;
-	    }
-
-	    $query = "replace into tiki_users_score (user, event_id, score, expire) values ('$user', '$event_id', $score, now() + interval $expire minute)";
-	    $this->query($query);
-	}
-
-	$query = "update users_users set score = score + $score where login='$user'";
-	$event['id'] = $id; // just for debug
-
-	$this->query($query);
-	return;	
-    }
-
     // All information about an event type
     function get_event($event) {
 	$query = "select * from tiki_score where event='$event'";
@@ -64,24 +27,6 @@ class ScoreLib extends TikiLib {
 	return $this->getOne("select count(*)+1 from users_users where score > $score and login <> 'admin'");
     }
 
-
-    // List users by best scoring
-    function ranking($limit = 10, $start = 0) {
-	if (!$start) {
-	    $start = "0";
-	}
-	// admin doesn't go on ranking
-	$query = "select userId, login, score from users_users where login <> 'admin' order by score desc limit $start, $limit";
-
-	$result = $this->query($query);
-	$ranking = array();
-
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-	    $res['position'] = ++$start;
-	    $ranking[] = $res;
-	}
-	return $ranking;
-    }
 
     // Number of users that go on ranking
     function count_users() {
@@ -107,30 +52,6 @@ class ScoreLib extends TikiLib {
 	}
     }
 
-    function get_star($score) {
-	$star = '';
-
-	$star_colors = array(0 => 'grey',
-			     100 => 'blue',
-			     500 => 'green',
-			     1000 => 'yellow',
-			     2500 => 'orange',
-			     5000 => 'red',
-			     10000 => 'purple');
-	
-	foreach ($star_colors as $boundary => $color) {
-	    if ($score >= $boundary) {
-		$star = 'star_'.$color.'.gif';
-	    }
-	}
-                                                                                                                                            
-	if (!empty($star)) {
-	    $alt = sprintf(tra("%d points"), $score);
-	    $star = "<img src=\"images/$star\" alt=\"$alt\" />&nbsp;";
-	}
-
-	return $star;
-    }
 }
 
 global $dbTiki;
