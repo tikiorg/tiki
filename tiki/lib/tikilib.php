@@ -5147,89 +5147,23 @@ function formatted_language_compare($a, $b) {
 function format_language_list($languages) {
     // The list of available languages so far with both English and
     // translated names.
-    $mapping = array(
-	    'cs' => array(
-		'??esk??',
-		tra("Czech")
-		),
-	    'da' => array(
-		'Dansk',
-		tra("Danish")
-		),
-	    'de' => array(
-		'Deutsch',
-		tra("German")
-		),
-	    'en' => array(
-		'English',
-		tra("English")
-		),
-	    'es' => array(
-		'Espa??ol',
-		tra("Spanish")
-		),
-	    'el' => array(
-		'Greek',
-		tra("Greek")
-		),
-	    'fr' => array(
-		    'Fran??ais',
-		    tra("French")
-		    ),
-	    'it' => array(
-		    'Italiano',
-		    tra("Italian")
-		    ),
-	    'ja' => array(
-		    'Japanese',
-		    tra("Japanese")
-		    ),
-	    'nl' => array(
-		    'Dutch',
-		    tra("Dutch")
-		    ),
-	    'no' => array(
-		    'Norwegian',
-		    tra("Norwegian")
-		    ),
-	    'pl' => array(
-		    'Polish',
-		    tra("Polish")
-		    ),
-	    'ru' => array(
-		    'Russian',
-		    tra("Russian")
-		    ),
-	    'sv' => array(
-		    'Swedish',
-		    tra("Swedish")
-		    ),
-	    'tw' => array(
-		    'Twi',
-		    tra("Twi")
-		    ),
-	    'zh' => array(
-		    'Chinese',
-		    tra("Chinese")
-		    )
-		);
-
+          include_once("lang/langmapping.php");
 	    $formatted = array();
 
 	    // run through all the language codes:
 	    foreach ($languages as $lc) {
-		if (isset($mapping[$lc])) {
+		if (isset($langmapping[$lc])) {
 		    // known language
-		    if ($mapping[$lc][0] == $mapping[$lc][1]) {
+		    if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
 			// Skip repeated text, 'English (English, en)' looks silly.
 			$formatted[] = array(
 				'value' => $lc,
-				'name' => $mapping[$lc][0] . " ($lc)"
+				'name' => $langmapping[$lc][0] . " ($lc)"
 				);
 		    } else {
 			$formatted[] = array(
 				'value' => $lc,
-				'name' => $mapping[$lc][1] . ' (' . $mapping[$lc][0] . ', ' . $lc . ')'
+				'name' => $langmapping[$lc][1] . ' (' . $langmapping[$lc][0] . ', ' . $lc . ')'
 				    );
 				}
 				} else {
