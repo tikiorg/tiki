@@ -7,7 +7,7 @@
 // If no groupname is given returns all users
 
 function wikiplugin_usercount_help() {
-        return tra("Displays the number of registered users").":<br :>~np~{USERCOUNT()}groupname{USERCOUNT}~/np~";
+        return tra("Displays the number of registered users").":<br />~np~{USERCOUNT()}groupname{USERCOUNT}~/np~";
 }
 
 function wikiplugin_usercount($data, $params) {

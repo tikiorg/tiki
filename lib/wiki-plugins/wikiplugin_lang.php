@@ -1,11 +1,11 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.3 2004-04-13 16:18:25 sylvieg Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lang.php,v 1.4 2004-04-30 14:20:09 sylvieg Exp $
  * Displays the content data only if the language matched the current language or the language is the URI
  * {LANG(lang=fr)}Bon appétit{LANG}
  * 
  */
 function wikiplugin_lang_help() {
-	return tra("Displays the text only if the language matchs").":<br :>~np~{LANG(lang=>)}".tra("text")."{LANG}~/np~";
+	return tra("Displays the text only if the language matchs").":<br />~np~{LANG(lang=>)}".tra("text")."{LANG}~/np~";
 }
 
 function wikiplugin_lang($data, $params) {
