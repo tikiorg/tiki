@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.14 2004-05-02 18:08:23 dgdaniels Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.15 2004-05-03 04:17:06 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -155,8 +155,9 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $quizlib->list_quiz_questions($_REQUEST["quizId"], $offset, $maxRecords, $sort_mode, $find);
-$questions = $quizlib->list_all_questions(0, -1, 'position_desc', '');
-$smarty->assign('questions', $questions["data"]);
+// GGG turned this off as we now have too many questions in the db for this to work.
+// $questions = $quizlib->list_all_questions(0, -1, 'position_desc', '');
+// $smarty->assign('questions', $questions["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

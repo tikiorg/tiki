@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.12 2004-04-30 18:25:00 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.13 2004-05-03 04:17:06 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -29,23 +29,6 @@
 </td>
 </tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
-</table>
-</form>
-<h2>{tr}Reuse question{/tr}</h2>
-<form action="tiki-edit_quiz_questions.php" method="post">
-<input type="hidden" name="quizId" value="{$quizId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td>
-<td class="formcolor">
-<select name="usequestionid">
-{section name=ix loop=$questions}
-{* adding the juicy truncation bits here |truncate:110:"":true * }
-<option value="{$questions[ix].questionId|escape}">{$questions[ix].question|truncate:110:"":true}</option>
-{/section}
-</select>
-</td></tr>
-<tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$position}</select></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="useQuestion" value="{tr}use{/tr}" /></td></tr>
 </table>
 </form>
 
