@@ -135,7 +135,7 @@ class BlogLib extends TikiLib {
 	}
 
 	function add_trackback_from($postId, $url, $title = '', $excerpt = '', $blog_name = '') {
-		if (!$this->getOne("select count(*) from tiki_blog_posts where postId=$postId"))
+		if (!$this->getOne("select count(*) from `tiki_blog_posts` where `postId`=?",array($postId)))
 			return false;
 
 		$tbs = $this->get_trackbacks_from($postId);
@@ -146,36 +146,36 @@ class BlogLib extends TikiLib {
 		);
 
 		$tbs[$url] = $aux;
-		$st = addslashes(serialize($tbs));
-		$query = "update tiki_blog_posts set trackbacks_from='$st' where postId=$postId";
-		$this->query($query);
+		$st = serialize($tbs);
+		$query = "update `tiki_blog_posts` set `trackbacks_from`=? where `postId`=?";
+		$this->query($query,array($st,$postId));
 		return true;
 	}
 
 	function get_trackbacks_from($postId) {
-		$st = $this->db->getOne("select trackbacks_from from tiki_blog_posts where postId=$postId");
+		$st = $this->db->getOne("select `trackbacks_from` from `tiki_blog_posts` where `postId`=?",array($postId));
 
 		return unserialize($st);
 	}
 
 	function get_trackbacks_to($postId) {
-		$st = $this->db->getOne("select trackbacks_to from tiki_blog_posts where postId=$postId");
+		$st = $this->db->getOne("select `trackbacks_to` from `tiki_blog_posts` where `postId`=?",array($postId));
 
 		return unserialize($st);
 	}
 
 	function clear_trackbacks_from($postId) {
-		$empty = addslashes(serialize(array()));
+		$empty = serialize(array());
 
-		$query = "update tiki_blog_posts set trackbacks_from = '$empty' where postId=$postId";
-		$this->query($query);
+		$query = "update `tiki_blog_posts` set `trackbacks_from` = ? where `postId`=?";
+		$this->query($query,array($empty,$postId));
 	}
 
 	function clear_trackbacks_to($postId) {
-		$empty = addslashes(serialize(array()));
+		$empty = serialize(array());
 
-		$query = "update tiki_blog_posts set trackbacks_to = '$empty' where postId=$postId";
-		$this->query($query);
+		$query = "update `tiki_blog_posts` set `trackbacks_to` = ? where `postId`=?";
+		$this->query($query,array($empty,$postId));
 	}
 
 	function add_blog_hit($blogId) {
@@ -184,37 +184,36 @@ class BlogLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update tiki_blogs set hits = hits+1 where blogId=$blogId";
+			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($blogId));
 		}
 
 		return true;
 	}
 
 	function insert_post_image($postId, $filename, $filesize, $filetype, $data) {
-		$data = addslashes($data);
 
-		$query = "insert into tiki_blog_posts_images(postId,filename,filesize,filetype,data)
-    values($postId,'$filename',$filesize,'$filetype','$data')";
-		$this->query($query);
+		$query = "insert into `tiki_blog_posts_images`(`postId`,`filename`,`filesize`,`filetype`,`data`)
+    values(?,?,?,?,?)";
+		$this->query($query,array($postId,$filename,$filesize,$filetype,$data));
 	}
 
 	function get_post_image($imgId) {
-		$query = "select * from tiki_blog_posts_images where imgId=$imgId";
+		$query = "select * from `tiki_blog_posts_images` where `imgId`=?";
 
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$result = $this->query($query,array($imgId));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function get_post_images($postId) {
-		$query = "select postId,filename,filesize,imgId from tiki_blog_posts_images where postId=$postId";
+		$query = "select `postId`,`filename`,`filesize`,`imgId` from `tiki_blog_posts_images` where `postId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $postId));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$imgId = $res['imgId'];
 
 			$res['link'] = "<img src='tiki-view_blog_post_image.php?imgId=$imgId' border='0' alt='image' />";
@@ -228,60 +227,58 @@ class BlogLib extends TikiLib {
 	}
 
 	function remove_post_image($imgId) {
-		$query = "delete from tiki_blog_posts_images where imgId=$imgId";
+		$query = "delete from `tiki_blog_posts_images` where `imgId`=?";
 
-		$this->query($query);
+		$this->query($query,array($imgId));
 	}
 
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find,
 		$allow_comments) {
-		$title = addslashes($title);
-
-		$description = addslashes($description);
-		$heading = addslashes($heading);
 		$now = date("U");
 
 		if ($blogId) {
-			$query = "update tiki_blogs set title='$title',description='$description',user='$user',public='$public',lastModif=$now,maxPosts=$maxPosts,heading='$heading',use_title='$use_title',use_find='$use_find',allow_comments='$allow_comments' where blogId=$blogId";
+			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=? where `blogId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($title,$description,$user,$public,$now,$maxPosts,$heading,$use_title,$use_find,$allow_comments,$blogId));
 		} else {
-			$query = "insert into tiki_blogs(created,lastModif,title,description,user,public,posts,maxPosts,hits,heading,use_title,use_find,allow_comments)
-                       values($now,$now,'$title','$description','$user','$public',0,$maxPosts,0,'$heading','$use_title','$use_find','$allow_comments')";
+			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`)
+                       values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query);
-			$query2 = "select max(blogId) from tiki_blogs where lastModif=$now";
-			$blogId = $this->getOne($query2);
+			$result = $this->query($query,array((int) $now,(int) $now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments));
+			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
+			$blogId = $this->getOne($query2,array((int) $now));
 		}
 
 		return $blogId;
 	}
 
 	function list_blog_posts($blogId, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where blogId=$blogId and (data like $findesc) ";
+			$mid = " where `blogId`=? and (`data` like ?) ";
+			$bindvars = array((int)$blogId,$findesc);
 		} else {
-			$mid = " where blogId=$blogId ";
+			$mid = " where `blogId`=? ";
+			$bindvars = array((int) $blogId);
 		}
 
 		if ($date) {
-			$mid .= " and  created<=$date ";
+			$mid .= " and  `created`<=? ";
+			$bindvars[]=(int) $date;
 		}
 
-		$query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_blog_posts $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$hash = md5('post' . $res["postId"]);
 
-			$cant_com = $this->getOne("select count(*) from tiki_comments where object='$hash'");
+			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
 			$res["comments"] = $cant_com;
 			$res['trackbacks_from'] = unserialize($res['trackbacks_from']);
 
@@ -302,34 +299,36 @@ class BlogLib extends TikiLib {
 	}
 
 	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (data like $findesc) ";
+			$mid = " where (`data` like ?) ";
+			$bindvars=array($findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
 		if ($date) {
+			$bindvars[]=$date;
 			if ($mid) {
-				$mid .= " and  created<=$date ";
+				$mid .= " and  `created`<=? ";
 			} else {
-				$mid .= " where created<=$date ";
+				$mid .= " where `created`<=? ";
 			}
 		}
 
-		$query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_blog_posts $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$query2 = "select title from tiki_blogs where blogId=" . $res["blogId"];
+		while ($res = $result->fetchRow()) {
+			$query2 = "select `title` from `tiki_blogs` where `blogId`=?";
 
-			$title = $this->getOne($query2);
+			$title = $this->getOne($query2,array($res["blogId"]));
 			$res["blogtitle"] = $title;
 			$ret[] = $res;
 		}
@@ -346,22 +345,20 @@ class BlogLib extends TikiLib {
 
 		global $feature_user_watches;
 		global $sender_email;
-		$tracks = addslashes(serialize(explode(',', $trackbacks)));
-		$title = addslashes($title);
+		$tracks = serialize(explode(',', $trackbacks));
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
-		$data = addslashes($data);
 		$now = date("U");
-		$query = "insert into tiki_blog_posts(blogId,data,created,user,title) values($blogId,'$data',$now,'$user','$title')";
-		$result = $this->query($query);
-		$query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
-		$id = $this->getOne($query);
+		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`) values(?,?,?,?,?)";
+		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title));
+		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
+		$id = $this->getOne($query,array((int) $now,$user));
 		// Send trackbacks recovering only successful trackbacks
-		$trackbacks = addslashes(serialize($this->send_trackbacks($id, $trackbacks)));
+		$trackbacks = serialize($this->send_trackbacks($id, $trackbacks));
 		// Update post with trackbacks successfully sent
-		$query = "update tiki_blog_posts set trackbacks_from='', trackbacks_to = '$trackbacks' where postId=$id";
-		$this->query($query);
-		$query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
-		$result = $this->query($query);
+		$query = "update `tiki_blog_posts` set `trackbacks_from`=?, `trackbacks_to` = ? where `postId`=?";
+		$this->query($query,array('',$trackbacks,(int) $id));
+		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
+		$result = $this->query($query,array((int) $now,(int) $blogId));
 		$this->add_blog_activity($blogId);
 
 		if ($feature_user_watches == 'y') {
@@ -395,40 +392,40 @@ class BlogLib extends TikiLib {
 	}
 
 	function remove_blog($blogId) {
-		$query = "delete from tiki_blogs where blogId=$blogId";
+		$query = "delete from `tiki_blogs` where `blogId`=?";
 
-		$result = $this->query($query);
-		$query = "delete from tiki_blog_posts where blogId=$blogId";
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $blogId));
+		$query = "delete from `tiki_blog_posts` where `blogId`=?";
+		$result = $this->query($query,array((int) $blogId));
 		$this->remove_object('blog', $blogId);
 		return true;
 	}
 
 	function remove_post($postId) {
-		$query = "select blogId from tiki_blog_posts where postId=$postId";
+		$query = "select `blogId` from `tiki_blog_posts` where `postId`=?";
 
-		$blogId = $this->getOne($query);
+		$blogId = $this->getOne($query,array($postId));
 
 		if ($blogId) {
-			$query = "delete from tiki_blog_posts where postId=$postId";
+			$query = "delete from `tiki_blog_posts` where `postId`=?";
 
-			$result = $this->query($query);
-			$query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
-			$result = $this->query($query);
+			$result = $this->query($query,array($postId));
+			$query = "update `tiki_blogs` set `posts`=`posts`-1 where `blogId`=?";
+			$result = $this->query($query,array($blogId));
 		}
 
-		$query = "delete from tiki_blog_posts_images where postId=$postId";
-		$this->query($query);
+		$query = "delete from `tiki_blog_posts_images` where `postId`=?";
+		$this->query($query,array($postId));
 		return true;
 	}
 
 	function get_post($postId) {
-		$query = "select * from tiki_blog_posts where postId=$postId";
+		$query = "select * from `tiki_blog_posts` where `postId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $postId));
 
 		if ($result->numRows()) {
-			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$res = $result->fetchRow();
 
 			if (!$res['trackbacks_from'])
 				$res['trackbacks_from'] = serialize(array());
@@ -448,32 +445,30 @@ class BlogLib extends TikiLib {
 	}
 
 	function update_post($postId, $data, $user, $title = '', $trackbacks = '') {
-		$data = addslashes($data);
-
-		$trackbacks = addslashes(serialize($this->send_trackbacks($postId, $trackbacks)));
-		$title = addslashes($title);
-		$query = "update tiki_blog_posts set trackbacks_to='$trackbacks',data='$data',user='$user',title='$title' where postId=$postId";
-		$result = $this->query($query);
+		$trackbacks = serialize($this->send_trackbacks($postId, $trackbacks));
+		$query = "update `tiki_blog_posts` set `trackbacks_to`=?,`data`=?,`user`=?,`title`=? where `postId`=?";
+		$result = $this->query($query,array($trackbacks,$data,$user,$title,$postId));
 	}
 
 	function list_user_posts($user, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where user=$user and (data like $findesc) ";
+			$mid = " where `user`=? and (`data` like ?) ";
+			$bindvars=array($user,$findesc);
 		} else {
-			$mid = ' where user=$user ';
+			$mid = ' where `user`=? ';
+			$bindvars=array($user);
 		}
 
-		$query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_blog_posts $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -492,32 +487,29 @@ class BlogLib extends TikiLib {
 		$day1 = $today - (2 * 24 * 60 * 60);
 		$day2 = $today - (3 * 24 * 60 * 60);
 		// Purge old activity
-		$query = "delete from tiki_blog_activity where day<$day2";
-		$result = $this->query($query);
+		$query = "delete from `tiki_blog_activity` where `day`<?";
+		$result = $this->query($query,array((int) $day2));
 		// Register new activity
-		$query = "select * from tiki_blog_activity where blogId=$blogId and day=$today";
-		$result = $this->query($query);
+		$query = "select * from `tiki_blog_activity` where `blogId`=? and `day`=?";
+		$result = $this->query($query,array((int) $blogId,(int)$today));
 
 		if ($result->numRows()) {
-			$query = "update tiki_blog_activity set posts=posts+1 where blogId=$blogId and day=$today";
+			$query = "update `tiki_blog_activity` set `posts`=`posts`+1 where `blogId`=? and `day`=?";
 		} else {
-			$query = "insert into tiki_blog_activity(blogId,day,posts) values($blogId,$today,1)";
+			$query = "insert into `tiki_blog_activity`(`blogId`,`day`,`posts`) values(?,?,1)";
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $blogId,(int) $today));
 		// Calculate activity
-		$query = "select posts from tiki_blog_activity where blogId=$blogId and day=$today";
-		$vtoday = $this->getOne($query);
-		$query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day0";
-		$day0 = $this->getOne($query);
-		$query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day1";
-		$day1 = $this->getOne($query);
-		$query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day2";
-		$day2 = $this->getOne($query);
+		$query = "select `posts` from `tiki_blog_activity` where `blogId`=? and `day`=?";
+		$vtoday = $this->getOne($query,array((int) $blogId,(int) $today));
+		$day0 = $this->getOne($query,array((int) $blogId,(int) $day0));
+		$day1 = $this->getOne($query,array((int) $blogId,(int) $day1));
+		$day2 = $this->getOne($query,array((int) $blogId,(int) $day2));
 		$activity = (2 * $vtoday) + ($day0)+(0.5 * $day1) + (0.25 * $day2);
 		// Update tiki_blogs with activity information
-		$query = "update tiki_blogs set activity=$activity where blogId=$blogId";
-		$result = $this->query($query);
+		$query = "update `tiki_blogs` set `activity`=? where `blogId`=?";
+		$result = $this->query($query,array($activity,(int) $blogId));
 	}
 }
 
