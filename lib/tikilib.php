@@ -2224,15 +2224,16 @@ function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', 
 function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
     global $userlib;
 
+    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
     $bindvars=array();
     if ($find) {
 	$findesc = '%' . $find . '%';
-	$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
+	$mid .= " and (`title` like ? or `heading` like ? or `body` like ?) ";
 	$bindvars=array($findesc,$findesc,$findesc);
-    } else {
-	$mid = '';
+    //} else {
+//	$mid = '';
     }
-
+/*
     $bindvars=array();
     if ($date) {
 	$bindvars[]=(int) $date;
@@ -2241,16 +2242,16 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	} else {
 	    $mid = " where ";
 	}
-	$mid .= "(`publishDate`<=? and `type`<>?) or (`publishDate`>=? and `type`=?)";
+	$mid .= "(`publishDate`<=? and `tiki_articles`.`type`<>?) or (`publishDate`>=? and `tiki_articles`.`type`=?)";
 	$bindvars=array((int) $date,'Event',(int) $date,'Event');
     }
-
+*/
     if ($type) {
 	$bindvars[]=$type;
 	if ($mid) {
-	    $mid .= " and `type`=? ";
+	    $mid .= " and `tiki_articles`.`type`=? ";
 	} else {
-	    $mid = " where `type`=? ";
+	    $mid = " where `tiki_articles`.`type`=? ";
 	}
     }
 
@@ -2286,8 +2287,21 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	 */
     }
 
-    $query = "select * from `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
-    $query_cant = "select count(*) from `tiki_articles` $mid";
+    //$query = "select * from `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
+    $query = "select `tiki_articles`.*,
+	`tiki_article_types`.`use_ratings`,
+	`tiki_article_types`.`show_pre_publ`,
+	`tiki_article_types`.`show_post_expire`,
+	`tiki_article_types`.`heading_only`,
+	`tiki_article_types`.`allow_comments`,
+	`tiki_article_types`.`show_image`,
+	`tiki_article_types`.`show_avatar`,
+	`tiki_article_types`.`show_author`,
+	`tiki_article_types`.`show_pubdate`,
+	`tiki_article_types`.`show_expdate`,
+	`tiki_article_types`.`show_reads`
+	from `tiki_articles`, `tiki_article_types` $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
@@ -2313,6 +2327,17 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	    $res["hasImage"] = 'n';
 	}
 	$res['count_comments'] = 0;
+
+	// Determine if the article should be displayed based on the date parameter
+	$res["disp_article"] = 'y';
+	if ($date) {
+	   if (($res["show_pre_publ"] != 'y') and ($date < $res["publishDate"])) {
+	       $res["disp_article"] = 'n';
+	   }
+	   if (($res["show_post_expire"] != 'y') and ($date > $res["expireDate"])) {
+	       $res["disp_article"] = 'n';
+	   }
+	}
 
 	if ($add) {
 	    $ret[] = $res;
