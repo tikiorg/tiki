@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.59 2004-03-11 06:01:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.60 2004-03-16 00:28:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,11 +83,15 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 $smarty->assign('tracker_info', $tracker_info);
-if (!isset($tracker_info["writerCanModify"])) $tracker_info["writerCanModify"] = 'n';
-if (!isset($tracker_info["writerGroupCanModify"])) $tracker_info["writerGroupCanModify"] = 'n';
+if (!isset($tracker_info["writerCanModify"]) or (!isset($utid) or ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
+	$tracker_info["writerCanModify"] = 'n';
+}
+if (!isset($tracker_info["writerGroupCanModify"]) or (!isset($gtid) or ($_REQUEST['trackerId'] != $gtid['groupTrackerId']))) {
+	$tracker_info["writerGroupCanModify"] = 'n';
+}
 
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y') {
-  if (!isset($user)){
+  if (!$user) {
     $smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
     $smarty->assign('errortitle',tra("Please login"));
   } else {
@@ -286,7 +290,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('view-trackers-items');
 		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
-			$_REQUEST["status"] = '';
+			$_REQUEST["status"] = $tracker_info["modItemStatus"];
 		}
 		
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
@@ -538,7 +542,7 @@ if (isset($_REQUEST['show'])) {
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
 		if ($tracker_info["useComments"] == 'y') $tabi++;
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");
+	setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab$tabi");
 } 
 
 $section = 'trackers';
