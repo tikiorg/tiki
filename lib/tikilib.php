@@ -2350,16 +2350,17 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	}
 	$res['count_comments'] = 0;
 
-	// Determine if the article should be displayed based on the date parameter
+	// Determine if the article would be displayed in the view page
 	$res["disp_article"] = 'y';
-	if ($date) {
-	   if (($res["show_pre_publ"] != 'y') and ($date < $res["publishDate"])) {
+	$now = date("U");
+	//if ($date) {
+	   if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
 	       $res["disp_article"] = 'n';
 	   }
-	   if (($res["show_post_expire"] != 'y') and ($date > $res["expireDate"])) {
+	   if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
 	       $res["disp_article"] = 'n';
 	   }
-	}
+	//}
 
 	if ($add) {
 	    $ret[] = $res;
