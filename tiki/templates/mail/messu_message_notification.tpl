@@ -4,6 +4,6 @@
 
 {tr}From:{/tr} {$mail_from}
 {tr}Subject:{/tr} {$mail_subject}
-{tr}Date:{/tr} {$mail_date|tiki_long_datetime}
+{tr}Date:{/tr} {$mail_date|tiki_short_datetime}
 
 {$mail_body}
