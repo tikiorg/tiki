@@ -863,6 +863,7 @@ class TikiLib extends TikiDB {
      * shared
      */
     function score_event($user, $event_type, $id = '', $multiplier=false) {
+    	global $scorelib;
 		if (!is_object($scorelib)) {
 			include_once("lib/score/scorelib.php");
 		}
