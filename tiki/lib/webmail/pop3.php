@@ -92,7 +92,7 @@ class POP3{
                            $this->AddError("1 a connection is already opened");
                   $this->OpenConnection();
                         $this->greeting = @fgets($this->connection, 100);
-                          if(GetType($this->greeting)!="string" OR strtok($this->greeting," ")!="+OK") :
+                          if(GetType($this->greeting)!="string" AND strtok($this->greeting," ")!="+OK") :
                                    $this->CloseConnection();
                                    $this->AddError("2 POP3 server greeting was not found");
                           endif;
