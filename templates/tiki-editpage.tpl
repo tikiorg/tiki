@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.51 2004-05-06 00:24:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.52 2004-05-28 10:27:46 chris_holman Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -25,6 +25,12 @@
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
 {if $page_ref_id}
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+{/if}
+{if $current_page_id}
+<input type="hidden" name="current_page_id" value="{$current_page_id}" />
+{/if}
+{if $add_child}
+<input type="hidden" name="add_child" value="true" />
 {/if}
 <table class="normal">
 {include file=categorize.tpl}
