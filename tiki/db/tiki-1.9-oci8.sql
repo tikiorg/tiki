@@ -1852,8 +1852,8 @@ DROP TABLE "tiki_group_inclusion";
 
 
 CREATE TABLE "tiki_group_inclusion" (
-  "groupName" varchar(30) default '' NOT NULL,
-  "includeGroup" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
+  "includeGroup" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("groupName","includeGroup")
 ) ;
 
@@ -2383,7 +2383,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Categories','tiki-categories.php',25,'feature_categories','tiki_p_view_categories','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Games','tiki-games.php',30,'feature_games','tiki_p_play_games','');
@@ -3111,7 +3111,7 @@ CREATE TABLE "tiki_pages" (
   "points" number(8) default NULL,
   "votes" number(8) default NULL,
   "cache" clob,
-  "wiki_cache" number(10) default 0,
+  "wiki_cache" number(10) default NULL,
   "cache_timestamp" number(14) default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
@@ -4004,6 +4004,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "type" char(1) default NULL,
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
+  "isSearchable" char(1) default NULL,
   PRIMARY KEY ("fieldId")
 )   ;
 
@@ -4707,7 +4708,7 @@ DROP TABLE "users_grouppermissions";
 
 
 CREATE TABLE "users_grouppermissions" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "permName" varchar(30) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
@@ -4725,9 +4726,11 @@ DROP TABLE "users_groups";
 
 
 CREATE TABLE "users_groups" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL,
   "groupHome" varchar(255),
+	usersTrackerId number(11),
+	groupTrackerId number(11),
   PRIMARY KEY ("groupName")
 ) ;
 
@@ -4743,7 +4746,7 @@ DROP TABLE "users_objectpermissions";
 
 
 CREATE TABLE "users_objectpermissions" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "permName" varchar(30) default '' NOT NULL,
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
@@ -4898,7 +4901,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar');
@@ -5234,7 +5237,7 @@ DROP TABLE "users_usergroups";
 
 CREATE TABLE "users_usergroups" (
   "userId" number(8) default '0' NOT NULL,
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("userId","groupName")
 ) ;
 
@@ -5431,10 +5434,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('blog_list_visits','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('blog_spellcheck','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_language','y');
@@ -5956,9 +5959,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('gal_use_lib','gd');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTracker','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTrackerId','0');
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('home_file_gallery','');
 
 
@@ -6157,6 +6157,24 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('sender_email','');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('email_encoding','utf-8');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_length','100');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_syll_age','48');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('short_date_format','%a %d of %b, %Y');
 
 
@@ -6214,13 +6232,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTracker','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTrackerId','0');
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n');

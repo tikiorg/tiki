@@ -1,6 +1,12 @@
 #!/bin/sh
 
-TIKISERVER="tikigmsih"
+if [ -z $1 ]; then
+	echo "Usage: ./convertscript.sh <host>"
+	echo "       whhere <host> is the virtualhost/root/ for your tiki"
+	exit 0
+fi
+
+TIKISERVER=$1
 VERSION="1.9"
 
 
