@@ -4,6 +4,7 @@ Tikiwiki Changelog
 
 Version 1.8 --
 
+* [MOD] CODE plugin now accepts php syntax highlighting {CODE(colors=>php)}
 * [NEW] Replace PEAR::DB with ADOdb to support PostgreSQL, Oracle, MSSQL, etc.
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
 
