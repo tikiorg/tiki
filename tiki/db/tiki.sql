@@ -3699,6 +3699,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_usermenu','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userPreferences','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userVersions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
