@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.20 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.21 2003-10-08 04:11:54 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if($where=='directory') {
 
 if($where=='faqs') {
 	if ($feature_faqs != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;
 	}
@@ -75,7 +75,7 @@ if($where=='faqs') {
 
 if($where=='forums') {
 	if ($feature_forums != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
   	$smarty->display("styles/$style_base/error.tpl");
   	die;
 	}
@@ -88,7 +88,7 @@ if($where=='forums') {
 
 if($where=='files') {
 	if ($feature_file_galleries !='y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;
 	}
@@ -101,7 +101,7 @@ if($where=='files') {
 
 if($where=='articles') {
 	if ($feature_articles != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;
 	}
@@ -114,7 +114,7 @@ if($where=='articles') {
 
 if (($where=='galleries' || $where=='images')) {
 	if ($feature_galleries != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;
 	}
@@ -127,7 +127,7 @@ if (($where=='galleries' || $where=='images')) {
 
 if(($where=='blogs' || $where=='posts')) {
 	if ($feature_blogs != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;
 	}
@@ -139,7 +139,7 @@ if(($where=='blogs' || $where=='posts')) {
 }
 
 if (($where == 'blogs' || $where == 'posts') and $feature_blogs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
