@@ -92,6 +92,7 @@ if(isset($_REQUEST['create'])) {
   copys("lib/tikihelp","$base/");
   
   $structlib->structure_to_webhelp($struct,$dir,$top);
+  copy("$base/pages/$top.html","$base/content.html");
   $smarty->assign('generated','y');
 }  
 

@@ -699,6 +699,7 @@ class StructLib extends TikiLib {
   		$result = $this->query($query,array($page));
 		$res = $result->fetchRow();
   		$docs[] = $res["pageName"]; 
+  		if(empty($res["description"])) $res["description"]=$res["pageName"];
   		$pageName=$res["pageName"].'|'.$res["description"];
   		$dat = $this->parse_data($res['data']);
 
@@ -706,7 +707,7 @@ class StructLib extends TikiLib {
   		$dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
   		$dat = str_replace('?nocache=1','',$dat);
   		$cs = '';
-  		$data = "<html><head><script src=\"../js/highlight.js\"></script><link rel=\"StyleSheet\"  href=\"../styles/$style_base.css\" type=\"text/css\" /><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <title>".$res["pageName"]."</title></head><body onLoad=\"doProc();\">$cs<div id='tiki-center'><div class='wikitext'>".$dat.'</div></div></body></html>';
+  		$data = "<html><head><script src=\"../js/highlight.js\"></script><link rel=\"StyleSheet\"  href=\"../../../styles/$style_base.css\" type=\"text/css\" /><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" /> <title>".$res["pageName"]."</title></head><body onLoad=\"doProc();\">$cs<div id='tiki-center'><div class='wikitext'>".$dat.'</div></div></body></html>';
   		$fw=fopen("$base/pages/".$res['pageName'].'.html','wb+');
   		fwrite($fw,$data);
   		fclose($fw);
