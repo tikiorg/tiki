@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.52 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.53 2004-06-15 05:06:30 rlpowell Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -252,6 +252,10 @@ a moderator approves it.{/tr}</small>
 {/if}
 {/if}
 
+<table class="normal" >
+{include file="comments.tpl"}
+
+{*
 {if $replies_cant > 0}
 <!-- TOOLBAR -->
   <div class="forumtoolbar">
@@ -349,7 +353,6 @@ a moderator approves it.{/tr}</small>
 </table>
 {/if}
 
-<table class="normal" >
 <tr>
   <td class="heading">{tr}author{/tr}</td>
   <td class="heading">{tr}message{/tr}</td>
@@ -503,6 +506,7 @@ a moderator approves it.{/tr}</small>
   </div>
 </div>
 {/if}
+*}
 
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
 

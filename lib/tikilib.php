@@ -5176,6 +5176,7 @@ function add_pageview() {
 		} elseif ($litype == '+') {
 		    // Close open paragraph, but not list or div's
 		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+		    $listlevel = $this->how_many_at_start($line, $litype);
 		    // Close lists down to requested level
 		    while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
 
