@@ -3433,7 +3433,7 @@ class TikiLib extends TikiDB {
 	global $page_regex;
 
 	global $slidemode;
-//	global $feature_hotwords; // doesn't seem to be used in this function
+	global $feature_hotwords;
 	global $feature_autolinks;
 	global $cachepages;
 	global $ownurl_father;
