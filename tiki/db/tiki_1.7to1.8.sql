@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.67 2003-11-14 18:38:17 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.68 2003-11-15 22:27:58 xenfasa Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -374,6 +374,9 @@ ALTER TABLE `tiki_comments` ADD `in_reply_to` VARCHAR( 250 ) AFTER `message_id` 
 #ALTER TABLE `tiki_comments` MODIFY `message_id` VARCHAR( 250 ) AFTER `smiley` ;
 #ALTER TABLE `tiki_comments` MODIFY `in_reply_to` VARCHAR( 250 ) AFTER `message_id` ;
 
+# Add field in tiki_comments for comment_rating - xenfasa
+ALTER TABLE `tiki_comments` ADD `comment_rating` TINYINT( 2 ) ;
+
 # Some more indexes for performance 
 CREATE INDEX `hash` on `tiki_comments`(`hash`);
 CREATE INDEX `in_reply_to` on `tiki_comments`(`in_reply_to`);
@@ -466,7 +469,7 @@ CREATE TABLE tiki_article_types (
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
   creator_edit varchar(1) default NULL,
-  comment_rating varchar(1) default NULL,
+  comment_can_rate_article varchar(1) default NULL,
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
