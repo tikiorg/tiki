@@ -1,3 +1,32 @@
+### Forum attachments (!) ###
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_attach','forums','Can attach to forum posts','editor');
+
+drop table if exists tiki_forum_attachments;
+create table tiki_forum_attachments(
+	attId integer(14) not null auto_increment,
+	threadId integer(14) not null,
+	qId integer(14) not null,
+	forumId integer(14),
+	filename varchar(250),
+	filetype varchar(250),
+	filesize integer(12),
+	data longblob,
+	dir varchar(200),
+	created integer(14),
+	path varchar(250),
+	primary key(attId)
+);
+alter table tiki_forums add att varchar(80);
+update tiki_forums set att='att_no';
+alter table tiki_forums add att_store varchar(4);
+update tiki_forums set att_store='db';
+alter table tiki_forums add att_store_dir varchar(250);
+update tiki_forums set att_store='';
+alter table tiki_forums add att_max_size integer(12);
+update tiki_forums set att_max_size = 1000000;
+### Forum attachments ###
+
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_live_support_admin','support','Admin live support system','admin');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_live_support','support','Can use live support system','basic');
 

@@ -56,6 +56,11 @@ if(isset($_REQUEST['qId'])) {
 
 $smarty->assign('form','y');
 
+if(isset($_REQUEST['remove_attachment'])) {
+	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+}
+
+
 if(isset($_REQUEST['qId'])) {
 
 	if(isset($_REQUEST['save'])) {
@@ -77,6 +82,8 @@ if(isset($_REQUEST['qId'])) {
 		$smarty->assign('form','n');
 		$commentslib->remove_queued($_REQUEST['qId']);
 	}
+	
+
 	
 	if(isset($_REQUEST['saveapp'])) {
 		$smarty->assign('form','n');

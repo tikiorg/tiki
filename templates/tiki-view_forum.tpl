@@ -84,7 +84,7 @@ a moderator approves it.{/tr}</small>
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
-    <form method="post" action="tiki-view_forum.php">
+    <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php">
     <input type="hidden" name="comments_offset" value="{$comments_offset}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
     <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
@@ -103,7 +103,7 @@ a moderator approves it.{/tr}</small>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
       
-      {if $feature_smileys eq 'y'}<td rowspan="5" class="forumform">
+      {if $feature_smileys eq 'y'}<td rowspan="6" class="forumform">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
@@ -186,6 +186,14 @@ a moderator approves it.{/tr}</small>
       <td class="forumform">{tr}Comment{/tr}</td>
       <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
     </tr>
+    {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
+    <tr>
+	  <td class="forumform">{tr}Attach file{/tr}</td>
+	  <td class="forumform">
+	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size}"><input name="userfile1" type="file" />
+	  </td>   
+    </tr>
+    {/if}
     </table>
     </form>
 <br/>    
@@ -325,14 +333,23 @@ a moderator approves it.{/tr}</small>
   <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
   {/if}
   </td>
-  {if $tiki_p_admin_forum eq 'y'}
+  
   <td style="text-align:right;">
+  {if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
+  {if count($comments_coms[ix].attachments)}
+  	<img src='img/icons/attachment.gif' alt='attachments' />
+  {/if}
+  {if $tiki_p_admin_forum eq 'y'}
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
-  </td>   
+     class="admlink"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
   {/if}
+  {else}
+  	&nbsp;
+  {/if}
+  </td>   
+  
   </tr></table>
   </td>
   {if $forum_info.topics_list_replies eq 'y'}

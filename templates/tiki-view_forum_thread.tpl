@@ -31,9 +31,6 @@ a moderator approves it.{/tr}</small>
   {if $thread_info.userName and $forum_info.ui_level eq 'y'}
   <br/><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
-  {if $thread_info.userName and $forum_info.ui_online eq 'y' and $thread_info.user_online eq 'y'}
-  <br/><small>now online</small>
-  {/if}
   </div>
   </td>
   <td class="viewthreadr" width="85%">
@@ -48,19 +45,15 @@ a moderator approves it.{/tr}</small>
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_threadId={$thread_info.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_remove=1&amp;comments_threadId={$thread_info.threadId}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
-	     class="admlink"><img src='img/icons/trash.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+	     class="admlink"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 	  {/if}     
 	  
-	  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject=Re:{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
-	  {/if}
+	  
 	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;savenotepad={$thread_info.threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	  {/if}
 
-	  {if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
-		  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
-	  {/if}
+	
 	  {if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_topic eq 'n'}
 			<a href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' title='{tr}monitor this topic{/tr}' src='img/icons/icon_watch.png' /></a>
@@ -75,8 +68,40 @@ a moderator approves it.{/tr}</small>
   </table>
   <br/><br/>
   {$thread_info.parsed}
-  <br/><br/>
-  <table width="100%" border="1" style="border: 1px solid black;">
+  <br/>
+  {if count($thread_info.attachments) > 0}
+	{section name=ix loop=$thread_info.attachments}
+		<a class="link" href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
+		<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
+		{$thread_info.attachments[ix].filename} ({$thread_info.attachments[ix].filesize|kbsize})</a>
+		{if $tiki_p_admin_forum eq 'y'}
+			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}">[{tr}del{/tr}]</a>					
+		{/if}
+		<br/>
+	{/section}
+  {/if}
+  </td>
+  </tr>
+<tr>
+  <td class="viewthreadr" style="text-align:center;">
+  	&nbsp;
+  	{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject=Re:{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+    {/if}
+	{if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
+	  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+	{/if}
+    {if $thread_info.userName and $forum_info.ui_online eq 'y'}
+    	{if $thread_info.user_online eq 'y'}
+  			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+  		{else}
+  			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+  		{/if}
+  	{/if}
+
+  </td>
+  <td class="viewthreadr">  
+  <table width="100%" border="1" style="border: 1px solid black; vertical-align: bottom;">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     {if $forum_info.vote_threads eq 'y'}
@@ -140,7 +165,7 @@ a moderator approves it.{/tr}</small>
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
-    <form method="post" action="tiki-view_forum_thread.php">
+    <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php">
     <input type="hidden" name="comments_offset" value="{$comments_offset}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
     <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
@@ -211,6 +236,14 @@ a moderator approves it.{/tr}</small>
       <td class="forumform">Comment</td>
       <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
     </tr>
+    {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
+    <tr>
+	  <td class="forumform">{tr}Attach file{/tr}</td>
+	  <td class="forumform">
+	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size}"><input name="userfile1" type="file" />
+	  </td>   
+    </tr>
+    {/if}
     </table>
     </form>
     
@@ -342,13 +375,10 @@ a moderator approves it.{/tr}</small>
   {if $comments_coms[ix].userName and $forum_info.ui_level eq 'y'}
   <br/><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
-  {if $comments_coms[ix].userName and $forum_info.ui_online eq 'y' and $comments_coms[ix].user_online eq 'y'}
-  <br/><small>now online</small>
-  {/if}
 
   </div>
   </td>
-  <td  class="threads{cycle}r" width="85%">
+  <td  class="threads{cycle advance=false}r" width="85%">
   <table width="100%">
   <tr>
   	<td>
@@ -363,28 +393,53 @@ a moderator approves it.{/tr}</small>
 	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-	     class="admlink"><img src='img/icons/trash.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+	     class="admlink"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 	  {/if}     
 	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;quote={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons/linkto.gif' border='0' alt='{tr}reply{/tr}' title='{tr}reply{/tr}' /></a>
-	  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
-	  {/if}
+	  
 	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;savenotepad={$comments_coms[ix].threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	  {/if}
-
-	  {if $comments_coms[ix].userName and $forum_info.ui_email eq 'y' and strlen($comments_coms[ix].user_email) > 0}  
-		  <a href="mailto:{$comments_coms[ix].user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
-	  {/if}
-
-
 	</td>
   </tr>
   </table>
   <br/><br/>
   {$comments_coms[ix].parsed}
-  <br/><br/>
+  <br/>
+  {if count($comments_coms[ix].attachments) > 0}
+	{section name=iz loop=$comments_coms[ix].attachments}
+		<a class="link" href="tiki-download_forum_attachment.php?attId={$comments_coms[ix].attachments[iz].attId}">
+		<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
+		{$comments_coms[ix].attachments[iz].filename} ({$comments_coms[ix].attachments[iz].filesize|kbsize})</a>
+		{if $tiki_p_admin_forum eq 'y'}
+			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comments_coms[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
+		{/if}
+		<br/>
+	{/section}
+  {/if}
+
+  </td>
+  </tr>
+  <tr>
+  <td style="text-align:center;" class="threads{cycle advance=false}r">
+    &nbsp;
+    {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+    {/if}
+    {if $comments_coms[ix].userName and $forum_info.ui_email eq 'y' and strlen($comments_coms[ix].user_email) > 0}  
+		  <a href="mailto:{$comments_coms[ix].user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+	{/if}
+    {if $comments_coms[ix].userName and $forum_info.ui_online eq 'y' }
+    	{if $comments_coms[ix].user_online eq 'y'}
+  			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+  		{else}
+  			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+  		{/if}
+  	{/if}
+
+  </td>
+  <td class="threads{cycle}r">
   <table style="border: 1px solid black;" width="100%">
   <tr>
     <td style="font-size:8pt;">

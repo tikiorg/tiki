@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] WML&PDA Integration using HawHaw: Use tiki-wap.php to access a Phone/PDA 
+  friendly version of the Wiki.
+* [NEW] Forum attachments added, you can setup which forums admit attachments and who
+  can attach files to forum posts. 
 * [NEW] Added forum discussion button to wiki page view: allows users to go straight to
   forum for page discussion.
 * [NEW] Drawings history added. From the admin drawings panel you can view the history,
