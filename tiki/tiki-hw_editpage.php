@@ -1,5 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.2 2004-02-05 19:09:59 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.3 2004-02-22 15:01:53 ggeller Exp $
+
+// 20040206 - Fix typos in error messages, comments, tabs.
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -75,32 +77,27 @@ $ggg_tracer->outvar($assignment_data);
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' $sdate = '.$sdate);
 if (($tiki_p_hw_grader == 'n') && (date("U") > $assignment_data['expireDate']) ) {
   $homeworklib->hw_page_unlock($pageId);
-  $smarty->assign('msg', tra("Permission denied: Students may edit their work after the due date."));
+  $smarty->assign('msg', tra("Permission denied: Students may NOT edit their work after the due date."));
   $smarty->display("error.tpl");
   die;
 }
 
-//       1         2         3         4         5         6         7
-//34567890123456789012345678901234567890123456789012345678901234567890123456789
 // Admin, teachers and graders can edit anyone's page after the due date, no
 //   one's before the due date. (unlock this page and exit)
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' $tiki_p_hw_grader = '.$tiki_p_hw_grader);
 if (($tiki_p_hw_grader == 'y') && (date("U") < $assignment_data['expireDate'])) {
   $homeworklib->hw_page_unlock($pageId);
-  $smarty->assign('msg', tra("Permission denied: The teacher must wait until the due date to edit student\'s work."));
+  $smarty->assign('msg', tra("Permission denied: The teacher must wait until the due date to edit students' work."));
   $smarty->display("error.tpl");
   die;
 }
 
 $smarty->assign('homeworkTitle', $assignment_data["title"]);
 
-// $ggg_tracer->out(__FILE__." line ".__LINE__.' $_REQUEST = ');
-// $ggg_tracer->outvar($_REQUEST);
-
 $edit_data = $page_data["data"];
 $smarty->assign('pagedata',$edit_data);
 
-// No preview for the prototype
+// No preview for the prototype TODO for VERSION2, the preview.
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 // if(isset($_REQUEST["preview"])) {
@@ -112,7 +109,7 @@ if (isset($_REQUEST["save"])) {
 
   $edit = $_REQUEST["edit"];
   if ((md5($page_data["data"]) != md5($_REQUEST["edit"]))) {
-	$comment = $_REQUEST["comment"];
+    $comment = $_REQUEST["comment"];
     $homeworklib->hw_page_update($pageId, $edit, $comment);
   }
   header("location: tiki-hw_page.php?assignmentId=".$page_data['assignmentId']);
