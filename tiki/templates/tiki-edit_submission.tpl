@@ -3,7 +3,7 @@
 {include file="tiki-preview_article.tpl"}
 {/if}
 <a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a><br/><br/>
-[<a class="link" href="tiki-list_submissions.php">list submissions</a>]
+[<a class="link" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>]
 <br/><br/>
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='tikieditsubmission'>
 <input type="hidden" name="subId" value="{$subId}" />

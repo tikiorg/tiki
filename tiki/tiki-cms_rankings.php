@@ -21,8 +21,8 @@ if($tiki_p_read_article != 'y') {
 }
 
 $allrankings = Array(
-  Array( 'name'=> 'Top articles', 'value'=> tra('cms_ranking_top_articles')),
-  Array( 'name'=> 'Top authors', 'value'=>tra('cms_ranking_top_authors'))
+  Array( 'name'=> tra('Top articles'), 'value'=> 'cms_ranking_top_articles'),
+  Array( 'name'=> tra('Top authors'), 'value'=> 'cms_ranking_top_authors')
   
 );
 $smarty->assign('allrankings',$allrankings);
