@@ -1,14 +1,14 @@
 <a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr}</a><br/><br/>
-[<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
+<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
-|<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
-|<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="link">{tr}Edit this tracker{/tr}</a>
+<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
+<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a>
 {if $user}
-|<a href="tiki-view_tracker_item.php?itemId={$itemId}&amp;trackerId={$trackerId}&amp;monitor=1" class="link">{tr}{$email_mon}{/tr}</a>
+<a href="tiki-view_tracker_item.php?itemId={$itemId}&amp;trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a>
 {/if}
 {/if}
-|<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="link">{tr}View this tracker items{/tr}</a>
-]<br/><br/>
+<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a>
+<br/><br/>
 <form action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
