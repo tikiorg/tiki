@@ -66,7 +66,7 @@
   {/section}
 </table>
 </form>
-
+<br/>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}

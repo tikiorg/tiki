@@ -1,7 +1,5 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
-CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
-
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
@@ -143,3 +141,118 @@ create fulltext index ft on tiki_articles (title,heading,body);
 create fulltext index ft on tiki_blog_posts (data);
 
 ### FULLTEXT SEARCH END
+
+alter table users_permissions add level varchar(80);
+## LEVELS
+## 1-anonymous users
+## 2-registered users
+## 3-editors&friends
+## 4-admins
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_structures ';
+UPDATE users_permissions set level='registered' where permName='tiki_p_messages';
+UPDATE users_permissions set level='admin' where permName='tiki_p_broadcast';
+UPDATE users_permissions set level='admin' where permName='tiki_p_admin_mailin';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_directory';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory_cats';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_directory_sites';
+UPDATE users_permissions set level='basic' where permName='tiki_p_submit_link';
+UPDATE users_permissions set level='editors' where permName='tiki_p_autosubmit_link';
+UPDATE users_permissions set level='editors' where permName='tiki_p_validate_links';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_galleries';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_file_galleries';
+UPDATE users_permissions set level='editors' where permName='tiki_p_create_file_galleries';
+UPDATE users_permissions set level='registered' where permName='tiki_p_upload_files';
+UPDATE users_permissions set level='basic' where permName='tiki_p_download_files';
+UPDATE users_permissions set level='basic' where permName='tiki_p_post_comments';
+UPDATE users_permissions set level='basic' where permName='tiki_p_read_comments';
+UPDATE users_permissions set level='editors' where permName='tiki_p_remove_comments';
+UPDATE users_permissions set level='registered' where permName='tiki_p_vote_comments';
+UPDATE users_permissions set level='admin' where permName='tiki_p_admin';
+UPDATE users_permissions set level='basic' where permName='tiki_p_edit';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view';
+UPDATE users_permissions set level='editors' where permName='tiki_p_remove';
+UPDATE users_permissions set level='registered' where permName='tiki_p_rollback';
+UPDATE users_permissions set level='editors' where permName='tiki_p_create_galleries';
+UPDATE users_permissions set level='registered' where permName='tiki_p_upload_images';
+UPDATE users_permissions set level='editors' where permName='tiki_p_use_HTML';
+UPDATE users_permissions set level='editors' where permName='tiki_p_create_blogs';
+UPDATE users_permissions set level='registered' where permName='tiki_p_blog_post';
+UPDATE users_permissions set level='editors' where permName='tiki_p_blog_admin';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_article';
+UPDATE users_permissions set level='editors' where permName='tiki_p_remove_article';
+UPDATE users_permissions set level='basic' where permName='tiki_p_read_article';
+UPDATE users_permissions set level='basic' where permName='tiki_p_submit_article';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_submission';
+UPDATE users_permissions set level='editors' where permName='tiki_p_remove_submission';
+UPDATE users_permissions set level='editors' where permName='tiki_p_approve_submission';
+UPDATE users_permissions set level='admin' where permName='tiki_p_edit_templates';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_dynamic';
+UPDATE users_permissions set level='admin' where permName='tiki_p_admin_banners';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_wiki';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_cms';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_categories';
+UPDATE users_permissions set level='registered' where permName='tiki_p_send_pages';
+UPDATE users_permissions set level='registered' where permName='tiki_p_sendme_pages';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_received_pages';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_forum';
+UPDATE users_permissions set level='basic' where permName='tiki_p_forum_post';
+UPDATE users_permissions set level='basic' where permName='tiki_p_forum_post_topic';
+UPDATE users_permissions set level='basic' where permName='tiki_p_forum_read';
+UPDATE users_permissions set level='registered' where permName='tiki_p_forum_vote';
+UPDATE users_permissions set level='basic' where permName='tiki_p_read_blog';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_image_gallery';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_file_gallery';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_comments';
+UPDATE users_permissions set level='basic' where permName='tiki_p_vote_poll';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_chat';
+UPDATE users_permissions set level='basic' where permName='tiki_p_chat';
+UPDATE users_permissions set level='basic' where permName='tiki_p_topic_read';
+UPDATE users_permissions set level='basic' where permName='tiki_p_play_games';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_games';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_cookies';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_stats';
+UPDATE users_permissions set level='registered' where permName='tiki_p_create_bookmarks';
+UPDATE users_permissions set level='registered' where permName='tiki_p_configure_modules';
+UPDATE users_permissions set level='registered' where permName='tiki_p_cache_bookmarks';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_faqs';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_faqs';
+UPDATE users_permissions set level='editors' where permName='tiki_p_send_articles';
+UPDATE users_permissions set level='registered' where permName='tiki_p_sendme_articles';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_received_articles';
+UPDATE users_permissions set level='editors' where permName='tiki_p_view_referer_stats';
+UPDATE users_permissions set level='basic' where permName='tiki_p_wiki_attach_files';
+UPDATE users_permissions set level='editors' where permName='tiki_p_wiki_admin_attachments';
+UPDATE users_permissions set level='basic' where permName='tiki_p_wiki_view_attachments';
+UPDATE users_permissions set level='editors' where permName='tiki_p_batch_upload_images';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_drawings';
+UPDATE users_permissions set level='basic' where permName='tiki_p_edit_drawings';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_html_pages';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_html_pages';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_shoutbox';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_shoutbox';
+UPDATE users_permissions set level='basic' where permName='tiki_p_post_shoutbox';
+UPDATE users_permissions set level='basic' where permName='tiki_p_suggest_faq';
+UPDATE users_permissions set level='editors' where permName='tiki_p_edit_content_templates';
+UPDATE users_permissions set level='editors' where permName='tiki_p_use_content_templates';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_quizzes';
+UPDATE users_permissions set level='basic' where permName='tiki_p_take_quiz';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_quiz_stats';
+UPDATE users_permissions set level='editors' where permName='tiki_p_view_user_results';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_newsletters';
+UPDATE users_permissions set level='basic' where permName='tiki_p_subscribe_newsletters';
+UPDATE users_permissions set level='editors' where permName='tiki_p_subscribe_email';
+UPDATE users_permissions set level='registered' where permName='tiki_p_use_webmail';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_surveys';
+UPDATE users_permissions set level='basic' where permName='tiki_p_take_survey';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_survey_stats';
+UPDATE users_permissions set level='registered' where permName='tiki_p_modify_tracker_items';
+UPDATE users_permissions set level='basic' where permName='tiki_p_comment_tracker_items';
+UPDATE users_permissions set level='registered' where permName='tiki_p_create_tracker_items';
+UPDATE users_permissions set level='editors' where permName='tiki_p_admin_trackers';
+UPDATE users_permissions set level='basic' where permName='tiki_p_view_trackers';
+UPDATE users_permissions set level='registered' where permName='tiki_p_attach_trackers';
+UPDATE users_permissions set level='basic' where permName='tiki_p_upload_picture';
+UPDATE users_permissions set level='editors' where permName='tiki_p_batch_upload_files';
+
+CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
