@@ -318,7 +318,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$ins_fields[ix].value|escape}</textarea>
 
 {elseif $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].id time=$ins_fields[ix].value end_year="+1"} {html_select_time prefix=$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
+{html_select_date prefix="ins_"|cat:$ins_fields[ix].id time=$ins_fields[ix].value start_year="-4" end_year="+4"} {html_select_time prefix="ins_"|cat:$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
 
 {elseif $ins_fields[ix].type eq 'r'}
 <select name="ins_{$ins_fields[ix].id}">

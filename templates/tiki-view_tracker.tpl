@@ -313,7 +313,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}4{/if}">{$defaultvalues.$fid|escape}</textarea>
 
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value start_year="-4" end_year="+4"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {elseif $fields[ix].type eq 'd'}
 <select name="{$fields[ix].ins_id}">
