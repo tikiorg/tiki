@@ -36,7 +36,7 @@ class StructLib extends TikiLib {
   function s_get_structure_pages($structure_id) {
 
 		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id and `page_ref_id`=?";
 		$result = $this->query($query,array($structure_id));
 
@@ -57,7 +57,7 @@ class StructLib extends TikiLib {
 		$ret = array($parent_id, $pageName, $page_alias);
 
 		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($structure_id));
 
@@ -105,7 +105,7 @@ class StructLib extends TikiLib {
 		// Now recursively remove
 
 		$query = "select `page_ref_id`, ts.`page_id`, `pageName` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where tp.`page_id`=ts.`page_id` and `parent_id`=?";
 		$result = $this->query($query,array($page_ref_id));
 
@@ -176,7 +176,7 @@ class StructLib extends TikiLib {
 
 		//Get all child nodes for this page_ref_id
     $query = "select `page_ref_id`, `page_alias`, `pageName`";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id` = tp.`page_id` and `parent_id`=? order by `pos` asc";
 		$result = $this->query($query,array($page_ref_id));
 		
@@ -262,7 +262,7 @@ class StructLib extends TikiLib {
 	function get_page_info($page_ref_id) {
     $ret = array();
 		$query =  "select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `page_ref_id`=?";
     $result = $this->query($query,array($page_ref_id));
     if($res = $result->fetchRow()) {
@@ -287,7 +287,7 @@ class StructLib extends TikiLib {
 		//$level++;
 		$sublevel = 0;
 		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($page_ref_id));
 		$subs = array();
@@ -385,7 +385,7 @@ class StructLib extends TikiLib {
 
 	function page_is_in_structure($pageName) {
     $query  = "select count(*) ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
 		$cant = $this->getOne($query,array($pageName));
 		return $cant;
@@ -394,7 +394,7 @@ class StructLib extends TikiLib {
   //Is this page the head page for a structure?
 	function get_struct_ref_if_head($pageName) {
     $query =  "select `page_ref_id` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id` is null and `pageName`=?";
 		$page_ref_id = $this->getOne($query,array($pageName));
 		return $page_ref_id;
@@ -405,7 +405,7 @@ class StructLib extends TikiLib {
 		// If we have children then get the first child
 		if ($deep) {
 			$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-      $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+      $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
       $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? ";
       $query .= "order by ".$this->convert_sortmode("pos_asc");
 			$result1 = $this->query($query,array($page_ref_id));
@@ -429,7 +429,7 @@ class StructLib extends TikiLib {
 			return null;
 
 		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? and `pos`>? ";
     $query .= "order by ".$this->convert_sortmode("pos_asc");
 		$result2 = $this->query($query,array($parent_id, $page_pos));
@@ -451,7 +451,7 @@ class StructLib extends TikiLib {
     //Drill down to last child for this tree node
     if ($deep) {
   		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-      $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+      $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
       $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? ";
       $query .= "order by ".$this->convert_sortmode("pos_desc");
   		$result = $this->query($query,array($page_ref_id));
@@ -480,7 +480,7 @@ class StructLib extends TikiLib {
 			return null;
 
 		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? and `pos`<? ";
     $query .= "order by ".$this->convert_sortmode("pos_desc");
 		$result = $this->query($query,array($parent_id,$pos));
@@ -526,7 +526,7 @@ class StructLib extends TikiLib {
   */
 	function get_pages($parent_id) {
 		$ret = array();
-		$query =  "select `page_ref_id`, `pageName`, `page_alias` from `tiki_structures` as ts, `tiki_pages` as tp ";
+		$query =  "select `page_ref_id`, `pageName`, `page_alias` from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($parent_id));
 		while ($res = $result->fetchRow()) {
@@ -542,7 +542,7 @@ class StructLib extends TikiLib {
 		$ret = array();
 		$pages_added = array();
 		$query = "select `page_ref_id` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
     $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		while ($res = $result->fetchRow()) {
@@ -573,7 +573,7 @@ class StructLib extends TikiLib {
       $ret = array($page_ref_id);
     }
  	  $query =  "select `page_ref_id`, `pageName`, `page_alias` from ";
-    $query .= "`tiki_structures` as ts, `tiki-pages` as tp ";
+    $query .= "`tiki_structures` ts, `tiki-pages` tp ";
     $query .= "where tp.`page_id`=ts.`page_id` and `parent_id`=?";
  	  $result = $this->query($query,array($page_ref_id));
 		while ($res = $result->fetchRow()) {
@@ -611,8 +611,11 @@ class StructLib extends TikiLib {
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_structures` as ts, `tiki_pages` as tp $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_structures` as ts, `tiki_pages` as tp $mid";
+		$query = "select `page_ref_id`,`parent_id`,ts.`page_id`,`page_alias`,`pos`,
+			`pageName`,`hits`,`data`,`description`,`lastModif`,`comment`,`version`,
+			`user`,`ip`,`flag`,`points`,`votes`,`cache`,`wiki_cache`,`cache_timestamp`,
+			`pageRank`,`creator`,`page_size` from `tiki_structures` ts, `tiki_pages` tp $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_structures` ts, `tiki_pages` tp $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
