@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.36 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.37 2004-06-29 22:29:36 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -316,7 +316,10 @@ if (isset($_REQUEST["comments_previewComment"])) {
 // Check for settings
 if (!isset($_REQUEST["comments_maxComments"])) {
     $_REQUEST["comments_maxComments"] = $comments_per_page;
+    $smarty->assign('comments_maxComments_param', NULL);
 } else {
+	$comments_maxComments_param = 'comments_maxComments=' . $_REQUEST["comments_maxComments"];
+	$smarty->assign('comments_maxComments_param', htmlspecialchars($comments_maxComments_param));
     $comments_show = 'y';
 }
 
