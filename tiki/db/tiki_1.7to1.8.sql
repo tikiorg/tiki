@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.40 2003-10-20 16:03:26 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.41 2003-10-21 18:00:25 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -78,6 +78,8 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('direct_paginati
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('display_timezone', 'EST');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('faq_comments_default_ordering', 'points_desc');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('faq_comments_per_page', '10');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_autolinks','y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_maps','n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_article_comments', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_articles', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_babelfish', 'n');

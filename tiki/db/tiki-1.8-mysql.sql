@@ -3515,6 +3515,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_img','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_reads','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_size','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_title','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_topic','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_type','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_expire','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_visible','y');
@@ -3567,6 +3568,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('direct_pagination','n')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('display_timezone','EST');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_default_ordering','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_per_page','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_autolinks','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_maps','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_article_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_articles','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_babelfish','n');

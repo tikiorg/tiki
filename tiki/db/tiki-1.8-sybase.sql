@@ -5863,6 +5863,16 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y');
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n');
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comments','n')
 go
 
