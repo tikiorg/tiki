@@ -1,10 +1,5 @@
 {php}
 include_once("lib/class_calendar.php");
-//if(!isset($_SESSION["thedate"])) {
-  $day = date("d");
-  $mon = date("m");
-  $year = date("Y");
-//}
 if(isset($_SESSION["thedate"])) {
   $day=date("d",$_SESSION["thedate"]);
   $mon=date("m",$_SESSION["thedate"]);
@@ -71,19 +66,19 @@ if(!strstr($father,"?")) {
 	  <td colspan="7">
        	    <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tr class="changedate" bgcolor="#FFFFFF"> <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
-                <td align="left"><a class="nav" href="<?$mong=$year-1;print("$father"."day=$day&amp;mon=$mon&amp;year=$mong");?>">&lt;</a><span class="nav"><?=$year?></span><a class="nav" href="<?$mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
-                <td align="center"><a class="today" href="<?=$todaylink?>">{tr}Today{/tr}</a></td>
-                <td align="right"><a class="nav" href="<?$mong=$mon-1;print("$father"."day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><span class="nav"><?=$v?></span><a class="nav" href="<?$mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
+                <td align="left"><a class="nav" href="<?php $mong=$year-1;print("$father"."day=$day&amp;mon=$mon&amp;year=$mong");?>">&lt;</a><span class="nav"><?php print($year);?></span><a class="nav" href="<?php $mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
+                <td align="center"><a class="today" href="<?php print($todaylink);?>">{tr}Today{/tr}</a></td>
+                <td align="right"><a class="nav" href="<?php $mong=$mon-1;print("$father"."day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><span class="nav"><?php print($v);?></span><a class="nav" href="<?php $mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
               </tr> <!-- ROW WITH YEAR AND MONTH ENDS -->
             </table>
           </td>
 	</tr>
-        <?
+        <?php
           $mat=$c->getDisplayMatrix($day,$mon,$year);
           $pmat=$c->getPureMatrix($day,$mon,$year);
         ?>
         <tr> <!-- DAYS OF THE WEEK -->
-          <?
+          <?php
             for($i=0;$i<7;$i++) {
               $dayW=$c->dayOfWeekStrFromNo($i+1);
               $dayp=Substr($dayW,0,1);
@@ -92,7 +87,7 @@ if(!strstr($father,"?")) {
           ?>
         </tr>
         <!-- TRs WITH DAYS -->
-        <?
+        <?php
           for($i=0;$i<6;$i++) {
             print("<tr>");
             for($j=0;$j<7;$j++) {
@@ -116,4 +111,3 @@ if(!strstr($father,"?")) {
 </div>
 <?
 {/php}
-
