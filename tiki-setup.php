@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.138 2003-08-22 05:51:26 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.139 2003-09-07 00:07:59 jenolan1701 Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,7 @@
 class TikiSetup {
 	/*!
 		Return 'windows' if windows, otherwise 'unix'
-		
+
 		\static
 	*/
 	function os() {
@@ -35,7 +35,7 @@ class TikiSetup {
 
 	/*!
 		Return true if windows, otherwise false
-		
+
 		\static
 	*/
 	function isWindows() {
@@ -50,7 +50,7 @@ class TikiSetup {
 
 	/*!
 		Return ';' if windows otherwise ':'
-		
+
 		\static
 	*/
 	function pathSeparator() {
@@ -102,7 +102,7 @@ class TikiSetup {
 
 	/*!
 		Return system defined temporary directory.
-		
+
 		In Unix, this is usually /tmp
 		In Windows, this is usually c:\windows\temp or c:\winnt\temp
 
@@ -112,7 +112,9 @@ class TikiSetup {
 		static $tempdir;
 
 		if (!$tempdir) {
-			$tempdir = dirname(tempnam(false, ''));
+			$tempfile = tempnam( false, '' );
+			$tempdir = dirname( $tempfile );
+			unlink( $tempfile );
 		}
 
 		return $tempdir;
@@ -120,7 +122,7 @@ class TikiSetup {
 
 	/*!
 		Check that everything is set up properly
-		
+
 		\static
 	*/
 	function check() {
@@ -245,7 +247,7 @@ If you can become root:
 	\$ chmod +x setup.sh
 	\$ su -c './setup.sh $wwwuser'
 
-If you have problems accessing a directory, check the open_basedir entry in 
+If you have problems accessing a directory, check the open_basedir entry in
 $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 Once you have executed these commands, this message will disappear!
@@ -1397,7 +1399,7 @@ if(isset($_COOKIE["mapsmenu"])) {
     $smarty->assign('mnu_mapsmenu','display:block;');
   }
 }
-	
+
 $smarty->assign('mnu_layermenu','display:none;');
 if(isset($_COOKIE["layermenu"])) {
   if($_COOKIE["layermenu"]=='o') {
@@ -1539,7 +1541,7 @@ $ownurl_father = $father;
 $smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
 
 
-	
+
 $allowMsgs = 'n';
 
 if ($user) {
