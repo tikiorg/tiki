@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.17 2004-07-23 16:20:41 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.18 2004-08-11 20:33:02 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,15 +89,26 @@ if (isset($_REQUEST["preview"])) {
 
 $smarty->assign('diff2', 'n');
 
-if (isset($_REQUEST["diff2"])) {
+if (isset($_REQUEST["diff2"]) || isset($_REQUEST["compare"])) {
 	require_once('lib/diff/difflib.php');
-	$diff = $histlib->get_version($page, $_REQUEST["diff2"]);
-
-	$info = $tikilib->get_page_info($page);
+	if (isset($_REQUEST["diff2"])) {
+		$diff = $histlib->get_version($page, $_REQUEST["diff2"]);
+		$info = $tikilib->get_page_info($page);
+		$smarty->assign('oldver', $_REQUEST["diff2"]);
+		$smarty->assign('newver', 0);
+	}
+	else {
+		$diff = $histlib->get_version($page, $_REQUEST["oldver"]);
+		if ($_REQUEST["newver"] == 0)
+			$info = $tikilib->get_page_info($page);
+		else
+			$info = $histlib->get_version($page, $_REQUEST["newver"]);
+		$smarty->assign('oldver', $_REQUEST["oldver"]);
+		$smarty->assign('newver', $_REQUEST["newver"]);
+	}
 	$html = diff2($diff["data"], $info["data"]);
 	$smarty->assign('diffdata', $html);
 	$smarty->assign('diff2', 'y');
-	$smarty->assign_by_ref('version', $_REQUEST["diff2"]);
 }
 
 // We are going to change this to "compare" instead of diff
@@ -111,7 +122,7 @@ if (isset($_REQUEST["diff"])) {
 	$info = $tikilib->get_page_info($page);
 	$pdata = $tikilib->parse_data($info["data"]);
 	$smarty->assign_by_ref('parsed', $pdata);
-	$smarty->assign_by_ref('version', $_REQUEST["diff"]);
+	$smarty->assign_by_ref('oldver', $_REQUEST["diff"]);
 }
 
 $info = $tikilib->get_page_info($page);
