@@ -1054,9 +1054,9 @@ class Comments extends TikiLib {
 	    0, $id = 0)
     {
 	$r1 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, $id, true, true);
+			$sort_mode, $find, $threshold, true, true);
 	$r2 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, $id, false, true);
+			$sort_mode, $find, $threshold, false, true);
 
 	$retval = array();
 	$retval["data"] = array_merge($r1["data"], $r2["data"]);
@@ -1067,7 +1067,7 @@ class Comments extends TikiLib {
 
     function _get_comments($objectId, $parentId, $offset = 0, $maxRecords
 	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
-	    0, $id, $sticky, $get_replies)
+	    0, $sticky, $get_replies)
     {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
@@ -1100,14 +1100,6 @@ class Comments extends TikiLib {
 	    $maxRecords = -1;
 	}
 
-	if ($id) {
-	    $extra = " and ? ";
-	    $bind_extra=array($id);
-	} else {
-	    $extra = '';
-	    $bind_extra=array();
-	}
-
 	// Break out the type and object parameters.
 	$object = explode( ":", $objectId, 2);
 
@@ -1135,13 +1127,12 @@ class Comments extends TikiLib {
 	    $bind_mid=array($object[0], $object[1], $parentId, 's', $threshold);
 	}
 
-	$query = "select * from `tiki_comments` $mid $extra
-	    $time_cond order by
-	    ".$this->convert_sortmode($sort_mode).",`threadId`";
+	$query = "select * from `tiki_comments` $mid $time_cond
+		order by".$this->convert_sortmode($sort_mode).",`threadId`";
 	//print("$query<br/>");
-	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
-	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_extra,$bind_time));
+	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
+	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -1257,9 +1248,6 @@ class Comments extends TikiLib {
 	    $maxRecords = -1;
 	}
 
-	$extra = '';
-	$bind_extra=array();
-
 	// Break out the type and object parameters.
 	$object = explode( ":", $objectId, 2);
 
@@ -1270,10 +1258,10 @@ class Comments extends TikiLib {
 	$mid = " where `objectType` = ? and `object`=? ";
 	$bind_mid=$object;
 
-	$query = "select * from `tiki_comments` $mid $extra $time_cond order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
-	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_extra,$bind_time));
+	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
+	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 
 	while ($res = $result->fetchRow()) {
 	    // Get the last reply
