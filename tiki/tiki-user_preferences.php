@@ -63,6 +63,8 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
     $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
   }
+  header("location: tiki-user_preferences.php?view_user=$userwatch");
+  die;
 }
 
 if(isset($_REQUEST["chgpswd"])) {
