@@ -93,8 +93,8 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 {/section}
 {/if}
 </div>
-</div>
 {/if}
+</div>
 </div>
 
 {* --- tab with form --- *}
@@ -127,6 +127,13 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td><input type="text" name="defaultOrderKey" value="{$defaultOrderKey}" /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}What is default sort order in list?{/tr}</td><td>
+<select name="defaultOrderDir">
+<option value="asc" {if $defaultOrderDir eq 'asc'}selected="selected"{/if}/>{tr}ascending{/tr}</option>
+<option value="desc" {if $defaultOrderDir eq 'desc'}selected="selected"{/if}/>{tr}descending{/tr}</option>
+</select>
+</td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow comments?{/tr}</td><td>
 <input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleSpan('commentsoptions');" />
 <span id="commentsoptions" style="display:{if $useComments eq 'y'}inline{else}none{/if};">
