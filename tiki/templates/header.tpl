@@ -48,7 +48,7 @@
 {/if}
 
 {* --- phplayers block --- *}
-{if $feature_phplayers eq 'y' and $uses_jscalendar eq 'y'}
+{if $feature_phplayers eq 'y'}
 <link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
 <style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
 <script language="JavaScript" type="text/javascript"><!--
