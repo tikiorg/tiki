@@ -309,6 +309,7 @@ function convert_sortmode($sort_mode) {
 	    // Postgres needs " " around column names
 	    //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
 	    $sort_mode = str_replace("_", "\" ", $sort_mode);
+        $sort_mode = str_replace(",", "\",\"",$sort_mode);
 
 	$sort_mode = "\"" . $sort_mode;
 	break;
@@ -317,7 +318,7 @@ function convert_sortmode($sort_mode) {
 	    case "mysql":
 	default:
 	    $sort_mode = str_replace("_", "` ", $sort_mode);
-
+        $sort_mode = str_replace(",", "`,`",$sort_mode);
 	    $sort_mode = "`" . $sort_mode;
 	    break;
     }
