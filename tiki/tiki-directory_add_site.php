@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.5 2003-11-07 20:03:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.6 2003-11-16 23:33:42 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -193,7 +193,7 @@ if ($offset > 0) {
 $smarty->assign_by_ref('items', $items["data"]);
 
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
-if (isset($_REQUEST["save"]) && $msg != "") { // an error occured, the chosen categs have to be set again
+if (isset($_REQUEST["save"]) && $msg != "" && isset($_REQUEST["siteCats"])) { // an error occured, the chosen categs have to be set again
 	foreach ($_REQUEST["siteCats"] as $acat)
 		for ($ix = 0; $ix < sizeof($categs) ; ++$ix) {
 			if ($categs[$ix]["categId"] == $acat)
