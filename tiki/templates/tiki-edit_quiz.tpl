@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.17 2004-06-04 04:59:11 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.18 2004-06-04 05:24:34 dgdaniels Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -59,8 +59,12 @@
 <textarea name="description" id="quiz-desc" rows="4" cols="75">{$description|escape}</textarea>
 </td>
 </tr>
+
+<!-- here's the little gem that provides the categories -->
 {include file=categorize.tpl}
 <tr class="formcolor">
+
+<!-- the publishing info does not work... don't trust it -->
 <td>{tr}Publish Date{/tr}</td>
 <td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
@@ -85,10 +89,13 @@
 <td class="formcolor">
 <input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
 <tr>
-<td class="formcolor"><label for="immediate-feedback">{tr}Immediate feedback{/tr}</td><td class="formcolor"><input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} /></td></tr>
+<!-- There is no immeidate feedback... the results come back as blank-->
+<td class="formcolor"><label for="immediate-feedback">{tr}Immediate feedback{/tr}</td><td class="formcolor"><input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} /></td>
+</tr>
 <tr>
 <td class="formcolor">
-<label for="show-answers">{tr}Show correct answers{/tr}</td><td class="formcolor"><input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} /></td></tr>
+<label for="show-answers">{tr}Show correct answers{/tr}</td>
+<td class="formcolor"><input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} /></td></tr>
 <tr>
 <td class="formcolor">
 <label for="shuffle-questions">{tr}Shuffle questions{/tr}</td><td class="formcolor">
@@ -99,9 +106,11 @@
 <td class="formcolor">
 <label for="shuffle-answers">{tr}Shuffle answers{/tr}</td><td class="formcolor">
 <input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} /></td></tr>
-<!--<tr><td class="formcolor"><label for="quiz-perpage">{tr}Questions per page{/tr}</td><td class="formcolor"><select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select></td></tr>-->
+<!--Why was this quoted out? Need to investigate
+<tr><td class="formcolor"><label for="quiz-perpage">{tr}Questions per page{/tr}</td><td class="formcolor"><select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select></td></tr>-->
 <tr>
 <td class="formcolor">
+<!-- quiz time limits do work-->
 <label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label></td><td class="formcolor">
 <input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} />
 </td>
@@ -148,19 +157,19 @@
 <a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
 </td>
 
-
+<!-- I don't know why but these column head will not behave properly with sort -->
 <td class="heading">{tr}questions{/tr}</td>
 <td class="heading">{tr}results{/tr}</td>
 
-{* still stuck on being able to sort by number of questions and results! 
+{* still stuck on being able to sort by number of questions and results!
 Results need to be sortable so as to give admin quick idea of user participation
 <a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}results{/tr}</a>
 </td>
 *}
 
-
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+<!-- end header data -->
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
 <tr>
