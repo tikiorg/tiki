@@ -1,3 +1,17 @@
+### Wiki drawings versioning
+drop table if exists tiki_drawings;
+create table tiki_drawings(
+	drawId integer(12) not null auto_increment,
+	name varchar(250),
+	filename varchar(250),
+	timestamp integer(14),
+	user varchar(200),
+	primary key(drawId)
+);
+
+### Wiki drawings versioning
+
+
 ### Live support chat system
 ### under construction
 
@@ -137,7 +151,11 @@ alter table tiki_comments add smiley varchar(80);
 update tiki_comments set smiley='';
 
 alter table tiki_forums add outbound_address varchar(250);
-alter table tiki_forums add inbound_address varchar(250);
+alter table tiki_forums add inbound_pop_server varchar(250);
+alter table tiki_forums add inbound_pop_port integer(4);
+alter table tiki_forums add inbound_pop_user varchar(200);
+alter table tiki_forums add inbound_pop_password varchar(80);
+
 alter table tiki_forums add topic_smileys char(1);
 alter table tiki_forums add ui_avatar char(1);
 alter table tiki_forums add ui_flag char(1);

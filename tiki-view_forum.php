@@ -124,6 +124,8 @@ $comments_vars=Array('forumId');
 $comments_prefix_var='forum';
 $comments_object_var='forumId';
 
+$commentslib->process_inbound_mail($_REQUEST['forumId']);
+
 /******************************/
 if(!isset($_REQUEST['comments_threshold'])) {
   $_REQUEST['comments_threshold']=0;

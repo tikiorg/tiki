@@ -230,6 +230,7 @@ class BlogLib extends TikiLib {
   {
     // update tiki_blogs and call activity functions
 	global $smarty;
+	global $feature_user_watches;
     $tracks=addslashes(serialize(explode(',',$trackbacks)));
     $title=addslashes($title);
     $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');

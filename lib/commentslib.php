@@ -14,6 +14,96 @@ class Comments extends TikiLib {
   }
   
   /* Functions for the forums */
+  function parse_output(&$obj, &$parts,$i) {  
+	  if(!empty($obj->parts)) {    
+	    for($i=0; $i<count($obj->parts); $i++)      
+	      parse_output($obj->parts[$i], $parts,$i);  
+	  }else{    
+	    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;    
+	    switch($ctype) {    
+	      case 'text/plain':      
+	        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
+	          $names=split(';',$obj->headers["content-disposition"]);        
+	          $names=split('=',$names[1]);        
+	          $aux['name']=$names[1];        
+	          $aux['content-type']=$obj->headers["content-type"];        
+	          $aux['part']=$i;        
+	          $parts['attachments'][] = $aux;      
+	        }else{        
+	          $parts['text'][] = $obj->body;      
+	        }      
+	        break;    
+	      case 'text/html':      
+	        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
+	          $names=split(';',$obj->headers["content-disposition"]);        
+	          $names=split('=',$names[1]);        
+	          $aux['name']=$names[1];        
+	          $aux['content-type']=$obj->headers["content-type"];        
+	          $aux['part']=$i;        
+	          $parts['attachments'][] = $aux;      
+	        }else{        
+	          $parts['html'][] = $obj->body;      
+	        }      
+	        break;    
+	      default:            
+	        $names=split(';',$obj->headers["content-disposition"]);      
+	        $names=split('=',$names[1]);      
+	        $aux['name']=$names[1];      
+	        $aux['content-type']=$obj->headers["content-type"];      
+	        $aux['part']=$i;      
+	        $parts['attachments'][] = $aux;    
+	    } 
+	  }
+  }
+
+  function process_inbound_mail($forumId)
+  {
+  	 require_once ("lib/webmail/pop3.php");
+	 require_once ("lib/webmail/mimeDecode.php");
+	 include_once ("lib/webmail/class.rc4crypt.php");
+	 include_once ("lib/webmail/htmlMimeMail.php");
+  	 $info = $this->get_forum($forumId);
+  	 if(!$info["inbound_pop_server"]) return;
+	 $pop3=new POP3($info["inbound_pop_server"],$acc["inbound_pop_user"],$acc["inbound_pop_password"]);  
+	 if(!$pop3) return;
+     $pop3->Open();  
+     $s = $pop3->Stats() ;  
+     $mailsum = $s["message"];  
+     for($i=1;$i<=$mailsum;$i++) {      
+       $aux = $pop3->ListMessage($i);	        	
+  	   if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      	
+  	   $title = addslashes(trim($aux['subject']));
+  	   $email = $aux["sender"]["email"];
+  	   $full = $message["full"];  
+       $params = array('input' => $full,
+                  'crlf'  => "\r\n", 
+                  'include_bodies' => TRUE,
+                  'decode_headers' => TRUE, 
+                  'decode_bodies'  => TRUE
+                  );  
+       $output = Mail_mimeDecode::decode($params);    
+       parse_output($output, $parts,0);  
+       if(isset($parts["text"][0])) $body=$parts["text"][0];
+      
+       //Todo: check permissions
+       
+       $object = md5('forum'.$forumId);
+       // Determine if this is a topic or a thread
+       $parentId = $this->getOne("select threadId from tiki_comments where object='$object' and parentId=0 and locate(title,'$title')");
+       if(!$parentId) $parentId=0;
+       
+       // Determine user from email
+       $userName = $this->getOne("select login from users_users where email='$email'");
+       if(!$userName) $user='';
+       
+       // post
+       $this->post_new_comment($object,$parentId,$userName, $title, $body,$type='n',$summary='',$smiley='');
+       
+       $pop3->DeleteMessage($i);      
+     }
+     $pop3->close();
+   }
+  
   
   /* queue management */
   
@@ -128,7 +218,7 @@ class Comments extends TikiLib {
                          $topicOrdering, $threadOrdering,$section,
                          $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads,
                          $show_description,
-                         $inbound_address,$outbound_address,
+                         $inbound_pop_server,$inbound_pop_server,$inbound_pop_user,$inbound_pop_password,$outbound_address,
                          $topic_smileys, $topic_summary,
                          $ui_avatar, $ui_flag, $ui_posts, $ui_level,$ui_email, $ui_online,
                          $approval_type,
@@ -139,7 +229,10 @@ class Comments extends TikiLib {
     $moderator_group = addslashes($moderator_group);
     $description = addslashes($description);
     $section = addslashes($section);
-    $inbound_address = addslashes($inbound_address);
+    $inbound_pop_server = addslashes($inbound_pop_server);
+    $inbound_pop_user = addslashes($inbound_pop_user);
+    $inbound_pop_password = addslashes($inbound_pop_password);
+    
     $outbound_address  = addslashes($outbound_address);
      	
     if($forumId) {
@@ -159,7 +252,10 @@ class Comments extends TikiLib {
                 topics_list_reads = '$topics_list_reads',
                 topics_list_replies = '$topics_list_replies',
                 show_description = '$show_description',
-                inbound_address = '$inbound_address',
+                inbound_pop_server = '$inbound_pop_server',
+                inbound_pop_port = $inbound_pop_port,
+                inbound_pop_user = '$inbound_pop_user',
+                inbound_pop_password = '$inbound_pop_password',
                 outbound_address = '$outbound_address',
                 topic_smileys = '$topic_smileys',
                 topic_summary = '$topic_summary',
@@ -188,7 +284,7 @@ class Comments extends TikiLib {
                 comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
                 pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section,
                 topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
-                inbound_address,outbound_address,
+                inbound_pop_server,inbound_pop_port,inbound_pop_user,inbound_pop_password,outbound_address,
                 topic_smileys,topic_summary,
                 ui_avatar,ui_flag,ui_posts,ui_level,ui_email,ui_online,approval_type,moderator_group,forum_password,forum_use_password) 
                 values ('$name','$description',$now,$now,0,
@@ -197,7 +293,7 @@ class Comments extends TikiLib {
                         $pruneMaxAge, $topicsPerPage,
                         '$topicOrdering','$threadOrdering','$section',
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
-                        '$inbound_address','$outbound_address',
+                        '$inbound_pop_server',$inbound_pop_port,'$inbound_pop_user','$inbound_pop_password',$outbound_address',
                         '$topic_smileys','$topic_summary',
                         '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password') ";
      $result = $this->query($query);
