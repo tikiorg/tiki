@@ -3509,7 +3509,7 @@ function add_hit($pageName) {
     return true;
 }
 
-function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang=null) {
+function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang='') {
     global $smarty;
     global $dbTiki;
     global $sender_email;
