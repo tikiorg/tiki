@@ -469,7 +469,7 @@ class TrackerLib extends TikiLib {
 			
 			$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`,
-				`items`,`showCreated`,`showLastModif`,`useComments`,`showComments``useAttachments`,`showAttachments`,`showStatus`,`orderAttachments`)
+				`items`,`showCreated`,`showLastModif`,`useComments`,`showComments`,`useAttachments`,`showAttachments`,`showStatus`,`orderAttachments`)
                 		values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,(int) $now,0,$showCreated,$showLastModif,
 				$useComments,$showComments,$useAttachments,$showAttachments,$showStatus,$orderattachments);
