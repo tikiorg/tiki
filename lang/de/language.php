@@ -2,6 +2,7 @@
 $lang=Array(
 " modified" => " ge&auml;ndert",
 " on " => " am ",
+"last modification" => "letzte &Auml;nderung",
 " or upload a local file from your disk" => " oder Datei von lokaler Disk hochladen",
 " or upload a local image from your disk" => " oder lokales Bild von Ihrer Disk hochladen",
 "<b>enable/disable</b>" => "<strong>ein/aus</strong>",
