@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.28 2003-09-25 19:25:16 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.29 2003-09-27 09:28:06 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -349,17 +349,35 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			if (!isset($_REQUEST['comment_topicsmiley']))
 			    $_REQUEST['comment_topicsmiley'] = '';
 
-			$threadId = $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST["comment_topicsummary"], $_REQUEST['comment_topicsmiley'] );
+			$threadId =
+			    $commentslib->post_new_comment(
+				    $comments_objectId,
+				    0, $user, $_REQUEST["comments_title"],
+				    ($_REQUEST["comments_data"]),
+				    $_REQUEST["comment_topictype"],
+				    $_REQUEST["comment_topicsummary"],
+				    $_REQUEST['comment_topicsmiley']
+				    );
 
 			if ( ! $threadId )
 			{
 			    // Call post_new_comment again, but this
 			    // time ask it to return the threadId if the
 			    // same comment already exists. -rlpowell
-			    $getold = $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST["comment_topicsummary"], $_REQUEST['comment_topicsmiley'], true );
+			    $getold =
+				$commentslib->post_new_comment(
+					$comments_objectId,
+					0, $user, $_REQUEST["comments_title"],
+					($_REQUEST["comments_data"]),
+					$_REQUEST["comment_topictype"],
+					$_REQUEST["comment_topicsummary"],
+					$_REQUEST['comment_topicsmiley'], true
+					);
 
 			    if ( $getold )
 			    {
+				// If the samely titled comment already
+				// exists, go straight to it.
 				$url = 'tiki-view_forum_thread.php?comments_parentId=' 
 				    . urlencode( $getold )
 				    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='

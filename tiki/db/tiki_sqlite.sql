@@ -585,6 +585,8 @@ CREATE TABLE tiki_comments (
   hash varchar(32) DEFAULT NULL,
   user_ip varchar(15) DEFAULT NULL,
   summary varchar(240) DEFAULT NULL,
+  message_id varchar(250) default NULL,
+  in_reply_to varchar(250) default NULL,
   smiley varchar(80) DEFAULT NULL
 );
 CREATE INDEX title_tiki_comments on tiki_comments (title);
@@ -908,6 +910,7 @@ CREATE TABLE tiki_forums (
   forum_password varchar(32) DEFAULT NULL,
   forum_use_password char(1) DEFAULT NULL,
   moderator_group varchar(200) DEFAULT NULL,
+  outbound_from varchar(250) default NULL,
   approval_type varchar(20) DEFAULT NULL,
   outbound_address varchar(250) DEFAULT NULL,
   inbound_pop_server varchar(250) DEFAULT NULL,
