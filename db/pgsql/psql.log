@@ -1,0 +1,847 @@
+psql:tiki_pgsql.sql:23: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_activities_pkey' for table 'galaxia_activities'
+CREATE
+psql:tiki_pgsql.sql:31: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_activity_roles_pkey' for table 'galaxia_activity_roles'
+CREATE
+psql:tiki_pgsql.sql:43: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_instance_activitie_pkey' for table 'galaxia_instance_activities'
+CREATE
+psql:tiki_pgsql.sql:58: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_instance_comments_pkey' for table 'galaxia_instance_comments'
+CREATE
+psql:tiki_pgsql.sql:73: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_instances_pkey' for table 'galaxia_instances'
+CREATE
+psql:tiki_pgsql.sql:87: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_processes_pkey' for table 'galaxia_processes'
+CREATE
+psql:tiki_pgsql.sql:98: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_roles_pkey' for table 'galaxia_roles'
+CREATE
+psql:tiki_pgsql.sql:107: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_transitions_pkey' for table 'galaxia_transitions'
+CREATE
+psql:tiki_pgsql.sql:116: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_user_roles_pkey' for table 'galaxia_user_roles'
+CREATE
+psql:tiki_pgsql.sql:130: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'galaxia_workitems_pkey' for table 'galaxia_workitems'
+CREATE
+psql:tiki_pgsql.sql:150: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'messu_messages_pkey' for table 'messu_messages'
+CREATE
+CREATE
+psql:tiki_pgsql.sql:192: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_articles_pkey' for table 'tiki_articles'
+CREATE
+psql:tiki_pgsql.sql:227: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_banners_pkey' for table 'tiki_banners'
+CREATE
+psql:tiki_pgsql.sql:246: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_banning_pkey' for table 'tiki_banning'
+CREATE
+psql:tiki_pgsql.sql:254: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_banning_sections_pkey' for table 'tiki_banning_sections'
+CREATE
+psql:tiki_pgsql.sql:263: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_blog_activity_pkey' for table 'tiki_blog_activity'
+CREATE
+psql:tiki_pgsql.sql:277: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_blog_posts_pkey' for table 'tiki_blog_posts'
+CREATE
+psql:tiki_pgsql.sql:289: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_blog_posts_images_pkey' for table 'tiki_blog_posts_images'
+CREATE
+psql:tiki_pgsql.sql:312: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_blogs_pkey' for table 'tiki_blogs'
+CREATE
+psql:tiki_pgsql.sql:321: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_calendar_categories_pkey' for table 'tiki_calendar_categories'
+psql:tiki_pgsql.sql:321: NOTICE:  CREATE TABLE / UNIQUE will create implicit index 'tiki_calendar_ca_calendarid_key' for table 'tiki_calendar_categories'
+CREATE
+psql:tiki_pgsql.sql:342: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_calendar_items_pkey' for table 'tiki_calendar_items'
+CREATE
+psql:tiki_pgsql.sql:352: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_calendar_locations_pkey' for table 'tiki_calendar_locations'
+psql:tiki_pgsql.sql:352: NOTICE:  CREATE TABLE / UNIQUE will create implicit index 'tiki_calendar_lo_calendarid_key' for table 'tiki_calendar_locations'
+CREATE
+psql:tiki_pgsql.sql:360: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_calendar_roles_pkey' for table 'tiki_calendar_roles'
+CREATE
+psql:tiki_pgsql.sql:377: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_calendars_pkey' for table 'tiki_calendars'
+CREATE
+psql:tiki_pgsql.sql:388: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_categories_pkey' for table 'tiki_categories'
+CREATE
+psql:tiki_pgsql.sql:402: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_categorized_objects_pkey' for table 'tiki_categorized_objects'
+CREATE
+psql:tiki_pgsql.sql:410: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_category_objects_pkey' for table 'tiki_category_objects'
+CREATE
+psql:tiki_pgsql.sql:418: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_category_sites_pkey' for table 'tiki_category_sites'
+CREATE
+psql:tiki_pgsql.sql:433: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_chart_items_pkey' for table 'tiki_chart_items'
+CREATE
+psql:tiki_pgsql.sql:458: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_charts_pkey' for table 'tiki_charts'
+CREATE
+psql:tiki_pgsql.sql:472: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_charts_rankings_pkey' for table 'tiki_charts_rankings'
+CREATE
+psql:tiki_pgsql.sql:482: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_charts_votes_pkey' for table 'tiki_charts_votes'
+CREATE
+psql:tiki_pgsql.sql:496: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_chat_channels_pkey' for table 'tiki_chat_channels'
+CREATE
+psql:tiki_pgsql.sql:507: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_chat_messages_pkey' for table 'tiki_chat_messages'
+CREATE
+psql:tiki_pgsql.sql:516: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_chat_users_pkey' for table 'tiki_chat_users'
+CREATE
+psql:tiki_pgsql.sql:538: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_comments_pkey' for table 'tiki_comments'
+CREATE
+psql:tiki_pgsql.sql:546: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_content_pkey' for table 'tiki_content'
+CREATE
+psql:tiki_pgsql.sql:556: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_content_templates_pkey' for table 'tiki_content_templates'
+CREATE
+psql:tiki_pgsql.sql:564: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_content_templates_sec_pkey' for table 'tiki_content_templates_sections'
+CREATE
+psql:tiki_pgsql.sql:572: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_cookies_pkey' for table 'tiki_cookies'
+CREATE
+psql:tiki_pgsql.sql:585: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_copyrights_pkey' for table 'tiki_copyrights'
+CREATE
+psql:tiki_pgsql.sql:602: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_directory_categories_pkey' for table 'tiki_directory_categories'
+CREATE
+psql:tiki_pgsql.sql:610: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_directory_search_pkey' for table 'tiki_directory_search'
+CREATE
+psql:tiki_pgsql.sql:627: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_directory_sites_pkey' for table 'tiki_directory_sites'
+CREATE
+psql:tiki_pgsql.sql:640: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_drawings_pkey' for table 'tiki_drawings'
+CREATE
+psql:tiki_pgsql.sql:649: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_dsn_pkey' for table 'tiki_dsn'
+CREATE
+psql:tiki_pgsql.sql:665: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_eph_pkey' for table 'tiki_eph'
+CREATE
+psql:tiki_pgsql.sql:674: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_extwiki_pkey' for table 'tiki_extwiki'
+CREATE
+psql:tiki_pgsql.sql:685: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_faq_questions_pkey' for table 'tiki_faq_questions'
+CREATE
+psql:tiki_pgsql.sql:698: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_faqs_pkey' for table 'tiki_faqs'
+CREATE
+psql:tiki_pgsql.sql:710: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_featured_links_pkey' for table 'tiki_featured_links'
+CREATE
+psql:tiki_pgsql.sql:736: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_file_galleries_pkey' for table 'tiki_file_galleries'
+CREATE
+psql:tiki_pgsql.sql:759: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_files_pkey' for table 'tiki_files'
+CREATE
+psql:tiki_pgsql.sql:776: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_forum_attachments_pkey' for table 'tiki_forum_attachments'
+CREATE
+psql:tiki_pgsql.sql:786: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_forum_reads_pkey' for table 'tiki_forum_reads'
+CREATE
+psql:tiki_pgsql.sql:842: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_forums_pkey' for table 'tiki_forums'
+CREATE
+psql:tiki_pgsql.sql:861: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_forums_queue_pkey' for table 'tiki_forums_queue'
+CREATE
+psql:tiki_pgsql.sql:873: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_forums_reported_pkey' for table 'tiki_forums_reported'
+CREATE
+psql:tiki_pgsql.sql:893: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_galleries_pkey' for table 'tiki_galleries'
+CREATE
+psql:tiki_pgsql.sql:902: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_galleries_scales_pkey' for table 'tiki_galleries_scales'
+CREATE
+psql:tiki_pgsql.sql:912: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_games_pkey' for table 'tiki_games'
+CREATE
+psql:tiki_pgsql.sql:920: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_group_inclusion_pkey' for table 'tiki_group_inclusion'
+CREATE
+psql:tiki_pgsql.sql:934: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_history_pkey' for table 'tiki_history'
+CREATE
+psql:tiki_pgsql.sql:942: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_hotwords_pkey' for table 'tiki_hotwords'
+CREATE
+psql:tiki_pgsql.sql:953: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_html_pages_pkey' for table 'tiki_html_pages'
+CREATE
+psql:tiki_pgsql.sql:963: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_html_pages_dynamic_zo_pkey' for table 'tiki_html_pages_dynamic_zones'
+CREATE
+psql:tiki_pgsql.sql:977: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_images_pkey' for table 'tiki_images'
+CREATE
+psql:tiki_pgsql.sql:991: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_images_data_pkey' for table 'tiki_images_data'
+CREATE
+psql:tiki_pgsql.sql:1013: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_images_old_pkey' for table 'tiki_images_old'
+CREATE
+psql:tiki_pgsql.sql:1021: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_language_pkey' for table 'tiki_language'
+CREATE
+psql:tiki_pgsql.sql:1029: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_languages_pkey' for table 'tiki_languages'
+CREATE
+psql:tiki_pgsql.sql:1039: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_link_cache_pkey' for table 'tiki_link_cache'
+CREATE
+psql:tiki_pgsql.sql:1047: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_links_pkey' for table 'tiki_links'
+CREATE
+psql:tiki_pgsql.sql:1060: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_events_pkey' for table 'tiki_live_support_events'
+CREATE
+psql:tiki_pgsql.sql:1070: NOTICE:  identifier "tiki_live_support_message_comments" will be truncated to "tiki_live_support_message_comme"
+psql:tiki_pgsql.sql:1070: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_message__pkey' for table 'tiki_live_support_message_comme'
+CREATE
+psql:tiki_pgsql.sql:1088: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_messages_pkey' for table 'tiki_live_support_messages'
+CREATE
+psql:tiki_pgsql.sql:1096: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_modules_pkey' for table 'tiki_live_support_modules'
+CREATE
+psql:tiki_pgsql.sql:1113: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_operator_pkey' for table 'tiki_live_support_operators'
+CREATE
+psql:tiki_pgsql.sql:1133: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_live_support_requests_pkey' for table 'tiki_live_support_requests'
+CREATE
+CREATE
+psql:tiki_pgsql.sql:1159: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_mailin_accounts_pkey' for table 'tiki_mailin_accounts'
+CREATE
+psql:tiki_pgsql.sql:1167: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_menu_languages_pkey' for table 'tiki_menu_languages'
+CREATE
+psql:tiki_pgsql.sql:1179: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_menu_options_pkey' for table 'tiki_menu_options'
+CREATE
+psql:tiki_pgsql.sql:1189: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_menus_pkey' for table 'tiki_menus'
+CREATE
+psql:tiki_pgsql.sql:1205: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_minical_events_pkey' for table 'tiki_minical_events'
+CREATE
+psql:tiki_pgsql.sql:1220: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_minical_topics_pkey' for table 'tiki_minical_topics'
+CREATE
+psql:tiki_pgsql.sql:1235: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_modules_pkey' for table 'tiki_modules'
+CREATE
+psql:tiki_pgsql.sql:1246: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_newsletter_subscripti_pkey' for table 'tiki_newsletter_subscriptions'
+CREATE
+psql:tiki_pgsql.sql:1261: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_newsletters_pkey' for table 'tiki_newsletters'
+CREATE
+psql:tiki_pgsql.sql:1271: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_newsreader_marks_pkey' for table 'tiki_newsreader_marks'
+CREATE
+psql:tiki_pgsql.sql:1283: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_newsreader_servers_pkey' for table 'tiki_newsreader_servers'
+CREATE
+psql:tiki_pgsql.sql:1292: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_page_footnotes_pkey' for table 'tiki_page_footnotes'
+CREATE
+psql:tiki_pgsql.sql:1314: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_pages_pkey' for table 'tiki_pages'
+CREATE
+psql:tiki_pgsql.sql:1322: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_pageviews_pkey' for table 'tiki_pageviews'
+CREATE
+psql:tiki_pgsql.sql:1332: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_poll_options_pkey' for table 'tiki_poll_options'
+CREATE
+psql:tiki_pgsql.sql:1343: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_polls_pkey' for table 'tiki_polls'
+CREATE
+psql:tiki_pgsql.sql:1351: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_preferences_pkey' for table 'tiki_preferences'
+CREATE
+psql:tiki_pgsql.sql:1362: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_private_messages_pkey' for table 'tiki_private_messages'
+CREATE
+psql:tiki_pgsql.sql:1372: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_programmed_content_pkey' for table 'tiki_programmed_content'
+CREATE
+psql:tiki_pgsql.sql:1382: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quiz_question_options_pkey' for table 'tiki_quiz_question_options'
+CREATE
+psql:tiki_pgsql.sql:1394: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quiz_questions_pkey' for table 'tiki_quiz_questions'
+CREATE
+psql:tiki_pgsql.sql:1405: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quiz_results_pkey' for table 'tiki_quiz_results'
+CREATE
+psql:tiki_pgsql.sql:1415: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quiz_stats_pkey' for table 'tiki_quiz_stats'
+CREATE
+psql:tiki_pgsql.sql:1427: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quiz_stats_sum_pkey' for table 'tiki_quiz_stats_sum'
+CREATE
+psql:tiki_pgsql.sql:1443: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_quizzes_pkey' for table 'tiki_quizzes'
+CREATE
+psql:tiki_pgsql.sql:1471: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_received_articles_pkey' for table 'tiki_received_articles'
+CREATE
+psql:tiki_pgsql.sql:1485: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_received_pages_pkey' for table 'tiki_received_pages'
+CREATE
+psql:tiki_pgsql.sql:1494: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_referer_stats_pkey' for table 'tiki_referer_stats'
+CREATE
+psql:tiki_pgsql.sql:1502: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_related_categories_pkey' for table 'tiki_related_categories'
+CREATE
+psql:tiki_pgsql.sql:1515: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_rss_modules_pkey' for table 'tiki_rss_modules'
+CREATE
+psql:tiki_pgsql.sql:1523: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_search_stats_pkey' for table 'tiki_search_stats'
+CREATE
+psql:tiki_pgsql.sql:1532: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_semaphores_pkey' for table 'tiki_semaphores'
+CREATE
+psql:tiki_pgsql.sql:1544: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_sent_newsletters_pkey' for table 'tiki_sent_newsletters'
+CREATE
+psql:tiki_pgsql.sql:1553: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_sessions_pkey' for table 'tiki_sessions'
+CREATE
+psql:tiki_pgsql.sql:1564: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_shoutbox_pkey' for table 'tiki_shoutbox'
+CREATE
+psql:tiki_pgsql.sql:1573: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_structures_pkey' for table 'tiki_structures'
+CREATE
+psql:tiki_pgsql.sql:1604: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_submissions_pkey' for table 'tiki_submissions'
+CREATE
+psql:tiki_pgsql.sql:1616: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_suggested_faq_questio_pkey' for table 'tiki_suggested_faq_questions'
+CREATE
+psql:tiki_pgsql.sql:1626: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_survey_question_optio_pkey' for table 'tiki_survey_question_options'
+CREATE
+psql:tiki_pgsql.sql:1641: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_survey_questions_pkey' for table 'tiki_survey_questions'
+CREATE
+psql:tiki_pgsql.sql:1654: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_surveys_pkey' for table 'tiki_surveys'
+CREATE
+psql:tiki_pgsql.sql:1671: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tags_pkey' for table 'tiki_tags'
+CREATE
+psql:tiki_pgsql.sql:1679: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_theme_control_categs_pkey' for table 'tiki_theme_control_categs'
+CREATE
+psql:tiki_pgsql.sql:1689: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_theme_control_objects_pkey' for table 'tiki_theme_control_objects'
+CREATE
+psql:tiki_pgsql.sql:1697: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_theme_control_section_pkey' for table 'tiki_theme_control_sections'
+CREATE
+psql:tiki_pgsql.sql:1711: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_topics_pkey' for table 'tiki_topics'
+CREATE
+psql:tiki_pgsql.sql:1724: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tracker_fields_pkey' for table 'tiki_tracker_fields'
+CREATE
+psql:tiki_pgsql.sql:1741: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tracker_item_attachme_pkey' for table 'tiki_tracker_item_attachments'
+CREATE
+psql:tiki_pgsql.sql:1753: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tracker_item_comments_pkey' for table 'tiki_tracker_item_comments'
+CREATE
+psql:tiki_pgsql.sql:1762: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tracker_item_fields_pkey' for table 'tiki_tracker_item_fields'
+CREATE
+psql:tiki_pgsql.sql:1773: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_tracker_items_pkey' for table 'tiki_tracker_items'
+CREATE
+psql:tiki_pgsql.sql:1790: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_trackers_pkey' for table 'tiki_trackers'
+CREATE
+psql:tiki_pgsql.sql:1799: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_untranslated_pkey' for table 'tiki_untranslated'
+psql:tiki_pgsql.sql:1799: NOTICE:  CREATE TABLE / UNIQUE will create implicit index 'tiki_untranslated_id_key' for table 'tiki_untranslated'
+CREATE
+psql:tiki_pgsql.sql:1809: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_answers_pkey' for table 'tiki_user_answers'
+CREATE
+psql:tiki_pgsql.sql:1824: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_assigned_modules_pkey' for table 'tiki_user_assigned_modules'
+CREATE
+psql:tiki_pgsql.sql:1834: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_bookmarks_folder_pkey' for table 'tiki_user_bookmarks_folders'
+CREATE
+psql:tiki_pgsql.sql:1847: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_bookmarks_urls_pkey' for table 'tiki_user_bookmarks_urls'
+CREATE
+psql:tiki_pgsql.sql:1865: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_mail_accounts_pkey' for table 'tiki_user_mail_accounts'
+CREATE
+psql:tiki_pgsql.sql:1877: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_menus_pkey' for table 'tiki_user_menus'
+CREATE
+psql:tiki_pgsql.sql:1886: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_modules_pkey' for table 'tiki_user_modules'
+CREATE
+psql:tiki_pgsql.sql:1900: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_notes_pkey' for table 'tiki_user_notes'
+CREATE
+psql:tiki_pgsql.sql:1911: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_postings_pkey' for table 'tiki_user_postings'
+CREATE
+psql:tiki_pgsql.sql:1920: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_preferences_pkey' for table 'tiki_user_preferences'
+CREATE
+psql:tiki_pgsql.sql:1934: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_quizzes_pkey' for table 'tiki_user_quizzes'
+CREATE
+psql:tiki_pgsql.sql:1942: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_taken_quizzes_pkey' for table 'tiki_user_taken_quizzes'
+CREATE
+psql:tiki_pgsql.sql:1957: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_tasks_pkey' for table 'tiki_user_tasks'
+CREATE
+psql:tiki_pgsql.sql:1965: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_votings_pkey' for table 'tiki_user_votings'
+CREATE
+psql:tiki_pgsql.sql:1979: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_user_watches_pkey' for table 'tiki_user_watches'
+CREATE
+psql:tiki_pgsql.sql:1996: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_userfiles_pkey' for table 'tiki_userfiles'
+CREATE
+CREATE
+psql:tiki_pgsql.sql:2014: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_users_pkey' for table 'tiki_users'
+CREATE
+psql:tiki_pgsql.sql:2026: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_webmail_contacts_pkey' for table 'tiki_webmail_contacts'
+CREATE
+psql:tiki_pgsql.sql:2038: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_webmail_messages_pkey' for table 'tiki_webmail_messages'
+CREATE
+psql:tiki_pgsql.sql:2055: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_wiki_attachments_pkey' for table 'tiki_wiki_attachments'
+CREATE
+psql:tiki_pgsql.sql:2062: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'tiki_zones_pkey' for table 'tiki_zones'
+CREATE
+psql:tiki_pgsql.sql:2071: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_grouppermissions_pkey' for table 'users_grouppermissions'
+CREATE
+psql:tiki_pgsql.sql:2079: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_groups_pkey' for table 'users_groups'
+CREATE
+psql:tiki_pgsql.sql:2089: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_objectpermissions_pkey' for table 'users_objectpermissions'
+CREATE
+psql:tiki_pgsql.sql:2099: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_permissions_pkey' for table 'users_permissions'
+CREATE
+psql:tiki_pgsql.sql:2107: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_usergroups_pkey' for table 'users_usergroups'
+CREATE
+psql:tiki_pgsql.sql:2134: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index 'users_users_pkey' for table 'users_users'
+CREATE
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+psql:tiki_pgsql.sql:2185: NOTICE:  identifier "tiki_live_support_message_comments" will be truncated to "tiki_live_support_message_comme"
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+ setval 
+--------
+       
+(1 row)
+
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+psql:tiki_pgsql.sql:2245: NOTICE:  identifier "tiki_calendar_categories_calendarid" will be truncated to "tiki_calendar_categories_calend"
+CREATE
+CREATE
+CREATE
+psql:tiki_pgsql.sql:2248: NOTICE:  identifier "tiki_calendar_locations_calendarid" will be truncated to "tiki_calendar_locations_calenda"
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+psql:tiki_pgsql.sql:2254: NOTICE:  identifier "tiki_directory_sites_description" will be truncated to "tiki_directory_sites_descriptio"
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
+CREATE
