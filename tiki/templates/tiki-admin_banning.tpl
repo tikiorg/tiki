@@ -1,14 +1,14 @@
-<a title="{tr}Click here to refresh this page{/tr}" class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
+<a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a title="{tr}Click here for help on banning{/tr}"  href="http://tikiwiki.org/tiki-index.php?page=BanningSystem" target="tikihelp" class="tikihelp">
+<a href="http://tikiwiki.org/tiki-index.php?page=BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Banning{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a title="{tr}Click here to edit this template{/tr}" href="tiki-edit_templates.php?template=templates/tiki-admin_banning.tpl" target="tikihelp" class="tikihelp">
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- beginning of next bit -->
@@ -144,7 +144,7 @@
 {/section}
 </td>
 <td class="{cycle}">
-&nbsp;&nbsp;<a title="Click here to delete this rule" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
+&nbsp;&nbsp;<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
