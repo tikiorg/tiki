@@ -40,10 +40,10 @@
  * @author Monte Ohrt <monte@ispi.net>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.0-RC1-cvs
+ * @version 2.6.0-RC2
  */
 
-/* $Id: Smarty.class.php,v 1.2 2003-08-21 00:12:08 rossta Exp $ */
+/* $Id: Smarty.class.php,v 1.3 2003-10-29 11:43:44 mose Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -490,7 +490,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.0-RC1-cvs';
+    var $_version              = '2.6.0-RC2';
 
     /**
      * current template inclusion depth
@@ -587,20 +587,6 @@ class Smarty
      */
     var $_cache_including = false;
 
-    /**
-     * cached file paths
-     *
-     * @var array
-     */
-    var $_cache_paths = null;
-
-    /**
-     * cached file pathname (set in constructor)
-     *
-     * @var array
-     */
-    var $_cache_paths_file = null;
-		
     /**#@-*/
     /**
      * The class constructor.
@@ -1095,7 +1081,8 @@ class Smarty
 		$_params = array('auto_base' => $this->compile_dir,
 						'auto_source' => $tpl_file,
 						'auto_id' => $compile_id,
-						'exp_time' => $exp_time);
+                        'exp_time' => $exp_time,
+                        'extensions' => array('.inc', '.php'));
 		require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.rm_auto.php');
 		return smarty_core_rm_auto($_params, $this);		
     }
@@ -1108,7 +1095,7 @@ class Smarty
      */    
     function template_exists($tpl_file)
     {
-		$_params = array('resource_name' => $tpl_file);
+		$_params = array('resource_name' => $tpl_file, 'quiet'=>true, 'get_source'=>false);
         return $this->_fetch_resource_info($_params);
     }
 
@@ -1181,26 +1168,6 @@ class Smarty
     {
         static $_cache_info = array();
 
-		$_compile_dir_sep =  $this->use_sub_dirs ? DIRECTORY_SEPARATOR : '^';
-		
-		$this->_cache_paths_file =
-				$this->compile_dir
-				. DIRECTORY_SEPARATOR
-				. '_smarty_cached_paths'
-				. $_compile_dir_sep
-				. urlencode($resource_name)
-				. '.php';
-
-// date: 2002/12/24 20:46:42;  author: lrargerich;  state: Exp;  lines: +1 -1
-// Added @ to prevent some warnings
-// -        if (!$this->force_compile && file_exists($compile_path)) {
-// +        if (!$this->force_compile && @file_exists($compile_path)) {
-
-		if(!$this->force_compile
-			&& @file_exists($this->_cache_paths_file)) {
-			include_once($this->_cache_paths_file);
-		}		
-				
         $_smarty_old_error_level = $this->debugging ? error_reporting() : error_reporting(error_reporting() & ~E_NOTICE);
 
         if($this->security && !in_array($this->template_dir, $this->secure_dir)) {
@@ -1209,7 +1176,7 @@ class Smarty
         }
 
         if (!$this->debugging && $this->debugging_ctrl == 'URL'
-               && strstr($GLOBALS['HTTP_SERVER_VARS']['QUERY_STRING'], $this->_smarty_debug_id)) {
+               && @strstr($GLOBALS['HTTP_SERVER_VARS']['QUERY_STRING'], $this->_smarty_debug_id)) {
             // enable debugging from URL
             $this->debugging = true;
         }
@@ -1271,7 +1238,7 @@ class Smarty
                         $_smarty_results .= smarty_core_display_debug_console($_params, $this);
                     }
                     if ($this->cache_modified_check) {
-                        $_last_modified_date = substr($GLOBALS['HTTP_SERVER_VARS']['HTTP_IF_MODIFIED_SINCE'], 0, strpos($GLOBALS['HTTP_SERVER_VARS']['HTTP_IF_MODIFIED_SINCE'], 'GMT') + 3);
+                        $_last_modified_date = @substr($GLOBALS['HTTP_SERVER_VARS']['HTTP_IF_MODIFIED_SINCE'], 0, strpos($GLOBALS['HTTP_SERVER_VARS']['HTTP_IF_MODIFIED_SINCE'], 'GMT') + 3);
                         $_gmt_mtime = gmdate('D, d M Y H:i:s', $this->_cache_info['timestamp']).' GMT';
                         if (@count($this->_cache_info['insert_tags']) == 0
                             && !$this->_cache_serials
@@ -1443,26 +1410,12 @@ class Smarty
      * @param string $type
      * @param string $name
      * @return string|false
-     */    
+     */
     function _get_plugin_filepath($type, $name)
     {
-		$_cache_paths_key = $type . '/' . $name;
-		if (isset($this->_cache_paths['plugins'][$_cache_paths_key])) {
-			return $this->_cache_paths['plugins'][$_cache_paths_key];
-		}
-		
 		$_params = array('type' => $type, 'name' => $name);
 		require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.assemble_plugin_filepath.php');
-		$_return = smarty_core_assemble_plugin_filepath($_params, $this);
-						
-		if ($_return !== false) {
-			$this->_cache_paths['plugins'][$_cache_paths_key] = $_return;
-			require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.write_cache_paths_file.php');
-			smarty_core_write_cache_paths_file(null, $this);
-			return $_return;
-		}
-		
-        return false;
+		return smarty_core_assemble_plugin_filepath($_params, $this);
     }	
 	
    /**
@@ -1576,11 +1529,7 @@ class Smarty
         $smarty_compiler->default_modifiers = $this->default_modifiers;
         $smarty_compiler->compile_id        = $this->_compile_id;
         $smarty_compiler->_config			= $this->_config;
-
         $smarty_compiler->request_use_auto_globals  = $this->request_use_auto_globals;
-
-        $smarty_compiler->_cache_paths   	= $this->_cache_paths;
-        $smarty_compiler->_cache_paths_file	= $this->_cache_paths_file;
 
         $smarty_compiler->_cache_serial = null;
         $smarty_compiler->_cache_include = $cache_include_path;
@@ -1635,6 +1584,9 @@ class Smarty
 
         $_return = false;
         $_params = array('resource_name' => $params['resource_name']) ;
+        if (isset($params['resource_base_path']))
+            $_params['resource_base_path'] = $params['resource_base_path'];
+
         if ($this->_parse_resource_name($_params)) {
             $_resource_type = $_params['resource_type'];
             $_resource_name = $_params['resource_name'];
@@ -1644,7 +1596,7 @@ class Smarty
                         $params['source_content'] = $this->_read_file($_resource_name);
                     }
                     $params['resource_timestamp'] = filemtime($_resource_name);
-                    $_return = true;
+                    $_return = is_file($_resource_name);
                     break;
 
                 default:                    
@@ -1669,7 +1621,7 @@ class Smarty
         if (!$_return) {
             // see if we can get a template with the default template handler
             if (!empty($this->default_template_handler_func)) {
-                if (!$this->_plugin_implementation_exists($this->default_template_handler_func)) {
+                if (!is_callable($this->default_template_handler_func)) {
                     $this->trigger_error("default template handler function \"$this->default_template_handler_func\" doesn't exist.");
                 } else {
                     $_return = call_user_func_array(
@@ -1732,8 +1684,12 @@ class Smarty
             if (!preg_match("/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/", $params['resource_name'])) {
                 // relative pathname to $params['resource_base_path']
                 // use the first directory where the file is found
-                $_resource_base_path = isset($params['resource_base_path']) ? $params['resource_base_path'] : array($this->template_dir, '.');
-                settype($_resource_base_path, 'array');
+                if (isset($params['resource_base_path'])) {
+                    $_resource_base_path = (array)$params['resource_base_path'];        
+                } else {
+                    $_resource_base_path = (array)$this->template_dir;
+                    $_resource_base_path[] = '.';
+                }
                 foreach ($_resource_base_path as $_curr_path) {
                     $_fullpath = $_curr_path . DIRECTORY_SEPARATOR . $params['resource_name'];
                     if (@file_exists($_fullpath) && is_file($_fullpath)) {
@@ -1851,26 +1807,39 @@ class Smarty
      * @return string
      * @staticvar string|null
      * @staticvar string|null
-     */    
+     */
     function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
     {
-		$_cache_paths_key = $auto_base . '/' . $auto_source . '/' . $auto_id;
-		if (isset($this->_cache_paths['auto_file'][$_cache_paths_key])) {
-			return $this->_cache_paths['auto_file'][$_cache_paths_key];
-		}
+        $_compile_dir_sep =  $this->use_sub_dirs ? DIRECTORY_SEPARATOR : '^';
 
-		$_params = array('auto_base' => $auto_base, 'auto_source' => $auto_source, 'auto_id' => $auto_id);
-		require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.assemble_auto_filename.php');
-		$_return = smarty_core_assemble_auto_filename($_params, $this);
+        if(@is_dir($auto_base)) {
+            $_return = $auto_base . DIRECTORY_SEPARATOR;
+        } else {
+            // auto_base not found, try include_path
+            $_params = array('file_path' => $auto_base);
+            require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.get_include_path.php');
+            smarty_core_get_include_path($_params, $this);
+            $_return = isset($_params['new_file_path']) ? $_params['new_file_path'] . DIRECTORY_SEPARATOR : null;
+        }
 
-		if($_return !== false) {
-			$this->_cache_paths['auto_file'][$_cache_paths_key] = $_return;
-			require_once(SMARTY_DIR . 'core' . DIRECTORY_SEPARATOR . 'core.write_cache_paths_file.php');
-			smarty_core_write_cache_paths_file(null, $this);
-			return $_return;
-		}
-				        
-        return false;
+        if(isset($auto_id)) {
+            // make auto_id safe for directory names
+            $auto_id = str_replace('%7C',$_compile_dir_sep,(urlencode($auto_id)));
+            // split into separate directories
+            $_return .= $auto_id . $_compile_dir_sep;
+        }
+
+        if(isset($auto_source)) {
+            // make source name safe for filename
+            $_filename = urlencode(basename($auto_source));
+            $_crc32 = crc32($auto_source) . $_compile_dir_sep;
+            // prepend %% to avoid name conflicts with
+            // with $params['auto_id'] names
+            $_crc32 = '%%' . substr($_crc32,0,3) . $_compile_dir_sep . '%%' . $_crc32;
+            $_return .= $_crc32 . $_filename;
+        }
+
+        return $_return;
     }
 
     /**
@@ -1882,11 +1851,11 @@ class Smarty
     function _unlink($resource, $exp_time = null)
     {
         if(isset($exp_time)) {
-            if(time() - filemtime($resource) >= $exp_time) {
-                @unlink($resource);
+            if(time() - @filemtime($resource) >= $exp_time) {
+                return @unlink($resource);
             }
         } else {            
-            @unlink($resource);
+            return @unlink($resource);
         }
     }
 
@@ -1930,16 +1899,6 @@ class Smarty
         } else {
             trigger_error("Smarty error: $error_msg$info", $error_type);
         }
-    }
-
-    /**
-     * check if the function or method exists
-     * @return bool
-     */
-    function _plugin_implementation_exists($function)
-    {
-        return (is_array($function)) ?
-            method_exists($function[0], $function[1]) || (in_array(strtolower($function[1]), (array)get_class_methods($function[0]))) : function_exists($function);
     }
 
 
@@ -2039,8 +1998,11 @@ class Smarty
      * wrapper for include() retaining $this
      * @return mixed
      */
-    function _include($filename, $once=false)
+    function _include($filename, $once=false, $vars=null)
     {
+        if (is_array($vars))
+            extract($vars, EXTR_PREFIX_SAME, 'include_php_');
+
         if ($once) {
             return include_once($filename);
         } else {
@@ -2053,8 +2015,11 @@ class Smarty
      * wrapper for eval() retaining $this
      * @return mixed
      */
-    function _eval($code)
+    function _eval($code, $vars=null)
     {
+        if (is_array($vars))
+            extract($vars, EXTR_PREFIX_SAME, 'include_php_');
+
         return eval($code);
     }
     /**#@-*/
