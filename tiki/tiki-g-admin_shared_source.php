@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.3 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_shared_source.php,v 1.4 2003-08-15 22:09:33 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,8 +41,8 @@ if (isset($_REQUEST['code'])) {
 }
 
 $proc_info = $processManager->get_process($_REQUEST['pid']);
-$proc_info['graph'] = "lib/Galaxia/Processes/" . $proc_info['normalized_name'] . "/graph/" . $proc_info['normalized_name'] . ".png";
-$smarty->assign_by_ref('proc_info', $proc_info);
+$proc_info['graph']="lib/Galaxia/processes/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";
+$smarty->assign_by_ref('proc_info',$proc_info);
 
 $procname = $proc_info['normalized_name'];
 

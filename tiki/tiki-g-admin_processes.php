@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.5 2003-08-15 22:07:15 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (!isset($_REQUEST['pid']))
 if ($_REQUEST["pid"]) {
 	$info = $processManager->get_process($_REQUEST["pid"]);
 
-	$info['graph'] = "lib/Galaxia/Processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+	$info['graph'] = "lib/Galaxia/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
 } else {
 	$info = array(
 		'name' => '',

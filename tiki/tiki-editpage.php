@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.38 2003-08-10 13:42:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.39 2003-08-15 22:03:56 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -437,7 +437,6 @@ $tikilib->cache_links($links);
 		die;
 	} else {
 		$page = urlencode($page);
-
 		header ("location: tiki-index.php?page=$page");
 		die;
 	}
