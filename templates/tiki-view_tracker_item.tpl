@@ -88,7 +88,7 @@
 
 {elseif $ins_fields[ix].type eq 't'}
 {if $ins_fields[ix].options_array[2]}
-{$ins_fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
+{$ins_fields[ix].value} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
 {else}
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
