@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.228 2004-05-31 11:32:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.229 2004-05-31 22:55:58 luciash Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1043,6 +1043,21 @@ $smarty->assign('proxy_host', $proxy_host);
 $smarty->assign('proxy_port', $proxy_port);
 $smarty->assign('registerPasscode', $registerPasscode);
 $smarty->assign('useRegisterPasscode', $useRegisterPasscode);
+
+/* 
+ * Site identity initial default settings 
+ */
+$feature_siteidentity='n';
+$smarty->assign('feature_siteidentity', $feature_siteidentity);
+$feature_sitelogo='y';
+$sitelogo_title='TikiWiki powered site';
+$sitelogo_src='styles/default/sitelogo.png';
+$sitelogo_alt='Site Logo';
+$smarty->assign('feature_sitelogo', $feature_sitelogo);
+$smarty->assign('sitelogo_title', $sitelogo_title);
+$smarty->assign('sitelogo_src', $sitelogo_src);
+$smarty->assign('sitelogo_alt', $sitelogo_alt);
+
 
 //$smarty->assign('tikiIndex', $tikiIndex);
 $smarty->assign('maxArticles', $maxArticles);
