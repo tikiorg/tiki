@@ -446,6 +446,8 @@ class TrackerLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res["options_array"] = split(',', $res["options"]);
+			$res["label"] = $res["name"];
+			$res["name"] = ereg_replace("[^a-zA-Z0-9]","",$res["name"]);
 			$ret[] = $res;
 		}
 

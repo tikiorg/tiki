@@ -154,18 +154,26 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 {section name=ix loop=$fields}
 <input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
-<table class="normal">
-<tr class="formcolor"><td>{tr}Status{/tr}</td>
+<table>
+<tr><td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
 <option value="o" {if $item_info.status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
 <option value="c" {if $item_info.status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
 </td></tr>
+</table>
+<table class="normal">
 {section name=ix loop=$ins_fields}
+
 {if $ins_fields[ix].type ne 'x'}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
-<td>
+{if $ins_fields[ix].type eq 'h'}
+</table>
+<h3>{$ins_fields[ix].label}</h3>
+<table class="normal">
+{else}
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td>
+{/if}
 
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
@@ -182,11 +190,6 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <option value="{$groups[ux].groupName|escape}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
 {/section}
 </select>
-
-{elseif $ins_fields[ix].type eq 'h'}
-</td></tr>
-<tr><td class="formcolor" colspan="2">
-<h3>{$ins_fields[ix].name}</h3>
 
 {elseif $ins_fields[ix].type eq 't'}
 <input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
