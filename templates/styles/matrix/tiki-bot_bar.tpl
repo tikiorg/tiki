@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki-bot_bar.tpl,v 1.2 2003-08-01 10:31:17 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki-bot_bar.tpl,v 1.3 2003-08-14 01:46:14 rossta Exp $ *}
 
 <table width="100%">
   <tr>
@@ -64,3 +64,10 @@
     </td>
   </tr>
 </table>
+
+<div align="center">
+	<small>{$babelfish_links}</small>
+</div>
+<div align="center">
+	{$babelfish_logo}
+</div>
