@@ -1,4 +1,4 @@
-{* *Header: $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.12 2003-11-16 23:16:36 sylvieg Exp $ *}
 
 <div class="box">
 <div class="box-title">
