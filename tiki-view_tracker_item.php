@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.64 2004-04-02 20:53:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.65 2004-04-09 05:11:48 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -550,7 +550,7 @@ if (isset($_REQUEST['show'])) {
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
 		if ($tracker_info["useComments"] == 'y') $tabi++;
 	}
-	setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab$tabi");
+	setcookie("tab","$tabi");
 } 
 
 $section = 'trackers';

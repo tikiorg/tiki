@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.63 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.64 2004-04-09 05:11:48 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,9 +49,10 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
 	$defaultvalues = $_REQUEST['vals'];
-	setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab2");
+	setcookie("tab","2");
 } else {
 	$defaultvalues = array();
+	setcookie("tab","1");
 }
 $smarty->assign('defaultvalues', $defaultvalues);
 
@@ -338,7 +339,7 @@ if (isset($_REQUEST["save"])) {
 			$_REQUEST["status"] = '';
 		}
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
-		setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab1");
+		setcookie("tab","1");
 		$smarty->assign('itemId', '');
 		
 		if (count($ins_categs)) {
