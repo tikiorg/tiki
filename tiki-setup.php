@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.137 2003-08-22 05:05:53 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.138 2003-08-22 05:51:26 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -322,7 +322,6 @@ if ($load = @file('/proc/loadavg')) {
 		}
 	}
 }
-
 
 // The votes array stores the votes the user has made
 if (!isset($_SESSION["votes"])) {
@@ -1598,7 +1597,16 @@ $smarty->assign('uses_tabs', 'n');
 $user_preferences = array();
 
 //print("tiki-setup: before include tiki-handlers.php:".$tiki_timer->elapsed()."<br />");
-include_once ('tiki-handlers.php');
+//tiki-handlers.php is empty right now.  uncomment the line below if you need to use it
+//include_once ('tiki-handlers.php');
+
+if (ini_get('zlib.output_compression') == 1) {
+	$smarty->assign('gzip','Enabled');
+} elseif ($feature_obzip == 'y') {
+	$smarty->assign('gzip','Enabled');
+} else {
+	$smarty->assign('gzip','Disabled');
+}
 
 if ($feature_obzip == 'y') {
 	ob_start ("ob_gzhandler");
