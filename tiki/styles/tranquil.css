@@ -4674,4 +4674,252 @@ a.removeTab{
 	clear:both;
 	}
 	
+/********************************** JUKEBOX *****************************************/
 
+.jukeboxname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #006699
+}
+
+a.jukeboxname {
+	text-decoration:    none;
+	color:   #006699;
+}
+
+a.jukeboxname:hover {
+	text-decoration: underline;
+}
+
+/* General links for blogs */
+.jukeboxlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00639C;
+	text-decoration:   none;
+}
+
+.jukeboxlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00639C;
+	text-decoration:   none;
+}
+
+.jukeboxlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   red;
+	text-decoration:   underline;
+}
+
+/* Prev and next buttons in blog listings */
+.jukeboxprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+.jukeboxprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+.jukeboxprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+/* The table listing blogs & so */
+table.jukeboxlist {
+	border-color:    #00639C;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+/* The headings in the table listing blogs */
+td.jukeboxlistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #006699;
+	height:   25px;
+	background-image:   url(subsilver/cellpic3.gif);
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* Links in the headings of the table listing gallery images */
+.jukeboxlistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.jukeboxlistheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.jukeboxlistheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FF860D;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns in the table listing gallery images */
+td.jukeboxlistnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistdescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistdescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukevoxlistcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistlastModifodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistlastModifeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistuserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlisttracksodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlisttrackseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistvisitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistvisitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
