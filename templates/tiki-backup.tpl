@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-backup.php">Backups</a><br/><br/>
+<a class="pagetitle" href="tiki-backup.php">{tr}Backups{/tr}</a><br/><br/>
 <h2>{tr}List of available backups{/tr}</h2>
 
 <table class="normal">

@@ -1,6 +1,6 @@
 <a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a><br/><br/>
 <a class="link" href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a>
-<h3>List of featured links</h3>
+<h3>{tr}List of featured links{/tr}</h3>
 <table class="normal">
 <tr>
 <td class="heading">{tr}url{/tr}</td>
@@ -60,6 +60,6 @@
 <option value="n" {if $type eq 'n'}selected="selected"{/if}>{tr}open new window{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="add" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>

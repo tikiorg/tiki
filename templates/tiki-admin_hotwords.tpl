@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
-<h3>Add Hotword</h3>
+<h3>{tr}Add Hotword{/tr}</h3>
 <form method="post" action="tiki-admin_hotwords.php">
 <table class="normal">
 <tr><td class="formcolor">{tr}Word{/tr}</td><td class="formcolor"><input type="text" name="word"></td></tr>

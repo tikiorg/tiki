@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_rssmodules.php">Admin RSS modules</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_rssmodules.php">{tr}Admin RSS modules{/tr}</a><br/><br/>
 {if $preview eq 'y'}
 <div class="simplebox">
 <h2>{tr}Content for the feed{/tr}</h2>

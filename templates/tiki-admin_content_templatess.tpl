@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_cookies.php">{tr}Admin cookies{/tr}</a><br/>
+<a class="pagetitle" href="tiki-admin_cookies.php">{tr}Admin content templates{/tr}</a><br/>
 <h2>{tr}Create/edit cookies{/tr}</h2>
 <form action="tiki-admin_cookies.php" method="post">
 <input type="hidden" name="cookieId" value="{$cookieId}" />

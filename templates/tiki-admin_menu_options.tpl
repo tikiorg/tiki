@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">Admin Menu: {$menu_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br/><br/>
 <a href="tiki-admin_menus.php" class="link">{tr}List menus{/tr}</a>
 <a href="tiki-admin_menus.php?menuId={$menuId}" class="link">{tr}Edit this menu{/tr}</a>
 <h2>{tr}Preview menu{/tr}</h2>

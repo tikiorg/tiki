@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">Admin Polls: {$menu_info.title}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">{tr}Admin Polls{/tr}: {$menu_info.title}</a><br/><br/>
 [<a href="tiki-admin_polls.php" class="link">{tr}List polls{/tr}</a>|
 <a href="tiki-admin_polls.php?pollId={$pollId}" class="link">{tr}Edit this poll{/tr}</a>]
 <h2>{tr}Preview poll{/tr}</h2>
@@ -23,7 +23,7 @@
 </table>
 </form>
 
-<h2>Poll options</h2>
+<h2>{tr}Poll options{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
