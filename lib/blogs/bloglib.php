@@ -280,13 +280,15 @@ class BlogLib extends TikiLib {
 
 			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
 			$res["comments"] = $cant_com;
-			$res['trackbacks_from'] = unserialize($res['trackbacks_from']);
+			if($res['trackbacks_from']!=null)
+				$res['trackbacks_from'] = unserialize($res['trackbacks_from']);
 
 			if (!is_array($res['trackbacks_from']))
 				$res['trackbacks_from'] = array();
 
 			$res['trackbacks_from_count'] = count(array_keys($res['trackbacks_from']));
-			$res['trackbacks_to'] = unserialize($res['trackbacks_to']);
+			if($res['trackbacks_to']!=null)
+				$res['trackbacks_to'] = unserialize($res['trackbacks_to']);
 			$res['trackbacks_to_count'] = count($res['trackbacks_to']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
 			$ret[] = $res;
@@ -348,15 +350,15 @@ class BlogLib extends TikiLib {
 		$tracks = serialize(explode(',', $trackbacks));
 		$data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
 		$now = date("U");
-		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`) values(?,?,?,?,?)";
-		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title));
+		$query = "insert into `tiki_blog_posts`(`blogId`,`data`,`created`,`user`,`title`,`trackbacks_from`,`trackbacks_to`) values(?,?,?,?,?,?,?)";
+		$result = $this->query($query,array((int) $blogId,$data,(int) $now,$user,$title,serialize(array()),serialize(array())));
 		$query = "select max(`postId`) from `tiki_blog_posts` where `created`=? and `user`=?";
 		$id = $this->getOne($query,array((int) $now,$user));
 		// Send trackbacks recovering only successful trackbacks
 		$trackbacks = serialize($this->send_trackbacks($id, $trackbacks));
 		// Update post with trackbacks successfully sent
 		$query = "update `tiki_blog_posts` set `trackbacks_from`=?, `trackbacks_to` = ? where `postId`=?";
-		$this->query($query,array('',$trackbacks,(int) $id));
+		$this->query($query,array(serialize(array()),$trackbacks,(int) $id));
 		$query = "update `tiki_blogs` set `lastModif`=?,`posts`=`posts`+1 where `blogId`=?";
 		$result = $this->query($query,array((int) $now,(int) $blogId));
 		$this->add_blog_activity($blogId);
@@ -404,18 +406,18 @@ class BlogLib extends TikiLib {
 	function remove_post($postId) {
 		$query = "select `blogId` from `tiki_blog_posts` where `postId`=?";
 
-		$blogId = $this->getOne($query,array($postId));
+		$blogId = $this->getOne($query,array((int) $postId));
 
 		if ($blogId) {
 			$query = "delete from `tiki_blog_posts` where `postId`=?";
 
-			$result = $this->query($query,array($postId));
+			$result = $this->query($query,array((int) $postId));
 			$query = "update `tiki_blogs` set `posts`=`posts`-1 where `blogId`=?";
-			$result = $this->query($query,array($blogId));
+			$result = $this->query($query,array((int) $blogId));
 		}
 
 		$query = "delete from `tiki_blog_posts_images` where `postId`=?";
-		$this->query($query,array($postId));
+		$this->query($query,array((int) $postId));
 		return true;
 	}
 
@@ -426,11 +428,11 @@ class BlogLib extends TikiLib {
 
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
-
-			if (!$res['trackbacks_from'])
+			
+			if (!$res['trackbacks_from'] || $res['trackbacks_from']===null)
 				$res['trackbacks_from'] = serialize(array());
 
-			if (!$res['trackbacks_to'])
+			if (!$res['trackbacks_to'] || $res['trackbacks_to']===null)
 				$res['trackbacks_to'] = serialize(array());
 
 			$res['trackbacks_from_count'] = count(array_keys(unserialize($res['trackbacks_from'])));
