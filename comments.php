@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.16 2003-10-10 07:06:26 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.17 2003-11-14 19:04:31 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -262,9 +262,11 @@ if ($comments_offset > 0) {
 $smarty->assign('comments_coms', $comments_coms["data"] );
 
 // Grab the parent comment to show.  -rlpowell
-if (isset($_REQUEST["comments_parentId"]) && ($tiki_p_post_comments == 'y') &&
-		(isset($_REQUEST['comments_previewComment']) ||
-		 isset($_REQUEST['post_reply']))) {
+if (isset($_REQUEST["comments_parentId"]) &&
+	$_REQUEST["comments_parentId"] > 0 && 
+	($tiki_p_post_comments == 'y') &&
+	(isset($_REQUEST['comments_previewComment']) ||
+	 isset($_REQUEST['post_reply']))) {
     $parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
     $smarty->assign_by_ref('parent_com', $parent_com);
 }
