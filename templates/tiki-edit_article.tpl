@@ -91,7 +91,9 @@
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 <tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
-{html_select_date time=$publishDate start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time time=$publishDate display_seconds=false}</span>
+{html_select_date time=$publishDateSite start_year="-5" end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time time=$publishDateSite display_seconds=false}
+&nbsp;{$siteTimeZone}
+</span>
 </td></tr>
 </table>
 {if $tiki_p_use_HTML eq 'y'}

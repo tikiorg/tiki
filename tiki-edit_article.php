@@ -53,12 +53,12 @@ $smarty->assign('heading','');
 $smarty->assign('body','');
 $smarty->assign('type','Article');
 $smarty->assign('rating',7);
-$smarty->assign('publishDate',$publishDate);
 $smarty->assign('edit_data','n');
 
 // If the articleId is passed then get the article data
 if(isset($_REQUEST["articleId"])) {
   $article_data = $tikilib->get_article($_REQUEST["articleId"]);
+  $publishDate = $article_data["publishDate"];
   $smarty->assign('title',$article_data["title"]);
   $smarty->assign('authorName',$article_data["authorName"]);
   $smarty->assign('topicId',$article_data["topicId"]);
@@ -78,7 +78,6 @@ if(isset($_REQUEST["articleId"])) {
   }
   $smarty->assign('heading',$article_data["heading"]);
   $smarty->assign('body',$article_data["body"]);
-  $smarty->assign('publishDate',$article_data["publishDate"]);
   $smarty->assign('edit_data','y');
   
   $data = $article_data["image_data"];
@@ -112,6 +111,11 @@ if(isset($_REQUEST["allowhtml"])) {
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 if(isset($_REQUEST["preview"])) {
+  # convert from the displayed 'site' time to 'server' time
+  $publishDate = $tikilib->make_server_time($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
+                       $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],
+                       $tikilib->get_display_timezone($user));
+
   $smarty->assign('reads','0');
   $smarty->assign('preview',1); 
   $smarty->assign('edit_data','y');
@@ -141,9 +145,6 @@ if(isset($_REQUEST["preview"])) {
   $imgname=$_REQUEST["image_name"];
   $data=urldecode($_REQUEST["image_data"]);
 
-  $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
-                        $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $smarty->assign('publishDate',$publishDate);
   // Parse the information of an uploaded file and use it for the preview
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
     $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
@@ -207,9 +208,10 @@ if(isset($_REQUEST["preview"])) {
 
 // Pro
 if(isset($_REQUEST["save"])) {
-
-  
-
+  # convert from the displayed 'site' time to 'server' time
+  $publishDate = $tikilib->make_server_time($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
+    $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],
+    $tikilib->get_display_timezone($user));
 
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $body = $_REQUEST["body"];  
@@ -223,10 +225,6 @@ if(isset($_REQUEST["save"])) {
   } else {
     $useImage = 'n';
   }
-
-  $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
-                        $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $smarty->assign('publishDate',$publishDate);
   
   $imgdata=urldecode($_REQUEST["image_data"]);
   if(strlen($imgdata)>0) {
@@ -296,14 +294,9 @@ $cat_type='article';
 $cat_objid = $articleId;
 include_once("categorize_list.php");
 
-
-  
-  
-
-
-
-
-
+$smarty->assign('publishDate',		$publishDate);
+$smarty->assign('publishDateSite',	$tikilib->get_site_time($publishDate, $user));
+$smarty->assign('siteTimeZone',		$tikilib->get_site_timezone_shortname($user));
 
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_article.tpl');
