@@ -92,7 +92,30 @@ class DirLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$res["sites"] = $this->getOne("select count(*) from `tiki_category_sites` where `categId`=?",array((int)$res["categId"]));
 			//$res["path"]=$this->dir_get_path_text($res["categId"]);
-			$ret[] = $res;
+
+		    $add = TRUE;
+		    global $feature_categories;
+		    global $userlib;
+		    global $user;
+		    global $tiki_p_admin;
+
+		    if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    	global $categlib;
+		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    	$perms_array = $categlib->get_object_categories_perms($user, 'directory', $res['categId']);
+		    	if ($perms_array) {
+			    	foreach ($perms_array as $perm => $value) {
+			    		$$perm = $value;
+			    	}
+		    	}
+
+		    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    		$add = FALSE;
+		    	}
+		    }
+		    if ($add) {
+				$ret[] = $res;
+		    }
 		}
 
 		$retval = array();

@@ -765,12 +765,12 @@ class Comments extends TikiLib {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['forumId'], 'forum')) {
-	    // blog permissions override category permissions
+	    // forum permissions override category permissions
 			if (!$userlib->object_has_permission($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
 			    $add = FALSE;
 			}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no blog permissions so now we check category permissions
+	    	// no forum permissions so now we check category permissions
 	    	global $categlib;
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $res['forumId']);
