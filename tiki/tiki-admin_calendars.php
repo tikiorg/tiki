@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.14 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.15 2004-04-27 06:23:39 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,8 @@ if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 
 if (!isset($_REQUEST["calendarId"])) {
 	$_REQUEST["calendarId"] = 0;
+} elseif ($userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar')) {
+	$smarty->assign('individual', 'y');
 }
 
 if (isset($_REQUEST["drop"])) {
@@ -80,7 +82,15 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-$calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find, 0);
+$calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find);
+
+foreach (array_keys($calendars["data"]) as $i) {
+	if ($userlib->object_has_one_permission($i, 'calendar')) {
+		$calendars["data"][$i]["individual"] = 'y';
+	} else {
+		$calendars["data"][$i]["individual"] = 'n';
+	}
+}
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;

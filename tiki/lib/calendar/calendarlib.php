@@ -20,7 +20,7 @@ class CalendarLib extends TikiLib {
 		$bindvars = array();
 		if ($find) {
 			$mid = "where `name` like ?";
-			$bindvars[] = $findesc;
+			$bindvars[] = '%'.$find.'%';
 		}
 		$query = "select * from `tiki_calendars` $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
