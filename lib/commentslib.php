@@ -280,28 +280,40 @@ class Comments extends TikiLib {
 		$in_reply_to = '';
 	    }
 
-	    // Determine if this is a topic or a thread
+	    // Determine user from email
+	    $userName = $this->getOne("select `login` from `users_users` where `email`=?",array($email));
+
+	    if (!$userName)
+		$user = '';
+
+	    // Determine if the thread already exists.
 	    $parentId = $this->getOne(
 		    "select `threadId` from `tiki_comments` where
 		    `object`=? and `objectType` = 'forum' and
-		    `parentId`=0 and locate(`title`,?)",
-		    array($forumId,$title)); //todo: replace mysql locate() 
+		    `parentId`=0 and `title`=?",
+		    array($forumId,$title) 
+		    );
 
-		    if (!$parentId)
-			$parentId = 0;
+	    if (!$parentId)
+	    {
+		// No thread already; create it.
 
-		    // Determine user from email
-		    $userName = $this->getOne("select `login` from `users_users` where `email`=?",array($email));
+		$temp_msid = '';
 
-		    if (!$userName)
-			$user = '';
+		$parentId = $this->post_new_comment(
+			'forum:' . $forumId, 0,
+			$userName, $title, 
+			"Use this thread to discuss the [tiki-index.php?page=$title|$title] page.",
+			$temp_msid
+			);
+	    }
 
-		    // post
-		    $this->post_new_comment('forum:' . $forumId,
+	    // post
+	    $this->post_new_comment( 'forum:' . $forumId,
 		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
 
-		    $pop3->DeleteMessage($i);
+	    $pop3->DeleteMessage($i);
 	}
 
 	$pop3->close();
