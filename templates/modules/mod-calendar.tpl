@@ -27,7 +27,7 @@ $c=new Calendar("en");
 $v=substr($c->nameOfMonth($mon),0,3);
 $dayofweek=$c->dayOfWeekStr($day,$mon,$year);
 $father="tiki-index.php";
-$todaylink=$father."?day=".date("d")."&mon=".date("m")."&year=".date("Y")
+$todaylink=$father."?day=".date("d")."&amp;amp;mon=".date("m")."&amp;amp;year=".date("Y")
 ?>
 <div class="boxnm">
 <div class="box-title">
@@ -43,9 +43,9 @@ Calendar
 	  <td colspan="7">
        	    <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tr class="changedate" bgcolor="#FFFFFF"> <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
-                <td align="left"><a class="link" href="<?$mong=$year-1;print("$father?day=$day&mon=$mon&year=$mong");?>">&lt;</a><?=$year?><a class="link" href="<?$mong=$year+1;print("$father?day=$day&mon=$mon&year=$mong");?>">&gt;</a></td>
+                <td align="left"><a class="link" href="<?$mong=$year-1;print("$father?day=$day&amp;amp;mon=$mon&amp;year=$mong");?>">&lt;</a><?=$year?><a class="link" href="<?$mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
                 <td align="center"><a class="link" href="<?=$todaylink?>">Today</a></td>
-                <td align="right"><a class="link" href="<?$mong=$mon-1;print("$father?day=$day&mon=$mong&year=$year");?>">&lt;</a><?=$v?><a class="link" href="<?$mong=$mon+1;print("$father?day=$day&mon=$mong&year=$year");?>">&gt;</a></td>
+                <td align="right"><a class="link" href="<?$mong=$mon-1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><?=$v?><a class="link" href="<?$mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
               </tr> <!-- ROW WITH YEAR AND MONTH ENDS -->
             </table>
           </td>
@@ -75,7 +75,7 @@ Calendar
               } else {
                 $classval="day";
               }
-              print("<td class='fc' align='right'><a class='$classval' href='$father?day=$pval&mon=$mon&year=$year'>$val</a></td>");
+              print("<td class='fc' align='right'><a class='$classval' href='$father?day=$pval&amp;mon=$mon&amp;year=$year'>$val</a></td>");
             }
             print("</tr>");
           }

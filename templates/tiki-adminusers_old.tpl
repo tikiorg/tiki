@@ -1,5 +1,5 @@
 <h2>{tr}Admin users{/tr}</h2>
-<div align="center">
+<div  align="center">
 <table border="1" cellpadding="0" cellspacing="0" width="80%">
 <tr>
 <td class="textbl" bgcolor="#bbbbbb"><a class="link" href="tiki-adminusers.php?offset={$offset}&sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}name{/tr}</a></td>

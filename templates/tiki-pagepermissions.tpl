@@ -2,7 +2,7 @@
 <div>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
 <table>
-{section name=pg loop=$page_perms}
+{section  name=pg loop=$page_perms}
 <tr><td>{tr}Group{/tr}: {$page_perms[pg].groupName} {tr}Perm{/tr}: {$page_perms[pg].permName} (<a href="tiki-pagepermissions.php?action=remove&page={$page}&perm={$page_perms[pg].permName}&group={$page_perms[pg].groupName}">remove</a>)</td></tr>
 {sectionelse}
 <tr><td>{tr}No indivual permissions global permissions to all pages apply{/tr}</td></tr>

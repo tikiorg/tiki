@@ -1,6 +1,6 @@
 <h1>{tr}Pages{/tr}</h1>
 <div align="center">
-<table border="1" width="90%" cellpadding="0" cellspacing="0">
+<table  border="1" width="90%" cellpadding="0" cellspacing="0">
 <tr>
 <td class="heading"><a class="link" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
 <td class="heading"><a class="link" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>

@@ -1,5 +1,5 @@
 <h1>{tr}Cache{/tr}</h1>
-<div align="center">
+<div  align="center">
 <table border="1" cellpadding="0" cellspacing="0" width="97%">
 <tr><td>Find</td>
    <td>

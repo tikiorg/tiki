@@ -4,7 +4,7 @@
 <tr>
 {if !$lock}
 
-<td><div class="button2"><a href="tiki-print.php?page={$page}" class="linkbut">{tr}printable{/tr}</a></div></td>
+<td><div  class="button2"><a href="tiki-print.php?page={$page}" class="linkbut">{tr}printable{/tr}</a></div></td>
 
 {if $tiki_p_edit eq 'y'}
 <td><div class="button2"><a href="tiki-editpage.php?page={$page}" class="linkbut">{tr}edit{/tr}</a></div></td>

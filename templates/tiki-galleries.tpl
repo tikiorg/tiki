@@ -2,7 +2,7 @@
 {if $tiki_p_create_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 <h3>{tr}Create or edit a gallery using this form{/tr}</h3>
-<div align="center">
+<div  align="center">
 <table border="1" cellspacing="0" cellpadding="0"><tr><td>
 <form action="tiki-galleries.php" method="post">
 <table>

@@ -6,7 +6,7 @@
 {/if}
 <br/>
 <div align="center">
-<table border="1" width="80%" cellpadding="0" cellspacing="0">
+<table  border="1" width="80%" cellpadding="0" cellspacing="0">
 <tr>
 <td id="heading">{tr}Date{/tr}</td>
 <td id="heading">{tr}Page{/tr}</td>

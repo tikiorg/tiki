@@ -2,8 +2,8 @@
 <div>
 <h3>Group Information</h3>
 <table>
-<tr><td class="heading">Name:</td><td class="text">{$group_info.groupName}</td>
-<tr><td class="heading">Desc:</td><td class="text">{$group_info.groupDesc}</td>
+<tr><td class="heading">Name:</td><td class="text">{$group_info.groupName}</td></tr>
+<tr><td class="heading">Desc:</td><td class="text">{$group_info.groupDesc}</td></tr>
 <tr><td class="heading">Permissions:</td><td class="text">
 {section name=grp loop=$group_info.perms}
 {$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;

@@ -2,8 +2,8 @@
 <div>
 <h3>User Information</h3>
 <table>
-<tr><td class="heading">Login:</td><td class="text">{$user_info.login}</td>
-<tr><td class="heading">Email:</td><td class="text">{$user_info.email}</td>
+<tr><td class="heading">Login:</td><td class="text">{$user_info.login}</td></tr>
+<tr><td class="heading">Email:</td><td class="text">{$user_info.email}</td></tr>
 <tr><td class="heading">Groups:</td><td class="text">
 {section name=grp loop=$user_info.groups}
 {$user_info.groups[grp]}{if $user_info.groups[grp] != "Anonymous"}(<a class="link" href="tiki-assignuser.php?assign_user={$assign_user}&amp;action=removegroup&amp;group={$user_info.groups[grp]}">x</a>){/if}&nbsp;&nbsp;

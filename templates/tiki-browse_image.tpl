@@ -1,4 +1,4 @@
-<div class="browseimage">
+<div  class="browseimage">
   
   <div class="imagetitle">
     {tr}Browsing Image{/tr}: {$name}
