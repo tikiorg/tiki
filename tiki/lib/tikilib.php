@@ -4859,6 +4859,7 @@ function add_pageview() {
 	{
 	    $target = '';
 	    $class = 'class="wiki"';
+	    $ext_icon = '';
 
 	    if ($this->get_preference('popupLinks', 'n') == 'y')
 	    {
@@ -4873,6 +4874,7 @@ function add_pageview() {
 		$target = '';
 	    } else {
 	    	$class = 'class="wiki external"';
+	    	$ext_icon = "<img border=\"0\" src=\"img/icons/external_link.gif\" />";
 	    }
 
 	    if (!strstr($link, '//'))
@@ -4894,11 +4896,11 @@ function add_pageview() {
 		//$link2 = str_replace("&","\&",$link2);
 		$link2 = str_replace("/", "\/", preg_quote($link));
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a> $cosa", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon $cosa", $data);
 		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a> $cosa", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon $cosa", $data);
 	    } else {
 		//$link2 = str_replace("/","\/",$link);
 		//$link2 = str_replace("?","\?",$link2);
@@ -4906,9 +4908,9 @@ function add_pageview() {
 		$link2 = str_replace("/", "\/", preg_quote($link));
 
 		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
 		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>", $data);
+		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon", $data);
 	    }
 
 	}
