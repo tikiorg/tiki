@@ -31,6 +31,7 @@
 {elseif $headtitle} : {$headtitle}
 {elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
+{elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
 {/if}
 </title>
