@@ -67,9 +67,9 @@
 	{if $userTracker eq 'y'}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
 	{if $useritemId}
-	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
+	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit information{/tr}</a>
 	{else}
-	<a class="link" href="tiki-view_tracker.php?trackerId={$usertrackerId}&amp;vals[Login]={$userwatch|escape:"url"}&amp;view=mod">{tr}Add informations{/tr}</a>
+	<a class="link" href="tiki-view_tracker_item.php?view=+user">{tr}View extra information{/tr}</a>
 	{/if}
 	{/if}
 

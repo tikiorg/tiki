@@ -17,7 +17,7 @@
 @define("ERROR_MANAGER_LEVEL", 		"0");      		//Précise le niveau d"erreur toléré, plus il est bas, moins les erreurs sont tolérées.
 //@define("ERROR_MANAGER_ESCAPE", 	APATH_ROOT."include/org/apicnet/ui/erreur.html"); //Permet de spécifier une url locale de remplacement en cas de remontée d"erreurs.
 @define("ERROR_MANAGER_LOG", 		APATH_ROOT."cache/erreur.log");	//Permet de définir un fichier de log.
-@define("ERROR_MANAGER_ALARME", 	"logiciel@apicnet.net");	//Permet de définir une série d"adresse email à laquelle sera envoyé un mail d"alerte.
+@define("ERROR_MANAGER_ALARME", 	"");	//Permet de définir une série d"adresse email à laquelle sera envoyé un mail d"alerte.
 
 /*Configuration générale de l'application*/
 @define("APIC_VERBOSE_MODE", 	 	TRUE);

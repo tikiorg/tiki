@@ -53,7 +53,7 @@ class UsersLib extends TikiLib {
     }
 
     function assign_object_permission($groupName, $objectId, $objectType, $permName) {
-	$objectId = md5($objectType . $objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "delete from `users_objectpermissions`
 	    where `groupName` = ? and
@@ -73,7 +73,7 @@ class UsersLib extends TikiLib {
     function object_has_permission($user, $objectId, $objectType, $permName) {
 	$groups = $this->get_user_groups($user);
 
-	$objectId = md5($objectType . $objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	foreach ($groups as $groupName) {
 	    $query = "select count(*)
@@ -93,7 +93,7 @@ class UsersLib extends TikiLib {
     }
 
     function remove_object_permission($groupName, $objectId, $objectType, $permName) {
-	$objectId = md5($objectType . $objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "delete from `users_objectpermissions`
 	    where `groupName` = ? and `objectId` = ?
@@ -105,7 +105,7 @@ class UsersLib extends TikiLib {
     }
 
     function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
-	$objectId = md5($objectType.$objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select `permName`, `groupName`
 	    from `users_objectpermissions`
@@ -147,7 +147,7 @@ class UsersLib extends TikiLib {
     }
 
     function get_object_permissions($objectId, $objectType) {
-	$objectId = md5($objectType . $objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select `groupName`, `permName`
 	    from `users_objectpermissions`
@@ -165,7 +165,7 @@ class UsersLib extends TikiLib {
     }
 
     function object_has_one_permission($objectId, $objectType) {
-	$objectId = md5($objectType . $objectId);
+	$objectId = md5($objectType . strtolower($objectId));
 
 	$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
 	$result = $this->getOne($query, array(
@@ -1245,6 +1245,29 @@ function get_included_groups($group) {
     }
 
   
+		// Case-sensitivity regression only. used for patching
+	function get_object_case_permissions($objectId, $objectType) {
+		$query = "select `groupName`, `permName` from `users_objectpermissions` where `objectId` = ? and `objectType` = ?";
+		$result = $this->query($query, array(md5($objectType . $objectId),$objectType));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+
+	function object_has_one_case_permission($objectId, $objectType) {
+		$query = "select count(*) from `users_objectpermissions` where `objectId`=? and `objectType`=?";
+		$result = $this->getOne($query, array( md5($objectType . $objectId), $objectType));
+		return $result;
+	}
+
+	function remove_object_case_permission($groupName, $objectId, $objectType, $permName) {
+		$query = "delete from `users_objectpermissions` where `groupName` = ? and `objectId` = ?  and `objectType` = ? and `permName` = ?";
+		$result = $this->query($query, array($groupName, md5($objectType . $objectId), $objectType, $permName));
+		return true;
+	}
+
 }
 
 ?>

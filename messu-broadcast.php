@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.19 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.20 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,7 @@ if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
 }
 
 if (isset($_REQUEST['group'])) {
-	if ($_REQUEST['group'] == 'all') {
+	if ($_REQUEST['group'] == 'all' && $tiki_p_broadcast_all == 'y') {
 		$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
 
 		$all_users = array();

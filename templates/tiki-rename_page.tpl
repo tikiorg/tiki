@@ -1,6 +1,5 @@
 <h2>{tr}Rename page{/tr}: {$page}</h2>
 <form action="tiki-rename_page.php" method="post">
-<input type="hidden"  name="oldpage" value="{$page|escape}" />
 <input type="hidden"  name="page" value="{$page|escape}" />
 <table class="normal">
 <tr>

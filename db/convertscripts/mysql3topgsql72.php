@@ -125,7 +125,7 @@ function do_updates($tab,$content)
     $vals=preg_replace("/([a-zA-Z0-9_]+)=([a-zA-Z0-9_]+)/","\"$1\"=\"$2\"",$vals);
     $ret.=$vals;
   }
-  $ret=preg_replace("/\"\"/","\",\"",$ret);
+  $ret=preg_replace("/\" *\"/","\",\"",$ret);
   return($ret);
 }
 

@@ -1,10 +1,26 @@
 <div class="quicktag">
+{literal}
+<script language="javascript">
+<!--
+function taginsert($area_name,$tagid)
+{
+//fill variables{/literal}
+  var tag = new Array();
+  {section name=qtg loop=$quicktags}
+  tag[{$quicktags[qtg].tagId}]='{$quicktags[qtg].taginsert|escape:"javascript"}';
+  {/section}
+//done{literal}  
+  insertAt($area_name,tag[$tagid]);
+}
+-->
+</script>
+{/literal}
 <a href="javascript:toggleBlock('quicktags{$qtnum}');" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...</a><br /><br />
 <div id='quicktags{$qtnum}' {if $showtags}style="display:block;"{else}style="display:none;"{/if}>
 <div>
 {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}
 {section name=qtg loop=$quicktags}
-<a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:insertAt('{$area_name}','{$quicktags[qtg].taginsert|escape:"javascript"}');"><img
+<a title="{tr}{$quicktags[qtg].taglabel}{/tr}" href="javascript:taginsert('{$area_name}','{$quicktags[qtg].tagId}');"><img
 src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' title='{tr}{$quicktags[qtg].taglabel}{/tr}' border='0' /></a>
 {cycle name='cycle'|cat:$qtnum}
 {/section}

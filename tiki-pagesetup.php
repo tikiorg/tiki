@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.13 2004-06-08 18:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.14 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,9 +17,8 @@ if ($tiki_p_admin != 'y' && isset($page) && $userlib->object_has_one_permission(
 	if ($userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_admin_wiki')) {
 		foreach ($perms["data"] as $perm) {
 			$perm = $perm["permName"];
-
-  			$smarty->assign("$perm", 'y');
-    			$$perm = 'y';
+			$smarty->assign("$perm", 'y');
+			$$perm = 'y';
 		}
 	} else {
 		foreach ($perms["data"] as $perm) {

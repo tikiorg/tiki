@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.20 2004-07-15 21:50:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.21 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -216,6 +216,10 @@ if (isset($_REQUEST["loginprefs"])) {
     $smarty->assign('rememberme', $_REQUEST['rememberme']);
     $smarty->assign('remembertime', $_REQUEST['remembertime']);
 		
+		$v = isset($_REQUEST['cookie_name']) ? $_REQUEST['cookie_name'] : $_SERVER['SERVER_NAME'];
+    $tikilib->set_preference('cookie_name', $v);
+    $smarty->assign('cookie_name', $v);
+
 		$v = isset($_REQUEST['cookie_domain']) ? $_REQUEST['cookie_domain'] : $_SERVER['SERVER_NAME'];
     $tikilib->set_preference('cookie_domain', $v);
     $smarty->assign('cookie_domain', $v);

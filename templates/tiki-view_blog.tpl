@@ -17,7 +17,7 @@
 		{/if}
 		{/if}
 		{if $rss_blog eq "y"}
-		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src='img/icons/mode_desc.gif' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+		<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}&amp;ver=2&amp;css=y"><img src='img/icons/mode_desc.gif' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 		{/if}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
 		<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src='img/icons/config.gif' border='0' alt='{tr}Edit blog{/tr}' title='{tr}Edit blog{/tr}' /></a>
@@ -110,18 +110,18 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
+[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
- [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a> 
+{$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>

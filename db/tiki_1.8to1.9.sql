@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.85 2004-07-22 13:08:29 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.86 2004-07-29 17:37:47 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -316,7 +316,12 @@ ALTER TABLE `tiki_untranslated` CHANGE `lang` `lang` char(16) NOT NULL default '
 ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
 
-UPDATE `tiki_quicktags` set `tagcategory`='wiki';
+UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`=NULL;
+
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Layer', 'LAYER\r\n NAME\r\n TYPE\r\n STATUS\r\n DATA\r\n PROJECTION\r\nEND #end of layer', 'img/icons/global.gif', 'maps');
+
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class','CLASS\r\n EXPRESSION\r\n NAME\r\n OUTLINECOLOR\r\n COLOR\r\nEND #end of class','img/icons/mini_triangle.gif', 'maps');
+
 
 #added on 2004-04-19 lphuberdeau - Additional table for TikiSheet
 CREATE TABLE tiki_sheet_layout (
@@ -328,8 +333,6 @@ CREATE TABLE tiki_sheet_layout (
   className varchar(64) default NULL,
   UNIQUE KEY sheetId (sheetId,begin)
 ) TYPE=MyISAM;
-
-UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`=NULL;
 
 #added on 2004-4-26 sylvie
 DELETE FROM `tiki_preferences` WHERE `name`='email_encoding';
@@ -622,6 +625,8 @@ UPDATE `tiki_menu_options` set `name`='Genres Admin', `url`='tiki-jukebox_genres
 UPDATE `tiki_menu_options` set `name`='User list' where `url`='tiki-list_users.php' and menuId='42';
 UPDATE `tiki_menu_options` set `section`='feature_articles,feature_cms_rankings'  where `section`='feature_articles,feature_cms_ranking' and menuId='42';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
+UPDATE `tiki_menu_options` set `url`='tiki-blog_rankings.php' where `url`='tiki-blogs_rankings.php' and menuId='42';
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
+
 

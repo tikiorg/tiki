@@ -1,8 +1,14 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.3 2004-02-23 20:32:28 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/babelfish.tpl,v 1.4 2004-07-29 17:38:16 mose Exp $ *}
 
 {if $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'y'}
 
-<div align="center">
+{assign var=links value=0}
+{section loop=$babelfish_links name=i}
+	{assign var=links value=$links+1}
+{/section}
+
+<div id="babelfish" align="center">
+{if $links>0}
 <table width="100%">
   {section loop=$babelfish_links name=i}
     <tr>
@@ -21,11 +27,15 @@
     </tr>
   {/section}
 </table>
+{else if $tiki_p_admin eq 'y'}
+<small><strong>Babelfish ({tr}debug{/tr}): {tr}Fatal error{/tr}</strong></small>
+{/if}
 </div>
 
 {elseif $feature_babelfish eq 'y' and $feature_babelfish_logo eq 'n'}
 
-<div align="center">
+<div id="babelfish" align="center">
+{if $links>0}
 <table width="100%">
   {section loop=$babelfish_links name=i}
   <tr><td align="center">
@@ -33,11 +43,14 @@
   </td> </tr>
   {/section}
 </table>
+{else if $tiki_p_admin eq 'y'}
+<small><strong>Babelfish ({tr}debug{/tr}): {tr}Fatal error{/tr}</strong></small>
+{/if}
 </div>
 
 {elseif $feature_babelfish eq 'n' and $feature_babelfish_logo eq 'y'}
 
-<div align="center">
+<div id="babelfish" align="center">
   {$babelfish_logo}
 </div>
 

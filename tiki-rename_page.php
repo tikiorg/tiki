@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.9 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.10 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,9 +32,19 @@ if (!isset($_REQUEST["page"])) {
 
 include_once ("tiki-pagesetup.php");
 
-// Now check permissions to access this page
-if ($tiki_p_rename != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
+// Now check permissions to rename this page
+if ($tiki_p_rename == 'y') {
+	if ($tiki_p_admin_wiki != 'y' && $feature_wiki_usrlock == 'y' && $wikilib->is_locked($page)) {
+		$info = $tikilib->get_page_info($page);
+		$allowed = ($user == $info['user']) ? 'y' : 'n';
+	} else {
+		$allowed = 'y';
+	}
+} else {
+	$allowed = 'n';
+}
+if ($allowed == 'n') {
+	$smarty->assign('msg', tra("Permission denied you cannot rename this page"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -50,14 +60,21 @@ if (!$tikilib->page_exists($page,true)) { // true: casesensitive check here
 
 if (isset($_REQUEST["rename"])) {
 	check_ticket('rename-page');
-	if (!$wikilib->wiki_rename_page($_REQUEST['oldpage'], $_REQUEST['newpage'])) {
+	// If the new pagename does match userpage prefix then display an error
+	$newName = $_REQUEST['newpage'];
+	if (strpos($newName, $feature_wiki_userpage_prefix)===0) { // don't use ==, we check the position here!
+		$smarty->assign('msg', tra("Cannot rename page because the new name begins with reserved prefix").' ('.$feature_wiki_userpage_prefix.').');
+
+		$smarty->display("error.tpl");
+		die;
+	}
+	if (!$wikilib->wiki_rename_page($page, $newName)) {
 		$smarty->assign('msg', tra("Cannot rename page maybe new page already exists"));
 
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	$newName = $_REQUEST['newpage'];
 	header ("location: tiki-index.php?page=$newName");
 }
 

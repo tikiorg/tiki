@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.10 2004-07-08 12:50:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-categpermissions.php,v 1.11 2004-07-29 17:37:46 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,13 +56,24 @@ if (isset($_REQUEST['assign_all'])) {
 
 // Process the form to remove a permission from the category
 if (isset($_REQUEST['action'])) {
+	$area = 'removecategperm';
 	if ($_REQUEST['action'] == 'remove') {
-		$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
+		} else {
+			key_get($area);
+		}
 	} elseif ($_REQUEST['action'] == 'remove_all') {
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
 		$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
 		$children = $categlib->get_child_categories($categId);
 		foreach ($children as $child) {
 			$userlib->remove_object_permission($_REQUEST['group'], $child['categId'], 'category', $_REQUEST['perm']);
+		}
+		} else {
+			key_get($area);
 		}
 	}
 }
@@ -87,8 +98,6 @@ $smarty->assign_by_ref('perms', $perms['data']);
 // Get the category path
 $path = $categlib->get_category_path($categId);
 $smarty->assign_by_ref('path', $path);
-
-//ask_ticket('category-perms');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
 $smarty->assign('show_page_bar', 'y');

@@ -38,6 +38,7 @@ function wikiplugin_articles($data,$params) {
 	
 	$listpages = $tikilib->list_articles(0, $max, 'publishDate_desc', '', $now, 'admin', '', $topic);
  	if ($feature_multilingual == 'y') {
+		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
 		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
 	}

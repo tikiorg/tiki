@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.61 2004-06-29 23:26:58 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.62 2004-07-29 17:38:17 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -27,31 +27,27 @@ a moderator approves it.{/tr}</small>
 
 <table class="normal">
 <tr>
-  <td class="odd" >
-  <div align="center">
-  {if $forum_info.ui_avatar eq 'y' and $thread_info.userName|avatarize}
-  {$thread_info.userName|avatarize}<br />
-  {/if}
-  {$thread_info.userName|userlink}
-  {if $forum_info.ui_flag eq 'y' and $thread_info.userName|countryflag}
-  <br />{$thread_info.userName|countryflag}
-  {/if}
-  {if $forum_info.ui_posts eq 'y' and $thread_info.user_posts}
-  <br /><small>posts:{$thread_info.user_posts}</small>
-  {/if}
-  {if $forum_info.ui_level eq 'y' and $thread_info.user_level}
-  <br /><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
-  {/if}
-  </div>
-  </td>
-  <td class="odd" >
-  <table >
-  <tr>
-  	<td>
-  		<b>{$thread_info.title}</b>
-  	</td>
-  	<td style="text-align:right;">
-	  
+  <td rowspan="2" class="odd" >
+	  <div align="center">
+		  {if $forum_info.ui_avatar eq 'y' and $thread_info.userName|avatarize}
+		  {$thread_info.userName|avatarize}<br />
+		  {/if}
+		  {$thread_info.userName|userlink}
+		  {if $forum_info.ui_flag eq 'y' and $thread_info.userName|countryflag}
+		  <br />{$thread_info.userName|countryflag}
+		  {/if}
+		  {if $forum_info.ui_posts eq 'y' and $thread_info.user_posts}
+		  <br /><small>posts:{$thread_info.user_posts}</small>
+		  {/if}
+		  {if $forum_info.ui_level eq 'y' and $thread_info.user_level}
+		  <br /><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
+		  {/if}
+	  </div>
+	</td>
+  <td class="odd">
+ 		<b>{$thread_info.title}</b>
+ 	</td>
+ 	<td style="text-align:right;" class="odd">
 	  {if $tiki_p_admin_forum eq 'y'
 	  or ($tiki_p_forum_post eq 'y' and ($thread_info.userName == $user)) }
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_threadId={$thread_info.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}"
@@ -62,11 +58,9 @@ a moderator approves it.{/tr}</small>
 	     class="admlink"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 	  {/if}     
 	  
-	  
 	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;savenotepad={$thread_info.threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	  {/if}
-
 	
 	  {if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_topic eq 'n'}
@@ -75,11 +69,10 @@ a moderator approves it.{/tr}</small>
 			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this topic{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	  {/if}
-
-
-  	</td>
-  </tr>
-  </table>
+  </td>
+</tr>
+<tr>
+	<td class="even" colspan="3">
   <br /><br />
   {$thread_info.parsed}
   <br />
@@ -95,45 +88,44 @@ a moderator approves it.{/tr}</small>
 	{/section}
   {/if}
   </td>
-  </tr>
+</tr>
 <tr>
   <td class="odd" style="text-align:center;">
   	&nbsp;
   	{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
 	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject={tr}Re:{/tr}%20{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
     {/if}
-	{if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
-	  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
-	{/if}
-    {if $thread_info.userName and $forum_info.ui_online eq 'y'}
-    	{if $thread_info.user_online eq 'y'}
-  			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
-  		{elseif $thread_info.user_online eq 'n'}
-  			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
-  		{/if}
-  	{/if}
-
+		{if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
+		  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
+		{/if}
+	    {if $thread_info.userName and $forum_info.ui_online eq 'y'}
+	    	{if $thread_info.user_online eq 'y'}
+	  			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+	  		{elseif $thread_info.user_online eq 'n'}
+	  			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+	  		{/if}
+	  	{/if}
   </td>
-  <td class="odd">  
-  <table class="commentinfo">
-  <tr>
-    <td style="font-size:8pt;"><b>{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
-    {if $forum_info.vote_threads eq 'y'}
-    <td style="font-size:8pt;"><b>{tr}score{/tr}</b>: {$thread_info.points}</td>
-    {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
-	  <b>{tr}Vote{/tr}</b>: 
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">1</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">2</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">3</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">4</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">5</a>
+  <td class="odd" colspan="2">
+	  <table class="commentinfo">
+	  <tr>
+  	  <td style="font-size:8pt;"><b>{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
+	    {if $forum_info.vote_threads eq 'y'}
+	    <td style="font-size:8pt;"><b>{tr}score{/tr}</b>: {$thread_info.points}</td>
+	    {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
+			  <b>{tr}Vote{/tr}</b>: 
+			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">1</a>
+			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">2</a>
+			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">3</a>
+			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">4</a>
+			  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}{$comments_threshold_param}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}">5</a>
   	  </td>
-  	{/if}
-  	{/if}
-  <td style="font-size:8pt;">
-  {tr}reads{/tr}: {$thread_info.hits}
-  </td>
-  </tr>
+  		{/if}
+  		{/if}
+  		<td style="font-size:8pt;">
+  		{tr}reads{/tr}: {$thread_info.hits}
+  		</td>
+  	</tr>
   </table>
   </td>
 </tr>

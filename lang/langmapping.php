@@ -35,6 +35,7 @@ $langmapping = array(
     'sr-latn' => array(   'Srpski',  tra("Serbian Latin")       ),
     'sv' => array(  'Svenska',      tra("Swedish")      ),
     'tw' => array(  '正體中文',          tra("Traditional Chinese")          ),
+    'uk' => array( 'Українська',     tra("Ukrainian")    ),
     'zh' => array(  'Chinese',      tra("Chinese")      )
 );
 ?>

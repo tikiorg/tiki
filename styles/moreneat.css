@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.64 2004-07-17 12:49:34 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.65 2004-07-29 17:38:15 mose Exp $
 
 MoreNeat theme
 */
@@ -13,6 +13,7 @@ body {
   background-color: #E9ECEF;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   margin: 0px;
+  padding: 0px;
 }
 ul
 {
@@ -119,7 +120,7 @@ DIV#tiki-center table { }
 #tikimidtbl { width: 100%; }
 
 /* And this is the footer */
-DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; }
+DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; font-size: 11px;}
 
 /* The three columns */
 TD#leftcolumn {  padding-right: 0px; vertical-align: top;  width: 180px;}
