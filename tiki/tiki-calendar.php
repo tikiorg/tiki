@@ -441,7 +441,7 @@ $smarty->assign('viewstart',$viewstart);
 $smarty->assign('viewend',$viewend);
 $smarty->assign('numberofweeks',$numberofweeks);
 
-$daysnames = array("Sunday","Monday","Thursday","Wednesday","Tuesday","Friday","Saturday");
+$daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
 $weeks = array();
 $cell = array();
 
