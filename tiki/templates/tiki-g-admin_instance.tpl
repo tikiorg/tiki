@@ -143,4 +143,4 @@
 </table>
 </form>
 
-{include file=tiki-g-instance_comments.tpl}
+{* include file=tiki-g-instance_comments.tpl *}
