@@ -25,7 +25,7 @@
   </tr>
   <tr>
     <td class="formcolor">{tr}Country{/tr}:</td>
-    <td class="formcolor">{$info.country}</td>
+    <td class="formcolor">{tr}{$info.country}{/tr}</td>
 </tr></table>
 
 {else}
