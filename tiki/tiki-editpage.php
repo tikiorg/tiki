@@ -364,9 +364,11 @@ if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["da
   }
   
   
+  $page = urlencode($page);
   header("location: tiki-index.php?page=$page");
   die;
 } else {
+  $page = urlencode($page);
   header("location: tiki-index.php?page=$page");
   die;
 }
