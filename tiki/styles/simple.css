@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.24 2004-07-11 13:45:27 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.25 2004-07-11 14:11:41 redflo Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -14,11 +14,7 @@
 
 body {
  /* setting up the background. the color, then bg image and its form of repeating. */
-<<<<<<< simple.css
- background: #ffffff; /* url('background.png') repeat-y; Someone forgot to add this file?*/
-=======
  background: #ffffff; /* url('background.png') repeat-y; Someone forgot to upload that pic? */
->>>>>>> 1.21
  /* shorthand for default font setting. size in percentage and font-family here */
  font: 75% 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
  /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
@@ -292,9 +288,6 @@ TABLE.admin {
   vertcal-align: middle;
 }
 
-<<<<<<< simple.css
-.normal { border:solid 1px #abcdef;}
-=======
 .normal { border:solid 1px #abcdef;}/**** coloration for c o d e plugin *****/
 .codelisting 
 { font-family : monospace;
@@ -302,9 +295,6 @@ TABLE.admin {
   background-color : #ddeeff;
   margin : 1ex;
    border : 1px dashed #adacaf; }
-<<<<<<< simple.css
->>>>>>> 1.21
-=======
 
    /* wiki diff styles */
 
@@ -360,4 +350,4 @@ border-width: 0px 1px 1px 1px;
 border-style: solid;
 color: black;
 background-color: #edeeef;
-}>>>>>>> 1.22
+}
