@@ -67,11 +67,11 @@
 <tr>
 {if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
-    <td width=20%>
+    <td>
     <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
     </td>
     {if $listpages[ix].size > 0}
-      <td width=25%>
+      <td>
       ({$listpages[ix].size} {tr}bytes{/tr})
       </td>
     {/if}
@@ -79,7 +79,7 @@
   {if ($feature_article_comments eq 'y')
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
-    <td width=30%>
+    <td>
     {if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
     {elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
     {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
