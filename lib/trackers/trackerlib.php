@@ -214,8 +214,14 @@ class TrackerLib extends TikiLib {
 		$bindvars = array((int) $trackerId);
 
 		if ($status) {
-			$mid.= " and tti.`status`=? ";
-			$bindvars[] = $status;
+			if (sizeof($status > 1)) {
+				$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
+				$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
+				$bindvars = array_merge($bindvars,$sts);
+			} else {
+				$mid.= " and tti.`status`=? ";
+				$bindvars[] = $status;
+			}
 		}
 		if (!$sort_mode) {
 			$sort_mode = "lastModif_desc";
@@ -412,7 +418,6 @@ class TrackerLib extends TikiLib {
 
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset, $maxRecords, $sort_mode, $find) {
-		global $cachelib;
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -465,7 +470,6 @@ class TrackerLib extends TikiLib {
 
 
 	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $position, $options) {
-		global $cachelib;
 	
 		if ($fieldId) {
 			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
@@ -494,13 +498,10 @@ class TrackerLib extends TikiLib {
 				$this->query($query2,array((int) $itemId,(int) $fieldId,''));
 			}
 		}
-		$cachelib->invalidate("trackerfields$trackerId");
 		return $fieldId;
 	}
 
 	function remove_tracker($trackerId) {
-		global $cachelib;
-		// Remove the tracker
 		$bindvars=array((int) $trackerId);
 		$query = "delete from `tiki_trackers` where `trackerId`=?";
 
@@ -528,7 +529,6 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_field($fieldId,$trackerId) {
-		global $cachelib;
 		$query = "delete from `tiki_tracker_fields` where `fieldId`=?";
 		$bindvars=array((int) $fieldId);
 		$result = $this->query($query,$bindvars);
@@ -601,9 +601,9 @@ class TrackerLib extends TikiLib {
 	}
 	
 	function status_types() {
-		$status['o'] = array('label'=>tra('open'),'image'=>'img/icons2/status_open.gif');
-		$status['c'] = array('label'=>tra('closed'),'image'=>'img/icons2/status_closed.gif');
-		$status['p'] = array('label'=>tra('pending'),'image'=>'img/icons2/status_pending.gif');
+		$status['o'] = array('label'=>tra('open'),'perm'=>'tiki_p_view_trackers','image'=>'img/icons2/status_open.gif');
+		$status['p'] = array('label'=>tra('pending'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons2/status_pending.gif');
+		$status['c'] = array('label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_pending','image'=>'img/icons2/status_closed.gif');
 		return $status;
 	}
 }

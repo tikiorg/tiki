@@ -34,6 +34,13 @@
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal"><tr>
+{if ($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y'}
+{foreach key=st item=stdata from=$status_types}
+<td><div class="{$stdata.class}">
+<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
+class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata.label align=top}</a></div></td>
+{/foreach}
+{/if}
 {if $show_filters eq 'y'}
 <td class="formcolor" style="width:100%;"><input type="text" name="filtervalue" value="{$filtervalue}" /></td>
 <td>
@@ -43,16 +50,6 @@
 <option value="{$fields[ix].name|escape}">{$fields[ix].name|truncate:52:"..."}</option>
 {/if}
 {/section}
-</select>
-</td>
-{/if}
-{if ($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y'}
-<td>
-<select name="status">
-<option value="" {if $status eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-{foreach key=st item=stdata from=$status_types}
-<option value="{$st}"{if $status eq $st} selected="selected"{/if}>{$stdata.label}</option>
-{/foreach}
 </select>
 </td>
 {/if}
