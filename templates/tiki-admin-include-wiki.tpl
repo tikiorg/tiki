@@ -272,6 +272,23 @@
     </form>
 
     </div>
+    
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php?page=wiki">
+    <table class="admin"><tr>
+    <td colspan="2" class="form">{tr}Wiki Page Footer configuration{/tr}</td></tr><tr><td colspan="2" class="form">
+    {tr}Place copyright notices, certifying authorities, or page URLs (&#123;url&#125;) here{/tr}
+    </td></tr><tr>
+    <td>Enable wiki page footer:</td>
+    <td><input type="checkbox" name="feature_wiki_page_footer" {if $feature_wiki_page_footer eq 'y'}checked="checked"{/if}/></td>
+    </tr>
+    <tr>
+    <td colspan="2" class="form">{tr}Wiki page footer content:{/tr}<br />
+    <textarea rows="3" cols="40" name="wiki_page_footer_content">{$wiki_page_footer_content}</textarea></td>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikifooter" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
 
     </td>
     

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.123 2004-07-27 20:13:03 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.124 2004-07-28 20:16:39 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -554,10 +554,20 @@ if (isset($is_categorized) && $is_categorized) {
 $smarty->assign('show_page','y');
 ask_ticket('index');
 
-global $feature_wiki_dblclickedit, $tiki_p_view_wiki_history;
+global $feature_wiki_dblclickedit, $feature_wiki_page_footer, $tiki_p_view_wiki_history;
 $smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 $smarty->assign('tiki_p_view_wiki_history',$tiki_p_view_wiki_history);
 $smarty->assign('is_a_wiki_page', 'y');
+
+if ($feature_wiki_page_footer == 'y') {
+	$smarty->assign('feature_wiki_page_footer', 'y');
+	global $wiki_page_footer_content;
+	$current_url = 'http://' . $_REQUEST['HTTP_HOST'] . $_REQUEST['REQUEST_URI'];
+	$content = str_replace('{url}', $current_url, $wiki_page_footer_content);
+	$smarty->assign('wiki_page_footer_content', $content);
+} else {
+	$smarty->assign('feature_wiki_page_footer', 'n');
+}
 
 // Display the Index Template
 $smarty->assign('print_page','n');
