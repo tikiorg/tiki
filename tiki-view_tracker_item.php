@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.65 2004-04-09 05:11:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.66 2004-04-29 20:01:30 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,6 +197,25 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 		
+	} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][3]))	{
+		if (isset($_REQUEST["$ins_id"])) {
+			if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
+				$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
+			} else {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			}
+		} else {
+			$ins_fields["data"][$i]["value"] = '';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+		if ($fields["data"][$i]["options_array"][0])	{
+			$textarea_options = true;
+		} 
+
 	} else {
 		if (isset($_REQUEST["$ins_id"])) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
@@ -208,9 +227,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if ($fields["data"][$i]["type"] == 'a' and $fields["data"][$i]["options_array"][0])	{
-			$textarea_options = true;
-		} elseif ($fields["data"][$i]["type"] == 'i')	{
+		if ($fields["data"][$i]["type"] == 'i')	{
 			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 				if (!empty($gal_match_regex)) {
 					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
