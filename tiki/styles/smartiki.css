@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.4 2004-02-08 05:01:25 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.5 2004-02-15 15:11:15 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -70,7 +70,7 @@ pre.code {
 	background-color: #f0f0f0;
 }
 
-h1 {
+h1, .pagetitle {
 	font-family: verdana,arial,helvetica,sans-serif;
 	font-size: 140%;
 	font-weight: bold;
