@@ -504,6 +504,24 @@ if(isset($_REQUEST["wikiprefs"])) {
   }
 }
 
+if(isset($_REQUEST["wikidiscussprefs"])) {
+  if(isset($_REQUEST["feature_wiki_discuss"])) {
+    $tikilib->set_preference('feature_wiki_discuss','y');
+    $smarty->assign('feature_wiki_discuss','y');
+  } else {
+    $tikilib->set_preference("feature_wiki_discuss",'n');
+    $smarty->assign('feature_wiki_discuss','n');
+  }
+
+  if(isset($_REQUEST["wiki_forum"])) {
+    $tikilib->set_preference('wiki_forum',$_REQUEST["wiki_forum"]);
+    $smarty->assign('wiki_forum',$_REQUEST["wiki_forum"]);
+    $wiki_forum_id=$tikilib->getOne("select forumID from tiki_forums where name='".$_REQUEST["wiki_forum"]."'");
+    $tikilib->set_preference('wiki_forum_id',$wiki_forum_id);
+    $smarty->assign('wiki_forum_id',$wiki_forum_id);
+  }
+}
+
 if(isset($_REQUEST["wikiexport"])) {
   //$cosa=$tikilib->export_wiki_page('HomePage',1);
   $exportlib->MakeWikiZip();
