@@ -99,18 +99,22 @@ class StructLib extends TikiLib {
     $query .= "where tp.`page_id`=ts.`page_id` and `parent_id`=?";
 		$result = $this->query($query,array($page_ref_id));
 
+    //Iterate down through the child nodes
 		while ($res = $result->fetchRow()) {
 			$this->s_remove_page($res["page_ref_id"], $delete);
 		}
 
+    //Only delete a page if other structures arent referencing it
 		if ($delete) {
+      $page_info = $this->s_get_page_info($page_ref_id);
   		$query = "select count(*) from `tiki_structures` where `page_id`=?";
-	  	$count = $this->getOne($query, array($res["page_id"]));
+	  	$count = $this->getOne($query, array($page_info["page_id"]));
       if ($count = 1) {
-			  $this->remove_all_versions($res["pageName"]);
+			  $this->remove_all_versions($page_info["pageName"]);
       }
 		}
 
+    //Remove the structure node
 		$query = "delete from `tiki_structures` where `page_ref_id`=?";
 		$result = $this->query($query, array($page_ref_id));
 
