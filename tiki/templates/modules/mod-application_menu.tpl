@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.97 2004-05-06 00:24:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.98 2004-06-08 05:15:56 lfagundes Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -100,6 +100,24 @@
   &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br />  
   </div>
 {/if}
+
+{if $feature_friends eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('friendsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="friendsmenuicn" alt="{tr}FriendsMenu{/tr}"/></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('friendsmenu');">[-]</a>{/if}
+  <a class="separator" href="tiki-community.php">{tr}Community{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('friendsmenu');">[+]</a>{/if}
+  </div>
+  <div id="friendsmenu" style="{$mnu_friendsmenu}">
+  {if $tiki_p_list_users eq 'y'}
+    &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}Member list{/tr}</a><br />
+  {/if}
+  {if $feature_friends eq 'y'}
+    &nbsp;<a href="tiki-friends.php" class="linkmenu">{tr}Friendship Network{/tr}</a><br />
+  {/if}
+  </div>
+{/if}  
 
 {if $feature_wiki eq 'y'}
   <div class="separator">

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.24 2004-05-13 08:13:17 russwilde Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.25 2004-06-08 05:15:52 lfagundes Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -38,6 +38,7 @@ $features_toggles = array(
 	"feature_featuredLinks",
 	"feature_file_galleries",
 	"feature_forums",
+	"feature_friends",
 	"feature_galleries",
 	"feature_games",
 	"feature_homework",

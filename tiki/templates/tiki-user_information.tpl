@@ -20,6 +20,16 @@
   <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
+  <tr><td class="form" colspan="2">
+{if $user}
+  {if $friend}
+    <img src="img/icons/ico_friend.png">Este usuario es su amigo
+  {else}
+    <img src="img/icons/ico_not_friend.png">Este usuario no es su amigo.
+    <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">Agregar como amigo</a>
+  {/if}
+{/if}
+  </td></tr>  
   </table>
   </form>
   </div>

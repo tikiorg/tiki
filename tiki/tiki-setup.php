@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.231 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.232 2004-06-08 05:15:52 lfagundes Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1423,6 +1423,14 @@ $smarty->assign('mnu_usrmenu', 'display:none;');
 if (isset($_COOKIE["usrmenu"])) {
     if ($_COOKIE["usrmenu"] == 'o') {
         $smarty->assign('mnu_usrmenu', 'display:block;');
+    }
+}
+
+$smarty->assign('mnu_friendsmenu', 'display:none;');
+
+if (isset($_COOKIE["friendsmenu"])) {
+    if ($_COOKIE["friendsmenu"] == 'o') {
+        $smarty->assign('mnu_friendsmenu', 'display:block;');
     }
 }
 

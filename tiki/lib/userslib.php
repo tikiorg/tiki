@@ -1610,6 +1610,140 @@ function get_included_groups($group) {
         return $rv[$group];
     }
 
+    // Friends methods
+    function request_friendship($user, $friend)
+    {
+	global $messulib;
+
+	if (empty($user) || empty($friend)) {
+	    return false;
+	}
+
+	$user = "'".addslashes($user)."'";
+	$friend = "'".addslashes($friend)."'";
+
+	$result = $this->query("replace into tiki_friendship_requests (userFrom, userTo) values ($user, $friend)");
+
+	if (!$result)
+	    return false;
+
+	return true;
+    }
+
+    function accept_friendship($user, $friend)
+    {
+	global $messulib, $scorelib;
+
+	$user = addslashes($user);
+	$friend = addslashes($friend);
+
+	$exists = $this->getOne("select count(*) from tiki_friendship_requests where userTo='$user' and userFrom='$friend'");
+
+	if (!$exists)
+	    return false;
+
+	if (empty($user) || empty($friend)) {
+	    return false;
+	}
+
+	$this->query("replace into tiki_friends values ('$user', '$friend')");
+	$this->query("replace into tiki_friends values ('$friend', '$user')");
+	$this->query("delete from tiki_friendship_requests where userTo='$user' and userFrom='$friend'");
+	$this->query("delete from tiki_friendship_requests where userTo='$friend' and userFrom='$user'");
+
+	/*$scorelib->score_event($user,'friend_new',$friend);
+	$scorelib->score_event($friend,'friend_new',$user);*/
+
+	$messulib->post_message($friend,
+				$user,
+				$friend,
+				'',
+				tra('AcceptFriendshipSubject'),
+				tra('AcceptFriendshipMessage'),
+				3);
+
+	return true;
+    }
+
+    function refuse_friendship($user, $friend)
+    {
+	global $messulib;
+
+	$user = "'".addslashes($user)."'";
+	$friend = "'".addslashes($friend)."'";
+
+	$exists = $this->getOne("select count(*) from tiki_friendship_requests where userTo=$user and userFrom=$friend");
+
+	if (!$exists)
+	    return false;
+
+	$this->query("delete from tiki_friendship_requests where userTo=$user and userFrom=$friend");
+	$this->query("delete from tiki_friendship_requests where userTo=$friend and userFrom=$user");
+
+	$messulib->post_message($friend,
+				$user,
+				$friend,
+				'',
+				tra('RefuseFriendshipSubject'),
+				tra('RefuseFriendshipMessage'),
+				3);
+
+
+	return true;
+    }
+
+    function list_pending_friendship_requests($user)
+    {
+	$user = "'".addslashes($user)."'";
+
+	$query = "select * from tiki_friendship_requests where userTo=$user order by tstamp";
+
+	$result = $this->query($query);
+
+	$requests = array();
+	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $requests[$res['userFrom']] = $res['tstamp'];
+	}
+
+	return $requests;
+    }
+
+    function list_waiting_friendship_requests($user)
+    {
+	$user = "'".addslashes($user)."'";
+
+	$result = $this->query("select * from tiki_friendship_requests where userFrom=$user order by tstamp");
+
+	$requests = array();
+	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $requests[$res['userTo']] = $res['tstamp'];
+	}
+
+	return $requests;
+    }
+
+
+
+    function break_friendship($user, $friend)
+    {
+	global $messulib;
+
+	$user = "'".addslashes($user)."'";
+	$friend = "'".addslashes($friend)."'";
+
+	$this->query("delete from tiki_friends where user=$user and friend=$friend");
+	$this->query("delete from tiki_friends where user=$friend and friend=$user");
+
+	$messulib->post_message($friend,
+				$user,
+				$friend,
+				'',
+				tra('BreakFriendshipSubject'),
+				tra('BreakFriendshipMessage'),
+				3);
+    }
+
+  
 }
 
 ?>
