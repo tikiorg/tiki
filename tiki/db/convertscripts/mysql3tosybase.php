@@ -53,6 +53,7 @@ function parse($stmt)
   //auto_increment things
   $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) NOT NULL auto_increment/","$1 numeric($2 ,0) identity",$stmt);
   // integer types
+  $stmt=preg_replace("/tinyint\(([0-9]+)\)/","numeric($1,0)",$stmt);
   $stmt=preg_replace("/int\(([0-9]+)\) unsigned/","numeric($1,0)",$stmt);
   $stmt=preg_replace("/int\(([0-9]+)\)/","numeric($1,0)",$stmt);
   // timestamps

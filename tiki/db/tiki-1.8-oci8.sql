@@ -1086,7 +1086,7 @@ CREATE TABLE "tiki_comments" (
   "smiley" varchar(80) default NULL,
   "message_id" varchar(250) default NULL,
   "in_reply_to" varchar(250) default NULL,
-  "comment_rating" tinynumber(2) default NULL,  
+  "comment_rating" number(2) default NULL,  
   PRIMARY KEY ("threadId")
 )   ;
 

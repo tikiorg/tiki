@@ -51,6 +51,7 @@ function parse($stmt)
   $stmt=preg_replace("/int\(.\) NOT NULL auto_increment/","serial",$stmt);
   $stmt=preg_replace("/int\(..\) NOT NULL auto_increment/","bigserial",$stmt);
   // integer types
+  $stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
   $stmt=preg_replace("/int\([1-4]\) unsigned/","smallint",$stmt);
   $stmt=preg_replace("/int\([1-4]\)/","smallint",$stmt);
   $stmt=preg_replace("/int\([5-9]\) unsigned/","integer",$stmt);
