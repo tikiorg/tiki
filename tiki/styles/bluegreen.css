@@ -514,7 +514,8 @@ TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.blog
 }
 
 /* adding duplicate class for above class to ensure table header are formatted consistantly as before.  the above class should be deleted upon completion of transition to accessibility in tiki.) */
-th {
+th, th.gallistheading, th.listgalheading, th.jukeboxlistheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.thead {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	color:   white;
 	font-size:   11px;
