@@ -202,6 +202,16 @@ class WikiLib extends TikiLib {
 		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
+		// check if statictiki is enabled; staticlib is used within the while loop below
+		global $feature_wiki_realtime_static;
+		if ($feature_wiki_realtime_static == 'y') {
+			global $staticlib;
+			if (!is_object($staticlib)) {
+				require_once('lib/static/staticlib.php');
+			}
+			$staticlib->rename_page($oldName, $newName);
+		}
+
 		while ($res = $result->fetchRow()) {
 		    $page = $res['fromPage'];
 	
@@ -214,6 +224,11 @@ class WikiLib extends TikiLib {
 		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    $this->query($query, array( $data,(int) strlen($data), $page));
 		    $this->invalidate_cache($page);
+		    
+		    // rebuild static html pages if necessary
+			if ($feature_wiki_realtime_static == 'y') {
+				$staticlib->update_page($page);
+			}
 		}
 
 		// correct toPage and fromPage in tiki_links
@@ -475,6 +490,17 @@ class WikiLib extends TikiLib {
 
 	    $histlib->use_version($res["pageName"], $res["version"]);
 	    $histlib->remove_version($res["pageName"], $res["version"]);
+
+		// update static html page if necessary
+		global $feature_wiki_realtime_static;
+		if ($feature_wiki_realtime_static == 'y') {
+			global $staticlib;
+			if (!is_object($staticlib)) {
+				require_once('lib/static/staticlib.php');
+			}
+			$staticlib->update_page($page);
+		}
+
 	} else {
 	    $this->remove_all_versions($page);
 	}
