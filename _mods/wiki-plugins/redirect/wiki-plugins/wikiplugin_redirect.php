@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.2 2005-02-08 22:17:16 mhausi Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.3 2005-02-09 07:31:23 mhausi Exp $
 
 // Wiki plugin to redirect to another page.
 // damian aka damosoft 30 March 2004
@@ -11,7 +11,7 @@ function wikiplugin_redirect_help() {
 
 function wikiplugin_redirect($data, $params) {
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 	$areturn = '';
 
 	if (!isset($page)) {
