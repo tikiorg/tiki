@@ -1,4 +1,5 @@
 <?php  
+//foo
 include_once('tiki-setup.php');
 include_once('PHPUnit.php');
 
