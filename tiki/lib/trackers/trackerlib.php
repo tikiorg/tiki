@@ -297,6 +297,8 @@ class TrackerLib extends TikiLib {
 					}
 					$fopt["linkId"] = $this->get_item_id($opts[0],$opts[1],$fopt["value"]);
 					$fopt["trackerId"] = $opts[0];
+				} elseif ($fopt["type"] == 'a') {
+					$fopt["pvalue"] = $this->parse_data(trim($fopt["value"]));
 				} elseif ($fopt["type"] == 'l') {
 					if (!$optsl) {
 						$optsl = split(',',$fopt['options']);
