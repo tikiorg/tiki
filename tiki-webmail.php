@@ -618,11 +618,7 @@ if($_REQUEST["section"]=='contacts') {
   $smarty->assign_by_ref('channels',$channels["data"]);
 }
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
-
+include_once('tiki-mytiki_shared.php');
 
 $section='webmail';
 include_once('tiki-section_options.php');

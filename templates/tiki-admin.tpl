@@ -69,6 +69,9 @@
 <tr><td class="form">{tr}User Tasks{/tr}:</td><td><input type="checkbox" name="feature_tasks" {if $feature_tasks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Newsreader{/tr}:</td><td><input type="checkbox" name="feature_newsreader" {if $feature_newsreader eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Contact{/tr}:</td><td><input type="checkbox" name="feature_contact" {if $feature_contact eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}User Notepad{/tr}:</td><td><input type="checkbox" name="feature_notepad" {if $feature_notepad eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}User files{/tr}:</td><td><input type="checkbox" name="feature_userfiles" {if $feature_userfiles eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Ephemerides{/tr}:</td><td><input type="checkbox" name="feature_eph" {if $feature_eph eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>

@@ -76,10 +76,7 @@ $smarty->assign('body',$body);
 
 
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
+include_once('tiki-mytiki_shared.php');
 
 $smarty->assign('mid','tiki-newsreader_read.tpl');
 $smarty->display('tiki.tpl');

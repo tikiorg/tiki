@@ -1,5 +1,15 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+drop table if exists tiki_user_notes;
+create table tiki_user_notes(
+  user varchar(200) not null,
+  noteId integer(12) not null auto_increment,
+  created integer(14),
+  lastModif integer(14),
+  data text,
+  primary key(noteId)
+);
+
 alter table tiki_categorized_objects modify objId varchar(255);
 
 drop table if exists tiki_newsreader_marks;

@@ -89,10 +89,7 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('avatars',$avatars);
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
+include_once('tiki-mytiki_shared.php');
 
 $avatar = $tikilib->get_user_avatar($user);
 $smarty->assign('avatar',$avatar);

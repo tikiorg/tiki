@@ -38,10 +38,7 @@ $groups = $newslib->news_get_groups();
 $smarty->assign_by_ref('groups',$groups);
 //print_r($groups);
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
+include_once('tiki-mytiki_shared.php');
 
 $smarty->assign('mid','tiki-newsreader_groups.tpl');
 $smarty->display('tiki.tpl');
