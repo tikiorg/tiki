@@ -2231,6 +2231,9 @@ function add_pageview() {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no blog permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
 	    	if ($perms_array) {
@@ -2414,6 +2417,9 @@ function add_pageview() {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no topic permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'article', $res['articleId']);
 	    	if ($perms_array) {
@@ -3058,6 +3064,9 @@ function add_pageview() {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no forum permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
 	    	if ($perms_array) {
