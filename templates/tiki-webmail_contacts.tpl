@@ -6,13 +6,11 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
+    {include file="bidi.tpl"}
     <title>{tr}Address book{/tr}</title>
   </head>
   <body>
-
-{if $feature_bidi eq 'y'}
-<table dir="rtl" width="100%"><tr><td>
-{/if}
+  <div id="tiki-clean">
 
 <h2>{tr}Contacts{/tr}</h2>
 <div  align="center">
@@ -62,11 +60,6 @@
 {/if}
 </div>
 </div>
-
-
-{if $feature_bidi eq 'y'}
-</td></tr></table>
-{/if}
-
+</div>
 </body>
 </html>
