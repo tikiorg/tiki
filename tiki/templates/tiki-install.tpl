@@ -106,7 +106,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 			Create database with profile :
 			<select name="profile">
 			{section name=ix loop=$profiles}
-			<option value="{$profiles[ix]|escape}">{$profiles[ix]}</option>
+			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
 			{/section}
 			</select>
 			<input type="submit" name="scratch" value="create" />	    

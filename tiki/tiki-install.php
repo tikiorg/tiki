@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.22 2003-10-20 21:34:17 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.23 2003-10-22 16:28:07 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.22 2003-10-20 21:34:17 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.23 2003-10-22 16:28:07 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -554,11 +554,20 @@ $h = opendir('db/profiles/');
 
 while ($file = readdir($h)) {
 	if (strstr($file, '.prf')) {
-		$profiles[] = $file;
+		// Assign the filename of the profile to the name field
+		$prof1 = array("name" => $file);
+		// Open the profile and pull out the description from the first line
+		$fp = fopen("db/profiles/$file", "r");
+		$desc = substr(fgets($fp,40),2);
+		fclose($fp);
+		$prof1["desc"] = $desc;
+		// Assign the record to the profile array
+		$profiles[] = $prof1;
 	}
 }
 
 closedir ($h);
+sort($profiles);
 $smarty->assign('profiles', $profiles);
 
 //Load SQL scripts
@@ -651,6 +660,11 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql',$db_tiki);
 
 		$smarty->assign('dbdone', 'y');
+		if (isset($_REQUEST['profile'])) {
+			process_sql_file ('profiles/' . $_REQUEST['profile'],$db_tiki);
+			//$profile = $_REQUEST['profile'];
+			//print "Profile: $profile";
+		}
 	}
 
 	if (isset($_REQUEST['update'])) {
