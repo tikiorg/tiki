@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.23 2003-12-21 17:47:25 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.24 2003-12-31 02:34:13 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -43,7 +43,11 @@ class CategLib extends TikiLib {
 				$res["incat"] = 'n';
 			}
       
-      $categpath = $this->get_category_path($res["categId"]);
+      $catpath = $this->get_category_path($res["categId"]);
+			foreach ($categpath as $cat) {
+				$tepath[] = $cat['name'];
+			}
+			$categpath = implode("::",$tepath);
 			$res["categpath"] = $categpath;
 			$ret["$categpath"] = $res;
 		}
@@ -54,51 +58,20 @@ class CategLib extends TikiLib {
 		return $retval;
 	}
 	
-  function get_category_path($categId) {
-		$back = '';
+	function get_category_path($categId) {
 		$info = $this->get_category($categId);
-		$back = $info["name"];
+		$path[] = array('categId'=>$info["categId"],'name'=>$info["name"]);
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-			$back = $info["name"]."::$back";
+			$path[] = array('categId'=>$info["categId"],'name'=>$info["name"]);
 		}
-		return $back;
-	}
-  
-	function get_category_path_admin($categId) {
-
-		$info = $this->get_category($categId);
-		$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>';
-
-		while ($info["parentId"] != 0) {
-			$info = $this->get_category($info["parentId"]);
-			$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>' . '>' . $path;
-		}
-
-		return $path;
-	}
-
-	function get_category_path_browse($categId) {
-
-		$info = $this->get_category($categId);
-		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>';
-
-		while ($info["parentId"] != 0) {
-			$info = $this->get_category($info["parentId"]);
-			$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . htmlentities($info["name"]) . '</a>' . '>' . $path;
-		}
-
 		return $path;
 	}
 
 	function get_category($categId) {
 		$query = "select * from `tiki_categories` where `categId`=?";
-
 		$result = $this->query($query,array((int) $categId));
-
-		if (!$result->numRows())
-			return false;
-
+		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}

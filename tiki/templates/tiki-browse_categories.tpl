@@ -1,12 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.7 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.8 2003-12-31 02:34:14 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-browse_categories.php">{tr}Categories{/tr}</a>
 <br /><br />
 
-{* Current position and basic navigation *}
-
-
-{* Search form *}
 
 <div align="center">
 <form method="post" action="tiki-browse_categories.php">
@@ -18,33 +14,25 @@
 </form>
 </div>
 
-<br /><br /><br />
+<br /><br />
 
 <div class="tree" id="top">
-<table class="tcategpath">
-<tr>
-  <td class="tdcategpath">{tr}Current category{/tr}: {$path} </td>
-  <td class="tdcategpath" align="right">
-  <table><tr><td>
-  {* Don't show 'TOP' button if we already on TOP but resserve space to avoid visual effects on change view *}
-  <div class="button2" style="visibility:{if $parentId ne '0'}visible{else}hidden{/if}">
-      <a class="linkbut" href="tiki-browse_categories.php?parentId=0">{tr}top{/tr}</a>
-    </div>
-  </td></tr></table></td>
-</tr>
-</table>
+<div class="treetitle">{tr}Current category{/tr}: 
+<a href="tiki-browse_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
+{section name=x loop=$path}
+&nbsp;::&nbsp;
+<a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
+{/section}
+</div>
 
-{* Show tree *}
-{ * If not TOP level, append '..' as first node :) *}
 {if $parentId ne '0'}
 <div class="treenode">
-  <a class="catname" href="tiki-browse_categories.php?parentId={$father}" title="Upper level">..</a>
+<a class="catname" href="tiki-browse_categories.php?parentId={$father}" title="Upper level">..</a>
 </div>
 {/if}
 {$tree}
 </div>
 
-{* List of object in category *}
 
 <h3>{tr}Objects{/tr} ({$cantobjects})</h3>
 {if $cantobjects > 0}
