@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/google.php,v 1.2 2003-11-18 01:34:56 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/google.php,v 1.3 2004-01-08 23:50:17 damosoft Exp $
 
 Google "get-the-first-link" wollabot module
 */
@@ -44,7 +44,7 @@ class google extends Wollabot_Module {
 	function google_en($params) {
 		array_shift($params["message_exploded"]);
 		$param = implode(" ", $params["message_exploded"]);
-		$url = "http://www.google.com/search?hl=fr&lr=lang_fr&q=".urlencode($param);
+		$url = "http://www.google.com/search?hl=en&lr=lang_en&q=".urlencode($param);
 		$this->google_lookup($params,$url);
 	}
 			
