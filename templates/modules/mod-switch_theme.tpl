@@ -1,5 +1,4 @@
 {tikimodule title="{tr}Style{/tr}: $style" name="switch_theme"}
-{tr}Style{/tr}: {$style}
 <form method="get" action="tiki-switch_theme.php" target="_self">
 <select name="theme" size="1" onchange="this.form.submit();">
 {section name=ix loop=$styleslist}
