@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.152 2003-10-21 13:10:43 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.153 2003-10-25 00:46:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -792,6 +792,18 @@ $smarty->assign('max_rss_wiki', $max_rss_wiki);
 $smarty->assign('max_rss_image_gallery', $max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery', $max_rss_file_gallery);
 $smarty->assign('max_rss_blog', $max_rss_blog);
+
+$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","2"));
+$smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
+$smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
+$smarty->assign("rssfeed_publisher", $tikilib->get_preference("rssfeed_publisher",""));
+$smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
+$smarty->assign("rssfeed_creator", $tikilib->get_preference("rssfeed_creator",""));
+
+$smarty->assign("rssfeed_cssparam", "&amp;css=y");
+if ($tikilib->get_preference("rssfeed_css","y") <> "y") {
+	$smarty->assign("rssfeed_cssparam", "");
+}
 
 $smarty->assign('fgal_use_db', $fgal_use_db);
 $smarty->assign('fgal_use_dir', $fgal_use_dir);

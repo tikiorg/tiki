@@ -3493,5 +3493,9 @@ $lang=Array(
 "show publish date" => "Ver&ouml;ffentlichungsdatum anzeigen",
 "show pubdate" => "Datum anzeigen",
 "AutoLinks" => "URLs in Links verwandeln",
+"Documentation" => "Dokumentation",
+"Append CSS file to feed urls" => "Feed-URLs mit Stylesheet verkn&uuml;pfen",
+"Default RDF version" => "Welche RDF-Version benutzen",
+"Specification" => "Spezifikation",
 "###end###"=>"###end###");
 ?>

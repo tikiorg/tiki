@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.4 2003-10-13 23:03:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.5 2003-10-25 00:46:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,29 @@ if (isset($_REQUEST["rss"])) {
 	$smarty->assign("max_rss_forums", $_REQUEST["max_rss_forums"]);
 	$tikilib->set_preference('max_rss_mapfiles', $_REQUEST["max_rss_mapfiles"]);
 	$smarty->assign("max_rss_mapfiles", $_REQUEST["max_rss_mapfiles"]);
+
+	$tikilib->set_preference('rssfeed_default_version', $_REQUEST["rssfeed_default_version"]);
+	$smarty->assign("rssfeed_default_version", $_REQUEST["rssfeed_default_version"]);
+	$tikilib->set_preference('rssfeed_language', $_REQUEST["rssfeed_language"]);
+	$smarty->assign("rssfeed_language", $_REQUEST["rssfeed_language"]);
+	$tikilib->set_preference('rssfeed_editor', $_REQUEST["rssfeed_editor"]);
+	$smarty->assign("rssfeed_editor", $_REQUEST["rssfeed_editor"]);
+	$tikilib->set_preference('rssfeed_publisher', $_REQUEST["rssfeed_publisher"]);
+	$smarty->assign("rssfeed_publisher", $_REQUEST["rssfeed_publisher"]);
+	$tikilib->set_preference('rssfeed_webmaster', $_REQUEST["rssfeed_webmaster"]);
+	$smarty->assign("rssfeed_webmaster", $_REQUEST["rssfeed_webmaster"]);
+	$tikilib->set_preference('rssfeed_creator', $_REQUEST["rssfeed_creator"]);
+	$smarty->assign("rssfeed_creator", $_REQUEST["rssfeed_creator"]);
+
+	if (isset($_REQUEST["rssfeed_css"]) && $_REQUEST["rssfeed_css"] == "on") {
+		$tikilib->set_preference("rssfeed_css", 'y');
+
+		$smarty->assign('rssfeed_css', 'y');
+	} else {
+		$tikilib->set_preference("rssfeed_css", 'n');
+
+		$smarty->assign('rssfeed_css', 'n');
+	}
 
 	if (isset($_REQUEST["rss_articles"]) && $_REQUEST["rss_articles"] == "on") {
 		$tikilib->set_preference("rss_articles", 'y');
@@ -152,6 +175,14 @@ if (isset($_REQUEST["rss"])) {
 	$smarty->assign("max_rss_image_galleries", $tikilib->get_preference("max_rss_image_galleries", 10));
 	$smarty->assign("max_rss_file_gallery", $tikilib->get_preference("max_rss_file_gallery", 10));
 	$smarty->assign("max_rss_image_gallery", $tikilib->get_preference("max_rss_image_gallery", 10));
+
+	$smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","2"));
+	$smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));
+	$smarty->assign("rssfeed_editor", $tikilib->get_preference("rssfeed_editor",""));
+	$smarty->assign("rssfeed_publisher", $tikilib->get_preference("rssfeed_publisher",""));
+	$smarty->assign("rssfeed_webmaster", $tikilib->get_preference("rssfeed_webmaster",""));
+	$smarty->assign("rssfeed_creator", $tikilib->get_preference("rssfeed_creator",""));
+	$smarty->assign("rssfeed_css", $tikilib->get_preference("rssfeed_css","y"));
 }
 
 ?>
