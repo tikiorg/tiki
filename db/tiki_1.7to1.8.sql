@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.99 2004-01-02 23:19:27 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.100 2004-01-03 00:28:56 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -881,3 +881,6 @@ CREATE TABLE tiki_searchsyllable(
   PRIMARY KEY  (syllable),
   KEY lastUsed (lastUsed)
 ) TYPE=MyISAM;
+
+# added on 2004-01-02 by xenfasa (typo in file name)
+UPDATE tiki_menu_options set `url`='tiki-browse_categories.php' where `url`='tiki-categories.php';
