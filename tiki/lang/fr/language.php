@@ -219,7 +219,7 @@ $lang=Array(
 "wiki create" => "créer la page Wiki",
 "wiki overwrite" => "écraser la page Wiki",
 "Folder in" => "Aller dans le répertoire",
-"Grade Paper" => "Devoir",
+"Grade Paper" => "Devoir corrigé",
 // ### end of untranslated words
 // ###
 
@@ -2614,7 +2614,7 @@ $lang=Array(
 "list articles" => "liste des articles",
 "view articles" => "afficher les articles",
 "Topline" => "Ligne du haut",
-"Subtitle" => "SOus-titre",
+"Subtitle" => "Sous-titre",
 "Link to" => "Lié à",
 "Author Name" => "Nom de l'auteur",
 "Admin topics" => "Administrer les sujets",
