@@ -1318,7 +1318,84 @@ class Comments extends TikiLib {
 	$data = $this->parse_smileys($data);
 	$data = preg_replace("/---/", "<hr/>", $data);
 	// Reemplazar --- por <hr/>
+	
+	if ($feature_forum_parse != 'y') {
+		$data = $this->parse_quote($data);
+	}
+	
 	return nl2br($data);
+    }
+    
+    function parse_quote(&$data) {
+    	global $tikilib;
+    	
+	    // Find the plugins
+	    // note: [1] is plugin name, [2] is plugin arguments
+	    preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+
+	    // Process plugins in reverse order, so that nested plugins are handled
+	    // from the inside out.
+	    $i = count($plugins[0]) - 1;
+
+	    while ($i >= 0) {
+			$plugin_start = $plugins[0][$i];
+
+			$plugin = 'QUOTE';
+			$plugin_start_base = '{QUOTE(';
+			$pos = strpos($data, $plugin_start); // where plugin starts
+			// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
+			if (preg_match("/\/ *\}$/",$plugin_start)) {
+			    $plugin_end='';
+			    $pos_end=$pos+strlen($plugin_start);
+			}
+			else {
+			    $plugin_end = '{' . $plugin . '}';
+			    $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+			}
+
+		    // Extract the plugin data
+		    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
+		    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
+
+		    // Construct plugin file pathname
+		    $php_name = 'lib/wiki-plugins/wikiplugin_';
+		    $php_name .= strtolower($plugins[1][$i]). '.php';
+	
+		    // Construct plugin function name
+		    $func_name = 'wikiplugin_' . strtolower($plugins[1][$i]);
+	
+		    // Construct argument list array
+		    $params = split(',', trim($plugins[2][$i]));
+		    $arguments = array();
+
+		    foreach ($params as $param) {
+				// the following str_replace line is to decode the &gt; char when html is turned off
+				// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+				$decoded_param = str_replace('&gt;', '>', $param);
+				$parts = split( '=>?', $decoded_param );
+
+				if (isset($parts[0]) && isset($parts[1])) {
+				    $name = trim($parts[0]);
+				    $arguments[$name] = trim($parts[1]);
+				}
+		    }
+
+		    if (file_exists($php_name)) {
+				include_once ($php_name);
+
+				$ret = $func_name($plugin_data, $arguments);
+				
+				$this->parse_quote($ret);
+
+				// Replace plugin section with its output in data
+				$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+		    }
+
+			$i--;
+
+	    } // while
+   	
+    	return $data;
     }
 
     /*****************/
