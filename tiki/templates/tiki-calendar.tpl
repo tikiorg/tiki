@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.46 2004-06-19 18:58:34 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.47 2004-07-17 12:49:34 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -101,7 +101,7 @@ onUpdate     : gotocal
 {cycle values="odddark" print=false advance=false}
 {/if}
 <td class="{cycle}" width="14%">
-<div align="center" class="calfocus{if $cell[w][d].day eq $focusdate}on{/if}">
+<div align="center" class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}">
 <span style="float:left;">
 <a href="tiki-calendar.php?todate={$cell[w][d].day}">{$cell[w][d].day|date_format:"%d/%m"}</a>
 </span>
@@ -138,18 +138,18 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {if $modifiable}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
-{* ······························· *}{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
 
-{* ················ *}{if $calitemId}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{if $calitemId}
 <div class="pagetitle">{tr}Edit Calendar Item{/tr}</div>
 <div><b>{$calname}</b> : {$name|default:"new event"} (id #{$calitemId})</div>
 <div class="mininotes">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time} </div>
 <div class="mininotes">{tr}Modified{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} </div>
 <div class="mininotes">{tr}by{/tr}: {$lastUser} </div>
-{* ················ *}{else}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{else}
 <div class="pagetitle">{tr}New Calendar Item{/tr}</div>
 <div><b>{$calname}</b> </div>
-{* ················ *}{/if}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{/if}
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
@@ -319,7 +319,7 @@ align       : "bR"
 </td></tr>
 </table>
 </form>
-{* ······························· *}{else}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{else}
 <h2>{tr}Add Calendar Item{/tr}</h2>
 
 <ul>
@@ -330,7 +330,7 @@ align       : "bR"
 {/foreach}
 </ul>
 
-{* ······························· *}{/if}
+{* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ *}{/if}
 </div>
 {/if}
 

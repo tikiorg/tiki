@@ -16,10 +16,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-mailin-code.php")!=FALSE) {
 include_once ('lib/mailin/mailinlib.php');
 
 require_once ("lib/webmail/pop3.php");
-require_once ("lib/webmail/mimeDecode.php");
 include_once ("lib/webmail/class.rc4crypt.php");
-include_once ("lib/webmail/htmlMimeMail.php");
 
+include_once ("lib/mail/mimelib.php");
+include_once ("lib/webmail/tikimaillib.php");
+/*
+That parsing is now integrated in demime
 function mailin_parse_output(&$obj, &$parts, $i) {
   if (!empty($obj->parts)) {
   	$temp_max = count($obj->parts);
@@ -70,7 +72,7 @@ function mailin_parse_output(&$obj, &$parts, $i) {
     }
   }
 }
-
+*/
 // The mailin script is used to get / set wiki pages using an email account
 
 // Get a list of ACTIVE emails accounts configured for mailin procedures
@@ -96,16 +98,16 @@ foreach ($accs['data'] as $acc) {
     $aux["msgid"] = $i;
     $aux["realmsgid"] = $pop3->GetMessageID($i);
     $message = $pop3->GetMessage($i);
-    $content .= "Reading a request. From: " . $aux["sender"]["email"] . "Subject: " . $aux["subject"] . "<br />";
+    $content .= "Reading a request.<br />From: " . $aux["sender"]["email"] . "<br />Subject: " . $aux["subject"] . "<br />";
 
-    $content .= "sender email:&nbsp;" . $aux["sender"]["email"] . "<br />";
+    $content .= "sender email: " . $aux["sender"]["email"] . "<br />";
     $aux["sender"]["user"] = $userlib->get_user_by_email($aux["sender"]["email"]);
-    $content .= "sender user:&nbsp;" .  $aux["sender"]["user"] . "<br />";
+    $content .= "sender user: " .  $aux["sender"]["user"] . "<br />";
 
     $cantUseMailIn = $acc["anonymous"]=='n' && empty($aux["sender"]["user"]);
     if($cantUseMailIn) {
       $content .= "Anonymous user acces denied, sending auto-reply to email address:&nbsp;" .  $aux["sender"]["email"] . "<br />";
-      $mail = new htmlMimeMail();
+      $mail = new TikiMail();
       $mail->setFrom($acc["account"]);
       $mail->setSubject(tra('Tiki mail-in auto-reply'));
       $mail->setSMTPParams($acc["smtp"], $acc["smtpPort"], '', $acc["useAuth"], $acc["username"], $acc["pass"]);
@@ -125,19 +127,12 @@ foreach ($accs['data'] as $acc) {
         $title = trim($aux['subject']);
   
         $full = $message['full'];
-        $params = array(
-          'input' => $full,
-          'crlf' => "\r\n",
-          'include_bodies' => TRUE,
-          'decode_headers' => TRUE,
-          'decode_bodies' => TRUE
-        );
   
-        $output = Mail_mimeDecode::decode($params);
-        mailin_parse_output($output, $parts, 0);
+        $output = mime::decode($full);
+        //mailin_parse_output($output, $parts, 0);
   
-        if (isset($parts["text"][0])) {
-          $msgbody = $parts["text"][0];
+        if (isset($output['text'][0])) {
+          $msgbody = $output["text"][0];
         }
         
         $heading = $msgbody;
@@ -187,7 +182,7 @@ foreach ($accs['data'] as $acc) {
         // and also sends the source of the page
         $page = trim($aux['subject']);
   
-        $mail = new htmlMimeMail();
+        $mail = new TikiMail();
         $mail->setFrom($acc["account"]);
         $mail->setSubject($page);
   
@@ -213,21 +208,19 @@ foreach ($accs['data'] as $acc) {
         $page = trim($aux['subject']);
   
         $full = $message["full"];
-        $params = array(
-          'input' => $full,
-          'crlf' => "\r\n",
-          'include_bodies' => TRUE,
-          'decode_headers' => TRUE,
-          'decode_bodies' => TRUE
-        );
   
-        $output = Mail_mimeDecode::decode($params);
-        mailin_parse_output($output, $parts, 0);
+        $output = mime::decode($full);
+//        mailin_parse_output($output, $parts, 0);
   
-        if (isset($parts["text"][0]))
-          $body = $parts["text"][0];
+        if (isset($output["text"][0])) {
+          $body = $output["text"][0];
+				} elseif (isset($output['parts'][0]["text"][0])) {
+          $body = $output['parts'][0]["text"][0];
+				} else {
+					$body = '';
+				}
   
-        if (isset($body)) {
+        if (!empty($body)) {
           if (!$tikilib->page_exists($page)) {
             $content .= "Page: $page has been created<br />";
   
@@ -247,19 +240,12 @@ foreach ($accs['data'] as $acc) {
         $page = trim($aux['subject']);
   
         $full = $message["full"];
-        $params = array(
-          'input' => $full,
-          'crlf' => "\r\n",
-          'include_bodies' => TRUE,
-          'decode_headers' => TRUE,
-          'decode_bodies' => TRUE
-        );
   
-        $output = Mail_mimeDecode::decode($params);
-        mailin_parse_output($output, $parts, 0);
+        $output = mime::decode($full);
+        //mailin_parse_output($output, $parts, 0);
   
-        if (isset($parts["text"][0]))
-          $body = $parts["text"][0];
+        if (isset($output["text"][0]))
+          $body = $output["text"][0];
   
         if (isset($body)) {
           if (!$tikilib->page_exists($page)) {
@@ -292,19 +278,12 @@ foreach ($accs['data'] as $acc) {
         $method = $parts[0];
         $page = $parts[1];
         $full = $message["full"];
-        $params = array(
-          'input' => $full,
-          'crlf' => "\r\n",
-          'include_bodies' => TRUE,
-          'decode_headers' => TRUE,
-          'decode_bodies' => TRUE
-        );
   
-        $output = Mail_mimeDecode::decode($params);
-        mailin_parse_output($output, $parts, 0);
+        $output = mime::decode($full);
+        //mailin_parse_output($output, $parts, 0);
   
-        if (isset($parts["text"][0]))
-          $body = $parts["text"][0];
+        if (isset($output["text"][0]))
+          $body = $output["text"][0];
   
         if ($method == 'PUT') {
           if (!$tikilib->page_exists($page)) {
@@ -319,7 +298,7 @@ foreach ($accs['data'] as $acc) {
             $content .= "Page: $page has been updated";
           }
         } elseif ($method == 'GET') {
-          $mail = new htmlMimeMail();
+          $mail = new TikiMail();
   
           $mail->setFrom($acc["account"]);
           $mail->setSubject($page);
@@ -352,7 +331,7 @@ foreach ($accs['data'] as $acc) {
             $content .= "Page: $page has been updated";
           }
         } else {
-          $mail = new htmlMimeMail();
+          $mail = new TikiMail();
   
           $mail->setFrom($acc["account"]);
           $mail->setSubject(tra('Tiki mail-in instructions'));
@@ -363,7 +342,7 @@ foreach ($accs['data'] as $acc) {
       }
     }//end if($cantUseMailIn)
     // Remove the email from the pop3 server
-    $pop3->DeleteMessage($i);
+    //$pop3->DeleteMessage($i);
   }//end for ($i = 1; $i <= $mailsum; $i++)
 
   $pop3->close();

@@ -77,7 +77,7 @@ class CommLib extends TikiLib {
 	}
 
 	function rename_received_page($receivedPageId, $name) {
-		$query = "update `tiki_received_pages` set `pageName`=? where `receivedPageId`=?";
+		$query = "update `tiki_received_pages` set ".$this->convert_binary()." `pageName`=? where `receivedPageId`=?";
 		$result = $this->query($query,array($name,(int)$receivedPageId));
 	}
 
@@ -126,7 +126,7 @@ class CommLib extends TikiLib {
 	function receive_page($pageName, $data, $comment, $site, $user, $description) {
 		$now = date("U");
 		// Remove previous page sent from the same site-user (an update)
-		$query = "delete from `tiki_received_pages` where `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=?";
+		$query = "delete from `tiki_received_pages` where ".$this->convert_binary()." `pageName`=? and `receivedFromsite`=? and `receivedFromUser`=?";
 		$result = $this->query($query,array($pageName,$site,$user));
 		// Now insert the page
 		$query = "insert into `tiki_received_pages`(`pageName`,`data`,`comment`,`receivedFromSite`, `receivedFromUser`, `receivedDate`,`description`) values(?,?,?,?,?,?,?)";

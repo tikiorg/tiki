@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.54 2004-07-13 22:53:53 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.55 2004-07-17 12:49:34 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <td>
@@ -155,7 +155,7 @@
 
 {if $tiki_p_post_comments eq 'y'}
     {if $forum_mode eq 'y'}
-	{if $post_reply > 0 || $edit_reply > 0} {* posting a reply or editing a reply: show form *}
+	{if $post_reply > 0 || $edit_reply > 0 || $comment_preview} {* posting a reply or editing a reply: show form *}
 		<div id='{$postclass}open' class="threadpost">
 	{else}
 		<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="flip('{$postclass}');"/>

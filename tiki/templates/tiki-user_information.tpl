@@ -15,7 +15,7 @@
 {if $email_isPublic neq 'n'}  
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
-  <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {$country}</td></tr>
+  <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {tr}{$country}{/tr}</td></tr>
   <tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>
   <tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>

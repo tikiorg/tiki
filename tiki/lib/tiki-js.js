@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.52 2004-07-11 10:27:46 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.53 2004-07-17 12:49:30 mose Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -389,11 +389,11 @@ function getHttpRequest( method, url )
 	{
 		try
 		{
-			request = new ActiveXObject("MSXML2.XMLHTTP");
+			request = new ActiveXObject( "Microsoft.XMLHTTP" );
 		}
 		catch( ex )
 		{
-			request = new ActiveXObject( "Microsoft.XMLHTTP" );
+			request = new ActiveXObject("MSXML2.XMLHTTP");
 		}
 	}
 	else
@@ -401,6 +401,8 @@ function getHttpRequest( method, url )
 
 	if( !request )
 		return false;
+
+	request.open( method, url );
 
 	return request;
 }
@@ -422,6 +424,7 @@ function setCookie(name, value, expires, path, domain, secure) {
 	try
 	{
 		request.send('');
+		return true;
 	}
 	catch( ex )
 	{
@@ -429,6 +432,7 @@ function setCookie(name, value, expires, path, domain, secure) {
 			+ ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
 
 		document.cookie = curCookie;
+		return false;
 	}
 }
 
@@ -436,7 +440,7 @@ function setCookie(name, value, expires, path, domain, secure) {
 // * return string containing value of specified cookie or null if cookie does not exist
 function getCookie(name) {
 	// If XMLHttpRequest is supported
-	if( window.XMLHttpRequest || window.ActiveXObject )
+	if( window.XMLHttpRequest || ( window.ActiveXObject && tiki_cookie_jar[name] != null ) )
 	{
 		return tiki_cookie_jar[name];
 	}
@@ -469,10 +473,8 @@ function getCookie(name) {
 // [domain] - domain of the cookie (must be same as domain used to create cookie)
 // * path and domain default if assigned null or omitted if no explicit argument proceeds
 function deleteCookie(name, path, domain) {
-	// If XMLHttpRequest is supported
-	if( window.XMLHttpRequest || window.ActiveXObject )
-		setCookie( name, '', 0, path, domain );
-	else
+	// If XMLHttpRequest is not supported
+	if( !setCookie( name, '', 0, path, domain ) )
 	{
 		if (getCookie(name)) {
 			document.cookie = name + "="

@@ -1,6 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.17 2004-07-11 10:27:48 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.18 2004-07-17 12:49:34 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
+
+<h1><a href="tiki-map.phtml">TikiMap</a></h1><br />
 
 <div align="center">
    <form name="frmmap" action="tiki-map.phtml" method="get">
@@ -8,10 +10,12 @@
 	  <table border="0" cellpadding="0" cellspacing="0" >
 	  <tr>
 		<td align="center" valign="middle">
-		<table border="1">
+		<table class="normal">
 		<tr><td>
-		  <input type="image" id="map" src="{$image_url}" width="{$size}" height="{$size}" 
-		  border="0"
+		  <input type="image" id="map" src="{$image_url}"
+			{if $xsize != ""}width="{$xsize}"{/if} 
+			{if $ysize != ""}height="{$ysize}"{/if} 
+		  border="1"
 		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
 		</td></tr>
@@ -20,44 +24,44 @@
 		</td></tr>
 		<tr><td align="center">	
 		{if $zoom eq -4}
-		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="{tr}Zoom out x4{/tr}" border="1">
-		{else}  
-		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="{tr}Zoom out x4{/tr}">
+		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="-x4" title="{tr}Zoom out x4{/tr}" border="1">
+		{else}
+		  <img name="imgzoom0" src="img/icons/zoom-4.gif" onclick="zoomin(0)" alt="-x4" title="{tr}Zoom out x4{/tr}">
 		{/if}
 		{if $zoom eq -3}
-		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="{tr}Zoom out x3{/tr}" border="1">
+		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="-x3" title="{tr}Zoom out x3{/tr}" border="1">
 		{else}  
-		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="{tr}Zoom out x3{/tr}">
+		  <img name="imgzoom1" src="img/icons/zoom-3.gif" onclick="zoomin(1)" alt="-x3" title="{tr}Zoom out x3{/tr}">
 		{/if}
 		{if $zoom eq -2}
-		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="{tr}Zoom out x2{/tr}" border="1">
+		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}" border="1">
 		{else}
-		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="{tr}Zoom out x2{/tr}">
+		  <img name="imgzoom2" src="img/icons/zoom-2.gif" onclick="zoomin(2)" alt="-x2" title="{tr}Zoom out x2{/tr}">
 		{/if}
 		{if $zoom eq 0}
-		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="{tr}Query{/tr}" border="1">
+		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}" border="1">
 		{else}
-		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="{tr}Query{/tr}">
+		  <img name="imgzoom3" src="img/icons/info.gif" onclick="zoomin(3)" alt="Q" title="{tr}Query{/tr}">
 		{/if}
 		{if $zoom eq 1}
-		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="{tr}Pan{/tr}" border="1">
+		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}" border="1">
 		{else}
-		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="{tr}Pan{/tr}">
+		  <img name="imgzoom4" src="img/icons/move.gif" onclick="zoomin(4)" alt="P" title="{tr}Pan{/tr}">
 		{/if}
 		{if $zoom eq 2}
-		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="{tr}Zoom in x2{/tr}" border="1">
+		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}" border="1">
 		{else}
-		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="{tr}Zoom in x2{/tr}">
+		  <img name="imgzoom5" src="img/icons/zoom+2.gif" onclick="zoomin(5)" alt="x2" title="{tr}Zoom in x2{/tr}">
 		{/if}
 		{if $zoom eq 3}
-		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="{tr}Zoom in x3{/tr}" border="1">
+		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="x3" title="{tr}Zoom in x3{/tr}" border="1">
 		{else}
-		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="{tr}Zoom in x3{/tr}">
+		  <img name="imgzoom6" src="img/icons/zoom+3.gif" onclick="zoomin(6)" alt="x3" title="{tr}Zoom in x3{/tr}">
 		{/if}
 		{if $zoom eq 4}
-		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="{tr}Zoom in x4{/tr}" border="1">
+		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="x4" title="{tr}Zoom in x4{/tr}" border="1">
 		{else}
-		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="{tr}Zoom in x4{/tr}">
+		  <img name="imgzoom7" src="img/icons/zoom+4.gif" onclick="zoomin(7)" alt="x4" title="{tr}Zoom in x4{/tr}">
 		{/if}
 		&nbsp;
 		  <select name="zoom" size="1" onchange="cbzoomchange()">
@@ -91,9 +95,9 @@
 		</table>
 		</td>
 		<td valign="top">
-		  <table border="1">
-		  <tr><td align="center" valign="middle">
-		  <img id="ref" src="{$image_ref_url}" border="0" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
+		  <table class="normal">
+		  <tr><td align="left" valign="middle">
+		  <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
 		  </td></tr>
 		  <tr><td>
 		  <img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" />
@@ -148,7 +152,7 @@
 		  {if $layer_query[j] eq "On"}
      <img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />		  
 		  {else}
-		  &nbsp
+		  &nbsp;
 		  {/if}
 		  </td>
 		  {if $smarty.section.j.index % 2}

@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 $langmapping = array(
     'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese")        ),
-    'cs' => array(  'Český',      tra("Czech")        ),
+    'cs' => array(  'Česky',      tra("Czech")        ),
     'da' => array(  'Dansk',        tra("Danish")       ),
     'de' => array(  'Deutsch',      tra("German")       ),
     'en' => array(  'English',      tra("English")      ),

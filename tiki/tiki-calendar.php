@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.39 2004-07-11 10:27:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.40 2004-07-17 12:49:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -213,6 +213,8 @@ list($focus_day, $focus_month, $focus_year) = array(
 	date("m", $focusdate),
 	date("Y", $focusdate)
 );
+
+$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
 $focusdate = mktime(date('G'),date('i'),date('s'),$focus_month,$focus_day,$focus_year);
 
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
@@ -437,6 +439,7 @@ if (isset($_REQUEST['drop'])) {
 
 $z = date("z");
 
+// Windows requires clean dates!
 $focus_prevday = mktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
 $focus_nextday = mktime(0, 0, 0, $focus_month, $focus_day + 1, $focus_year);
 $focus_prevweek = mktime(0, 0, 0, $focus_month, $focus_day - 7, $focus_year);
@@ -452,6 +455,7 @@ $smarty->assign('weekafter', $focus_nextweek);
 $smarty->assign('monthafter', $focus_nextmonth);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
+$smarty->assign('focuscell', $focuscell);
 $smarty->assign('now', mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')));
 
 $weekdays = range(0, 6);

@@ -17,7 +17,7 @@ class HistLib extends TikiLib {
 
 	// Removes a specific version of a page
 	function remove_version($page, $version, $comment = '') {
-		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+		$query = "delete from `tiki_history` where ".$this->convert_binary()." `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
 		$action = "Removed version $version";
 		$t = date("U");
@@ -44,7 +44,7 @@ class HistLib extends TikiLib {
 		    $this->query($query,array($page,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		}
 		
-		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
+		$query = "select * from `tiki_history` where ".$this->convert_binary()." `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
 
 		if (!$result->numRows())
@@ -52,7 +52,7 @@ class HistLib extends TikiLib {
 
 		$res = $result->fetchRow();
 		$query
-			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `pageName`=?";
+			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query,array($page));
@@ -97,7 +97,7 @@ class HistLib extends TikiLib {
 	// Returns information about a specific version of a page
 	function get_version($page, $version) {
 
-		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
+		$query = "select * from `tiki_history` where ".$this->convert_binary()." `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
 		$res = $result->fetchRow();
 		return $res;
@@ -107,7 +107,7 @@ class HistLib extends TikiLib {
 	// without the data itself
 	function get_page_history($page) {
 
-		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where ".$this->convert_binary()." `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page));
 		$ret = array();
 
@@ -131,7 +131,7 @@ class HistLib extends TikiLib {
 	
 	function get_page_latest_version($page) {
 
-		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select `version` from `tiki_history` where ".$this->convert_binary()." `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page),1);
 		$ret = array();
 		
@@ -146,7 +146,7 @@ class HistLib extends TikiLib {
 
 	function version_exists($pageName, $version) {
 
-		$query = "select `pageName` from `tiki_history` where `pageName` = ? and `version`=?";
+		$query = "select `pageName` from `tiki_history` where ".$this->convert_binary()." `pageName` = ? and `version`=?";
 		$result = $this->query($query,array($pageName,$version));
 		return $result->numRows();
 	}
@@ -156,12 +156,12 @@ class HistLib extends TikiLib {
 	// function parameters modified by ramiro_v on 11/03/2002
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 
-		$where = "where (th.`version` != '' or tp.`version` != '') ";
+		$where = "where (th.`version` != 0 or tp.`version` != 0) ";
 		$bindvars = array();
 		if ($findwhat) {
 			$findstr='%' . $findwhat . '%';
-			$where.= " and ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ? ";
-			$bindvars=array($findstr,$findstr,$findstr);
+			$where.= " and ".$this->convert_binary()." ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ?";
+			$bindvars = array($findstr,$findstr,$findstr);
 		}
 
 		if ($days) {
@@ -173,11 +173,11 @@ class HistLib extends TikiLib {
 		}
 
 		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`pageName`,ta.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
+			left join `tiki_history` th on ".$this->convert_binary()."  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ".$this->convert_binary()." ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_actionlog` ta 
-			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
-			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
+			left join `tiki_history` th on  ".$this->convert_binary()." ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ".$this->convert_binary()." ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
 
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);

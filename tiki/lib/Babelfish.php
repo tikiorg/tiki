@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.9 2004-07-08 12:50:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.10 2004-07-17 12:49:30 mose Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,7 +77,7 @@ class Babelfish {
 		if (!isset($url_map[$lang_from])) {
 			return '';
 		}
-		
+
 		$url = 'http://jump.altavista.com/translate_' . $url_map[$lang_from] . '.go' .
 			'?http://babelfish.altavista.com/babelfish/tr?doit=done' .
 			'&amp;lp=' . $lang_from . '_' . $lang_to .
@@ -162,20 +162,23 @@ class Babelfish {
 		\static
 	*/
 	function logo($lang = 'en') {
- 	        $lang = substr($lang,0,2);
+ 	    $lang = substr($lang,0,2);
 
-		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>";
+		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/static/scripts/translate_%s.js\"></script>";
 
 		$lang = strtolower($lang);
 
 		switch ($lang) {
 			case 'en':
+				return sprintf($s, "engl");
 			case 'de':
+				return sprintf($s, "german");
 			case 'fr':
+				return sprintf($s, "french");
 			case 'it':
-				return sprintf($s, $lang);
+				return sprintf($s, "italien");
 			case 'es':
-				return sprintf($s, 'esp');
+				return sprintf($s, 'spanish');
 			case 'pt':
 				return sprintf($s, 'port');
 		}

@@ -73,7 +73,7 @@ class WikiLib extends TikiLib {
     }
 
     function get_creator($name) {
-	return $this->getOne("select `creator` from `tiki_pages` where `pageName`=?", array($name));
+	return $this->getOne("select `creator` from `tiki_pages` where ".$this->convert_binary()." `pageName`=?", array($name));
     }
 
     function wiki_page_graph(&$str, &$graph, $garg) {
@@ -184,22 +184,22 @@ class WikiLib extends TikiLib {
 
 		// 1st rename the page in tiki_pages, using a tmpname inbetween for
 		// rename pages like ThisTestpage to ThisTestPage
-		$query = "update `tiki_pages` set `pageName`=? where `pageName`=?";
+		$query = "update `tiki_pages` set `pageName`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $tmpName, $oldName ) );
 
-		$query = "update `tiki_pages` set `pageName`=? where `pageName`=?";
+		$query = "update `tiki_pages` set `pageName`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $newName, $tmpName ) );
 
 		// correct pageName in tiki_history, using a tmpname inbetween for
 		// rename pages like ThisTestpage to ThisTestPage
-		$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
+		$query = "update `tiki_history` set `pageName`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $tmpName, $oldName ) );
 
-		$query = "update `tiki_history` set `pageName`=? where `pageName`=?";
+		$query = "update `tiki_history` set `pageName`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $newName, $tmpName ) );
 		
 		// get pages linking to the old page
-		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
+		$query = "select `fromPage` from `tiki_links` where ".$this->convert_binary()." `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
 		while ($res = $result->fetchRow()) {
@@ -211,20 +211,20 @@ class WikiLib extends TikiLib {
 		    $oldName = quotemeta( $oldName );
 		    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
-		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where ".$this->convert_binary()." `pageName`=?";
 		    $this->query($query, array( $data,(int) strlen($data), $page));
 		    $this->invalidate_cache($page);
 		}
 
 		// correct toPage and fromPage in tiki_links
-		$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
+		$query = "update `tiki_links` set `fromPage`=? where ".$this->convert_binary()." `fromPage`=?";
 		$this->query($query, array( $newName, $oldName));
 	
 		$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
 		$this->query($query, array( $newName, $oldName));
 	
 		// tiki_footnotes change pageName
-		$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
+		$query = "update `tiki_page_footnotes` set `pageName`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $newName, $oldName ));
 	
 		// Build objectId using 'wiki page' and the name
@@ -267,7 +267,7 @@ class WikiLib extends TikiLib {
 	}
 
 	function set_page_cache($page,$cache) {
-		$query = "update `tiki_pages` set `wiki_cache`=? where `pageName`=?";
+		$query = "update `tiki_pages` set `wiki_cache`=? where ".$this->convert_binary()." `pageName`=?";
 		$this->query($query, array( $cache, $page));
 	}
 
@@ -278,7 +278,7 @@ class WikiLib extends TikiLib {
 	// Methods to cache and handle the cached version of wiki pages
 	// to prevent parsing large pages.
 	function get_cache_info($page) {
-		$query = "select `cache`,`cache_timestamp` from `tiki_pages` where `pageName`=?";
+		$query = "select `cache`,`cache_timestamp` from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
 
 		$result = $this->query($query, array( $page ) );
 		$res = $result->fetchRow();
@@ -288,7 +288,7 @@ class WikiLib extends TikiLib {
 	function update_cache($page, $data) {
 		$now = date('U');
 
-		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
+		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query, array( $data, $page ) );
 		return true;
 	}
@@ -411,24 +411,24 @@ class WikiLib extends TikiLib {
     // Functions for wiki page footnotes
     function get_footnote($user, $page) {
 
-	$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
+	$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`=? and ".$this->convert_binary()." `pageName`=?",array($user,$page));
 
 	if (!$count) {
 	    return '';
 	} else {
-	    return $this->getOne("select `data` from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
+	    return $this->getOne("select `data` from `tiki_page_footnotes` where `user`=? and ".$this->convert_binary()." `pageName`=?",array($user,$page));
 	}
     }
 
     function replace_footnote($user, $page, $data) {
-	$querydel = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+	$querydel = "delete from `tiki_page_footnotes` where `user`=? and ".$this->convert_binary()." `pageName`=?";
 	$this->query($querydel,array($user, $page),-1,-1,false);
 	$query = "insert into `tiki_page_footnotes`(`user`,`pageName`,`data`) values(?,?,?)";
 	$this->query($query,array($user,$page,$data));
     }
 
     function remove_footnote($user, $page) {
-	$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+	$query = "delete from `tiki_page_footnotes` where `user`=? and ".$this->convert_binary()." `pageName`=?";
 	$this->query($query,array($user,$page));
     }
 
@@ -441,7 +441,7 @@ class WikiLib extends TikiLib {
 	    print ($res["pageName"] . " ");
 
 	    $page = $res["pageName"];
-	    $query2 = "select `toPage` from `tiki_links` where `fromPage`=?";
+	    $query2 = "select `toPage` from `tiki_links` where ".$this->convert_binary()." `fromPage`=?";
 	    $result2 = $this->query($query2, array( $page ) );
 	    $pages = array();
 
@@ -461,7 +461,7 @@ class WikiLib extends TikiLib {
     function remove_last_version($page, $comment = '') {
 
 	$this->invalidate_cache($page);
-	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
+	$query = "select * from `tiki_history` where ".$this->convert_binary()." `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
 	$result = $this->query($query, array( $page ) );
 
 	if ($result->numRows()) {
@@ -495,7 +495,7 @@ class WikiLib extends TikiLib {
 	$exps = array();
 	$bindvars=array();
 	foreach ($words as $word) {
-	    $exps[] = "`pageName` like ?";
+	    $exps[] = $this->convert_binary()." `pageName` like ?";
 	    $bindvars[] = "%$word%";
 	}
 
@@ -512,7 +512,7 @@ class WikiLib extends TikiLib {
     }
 
     function is_locked($page) {
-	$query = "select `flag` from `tiki_pages` where `pageName`=?";
+	$query = "select `flag` from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
 	$result = $this->query($query, array( $page ) );
 	$res = $result->fetchRow();
 
@@ -525,11 +525,11 @@ class WikiLib extends TikiLib {
     function lock_page($page) {
 	global $user;
 
-	$query = "update `tiki_pages` set `flag`=? where `pageName`=?";
+	$query = "update `tiki_pages` set `flag`=? where ".$this->convert_binary()." `pageName`=?";
 	$result = $this->query($query, array( "L",$page ) );
 
 	if (isset($user)) {
-	    $query = "update `tiki_pages` set `user`=? where `pageName`=?";
+	    $query = "update `tiki_pages` set `user`=? where ".$this->convert_binary()." `pageName`=?";
 
 	    $result = $this->query($query, array( $user, $page ) );
 	}
@@ -538,7 +538,7 @@ class WikiLib extends TikiLib {
     }
 
     function unlock_page($page) {
-	$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
+	$query = "update `tiki_pages` set `flag`='' where ".$this->convert_binary()." `pageName`=?";
 	$result = $this->query($query, array( $page ) );
 	return true;
     }
