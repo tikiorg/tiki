@@ -133,6 +133,13 @@ if(count($image_next["data"])==1) {
 } else {
   $smarty->assign('nextimg','');
 }
+
+$smarty->assign('firstId',$imagegallib->get_first_image($sort_mode,'',$_REQUEST['galleryId']));
+$smarty->assign('lastId', $imagegallib->get_last_image($sort_mode,'',$_REQUEST['galleryId']));
+
+
+
+
 $smarty->assign('offset',$_REQUEST["offset"]);
 $smarty->assign('prevdesp',$_REQUEST["desp"]-1);
 $smarty->assign('nextdesp',$_REQUEST["desp"]+1);

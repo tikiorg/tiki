@@ -744,6 +744,70 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $retval;
   }
 
+  function get_first_image($sort_mode,$find,$galleryId=-1)
+  {
+
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";
+    } else {
+      $mid="";
+    }
+
+    $midcant="";
+    if ($galleryId != -1 && is_numeric($galleryId))
+    {
+      $mid .= " and i.galleryId=$galleryId ";
+      $midcant = "where galleryId=$galleryId ";
+    }
+
+    $query = "select i.imageID
+                from tiki_images i , tiki_images_data d
+                 where i.imageID=d.imageID
+                 and d.type='o'
+                $mid
+                order by $sort_mode limit 0,1";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res['imageID'];
+  }
+
+  function get_last_image($sort_mode,$find,$galleryId=-1)
+  {
+	if(strstr($sort_mode,'asc')) {
+		$sort_mode = str_replace('asc','desc',$sort_mode);
+	} else {
+		$sort_mode = str_replace('desc','asc',$sort_mode);
+	}
+	
+    $sort_mode = str_replace("_"," ",$sort_mode);
+
+    if($find) {
+      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";
+    } else {
+      $mid="";
+    }
+
+    $midcant="";
+    if ($galleryId != -1 && is_numeric($galleryId))
+    {
+      $mid .= " and i.galleryId=$galleryId ";
+      $midcant = "where galleryId=$galleryId ";
+    }
+
+    $query = "select i.imageID
+                from tiki_images i , tiki_images_data d
+                 where i.imageID=d.imageID
+                 and d.type='o'
+                $mid
+                order by $sort_mode limit 0,1";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res['imageID'];
+  }
+
+
+
   function list_images($offset,$maxRecords,$sort_mode,$find)
   {
     return $this->get_images($offset,$maxRecords,$sort_mode,$find);
