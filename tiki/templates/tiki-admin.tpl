@@ -25,7 +25,7 @@
 <tr><td valign="top">
 <div class="simplebox">
 {tr}Tiki sections and features{/tr}
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#features" method="post">
 <table>
 <tr><td class="form">{tr}Wiki{/tr}:</td><td><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Search{/tr}:</td><td><input type="checkbox" name="feature_search" {if $feature_search eq 'y'}checked="checked"{/if}/></td></tr>
@@ -83,7 +83,7 @@
 </td><td valign="top">
 <div class="simplebox">
 {tr}General Layout options{/tr}
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#features" method="post">
 <table>
 <tr><td class="form">{tr}Left column{/tr}:</td><td><input type="checkbox" name="feature_left_column" {if $feature_left_column eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Right column{/tr}:</td><td><input type="checkbox" name="feature_right_column" {if $feature_right_column eq 'y'}checked="checked"{/if}/></td></tr>
@@ -92,7 +92,7 @@
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="layout" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#features" method="post">
 <table>
 <tr><td class="form">{tr}Layout per section{/tr}:</td><td><input type="checkbox" name="layout_section" {if $layout_section eq 'y'}checked="checked"{/if}/></td>
 <td align="center" class="form" colspan="2"><input type="submit" name="layout_ss" value="{tr}Set{/tr}" /></td></tr>
@@ -125,7 +125,7 @@
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
 <div class="cbox-data">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#general" method="post">
 <div class="simplebox">
 <table>
 <tr><td class="form">{tr}Home page{/tr}:</td><td>
@@ -223,7 +223,7 @@
 <table width="80%" cellpadding="0" cellspacing="0">
 <tr>
   <td>
-  <form method="post" action="tiki-admin.php">
+  <form method="post" action="tiki-admin.php#general">
     <table>
     <tr><td class="form">{tr}Change admin password{/tr}:</td><td><input type="password" name="adminpass" /></td></tr>
     <tr><td class="form">{tr}Again{/tr}:</td><td><input type="password" name="again" /></td></tr>
@@ -260,7 +260,7 @@
 <div class="cbox-title">{tr}User registration and login{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#login" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
@@ -337,12 +337,12 @@
     <tr><td width="60%" valign="top">
     <div class="simplebox">
     {tr}Dumps{/tr}:<br/>
-    <a class="link" href="tiki-admin.php?dump=1">{tr}Generate dump{/tr}</a><br/>
+    <a class="link" href="tiki-admin.php#wiki?dump=1">{tr}Generate dump{/tr}</a><br/>
     <a class="link" href="dump/new.tar">{tr}Download last dump{/tr}</a>
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php" method="post">
+    <form action="tiki-admin.php#wiki" method="post">
     {tr}Create a tag for the current wiki{/tr}<br/>
     {tr}Tag Name{/tr}<input  maxlength="20" size="10" type="text" name="tagname"/>
     <input type="submit" name="createtag" value="{tr}create{/tr}"/>
@@ -350,7 +350,7 @@
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php" method="post">
+    <form action="tiki-admin.php#wiki" method="post">
     {tr}Restore the wiki{/tr}<br/>
     {tr}Tag Name{/tr}: <select name="tagname">
           {section name=sel loop=$tags}
@@ -364,7 +364,7 @@
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php" method="post">
+    <form action="tiki-admin.php#wiki" method="post">
     {tr}Remove a tag{/tr}<br/>
     {tr}Tag Name{/tr}<select name="tagname">
           {section name=sel loop=$tags}
@@ -380,7 +380,7 @@
     
     <div class="simplebox">
     {tr}Wiki comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#wiki">
     <table>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
@@ -397,7 +397,7 @@
     
     <div class="simplebox">
     {tr}Wiki attachments{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#wiki">
     <table>
     <tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if}/></td></tr>
@@ -409,7 +409,7 @@
     
     <div class="simplebox">
     {tr}Export Wiki Pages{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#wiki">
     <table>
     <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></tr>
     </table>
@@ -418,11 +418,11 @@
     
     
     <div class="simplebox">
-    <a class="link" href="tiki-admin.php?rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
+    <a class="link" href="tiki-admin.php#wiki?rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
     </div>
     
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#wiki">
     <table><tr>
     <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage}" />
     <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
@@ -432,7 +432,7 @@
     </div>
     
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#wiki">
     <table><tr>
     <td class="form">{tr}Wiki Page Names{/tr}</td><td class="form">
     <select name="wiki_page_regex">
@@ -450,7 +450,7 @@
     <td width="40%" valign="top">
     <div class="simplebox">
     {tr}Wiki Features{/tr}:<br/>
-    <form action="tiki-admin.php" method="post">
+    <form action="tiki-admin.php#wiki" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
@@ -492,6 +492,12 @@
     </select> 
     </td></tr>
     <tr><td class="form">{tr}Footnotes{/tr}:</td><td><input type="checkbox" name="feature_wiki_footnotes" {if $feature_wiki_footnotes eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
+    <select name="feature_wiki_tables">
+    <option value="old" {if $feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
+    <option value="new" {if $feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}\n for rows{/tr}</option>
+    </select>
+    </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>
@@ -499,7 +505,7 @@
     
     <div class="simplebox">
     {tr}Wiki History{/tr}
-    <form action="tiki-admin.php" method="post">
+    <form action="tiki-admin.php#wiki" method="post">
     <table>
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions}" /></td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions}" /></td></tr>
@@ -534,7 +540,7 @@
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#gal" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Home Gallery (main gallery){/tr}</td><td>
 <select name="homeGallery">
@@ -552,7 +558,7 @@
 
 <div class="simplebox">
 {tr}Galleries features{/tr}<br/>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#gal" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -565,12 +571,12 @@
 </form>
 </div>
 <div class="simplebox">
-<a class="link" href="tiki-admin.php?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
+<a class="link" href="tiki-admin.php#gal?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
 
     <div class="simplebox">
     {tr}Image galleries comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#gal">
     <table>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="image_galleries_comments_per_page" value="{$image_galleries_comments_per_page}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
@@ -611,7 +617,7 @@
 <div class="cbox-title">{tr}File galleries{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#fgal" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Home Gallery (main gallery){/tr}</td><td>
 <select name="homeFileGallery">
@@ -628,7 +634,7 @@
 
 <div class="simplebox">
 {tr}Galleries features{/tr}<br/>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#fgal" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_comments" {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -644,7 +650,7 @@
 
     <div class="simplebox">
     {tr}File galleries comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#fgal">
     <table>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="file_galleries_comments_per_page" value="{$file_galleries_comments_per_page}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
@@ -689,7 +695,7 @@
 
 <div class="simplebox">
 {tr}CMS features{/tr}<br/>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#cms" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_cms_rankings" {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_article_comments" {if $feature_article_comments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -700,7 +706,7 @@
 </form>
 </div>
 <div class="simplebox">
-<form method="post" action="tiki-admin.php">
+<form method="post" action="tiki-admin.php#cms">
 <table>
   <tr><td class="form">{tr}Maximum number of articles in home{/tr}: </td><td><input size="5" type="text" name="maxArticles" value="{$maxArticles}" /></td></tr>
   <tr><td align="center" colspan="2"><input type="submit" name="cmsprefs" value="{tr}Change preferences{/tr}" /></td></tr>
@@ -710,7 +716,7 @@
 
     <div class="simplebox">
     {tr}Article comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#cms">
     <table>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="article_comments_per_page" value="{$article_comments_per_page}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
@@ -751,7 +757,7 @@
 <div class="cbox-data">
     <div class="simplebox">
     {tr}Poll comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#polls">
     <table>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_poll_comments" {if $feature_poll_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="poll_comments_per_page" value="{$poll_comments_per_page}" /></td></tr>
@@ -792,7 +798,7 @@
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#blogs" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Home Blog (main blog){/tr}</td><td>
 <select name="homeBlog">
@@ -811,7 +817,7 @@
 
 <div class="simplebox">
 {tr}Blog features{/tr}<br/>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#blogs" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_blog_rankings" {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Blog level comments{/tr}:</td><td><input type="checkbox" name="feature_blog_comments" {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -835,7 +841,7 @@
 
     <div class="simplebox">
     {tr}Blog comments settings{/tr}
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#blogs">
     <table>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="blog_comments_per_page" value="{$blog_comments_per_page}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
@@ -876,7 +882,7 @@
 <div class="cbox-data">
     {tr}Forums settings{/tr}
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#forums">
     <table>
     <tr><td class="form">{tr}Home Forum (main forum){/tr}</td><td>
     <select name="homeForum">
@@ -893,7 +899,7 @@
     
     
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php">
+    <form method="post" action="tiki-admin.php#forums">
     <table>
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_forum_rankings" {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Ordering for forums in the forum listing{/tr}
@@ -942,7 +948,7 @@
 
 <div class="simplebox">
 {tr}FAQ comments{/tr}<br/>
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#faqs" method="post">
     <table>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_faq_comments" {if $feature_faq_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="faq_comments_per_page" value="{$faq_comments_per_page}" /></td></tr>
@@ -983,7 +989,7 @@
 <div class="cbox-title">{tr}Trackers{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#trackers" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="t_use_dir" value="{$t_use_dir}" /> </tr>
@@ -1016,7 +1022,7 @@
 <div class="cbox-title">{tr}Webmail{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#webmail" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Allow viewing HTML mails{/tr}?</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Maximum size for each attachment{/tr}:</td><td><select name="webmail_max_attachment">
@@ -1057,7 +1063,7 @@
 <div class="cbox-title">{tr}Directory{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php#directory" method="post">
 <table width="100%">
 <tr><td>{tr}Number of columns per page when listing categories{/tr}</td><td>
     <select name="directory_columns">
@@ -1108,7 +1114,7 @@
 	<div class="cbox-title">{tr}User files{/tr}</div>
 		<div class="cbox-data">
 			<div class="simplebox">
-				<form action="tiki-admin.php" method="post">
+				<form action="tiki-admin.php#userfiles" method="post">
 				<table width="100%">
 				<tr><td class="form">{tr}Quota (Mb){/tr}</td><td>
 				<input type="text" name="userfiles_quota" value="{$userfiles_quota}" />
@@ -1147,7 +1153,7 @@
     <table>
     <tr>
       <td valign="top">
-        <form action="tiki-admin.php" method="post">
+        <form action="tiki-admin.php#rss" method="post">
         <table>
         <tr><td class="form">{tr}<b>Feed</b>{/tr}</td>
             <td class="form">{tr}<b>enable/disable</b>{/tr}</td>

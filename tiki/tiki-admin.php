@@ -771,6 +771,10 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_footnotes",'n');
   }
   
+  $tikilib->set_preference('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
+  $smarty->assign('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
+  
+  
   if(isset($_REQUEST["feature_wiki_undo"]) && $_REQUEST["feature_wiki_undo"]=="on") {
     $tikilib->set_preference("feature_wiki_undo",'y'); 
     $smarty->assign("feature_wiki_undo",'y');
