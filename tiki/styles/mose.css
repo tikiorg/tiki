@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.52 2004-05-07 14:36:48 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.53 2004-05-07 15:46:33 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -560,13 +560,13 @@ Links in table headings
 	font-weight:   bold;
 }
 
-.tableheading:active, .gallistheading:active, .listgalheading:active, .bloglistheading:active, .llisfgalheading:active, .
-	llistfileslink:active, .llistart:active, .lforumheading:active {
+.tableheading:active, .gallistheading:active, .listgalheading:active, .bloglistheading:active, .llisfgalheading:active, 
+	.llistfileslink:active, .llistart:active, .lforumheading:active {
 	color:    white;
 }
 
-.tableheading:hover, .gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .
-	llistfileslink:hover, .llistart:hover, .lforumheading:hover {
+.tableheading:hover, .gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, 
+	.llistfileslink:hover, .llistart:hover, .lforumheading:hover {
 	color:    #CCCCCC;
 }
 
@@ -1732,7 +1732,7 @@ div.treetitle {
 	border-spacing: 0;
 }
 .treenode table tr {
-	background-color: none;
+	background-color: transparent;
 }
 .treenode table tr:hover {
 	background-color: #dedede;
@@ -2586,7 +2586,7 @@ a.tikihelp:hover {
 .catlists {
 	border-top: 1px solid #ffffff;
 	padding: 1px 6px 1px 6px;
-	background-color: none;
+	background-color: transparent;
 	color: #666666;
 }
 .catlists:last-child {
@@ -2665,6 +2665,7 @@ div#loadstats {
 	position: relative;
 	text-align: left;
 	white-space: nowrap;
+	font-size: 11px;
 }
 
 .mdkitem a	{
