@@ -1919,7 +1919,7 @@ function user_has_voted($user, $id) {
 	}
     } else {
 	$query = "select count(*) from `tiki_user_votings` where `user`=? and `id`=?";
-	$result = $this->getOne($query,array($user,(int)$id));
+	$result = $this->getOne($query,array($user,(string) $id));
 	if ($result) {
 	    $ret = true;
 	} else {
@@ -1937,9 +1937,9 @@ function register_user_vote($user, $id) {
 	$_SESSION["votes"][] = $id;
 	} else {
 	$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-	$result = $this->query($query,array($user,(int)$id));
+	$result = $this->query($query,array($user,(string) $id));
 	$query = "insert into `tiki_user_votings`(`user`,`id`) values(?,?)";
-	$result = $this->query($query,array($user,(int)$id));
+	$result = $this->query($query,array($user,(string) $id));
     }
 }
 

@@ -71,7 +71,7 @@ class Comments extends TikiLib {
     function remove_reported($threadId) {
 	$query = "delete from `tiki_forums_reported` where `threadId`=?";
 
-	$this->query($query,array($threadId));
+	$this->query($query,array((int) $threadId));
     }
 
     function get_num_reported($forumId) {
@@ -935,7 +935,7 @@ class Comments extends TikiLib {
     function get_comment($id) {
 	$query = "select * from `tiki_comments` where `threadId`=?";
 
-	$result = $this->query($query, array( $id ) );
+	$result = $this->query($query, array( (int) $id ) );
 	$res = $result->fetchRow();
 	$res["parsed"] = $this->parse_comment_data($res["data"]);
 
@@ -990,7 +990,7 @@ class Comments extends TikiLib {
 	order by " .
 	$this->convert_sortmode($sort_mode).",`commentDate` desc";
 
-	$result = $this->query($query,array($id,$threshold),$max,$offset);
+	$result = $this->query($query,array((int) $id,(int) $threshold),$max,$offset);
 	$retval = array();
 	$retval["numReplies"] = $result->numRows();
 	$ret = array();
@@ -1156,9 +1156,9 @@ class Comments extends TikiLib {
 	$object = explode( ":", $objectId, 2);
 
 	$query = "select count(*) from `tiki_comments` where
-	`objectType`=? and `object`=? and `average`<? $time_cond";
+	`objectType`=? and `object`=? and `average` < ? $time_cond";
 	$below = $this->getOne($query, array_merge(
-	array($object[0], $object[1], $threshold), $bind_time) );
+	array($object[0], $object[1], (float) $threshold), $bind_time) );
 
 	if ($sticky) {
 		$typetest = '=';
@@ -1172,11 +1172,11 @@ class Comments extends TikiLib {
 	    $mid = " where `objectType` = ? and `object`=? and
 	    `parentId`=? and `type`".$typetest."? and `average`>=? and (`title`
 	    like ? or `data` like ?) ";
-	    $bind_mid=array($object[0],  $object[1],  $parentId,
-	    's', $threshold, $findesc, $findesc);
+	    $bind_mid=array($object[0],  $object[1],  (int) $parentId,
+	    's', (int) $threshold, $findesc, $findesc);
 	} else {
 	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `type`".$typetest."? and `average`>=? ";
-	    $bind_mid=array($object[0], $object[1], $parentId, 's', $threshold);
+	    $bind_mid=array($object[0], $object[1], (int) $parentId, 's', (int) $threshold);
 	}
 
 	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
@@ -1414,7 +1414,7 @@ class Comments extends TikiLib {
 	data=?, type=?, summary=?, smiley=?
 	    where `threadId`=?";
 	$result = $this->query($query, array( $title, $data, $type,
-		    $summary, $smiley, $threadId ) );
+		    $summary, $smiley, (int) $threadId ) );
     }
 
     // Added an aption, $getold, to have it return the threadId of
@@ -1443,18 +1443,18 @@ class Comments extends TikiLib {
 	} else {
 	    $now = (int) date("U");
 
-	    if ($this->db->getOne("select count(*) from 
+	    if ($this->getOne("select count(*) from 
 			`tiki_user_postings` where `user`=?",
-			array( $userName )))
+			array( $userName ),false))
 	    {
 		$query = "update `tiki_user_postings` ".
 		    "set `last`=?, `posts` = `posts` + 1 where `user`=?";
 
 		$this->query($query, array( $now, $userName ) );
 	    } else {
-		$posts = $this->db->getOne("select count(*) ".
+		$posts = $this->getOne("select count(*) ".
 			"from `tiki_comments` where `userName`=?",
-			array( $userName));
+			array( $userName),false);
 
 		if (!$posts)
 		    $posts = 1;
@@ -1462,7 +1462,7 @@ class Comments extends TikiLib {
 		$query = "insert into 
 		    `tiki_user_postings`(`user`,`first`,`last`,`posts`) 
 		    values( ?, ?, ?, ? )";
-		$this->query($query,  array($userName, $now, $now, $posts) );
+		$this->query($query,  array($userName, (int) $now, (int) $now,(int) $posts) );
 	    }
 
 	    // Calculate max
@@ -1478,9 +1478,9 @@ class Comments extends TikiLib {
 	    $range1 = ($min + $average) / 2;
 	    $range2 = ($max + $average) / 2;
 
-	    $posts = $this->db->getOne("select `posts` ".
+	    $posts = $this->getOne("select `posts` ".
 		    "from `tiki_user_postings` where `user`=?",
-		    array($userName));
+		    array($userName),false);
 
 	    if ($posts == $max) {
 		$level = 5;
@@ -1515,7 +1515,7 @@ class Comments extends TikiLib {
 	}
 
 	if (!$result->numRows()) {
-	    $now = date("U");
+	    $now = (int) date("U");
 
 	    // Break out the type and object parameters.
 	    $object = explode( ":", $objectId, 2);
@@ -1532,7 +1532,7 @@ class Comments extends TikiLib {
 
 	    $result = $this->query($query, 
 		    array( $object[0], $object[1], $now, $userName,
-		    $title, $data, $hash, $parentId, $type,
+		    $title, $data, $hash, (int) $parentId, $type,
 		    $summary, $smiley, $_SERVER["REMOTE_ADDR"],
 		    $message_id, $in_reply_to )
 		    );
@@ -1552,9 +1552,9 @@ class Comments extends TikiLib {
     function remove_comment($threadId) {
 	$query = "delete from `tiki_comments` where `threadId`=? or parentId=?";
 
-	$result = $this->query($query, array( $threadId, $threadId ) );
+	$result = $this->query($query, array( (int) $threadId, (int) $threadId ) );
 	$query = "delete from `tiki_forum_attachments` where `threadId`=?";
-	$this->query($query, array( $threadId ) );
+	$this->query($query, array( (int) $threadId ) );
 	$this->remove_reported($threadId);
 	return true;
     }
@@ -1590,7 +1590,7 @@ class Comments extends TikiLib {
 
 	// Get the user that posted the comment being voted
 	$query = "select `userName` from `tiki_comments` where `threadId`=?";
-	$comment_user = $this->getOne($query, array( $threadId ) );
+	$comment_user = $this->getOne($query, array( (int) $threadId ) );
 
 	if ($comment_user && ($comment_user == $user)) {
 	    // The user is voting a comment posted by himself then bail out
