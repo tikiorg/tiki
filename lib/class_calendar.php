@@ -165,17 +165,17 @@ class Calendar {
   function getDisplayMatrix($d,$m,$y) {
     $dw=$this->dayOfWeek(1,$m,$y);
     $cu=$this->daysInMonth($m,$y);
+    $hd=date('d');
+    $hm=date('m'); 
+    $hy=date('Y');
     //Inicializo la matriz horrible...
     for($i=0;$i<42;$i++) {
       $mat[$i]='  ';
     }
     for($j=0;$j<$cu;$j++) {
      $v=$j+1;
-     $hd=date('d');
-     $hm=date('m'); 
-     $hy=date('Y');
      $mat[$j+($dw-1)]="$v";
-     if($v==$d) {
+     if ($hm==$m && $hy==$y && $hd==$v) {
        $mat[$j+($dw-1)]='+'.$mat[$j+($dw-1)].'';
      }
     }
@@ -191,9 +191,6 @@ class Calendar {
     }
     for($j=0;$j<$cu;$j++) {
      $v=$j+1;
-     $hd=date('d');
-     $hm=date('m'); 
-     $hy=date('Y');
      $mat[$j+($dw-1)]="$v";
     }
     return $mat;
