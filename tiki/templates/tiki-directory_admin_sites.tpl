@@ -63,9 +63,15 @@
     <td class="formcolor">{tr}Country{/tr}:</td>
     <td class="formcolor">
       <select name="country">
-        {section name=ux loop=$countries}
-        <option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
+        <option value="None" {if $country eq "None"}selected="selected"{/if}>{tr}None{/tr}</option>
+        <option value="Other" {if $country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
+        {sortlinks}
+	{section name=ux loop=$flags}
+	{if $flags[ux] ne "Other" and $flags[ux] ne "None"}
+        <option value="{$flags[ux]|escape}" {if $info.country eq $flags[ux]}selected="selected"{/if}>{tr}{$flags[ux]}{/tr}</option>
+	{/if}
         {/section}
+	{/sortlinks}
       </select>
     </td>
   </tr>
