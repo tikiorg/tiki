@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision: 
-$Revision: 1.4 $
+$Revision: 1.5 $
 
 lastmodif:
-$Date: 2004-10-07 01:16:00 $
+$Date: 2004-10-07 06:17:21 $
 
 files: 
 thirdparty/sample:tiki-mailman.php tiki-mailman.php
@@ -32,6 +32,7 @@ exectue the list_lists mailman command. You can use visudo and add
 
 configuration:
 Domain name,domain,$HTTP_HOST
+Mailing-list server name,mldomain,lists.$HTTP_HOST
 
 sql-install:
 DELETE FROM `tiki_integrator_reps` where `repID`=42;
