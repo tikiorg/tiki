@@ -42,10 +42,10 @@
 <td class="{cycle advance=false}">{$cal.customlanguages}</td>
 <td class="{cycle advance=false}">{$cal.custompriorities}</td>
 <td class="{cycle}">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
+   &nbsp;&nbsp;<a title="{tr}delete{/tr} class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this calendar?{/tr}')" 
-title="Click here to delete this calendar"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="Click here to delete this calendar"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/foreach}
