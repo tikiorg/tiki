@@ -38,6 +38,7 @@
     <select name="event">
       <option value="user_registers">{tr}A user registers{/tr}</option>
       <option value="article_submitted">{tr}A user submits an article{/tr}</option>
+      <option value="wiki_page_changes">{tr}Any wiki page is changed{/tr}</option>
     </select>
     </td>
 </tr> 

@@ -1726,7 +1726,7 @@ class TikiLib {
 
 	// Now remove comments
 	$object = $type . $id;
-	$query = "delete from `tiki_comments` where `object`='?'
+	$query = "delete from `tiki_comments` where `object`=?
 	and `objectType` = ?";
 	$result = $this->query($query, array( $id, $type ));
 	// Remove individual permissions for this object if they exist
@@ -3697,6 +3697,12 @@ class TikiLib {
     }
 
     function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '') {
+	global $smarty;
+	global $dbTiki;
+	global $notificationlib;
+	global $sender_email;
+	include_once ('lib/notifications/notificationlib.php');
+
 	// Collect pages before modifying data
 	$pages = $this->get_pages($data);
 
@@ -3745,6 +3751,25 @@ class TikiLib {
 			$ip,
 			$comment
 			));
+	}
+
+	$emails = $notificationlib->get_mail_events('wiki_page_changes', '*');
+
+	foreach ($emails as $email) {
+	    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+
+	    $smarty->assign('mail_page', $name);
+	    $smarty->assign('mail_date', date("U"));
+	    $smarty->assign('mail_user', $user);
+	    $smarty->assign('mail_comment', $comment);
+	    $smarty->assign('mail_last_version', 1);
+	    $smarty->assign('mail_data', $data);
+	    $foo = parse_url($_SERVER["REQUEST_URI"]);
+	    $machine = httpPrefix(). dirname( $foo["path"] );
+	    $smarty->assign('mail_machine', $machine);
+	    $smarty->assign('mail_pagedata', $data);
+	    $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
+	    @mail($email, tra('Wiki page'). ' ' . $name . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 	}
 
 	return true;
@@ -5069,7 +5094,6 @@ class TikiLib {
 
 	    // Update the pages table with the new version of this page
 
-	    //$edit_data = addslashes($edit_data);
 	    $emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName);
 
 	    foreach ($emails as $email) {
@@ -5082,7 +5106,7 @@ class TikiLib {
 		$smarty->assign('mail_last_version', $version);
 		$smarty->assign('mail_data', $edit_data);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = httpPrefix(). $foo["path"];
+		$machine = httpPrefix(). dirname( $foo["path"] );
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_pagedata', $edit_data);
 		$mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
@@ -5104,7 +5128,7 @@ class TikiLib {
 		    $smarty->assign('mail_data', $edit_data);
 		    $smarty->assign('mail_hash', $not['hash']);
 		    $foo = parse_url($_SERVER["REQUEST_URI"]);
-		    $machine = httpPrefix(). $foo["path"];
+		    $machine = httpPrefix(). dirname( $foo["path"] );
 		    $smarty->assign('mail_machine', $machine);
 		    $parts = explode('/', $foo['path']);
 
