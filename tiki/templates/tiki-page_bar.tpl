@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.32 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.33 2004-06-07 20:59:14 sylvieg Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -125,6 +125,10 @@
     </div>
   </td>
   {/if}{* attachments *}
+
+  {if $feature_multilingual eq 'y'}
+     <td><div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></div></td>
+  {/if}
 
 {/if}
 

@@ -22,7 +22,6 @@ class MultilingualLib extends TikiLib {
 		$srcTrads = $this->getTrads($type, $srcId);
 		$objTrads = $this->getTrads($type, $objId);
 		if (!$srcTrads && !$objTrads) {
-echo "EEEE";
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`lang`) values (?,?,?)";
 			$this->query($query, array($type, $srcId, $srcLang));
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,last_insert_id(),?)";
@@ -30,20 +29,30 @@ echo "EEEE";
 			return  null;
 		}
 		elseif (!$srcTrads) {
-echo "RRRR";
+			if ($this->exist($objTrads, $srcLang))
+					return "alreadyTrad";
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
 			$this->query($query, array($type, $srcId, $objTrads[0]['traId'], $srcLang));
 			return null;
 		}
 		elseif (!$objTrads) {
-echo "GGG";
+			if ($this->exist($srcTrads, $objLang))
+					return "alreadyTrad";
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
 			$this->query($query, array($type, $objId, $srcTrads[0]['traId'], $objLang));
 			return null;
 		}
+		elseif  ($srcTrads[0]['traId'] == $objTrads[0]['traId']) {
+			return "alreadySet";
+		}
 		else {
-echo "TODO";
-			return "TODO";
+			foreach ($srcTrads as $t) {
+				if ($this->exist($objTrads, $t['lang']))
+					return "alreadyTrad";
+			}
+			$query = "update `tiki_translated_objects`set `traId`=? where `tradId`=?";
+			$this->query = $this->query($query, array($srcTrads[0]['traId'], $objTrads[0]['traId']));
+			return null;
 		}
 	}
 
@@ -56,18 +65,11 @@ echo "TODO";
 	}
 
 	/** @brief get the translation in a language of an object if exists
-	 * @param objLang searched object language, if null return tradId
 	 * @return array(objId, traId)
 	 */
-	function getTranslation($type, $srcId, $objLang = null) {
-		if ($objLang) {
-			$query = "select t2.`objId`, t2.`traId` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and  t1.`objId`=? and t2.`lang`=?";
-			return $this->getOne($query, array($type, $srcId, $objLang));
-		}
-		else {
-			$query = "select `traId` from `tiki_translated_objects`where `type`=? and `objId`=?";
-			return $this->getOne($query, array($type, $srcId));
-		}
+	function getTranslation($type, $srcId) {
+		$query = "select t2.`objId`, t2.`traId` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and  t1.`objId`=? and t2.`lang`=?";
+		return $this->getOne($query, array($type, $srcId, $objLang));
 	}
 
 	function getTrads($type, $objId) {
@@ -131,10 +133,20 @@ echo "TODO";
 
 	/* @brief: detach one translation
 	 */
-	function deleteTranslation($type, $objId) {
+	function detachTranslation($type, $objId) {
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
 		$this->query($query,array($type, $objId));
 //@@a faire si 1 obj
+	}
+	
+	/* @brief : test si lang exists in a tab of langs
+	 */
+	function exist($tab, $lang) {
+		foreach ($tab as $t) {
+			if ($t['lang'] == $lang)
+				return true;
+		}
+		return false;
 	}
 }
 $multilinguallib = new MultilingualLib($dbTiki);
