@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.32 2003-11-26 01:04:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.33 2003-12-04 21:36:05 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.32 2003-11-26 01:04:25 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.33 2003-12-04 21:36:05 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -220,16 +220,57 @@ if (isset($_REQUEST['kill'])) {
 	die;
 }
 
+if (isset($_REQUEST['install_app'])) {
+	include_once ('lib/pclzip.lib.php');
+	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
+	// Read Archive contents
+	$ziplist = $archive->listContent();
+
+	if ($ziplist) {
+		for ($i = 0; $i < sizeof($ziplist); $i++) {
+			$file = $ziplist["$i"]["filename"];
+			//print "$file";
+			//print "<br>";
+		}
+	}
+/*
+*/
+	if ($archive->extract() == 0) {
+		die("Error : ".$archive->errorInfo(true));
+	}
+	else {
+		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
+	}
+	//die;
+}
+
+if (isset($_REQUEST['remove_app'])) {
+	include_once ('lib/pclzip.lib.php');
+	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
+	// Read Archive contents
+	$ziplist = $archive->listContent();
+
+	if ($ziplist) {
+		for ($i = 0; $i < sizeof($ziplist); $i++) {
+			$file = $ziplist["$i"]["filename"];
+			unlink($file);
+			print "$file";
+			print "<br>";
+		}
+	}
+	//die;
+}
+
 $smarty = new Smarty_TikiWiki();
 //$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('style', 'default.css');
-$smarty->assign('mid', 'tiki-install.tpl');
+$smarty->assign('mid', 'tiki-install-dh.tpl');
 
 $tiki_version = '1.8';
 $smarty->assign('tiki_version', $tiki_version);
 
-// Avalible DB Servers
+// Available DB Servers
 /*
 $dbservers = array(
 	"Mysql 3.X" => "mysql3",
@@ -593,6 +634,30 @@ while ($file = readdir($h)) {
 closedir ($h);
 $smarty->assign('files', $files);
 
+//Load applications
+// the applications are only mysql-safe at this time, so make other DB's only show the default, which is empty
+if ($db_tiki == "mysql") {
+	$apps = array();
+	$h = opendir('app_repos/');
+
+	while ($file = readdir($h)) {
+		if (strstr($file, '.zip')) {
+			// Assign the filename of the apps to the name field
+			$app1 = array("name" => $file);
+			$app1["desc"] = basename($file,".zip");
+			// Assign the record to the apps array
+			$apps[] = $app1;
+		}
+	}
+
+	closedir ($h);
+	sort($apps);
+} else {
+	$app1 = array("name" => "_default.prf");
+	$apps[] = $app1;
+}
+$smarty->assign('apps', $apps);
+
 // If no admin account then allow the creation of an admin account
 if (!$noadmin && $admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
 	if ($_REQUEST['pass1'] == $_REQUEST['pass2']) {
@@ -668,8 +733,7 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 	if (isset($_REQUEST['scratch'])) {
 		process_sql_file ('tiki-' . $dbversion_tiki . "-" . $db_tiki . '.sql',$db_tiki);
 
-		$smarty->assign('dbdone', 'y');
-		if (isset($_REQUEST['profile'])) {
+		$smarty->assign('dbdone', 'y'); if (isset($_REQUEST['profile'])) {
 			process_sql_file ('profiles/' . $_REQUEST['profile'],$db_tiki);
 			//$profile = $_REQUEST['profile'];
 			//print "Profile: $profile";
