@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.26 2004-10-18 22:31:29 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.27 2004-12-07 09:26:49 gunnarre Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -71,6 +71,9 @@ PRIMARY KEY ( id )
 
 # added on 2004-9-2 sylvie
 ALTER TABLE tiki_mailin_accounts add column (discard_after varchar(255) default NULL);
+
+# added on 2004-12-7 gunnarre
+ALTER TABLE tiki_mailin_accounts add column (attachments char(1) NOT NULL default 'n');
 
 # added on 2004-09-14
 # polls enhancement
