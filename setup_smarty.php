@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.12 2004-01-15 22:12:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.13 2004-01-15 22:16:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,7 +53,7 @@ class Smarty_TikiWiki extends Smarty {
 		global $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("styles/$style_base/".$params['smarty_include_tpl_file'])) {
+			if (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
 				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
 			}
 		}
@@ -64,7 +64,7 @@ class Smarty_TikiWiki extends Smarty {
 		global $language, $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("styles/$style_base/$_smarty_tpl_file")) {
+			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
