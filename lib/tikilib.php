@@ -7810,6 +7810,42 @@ function parse_data($data)
     }
     
     //unset($smc);
+    
+    
+    // New syntax for tables
+    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+     $maxcols = 1;
+      $cols = array();
+      for($i = 0; $i < count($tables[0]); $i++) {
+        $rows = explode('||', $tables[0][$i]);
+        $col[$i] = array();
+        for ($j = 0; $j < count($rows); $j++) {
+          $cols[$i][$j] = explode('|', $rows[$j]);
+          if (count($cols[$i][$j]) > $maxcols)
+            $maxcols = count($cols[$i][$j]);
+        }
+      }
+      for ($i = 0; $i < count($tables[0]); $i++) {
+        $repl = '<table class="wikitable" border="1">';
+        for ($j = 0; $j < count($cols[$i]); $j++) {
+          $ncols = count($cols[$i][$j]);
+          if ($ncols == 1 && !$cols[$i][$j][0])
+            continue;
+          $repl .= '<tr>';
+          for ($k = 0; $k < $ncols; $k++) {
+            $repl .= '<td';
+            if ($k == $ncols - 1 && $ncols < $maxcols)
+              $repl .= ' colspan=' . ($maxcols-$k);
+            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+          }
+          $repl.='</tr>';
+        }
+        $repl.='</table>';
+        $data = str_replace($tables[0][$i],$repl,$data);
+      }
+    }
+
+
 
 
     // Now search for images uploaded by users
@@ -8074,39 +8110,6 @@ function parse_data($data)
     $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
 
 
-
-    // New syntax for tables
-    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
-     $maxcols = 1;
-      $cols = array();
-      for($i = 0; $i < count($tables[0]); $i++) {
-        $rows = explode('||', $tables[0][$i]);
-        $col[$i] = array();
-        for ($j = 0; $j < count($rows); $j++) {
-          $cols[$i][$j] = explode('|', $rows[$j]);
-          if (count($cols[$i][$j]) > $maxcols)
-            $maxcols = count($cols[$i][$j]);
-        }
-      }
-      for ($i = 0; $i < count($tables[0]); $i++) {
-        $repl = '<table border=1>';
-        for ($j = 0; $j < count($cols[$i]); $j++) {
-          $ncols = count($cols[$i][$j]);
-          if ($ncols == 1 && !$cols[$i][$j][0])
-            continue;
-          $repl .= '<tr>';
-          for ($k = 0; $k < $ncols; $k++) {
-            $repl .= '<td';
-            if ($k == $ncols - 1 && $ncols < $maxcols)
-              $repl .= ' colspan=' . ($maxcols-$k);
-            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
-          }
-          $repl.='</tr>';
-        }
-        $repl.='</table>';
-        $data = str_replace($tables[0][$i],$repl,$data);
-      }
-    }
 
 
     // tables
