@@ -6,13 +6,12 @@
 <h1>{tr}Edit{/tr}: {$page}</h1>
 {if $page eq 'SandBox'}
 <div class="wikitext">
-{tr}The SandBox is a page where you can practice your editing skills, use the preview feature
-to preview the appeareance of the page, no versions are stored for this page.{/tr}
+{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
 <table class="normal">
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
 {assign var=area_name value="editwiki"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
@@ -20,7 +19,7 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 {include file=categorize.tpl}
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
-<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Apply template{/tr}:</td><td class="formcolor">
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
@@ -30,7 +29,7 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 </td></tr>
 {/if}
 {if $feature_smileys eq 'y'}
-<tr><td class="formcolor">{tr}Smileys{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Smileys{/tr}:</td><td class="formcolor">
 <table>
      <tr>
           <td><a href="javascript:setSomeElement('editwiki','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
@@ -62,14 +61,14 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 </tr>
 {/if}
 <!--<a class="link" href="javascript:setSomeElement('editwiki',"''text here''");">i</a>-->
-<tr><td class="formcolor">{tr}edit{/tr}</td><td class="formcolor">
+{if $feature_wiki_description}
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="description" value="{$description}" /></td>
+{/if}
+<tr><td class="formcolor">{tr}Edit{/tr}:</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
 </td>
-{if $feature_wiki_description}
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="50" class="wikitext" name="description" value="{$description}" /></td>
-{/if}
 {if $page ne 'SandBox'}
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="50" class="wikitext" name="comment" value="{$commentdata}" /></td>
+<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="comment" value="{$commentdata}" /></td>
 {/if}
 {if $tiki_p_use_HTML eq 'y'}
 <tr><td class="formcolor">{tr}Allow HTML{/tr}: </td><td class="formcolor"><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
@@ -78,7 +77,7 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 {if $tiki_p_admin_wiki eq 'y'}
-<tr><td class="formcolor">{tr}Import page{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 <input name="userfile1" type="file">
 <a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="linkbut">{tr}export all versions{/tr}</a>
