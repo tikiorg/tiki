@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.58 2003-08-07 20:56:53 zaufi Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.59 2003-08-10 14:52:04 sylvieg Exp $*}
 
 
 <div class="box">
@@ -79,7 +79,7 @@
      &nbsp;<a href="tiki-usermenu.php" class="linkmenu">{tr}User menu{/tr}</a><br />    
   {/if}
   {if $feature_minical eq 'y'}
-     &nbsp;<a href="tiki-minical.php" class="linkmenu">{tr}Calendar{/tr}</a><br />    
+     &nbsp;<a href="tiki-minical.php" class="linkmenu">{tr}Mini Calendar{/tr}</a><br />    
   {/if}
   {if $feature_user_watches eq 'y'}
     &nbsp;<a href="tiki-user_watches.php" class="linkmenu">{tr}My watches{/tr}</a><br />      
