@@ -2119,5 +2119,7 @@ from Admin->General
 "1 month" => "1 month",
 "You will receive an email with your password soon" => "You will receive an email with your password soon",
 "Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
+"Batch upload (CSV file)" => "Batch upload (CSV file)",
+"Overwrite" => "Overwrite",
 "##end###" => "###end###");
 ?>

@@ -150,9 +150,12 @@ if(isset($_REQUEST["game"])) {
  $gamelib->add_game_hit($_REQUEST["game"]);
  $game = $_REQUEST["game"];
  $parts=explode('.',$game);
- $source='games/flash/'.implode('.',Array($parts[0],$parts[1]));
- $smarty->assign('source',$source);
- $smarty->assign('play','y');
+ if ($parts[0]>0)
+ {
+   $source='games/flash/'.implode('.',Array($parts[0],$parts[1]));
+   $smarty->assign('source',$source);
+   $smarty->assign('play','y');
+ }
 }
 
 $section='games';

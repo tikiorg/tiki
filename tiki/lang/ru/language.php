@@ -2065,7 +2065,7 @@ from Admin->General
 "Must enter a url to add a site" => "Следует ввести ссылку, чтобы добавить сайт",
 "Must select a category" => "Следует выбрать категорию",
 "You can not download files" => "Вы не можете скачивать файлы",
-"Invalid email address. You must enter a valid email address" => "Неверный адрес e-mail. Пожалуйста введите настоящий работающий адрес e-mail.",
+"Invalid email address. You must enter a valid email address" => "Неверный адрес email. Пожалуйста введите настоящий работающий адрес email.",
 "No site indicated" => "Сайт не указан",
 "Must enter a name to add a site" => "Следует ввести название, чтобы добавить сайт",
 "URL already added to the directory. Duplicate site?" => "Ссылка уже добавлена в каталог. Вы вводите дубликат?",
@@ -2125,5 +2125,7 @@ from Admin->General
 "1 month" => "1 month",
 "You will receive an email with your password soon" => "You will receive an email with your password soon",
 "Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
+"Batch upload (CSV file)" => "Batch upload (CSV file)",
+"Overwrite" => "Overwrite",
 "##end###" => "###end###");
 ?>
