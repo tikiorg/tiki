@@ -40,7 +40,7 @@ class CcLib extends UsersLib {
 		return $info;
 	}
 
-	function get_ledgers($offset=0,$max=-1,$sort_mode='last_tr_date_desc',$user=false,$cc=false,$app='y') {
+	function get_ledgers($offset=0,$max=-1,$sort_mode='last_tr_date_desc',$user=false,$cc=false,$app=false) {
 		$query = 'select * from `cc_ledger`';
 		$query_cant = 'select count(*) from `cc_ledger`';
 		$bindvars = $mid = array();
@@ -52,9 +52,15 @@ class CcLib extends UsersLib {
 			$mid[] = "`cc_id`=?";
 			$bindvars[] = $cc;
 		}
-		$mid[] = "`approved`=?";
-		$bindvars[] = $app;
-		$mid = " where ". implode(' and ',$mid);
+		if ($approved) {
+			$mid[] = "`approved`=?";
+			$bindvars[] = $app;
+		}
+		if (count($mid)) {
+			$mid = " where ". implode(' and ',$mid);
+		} else {
+			$mid = '';
+		}
 		$order = " order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
@@ -104,9 +110,9 @@ class CcLib extends UsersLib {
 		return $retval;
 	}
 
-	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false) {
+	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false,$app=false) {
 		$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
-		$query_cant = 'select count(*) from `cc_cc` as cc';
+		$query_cant = 'select count(*) from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
 		$bindvars = $mid = array();
 		if ($find) {
 			$mid[] = "cc.`cc_name`=?";
@@ -120,18 +126,17 @@ class CcLib extends UsersLib {
 			$mid[] = "cc.`listed`=?";
 			$bindvars[] = 'y';
 		}
-		$midc = $mid;
-		$bindvarsc = $bindvars;
-		$midc[] = "ccl.`approved`=?";
-		$bindvarsc[] = 'y';
+		if ($app) {
+			$mid[] = "ccl.`approved`=?";
+			$bindvars[] = 'y';
+		}
 		$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
 		if (count($mid)) {
 			$mid = " where ". implode(' and ',$mid);
 		} else {
 			$mid = '';
 		}
-		$midc = " where ". implode(' and ',$midc);
-		$result = $this->query($query.$midc.$order,$bindvarsc,$max,$offset);	
+		$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -256,6 +261,11 @@ class CcLib extends UsersLib {
 	function unregister_cc($cc,$user) {
 		$query = "update `cc_ledger` set `approved`=? where `acct_id`=? and `cc_id`=?";
 		$this->query($query,array('c',$user,$cc));
+	}
+
+	function moderate_cc($cc,$user,$app) {
+		$query = "update `cc_ledger` set `approved`=? where `acct_id`=? and `cc_id`=?";
+		$this->query($query,array($app,$user,$cc));
 	}
 
 	function record_transaction($cc,$type,$from_user,$to_user,$amount,$item,$date=false) {

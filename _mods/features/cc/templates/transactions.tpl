@@ -37,7 +37,7 @@ $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}date{/tr}</a
 {else}
 <td></td><td align=right>{$thelist[i].amount}</td>
 {/if}
-<td align=right>{$thelist[i].cc_id}</td>
+<td align=right><a href="cc.php?page=currencies&amp;cc_id={$thelist[i].cc_id}&amp;view=1">{$thelist[i].cc_id}</a></td>
 <td align=right>{$thelist[i].balance}</td>
 </tr>
 {sectionelse}

@@ -30,8 +30,10 @@ if ($user) {
 		if ($page == 'ledgers' and $tiki_p_cc_admin == 'y') {
 			if (isset($_REQUEST['cc_id'])) {
 				$thelist = $cclib->get_ledgers(0,-1,$sort_mode,false,$_REQUEST['cc_id']);
+				$smarty->assign("ccid",$_REQUEST['cc_id']);
 			} else {
 				$thelist = $cclib->get_ledgers(0,-1,$sort_mode);
+				$smarty->assign("ccid",false);
 			}
 		} else {
 			$thelist = $cclib->get_ledgers(0,-1,$sort_mode,$user);
@@ -132,9 +134,14 @@ if ($user) {
 		if (isset($_REQUEST['cc_id'])) {
 			$info = $cclib->get_currency($_REQUEST['cc_id']);
 			if (isset($_REQUEST['view'])) {
-				$population = $cclib->get_ledgers(0,-1,'acct_id_desc',false,$_REQUEST['cc_id']);
+				if ($tiki_p_cc_admin == 'y' or $info['owner_id'] == $user or (!isset($info['owner_id']))) {
+					if (isset($_REQUEST['app']) and isset($_REQUEST['who'])) {
+						$cclib->moderate_cc($_REQUEST['cc_id'],$_REQUEST['who'],$_REQUEST['app']);
+					}
+					$population = $cclib->get_ledgers(0,-1,'acct_id_desc',false,$_REQUEST['cc_id']);
+					$smarty->assign('population', $population['data']);
+				}
 				$smarty->assign('info', $info);
-				$smarty->assign('population', $population['data']);
 				$mid = "cc/currency_admin.tpl";
 			} elseif ($tiki_p_cc_admin == 'y' or $info['owner_id'] == $user or (!isset($info['owner_id']) and $tiki_p_cc_create == 'y')) {
 				if (isset($_REQUEST['cc_name'])) {
