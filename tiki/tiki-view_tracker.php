@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.29 2004-01-27 18:36:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.30 2004-01-28 10:45:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,7 +88,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	} elseif ($fields["data"][$i]["type"] == 'e') {
 		include_once('lib/categories/categlib.php');
 		$k = $ins_fields["data"][$i]["options"];
-		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+		$ins_fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 	
 	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {

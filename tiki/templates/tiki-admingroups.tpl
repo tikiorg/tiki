@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.35 2004-01-28 04:55:45 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.36 2004-01-28 10:45:08 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -214,9 +214,17 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 {assign var=fca value=$fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><tt>{if $fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
+{assign var=fcat value=$iu.categId }
+<td width="50%" nowrap="nowrap">
+{if $fields[ix].cat.$fcat eq 'y'}
+<tt>X&nbsp;</tt><b>{$iu.name}</b></td>
+{else}
+<tt>&nbsp;&nbsp;</tt><s>{$iu.name}</s></td>
+{/if}
+{cycle name=$fca}
 {/foreach}
-</table></td></tr>
+</tr></table></td></tr>
+
 
 {elseif $fields[ix].type eq 'c'}
 {$fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
