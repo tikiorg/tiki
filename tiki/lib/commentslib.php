@@ -1082,6 +1082,12 @@ class Comments extends TikiLib {
 	return $cant;
     }
 
+    function count_comments_threads($objectId) {
+    	$object = explode( ":", $objectId, 2);
+	$query = "select count(*) from `tiki_comments` where `objectType`=? and `object`=? and `parentId`=0";
+	$cant = $this->getOne($query, $object );
+	return $cant;
+    }
     function get_comment_replies($id, $sort_mode, $offset, $max, $threshold = 0) {
 	$query = "select
 	`threadId`,`title`,`userName`,`points`,`commentDate`,`parentId`
