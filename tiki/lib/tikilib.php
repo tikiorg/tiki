@@ -165,6 +165,7 @@ class TikiLib {
   {
     global $userlib;
   	$object=addslashes($object);
+    $title=addslashes($title);
   	$hash=md5(uniqid('.'));
   	$email = $userlib->get_user_email($user);
   	$query = "replace into tiki_user_watches(user,event,object,email,hash,type,title,url)
