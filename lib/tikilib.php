@@ -8228,9 +8228,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     preg_match_all("/\(\(($page_regex)\|([^\)]+)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
       if($desc = $this->page_exists_desc($pages[1][$i])) {
-        $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[2][$i]."</a>";
+        $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[5][$i]."</a>";
       } else {
-        $repl = $pages[2][$i]."<a href='tiki-editpage.php?page=".$pages[1][$i]."' class='wiki'>?</a>";
+        $repl = $pages[5][$i]."<a href='tiki-editpage.php?page=".$pages[1][$i]."' class='wiki'>?</a>";
       } 
       
       $pattern = "/\(\(".$pages[0][$i]."\)\)/";
