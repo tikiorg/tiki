@@ -271,7 +271,7 @@ class UsersLib extends TikiLib {
 				// see if we can create a new account
 				if ($create_tiki) {
 					// need to make this better! *********************************************************
-					$result = $this->create_user_tiki($user, $pass);
+					$result = $this->add_user($user, $pass, '');
 
 					// if it worked ok, just log in
 					if ($result == USER_VALID)
