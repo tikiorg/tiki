@@ -3847,7 +3847,7 @@ function parse_data($data) {
 		// Check is timeout expired?
 		if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
 		    // Append small 'new' image. TODO: possible 'updated' image more suitable...
-		    $repl .= '&nbsp;<img src="img/icons/new.gif" border="0">';
+		    $repl .= '&nbsp;<img src="img/icons/new.gif" border="0" />';
 	    } else {
 		$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
 

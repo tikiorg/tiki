@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.9 2003-11-14 22:09:52 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.10 2003-11-19 00:35:58 gongo Exp $ *}
 
 <div align="center">
    <form action="tiki-map.phtml" method="get">
@@ -102,7 +102,7 @@
 		  {if $layer_download[j] eq "T"}
 		  <small>
 		  <a href="tiki-map_download.phtml?mapfile={$mapfile}&layer={$my_layers[j]->name}">
-		  <img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}">
+		  <img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" />
 		  </a>
 		  </small>
 		  {/if}

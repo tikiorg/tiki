@@ -1476,7 +1476,7 @@ class HAW_deck
     Activates the device simulator on bigscreen browsers.
     This function requires an image of your favorite device, which must be
     sliced into five JPG files as the figure shows.<br>
-    <img src="set_sim_device.gif" alt="set_sim_device" align="right">
+    <img src="set_sim_device.gif" alt="set_sim_device" align="right"/>
     These five subimages MUST be named:
     <ul>
     <li>top.jpg</li>
@@ -1651,9 +1651,9 @@ class HAW_deck
         {
           // create customized device simulator table layout
           echo "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n";
-          printf("<tr><td colspan=\"3\"><img src=\"%s/top.jpg\"></td></tr>\n",
+          printf("<tr><td colspan=\"3\"><img src=\"%s/top.jpg\" /></td></tr>\n",
                   $this->sim_device);
-          printf("<tr><td valign=\"top\"><img src=\"%s/left.jpg\"></td>\n",
+          printf("<tr><td valign=\"top\"><img src=\"%s/left.jpg\" /></td>\n",
                   $this->sim_device);
           printf("<td width=\"%d\" height=\"%d\" background=\"%s/display.jpg\" valign=\"top\">\n",
                   $this->simdev_width, $this->simdev_height, $this->sim_device);
@@ -1937,9 +1937,9 @@ class HAW_deck
         if ($this->td_scroll && $this->sim_device)
         {
           // display lower part of customized device simulator
-          printf("<td valign=\"top\"><img src=\"%s/right.jpg\"></td></tr>\n",
+          printf("<td valign=\"top\"><img src=\"%s/right.jpg\" /></td></tr>\n",
                   $this->sim_device);
-          printf("<tr><td colspan=\"3\"><img src=\"%s/bottom.jpg\"></td>\n",
+          printf("<tr><td colspan=\"3\"><img src=\"%s/bottom.jpg\" /></td>\n",
                   $this->sim_device);
         }
         elseif ($this->td_scroll && $this->use_simulator)
@@ -2809,7 +2809,7 @@ class HAW_image
       else
         $icon = "";
 
-      $content = sprintf("<img src=\"%s\" alt=\"%s\"%s>\n",
+      $content = sprintf("<img src=\"%s\" alt=\"%s\"%s />\n",
                          $this->src_bmp,
                          HAW_specchar($this->alt, $deck), $icon);
 
@@ -2844,7 +2844,7 @@ class HAW_image
         {
           // use HTML bitmap
 
-          printf("<img src=\"%s\" alt=\"%s\">\n",
+          printf("<img src=\"%s\" alt=\"%s\" />\n",
                  $this->src_html, HAW_specchar($this->alt, $deck));
         }
 
@@ -5457,7 +5457,7 @@ class HAW_banner
       // prepare this variable only if size info available
       $size = sprintf(" width=%d height=%d", $this->width, $this->height);
 
-    printf("<img src=\"%s\" alt=\"%s\"%s hspace=10 vspace=10 border=0>",
+    printf("<img src=\"%s\" alt=\"%s\"%s hspace=10 vspace=10 border=0 />",
            $this->image, $this->alt, $size);
 
     if ($this->url != HAW_NOLINK)

@@ -22,7 +22,7 @@
  *                     is environment variable DOCUMENT_ROOT
  *
  * Examples: {html_image file="images/masthead.gif"}
- * Output:   <img src="images/masthead.gif" border=0 width=400 height=23>
+ * Output:   <img src="images/masthead.gif" border=0 width=400 height=23 />
  * @link http://smarty.php.net/manual/en/language.function.html.image.php {html_image}
  *      (Smarty online manual)
  * @author   Monte Ohrt <monte@ispi.net>
