@@ -22,6 +22,38 @@ class TikiLib {
   }
   
   /* Webmails */
+  function replace_webmail_message($current,$user,$msgid)   {
+    $query = "select count(*) from tiki_webmail_messages where accountId=$current and mailId=$msgid and user='$user'";
+    
+    if($this->db->getOne($query)==0) {
+      $query = "insert into tiki_webmail_messages(accountId,mailId,user,isRead,isFlagged,isReplied)
+                values($current,$msgid,'$user','n','n','n')";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);          	
+    }
+  }
+  
+  function set_mail_flag($current,$user,$msgid,$flag,$value)
+  {
+    $query = "update tiki_webmail_messages set $flag='$value' where accountId=$current and mailId=$msgid and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    return true;
+    
+  }
+  
+  function get_mail_flags($current,$user,$msgid) 
+  {
+    $query = "select isRead,isFlagged,isReplied from tiki_webmail_messages where accountId=$current and mailId=$msgid and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    if(!$result->numRows()) {
+      return Array('n','n','n');	
+    }
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return Array($res["isRead"],$res["isFlagged"],$res["isReplied"]);
+  }
+  
   function current_webmail_account($user,$accountId)
   {
     $query = "update tiki_user_mail_accounts set current='n' where user='$user'";
