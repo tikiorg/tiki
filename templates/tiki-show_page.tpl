@@ -57,6 +57,7 @@
 </div>
 {/if}{$parsed}
 {if $pages > 1}
+	<br/>
 	<div align="center">
 		<a href="tiki-index.php?page={$page}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
 
