@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-09-08 19:51:52 $
+# $Date: 2004-09-14 10:37:53 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3862,7 +3862,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
@@ -3901,6 +3900,16 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_newsreader', 'Can use the newsreader', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_notepad', 'Can use the notepad', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_comment', 'Can add coments to polls', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_item_comment', 'Can add comments to poll items', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_admin', 'Admin has all polls perms', 'admin', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_create', 'Can create new polls', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_edit', 'Can modify polls', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_item_submit', 'Can propose new poll items', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_submit', 'Can propose new polls', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view', 'Can view polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_comments', 'Can view polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_submissions', 'Can browse polls submissions', 'registered', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_comments', 'Can post new comments', 'registered', 'comments');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_shoutbox', 'Can post messages in shoutbox', 'basic', 'shoutbox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_article', 'Can read articles', 'basic', 'cms');
@@ -3962,7 +3971,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_wiki_history', 'Can view wiki page history', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
@@ -4176,6 +4185,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phplayers','n')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_item_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
