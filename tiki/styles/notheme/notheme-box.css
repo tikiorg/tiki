@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.10 2003-10-20 01:16:55 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.11 2003-11-07 23:49:06 zaufi Exp $
  *
  */
 
@@ -80,7 +80,9 @@ div.cbox {
 	border-bottom: 2px outset ThreeDShadow;
 	border-right: 2px outset ThreeDShadow;
 }
-
+div.wikitext div.cbox {
+    margin: 0px;
+}
 div.cbox#error-box {
 	margin: 20px;
 	margin-top: 120px;
@@ -105,6 +107,7 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data table {
     width: 100%;
+    border: 1px solid red;
 }
 
 /* When modules display a list of items each item is enclosed

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/doxygen.css,v 1.1 2003-10-13 13:38:58 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/doxygen.css,v 1.2 2003-11-07 23:49:06 zaufi Exp $
  *
  */
 
@@ -57,9 +57,9 @@ div.integrated-page td.mdescRight {
     font-size: small;
 }
 
-div.integrated-page span.keyword       { color: #008000 }
+div.integrated-page span.keyword       { color: #0000b0 }
 div.integrated-page span.keywordtype   { color: #604020 }
-div.integrated-page span.keywordflow   { color: #e08000 }
+div.integrated-page span.keywordflow   { color: #0000b0; font-weight: bold; }
 div.integrated-page span.comment       { color: #800000 }
 div.integrated-page span.preprocessor  { color: #806020 }
 div.integrated-page span.stringliteral { color: #002080 }

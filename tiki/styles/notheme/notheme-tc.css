@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.7 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.8 2003-11-07 23:49:06 zaufi Exp $
  *
  */
 
@@ -73,4 +73,7 @@ div#tiki-center {
 	padding-left: 2px;
 	padding-right: 2px;
 	width: auto;
+}
+div#tiki-center > table {
+    width: 100%;
 }
