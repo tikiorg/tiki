@@ -562,7 +562,8 @@ function list_trackers($offset, $maxRecords, $sort_mode, $find) {
 
 		$list = array();
 		while ($res = $result->fetchRow()) {
-			// Tracker fields are automatically counted when adding/removing fields to trackers
+			$qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
+			$res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
 			$ret[] = $res;
 			$list[$res['trackerId']] = $res['name'];
 		}
