@@ -5587,16 +5587,16 @@ function list_languages($path = false) {
     return $this->format_language_list($languages);
 }
 
+// Comparison function used to sort languages by their name in the
+// current locale.
+function formatted_language_compare($a, $b) {
+    return strcmp($a['name'], $b['name']);
+    }
+
 // Returns a list of languages formatted as a twodimensionel array
 // with 'value' being the language code and 'name' being the name of
 // the language.
 function format_language_list($languages) {
-
-    // Comparison function used to sort languages by their name in the
-    // current locale.
-    function formatted_language_compare($a, $b) {
-	return strcmp($a['name'], $b['name']);
-    }
 
     // The list of available languages so far with both English and
     // translated names.

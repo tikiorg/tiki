@@ -11,7 +11,6 @@ if(isset($_GET['language'])) {
 	$language = $_GET['language'];
 	if($feature_userPreferences == 'y' && $user && $change_language == 'y')  {
 		$tikilib->set_user_preference($user, 'language', $language);
-	echo "eeee";
 	}
 	else
 		$_SESSION["language"] = $language;
