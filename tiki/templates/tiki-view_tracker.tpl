@@ -102,13 +102,13 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<td  class="heading"width="5%">{tr}coms{/tr}</td>
+<td class="heading" width="5%">{tr}coms{/tr}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-<td  class="heading"width="5%">{tr}atts{/tr}</td>
+<td class="heading" width="5%">{tr}atts{/tr}</td>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td  class="heading"width="5%">&nbsp;</td>
+<td class="heading" width="5%">&nbsp;</td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
