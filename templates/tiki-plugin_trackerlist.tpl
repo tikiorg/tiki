@@ -8,10 +8,10 @@
 {if $tr_initial and $initials[ini] eq $tr_initial}
 <span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
 {else}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}" class="prevnext">{$initials[ini]}</a> . 
+<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={$initials[ini]}{if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{$initials[ini]}</a> . 
 {/if}
 {/section}
-<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}" class="prevnext">{tr}All{/tr}</a>
+<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}tr_initial={if $tr_sort_mode}&amp;tr_sort_mode={$tr_sort_mode}{/if}&amp;tr_offset=0" class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
