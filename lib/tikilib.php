@@ -5588,7 +5588,7 @@ class TikiLib extends TikiDB {
 			    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
 			}
 
-			function list_languages($path = false) {
+			function list_languages($path = false, $short=null) {
 			    $languages = array();
 
 			    if (!$path)
@@ -5608,7 +5608,7 @@ class TikiLib extends TikiDB {
 			    closedir ($h);
 
 			    // Format and return the list
-			    return $this->format_language_list($languages);
+			    return $this->format_language_list($languages, $short);
 			}
 
 			function list_styles() {
@@ -5657,11 +5657,11 @@ class TikiLib extends TikiDB {
 			function formatted_language_compare($a, $b) {
 			    return strcmp($a['name'], $b['name']);
 			}
-
 			// Returns a list of languages formatted as a twodimensionel array
 			// with 'value' being the language code and 'name' being the name of
 			// the language.
-			function format_language_list($languages) {
+			// if $short is 'y' returns only the localized language names array
+			function format_language_list($languages, $short=null) {
 			    // The list of available languages so far with both English and
 			    // translated names.
 			    global $langmapping;
@@ -5669,6 +5669,15 @@ class TikiLib extends TikiDB {
 			    $formatted = array();
 
 			    // run through all the language codes:
+				if (isset($short) && $short == "y") {
+					foreach ($languages as $lc) {
+						if (isset($langmapping[$lc]))
+							$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
+						else
+							$formatted[] = array('value' => $lc, 'name' => $lc);
+					}
+					return $formatted;
+				}
 			    foreach ($languages as $lc) {
 				if (isset($langmapping[$lc])) {
 				    // known language
