@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.42 2003-12-28 06:52:04 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.43 2003-12-30 13:24:04 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.42 2003-12-28 06:52:04 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.43 2003-12-30 13:24:04 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -181,7 +181,7 @@ $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('style', 'default.css');
 $smarty->assign('mid', 'tiki-install.tpl');
 
-$tiki_version = '1.8';
+$tiki_version = '1.9';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
