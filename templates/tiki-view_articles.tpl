@@ -31,11 +31,7 @@
 <table  cellpadding="0" cellspacing="0">
 <tr>
 {if $art_view_img eq 'y'}
-{if $listpages[ix].isfloat eq 'n'}
-<td  valign="top">
-{else}
 <td valign="top">
-{/if}
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
 <img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/>
