@@ -1,4 +1,3 @@
-<<<<<<< mail.php
 <?php
 /* TikiMail class
  *

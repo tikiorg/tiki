@@ -23,6 +23,7 @@ $langmapping = array(
     'hr' => array(  'Hrvatski',     tra("Croatian")   ),
     'it' => array(  'Italiano',     tra("Italian")      ),
     'ja' => array(  '日本語',    tra("Japanese")     ),
+    'ko' => array(  '한국말',    tra("Korean")     ),
     'nl' => array(  'Nederlands',   tra("Dutch")        ),
     'no' => array(  'Norwegian',    tra("Norwegian")    ),
     'pl' => array(  'Polish',       tra("Polish")       ),
