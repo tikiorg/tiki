@@ -18,17 +18,19 @@
 <tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url}" /></td></tr>
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td><td class="formcolor">
 <select name="refresh">
-<option value="1" {if $refresh eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+<option value="1" {if $minutes eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
 <option value="5" {if $refresh eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
 <option value="10" {if $refresh eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
 <option value="15" {if $refresh eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
 <option value="20" {if $refresh eq 1200}selected="selected"{/if}>20 {tr}minutes{/tr}</option>
 <option value="30" {if $refresh eq 1800}selected="selected"{/if}>30 {tr}minutes{/tr}</option>
-<option value="45" {if $refresh eq 4500}selected="selected"{/if}>45 {tr}minutes{/tr}</option>
-<option value="60" {if $refresh eq 6000}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-<option value="90" {if $refresh eq 9000}selected="selected"{/if}>1.5 {tr}hours{/tr}</option>
-<option value="120" {if $refresh eq 12000}selected="selected"{/if}>2 {tr}hours{/tr}</option>
-<option value="144" {if $refresh eq 14400}selected="selected"{/if}>1 {tr}day{/tr}</option>
+<option value="45" {if $refresh eq 2700}selected="selected"{/if}>45 {tr}minutes{/tr}</option>
+<option value="60" {if $refresh eq 3600}selected{/if}>1 {tr}hour{/tr}</option>
+<option value="90" {if $refresh eq 5400}selected="selected"{/if}>1.5 {tr}hours{/tr}</option>
+<option value="120" {if $refresh eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
+<option value="360" {if $refresh eq 21600}selected="selected"{/if}>6 {tr}hours{/tr}</option>
+<option value="720" {if $refresh eq 43200}selected="selected"{/if}>12 {tr}hours{/tr}</option>
+<option value="1440" {if $refresh eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
 </select>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
