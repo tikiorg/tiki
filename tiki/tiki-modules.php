@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.16 2003-08-11 18:32:10 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.17 2003-09-29 20:09:59 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,7 +58,9 @@ for ($i = 0; $i < count($left_modules); $i++) {
 	}
 
 	if ($pass == 'y') {
-		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.cache';
+		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
+// The cache name depending on the language is a quick fix
+// the cache is here to avoid calls to consumming queries, but a module is different for each language because of the strings
 
 		$phpfile = 'modules/mod-' . $r["name"] . '.php';
 		$template = 'modules/mod-' . $r["name"] . '.tpl';
@@ -141,7 +143,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
 	}
 
 	if ($pass == 'y') {
-		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.cache';
+		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 
 		$phpfile = 'modules/mod-' . $r["name"] . '.php';
 		$template = 'modules/mod-' . $r["name"] . '.tpl';
