@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.1 2004-02-28 03:47:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.2 2004-03-31 09:53:20 mose Exp $
 
 class LogsLib extends TikiLib {
 	
@@ -25,7 +25,7 @@ class LogsLib extends TikiLib {
 		if (!$time) {
 			$time = date("U");
 		}
-		$query = "insert into `tiki_systemlog` (`logtype`,`logmessage`,`loguser`,`logip`,`logclient`,`logtime`) values (?,?,?,?)";
+		$query = "insert into `tiki_systemlog` (`logtype`,`logmessage`,`loguser`,`logip`,`logclient`,`logtime`) values (?,?,?,?,?,?)";
 		$result = $this->query($query,array($type,$message,$who,$ip,$client,(int)$time));
 	}
 
