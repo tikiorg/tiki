@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.1 2004-01-06 12:31:10 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.2 2004-05-03 04:21:10 lfagundes Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -59,6 +59,11 @@
 		{/section}
 	  </select>
 	{/if}
+
+        {if $wiki_feature_3d eq 'y'}
+          <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
+        {/if}
+
 	{if count($showstructs) ne 0}
 	  <select name="page" onchange="go(this)">
 	    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>

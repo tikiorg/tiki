@@ -13,6 +13,10 @@
 <a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page}" class="linkbuttop">{tr}backlinks{/tr}</a>
 {/if}
 
+{if $wiki_feature_3d eq 'y'}
+<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})" class="linkbuttop">{tr}3d browser{/tr}</a>
+{/if}
+
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page}" class="linkbuttop">{tr}print{/tr}</a>
 
 {if $feature_wiki_pdf eq 'y'}

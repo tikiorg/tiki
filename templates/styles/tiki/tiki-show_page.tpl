@@ -5,6 +5,10 @@
 <span class="tabbut"><a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}" class="tablink">{tr}backlinks{/tr}</a></span>
 {/if}
 
+{if $wiki_feature_3d eq 'y'}
+<span class="tabbut"><a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})">{tr}3d browser{/tr}</a></span>
+{/if}
+
 {if $cached_page eq 'y'}
 <span class="tabbut"><a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="tablink">{tr}refresh{/tr}</a></span>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.67 2004-03-27 21:24:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.68 2004-05-03 04:21:08 lfagundes Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -62,6 +62,11 @@
       </form>
       </td>
 	{/if}
+
+        {if $wiki_feature_3d eq 'y'}
+          <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
+        {/if}
+
 	{if count($showstructs) > 1}
   	  <td style="text-align:right;">
       <form action="tiki-index.php" method="post">
