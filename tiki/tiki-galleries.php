@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.35 2004-09-28 12:59:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.36 2004-10-07 23:01:23 telenieko Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,7 +307,7 @@ if (isset($_REQUEST["make_map"])) {
 		if ($_REQUEST["galleryId"] > 0) {
 			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
 
-			if ($tiki_p_admin ne 'y' || !$user || $info["user"] != $user) {
+			if ($tiki_p_admin != 'y' || !$user || $info["user"] != $user) {
 				$smarty->assign('msg', tra("Permission denied you cannot make the map of this gallery"));
 
 				$smarty->display("error.tpl");
