@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.30 2004-03-27 21:24:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.31 2004-04-09 19:36:31 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -124,6 +124,7 @@
             <option value="0" {if $error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
             <option value="2047" {if $error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
             <option value="2039" {if $error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
+		<option value="1" {if $error_reporting_level eq 1}selected="selected"{/if}>{tr}Report PHP errors only for admin{/tr}</option>
             </select>
       </td>
       </tr>
@@ -234,14 +235,8 @@
       </tr><tr>
         <td class="form"><label for="general-send_email">{tr}Sender Email{/tr}:</label></td>
         <td><input type="text" name="sender_email" id="general-send_email" value="{$sender_email|escape}" size="50" /></td>
-      </tr><tr>
-<!--        <td class="form"><label for="general-encoding">{tr}Email Encoding{/tr}:</label></td>
-        <td><select name="email_encoding" id="general-encoding">
-                  <option value="utf-8" {if $email_encoding != "iso-8859-1"}selected="selected"{/if}>utf-8</option>
-                  <option value="iso-8859-1"{if $email_encoding == "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
-        </select></td>
-      </tr><tr>
--->
+      </tr>
+      <tr>
         <td class="form"><label for="general-contact">{tr}Contact user{/tr}:</label></td>
         <td>{if $feature_contact eq 'y'}
               <input type="text" name="contact_user" id="general-contact" value="{$contact_user|escape}" size="40" />
