@@ -148,14 +148,24 @@
 {/if}
 {/if}
 
+
 {if $print_page ne 'y'}
-{if $show_page eq 'y'}
-<span class="tabbut">
-{if $comments_cant > 0}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
-{else}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
-{/if}
+{* don't show comments if feature disabled or not enough rights *}
+{if $feature_wiki_comments == 'y'
+&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0)
+||  $tiki_p_post_comments  == 'y'
+||  $tiki_p_edit_comments  == 'y')}
+  <span class="tabbut">
+  <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink"{if $comments_cant != 0}  style="background: #FFAAAA"{/if}>
+	{if $comments_cant == 0}
+          {tr}add comment{/tr}
+        {elseif $comments_cant == 1}
+          {tr}1 comment{/tr}
+        {else}
+          {$comments_cant} {tr}comments{/tr}
+        {/if}
+  </a>
+  </span>
 {/if}
 {/if}
 
