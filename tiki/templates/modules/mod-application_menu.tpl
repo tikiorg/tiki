@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.92 2004-02-24 21:52:00 wolff_borg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.93 2004-03-01 17:21:28 damosoft Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -558,6 +558,7 @@
     {/if}
     {if $feature_shoutbox eq 'y' and $tiki_p_admin_shoutbox eq 'y'}
       &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_shoutbox_words.php" class="linkmenu">{tr}Shoutbox Words{/tr}</a><br />
     {/if}
     {if $feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br />

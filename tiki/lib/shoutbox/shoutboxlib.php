@@ -93,6 +93,50 @@ class ShoutboxLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
+
+        function get_bad_words($offset = 0, $maxRecords = -1, $sort_mode = 'word_asc', $find = '') {
+
+                if ($find) {
+                        $findesc = "%$find%";
+			$mid = " where `word` like ?";
+                        $bindvars = array($findesc);
+                } else {
+                        $mid = '';
+                        $bindvars = array();
+                }
+
+                $query = "select * from `tiki_shoutbox_words` $mid order by ".$this->convert_sortmode($sort_mode);
+                $query_cant = "select count(*) from `tiki_shoutbox_words` $mid";
+                $result = $this->query($query,$bindvars,$maxRecords,$offset);
+                $cant = $this->getOne($query_cant,$bindvars);
+                $ret = array();
+
+                while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+                        $ret[] = $res;
+                }
+
+                $retval = array();
+                $retval["data"] = $ret;
+                $retval["cant"] = $cant;
+                return $retval;
+        }
+
+        function add_bad_word($word) {
+                $word = addslashes($word);
+
+                $query = "delete from `tiki_shoutbox_words` where `word`=?";
+                $result = $this->query($query,array($word));
+                $query = "insert into `tiki_shoutbox_words` (`word`) values(?)";
+                $result = $this->query($query,array($word));
+                return true;
+        }
+
+        function remove_bad_word($word) {
+                $query = "delete from `tiki_shoutbox_words` where `word`=?";
+                $result = $this->query($query,array($word));
+        }
+
+
 }
 
 $shoutboxlib = new ShoutboxLib($dbTiki);
