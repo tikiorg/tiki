@@ -4431,11 +4431,10 @@ class TikiLib extends TikiDB {
 	// This protects ))word((, I think?
 	$data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
 
-	// This should be *MUCH* lower down (and, in fact, it already was). --rlpowell
 	// reinsert hash-replaced links into page
-	//foreach ($noparsedlinks as $np) {
-	//    $data = str_replace($np["key"], $np["data"], $data);
-	//}
+	foreach ($noparsedlinks as $np) {
+	    $data = str_replace($np["key"], $np["data"], $data);
+	}
 
 	// TODO: I think this is 1. just wrong and 2. not needed here? remove it?
 	// Replace ))Words((
