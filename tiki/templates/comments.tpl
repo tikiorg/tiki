@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.36 2004-03-19 21:03:12 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.37 2004-03-21 19:22:08 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -126,11 +126,10 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this co
   	<td class="even">
   		{$comments_coms[com].parsed}
   		<br /><br />
-  		[<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comments_coms[com].threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}&amp;post_reply=1#threadId{$comments_coms[com].threadId}">{tr}reply{/tr}</a>
+  		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comments_coms[com].threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}&amp;post_reply=1#threadId{$comments_coms[com].threadId}">{tr}reply{/tr}</a>
   		{if $comments_parentId > 0}
-  			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}#threadId{$comments_coms[com].parentId}">{tr}parent{/tr}</a>
+  			<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}#threadId{$comments_coms[com].parentId}">{tr}parent{/tr}</a>
   		{/if}
-  		]
   		{if $comments_coms[com].replies > 0}
   			<br />
   			<ul>
