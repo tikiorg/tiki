@@ -33,7 +33,7 @@ function sendPage($params) {
  $pp=$params->getParam(3); $pageName=$pp->scalarval();
  $pp=$params->getParam(4); $data=$pp->scalarval();
  $pp=$params->getParam(5); $comment=$pp->scalarval();
- 
+ $pp=$params->getParam(6); $description=$pp->scalarval(); 
  // 
  if(!$userlib->validate_user($username,$password,'','')) {
    return new xmlrpcresp(0, 101, "Invalid username or password");
@@ -46,7 +46,7 @@ function sendPage($params) {
  // Store the page in the tiki_received_pages_table
  $data = base64_decode($data);
  
- $tikilib->receive_page($pageName,$data,$comment,$site,$username);
+ $tikilib->receive_page($pageName,$data,$comment,$site,$username,$description);
  /*
  if () {                                 
      return new xmlrpcresp(new xmlrpcval(1,"boolean"));

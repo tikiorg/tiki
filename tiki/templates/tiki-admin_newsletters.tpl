@@ -1,5 +1,6 @@
 <a class="pagetitle" href="tiki-admin_newsletters.php">Admin newsletters</a><br/><br/>
 [<a class="link" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
+|<a class="link" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
 ]<br/><br/>
 <h2>{tr}Create/edit newsletters{/tr}</h2>
 {if $individual eq 'y'}
@@ -51,13 +52,13 @@
 <td class="{cycle advance=false}">{$channels[user].nlId}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
-<td class="{cycle advance=false}">{$channels[user].users}</td>
+<td class="{cycle advance=false}">{$channels[user].users} ({$channels[user].confirmed})</td>
 <td class="{cycle advance=false}">{$channels[user].editions}</td>
 <td class="{cycle advance=false}">{$channels[user].lastSent|date_format:"%a %d of %b [%H:%M]"}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].nlId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-admin_newsletter_subscriptions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}">{tr}subscriptions{/tr}</a>
+   <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}">{tr}subscriptions{/tr}</a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=newsletter%20{$channels[user].name}&amp;objectType=newsletter&amp;permType=newsletters&amp;objectId={$channels[user].nlId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 </td>
 </tr>

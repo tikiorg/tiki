@@ -25,6 +25,11 @@ if($_REQUEST["templateId"]) {
   } else {
     $info["section_wiki"]='n';
   }
+  if($tikilib->template_is_in_section($_REQUEST["templateId"],'newsletters')) {
+    $info["section_newsletters"]='y';
+  } else {
+    $info["section_newsletters"]='n';
+  }
   if($tikilib->template_is_in_section($_REQUEST["templateId"],'cms')) {
     $info["section_cms"]='y';
   } else {
@@ -37,6 +42,7 @@ if($_REQUEST["templateId"]) {
   $info["section_cms"]='n';
   $info["section_html"]='n';
   $info["section_wiki"]='n';
+  $info["section_newsletters"]='n';
 }
 $smarty->assign('info',$info);
 
@@ -67,6 +73,11 @@ if(isset($_REQUEST["preview"])) {
   }  else {
      $info["section_wiki"]='n';
   }
+  if(isset($_REQUEST["section_newsletters"])&&$_REQUEST["section_newsletters"]=='on') {
+     $info["section_newsletters"]='y';
+  }  else {
+     $info["section_newsletters"]='n';
+  }
   if(isset($_REQUEST["section_cms"])&&$_REQUEST["section_cms"]=='on') {
     $info["section_cms"]='y';
   }  else {
@@ -85,6 +96,7 @@ if(isset($_REQUEST["save"])) {
   $info["content"]='';
   $info["section_cms"]='n';
   $info["section_wiki"]='n';
+  $info["section_newsletters"]='n';
   $info["section_html"]='n';
   if(isset($_REQUEST["section_html"])&&$_REQUEST["section_html"]=='on') {
      $tikilib->add_template_to_section($tid,'html');
@@ -96,6 +108,11 @@ if(isset($_REQUEST["save"])) {
     $tikilib->add_template_to_section($tid,'wiki');
   }  else {
     $tikilib->remove_template_from_section($tid,'wiki');
+  }
+  if(isset($_REQUEST["section_newsletters"])&&$_REQUEST["section_newsletters"]=='on') {
+    $tikilib->add_template_to_section($tid,'newsletters');
+  }  else {
+    $tikilib->remove_template_from_section($tid,'newsletters');
   }
   if(isset($_REQUEST["section_cms"])&&$_REQUEST["section_cms"]=='on') {
     $tikilib->add_template_to_section($tid,'cms');

@@ -138,7 +138,7 @@ if(empty($info["user"])) {
   $info["user"]='anonymous';  
 }
 $smarty->assign_by_ref('lastUser',$info["user"]);
-
+$smarty->assign_by_ref('description',$info["description"]);
 /*
 // force enable wiki comments (for development)
 $feature_wiki_comments = 'y';

@@ -50,10 +50,14 @@ if($_REQUEST["nlId"]) {
   $info["allowAnySub"]='n';
   $info["frequency"]=7*24*60*60;
 }
-$smarty->assign('info',$info);
+$smarty->assign('nl_info',$info);
 
 if(isset($_REQUEST["remove"])) {
   $nllib->remove_newsletter_subscription($_REQUEST["remove"],$_REQUEST["email"]);
+}
+
+if(isset($_REQUEST["add_all"])) {
+  $nllib->add_all_users($_REQUEST["nlId"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -61,7 +65,7 @@ if(isset($_REQUEST["save"])) {
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'created_desc'; 
+  $sort_mode = 'subscribed_desc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 

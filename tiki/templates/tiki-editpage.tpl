@@ -65,6 +65,9 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 <tr><td class="formcolor">{tr}edit{/tr}</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
 </td>
+{if $feature_wiki_description}
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="50" class="wikitext" name="description" value="{$description}" /></td>
+{/if}
 {if $page ne 'SandBox'}
 <tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="50" class="wikitext" name="comment" value="{$commentdata}" /></td>
 {/if}

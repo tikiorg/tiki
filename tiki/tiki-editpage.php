@@ -62,6 +62,11 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
       $version=urldecode($part["version"]);
       $author=urldecode($part["author"]);
       $lastmodified=$part["lastmodified"];
+      if(isset($part["description"])) {
+          $description = $part["description"];
+        } else {
+          $description = '';
+        }
       $authorid=urldecode($part["author_id"]);
       if(isset($part["hits"])) $hits=urldecode($part["hits"]); else $hits=0;
       $ex=substr($part["body"],0,25);
@@ -69,10 +74,10 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
       $msg='';
       if(isset($_REQUEST["save"])) {
         if($tikilib->page_exists($pagename)) {
-          $tikilib->update_page($pagename,$part["body"],tra('page imported'),$author,$authorid);
+          $tikilib->update_page($pagename,$part["body"],tra('page imported'),$author,$authorid,$description);
         } else {
   
-          $tikilib->create_page($pagename,$hits,$part["body"],$lastmodified,tra('created from import'),$author,$authorid);
+          $tikilib->create_page($pagename,$hits,$part["body"],$lastmodified,tra('created from import'),$author,$authorid,$description);
         }
       } else {
         $_REQUEST["edit"]=$last_part;
@@ -209,6 +214,17 @@ $smarty->assign('commentdata','');
 if(isset($_REQUEST["comment"])) {
   $smarty->assign_by_ref('commentdata',$_REQUEST["comment"]); 
 }
+if(isset($info["description"])) {
+  $smarty->assign('description',$info["description"]);
+  $description=$info["description"];
+} else {
+  $smarty->assign('description','');
+  $description = '';
+}
+if(isset($_REQUEST["description"])) {
+  $smarty->assign_by_ref('description',$_REQUEST["description"]);
+  $description = $_REQUEST["description"];
+}
 if(isset($_REQUEST["allowhtml"])) {
   if($_REQUEST["allowhtml"] == "on") {
     $smarty->assign('allowhtml','y');
@@ -281,11 +297,11 @@ if(isset($_REQUEST["save"])) {
     $links = $tikilib->get_links($_REQUEST["edit"]);
     $tikilib->cache_links($links);
     $t = date("U");
-    $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"]);  
+    $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
   } else {
     $links = $tikilib->get_links($edit);
     $tikilib->cache_links($links);
-    $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"]);
+    $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
   }
   
   $cat_type='wiki page';
