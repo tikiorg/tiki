@@ -1,0 +1,21 @@
+contributor:
+$Author: mose $
+
+revision: 
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-10-03 03:08:07 $
+
+files: 
+wiki-plugins/ebay/wiki-plugins/wikiplugin_ebay.php lib/wiki-plugins/wikiplugin_ebay.php
+
+author:
+Damosoft
+
+licence:
+GNU/LGPL
+
+Description: 
+Currently only works with ebay.co.uk
+
