@@ -1575,6 +1575,27 @@ function get_categoryobjects($catids) {
     return $out;
 }
 
+/** shared used in mod-last_category_objects 
+ */
+function last_category_objects($categId, $maxRecords, $type="") {
+	$mid = "and tbl1.`categId`=?";
+	$bindvars = array((int)$categId);
+	if ($type) {
+		$mid.= " and tbl2.`type`=?";
+		$bindvars[] = $type;
+	}
+	$sort_mode = "created_desc";
+	$query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
+	$query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+	$result = $this->query($query,$bindvars,$maxRecords,0);
+
+	$ret = array('data'=>array());
+	while ($res = $result->fetchRow()) {
+		$ret['data'][] = $res;
+	}
+	return $ret;
+}
+
 /*shared*/
 function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
     $bindvars = array();
@@ -3816,9 +3837,11 @@ function parse_data($data) {
     global $feature_wikiwords;
 
     // Process pre_handlers here
+		if (is_array($this->pre_handlers)) {
     foreach ($this->pre_handlers as $handler) {
   $data = $handler($data);
     }
+		}
 
     // Handle pre- and no-parse sections and plugins
     $preparsed = array();
