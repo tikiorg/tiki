@@ -10,6 +10,24 @@ class ChartLib extends TikiLib {
     $this->db = $db;  
   }
   
+  function add_chart_hit($chartId)
+  {
+    $query = "update tiki_charts set hits=hits+1 where chartId=$chartId";
+    $this->query($query);
+  }
+  
+  function clear_chart_votes($chartId)
+  {
+    $query = "update tiki_chart_items set votes=0, average=0, points=0 where chartId=$chartId";
+    $this->query($query);
+  }
+  
+  function remove_chart_rankings($chartId)
+  {
+	$query = "delete from tiki_charts_rankings where chartId=$chartId";
+	$this->query($query);  
+  }
+  
   function user_vote($user,$itemId,$points=0)
   {
     $chartId=$this->getOne("select chartId from tiki_chart_items where itemId=$itemId");
@@ -51,7 +69,7 @@ class ChartLib extends TikiLib {
     $info = $this->get_chart($chartId);
     // Now just loop the items table and get the topN
     $topN=$info['topN'];
-    $query = "select * from tiki_chart_items order by average limit 0,$topN";
+    $query = "select * from tiki_chart_items order by average desc limit 0,$topN";
     $result = $this->query($query);
     $position=1;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -61,8 +79,10 @@ class ChartLib extends TikiLib {
       } else {
         $lastPosition = 0;
       }
-      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period,timestamp)
-      values($chartId,$itemId,$position,$lastPosition,$newPeriod,$now)";
+      $rvotes = $res['votes'];
+      $raverage = $res['average'];
+      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period,timestamp,rvotes,raverage)
+      values($chartId,$itemId,$position,$lastPosition,$newPeriod,$now,$rvotes,$raverage)";
       $this->query($query2);
       $position++;
     }
@@ -81,7 +101,7 @@ class ChartLib extends TikiLib {
   function get_ranking($chartId,$period) 
   {
   	global $user;
-    $query = "select tcr.rvotes,tcr.raverage,tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
+    $query = "select tcr.timestamp,tcr.rvotes,tcr.raverage,tci.itemId,tci.title,tci.URL,tci.votes,tci.points,tci.average,tcr.position,tcr.lastPosition from tiki_charts_rankings tcr,tiki_chart_items tci where tcr.itemId = tci.itemId and tcr.chartId=$chartId and period=$period order by position asc";
     $result = $this->query($query);
 	$ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
@@ -199,12 +219,11 @@ class ChartLib extends TikiLib {
     $TABLE_NAME = 'tiki_charts';
     $now = date("U");
     $vars['created']=$now;
-    
     foreach($vars as $key=>$value)
     {
       $vars[$key]=addslashes($value);
     }
-  
+    unset($vars['hits']);
     if($chartId) {
       // update mode
       $first = true;
@@ -219,6 +238,7 @@ class ChartLib extends TikiLib {
       $this->query($query);
     } else {
       unset($vars['chartId']);
+      $vars['hist']=0;
       // insert mode
       $first = true;
       $query = "insert into $TABLE_NAME(";
@@ -301,6 +321,9 @@ class ChartLib extends TikiLib {
   {
     $query = "delete from tiki_charts where chartId=$chartId";
     $this->query($query);  	
+    $this->remove_chart_rankings($chartId);
+    $query = "delete from tiki_chart_items where chartId=$chartId";
+    $this->query($query);
   }
 
   function remove_chart_item($itemId)

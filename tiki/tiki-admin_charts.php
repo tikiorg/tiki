@@ -60,6 +60,7 @@ if(isset($_REQUEST['save'])) {
     $_REQUEST['useCookies']=isset($_REQUEST['useCookies'])?'y':'n';
     $_REQUEST['lastChart']=0;
     $_REQUEST['created']=date("U");
+    $_REQUEST['hits']=0;
 	foreach(array_keys($info) as $key) {
 	  $vars[$key] = $_REQUEST[$key];
 	}

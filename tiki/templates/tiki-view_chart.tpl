@@ -1,4 +1,5 @@
-<a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a>
+<a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a><br/>
+<small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
 <br/><br/>
 {if strlen($chart_info.description)}
 {$chart_info.description}<br/><br/><br/>
@@ -8,14 +9,15 @@
 <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='img/icons/ico_olist.gif' border='0' alt='{tr}edit items{/tr}' title='{tr}edit items{/tr}' /></a>
 {/if}
 <a href="tiki-charts.php"><img src='img/icons/ico_table.gif' border='0' alt='{tr}list charts{/tr}' title='{tr}list charts{/tr}' /></a>
+<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}lat chart{/tr}' /></a>
 {if $chart_info.frequency > 0}
     <br/>
 	{if $prevPeriod > 0}
-	Prev
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}"><img border='0' src='img/icons/toleft.gif' alt='{tr}previous chart{/tr}' title='{tr}previous chart{/tr}' ></a>
 	{/if}
-	{tr}Chart created{/tr}:{$chart_info.lastChart|tiki_long_datetime}
+	<b>{tr}Chart created{/tr}: {$items[0].timestamp|tiki_long_datetime}</b>
 	{if $nextPeriod > 0}
-	Next
+	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$nextPeriod}"><img border='0' src='img/icons/toright.gif' alt='{tr}next chart{/tr}' title='{tr}next chart{/tr}' ></a>
 	{/if}
 {/if}
 <table class="normal">
@@ -41,7 +43,7 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].perm}</td>
 	<td class="{cycle advance=false}"><a class="link" target="_new" href="{$items[ix].URL}">{$items[ix].title}</a>
 	{if $items[ix].dif ne 'new' and $items[ix].dif eq $max_dif}
-		<img src='img/icons/cool.gif' alt='{tr}cool{/tr}' />
+		<img src='img/icons/popular.gif' alt='{tr}cool{/tr}' />
 	{/if}
 	</td>
 	<td style="text-align:right;" class="{cycle advance=false}">
@@ -49,9 +51,9 @@
 	    <img src='img/icons/new.gif' border='0' alt='{tr}new{/tr}' />	
 	{else}
 		{if $items[ix].dif eq $max_dif}
-			{$items[ix].dif}!
+			{if $items[ix].dif > 0}+{/if}{$items[ix].dif}
 		{else}
-			{$items[ix].dif}
+			{if $items[ix].dif > 0}+{/if}{$items[ix].dif}
 		{/if}
 	{/if}
 	
@@ -79,3 +81,23 @@
 {if $chart_info.frequency > 0 }
 <small>{tr}Next chart will be generated on{/tr}: {$next_chart|tiki_long_datetime}</small>
 {/if}
+<h4>{tr}View or vote items not listed in the chart{/tr}</h4>
+<table>
+<tr>
+<td>
+<form method="post">
+{tr}find{/tr}: <input type="text" name="find" value="{$smarty.request.find}" />
+<input type="submit" name="findb" value="{tr}find{/tr}" />
+</form>
+</td>
+<td>
+<form method="post" action="tiki-view_chart_item.php">
+<select name="itemId">
+{section name=ix loop=$all_items}
+<option value="{$all_items[ix].itemId}">{$all_items[ix].title}</option>
+{/section}
+</select>
+</form>
+</td>
+</tr>
+</table>

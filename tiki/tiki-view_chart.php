@@ -17,12 +17,12 @@ if(!isset($_REQUEST['chartId'])) {
 $chart_info = $chartlib->get_chart($_REQUEST["chartId"]);
 $smarty->assign_by_ref('chart_info',$chart_info);
 
-$smarty->assign('next_chart',$chart_info['lastChart']+($chart_info['frequency']*24*60*60));
+$smarty->assign('next_chart',$chart_info['lastChart']+($chart_info['frequency']));
 
 // Regenerate the ranking if no ranking is found or if
 // the last ranking is too old for the frequency
 if(!$chartlib->ranking_exists($chart_info['chartId']) ||
-    ($chart_info['lastChart']+($chart_info['frequency']*24*60*60)) < $now) {
+    ($chart_info['lastChart']+($chart_info['frequency'])) < $now) {
   if($chart_info['frequency']==0) $chartlib->drop_rankings($chart_info['chartId']);  
   $chartlib->generate_new_ranking($chart_info['chartId']);    
 }
@@ -51,6 +51,8 @@ if($chart_info['frequency']) {
   }
 }
 
+$chartlib->add_chart_hit($chart_info['chartId']);
+
 // Purge user votes that are too old using voteagainafter
 $chartlib->purge_user_votes($chart_info['chartId'],$chart_info['voteAgainAfter']);
 
@@ -61,11 +63,13 @@ $smarty->assign('user_voted_chart',$user_voted_chart?'y':'n');
 // now get the ranking items
 $items = $chartlib->get_ranking($chart_info['chartId'],$_REQUEST['period']);
 $smarty->assign_by_ref('items',$items);
-
 $smarty->assign('max_dif',$chartlib->max_dif($chart_info['chartId']));
 
 $sameurl_elements = Array('offset','sort_mode','where','find','chartId');
 
+if(!isset($_REQUEST['find'])) $_REQUEST['find']='';
+$all_items = $chartlib->list_chart_items(0,-1,'title_asc',$_REQUEST['find'],"chartId=".$chart_info['chartId']);
+$smarty->assign_by_ref('all_items',$all_items['data']);
 $smarty->assign('mid','tiki-view_chart.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 ?> 

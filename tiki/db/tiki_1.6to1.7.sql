@@ -55,6 +55,7 @@ create table tiki_charts(
   chartId integer(14) not null auto_increment,
   title varchar(250),
   description text,
+  hits integer(14),
   singleItemVotes char(1),
   singleChartVotes char(1),
   suggestions char(1),
