@@ -761,10 +761,6 @@ class UsersLib extends TikiLib {
 		$query = "select * from `users_users` where `login`=?";
 		$result = $this->query($query,array($user));
 		$res = $result->fetchRow();
-		$aux = array();
-		foreach ($res as $key => $val) {
-			$aux[$key] = $val;
-		}
 		$groups = $this->get_user_groups($user);
 		$res["groups"] = $groups;
 		return $res;
