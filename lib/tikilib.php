@@ -1511,7 +1511,7 @@ class TikiLib {
   function get_user_assigned_modules($user)
   {
 
-    $query = "select * from tiki_user_assigned_modules order by position asc,ord asc";
+    $query = "select * from tiki_user_assigned_modules where user='$user' order by position asc,ord asc";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1581,7 +1581,7 @@ class TikiLib {
       // The module must not be assigned
       $isas = $this->getOne("select count(*) from tiki_user_assigned_modules where name='".$res["name"]."'");
       if(!$isas) {
-        if($res["groups"] && $modallgroups!='y') {
+        if($res["groups"] && $modallgroups!='y' && $user!='admin') {
           $groups = unserialize($res["groups"]);
           $ins = array_intersect($groups, $user_groups);
           if(count($ins)>0) {
