@@ -407,7 +407,7 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "nl":
-				$query = "select count(s.`email`) as count, max(s.`subscribed`) as day, s.`nlId` as nlId, n.`name` as name ";
+				$query = "select count(s.`email`) as count, FROM_UNIXTIME(s.`subscribed`,'%d') as d, max(s.`subscribed`) as day, s.`nlId` as nlId, n.`name` as name ";
 				$query.= " from `tiki_newsletter_subscriptions` as s left join `tiki_newsletters` as n ";
 				$query.= " on n.`nlId`=s.`nlId`  where (`subscribed`>? and `subscribed`<?) group by s.`nlId`, d";
 				$result = $this->query($query,array($tstart,$tstop));

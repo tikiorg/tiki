@@ -2183,8 +2183,8 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 
     if ($visible_only) {
 	$now = date('U');
-	$bindvars[]=$now;
-	$bindvars[]=$now;
+	$bindvars[]=(int) $now;
+	$bindvars[]=(int) $now;
 	if ($mid) {
 	    $mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
 	} else {

@@ -19,3 +19,11 @@ Disallow: /temp/
 Disallow: /tests/
 Disallow: /tikimovies/
 Disallow: tiki-install.php
+Disallow: tiki-admin
+Disallow: tiki-print.php
+Disallow: tiki-pagehistory.php
+Disallow: tiki-backlinks.php
+Disallow: tiki-user_information.php
+Disallow: tiki-likepages.php
+Disallow: tiki-register.php
+Disallow: tiki-login_scr.php
