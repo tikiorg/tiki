@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.35 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.36 2003-10-13 00:25:42 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -621,19 +621,13 @@ if (isset($_REQUEST["comments_previewComment"])) {
 if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
 {
     if ($tiki_p_admin_forum == 'y'
-	    || ($commentslib->user_can_edit_post(
-		    $user,
-		    $_REQUEST["comments_threadId"]
-		    )
-		&& $tiki_p_forum_post == 'y')
-       )
     {
 	$comments_show = 'y';
 
 	$commentslib->remove_comment($_REQUEST["comments_threadId"]);
 	$commentslib->register_remove_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
     } else { // user can't edit this post
-	$smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
+	$smarty->assign('msg', tra('Only an admin can remove a thread.'));
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

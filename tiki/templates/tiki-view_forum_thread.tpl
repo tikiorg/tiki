@@ -53,6 +53,8 @@ a moderator approves it.{/tr}</small>
 	  or ($tiki_p_forum_post eq 'y' and ($thread_info.userName == $user)) }
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_threadId={$thread_info.threadId}&amp;openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+	  {/if}
+	  {if $tiki_p_admin_forum eq 'y'}
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;comments_remove=1&amp;comments_threadId={$thread_info.threadId}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}"
 	     class="admlink"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
 	  {/if}     
