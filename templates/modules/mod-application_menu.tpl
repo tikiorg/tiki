@@ -328,6 +328,17 @@
 {/if}
 
 
+{if $feature_charts eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:setCookie('chartmenu','c');hide('chartmenu');">[-]</a> 
+  <a href="tiki-charts.php" class="separator">{tr}Charts{/tr}</a>
+  <a class='separator' href="javascript:setCookie('chartmenu','o');show('chartmenu');">[+]</a></div>
+  <div id='chartmenu' style="{$mnu_chartmenu}">
+  {if $tiki_p_admin_charts eq 'y'}
+  &nbsp;<a href="tiki-admin_charts.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or

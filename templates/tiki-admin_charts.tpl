@@ -135,6 +135,7 @@
 	<td class="{cycle advance=false}">
 		<a class="link" href="{sameurl chartId=$items[ix].chartId}">{$items[ix].title}</a>
 		[<a class="link" href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{tr}items{/tr}</a>]
+		[<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}">{tr}view{/tr}</a>]
 	</td>
 </tr>
 {sectionelse}
