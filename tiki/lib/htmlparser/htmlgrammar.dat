@@ -1156,3 +1156,21 @@ closeon="!a|!map|!area|!strong|!sup|!font|!i|!b|!u|!tt|!img|!s|!big|!small|!stri
   [ par="onkeyup" ]
   [ par="selected" single editmethod="_Translator_edit_standart_single_control"]
 >
+
+<tag="link"
+  endtag="absent"
+  pictureforedit="tags/tag_link.gif"
+  [ par=rel ]
+  [ par=rev ]
+  [ par=href ]
+  [ par=target ]
+  [ par=media ]
+  [ par=hreflang ]
+  [ par=charset ]
+  [ par=title ]
+  [ par=dir ]
+  [ par=lang ]
+  [ par=style ]
+  [ par=id ]
+  [ par=class ]
+>
