@@ -2120,14 +2120,8 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('slide_styles',$slide_styles);
 
-$languages=Array();
-$h=opendir("lang/");
-while($file=readdir($h)) {
-  if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
-    $languages[]=$file;
-  }
-}
-closedir($h);
+$languages = Array();
+$languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages',$languages);
 $smarty->assign('site_language',$tikilib->get_preference("language",'en'));
 

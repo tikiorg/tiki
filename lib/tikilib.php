@@ -3946,6 +3946,21 @@ Debug::d('get_site_date()');
     return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
   }
 
+	function list_languages($path = false) {
+		$languages=Array();
+		if (!$path) $path = "lang";
+		if (!is_dir($path)) return array();
+		$h=opendir($path);
+		while($file=readdir($h)) {
+			if($file!='.' && $file!='..' && is_dir("$path/$file") && strlen($file)==2) {
+				$languages[]=$file;
+			}
+		}
+		closedir($h);
+		sort($languages);
+		return $languages;
+	}
+
   function get_language($user = false) {
     static $language = false;
 

@@ -27,13 +27,7 @@ $smarty->assign_by_ref('languages',$languages);
 
 // Get available languages from Disk
 $languages_files=Array();
-$h=opendir("lang/");
-while($file=readdir($h)) {
-  if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
-    $languages_files[]=$file;
-  }
-}
-closedir($h);
+$languages_files = $tikilib->list_languages();
 $smarty->assign_by_ref('languages_files',$languages_files);
 
 // Save Variables
