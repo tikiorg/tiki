@@ -1,9 +1,9 @@
 <h2>{tr}Search results{/tr}:</h2>
 {tr}Search in{/tr}:
 [
-<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=all">{tr}Entire site{/tr}</a> |
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}Entire site{/tr}</a> |
 {if $feature_wiki eq 'y'}
-<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}pages{/tr}</a> |
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=wikis">{tr}wiki pages{/tr}</a> |
 {/if}
 {if $feature_galleries eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=galleries">{tr}galleries{/tr}</a> |
@@ -27,7 +27,7 @@
 {/if}
 ]
 <br/><br/>
-{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where}
+{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 <form class="forms" method="post" action="tiki-searchresults.php">
     {tr}Find{/tr}: <input id="fuser" name="words" size="14" type="text" accesskey="s" /> 
     <input type="hidden" name="where" value="{$where}" />
@@ -35,9 +35,9 @@
 </form>
 <br/><br/>
 {section  name=search loop=$results}
-<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> (Hits: {$results[search].hits})
+<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
-&nbsp;(Relevance: {$results[search].relevance})
+&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
 {/if}
 {if $results[search].type > ''}
 &nbsp;({$results[search].type})
