@@ -526,7 +526,6 @@ class Comments extends TikiLib {
 	    $sort_mode = 'commentDate_asc') {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
-		$sort_mode = 'average_asc';
 	}
 	if ($this->time_control) {
 	    $limit = time() - $this->time_control;
@@ -1056,6 +1055,8 @@ class Comments extends TikiLib {
 	    while ($res = $result->fetchRow()) {
 		// Check if this old top level thread has replies
 		$id = $res["threadId"];
+		if ($id == 0)
+			continue;	// in the case there is an error ...
 
 		$query2 = "select count(*) from `tiki_comments`
 		    where `parentId`=?";
@@ -1067,15 +1068,11 @@ class Comments extends TikiLib {
 			`threadId` = ?";
 
 		    $result3 = $this->query($query3, array( (int) $id ));
-		    // This is just to be sure
-		    $query3 = "delete from `tiki_comments` where
-			`parentId` = ?";
-		    $result3 = $this->query($query3, array( (int) $id ));
 		}
 	    }
 	}
 
-	if ($forum["usePruneOld"] == 'y') {
+	if ($forum["usePruneOld"] == 'y') { // this is very dangerous as you can delete some posts in the middle or root of a tree strucuture
 	    $maxAge = $forum["pruneMaxAge"];
 
 	    $old = date("U") - $maxAge;
@@ -1084,17 +1081,14 @@ class Comments extends TikiLib {
 	    $result = $this->query($query, array($forumId, (int) $old));
 	}
 
-	// Recalculate comments and threads
-	$query = "select count(*) from `tiki_comments` where
-	    `objectType` = 'forum' and `object`=?";
-	$comments = $this->getOne($query, array( $forumId ) );
-	$query = "select count(*) from `tiki_comments` where
-	    `objectType` = 'forum' and `object`=? and `parentId`=0";
-	$threads = $this->getOne($query, array( $forumId ));
-	$query = "update `tiki_forums` set `comments`=?, `threads`=?
-	    where `forumId`=?";
-	$result = $this->query($query, array( (int) $comments, (int) $threads,
-		    (int) $forumId) );
+	if ($forum["usePruneUnreplied"] == 'y' || $forum["usePruneOld"] == 'y') {	// Recalculate comments and threads
+		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object`=?";
+		$comments = $this->getOne($query, array( $forumId ) );
+		$query = "select count(*) from `tiki_comments` where `objectType` = 'forum' and `object`=? and `parentId`=0";
+		$threads = $this->getOne($query, array( $forumId ));
+		$query = "update `tiki_forums` set `comments`=?, `threads`=? where `forumId`=?";
+		$result = $this->query($query, array( (int) $comments, (int) $threads, (int) $forumId) );
+	}
 	return true;
     }
 
@@ -1464,11 +1458,6 @@ class Comments extends TikiLib {
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
     {
 	global $userlib;
-
-//	print "<pre>";
-//	print "In get_comments; $objectId, $parentId, $offset, $maxRecords, $sort_mode, $find, $threshold, $style, $reply_threadId.\n";
-//	print "</pre>";
-
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 	$maxRecords = $offset + $maxRecords;
 
@@ -1552,7 +1541,7 @@ class Comments extends TikiLib {
 
 //	if ($parentId > 0 && $style == 'commentStyle_threaded' && $object[0] != "forum") {
 	if ($reply_threadId > 0 && $style == 'commentStyle_threaded') {
-		$ret[] = $this->get_comment($reply_threadId);
+		$ret[] = $this->get_comments_fathers($reply_threadId, $ret);
 		$cant = 1;
 	} else {
 		$result = $this->query($query,array_merge($bind_mid,$bind_time));
@@ -1666,8 +1655,6 @@ class Comments extends TikiLib {
 	/* @brief: gets the comments of the thread and of all its fathers (ex cept first one for forum)
  	*/
 	function get_comments_fathers($threadId, $ret = null, $message_id = null) {
-		if (empty($threadId))
-			return null;
 		$com = $this->get_comment($threadId, $message_id);
 		if ($com['objectType'] == 'forum' && $com['parentId'] == 0 ) {// don't want the 1 level
 			return $ret;
@@ -1725,9 +1712,9 @@ class Comments extends TikiLib {
 
     function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '') {
 	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
-	data=?, type=?, summary=?, smiley=?
+	`data`=?, `type`=?, `summary`=?, `smiley`=?
 	    where `threadId`=?";
-	$result = $this->query($query, array( $title, $comment_rating, $data, $type,
+	$result = $this->query($query, array( $title, (int) $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
     }
 
@@ -1875,6 +1862,8 @@ class Comments extends TikiLib {
     }
 
     function remove_comment($threadId) {
+	if ($threadId == 0)
+		return false;
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
 
 	$result = $this->query($query, array( (int) $threadId, (int) $threadId ) );

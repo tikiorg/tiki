@@ -94,8 +94,8 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {if $blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}save and exit{/tr}" />
 </td></tr>
 </table>
