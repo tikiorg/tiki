@@ -4,10 +4,9 @@
 {/if}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td style="text-align:right;"  class="heading">{tr}questions{/tr}</td>
-<td style="text-align:right;"  class="heading">{tr}action{/tr}</td>
+<th><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a class="tableheading" href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></th>
+<th>{tr}questions{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -35,9 +34,8 @@ href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><img border='0
 {/if}
 {/section}
 </table>
-<br/>
-<div align="center">
-<div class="mini">
+<br />
+<div align="center" class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-list_surveys.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -46,7 +44,7 @@ href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><img border='0
 &nbsp;[<a class="prevnext" href="tiki-list_surveys.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_surveys.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -54,5 +52,3 @@ href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><img border='0
 {/section}
 {/if}
 </div>
-</div>
-
