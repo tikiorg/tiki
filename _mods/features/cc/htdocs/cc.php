@@ -1,5 +1,6 @@
 <?php
 require_once ('tiki-setup.php');
+require_once ('lib/cc/cclib.php');
 
 if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
@@ -7,11 +8,9 @@ $page = $_REQUEST['page'];
 if ($page == '') {
   $mainpage = $smarty->fetch("cc/index.tpl");
   $smarty->assign("content", $mainpage);
-
 } elseif ($page == 'help') {
   $mainpage = $smarty->fetch("cc/help.tpl");
   $smarty->assign("content", $mainpage);
-
 }
 
 if ($user) {
@@ -20,6 +19,9 @@ if ($user) {
 	$smarty->assign("ccusername", $user);
 	$smarty->assign("ccuseraccount", $user); 
 	$smarty->assign("ccuserid", $user);
+	
+	$ccuser = $cclib->user_infos($user);
+	$smarty->assign("ccuser", $ccuser);
 
 	if ($page == 'app') {
 		require_once "lib/cc/db_tr_summary.php";
@@ -133,7 +135,7 @@ if ($user) {
 			$smarty->assign("description", $transaction->tr_item);
 			$smarty->assign("amount", $transaction->tr_amount);
 			$smarty->assign("cc", $_REQUEST['cc_id']);
-			require_once ".lib/cc/db_tr_summary.php";
+			require_once "lib/cc/db_tr_summary.php";
 			$summary = new db_tr_summary();
 			$summary->setAcct($auth->id);
 			$smarty->assign("tr_summaryinfo",$summary->get());

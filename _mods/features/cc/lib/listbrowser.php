@@ -90,7 +90,7 @@ class listbrowser
 		  }
 
 		if ($dict->getFilterFields($this->tablename) != '') {
-			$str .= "<a href=\"javascript:showFilter('".$this->tablename."_filter','".$this->tablename."','".$this->page."');\">filter results</a></td></tr>";
+			$str .= "<a href=\"javascript:showFilter('".$this->tablename."_filter','".$this->tablename."','".$this->page."');\">filter results</a>";
 		}
 
 		$str .= "<TABLE>\n";
@@ -101,15 +101,12 @@ class listbrowser
 			$count++;
 			$dictrows = $dict->getFieldList($this->tablename);
 
-
 			if ($count == 1) {
 				$str .= "<TR>";
 				foreach ($dictrows as $column=>$value) {
-				   if ($dict->shouldDisplay($this->tablename,$column)) {
-					$str .= "<TH>";
-					$str .= $dict->getLabel($this->tablename,$column);
-					$str .= "</TH>";
-				   }
+				 	if ($dict->shouldDisplay($this->tablename,$column)) {
+						$str .= "<TH>". $dict->getLabel($this->tablename,$column) ."</TH>";
+				 	}
 				}
 				$str .= "</TR>\n";
 			}
@@ -119,12 +116,11 @@ class listbrowser
 			foreach ($row as $column=>$value) {
 			   if ($dict->shouldDisplay($this->tablename,$column)) {
 				   $str .= "<TD";
-				   if ($rowval == "even")
-                 	           {
-					$str .= " bgcolor='#EEEEEE' ";
+				   if ($rowval == "even") {
+						$str .= " bgcolor='#EEEEEE' ";
 				   } else {
-				       $str .= " bgcolor='#FFFFFF' ";
-				     }
+						 $str .= " bgcolor='#FFFFFF' ";
+					 }
 				   $str .= $dict->getAlign($this->tablename,$column);
 				   $str .= ">";
 
@@ -170,9 +166,9 @@ class listbrowser
 		
 		$nextcount = $dbh->start + $dbh->limit;
 		$nextlink = $this->link."&start=".($dbh->start+$dbh->limit);
-		$str .= "<TABLE width='100'><TR>\n";
 
 		if ($this->nolimit == '') {
+			$str .= "<TABLE width='100'><TR>\n";
 			if ($dbh->start >= $dbh->limit) {
 				if ($dbh->start > 0) {
 					$toplink = $this->link;
@@ -182,8 +178,9 @@ class listbrowser
 				$str .= "<TD><A HREF='$prevlink'>Previous</TD>\n";		
 			}
 			if ($count > 0) {
-				$str .= "<TD><A HREF='$nextlink'>Next</TD></TR></TABLE>\n";		
+				$str .= "<TD><A HREF='$nextlink'>Next</TD>";
 			}
+			$str.= "</TR></TABLE>\n";		
 		}
 		return $str;
 	}
