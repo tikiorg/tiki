@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.3 2004-05-10 09:55:25 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.4 2004-06-12 13:10:43 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -81,7 +81,8 @@
   {else}
     <td>&nbsp;</td>
   {/if}
-  </tr>
+  {if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
+</tr>
 </table>
 
 <div class="wikitext">

@@ -34,9 +34,11 @@
 		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
 	{/if}
 {/if}
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" div='y'}{/if}
 {/if}
 </div>
 </div>
+
 
 {if $feature_wiki_description eq 'y'}
 <div class="toptitledesc">
@@ -48,7 +50,6 @@
 {/if}
 {$description}</div>
 {/if}
-
 
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">

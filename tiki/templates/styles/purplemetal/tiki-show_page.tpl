@@ -91,6 +91,7 @@
 {else}
     <td>&nbsp;</td>
 {/if}
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
 </tr>
 </table>
 
@@ -165,6 +166,9 @@
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{/if}
+{if $feature_multilingual eq 'y'and $tiki_p_edit eq 'y'}
+     <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}

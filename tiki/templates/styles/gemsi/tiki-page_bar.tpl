@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.1 2003-12-27 12:47:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.2 2004-06-12 13:12:44 sylvieg Exp $ *}
 
 <div id="page-bar">
 
@@ -104,6 +104,9 @@ class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_ca
   {/if}{* attachments *}
 
 {/if}
+{if $feature_multilingual eq 'y'}
+     <div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></div>
+  {/if}
 
 </div>
 

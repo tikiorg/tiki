@@ -34,6 +34,9 @@
 		<a href="tiki-index.php?page={$page}&amp;watch_event=wiki_page_changed&amp;watch_object={$page}&amp;watch_action=remove" class="linkbuttop">{tr}stop monitoring this page{/tr}</a>
 	{/if}
 {/if}
+
+{if $feature_multilingual == 'y'}{include file="translated-lang.tpl"}{/if}
+
 </div>
 </div>
 {/if}
