@@ -4,8 +4,8 @@
 {if $tiki_p_admin eq 'y'}
 <span class="mini"><a href="tiki-admin_calendars.php" class="link">{tr}admin{/tr}</a></span>
 {/if}
-<br/><br/>
-<table cellpadding="0" cellspacing="1" border="0" width="100%">
+<br/>
+<table cellpadding="0" cellspacing="1" border="0" width="100%" style="border-bottom:1px dashed #424242;">
 <tr><td class="heading">
 <div id="morecal" class="heading" style="padding-top:4px;">
 <a href="javascript:toggle('refreshopened');toggle('refreshclosed');toggle('morecal');toggle('lesscal');" class="tableheading">{tr}more{/tr}</a>
@@ -31,7 +31,8 @@
 onclick="document.getElementById('groupcal_{$listcals[lc].name}').checked=!document.getElementById('groupcal_{$listcals[lc].name}').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';"
-><input type="checkbox" name="calIds[]" value="{$listcals[lc].calendarId}" id="groupcal_{$listcals[lc].name}" {if $thiscal[lc]}checked="checked"{/if}/>
+><input type="checkbox" name="calIds[]" value="{$listcals[lc].calendarId}" id="groupcal_{$listcals[lc].name}" {if $thiscal[lc]}checked="checked"{/if}
+onclick="this.checked=!this.checked;"/>
 {$listcals[lc].name} ({tr}groupe{/tr} {$listcals[lc].groupname})
 </div>
 {/section}
@@ -46,7 +47,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_wiki').checked=!document.getElementById('tikical_wiki').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="wiki" id="tikical_wiki" {if $tikical.wiki}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="wiki" id="tikical_wiki" {if $tikical.wiki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Wiki{/tr}</div>
 {/if}
 
@@ -55,7 +56,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_gal').checked=!document.getElementById('tikical_gal').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="gal" id="tikical_gal" {if $tikical.gal}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="gal" id="tikical_gal" {if $tikical.gal}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Image Gallery{/tr}</div>
 {/if}
 
@@ -64,7 +65,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_art').checked=!document.getElementById('tikical_art').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="art" id="tikical_art" {if $tikical.art}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="art" id="tikical_art" {if $tikical.art}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Articles{/tr}</div>
 {/if}
 
@@ -73,7 +74,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_blog').checked=!document.getElementById('tikical_blog').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="blog" id="tikical_blog" {if $tikical.blog}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="blog" id="tikical_blog" {if $tikical.blog}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Blogs{/tr}</div>
 {/if}
 
@@ -82,7 +83,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_forum').checked=!document.getElementById('tikical_forum').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="forum" id="tikical_forum" {if $tikical.forum}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="forum" id="tikical_forum" {if $tikical.forum}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Forums{/tr}</div>
 {/if}
 
@@ -91,7 +92,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_dir').checked=!document.getElementById('tikical_dir').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="dir" id="tikical_dir" {if $tikical.dir}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="dir" id="tikical_dir" {if $tikical.dir}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Directory{/tr}</div>
 {/if}
 
@@ -100,7 +101,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_fgal').checked=!document.getElementById('tikical_fgal').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="fgal" id="tikical_fgal" {if $tikical.fgal}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="fgal" id="tikical_fgal" {if $tikical.fgal}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}File Gallery{/tr}</div>
 {/if}
 
@@ -109,7 +110,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_faq').checked=!document.getElementById('tikical_faq').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="faq" id="tikical_faq" {if $tikical.faq}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="faq" id="tikical_faq" {if $tikical.faq}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}FAQs{/tr}</div>
 {/if}
 
@@ -118,7 +119,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_quiz').checked=!document.getElementById('tikical_quiz').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="quiz" id="tikical_quiz" {if $tikical.quiz}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="quiz" id="tikical_quiz" {if $tikical.quiz}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Quizzes{/tr}</div>
 {/if}
 
@@ -127,7 +128,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_track').checked=!document.getElementById('tikical_track').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="track" id="tikical_track" {if $tikical.track}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="track" id="tikical_track" {if $tikical.track}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Trackers{/tr}</div>
 {/if}
 
@@ -136,28 +137,25 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 onclick="document.getElementById('tikical_surv').checked=!document.getElementById('tikical_surv').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="surv" id="tikical_surv" {if $tikical.surv}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="surv" id="tikical_surv" {if $tikical.surv}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Survey{/tr}</div>
 {/if}
 
 {if $feature_newsletters eq 'y'}
-<div 
-style="background-color:#ffffff;" 
+<div style="background-color:#ffffff;" 
 onclick="document.getElementById('tikical_nl').checked=!document.getElementById('tikical_nl').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
->
-<input type="checkbox" name="tikicals[]" value="nl" id="tikical_nl" {if $tikical.nl}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="nl" id="tikical_nl" {if $tikical.nl}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Newsletter{/tr}</div>
 {/if}
+
 {if $feature_eph eq 'y'}
-<div 
-style="background-color:#ffffff;" 
+<div style="background-color:#ffffff;" 
 onclick="document.getElementById('tikical_eph').checked=!document.getElementById('tikical_eph').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
->
-<input type="checkbox" name="tikicals[]" value="eph" id="tikical_eph" {if $tikical.eph}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="eph" id="tikical_eph" {if $tikical.eph}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Ephemerides{/tr}</div>
 {/if}
 {if $feature_charts eq 'y'}
@@ -166,7 +164,7 @@ style="background-color:#ffffff;"
 onclick="document.getElementById('tikical_chart').checked=!document.getElementById('tikical_chart').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';" 
-><input type="checkbox" name="tikicals[]" value="chart" id="tikical_chart" {if $tikical.chart}checked="checked"{/if}/>
+><input type="checkbox" name="tikicals[]" value="chart" id="tikical_chart" {if $tikical.chart}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 {tr}Charts{/tr}</div>
 {/if}
 
@@ -259,16 +257,16 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 </table>
 
 {if $editmode}
-<h2>{tr}Edit Calendar Item{/tr}</h2>
-<h3>{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}
-<span class="mini">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time}</span>
-<span class="mini">{tr}Last modification{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time}</span>
-</h3>
+<h2>{tr}Edit Calendar Item{/tr} : <span style="font-size:80%;">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
+<div class="mini">
+<span style="color:#666666;">{tr}Created{/tr}:</span> {$created|tiki_long_date} {$created|tiki_long_time} 
+<span style="color:#666666;">{tr}Modified{/tr}:</span> {$lastModif|tiki_long_date} {$lastModif|tiki_long_time}
+</div>
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
 <input type="hidden" name="calitemId" value="{$calitemId}">
-<table class="normal" style="width:100%">
+<table class="normal" style="width:100%;">
 <tr><td class="formcolor">{tr}Calendrier{/tr}</td><td class="formcolor">
 <select name="calendarId">
 {section name=lc loop=$listcals}
