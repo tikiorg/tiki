@@ -63,17 +63,17 @@
 <td >
 	<select name="filter_process">
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name}</option>
-	{/section}
+    {foreach from=$all_procs item=proc}
+	<option {if $proc.pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$proc.pId|escape}">{$proc.name}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId|escape}">{$all_acts[ix].name}</option>
-	{/section}
+    {foreach from=$all_procs item=proc}
+	<option {if $proc.activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$proc.activityId|escape}">{$proc.name}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
@@ -122,35 +122,28 @@
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
-{section name=ix loop=$items}
+{foreach from=$items item=proc}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_instance.php?iid={$items[ix].instanceId}">{$items[ix].instanceId}</a>
+	  <a class="link" href="tiki-g-admin_instance.php?iid={$proc.instanceId}">{$proc.instanceId}</a>
 	</td>
-  
-
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].name}
+		{$proc.name}
 	</td>
-	
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].status}
+		{$proc.status}
 	</td>
-
-
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$items[ix].user}
+		{$proc.user}
 	</td>
-	
-	
 </tr>
-{sectionelse}
+{foreachelse}
 <tr>
 	<td class="{cycle advance=false}" colspan="6">
 	{tr}No instances created yet{/tr}
 	</td>
 </tr>	
-{/section}
+{/foreach}
 </table>
 </form>
 {* END OF LISTING *}
