@@ -14,7 +14,7 @@ class CcLib extends UsersLib {
 	function CcLib($dbTiki) { 
 		$this->db = $dbTiki;
 		$this->date = date("U");
-		$this->logfile = "mods/features/cc/cc.log.php";
+		$this->logfile = "temp/cc.log.php";
 		$this->initlog();
 	}
 
@@ -362,13 +362,14 @@ class CcLib extends UsersLib {
 					}
 				}
 			}
-			if (count($allp)) {
+			if (isset($allp) and count($allp)) {
 				foreach ($allp as $url=>$data) {
 					$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
 				}
 			}
 		}
 		$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
+		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
