@@ -1,3 +1,10 @@
+### Changes in articles
+alter table tiki_articles add isfloat char(1);
+update tiki_articles set isfloat='n';
+alter table tiki_submissions add isfloat char(1);
+update tiki_submissions set isfloat='n';
+###
+
 drop table if exists tiki_user_watches;
 create table tiki_user_watches(
   user varchar(200) not null,

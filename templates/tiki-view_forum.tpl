@@ -117,7 +117,7 @@
     </tr>
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="16" cols="80">{$comment_data}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
     </tr>
     </table>
     </form>
@@ -168,13 +168,19 @@
   {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
   </td>
-  <td class="topictitle{cycle advance=false}"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  <td class="topictitle{cycle advance=false}">
+  <table width="100%"><tr><td>
+  <a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  </td>
   {if $tiki_p_admin_forum eq 'y'}
+  <td style="text-align:right;">
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+  </td>   
   {/if}
+  </tr></table>
   {if $feature_forum_topicd eq 'y'}
   <br/>
   <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     

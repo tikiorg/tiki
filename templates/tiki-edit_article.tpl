@@ -65,6 +65,9 @@
 <tr><td class="formcolor">{tr}Use own image{/tr}</td><td class="formcolor">
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
+<tr><td class="formcolor">{tr}Float text around image{/tr}</td><td class="formcolor">
+<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
+</td></tr>
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
 

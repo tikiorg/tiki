@@ -17,17 +17,24 @@
 {/if}
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
-<tr><td width="25%" valign="top">
+<tr>
+{if $listpages[ix].isfloat eq 'n'}
+<td width="25%" valign="top">
+{else}
+<td valign="top">
+{/if}
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
-<img alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/>
+<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/>
 {else}
-<img alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
+<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
 {else}
-<img alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
+<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
+{if $listpages[ix].isfloat eq 'n'}
 </td><td width="75%" valign="top">
+{/if}
 <span class="articleheading">{$listpages[ix].parsed_heading}</span>
 </td></tr>
 </table>

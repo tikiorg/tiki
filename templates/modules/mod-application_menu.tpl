@@ -144,7 +144,7 @@
 {/if}
 
 {if $feature_articles eq 'y' or $feature_submissions eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('cmsmenu','c');hide('cmsmenu');">[-]</a> <a class='separator' href='tiki-view_articles.php'>{tr}CMS{/tr}</a> <a class='separator' href="javascript:setCookie('cmsmenu','o');show('cmsmenu');">[+]</a></div>
+  <div class="separator"><a class='separator' href="javascript:setCookie('cmsmenu','c');hide('cmsmenu');">[-]</a> <a class='separator' href='tiki-view_articles.php'>{tr}Articles{/tr}</a> <a class='separator' href="javascript:setCookie('cmsmenu','o');show('cmsmenu');">[+]</a></div>
   <div id='cmsmenu' style="{$mnu_cmsmenu}">
   {if $tiki_p_read_article eq 'y'}
   &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles Home{/tr}</a><br/>

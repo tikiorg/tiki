@@ -1,10 +1,11 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Articles: topic or article image can 'float' around text optionally.
 * [NEW] Forums: columns to be listed in topic listing can be
-  configured per-forum
+  configured per-forum.
 * [NEW] Forums: columns to be listed in forum listing can be
-  configured
-* [NEW] Notes in notepad remember parsing mode
+  configured.
+* [NEW] Notes in notepad remember parsing mode.
 * [NEW] Notes in notepad can be viewed as smarty templates
 * [NEW] Forum posts can be saved to the notepad.
 * [NEW] Weblog posts can be saved to the notepad.

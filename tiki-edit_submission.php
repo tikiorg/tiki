@@ -35,6 +35,7 @@ $smarty->assign('title','');
 $smarty->assign('authorName','');
 $smarty->assign('topicId','');
 $smarty->assign('useImage','n');
+$smarty->assign('isfloat','n');
 $hasImage='n';
 $smarty->assign('hasImage','n');
 $smarty->assign('image_name','');
@@ -73,6 +74,7 @@ if(isset($_REQUEST["subId"])) {
   $smarty->assign('authorName',$article_data["authorName"]);
   $smarty->assign('topicId',$article_data["topicId"]);
   $smarty->assign('useImage',$article_data["useImage"]);
+  $smarty->assign('isfloat',$article_data["isfloat"]);  
   $smarty->assign('image_name',$article_data["image_name"]);
   $smarty->assign('image_type',$article_data["image_type"]);
   $smarty->assign('image_size',$article_data["image_size"]);
@@ -143,6 +145,11 @@ if(isset($_REQUEST["preview"])) {
   } else {
     $useImage = 'n';
   }
+  if(isset($_REQUEST["isfloat"])&&$_REQUEST["isfloat"]=='on') {
+    $isfloat = 'y';
+  } else {
+    $isfloat = 'n';
+  }
   
   $smarty->assign('image_data',$_REQUEST["image_data"]);
   if(strlen($_REQUEST["image_data"])>0) {
@@ -155,6 +162,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('image_x',$_REQUEST["image_x"]);
   $smarty->assign('image_y',$_REQUEST["image_y"]);
   $smarty->assign('useImage',$useImage);
+  $smarty->assign('isfloat',$isfloat);
   $smarty->assign('type',$_REQUEST["type"]);
   $smarty->assign('rating',$_REQUEST["rating"]);
   $smarty->assign('entrating',floor($_REQUEST["rating"]));
@@ -244,6 +252,11 @@ if(isset($_REQUEST["save"])) {
   } else {
     $useImage = 'n';
   }
+  if(isset($_REQUEST["isfloat"])&&$_REQUEST["isfloat"]=='on') {
+    $isfloat = 'y';
+  } else {
+    $isfloat = 'n';
+  }
 
   $imgdata=urldecode($_REQUEST["image_data"]);
   if(strlen($imgdata)>0) {
@@ -284,7 +297,7 @@ if(isset($_REQUEST["save"])) {
                             $_REQUEST["image_x"],
                             $_REQUEST["image_y"],
                             $_REQUEST["type"],
-                            $_REQUEST["rating"]);
+                            $_REQUEST["rating"],$isfloat);
 /*                            
   $links = $tikilib->get_links($body);
   $notcachedlinks = $tikilib->get_links_nocache($body);
