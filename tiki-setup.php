@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.130 2003-08-15 00:04:46 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.131 2003-08-15 22:32:42 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -433,26 +433,33 @@ $wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
 $smarty->assign('wiki_creator_admin', $wiki_creator_admin);
 
-$smarty->assign('art_list_title', 'y');
-$smarty->assign('art_list_topic', 'y');
-$smarty->assign('art_list_date', 'y');
-$smarty->assign('art_list_author', 'y');
-$smarty->assign('art_list_reads', 'y');
-$smarty->assign('art_list_size', 'y');
-$smarty->assign('art_list_img', 'y');
+$wiki_watch_author = 'y';
+$smarty->assign('wiki_watch_author',$wiki_watch_author);
+$wiki_watch_comments = 'y';
+$smarty->assign('wiki_watch_comments',$wiki_watch_comments);
+$wiki_watch_editor = 'n';
+$smarty->assign('wiki_watch_editor',$wiki_watch_editor);
 
-$smarty->assign('wiki_list_name', 'y');
-$smarty->assign('wiki_list_hits', 'y');
-$smarty->assign('wiki_list_lastmodif', 'y');
-$smarty->assign('wiki_list_creator', 'y');
-$smarty->assign('wiki_list_user', 'y');
-$smarty->assign('wiki_list_lastver', 'y');
-$smarty->assign('wiki_list_comment', 'y');
-$smarty->assign('wiki_list_status', 'y');
-$smarty->assign('wiki_list_versions', 'y');
-$smarty->assign('wiki_list_links', 'y');
-$smarty->assign('wiki_list_backlinks', 'y');
-$smarty->assign('wiki_list_size', 'y');
+$smarty->assign('art_list_title','y');
+$smarty->assign('art_list_topic','y');
+$smarty->assign('art_list_date','y');
+$smarty->assign('art_list_author','y');
+$smarty->assign('art_list_reads','y');
+$smarty->assign('art_list_size','y');
+$smarty->assign('art_list_img','y');
+
+$smarty->assign('wiki_list_name','y');
+$smarty->assign('wiki_list_hits','y');
+$smarty->assign('wiki_list_lastmodif','y');
+$smarty->assign('wiki_list_creator','y');
+$smarty->assign('wiki_list_user','y');
+$smarty->assign('wiki_list_lastver','y');
+$smarty->assign('wiki_list_comment','y');
+$smarty->assign('wiki_list_status','y');
+$smarty->assign('wiki_list_versions','y');
+$smarty->assign('wiki_list_links','y');
+$smarty->assign('wiki_list_backlinks','y');
+$smarty->assign('wiki_list_size','y');
 
 $feature_wiki_comments = 'n';
 $wiki_comments_default_ordering = 'points_desc';
