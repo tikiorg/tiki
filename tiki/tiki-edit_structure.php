@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.14 2003-11-19 10:04:21 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.15 2003-11-23 11:41:20 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,19 +18,14 @@ if ($tiki_p_edit_structures != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["structure_id"])) {
+if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST["page_ref_id"])) {
-	$_REQUEST["page_ref_id"] = $_REQUEST["structure_id"];
-}
-
-$structure_info = $structlib->s_get_page_info($_REQUEST["structure_id"]);
-$page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
+$page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
+$structure_info = $structlib->s_get_structure_info($_REQUEST["page_ref_id"]);
 if (!isset($structure_info) or !isset($page_info) ) {
 	$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
 
@@ -39,7 +34,8 @@ if (!isset($structure_info) or !isset($page_info) ) {
 }
 
 $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
-$smarty->assign('structure_id', $_REQUEST["structure_id"]);
+$smarty->assign('structure_id', $structure_info["page_ref_id"]);
+$smarty->assign('structure_name', $structure_info["pageName"]);
 
 if (isset($_REQUEST["create"])) {
 	if (isset($_REQUEST["pageAlias"]))	{
@@ -61,6 +57,23 @@ if (isset($_REQUEST["create"])) {
       $after = $new_page_ref_id;
 		}
 	}
+}
+
+if (isset($_REQUEST["move_node"])) {
+	$move_node = $_REQUEST["move_node"];
+	if (0 == strcmp($move_node, tra("Promote"))) {
+		$structlib->promote_node($page_ref_id);
+	}
+	elseif (0 == strcmp($move_node, tra("Demote"))) {
+		$structlib->demote_node($page_ref_id);
+	}
+	elseif (0 == strcmp($move_node, tra("Next"))) {
+		$structlib->move_after_next_node($page_ref_id);
+	}
+	elseif (0 == strcmp($move_node, tra("Previous"))) {
+		$structlib->move_before_previous_node($page_ref_id);
+	}
+	
 }
 
 $smarty->assign('remove', 'n');
@@ -85,7 +98,7 @@ $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
 
 $subpages = $structlib->get_pages($_REQUEST["page_ref_id"]);
-$max = $structlib->get_max_children($_REQUEST["structure_id"], $_REQUEST["page_ref_id"]);
+$max = $structlib->get_max_children($structure_info["page_ref_id"], $_REQUEST["page_ref_id"]);
 $smarty->assign_by_ref('subpages', $subpages);
 $smarty->assign('max', $max);
 
@@ -102,7 +115,7 @@ $listpages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 
-$subtree = $structlib->get_subtree($_REQUEST["structure_id"]);
+$subtree = $structlib->get_subtree($structure_info["page_ref_id"]);
 $smarty->assign('subtree', $subtree);
 
 // Display the template

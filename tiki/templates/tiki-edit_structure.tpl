@@ -1,26 +1,38 @@
-<a class="pagetitle" href="tiki-edit_structure.php?structure_id={$structure_id}&amp;page_ref_id={$page_ref_id}">
-  {tr}Structure{/tr}: {$structID}
+<a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
+  {tr}Modify Structure{/tr}: {$structure_name}
 </a><br/><br/>
 
-<a class="link" href="tiki-admin_structures.php">{tr}Admin structures{/tr}</a><br/><br/>
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
-<input type="hidden" name="structure_id" value="{$structure_id}" />
 
-<h2>{tr}Modify Structure{/tr}</h2>
+<h2>{tr}Current Node{/tr}: {$pageName}</h2>
 <table class="normal">
-  <tr>
-  <td class="formcolor">{tr}In parent page{/tr}</td>
-  <td class="formcolor">
-	{$pageName}
-  </td>
-  </tr>
   <tr>
   <td class="formcolor">{tr}Page alias{/tr}</td>
   <td class="formcolor">
-  <input type="text" name="pageAlias" value="{$pageAlias}" />
+  <input type="text" name="pageAlias" value="{$pageAlias}" />  <input type="submit" name="create" value="{tr}update{/tr}" />
   </td>
   </tr>
+  <tr>
+  <td class="formcolor">{tr}Move{/tr}</td>
+  <td class="formcolor">
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Promote'>
+    <img src='img/icons2/nav_dot_right.gif' border='0' title="Promote"/>
+  </a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Previous'>
+    <img src='img/icons2/nav_home.gif' border='0' title="Previous"/>
+  </a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Next'>
+    <img src='img/icons2/nav_down.gif' border='0' title="Next"/>
+  </a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Demote'>
+    <img src='img/icons2/nav_dot_left.gif' border='0' title="Demote"/>
+  </a>
+  </td>
+  </tr>
+</table>
+<h3>{tr}Add pages to current node{/tr}:</h3>
+<table class="normal">
   <tr>
   <td class="formcolor">
   {tr}After page{/tr}
@@ -70,7 +82,7 @@
 
 {section name=ix loop=$subtree}
  {if $subtree[ix].pos eq ''}
-     <a class='link' href='tiki-edit_structure.php?structure_id={$structure_id}&amp;page_ref_id={$subtree[ix].page_ref_id}'>{$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
+     <a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'>{$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
 	 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>view</a>
 	 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>edit</a>]
  {else}
@@ -79,12 +91,15 @@
    {if $subtree[ix].last}
      </ul>
    {else}
+     {if $page_ref_id eq $subtree[ix].page_ref_id}<b>{/if}
      <li style='list-style:disc outside;'>{$subtree[ix].pos}
-	     &nbsp;<a class='link' href='tiki-edit_structure.php?structure_id={$structure_id}&amp;page_ref_id={$subtree[ix].page_ref_id}'>{$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
-		 &nbsp;[<a class='link' href='tiki-edit_structure.php?structure_id={$structure_id}&amp;remove={$subtree[ix].page_ref_id}'>x</a>]
+	     &nbsp;<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'>
+         {$subtree[ix].pageName}{if $subtree[ix].page_alias}({$subtree[ix].page_alias}){/if}</a>
+		 &nbsp;[<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;remove={$subtree[ix].page_ref_id}'>x</a>]
 		 &nbsp;[<a class='link' href='tiki-index.php?page_ref_id={$subtree[ix].page_ref_id}'>view</a>
 		 |<a  class='link' href='tiki-editpage.php?page={$subtree[ix].pageName}'>edit</a>]
      </li>
+     {if $page_ref_id eq $subtree[ix].page_ref_id}</b>{/if}
    {/if}
  {/if}
 {/section}
@@ -93,8 +108,8 @@
 <br/>
 {tr}You will remove{/tr} '{$removePageName}' {tr}and its subpages from the structure, now you have two options:{/tr}
 <ul>
-<li><a class="link" href="tiki-edit_structure.php?structure_id={$structure_id}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
-<li><a class="link" href="tiki-edit_structure.php?structure_id={$structure_id}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>
+<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
+<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>
 </ul>
 {/if}
 
