@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.3 2003-08-05 17:33:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.4 2003-08-07 02:31:58 rossta Exp $
  *
  * \brief Tiki internal debugger 
  *
@@ -196,3 +196,5 @@ global $debugger;
 $debugger = new Debugger();
 // First message (will not appear if no user messages wil be added)
 $debugger->msg("Debugger startup OK. ".count($debugger->commands)." plugable commands found");
+
+?>

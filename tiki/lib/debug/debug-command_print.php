@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_print.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_print.php,v 1.3 2003-08-07 02:30:52 rossta Exp $
 //
 // \brief Command to print PHP variables to debug console
 //
@@ -55,3 +55,5 @@ function dbg_command_factory_print()
 {
   return new DbgPrint();
 }
+
+?>
