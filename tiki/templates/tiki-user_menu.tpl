@@ -5,7 +5,7 @@
   {if $opensec eq 'y'}</div>{/if}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:icntoggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');"><img src="img/icons/fo.gif" border="0" name="userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}icn" alt=''/>&nbsp;</a>
+  <a class='separator' href="javascript:icntoggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');"><img src="img/icons/fo.gif" border="0" name="userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}icn" alt=''/></a>&nbsp;
   {else}<a class='separator' href="javascript:toggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[-]</a>{/if} 
   <a href="{$channels[ix].url}" class="separator">{tr}{$channels[ix].name}{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[+]</a>{/if} 
