@@ -29,22 +29,27 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
+//include_once("lib/userslib/userslib.php");
 function wikiplugin_include_help() {
 	return tra("Include a page").":<br />~np~{INCLUDE(page=> [,start=>] [,stop=>])}{INCLUDE}~/np~";
 }
 function wikiplugin_include($data, $params) {
-	global $tikilib;
+	global $tikilib,$userlib,$user;
 
 	extract ($params);
 
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br/>");
 	}
-
 	$data = $tikilib->get_page_info($page);
+	if (!($userlib->user_has_permission($user,'tiki_p_view') or ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')))) {
+//		$text="<b>User $user has no permission to access $page</b><br/>";
+		$text="";
+		return($text);
+	}
 	$text = $data['data'];
 	if (isset($start) || isset($stop)) {
 		$explText = explode("\n", $text);
