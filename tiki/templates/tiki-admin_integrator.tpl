@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.5 2003-10-19 13:20:19 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.6 2003-10-19 15:09:07 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -21,23 +21,23 @@
 <form action="tiki-admin_integrator.php" method="post">
 <input type="hidden" name="repID" value="{$repID|escape}" />
 <table class="normal">
-  <tr><td class="formcolor">{tr}Name{/tr}</td>
-    <td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td>
+  <tr><td class="formcolor"><span title="{tr}Human readable repository name{/tr}">{tr}Name{/tr}</span></td>
+    <td class="formcolor"><input type="text" name="name" value="{$name|escape}" title="{tr}Human readable repository name{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Path{/tr}</td>
-    <td class="formcolor"><input type="text" name="path" value="{$path|escape}" /></td>
+    <td class="formcolor"><span title="{tr}Path to repository (local filesystem relative web root){/tr}">{tr}Path{/tr}</td>
+    <td class="formcolor"><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem relative web root){/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Start page{/tr}</td>
-    <td class="formcolor"><input type="text" name="start" value="{$start|escape}" /></td>
+    <td class="formcolor"><span title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</td>
+    <td class="formcolor"><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}CSS file{/tr}</td>
-    <td class="formcolor"><input type="text" name="cssfile" value="{$cssfile|escape}" /></td>
+    <td class="formcolor"><span title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS file{/tr}</td>
+    <td class="formcolor"><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Visible{/tr}</td>
-    <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} /></td>
+    <td class="formcolor"><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Description{/tr}</td>
-    <td class="formcolor"><textarea name="description" rows="4">{$description|escape}</textarea></td>
+    <td class="formcolor"><span title="{tr}Human readable text description of repository{/tr}">{tr}Description{/tr}</td>
+    <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td class="formcolor"></td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>

@@ -1,8 +1,8 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.3 2003-10-17 16:10:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.4 2003-10-19 15:09:06 zaufi Exp $
  *
- * Doxygened files viewer (wrapper)
+ * Integrated files viewer (wrapper)
  *
  */
 
@@ -17,7 +17,7 @@ if ($tiki_p_view != 'y')
     die;
 }
 
-$repID = isset($_REQUEST["repID"]) ? $_REQUEST["repID"] : 0;
+$repID = (isset($_REQUEST["repID"]) && strlen($_REQUEST["repID"]) > 0) ? $_REQUEST["repID"] : 0;
 
 if (!isset($_REQUEST["repID"]) && ($repID <= 0))
 {
