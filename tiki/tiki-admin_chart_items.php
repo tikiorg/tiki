@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.5 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.6 2003-10-17 01:14:50 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,7 +86,11 @@ if (isset($_REQUEST['save'])) {
 	$smarty->assign('info', $info);
 }
 
-$where = 'chartId=' . $_REQUEST['chartId'];
+// the $where is unused for now i think, but beware of using it in the template
+// it's a security problem in list_chart_items().
+$where = 'chartId = '.$_REQUEST['chartId'];
+$wherekey = 'chartId';
+$whereval = $_REQUEST['chartId'];
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
@@ -111,7 +115,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$items = $chartlib->list_chart_items($offset, $maxRecords, $sort_mode, $find, $where);
+$items = $chartlib->list_chart_items($offset, $maxRecords, $sort_mode, $find, $wherekey,$whereval);
 $smarty->assign('cant', $items['cant']);
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
