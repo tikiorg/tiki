@@ -1,6 +1,5 @@
 <?php
-
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.13 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.14 2004-01-08 18:54:12 ggeller Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,6 +36,7 @@ $features_toggles = array(
 	"feature_forums",
 	"feature_galleries",
 	"feature_games",
+	"feature_homework",
 	"feature_hotwords",
 	"feature_hotwords_nw",
 	"feature_html_pages",
@@ -86,7 +86,7 @@ $features_toggles = array(
 
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
-	check_ticket('admin-inc-features');
+    check_ticket('admin-inc-features');
 	foreach ($features_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
