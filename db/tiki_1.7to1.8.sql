@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.47 2003-10-25 00:54:21 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.48 2003-10-25 14:17:36 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -486,3 +486,10 @@ INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
 INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+
+# blogs had the same problem than wiki pages : adding a field for size to avoid run-time calculation
+ALTER TABLE `tiki_blog_posts` ADD `data_size` int(10) unsigned default 0;
+UPDATE `tiki_blog_posts` set `data_size`=length(`data`);
+
+
+
