@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.10 2004-01-17 21:04:08 gongo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.11 2004-01-18 11:49:05 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -71,6 +71,12 @@ ALTER TABLE `tiki_group_inclusion` ADD PRIMARY KEY ( groupName(30),includeGroup(
 # added on 2004-01-16 by damosoft: new marking a blog entry as private
 ALTER TABLE `tiki_blog_posts` ADD `priv` VARCHAR( 1 );
 
+# Tiki Jukebox
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-jukebox_admin.php',620,'feature_jukebox','tiki_p_jukebox_admin', '');
 
 
 
