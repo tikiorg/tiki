@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate_console.php,v 1.1 2004-02-29 01:22:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate_console.php,v 1.2 2004-05-06 00:55:17 mose Exp $
 
 require_once ('tiki-setup.php');
 include_once 'lib/logs/logslib.php';
@@ -16,7 +16,9 @@ if ($tiki_p_admin != 'y') {
 }
 
 $dumps = array();
-$h = opendir("backups/$tikidomain");
+$path = "backups";
+if ($tikidomain) { $path.= "/$tikidomain"; }
+$h = opendir($path);
 while ($file = readdir($h)) {
 	if (strstr($file, ".sql") and substr($file,0,1) != '.') {
 		$dumps[] = $file;
