@@ -4225,7 +4225,8 @@ class TikiLib {
 			}
 			$html = $span1.$span2;
 			//It's important to replace only once
-			$data = preg_replace("/%$dvar%/",$html,$data,1);
+			$dvar_preg = preg_quote( $dvar );
+			$data = preg_replace("/%$dvar_preg%/",$html,$data,1);
 			//Further replacements only with the value
 			$data = str_replace("%$dvar%",$value,$data);			
 			
