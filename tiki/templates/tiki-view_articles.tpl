@@ -3,6 +3,7 @@
 {if $art_view_title eq 'y'}
 <span class="titlea">{$listpages[ix].title}</span><br />
 {/if}
+{if ($art_view_author eq 'y') or ($art_view_date eq 'y') or ($art_view_reads eq 'y')}	
 <span class="titleb">
 {if $art_view_author eq 'y'}	
 {tr}By:{/tr} {$listpages[ix].authorName} 
@@ -14,6 +15,7 @@
 ({$listpages[ix].reads} {tr}reads{/tr})
 {/if}
 </span><br />
+{/if}
 </div>
 {if $listpages[ix].type eq 'Review'}
 <div class="articleheading">
@@ -63,7 +65,8 @@
 - {$listpages[ix].size} {tr}bytes{/tr}
 {/if}
 {if ($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y')} - 
-{if $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
+{if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
+{elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
 {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
 {/if}
 {/if} )
