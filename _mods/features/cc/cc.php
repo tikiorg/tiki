@@ -28,7 +28,11 @@ if ($user) {
 			$sort_mode = $_REQUEST["sort_mode"];
 		}		
 		if ($page == 'ledgers' and $tiki_p_cc_admin == 'y') {
-			$thelist = $cclib->get_ledgers(0,-1,$sort_mode);
+			if (isset($_REQUEST['cc_id'])) {
+				$thelist = $cclib->get_ledgers(0,-1,$sort_mode,false,$_REQUEST['cc_id']);
+			} else {
+				$thelist = $cclib->get_ledgers(0,-1,$sort_mode);
+			}
 		} else {
 			$thelist = $cclib->get_ledgers(0,-1,$sort_mode,$user);
 			$smarty->assign("userid",$user);
