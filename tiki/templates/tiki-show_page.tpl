@@ -2,6 +2,9 @@
 {if $feature_wiki_description}
 <small>{$description}</small>
 {/if}
+{if $cached_page eq 'y'}
+<small> (cached) [<a class="linkmodule" href="tiki-index.php?page={$page}&amp;refresh=1">refresh</a>]</small>
+{/if}
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
