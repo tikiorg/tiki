@@ -53,7 +53,7 @@ class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata
 <select name="filterfield">
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
-<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:52:"..."}</option>
+<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:255:"..."}</option>
 {/if}
 {/section}
 </select>
@@ -89,7 +89,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:52:"..."|default:"&nbsp;"}</a></td>
+'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:255:"..."|default:"&nbsp;"}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -126,7 +126,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
-<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel|truncate:52:"..."}</a></div>
+<div><a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel|truncate:255:"..."}</a></div>
 {/foreach}
 </td>
 {elseif $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
@@ -144,16 +144,19 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
  and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
 
 {if $items[user].field_values[ix].type eq 'f'}
-{$items[user].field_values[ix].value|tiki_short_datetime|truncate:52:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|tiki_short_datetime|truncate:255:"..."|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
+
+{elseif $items[user].field_values[ix].type eq 'a'}
+{$items[user].field_values[ix].pvalue}
 
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}" alt="" />
 
 {else}
-{$items[user].field_values[ix].value|truncate:52:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 
 {/if}
 
@@ -167,9 +170,13 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <td class="auto">
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 </td>
+{elseif $items[user].field_values[ix].type eq 'a'}
+<td class="auto">
+{$items[user].field_values[ix].pvalue}
+</td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
-{$items[user].field_values[ix].value|truncate:52:"..."|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:255:"..."|default:"&nbsp;"}
 </td>
 {/if}
 {/if}
@@ -194,7 +201,6 @@ link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section 
 name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker item?{/tr}');" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a></td>
 {/if}
 </tr>
