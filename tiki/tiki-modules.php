@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.28 2004-01-15 22:12:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.29 2004-01-17 03:02:50 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,7 +86,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
 // the cache is here to avoid calls to consumming queries, but a module is different for each language because of the strings
 
         $phpfile = 'modules/mod-' . $r["name"] . '.php';
-        $template = 'modules/mod-' . $r["name"] . '.tpl';
+        $template = 'templates/modules/mod-' . $r["name"] . '.tpl';
         $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
@@ -110,7 +110,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
             }
 
             //print("Template file: $template<br/>");
-            if (file_exists("templates/$template")) {
+            if (file_exists("$template")) {
                 //print("FETCH<br/>");
                 $data = $smarty->fetch($template);
             } else {
@@ -191,7 +191,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
     if ($pass == 'y') {
         $cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 
-        $phpfile = 'templates/modules/mod-' . $r["name"] . '.php';
+        $phpfile = 'modules/mod-' . $r["name"] . '.php';
         $template = 'templates/modules/mod-' . $r["name"] . '.tpl';
         $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
 
