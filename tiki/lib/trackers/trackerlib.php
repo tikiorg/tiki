@@ -249,6 +249,10 @@ class TrackerLib extends TikiLib {
 		return $res;
 	}
 
+	function get_last_position($id) {
+		return $this->getOne("select max(`position`) from `tiki_tracker_fields` where `trackerId` = ?",array((int)$id));
+	}
+
 	function list_all_tracker_items($offset, $maxRecords, $sort_mode, $fields) {
 		$filters = array();
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.15 2004-01-04 19:31:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.16 2004-01-04 19:41:15 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if ($_REQUEST["fieldId"]) {
 
 	$info["name"] = '';
 	$info["options"] = '';
-	$info["position"] = 1;
+	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"])+1;
 	$info["type"] = 'o';
 	$info["isMain"] = 'n';
 	$info["isSearchable"] = 'y';
