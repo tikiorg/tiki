@@ -39,9 +39,23 @@ class SearchLib extends TikiLib {
 	function &find($where,$words,$offset, $maxRecords) {
 	  $exact=$this->find_exact($where,$words,$offset, $maxRecords);
 	  $part=$this->find_part($where,$words,$offset, $maxRecords);
-	  $res=array();
-	  $res["data"]=array_merge($exact["data"],$part["data"]);
-	  $res["cant"]=$exact["cant"]+$part["cant"];
+          foreach ($part["data"] as $p) {
+            $same = false;
+            foreach ($exact["data"] as $e) {
+              if ($p["pageName"] == $e["pageName"]) {
+                $same = true;
+                break;
+              }
+            }
+            if (!$same) {
+              array_push($exact["data"], $p);
+              $exact["cant"]++;
+            }
+          }
+          $res=$exact;
+//	  $res=array();
+//	  $res["data"]=array_merge($exact["data"],$part["data"]);
+//	  $res["cant"]=$exact["cant"]+$part["cant"];
 	  return $res;
 	}
 

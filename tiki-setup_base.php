@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.74 2004-04-26 19:32:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.75 2004-05-01 01:06:20 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,7 +70,7 @@ if ( ini_get('register_globals') ) {
 }
 make_clean($_GET,get_magic_quotes_gpc());
 make_clean($_POST,get_magic_quotes_gpc());
-make_clean($_COOOKIE,get_magic_quotes_gpc());
+make_clean($_COOKIE,get_magic_quotes_gpc());
 make_clean($_SERVER['QUERY_STRING']);
 make_clean($_SERVER['REQUEST_URI']);
 
@@ -92,10 +92,11 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 
 // mose : simulate strong var type checking for http vars
 $patterns['int']   = "/^[0-9]*$/"; // *Id, offset,
-$patterns['char']  = "/^[-_a-zA-Z0-9]*$/"; // sort_mode, 
+$patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";&#]*$/"; // find, and such extended chars
 
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
+$patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 
 $vartype['offset'] = 'int';
 $vartype['thresold'] = 'int';
@@ -109,6 +110,7 @@ $vartype['flag'] = 'char';
 $vartype['lang'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
+$vartype['reqId'] = 'hash';
 
 $language = $tikilib->get_preference('language', 'en');// varcheck use tra
 
@@ -121,8 +123,9 @@ function varcheck($array) {
       } else {
         if (is_array($rv)) {
           varcheck($rv);
-        } elseif (((substr($rq,-2,2) == 'Id' or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
+        } elseif ((((substr($rq,-2,2) == 'Id' and !$rq == 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
+          or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {
           die(tra("Invalid variable value : "). "$rq = ". htmlspecialchars($rv));
         }

@@ -231,6 +231,7 @@ div.separator {
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
+  margin-left: 20px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -288,7 +289,7 @@ input[type=submit]:hover { color: #000000; background-image: url(akwa/aqua-tab-a
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
-table.viewthread, table.jukeboxlist
+table.viewthread, table.jukeboxlist, table.galtable
 {  border: thin solid #999999; width: 100%; border-spacing: 0; border-collapse: separate;}
 
 

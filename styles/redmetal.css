@@ -1,4 +1,4 @@
-* Default style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
+/* Default style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
    every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
    adapt to produce a new theme. Good luck!
 */
@@ -258,6 +258,7 @@ div.separator {
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
+  margin-left: 15px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -1944,4 +1945,3 @@ TABLE.admin {
   margin: 2px;
   vertcal-align: middle;
 }
-

@@ -1,9 +1,18 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.36 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.37 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],"tiki-modules.php")!=FALSE) {
+  //smarty is not there - we need setup
+  require_once('tiki-setup.php');
+  $smarty->assign('msg',tra("This script cannot be called directly"));
+  $smarty->display("error.tpl");
+  die;
+}
 
 include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');

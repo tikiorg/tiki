@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.56 2004-04-08 22:55:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.57 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.56 2004-04-08 22:55:06 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.57 2004-05-01 01:06:19 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -40,6 +40,9 @@ function process_sql_file($file,$db_tiki) {
 	  case "sybase":
 	    $statements=split("(\r|\n)go(\r|\n)",$command);
 	    break;
+          case "mssql":
+	    $statements=split("(\r|\n)go(\r|\n)",$command);
+            break;
 	  case "oci8":
 	    $statements=preg_split("#(;\n)|(\n/\n)#",$command);
 	    break;
@@ -429,11 +432,11 @@ $tiki_version = '1.9';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase','SQLLite','MSSQL');
+$dbservers = array('MySQL 3.x', 'MySQL 4.0.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase','SQLLite','MSSQL');
 
 $dbtodsn = array(
 	"MySQL 3.x" => "mysql",
-	"MySQL 4.x" => "mysql",
+	"MySQL 4.0.x" => "mysql",
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle 8i" => "oci8",
 	"Oracle 9i" => "oci8",
@@ -445,7 +448,10 @@ $dbtodsn = array(
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
-$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+
+// changed to path_translated 28/4/04 by damian
+// for IIS compatibilty
+$docroot = dirname($_SERVER['PATH_TRANSLATED']);
 
 check_session_save_path();
 

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.47 2004-04-29 22:31:46 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.48 2004-05-01 01:06:32 damosoft Exp $
 
 MoreNeat theme
 */
@@ -591,7 +591,7 @@ div.wiki-edithelp { background: white; border: 1px solid black; font-size: small
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
-TABLE.galtable { border-collapse:collapse;}
+TABLE.galtable { width:100%; border-collapse:collapse;}
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows are shown inside oddthumb tds */

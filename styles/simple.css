@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.16 2004-04-29 22:31:47 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.17 2004-05-01 01:06:33 damosoft Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -54,6 +54,10 @@ h3 {
 /* images have no border by default */
 img {
  border: 0;
+}
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
 }
 
 /* Description on wiki pages */

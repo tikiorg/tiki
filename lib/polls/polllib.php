@@ -185,8 +185,8 @@ class PollLib extends TikiLib {
 
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
 		$last = $this->getOne($query,array((int) $now));
-		$query = "update `tiki_polls` set `active`='x' where `publishDate`<? and `publishDate`<=?";
-		$result = $this->query($query,array('x',$last,array((int) $now)));
+		$query = "update `tiki_polls` set `active`='x' where `publishDate`<=?";
+		$result = $this->query($query,array((int) $now));
 	}
 
 	function active_all_polls() {

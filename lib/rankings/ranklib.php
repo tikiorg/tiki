@@ -146,6 +146,23 @@ class RankLib extends TikiLib {
 		return $ret;
 	}
 
+    function forums_top_posters($qty) {
+        $query = "select `user`, `posts` from `tiki_user_postings` order by ".$this->convert_sortmode("posts_desc");
+        $result = $this->query($query, array(),$qty);
+        $ret = array();
+
+        while ($res = $result->fetchRow()) {
+            $aux["name"] = $res["user"];
+	    $aux["posts"] = $res["posts"];
+	    $ret[] = $aux;
+        }
+
+	$ret["data"] = $ret;
+
+        return $ret;
+    }
+
+
 	function forums_ranking_top_topics($limit) {
 		$query = "select
 		tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object`

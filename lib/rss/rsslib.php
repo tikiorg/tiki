@@ -210,12 +210,12 @@ class RSSLib extends TikiLib {
 		return $showPubDate;
 	}
 
-	function get_rss_module_content($rssId) {
+	function get_rss_module_content($rssId, $refresh=false) {
 		$info = $this->get_rss_module($rssId);
 		$now = date("U");
 
 		// cache too old, get data from feed and update cache
-		if (($info["lastUpdated"] + $info["refresh"] < $now) || ($info["content"]=="")) {
+		if (($info["lastUpdated"] + $info["refresh"] < $now) || ($info["content"]=="") || $refresh) {
 			$data = $this->refresh_rss_module($rssId);
 		}
 

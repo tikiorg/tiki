@@ -258,6 +258,7 @@ div.separator {
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
+  margin-left: 15px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -1942,4 +1943,3 @@ TABLE.admin {
   margin: 2px;
   vertcal-align: middle;
 }
-

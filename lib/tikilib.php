@@ -1442,7 +1442,7 @@ function remove_object($type, $id) {
     $result = $this->query($query, array( $id, $type ));
     // Remove individual permissions for this object if they exist
     $query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
-    $result = $this->query($query,array((int)$object,$type));
+    $result = $this->query($query,array(md5($object),$type));
     return true;
 }
 
@@ -3884,14 +3884,14 @@ function replace_hotwords($line, $words) {
 	if ($feature_hotwords == 'y') {
 		foreach ($words as $word => $url) {
 			// \b is a word boundary, \s is a space char
-			$line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-			$line = preg_replace("/(=(\"|')[^\"']*)$word(\b)([^\"']*(\"|'))/i","$1 :::::$word$3$4",$line);
-			$line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-			$line = preg_replace("/:::::$word(\b)/i"," $word$1",$line);
+      $line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+            $line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+      $line = preg_replace("/:::::$word,:::::/i","$word",$line);
 		}
 	}
 	return $line;
 }
+
 
 //Updates a dynamic variable found in some object
 /*Shared*/ function update_dynamic_variable($name,$value) {
@@ -4360,8 +4360,8 @@ function parse_data($data) {
 		foreach (array_unique($pages[2])as $page_parse) {
 			if (!array_key_exists($page_parse, $words)) {
 				if ($desc = $this->page_exists_desc($page_parse)) {
-					$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-					$repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+					//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+					$repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
 				} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
 					# Link plural topic names to singular topic names if the plural
 					# doesn't exist, and the language is english
@@ -4375,7 +4375,7 @@ function parse_data($data) {
 					# Others, excluding ending ss like address(es)
 					$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
 					if($desc = $this->page_exists_desc($plural_tmp)) {
-						$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+						// $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 						// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 						$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 					} else {
@@ -4695,9 +4695,9 @@ function parse_data($data) {
 	}
 
 	// check if we are inside a table, if so, ignore monospaced and do
-	// not insert <br />
-	$inTable += substr_count($line, "<table");
-	$inTable -= substr_count($line, "</table");
+	// not insert <br/>
+	$inTable += substr_count(strtolower($line), "<table");
+	$inTable -= substr_count(strtolower($line), "</table");
 
 	// If the first character is ' ' and we are not in pre then we are in pre
 	global $feature_wiki_monosp;

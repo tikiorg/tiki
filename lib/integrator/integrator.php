@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.26 2004-03-29 21:26:35 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.27 2004-05-01 01:06:29 damosoft Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -112,15 +112,19 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
             $query = "select max(`ord`) from `tiki_integrator_rules` where `repID`=?";
             $ord = $tikilib->getOne($query, array($repID)) + 1;
         }
-        if (strlen($ruleID) == 0 || $ruleID == 0)
+        if (strlen($ruleID) == 0 || $ruleID == 0) {
             $query = "insert into `tiki_integrator_rules`
                      (`repID`,`ord`,`srch`,`repl`,`type`,`casesense`,`rxmod`,`enabled`,`description`)
                       values(?,?,?,?,?,?,?,?,?)";
-        else
+	    $qparms = array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr);
+	} else {
+	
             $query = "update `tiki_integrator_rules` 
                       set `repID`=?,`ord`=?,`srch`=?,`repl`=?,`type`=?,`casesense`=?,
                       `rxmod`=?,`enabled`=?,`description`=? where `ruleID`=?";
-        $result = $tikilib->query($query, array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr,(int) $ruleID));
+	    $qparms = array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr,(int) $ruleID);
+	}
+        $result = $tikilib->query($query, $qparms);
         // Clear cached pages for this repository
         $this->clear_cache($repID);
     }

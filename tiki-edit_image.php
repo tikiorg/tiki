@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.9 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.10 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,6 +115,11 @@ $smarty->assign_by_ref('imageId', $_REQUEST['edit']);
 $smarty->assign_by_ref('galleryId', $info['galleryId']);
 $smarty->assign_by_ref('name', $info['name']);
 $smarty->assign_by_ref('description', $info['description']);
+
+$cat_type = 'image';
+$cat_objid = $_REQUEST["edit"];
+include_once ("categorize_list.php");
+
 ask_ticket('edit-image');
 
 // Display the template

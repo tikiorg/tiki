@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.19 2004-04-27 00:04:15 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.20 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.19 2004-04-27 00:04:15 franck Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.20 2004-05-01 01:06:19 damosoft Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -26,6 +26,11 @@ if ($feature_galleries != 'y') {
 if (!isset($_REQUEST["id"]) && !isset($_REQUEST["name"])) {
    header("HTTP/1.0 404 Not Found");
 	die;
+}
+
+// Die is galleries are disabled
+if($feature_galleries != 'y') {
+  die;
 }
 
 $gal_use_db = $tikilib->get_preference('gal_use_db', 'y');

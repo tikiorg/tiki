@@ -66,6 +66,9 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function parse_html_page($pageName, $data) {
+		global $tikilib; // only required for parsing <wiki>...</wiki> tags
+
+		// match and replace dynamic content
 		//The data is needed because we may be previewing a page...
 		preg_match_all("/\{t?ed id=([^\}]+)\}/", $data, $eds);
 
@@ -73,6 +76,14 @@ class HtmlPagesLib extends TikiLib {
 			$cosa = $this->get_html_page_content($pageName, $eds[1][$i]);
 			$data = str_replace($eds[0][$i], '<span id="' . $eds[1][$i] . '">' . $cosa["content"] . '</span>', $data);
 		}
+
+		// match and parse text in <wiki>...</wiki> tags
+		preg_match_all('/<wiki>(.*?)<\/wiki>/si', $data, $wikis); // ? for ungreedy and /s to include \n in .
+		for ($i = 0; $i < count($wikis[0]); $i++) {
+			$parsed = substr($tikilib->parse_data($wikis[1][$i]), 0, -7); // remove <br /> appended by parser
+			$data = str_replace($wikis[0][$i], $parsed , $data);
+		}
+
 		return $data;
 	}
 
@@ -93,7 +104,7 @@ class HtmlPagesLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if (!in_array($res["zone"], $all_eds)) {
 				$query2 = "delete from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?";
-				$result2 = $this->query($query2,array($pageName,$zone));
+				$result2 = $this->query($query2,array($pageName,$res['zone']));
 			}
 		}
 

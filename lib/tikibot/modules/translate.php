@@ -74,7 +74,8 @@ function trans($params) {
 		$buffer = ob_get_contents();
 		ob_end_clean();
 		curl_close ($ch);
-		$start = strpos ($buffer, 'padding:10px')+22;
+// 		$start = strpos ($buffer, 'padding:10px')+22; Maybe less init offset is better		
+		$start = strpos ($buffer, 'padding:10px')+14;
 		$buffer = substr($buffer, $start);
 		$end = strpos ($buffer, '</div>');
 		$buffer = trim(substr($buffer, 0, $end));

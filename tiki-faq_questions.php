@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.16 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.17 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if ($tiki_p_admin_faqs != 'y') {
 }
 
 if (!isset($_REQUEST["faqId"])) {
-	$smarty->assign('msg', tra("No FAQ indicated"));
+	$smarty->assign('msg', tra("No questions group indicated"));
 
 	$smarty->display("error.tpl");
 	die;
