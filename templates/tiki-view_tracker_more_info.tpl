@@ -2,9 +2,9 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
-<div id="tiki-main">
+<div id="tiki-main" class="simplebox">
 <h3>{tr}Details{/tr}</h3>
-<table class="normal">
+<table class="normalnoborder">
 {if $info.name}
 <tr class="formcolor"><td>{tr}Name{/tr}</td><td><b>{$info.name}</b></td></tr>
 {/if}
@@ -13,6 +13,9 @@
 {/if}
 {if $info.longdesc}
 <tr class="formcolor"><td colspan="2">{$info.longdesc}</td></tr>
+{/if}
+{if $info.downloads}
+<tr class="formcolor"><td>{tr}Downloads{/tr}</td><td>{$info.downloads}</td></tr>
 {/if}
 </table>
 <div class="cbox">
