@@ -884,13 +884,13 @@ class UsersLib extends TikiLib {
 
 	if ($find) {
 	    if ($mid) {
-		$mid .= " and `permName` like '%?%'";
+		$mid .= " and `permName` like ?";
 
-		$values[] = $find;
+		$values[] = '%'.$find.'%';
 	    } else {
-		$mid .= " where `permName` like '%?%'";
+		$mid .= " where `permName` like ?";
 
-		$values[] = $find;
+		$values[] = '%'.$find.'%';
 	    }
 	}
 
