@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.5 2005-02-14 15:36:21 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.6 2005-02-14 15:43:20 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -910,7 +910,7 @@ table.viewthread
 TABLE.normalnoborder {  width: 100%;}
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading
+TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
 td.listfilesheading, td.listartheading, td.forumheading, td.thead
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -920,7 +920,7 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
 }
 
 /* adding th so it doesn't mess up formatting as we transition to an accessible tiki */
-th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading 
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading, 
 th.listfilesheading, th.listartheading, th.forumheading, th.thead
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
