@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.40 2004-02-26 06:30:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.41 2004-03-27 21:24:58 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -16,7 +16,7 @@
     </div>
 {* the heading of the  box *}
     <div class="cbox-data">
-      <table class="admin"><tr>
+      <table class="admin" width="100%"><tr>
         <td class="heading" colspan="5" align="center">{tr}Tiki sections and features{/tr}</td>
       </tr>
 {* top left wiki ck box ... each of the function option boxes here begin with  td class form *}

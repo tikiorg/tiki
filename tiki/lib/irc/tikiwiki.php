@@ -1,4 +1,4 @@
-<?php # $CVSHeader$
+<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/tikiwiki.php,v 1.6 2004-03-27 21:24:32 mose Exp $
 
 # Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.

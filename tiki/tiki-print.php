@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.15 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.16 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,8 +101,9 @@ $smarty->assign_by_ref('lastUser', $info["user"]);
 $http_domain = $tikilib->get_preference('http_domain', false);
 $http_port = $tikilib->get_preference('http_port', 80);
 $http_prefix = $tikilib->get_preference('http_prefix', '/');
-
+$http_svrname = $tikilib->get_preference('feature_server_name','');
 if ($http_domain) {
+
 	$prefix = 'http://' . $http_domain;
 
 	if ($http_port != 80)
@@ -110,6 +111,10 @@ if ($http_domain) {
 
 	$prefix .= $https_prefix;
 	$smarty->assign('urlprefix', $prefix);
+} else {
+  $prefix = 'http://'.$http_svrname;
+  $prefix .= $http_prefix;
+  $smarty->assign('urlprefix', $prefix);
 }
 
 ask_ticket('print');

@@ -1,4 +1,10 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 // --------------------------------------------------------------------------------
 // PhpConcept Library - Zip Module 2.0
 // --------------------------------------------------------------------------------
@@ -22,7 +28,7 @@
 //   The use of this software is at the risk of the user.
 //
 // --------------------------------------------------------------------------------
-// $Id: pclzip.lib.php,v 1.6 2003-12-04 18:39:51 dheltzel Exp $
+// $Id: pclzip.lib.php,v 1.7 2004-03-27 21:24:03 mose Exp $
 // --------------------------------------------------------------------------------
 
   // ----- Constants

@@ -1,10 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.2 2004-01-15 09:56:26 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.3 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
+
 if (isset($_REQUEST["searchprefs"])) {
 	check_ticket('admin-inc-search');
 	simple_set_int("search_refresh_rate");

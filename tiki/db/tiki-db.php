@@ -1,5 +1,10 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 //$api_tiki        = 'pear';
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
@@ -66,7 +71,7 @@ if (file_exists($file)) {
 if (preg_match('/^adodb$/i', $api_tiki)) {
 	TikiInit::prependIncludePath('lib/adodb');
 	TikiInit::prependIncludePath('lib/pear');
-	error_reporting (E_ALL);       # show any error messages triggered
+	#error_reporting (E_ALL);       # show any error messages triggered
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?

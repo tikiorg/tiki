@@ -1939,7 +1939,6 @@ div#rules-copy-panel {
   font-weight:bold;
 }
 
-TABLE.admin { width: 100%; }
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
   background-color: #dedede;
@@ -2032,6 +2031,7 @@ div#loadstats {
 div#rules-copy-panel {
     display: none;
 }
+
 /* for tabs */
 div.tabs {
 	font-size: 11px;
@@ -2097,5 +2097,7 @@ a.removeTab{
 #clear {
 	clear:both;
 	}
-	
 
+TABLE.admin {
+  width: 100%;
+}

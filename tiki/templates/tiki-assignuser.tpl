@@ -1,6 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.12 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.13 2004-03-27 21:24:58 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
+<a href="tiki-adminusers.php" class="link">Back to users</a>
+<br/>
 <h3>{tr}User Information{/tr}</h3>
 <table class="normal">
 <tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
@@ -40,7 +42,7 @@
    </td>
 </tr>
 </table>
-</div>
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-assignuser.php?assign_user={$assign_user}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}name{/tr}</a></td>
@@ -78,4 +80,4 @@
 {/if}
 
 </div>
-
+</div>

@@ -2663,7 +2663,7 @@ div.tree {
 }
 /* Root of tree (outer div) */
 div.tree#top {
-	border:    1px outset #00E000;
+	border:    1px solid #00287B;
 	padding:   10px 1.5em 20px 1.5em;
 }
 
@@ -2738,7 +2738,6 @@ div#rules-copy-panel {
   font-weight:bold; 
 }
 
-TABLE.admin { width: 100%; }
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
   background-color: #dedede;
@@ -2831,6 +2830,7 @@ div#loadstats {
 div#rules-copy-panel {
     display: none;
 }
+
 /* for tabs */
 div.tabs {
 	font-size: 11px;
@@ -2897,4 +2897,7 @@ a.removeTab{
 	clear:both;
 	}
 	
-
+/* admin class table widths */
+TABLE.admin {
+  width: 100%;
+}

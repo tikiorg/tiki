@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.5 2004-02-09 19:19:42 damosoft Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.6 2004-03-27 21:24:04 mose Exp $
 
 Tikiwiki CSRF protection.
 also called : anti-banana-skin (oops)
@@ -89,6 +89,12 @@ $smarty->display("tiki.tpl");
 please ask admins@tikiwiki.org if you are lost with a complicated case.
 
 */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 function ask_ticket($area) {
 	$_SESSION['antisurf'] =  $area; 
 }

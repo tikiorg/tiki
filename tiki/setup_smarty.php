@@ -1,10 +1,19 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.18 2004-03-24 11:56:26 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.19 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
+  //smarty is not there - we need setup
+  require_once('tiki-setup.php');
+  $smarty->assign('msg',tra("This script cannot be called directly"));
+  $smarty->display("error.tpl");
+  die;
+}
 
 if (isset($_SERVER["REQUEST_URI"])) {
   ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
@@ -13,7 +22,6 @@ if (isset($_SERVER["REQUEST_URI"])) {
 require_once ("db/tiki-db.php");
 require_once("lib/tikiticketlib.php");
 
-error_reporting (E_ALL);
 // Set the separator for PHP generated tags to be &amp; instead of &
 // This is necessary for XHTML compliance
 ini_set("arg_separator.output","&amp;");

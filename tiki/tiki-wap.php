@@ -8,7 +8,6 @@
 require_once ('tiki-setup.php');
 
 require ("lib/hawhaw/hawhaw.inc");
-error_reporting (E_WARNING);
 /*
 $DemoPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
 $title = new HAW_text("Tiki", HAW_TEXTFORMAT_BOLD);

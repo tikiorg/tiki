@@ -20,19 +20,22 @@
 
 <table class="normal">
   <tr>
-    <td class="heading">
-      {tr}Account{/tr}
-      &nbsp;[<a class="tablename" href="tiki-admin_mailin.php">{tr}add new{/tr}</a>]
+    <td class="heading" width="25%">
+      [<a class="tablename" href="tiki-admin_mailin.php">{tr}add new{/tr} {tr}Account{/tr}</a>]
     </td>
-    <td class="heading">{tr}type{/tr}</td>
+    <td class="heading" width="50%">
+      {tr}Account{/tr}
+    </td>
+    <td class="heading" width="25%">{tr}type{/tr}</td>
   </tr>
-  {cycle values="odd,even" print=false}
+  {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
     <tr>
-      <td class="{cycle advance=false}">
-        <a href="tiki-admin_mailin.php" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
-        [<a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}" class="tablename">edit</a>]
+      <td class="{cycle advance=false}" align="right">
+        [<a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}" class="tablename">{tr}edit{/tr}</a> |
+         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" class="tablename">{tr}delete{/tr}</a>]
       </td>
+      <td class="{cycle advance=false}">{$accounts[ix].account}</td>
       <td class="{cycle}">{$accounts[ix].type}</td>
     </tr>
   {/section}
@@ -61,7 +64,7 @@
     </tr>
     <tr class="formcolor">
       <td>{tr}SMTP requires authentication{/tr}</td>
-      <td  colspan="3">
+      <td colspan="3">
         {tr}Yes{/tr}
         <input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if} />
         {tr}No{/tr}
@@ -70,14 +73,15 @@
     </tr>
     <tr class="formcolor">
       <td>{tr}Username{/tr}</td>
-      <td  colspan="3"><input type="text" name="username" value="{$info.username|escape}" /></td>
+      <td colspan="3"><input type="text" name="username" value="{$info.username|escape}" /></td>
     </tr>
     <tr class="formcolor">
       <td>{tr}Password{/tr}</td>
-      <td  colspan="3"><input type="text" name="pass" value="{$info.pass|escape}" /></td>
+      <td colspan="3"><input type="text" name="pass" value="{$info.pass|escape}" /></td>
     </tr>
     <tr class="formcolor">
-      <td>{tr}Type{/tr}</td><td colspan="3">
+      <td>{tr}Type{/tr}</td>
+      <td colspan="3">
         <select name="type">
           <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
           <option value="wiki-put" {if $info.type eq 'wiki-put'}selected="selected"{/if}>{tr}wiki-put{/tr}</option>
@@ -102,6 +106,15 @@
         <input type="radio" name="anonymous" {if $info.anonymous eq 'y'}checked="checked"{/if} value="y" />
         {tr}No{/tr}
         <input type="radio" name="anonymous" {if $info.anonymous eq 'n'}checked="checked"{/if} value="n" />
+      </td>
+    </tr>
+    <tr class="formcolor">
+      <td>{tr}Allow attachments{/tr}</td>
+      <td colspan="3">
+        {tr}Yes{/tr}
+        <input type="radio" name="attachments" {if $info.attachments eq 'y'}checked="checked"{/if} value="y" />
+        {tr}No{/tr}
+        <input type="radio" name="attachments" {if $info.attachments eq 'n'}checked="checked"{/if} value="n" />
       </td>
     </tr>
     <tr class="formcolor">

@@ -17,10 +17,15 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.3 2004-03-17 02:51:37 rossta Exp $
+// $Id: TimeZoneWindows.php,v 1.4 2004-03-27 21:24:05 mose Exp $
 //
 // Date_TimeZone Class Windows Support File
 //
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 /**
  * This class includes Windows time zone data (from zoneinfo) in the form of a global array,

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.40 2004-03-07 23:12:10 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.41 2004-03-27 21:24:51 mose Exp $
 
 MoreNeat theme
 */
@@ -1669,7 +1669,7 @@ div.tree
 /* Root of tree (outer div) */
 div.tree#top
 {
-  border: 1px outset #00E000;
+  border: 1px solid #8CACBB;
   padding: 10px 1.5em 20px 1.5em;
 }
 

@@ -1,5 +1,11 @@
 <?php
-/* $Id: taillib.php,v 1.2 2003-08-07 04:34:11 rossta Exp $*/
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
+/* $Id: taillib.php,v 1.3 2004-03-27 21:24:42 mose Exp $*/
 function tail_filter_irc(&$item, $key) {
 	# here is a sample line
 	# [06-24-03/05:13] <mose> how is everyone ?

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.66 2004-03-02 11:10:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.67 2004-03-27 21:24:58 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -173,7 +173,7 @@
 
 {if $print_page eq 'y'}
   <div class="editdate" align="center"><p>
-    {tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}
+    {tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page={$page|escape:"url"}
   </p></div>
 {/if}
 

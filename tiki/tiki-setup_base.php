@@ -1,10 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.56 2004-03-26 21:27:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.57 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
 
 //print("tiki-setup_base 1: before include setup.php: ".$tiki_timer->elapsed()."<br />");
 # switch smarty with commenting either line

@@ -1,12 +1,18 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.5 2004-01-15 22:03:16 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.6 2004-03-27 21:24:46 mose Exp $
  *
  * \brief Base tree maker
  *
  * \author zaufi@sendmail.ru
  *
  */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 require_once ('lib/debug/debugger.php');
 
 /**

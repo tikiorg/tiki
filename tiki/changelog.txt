@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.151 2004-03-25 06:19:08 dabright Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.152 2004-03-27 21:23:52 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -479,7 +479,6 @@ Version 1.7 -Eta Carinae-
 * [FIX] all sent mails are utf-8 encoded now for intl sake 
 * [FIX] added sender email address to outgoing mails
 * [FIX] added form to edit groups and change included groups
->>>>>>> 1.94.2.10
 * [NEW] Added an Edit CSS feature, with fancy display of css and fast editor form
 * [NEW] Added a setup_virtual.sh for virtual hosting, and changed internal code accordingly
 * [NEW] Added a general Calendar feature for tiki content browsing and groups calendar

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.203 2004-03-26 21:27:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.204 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,6 @@
 
 //xdebug_start_profiling();
 
-#error_reporting(E_ALL);
 
 /*!
     \static
@@ -504,6 +503,12 @@ $smarty->assign('feature_wiki_monosp', $feature_wiki_monosp);
 
 $system_os = $tikilib->get_preference('system_os', TikiSetup::os());
 $smarty->assign('system_os', $system_os);
+
+if ($tiki_p_admin == "y")
+	$error_reporting_level = E_ALL;
+else
+	$error_reporting_level = (int)($tikilib->get_preference('error_reporting_level', E_ALL));
+error_reporting($error_reporting_level);
 
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 $smarty->assign('rememberme', $rememberme);

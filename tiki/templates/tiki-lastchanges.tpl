@@ -41,9 +41,9 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$lastchanges}
-<tr>
-<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="{cycle advance=false}">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"...":true}</a> 
+<tr class="{cycle}">
+<td>&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
+<td>&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"...":true}</a> 
 {if $lastchanges[changes].version}
 (<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}">{tr}hist{/tr}</a> {tr}v{/tr}{$lastchanges[changes].version}</span>)
 &nbsp;<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}"
@@ -60,11 +60,10 @@
 
 </td>
 
-<td class="{cycle advance=false}">{tr}{$lastchanges[changes].action}{/tr}</td>
-<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
-<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
-<td class="{cycle}">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
-
+<td>{tr}{$lastchanges[changes].action}{/tr}</td>
+<td>&nbsp;{$lastchanges[changes].user}&nbsp;</td>
+<td>&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
+<td>&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
 
 </tr>
 {sectionelse}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.29 2004-01-30 07:45:00 btodoroff Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.30 2004-03-27 21:24:58 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -118,7 +118,16 @@
               {if $system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
             </select>
         </td>
-      </tr></table>
+      </tr><tr>
+      <td class="form"><label for="general-error">{tr}Php error reporting level for non-admin:{/tr}</label></td>
+      <td><select name="error_reporting_level" id="general-error">
+            <option value="0" {if $error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
+            <option value="2047" {if $error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
+            <option value="2039" {if $error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
+            </select>
+      </td>
+      </tr>
+      </table>
       <table class="admin"><tr>
         <td class="heading" colspan="5"
             align="center">{tr}General Settings{/tr}</td>

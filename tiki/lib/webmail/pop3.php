@@ -1,5 +1,10 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 /*************************************************************************/
  #  Mailbox 0.9.2a   by Sivaprasad R.L (http://netlogger.net)             #
  #  eMailBox 0.9.3   by Don Grabowski  (http://ecomjunk.com)              #
@@ -46,9 +51,9 @@ class POP3{
          function AddError($error) {
                  
                  $this->has_error = true;
-                 echo "<center>\n";
-        	 echo "<b>Error:</b> $error\n";
-                 echo "</center>\n";
+//               echo "<center>\n";
+//        	 echo "<b>Error:</b> $error\n";
+//               echo "</center>\n";
                  $this->CloseConnection();
                  //if ($this->exit) exit;
                  

@@ -1,5 +1,10 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 class HistLib extends TikiLib {
 	function HistLib($db) {
 		# this is probably uneeded now
@@ -123,6 +128,7 @@ class HistLib extends TikiLib {
 		$where = "where (th.`version` != '' or tp.`version` != '') ";
 		if ($findwhat == '') {
 			$bindvars=array();
+			$where = '';
 		} else {
 			$findstr='%' . $findwhat . '%';
 			$where.= " and ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ? ";

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.7 2004-01-02 23:19:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.8 2004-03-27 21:23:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,6 @@ if ($tiki_p_admin_mailin != 'y' and $tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }	
-			
 
 // Add a new mail account for the user here  
 if (!isset($_REQUEST["accountId"]))
@@ -35,8 +34,7 @@ if (isset($_REQUEST["new_acc"])) {
 	check_ticket('admin-mailin');
 	$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
 		$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
-		$_REQUEST["active"], $_REQUEST["anonymous"]);
-
+		$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"]);
 	$_REQUEST["accountId"] = 0;
 }
 
@@ -49,7 +47,6 @@ if ($_REQUEST["accountId"]) {
 	$info = $mailinlib->get_mailin_account($_REQUEST["accountId"]);
 } else {
 	$info["account"] = '';
-
 	$info["username"] = '';
 	$info["pass"] = '';
 	$info["pop"] = '';
@@ -60,6 +57,8 @@ if ($_REQUEST["accountId"]) {
 	$info["type"] = 'wiki-get';
 	$info["active"] = 'y';
 	$info["anonymous"] = 'y';
+	$info["anonymous"] = 'y';
+	$info["attachments"] = 'n';
 }
 
 $smarty->assign('info', $info);

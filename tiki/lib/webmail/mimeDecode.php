@@ -17,6 +17,11 @@
 // +----------------------------------------------------------------------+
 require_once ('PEAR.php');
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  die("This script cannot be called directly");
+}
+
 /**
 *  +----------------------------- IMPORTANT ------------------------------+
 *  | Usage of this class compared to native php extensions such as        |
@@ -47,7 +52,7 @@ require_once ('PEAR.php');
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.5 $
+* @version $Revision: 1.6 $
 * @package Mail
 */
 class Mail_mimeDecode extends PEAR {
