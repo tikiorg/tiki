@@ -18,7 +18,7 @@
       <td width="20%" class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
-      <td class="odd">Average:</td>
+      <td class="odd">{tr}Average{/tr}:</td>
       <td class="odd">{$channels[ix].average|string_format:"%.2f"}</td>
     </tr>
   {elseif $channels[ix].type eq 's'}
@@ -27,7 +27,7 @@
       <td width="70%" class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
-      <td class="odd">Average:</td>
+      <td class="odd">{tr}Average{/tr}:</td>
       <td class="odd">{$channels[ix].average|string_format:"%.2f"}/10</td>
     </tr>
   {else}

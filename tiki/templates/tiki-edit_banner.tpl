@@ -1,5 +1,5 @@
-<a class="pagetitle" href="tiki-edit_banner.php">Edit or create banners</a><br/><br/>
-[<a class="link" href="tiki-list_banners.php">List banners</a>]<br/><br/>
+<a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a><br/><br/>
+[<a class="link" href="tiki-list_banners.php">{tr}List banners{/tr}</a>]<br/><br/>
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="bannerId" value="{$bannerId}" />
 <div class="simplebox">
@@ -62,7 +62,7 @@
 
 <div class="simplebox">
 <table with="100%">
-<tr><td colspan="7" class="form">{/tr}Show the banner only on{/tr}:</td></tr>
+<tr><td colspan="7" class="form">{tr}Show the banner only on{/tr}:</td></tr>
 <tr>
 <td class="form">{tr}Mon{/tr}:<input type="checkbox" name="Dmon" {if $Dmon eq 'y'}checked="checked"{/if} /></td>
 <td class="form">{tr}Tue{/tr}:<input type="checkbox" name="Dtue" {if $Dtue eq 'y'}checked="checked"{/if} /></td>
