@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_forums.php">Admin Forums</a></h1>
+<h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a></h1>
 <h2>{tr}Create/edit Forums{/tr}</h2>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$galleryId}">{tr}There are inddividual permissions set for this forum{/tr}</a>
@@ -11,10 +11,10 @@
 <tr><td class="formcolor">{tr}Prevent flooding{/tr}:</td><td class="formcolor"><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
 {tr}Minimum time between posts{/tr}: 
 <select name="floodInterval">
-<option value="15" {if $floodInterval eq 15}selected="selected"{/if}>15 secs</option>
-<option value="30" {if $floodInterval eq 30}selected="selected"{/if}>30 secs</option>
-<option value="60" {if $floodInterval eq 60}selected="selected"{/if}>1 min</option>
-<option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 mins</option>
+<option value="15" {if $floodInterval eq 15}selected="selected"{/if}>15 {tr}secs{/tr}</option>
+<option value="30" {if $floodInterval eq 30}selected="selected"{/if}>30 {tr}secs{/tr}</option>
+<option value="60" {if $floodInterval eq 60}selected="selected"{/if}>1 {tr}min{/tr}</option>
+<option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 {tr}mins{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage}" /></td></tr>
@@ -58,32 +58,32 @@
 <tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail}" /></td></tr>
 <tr><td class="formcolor"><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td class="formcolor">
 <select name="pruneUnrepliedAge">
-<option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>1 day</option>
-<option value="172800" {if $pruneUnrepliedAge eq 172800}selected="selected"{/if}>2 days</option>
-<option value="432000" {if $pruneUnrepliedAge eq 432000}selected="selected"{/if}>5 days</option>
-<option value="604800" {if $pruneUnrepliedAge eq 604800}selected="selected"{/if}>7 days</option>
-<option value="1296000" {if $pruneUnrepliedAge eq 1296000}selected="selected"{/if}>15 days</option>
-<option value="2592000" {if $pruneUnrepliedAge eq 2592000}selected="selected"{/if}>30 days</option>
-<option value="5184000" {if $pruneUnrepliedAge eq 5184000}selected="selected"{/if}>60 days</option>
-<option value="7776000" {if $pruneUnrepliedAge eq 7776000}selected="selected"{/if}>90 days</option>
+<option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
+<option value="172800" {if $pruneUnrepliedAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
+<option value="432000" {if $pruneUnrepliedAge eq 432000}selected="selected"{/if}>5 {tr}days{/tr}</option>
+<option value="604800" {if $pruneUnrepliedAge eq 604800}selected="selected"{/if}>7 {tr}days{/tr}</option>
+<option value="1296000" {if $pruneUnrepliedAge eq 1296000}selected="selected"{/if}>15 {tr}days{/tr}</option>
+<option value="2592000" {if $pruneUnrepliedAge eq 2592000}selected="selected"{/if}>30 {tr}days{/tr}</option>
+<option value="5184000" {if $pruneUnrepliedAge eq 5184000}selected="selected"{/if}>60 {tr}days{/tr}</option>
+<option value="7776000" {if $pruneUnrepliedAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor"><input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after{/tr}:</td><td class="formcolor">
 <select name="pruneMaxAge">
-<option value="86400" {if $pruneMaxAge eq 86400}selected="selected"{/if}>1 day</option>
-<option value="172800" {if $pruneMaxAge eq 172800}selected="selected"{/if}>2 days</option>
-<option value="432000" {if $pruneMaxAge eq 432000}selected="selected"{/if}>5 days</option>
-<option value="604800" {if $pruneMaxAge eq 604800}selected="selected"{/if}>7 days</option>
-<option value="1296000" {if $pruneMaxAge eq 1296000}selected="selected"{/if}>15 days</option>
-<option value="2592000" {if $pruneMaxAge eq 2592000}selected="selected"{/if}>30 days</option>
-<option value="5184000" {if $pruneMaxAge eq 5184000}selected="selected"{/if}>60 days</option>
-<option value="7776000" {if $pruneMaxAge eq 7776000}selected="selected"{/if}>90 days</option>
+<option value="86400" {if $pruneMaxAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
+<option value="172800" {if $pruneMaxAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
+<option value="432000" {if $pruneMaxAge eq 432000}selected="selected"{/if}>5 {tr}days{/tr}</option>
+<option value="604800" {if $pruneMaxAge eq 604800}selected="selected"{/if}>7 {tr}days{/tr}</option>
+<option value="1296000" {if $pruneMaxAge eq 1296000}selected="selected"{/if}>15 {tr}days{/tr}</option>
+<option value="2592000" {if $pruneMaxAge eq 2592000}selected="selected"{/if}>30 {tr}days{/tr}</option>
+<option value="5184000" {if $pruneMaxAge eq 5184000}selected="selected"{/if}>60 {tr}days{/tr}</option>
+<option value="7776000" {if $pruneMaxAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>Forums</h2>
+<h2>{tr}Forums{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -123,7 +123,7 @@
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}">{tr}x{/tr}</a>
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}">{tr}edit{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Forum%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 {/if}
 </td>
 </tr>
@@ -141,7 +141,7 @@
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}">{tr}x{/tr}</a>
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}">{tr}edit{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Forum%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
 {/if}
 </td>
 </tr>

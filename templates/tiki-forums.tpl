@@ -1,5 +1,5 @@
 <div class="forumspagetitle">
-<a class="forumspagetitle" href="tiki-forums.php">Forums</a>
+<a class="forumspagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 </div>
 <div  align="center">
 <table class="findtable">
@@ -39,7 +39,7 @@
 <td class="forumstableodd">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">admin</a>
+<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}admin{/tr}</a>
 {/if}<br/>
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
 </td>
@@ -62,7 +62,7 @@
 <td class="forumstableeven">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">admin</a>
+<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}admin{/tr}</a>
 {/if}<br/>
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
 </td>

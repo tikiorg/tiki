@@ -1,5 +1,5 @@
 <div class="forumspagetitle">
-<a href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">Forum: {$forum_info.name}</a>
+<a href="tiki-view_forum.php?forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 </div>
 <br/>
 {if $openpost eq 'y'}
@@ -219,12 +219,12 @@
   <b>{$comments_coms[ix].title}</b>
   {if $tiki_p_admin_forum eq 'y'}
   [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">edit</a>]
+     class="admlink">{tr}edit{/tr}</a>]
   [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">x</a>]
+     class="admlink">{tr}x{/tr}</a>]
   {/if}     
   [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;quote={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">quote</a>]
+     class="admlink">{tr}quote{/tr}</a>]
   <br/><br/>
   {$comments_coms[ix].parsed}
   <br/><br/>
