@@ -13,10 +13,10 @@
 <a name="q{$channels[ix].questionId}"></a>
 <div class="faqqa">
 <div class="faqquestion">
-Q: {$channels[ix].question}
+{tr}Q{/tr}: {$channels[ix].question}
 </div>
 <div class="faqanswer">
-A: {$channels[ix].parsed}
+{tr}A{/tr}: {$channels[ix].parsed}
 </div>
 </div>
 {/section}
