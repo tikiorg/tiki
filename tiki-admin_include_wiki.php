@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.19 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.20 2004-04-03 09:36:39 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -290,6 +290,16 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$tikilib->set_preference("feature_wikiwords", 'n');
 
 		$smarty->assign('feature_wikiwords', 'n');
+	}
+	
+	if (isset($_REQUEST["feature_wikiwords_usedash"]) && $_REQUEST["feature_wikiwords_usedash"] == "on") {
+		$tikilib->set_preference("feature_wikiwords_usedash", 'y');
+
+		$smarty->assign('feature_wikiwords_usedash', 'y');
+	} else {
+		$tikilib->set_preference("feature_wikiwords_usedash", 'n');
+
+		$smarty->assign('feature_wikiwords_usedash', 'n');
 	}
 	
 	if(isset($_REQUEST["feature_wiki_plurals"]) && $_REQUEST["feature_wiki_plurals"]=="on") {

@@ -3978,6 +3978,7 @@ function parse_data($data) {
     global $tikidomain;
     global $feature_wikiwords;
     global $feature_wiki_paragraph_formatting;
+    global $feature_wikiwords_usedash;
 
     // Process pre_handlers here
     if (is_array($this->pre_handlers)) {
@@ -4299,14 +4300,16 @@ function parse_data($data) {
     //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
     if ($feature_wikiwords == 'y') {
   // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-  preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		if ($feature_wikiwords_usedash == 'y') {
+	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		} else {
+	preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		}
   $words = $this->get_hotwords();
   foreach (array_unique($pages[2])as $page_parse) {
       if (!array_key_exists($page_parse, $words)) {
     if ($desc = $this->page_exists_desc($page_parse)) {
         $repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-    } elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
-# Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
         $plural_tmp = $page_parse;
 # Plurals like policy / policies
@@ -5503,7 +5506,7 @@ function list_languages($path = false) {
     $h = opendir($path);
 
     while ($file = readdir($h)) {
-	if ($file != '.' && $file != '..' && $file != 'CVS' && is_dir("$path/$file") ) {
+	if ($file != '.' && $file != '..' && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
 	    $languages[] = $file;
 	}
     }

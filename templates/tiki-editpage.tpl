@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.47 2004-03-31 07:38:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.48 2004-04-03 09:36:54 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -58,7 +58,7 @@
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
-</td>
+</td></tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
 <tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>

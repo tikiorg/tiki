@@ -1,3 +1,21 @@
 User-agent: *
 Disallow: /CVS/
-
+Disallow: /lib/
+Disallow: /doc/
+Disallow: /dump/
+Disallow: /img/
+Disallow: /templates/
+Disallow: /templates_c/
+Disallow: /var/
+Disallow: /lang/
+Disallow: /backups/
+Disallow: /bin/
+Disallow: /db/
+Disallow: /games/
+Disallow: /images/
+Disallow: /modules/
+Disallow: /popups/
+Disallow: /temp/
+Disallow: /tests/
+Disallow: /tikimovies/
+Disallow: tiki-install.php

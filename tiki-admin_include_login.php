@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.15 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.16 2004-04-03 09:36:39 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -221,6 +221,10 @@ if (isset($_REQUEST["loginprefs"])) {
 	$b = (isset($_REQUEST['feature_ticketlib']) && $_REQUEST['feature_ticketlib'] == 'on') ? 'y' : 'n';
 	$tikilib->set_preference('feature_ticketlib', $b);
 	$smarty->assign('feature_ticketlib', $b);
+
+	$b = (isset($_REQUEST['feature_ticketlib2']) && $_REQUEST['feature_ticketlib2'] == 'on') ? 'y' : 'n';
+	$tikilib->set_preference('feature_ticketlib2', $b);
+	$smarty->assign('feature_ticketlib2', $b);
 }
 
 if (isset($_REQUEST["auth_pear"])) {

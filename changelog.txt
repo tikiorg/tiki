@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.152 2004-03-27 21:23:52 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.153 2004-04-03 09:36:39 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -30,8 +30,16 @@ Version 1.9
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
 
+Version 1.8.2 - Polaris -
+<http://tikiwiki.org/ReleaseProcess182>
+* [NEW] added an option in wiki admin panel to make use of dashes and
+        underscores optionnal in WikiWords
+* [NEW] Confirmation on all destructive actions
+* [NEW] index.php everywhere, which calls ../index.php until the top level
+        which will call tiki-index.php as normal
+* [NEW] Some scripts cannot be called directly, so we divert to the index.php
 
-Version 1.8.1 - Polaris-
+Version 1.8.1 - Polaris -
 <http://tikiwiki.org/ReleaseProcess181>
 * [FIX] File and Image Galleries: Directory value shouldn't need "/"
 * [MOD] Wiki Forum Discuss Broken with dropdown on Wiki Admin page 

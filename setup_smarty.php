@@ -1,15 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.20 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.21 2004-04-03 09:36:39 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+require_once('tiki-setup.php');
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
   //smarty is not there - we need setup
-  require_once('tiki-setup.php');
   $smarty->assign('msg',tra("This script cannot be called directly"));
   $smarty->display("error.tpl");
   die;
@@ -18,8 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
 if (isset($_SERVER["REQUEST_URI"])) {
   ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
 }
-
-require_once ("db/tiki-db.php");
+$ticket = '';
 require_once("lib/tikiticketlib.php");
 
 // Set the separator for PHP generated tags to be &amp; instead of &
@@ -108,8 +107,16 @@ class Smarty_TikiWiki extends Smarty {
 if (!isset($tikidomain))
 	$tikidomain = "";
 
+if (!isset($feature_ticketlib2))
+	$feature_ticketlib2 = "y";
+
 $smarty = new Smarty_TikiWiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
+/*
+if ($feature_ticketlib2 == 'y') {
+	$smarty->load_filter('output', 'ticket');
+}
+*/
 //$smarty->load_filter('output','trimwhitespace');
 
 if (isset($_REQUEST['highlight'])) {

@@ -6,6 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 //$api_tiki        = 'pear';
+
+// Please use the local.php file instead containing these variables
+// If you set sessions to store in the database, you will need a local.php file
+// Otherwise you will be ok.
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
 $dbversion_tiki = '1.8';
@@ -145,86 +149,5 @@ unset ($user_tiki);
 unset ($pass_tiki);
 unset ($dbs_tiki);
 
-
-// DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
-// 29 Mar 2004 DJNZ www.paulbloomfield.com
-
-// helper functions
-function make_clean(&$var) {
-	if ( is_array($var) ) {
-		foreach ( $var as $key=>$val ) {
-			make_clean($var[$key]);
-		}
-	} else {
-//		$var = htmlspecialchars($var, ENT_QUOTES);
-		$var = htmlspecialchars($var); // ideally use ENT_QUOTES but this is too aggressive for names like o'doyle etc.
-	}
-}
-
-// call this from anywhere to restore a variable passed in $_GET
-function get_unclean($var) {
-	if ( is_array($var) ) {
-		foreach ( $var as $key=>$val ) {
-			$ret[$key] = get_unclean($val);
-		}
-	} else {
-//		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)));
-		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS))); // ENT_QUOTES needs to match make_clean
-	}
-	return $ret;
-}
-
-// deal with register_globals
-if ( ini_get('register_globals') ) {
-	foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
-		foreach ( $superglob as $key=>$val ) {
-			if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
-				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
-				unset($GLOBALS[$key]);
-			}
-		}
-	}
-}
-
-// deal with get_magic_quotes_gpc
-/* Don't do this here because Tiki must already be doing it somewhere else
-if ( get_magic_quotes_gpc() ) { // don't do this here because Tiki must already be doing it somewhere
-	foreach ( $_GET as $key=>$val ) {
-		$_GET[$key] = stripslashes($val);
-	}
-	foreach ( $_POST as $key=>$val ) {
-		$_POST[$key] = stripslashes($val);
-	}
-	foreach ( $_COOKIE as $key=>$val ) {
-		$_COOKIE[$key] = stripslashes($val);
-	}
-}
-*/
-
-// deal with attempted <script> attacks and any other trash in URI
-// note that embedded tags in post, post files and cookie must be handled
-// specifically by code as they might be valid!
-make_clean($_GET);
-make_clean($_SERVER['QUERY_STRING']);
-make_clean($_SERVER['REQUEST_URI']);
-
-// rebuild in a safe order
-$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
-
-// deal with old request globals
-// Tiki uses them (admin for instance) so compatibility is required
-if ( false ) { // if pre-PHP 4.1 compatibility is not required
-	unset($GLOBALS['HTTP_GET_VARS']);
-	unset($GLOBALS['HTTP_POST_VARS']);
-	unset($GLOBALS['HTTP_COOKIE_VARS']);
-	unset($GLOBALS['HTTP_ENV_VARS']);
-	unset($GLOBALS['HTTP_SERVER_VARS']);
-	unset($GLOBALS['HTTP_SESSION_VARS']);
-	unset($GLOBALS['HTTP_POST_FILES']);
-} else {
-	$GLOBALS['HTTP_GET_VARS'] =& $_GET;
-	$GLOBALS['HTTP_POST_VARS'] =& $_POST;
-	$GLOBALS['HTTP_COOKIE_VARS'] =& $_COOKIE;
-}
 
 ?>

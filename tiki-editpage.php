@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.75 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.76 2004-04-03 09:36:39 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,6 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   foreach ($parts as $part) {
     if ($part["version"] > $last_part_ver) {
       $last_part_ver = $part["version"];
-
       $last_part = $part["body"];
     }
 
@@ -109,11 +108,11 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       $msg = '';
 
       if (isset($_REQUEST["save"])) {
+        make_clean($description);
         if ($tikilib->page_exists($pagename)) {
           $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description);
         } else {
-          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author,
-            $authorid, $description);
+          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description);
         }
       } else {
         $_REQUEST["edit"] = $last_part;
@@ -643,6 +642,8 @@ if (isset($_REQUEST["save"])) {
     $tikilib->cache_links($cachedlinks);
     */
       $t = date("U");
+      make_clean($_REQUEST["comment"]);
+      make_clean($description);
       $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
       if ($wiki_watch_author == 'y')
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
@@ -657,6 +658,8 @@ if (isset($_REQUEST["save"])) {
       } else {
         $minor=false;
       }
+      make_clean($_REQUEST["comment"]);
+      make_clean($description);
       $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor);
     }
 

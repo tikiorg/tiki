@@ -1948,7 +1948,7 @@ class HAW_deck
         if ($haw_license_holder && $haw_signature)
         {
           if ($haw_signature == 1)
-            $signature = sprintf("<font size=-1>Powered by HAWHAW (C)</font>\n");
+            $signature = sprintf("<font size=-1>Powered by HAWHAW (C)<br />and TikiWiki</font>\n");
           else
             if ($haw_sig_text)
               if ($haw_sig_link)
@@ -1957,7 +1957,7 @@ class HAW_deck
                 $signature = sprintf("<font size=-1>%s</font>\n", $haw_sig_text);
         }
         else
-          $signature = sprintf("<a href=\"http://info.hawhaw.de/index.htm?host=%s\" target=\"_blank\"><font size=-1>Powered by HAWHAW (C)</font></a>\n", $this->waphome);
+          $signature = sprintf("<a href=\"http://info.hawhaw.de/index.htm?host=%s\" target=\"_blank\"><font size=-1>Powered by HAWHAW (C)</font></a><br />and <a href=\"http://tikiwiki.org\" target=\"_blank\"><font size=-1>TikiWiki (C)</font></a>\n", $this->waphome);
         echo $signature;
 
         echo "</center>\n";

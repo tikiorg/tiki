@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.7 2004-03-29 21:26:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.8 2004-04-03 09:36:50 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -34,6 +34,8 @@ function qstr($str) {
 function queryError( $query, &$error, $values = null, $numrows = -1,
         $offset = -1 )
 {
+    $numrows = intval($numrows);
+    $offset = intval($offset);
     $this->convert_query($query);
 
     if ($numrows == -1 && $offset == -1)
@@ -59,6 +61,8 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 function query($query, $values = null, $numrows = -1,
         $offset = -1, $reporterrors = true )
 {
+    $numrows = intval($numrows);
+    $offset = intval($offset);
     $this->convert_query($query);
 
     //echo "query: $query <br/>";
@@ -188,6 +192,17 @@ function blob_encode(&$blob) {
 
 function convert_sortmode($sort_mode) {
     global $ADODB_LASTDB;
+
+    if ( !$sort_mode ) {
+        return '';
+    }
+    // parse $sort_mode for evil stuff
+    $sort_mode = preg_replace('/[^A-Za-z_,]/', '', $sort_mode);
+    $sep = strrpos($sort_mode, '_');
+    // force ending to either _asc or _desc
+    if ( substr($sort_mode, $sep)!=='_asc' ) {
+        $sort_mode = substr($sort_mode, 0, $sep) . '_desc';
+    }
 
     switch ($ADODB_LASTDB) {
         case "postgres7":
