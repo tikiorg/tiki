@@ -16,14 +16,10 @@
   <tr>
   <td class="formcolor">{tr}Move{/tr}</td>
   <td class="formcolor">
-  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Promote'>
-    <img src='img/icons2/nav_dot_right.gif' border='0' title="Promote"/></a>
-  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Previous'>
-    <img src='img/icons2/nav_home.gif' border='0' title="Previous"/></a>
-  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Next'>
-    <img src='img/icons2/nav_down.gif' border='0' title="Next"/></a>
-  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=Demote'>
-    <img src='img/icons2/nav_dot_left.gif' border='0' title="Demote"/></a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=1'><img src='img/icons2/nav_dot_right.gif' hspace="3" border='0' title="{tr}Promote{/tr}"/></a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=2'><img src='img/icons2/nav_home.gif' hspace="3" border='0' title="{tr}Previous{/tr}"/></a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=3'><img src='img/icons2/nav_down.gif' hspace="3" border='0' title="{tr}Next{/tr}"/></a>
+  <a href='tiki-edit_structure.php?page_ref_id={$page_ref_id}&amp;move_node=4'><img src='img/icons2/nav_dot_left.gif' hspace="3" border='0' title="{tr}Demote{/tr}"/></a>
   </td>
   </tr>
 </table>
