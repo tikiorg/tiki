@@ -77,7 +77,7 @@ function wikiplugin_tracker($data, $params) {
 					$back.= "<tr><td>".$f['name']."</td><td>";
 					$back.= '<select name="track['.$f["fieldId"].']">';
 					foreach ($list as $key=>$item) {
-						$back.= '<option value="'.$key.'">'.$item.'</option>';
+						$back.= '<option value="'.$item.'">'.$item.'</option>';
 					}
 					$back.= "</select>";
 				} elseif ($f['type'] == 'a') {
