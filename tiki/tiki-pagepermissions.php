@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.13 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.14 2003-12-05 11:51:37 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,6 +74,7 @@ if (!$tikilib->page_exists($page)) {
 if (isset($_REQUEST["assign"])) {
 	$userlib->assign_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 }
+/* TODO: CURRENTLY CANNOT ADD PERMISSIONS TO NEW STYLE STRUCTURES
 // Process the form to assign a new permission to this structure
 if(isset($_REQUEST["assignstructure"])) {
 	$userlib->assign_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
@@ -82,12 +83,13 @@ if(isset($_REQUEST["assignstructure"])) {
 		$userlib->assign_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
 	}
 }
-
+*/
 // Process the form to remove a permission from the page
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'remove') {
 		$userlib->remove_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 	}
+/* TODO: CURRENTLY CANNOT ADD PERMISSIONS TO NEW STYLE STRUCTURES
 	if($_REQUEST["action"] == 'removestructure') {
 		$userlib->remove_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
 		$pages=$structlib->get_structure_pages($page);
@@ -95,6 +97,7 @@ if (isset($_REQUEST["action"])) {
 			$userlib->remove_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
 		}
 	}
+*/
 }
 
 // Now we have to get the individual page permissions if any
