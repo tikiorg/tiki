@@ -1,7 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_quizzes.tpl,v 1.6 2003-11-23 04:01:52 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_quizzes.tpl,v 1.7 2003-11-24 01:37:55 gmuslera Exp $ *}
 
 {if $feature_quizzes eq 'y'}
-    {tikimodule title="{tr}Top Quizzes{/tr}" name="top_quizzes"}
+    {if $nonums eq 'y'}
+    {eval var="{tr}Top `$module_rows` Quizzes{/tr}" assign="tpl_module_title"}
+    {else}
+    {eval var="{tr}Top Quizzes{/tr}" assign="tpl_module_title"}
+    {/if}
+
+    {tikimodule title=$tpl_module_title name="top_quizzes"}
     <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modTopQuizzes}
 	<tr>{if $nonums != 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}
