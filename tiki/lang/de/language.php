@@ -2233,8 +2233,6 @@ in Admin-Allgemein abgestellt haben.
 "Process Name" => "Prozessname",
 "is active?" => "ist aktiv?", 
 "Or upload a process using this form" => "Oder Prozess &uuml;ber dieses Formular hochladen",
-"act" => "act",		// TODO
-"val" => "val",		// TODO
 "Add or edit a process" => "Prozess hinzuf&uuml;gen/bearbeiten",
 "Live support" => "Onlinesupport",
 "Live support system" => "Onlinesupport-System",
@@ -2287,5 +2285,14 @@ in Admin-Allgemein abgestellt haben.
 "Thank you for you registration. You may log in now." => "Vielen Dank f&uuml;r die Registrierung. Sie k&ouml;nnen sich jetzt anmelden.",
 "Batch upload (CSV file)" => "Batch Upload (CSV Datei)",
 "Overwrite" => "&Uuml;berschreiben",
+"proc" => "Prozesse",
+"processes" => "Prozesse",
+"Instances" => "Instanzen",
+"aborted" => "abgebrochen",
+"being run" => "ausgef&uuml;hrt",
+"exceptions" => "Fehler",
+"act" => "act", // TODO
+"val" => "val", // TODO
+"Activs" => "Activs", // TODO
 "##end###" => "###end###");
 ?>
