@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.10 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.11 2003-11-03 20:24:26 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,20 +76,19 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("hasImage", 'n');
 
 	if (strlen($info["imageData"]) > 0) {
-		$tmpfname = tempnam($tmpDir, "TMPIMG"). $info["imageName"];
-
+		$tmpfname = $tmpDir . "/bannerimage" . "." . $_REQUEST["bannerId"];
 		$fp = fopen($tmpfname, "wb");
-
 		if ($fp) {
-			fwrite($fp, urldecode($info["imageData"]));
-
+			fwrite($fp, $data);
 			fclose ($fp);
 			$smarty->assign('tempimg', $tmpfname);
 			$smarty->assign('hasImage', 'y');
 		} else {
+			$smarty->assign('tempimg', 'n');
 			$smarty->assign('hasImage', 'n');
 		}
 	}
+
 } else {
 	$smarty->assign('client', '');
 
