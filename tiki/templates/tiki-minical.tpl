@@ -213,7 +213,7 @@
   	  <td class="formcolor">
 	  <select name="duration_hours">
 	  {html_options output=$hours values=$hours selected=$duration_hours}
-	  </select>{if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
+	  </select> {if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
  	  <select name="duration_minutes">
 	  {html_options output=$minutes values=$minutes selected=$duration_minutes}
 	  </select> {tr}minutes{/tr}
