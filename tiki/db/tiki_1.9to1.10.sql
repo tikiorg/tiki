@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.18 2004-08-24 13:21:34 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.19 2004-08-26 22:13:52 redflo Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -92,7 +92,22 @@ ALTER TABLE tiki_galleries ADD COLUMN (
 	showfilesize char(1) NOT NULL DEFAULT 'n',
 	showfilename char(1) NOT NULL DEFAULT 'n'
 );
-	
+
+ALTER TABLE tiki_galleries ADD COLUMN (
+        defaultscale varchar(10) NOT NULL DEFAULT 'o'
+);
+
+# simplify scales
+
+alter table tiki_galleries_scales add column (scale int(11) NOT NULL default 0);
+update tiki_galleries_scales set scale=greatest(xsize,ysize);
+alter table tiki_galleries_scales drop primary key;
+alter table tiki_galleries_scales drop column xsize;
+alter table tiki_galleries_scales drop column ysize;
+alter table tiki_galleries_scales add primary key (galleryId,scale);
+
+
+
 #
 # End Imagegals enhancements
 #

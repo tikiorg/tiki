@@ -79,13 +79,14 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 {section  name=scales loop=$scaleinfo}
-{tr}Remove{/tr}:<input type="checkbox" name="{$scaleinfo[scales].xsize|escape}x{$scaleinfo[scales].ysize}" />
-{$scaleinfo[scales].xsize}x{$scaleinfo[scales].ysize}<br />
+{tr}Remove{/tr}:<input type="checkbox" name="removescale_{$scaleinfo[scales].scale|escape}" />
+{$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />{tr}default scale{/tr}<br />
 {sectionelse}
 {tr}No scales available{/tr}
 {/section}
+{tr}Original Image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
-<tr><td class="formcolor">{tr}Add scaled images size X x Y{/tr}:</td><td class="formcolor"><input type="text" name="scaleSizeX" size=4 />x<input type="text" name="scaleSizeY" size=4 /></td></tr>
+<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size=4 /></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>

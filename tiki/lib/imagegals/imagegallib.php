@@ -609,8 +609,11 @@ class ImageGalsLib extends TikiLib {
 		return true;
 	}
 
-	function rebuild_image($imageid, $itype, $xsize, $ysize) {
+	function rebuild_image($imageid, $itype, $xsize, $ysize=0) {
 		$galid = $this->get_gallery_from_image($imageid);
+		if($ysize==0) {
+			$ysize=$xsize;
+		}
 
 		//we don't rebuild original images
 		if ($itype == 'o')
@@ -623,11 +626,12 @@ class ImageGalsLib extends TikiLib {
 			$hasscale = false;
 
 			while (list($num, $sci) = each($scaleinfo)) {
-				if ($sci["xsize"] == $xsize || $sci["ysize"] == $ysize) {
+				if ((($sci['scale'] == $xsize) && ($sci['scale'] >= $ysize)) || 
+				    (($sci['scale'] == $ysize) && ($sci['scale'] >= $xsize))) {
 					$hasscale = true;
 
-					$newx = $sci["xsize"];
-					$newy = $sci["ysize"];
+					$newx = $sci['scale'];
+					$newy = $sci['scale'];
 				}
 			}
 
@@ -1357,18 +1361,19 @@ class ImageGalsLib extends TikiLib {
 		// code may be merged with get_image
 		$mid = "";
 
-		if ($xsize != 0) {
-			$mid = "and d.`xsize`=? ";
-			$bindvars=array((int)$id,$itype,(int)$xsize);
+		if ($xsize != 0 && $ysize == 0) {
+			// bounding box
+			$ysize=$xsize;
 		} 
-		if ($ysize != 0) {
-			$mid = "and d.`ysize`=? ";
-			$bindvars=array((int)$id,$itype,(int)$ysize);
-		} 
+
 		if ($xsize != 0 && $ysize != 0) {
-			// we don't know yet.
-			$mid = "and (d.`xsize` = ? or d.`ysize` = ?) order by `xysize` desc";
 			$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+			if($xsize == $ysize) {
+				// we don't know yet.
+				$mid = "and (d.`xsize` = ? or d.`ysize` = ?) order by `xysize` desc";
+			} else {
+				$mid = 'and d.`xsize` = ? and d.`ysize` = ?';
+			}
 		}
 		
 		if(!@is_array($bindvars)) {
@@ -1404,14 +1409,12 @@ class ImageGalsLib extends TikiLib {
 			$ysize = $galinfo["thumbSizeY"];
 		}
 
-		if ($xsize != 0) {
-			$mid = "and d.`xsize`=? ";
-			$bindvars=array((int)$id,$itype,(int)$xsize);
+		if ($xsize != 0 && $ysize == 0) {
+			// first parameter (xsize) represents a scale
+			// so we select a bounding box
+			$ysize=$xsize;
 		} 
-		if ($ysize != 0) {
-			$mid .= "and d.`ysize`=? ";
-			$bindvars=array((int)$id,$itype,(int)$ysize);
-		} 
+
 		if ($xsize != 0 && $ysize != 0) {
 			if ($ysize == $xsize) {
 				// we don't know yet.
@@ -1419,7 +1422,6 @@ class ImageGalsLib extends TikiLib {
 				$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
 			} else {
 				//exact match
-				//comment from redflo: does that make any sense?
 				$mid = "and d.`xsize`=? and d.`ysize`=? ";
 				$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
 			}
@@ -1531,7 +1533,7 @@ class ImageGalsLib extends TikiLib {
 		return $this->get_image($id, 't');
 	}
 
-	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n') {
+	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o') {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -1547,15 +1549,15 @@ class ImageGalsLib extends TikiLib {
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
 		`parentgallery`=?,`showname`=?,`showimageid`=?,`showdescription`=?,
 		`showcreated`=?,`showuser`=?,`showhits`=?,`showxysize`=?,`showfilesize`=?,
-		`showfilename`=?
+		`showfilename`=?,`defaultscale`=?
 	       	where `galleryId`=?";
 
-			$result = $this->query($query,array($name,$visible,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,(int)$galleryId));
+			$result = $this->query($query,array($name,$visible,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,(int)$galleryId));
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`)
-                                    values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename);
+			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`)
+                                    values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale);
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $now));
 
@@ -1568,23 +1570,19 @@ class ImageGalsLib extends TikiLib {
 		return $galleryId;
 	}
 
-	function add_gallery_scale($galleryId, $xsize, $ysize) {
-		$query = "insert into `tiki_galleries_scales`(`galleryId`,`xsize`,`ysize`)
-            values(?,?,?)";
+	function add_gallery_scale($galleryId, $scale) {
+		$query = "insert into `tiki_galleries_scales`(`galleryId`,`scale`)
+            values(?,?)";
 
-		$result = $this->query($query,array((int)$galleryId,(int)$xsize,(int)$ysize));
+		$result = $this->query($query,array((int)$galleryId,(int)$scale));
 	}
 
-	function remove_gallery_scale($galleryId, $xsize = 0, $ysize = 0) {
+	function remove_gallery_scale($galleryId, $scale= 0) {
                 $mid = "";
                 $bindvars=array((int) $galleryId);
-                if ($xsize != 0) {
-                        $mid = " and `xsize`=? ";
-                        $bindvars[]=(int) $xsize;
-                }
-                if ($ysize != 0) {
-                        $mid .= " and `ysize`=? ";
-                        $bindvars[]=(int) $ysize;
+                if ($scale != 0) {
+                        $mid = " and `scale`=? ";
+                        $bindvars[]=(int) $scale;
                 }
                 $query = "delete from `tiki_galleries_scales` where
             `galleryId`=? $mid";
@@ -1652,7 +1650,7 @@ class ImageGalsLib extends TikiLib {
 
 	function get_gallery_scale_info($id) {
 		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
-              order by `xsize`*`ysize` asc";
+              order by `scale` asc";
 
 		$result = $this->query($query,array((int) $id));
 		$resa = array();
@@ -1664,14 +1662,39 @@ class ImageGalsLib extends TikiLib {
 		return $resa;
 	}
 
-	function get_gallery_next_scale($id, $xsize = 0, $ysize = 0) {
-		$xy = $xsize * $ysize;
-
+	function get_gallery_next_scale($id, $scale= 0) {
 		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
-              and `xsize`*`ysize` > ? order by `xsize`*`ysize` asc";
-		$result = $this->query($query,array((int) $id,(int) $xy));
+              and `scale` > ? order by `scale` asc";
+		$result = $this->query($query,array((int) $id,(int) $scale));
 		$res = $result->fetchRow();
 		return $res;
+	}
+
+	function get_gallery_default_scale($id) {
+		$query = "select `defaultscale` from `tiki_galleries` where `galleryId`=?";
+		$ret=$this->getOne($query,array((int) $id));
+		return $ret;
+	}
+
+	function get_gallery_prevnext_scale($id,$currentscale) {
+		$ret=array();
+		$bindvars=array((int) $id, (int) $currentscale);
+		$query = 'select `scale` from `tiki_galleries_scales` where `galleryId`=? ';
+		$query2 =$query.'and `scale`>? order by `scale` asc';
+		$ret['nextscale']=$this->getOne($query2,$bindvars);
+		$query2 =$query.'and `scale`<? order by `scale` desc';
+		$ret['prevscale']=$this->getOne($query2,$bindvars);
+		if($ret['nextscale']) {
+			$ret['nexttype']='s';
+		} else {
+			$ret['nexttype']='o';
+		}
+		if($ret['prevscale']) {
+			$ret['prevtype']='s';
+		} else {
+			$ret['prevtype']='o';
+		}
+		return($ret);
 	}
 
 	//Capture Images from wiki, blogs, ....

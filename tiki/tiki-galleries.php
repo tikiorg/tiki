@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.31 2004-08-24 13:21:27 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.32 2004-08-26 22:13:51 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,6 +122,7 @@ $smarty->assign_by_ref('options_galleryimage',$options_galleryimage);
 $smarty->assign('galleryimage','first');
 $galleries_list=$imagegallib->list_galleries(0,-1,'name_desc',$user);
 $smarty->assign_by_ref('galleries_list',$galleries_list['data']);
+$smarty->assign('defaultscale','o');
 $smarty->assign('parentagllery',-1);
 
 // If we are editing an existing gallery prepare smarty variables
@@ -163,6 +164,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('showxysize',$info['showxysize']);
 		$smarty->assign('showfilesize',$info['showfilesize']);
 		$smarty->assign('showfilename',$info['showfilename']);
+		$smarty->assign('defaultscale',$info['defaultscale']);
 
 		$smarty->assign_by_ref('scaleinfo', $scaleinfo);
 	}
@@ -208,6 +210,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
 	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
+	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
 	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
 	foreach($auxarray as $key => $item) {
 		if(!isset($_REQUEST[$item])) {
@@ -240,12 +243,11 @@ if (isset($_REQUEST["edit"])) {
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
 		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
-		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename']);
+		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale']);
 
 	#add scales
-	if (isset($_REQUEST["scaleSizeX"])
-		&& is_numeric($_REQUEST["scaleSizeX"]) && isset($_REQUEST["scaleSizeY"]) && is_numeric($_REQUEST["scaleSizeY"])) {
-		$imagegallib->add_gallery_scale($gid, $_REQUEST["scaleSizeX"], $_REQUEST["scaleSizeY"]);
+	if (isset($_REQUEST["scaleSize"]) && is_numeric($_REQUEST["scaleSize"])) {
+		$imagegallib->add_gallery_scale($gid, $_REQUEST["scaleSize"]);
 	}
 
 	#remove scales
@@ -253,10 +255,10 @@ if (isset($_REQUEST["edit"])) {
 
 	# loop though scales to determine if a scale has to be removed
 	while (list($num, $sci) = each($scaleinfo)) {
-		$sizestr = $sci["xsize"] . "x" . $sci["ysize"];
+		$removestr = 'removescale_'.$sci['scale'];
 
-		if (isset($_REQUEST[$sizestr]) && $_REQUEST[$sizestr] == 'on') {
-			$imagegallib->remove_gallery_scale($_REQUEST["galleryId"], $sci["xsize"], $sci["ysize"]);
+		if (isset($_REQUEST[$removestr]) && $_REQUEST[$removestr] == 'on') {
+			$imagegallib->remove_gallery_scale($_REQUEST["galleryId"], $sci['scale']);
 		}
 	}
 

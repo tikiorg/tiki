@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.26 2004-07-22 13:08:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.27 2004-08-26 22:13:51 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,62 +99,30 @@ if ($tiki_p_view_image_gallery != 'y') {
 	die;
 }
 
-$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
-$sxsize = 0;
-$sysize = 0;
 
-if (isset($_REQUEST["xsize"]))
-	$sxsize = $_REQUEST["xsize"];
-
-if (isset($_REQUEST["ysize"]))
-	$sysize = $_REQUEST["ysize"];
-
-$prevx = 0;
-$prevy = 0;
-$prevt = 'o';
-$nextx = 0;
-$nexty = 0;
-$nextt = 'o';
-
-while (list($key, $val) = each($scaleinfo)) {
-	if ($val["xsize"] < $sxsize && $val["ysize"] < $sysize) {
-		$prevx = $val["xsize"];
-
-		$prevy = $val["ysize"];
-		$prevt = 's';
-	}
-
-	if ($val["xsize"] > $sxsize && $val["ysize"] > $sysize) {
-		$nextx = $val["xsize"];
-
-		$nexty = $val["ysize"];
-		$nextt = 's';
-	}
+$scalesize = 0;
+if (isset($_REQUEST['scalesize'])) {
+	$scalesize = $_REQUEST['scalesize'];
 }
+
+$scaleinfo = $imagegallib->get_gallery_prevnext_scale($_REQUEST["galleryId"],$scalesize);
+// print_r($scaleinfo);
+$smarty->assign_by_ref('scaleinfo',$scaleinfo);
 
 if (!isset($_REQUEST["scaled"])) {
 	$itype = 'o';
 
-	$sxsize = 0;
-	$sysize = 0;
+	$scalesize = 0;
 } else {
 	$itype = 's';
 
-	$sxsize = $_REQUEST["xsize"];
-	$sysize = $_REQUEST["ysize"];
+	$scalesize = $_REQUEST["scalesize"];
 }
 
 $smarty->assign_by_ref('itype', $itype);
-$smarty->assign_by_ref('sxsize', $sxsize);
-$smarty->assign_by_ref('sysize', $sysize);
-$smarty->assign_by_ref('nextx', $nextx);
-$smarty->assign_by_ref('nexty', $nexty);
-$smarty->assign_by_ref('nextt', $nextt);
-$smarty->assign_by_ref('prevx', $prevx);
-$smarty->assign_by_ref('prevy', $prevy);
-$smarty->assign_by_ref('prevt', $prevt);
+$smarty->assign_by_ref('scalesize', $scalesize);
 
-$info = $imagegallib->get_image_info($_REQUEST["imageId"], $itype, $sxsize, $sysize);
+$info = $imagegallib->get_image_info($_REQUEST["imageId"], $itype, $scalesize);
 $gal_info = $imagegallib->get_gallery($info["galleryId"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
