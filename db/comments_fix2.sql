@@ -4,6 +4,25 @@
 # a type field encoding what type of object it is.  -rlpowell
 #########
 
+# To execute this file do the following:
+#
+# $ mysql -f dbname <comments_fix2.sql
+#
+# where dbname is the name of your tiki database.
+#
+# For example, if your tiki database is named tiki (not a bad
+# choice), type:
+#
+# $ mysql -f tiki <comments_fix2.sql
+
+
+#############
+# You may *****NOT**** execute this command as often as you like!
+#
+# Every run of this command after the first will *DESTROY* any
+# comments posted since the run before!
+#############
+
 # Save the old comments!
 # Note that this will only ever work once, which is *good* because we want to
 # keep it! 
