@@ -23,7 +23,7 @@ $langmapping = array(
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
     'sr' => array(   'Serbian',  tra("Serbian")       ),
     'sv' => array(  'Svenska',      tra("Swedish")      ),
-    'tw' => array(  '中文(繁体字)',          tra("Traditional Chinese")          ),
+    'tw' => array(  '正體中文',          tra("Traditional Chinese")          ),
     'zh' => array(  'Chinese',      tra("Chinese")      )
 );
 ?>
