@@ -73,7 +73,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_rss_modules($offset,$maxRecords,$sort_mode,$find);
+$channels = $rsslib->list_rss_modules($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
