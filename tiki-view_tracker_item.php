@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.38 2004-02-03 04:35:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.39 2004-02-03 16:07:41 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -185,6 +185,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		$smarty->assign('item_info', $item_info);
 		
 		if (isset($ins_categs) and is_array($ins_categs)) {
+			include_once('lib/categories/categlib.php');
 			$cat_type = "tracker ".$_REQUEST["trackerId"];
 			$cat_objid = $_REQUEST["itemId"];
 			$cat_desc = "";
@@ -205,6 +206,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$last = array();
+	$lst = '';
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 		if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers) {
 			if ($fields["data"][$i]["type"] != 'h') {
@@ -236,6 +238,8 @@ if ($_REQUEST["itemId"]) {
 							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
 						}
 					}
+					//ob_start();var_dump($last);$output = ob_get_contents();ob_end_clean();
+					//$ins_fields["data"][$i]["links"][] = $output;
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($ins_fields["data"][$i]["options_array"][0],$ins_fields["data"][$i]["options_array"][1],$info["$fid"]);
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
