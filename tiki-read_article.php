@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_articles != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 if(!isset($_REQUEST["articleId"])) {
   $smarty->assign('msg',tra("No article indicated"));
   $smarty->display('error.tpl');

@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_articles != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // Now check permissions to access this page
 if($tiki_p_edit_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot edit this article"));

@@ -10,6 +10,13 @@ if($feature_listPages != 'y') {
 }
 */
 
+if($feature_submissions != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 /*
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {

@@ -94,6 +94,12 @@ $feature_userVersions = $tikilib->get_preference("feature_userVersions", 'y');
 $feature_galleries = $tikilib->get_preference("feature_galleries",'y');
 $feature_featuredLinks = $tikilib->get_preference("feature_featuredLinks",'y');
 $feature_hotwords = $tikilib->get_preference("feature_hotwords",'y');
+
+$feature_articles = $tikilib->get_preference("feature_articles",'n');
+$feature_submissions = $tikilib->get_preference("feature_submissions",'n');
+$feature_blogs = $tikilib->get_preference("feature_blogs",'n');
+$feature_xmlrpc = $tikilib->get_preference("feature_xmlrpc",'n');
+
 $smarty->assign_by_ref('feature_hotwords',$feature_hotwords);
 $smarty->assign_by_ref('feature_lastChanges',$feature_lastChanges);
 $smarty->assign_by_ref('feature_dump',$feature_dump);
@@ -108,6 +114,11 @@ $smarty->assign_by_ref('feature_userPreferences', $feature_userPreferences);
 $smarty->assign_by_ref('feature_userVersions', $feature_userVersions);
 $smarty->assign_by_ref('feature_galleries',$feature_galleries);
 $smarty->assign_by_ref('feature_featuredLinks',$feature_featuredLinks);
+
+$smarty->assign_by_ref('feature_articles',$feature_articles);
+$smarty->assign_by_ref('feature_submissions',$feature_submissions);
+$smarty->assign_by_ref('feature_blogs',$feature_blogs);
+$smarty->assign_by_ref('feature_xmlrpc',$feature_xmlrpc);
 // Other preferences
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');

@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_articles != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
