@@ -82,6 +82,8 @@ onChange="toggle('grouptracker');"/>
 </td></tr>
 <tr><td class="form">{tr}Remember me domain{/tr}:</td><td><input type="text" name="cookie_domain" value="{$cookie_domain|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}Remember me path{/tr}:</td><td><input type="text" name="cookie_path" value="{$cookie_path|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}Protect against CSRF with a confirmation step{/tr}:</td><td><input type="checkbox" name="feature_ticketlib" {if $feature_ticketlib eq 'y'}checked="c
+hecked"{/if}/></td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
