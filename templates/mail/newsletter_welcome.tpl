@@ -1,10 +1,10 @@
-Welcome to our newsletter!
-This email address has been added to the list of subscriptors of:
-Newsletter: {$info.name}
+{tr}Welcome to our newsletter!{/tr}
+{tr}This email address has been added to the list of subscriptors of:{/tr}
+{tr}Newsletter:{/tr} {$info.name}
 
-Description:
+{tr}Description:{/tr}
 {$info.description}
 
-You can always cancel your subscription using:
+{tr}You can always cancel your subscription using:{/tr}
 
 {$url_subscribe}?unsubscribe={$code}

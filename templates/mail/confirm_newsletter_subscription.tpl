@@ -1,9 +1,9 @@
-Somebody or you tried to subscribe this email address at our site: {$server_name}
-To the newsletter: {$info.name}
+{tr}Somebody or you tried to subscribe this email address at our site:{/tr} {$server_name}
+{tr}To the newsletter:{/tr} {$info.name}
 
-Description:
+{tr}Description:{/tr}
 {$info.description}
 
-In order to confirm your subscription you must access the following URL:
+{tr}In order to confirm your subscription you must access the following URL:{/tr}
 
 {$url_subscribe}?confirm_subscription={$code}
