@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.9 2003-11-09 05:22:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.10 2003-11-10 13:40:38 sylvieg Exp $
  *
  * Admin interface for repositories management
  *
@@ -68,7 +68,7 @@ if (isset($_REQUEST["action"]))
         header('location: '.$_SERVER['SCRIPT_NAME'].'?action=edit&repID='.$repID);
         exit;
     default:
-        $smarty->assign('msg', tra("Requested action is not supportted on repository"));
+        $smarty->assign('msg', tra("Requested action is not supported on repository"));
         $smarty->display("styles/$style_base/error.tpl");
         die;
         break;
