@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.49 2003-10-26 03:35:41 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.50 2003-10-28 22:05:34 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -460,6 +460,7 @@ CREATE TABLE tiki_article_types (
   show_pubdate varchar(1) default 'y',
   show_expdate varchar(1) default NULL,
   show_reads varchar(1) default 'y',
+  show_size varchar(1) default 'y',
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
@@ -469,7 +470,9 @@ INSERT IGNORE INTO tiki_article_types(type,show_post_expire) VALUES ('Event','n'
 INSERT IGNORE INTO tiki_article_types(type,show_post_expire,heading_only,allow_comments) VALUES ('Classified','n','y','n');
 
 ALTER TABLE tiki_articles ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
-update tiki_articles set expireDate = 1104555540 where expireDate is null;
+UPDATE tiki_articles SET expireDate = 1104555540 WHERE expireDate is null;
+ALTER TABLE tiki_articles ADD COLUMN state varchar(1) default 's' AFTER `title`;
+UPDATE tiki_articles SET state = 'p';
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
 
