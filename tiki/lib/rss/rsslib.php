@@ -126,7 +126,6 @@ class RSSLib extends TikiLib {
   
   function refresh_rss_module($rssId)
   {
-    $info = $this->get_rss_module($rssId);
     @$fp = fopen($info["url"],"r");
     if(!$fp) return false;
     $data = '';
