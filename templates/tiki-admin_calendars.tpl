@@ -69,8 +69,8 @@
 <td class="{cycle advance=false}">{$cal.customlanguages}</td>
 <td class="{cycle advance=false}">{$cal.custompriorities}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&drop={$id}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&calendarId={$id}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {/foreach}
