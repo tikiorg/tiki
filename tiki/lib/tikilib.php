@@ -3625,11 +3625,15 @@ class TikiLib extends TikiDB {
 				$linktext = $pages[1][$i];
 			}
 		    global $feature_wiki_jstooltips;
+		    if ($desc != tra('no description')) {
 			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
 			$repl = '<a href="'.$uri_ref.'" class="wiki" onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $linktext . '</a>';
 			} else {
 			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
 			}
+		    } else {
+		    	$repl = '<a href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
+		    }
 
 			// Check is timeout expired?
 			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
@@ -3678,11 +3682,15 @@ class TikiLib extends TikiDB {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    global $feature_wiki_jstooltips;
+		    if ($desc != tra('no description')) {
 			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
 				$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
 			} else {
 			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
 			}
+		    } else {
+		    	$repl = "<a href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
+		    }
 		    } else {
 				global $tiki_p_edit;
 				if ($tiki_p_edit == 'y') {
@@ -3715,11 +3723,15 @@ class TikiLib extends TikiDB {
 			if ($desc = $this->page_exists_desc($page_parse)) {
 			    //$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			    global $feature_wiki_jstooltips;
+			    if ($desc != tra('no description')) {
 				if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
 				    $repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki" onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse . '</a>';
 				} else {
 				    $repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
 				}
+			    } else {
+			    	$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+			    }
 			} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
 # Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
