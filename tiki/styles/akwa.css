@@ -295,7 +295,7 @@ table.viewthread
 TABLE.normalnoborder {  width: 100%; border-spacing: 0; border-collapse: separate; }
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, 
+TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.bloglistheading, td.listfgalheading, 
 td.listfilesheading, td.listartheading, td.forumheading, td.thead
 {
 	background-image: url(akwa/aqua-menubar.png);
@@ -345,11 +345,11 @@ border-top: 1px dashed #dedede;
 
 
 /* Links to view an object from a table listing objects can be generalized to this link */
-a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumname
+a.tablename, a.galname, a.imagename, a.jukeboxname, a.blogname, a.fgalname, a.artname, a.forumname
 { font-weight: bold; font-size: 12px ; letter-spacing: 1px; }
-a.tablename:active,a.galname:active, .a.imagename:active, a.blogname:active, a.fgalname:active,a.artname:active,a.forumname:active
+a.tablename:active, a.galname:active, a.jukeboxname:active, a.imagename:active, a.blogname:active, a.fgalname:active, a.artname:active, a.forumname:active
 { }
-a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
+a.tablename:hover, a.galname:hover, a.jukeboxname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover
 { }
 
 a.forumnameread
@@ -398,7 +398,9 @@ td.listfgalactionsodd, td.listfilesnameodd,td.listfilesdescriptionodd,td.listfil
 td.listfilesfilesizeodd,td.listfilescreatedodd,td.listfilesdlsodd,td.listfilesnameodd,td.listfilesuserodd,td.listfilesactionsodd,
 td.listarttitleodd,td.listarttopicodd,td.listartpublishDateodd,td.listartauthorodd,td.listartreadsodd,td.listarthasimageodd,
 td.listartuseimageodd,td.listartactionsodd,td.listartsizeodd,td.forumstableodd,td.forumstableinfoodd,td.topictitleodd,
-td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd
+td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd,td.jukeboxlistnameodd,
+td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastModifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd,
+td.jukeboxlistvisitsodd
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : Black; background-color: #EFEFEF; vertical-align: top; text-align: left;}
 
 /* Even rows in several listings */
@@ -412,7 +414,9 @@ td.listfgalactionseven,td.listfilesnameeven ,td.listfilesdescriptioneven,td.list
 td.listfilesfilesizeeven,td.listfilescreatedeven,td.listfilesdlseven,td.listfilesnameeven,td.listfilesusereven,td.listfilesactionseven,
 td.listarttitleeven,td.listarttopiceven,td.listartpublishDateeven,td.listartauthoreven,td.listartreadseven,td.listarthasimageeven,
 td.listartuseimageeven,td.listartactionseven,td.listartsizeeven,td.forumstableeven,td.forumstableinfoeven,td.topictitleeven,
-td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven
+td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven,td.jukeboxlistnameeven,
+td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastModifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven,
+td.jukeboxlistvisitseven
 { font-size: 12px; }
 
 TD.third { font-size: 12px;  background-color: #CCCCCC; }
@@ -445,13 +449,13 @@ margin-bottom: 0px;
 }
 
 /* Links where no special link style apply (usually with the general application background) */
-.link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
+.link, .gallink, .jukeboxlink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink,
 .admlink,.forumbutlink
 {   font-size: 11px;}
-.link:active, .gallink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active,.commentslink:active,
+.link:active, .gallink:active, .jukeboxlink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active,.commentslink:active,
 .admlink:active,.forumbutlink:active
 { }
-.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover,.commentslink:hover,
+.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover,.commentslink:hover, .jukeboxlink:hover,
 .admlink:hover,.forumbutlink:hover
 { }
 
@@ -462,11 +466,11 @@ div.searchdate {  font-size: 10px; color : #333333;}
 .mini {font-size: 9px;color : Black;}
 
 /* prev & next buttons in pagination */
-.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext
+.prevnext, .galprevnext, .jukeboxprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext
 {font-size: 12px; }
-.prevnext:active, .galprevnext:active, .blogprevnext:active, .fgalprevnext:active, .artprevnext:active, .forumprevnext:active
+.prevnext:active, .galprevnext:active, .jukeboxprevnext:active, .blogprevnext:active, .fgalprevnext:active, .artprevnext:active, .forumprevnext:active
 {}
-.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover
+.prevnext:hover, .galprevnext:hover, .jukeboxprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover
 {}
 
 /* Warning background/color */
