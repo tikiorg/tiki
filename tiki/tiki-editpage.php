@@ -348,7 +348,7 @@ if(isset($_REQUEST["save"])) {
     }
 
     // add permisions here otherwise return error!
-    if($wiki_feature_copyrights == 'y'
+    if(isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y'
       && isset($_REQUEST['copyrightTitle'])
       && isset($_REQUEST['copyrightYear'])
       && isset($_REQUEST['copyrightAuthors'])
