@@ -254,7 +254,7 @@ class TrackerLib extends TikiLib {
 			$opts = array();
 			$itid = $res["itemId"];
 			$query2 = "select ttf.`fieldId`, `value` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
-				where ttif.`fieldId`=ttf.`fieldId` and `isTblVisible`=? and`itemId`=? order by `position` asc";
+				where ttif.`fieldId`=ttf.`fieldId` and `isPublic`=? and`itemId`=? order by `position` asc";
 			$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
 			$pass = true;
 			$last = array();
@@ -264,7 +264,6 @@ class TrackerLib extends TikiLib {
 				$inid = $res1['fieldId'];
 				$fil[$inid] = $res1['value'];
 			}
-			
 			foreach ($listfields as $fieldId=>$fopt) {
 				if (isset($fil[$fieldId])) {
 					$fopt['value'] = $fil[$fieldId];
