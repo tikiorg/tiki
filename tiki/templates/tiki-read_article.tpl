@@ -8,7 +8,10 @@
 {$arttitle}</span>
 <br />
 {if $show_subtitle eq 'y' and $subtitle}<div class="articlesubtitle">{$subtitle}</div>{/if}
-<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})
+<span class="titleb">
+{if $show_author eq 'y' && $authorName}{tr}By:{/tr} {$authorName} {/if}
+{if $show_pubdate eq 'y' && $publishDate}{tr}on:{/tr} {$publishDate|tiki_short_datetime} {/if}
+{if $show_reads eq 'y'}({$reads} {tr}reads{/tr}){/if}
 </span><br />
 </div>
 
@@ -54,10 +57,11 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 </table>
 </div>
 <div class="articletrailer">
-<table class="wikitopline"><tr><td>
-({$size} bytes)
-</td>
-{if $feature_multilingual and $show_lang and $lang}{include file="translated-lang.tpl" td='y'}{/if}
+<table class="wikitopline"><tr>
+{if $show_size eq 'y'}
+<td>({$size} bytes)</td>
+{/if}
+{if $feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
