@@ -1,23 +1,32 @@
-TikiWiki mods Collection
--------------------------
+$Header: /cvsroot/tikiwiki/_mods/themes/README,v 1.2 2004-05-09 18:29:31 damosoft Exp $
 
-This package is bundled separately because it contains various 
-licences. Each mod has his own, refer to them specifically before 
-using them.
+TikiWiki User Contributed Themes Collection
+-------------------------------------------
 
+These themes are bundled seperately simply to reduce the footprint on
+the TikiWiki installation.  Also, you may want to license your theme
+differently.
 
-Themes Index
-------------
+If no license reference is found in your themes README, lets assume its 
+the same as TikiWiki, thats LGPL.
 
-Please note the format
+Remember to include your contact details.
+
+Please note the following desired format:
+
+/themename/README
 
 /themename/styles/
 * This contains everything that needs to be copied to your sites /styles/ folder
+
 /themename/templates/styles/themename/
 * This contains everything that needs to be copied to your sites /templates/styles/themename/ folder
 
 The idea being you can just cp -R /themename/* /tikiroot/.
 
+
+Themes Index
+------------
 
 /isabelsworld/ - http://isabel.parkersworld.org
 /zaksworld/ - http://zak.parkersworld.org
