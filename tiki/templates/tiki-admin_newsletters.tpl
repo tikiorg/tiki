@@ -34,15 +34,22 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Users can subscribe any email addresss{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Users can subscribe/unsubscribe to this list{/tr}</td><td class="formcolor">
+<input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Users can subscribe any email address{/tr}</td><td class="formcolor">
 <input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Add unsubscribe instructions to each newsletter{/tr}</td><td class="formcolor">
+<input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Validate email addresses{/tr}</td><td class="formcolor">
+<input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} /></td></tr>
+{* <tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
 <select name="frequency">
 {section name=ix loop=$freqs}
 <option value="{$freqs[ix].t|escape}" {if $info.frequency eq $freqs[ix].t}selected="selected"{/if}>{$freqs[ix].i} {tr}days{/tr}</option>
 {/section}
 </select>
 </td></tr>
+*}
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

@@ -36,6 +36,7 @@
   <td class="even">{tr}Description{/tr}:</td>
   <td class="even">{$nl_info.description}</td>
 </tr>
+{if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
 {if $tiki_p_subscribe_email eq 'y'}
 <tr>
   <td class="even">{tr}Email:{/tr}</td>
@@ -48,6 +49,7 @@
   <td class="even">&nbsp;</td>
   <td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe{/tr}" /></td>
 </tr>
+{/if}
 </table>
 </form>
 {/if}
