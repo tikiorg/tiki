@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.18 2003-08-13 09:58:38 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.19 2003-08-21 00:13:19 rossta Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if (get_magic_quotes_gpc()) {
 }
 
 // Define and load Smarty components
-define('SMARTY_DIR', "Smarty/");
+define('SMARTY_DIR', 'lib/smarty');
 require_once (SMARTY_DIR . 'Smarty.class.php');
 
 class Smarty_Sterling extends Smarty {
@@ -32,6 +32,8 @@ class Smarty_Sterling extends Smarty {
 		$this->cache_dir = "cache/$tikidomain";
 		$this->caching = false;
 		$this->assign('app_name', 'Sterling');
+		// do we need this?
+		// $this->request_use_auto_globals = true;
 	//$this->debugging = true;
 	//$this->debug_tpl = 'debug.tpl';
 	}

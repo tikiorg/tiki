@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.4 2003-08-14 12:51:40 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.5 2003-08-21 00:13:19 rossta Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,6 +21,7 @@ class Babelfish {
 	*/
 	function host() {
 		if (isset($_SERVER['HTTP_HOST'])) {
+			// HTTP_HOST already includes a ':port' if it is used
 			return $_SERVER['HTTP_HOST'];
 		}
 
@@ -122,23 +123,25 @@ class Babelfish {
 			),
 		);
 
-		// \todo Use phpsniff or PHP Net::Detect to detect the browser type
-		// Netscape 4.x display '&#xabcd;' literally
-#		if (preg_match('/(mozilla\/4)/i', $_SERVER['HTTP_USER_AGENT'])) {
-#			$fishes['en']['zh'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Chinese&nbsp;(CN)';
-#			$fishes['en']['ja'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Japenese&nbsp;(Nihongo)';
-#			$fishes['en']['ko'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Korean&nbsp;(Hangul)';
-#		}
+		// \todo Use phpsniff or PEAR's Net_UserAgent_Detect to detect the browser type
+		// as Netscape 4.x and possibly others displays '&#xabcd;' literally
+//		if (preg_match('/(mozilla\/4)/i', $_SERVER['HTTP_USER_AGENT'])) {
+//			$fishes['en']['zh'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Chinese&nbsp;(CN)';
+//			$fishes['en']['ja'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Japenese&nbsp;(Nihongo)';
+//			$fishes['en']['ko'] = 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;Korean&nbsp;(Hangul)';
+//		}
 
-		# If we have already translated this page (babelfish=en_fr), then don't display the strings again
-		if (!isset($fishes[$lang_from]) || isset($_GET['babelfish']))
+		// If we have already translated this page (babelfish=en_fr), then don't display the strings again
+		if (!isset($fishes[$lang_from]) || isset($_GET['babelfish'])) {
 			return array();
+		}
 
 		$a = array();
-		foreach ($fishes[$lang_from] as $lang_to => $msg)
+		foreach ($fishes[$lang_from] as $lang_to => $msg) {
 			$a[] = array('target' => $lang_to,
                          'href'   => Babelfish::url($lang_from, $lang_to),
                          'msg'    => $msg);
+		}
 
 		return $a;
 	}
@@ -150,7 +153,9 @@ class Babelfish {
 	*/
 	function logo($lang = 'en') {
 		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>";
+
 		$lang = strtolower($lang);
+
 		switch ($lang) {
 			case 'en':
 			case 'de':
