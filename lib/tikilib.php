@@ -4158,10 +4158,8 @@ function parse_data($data) {
     preg_match_all("/(\{img [^\}]+})/", $data, $pages);
 
     foreach (array_unique($pages[1])as $page_parse) {
-	//$parts = explode(" ", $page_parse);
 	$parts = $this->split_tag( $page_parse);
 
-$repl="";
 	$imgdata = array();      // pre-set preferences
 	$imgdata["src"] = '';
 	$imgdata["height"] = '';
@@ -4170,37 +4168,9 @@ $repl="";
 	$imgdata["align"] = '';
 	$imgdata["desc"] = '';
 	$imgdata["imalign"] = '';
+        $imgdata = $this->split_assoc_array( $parts, $imgdata);
 
-        $imgdata = $this->split_agssoc_array( $parts, $imgdata);
-/*old stuff: should go away when the above works
-	$imgdata = array();
-	$imgdata["src"] = '';
-	$imgdata["height"] = '';
-	$imgdata["width"] = '';
-	$imgdata["link"] = '';
-	$imgdata["align"] = '';
-	$imgdata["desc"] = '';
-	$imgdata["imalign"] = '';
-
-	foreach ($parts as $part) {
-$repl .="($part) ";
-	    $part = str_replace('}', '', $part);
-
-	    $part = str_replace('{', '', $part);
-	    $part = str_replace('\'', '', $part);
-	    $part = str_replace('"', '', $part);
-
-	    if (strstr($part, '=')) {
-		$subs = explode("=", $part, 2);
-
-		$imgdata[$subs[0]] = $subs[1];
-	    }
-	}
- 
-*/
-	//print("todo el tag es: ".$page_parse."<br/>");
-	//print_r($imgdata);
-	$repl .= '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
+	$repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
 
 	if ($imgdata["width"])
 	    $repl .= ' width="' . $imgdata["width"] . '"';
