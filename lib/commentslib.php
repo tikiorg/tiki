@@ -25,7 +25,8 @@ class Comments extends TikiLib {
                          $show_description,
                          $inbound_address,$outbound_address,
                          $topic_smileys, $topic_summary,
-                         $ui_avatar, $ui_flag, $ui_posts, $ui_email, $ui_online)
+                         $ui_avatar, $ui_flag, $ui_posts, $ui_email, $ui_online,
+                         $approval_type)
   {
     $name = addslashes($name);
     $description = addslashes($description);
@@ -59,6 +60,7 @@ class Comments extends TikiLib {
                 ui_posts = '$ui_posts',
                 ui_email = '$ui_email',
                 ui_online = '$ui_online',
+                approval_type = '$approval_type',
                 topics_list_pts = '$topics_list_pts',
                 topics_list_lastpost = '$topics_list_lastpost',
                 topics_list_author = '$topics_list_author',
@@ -76,7 +78,7 @@ class Comments extends TikiLib {
                 topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
                 inbound_address,outbound_address,
                 topic_smileys,topic_summary,
-                ui_avatar,ui_flag,ui_posts,ui_email,ui_online) 
+                ui_avatar,ui_flag,ui_posts,ui_email,ui_online,approval_type) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
@@ -85,7 +87,7 @@ class Comments extends TikiLib {
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
                         '$inbound_address','$outbound_address',
                         '$topic_smileys','$topic_summary',
-                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online') ";
+                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online','$approval_type') ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
