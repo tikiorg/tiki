@@ -4,13 +4,13 @@
 
 <!-- the help link info -->
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Charts" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Charts{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 <!-- link to tpl -->
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
@@ -25,35 +25,35 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Title{/tr}</td>
 		<td><input type="text" maxlength="250" name="title" value="{$info.title|escape}" /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Description{/tr}</td>
 		<td><textarea rows="4" cols="40" name="description">{$info.description|escape}</textarea></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Active{/tr}</td>
 		<td><input type="checkbox" name="isActive" {if $info.isActive eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Users can vote for only one item from this chart per period{/tr}</td>
 		<td><input id='chksc' type="checkbox" name="singleChartVotes" {if $info.singleChartVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Prevent users from voting for the same item more than once{/tr}</td>
 		<td><input id="chksi" type="checkbox" name="singleItemVotes" {if $info.singleItemVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Users can suggest new items{/tr}</td>
 		<td><input {literal}onchange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id="chksug" type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Auto validate user suggestions{/tr}</td>
 		<td><input {literal}onchange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id="chkaut" type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Ranking shows{/tr}</td>
 		<td>
 			<select name="topN">
@@ -67,7 +67,7 @@
 			</select>
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Voting system{/tr}</td>
 		<td>
 			<select name="maxVoteValue">
@@ -77,7 +77,7 @@
 			</select>
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Ranking frequency{/tr}</td>
 		<td>
 			<select name="frequency">
@@ -89,19 +89,19 @@
 			</select>
 		</td>
 	</tr>	
-	<tr class="cell">
+	<tr>
 		<td>{tr}Show Average{/tr}</td>
 		<td><input type="checkbox" name="showAverage" {if $info.showAverage eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Show Votes{/tr}</td>
 		<td><input type="checkbox" name="showVotes" {if $info.showVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Use Cookies for unregistered users{/tr}</td>
 		<td><input type="checkbox" name="useCookies" {if $info.useCookies eq 'y'}checked="checked"{/if} /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>{tr}Users can vote again after{/tr}</td>
 		<td>
 			<select id="selva" name="voteAgainAfter" {literal}onchange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal}>
@@ -113,7 +113,7 @@
 			</select>
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td>&nbsp;</td>
 		<td><input type="submit" name="save" value="{if $chartId > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
 	</tr>
@@ -133,38 +133,23 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
-<td  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'title_desc'}{sameurl sort_mode="title_asc"}{else}{sameurl sort_mode="title_desc"}{/if}">{tr}Title{/tr}</a></td>
-<td  style="text-align:right;" class="heading" >{tr}Items{/tr}</td>
-<td  style="text-align:right;" class="heading" >{tr}Ranks{/tr}</td>
-<td  class="heading">&nbsp;</td>
+<th><input type="submit" name="delete" value="{tr}x{/tr} " /></th>
+<th><a href="{if $sort_mode eq 'title_desc'}{sameurl sort_mode="title_asc"}{else}{sameurl sort_mode="title_desc"}{/if}">{tr}Title{/tr}</a></th>
+<th>{tr}Items{/tr}</th>
+<th>{tr}Ranks{/tr}</th>
+<th>&nbsp;</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr>
-	<td class="{cycle advance=false}">
-		<input type="checkbox" name="chart[{$items[ix].chartId}]" />
-	</td>
-	<td class="{cycle advance=false}">
-		<a class="link" href="{sameurl chartId=$items[ix].chartId}">{$items[ix].title}</a>
-	</td>
-	<td style="text-align:right;" class="{cycle advance=false}">
-		<a class="link" href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{$items[ix].items}</a>
-	</td>
-	<td style="text-align:right;" class="{cycle advance=false}">
-		{$items[ix].periods}
-	</td>
-	<td style="text-align:right;" class="{cycle}">
-		<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
-	</td>
-
+	<td class="{cycle advance=false}"><input type="checkbox" name="chart[{$items[ix].chartId}]" /></td>
+	<td class="{cycle advance=false}"><a href="{sameurl chartId=$items[ix].chartId}">{$items[ix].title}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{$items[ix].items}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].periods}</td>
+	<td style="text-align:right;" class="{cycle}"><a href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" alt='{tr}view{/tr}' /></a></td>
 </tr>
-{sectionelse}
-<tr>
-	<td class="{cycle advance=false}" colspan="5">
-	{tr}No charts defined yet{/tr}
-	</td>
-</tr>	
+{sectionelse}j
+<tr><td class="{cycle advance=false}" colspan="5">{tr}No charts defined yet{/tr}</td></tr>	
 {/section}
 </table>
 </form>

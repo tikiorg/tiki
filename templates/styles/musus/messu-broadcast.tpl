@@ -16,7 +16,7 @@
 {else}
 <form action="messu-broadcast.php" method="post">
 <table>
-	<tr class="cell">
+	<tr>
 		<td><label for="broadcast-group">{tr}Group{/tr}:</label></td>
 		<td>
 			<select name="group" id="broadcast-group">
@@ -29,7 +29,7 @@
 			</select>
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="broadcast-priority">{tr}Priority{/tr}:</label></td>
 		<td>
 			<select name="priority" id="broadcast-priority">
@@ -42,15 +42,15 @@
 			<input type="submit" name="send" value="{tr}send{/tr}" />
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="broadcast-subject">{tr}Subject{/tr}:</label></td>
 		<td><input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
 	</tr>
 </table>
 <br />
 <table>
-	<tr class="cell">
-<!--td below had ==style="text-align: center;"== -->
+	<tr>
+<!--td below had style="text-align: center;" -->
 		<td><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
 	</tr>
 </table>

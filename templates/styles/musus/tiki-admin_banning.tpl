@@ -18,9 +18,7 @@
 <table>
 <tr>
 	<td><label for="banning-title">{tr}Rule title{/tr}</label></td>
-	<td>
-		<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" />
-	</td>
+	<td><input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" /></td>
 </tr>
 <tr>
 	<td><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
@@ -45,7 +43,7 @@
 		<table><tr>
 		{section name=ix loop=$sections}
         <td>
-			<input type="checkbox" name="section[{$sections[ix]}]" id="banning-section" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} /> <label for="banning-section">{$sections[ix]}</label>
+			<label for="banning-section">{$sections[ix]}</label><input type="checkbox" name="section[{$sections[ix]}]" id="banning-section" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} />
         </td>
         {* see if we should go to the next row *}
         {if not ($smarty.section.ix.rownum mod 3)}
@@ -69,33 +67,23 @@
 </tr>
 <tr>
 	<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
-	<td>
-		<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
-	</td>
+	<td><input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
 	<td>{tr}Rule active from{/tr}</td>
-	<td>
-		{html_select_date prefix="date_from" time="$info.date_from"}
-	</td>
+	<td>{html_select_date prefix="date_from" time="$info.date_from"}</td>
 </tr>
 <tr>
 	<td>{tr}Rule active until{/tr}</td>
-	<td>
-		{html_select_date prefix="date_to" time="$info.date_to"}
-	</td>
+	<td>{html_select_date prefix="date_to" time="$info.date_to"}</td>
 </tr>
 <tr>
 	<td><label for="banning-mess">{tr}Custom message to the user{/tr}</label></td>
-	<td>
-		<textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea>
-	</td>
+	<td><textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea></td>
 </tr>
 <tr>
 	<td>&nbsp;</td>
-	<td>
-		<input type="submit" name="save" value="{tr}save{/tr}" />
-	</td>
+	<td><input type="submit" name="save" value="{tr}save{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -122,9 +110,7 @@
 {section name=user loop=$items}
 <tr>
 <td class="{cycle advance=false}"><input type="checkbox" name="delsec[{$items[user].banId}]" /></td>
-<td class="{cycle advance=false}">
-<a href="tiki-admin_banning.php?banId={$items[user].banId}">{$items[user].title}</a>
-</td>
+<td class="{cycle advance=false}"><a href="tiki-admin_banning.php?banId={$items[user].banId}">{$items[user].title}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">
 {if $items[user].mode eq 'user'}
 	{$items[user].user}
@@ -140,7 +126,7 @@
 <td class="{cycle}">
 <a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')" 
-title="Click here to delete this rule"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" ></a>
+title="Click here to delete this rule"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 </td>
 </tr>
 {sectionelse}

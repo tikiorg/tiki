@@ -23,14 +23,14 @@
 </tr>
 </table>
 <table>
-<tr class="heading">
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">{tr}ID{/tr}</a></td>
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlocations_desc'}customlocations_asc{else}customlocations_desc{/if}">{tr}loc{/tr}</a></td>
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}cat{/tr}</a></td>
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}lang{/tr}</a></td>
-<td><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}prio{/tr}</a></td>
-<td>{tr}action{/tr}</td>
+<tr>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">{tr}ID{/tr}</a></th>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlocations_desc'}customlocations_asc{else}customlocations_desc{/if}">{tr}loc{/tr}</a></th>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}cat{/tr}</a></th>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}lang{/tr}</a></th>
+<th><a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}prio{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach key=id item=cal from=$calendars}
@@ -44,8 +44,8 @@
 <td class="{cycle}">
    <a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this calendar?{/tr}')" 
-title="Click here to delete this calendar"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" ></a>
-   <a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="Click here to delete this calendar"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   <a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/foreach}
@@ -82,32 +82,32 @@ title="Click here to delete this calendar"><img border="0" alt="{tr}Remove{/tr}"
 <form action="tiki-admin_calendars.php" method="post">
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
 <table>
-<tr class="cell"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr class="cell"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
-<tr class="cell"><td>{tr}Custom Locations{/tr}:</td><td>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="5" wrap="virtual" style="width:100%;">{$description|escape}</textarea></td></tr>
+<tr><td>{tr}Custom Locations{/tr}:</td><td>
 <select name="customlocations">
 <option value='y' {if $customlocations eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlocations eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr class="cell"><td>{tr}Custom Categories{/tr}:</td><td>
+<tr><td>{tr}Custom Categories{/tr}:</td><td>
 <select name="customcategories">
 <option value='y' {if $customcategories eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customcategories eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr class="cell"><td>{tr}Custom Languages{/tr}:</td><td>
+<tr><td>{tr}Custom Languages{/tr}:</td><td>
 <select name="customlanguages">
 <option value='y' {if $customlanguages eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $customlanguages eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr class="cell"><td>{tr}Custom Priorities{/tr}:</td><td>
+<tr><td>{tr}Custom Priorities{/tr}:</td><td>
 <select name="custompriorities">
 <option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr class="cell"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

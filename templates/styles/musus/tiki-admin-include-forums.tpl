@@ -1,11 +1,11 @@
-<div class="cbox">
-  <div class="cbox-title">{tr}Forums{/tr}</div>
-  <div class="cbox-data">
+<div class="tiki">
+  <div class="tiki-title">{tr}Forums{/tr}</div>
+  <div class="tiki-content">
     {tr}Forums settings{/tr}
     <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=forums">
-        <table class="admin"><tr>
-          <td class="form">{tr}Home Forum (main forum){/tr}</td>
+        <table><tr>
+          <td>{tr}Home Forum (main forum){/tr}</td>
           <td><select name="homeForum">
               {section name=ix loop=$forums}
                 <option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true}</option>
@@ -19,20 +19,20 @@
     
     <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=forums">
-        <table class="admin"><tr>
-          <td class="form">{tr}Rankings{/tr}:</td>
+        <table><tr>
+          <td>{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_forum_rankings"
               {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td class="form">{tr}Accept wiki syntax{/tr}:</td>
+          <td>{tr}Accept wiki syntax{/tr}:</td>
           <td><input type="checkbox" name="feature_forum_parse"
               {if $feature_forum_parse eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td class="form">{tr}Forum quick jumps{/tr}:</td>
+          <td>{tr}Forum quick jumps{/tr}:</td>
           <td><input type="checkbox" name="feature_forum_quickjump"
               {if $feature_forum_quickjump eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td class="form">{tr}Ordering for forums in the forum listing{/tr}</td>
+          <td>{tr}Ordering for forums in the forum listing{/tr}</td>
           <td><select name="forums_ordering">
               <option value="created_desc" {if $forums_ordering eq 'created_desc'}selected="selected"{/if}>{tr}Creation Date (desc){/tr}</option>
               <option value="threads_desc" {if $forums_ordering eq 'threads_desc'}selected="selected"{/if}>{tr}Topics (desc){/tr}</option>
@@ -52,29 +52,29 @@
     <div class="simplebox">
       {tr}Forum listing configuration{/tr}
       <form method="post" action="tiki-admin.php?page=forums">
-        <table class="admin"><tr>
-          <td class="form">{tr}Topics{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_topics"
+        <table><tr>
+          <td>{tr}Topics{/tr}</td>
+          <td><input type="checkbox" name="forum_list_topics"
               {if $forum_list_topics eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Posts{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_posts"
+          <td>{tr}Posts{/tr}</td>
+          <td><input type="checkbox" name="forum_list_posts"
               {if $forum_list_posts eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Posts per day{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_ppd"
+          <td>{tr}Posts per day{/tr}</td>
+          <td><input type="checkbox" name="forum_list_ppd"
               {if $forum_list_ppd eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Last post{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_lastpost"
+          <td>{tr}Last post{/tr}</td>
+          <td><input type="checkbox" name="forum_list_lastpost"
               {if $forum_list_lastpost eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Visits{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_visits"
+          <td>{tr}Visits{/tr}</td>
+          <td><input type="checkbox" name="forum_list_visits"
               {if $forum_list_visits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Description{/tr}</td>
-          <td class="form"><input type="checkbox" name="forum_list_desc"
+          <td>{tr}Description{/tr}</td>
+          <td><input type="checkbox" name="forum_list_desc"
               {if $forum_list_desc eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="forumlistprefs"

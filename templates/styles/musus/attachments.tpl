@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.3 2004-01-09 14:07:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.4 2004-01-13 18:47:56 musus Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -15,7 +15,7 @@
   || $tiki_p_wiki_admin_attachments == 'y') 
   && count($atts) > 0}
 
-	<table class="normal">
+	<table>
 		<caption> {tr}List of attached files{/tr} </caption>
 		<tr>
 			<td  class="heading">
@@ -37,9 +37,9 @@
 					{$atts[ix].filename|iconify}
 					<a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
 					{if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-						&nbsp;&nbsp;<a href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" 
+						  <a href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this attachment?{/tr}')" 
-title="{tr}Click here to delete this attachment{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>&nbsp;&nbsp;
+title="{tr}Click here to delete this attachment{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>  
 					{/if}
 				</td>
 				<td class="{cycle advance=false}">

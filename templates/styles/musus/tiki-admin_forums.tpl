@@ -3,18 +3,18 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Forums" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Forums{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=Forums" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Forums{/tr}"><img alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin forums tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin forums tpl{/tr}"><img alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 <!-- beginning of next bit -->
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=forums"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+<a href="tiki-admin.php?page=forums"><img alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 {/if}
 
 {if $forumId > 0}
@@ -32,13 +32,13 @@
 <tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td>{tr}Show description{/tr}:</td><td><input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Prevent flooding{/tr}:</td><td><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
+<tr><td>{tr}Prevent flooding{/tr}:</td><td><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} />
 {tr}Minimum time between posts{/tr}: 
 <select name="floodInterval">
-<option value="15" {if $floodInterval eq 15}selected="selected"{/if}>15 {tr}secs{/tr}</option>
-<option value="30" {if $floodInterval eq 30}selected="selected"{/if}>30 {tr}secs{/tr}</option>
-<option value="60" {if $floodInterval eq 60}selected="selected"{/if}>1 {tr}min{/tr}</option>
-<option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 {tr}mins{/tr}</option>
+<option value="15" {if $floodInterval eq 15}selected="selected"{/if}>{tr}15 seconds{/tr}</option>
+<option value="30" {if $floodInterval eq 30}selected="selected"{/if}>{tr}30 seconds{/tr}</option>
+<option value="60" {if $floodInterval eq 60}selected="selected"{/if}>{tr}1 minute{/tr}</option>
+<option value="120" {if $floodInterval eq 120}selected="selected"{/if}>{tr}2 minutes{/tr}</option>
 </select>
 </td></tr>
 <tr><td>{tr}Topics per page{/tr}:</td><td><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
@@ -61,7 +61,7 @@
 </td></tr>
 <tr><td>{tr}Moderator group{/tr}:</td><td>
 <select name="moderator_group">
-<option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+<option value="" {if $moderator_group eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $moderator_group eq $groups[ix].groupName}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
@@ -97,29 +97,29 @@
 <option value="title_asc" {if $threadOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 </select>
 </td></tr>
-<tr><td><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
-<tr><td><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td>
+<tr><td><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} />{tr}Send this forums posts to this email{/tr}:</td><td><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
+<tr><td><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} />{tr}Prune unreplied messages after{/tr}:</td><td>
 <select name="pruneUnrepliedAge">
-<option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
-<option value="172800" {if $pruneUnrepliedAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
-<option value="432000" {if $pruneUnrepliedAge eq 432000}selected="selected"{/if}>5 {tr}days{/tr}</option>
-<option value="604800" {if $pruneUnrepliedAge eq 604800}selected="selected"{/if}>7 {tr}days{/tr}</option>
-<option value="1296000" {if $pruneUnrepliedAge eq 1296000}selected="selected"{/if}>15 {tr}days{/tr}</option>
-<option value="2592000" {if $pruneUnrepliedAge eq 2592000}selected="selected"{/if}>30 {tr}days{/tr}</option>
-<option value="5184000" {if $pruneUnrepliedAge eq 5184000}selected="selected"{/if}>60 {tr}days{/tr}</option>
-<option value="7776000" {if $pruneUnrepliedAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
+<option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>{tr}24 hours{/tr}</option>
+<option value="172800" {if $pruneUnrepliedAge eq 172800}selected="selected"{/if}>{tr}2 days{/tr}</option>
+<option value="432000" {if $pruneUnrepliedAge eq 432000}selected="selected"{/if}>{tr}5 days{/tr}</option>
+<option value="604800" {if $pruneUnrepliedAge eq 604800}selected="selected"{/if}>{tr}7 days{/tr}</option>
+<option value="1296000" {if $pruneUnrepliedAge eq 1296000}selected="selected"{/if}>{tr}15 days{/tr}</option>
+<option value="2592000" {if $pruneUnrepliedAge eq 2592000}selected="selected"{/if}>{tr}30 days{/tr}</option>
+<option value="5184000" {if $pruneUnrepliedAge eq 5184000}selected="selected"{/if}>{tr}60 days{/tr}</option>
+<option value="7776000" {if $pruneUnrepliedAge eq 7776000}selected="selected"{/if}>{tr}90 days{/tr}</option>
 </select>
 </td></tr>
 <tr><td><input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after{/tr}:</td><td>
 <select name="pruneMaxAge">
-<option value="86400" {if $pruneMaxAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
-<option value="172800" {if $pruneMaxAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
-<option value="432000" {if $pruneMaxAge eq 432000}selected="selected"{/if}>5 {tr}days{/tr}</option>
-<option value="604800" {if $pruneMaxAge eq 604800}selected="selected"{/if}>7 {tr}days{/tr}</option>
-<option value="1296000" {if $pruneMaxAge eq 1296000}selected="selected"{/if}>15 {tr}days{/tr}</option>
-<option value="2592000" {if $pruneMaxAge eq 2592000}selected="selected"{/if}>30 {tr}days{/tr}</option>
-<option value="5184000" {if $pruneMaxAge eq 5184000}selected="selected"{/if}>60 {tr}days{/tr}</option>
-<option value="7776000" {if $pruneMaxAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
+<option value="86400" {if $pruneMaxAge eq 86400}selected="selected"{/if}>{tr}24 hours{/tr}</option>
+<option value="172800" {if $pruneMaxAge eq 172800}selected="selected"{/if}>{tr}2 days{/tr}</option>
+<option value="432000" {if $pruneMaxAge eq 432000}selected="selected"{/if}>{tr}5 days{/tr}</option>
+<option value="604800" {if $pruneMaxAge eq 604800}selected="selected"{/if}>{tr}7 days{/tr}</option>
+<option value="1296000" {if $pruneMaxAge eq 1296000}selected="selected"{/if}>{tr}15 days{/tr}</option>
+<option value="2592000" {if $pruneMaxAge eq 2592000}selected="selected"{/if}>{tr}30 days{/tr}</option>
+<option value="5184000" {if $pruneMaxAge eq 5184000}selected="selected"{/if}>{tr}60 days{/tr}</option>
+<option value="7776000" {if $pruneMaxAge eq 7776000}selected="selected"{/if}>{tr}90 days{/tr}</option>
 </select>
 </td></tr>
 <tr>
@@ -163,7 +163,7 @@
 	<td><input type="text" name="outbound_address" size=30 value="{$outbound_address|escape}" /></td>
 </tr>
 <tr>
-	<td>{tr}Originating e-mail address for mails from this forum{/tr}</td>
+	<td>{tr}Originating email address for email from this forum{/tr}</td>
 	<td><input type="text" name="outbound_from" size=30 value="{$outbound_from|escape}" /></td>
 </tr>
 <tr>
@@ -193,11 +193,10 @@
 	<td>{tr}Show topic summary{/tr}</td>
 	<td><input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if} /></td>
 </tr>
-
 <tr>
 	<td>{tr}User information display{/tr}</td>
 	<td>
-	<table >
+	<table>
 	<tr>
 		<td>{tr}avatar{/tr}</td>
 		<td>{tr}flag{/tr}</td>
@@ -239,30 +238,17 @@
 		<br />
 		{tr}Store attachments in:{/tr}
 		<table>
-			<tr>
-				<td>
-				<input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if} /> {tr}Database{/tr}
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory (include trailing slash){/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" />
-				</td>
-			</tr>
+			<tr><td><input type="radio" name="att_store" value="db" {if $att_store eq 'db'}checked="checked"{/if} /> {tr}Database{/tr}</td></tr>
+			<tr><td><input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory (include trailing slash){/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" /></td></tr>
+			<tr><td>{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" /></td></tr>
 		</table>
 	</td>
 </tr>
-
 <tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Forums{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
@@ -288,8 +274,8 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-<tr>
-<td class="odd"><a href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
+<tr class="odd">
+<td><a href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
@@ -299,11 +285,11 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
-   <a href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
+   <a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+   <a href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
    &nbsp;&nbsp;<a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this forum?{/tr}')" 
-title="{tr}Click here to delete this forum{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}Click here to delete this forum{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {/if}
 </td>
 </tr>

@@ -1,6 +1,6 @@
-<div class="cbox">
-<div class="cbox-title">{tr}RSS feeds{/tr}</div>
-<div class="cbox-data">
+<div class="tiki">
+<div class="tiki-title">{tr}RSS feeds{/tr}</div>
+<div class="tiki-content">
         <form action="tiki-admin.php?page=rss" method="post">
         <table class="admin">
         <tr><td>{tr}<b>Feed</b>{/tr}</td>

@@ -10,12 +10,12 @@
 <form action="tiki-admin_tracker_fields.php" method="post">
 <input type="hidden" name="fieldId" value="{$fieldId|escape}" />
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Type{/tr}:
-<span  id='trkflddropdown' {if $type eq 'd'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Dropdown options : list of items separated with commas){/tr}:</span>
-<span  id='trkfldimage' {if $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Image options : xSize,ySize indicated in pixels){/tr}:</span>
-</td><td class="formcolor">
+<table>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Type{/tr}:
+<div id='trkflddropdown' {if $type eq 'd'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Dropdown options : list of items separated with commas){/tr}:</div>
+<div id='trkfldimage' {if $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Image options : xSize,ySize indicated in pixels){/tr}:</div>
+</td><td>
 <select name="type" id='trkfldtype' onchange="javascript:chgTrkFld();">
 <option value="c" {if $type eq 'c'}selected="selected"{/if}>{tr}checkbox{/tr}</option>
 <option value="t" {if $type eq 't'}selected="selected"{/if}>{tr}text field{/tr}</option>
@@ -26,18 +26,18 @@
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
 <option value="i" {if $type eq 'i'}selected="selected"{/if}>{tr}image{/tr}</option>
 </select>
-<span  id='trkfldoptions' {if $type eq 'd' or $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" /></span>
+<div id='trkfldoptions' {if $type eq 'd' or $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" /></div>
 </td></tr>
-<tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>{tr}Is column visible when listing tracker items?{/tr}</td><td><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td>{tr}Column links to edit/view item?{/tr}</td><td><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Tracker fields{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_tracker_fields.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -46,13 +46,13 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isMain_desc'}isMain_asc{else}isMain_desc{/if}">{tr}isMain{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isTblVisible_desc'}isTblVisible_asc{else}isTblVisible_desc{/if}">{tr}Tbl vis{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></th>
+<th><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isMain_desc'}isMain_asc{else}isMain_desc{/if}">{tr}isMain{/tr}</a></th>
+<th><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isTblVisible_desc'}isTblVisible_asc{else}isTblVisible_desc{/if}">{tr}Tbl vis{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -62,8 +62,8 @@
 <td class="{cycle advance=false}">{$channels[user].isMain}</td>
 <td class="{cycle advance=false}">{$channels[user].isTblVisible}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}">{tr}edit{/tr}</a>
+   <a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a>
+   <a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {/section}
@@ -85,7 +85,5 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-
 </div>
 </div>
-

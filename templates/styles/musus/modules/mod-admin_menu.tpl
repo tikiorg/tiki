@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-admin_menu.tpl,v 1.2 2004-01-09 15:29:32 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-admin_menu.tpl,v 1.3 2004-01-13 19:50:58 musus Exp $ *}
 
 {tikimodule title="{tr}Admin Menu{/tr}" name="admin_menu"}
 {if $tiki_p_admin eq 'y' or 
@@ -35,7 +35,7 @@
       &nbsp;<a href="tiki-backup.php" class="menu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="menu">{tr}Mail notifications{/tr}</a><br />
       &nbsp;<a href="tiki-search_stats.php" class="menu">{tr}Search stats{/tr}</a><br />
-			&nbsp;<a href="tiki-admin_quicktags.php" class="menu">{tr}QuickTags{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_quicktags.php" class="menu">{tr}QuickTags{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="menu">{tr}Chat{/tr}</a><br />

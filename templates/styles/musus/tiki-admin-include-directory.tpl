@@ -1,6 +1,6 @@
-<div class="cbox">
-  <div class="cbox-title">{tr}Directory{/tr}</div>
-  <div class="cbox-data">
+<div class="tiki">
+  <div class="tiki-title">{tr}Directory{/tr}</div>
+  <div class="tiki-content">
     <div class="simplebox">
       <form action="tiki-admin.php?page=directory" method="post">
         <table class="admin"><tr>

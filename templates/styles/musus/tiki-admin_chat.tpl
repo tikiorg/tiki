@@ -1,14 +1,14 @@
 <a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a>
 
 <!-- the help link info -->
-  
-      {if $feature_help eq 'y'}
+
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 <!-- link to tpl -->
 
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
@@ -18,10 +18,10 @@
 <form action="tiki-admin_chat.php" method="post">
 <input type="hidden" name="channelId" value="{$channelId|escape}" />
 <table>
-<tr class="cell"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr class="cell"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-<tr class="cell"><td>{tr}Active{/tr}:</td><td><input type="checkbox" name="active" {if $active eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="cell"><td>{tr}Refresh rate{/tr}:</td><td>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td>{tr}Active{/tr}:</td><td><input type="checkbox" name="active" {if $active eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td>{tr}Refresh rate{/tr}:</td><td>
 <select name="refresh">
 <option value="500" {if $refresh eq 500}selected="selected"{/if}>{tr}Half a second{/tr}</option>
 <option value="1000" {if $refresh eq 1000}selected="selected"{/if}>1 {tr}second{/tr}</option>
@@ -36,7 +36,7 @@
 <option value="10000" {if $refresh eq 10000}selected="selected"{/if}>10 {tr}seconds{/tr}</option>
 </select>
 </td></tr>
-<tr class="cell"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Chat channels{/tr}</h2>
