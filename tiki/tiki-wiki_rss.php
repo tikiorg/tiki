@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.15 2003-09-02 14:42:35 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.16 2003-09-02 18:09:01 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,7 @@ $pagename = substr($urlarray["path"], strrpos($urlarray["path"], '/') + 1);
 
 $home = httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]);
 $img = httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]);
+$read = httpPrefix().str_replace($pagename, $tikiIndex."?page=", $urlarray["path"]);
 $url = httpPrefix().$url;
 
 $css = httpPrefix().str_replace($pagename, "lib/rss/rss-style.css", $urlarray["path"]);
@@ -59,19 +60,19 @@ if ($rss_version == 2) {
 }
 
 if (($rss_use_css) && ($rss_version == 1)) {
-	print '<?xml-stylesheet href="'.$css.'" type="text/css"?>'."\n";
+	print '<?xml-stylesheet href="'.htmlspecialchars($css).'" type="text/css"?>'."\n";
 }
 
 if ($rss_version == 2) {
 	print "<channel>\n";
 } else {
 	print '<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/">'."\n";
-	print '<channel rdf:about="'.$url.'">'."\n";
+	print '<channel rdf:about="'.htmlspecialchars($url).'">'."\n";
 }
 
-print "<title>$title</title>\n";
-print "<link>$home</link>\n";
-print "<description>$desc</description>\n";
+print "<title>".htmlspecialchars($title)."</title>\n";
+print "<link>".htmlspecialchars($home)."</link>\n";
+print "<description>".htmlspecialchars($desc)."</description>\n";
 
 if ($rss_version == 2) {
 	print "<language>en-us</language>\n";
@@ -82,11 +83,11 @@ print "\n";
 if ($rss_version == 2) {
 	print '<image>'."\n";
 } else {
-	print '<image rdf:about="'.$url.'" rdf:url="'.$img.'">'."\n";
+	print '<image rdf:about="'.htmlspecialchars($url).'" rdf:url="'.htmlspecialchars($img).'">'."\n";
 }
-print "<title>$title</title>\n";
-print "<link>$home</link>\n";
-print "<url>$url</url>\n";
+print "<title>".htmlspecialchars($title)."</title>\n";
+print "<link>".htmlspecialchars($home)."</link>\n";
+print "<url>".htmlspecialchars($url)."</url>\n";
 print "</image>\n\n";
 
 if ($rss_version == 1) {
@@ -94,7 +95,7 @@ if ($rss_version == 1) {
 	print "<rdf:Seq>\n";
 	// LOOP collecting last changes to the wiki pages (index)
 	foreach ($changes["data"] as $chg) {
-		print ('        <rdf:li resource="'.rawurlencode($home.'?page='.$chg["pageName"]).'" />'."\n");
+		print ('        <rdf:li resource="'.htmlspecialchars($read.$chg["pageName"]).'" />'."\n");
 	}
 	print "</rdf:Seq>\n";
 	print "</items>\n";
@@ -107,10 +108,10 @@ foreach ($changes["data"] as $chg) {
 	if ($rss_version == 2) {
 		print ("<item>\n");
 	} else {
-		print ('<item rdf:about="'.rawurlencode($home.'?page='.$chg["pageName"]).'">'."\n");
+		print ('<item rdf:about="'.htmlspecialchars($read.$chg["pageName"]).'">'."\n");
 	}
-	print ('  <title>'.rawurlencode($chg["pageName"].' '.$chg["action"]).'</title>'."\n");
-	print ('  <link>'.rawurlencode($home.'?page='.$chg["pageName"]).'</link>'."\n");
+	print ('  <title>'.htmlspecialchars($chg["pageName"].' '.$chg["action"]).'</title>'."\n");
+	print ('  <link>'.htmlspecialchars($read.$chg["pageName"]).'</link>'."\n");
 	if (!empty($chg["comment"])) {
 		$comment = "(".htmlspecialchars($chg["comment"]).")";
 	} else {
@@ -118,13 +119,13 @@ foreach ($changes["data"] as $chg) {
 	}
 	if ($rss_version == 2) {
 		$date = gmdate('D, d M Y H:i:s T', $chg["lastModif"]);
-		print ('<description>'.$chg["action"].urlencode(" ".$chg["pageName"].$comment).'</description>'."\n");
+		print ('<description>'.$chg["action"].htmlspecialchars(" ".$chg["pageName"].$comment).'</description>'."\n");
 		// print("<author>".$chg["user"]."</author>\n"); // TODO: email address of author
-		print ('<guid isPermaLink="true">'.rawurlencode($home.'?page='.$chg["pageName"]).'</guid>'."\n");
+		print ('<guid isPermaLink="true">'.htmlspecialchars($read.$chg["pageName"]).'</guid>'."\n");
 		print ("<pubDate>$date</pubDate>\n");
 	} else {
 		$date = $tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["lastModif"]);
-		print ('  <description>'."[$date] :".$chg["action"].urlencode(" ".$chg["pageName"].$comment).'</description>'."\n");
+		print ('  <description>'.htmlspecialchars("[$date] :".$chg["action"]." ".$chg["pageName"].$comment).'</description>'."\n");
 	}
 	print ('</item>'."\n\n");
 }
