@@ -1465,7 +1465,7 @@ function add_pageview() {
     }
 */
 
-/*
+/* moved to categlib.php; will delete this code if no problems arise
     // shared
     // \todo remove hardcoded html from get_categorypath()
     function get_categorypath($cats) {
@@ -1496,6 +1496,7 @@ function add_pageview() {
     }
 */
 
+/* get_categorypath_array() doesn't seem to be used anywhere
     function get_categorypath_array($cats,$focus=0) {
 	global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
 	if (!is_object($categlib)) {
@@ -1521,7 +1522,7 @@ function add_pageview() {
 	    return $out;
 	}
     }
-
+*/
 
     /*shared*/
     // function enhancing php in_array() function
@@ -1543,7 +1544,8 @@ function add_pageview() {
 	return $in_multi_array;
     }
 
-    /*shared*/
+/*
+    // shared
     function get_categoryobjects($catids) {
 	global $dbTiki;
 
@@ -1636,6 +1638,7 @@ function add_pageview() {
 	//  $out = $smarty -> fetch("tiki-simple_plugin.tpl");
 	return $out;
     }
+*/
 
     /** shared used in mod-last_category_objects
      */

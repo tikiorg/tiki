@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.96 2004-06-04 11:51:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.97 2004-06-07 17:08:18 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -484,7 +484,7 @@ if ($is_categorized) {
     if(isset($feature_categorypath) and $feature_categories == 'y') {
 	if ($feature_categorypath == 'y') {
 	    $cats = $categlib->get_object_categories('wiki page',$objId);
-	    $display_catpath = $tikilib->get_categorypath($cats);
+	    $display_catpath = $categlib->get_categorypath($cats);
 	    $smarty->assign('display_catpath',$display_catpath);
 	}
     }
@@ -492,7 +492,7 @@ if ($is_categorized) {
     if (isset($feature_categoryobjects) and $feature_categories == 'y') {
 	if ($feature_categoryobjects == 'y') {
 	    $catids = $categlib->get_object_categories('wiki page', $objId);
-	    $display_catobjects = $tikilib->get_categoryobjects($catids);
+	    $display_catobjects = $categlib->get_categoryobjects($catids);
 	    $smarty->assign('display_catobjects',$display_catobjects);
 	}
     }
