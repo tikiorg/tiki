@@ -8,12 +8,16 @@
 </h1>
 <br/><br/>
 
-<div class="simplebox">
-<ul>
-<li><strong><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty templates_c/{/tr}</a></strong>
-({$templates_c_size|kbsize})</li>
-
-<li><strong><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty modules/cache/{/tr}</a></strong>
-({$modules_size|kbsize})</li>
-</ul>
-</div>
+<table class="normal">
+<tr><td colspan="3" class="heading">{tr}Exterminator{/tr}</td></tr>
+<tr>
+<td class="formcolor"><b>TEMPLATES_C/</b></td>
+<td class="formcolor"><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty{/tr}</a></td>
+<td class="formcolor">({$templates_c.cant} {tr}files{/tr} / {$templates_c.total|kbsize})</td>
+</tr>
+<tr>
+<td class="formcolor"><b>MODULES/</b></td>
+<td class="formcolor"><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
+<td class="formcolor">({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
+</tr>
+</table>
