@@ -3531,6 +3531,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
     if ($this->page_exists($name))
   return false;
 
+    if(!$lang)
+	$lang = "NULL";
     $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) ";
     $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?)";
     $result = $this->query($query, array(
@@ -5074,7 +5076,8 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
   }
 
-
+    if(!$lang)
+	$lang = "NULL";
 
     $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
     $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
@@ -5126,6 +5129,9 @@ function update_page_version($pageName, $version, $edit_data, $edit_comment, $ed
 
     if (!$this->page_exists($pageName))
   return false;
+
+    if(!$lang)
+        $lang = "NULL";
 
     $t = date("U");
     $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
