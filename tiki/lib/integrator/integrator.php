@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.16 2003-11-08 18:35:13 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.17 2003-11-09 00:02:29 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -282,12 +282,12 @@ class TikiIntegrator extends TikiLib
      *
      * \note File is not checked for existence...
      */
-    function get_file($repID, $file, $use_cache = true, $url = '')
+    function get_file($repID, $file, $use_cache = 'y', $url = '')
     {
         global $tikilib;
         $data = '';
         // Try to get data from cache
-        if ($use_cache && $url != '' && $tikilib->is_cached($url))
+        if ($use_cache == 'y' && $url != '' && $tikilib->is_cached($url))
             $data = $tikilib->get_cache($tikilib->get_cache_id($url));
 
         // If smth found in cache return it... else try to get it by usual way.
@@ -312,6 +312,14 @@ class TikiIntegrator extends TikiLib
         // Delete all cached URLs with word 'integrator' in a script
         // name and 'repID' parameter equal to function arg...
         $query = "delete from tiki_link_cache where url like '".httpPrefix()."/%integrator%.php?%repID=".$repID."%'";
+        $result = $this->query($query);
+    }
+    /// Clear cache of given file for given repository
+    function clear_cached_file($repID, $file)
+    {
+        // Delete all cached URLs with word 'integrator' in a script
+        // name and 'repID' parameter equal to function arg...
+        $query = "delete from tiki_link_cache where url like '".httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')."'";
         $result = $this->query($query);
     }
 }
