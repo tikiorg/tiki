@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.37 2003-12-05 03:58:15 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.38 2003-12-05 19:27:28 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.37 2003-12-05 03:58:15 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.38 2003-12-05 19:27:28 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -50,7 +50,7 @@ function process_sql_file($file,$db_tiki) {
 	$prestmt="";
 	$do_exec=true;
 	foreach ($statements as $statement) {
-	  //echo "executing $statement </br>";
+		//echo "executing $statement </br>";
 			if (trim($statement)) {
 				switch ($db_tiki) {
 				case "oci8":
@@ -73,7 +73,7 @@ function process_sql_file($file,$db_tiki) {
 			if (!$result) {
 				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
 				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
-				// Do not die at the moment. Wen need some better error checking here
+				// Do not die at the moment. We need some better error checking here
 				//die;
 			} else {
 				$succcommands[]=$statement;
@@ -171,57 +171,6 @@ if (isset($_REQUEST['kill'])) {
 	}
 
 	die;
-}
-
-// Tiki Applications feature
-// Written by dheltzel 12/4/2003 - status: experimental
-
-// This is the directory where it looks for the application files. If no .zip files are in this dir, the Installer will be disabled.
-$app_repository = "app_repos/";
-// This is the suffix it uses to look for an install SQL script
-$app_sql_install_suf = "_install.sql";
-// This is the suffix it uses to look for a remove SQL script
-$app_sql_remove_suf = "_remove.sql";
-
-// This is used to install files into the Tiki file structure from a zip file
-if (isset($_REQUEST['install_app'])) {
-include_once ('lib/pclzip.lib.php');
-	$archive = new PclZip($app_repository.$_REQUEST['apps']);
-
-	if ($archive->extract() == 0) {
-		die("Error : ".$archive->errorInfo(true));
-	}
-	else {
-		$app_sql_install_file = "db/".basename($_REQUEST['apps'],".zip").$app_sql_install_suf;
-		print "install SQL: ".$app_sql_install_file."<br>";
-		if (is_file($app_sql_install_file)) {
-			print "Need to run: ".$app_sql_install_file."<br>";
-		}
-		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
-	}
-}
-
-// This is used to remove files that were installed into the Tiki file structure by the install_app prcess
-if (isset($_REQUEST['remove_app'])) {
-include_once ('lib/pclzip.lib.php');
-	$archive = new PclZip($app_repository.$_REQUEST['apps']);
-	$app_sql_remove_file = "db/".basename($_REQUEST['apps'],".zip").$app_sql_remove_suf;
-	if (is_file($app_sql_remove_file)) {
-		print "Need to run: ".$app_sql_remove_file."<br>";
-	}
-
-	// Read Archive contents
-	$ziplist = $archive->listContent();
-	if ($ziplist) {
-		for ($i = 0; $i < sizeof($ziplist); $i++) {
-			$file = $ziplist["$i"]["filename"];
-			unlink($file);
-			print $file." removed<br>";
-		}
-	}
-	else {
-		print "Nothing to remove for ".$_REQUEST['apps']."<br>";
-	}
 }
 
 $smarty = new Smarty_TikiWiki();
@@ -552,6 +501,59 @@ if ($noadmin) {
 	$smarty->assign('noadmin', 'y');
 } else {
 	$smarty->assign('noadmin', 'n');
+}
+
+// Tiki Applications feature
+// Written by dheltzel 12/4/2003 - status: experimental
+include ('db/local.php');
+include_once ('lib/pclzip.lib.php');
+
+// This is the directory where it looks for the application files. If no .zip files are in this dir, the Installer will be disabled.
+$app_repository = "app_repos/";
+// This is the suffix it uses to look for an install SQL script
+$app_sql_install_suf = "_install.sql";
+// This is the suffix it uses to look for a remove SQL script
+$app_sql_remove_suf = "_remove.sql";
+
+// This is used to install files into the Tiki file structure from a zip file
+if (isset($_REQUEST['install_app'])) {
+	$archive = new PclZip($app_repository.$_REQUEST['apps']);
+
+	if ($archive->extract() == 0) {
+		die("Error : ".$archive->errorInfo(true));
+	}
+	else {
+		$app_sql_install_file = basename($_REQUEST['apps'],".zip").$app_sql_install_suf;
+		if (is_file("db/".$app_sql_install_file)) {
+			print "Running ".$app_sql_install_file."<br>";
+			process_sql_file ($app_sql_install_file,$db_tiki);
+
+		}
+		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
+	}
+}
+
+// This is used to remove files that were installed into the Tiki file structure by the install_app prcess
+if (isset($_REQUEST['remove_app'])) {
+	$archive = new PclZip($app_repository.$_REQUEST['apps']);
+	$app_sql_remove_file = basename($_REQUEST['apps'],".zip").$app_sql_remove_suf;
+	if (is_file("db/".$app_sql_remove_file)) {
+		print "Running ".$app_sql_remove_file."<br>";
+		process_sql_file ($app_sql_remove_file,$db_tiki);
+	}
+
+	// Read Archive contents
+	$ziplist = $archive->listContent();
+	if ($ziplist) {
+		for ($i = 0; $i < sizeof($ziplist); $i++) {
+			$file = $ziplist["$i"]["filename"];
+			unlink($file);
+			print $file." removed<br>";
+		}
+	}
+	else {
+		print "Nothing to remove for ".$_REQUEST['apps']."<br>";
+	}
 }
 
 //Load Profiles

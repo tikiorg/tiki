@@ -175,7 +175,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	{if $app_available eq 'y'}
 		<p><p>
 		<form method="post" action="tiki-install.php">
-		<h1>Tiki Applications</h1>
+		<h1>Tiki applications</h1>
 		<table>
 			<tr><td>
 				<select name="apps">
@@ -184,7 +184,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 					{/section}
 				</select>
 			</td><td>
-				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available applicationss</a>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available applications</a>
 			</td></tr>
 			<tr><td>
 				<input type="submit" name="install_app" value="install" />	    
