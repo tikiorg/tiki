@@ -11,7 +11,7 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin charts template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 <!-- beginning of next bit -->
@@ -162,7 +162,7 @@
 		{$items[ix].periods}
 	</td>
 	<td style="text-align:right;" class="{cycle}">
-		<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+		<a title="{tr}view{/tr}" class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" border='0' alt='{tr}view{/tr}' /></a>
 	</td>
 
 </tr>

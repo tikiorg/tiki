@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.21 2004-01-31 14:10:46 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.22 2004-02-05 11:44:04 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -7,7 +7,7 @@
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin categories template{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <br />
@@ -52,9 +52,9 @@
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
 {assign var=categ value=$catree[dx].categId}
 {assign var=parent value=$catree[dx].parentId}
-<a class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;removeCat={$categ}" title="{tr}remove{/tr}"><img  
+<a title="{tr}delete{/tr}" class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;removeCat={$categ}" title="{tr}delete{/tr}"><img  
 style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
-<a class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;categId={$categ}" title="{tr}edit{/tr}"><img  
+<a title="{tr}edit{/tr}" class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;categId={$categ}" title="{tr}edit{/tr}"><img  
 border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {/section}
@@ -131,9 +131,9 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{$objects[ix].type}</td>
-        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Delete item from category?{/tr}">
+        <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}delete{/tr}">
 <!--onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this category?{/tr}')"-->
-<img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" border="0" /></a></td>
+<img alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" border="0" /></a></td>
       </tr>
       {/section}
       </table>

@@ -13,7 +13,7 @@
     </table>
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
-    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
+    <a title="{tr}delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this copyright?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">up</a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">down</a>
