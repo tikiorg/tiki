@@ -442,6 +442,7 @@
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('admmnu');">[+]</a>{/if}
   </div>
   <div id="admmnu" style="{$mnu_admmnu}">
+	{sortlinks}
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
 	{/if}
@@ -513,6 +514,7 @@
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br />
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
     {/if}
+		{/sortlinks}
   </div>
 {/if}
 {if $feature_usermenu eq 'y'}

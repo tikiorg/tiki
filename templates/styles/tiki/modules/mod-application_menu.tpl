@@ -348,6 +348,7 @@
   {if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
   </div>
   <div id='admmnu' style="{$mnu_admmnu}">
+	{sortlinks}
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		<div class="separated"><a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a></div>
 	{/if}
@@ -416,6 +417,7 @@
     <div class="separated"><a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a></div>
     <div class="separated"><a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a></div>
     {/if}
+		{/sortlinks}
   </div>
   
 {/if}
