@@ -515,38 +515,38 @@ class TikiLib extends TikiDB {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['quizId'], 'quiz')) {
-	    // quiz permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_take_quiz') &&
-				!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_view_quiz_stats')) {
-			    $add = FALSE;
-			}
+		// quiz permissions override category permissions
+		if (!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_take_quiz') &&
+			!$userlib->object_has_permission($user, $res['quizId'], 'quiz', 'tiki_p_view_quiz_stats')) {
+		    $add = FALSE;
+		}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no quiz permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $res['quizId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+		// no quiz permissions so now we check category permissions
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $res['quizId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
 	    }
 
-		if ($add) {
-		    $res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
-		    $res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array((int) $res["quizId"]));
-		    $ret[] = $res;
-		}
+	    if ($add) {
+		$res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
+		$res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array((int) $res["quizId"]));
+		$ret[] = $res;
+	    }
 	}
 
 	$retval = array();
@@ -623,38 +623,38 @@ class TikiLib extends TikiDB {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['trackerId'], 'tracker')) {
-	    // tracker permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
-			    $add = FALSE;
-			}
-	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no tracker permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $res['trackerId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
-
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
-	    }
-		
-		if ($add) {
-		    $qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
-		    $res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
-		    $ret[] = $res;
-		    $list[$res['trackerId']] = $res['name'];
+		// tracker permissions override category permissions
+		if (!$userlib->object_has_permission($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
+		    $add = FALSE;
 		}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		// no tracker permissions so now we check category permissions
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $res['trackerId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
+
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
+	    }
+
+	    if ($add) {
+		$qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
+		$res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
+		$ret[] = $res;
+		$list[$res['trackerId']] = $res['name'];
+	    }
 	}
 
 	$retval = array();
@@ -692,37 +692,37 @@ class TikiLib extends TikiDB {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['surveyId'], 'survey')) {
-	    // gallery permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_take_survey') &&
-				!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_view_survey_stats')) {
-			    $add = FALSE;
-			}
+		// gallery permissions override category permissions
+		if (!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_take_survey') &&
+			!$userlib->object_has_permission($user, $res['surveyId'], 'survey', 'tiki_p_view_survey_stats')) {
+		    $add = FALSE;
+		}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no forum permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $res['surveyId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+		// no forum permissions so now we check category permissions
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'survey', $res['surveyId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
 	    }
 
-		if ($add) {
-		    $res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
-		    $ret[] = $res;
-		}
+	    if ($add) {
+		$res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
+		$ret[] = $res;
+	    }
 	}
 
 	$retval = array();
@@ -745,7 +745,7 @@ class TikiLib extends TikiDB {
 	$filters = array();
 
 	if ($fields) {
-		$temp_max = count($fields["data"]);
+	    $temp_max = count($fields["data"]);
 	    for ($i = 0; $i < $temp_max; $i++) {
 		$fieldId = $fields["data"][$i]["fieldId"];
 		$filters[$fieldId] = $fields["data"][$i];
@@ -855,7 +855,7 @@ class TikiLib extends TikiDB {
      */
     function score_event($user, $event_type, $id = '', $multiplier=false) {
 	if ($user == 'admin') { return; }
-	
+
 	$event = $this->get_event($event_type);
 	if (!$event || !$event['score']) {
 	    return;
@@ -911,19 +911,19 @@ class TikiLib extends TikiDB {
 	$star = '';
 
 	$star_colors = array(0 => 'grey',
-			     100 => 'blue',
-			     500 => 'green',
-			     1000 => 'yellow',
-			     2500 => 'orange',
-			     5000 => 'red',
-			     10000 => 'purple');
-	
+		100 => 'blue',
+		500 => 'green',
+		1000 => 'yellow',
+		2500 => 'orange',
+		5000 => 'red',
+		10000 => 'purple');
+
 	foreach ($star_colors as $boundary => $color) {
 	    if ($score >= $boundary) {
 		$star = 'star_'.$color.'.gif';
 	    }
 	}
-                                                                                                                                            
+
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
 	    $star = "<img src=\"images/$star\" alt=\"$alt\" />&nbsp;";
@@ -940,7 +940,7 @@ class TikiLib extends TikiDB {
     //shared
     // \todo remove all hardcoded html in get_user_avatar()
     function get_user_avatar($user, $float = "") {
-    	global $userlib;
+	global $userlib;
 	if (empty($user))
 	    return '';
 
@@ -1214,17 +1214,17 @@ class TikiLib extends TikiDB {
 	return $ret;
     }
 
-function add_pageview() {
-    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-    $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
-                                                                                                                                                                                                      
-    if ($cant) {
-        $query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
-    } else {
-        $query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
+    function add_pageview() {
+	$dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+	$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
+
+	if ($cant) {
+	    $query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
+	} else {
+	    $query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
+	}
+	$result = $this->query($query,array((int)$dayzero),-1,-1,false);
     }
-    $result = $this->query($query,array((int)$dayzero),-1,-1,false);
-}
 
     function get_usage_chart_data() {
 	$this->compute_quiz_stats();
@@ -1320,31 +1320,31 @@ function add_pageview() {
 	    global $user;
 	    global $tiki_p_admin;
 
-		if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-			global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+	    if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
 	    }
 
-		if ($add) {
-		    $res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
-		    $ret[] = $res;
-		}
+	    if ($add) {
+		$res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
+		$ret[] = $res;
+	    }
 	}
 
 	$retval = array();
@@ -1593,11 +1593,11 @@ function add_pageview() {
 
     /*shared*/
     function remove_object($type, $id) {
-    	global $categlib, $dbTiki;
+	global $categlib, $dbTiki;
 
-		if (!is_object($categlib)) {
-		    require_once ("lib/categories/categlib.php");
-		}
+	if (!is_object($categlib)) {
+	    require_once ("lib/categories/categlib.php");
+	}
 	$categlib->uncategorize_object($type, $id);
 	// Now remove comments
 	$object = $type . $id;
@@ -1609,33 +1609,33 @@ function add_pageview() {
 	return true;
     }
 
-/* get_categorypath_array() doesn't seem to be used anywhere
-    function get_categorypath_array($cats,$focus=0) {
-	global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
-	if (!is_object($categlib)) {
-	    require_once ("lib/categories/categlib.php");
-	}
-	foreach ($cats as $categId) {
-	    $focused = false;
-	    $info = $categlib->get_category($categId);
-	    $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
-	    while ($info["parentId"] != 0) {
-		$info = $categlib->get_category($info["parentId"]);
-		if ($focus and $info["categId"] == $focus) {
-		    $focused = $categId;
-		    break;
-		} else {
-		    $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
-		}
-	    }
-	}
-	if ($focused) {
-	    return $out[$focused];
-	} else {
-	    return $out;
-	}
-    }
-*/
+    /* get_categorypath_array() doesn't seem to be used anywhere
+       function get_categorypath_array($cats,$focus=0) {
+       global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
+       if (!is_object($categlib)) {
+       require_once ("lib/categories/categlib.php");
+       }
+       foreach ($cats as $categId) {
+       $focused = false;
+       $info = $categlib->get_category($categId);
+       $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
+       while ($info["parentId"] != 0) {
+       $info = $categlib->get_category($info["parentId"]);
+       if ($focus and $info["categId"] == $focus) {
+       $focused = $categId;
+       break;
+       } else {
+       $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
+       }
+       }
+       }
+       if ($focused) {
+       return $out[$focused];
+       } else {
+       return $out;
+       }
+       }
+     */
 
     /*shared*/
     // function enhancing php in_array() function
@@ -1703,18 +1703,22 @@ function add_pageview() {
 
     //This should be moved to a poll module (currently in tiki-setup.php
     /*shared*/
-    function poll_vote($user, $pollId, $optionId) {
+    function poll_vote($user, $pollId, $optionId) 
+    {
 	$query = "select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?";
 	$previous_vote = $this->getOne($query,array( $user, "poll" . $pollId));
 
 	// Only need to increase vote numbers if the user hasn't voted before.
 	if( !$previous_vote || $previous_vote == 0 )
 	{
-	    $query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
-	    $result = $this->query($query,array((int)$pollId));
+	    if( $optionId != 'WithdrawVote' )
+	    {
+		$query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
+		$result = $this->query($query,array((int)$pollId));
 
-	    $query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
-	    $result = $this->query($query,array((int)$optionId));
+		$query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
+		$result = $this->query($query,array((int)$optionId));
+	    }
 	}
 	else
 	{
@@ -1724,11 +1728,23 @@ function add_pageview() {
 		$query = "update `tiki_poll_options` set `votes`=`votes`-1 where `optionId`=?";
 		$result = $this->query($query,array((int)$previous_vote));
 
-		$query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
-		$result = $this->query($query,array((int)$optionId));
+		if( $optionId != 'WithdrawVote' )
+		{
+		    $query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
+		    $result = $this->query($query,array((int)$optionId));
+		}
 	    }
 	}
 
+	// If the user is un-voting.
+	if( $optionId == 'WithdrawVote' )
+	{
+	    $query = "update `tiki_polls` set `votes`=`votes`-1 where `pollId`=?";
+	    $result = $this->query($query,array((int)$pollId));
+
+	    $query = "delete from `tiki_user_votings` where `user` = ? and `id` = ?";
+	    $result = $this->query($query,array( $user, (string) "poll" . $pollId));
+	}
     }
 
     // end polls ////
@@ -1818,7 +1834,7 @@ function add_pageview() {
 	    $cant = $channels['cant'];
 	    $channels = $channels['data'];
 	}
-	
+
 	$temp_max = sizeof($channels);
 	for ($i=0; $i < $temp_max; $i++) {
 	    $sorted_channels[$i] = $channels[$i];
@@ -1838,7 +1854,7 @@ function add_pageview() {
 
 	if (isset($cant)) {
 	    $sorted_channels = array ('data' => $sorted_channels,
-				      'cant' => $cant);
+		    'cant' => $cant);
 	}
 
 	return $sorted_channels;
@@ -1879,17 +1895,20 @@ function add_pageview() {
 	if (!$user) {
 	    $_SESSION["votes"][] = $id;
 	} else {
-	    if( $optionId != 0 )
+	    if( $optionId != 'WithdrawVote' )
 	    {
-		$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-		$result = $this->query($query,array($user,(string) $id));
-		$query = "insert into `tiki_user_votings`(`user`,`id`, `optionId` ) values(?,?,?)";
-		$result = $this->query($query,array($user,(string) $id, $optionId));
-	    } else {
-		$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-		$result = $this->query($query,array($user,(string) $id));
-		$query = "insert into `tiki_user_votings`(`user`,`id` ) values(?,?)";
-		$result = $this->query($query,array($user,(string) $id));
+		if( $optionId != 0 )
+		{
+		    $query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
+		    $result = $this->query($query,array($user,(string) $id));
+		    $query = "insert into `tiki_user_votings`(`user`,`id`, `optionId` ) values(?,?,?)";
+		    $result = $this->query($query,array($user,(string) $id, $optionId));
+		} else {
+		    $query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
+		    $result = $this->query($query,array($user,(string) $id));
+		    $query = "insert into `tiki_user_votings`(`user`,`id` ) values(?,?)";
+		    $result = $this->query($query,array($user,(string) $id));
+		}
 	    }
 	}
     }
@@ -2165,7 +2184,7 @@ function add_pageview() {
 	return $this->getOne($query);
     }
 
-	
+
     function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'realName', $find = '')
     {
 	global $user;
@@ -2224,33 +2243,33 @@ function add_pageview() {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['blogId'], 'blog')) {
-	    // blog permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['blogId'], 'blog', 'tiki_p_blog_read')) {
-			    $add = FALSE;
-			}
+		// blog permissions override category permissions
+		if (!$userlib->object_has_permission($user, $res['blogId'], 'blog', 'tiki_p_blog_read')) {
+		    $add = FALSE;
+		}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no blog permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+		// no blog permissions so now we check category permissions
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
 	    }
-		if ($add) {
-	    	$ret[] = $res;
+	    if ($add) {
+		$ret[] = $res;
 	    }
 	}
 	$retval = array();
@@ -2336,9 +2355,9 @@ function add_pageview() {
 	return $topicId;
     }
 
-/*shared*/
+    /*shared*/
     function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = 'y') {
-        global $userlib;
+	global $userlib;
 
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
 	$bindvars=array();
@@ -2367,16 +2386,16 @@ function add_pageview() {
 	}
 
 
-    if (($visible_only) && ($visible_only <> 'n')) {
-	$now = date('U');
-	$bindvars[]=(int) $now;
-	$bindvars[]=(int) $now;
-	if ($mid) {
-	    $mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-	} else {
-	    $mid .= " where (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	if (($visible_only) && ($visible_only <> 'n')) {
+	    $now = date('U');
+	    $bindvars[]=(int) $now;
+	    $bindvars[]=(int) $now;
+	    if ($mid) {
+		$mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	    } else {
+		$mid .= " where (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	    }
 	}
-    }
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,
 	`tiki_article_types`.`use_ratings`,
@@ -2410,678 +2429,678 @@ function add_pageview() {
 	    global $tiki_p_admin;
 
 	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res["topicId"], 'topic')) {
-	    // topic permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
-			    $add = FALSE;
-			}
+		// topic permissions override category permissions
+		if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
+		    $add = FALSE;
+		}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no topic permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'article', $res['articleId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+		// no topic permissions so now we check category permissions
+		global $categlib;
+		if (!is_object($categlib)) {
+		    include_once('lib/categories/categlib.php');
+		}
+		unset($tiki_p_view_categories); // unset this var in case it was set previously
+		$perms_array = $categlib->get_object_categories_perms($user, 'article', $res['articleId']);
+		if ($perms_array) {
+		    $is_categorized = TRUE;
+		    foreach ($perms_array as $perm => $value) {
+			$$perm = $value;
+		    }
+		} else {
+		    $is_categorized = FALSE;
+		}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    $add = FALSE;
+		}
 	    }
 	    // no need to do all of the following if we are not adding this article to the array
 	    if ($add) {
-		    $res["entrating"] = floor($res["rating"]);
-		    if (empty($res["body"])) {
-				$res["isEmpty"] = 'y';
-		    } else {
-				$res["isEmpty"] = 'n';
-	    	}
-		    if (strlen($res["image_data"]) > 0) {
-				$res["hasImage"] = 'y';
-		    } else {
-				$res["hasImage"] = 'n';
-		    }
-		    $res['count_comments'] = 0;
-
-		    // Determine if the article would be displayed in the view page
-		    $res["disp_article"] = 'y';
-		    $now = date("U");
-		    //if ($date) {
-		    if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
-				$res["disp_article"] = 'n';
-		    }
-		    if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
-				$res["disp_article"] = 'n';
-		    }
-		    //}
-//	    if ($add) { // moved this check to the top
-			$ret[] = $res;
-	    }
-	}
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    /*shared*/
-    function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '') {
-
-	if ($find) {
-	    $findesc = $this->qstr('%' . $find . '%');
-	    $mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
-	    $bindvars = array($findesc,$findesc,$findesc);
-	} else {
-	    $mid = '';
-	    $bindvars = array();
-	}
-
-	if ($date) {
-	    if ($mid) {
-		$mid .= " and `publishDate` <= ? ";
-	    } else {
-		$mid = " where `publishDate` <= ? ";
-	    }
-	    $bindvars[] = $date;
-	}
-
-	$query = "select * from `tiki_submissions` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_submissions` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $res["entrating"] = floor($res["rating"]);
-
-	    if (empty($res["body"])) {
-		$res["isEmpty"] = 'y';
-	    } else {
-		$res["isEmpty"] = 'n';
-	    }
-
-	    if (strlen($res["image_data"]) > 0) {
-		$res["hasImage"] = 'y';
-	    } else {
-		$res["hasImage"] = 'n';
-	    }
-
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    function get_article($articleId) {
-	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
-	$query = "select `tiki_articles`.*,
-	`users_users`.`avatarLibName`,
-	`tiki_article_types`.`use_ratings`,
-	`tiki_article_types`.`show_pre_publ`,
-	`tiki_article_types`.`show_post_expire`,
-	`tiki_article_types`.`heading_only`,
-	`tiki_article_types`.`allow_comments`,
-	`tiki_article_types`.`comment_can_rate_article`,
-	`tiki_article_types`.`show_image`,
-	`tiki_article_types`.`show_avatar`,
-	`tiki_article_types`.`show_author`,
-	`tiki_article_types`.`show_pubdate`,
-	`tiki_article_types`.`show_expdate`,
-	`tiki_article_types`.`show_reads`,
-	`tiki_article_types`.`show_size`,
-	`tiki_article_types`.`show_topline`,
-	`tiki_article_types`.`show_subtitle`,
-	`tiki_article_types`.`show_linkto`,
-	`tiki_article_types`.`show_image_caption`,
-	`tiki_article_types`.`show_lang`,
-	`tiki_article_types`.`creator_edit`
-	    from `tiki_articles`, `tiki_article_types`, `users_users` $mid and `tiki_articles`.`articleId`=?";
-	//$query = "select * from `tiki_articles` where `articleId`=?";
-	$result = $this->query($query,array((int)$articleId));
-	if ($result->numRows()) {
-	    $res = $result->fetchRow();
-	    $res["entrating"] = floor($res["rating"]);
-	} else {
-	    return false;
-	}
-	return $res;
-    }
-
-    function get_submission($subId) {
-	$query = "select * from `tiki_submissions` where `subId`=?";
-	$result = $this->query($query,array((int) $subId));
-	if ($result->numRows()) {
-	    $res = $result->fetchRow();
-	    $res["entrating"] = floor($res["rating"]);
-	} else {
-	    return false;
-	}
-	return $res;
-    }
-
-    /*shared*/
-    function get_topic_image($topicId) {
-	// Fixed query. -rlpowell
-	$query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_topics` where `topicId`=?";
-	$result = $this->query($query, array((int) $topicId));
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    /*shared*/
-    function get_article_image($id) {
-	$query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_articles` where `articleId`=?";
-	$result = $this->query($query, array((int) $id));
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    /*shared*/
-    function get_featured_links($max = 10) {
-	$query = "select * from `tiki_featured_links` where `position` > ? order by ".$this->convert_sortmode("position_asc");
-	$result = $this->query($query, array(0), (int)$max, 0 );
-	$ret = array();
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-	return $ret;
-    }
-
-    function update_session($sessionId) {
-	global $user;
-	if ($user === false) $user = '';
-	$now = date("U");
-	$oldy = $now - (5 * 60);
-	$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
-	$bindvars = array($sessionId, $oldy);
-	if ($user) {
-	    $query .= " or `user`=?";
-	    $bindvars[] = $user;
-	}
-	$this->query($query, $bindvars, -1, -1, false);
-	$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`) values(?,?,?)";
-	$result = $this->query($query, array($sessionId, (int)$now, $user));
-	return true;
-    }
-
-    function count_sessions() {
-	$query = "select count(*) from `tiki_sessions`";
-	$cant = $this->getOne($query,array());
-	return $cant;
-    }
-
-    /*shared*/
-    function get_assigned_modules($position, $displayed="n") {
-	$filter = '';
-	if ($displayed != 'n') {
-	    $filter = " and (`type` is null or `type` !='h')";
-	}
-	$query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` ";
-	$query.= " where `position`= ? $filter order by ".$this->convert_sortmode("ord_asc");
-
-	$result = $this->query($query, array($position));
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    if ($res["groups"] && strlen($res["groups"]) > 1) {
-		$grps = @unserialize($res["groups"]);
-
-		$res["module_groups"] = '';
-		if (is_array($grps)) {
-		    foreach ($grps as $grp) {
-			$res["module_groups"] .= " $grp ";
-		    }
-		}
-	    } else {
-		$res["module_groups"] = '&nbsp;';
-	    }
-	    $ret[] = $res;
-	}
-	return $ret;
-    }
-
-    /*shared*/
-    function is_user_module($name) {
-	$query = "select `name`  from `tiki_user_modules` where `name`=?";
-	$result = $this->query($query,array($name));
-	return $result->numRows();
-    }
-
-    /*shared*/
-    function get_user_module($name) {
-	$query = "select * from `tiki_user_modules` where `name`=?";
-	$result = $this->query($query,array($name));
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    function cache_links($links) {
-	$cachepages = $this->get_preference("cachepages", 'y');
-	if ($cachepages != 'y') return false;
-	foreach ($links as $link) {
-	    if (!$this->is_cached($link)) {
-		$this->cache_url($link);
-	    }
-	}
-    }
-
-    function get_links($data) {
-	$links = array();
-
-	// Match things like [...], but ignore things like [[foo].
-	// -Robin
-	if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
-	    $res = $r1[1];
-	    $links = array_unique($res);
-	}
-
-	return $links;
-    }
-
-    function get_links_nocache($data) {
-	$links = array();
-
-	if (preg_match_all("/\[([^\]]+)/", $data, $r1)) {
-	    $res = array();
-
-	    foreach ($r1[1] as $alink) {
-		$parts = explode('|', $alink);
-
-		if (isset($parts[1]) && $parts[1] == 'nocache') {
-		    $res[] = $parts[0];
+		$res["entrating"] = floor($res["rating"]);
+		if (empty($res["body"])) {
+		    $res["isEmpty"] = 'y';
 		} else {
-		    if (isset($parts[2]) && $parts[2] == 'nocache') {
-			$res[] = $parts[0];
-		    }
+		    $res["isEmpty"] = 'n';
 		}
-		// avoid caching URLs with common binary file extensions
-		$extension = substr($parts[0], -4);
-		$binary = array(
-			'.arj',
-			'.asf',
-			'.avi',
-			'.bz2',
-			'.dat',
-			'.doc',
-			'.exe',
-			'.hqx',
-			'.mov',
-			'.mp3',
-			'.mpg',
-			'.ogg',
-			'.pdf',
-			'.ram',
-			'.rar',
-			'.rpm',
-			'.rtf',
-			'.sea',
-			'.sit',
-			'.tar',
-			'.tgz',
-			'.wav',
-			'.wmv',
-			'.xls',
-			'.zip',
-			'ar.Z', // .tar.Z
-			'r.gz'  // .tar.gz
-			    );
-			if (in_array($extension, $binary)) {
+		if (strlen($res["image_data"]) > 0) {
+		    $res["hasImage"] = 'y';
+		} else {
+		    $res["hasImage"] = 'n';
+		}
+		$res['count_comments'] = 0;
+
+		// Determine if the article would be displayed in the view page
+		$res["disp_article"] = 'y';
+		$now = date("U");
+		//if ($date) {
+		if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
+		    $res["disp_article"] = 'n';
+		}
+		if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
+		    $res["disp_article"] = 'n';
+		}
+		//}
+		//	    if ($add) { // moved this check to the top
+		$ret[] = $res;
+	    }
+	    }
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
+	}
+
+	/*shared*/
+	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '') {
+
+	    if ($find) {
+		$findesc = $this->qstr('%' . $find . '%');
+		$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
+		$bindvars = array($findesc,$findesc,$findesc);
+	    } else {
+		$mid = '';
+		$bindvars = array();
+	    }
+
+	    if ($date) {
+		if ($mid) {
+		    $mid .= " and `publishDate` <= ? ";
+		} else {
+		    $mid = " where `publishDate` <= ? ";
+		}
+		$bindvars[] = $date;
+	    }
+
+	    $query = "select * from `tiki_submissions` $mid order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_submissions` $mid";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$res["entrating"] = floor($res["rating"]);
+
+		if (empty($res["body"])) {
+		    $res["isEmpty"] = 'y';
+		} else {
+		    $res["isEmpty"] = 'n';
+		}
+
+		if (strlen($res["image_data"]) > 0) {
+		    $res["hasImage"] = 'y';
+		} else {
+		    $res["hasImage"] = 'n';
+		}
+
+		$ret[] = $res;
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
+	}
+
+	function get_article($articleId) {
+	    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
+	    $query = "select `tiki_articles`.*,
+	    `users_users`.`avatarLibName`,
+	    `tiki_article_types`.`use_ratings`,
+	    `tiki_article_types`.`show_pre_publ`,
+	    `tiki_article_types`.`show_post_expire`,
+	    `tiki_article_types`.`heading_only`,
+	    `tiki_article_types`.`allow_comments`,
+	    `tiki_article_types`.`comment_can_rate_article`,
+	    `tiki_article_types`.`show_image`,
+	    `tiki_article_types`.`show_avatar`,
+	    `tiki_article_types`.`show_author`,
+	    `tiki_article_types`.`show_pubdate`,
+	    `tiki_article_types`.`show_expdate`,
+	    `tiki_article_types`.`show_reads`,
+	    `tiki_article_types`.`show_size`,
+	    `tiki_article_types`.`show_topline`,
+	    `tiki_article_types`.`show_subtitle`,
+	    `tiki_article_types`.`show_linkto`,
+	    `tiki_article_types`.`show_image_caption`,
+	    `tiki_article_types`.`show_lang`,
+	    `tiki_article_types`.`creator_edit`
+		from `tiki_articles`, `tiki_article_types`, `users_users` $mid and `tiki_articles`.`articleId`=?";
+	    //$query = "select * from `tiki_articles` where `articleId`=?";
+	    $result = $this->query($query,array((int)$articleId));
+	    if ($result->numRows()) {
+		$res = $result->fetchRow();
+		$res["entrating"] = floor($res["rating"]);
+	    } else {
+		return false;
+	    }
+	    return $res;
+	}
+
+	function get_submission($subId) {
+	    $query = "select * from `tiki_submissions` where `subId`=?";
+	    $result = $this->query($query,array((int) $subId));
+	    if ($result->numRows()) {
+		$res = $result->fetchRow();
+		$res["entrating"] = floor($res["rating"]);
+	    } else {
+		return false;
+	    }
+	    return $res;
+	}
+
+	/*shared*/
+	function get_topic_image($topicId) {
+	    // Fixed query. -rlpowell
+	    $query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_topics` where `topicId`=?";
+	    $result = $this->query($query, array((int) $topicId));
+	    $res = $result->fetchRow();
+	    return $res;
+	}
+
+	/*shared*/
+	function get_article_image($id) {
+	    $query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_articles` where `articleId`=?";
+	    $result = $this->query($query, array((int) $id));
+	    $res = $result->fetchRow();
+	    return $res;
+	}
+
+	/*shared*/
+	function get_featured_links($max = 10) {
+	    $query = "select * from `tiki_featured_links` where `position` > ? order by ".$this->convert_sortmode("position_asc");
+	    $result = $this->query($query, array(0), (int)$max, 0 );
+	    $ret = array();
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+	    return $ret;
+	}
+
+	function update_session($sessionId) {
+	    global $user;
+	    if ($user === false) $user = '';
+	    $now = date("U");
+	    $oldy = $now - (5 * 60);
+	    $query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
+	    $bindvars = array($sessionId, $oldy);
+	    if ($user) {
+		$query .= " or `user`=?";
+		$bindvars[] = $user;
+	    }
+	    $this->query($query, $bindvars, -1, -1, false);
+	    $query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`) values(?,?,?)";
+	    $result = $this->query($query, array($sessionId, (int)$now, $user));
+	    return true;
+	}
+
+	function count_sessions() {
+	    $query = "select count(*) from `tiki_sessions`";
+	    $cant = $this->getOne($query,array());
+	    return $cant;
+	}
+
+	/*shared*/
+	function get_assigned_modules($position, $displayed="n") {
+	    $filter = '';
+	    if ($displayed != 'n') {
+		$filter = " and (`type` is null or `type` !='h')";
+	    }
+	    $query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` ";
+	    $query.= " where `position`= ? $filter order by ".$this->convert_sortmode("ord_asc");
+
+	    $result = $this->query($query, array($position));
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		if ($res["groups"] && strlen($res["groups"]) > 1) {
+		    $grps = @unserialize($res["groups"]);
+
+		    $res["module_groups"] = '';
+		    if (is_array($grps)) {
+			foreach ($grps as $grp) {
+			    $res["module_groups"] .= " $grp ";
+			}
+		    }
+		} else {
+		    $res["module_groups"] = '&nbsp;';
+		}
+		$ret[] = $res;
+	    }
+	    return $ret;
+	}
+
+	/*shared*/
+	function is_user_module($name) {
+	    $query = "select `name`  from `tiki_user_modules` where `name`=?";
+	    $result = $this->query($query,array($name));
+	    return $result->numRows();
+	}
+
+	/*shared*/
+	function get_user_module($name) {
+	    $query = "select * from `tiki_user_modules` where `name`=?";
+	    $result = $this->query($query,array($name));
+	    $res = $result->fetchRow();
+	    return $res;
+	}
+
+	function cache_links($links) {
+	    $cachepages = $this->get_preference("cachepages", 'y');
+	    if ($cachepages != 'y') return false;
+	    foreach ($links as $link) {
+		if (!$this->is_cached($link)) {
+		    $this->cache_url($link);
+		}
+	    }
+	}
+
+	function get_links($data) {
+	    $links = array();
+
+	    // Match things like [...], but ignore things like [[foo].
+	    // -Robin
+	    if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
+		$res = $r1[1];
+		$links = array_unique($res);
+	    }
+
+	    return $links;
+	}
+
+	function get_links_nocache($data) {
+	    $links = array();
+
+	    if (preg_match_all("/\[([^\]]+)/", $data, $r1)) {
+		$res = array();
+
+		foreach ($r1[1] as $alink) {
+		    $parts = explode('|', $alink);
+
+		    if (isset($parts[1]) && $parts[1] == 'nocache') {
+			$res[] = $parts[0];
+		    } else {
+			if (isset($parts[2]) && $parts[2] == 'nocache') {
 			    $res[] = $parts[0];
 			}
+		    }
+		    // avoid caching URLs with common binary file extensions
+		    $extension = substr($parts[0], -4);
+		    $binary = array(
+			    '.arj',
+			    '.asf',
+			    '.avi',
+			    '.bz2',
+			    '.dat',
+			    '.doc',
+			    '.exe',
+			    '.hqx',
+			    '.mov',
+			    '.mp3',
+			    '.mpg',
+			    '.ogg',
+			    '.pdf',
+			    '.ram',
+			    '.rar',
+			    '.rpm',
+			    '.rtf',
+			    '.sea',
+			    '.sit',
+			    '.tar',
+			    '.tgz',
+			    '.wav',
+			    '.wmv',
+			    '.xls',
+			    '.zip',
+			    'ar.Z', // .tar.Z
+			    'r.gz'  // .tar.gz
+				);
+			    if (in_array($extension, $binary)) {
+				$res[] = $parts[0];
+			    }
 
+		}
+
+		$links = array_unique($res);
 	    }
 
-	    $links = array_unique($res);
+	    return $links;
 	}
 
-	return $links;
-    }
+	function is_cacheable($url) {
+	    // simple implementation: future versions should analyse
+	    // if this is a link to the local machine
+	    if (strstr($url, 'tiki-')) {
+		return false;
+	    }
 
-    function is_cacheable($url) {
-	// simple implementation: future versions should analyse
-	// if this is a link to the local machine
-	if (strstr($url, 'tiki-')) {
-	    return false;
+	    if (strstr($url, 'messu-')) {
+		return false;
+	    }
+
+	    return true;
 	}
 
-	if (strstr($url, 'messu-')) {
-	    return false;
+	function is_cached($url) {
+	    $query = "select `cacheId`  from `tiki_link_cache` where `url`=?";
+	    $result = $this->query($query, array($url) );
+	    $cant = $result->numRows();
+	    return $cant;
 	}
 
-	return true;
-    }
+	function list_cache($offset, $maxRecords, $sort_mode, $find) {
 
-    function is_cached($url) {
-	$query = "select `cacheId`  from `tiki_link_cache` where `url`=?";
-	$result = $this->query($query, array($url) );
-	$cant = $result->numRows();
-	return $cant;
-    }
+	    if ($find) {
+		$findesc = '%' . $find . '%';
 
-    function list_cache($offset, $maxRecords, $sort_mode, $find) {
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-
-	    $mid = " where (`url` like ?) ";
-	    $bindvars=array($findesc);
-	} else {
-	    $mid = "";
-	    $bindvars=array();
-	}
-
-	$query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_link_cache` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    function refresh_cache($cacheId) {
-	$query = "select `url`  from `tiki_link_cache`
-	    where `cacheId`=?";
-
-	$url = $this->getOne($query, array( $cacheId ) );
-	$data = $this->httprequest($url);
-	$refresh = date("U");
-	$query = "update `tiki_link_cache`
-	    set `data`=?, `refresh`=?
-	    where `cacheId`=? ";
-	$result = $this->query($query, array( $data, $refresh, $cacheId) );
-	return true;
-    }
-
-    function remove_cache($cacheId) {
-	$query = "delete from `tiki_link_cache` where `cacheId`=?";
-
-	$result = $this->query($query, array( $cacheId ) );
-	return true;
-    }
-
-    function get_cache($cacheId) {
-	$query = "select * from `tiki_link_cache`
-	    where `cacheId`=?";
-
-	$result = $this->query($query, array( $cacheId ) );
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    function get_cache_id($url) {
-	if (!$this->is_cached($url))
-	    return false;
-
-	$query = "select `cacheId`  from `tiki_link_cache`
-	    where `url`=?";
-	$id = $this->getOne($query, array( $url ) );
-	return $id;
-    }
-
-    function vote_page($page, $points) {
-	$query = "update `pages`
-	    set `points`=`points`+$points, `votes`=`votes`+1
-	    where `pageName`=?";
-	$result = $this->query($query, array( $page ));
-    }
-
-    function get_votes($page) {
-	$query = "select `points` ,`votes`
-	    from `pages` where `pageName`=?";
-	$result = $this->query($query, array( $page ));
-	$res = $result->fetchRow();
-	return $res;
-    }
-
-    // This funcion return the $limit most accessed pages
-    // it returns pageName and hits for each page
-    function get_top_pages($limit) {
-	$query = "select `pageName` , `hits`
-	    from `tiki_pages`
-	    order by `hits` desc";
-
-	$result = $this->query($query, array(),$limit);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $aux["pageName"] = $res["pageName"];
-
-	    $aux["hits"] = $res["hits"];
-	    $ret[] = $aux;
-	}
-
-	return $ret;
-    }
-
-    // Returns the name of "n" random pages
-    function get_random_pages($n) {
-	$query = "select count(*) from `tiki_pages`";
-
-	$cant = $this->getOne($query,array());
-
-	// Adjust the limit if there are not enough pages
-	if ($cant < $n)
-	    $n = $cant;
-
-	// Now that we know the number of pages to pick select `n`  random positions from `0` to cant
-	$positions = array();
-
-	for ($i = 0; $i < $n; $i++) {
-	    $pick = rand(0, $cant - 1);
-
-	    if (!in_array($pick, $positions))
-		$positions[] = $pick;
-	}
-
-	// Now that we have the positions we just build the data
-	$ret = array();
-
-	$temp_max = count($positions);
-	for ($i = 0; $i < $temp_max; $i++) {
-	    $index = $positions[$i];
-
-	    $query = "select `pageName`  from `tiki_pages`";
-	    $name = $this->getOne($query,array(),1,$index);
-	    $ret[] = $name;
-	}
-
-	return $ret;
-    }
-    /**
-     * \brief Cache given url
-     * If \c $data present (passed) it is just associated \c $url and \c $data.
-     * Else it will request data for given URL and store it in DB.
-     * Actualy (currently) data may be proviced by TIkiIntegrator only.
-     */
-    function cache_url($url, $data = '') {
-	// Avoid caching internal references... (only if $data not present)
-	// (cdx) And avoid other protocols than http...
-	// 03-Nov-2003, by zaufi
-	// preg_match("_^(mailto:|ftp:|gopher:|file:|smb:|news:|telnet:|javascript:|nntp:|nfs:)_",$url)
-	// was removed (replaced to explicit http[s]:// detection) bcouse
-	// I now (and actualy use in my production Tiki) another bunch of protocols
-	// available in my konqueror... (like ldap://, ldaps://, nfs://, fish://...)
-	// ... seems like it is better to enum that allowed explicitly than all
-	// noncacheable protocols.
-	if (((strstr($url, 'tiki-') || strstr($url, 'messu-')) && $data == '')
-		|| (substr($url, 0, 7) != 'http://' && substr($url, 0, 8) != 'https://'))
-	    return false;
-	// Request data for URL if nothing given in parameters
-	// (reuse $data var)
-	if ($data == '') $data = $this->httprequest($url);
-
-	// If stuff inside [] is *really* malformatted, $data
-	// will be empty.  -rlpowell
-	if ($data)
-	{
-	    $refresh = date("U");
-	    $query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
-	    $result = $this->queryError($query, $error, array($url,$data,$refresh) );
-	    return !isset($error);
-	}
-	else return false;
-    }
-
-    // Removes all the versions of a page and the page itself
-    /*shared*/
-    function remove_all_versions($page, $comment = '') {
-	global $dbTiki;
-	$this->invalidate_cache($page);
-	//Delete structure references before we delete the page
-	$query  = "select `page_ref_id` ";
-	$query .= "from `tiki_structures` ts, `tiki_pages` tp ";
-	$query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
-	$result = $this->query($query, array( $page ) );
-	while ($res = $result->fetchRow()) {
-	    $this->remove_from_structure($res["page_ref_id"]);
-	}
-	$query = "delete from `tiki_pages` where `pageName` = ?";
-	$result = $this->query($query, array( $page ) );
-	$query = "delete from `tiki_history` where `pageName` = ?";
-	$result = $this->query($query, array( $page ) );
-	$query = "delete from `tiki_links` where `fromPage` = ?";
-	$result = $this->query($query, array( $page ) );
-	include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
-	$multilinguallib->detachTranslation('wiki page', $multilinguallib->get_page_id_from_name($page));
-	$action = "Removed"; //get_strings tra("Removed");
-	$t = date("U");
-	$query = "insert into ";
-	$query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
-	$query .= "values(?,?,?,?,?,?)";
-	$result = $this->query($query, array(
-		    $action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
-		    ) );
-	$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
-	$this->query($query, array(NULL, $page));
-
-	$this->remove_object('wiki page', $page);
-
-	$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
-	$this->query($query,array('wiki_page_changed', $page));
-
-	return true;
-    }
-
-    /*shared*/
-    function remove_from_structure($page_ref_id) {
-	// Now recursively remove
-	$query  = "select `page_ref_id` ";
-	$query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
-	$query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=?";
-	$result = $this->query($query, array( $page_ref_id ) );
-
-	while ($res = $result->fetchRow()) {
-	    $this->remove_from_structure($res["page_ref_id"]);
-	}
-
-	$query = "delete from `tiki_structures` where `page_ref_id`=?";
-	$result = $this->query($query, array( $page_ref_id ) );
-	return true;
-    }
-
-    /*shared*/
-    function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
-	// If $user is admin then get ALL galleries, if not only user galleries are shown
-	global $tiki_p_admin_galleries;
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	// If the user is not admin then select `it` 's own galleries or public galleries
-	if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
-	    $whuser = "";
-	    $bindvars=array();
-	} else {
-	    $whuser = "where `user`=? or public=?";
-	    $bindvars=array($user,'y');
-	}
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-
-	    if (empty($whuser)) {
-		$whuser = "where `name` like ? or `description` like ?";
-		$bindvars=array($findesc,$findesc);
+		$mid = " where (`url` like ?) ";
+		$bindvars=array($findesc);
 	    } else {
-		$whuser .= " and `name` like ? or `description` like ?";
-		$bindvars[]=$findesc;
-		$bindvars[]=$findesc;
+		$mid = "";
+		$bindvars=array();
 	    }
+
+	    $query = "select `cacheId` ,`url`,`refresh` from `tiki_link_cache` $mid order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_link_cache` $mid";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
 	}
 
-	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_galleries` $whuser";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
+	function refresh_cache($cacheId) {
+	    $query = "select `url`  from `tiki_link_cache`
+		where `cacheId`=?";
 
-	while ($res = $result->fetchRow()) {
+	    $url = $this->getOne($query, array( $cacheId ) );
+	    $data = $this->httprequest($url);
+	    $refresh = date("U");
+	    $query = "update `tiki_link_cache`
+		set `data`=?, `refresh`=?
+		where `cacheId`=? ";
+	    $result = $this->query($query, array( $data, $refresh, $cacheId) );
+	    return true;
+	}
 
-	    $add = TRUE;
-	    global $feature_categories;
-	    global $userlib;
-	    global $user;
-	    global $tiki_p_admin;
+	function remove_cache($cacheId) {
+	    $query = "delete from `tiki_link_cache` where `cacheId`=?";
 
-	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'image gallery')) {
-	    // gallery permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
-			    $add = FALSE;
-			}
-	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no forum permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
+	    $result = $this->query($query, array( $cacheId ) );
+	    return true;
+	}
 
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
+	function get_cache($cacheId) {
+	    $query = "select * from `tiki_link_cache`
+		where `cacheId`=?";
+
+	    $result = $this->query($query, array( $cacheId ) );
+	    $res = $result->fetchRow();
+	    return $res;
+	}
+
+	function get_cache_id($url) {
+	    if (!$this->is_cached($url))
+		return false;
+
+	    $query = "select `cacheId`  from `tiki_link_cache`
+		where `url`=?";
+	    $id = $this->getOne($query, array( $url ) );
+	    return $id;
+	}
+
+	function vote_page($page, $points) {
+	    $query = "update `pages`
+		set `points`=`points`+$points, `votes`=`votes`+1
+		where `pageName`=?";
+	    $result = $this->query($query, array( $page ));
+	}
+
+	function get_votes($page) {
+	    $query = "select `points` ,`votes`
+		from `pages` where `pageName`=?";
+	    $result = $this->query($query, array( $page ));
+	    $res = $result->fetchRow();
+	    return $res;
+	}
+
+	// This funcion return the $limit most accessed pages
+	// it returns pageName and hits for each page
+	function get_top_pages($limit) {
+	    $query = "select `pageName` , `hits`
+		from `tiki_pages`
+		order by `hits` desc";
+
+	    $result = $this->query($query, array(),$limit);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$aux["pageName"] = $res["pageName"];
+
+		$aux["hits"] = $res["hits"];
+		$ret[] = $aux;
 	    }
+
+	    return $ret;
+	}
+
+	// Returns the name of "n" random pages
+	function get_random_pages($n) {
+	    $query = "select count(*) from `tiki_pages`";
+
+	    $cant = $this->getOne($query,array());
+
+	    // Adjust the limit if there are not enough pages
+	    if ($cant < $n)
+		$n = $cant;
+
+	    // Now that we know the number of pages to pick select `n`  random positions from `0` to cant
+	    $positions = array();
+
+	    for ($i = 0; $i < $n; $i++) {
+		$pick = rand(0, $cant - 1);
+
+		if (!in_array($pick, $positions))
+		    $positions[] = $pick;
+	    }
+
+	    // Now that we have the positions we just build the data
+	    $ret = array();
+
+	    $temp_max = count($positions);
+	    for ($i = 0; $i < $temp_max; $i++) {
+		$index = $positions[$i];
+
+		$query = "select `pageName`  from `tiki_pages`";
+		$name = $this->getOne($query,array(),1,$index);
+		$ret[] = $name;
+	    }
+
+	    return $ret;
+	}
+	/**
+	 * \brief Cache given url
+	 * If \c $data present (passed) it is just associated \c $url and \c $data.
+	 * Else it will request data for given URL and store it in DB.
+	 * Actualy (currently) data may be proviced by TIkiIntegrator only.
+	 */
+	function cache_url($url, $data = '') {
+	    // Avoid caching internal references... (only if $data not present)
+	    // (cdx) And avoid other protocols than http...
+	    // 03-Nov-2003, by zaufi
+	    // preg_match("_^(mailto:|ftp:|gopher:|file:|smb:|news:|telnet:|javascript:|nntp:|nfs:)_",$url)
+	    // was removed (replaced to explicit http[s]:// detection) bcouse
+	    // I now (and actualy use in my production Tiki) another bunch of protocols
+	    // available in my konqueror... (like ldap://, ldaps://, nfs://, fish://...)
+	    // ... seems like it is better to enum that allowed explicitly than all
+	    // noncacheable protocols.
+	    if (((strstr($url, 'tiki-') || strstr($url, 'messu-')) && $data == '')
+		    || (substr($url, 0, 7) != 'http://' && substr($url, 0, 8) != 'https://'))
+		return false;
+	    // Request data for URL if nothing given in parameters
+	    // (reuse $data var)
+	    if ($data == '') $data = $this->httprequest($url);
+
+	    // If stuff inside [] is *really* malformatted, $data
+	    // will be empty.  -rlpowell
+	    if ($data)
+	    {
+		$refresh = date("U");
+		$query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
+		$result = $this->queryError($query, $error, array($url,$data,$refresh) );
+		return !isset($error);
+	    }
+	    else return false;
+	}
+
+	// Removes all the versions of a page and the page itself
+	/*shared*/
+	function remove_all_versions($page, $comment = '') {
+	    global $dbTiki;
+	    $this->invalidate_cache($page);
+	    //Delete structure references before we delete the page
+	    $query  = "select `page_ref_id` ";
+	    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
+	    $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
+	    $result = $this->query($query, array( $page ) );
+	    while ($res = $result->fetchRow()) {
+		$this->remove_from_structure($res["page_ref_id"]);
+	    }
+	    $query = "delete from `tiki_pages` where `pageName` = ?";
+	    $result = $this->query($query, array( $page ) );
+	    $query = "delete from `tiki_history` where `pageName` = ?";
+	    $result = $this->query($query, array( $page ) );
+	    $query = "delete from `tiki_links` where `fromPage` = ?";
+	    $result = $this->query($query, array( $page ) );
+	    include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
+	    $multilinguallib->detachTranslation('wiki page', $multilinguallib->get_page_id_from_name($page));
+	    $action = "Removed"; //get_strings tra("Removed");
+	    $t = date("U");
+	    $query = "insert into ";
+	    $query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
+	    $query .= "values(?,?,?,?,?,?)";
+	    $result = $this->query($query, array(
+			$action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
+			) );
+	    $query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
+	    $this->query($query, array(NULL, $page));
+
+	    $this->remove_object('wiki page', $page);
+
+	    $query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
+	    $this->query($query,array('wiki_page_changed', $page));
+
+	    return true;
+	}
+
+	/*shared*/
+	function remove_from_structure($page_ref_id) {
+	    // Now recursively remove
+	    $query  = "select `page_ref_id` ";
+	    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+	    $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=?";
+	    $result = $this->query($query, array( $page_ref_id ) );
+
+	    while ($res = $result->fetchRow()) {
+		$this->remove_from_structure($res["page_ref_id"]);
+	    }
+
+	    $query = "delete from `tiki_structures` where `page_ref_id`=?";
+	    $result = $this->query($query, array( $page_ref_id ) );
+	    return true;
+	}
+
+	/*shared*/
+	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	    // If $user is admin then get ALL galleries, if not only user galleries are shown
+	    global $tiki_p_admin_galleries;
+
+	    $old_sort_mode = '';
+
+	    if (in_array($sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$old_offset = $offset;
+
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user desc';
+		$offset = 0;
+		$maxRecords = -1;
+	    }
+
+	    // If the user is not admin then select `it` 's own galleries or public galleries
+	    if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
+		$whuser = "";
+		$bindvars=array();
+	    } else {
+		$whuser = "where `user`=? or public=?";
+		$bindvars=array($user,'y');
+	    }
+
+	    if ($find) {
+		$findesc = '%' . $find . '%';
+
+		if (empty($whuser)) {
+		    $whuser = "where `name` like ? or `description` like ?";
+		    $bindvars=array($findesc,$findesc);
+		} else {
+		    $whuser .= " and `name` like ? or `description` like ?";
+		    $bindvars[]=$findesc;
+		    $bindvars[]=$findesc;
+		}
+	    }
+
+	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    $query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries` $whuser";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+
+		$add = TRUE;
+		global $feature_categories;
+		global $userlib;
+		global $user;
+		global $tiki_p_admin;
+
+		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'image gallery')) {
+		    // gallery permissions override category permissions
+		    if (!$userlib->object_has_permission($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+			$add = FALSE;
+		    }
+		} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    // no forum permissions so now we check category permissions
+		    global $categlib;
+		    if (!is_object($categlib)) {
+			include_once('lib/categories/categlib.php');
+		    }
+		    unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    $perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
+		    if ($perms_array) {
+			$is_categorized = TRUE;
+			foreach ($perms_array as $perm => $value) {
+			    $$perm = $value;
+			}
+		    } else {
+			$is_categorized = FALSE;
+		    }
+
+		    if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+			$add = FALSE;
+		    }
+		}
 
 		if ($add) {
 		    $aux = array();
@@ -3101,680 +3120,680 @@ function add_pageview() {
 		    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 		    $ret[] = $aux;
 		}
-	}
-
-	if ($old_sort_mode == 'images asc') {
-	    usort($ret, 'compare_images');
-	}
-
-	if ($old_sort_mode == 'images desc') {
-	    usort($ret, 'r_compare_images');
-	}
-
-	if (in_array($old_sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    /*shared*/
-    function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
-	global $tiki_p_admin_galleries;
-	// If $user is admin then get ALL galleries, if not only user galleries are shown
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	// If the user is not admin then select `it` 's own galleries or public galleries
-	if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
-	    $whuser = "and `user`=? or `public`=?";
-	    $bindvars=array('y',$user,'y');
-	} else {
-	    $whuser = "";
-	    $bindvars=array('y');
-	}
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-
-	    if (empty($whuser)) {
-		$whuser = " and (`name` like ? or `description` like ?)";
-		$bindvars=array('y',$findesc,$findesc);
-	    } else {
-		$whuser .= " and (`name` like ? or `description` like ?)";
-		$bindvars[]=$findesc;
-		$bindvars[]=$findesc;
 	    }
+
+	    if ($old_sort_mode == 'images asc') {
+		usort($ret, 'compare_images');
+	    }
+
+	    if ($old_sort_mode == 'images desc') {
+		usort($ret, 'r_compare_images');
+	    }
+
+	    if (in_array($old_sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
 	}
 
-	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
+	/*shared*/
+	function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	    global $tiki_p_admin_galleries;
+	    // If $user is admin then get ALL galleries, if not only user galleries are shown
 
-	while ($res = $result->fetchRow()) {
-	    $aux = array();
+	    $old_sort_mode = '';
 
-	    $aux["name"] = $res["name"];
-	    $gid = $res["galleryId"];
-	    $aux["visible"] = $res["visible"];
-	    $aux["id"] = $gid;
-	    $aux["galleryId"] = $res["galleryId"];
-	    $aux["description"] = $res["description"];
-	    $aux["created"] = $res["created"];
-	    $aux["lastModif"] = $res["lastModif"];
-	    $aux["user"] = $res["user"];
-	    $aux["hits"] = $res["hits"];
-	    $aux["public"] = $res["public"];
-	    $aux["theme"] = $res["theme"];
-	    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
-	    $ret[] = $aux;
-	}
+	    if (in_array($sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$old_offset = $offset;
 
-	if ($old_sort_mode == 'images asc') {
-	    usort($ret, 'compare_images');
-	}
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user desc';
+		$offset = 0;
+		$maxRecords = -1;
+	    }
 
-	if ($old_sort_mode == 'images desc') {
-	    usort($ret, 'r_compare_images');
-	}
+	    // If the user is not admin then select `it` 's own galleries or public galleries
+	    if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
+		$whuser = "and `user`=? or `public`=?";
+		$bindvars=array('y',$user,'y');
+	    } else {
+		$whuser = "";
+		$bindvars=array('y');
+	    }
 
-	if (in_array($old_sort_mode, array(
-			'images desc',
-			'images asc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
+	    if ($find) {
+		$findesc = '%' . $find . '%';
 
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
+		if (empty($whuser)) {
+		    $whuser = " and (`name` like ? or `description` like ?)";
+		    $bindvars=array('y',$findesc,$findesc);
+		} else {
+		    $whuser .= " and (`name` like ? or `description` like ?)";
+		    $bindvars[]=$findesc;
+		    $bindvars[]=$findesc;
+		}
+	    }
 
-    function last_pages($maxRecords = -1) {
-	$query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convert_sortmode('lastModif_desc');
-	$result = $this->query($query,array(),$maxRecords,0);
-	$ret = array();
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-	return $ret;
-    }
-
-
-    function last_major_pages($maxRecords = -1) {
-	$query = "select tp.`pageName`,tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
-	    on tp.`pageName`=ta.`pageName` and tp.`lastModif`=ta.`lastModif` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
-	$result = $this->query($query,array(),$maxRecords,0);
-	$ret = array();
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-	return $ret;
-    }
-
-    function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
-
-	if ($sort_mode == 'size_desc') {
-	    $sort_mode = 'page_size_desc';
-	}
-
-	if ($sort_mode == 'size_asc') {
-	    $sort_mode = 'page_size_asc';
-	}
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'versions_desc',
-			'versions_asc',
-			'links_asc',
-			'links_desc',
-			'backlinks_asc',
-			'backlinks_desc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'user_desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	if (is_array($find)) { // you can use an array of pages
-	    $mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
-	    $bindvars = $find;
-	} elseif (is_string($find)) { // or a string
-	    $mid = " where `pageName` like ? ";
-	    $bindvars = array('%' . $find . '%');
-	} else {
-	    $mid = "";
-	    $bindvars = array();
-	}
-
-	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select `creator` ,`pageName`, `hits`, `page_size` as `len`, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` ";
-	$query.= " from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_pages` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $aux = array();
-
-	    $aux["pageName"] = $res["pageName"];
-	    $page = $aux["pageName"];
-	    $aux["hits"] = $res["hits"];
-	    $aux["lastModif"] = $res["lastModif"];
-	    $aux["user"] = $res["user"];
-	    $aux["ip"] = $res["ip"];
-	    $aux["len"] = $res["len"];
-	    $aux["comment"] = $res["comment"];
-	    $aux["creator"] = $res["creator"];
-	    $aux["version"] = $res["version"];
-	    $aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
-	    $aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
-	    $aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
-	    $aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
-	    $ret[] = $aux;
-	}
-
-	// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
-	if ($old_sort_mode == 'versions_asc') {
-	    usort($ret, 'compare_versions');
-	}
-
-	if ($old_sort_mode == 'versions_desc') {
-	    usort($ret, 'r_compare_versions');
-	}
-
-	if ($old_sort_mode == 'links_desc') {
-	    usort($ret, 'compare_links');
-	}
-
-	if ($old_sort_mode == 'links_asc') {
-	    usort($ret, 'r_compare_links');
-	}
-
-	if ($old_sort_mode == 'backlinks_desc') {
-	    usort($ret, 'compare_backlinks');
-	}
-
-	if ($old_sort_mode == 'backlinks_asc') {
-	    usort($ret, 'r_compare_backlinks');
-	}
-
-	if (in_array($old_sort_mode, array(
-			'versions_desc',
-			'versions_asc',
-			'links_asc',
-			'links_desc',
-			'backlinks_asc',
-			'backlinks_desc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-    function get_all_preferences() {
-	global $preferences;
-	if (empty($preferences)) {
-	    $query = "select `name` ,`value` from `tiki_preferences`";
-
-	    $result = $this->query($query,array());
-	    $preferences = array();
+	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    $query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
-		$preferences[$res["name"]] = $res["value"];
+		$aux = array();
+
+		$aux["name"] = $res["name"];
+		$gid = $res["galleryId"];
+		$aux["visible"] = $res["visible"];
+		$aux["id"] = $gid;
+		$aux["galleryId"] = $res["galleryId"];
+		$aux["description"] = $res["description"];
+		$aux["created"] = $res["created"];
+		$aux["lastModif"] = $res["lastModif"];
+		$aux["user"] = $res["user"];
+		$aux["hits"] = $res["hits"];
+		$aux["public"] = $res["public"];
+		$aux["theme"] = $res["theme"];
+		$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
+		$ret[] = $aux;
 	    }
+
+	    if ($old_sort_mode == 'images asc') {
+		usort($ret, 'compare_images');
+	    }
+
+	    if ($old_sort_mode == 'images desc') {
+		usort($ret, 'r_compare_images');
+	    }
+
+	    if (in_array($old_sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
 	}
 
-	return $preferences;
-    }
-
-    function get_preference($name, $default = '') {
-	global $preferences;
-
-	if (empty($preferences)) {
-	    $preferences = $this->get_all_preferences();
+	function last_pages($maxRecords = -1) {
+	    $query = "select `pageName`,`lastModif`,`user` from `tiki_pages` order by ".$this->convert_sortmode('lastModif_desc');
+	    $result = $this->query($query,array(),$maxRecords,0);
+	    $ret = array();
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+	    return $ret;
 	}
 
-	if (!isset($preferences[$name])) {
-	    $preferences[$name] = $default;
+
+	function last_major_pages($maxRecords = -1) {
+	    $query = "select tp.`pageName`,tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
+		on tp.`pageName`=ta.`pageName` and tp.`lastModif`=ta.`lastModif` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
+	    $result = $this->query($query,array(),$maxRecords,0);
+	    $ret = array();
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+	    return $ret;
 	}
 
-	return $preferences[$name];
-    }
+	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
 
-    function set_preference($name, $value) {
-	global $preferences;
-	global $tikidomain;
+	    if ($sort_mode == 'size_desc') {
+		$sort_mode = 'page_size_desc';
+	    }
 
-	@unlink ("templates_c/$tikidomain/preferences.php");
+	    if ($sort_mode == 'size_asc') {
+		$sort_mode = 'page_size_asc';
+	    }
 
-	//refresh cache
-	if (isset($preferences[$name])) {
-	    unset ($preferences[$name]);
+	    $old_sort_mode = '';
 
-	    $preferences[$name] = $value;
-	}
+	    if (in_array($sort_mode, array(
+			    'versions_desc',
+			    'versions_asc',
+			    'links_asc',
+			    'links_desc',
+			    'backlinks_asc',
+			    'backlinks_desc'
+			    ))) {
+		$old_offset = $offset;
 
-	$query = "delete from `tiki_preferences` where `name`=?";
-	$result = $this->query($query,array($name),-1,-1,false);
-	$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
-	$result = $this->query($query,array($name,$value));
-	return true;
-    }
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user_desc';
+		$offset = 0;
+		$maxRecords = -1;
+	    }
 
-    function load_user_cache($login, $all=false) {
-	global $user_details;
-	global $user_preferences;
-
-	if ( !is_array($login) ) {
-	    $login = array($login);
-	}
-
-	$query  = 'SELECT `login` , `userId` , `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` ,  `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users`';
-	$query .= ' WHERE ' . str_repeat('`login` = ? OR ', count($login)-1) . '`login` = ?';
-	$result = $this->query($query, $login);
-
-	while ( $row = $result->fetchRow() ) {
-	    $alogin = $row['login'];
-	    unset($row['login']);
-	    $user_details[$alogin] = $row;
-	}
-
-	$query  = 'SELECT `user` , `prefName` , `value` FROM `tiki_user_preferences`';
-	if ( $all ) {
-	    $query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ?';
-	    $result = $this->query($query, $login);
-	} else {
-	    $query .= ' WHERE ( `prefName` = ? OR `prefName` = ? ) AND ( ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ? )';
-	    $result = $this->query($query, array_merge( array('user_information', 'country'), $login));
-	}
-
-	while ( $row = $result->fetchRow() ) {
-	    $alogin = $row['user'];
-	    unset($row['login']);
-	    $user_preferences[$row['user']][$row['prefName']] = $row['value'];
-	}
-    }
-
-    function get_user_preference($user, $name, $default = '') {
-	global $user_preferences;
-
-	if (!isset($user_preferences[$user][$name])) {
-	    $query = "select `value` from `tiki_user_preferences` where `prefName`=? and `user`=?";
-
-	    $result = $this->query($query, array( "$name", "$user"));
-
-	    if ($result->numRows()) {
-		$res = $result->fetchRow();
-
-		$user_preferences[$user][$name] = $res["value"];
+	    if (is_array($find)) { // you can use an array of pages
+		$mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+		$bindvars = $find;
+	    } elseif (is_string($find)) { // or a string
+		$mid = " where `pageName` like ? ";
+		$bindvars = array('%' . $find . '%');
 	    } else {
-		$user_preferences[$user][$name] = $default;
+		$mid = "";
+		$bindvars = array();
+	    }
+
+	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    $query = "select `creator` ,`pageName`, `hits`, `page_size` as `len`, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` ";
+	    $query.= " from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_pages` $mid";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$aux = array();
+
+		$aux["pageName"] = $res["pageName"];
+		$page = $aux["pageName"];
+		$aux["hits"] = $res["hits"];
+		$aux["lastModif"] = $res["lastModif"];
+		$aux["user"] = $res["user"];
+		$aux["ip"] = $res["ip"];
+		$aux["len"] = $res["len"];
+		$aux["comment"] = $res["comment"];
+		$aux["creator"] = $res["creator"];
+		$aux["version"] = $res["version"];
+		$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
+		$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+		$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+		$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
+		$ret[] = $aux;
+	    }
+
+	    // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
+	    if ($old_sort_mode == 'versions_asc') {
+		usort($ret, 'compare_versions');
+	    }
+
+	    if ($old_sort_mode == 'versions_desc') {
+		usort($ret, 'r_compare_versions');
+	    }
+
+	    if ($old_sort_mode == 'links_desc') {
+		usort($ret, 'compare_links');
+	    }
+
+	    if ($old_sort_mode == 'links_asc') {
+		usort($ret, 'r_compare_links');
+	    }
+
+	    if ($old_sort_mode == 'backlinks_desc') {
+		usort($ret, 'compare_backlinks');
+	    }
+
+	    if ($old_sort_mode == 'backlinks_asc') {
+		usort($ret, 'r_compare_backlinks');
+	    }
+
+	    if (in_array($old_sort_mode, array(
+			    'versions_desc',
+			    'versions_asc',
+			    'links_asc',
+			    'links_desc',
+			    'backlinks_asc',
+			    'backlinks_desc'
+			    ))) {
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
+	}
+
+	function get_all_preferences() {
+	    global $preferences;
+	    if (empty($preferences)) {
+		$query = "select `name` ,`value` from `tiki_preferences`";
+
+		$result = $this->query($query,array());
+		$preferences = array();
+
+		while ($res = $result->fetchRow()) {
+		    $preferences[$res["name"]] = $res["value"];
+		}
+	    }
+
+	    return $preferences;
+	}
+
+	function get_preference($name, $default = '') {
+	    global $preferences;
+
+	    if (empty($preferences)) {
+		$preferences = $this->get_all_preferences();
+	    }
+
+	    if (!isset($preferences[$name])) {
+		$preferences[$name] = $default;
+	    }
+
+	    return $preferences[$name];
+	}
+
+	function set_preference($name, $value) {
+	    global $preferences;
+	    global $tikidomain;
+
+	    @unlink ("templates_c/$tikidomain/preferences.php");
+
+	    //refresh cache
+	    if (isset($preferences[$name])) {
+		unset ($preferences[$name]);
+
+		$preferences[$name] = $value;
+	    }
+
+	    $query = "delete from `tiki_preferences` where `name`=?";
+	    $result = $this->query($query,array($name),-1,-1,false);
+	    $query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
+	    $result = $this->query($query,array($name,$value));
+	    return true;
+	}
+
+	function load_user_cache($login, $all=false) {
+	    global $user_details;
+	    global $user_preferences;
+
+	    if ( !is_array($login) ) {
+		$login = array($login);
+	    }
+
+	    $query  = 'SELECT `login` , `userId` , `email` , `lastLogin` , `currentLogin` , `registrationDate` , `created` ,  `avatarName` , `avatarSize` , `avatarFileType` , `avatarLibName` , `avatarType` FROM `users_users`';
+	    $query .= ' WHERE ' . str_repeat('`login` = ? OR ', count($login)-1) . '`login` = ?';
+	    $result = $this->query($query, $login);
+
+	    while ( $row = $result->fetchRow() ) {
+		$alogin = $row['login'];
+		unset($row['login']);
+		$user_details[$alogin] = $row;
+	    }
+
+	    $query  = 'SELECT `user` , `prefName` , `value` FROM `tiki_user_preferences`';
+	    if ( $all ) {
+		$query .= ' WHERE ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ?';
+		$result = $this->query($query, $login);
+	    } else {
+		$query .= ' WHERE ( `prefName` = ? OR `prefName` = ? ) AND ( ' . str_repeat('`user` = ? OR ', count($login)-1) . '`user` = ? )';
+		$result = $this->query($query, array_merge( array('user_information', 'country'), $login));
+	    }
+
+	    while ( $row = $result->fetchRow() ) {
+		$alogin = $row['user'];
+		unset($row['login']);
+		$user_preferences[$row['user']][$row['prefName']] = $row['value'];
 	    }
 	}
 
-	return $user_preferences[$user][$name];
-    }
+	function get_user_preference($user, $name, $default = '') {
+	    global $user_preferences;
 
-    function set_user_preference($user, $name, $value) {
-	global $user_preferences;
-	$user_preferences[$user][$name] = $value;
-	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-	$bindvars=array($user,$name);
-	$result = $this->query($query, $bindvars, -1,-1,false);
-	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-	$bindvars[]=$value;
-	$result = $this->query($query, $bindvars);
-	return true;
-    }
+	    if (!isset($user_preferences[$user][$name])) {
+		$query = "select `value` from `tiki_user_preferences` where `prefName`=? and `user`=?";
 
-    // This implements all the functions needed to use Tiki
-    /*shared*/
-    function page_exists($pageName, $casesensitive=false) {
-	$query = "select `pageName` from `tiki_pages` where `pageName` = ?";
-	$result = $this->query($query, array($pageName));
+		$result = $this->query($query, array( "$name", "$user"));
 
-	// if casesensitive, check the name of the returned page:
-	if ( ($casesensitive) && ($result->numRows()) ) {
+		if ($result->numRows()) {
+		    $res = $result->fetchRow();
+
+		    $user_preferences[$user][$name] = $res["value"];
+		} else {
+		    $user_preferences[$user][$name] = $default;
+		}
+	    }
+
+	    return $user_preferences[$user][$name];
+	}
+
+	function set_user_preference($user, $name, $value) {
+	    global $user_preferences;
+	    $user_preferences[$user][$name] = $value;
+	    $query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+	    $bindvars=array($user,$name);
+	    $result = $this->query($query, $bindvars, -1,-1,false);
+	    $query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+	    $bindvars[]=$value;
+	    $result = $this->query($query, $bindvars);
+	    return true;
+	}
+
+	// This implements all the functions needed to use Tiki
+	/*shared*/
+	function page_exists($pageName, $casesensitive=false) {
+	    $query = "select `pageName` from `tiki_pages` where `pageName` = ?";
+	    $result = $this->query($query, array($pageName));
+
+	    // if casesensitive, check the name of the returned page:
+	    if ( ($casesensitive) && ($result->numRows()) ) {
+		$res = $result->fetchRow();
+		if ($res["pageName"] <> $pageName) return 0;
+	    }
+
+	    return $result->numRows();
+	}
+
+	function page_exists_desc($pageName) {
+	    $query = "select `description`  from `tiki_pages`
+		where `pageName` = ?";
+	    $result = $this->query($query, array( $pageName ));
+
+	    if (!$result->numRows())
+		return false;
+
 	    $res = $result->fetchRow();
-	    if ($res["pageName"] <> $pageName) return 0;
+
+	    if (!$res["description"])
+		$res["description"] = tra('no description');
+
+	    return $res["description"];
 	}
 
-	return $result->numRows();
-    }
+	function page_exists_modtime($pageName) {
+	    $query = "select `lastModif`  from `tiki_pages`
+		where `pageName` = ?";
+	    $result = $this->query($query, array( $pageName ));
 
-    function page_exists_desc($pageName) {
-	$query = "select `description`  from `tiki_pages`
-	    where `pageName` = ?";
-	$result = $this->query($query, array( $pageName ));
+	    if (!$result->numRows())
+		return false;
 
-	if (!$result->numRows())
-	    return false;
+	    $res = $result->fetchRow();
 
-	$res = $result->fetchRow();
+	    if (!$res["lastModif"])
+		$res["lastModif"] = 0;
 
-	if (!$res["description"])
-	    $res["description"] = tra('no description');
+	    return $res["lastModif"];
+	}
 
-	return $res["description"];
-    }
+	function add_hit($pageName) {
+	    $query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
+	    $result = $this->query($query, array($pageName));
+	    return true;
+	}
 
-    function page_exists_modtime($pageName) {
-	$query = "select `lastModif`  from `tiki_pages`
-	    where `pageName` = ?";
-	$result = $this->query($query, array( $pageName ));
+	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang='') {
+	    global $smarty;
+	    global $dbTiki;
+	    global $sender_email;
+	    include_once ("lib/commentslib.php");
 
-	if (!$result->numRows())
-	    return false;
+	    $commentslib = new Comments($dbTiki);
 
-	$res = $result->fetchRow();
+	    // Collect pages before modifying data
+	    $pages = $this->get_pages($data);
 
-	if (!$res["lastModif"])
-	    $res["lastModif"] = 0;
+	    // This *really* shouldn't be necessary now that the
+	    // query itself has been fixed up, and it causes much
+	    // badness to the phpwiki import.  -rlpowell
+	    //  $name = addslashes($name);
+	    //  $description = addslashes($description);
+	    //  $data = addslashes($data);
+	    //  $comment = addslashes($comment);
 
-	return $res["lastModif"];
-    }
-
-    function add_hit($pageName) {
-	$query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
-	$result = $this->query($query, array($pageName));
-	return true;
-    }
-
-    function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang='') {
-	global $smarty;
-	global $dbTiki;
-	global $sender_email;
-	include_once ("lib/commentslib.php");
-
-	$commentslib = new Comments($dbTiki);
-
-	// Collect pages before modifying data
-	$pages = $this->get_pages($data);
-
-	// This *really* shouldn't be necessary now that the
-	// query itself has been fixed up, and it causes much
-	// badness to the phpwiki import.  -rlpowell
-	//  $name = addslashes($name);
-	//  $description = addslashes($description);
-	//  $data = addslashes($data);
-	//  $comment = addslashes($comment);
-
-	if (!isset($_SERVER["SERVER_NAME"])) {
+	    if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
-	}
+	    }
 
-	if ($this->page_exists($name))
-	    return false;
+	    if ($this->page_exists($name))
+		return false;
 
-	if ($lang) {	// not sure it is necessary
+	    if ($lang) {	// not sure it is necessary
 		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang ));
-	}
-	else  {
+	    }
+	    else  {
 		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) values(?,?,?,?,?,?,?,?,?,?,?)";	
 		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data)));
+	    }
+
+	    $this->clear_links($name);
+
+	    // Pages are collected before adding slashes
+	    foreach ($pages as $a_page) {
+		$this->replace_link($name, $a_page);
+	    }
+
+	    // Update the log
+	    if ($name != 'SandBox') {
+		$action = "Created";//get_strings tra("Created");
+
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query, array(
+			    $action,
+			    $name,
+			    (int)$lastModif,
+			    $user,
+			    $ip,
+			    $comment
+			    ));
+
+		//  Deal with mail notifications.
+		include_once('lib/notifications/notificationemaillib.php');
+		//This is put away: sender_email must be enough!
+		//  if( $this->get_preference('wiki_forum') ) {
+		//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
+		//    if ($forums)
+		//      $fromEmail = $forums["data"][0]["outbound_from"];
+		//    else
+		//      $fromEmail = $sender_email;
+		//  }
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = httpPrefix(). dirname( $foo["path"] );
+		sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
+	    }
+
+	    global $feature_score;
+	    if ($feature_score == 'y') {
+		$this->score_event($user, 'wiki_new');
+	    }
+
+	    return true;
 	}
 
-	$this->clear_links($name);
+	function get_user_pages($user, $max, $who='user') {
+	    $query = "select `pageName` from `tiki_pages` where `$who`=?";
 
-	// Pages are collected before adding slashes
-	foreach ($pages as $a_page) {
-	    $this->replace_link($name, $a_page);
+	    $result = $this->query($query,array($user),$max);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+
+	    return $ret;
 	}
 
-	// Update the log
-	if ($name != 'SandBox') {
-	    $action = "Created";//get_strings tra("Created");
+	function get_user_galleries($user, $max) {
+	    $query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`=?";
 
-	    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	    $result = $this->query($query, array(
-			$action,
-			$name,
-			(int)$lastModif,
-			$user,
-			$ip,
-			$comment
-			));
+	    $result = $this->query($query,array($user),$max);
+	    $ret = array();
 
-	    //  Deal with mail notifications.
-	    include_once('lib/notifications/notificationemaillib.php');
-	    //This is put away: sender_email must be enough!
-	    //  if( $this->get_preference('wiki_forum') ) {
-	    //      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-	    //    if ($forums)
-	    //      $fromEmail = $forums["data"][0]["outbound_from"];
-	    //    else
-	    //      $fromEmail = $sender_email;
-	    //  }
-	    $foo = parse_url($_SERVER["REQUEST_URI"]);
-	    $machine = httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
-	}
-	
-	global $feature_score;
-	if ($feature_score == 'y') {
-	    $this->score_event($user, 'wiki_new');
+	    while ($res = $result->fetchRow()) {
+		$ret[] = $res;
+	    }
+
+	    return $ret;
 	}
 
-	return true;
-    }
+	function get_page_info($pageName) {
+	    $query = "select * from `tiki_pages` where `pageName`=?";
 
-    function get_user_pages($user, $max, $who='user') {
-	$query = "select `pageName` from `tiki_pages` where `$who`=?";
+	    $result = $this->query($query, array($pageName));
 
-	$result = $this->query($query,array($user),$max);
-	$ret = array();
+	    if (!$result->numRows())
+		return false;
+	    else
+		return $result->fetchRow();
+	}
+	function get_page_info_from_id($page_id) {
+	    $query = "select * from `tiki_pages` where `page_id`=?";
 
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+	    $result = $this->query($query, array($page_id));
+
+	    if (!$result->numRows())
+		return false;
+	    else
+		return $result->fetchRow();
 	}
 
-	return $ret;
-    }
 
-    function get_user_galleries($user, $max) {
-	$query = "select `name` ,`galleryId`  from `tiki_galleries` where `user`=?";
-
-	$result = $this->query($query,array($user),$max);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+	function get_page_name_from_id($page_id) {
+	    $query = "select `pageName`  from `tiki_pages` where `page_id`=?";
+	    return $this->getOne($query, array((int)$page_id));
 	}
 
-	return $ret;
-    }
-
-    function get_page_info($pageName) {
-	$query = "select * from `tiki_pages` where `pageName`=?";
-
-	$result = $this->query($query, array($pageName));
-
-	if (!$result->numRows())
-	    return false;
-	else
-	    return $result->fetchRow();
-    }
-    function get_page_info_from_id($page_id) {
-	$query = "select * from `tiki_pages` where `page_id`=?";
-
-	$result = $this->query($query, array($page_id));
-
-	if (!$result->numRows())
-	    return false;
-	else
-	    return $result->fetchRow();
-    }
-
-
-    function get_page_name_from_id($page_id) {
-	$query = "select `pageName`  from `tiki_pages` where `page_id`=?";
-	return $this->getOne($query, array((int)$page_id));
-    }
-
-    function get_page_id_from_name($page) {
-	$query = "select `page_id` from `tiki_pages` where `pageName`=?";
-	return $this->getOne($query, array($page));
-    }
-
-    function how_many_at_start($str, $car) {
-	$cant = 0;
-
-	$i = 0;
-
-	while (($i < strlen($str)) && (isset($str{$i})) && ($str{$i}== $car)) {
-	    $i++;
-
-	    $cant++;
+	function get_page_id_from_name($page) {
+	    $query = "select `page_id` from `tiki_pages` where `pageName`=?";
+	    return $this->getOne($query, array($page));
 	}
 
-	return $cant;
-    }
+	function how_many_at_start($str, $car) {
+	    $cant = 0;
 
-    function parse_data_raw($data) {
-	$data = $this->parse_data($data);
+	    $i = 0;
 
-	$data = str_replace("tiki-index", "tiki-index_raw", $data);
-	return $data;
-    }
+	    while (($i < strlen($str)) && (isset($str{$i})) && ($str{$i}== $car)) {
+		$i++;
 
-    function add_pre_handler($name) {
-	if (!in_array($name, $this->pre_handlers)) {
-	    $this->pre_handlers[] = $name;
-	}
-    }
+		$cant++;
+	    }
 
-    function add_pos_handler($name) {
-	if (!in_array($name, $this->pos_handlers)) {
-	    $this->pos_handlers[] = $name;
-	}
-    }
-
-    // add a post edit filter which is called when a wiki page is edited and before
-    // it is committed to the database (see tiki-handlers.php on its usage)
-    function add_postedit_handler($name)
-    {
-	if(!in_array($name,$this->postedit_handlers)) {
-	    $this->postedit_handlers[]=$name;
-	}
-    }
-
-    // apply all the post edit handlers to the wiki page data
-    function apply_postedit_handlers($data) {
-	// Process editpage_handlers here
-	foreach($this->postedit_handlers as $handler) {
-	    $data = $handler($data);
-	}
-	return $data;
-    }
-
-    // This function handles wiki codes for those special HTML characters
-    // that textarea won't leave alone.
-    function parse_htmlchar(&$data) {
-	// cleaning some user input
-	$data = preg_replace("/&(?!([a-z]{1,7};))/", "&amp;", $data);
-
-	// oft-used characters (case insensitive)
-	$data = preg_replace("/~bs~/i", "&#92;", $data);
-	$data = preg_replace("/~hs~/i", "&nbsp;", $data);
-	$data = preg_replace("/~amp~/i", "&amp;", $data);
-	$data = preg_replace("/~ldq~/i", "&ldquo;", $data);
-	$data = preg_replace("/~rdq~/i", "&rdquo;", $data);
-	$data = preg_replace("/~lsq~/i", "&lsquo;", $data);
-	$data = preg_replace("/~rsq~/i", "&rsquo;", $data);
-	$data = preg_replace("/~c~/i", "&copy;", $data);
-	$data = preg_replace("/~--~/", "&mdash;", $data);
-	$data = preg_replace("/ -- /", " &mdash; ", $data);
-	$data = preg_replace("/~lt~/i", "&lt;", $data);
-	$data = preg_replace("/~gt~/i", "&gt;", $data);
-
-	// HTML numeric character entities
-	$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
-    }
-
-    // AWC ADDITION
-    // This function replaces pre- and no-parsed sections with unique keys
-    // and saves the section contents for later reinsertion.
-    function parse_pp_np(&$data, &$preparsed, &$noparsed) {
-	// Find all sections delimited by ~pp~ ... ~/pp~
-	// and replace them in the data stream with a unique key
-	preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/", $data, $preparse);
-
-	foreach (array_unique($preparse[1])as $pp) {
-	    $key = md5($this->genPass());
-
-	    $aux["key"] = $key;
-	    $aux["data"] = $pp;
-	    $preparsed[] = $aux;
-	    $data = str_replace("~pp~$pp~/pp~", $key, $data);
+	    return $cant;
 	}
 
-	// Temporary remove <pre> tags too
-	// TODO: Is this a problem if user insert <PRE> but after parsing
-	//     will get <pre> (lowercase)?? :)
-	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
-	$idx = 0;
+	function parse_data_raw($data) {
+	    $data = $this->parse_data($data);
 
-	foreach (array_unique($preparse[2])as $pp) {
-	    $key = md5($this->genPass());
-
-	    $aux["key"] = $key;
-	    $aux["data"] = $pp;
-	    $preparsed[] = $aux;
-	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
-	    $idx = $idx + 1;
+	    $data = str_replace("tiki-index", "tiki-index_raw", $data);
+	    return $data;
 	}
 
-	// This section used to be the ~np~ handling, but it's *way* too
-	// complicated.  A sensible version follows; the below should
-	// eventually be removed.  --rlpowell, 24 May 2004
-	/*
-	// Find all sections delimited by ~np~ ... ~/np~
-	$new_data = '';
-	$nopa = '';
-	$state = true;
-	$skip = false;
+	function add_pre_handler($name) {
+	    if (!in_array($name, $this->pre_handlers)) {
+		$this->pre_handlers[] = $name;
+	    }
+	}
 
-	$dlength=strlen($data);
-	for ($i = 0; $i < $dlength; $i++) {
+	function add_pos_handler($name) {
+	    if (!in_array($name, $this->pos_handlers)) {
+		$this->pos_handlers[] = $name;
+	    }
+	}
+
+	// add a post edit filter which is called when a wiki page is edited and before
+	// it is committed to the database (see tiki-handlers.php on its usage)
+	function add_postedit_handler($name)
+	{
+	    if(!in_array($name,$this->postedit_handlers)) {
+		$this->postedit_handlers[]=$name;
+	    }
+	}
+
+	// apply all the post edit handlers to the wiki page data
+	function apply_postedit_handlers($data) {
+	    // Process editpage_handlers here
+	    foreach($this->postedit_handlers as $handler) {
+		$data = $handler($data);
+	    }
+	    return $data;
+	}
+
+	// This function handles wiki codes for those special HTML characters
+	// that textarea won't leave alone.
+	function parse_htmlchar(&$data) {
+	    // cleaning some user input
+	    $data = preg_replace("/&(?!([a-z]{1,7};))/", "&amp;", $data);
+
+	    // oft-used characters (case insensitive)
+	    $data = preg_replace("/~bs~/i", "&#92;", $data);
+	    $data = preg_replace("/~hs~/i", "&nbsp;", $data);
+	    $data = preg_replace("/~amp~/i", "&amp;", $data);
+	    $data = preg_replace("/~ldq~/i", "&ldquo;", $data);
+	    $data = preg_replace("/~rdq~/i", "&rdquo;", $data);
+	    $data = preg_replace("/~lsq~/i", "&lsquo;", $data);
+	    $data = preg_replace("/~rsq~/i", "&rsquo;", $data);
+	    $data = preg_replace("/~c~/i", "&copy;", $data);
+	    $data = preg_replace("/~--~/", "&mdash;", $data);
+	    $data = preg_replace("/ -- /", " &mdash; ", $data);
+	    $data = preg_replace("/~lt~/i", "&lt;", $data);
+	    $data = preg_replace("/~gt~/i", "&gt;", $data);
+
+	    // HTML numeric character entities
+	    $data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
+	}
+
+	// AWC ADDITION
+	// This function replaces pre- and no-parsed sections with unique keys
+	// and saves the section contents for later reinsertion.
+	function parse_pp_np(&$data, &$preparsed, &$noparsed) {
+	    // Find all sections delimited by ~pp~ ... ~/pp~
+	    // and replace them in the data stream with a unique key
+	    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/", $data, $preparse);
+
+	    foreach (array_unique($preparse[1])as $pp) {
+		$key = md5($this->genPass());
+
+		$aux["key"] = $key;
+		$aux["data"] = $pp;
+		$preparsed[] = $aux;
+		$data = str_replace("~pp~$pp~/pp~", $key, $data);
+	    }
+
+	    // Temporary remove <pre> tags too
+	    // TODO: Is this a problem if user insert <PRE> but after parsing
+	    //     will get <pre> (lowercase)?? :)
+	    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
+	    $idx = 0;
+
+	    foreach (array_unique($preparse[2])as $pp) {
+		$key = md5($this->genPass());
+
+		$aux["key"] = $key;
+		$aux["data"] = $pp;
+		$preparsed[] = $aux;
+		$data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
+		$idx = $idx + 1;
+	    }
+
+	    // This section used to be the ~np~ handling, but it's *way* too
+	    // complicated.  A sensible version follows; the below should
+	    // eventually be removed.  --rlpowell, 24 May 2004
+	    /*
+	    // Find all sections delimited by ~np~ ... ~/np~
+	    $new_data = '';
+	    $nopa = '';
+	    $state = true;
+	    $skip = false;
+
+	    $dlength=strlen($data);
+	    for ($i = 0; $i < $dlength; $i++) {
 	    $tag5 = substr($data, $i, 5);
 
 	    $tag4 = substr($tag5, 0, 4);
@@ -3782,2165 +3801,2165 @@ function add_pageview() {
 
 	    // Beginning of a noparse section found
 	    if ($state && $tag4 == '~np~') {
-		$i += 3;
+	    $i += 3;
 
-		$state = false;
-		$skip = true;
+	    $state = false;
+	    $skip = true;
 	    }
 
 	    // Termination of a noparse section found
 	    if (!$state && ($tag5 == '~/np~')) {
-		$state = true;
+	    $state = true;
 
-		$i += 4;
-		$skip = true;
-		$key = md5($this->genPass());
-		$new_data .= $key;
-		$aux["key"] = $key;
-		$aux["data"] = $nopa;
-		//print "<p>nopa: $nopa</p>";
-		//print "<p>new: $new_data</p>";
-		$noparsed[] = $aux;
-		$nopa = '';
+	    $i += 4;
+	    $skip = true;
+	    $key = md5($this->genPass());
+	    $new_data .= $key;
+	    $aux["key"] = $key;
+	    $aux["data"] = $nopa;
+	    //print "<p>nopa: $nopa</p>";
+	    //print "<p>new: $new_data</p>";
+	    $noparsed[] = $aux;
+	    $nopa = '';
 	    }
 
 	    if (!$skip) { // This character is not part of a noparse tag
-		if ($state) { // This character is not within a noparse section
-		    $new_data .= $tag1;
-		} else { // This character is within a noparse section
-		    $nopa .= $tag1;
-		}
+	    if ($state) { // This character is not within a noparse section
+	    $new_data .= $tag1;
+	    } else { // This character is within a noparse section
+	    $nopa .= $tag1;
+	    }
 	    } else { // Tag is now skipped over
-		$skip = false;
+	    $skip = false;
+	    }
+	    }
+	     */
+
+	    // Find all sections delimited by ~np~ ... ~/np~
+	    // and replace them in the data stream with a unique key
+	    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/", $data, $noparse);
+
+	    foreach (array_unique($noparse[1])as $np) {
+		$key = md5($this->genPass());
+
+		$aux["key"] = $key;
+		$aux["data"] = $np;
+		$noparsed[] = $aux;
+		$data = str_replace("~np~$np~/np~", $key, $data);
 	    }
 	}
-	*/
 
-	// Find all sections delimited by ~np~ ... ~/np~
-	// and replace them in the data stream with a unique key
-	preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/", $data, $noparse);
-
-	foreach (array_unique($noparse[1])as $np) {
-	    $key = md5($this->genPass());
-
-	    $aux["key"] = $key;
-	    $aux["data"] = $np;
-	    $noparsed[] = $aux;
-	    $data = str_replace("~np~$np~/np~", $key, $data);
-	}
-    }
-
-    // Reverses parse_pp_np.
-    function replace_pp_np(&$data, &$preparsed, &$noparsed)
-    {
-	foreach ($noparsed as $np) {
-	    $data = str_replace($np["key"], $np["data"], $data);
-	}
-
-	foreach ($preparsed as $pp) {
-	    $data = str_replace($pp["key"], "<pre>" . $pp["data"] . "</pre>", $data);
-	}
-    }
-
-    // This recursive function handles pre- and no-parse sections and plugins
-    function parse_first(&$data, &$preparsed, &$noparsed) {
-	global $dbTiki;
-	// Handle pre- and no-parse sections
-	$this->parse_pp_np($data, $preparsed, $noparsed);
-
-	// Find the plugins
-	// note: [1] is plugin name, [2] is plugin arguments
-	preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
-
-	// if true, replace only CODE plugin, if false, replace all other plugins
-	$code_first = true;
-
-	// Process plugins in reverse order, so that nested plugins are handled
-	// from the inside out.
-	$i = count($plugins[0]) - 1;
-
-	while ($i >= 0) {
-	    $plugin_start = $plugins[0][$i];
-
-	    $plugin = $plugins[1][$i];
-	    $plugin_start_base = '{' . $plugins[1][$i] . '(';
-	    $pos = strpos($data, $plugin_start); // where plugin starts
-	    // process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
-	    if (preg_match("/\/ *\}$/",$plugin_start))
-	    {
-		$plugin_end='';
-		$pos_end=$pos+strlen($plugin_start);
-	    }
-	    else
-	    {
-		$plugin_end = '{' . $plugin . '}';
-		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+	// Reverses parse_pp_np.
+	function replace_pp_np(&$data, &$preparsed, &$noparsed)
+	{
+	    foreach ($noparsed as $np) {
+		$data = str_replace($np["key"], $np["data"], $data);
 	    }
 
+	    foreach ($preparsed as $pp) {
+		$data = str_replace($pp["key"], "<pre>" . $pp["data"] . "</pre>", $data);
+	    }
+	}
 
-	    if (
-		    // when in CODE parsing mode, replace only CODE plugins
-		    ((($code_first) && ($plugin == 'CODE')) ||
-		     // when NOT in CODE parsing mode, replace all other plugins
-		     ((!$code_first) && ($plugin <> 'CODE'))) && ($pos_end > $pos)) {
-		// Extract the plugin data
-		$plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
-		$plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
+	// This recursive function handles pre- and no-parse sections and plugins
+	function parse_first(&$data, &$preparsed, &$noparsed) {
+	    global $dbTiki;
+	    // Handle pre- and no-parse sections
+	    $this->parse_pp_np($data, $preparsed, $noparsed);
 
-		// Construct plugin file pathname
-		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= strtolower($plugins[1][$i]). '.php';
+	    // Find the plugins
+	    // note: [1] is plugin name, [2] is plugin arguments
+	    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
 
-		// Construct plugin function name
-		$func_name = 'wikiplugin_' . strtolower($plugins[1][$i]);
+	    // if true, replace only CODE plugin, if false, replace all other plugins
+	    $code_first = true;
 
-		// Construct argument list array
-		$params = split(',', trim($plugins[2][$i]));
-		$arguments = array();
+	    // Process plugins in reverse order, so that nested plugins are handled
+	    // from the inside out.
+	    $i = count($plugins[0]) - 1;
 
-		foreach ($params as $param) {
-		    // the following str_replace line is to decode the &gt; char when html is turned off
-		    // perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-		    $decoded_param = str_replace('&gt;', '>', $param);
-		    $parts = split( '=>?', $decoded_param );
+	    while ($i >= 0) {
+		$plugin_start = $plugins[0][$i];
 
-		    if (isset($parts[0]) && isset($parts[1])) {
-			$name = trim($parts[0]);
+		$plugin = $plugins[1][$i];
+		$plugin_start_base = '{' . $plugins[1][$i] . '(';
+		$pos = strpos($data, $plugin_start); // where plugin starts
+		// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
+		if (preg_match("/\/ *\}$/",$plugin_start))
+		{
+		    $plugin_end='';
+		    $pos_end=$pos+strlen($plugin_start);
+		}
+		else
+		{
+		    $plugin_end = '{' . $plugin . '}';
+		    $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+		}
 
-			$arguments[$name] = trim($parts[1]);
+
+		if (
+			// when in CODE parsing mode, replace only CODE plugins
+			((($code_first) && ($plugin == 'CODE')) ||
+			 // when NOT in CODE parsing mode, replace all other plugins
+			 ((!$code_first) && ($plugin <> 'CODE'))) && ($pos_end > $pos)) {
+		    // Extract the plugin data
+		    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
+		    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
+
+		    // Construct plugin file pathname
+		    $php_name = 'lib/wiki-plugins/wikiplugin_';
+		    $php_name .= strtolower($plugins[1][$i]). '.php';
+
+		    // Construct plugin function name
+		    $func_name = 'wikiplugin_' . strtolower($plugins[1][$i]);
+
+		    // Construct argument list array
+		    $params = split(',', trim($plugins[2][$i]));
+		    $arguments = array();
+
+		    foreach ($params as $param) {
+			// the following str_replace line is to decode the &gt; char when html is turned off
+			// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+			$decoded_param = str_replace('&gt;', '>', $param);
+			$parts = split( '=>?', $decoded_param );
+
+			if (isset($parts[0]) && isset($parts[1])) {
+			    $name = trim($parts[0]);
+
+			    $arguments[$name] = trim($parts[1]);
+			}
+		    }
+
+		    if (file_exists($php_name)) {
+			include_once ($php_name);
+
+			$ret = $func_name($plugin_data, $arguments);
+
+			// Handle pre- & no-parse sections and plugins inserted by this plugin
+			$this->parse_first($ret, $preparsed, $noparsed);
+
+			// Replace plugin section with its output in data
+			$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
 		    }
 		}
 
-		if (file_exists($php_name)) {
-		    include_once ($php_name);
+		$i--;
 
-		    $ret = $func_name($plugin_data, $arguments);
+		// if we are in CODE parsing mode and list is done, switch to 'parse other plugins' mode and start all over
+		if (($code_first) && ($i < 0)) {
+		    $i = count($plugins[0]) - 1;
 
-		    // Handle pre- & no-parse sections and plugins inserted by this plugin
-		    $this->parse_first($ret, $preparsed, $noparsed);
+		    $code_first = false;
+		}
+	    } // while
+	}
 
-		    // Replace plugin section with its output in data
-		    $data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+	// Replace hotwords in given line
+	function replace_hotwords($line, $words) {
+	    global $feature_hotwords;
+	    global $feature_hotwords_nw;
+	    $hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
+
+	    // Replace Hotwords
+	    if ($feature_hotwords == 'y') {
+		foreach ($words as $word => $url) {
+		    // \b is a word boundary, \s is a space char
+		    $line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+		    $line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+		    $line = preg_replace("/:::::$word,:::::/i","$word",$line);
 		}
 	    }
-
-	    $i--;
-
-	    // if we are in CODE parsing mode and list is done, switch to 'parse other plugins' mode and start all over
-	    if (($code_first) && ($i < 0)) {
-		$i = count($plugins[0]) - 1;
-
-		$code_first = false;
-	    }
-	} // while
-    }
-
-    // Replace hotwords in given line
-    function replace_hotwords($line, $words) {
-	global $feature_hotwords;
-	global $feature_hotwords_nw;
-	$hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
-
-	// Replace Hotwords
-	if ($feature_hotwords == 'y') {
-	    foreach ($words as $word => $url) {
-		// \b is a word boundary, \s is a space char
-		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
-		$line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
-		$line = preg_replace("/:::::$word,:::::/i","$word",$line);
-	    }
+	    return $line;
 	}
-	return $line;
-    }
-    
-    // Make plain text URIs in text into clickable hyperlinks
+
+	// Make plain text URIs in text into clickable hyperlinks
 	function autolinks($text) {
-//	check to see if autolinks is enabled before calling this function
-//		global $feature_autolinks;
-	
-//		if ($feature_autolinks == "y") {
+	    //	check to see if autolinks is enabled before calling this function
+	    //		global $feature_autolinks;
 
-		// add a space so we can match links starting at the beginning of the first line
-		$text = " " . $text;
-		// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
-		$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
-		$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
-		$text = preg_replace($patterns, $replacements, $text);
-		// strip the space we added
-		$text = substr($text, 1);
-		return $text;
+	    //		if ($feature_autolinks == "y") {
 
-//		} else {
-//			return $text;
-//		}
+	    // add a space so we can match links starting at the beginning of the first line
+	    $text = " " . $text;
+	    // match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
+	    $patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
+	    $replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
+	    $text = preg_replace($patterns, $replacements, $text);
+	    // strip the space we added
+	    $text = substr($text, 1);
+	    return $text;
+
+	    //		} else {
+	    //			return $text;
+	    //		}
 	}
 
 
-    //Updates a dynamic variable found in some object
-    /*Shared*/ function update_dynamic_variable($name,$value) {
-	$query = "delete from `tiki_dynamic_variables` where `name`=?";
-	$this->query($query,array($name),-1,-1,false);
-	$query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
-	$this->query($query,Array($name,$value));
-	return true;
-    }
+	//Updates a dynamic variable found in some object
+	/*Shared*/ function update_dynamic_variable($name,$value) {
+	    $query = "delete from `tiki_dynamic_variables` where `name`=?";
+	    $this->query($query,array($name),-1,-1,false);
+	    $query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
+	    $this->query($query,Array($name,$value));
+	    return true;
+	}
 
 
-    // split string into a list of
-    function split_tag($string) {
-	$_splts = split('&quot;', $string);
-	$inside = FALSE;
-	$cleanup= TRUE;  // @todo: make this an option for other code
-	$parts = array();
-	$index=0;
+	// split string into a list of
+	function split_tag($string) {
+	    $_splts = split('&quot;', $string);
+	    $inside = FALSE;
+	    $cleanup= TRUE;  // @todo: make this an option for other code
+	    $parts = array();
+	    $index=0;
 
-	foreach ($_splts as $i)  {
-	    if ($cleanup) {
-		$i = str_replace('}', '', $i);
-		$i = str_replace('{', '', $i);
-		$i = str_replace('\'', '', $i);
-	    }
-
-	    if ($inside) {  // inside "foo bar" - append
-		if ($index>0) {
-		    $parts[$index-1] .= $i;
-		} else {    // else: first element (should never happen)
-		    $parts[] = $i;
+	    foreach ($_splts as $i)  {
+		if ($cleanup) {
+		    $i = str_replace('}', '', $i);
+		    $i = str_replace('{', '', $i);
+		    $i = str_replace('\'', '', $i);
 		}
-	    } else {        //
-		$_spl = split(" ", $i);
-		foreach($_spl as $j) {
-		    $parts[$index++] = $j;
+
+		if ($inside) {  // inside "foo bar" - append
+		    if ($index>0) {
+			$parts[$index-1] .= $i;
+		    } else {    // else: first element (should never happen)
+			$parts[] = $i;
+		    }
+		} else {        //
+		    $_spl = split(" ", $i);
+		    foreach($_spl as $j) {
+			$parts[$index++] = $j;
+		    }
+		}
+		$inside = ! $inside;
+	    }
+	    return $parts;
+	}
+
+	function split_assoc_array($parts, $assoc) {
+	    //$assoc = array();
+	    foreach($parts as $part) {
+		$res=array();
+		$assoc[$part] = '';
+		preg_match("/(\w+)\s*=\s*(.*)/", $part, $res);
+		if ($res) {
+		    $assoc[$res[1]] = $res[2];
 		}
 	    }
-	    $inside = ! $inside;
+	    return $assoc;
 	}
-	return $parts;
-    }
 
-    function split_assoc_array($parts, $assoc) {
-	//$assoc = array();
-	foreach($parts as $part) {
-	    $res=array();
-	    $assoc[$part] = '';
-	    preg_match("/(\w+)\s*=\s*(.*)/", $part, $res);
-	    if ($res) {
-		$assoc[$res[1]] = $res[2];
-	    }
-	}
-	return $assoc;
-    }
-
-    /**
-     * close_blocks - Close out open paragraph, lists, and div's
-     *
-     * During parse_data, information is kept on blocks of text (paragraphs, lists, divs)
-     * that need to be closed out. This function does that, rather than duplicating the
-     * code inline.
-     *
-     * @param	$data			- Output data
-     * @param	$in_paragraph		- TRUE if there is an open paragraph
-     * @param	$listbeg		- array of open list terminators
-     * @param	$divdepth		- array indicating how many div's are open
-     * @param	$close_paragraph	- TRUE if open paragraph should be closed.
-     * @param	$close_lists		- TRUE if open lists should be closed.
-     * @param	$close_divs		- TRUE if open div's should be closed.
-     */
-    /* private */
-    function close_blocks(&$data,
-	    &$in_paragraph,
-	    &$listbeg,
-	    &$divdepth,
-	    $close_paragraph,
-	    $close_lists,
-	    $close_divs)
-    {
-	$closed = 0;	// Set to non-zero if something has been closed out
-	// Close the paragraph if inside one.
-	if ($close_paragraph && $in_paragraph) {
-	    $data .= "</p>";	
-	    $in_paragraph = 0;
-	    $closed++;
-	}
-	// Close open lists
-	if ($close_lists) {
-	    while (count($listbeg)) {
-		$data .= array_shift($listbeg);
+	/**
+	 * close_blocks - Close out open paragraph, lists, and div's
+	 *
+	 * During parse_data, information is kept on blocks of text (paragraphs, lists, divs)
+	 * that need to be closed out. This function does that, rather than duplicating the
+	 * code inline.
+	 *
+	 * @param	$data			- Output data
+	 * @param	$in_paragraph		- TRUE if there is an open paragraph
+	 * @param	$listbeg		- array of open list terminators
+	 * @param	$divdepth		- array indicating how many div's are open
+	 * @param	$close_paragraph	- TRUE if open paragraph should be closed.
+	 * @param	$close_lists		- TRUE if open lists should be closed.
+	 * @param	$close_divs		- TRUE if open div's should be closed.
+	 */
+	/* private */
+	function close_blocks(&$data,
+		&$in_paragraph,
+		&$listbeg,
+		&$divdepth,
+		$close_paragraph,
+		$close_lists,
+		$close_divs)
+	{
+	    $closed = 0;	// Set to non-zero if something has been closed out
+	    // Close the paragraph if inside one.
+	    if ($close_paragraph && $in_paragraph) {
+		$data .= "</p>";	
+		$in_paragraph = 0;
 		$closed++;
 	    }
+	    // Close open lists
+	    if ($close_lists) {
+		while (count($listbeg)) {
+		    $data .= array_shift($listbeg);
+		    $closed++;
+		}
+	    }
+
+	    // Close open divs
+	    if ($close_divs) {
+		$temp_max = count($divdepth);
+		for ($i = 1; $i <= $temp_max; $i++) {
+		    $data .= '</div>';
+		    $closed++;
+		}
+	    }
+
+	    if ($closed) {
+		$data .= "\n";
+	    }
+
+	    return $closed;
 	}
 
-	// Close open divs
-	if ($close_divs) {
-	    $temp_max = count($divdepth);
-	    for ($i = 1; $i <= $temp_max; $i++) {
-		$data .= '</div>';
-		$closed++;
+	//PARSEDATA
+	function parse_data($data) {
+	    global $page_regex;
+
+	    global $slidemode;
+	    //	global $feature_hotwords; // doesn't seem to be used in this function
+	    global $feature_autolinks;
+	    global $cachepages;
+	    global $ownurl_father;
+	    global $feature_drawings;
+	    global $tiki_p_admin_drawings;
+	    global $tiki_p_edit_drawings;
+	    global $tiki_p_edit_dynvar;
+	    global $feature_wiki_pictures;
+	    global $tiki_p_upload_picture;
+	    global $feature_wiki_plurals;
+	    global $feature_wiki_tables;
+	    global $page;
+	    global $page_ref_id;
+	    global $rsslib;
+	    global $dbTiki;
+	    global $structlib;
+	    global $user;
+	    global $tikidomain;
+	    global $feature_wikiwords;
+	    global $feature_wiki_paragraph_formatting;
+	    global $feature_wikiwords_usedash;
+
+	    // Process pre_handlers here
+	    if (is_array($this->pre_handlers)) {
+		foreach ($this->pre_handlers as $handler) {
+		    $data = $handler($data);
+		}
 	    }
-	}
 
-	if ($closed) {
-	    $data .= "\n";
-	}
+	    // Handle pre- and no-parse sections and plugins
+	    $preparsed = array();
+	    $noparsed = array();
+	    $this->parse_first($data, $preparsed, $noparsed);
 
-	return $closed;
-    }
+	    // Extract [link] sections (to be re-inserted later)
+	    $noparsedlinks = array();
 
-    //PARSEDATA
-    function parse_data($data) {
-	global $page_regex;
+	    // This section matches [...].
+	    // Added handling for [[foo] sections.  -rlpowell
+	    preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
 
-	global $slidemode;
-//	global $feature_hotwords; // doesn't seem to be used in this function
-	global $feature_autolinks;
-	global $cachepages;
-	global $ownurl_father;
-	global $feature_drawings;
-	global $tiki_p_admin_drawings;
-	global $tiki_p_edit_drawings;
-	global $tiki_p_edit_dynvar;
-	global $feature_wiki_pictures;
-	global $tiki_p_upload_picture;
-	global $feature_wiki_plurals;
-	global $feature_wiki_tables;
-	global $page;
-	global $page_ref_id;
-	global $rsslib;
-	global $dbTiki;
-	global $structlib;
-	global $user;
-	global $tikidomain;
-	global $feature_wikiwords;
-	global $feature_wiki_paragraph_formatting;
-	global $feature_wikiwords_usedash;
+	    foreach (array_unique($noparseurl[1])as $np) {
+		$key = md5($this->genPass());
 
-	// Process pre_handlers here
-	if (is_array($this->pre_handlers)) {
-	    foreach ($this->pre_handlers as $handler) {
-		$data = $handler($data);
+		$aux["key"] = $key;
+		$aux["data"] = $np;
+		$noparsedlinks[] = $aux;
+		$data = str_replace("$np", $key, $data);
 	    }
-	}
 
-	// Handle pre- and no-parse sections and plugins
-	$preparsed = array();
-	$noparsed = array();
-	$this->parse_first($data, $preparsed, $noparsed);
+	    // Replace special characters
+	    //done after url catching because otherwise urls of dyn. sites will be modified
+	    $this->parse_htmlchar($data);
 
-	// Extract [link] sections (to be re-inserted later)
-	$noparsedlinks = array();
+	    // Now replace a TOC
+	    preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?\}/i", $data, $tocs);
 
-	// This section matches [...].
-	// Added handling for [[foo] sections.  -rlpowell
-	preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
+	    //If there are instances of {toc} on this page
+	    if (count($tocs[0]) > 0) {
+		$order = 'asc';
+		$showdesc = false;
+		$shownum = false;
+		if ($tocs[2][0] == 'desc') {
+		    $order = 'desc';
+		}
+		if ($tocs[4][0] == 1) {
+		    $showdesc = true;
+		}
+		if ($tocs[6][0] == 1) {
+		    $shownum = true;
+		}
+		include_once ("lib/structures/structlib.php");
+		//And we are currently viewing a structure
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		if (isset($page_info)) {
+		    $html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum);
 
-	foreach (array_unique($noparseurl[1])as $np) {
-	    $key = md5($this->genPass());
-
-	    $aux["key"] = $key;
-	    $aux["data"] = $np;
-	    $noparsedlinks[] = $aux;
-	    $data = str_replace("$np", $key, $data);
-	}
-
-	// Replace special characters
-	//done after url catching because otherwise urls of dyn. sites will be modified
-	$this->parse_htmlchar($data);
-
-	// Now replace a TOC
-	preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?\}/i", $data, $tocs);
-
-	//If there are instances of {toc} on this page
-	if (count($tocs[0]) > 0) {
-	    $order = 'asc';
-	    $showdesc = false;
-	    $shownum = false;
-	    if ($tocs[2][0] == 'desc') {
-		$order = 'desc';
+		    // Loop over all the case-specific versions of {toc} used
+		    // (if the user is consistent, this is a loop of count 1)
+		    $temp_max = count($tocs[0]);
+		    for ($i = 0; $i < $temp_max; $i++) {
+			$data = str_replace($tocs[0], $html, $data);
+		    }
+		}
+		//Dont display the {toc} string for non structure pages
+		else {
+		    $temp_max = count($tocs[0]);
+		    for ($i = 0; $i < $temp_max; $i++) {
+			$data = str_replace($tocs[0], '', $data);
+		    }
+		}
 	    }
-	    if ($tocs[4][0] == 1) {
-		$showdesc = true;
-	    }
-	    if ($tocs[6][0] == 1) {
-		$shownum = true;
-	    }
-	    include_once ("lib/structures/structlib.php");
-	    //And we are currently viewing a structure
-	    $page_info = $structlib->s_get_page_info($page_ref_id);
-	    if (isset($page_info)) {
-		$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum);
 
-		// Loop over all the case-specific versions of {toc} used
-		// (if the user is consistent, this is a loop of count 1)
-		$temp_max = count($tocs[0]);
+	    // Now search for images uploaded by users
+	    if ($feature_wiki_pictures == 'y') {
+		preg_match_all("/\{picture file=([^\}]+)\}/", $data, $pics);
+
+		$temp_max = count($pics[0]);
 		for ($i = 0; $i < $temp_max; $i++) {
-		    $data = str_replace($tocs[0], $html, $data);
-		}
-	    }
-	    //Dont display the {toc} string for non structure pages
-	    else {
-		$temp_max = count($tocs[0]);
-		for ($i = 0; $i < $temp_max; $i++) {
-		    $data = str_replace($tocs[0], '', $data);
-		}
-	    }
-	}
-
-	// Now search for images uploaded by users
-	if ($feature_wiki_pictures == 'y') {
-	    preg_match_all("/\{picture file=([^\}]+)\}/", $data, $pics);
-
-	    $temp_max = count($pics[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		// Check if the image exists
-		$name = $pics[1][$i];
-		if ($tikidomain) {
-			$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
-		}
-		if (file_exists($name)) {
-		    // Replace by the img tag to show the image
-		    $repl = "<img src='$name' alt='$name' />";
-		} else {
-		    $repl = tra('picture not found')." $name";
-		}
-
-		// Replace by $repl
-		$data = str_replace($pics[0][$i], $repl, $data);
-	    }
-	}
-
-	//$data = strip_tags($data);
-	// BiDi markers
-	$bidiCount = 0;
-	$bidiCount = preg_match_all("/(\{l2r\})/", $data, $pages);
-	$bidiCount += preg_match_all("/(\{r2l\})/", $data, $pages);
-
-	$data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
-	$data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
-	$data = preg_replace("/\{lm\}/", "&lrm;", $data);
-	$data = preg_replace("/\{rm\}/", "&rlm;", $data);
-	// smileys
-	$data = $this->parse_smileys($data);
-
-	// Replace links to slideshows
-	if ($feature_drawings == 'y') {
-	    // Replace drawings
-	    // Replace rss modules
-	    $pars = parse_url($_SERVER["REQUEST_URI"]);
-
-	    $pars_parts = split('/', $pars["path"]);
-	    $pars = array();
-
-	    $temp_max = count($pars_parts) - 1;
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$pars[] = $pars_parts[$i];
-	    }
-
-	    $pars = join('/', $pars);
-
-	    if (preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/", $data, $draws)) {
-		//$this->invalidate_cache($page);
-		$temp_max = count($draws[0]);
-		for ($i = 0; $i < $temp_max; $i++) {
-		    $id = $draws[1][$i];
-
-		    $repl = '';
+		    // Check if the image exists
+		    $name = $pics[1][$i];
 		    if ($tikidomain) {
-			$name = $tikidomain.'/'.$id . '.gif';
+			$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
+		    }
+		    if (file_exists($name)) {
+			// Replace by the img tag to show the image
+			$repl = "<img src='$name' alt='$name' />";
 		    } else {
-			$name = $id . '.gif';
+			$repl = tra('picture not found')." $name";
 		    }
-				if ($tikidomain) {
-				  $name = $tikidomain.'/'.$name;
-				}
-		    if (file_exists("img/wiki/$name")) {
-			if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-			    $repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
+
+		    // Replace by $repl
+		    $data = str_replace($pics[0][$i], $repl, $data);
+		}
+	    }
+
+	    //$data = strip_tags($data);
+	    // BiDi markers
+	    $bidiCount = 0;
+	    $bidiCount = preg_match_all("/(\{l2r\})/", $data, $pages);
+	    $bidiCount += preg_match_all("/(\{r2l\})/", $data, $pages);
+
+	    $data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
+	    $data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
+	    $data = preg_replace("/\{lm\}/", "&lrm;", $data);
+	    $data = preg_replace("/\{rm\}/", "&rlm;", $data);
+	    // smileys
+	    $data = $this->parse_smileys($data);
+
+	    // Replace links to slideshows
+	    if ($feature_drawings == 'y') {
+		// Replace drawings
+		// Replace rss modules
+		$pars = parse_url($_SERVER["REQUEST_URI"]);
+
+		$pars_parts = split('/', $pars["path"]);
+		$pars = array();
+
+		$temp_max = count($pars_parts) - 1;
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $pars[] = $pars_parts[$i];
+		}
+
+		$pars = join('/', $pars);
+
+		if (preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/", $data, $draws)) {
+		    //$this->invalidate_cache($page);
+		    $temp_max = count($draws[0]);
+		    for ($i = 0; $i < $temp_max; $i++) {
+			$id = $draws[1][$i];
+
+			$repl = '';
+			if ($tikidomain) {
+			    $name = $tikidomain.'/'.$id . '.gif';
 			} else {
-			    $repl = "<img border='0' src='img/wiki/$name' alt='a drawing' />";
+			    $name = $id . '.gif';
 			}
+			if ($tikidomain) {
+			    $name = $tikidomain.'/'.$name;
+			}
+			if (file_exists("img/wiki/$name")) {
+			    if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
+				$repl = "<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
+			    } else {
+				$repl = "<img border='0' src='img/wiki/$name' alt='a drawing' />";
+			    }
+			} else {
+			    if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
+				$repl = "<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
+			    } else {
+				$repl = tra('drawing not found');
+			    }
+			}
+
+			$data = str_replace($draws[0][$i], $repl, $data);
+		    }
+		}
+	    }
+
+	    // Replace cookies
+	    if (preg_match_all("/\{cookie\}/", $data, $rsss)) {
+		$temp_max = count($rsss[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $cookie = $this->pick_cookie();
+
+		    $data = str_replace($rsss[0][$i], $cookie, $data);
+		}
+	    }
+
+	    // Replace dynamic variables
+	    // Dynamic variables are similar to dynamic content but they are editable
+	    // from the page directly, intended for short data, not long text but text
+	    // will work too
+	    //     Now won't match HTML-style '%nn' letter codes.
+	    if (preg_match_all("/%([^% 0-9][^% 0-9][^% ]*)%/",$data,$dvars)) {
+		// remove repeated elements
+		$dvars = array_unique($dvars[1]);
+		// Now replace each dynamic variable by a pair composed of the
+		// variable value and a text field to edit the variable. Each
+		foreach($dvars as $dvar) {
+		    $query = "select `data` from `tiki_dynamic_variables` where `name`=?";
+		    $result = $this->query($query,Array($dvar));
+		    if($result->numRows()) {
+			$value = $result->fetchRow();
+			$value = $value["data"];
 		    } else {
-			if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-			    $repl = "<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
-			} else {
-			    $repl = tra('drawing not found');
+			//Default value is NULL
+			$value = "NaV";
+		    }
+		    // Now build 2 divs
+		    $id = 'dyn_'.$dvar;
+
+		    if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
+			$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
+			$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
+		    } else {
+			$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
+			$span2 = '';
+		    }
+		    $html = $span1.$span2;
+		    //It's important to replace only once
+		    $dvar_preg = preg_quote( $dvar );
+		    $data = preg_replace("+%$dvar_preg%+",$html,$data,1);
+		    //Further replacements only with the value
+		    $data = str_replace("%$dvar%",$value,$data);
+
+		}
+		//At the end put an update button
+		//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables').'"/></div>
+		$data='<form method="post" name="dyn_vars">'.$data.'<div style="display:none;"><input type="submit" name="_dyn_update" value="'.tra('Update variables').'"/></div></form>';
+	    }
+
+	    // Replace dynamic content occurrences
+	    if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
+		$temp_max = count($dcs[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $repl = $this->get_actual_content($dcs[1][$i]);
+
+		    $data = str_replace($dcs[0][$i], $repl, $data);
+		}
+	    }
+
+	    // Replace Dynamic content with random selection
+	    if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
+		include_once("dcs/dcslib.php");
+		$temp_max = count($dcs[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $repl = $dcslib->get_random_content($dcs[1][$i]);
+
+		    $data = str_replace($dcs[0][$i], $repl, $data);
+		}
+	    }
+
+	    // Replace boxes
+	    $data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
+	    // Replace colors ~~color:text~~
+	    $data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/", "<span style=\"color:$1;\">$2</span>", $data);
+	    // Underlined text
+	    $data = preg_replace("/===([^\=]+)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
+	    // Center text
+	    $data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
+
+	    // New syntax for wiki pages ((name|desc)) Where desc can be anything
+	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
+
+	    $temp_max = count($pages[1]);
+	    for ($i = 0; $i < $temp_max; $i++) {
+		$pattern = $pages[0][$i];
+
+		$pattern = preg_quote($pattern, "/");
+
+		$pattern = "/" . $pattern . "/";
+
+		// Replace links to external wikis
+		$repl2 = true;
+
+		if (strstr($pages[1][$i], ':')) {
+		    $wexs = explode(':', $pages[1][$i]);
+
+		    if (count($wexs) == 2) {
+			$wkname = $wexs[0];
+
+			if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+			    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
+
+			    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
+			    $data = preg_replace($pattern, "$wkurl", $data);
+			    $repl2 = false;
 			}
 		    }
+		}
 
-		    $data = str_replace($draws[0][$i], $repl, $data);
+		if ($repl2) {
+		    // 24-Jun-2003, by zaufi
+		    // TODO: future optimize: get page description and modification time at once.
+
+		    // text[0] = link description (previous format)
+		    // text[1] = timeout in seconds (new field)
+		    // text[2..N] = drop
+		    $text = explode("|", $pages[5][$i]);
+
+		    if ($desc = $this->page_exists_desc($pages[1][$i])) {
+			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+			$uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]);
+
+			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '</a>';
+
+			// Check is timeout expired?
+			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
+			    // Append small 'new' image. TODO: possible 'updated' image more suitable...
+			    $repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new").'" />';
+		    } else {
+			$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
+
+			$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki wikinew">?</a>';
+		    }
+
+		    $data = preg_replace($pattern, "$repl", $data);
 		}
 	    }
-	}
 
-	// Replace cookies
-	if (preg_match_all("/\{cookie\}/", $data, $rsss)) {
-	    $temp_max = count($rsss[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$cookie = $this->pick_cookie();
+	    // New syntax for wiki pages ((name)) Where name can be anything
+	    preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
 
-		$data = str_replace($rsss[0][$i], $cookie, $data);
-	    }
-	}
+	    foreach (array_unique($pages[1])as $page_parse) {
+		$repl2 = true;
 
-	// Replace dynamic variables
-	// Dynamic variables are similar to dynamic content but they are editable
-	// from the page directly, intended for short data, not long text but text
-	// will work too
-	//     Now won't match HTML-style '%nn' letter codes.
-	if (preg_match_all("/%([^% 0-9][^% 0-9][^% ]*)%/",$data,$dvars)) {
-	    // remove repeated elements
-	    $dvars = array_unique($dvars[1]);
-	    // Now replace each dynamic variable by a pair composed of the
-	    // variable value and a text field to edit the variable. Each
-	    foreach($dvars as $dvar) {
-		$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
-		$result = $this->query($query,Array($dvar));
-		if($result->numRows()) {
-		    $value = $result->fetchRow();
-		    $value = $value["data"];
-		} else {
-		    //Default value is NULL
-		    $value = "NaV";
-		}
-		// Now build 2 divs
-		$id = 'dyn_'.$dvar;
+		if (strstr($page_parse, ':')) {
+		    $wexs = explode(':', $page_parse);
 
-		if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
-		    $span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
-		    $span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
-		} else {
-		    $span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
-		    $span2 = '';
-		}
-		$html = $span1.$span2;
-		//It's important to replace only once
-		$dvar_preg = preg_quote( $dvar );
-		$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
-		//Further replacements only with the value
-		$data = str_replace("%$dvar%",$value,$data);
+		    if (count($wexs) == 2) {
+			$wkname = $wexs[0];
 
-	    }
-	    //At the end put an update button
-	    //<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables').'"/></div>
-	    $data='<form method="post" name="dyn_vars">'.$data.'<div style="display:none;"><input type="submit" name="_dyn_update" value="'.tra('Update variables').'"/></div></form>';
-	}
+			if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+			    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-	// Replace dynamic content occurrences
-	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
-	    $temp_max = count($dcs[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$repl = $this->get_actual_content($dcs[1][$i]);
-
-		$data = str_replace($dcs[0][$i], $repl, $data);
-	    }
-	}
-
-	// Replace Dynamic content with random selection
-	if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
-	    include_once("dcs/dcslib.php");
-	    $temp_max = count($dcs[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$repl = $dcslib->get_random_content($dcs[1][$i]);
-
-		$data = str_replace($dcs[0][$i], $repl, $data);
-	    }
-	}
-
-	// Replace boxes
-	$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
-	// Replace colors ~~color:text~~
-	$data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/", "<span style=\"color:$1;\">$2</span>", $data);
-	// Underlined text
-	$data = preg_replace("/===([^\=]+)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
-	// Center text
-	$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
-
-	// New syntax for wiki pages ((name|desc)) Where desc can be anything
-	preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
-
-	$temp_max = count($pages[1]);
-	for ($i = 0; $i < $temp_max; $i++) {
-	    $pattern = $pages[0][$i];
-
-	    $pattern = preg_quote($pattern, "/");
-
-	    $pattern = "/" . $pattern . "/";
-
-	    // Replace links to external wikis
-	    $repl2 = true;
-
-	    if (strstr($pages[1][$i], ':')) {
-		$wexs = explode(':', $pages[1][$i]);
-
-		if (count($wexs) == 2) {
-		    $wkname = $wexs[0];
-
-		    if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-			$data = preg_replace($pattern, "$wkurl", $data);
-			$repl2 = false;
+			    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
+			    $data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
+			    $repl2 = false;
+			}
 		    }
 		}
-	    }
 
-	    if ($repl2) {
-		// 24-Jun-2003, by zaufi
-		// TODO: future optimize: get page description and modification time at once.
-
-		// text[0] = link description (previous format)
-		// text[1] = timeout in seconds (new field)
-		// text[2..N] = drop
-		$text = explode("|", $pages[5][$i]);
-
-		if ($desc = $this->page_exists_desc($pages[1][$i])) {
-		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-		    $uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]);
-
-		    $repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '</a>';
-
-		    // Check is timeout expired?
-		    if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
-			// Append small 'new' image. TODO: possible 'updated' image more suitable...
-			$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new").'" />';
-		} else {
-		    $uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
-
-		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki wikinew">?</a>';
-		}
-
-		$data = preg_replace($pattern, "$repl", $data);
-	    }
-	}
-
-	// New syntax for wiki pages ((name)) Where name can be anything
-	preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
-
-	foreach (array_unique($pages[1])as $page_parse) {
-	    $repl2 = true;
-
-	    if (strstr($page_parse, ':')) {
-		$wexs = explode(':', $page_parse);
-
-		if (count($wexs) == 2) {
-		    $wkname = $wexs[0];
-
-		    if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-			$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-			$data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
-			$repl2 = false;
-		    }
-		}
-	    }
-
-	    if ($repl2) {
-		if ($desc = $this->page_exists_desc($page_parse)) {
-		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-		    $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
-		} else {
-		    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
-		}
-
-		$page_parse_pq = preg_quote($page_parse, "/");
-		$data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
-	    }
-	}
-
-	// Links to internal pages
-	// If they are parenthesized then don't treat as links
-	// Prevent ))PageName(( from being expanded \"\'
-	//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-	if ($feature_wikiwords == 'y') {
-	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-	    if ($feature_wikiwords_usedash == 'y') {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-	    } else {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-	    }
-	    $words = $this->get_hotwords();
-	    foreach (array_unique($pages[2])as $page_parse) {
-		if (!array_key_exists($page_parse, $words)) {
+		if ($repl2) {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
-			//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-			$repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
-		    } elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
-# Link plural topic names to singular topic names if the plural
-# doesn't exist, and the language is english
-			$plural_tmp = $page_parse;
-# Plurals like policy / policies
-			$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-# Plurals like address / addresses
-			$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-# Plurals like box / boxes
-			$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-# Others, excluding ending ss like address(es)
-			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-			if($desc = $this->page_exists_desc($plural_tmp)) {
-			    // $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-			    // $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
-			    $repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
-			} else {
-			    $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki wikinew'>?</a>";
-			}
+			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
 		    } else {
 			$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
 		    }
 
-		    $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
-		    //$data = str_replace($page_parse,$repl,$data);
+		    $page_parse_pq = preg_quote($page_parse, "/");
+		    $data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 		}
 	    }
-	}
 
-	// This protects ))word((, I think?
-	$data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
-
-	// reinsert hash-replaced links into page
-	foreach ($noparsedlinks as $np) {
-	    $data = str_replace($np["key"], $np["data"], $data);
-	}
-
-	// TODO: I think this is 1. just wrong and 2. not needed here? remove it?
-	// Replace ))Words((
-	$data = preg_replace("/\(\(([^\)]+)\)\)/", "$1", $data);
-
-	// Images
-	preg_match_all("/(\{img [^\}]+})/", $data, $pages);
-
-	foreach (array_unique($pages[1])as $page_parse) {
-	    $parts = $this->split_tag( $page_parse);
-
-	    $imgdata = array();      // pre-set preferences
-	    $imgdata["src"] = '';
-	    $imgdata["height"] = '';
-	    $imgdata["width"] = '';
-	    $imgdata["link"] = '';
-	    $imgdata["align"] = '';
-	    $imgdata["desc"] = '';
-	    $imgdata["imalign"] = '';
-	    $imgdata = $this->split_assoc_array( $parts, $imgdata);
-
-			if ($tikidomain) {
-				$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
+	    // Links to internal pages
+	    // If they are parenthesized then don't treat as links
+	    // Prevent ))PageName(( from being expanded \"\'
+	    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
+	    if ($feature_wikiwords == 'y') {
+		// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+		if ($feature_wikiwords_usedash == 'y') {
+		    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		} else {
+		    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		}
+		$words = $this->get_hotwords();
+		foreach (array_unique($pages[2])as $page_parse) {
+		    if (!array_key_exists($page_parse, $words)) {
+			if ($desc = $this->page_exists_desc($page_parse)) {
+			    //$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+			    $repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+			} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
+# Link plural topic names to singular topic names if the plural
+# doesn't exist, and the language is english
+			    $plural_tmp = $page_parse;
+# Plurals like policy / policies
+			    $plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+# Plurals like address / addresses
+			    $plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+# Plurals like box / boxes
+			    $plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+# Others, excluding ending ss like address(es)
+			    $plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+			    if($desc = $this->page_exists_desc($plural_tmp)) {
+				// $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+				// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
+				$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
+			    } else {
+				$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki wikinew'>?</a>";
+			    }
+			} else {
+			    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
 			}
-	    $repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
 
-	    if ($imgdata["width"])
-		$repl .= ' width="' . $imgdata["width"] . '"';
-
-	    if ($imgdata["height"])
-		$repl .= ' height="' . $imgdata["height"] . '"';
-
-	    if ($imgdata["imalign"]) {
-		$repl .= ' align="' . $imgdata["imalign"] . '"';
+			$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
+			//$data = str_replace($page_parse,$repl,$data);
+		    }
+		}
 	    }
 
-	    $repl .= ' />';
+	    // This protects ))word((, I think?
+	    $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
 
-	    if ($imgdata["link"]) {
-		$imgtarget= '';
+	    // reinsert hash-replaced links into page
+	    foreach ($noparsedlinks as $np) {
+		$data = str_replace($np["key"], $np["data"], $data);
+	    }
+
+	    // TODO: I think this is 1. just wrong and 2. not needed here? remove it?
+	    // Replace ))Words((
+	    $data = preg_replace("/\(\(([^\)]+)\)\)/", "$1", $data);
+
+	    // Images
+	    preg_match_all("/(\{img [^\}]+})/", $data, $pages);
+
+	    foreach (array_unique($pages[1])as $page_parse) {
+		$parts = $this->split_tag( $page_parse);
+
+		$imgdata = array();      // pre-set preferences
+		$imgdata["src"] = '';
+		$imgdata["height"] = '';
+		$imgdata["width"] = '';
+		$imgdata["link"] = '';
+		$imgdata["align"] = '';
+		$imgdata["desc"] = '';
+		$imgdata["imalign"] = '';
+		$imgdata = $this->split_assoc_array( $parts, $imgdata);
+
+		if ($tikidomain) {
+		    $imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
+		}
+		$repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
+
+		if ($imgdata["width"])
+		    $repl .= ' width="' . $imgdata["width"] . '"';
+
+		if ($imgdata["height"])
+		    $repl .= ' height="' . $imgdata["height"] . '"';
+
+		if ($imgdata["imalign"]) {
+		    $repl .= ' align="' . $imgdata["imalign"] . '"';
+		}
+
+		$repl .= ' />';
+
+		if ($imgdata["link"]) {
+		    $imgtarget= '';
+		    if ($this->get_preference('popupLinks', 'n') == 'y')
+		    {
+			$imgtarget = ' target="_blank"';
+		    }
+		    $repl = '<a href="' . $imgdata["link"] .'"' . $imgtarget . '>' . $repl . '</a>';
+		}
+
+		if ($imgdata["desc"]) {
+		    $repl = '<table cellpadding="0" cellspacing="0"><tr><td>' . $repl . '</td></tr><tr><td class="mini">' . $imgdata["desc"] . '</td></tr></table>';
+		}
+
+		if ($imgdata["align"]) {
+		    $repl = '<div align="' . $imgdata["align"] . '">' . $repl . "</div>";
+		}
+
+		$data = str_replace($page_parse, $repl, $data);
+	    }
+
+	    $links = $this->get_links($data);
+
+	    $notcachedlinks = $this->get_links_nocache($data);
+
+	    $cachedlinks = array_diff($links, $notcachedlinks);
+
+	    $this->cache_links($cachedlinks);
+
+	    // Note that there're links that are replaced
+	    foreach ($links as $link)
+	    {
+		$target = '';
+		$class = 'class="wiki"';
+		$ext_icon = '';
+
 		if ($this->get_preference('popupLinks', 'n') == 'y')
 		{
-		    $imgtarget = ' target="_blank"';
+		    $target = 'target="_blank"';
 		}
-		$repl = '<a href="' . $imgdata["link"] .'"' . $imgtarget . '>' . $repl . '</a>';
-	    }
-
-	    if ($imgdata["desc"]) {
-		$repl = '<table cellpadding="0" cellspacing="0"><tr><td>' . $repl . '</td></tr><tr><td class="mini">' . $imgdata["desc"] . '</td></tr></table>';
-	    }
-
-	    if ($imgdata["align"]) {
-		$repl = '<div align="' . $imgdata["align"] . '">' . $repl . "</div>";
-	    }
-
-	    $data = str_replace($page_parse, $repl, $data);
-	}
-
-	$links = $this->get_links($data);
-
-	$notcachedlinks = $this->get_links_nocache($data);
-
-	$cachedlinks = array_diff($links, $notcachedlinks);
-
-	$this->cache_links($cachedlinks);
-
-	// Note that there're links that are replaced
-	foreach ($links as $link)
-	{
-	    $target = '';
-	    $class = 'class="wiki"';
-	    $ext_icon = '';
-
-	    if ($this->get_preference('popupLinks', 'n') == 'y')
-	    {
-		$target = 'target="_blank"';
-	    }
 
 		if (isset($_SERVER['SERVER_NAME'])) {
-			$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+		    $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
 		}
-	    if (strstr($link, $_SERVER["SERVER_NAME"]))
-	    {
-		$target = '';
-	    } else {
-	    	global $feature_wiki_ext_icon;
-	    	if ($feature_wiki_ext_icon == 'y') {
-		    	$class = 'class="wiki external"';
-		    	$ext_icon = "<img border=\"0\" hspace=\"2\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
-	    	}
-	    }
-
-	    if (!strstr($link, '//'))
-	    {
-		$target = '';
-	    }
-	
-	    // The (?<!\[) stuff below is to give users an easy way to
-	    // enter square brackets in their output; things like [[foo]
-	    // get rendered as [foo]. -rlpowell
-
-	if ($cachepages == 'y' && $this->is_cached($link))
-	    {
-		//use of urlencode for using cached versions of dynamic sites
-		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-		//$link2 = str_replace("/","\/",$link);
-		//$link2 = str_replace("?","\?",$link2);
-		//$link2 = str_replace("&","\&",$link2);
-		$link2 = str_replace("/", "\/", preg_quote($link));
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon $cosa", $data);
-		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon $cosa", $data);
-	    } else {
-		//$link2 = str_replace("/","\/",$link);
-		//$link2 = str_replace("?","\?",$link2);
-		//$link2 = str_replace("&","\&",$link2);
-		$link2 = str_replace("/", "\/", preg_quote($link));
-
-		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
-		$pattern = "/(?<!\[)\[$link2\]/";
-		$data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon", $data);
-	    }
-
-	}
-
-	// Handle double square brackets.  -rlpowell
-	$data = str_replace( "[[", "[", $data );
-
-	if ($feature_wiki_tables != 'new') {
-	    // New syntax for tables
-	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
-		$maxcols = 1;
-
-		$cols = array();
-
-		$temp_max = count($tables[0]);
-		for ($i = 0; $i < $temp_max; $i++) {
-		    $rows = explode('||', $tables[0][$i]);
-
-		    $col[$i] = array();
-
-		    $temp_max2 = count($rows);
-		    for ($j = 0; $j < $temp_max2; $j++) {
-			$cols[$i][$j] = explode('|', $rows[$j]);
-
-			if (count($cols[$i][$j]) > $maxcols)
-			    $maxcols = count($cols[$i][$j]);
+		if (strstr($link, $_SERVER["SERVER_NAME"]))
+		{
+		    $target = '';
+		} else {
+		    global $feature_wiki_ext_icon;
+		    if ($feature_wiki_ext_icon == 'y') {
+			$class = 'class="wiki external"';
+			$ext_icon = "<img border=\"0\" hspace=\"2\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 		    }
 		}
 
-		$temp_max3 = count($tables[0]);
-		for ($i = 0; $i < $temp_max3; $i++) {
-		    $repl = '<table class="wikitable">';
+		if (!strstr($link, '//'))
+		{
+		    $target = '';
+		}
 
-		    $temp_max4 = count($cols[$i]);
-		    for ($j = 0; $j < $temp_max4; $j++) {
-			$ncols = count($cols[$i][$j]);
+		// The (?<!\[) stuff below is to give users an easy way to
+		// enter square brackets in their output; things like [[foo]
+		// get rendered as [foo]. -rlpowell
 
-			if ($ncols == 1 && !$cols[$i][$j][0])
-			    continue;
+		if ($cachepages == 'y' && $this->is_cached($link))
+		{
+		    //use of urlencode for using cached versions of dynamic sites
+		    $cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
-			$repl .= '<tr>';
+		    //$link2 = str_replace("/","\/",$link);
+		    //$link2 = str_replace("?","\?",$link2);
+		    //$link2 = str_replace("&","\&",$link2);
+		    $link2 = str_replace("/", "\/", preg_quote($link));
+		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
+		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon $cosa", $data);
+		    $pattern = "/(?<!\[)\[$link2\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon $cosa", $data);
+		} else {
+		    //$link2 = str_replace("/","\/",$link);
+		    //$link2 = str_replace("?","\?",$link2);
+		    //$link2 = str_replace("&","\&",$link2);
+		    $link2 = str_replace("/", "\/", preg_quote($link));
 
-			for ($k = 0; $k < $ncols; $k++) {
-			    $repl .= '<td class="wikicell" ';
+		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
+		    $pattern = "/(?<!\[)\[$link2\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon", $data);
+		}
 
-			    if ($k == $ncols - 1 && $ncols < $maxcols)
-				$repl .= ' colspan="' . ($maxcols - $k).'"';
+	    }
 
-			    $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+	    // Handle double square brackets.  -rlpowell
+	    $data = str_replace( "[[", "[", $data );
+
+	    if ($feature_wiki_tables != 'new') {
+		// New syntax for tables
+		if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+		    $maxcols = 1;
+
+		    $cols = array();
+
+		    $temp_max = count($tables[0]);
+		    for ($i = 0; $i < $temp_max; $i++) {
+			$rows = explode('||', $tables[0][$i]);
+
+			$col[$i] = array();
+
+			$temp_max2 = count($rows);
+			for ($j = 0; $j < $temp_max2; $j++) {
+			    $cols[$i][$j] = explode('|', $rows[$j]);
+
+			    if (count($cols[$i][$j]) > $maxcols)
+				$maxcols = count($cols[$i][$j]);
+			}
+		    }
+
+		    $temp_max3 = count($tables[0]);
+		    for ($i = 0; $i < $temp_max3; $i++) {
+			$repl = '<table class="wikitable">';
+
+			$temp_max4 = count($cols[$i]);
+			for ($j = 0; $j < $temp_max4; $j++) {
+			    $ncols = count($cols[$i][$j]);
+
+			    if ($ncols == 1 && !$cols[$i][$j][0])
+				continue;
+
+			    $repl .= '<tr>';
+
+			    for ($k = 0; $k < $ncols; $k++) {
+				$repl .= '<td class="wikicell" ';
+
+				if ($k == $ncols - 1 && $ncols < $maxcols)
+				    $repl .= ' colspan="' . ($maxcols - $k).'"';
+
+				$repl .= '>' . $cols[$i][$j][$k] . '</td>';
+			    }
+
+			    $repl .= '</tr>';
 			}
 
-			$repl .= '</tr>';
-		    }
-
-		    $repl .= '</table>';
-		    $data = str_replace($tables[0][$i], $repl, $data);
-		}
-	    }
-	} else {
-	    // New syntax for tables
-	    // REWRITE THIS CODE
-	    if (preg_match_all("/\|\|(.*?)\|\|/s", $data, $tables)) {
-		$maxcols = 1;
-
-		$cols = array();
-
-		$temp_max5 = count($tables[0]);
-		for ($i = 0; $i < $temp_max5; $i++) {
-		    $rows = split("\n|\<br\/\>", $tables[0][$i]);
-
-		    $col[$i] = array();
-
-		    $temp_max6 = count($rows);
-		    for ($j = 0; $j < $temp_max6; $j++) {
-			$rows[$j] = str_replace('||', '', $rows[$j]);
-
-			$cols[$i][$j] = explode('|', $rows[$j]);
-
-			if (count($cols[$i][$j]) > $maxcols)
-			    $maxcols = count($cols[$i][$j]);
+			$repl .= '</table>';
+			$data = str_replace($tables[0][$i], $repl, $data);
 		    }
 		}
+	    } else {
+		// New syntax for tables
+		// REWRITE THIS CODE
+		if (preg_match_all("/\|\|(.*?)\|\|/s", $data, $tables)) {
+		    $maxcols = 1;
 
-		$temp_max7 = count($tables[0]);
-		for ($i = 0; $i < $temp_max7; $i++) {
-		    $repl = '<table class="wikitable">';
+		    $cols = array();
 
-		    $temp_max8 = count($cols[$i]);
-		    for ($j = 0; $j < $temp_max8; $j++) {
-			$ncols = count($cols[$i][$j]);
+		    $temp_max5 = count($tables[0]);
+		    for ($i = 0; $i < $temp_max5; $i++) {
+			$rows = split("\n|\<br\/\>", $tables[0][$i]);
 
-			if ($ncols == 1 && !$cols[$i][$j][0])
-			    continue;
+			$col[$i] = array();
 
-			$repl .= '<tr>';
+			$temp_max6 = count($rows);
+			for ($j = 0; $j < $temp_max6; $j++) {
+			    $rows[$j] = str_replace('||', '', $rows[$j]);
 
-			for ($k = 0; $k < $ncols; $k++) {
-			    $repl .= '<td class="wikicell" ';
+			    $cols[$i][$j] = explode('|', $rows[$j]);
 
-			    if ($k == $ncols - 1 && $ncols < $maxcols)
-				$repl .= ' colspan="' . ($maxcols - $k).'"';
+			    if (count($cols[$i][$j]) > $maxcols)
+				$maxcols = count($cols[$i][$j]);
+			}
+		    }
 
-			    $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+		    $temp_max7 = count($tables[0]);
+		    for ($i = 0; $i < $temp_max7; $i++) {
+			$repl = '<table class="wikitable">';
+
+			$temp_max8 = count($cols[$i]);
+			for ($j = 0; $j < $temp_max8; $j++) {
+			    $ncols = count($cols[$i][$j]);
+
+			    if ($ncols == 1 && !$cols[$i][$j][0])
+				continue;
+
+			    $repl .= '<tr>';
+
+			    for ($k = 0; $k < $ncols; $k++) {
+				$repl .= '<td class="wikicell" ';
+
+				if ($k == $ncols - 1 && $ncols < $maxcols)
+				    $repl .= ' colspan="' . ($maxcols - $k).'"';
+
+				$repl .= '>' . $cols[$i][$j][$k] . '</td>';
+			    }
+
+			    $repl .= '</tr>';
 			}
 
-			$repl .= '</tr>';
+			$repl .= '</table>';
+			$data = str_replace($tables[0][$i], $repl, $data);
 		    }
-
-		    $repl .= '</table>';
-		    $data = str_replace($tables[0][$i], $repl, $data);
 		}
 	    }
-	}
 
 
-	// 26-Jun-2003, by zaufi
-	//
-	// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
-	//
-	preg_match_all("/\{maketoc\}/", $data, $tocs);
-	$anch = array();
+	    // 26-Jun-2003, by zaufi
+	    //
+	    // {maketoc} --> create TOC from '!', '!!', '!!!' in current document
+	    //
+	    preg_match_all("/\{maketoc\}/", $data, $tocs);
+	    $anch = array();
 
-	// 08-Jul-2003, by zaufi
-	// HotWords will be replace only in ordinal text
-	// It looks __realy__ goofy in Headers or Titles
+	    // 08-Jul-2003, by zaufi
+	    // HotWords will be replace only in ordinal text
+	    // It looks __realy__ goofy in Headers or Titles
 
-	// Get list of HotWords
-	$words = $this->get_hotwords();
+	    // Get list of HotWords
+	    $words = $this->get_hotwords();
 
-	// Now tokenize the expression and process the tokens
-	// Use tab and newline as tokenizing characters as well  ////
-	$lines = explode("\n", $data);
-	$data = '';
-	$listbeg = array();
-	$divdepth = array();
-	$inTable = 0;
+	    // Now tokenize the expression and process the tokens
+	    // Use tab and newline as tokenizing characters as well  ////
+	    $lines = explode("\n", $data);
+	    $data = '';
+	    $listbeg = array();
+	    $divdepth = array();
+	    $inTable = 0;
 
-	// loop: process all lines
-	$in_paragraph = 0;
-	foreach ($lines as $line) {
-	    $line = rtrim($line); // Trim off trailing white space
-	    // Check for titlebars...
-	    // NOTE: that title bar should start at the beginning of the line and
-	    //	   be alone on that line to be autoaligned... otherwise, it is an old 
-	    //	   styled title bar...
-	    if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
-		// Close open paragraph and lists, but not div's
-		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-		//
-		$align_len = strlen($line) - strlen(ltrim($line));
+	    // loop: process all lines
+	    $in_paragraph = 0;
+	    foreach ($lines as $line) {
+		$line = rtrim($line); // Trim off trailing white space
+		// Check for titlebars...
+		// NOTE: that title bar should start at the beginning of the line and
+		//	   be alone on that line to be autoaligned... otherwise, it is an old 
+		//	   styled title bar...
+		if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
+		    // Close open paragraph and lists, but not div's
+		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+		    //
+		    $align_len = strlen($line) - strlen(ltrim($line));
 
-		// My textarea size is about 120 space chars.
-		//define('TEXTAREA_SZ', 120);
+		    // My textarea size is about 120 space chars.
+		    //define('TEXTAREA_SZ', 120);
 
-		// NOTE: That strict math formula (split into 3 areas) gives
-		//	   bad visual effects...
-		// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
-		//		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
-		//
-		// Going to introduce some heuristic here :)
-		// Visualy (remember that space char is thin) center starts at 25 pos
-		// and 'right' from 60 (HALF of full width!) -- thats all :)
-		//
-		// NOTE: Guess align only if more than 10 spaces before -=title=-
-		if ($align_len > 10) {
-		    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+		    // NOTE: That strict math formula (split into 3 areas) gives
+		    //	   bad visual effects...
+		    // $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
+		    //		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+		    //
+		    // Going to introduce some heuristic here :)
+		    // Visualy (remember that space char is thin) center starts at 25 pos
+		    // and 'right' from 60 (HALF of full width!) -- thats all :)
+		    //
+		    // NOTE: Guess align only if more than 10 spaces before -=title=-
+		    if ($align_len > 10) {
+			$align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
 
-		    $align = ' style="text-align: ' . $align . ';"';
-		} else
-		    $align = '';
+			$align = ' style="text-align: ' . $align . ';"';
+		    } else
+			$align = '';
 
-		//
-		$line = trim($line);
-		$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-		$data .= $line . "\n";
-		// TODO: Case is handled ...  no need to check other conditions
-		//	   (it is apriori known that they are all false, moreover sometimes
-		//	   check procedure need > O(0) of compexity)
-		//	   -- continue to next line...
-		//	   MUST replace all remaining parse blocks to the same logic...
-		continue;
-	    }
+		    //
+		    $line = trim($line);
+		    $line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+		    $data .= $line . "\n";
+		    // TODO: Case is handled ...  no need to check other conditions
+		    //	   (it is apriori known that they are all false, moreover sometimes
+		    //	   check procedure need > O(0) of compexity)
+		    //	   -- continue to next line...
+		    //	   MUST replace all remaining parse blocks to the same logic...
+		    continue;
+		}
 
-	    // Replace old styled titlebars
-	    if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
-		// Close open paragraph, but not lists (why not?) or div's
-		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-		$data .= $line . "\n";
+		// Replace old styled titlebars
+		if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
+		    // Close open paragraph, but not lists (why not?) or div's
+		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+		    $data .= $line . "\n";
 
-		continue;
-	    }
+		    continue;
+		}
 
-	    // check if we are inside a table, if so, ignore monospaced and do
-	    // not insert <br/>
-	    $inTable += substr_count(strtolower($line), "<table");
-	    $inTable -= substr_count(strtolower($line), "</table");
+		// check if we are inside a table, if so, ignore monospaced and do
+		// not insert <br/>
+		$inTable += substr_count(strtolower($line), "<table");
+		$inTable -= substr_count(strtolower($line), "</table");
 
-	    // If the first character is ' ' and we are not in pre then we are in pre
-	    global $feature_wiki_monosp;
+		// If the first character is ' ' and we are not in pre then we are in pre
+		global $feature_wiki_monosp;
 
-	    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
-		// Close open paragraph and lists, but not div's
-		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+		if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
+		    // Close open paragraph and lists, but not div's
+		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
-		// If the first character is space then make font monospaced.
-		// For fixed formatting, use ~pp~...~/pp~
-		$line = '<tt>' . $line . '</tt>';
-	    }
+		    // If the first character is space then make font monospaced.
+		    // For fixed formatting, use ~pp~...~/pp~
+		    $line = '<tt>' . $line . '</tt>';
+		}
 
-	    // Replace Hotwords before begin
-	    $line = $this->replace_hotwords($line, $words);
+		// Replace Hotwords before begin
+		$line = $this->replace_hotwords($line, $words);
 
-	    // Make plain URLs clickable hyperlinks
-	    if ($feature_autolinks == 'y') {
-			$line = $this->autolinks($line);
-	    }
+		// Make plain URLs clickable hyperlinks
+		if ($feature_autolinks == 'y') {
+		    $line = $this->autolinks($line);
+		}
 
-	    // Replace monospaced text
-	    $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
-	    // Replace bold text
-	    $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-	    $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-	    // Replace definition lists
-	    $line = preg_replace("/^;(.*):[^\/\/](.*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+		// Replace monospaced text
+		$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+		// Replace bold text
+		$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+		$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+		// Replace definition lists
+		$line = preg_replace("/^;(.*):[^\/\/](.*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
-/* this code following if (0) is never executed, right?
-	    if (0) {
-		$line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
+		/* this code following if (0) is never executed, right?
+		   if (0) {
+		   $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
 
 		// Segundo intento reemplazar los [link] comunes
 		$line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
 		$line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
-	    }
-*/
+		}
+		 */
 
-	    // This line is parseable then we have to see what we have
-	    if (substr($line, 0, 3) == '---') {
-		// This is not a list item --- close open paragraph and lists, but not div's
-		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-		$line = '<hr />';
-	    } else {
-		$litype = substr($line, 0, 1);
-		if ($litype == '*' || $litype == '#') {
-		    // Close open paragraph, but not lists or div's
-		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-		    $listlevel = $this->how_many_at_start($line, $litype);
-		    $liclose = '</li>';
-		    $addremove = 0;
-		    if ($listlevel < count($listbeg)) {
-			while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
-			if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
-		    } elseif ($listlevel > count($listbeg)) {
-			$listyle = '';
-			while ($listlevel != count($listbeg)) {
-			    array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
-			    if ($listlevel == count($listbeg)) {
-				$listate = substr($line, $listlevel, 1);
-				if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-				    $thisid = 'id' . microtime() * 1000000;
-				    $data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-				    $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-				    $addremove = 1;
-				}
-			    }
-			    $data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
-			}
-			$liclose='';
-		    }
-		    if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
-			$data .= array_shift($listbeg);
-			$listyle = '';
-			$listate = substr($line, $listlevel, 1);
-			if (($listate == '+' || $listate == '-')) {
-			    $thisid = 'id' . microtime() * 1000000;
-			    $data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-			    $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-			    $addremove = 1;
-			}
-			$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-			$liclose = '';
-			array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
-		    }
-		    $line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
-		    if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
-		} elseif ($litype == '+') {
-		    // Close open paragraph, but not list or div's
-		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-		    $listlevel = $this->how_many_at_start($line, $litype);
-		    // Close lists down to requested level
-		    while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
-
-		    // Must append paragraph for list item of given depth...
-		    $listlevel = $this->how_many_at_start($line, $litype);
-		    if (count($listbeg)) {
-			if (substr(current($listbeg), 0, 5) != '</li>') {
-			    array_unshift($listbeg, '</li>' . array_shift($listbeg));
-			    $liclose = '<li>';
-			} else $liclose = '<br />';
-		    } else $liclose = '';
-		    $line = $liclose . substr($line, count($listbeg));
+		// This line is parseable then we have to see what we have
+		if (substr($line, 0, 3) == '---') {
+		    // This is not a list item --- close open paragraph and lists, but not div's
+		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+		    $line = '<hr />';
 		} else {
-		    // This is not a list item - close open lists,
-		    // but not paragraph or div's. If we are
-		    // closing a list, there really shouldn't be a
-		    // paragraph open anyway.
-		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
-		    // Get count of (possible) header signs at start
-		    $hdrlevel = $this->how_many_at_start($line, '!');
-		    // If 1st char on line is '!' and its count less than 6 (max in HTML)
-		    if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
-			// Close open paragraph (lists already closed above)
-			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 1);
-			// Close lower level divs if opened
-			for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
-
-			// Remove possible hotwords replaced :)
-			//   Umm, *why*?  Taking this out lets page
-			//   links in headers work, which can be nice.
-			//   -rlpowell
-			// $line = strip_tags($line);
-
-			// OK. Parse headers here...
-			$anchor = '';
-			$aclose = '';
+		    $litype = substr($line, 0, 1);
+		    if ($litype == '*' || $litype == '#') {
+			// Close open paragraph, but not lists or div's
+			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+			$listlevel = $this->how_many_at_start($line, $litype);
+			$liclose = '</li>';
 			$addremove = 0;
-
-			// May be special signs present after '!'s?
-			$divstate = substr($line, $hdrlevel, 1);
-			if ($divstate == '+' || $divstate == '-') {
-			    // OK. Must insert flipper after HEADER, and then open new div...
-			    $thisid = 'id' . microtime() * 1000000;
-			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-			    $aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-			    array_unshift($divdepth, $hdrlevel);
-			    $addremove = 1;
-			}
-			// Is any {maketoc} present on page?
-			if (count($tocs[0]) > 0) {
-			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
-			    $thisid = 'id' . microtime() * 1000000;
-			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
-			    $anchor = "<a id='$thisid'>";
-			    $aclose = '</a>' . $aclose;
-			}
-			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
-		    } elseif (!strcmp($line, "...page...")) {
-			// Close open paragraph, lists, and div's
-			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
-			// Leave line unchanged... tiki-index.php will split wiki here
-			$line = "...page...";
-		    } else {
-			/** Usual paragraph.  
-			 *
-			 * If the
-			 * $feature_wiki_paragraph_formatting
-			 * is on, then consecutive lines of
-			 * text will be gathered into a block
-			 * that is surrounded by HTML
-			 * paragraph tags. One or more blank
-			 * lines, or another special Wiki line
-			 * (e.g., heading, titlebar, etc.)
-			 * signifies the end of the
-			 * paragraph. If the paragraph
-			 * formatting feature is off, the
-			 * original TikiWiki behavior is used,
-			 * in which each line in the source is
-			 * terminated by an explicit line
-			 * break (br tag).
-			 *
-			 * @since Version 1.9
-			 */
-			if ($inTable == 0) {
-			    if ($feature_wiki_paragraph_formatting == 'y') {
-				if ($in_paragraph && (0 == strcmp("", trim($line)))) {
-				    // Blank line; end the paragraph
-				    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-				} elseif (!$in_paragraph && (0 != strcmp("", trim($line)))) {
-				    // First non-blank line; start a paragraph
-				    $data .= "<p>";
-				    $in_paragraph = 1;
-				} else {
-				    // A normal in-paragraph line or a consecutive blank line.
-				    // Leave it as is.
+			if ($listlevel < count($listbeg)) {
+			    while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
+			    if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
+			} elseif ($listlevel > count($listbeg)) {
+			    $listyle = '';
+			    while ($listlevel != count($listbeg)) {
+				array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
+				if ($listlevel == count($listbeg)) {
+				    $listate = substr($line, $listlevel, 1);
+				    if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+					$thisid = 'id' . microtime() * 1000000;
+					$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+					$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+					$addremove = 1;
+				    }
 				}
-			    } else {
-				$line .= '<br />';
+				$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+			    }
+			    $liclose='';
+			}
+			if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
+			    $data .= array_shift($listbeg);
+			    $listyle = '';
+			    $listate = substr($line, $listlevel, 1);
+			    if (($listate == '+' || $listate == '-')) {
+				$thisid = 'id' . microtime() * 1000000;
+				$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+				$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+				$addremove = 1;
+			    }
+			    $data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+			    $liclose = '';
+			    array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
+			}
+			$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
+			if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
+		    } elseif ($litype == '+') {
+			// Close open paragraph, but not list or div's
+			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+			$listlevel = $this->how_many_at_start($line, $litype);
+			// Close lists down to requested level
+			while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+
+			// Must append paragraph for list item of given depth...
+			$listlevel = $this->how_many_at_start($line, $litype);
+			if (count($listbeg)) {
+			    if (substr(current($listbeg), 0, 5) != '</li>') {
+				array_unshift($listbeg, '</li>' . array_shift($listbeg));
+				$liclose = '<li>';
+			    } else $liclose = '<br />';
+			} else $liclose = '';
+			$line = $liclose . substr($line, count($listbeg));
+		    } else {
+			// This is not a list item - close open lists,
+			// but not paragraph or div's. If we are
+			// closing a list, there really shouldn't be a
+			// paragraph open anyway.
+			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
+			// Get count of (possible) header signs at start
+			$hdrlevel = $this->how_many_at_start($line, '!');
+			// If 1st char on line is '!' and its count less than 6 (max in HTML)
+			if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
+			    // Close open paragraph (lists already closed above)
+			    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 1);
+			    // Close lower level divs if opened
+			    for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
+
+			    // Remove possible hotwords replaced :)
+			    //   Umm, *why*?  Taking this out lets page
+			    //   links in headers work, which can be nice.
+			    //   -rlpowell
+			    // $line = strip_tags($line);
+
+			    // OK. Parse headers here...
+			    $anchor = '';
+			    $aclose = '';
+			    $addremove = 0;
+
+			    // May be special signs present after '!'s?
+			    $divstate = substr($line, $hdrlevel, 1);
+			    if ($divstate == '+' || $divstate == '-') {
+				// OK. Must insert flipper after HEADER, and then open new div...
+				$thisid = 'id' . microtime() * 1000000;
+				$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+				$aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+				array_unshift($divdepth, $hdrlevel);
+				$addremove = 1;
+			    }
+			    // Is any {maketoc} present on page?
+			    if (count($tocs[0]) > 0) {
+				// OK. Must insert <a id=...> before HEADER and collect TOC entry
+				$thisid = 'id' . microtime() * 1000000;
+				array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
+				$anchor = "<a id='$thisid'>";
+				$aclose = '</a>' . $aclose;
+			    }
+			    $line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+			} elseif (!strcmp($line, "...page...")) {
+			    // Close open paragraph, lists, and div's
+			    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
+			    // Leave line unchanged... tiki-index.php will split wiki here
+			    $line = "...page...";
+			} else {
+			    /** Usual paragraph.  
+			     *
+			     * If the
+			     * $feature_wiki_paragraph_formatting
+			     * is on, then consecutive lines of
+			     * text will be gathered into a block
+			     * that is surrounded by HTML
+			     * paragraph tags. One or more blank
+			     * lines, or another special Wiki line
+			     * (e.g., heading, titlebar, etc.)
+			     * signifies the end of the
+			     * paragraph. If the paragraph
+			     * formatting feature is off, the
+			     * original TikiWiki behavior is used,
+			     * in which each line in the source is
+			     * terminated by an explicit line
+			     * break (br tag).
+			     *
+			     * @since Version 1.9
+			     */
+			    if ($inTable == 0) {
+				if ($feature_wiki_paragraph_formatting == 'y') {
+				    if ($in_paragraph && (0 == strcmp("", trim($line)))) {
+					// Blank line; end the paragraph
+					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+				    } elseif (!$in_paragraph && (0 != strcmp("", trim($line)))) {
+					// First non-blank line; start a paragraph
+					$data .= "<p>";
+					$in_paragraph = 1;
+				    } else {
+					// A normal in-paragraph line or a consecutive blank line.
+					// Leave it as is.
+				    }
+				} else {
+				    $line .= '<br />';
+				}
 			    }
 			}
 		    }
 		}
-	    }
-	    $data .= $line . "\n";
-	}
-
-	// Close open paragraph, lists, and div's
-	$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
-
-	// 26-Jun-2003, by zaufi
-	// Replace {maketoc} from collected list of headers
-	$html = '';
-
-	foreach ($anch as $tocentry) {
-	    $html .= $tocentry . "\n";
-	}
-
-	if (count($anch))
-	    $html = $this->parse_data($html);
-
-	$data = str_replace("{maketoc}", $html, $data);
-
-	// Replace rss modules
-	if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
-	    if (!isset($rsslib)) {
-		include ('lib/rss/rsslib.php');
+		$data .= $line . "\n";
 	    }
 
-	    $temp_max = count($rsss[0]);
-	    for ($i = 0; $i < $temp_max; $i++) {
-		$id = $rsss[1][$i];
+	    // Close open paragraph, lists, and div's
+	    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 
-		$max = $rsss[3][$i];
+	    // 26-Jun-2003, by zaufi
+	    // Replace {maketoc} from collected list of headers
+	    $html = '';
 
-		if (empty($max))
-		    $max = 99;
+	    foreach ($anch as $tocentry) {
+		$html .= $tocentry . "\n";
+	    }
 
-		$rssdata = $rsslib->get_rss_module_content($id);
-		$items = $rsslib->parse_rss_data($rssdata, $id);
+	    if (count($anch))
+		$html = $this->parse_data($html);
 
-		$repl = '<ul class="rsslist">';
+	    $data = str_replace("{maketoc}", $html, $data);
 
-		$temp_max2 = count($items);
-		for ($j = 1; $j < $temp_max2 && $j < $max; $j++) {
-		    $repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
-		    if ($items[$j]["pubdate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubdate"].')</span>'; }
-		    $repl .= '</li>';
+	    // Replace rss modules
+	    if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
+		if (!isset($rsslib)) {
+		    include ('lib/rss/rsslib.php');
 		}
 
-		$repl .= '</ul>';
-		$data = str_replace($rsss[0][$i], $repl, $data);
+		$temp_max = count($rsss[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $id = $rsss[1][$i];
+
+		    $max = $rsss[3][$i];
+
+		    if (empty($max))
+			$max = 99;
+
+		    $rssdata = $rsslib->get_rss_module_content($id);
+		    $items = $rsslib->parse_rss_data($rssdata, $id);
+
+		    $repl = '<ul class="rsslist">';
+
+		    $temp_max2 = count($items);
+		    for ($j = 1; $j < $temp_max2 && $j < $max; $j++) {
+			$repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
+			if ($items[$j]["pubdate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubdate"].')</span>'; }
+			$repl .= '</li>';
+		    }
+
+		    $repl .= '</ul>';
+		    $data = str_replace($rsss[0][$i], $repl, $data);
+		}
 	    }
+
+	    // linebreaks using %%%
+	    $data = str_replace("%%%", "<br />", $data);
+
+	    // Close BiDi DIVs if any
+	    for ($i = 0; $i < $bidiCount; $i++) {
+		$data .= "</div>";
+	    }
+
+	    // Put removed strings back.
+	    $this->replace_pp_np($data, $preparsed, $noparsed);
+
+	    // Process pos_handlers here
+	    foreach ($this->pos_handlers as $handler) {
+		$data = $handler($data);
+	    }
+
+	    return $data;
 	}
 
-	// linebreaks using %%%
-	$data = str_replace("%%%", "<br />", $data);
+	function parse_smileys($data) {
+	    global $feature_smileys;
 
-	// Close BiDi DIVs if any
-	for ($i = 0; $i < $bidiCount; $i++) {
-	    $data .= "</div>";
+	    if ($feature_smileys == 'y') {
+		$data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
+	    }
+
+	    return $data;
 	}
 
-	// Put removed strings back.
-	$this->replace_pp_np($data, $preparsed, $noparsed);
+	function parse_comment_data($data) {
+	    $data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a class=\"commentslink\" href=\"$1\">$2</a>", $data);
 
-	// Process pos_handlers here
-	foreach ($this->pos_handlers as $handler) {
-	    $data = $handler($data);
+	    // Segundo intento reemplazar los [link] comunes
+	    $data = preg_replace("/\[([^\]\|]+)\]/", "<a class=\"commentslink\" href=\"$1\">$1</a>", $data);
+	    // Llamar aqui a parse smileys
+	    $data = $this->parse_smileys($data);
+	    $data = preg_replace("/---/", "<hr />", $data);
+	    // Reemplazar --- por <hr />
+	    return $data;
 	}
 
-	return $data;
-    }
+	function get_pages($data) {
+	    global $page_regex;
 
-    function parse_smileys($data) {
-	global $feature_smileys;
+	    global $feature_wikiwords;
 
-	if ($feature_smileys == 'y') {
-	    $data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
+	    if ($feature_wikiwords == 'y') {
+		preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages2);
+		preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages3);
+
+		preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
+	    } else {
+		preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
+
+		preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages2);
+		$pages = array_unique(array_merge($pages[1], $pages2[1]));
+	    }
+
+	    return $pages;
 	}
 
-	return $data;
-    }
-
-    function parse_comment_data($data) {
-	$data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a class=\"commentslink\" href=\"$1\">$2</a>", $data);
-
-	// Segundo intento reemplazar los [link] comunes
-	$data = preg_replace("/\[([^\]\|]+)\]/", "<a class=\"commentslink\" href=\"$1\">$1</a>", $data);
-	// Llamar aqui a parse smileys
-	$data = $this->parse_smileys($data);
-	$data = preg_replace("/---/", "<hr />", $data);
-	// Reemplazar --- por <hr />
-	return $data;
-    }
-
-    function get_pages($data) {
-	global $page_regex;
-
-	global $feature_wikiwords;
-
-	if ($feature_wikiwords == 'y') {
-	    preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages2);
-	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages3);
-
-	    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-	    $pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
-	} else {
-	    preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
-
-	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages2);
-	    $pages = array_unique(array_merge($pages[1], $pages2[1]));
+	function clear_links($page) {
+	    $query = "delete from `tiki_links` where `fromPage`=?";
+	    $result = $this->query($query, array($page));
 	}
 
-	return $pages;
-    }
+	function replace_link($pageFrom, $pageTo) {
+	    $query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
+	    $result = $this->query($query, array($pageFrom,$pageTo));
+	    $query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
+	    $result = $this->query($query, array($pageFrom,$pageTo));
+	}
 
-    function clear_links($page) {
-	$query = "delete from `tiki_links` where `fromPage`=?";
-	$result = $this->query($query, array($page));
-    }
+	function invalidate_cache($page) {
+	    $query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
+	    $this->query($query, array(0,$page) );
+	}
 
-    function replace_link($pageFrom, $pageTo) {
-	$query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
-	$result = $this->query($query, array($pageFrom,$pageTo));
-	$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-	$result = $this->query($query, array($pageFrom,$pageTo));
-    }
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='') {
+	    global $smarty;
 
-    function invalidate_cache($page) {
-	$query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
-	$this->query($query, array(0,$page) );
-    }
+	    global $dbTiki;
+	    global $feature_user_watches;
+	    global $wiki_watch_author;
+	    global $wiki_watch_comments;
+	    global $sender_email;
+	    include_once ("lib/commentslib.php");
 
-    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='') {
-	global $smarty;
+	    $commentslib = new Comments($dbTiki);
 
-	global $dbTiki;
-	global $feature_user_watches;
-	global $wiki_watch_author;
-	global $wiki_watch_comments;
-	global $sender_email;
-	include_once ("lib/commentslib.php");
+	    $this->invalidate_cache($pageName);
+	    // Collect pages before modifying edit_data (see update of links below)
+	    $pages = $this->get_pages($edit_data);
 
-	$commentslib = new Comments($dbTiki);
+	    if (!$this->page_exists($pageName))
+		return false;
 
-	$this->invalidate_cache($pageName);
-	// Collect pages before modifying edit_data (see update of links below)
-	$pages = $this->get_pages($edit_data);
+	    $t = date("U");
+	    // Get this page information
+	    $info = $this->get_page_info($pageName);
+	    // Store the old version of this page in the history table
+	    $version = $info["version"];
+	    $lastModif = $info["lastModif"];
+	    $user = $info["user"];
+	    $ip = $info["ip"];
+	    $comment = $info["comment"];
+	    $data = $info["data"];
+	    // WARNING: POTENTIAL BUG
+	    // The line below is not consistent with the rest of Tiki
+	    // (I commented it out so it can be further examined by CVS change control)
+	    //$pageName=addslashes($pageName);
+	    // But this should work (comment added by redflo):
+	    $version += 1;
 
-	if (!$this->page_exists($pageName))
-	    return false;
-
-	$t = date("U");
-	// Get this page information
-	$info = $this->get_page_info($pageName);
-	// Store the old version of this page in the history table
-	$version = $info["version"];
-	$lastModif = $info["lastModif"];
-	$user = $info["user"];
-	$ip = $info["ip"];
-	$comment = $info["comment"];
-	$data = $info["data"];
-	// WARNING: POTENTIAL BUG
-	// The line below is not consistent with the rest of Tiki
-	// (I commented it out so it can be further examined by CVS change control)
-	//$pageName=addslashes($pageName);
-	// But this should work (comment added by redflo):
-	$version += 1;
-
-	if (!$minor) {
-	    if ($pageName != 'SandBox') {
-		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-		    values(?,?,?,?,?,?,?,?)";
+	    if (!$minor) {
+		if ($pageName != 'SandBox') {
+		    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
+			values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-		$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		/* the following doesn't work because tiki dies if the above query fails
-		if (!$result) {
-			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
-			$result = $this->query($query2,array($pageName,(int) $version));
-			$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		    $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		    /* the following doesn't work because tiki dies if the above query fails
+		       if (!$result) {
+		       $query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
+		       $result = $this->query($query2,array($pageName,(int) $version));
+		       $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		       }
+		     */
 		}
-		*/
+
+		//  Deal with mail notifications.
+		include_once('lib/notifications/notificationemaillib.php');
+		//This is put away: sender_email must be enough!
+		//  if( $this->get_preference('wiki_forum') ) {
+		//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
+		//    if ($forums)
+		//      $fromEmail = $forums["data"][0]["outbound_from"];
+		//    else
+		//      $fromEmail = $sender_email;
+		//  }
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = httpPrefix(). dirname( $foo["path"] );
+		sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
 	    }
 
-	    //  Deal with mail notifications.
-	    include_once('lib/notifications/notificationemaillib.php');
-	    //This is put away: sender_email must be enough!
-	    //  if( $this->get_preference('wiki_forum') ) {
-	    //      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-	    //    if ($forums)
-	    //      $fromEmail = $forums["data"][0]["outbound_from"];
-	    //    else
-	    //      $fromEmail = $sender_email;
-	    //  }
-	    $foo = parse_url($_SERVER["REQUEST_URI"]);
-	    $machine = httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
-	}
-
-	if ($lang) {// not sure it is necessary
+	    if ($lang) {// not sure it is necessary
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
 		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
-	} else {
+	    } else {
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
 		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
-	}
-	// Parse edit_data updating the list of links from this page
-	$this->clear_links($pageName);
-
-	// Pages collected above
-	foreach ($pages as $page) {
-	    $this->replace_link($pageName, $page);
-	}
-
-	// Update the log
-	if ($pageName != 'SandBox' && !$minor) {
-	    $action = "Updated"; //get_strings tra("Updated")
-
-	    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	    $result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
-	    $maxversions = $this->get_preference("maxVersions", 0);
-
-	    if ($maxversions) {
-		// Select only versions older than keep_versions days
-		$keep = $this->get_preference('keep_versions', 0);
-
-		$now = date("U");
-		$oktodel = $now - ($keep * 24 * 3600);
-		$query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
-		$result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
-		$toelim = $result->numRows();
-
-		while ($res = $result->fetchRow()) {
-		    $page = $res["pageName"];
-
-		    $version = $res["version"];
-		    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-		    $this->query($query,array($pageName,$version));
-		}
-	    }
-	}
-    }
-
-    function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
-	global $smarty;
-
-	if ($pageName == 'SandBox')
-	    return;
-
-	// Collect pages before modifying edit_data
-	$pages = $this->get_pages($edit_data);
-
-	if (!$this->page_exists($pageName))
-	    return false;
-
-	$t = date("U");
-	$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-	$result = $this->query($query, array( $pageName,(int) $version) );
-	$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
-	$result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
-		);
-
-	//print("version: $version<br />");
-	// Get this page information
-	$info = $this->get_page_info($pageName);
-
-	if ($version >= $info["version"]) {
-	    if ($lang) { // not sure it is necessary
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
-	    } else {
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
 	    }
 	    // Parse edit_data updating the list of links from this page
 	    $this->clear_links($pageName);
 
-	    // Pages are collected at the top of the function before adding slashes
+	    // Pages collected above
 	    foreach ($pages as $page) {
 		$this->replace_link($pageName, $page);
 	    }
+
+	    // Update the log
+	    if ($pageName != 'SandBox' && !$minor) {
+		$action = "Updated"; //get_strings tra("Updated")
+
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
+		$maxversions = $this->get_preference("maxVersions", 0);
+
+		if ($maxversions) {
+		    // Select only versions older than keep_versions days
+		    $keep = $this->get_preference('keep_versions', 0);
+
+		    $now = date("U");
+		    $oktodel = $now - ($keep * 24 * 3600);
+		    $query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
+		    $result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
+		    $toelim = $result->numRows();
+
+		    while ($res = $result->fetchRow()) {
+			$page = $res["pageName"];
+
+			$version = $res["version"];
+			$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+			$this->query($query,array($pageName,$version));
+		    }
+		}
+	    }
 	}
-    }
+
+	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
+	    global $smarty;
+
+	    if ($pageName == 'SandBox')
+		return;
+
+	    // Collect pages before modifying edit_data
+	    $pages = $this->get_pages($edit_data);
+
+	    if (!$this->page_exists($pageName))
+		return false;
+
+	    $t = date("U");
+	    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+	    $result = $this->query($query, array( $pageName,(int) $version) );
+	    $query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
+	    $result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
+		    );
+
+	    //print("version: $version<br />");
+	    // Get this page information
+	    $info = $this->get_page_info($pageName);
+
+	    if ($version >= $info["version"]) {
+		if ($lang) { // not sure it is necessary
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
+		} else {
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
+		}
+		// Parse edit_data updating the list of links from this page
+		$this->clear_links($pageName);
+
+		// Pages are collected at the top of the function before adding slashes
+		foreach ($pages as $page) {
+		    $this->replace_link($pageName, $page);
+		}
+	    }
+	}
 
 # TODO move all of these date/time functions to a static class: TikiDate
-    function get_timezone_list($use_default = false) {
-	static $timezone_options;
+	function get_timezone_list($use_default = false) {
+	    static $timezone_options;
 
-	if (!$timezone_options) {
-	    $timezone_options = array();
+	    if (!$timezone_options) {
+		$timezone_options = array();
 
-	    if ($use_default)
-		$timezone_options['default'] = '-- Use Default Time Zone --';
+		if ($use_default)
+		    $timezone_options['default'] = '-- Use Default Time Zone --';
 
-	    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
-		$offset = $tz['offset'];
+		foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
+		    $offset = $tz['offset'];
 
-		$absoffset = abs($offset /= 60000);
-		$plusminus = $offset < 0 ? '-' : '+';
-		$gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
-		$tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
-			$timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
-			}
-			}
+		    $absoffset = abs($offset /= 60000);
+		    $plusminus = $offset < 0 ? '-' : '+';
+		    $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
+		    $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
+			    $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+			    }
+			    }
 
-			return $timezone_options;
-			}
+			    return $timezone_options;
+			    }
 
-			function get_server_timezone() {
-			static $server_timezone;
+			    function get_server_timezone() {
+			    static $server_timezone;
 
-			if (!$server_timezone) {
-			$server_time = new Date();
+			    if (!$server_timezone) {
+			    $server_time = new Date();
 
-			$server_timezone = $server_time->tz->getID();
-			}
+			    $server_timezone = $server_time->tz->getID();
+			    }
 
-			return $server_timezone;
-			}
+			    return $server_timezone;
+			    }
 
 # TODO rename get_site_timezone()
-			function get_display_timezone($user = false) {
-			    static $display_timezone = false;
+			    function get_display_timezone($user = false) {
+				static $display_timezone = false;
 
-			    if (!$display_timezone) {
-				$server_time = $this->get_server_timezone();
+				if (!$display_timezone) {
+				    $server_time = $this->get_server_timezone();
 
-				if ($user) {
-				    $display_timezone = $this->get_user_preference($user, 'display_timezone');
+				    if ($user) {
+					$display_timezone = $this->get_user_preference($user, 'display_timezone');
 
-				    if (!$display_timezone || $display_timezone == 'default') {
+					if (!$display_timezone || $display_timezone == 'default') {
+					    $display_timezone = $this->get_preference('display_timezone', $server_time);
+					}
+				    } else {
 					$display_timezone = $this->get_preference('display_timezone', $server_time);
 				    }
-				} else {
-				    $display_timezone = $this->get_preference('display_timezone', $server_time);
 				}
+
+				return $display_timezone;
 			    }
 
-			    return $display_timezone;
-			}
+			    /**
+			     * Retrieves the user's preferred offset for displaying dates.
+			     *
+			     * $user: the logged-in user.
+			     * returns: the preferred offset to UTC.
+			     */
+			    function get_display_offset($_user = false) {
 
-			/**
-			 * Retrieves the user's preferred offset for displaying dates.
-			 *
-			 * $user: the logged-in user.
-			 * returns: the preferred offset to UTC.
-			 */
-			function get_display_offset($_user = false) {
+				// Cache preference from DB
+				$display_tz = "UTC";
 
-			    // Cache preference from DB
-			    $display_tz = "UTC";
+				// Default to UTCget_display_offset
+				$display_offset = 0;
 
-			    // Default to UTCget_display_offset
-			    $display_offset = 0;
+				// Load pref from DB is cache is empty
+				if ($_user)
+				    $display_tz = $this->get_display_timezone($_user);
 
-			    // Load pref from DB is cache is empty
-			    if ($_user)
-				$display_tz = $this->get_display_timezone($_user);
+				// Recompute offset each request in case DST kicked in
+				if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
+				    $display_offset = intval($_COOKIE["tz_offset"]);
 
-			    // Recompute offset each request in case DST kicked in
-			    if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
-				$display_offset = intval($_COOKIE["tz_offset"]);
-
-			    return $display_offset;
-			}
-
-			/**
-			 * Retrieves a TikiDate object for converting to/from display/UTC timezones
-			 *
-			 * $user: the logged-in user
-			 * returns: reference to a TikiDate instance with the appropriate offsets
-			 */
-			function &get_date_converter($_user = false) {
-			    static $date_converter;
-
-			    if (!$date_converter) {
-				$display_offset = $this->get_display_offset($_user);
-
-				$date_converter = &new TikiDate($display_offset);
+				return $display_offset;
 			    }
 
-			    return $date_converter;
-			}
+			    /**
+			     * Retrieves a TikiDate object for converting to/from display/UTC timezones
+			     *
+			     * $user: the logged-in user
+			     * returns: reference to a TikiDate instance with the appropriate offsets
+			     */
+			    function &get_date_converter($_user = false) {
+				static $date_converter;
 
-			function get_long_date_format() {
-			    static $long_date_format = false;
+				if (!$date_converter) {
+				    $display_offset = $this->get_display_offset($_user);
 
-			    if (!$long_date_format)
-				$long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
+				    $date_converter = &new TikiDate($display_offset);
+				}
 
-			    return $long_date_format;
-			}
-
-			function get_short_date_format() {
-			    static $short_date_format = false;
-
-			    if (!$short_date_format)
-				$short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
-
-			    return $short_date_format;
-			}
-
-			function get_long_time_format() {
-			    static $long_time_format = false;
-
-			    if (!$long_time_format)
-				$long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
-
-			    return $long_time_format;
-			}
-
-			function get_short_time_format() {
-			    static $short_time_format = false;
-
-			    if (!$short_time_format)
-				$short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
-
-			    return $short_time_format;
-			}
-
-			function get_long_datetime_format() {
-			    static $long_datetime_format = false;
-
-			    if (!$long_datetime_format)
-				$long_datetime_format = $this->get_long_date_format(). ' [' . $this->get_long_time_format(). ']';
-
-			    return $long_datetime_format;
-			}
-
-			function get_short_datetime_format() {
-			    static $short_datetime_format = false;
-
-			    if (!$short_datetime_format)
-				$short_datetime_format = $this->get_short_date_format(). ' [' . $this->get_short_time_format(). ']';
-
-			    return $short_datetime_format;
-			}
-
-			function server_time_to_site_time($timestamp, $user = false) {
-			    $date = new Date($timestamp);
-
-			    $date->setTZbyID($this->get_server_timezone());
-			    $date->convertTZbyID($this->get_display_timezone($user));
-			    return $date->getTime();
-			}
-
-			/**
-
-			 */
-			function get_site_date($timestamp, $user = false) {
-			    static $localed = false;
-
-			    if (!$localed) {
-				$this->set_locale($user);
-
-				$localed = true;
+				return $date_converter;
 			    }
 
-			    $original_tz = date('T', $timestamp);
+			    function get_long_date_format() {
+				static $long_date_format = false;
 
-			    $format = '%b %e, %Y';
-			    $rv = strftime($format, $timestamp);
-			    $rv .= " =timestamp\n";
-			    $rv .= strftime('%Z', $timestamp);
-			    $rv .= " =strftime('%Z')\n";
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
+				if (!$long_date_format)
+				    $long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
 
-			    $date = &new Date($timestamp);
+				return $long_date_format;
+			    }
+
+			    function get_short_date_format() {
+				static $short_date_format = false;
+
+				if (!$short_date_format)
+				    $short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
+
+				return $short_date_format;
+			    }
+
+			    function get_long_time_format() {
+				static $long_time_format = false;
+
+				if (!$long_time_format)
+				    $long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
+
+				return $long_time_format;
+			    }
+
+			    function get_short_time_format() {
+				static $short_time_format = false;
+
+				if (!$short_time_format)
+				    $short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
+
+				return $short_time_format;
+			    }
+
+			    function get_long_datetime_format() {
+				static $long_datetime_format = false;
+
+				if (!$long_datetime_format)
+				    $long_datetime_format = $this->get_long_date_format(). ' [' . $this->get_long_time_format(). ']';
+
+				return $long_datetime_format;
+			    }
+
+			    function get_short_datetime_format() {
+				static $short_datetime_format = false;
+
+				if (!$short_datetime_format)
+				    $short_datetime_format = $this->get_short_date_format(). ' [' . $this->get_short_time_format(). ']';
+
+				return $short_datetime_format;
+			    }
+
+			    function server_time_to_site_time($timestamp, $user = false) {
+				$date = new Date($timestamp);
+
+				$date->setTZbyID($this->get_server_timezone());
+				$date->convertTZbyID($this->get_display_timezone($user));
+				return $date->getTime();
+			    }
+
+			    /**
+
+			     */
+			    function get_site_date($timestamp, $user = false) {
+				static $localed = false;
+
+				if (!$localed) {
+				    $this->set_locale($user);
+
+				    $localed = true;
+				}
+
+				$original_tz = date('T', $timestamp);
+
+				$format = '%b %e, %Y';
+				$rv = strftime($format, $timestamp);
+				$rv .= " =timestamp\n";
+				$rv .= strftime('%Z', $timestamp);
+				$rv .= " =strftime('%Z')\n";
+				$rv .= date('T', $timestamp);
+				$rv .= " =date('T')\n";
+
+				$date = &new Date($timestamp);
 
 # Calling new Date() changes the timezone of the $timestamp var!
 # so we only change the timezone to UTC if the original TZ wasn't UTC
 # to begin with.
 # This seems really buggy, but I don't have time to delve into right now.
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
-
-			    $rv .= $date->format($format);
-			    $rv .= " =new Date()\n";
-
-			    $rv .= date('T', $timestamp);
-			    $rv .= " =date('T')\n";
-
-			    if ($original_tz == 'UTC') {
-				$date->setTZbyID('UTC');
+				$rv .= date('T', $timestamp);
+				$rv .= " =date('T')\n";
 
 				$rv .= $date->format($format);
-				$rv .= " =setTZbyID('UTC')\n";
-			    }
+				$rv .= " =new Date()\n";
 
-			    $tz_id = $this->get_display_timezone($user);
+				$rv .= date('T', $timestamp);
+				$rv .= " =date('T')\n";
 
-			    if ($date->tz->getID() != $tz_id) {
+				if ($original_tz == 'UTC') {
+				    $date->setTZbyID('UTC');
+
+				    $rv .= $date->format($format);
+				    $rv .= " =setTZbyID('UTC')\n";
+				}
+
+				$tz_id = $this->get_display_timezone($user);
+
+				if ($date->tz->getID() != $tz_id) {
 # let's convert to the displayed timezone
-				$date->convertTZbyID($tz_id);
+				    $date->convertTZbyID($tz_id);
 
-				$rv .= $date->format($format);
-				$rv .= " =convertTZbyID($tz_id)\n";
-			    }
+				    $rv .= $date->format($format);
+				    $rv .= " =convertTZbyID($tz_id)\n";
+				}
 
 #return $rv;
 
 # if ($format == "%b %e, %Y")
 #   $format = $tikilib->get_short_date_format();
-			    return $date;
-			}
+				return $date;
+			    }
 
 # TODO rename to server_time_to_site_time()
-			function get_site_time($timestamp, $user = false) {
+			    function get_site_time($timestamp, $user = false) {
 #print "<pre>get_site_time()</pre>";
-			    $date = $this->get_site_date($timestamp, $user);
+				$date = $this->get_site_date($timestamp, $user);
 
-			    return $date->getTime();
-			}
+				return $date->getTime();
+			    }
 
-			function date_format($format, $timestamp, $user = false) {
-			    //$date = $this->get_site_date($timestamp, $user);
-			    // JJ - ignore conversion - we have no idea what TZ they're using
+			    function date_format($format, $timestamp, $user = false) {
+				//$date = $this->get_site_date($timestamp, $user);
+				// JJ - ignore conversion - we have no idea what TZ they're using
 
-			    // strftime doesn't do translations correctly
-			    // return strftime($format,$timestamp);
-			    $date = new Date($timestamp);
+				// strftime doesn't do translations correctly
+				// return strftime($format,$timestamp);
+				$date = new Date($timestamp);
 
-			    return $date->format($format);
-			}
+				return $date->format($format);
+			    }
 
-			function get_long_date($timestamp, $user = false) {
-			    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
-			}
+			    function get_long_date($timestamp, $user = false) {
+				return $this->date_format($this->get_long_date_format(), $timestamp, $user);
+			    }
 
-			function get_short_date($timestamp, $user = false) {
-			    return $this->date_format($this->get_short_date_format(), $timestamp, $user);
-			}
+			    function get_short_date($timestamp, $user = false) {
+				return $this->date_format($this->get_short_date_format(), $timestamp, $user);
+			    }
 
-			function get_long_time($timestamp, $user = false) {
-			    return $this->date_format($this->get_long_time_format(), $timestamp, $user);
-			}
+			    function get_long_time($timestamp, $user = false) {
+				return $this->date_format($this->get_long_time_format(), $timestamp, $user);
+			    }
 
-			function get_short_time($timestamp, $user = false) {
-			    return $this->date_format($this->get_short_time_format(), $timestamp, $user);
-			}
+			    function get_short_time($timestamp, $user = false) {
+				return $this->date_format($this->get_short_time_format(), $timestamp, $user);
+			    }
 
-			function get_long_datetime($timestamp, $user = false) {
-			    return $this->date_format($this->get_long_datetime_format(), $timestamp, $user);
-			}
+			    function get_long_datetime($timestamp, $user = false) {
+				return $this->date_format($this->get_long_datetime_format(), $timestamp, $user);
+			    }
 
-			function get_short_datetime($timestamp, $user = false) {
-			    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
-			}
+			    function get_short_datetime($timestamp, $user = false) {
+				return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
+			    }
 
-			function get_site_timezone_shortname($user = false) {
-			    // UTC, or blank for local
-			    $dc = &$this->get_date_converter($user);
+			    function get_site_timezone_shortname($user = false) {
+				// UTC, or blank for local
+				$dc = &$this->get_date_converter($user);
 
-			    return $dc->getTzName();
-			}
+				return $dc->getTzName();
+			    }
 
-			function get_server_timezone_shortname($user = false) {
-			    // Site time is always UTC, from the user's perspective.
-			    return "UTC";
-			}
+			    function get_server_timezone_shortname($user = false) {
+				// Site time is always UTC, from the user's perspective.
+				return "UTC";
+			    }
 
-			/**
-			  get_site_time_difference - Return the number of seconds needed to add to a
-			  'system' time to return a 'site' time.
-			 */
-			function get_site_time_difference($user = false) {
-			    $dc = &$this->get_date_converter($user);
+			    /**
+			      get_site_time_difference - Return the number of seconds needed to add to a
+			      'system' time to return a 'site' time.
+			     */
+			    function get_site_time_difference($user = false) {
+				$dc = &$this->get_date_converter($user);
 
-			    $display_offset = $dc->display_offset;
-			    $server_offset = $dc->server_offset;
-			    return $display_offset - $server_offset;
-			}
+				$display_offset = $dc->display_offset;
+				$server_offset = $dc->server_offset;
+				return $display_offset - $server_offset;
+			    }
 
-			/**
-			  Timezone saavy replacement for mktime()
-			 */
-			function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-			    global $user; # ugh!
+			    /**
+			      Timezone saavy replacement for mktime()
+			     */
+			    function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
+				global $user; # ugh!
 
-				if ($year <= 69)
-				    $year += 2000;
+				    if ($year <= 69)
+					$year += 2000;
 
-			    if ($year <= 99)
-				$year += 1900;
+				if ($year <= 99)
+				    $year += 1900;
 
-			    $date = new Date();
-			    $date->setHour($hour);
-			    $date->setMinute($minute);
-			    $date->setSecond($second);
-			    $date->setMonth($month);
-			    $date->setDay($day);
-			    $date->setYear($year);
+				$date = new Date();
+				$date->setHour($hour);
+				$date->setMinute($minute);
+				$date->setSecond($second);
+				$date->setMonth($month);
+				$date->setDay($day);
+				$date->setYear($year);
 
 #$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
 #print "<pre> make_time() start";
 #print_r($date);
-			    if ($timezone_id)
-				$date->setTZbyID($timezone_id);
+				if ($timezone_id)
+				    $date->setTZbyID($timezone_id);
 
 #print_r($date);
 #$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
 #print $rv;
-			    return $date->getTime();
-			}
+				return $date->getTime();
+			    }
 
-			/**
-			  Timezone saavy replacement for mktime()
-			 */
-			function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-			    global $user; # ugh!
+			    /**
+			      Timezone saavy replacement for mktime()
+			     */
+			    function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
+				global $user; # ugh!
 
-				if ($year <= 69)
-				    $year += 2000;
+				    if ($year <= 69)
+					$year += 2000;
 
-			    if ($year <= 99)
-				$year += 1900;
+				if ($year <= 99)
+				    $year += 1900;
 
-			    $date = new Date();
-			    $date->setHour($hour);
-			    $date->setMinute($minute);
-			    $date->setSecond($second);
-			    $date->setMonth($month);
-			    $date->setDay($day);
-			    $date->setYear($year);
+				$date = new Date();
+				$date->setHour($hour);
+				$date->setMinute($minute);
+				$date->setSecond($second);
+				$date->setMonth($month);
+				$date->setDay($day);
+				$date->setYear($year);
 
 #print "<pre> make_server_time() start\n";
 #print_r($date);
-			    if ($timezone_id)
-				$date->setTZbyID($timezone_id);
+				if ($timezone_id)
+				    $date->setTZbyID($timezone_id);
 
 #print_r($date);
-			    $date->convertTZbyID($this->get_server_timezone());
+				$date->convertTZbyID($this->get_server_timezone());
 #print_r($date);
 #print "make_server_time() end\n</pre>";
-			    return $date->getTime();
-			}
+				return $date->getTime();
+			    }
 
-			/**
-			  Per http://www.w3.org/TR/NOTE-datetime
-			 */
-			function get_iso8601_datetime($timestamp, $user = false) {
-			    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
-			}
+			    /**
+			      Per http://www.w3.org/TR/NOTE-datetime
+			     */
+			    function get_iso8601_datetime($timestamp, $user = false) {
+				return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
+			    }
 
-			function get_rfc2822_datetime($timestamp = false, $user = false) {
-			    if (!$timestamp)
-				$timestamp = time();
+			    function get_rfc2822_datetime($timestamp = false, $user = false) {
+				if (!$timestamp)
+				    $timestamp = time();
 
 # rfc2822 requires dates to be en formatted
-			    $saved_locale = @setlocale(0);
-			    @setlocale ('en_US');
+				$saved_locale = @setlocale(0);
+				@setlocale ('en_US');
 #was return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
-			    $rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
+				$rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
 
 # switch back to the 'saved' locale
-			    if ($saved_locale)
-				@setlocale ($saved_locale);
+				if ($saved_locale)
+				    @setlocale ($saved_locale);
 
-			    return $rv;
-			}
-
-			function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
-			    if ($time === false)
-				$time = time();
-
-			    $secs = $this->date_format('%Z', $time, $user);
-
-			    if ($secs < 0) {
-				$sign = '-';
-
-				$secs = -$secs;
-			    } else {
-				$sign = '+';
+				return $rv;
 			    }
 
-			    $colon = $no_colon ? '' : ':';
-			    $mins = intval(($secs + 30) / 60);
+			    function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
+				if ($time === false)
+				    $time = time();
 
-			    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
-			}
+				$secs = $this->date_format('%Z', $time, $user);
 
-			function list_languages($path = false, $short=null) {
-			    $languages = array();
+				if ($secs < 0) {
+				    $sign = '-';
 
-			    if (!$path)
-				$path = "lang";
-
-			    if (!is_dir($path))
-				return array();
-
-			    $h = opendir($path);
-
-			    while ($file = readdir($h)) {
-				if ($file != '.' && $file != '..' && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
-				    $languages[] = $file;
+				    $secs = -$secs;
+				} else {
+				    $sign = '+';
 				}
+
+				$colon = $no_colon ? '' : ':';
+				$mins = intval(($secs + 30) / 60);
+
+				return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
 			    }
 
-			    closedir ($h);
+			    function list_languages($path = false, $short=null) {
+				$languages = array();
 
-			    // Format and return the list
-			    return $this->format_language_list($languages, $short);
-			}
+				if (!$path)
+				    $path = "lang";
 
-			function list_styles() {
-			    global $tikidomain;
+				if (!is_dir($path))
+				    return array();
 
-			    $sty = array();
-			    $h = opendir("styles/");
-			    while ($file = readdir($h)) {
-				if (strstr($file, ".css") and substr($file,0,1) != '.') {
-				    $sty[$file] = 1;
+				$h = opendir($path);
+
+				while ($file = readdir($h)) {
+				    if ($file != '.' && $file != '..' && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
+					$languages[] = $file;
+				    }
 				}
-			    }
-			    closedir($h);
 
-			    /* What is this $tikidomain section?
-			     * Some files that call this method used to list styles without considering
-			     * $tikidomain, now they do. They're listed below:
-                             *  
-                             *  tiki-theme_control.php
-                             *  tiki-theme_control_objects.php
-                             *  tiki-theme_control_sections.php
-                             *  tiki-my_tiki.php
-                             *  modules/mod-switch_theme.php
-                             *
-                             *  lfagundes
-			     */ 
-			    
-			    if ($tikidomain) {
-				$h = opendir("styles/$tikidomain");
+				closedir ($h);
+
+				// Format and return the list
+				return $this->format_language_list($languages, $short);
+			    }
+
+			    function list_styles() {
+				global $tikidomain;
+
+				$sty = array();
+				$h = opendir("styles/");
 				while ($file = readdir($h)) {
 				    if (strstr($file, ".css") and substr($file,0,1) != '.') {
-					$sty["$file"] = 1;
+					$sty[$file] = 1;
+				    }
+				}
+				closedir($h);
+
+				/* What is this $tikidomain section?
+				 * Some files that call this method used to list styles without considering
+				 * $tikidomain, now they do. They're listed below:
+				 *  
+				 *  tiki-theme_control.php
+				 *  tiki-theme_control_objects.php
+				 *  tiki-theme_control_sections.php
+				 *  tiki-my_tiki.php
+				 *  modules/mod-switch_theme.php
+				 *
+				 *  lfagundes
+				 */ 
+
+				if ($tikidomain) {
+				    $h = opendir("styles/$tikidomain");
+				    while ($file = readdir($h)) {
+					if (strstr($file, ".css") and substr($file,0,1) != '.') {
+					    $sty["$file"] = 1;
+					} 
 				    } 
-				} 
-				closedir($h);				
+				    closedir($h);				
+				}
+
+
+				$styles = array_keys($sty);
+				sort($styles);
+				return $styles;
 			    }
 
+			    // Comparison function used to sort languages by their name in the
+			    // current locale.
+			    function formatted_language_compare($a, $b) {
+				return strcmp($a['name'], $b['name']);
+			    }
+			    // Returns a list of languages formatted as a twodimensionel array
+			    // with 'value' being the language code and 'name' being the name of
+			    // the language.
+			    // if $short is 'y' returns only the localized language names array
+			    function format_language_list($languages, $short=null) {
+				// The list of available languages so far with both English and
+				// translated names.
+				global $langmapping;
+				include_once("lang/langmapping.php");
+				$formatted = array();
 
-			    $styles = array_keys($sty);
-			    sort($styles);
-			    return $styles;
-			}
-
-			// Comparison function used to sort languages by their name in the
-			// current locale.
-			function formatted_language_compare($a, $b) {
-			    return strcmp($a['name'], $b['name']);
-			}
-			// Returns a list of languages formatted as a twodimensionel array
-			// with 'value' being the language code and 'name' being the name of
-			// the language.
-			// if $short is 'y' returns only the localized language names array
-			function format_language_list($languages, $short=null) {
-			    // The list of available languages so far with both English and
-			    // translated names.
-			    global $langmapping;
-			    include_once("lang/langmapping.php");
-			    $formatted = array();
-
-			    // run through all the language codes:
+				// run through all the language codes:
 				if (isset($short) && $short == "y") {
-					foreach ($languages as $lc) {
-						if (isset($langmapping[$lc]))
-							$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
-						else
-							$formatted[] = array('value' => $lc, 'name' => $lc);
-					}
-					return $formatted;
+				    foreach ($languages as $lc) {
+					if (isset($langmapping[$lc]))
+					    $formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
+					else
+					    $formatted[] = array('value' => $lc, 'name' => $lc);
+				    }
+				    return $formatted;
 				}
-			    foreach ($languages as $lc) {
-				if (isset($langmapping[$lc])) {
-				    // known language
-				    if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
-					// Skip repeated text, 'English (English, en)' looks silly.
-					$formatted[] = array(
-						'value' => $lc,
-						'name' => $langmapping[$lc][0] . " ($lc)"
-						);
-				    } else {
-					$formatted[] = array(
-						'value' => $lc,
-						'name' => $langmapping[$lc][1] . ' (' . $langmapping[$lc][0] . ', ' . $lc . ')'
-						    );
-						}
-						} else {
-						// unknown language
-						$formatted[] = array(
+				foreach ($languages as $lc) {
+				    if (isset($langmapping[$lc])) {
+					// known language
+					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
+					    // Skip repeated text, 'English (English, en)' looks silly.
+					    $formatted[] = array(
 						    'value' => $lc,
-						    'name' => tra("Unknown language"). " ($lc)"
+						    'name' => $langmapping[$lc][0] . " ($lc)"
 						    );
-						}
-						}
+					} else {
+					    $formatted[] = array(
+						    'value' => $lc,
+						    'name' => $langmapping[$lc][1] . ' (' . $langmapping[$lc][0] . ', ' . $lc . ')'
+							);
+						    }
+						    } else {
+						    // unknown language
+						    $formatted[] = array(
+							'value' => $lc,
+							'name' => tra("Unknown language"). " ($lc)"
+							);
+						    }
+						    }
 
-						// Sort the languages by their name in the current locale
-						usort($formatted, array('TikiLib', 'formatted_language_compare'));
-						return $formatted;
-						}
+						    // Sort the languages by their name in the current locale
+						    usort($formatted, array('TikiLib', 'formatted_language_compare'));
+						    return $formatted;
+						    }
 
-						function get_language($user = false) {
-						static $language = false;
+						    function get_language($user = false) {
+						    static $language = false;
 
-						if (!$language) {
-						    if ($user) {
-							$language = $this->get_user_preference($user, 'language', 'en');
+						    if (!$language) {
+							if ($user) {
+							    $language = $this->get_user_preference($user, 'language', 'en');
 
-							if (!$language || $language == 'default')
+							    if (!$language || $language == 'default')
+								$language = $this->get_preference('language', 'en');
+							} else
 							    $language = $this->get_preference('language', 'en');
-						    } else
-							$language = $this->get_preference('language', 'en');
-						}
-						return $language;
-						}
+						    }
+						    return $language;
+						    }
 
-						function get_locale($user = false) {
+						    function get_locale($user = false) {
 # TODO move to admin preferences screen
-						    static $locales = array(
-							    'cs' => 'cs_CZ',
-							    'de' => 'de_DE',
-							    'dk' => 'da_DK',
-							    'en' => 'en_US',
-							    'fr' => 'fr_FR',
-							    'he' => 'he_IL', # hebrew
-							    'it' => 'it_IT', # italian
-							    'pl' => 'pl_PL', # polish
-							    'po' => 'po',
-							    'ru' => 'ru_RU',
-							    'es' => 'es_ES',
-							    'sw' => 'sw_SW', # swahili
-							    'tw' => 'tw_TW',
-							    );
+							static $locales = array(
+								'cs' => 'cs_CZ',
+								'de' => 'de_DE',
+								'dk' => 'da_DK',
+								'en' => 'en_US',
+								'fr' => 'fr_FR',
+								'he' => 'he_IL', # hebrew
+								'it' => 'it_IT', # italian
+								'pl' => 'pl_PL', # polish
+								'po' => 'po',
+								'ru' => 'ru_RU',
+								'es' => 'es_ES',
+								'sw' => 'sw_SW', # swahili
+								'tw' => 'tw_TW',
+								);
 
-						    if (!isset($locale) or !$locale) {
-							$locale = '';
-							if (isset($locales[$this->get_language($user)]))
-							    $locale = $locales[$this->get_language($user)];
+							if (!isset($locale) or !$locale) {
+							    $locale = '';
+							    if (isset($locales[$this->get_language($user)]))
+								$locale = $locales[$this->get_language($user)];
 #print "<pre>get_locale(): locale=$locale\n</pre>";
+							}
+
+							return $locale;
 						    }
 
-						    return $locale;
-						}
+						    function set_locale($user = false) {
+							static $locale = false;
 
-						function set_locale($user = false) {
-						    static $locale = false;
-
-						    if (!$locale) {
+							if (!$locale) {
 # breaks the RFC 2822 code
-							$locale = @setlocale(LC_TIME, $this->get_locale($user));
+							    $locale = @setlocale(LC_TIME, $this->get_locale($user));
 #print "<pre>set_locale(): locale=$locale\n</pre>";
+							}
+
+							return $locale;
 						    }
 
-						    return $locale;
-						}
-
-						function read_raw($text) {
-						    $file = split("\n",$text);
-						    foreach ($file as $line) {
-							$r = $s = '';
-							if (substr($line,0,1) != "#") {
-							    if (ereg("^\[([A-Z]+)\]",$line,$r)) {
-								$var = strtolower($r[1]);
-							    }
-							    if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
-								$back[$var][trim($s[1])] = trim($s[2]);
+						    function read_raw($text) {
+							$file = split("\n",$text);
+							foreach ($file as $line) {
+							    $r = $s = '';
+							    if (substr($line,0,1) != "#") {
+								if (ereg("^\[([A-Z]+)\]",$line,$r)) {
+								    $var = strtolower($r[1]);
+								}
+								if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+								    $back[$var][trim($s[1])] = trim($s[2]);
+								}
 							    }
 							}
+							return $back;
 						    }
-						    return $back;
-						}
 
-} 
+    } 
 
-// end of class ------------------------------------------------------
+    // end of class ------------------------------------------------------
 
-function compare_links($ar1, $ar2) {
-    return $ar1["links"] - $ar2["links"];
-}
+    function compare_links($ar1, $ar2) {
+	return $ar1["links"] - $ar2["links"];
+    }
 
-function compare_backlinks($ar1, $ar2) {
-    return $ar1["backlinks"] - $ar2["backlinks"];
-}
+    function compare_backlinks($ar1, $ar2) {
+	return $ar1["backlinks"] - $ar2["backlinks"];
+    }
 
-function r_compare_links($ar1, $ar2) {
-    return $ar2["links"] - $ar1["links"];
-}
+    function r_compare_links($ar1, $ar2) {
+	return $ar2["links"] - $ar1["links"];
+    }
 
-function r_compare_backlinks($ar1, $ar2) {
-    return $ar2["backlinks"] - $ar1["backlinks"];
-}
+    function r_compare_backlinks($ar1, $ar2) {
+	return $ar2["backlinks"] - $ar1["backlinks"];
+    }
 
-function compare_images($ar1, $ar2) {
-    return $ar1["images"] - $ar2["images"];
-}
+    function compare_images($ar1, $ar2) {
+	return $ar1["images"] - $ar2["images"];
+    }
 
-function r_compare_images($ar1, $ar2) {
-    return $ar2["images"] - $ar1["images"];
-}
+    function r_compare_images($ar1, $ar2) {
+	return $ar2["images"] - $ar1["images"];
+    }
 
-function compare_files($ar1, $ar2) {
-    return $ar1["files"] - $ar2["files"];
-}
+    function compare_files($ar1, $ar2) {
+	return $ar1["files"] - $ar2["files"];
+    }
 
-function r_compare_files($ar1, $ar2) {
-    return $ar2["files"] - $ar1["files"];
-}
+    function r_compare_files($ar1, $ar2) {
+	return $ar2["files"] - $ar1["files"];
+    }
 
-function compare_versions($ar1, $ar2) {
-    return $ar1["versions"] - $ar2["versions"];
-}
+    function compare_versions($ar1, $ar2) {
+	return $ar1["versions"] - $ar2["versions"];
+    }
 
-function r_compare_versions($ar1, $ar2) {
-    return $ar2["versions"] - $ar1["versions"];
-}
+    function r_compare_versions($ar1, $ar2) {
+	return $ar2["versions"] - $ar1["versions"];
+    }
 
-function compare_changed($ar1, $ar2) {
-    return $ar1["lastChanged"] - $ar2["lastChanged"];
-}
+    function compare_changed($ar1, $ar2) {
+	return $ar1["lastChanged"] - $ar2["lastChanged"];
+    }
 
-function r_compare_changed($ar1, $ar2) {
-    return $ar2["lastChanged"] - $ar1["lastChanged"];
-}
+    function r_compare_changed($ar1, $ar2) {
+	return $ar2["lastChanged"] - $ar1["lastChanged"];
+    }
 
-function chkgd2() {
-    if (!isset($_SESSION['havegd2'])) {
+    function chkgd2() {
+	if (!isset($_SESSION['havegd2'])) {
 #   TODO test this logic in PHP 4.3
 #   if (version_compare(phpversion(), "4.3.0") >= 0) {
 #  $_SESSION['havegd2'] = true;
@@ -5951,88 +5970,88 @@ function chkgd2() {
     $_SESSION['havegd2'] = preg_match('/GD Version.*2.0/', ob_get_contents());
     ob_end_clean();
 # }
-    }
-
-    return $_SESSION['havegd2'];
-}
-
-function httpScheme() {
-    return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
-}
-
-function httpPrefix() {
-    /*
-       if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
-       $rv = 'https://' . $_SERVER['HTTP_HOST'];
-
-       if ($_SERVER['SERVER_PORT'] != 443)
-       $rv .= ':' . $_SERVER['SERVER_PORT'];
-       } else {
-       $rv = 'http://' . $_SERVER['HTTP_HOST'];
-
-       if ($_SERVER['SERVER_PORT'] != 80)
-       $rv .= ':' . $_SERVER['SERVER_PORT'];
-       }
-
-       return $rv;
-     */
-    /* Warning by zaufi: as far as I saw in my apache 1.3.27
-     * there is no need to add port if it is non default --
-     * $_SERVER['HTTP_HOST'] already contain it ...
-     */
-    return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
-}
-
-function detect_browser_language() {
-
-    // Get supported languages
-    $supported = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']));
-
-    // Get available languages
-    $available = array();
-    $available_aprox = array();
-
-    $dh = opendir("lang");
-    while ($lang = readdir($dh)) {
-	if (file_exists("lang/$lang/language.php")) {
-	    $available[] = $lang;
-	    $available_aprox[substr($lang, 0, 2)] = $lang;
 	}
+
+	return $_SESSION['havegd2'];
     }
 
-    // Check better language
-    // First try an exact match, then an aproximate
-    $aproximate_lang = '';
-    foreach ($supported as $supported_lang) {
-	$lang = strtolower($supported_lang);
-       	if (in_array($lang, $available)) {
-	    return $lang;
-	} else {
-	    $lang = substr($lang, 0, 2);
-	    if (in_array($lang, array_keys($available_aprox))) {
-		$aproximate_lang = $available_aprox[$lang];
+    function httpScheme() {
+	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
+    }
+
+    function httpPrefix() {
+	/*
+	   if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
+	   $rv = 'https://' . $_SERVER['HTTP_HOST'];
+
+	   if ($_SERVER['SERVER_PORT'] != 443)
+	   $rv .= ':' . $_SERVER['SERVER_PORT'];
+	   } else {
+	   $rv = 'http://' . $_SERVER['HTTP_HOST'];
+
+	   if ($_SERVER['SERVER_PORT'] != 80)
+	   $rv .= ':' . $_SERVER['SERVER_PORT'];
+	   }
+
+	   return $rv;
+	 */
+	/* Warning by zaufi: as far as I saw in my apache 1.3.27
+	 * there is no need to add port if it is non default --
+	 * $_SERVER['HTTP_HOST'] already contain it ...
+	 */
+	return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
+    }
+
+    function detect_browser_language() {
+
+	// Get supported languages
+	$supported = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']));
+
+	// Get available languages
+	$available = array();
+	$available_aprox = array();
+
+	$dh = opendir("lang");
+	while ($lang = readdir($dh)) {
+	    if (file_exists("lang/$lang/language.php")) {
+		$available[] = $lang;
+		$available_aprox[substr($lang, 0, 2)] = $lang;
 	    }
 	}
-    }
 
-    return $aproximate_lang;
-}
-		
-		
-if (!function_exists('file_get_contents')) {
-    function file_get_contents($f) {
-	ob_start();
-
-	$retval = @readfile($f);
-
-	if (false !== $retval) { // no readfile error
-	    $retval = ob_get_contents();
+	// Check better language
+	// First try an exact match, then an aproximate
+	$aproximate_lang = '';
+	foreach ($supported as $supported_lang) {
+	    $lang = strtolower($supported_lang);
+	    if (in_array($lang, $available)) {
+		return $lang;
+	    } else {
+		$lang = substr($lang, 0, 2);
+		if (in_array($lang, array_keys($available_aprox))) {
+		    $aproximate_lang = $available_aprox[$lang];
+		}
+	    }
 	}
 
-	ob_end_clean();
-	return $retval;
+	return $aproximate_lang;
     }
 
-}
 
-?>
+    if (!function_exists('file_get_contents')) {
+	function file_get_contents($f) {
+	    ob_start();
+
+	    $retval = @readfile($f);
+
+	    if (false !== $retval) { // no readfile error
+		$retval = ob_get_contents();
+	    }
+
+	    ob_end_clean();
+	    return $retval;
+	}
+
+    }
+
+    ?>
