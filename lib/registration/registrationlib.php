@@ -36,8 +36,12 @@ class RegistrationLib extends TikiLib {
     // list function reference : http://www.php.net/manual/en/function.list.php
     // split function reference : http://www.php.net/manual/en/function.split.php
     list ( $Username, $Domain ) = split ("@",$Email);
-
-	if($system_os == 'windows') return $Return;
+	
+	if($system_os == 'windows') {
+		$Return[0]=true;
+		$Return[1]="The email appears to be correct."; 
+		Return $Return;
+	}
 
     // That MX(mail exchanger) record exists in domain check .
     // checkdnsrr function reference : http://www.php.net/manual/en/function.checkdnsrr.php

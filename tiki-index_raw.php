@@ -168,6 +168,6 @@ include_once('tiki-section_options.php');
 $smarty->assign('dblclickedit','y');
 //$smarty->assign('mid','tiki-show_page.tpl');
 //$smarty->assign('show_page_bar','y');
-$smarty->display("styles/$style_base/tiki-show_page_raw.tpl");
+$smarty->display("tiki-show_page_raw.tpl");
 
 ?>
