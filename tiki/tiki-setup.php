@@ -174,6 +174,8 @@ $feature_webmail = 'n';
 $smarty->assign('feature_webmail',$feature_webmail);
 $feature_obzip = 'n';
 $smarty->assign('feature_obzip',$feature_obzip);
+$direct_pagination = 'n';
+$smarty->assign('direct_pagination',$direct_pagination);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
