@@ -63,32 +63,35 @@ class ChartLib extends TikiLib {
   
   function generate_new_ranking($chartId)
   {
-    $maxPeriod = $this->get_last_period($chartId);
-    $newPeriod = $maxPeriod + 1;
     $now = date("U");
     $info = $this->get_chart($chartId);
-    // Now just loop the items table and get the topN
-    $topN=$info['topN'];
-    $query = "select * from tiki_chart_items order by average desc limit 0,$topN";
-    $result = $this->query($query);
-    $position=1;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $itemId = $res['itemId'];
-      if($maxPeriod) {
-        $lastPosition = $this->getOne("select position from tiki_charts_rankings where itemId=$itemId and chartId=$chartId and period=$maxPeriod");
-      } else {
-        $lastPosition = 0;
-      }
-      $rvotes = $res['votes'];
-      $raverage = $res['average'];
-      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period,timestamp,rvotes,raverage)
-      values($chartId,$itemId,$position,$lastPosition,$newPeriod,$now,$rvotes,$raverage)";
-      $this->query($query2);
-      $position++;
-    }
-
-    $query = "update tiki_charts set lastChart=$now where chartId=$chartId";
-    $this->query($query);
+	if($info['frequency']==0) $this->drop_rankings($chartId);
+	if($info['lastChart']+$info['frequency'] < $now) {
+	    $maxPeriod = $this->get_last_period($chartId);
+	    $newPeriod = $maxPeriod + 1;
+	    // Now just loop the items table and get the topN
+	    $topN=$info['topN'];
+	    $query = "select * from tiki_chart_items order by average desc limit 0,$topN";
+	    $result = $this->query($query);
+	    $position=1;
+	    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	      $itemId = $res['itemId'];
+	      if($maxPeriod) {
+	        $lastPosition = $this->getOne("select position from tiki_charts_rankings where itemId=$itemId and chartId=$chartId and period=$maxPeriod");
+	      } else {
+	        $lastPosition = 0;
+	      }
+	      $rvotes = $res['votes'];
+	      $raverage = $res['average'];
+	      $query2="insert into tiki_charts_rankings(chartId,itemId,position,lastPosition,period,timestamp,rvotes,raverage)
+	      values($chartId,$itemId,$position,$lastPosition,$newPeriod,$now,$rvotes,$raverage)";
+	      $this->query($query2);
+	      $position++;
+	    }
+	    $query = "update tiki_charts set lastChart=$now where chartId=$chartId";
+	    $this->query($query);
+	    $info = $this->get_chart($chartId);
+	}
   }
   
   function drop_rankings($chartId) {
@@ -122,9 +125,9 @@ class ChartLib extends TikiLib {
     return $ret;
   }
 
-  function max_dif($chartId)
+  function max_dif($chartId,$period)
   {
-    return $this->getOne("select max(lastPosition-position) from tiki_charts_rankings where chartId=$chartId ");
+    return $this->getOne("select max(lastPosition-position) from tiki_charts_rankings where chartId=$chartId and period=$period");
   }
   
   function purge_user_votes($chartId,$again)
