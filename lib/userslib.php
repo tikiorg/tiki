@@ -240,8 +240,10 @@ class UsersLib extends TikiDB {
 	$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
 	$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
 
-	// first attempt a login via the standard Tiki system
-	$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
+	// first attempt a login via the standard Tiki system, unless CAS auth is being used
+	if (!$auth_cas) {
+		$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
+	}
 
 	switch ($result) {
 	    case USER_VALID:
@@ -335,14 +337,19 @@ class UsersLib extends TikiDB {
 
 			break;
 		}
+		if ($this->user_exists($user)) {
+			$userTikiPresent = true;
+		} else {
+			$userTikiPresent = false;
+		}
 
     	// start off easy
 	    // if the user verified in Tiki and by CAS, log in
 	    if ($userCAS && $userTiki) {
 			return $this->update_lastlogin($user);
 	    }
-	    // if the user wasn't found in either system, just fail
-	    elseif (!$userTikiPresent && !$userCAS) {
+	    // if the user wasn't authenticated through CAS, just fail
+	    elseif (!$userCAS) {
 			return false;
 	    }
 	    // if the user was authenticated by CAS but not found in Tiki
