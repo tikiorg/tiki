@@ -999,8 +999,28 @@ class Comments extends TikiLib {
 	    $ret[] = $res;
 	}
 
+	for ($i = 0; $i < $retval["numReplies"]; $i++) {
+		$ret[$i]['replies'] =
+			$this->get_comment_replies($ret[$i]['threadId'],
+					$sort_mode, 0, $max, $threshold);
+	}
+
 	$retval["replies"] = $ret;
 	return $retval;
+    }
+
+    function flatten_comment_replies(&$replies, &$rep_flat, $level = 0)
+    {
+	$reps = $replies['numReplies'];
+	for ($i = 0; $i < $reps; $i++) {
+		$replies['replies'][$i]['level'] = $level;
+		$rep_flat[] = &$replies['replies'][$i];
+		if (isset($replies['replies'][$i]['replies'])) {
+			$this->flatten_comment_replies(
+					$replies['replies'][$i]['replies'],
+					$rep_flat, $level + 1);
+		}
+	}
     }
 
     function parse_smileys($data) {
@@ -1061,18 +1081,39 @@ class Comments extends TikiLib {
 	$this->time_control = $time;
     }
 
-    function get_comments($objectId, $parentId, $offset = 0, $maxRecords
-	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold = 0)
+    function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
+		    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0,
+		    $mode = 'thread')
     {
+	if (!in_array($mode, array('thread'))) {
+		return array('isEmpty' => 'y');
+	}
+
+	if ($mode == 'thread') {
+		$get_replies = true;
+	} else {
+		$get_replies = false;
+	}
 	$r1 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, true, true);
+			$sort_mode, $find, $threshold, true, $get_replies);
 	$r2 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, false, true);
+			$sort_mode, $find, $threshold, false, $get_replies);
 
 	$retval = array();
 	$retval["data"] = array_merge($r1["data"], $r2["data"]);
 	$retval["below"] = $r1["below"];
 	$retval["cant"] = $r1["cant"];
+
+	if ($mode == 'thread') {
+		$msgs = count($retval['data']);
+		for ($i = 0; $i < $msgs; $i++) {
+			$r = &$retval['data'][$i]['replies'];
+			$retval['data'][$i]['replies_flat'] = array();
+			$rf = &$retval['data'][$i]['replies_flat'];
+			$this->flatten_comment_replies($r, $rf);
+		}
+	}
+
 	return $retval;
     }
 
