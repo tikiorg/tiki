@@ -288,7 +288,7 @@ class FileGalLib extends TikiLib {
 	function get_file_info($id) {
 		$query = "select * from `tiki_files` where `fileId`=?";
 
-		$result = $this->query($queryi,array($id));
+		$result = $this->query($query,array($id));
 		$res = $result->fetchRow();
 		return $res;
 	}
