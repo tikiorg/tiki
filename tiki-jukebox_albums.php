@@ -28,8 +28,22 @@ if(isset($_REQUEST["find"])) {
 }
 
 $smarty->assign('find',$find);
-
 $smarty->assign('albumId',$_REQUEST["albumId"]);
+
+if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
+	$smarty->assign('edit_mode','y');
+	$smarty->assign('edited','y');
+	if($_REQUEST["albumId"]>0) {
+//		$info = $jukeboxlib->get_album_info($_REQUEST["albumId"]);
+
+//		$smarty->assign_by_ref('title',$info["title"]);
+//		$smarty->assign_by_ref('description',$info["description"]);
+
+//		$smarty->assign_by_ref('maxRows',$info["maxRows"]);
+//		$smarty->assign_by_ref('public',$info["public"]);
+	}
+}
+
 
 
 ask_ticket('jukebox-albums');

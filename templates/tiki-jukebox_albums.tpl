@@ -20,11 +20,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-<tr>
-        <td class="formcolor">{tr}Max description display size{/tr}</td>
-        <td class="formcolor"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
-</tr>
-<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Max tracks per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Other users can upload tracks to this album{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
