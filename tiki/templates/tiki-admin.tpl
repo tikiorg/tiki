@@ -281,7 +281,7 @@
 <tr><td class="form">{tr}HTTPS server name{/tr}:</td><td><input type="text" name="https_domain" value="{$https_domain}" /></td></tr>
 <tr><td class="form">{tr}HTTPS port{/tr}:</td><td><input type="text" name="https_port" size="5" value="{$https_port}" /></td></tr>
 <tr><td class="form">{tr}HTTPS URL prefix{/tr}:</td><td><input type="text" name="https_prefix" value="{$https_prefix}" /></td></tr>
-<tr><td class="form">{tr}Remember me feature{/tr}</td><td>
+<tr><td class="form">{tr}Remember me feature{/tr}:</td><td>
 <select name="rememberme">
 <option value="disabled" {if $rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
 <!--<option value="noadmin" {if $rememberme eq 'noadmin'}selected="selected"{/if}>{tr}Only for users{/tr}</option>-->
@@ -479,13 +479,13 @@
     <tr><td class="form">{tr}Cache wiki pages{/tr}:</td><td>
     <select name="wiki_cache">
     <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
-    <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 minute</option>
-    <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 minutes</option>
-    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 minute</option>
-    <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 minutes</option>
-    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 minute</option>
-    <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 hour</option>
-    <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 hours</option>
+    <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+    <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
+    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
+    <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
+    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
+    <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
+    <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
     </select> 
     </td></tr>
     <tr><td class="form">{tr}Footnotes{/tr}:</td><td><input type="checkbox" name="feature_wiki_footnotes" {if $feature_wiki_footnotes eq 'y'}checked="checked"{/if}/></td></tr>
@@ -577,7 +577,7 @@
     <option value="points_desc" {if $image_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="imagegalcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="imagegalcomprefs" value="{tr}Set prefs{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -1015,7 +1015,7 @@
 <div class="simplebox">
 <form action="tiki-admin.php" method="post">
 <table width="100%">
-<tr><td class="form">{tr}Allow viewing HTML mails?{/tr}:</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Allow viewing HTML mails{/tr}?</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Maximum size for each attachment{/tr}:</td><td><select name="webmail_max_attachment">
 <option value="500000" {if $webmail_max_attachment eq 500000}selected="selected"{/if}>500Kb</option>
 <option value="1000000" {if $webmail_max_attachment eq 1000000}selected="selected"{/if}>1Mb</option>
@@ -1023,7 +1023,7 @@
 <option value="2000000" {if $webmail_max_attachment eq 2000000}selected="selected"{/if}>2Mb</option>
 <option value="2500000" {if $webmail_max_attachment eq 2500000}selected="selected"{/if}>2.5Mb</option>
 <option value="3000000" {if $webmail_max_attachment eq 3000000}selected="selected"{/if}>3Mb</option>
-<option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>Unlimited</option>
+<option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>{tr}Unlimited{/tr}</option>
 </select></tr>
 <tr><td align="center" colspan="2"><input type="submit" name="webmail" value="{tr}Set prefs{/tr}" /></td></tr>    
 </table>
