@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.18 2004-05-05 00:23:29 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.19 2004-05-05 00:46:35 ggeller Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -571,7 +571,7 @@ class HomeworkLib extends TikiLib {
   function hw_page_create($user,$assignmentId) {
     $theDate = date("U");
     $ipAddr = $_SERVER["REMOTE_ADDR"];
-    $query = "INSERT INTO `hw_pages` (
+    $query = "INSERT INTO `tiki_hw_pages` (
                 `assignmentId`,
                 `studentName`,
                 `user`,

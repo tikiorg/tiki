@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.57 2004-05-05 00:31:29 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.58 2004-05-05 00:47:36 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -410,8 +410,8 @@ CREATE TABLE tiki_hw_grading_queue (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-rename table hw_history to tiki_hw_history;
-CREATE TABLE hw_pages_history (
+rename table hw_pages_history to tiki_hw_pages_history;
+CREATE TABLE tiki_hw_pages_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
   lastModif int(14) NOT NULL default '0',
