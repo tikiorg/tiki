@@ -97,8 +97,8 @@ if (isset($_REQUEST["edit_mode"]) and ($_REQUEST['edit_mode'])) {
 	$smarty->assign('edited','y');
 	if ($_REQUEST['fileId']>0) {
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
-		$smarty->assign('fileId',$fileId);
-		$smarty->assign('galleryId',$galleryId);
+		$smarty->assign('fileId',$_REQUEST['fileId']);
+		$smarty->assign('galleryId',$_REQUEST['galleryId']);
 		$smarty->assign_by_ref('fname',$info['name']);
 		$smarty->assign_by_ref('fdescription',$info['description']);
 	}
