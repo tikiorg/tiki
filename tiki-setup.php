@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.141 2003-09-18 20:55:24 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.142 2003-09-21 18:26:06 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -940,7 +940,9 @@ if ($wiki_page_regex == 'strict') {
 } elseif ($wiki_page_regex == 'full') {
     $page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
 } else {
-    $page_regex = '([A-Za-z0-9_\'\.\"]|[\x80-\xFF])([: A-Za-z0-9_\-\'\.\"]|[\x80-\xFF])*([A-Za-z0-9_\'\.\"]|[\x80-\xFF])';
+    // This is just evil.  The middle section means "anything, as long
+    // as it's not a | and isn't followed by ))".  -rlpowell
+    $page_regex = '([^|\(\)])([^|](?!\)\)))*?([^|\(\)])';
 }
 
 // PEAR::Auth support
