@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.21 2003-12-30 01:06:39 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.22 2004-01-10 02:05:09 damosoft Exp $
 
 # Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,9 +118,13 @@ chown -R $AUSER $DIRS
 
 if [ -n "$AGROUP" ]; then
 	chgrp -R $AGROUP $DIRS
+        chgrp $AGROUP robots.txt
 fi
 
 chmod -R $RIGHTS $DIRS
+
+chown $AUSER robots.txt
+chmod $RIGHTS robots.txt
 
 exit 0
 
