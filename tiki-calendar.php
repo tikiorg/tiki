@@ -1,8 +1,10 @@
 <?php
 require_once('tiki-setup.php');
 include_once('lib/userslib.php');
+include_once('lib/class_calendar.php');
 include_once('lib/calendar/calendarlib.php');
 
+$cal = new Calendar('en');
 $usercals = $calendarlib->list_user_calIds();
 
 if($feature_calendar != 'y') {
@@ -32,7 +34,7 @@ if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
 }
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = '';
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = 'week';
 
 $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
@@ -171,6 +173,7 @@ if(isset($_SESSION['CalendarFocusDate'])) {
 } else {
   list($focus_day,$focus_month,$focus_year) = array(date("d"),date("m"),date("Y"));
 }
+$z = date("z");
 
 $focus_date = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
 $focus_prevday = mktime(0,0,0,$focus_month,$focus_day-1,$focus_year);
@@ -186,31 +189,46 @@ $smarty->assign('monthbefore',$focus_prevmonth);
 $smarty->assign('dayafter',$focus_nextday);
 $smarty->assign('weekafter',$focus_nextweek);
 $smarty->assign('monthafter',$focus_nextmonth);
-$smarty->assign('day',$focus_day);
-$smarty->assign('month',$focus_month);
-$smarty->assign('year',$focus_year);
+$smarty->assign('focusmonth',$focus_month);
 $smarty->assign('focusdate',$focus_date);
 $smarty->assign('now',time());
 
-$currentweek = date("W",mktime(0,0,1,$focus_month,$focus_day,$focus_year));
-$weekdays = array(0,1,2,3,4,5,6);
+$weekdays = range(0,6);
+
+$d = 60*60*24;
+$currentweek = date("W",$focus_date + $d) - 1;
+$wd = date('w',$focus_date);
+#if ($wd == 0) $w = 7;
+#$wd--;
 
 // calculate timespan for sql query
 if ($_SESSION['CalendarViewMode'] == 'month') {
-	$firstweek = date("W",mktime(0,0,0,$focus_month,-5,$focus_year));
-	$lastweek = date("W",mktime(0,0,0,$focus_month+1,-7,$focus_year));
-	$viewstart = mktime(0,0,0,1,(7*$firstweek)-2,$focus_year);
-	$viewend = mktime(0,0,0,1,(7*$lastweek)+4,$focus_year);
-} elseif ($_SESSION['CalendarViewMode'] == 'week') { 
-	$viewstart = mktime(0,0,0,1,(7*$currentweek)-2,$focus_year);
-	$viewend = mktime(0,0,0,1,(7*$currentweek)+4,$focus_year);
+	$firstweek = date("W",mktime(0,0,0,$focus_month,2,$focus_year)) - 1;
+	$lastweek = date("W",mktime(0,0,0,$focus_month+1,1,$focus_year)) - 1;
+	if ($lastweek < $firstweek) {
+		$lastweek += 52;
+		$currentweek += 52;
+	}
+	$viewstart = mktime(0,0,0,1,(7*$firstweek) - 2,$focus_year);
+	$viewend = mktime(0,0,-1,1,(7*$lastweek + 1) + 6,$focus_year);
+	$numberofweeks = $lastweek - $firstweek;
+} elseif ($_SESSION['CalendarViewMode'] == 'week') {
+	$firstweek = $currentweek;
+	$lastweek = $currentweek;
+	$viewstart = $focus_date - ($wd * $d);
+	$viewend = $viewstart + ((7 * $d) - 1);
+	$numberofweeks = 0;
 } else {
-	$viewstart = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
-	$viewend = mktime(0,0,0,$focus_month,$focus_day+1,$focus_year);
+	$firstweek = $currentweek;
+	$lastweek = $currentweek;
+	$viewstart = $focus_date;
+	$viewend = $focus_date + ($d - 1);
 	$weekdays = array(date('w',$focus_date));
+	$numberofweeks = 0;
 }
-
-$firstweekday = mktime(0,0,0,0,7*$firstweek,0,$focus_year);
+$smarty->assign('viewstart',$viewstart);
+$smarty->assign('viewend',$viewend);
+$smarty->assign('numberofweeks',$numberofweeks);
 
 $daysnames = array("Sunday","Monday","Thursday","Wednesday","Tuesday","Friday","Saturday");
 $weeks = array();
@@ -218,7 +236,7 @@ $cell = array();
 
 $listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'],$user,$viewstart,$viewend,0,50,'name_desc','');
 $listtikievents = $calendarlib->list_tiki_items($_SESSION['CalendarViewTikiCals'],$user,$viewstart,$viewend,0,50,'name_desc','');
-for ($i=0;$i<=$lastweek-$firstweek;$i++) {
+for ($i=0;$i<=$numberofweeks;$i++) {
 	$wee = $firstweek + $i;
 	$weeks[] = $wee;
 	foreach ($weekdays as $w) {
@@ -245,13 +263,12 @@ for ($i=0;$i<=$lastweek-$firstweek;$i++) {
 }
 
 $smarty->assign('currentweek',$currentweek);
+$smarty->assign('firstweek',$firstweek);
+$smarty->assign('lastweek',$lastweek);
 $smarty->assign('weekdays',$weekdays);
 $smarty->assign('weeks',$weeks);
 $smarty->assign('daysnames',$daysnames);
 $smarty->assign('cell',$cell);
-$smarty->assign('cellweek',$cell[0]);
-
-
 
 $smarty->assign('mid','tiki-calendar.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

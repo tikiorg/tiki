@@ -1,5 +1,4 @@
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="lib/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+{popup_init src="lib/overlib.js"}
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <span class="mini"><a href="tiki-admin_calendars.php" class="link">{tr}admin{/tr}</a></span>
@@ -29,7 +28,7 @@
 {section name=lc loop=$listcals}
 <div> 
 <input type="checkbox" name="calIds[]" value="{$listcals[lc].calendarId}" id="cal{$listcals[lc].name}" {if $thiscal[lc]}checked="checked"{/if}/>
-<a href="#" onmouseover="return overlib('{$listcals[lc].description}');" onmouseout="return nd();" class="linkmenu">{$listcals[lc].name} ({$listcals[lc].groupname})</a>
+<a href="#" class="linkmenu" {popup text="$listcals[lc].description " hauto=1 vauto=1 background="decebe" sticky=1}>{$listcals[lc].name} ({$listcals[lc].groupname})</a>
 </div>
 {/section}
 </td>
@@ -150,9 +149,10 @@
 <a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}">{tr}month{/tr}</a>
 </div>
 </td></tr>
+
 {if $viewmode eq 'day'}
 
-{elseif $viewmode eq 'month'}
+{else}
 <tr><td></td>
 {section name=dn loop=$daysnames}
 <td class="heading">{$daysnames[dn]}</td>
@@ -162,7 +162,7 @@
 {section name=w loop=$cell}
 <tr><td width="20" class="heading">{$weeks[w]}</td>
 {section name=d loop=$weekdays}
-{if $cell[w][d].day|date_format:"%m" eq $month}
+{if $cell[w][d].day|date_format:"%m" eq $focusmonth}
 {cycle values="odd,even" print=false advance=false}
 {else}
 {cycle values="odddark" print=false advance=false}
@@ -178,42 +178,14 @@
 .<br/>
 </div>
 {section name=items loop=$cell[w][d].items}
-<div class="Cal{$cell[w][d].items[items].type}">
-<a href="{$cell[w][d].items[items].url}" onmouseover="return overlib('<b>{$cell[w][d].items[items].descriptionhead}</b><br>{$cell[w][d].items[items].descriptionbody}');" 
-onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."}</a><br/>
+<div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}">
+<a href="{$cell[w][d].items[items].url}" {popup text="<b>$cell[w][d].items[items].descriptionhead</b><br>$cell[w][d].items[items].descriptionbody"} 
+class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."}</a><br/>
 </div>
 {/section}
 </td>
 {/section}
 </tr>
-{/section}
-
-{else}
-<tr><td></td>
-{section name=dn loop=$daysnames}
-<td class="heading">{$daysnames[dn]}</td>
-{/section}
-</tr>
-<tr><td width="20" class="heading">{$currentweek}</td>
-{cycle values="odd,even" print=false}
-{section name=d loop=$weekdays}
-<td class="{cycle}">
-<div align="center" class="menu" style="font-size:7px;background-color:{if $cellweek[d].day eq $focusdate}#f3e498{else}none{/if};">
-<span style="float:left;">
-<a href="tiki-calendar.php?todate={$cellweek[d].day}" class="linkmenu" style="color:#666666;font-size:7px;">{$cellweek[d].day|date_format:"%d/%m"}</a>
-</span>
-<span style="float:right;margin-right:3px;">
-<a href="tiki-calendar.php?todate={$cell.currentweek[d].day}&editmode=add" class="linkmenu" style="color:#666666;font-size:7px;">{tr}+{/tr}</a>
-</span>
-.<br/>
-</div>
-{section name=items loop=$cell.currentweek[d].items}
-<div class="Cal{$cell.currentweek[d].items[items].type}">
-<a href="{$cell.currentweek[d].items[items].url}" onmouseover="return overlib('<b>{$cell.currentweek[d].items[items].descriptionhead}</b><br>{$cell[w][d].items[items].descriptionbody}');"
-onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."}</a><br/>
-</div>
-{/section}
-</td>
 {/section}
 </tr>
 {/if}
@@ -223,7 +195,7 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
 <input type="hidden" name="calitemId" value="{$calitemId}">
-<table class="normal">
+<table class="normal" style="width:100%">
 <tr><td class="formcolor">{tr}Calendrier{/tr}</td><td class="formcolor">
 <select name="calendarId">
 {section name=lc loop=$listcals}
