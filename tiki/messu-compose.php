@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.16 2004-01-30 08:30:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.17 2004-03-07 15:07:24 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,14 +95,13 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_to as $a_user) {
 		if (!empty($a_user)) {
 			if ($messulib->user_exists($a_user)) {
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y')) {
+				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					$users[] = $a_user;
 				} else {
-					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message .= "User $a_user can not receive messages<br />";
+					$message .= tra("User $a_user can not receive messages")."<br />";
 				}
 			} else {
-				$message .= "Invalid user: $a_user<br />";
+				$message .= tra("Invalid user: $a_user")."<br />";
 			}
 		}
 	}
@@ -110,14 +109,13 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_cc as $a_user) {
 		if (!empty($a_user)) {
 			if ($messulib->user_exists($a_user)) {
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y')) {
+				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					$users[] = $a_user;
 				} else {
-					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message .= "User $a_user can not receive messages<br />";
+					$message .= tra("User $a_user can not receive messages")."<br />";
 				}
 			} else {
-				$message .= "Invalid user: $a_user<br />";
+				$message .= tra("Invalid user: $a_user")."<br />";
 			}
 		}
 	}
@@ -125,14 +123,13 @@ if (isset($_REQUEST['send'])) {
 	foreach ($arr_bcc as $a_user) {
 		if (!empty($a_user)) {
 			if ($messulib->user_exists($a_user)) {
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y')) {
+				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y') == 'y') {
 					$users[] = $a_user;
 				} else {
-					// TODO: needs translation as soon as there is a solution for strings with embedded variables
-					$message .= "User $a_user can not receive messages<br />";
+					$message .= tra("User $a_user can not receive messages")."<br />";
 				}
 			} else {
-				$message .= "Invalid user: $a_user<br />";
+				$message .= tra("Invalid user: $a_user")."<br />";
 			}
 		}
 	}
@@ -143,7 +140,7 @@ if (isset($_REQUEST['send'])) {
 	if (count($users) > 0) {
 		$message .= tra("Message will be sent to: "). implode(',', $users). "<br />";
 	} else {
-		$message = tra('ERROR: No valid users to send the message');
+		$message .= tra('ERROR: No valid users to send the message');
 
 		$smarty->assign('message', $message);
 		$smarty->display("tiki.tpl");
