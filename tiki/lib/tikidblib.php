@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.9 2004-05-01 01:06:27 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.10 2004-05-05 13:20:35 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -132,12 +132,24 @@ function sql_error($query, $values, $result) {
 
     trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
     // only for debugging.
-    echo "Values: <br>";
-    print_r($values);
-    if($result===false) echo "<br>\$result is false";
-    if($result===null) echo "<br>\$result is null";
-    if(empty($result)) echo "<br>\$result is empty";
-    // end only for debugging
+    $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
+    $outp.= "<br /><table class='form'>";
+    $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
+		$outp.= "<tr class='formcolor'><td>File</td><td>".$_SERVER['SCRIPT_NAME']."</td></tr>";
+		$outp.= "<tr class='formcolor'><td>Url</td><td>".$_SERVER['REQUEST_URI']."</td></tr>";
+		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+		$outp.= "<tr class='formcolor'><td colspan='2'><tt>$query</tt></td></tr>";
+    $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
+    foreach ($values as $k=>$v) {
+      $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
+    }
+    $outp.= "</table>";
+    //if($result===false) echo "<br>\$result is false";
+    //if($result===null) echo "<br>\$result is null";
+    //if(empty($result)) echo "<br>\$result is empty";
+    require_once('tiki-setup.php');
+    $smarty->assign('msg',$outp);
+    $smarty->display("error.tpl");
     die;
 }
 
