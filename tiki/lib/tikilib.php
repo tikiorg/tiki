@@ -1008,13 +1008,9 @@ function add_wiki_attachment_hit($id) {
 
 /*shared*/
 function get_wiki_attachment($attId) {
-    $query = "select * from `tiki_wiki_attachments` where `attId`=$attId";
-
-    $result = $this->query($query);
-
-    if (!$result->numRows())
-	return false;
-
+    $query = "select * from `tiki_wiki_attachments` where `attId`=?";
+    $result = $this->query($query,array((int)$attId));
+    if (!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
 }
@@ -1022,26 +1018,27 @@ function get_wiki_attachment($attId) {
 /*shared*/
 function get_random_image($galleryId = -1) {
     $whgal = "";
-
+		$bindvars = array();
     if (((int)$galleryId) != -1) {
-	$whgal = " where `galleryId` = " . $galleryId;
+	$whgal = " where `galleryId`=? ";
+	$bindvars[] = (int) $galleryId;
     }
 
-    $query = "select count(*) from `tiki_images`" . $whgal;
-    $cant = $this->getOne($query);
+    $query = "select count(*) from `tiki_images` $whgal";
+    $cant = $this->getOne($query,$bindvars);
     $ret = array();
 
     if ($cant) {
 	$pick = rand(0, $cant - 1);
 
-	$query = "select `imageId` ,`galleryId`,`name` from `tiki_images`" . $whgal . " limit $pick,1";
-	$result = $this->query($query);
+	$query = "select `imageId` ,`galleryId`,`name` from `tiki_images` $whgal";
+	$result = $this->query($query,$bindvars,1,$pick);
 	$res = $result->fetchRow();
 	$ret["galleryId"] = $res["galleryId"];
 	$ret["imageId"] = $res["imageId"];
 	$ret["name"] = $res["name"];
-	$query = "select `name`  from `tiki_galleries` where `galleryId` = " . $res["galleryId"];
-	$ret["gallery"] = $this->getOne($query);
+	$query = "select `name`  from `tiki_galleries` where `galleryId` = ?";
+	$ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
     } else {
 	$ret["galleryId"] = 0;
 
@@ -1055,7 +1052,6 @@ function get_random_image($galleryId = -1) {
 /*shared*/
 function get_gallery($id) {
     $query = "select * from `tiki_galleries` where `galleryId`=?";
-
     $result = $this->query($query,array((int) $id));
     $res = $result->fetchRow();
     return $res;
@@ -1064,48 +1060,47 @@ function get_gallery($id) {
 // Last visit module ////
 /*shared*/
     function get_news_from_last_visit($user) {
-	if (!$user)
-	    return false;
+	if (!$user) return false;
 
-	$last = $this->getOne("select `lastLogin`  from `users_users` where `login`='$user'");
+	$last = $this->getOne("select `lastLogin`  from `users_users` where `login`=?",array($user));
 	$ret = array();
 
 	if (!$last) {
 	    $last = time();
 	}
-
 	$ret["lastVisit"] = $last;
-	$ret["images"] = $this->getOne("select count(*) from `tiki_images` where `created`>$last");
-	$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>$last");
-	$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>$last");
-	$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>$last");
-	$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>$last");
+	$ret["images"] = $this->getOne("select count(*) from `tiki_images` where `created`>?",array((int)$last));
+	$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last));
+	$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
+	$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
+	$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
 	return $ret;
     }
 
 // Templates ////
 /*shared*/
 function list_templates($section, $offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array($section);
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " and (content like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " and (`content` like ?)";
+	$bindvars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select `name` ,`created`,`tcts`.templateId from `tiki_content_templates` tct, tiki_content_templates_sections tcts where tcts.templateId=tct.templateId and section='$section' $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts where tcts.templateId=tct.templateId and `section`='$section' $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $query = "select `name` ,`created`,tcts.`templateId` from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
+		$query.= " where tcts.`templateId`=tct.`templateId` and `section`=? $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_content_templates` tct, `tiki_content_templates_sections` tcts ";
+		$query_cant.= "where tcts.`templateId`=tct.`templateId` and `section`=? $mid";
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
 
     while ($res = $result->fetchRow()) {
-	$query2 = "select `section`  from `tiki_content_templates_sections` where `templateId`=" . $res["templateId"];
+	$query2 = "select `section`  from `tiki_content_templates_sections` where `templateId`=?";
 
-	$result2 = $this->query($query2);
+	$result2 = $this->query($query2,array((int)$res["templateId"]));
 	$sections = array();
 
 	while ($res2 = $result2->fetchRow()) {
@@ -1124,13 +1119,9 @@ function list_templates($section, $offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function get_template($templateId) {
-    $query = "select * from `tiki_content_templates` where `templateId`=$templateId";
-
-    $result = $this->query($query);
-
-    if (!$result->numRows())
-	return false;
-
+    $query = "select * from `tiki_content_templates` where `templateId`=?";
+    $result = $this->query($query,array((int)$templateId));
+    if (!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
 }
@@ -1138,20 +1129,19 @@ function get_template($templateId) {
 
 /*shared*/
 function list_games($offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+	$bindvars = array();
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " where (`gameName` like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " where (`gameName` like ?)";
+	$bindvars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select * from `tiki_games` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_games` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_games` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
 
     while ($res = $result->fetchRow()) {
@@ -1169,14 +1159,12 @@ function list_games($offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function pick_cookie() {
-    $cant = $this->getOne("select count(*) from `tiki_cookies`");
-
-    if (!$cant)
-	return '';
+    $cant = $this->getOne("select count(*) from `tiki_cookies`",array());
+    if (!$cant) return '';
 
     $bid = rand(0, $cant - 1);
     //$cookie = $this->getOne("select `cookie`  from `tiki_cookies` limit $bid,1"); getOne seems not to work with limit
-    $result = $this->query("select `cookie`  from `tiki_cookies` limit $bid,1");
+    $result = $this->query("select `cookie`  from `tiki_cookies`",array(),1,$bid);
     if ($res = $result->fetchRow()) {
 	$cookie = str_replace("\n", "", $res['cookie']);
 	return '<i>"' . $cookie . '"</i>';
@@ -1189,8 +1177,7 @@ function pick_cookie() {
 /*shared*/
 function add_pageview() {
     $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-
-    $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array($dayzero));
+    $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
 
     if ($cant) {
 	$query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
@@ -1198,19 +1185,16 @@ function add_pageview() {
 	$query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
     }
 
-    $result = $this->query($query,array($dayzero));
+    $result = $this->query($query,array((int)$dayzero));
 }
 
 function get_pv_chart_data($days) {
     $now = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-
     $dfrom = 0;
+    if ($days != 0) $dfrom = $now - ($days * 24 * 60 * 60);
 
-    if ($days != 0)
-	$dfrom = $now - ($days * 24 * 60 * 60);
-
-    $query = "select `day` ,`pageviews` from `tiki_pageviews` where `day`<=$now and `day`>=$dfrom";
-    $result = $this->query($query);
+    $query = "select `day`, `pageviews` from `tiki_pageviews` where `day`<=? and `day`>=?";
+    $result = $this->query($query,array((int)$now,(int)$dfrom));
     $ret = array();
     $n = ceil($result->numRows() / 10);
     $i = 0;
@@ -1237,53 +1221,15 @@ function get_pv_chart_data($days) {
 
 function get_usage_chart_data() {
     $this->compute_quiz_stats();
-
-    $data = array();
-    $data[] = array(
-	    "wiki",
-	    $this->getOne("select sum(`hits`) from `tiki_pages`")
-	    );
-
-    $data[] = array(
-	    "img-g",
-	    $this->getOne("select sum(`hits`) from `tiki_galleries`")
-	    );
-
-    $data[] = array(
-	    "file-g",
-	    $this->getOne("select sum(`hits`) from `tiki_file_galleries`")
-	    );
-
-    $data[] = array(
-	    "faqs",
-	    $this->getOne("select sum(`hits`) from `tiki_faqs`")
-	    );
-
-    $data[] = array(
-	    "quizzes",
-	    $this->getOne("select sum(`timesTaken`) from `tiki_quiz_stats_sum`")
-	    );
-
-    $data[] = array(
-	    "arts",
-	    $this->getOne("select sum(`reads`) from `tiki_articles`")
-	    );
-
-    $data[] = array(
-	    "blogs",
-	    $this->getOne("select sum(`hits`) from `tiki_blogs`")
-	    );
-
-    $data[] = array(
-	    "forums",
-	    $this->getOne("select sum(`hits`) from `tiki_forums`")
-	    );
-
-    $data[] = array(
-	    "games",
-	    $this->getOne("select sum(`hits`) from `tiki_games`")
-	    );
-
+    $data[] = array( "wiki",   $this->getOne("select sum(`hits`) from `tiki_pages`",array()));
+    $data[] = array( "img-g",  $this->getOne("select sum(`hits`) from `tiki_galleries`",array()));
+    $data[] = array( "file-g", $this->getOne("select sum(`hits`) from `tiki_file_galleries`",array()));
+    $data[] = array( "faqs",   $this->getOne("select sum(`hits`) from `tiki_faqs`",array()));
+    $data[] = array( "quizzes",$this->getOne("select sum(`timesTaken`) from `tiki_quiz_stats_sum`",array()));
+    $data[] = array( "arts",   $this->getOne("select sum(`reads`) from `tiki_articles`",array()));
+    $data[] = array( "blogs",  $this->getOne("select sum(`hits`) from `tiki_blogs`",array()));
+    $data[] = array( "forums", $this->getOne("select sum(`hits`) from `tiki_forums`",array()));
+    $data[] = array( "games",  $this->getOne("select sum(`hits`) from `tiki_games`",array()));
     return $data;
 }
 
