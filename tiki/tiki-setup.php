@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.234 2004-06-11 05:02:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.235 2004-06-11 14:09:51 sylvieg Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -386,6 +386,7 @@ $feature_calendar = 'n';
 $feature_editcss = 'n';
 $feature_wiki_monosp = 'y';
 $feature_maps = 'n';
+$feature_antibot = 'n';
 $feature_modulecontrols = 'n';
 $smarty->assign('feature_modulecontrols', $feature_modulecontrols);
 $feature_phplayers = 'n';
