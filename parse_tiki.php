@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.4 2004-04-08 22:55:06 mose Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.5 2004-06-16 01:24:10 teedog Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
@@ -118,7 +118,8 @@ if (isset($_POST['action'])) {
 						$data = preg_replace ("/(?m)^\s*\#.*\$/",   "", $data); // shell comments
 						$data = preg_replace('/(\r|\n)/', '', $data); // all one line
 						preg_match_all('/\$_(REQUEST|POST|GET|COOKIE|SESSION)\[([^\]]*)\]/', $data, $requests); // requests uses
-						for ($i=0;$i<count($requests[0]);$i++) {
+						$max = count($requests[0]);
+						for ($i=0;$i<$max;$i++) {
 							echoline($fw,$fx,$requests[1][$i]." = ".$requests[2][$i],'sub var'); 
 						}
 					} elseif (preg_match ("/\.tpl$/", $file)) {
@@ -135,7 +136,8 @@ if (isset($_POST['action'])) {
 						echoline($fw,$fx,$f,'sub action'); 
 					}
 					preg_match_all('/<((input|textarea|select)[^>]*)>/', $data, $elements); // form elements uses
-					for ($i=0;$i<count($elements[0]);$i++) {
+					$max = count($elements[0]);
+					for ($i=0;$i<$max;$i++) {
 						echoline($fw,$fx,$elements[1][$i],'sub form'); 
 					}
 					echoline($fw,$fx,trim($params['atime']),'sub atime','d');
