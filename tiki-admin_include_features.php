@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.11 2003-12-01 12:37:32 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.12 2003-12-19 04:13:38 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,6 +43,7 @@ $features_toggles = array(
 	"feature_jscalendar",
 	"feature_left_column",
 	"feature_live_support",
+	"feature_mantis",
 	"feature_maps",
 	"feature_messages",
 	"feature_minical",
