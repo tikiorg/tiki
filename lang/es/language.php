@@ -631,7 +631,7 @@ $lang=Array(
 "sql query" => "consulta sql",
 "Displays the data using a monospace font" => "Muestra los datos usando fuente monoespaciada",
 "Displays the number of registered users" => "Muestra el número de usuarios registrados",
-"~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Inserta artículos en una página wiki",
+"~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Inserta artículos en una página wiki",
 "Include an article" => "Incluye un artículo",
 "List all pages which link to specific pages" => "Muestra todas las páginas que enlazan a páginas específicas",
 "Page cannot be found" => "La página no pudo ser encontrada",

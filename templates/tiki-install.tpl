@@ -201,33 +201,6 @@ or you override tnsnames.ora and put your SID here and fill your hostname:port a
     		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}" class="link">Go back and run another install/upgrade script</a> - do not use your Back button in your browser!<br /><br />
     	{/if}
 	{/if}
-	{if $pkg_available eq 'y'}
-		<p><p>
-		<form method="post" action="tiki-install.php">
-		{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
-		<h1>Tiki packages</h1>
-		<table>
-			<tr><td>
-				<select name="pkgs">
-					{section name=ix loop=$pkgs}
-						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
-					{/section}
-				</select>
-				<a href="{$helpurl}TikiApps" class="link">Descriptions of the available packages</a>
-			</td></tr>
-			<tr><td>
-				<input type="checkbox" name="runScript" />Run database script (may destroy data)
-			</td></tr>
-			<tr><td>
-				<input type="submit" name="install_pkg" value="install" />	    
-				<input type="submit" name="remove_pkg" value="remove" />	    
-			</td></tr>
-			<tr><td>
-				<p>
-			</td></tr>
-		</table>
-		</form><br/>
-	{/if}
 </div>
 
 {* multitiki ----------------------------- *}

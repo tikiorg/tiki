@@ -1282,6 +1282,14 @@ function get_included_groups($group) {
 		return true;
 	}
 
+	function get_permissions_types() {
+		$query = "select `type` from `users_permissions` group by `type`";
+		$result = $this->query($query,array());
+		$ret = array();
+		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
+		return $ret;									
+	}
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.15 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.16 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,15 @@ if ($tiki_p_admin_mailin != 'y' and $tiki_p_admin != 'y') {
 	die;
 }	
 
+function account_ok($pop, $user, $pass) {
+	include_once ("lib/webmail/pop3.php");
+	$pop3 = new POP3($pop, $user, $pass);
+  	$pop3->Open();
+	$err = $pop3->has_error;
+	$pop3->close();
+	return !$err;
+}
+
 // Add a new mail account for the user here  
 if (!isset($_REQUEST["accountId"]))
 	$_REQUEST["accountId"] = 0;
@@ -32,11 +41,15 @@ $smarty->assign('accountId', $_REQUEST["accountId"]);
 
 if (isset($_REQUEST["new_acc"])) {
 	check_ticket('admin-mailin');
-	$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
-		$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
-		$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"], $_REQUEST["discard_after"]);
+	if (!account_ok($_REQUEST["pop"], $_REQUEST["username"], $_REQUEST["pass"]))
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s incorrect"),$_REQUEST["account"]));
+	else {
+		$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
+			$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
+			$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"], $_REQUEST["discard_after"]);
 //	$_REQUEST["accountId"] = 0;
-	$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s saved"),$_REQUEST["account"]));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s saved"),$_REQUEST["account"]));
+	}
 } else {
 	$smarty->assign('confirmation', 0);
 }

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.9 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.10 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-include('lib/map/usermap.php');
+include_once ('lib/map/usermap.php');
 
 $map_error="";
 
@@ -37,10 +37,37 @@ if (isset($_REQUEST["mapuser"])) {
 		} else {
 			$tdo = "user";
 			if ($tikidomain) $tdo = "$tikidomain.user";
-		   $datastruct="Columns 2\n";
-	      $datastruct.="  user Char(20)\n";
+	      $datastruct="  user Char(20)\n";
   	      $datastruct.="  realName Char(100)\n";
-			makemap($tdo,$datastruct);
+  	      $datastruct.="  avatar Char(250)\n";
+  	      // Prepare the data
+  	      $query = "select * from `users_users`";
+			$result = $tikilib->query($query, array());
+			$i=0;
+			$data=array();
+			while ($res = $result->fetchRow()) {
+				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lat')";
+				$lat = $tikilib->getOne($query,array($res["login"]));
+				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lon')";
+				$lon = $tikilib->getOne($query,array($res["login"]));
+				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'realName')";
+				$realName = $tikilib->getOne($query,array($res["login"]));
+				if (!isset($realName)) {
+					$realName="";
+				}
+				$login=substr($res["login"],0,20);
+				$realName=substr($realName,0,100);
+				$image=$tikilib->get_user_avatar($res["login"]);
+				if (isset($lat) && isset($lon) && $lat && $lon) {
+					$data[$i][0]=$lat;
+					$data[$i][1]=$lon;
+					$data[$i][2]=$login;
+					$data[$i][3]=$realName;
+					$data[$i][4]=$image;
+					$i++;
+				}
+			}
+			makemap($tdo,$datastruct,$data,3);
 		}
 	} else {
 		$map_error=tra("No valid ogr2ogr executable");

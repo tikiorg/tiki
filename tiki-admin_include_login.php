@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.28 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.29 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("change_language", 'n');
     }
 
-    if (isset($_REQUEST["available_languages"])) {
+    if (isset($_REQUEST["change_language"]) && isset($_REQUEST["available_languages"])) {
 	$tikilib->set_preference("available_languages", serialize($_REQUEST["available_languages"]));
     } else {
 	$tikilib->set_preference("available_languages", serialize(array()));

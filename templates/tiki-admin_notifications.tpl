@@ -62,26 +62,16 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}emails_desc{/if}">{tr}email{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle print=false values="even,odd"}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].event}</td>
-<td class="odd">{$channels[user].object}</td>
-<td class="odd">{$channels[user].email}</td>
-<td class="odd">
+<tr class="{cycle}">
+<td>{$channels[user].event}</td>
+<td>{$channels[user].object}</td>
+<td>{$channels[user].email}</td>
+<td>
    <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].event}&amp;object={$channels[user].object}&amp;email={$channels[user].email}">{tr}remove{/tr}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].event}</td>
-<td class="even">{$channels[user].object}</td>
-<td class="even">{$channels[user].email}</td>
-<td class="even">
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].event}&amp;object={$channels[user].object}&amp;email={$channels[user].email}">{tr}remove{/tr}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br />

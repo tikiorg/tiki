@@ -434,7 +434,7 @@ $lang=Array(
 // "sql query" => "sql query",
 // "Displays the data using a monospace font" => "Displays the data using a monospace font",
 // "Displays the number of registered users" => "Displays the number of registered users",
-// "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage",
+// "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage",
 // "Include an article" => "Include an article",
 // "List all pages which link to specific pages" => "List all pages which link to specific pages",
 // "No pages links to" => "No pages links to",

@@ -7,7 +7,7 @@
 // topic=>topicId
 
 function wikiplugin_articles_help() {
-	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage");
+	return tra("~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage");
 }
 
 function wikiplugin_articles($data,$params) {

@@ -19,25 +19,16 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 		$sht_query = array();
 	}
 
-	// I don't think httpPrefix is needed here (Luis)
-	$shout_father =/*httpPrefix().*/ $setup_parsed_uri["path"];
+	$shout_father = $setup_parsed_uri["path"];
 
 	if (isset($sht_query) && count($sht_query) > 0) {
-		$sht_first = 1;
-
+		$sht = array();
 		foreach ($sht_query as $sht_name => $sht_val) {
-			if ($sht_first) {
-				$sht_first = false;
-
-				$shout_father .= '?' . $sht_name . '=' . $sht_val;
-			} else {
-				$shout_father .= '&amp;' . $sht_name . '=' . $sht_val;
-			}
+			$sht[] = $sht_name . '=' . $sht_val;
 		}
-
-		$shout_father .= '&amp;';
+		$shout_father.= "?".implode("&amp;",$sht)."&amp;";
 	} else {
-		$shout_father .= '?';
+		$shout_father.= "?";
 	}
 
 	global $smarty;
@@ -45,12 +36,16 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 
 	if ($tiki_p_admin_shoutbox == 'y') {
 		if (isset($_REQUEST["shout_remove"])) {
-			$area = 'delshoutboxentry';
-			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-				key_check($area);
-				$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
+			if ($feature_ticketlib2 =='y') {
+				$area = 'delshoutboxentry';
+				if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+					key_check($area);
+					$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
+				} else {
+					key_get($area);
+				}
 			} else {
-				key_get($area);
+				$shoutboxlib->remove_shoutbox($_REQUEST["shout_remove"]);
 			}
 		}
 	}

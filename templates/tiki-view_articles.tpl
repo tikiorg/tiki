@@ -122,6 +122,7 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 {/if}
 {/section}
 
+{if $cant_pages ne 0}
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -141,5 +142,6 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 {/if}
 </div>
 </div>
+{/if}
 
 

@@ -57,17 +57,21 @@
 {section name=ix loop=$listpages}
 <div class="blogpost">
 <div class="posthead">
+{if $use_title eq 'y'}
+	<h3>{$listpages[ix].title}</h3>
+{else}
+	<h3>{$listpages[ix].created|tiki_short_datetime}</h3>
+{/if}
 <table ><tr><td align="left">
 <span class="posthead">
 {if $use_title eq 'y'}
-	{$listpages[ix].title}<br />
 	<small> {tr}posted by{/tr} {$listpages[ix].user|userlink}  
 	{if $show_avatar eq 'y'}
        {$listpages[ix].avatar}
      {/if} 
 	 {tr}on{/tr} {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
-	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user} 
+  <small> {tr}posted by{/tr} {$listpages[ix].user} 
 	{if $show_avatar eq 'y'}
         {$listpages[ix].avatar}
     {/if}

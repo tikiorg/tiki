@@ -221,7 +221,10 @@ class WikiLib extends TikiLib {
 		    //$data=addslashes(str_replace($oldName,$newName,$info['data']));
 		    $data = $info['data'];
 		    $oldName = quotemeta( $oldName );
-		    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+ 		    if (strstr($newName, " "))
+		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
+		    else
+		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
 		    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    $this->query($query, array( $data,(int) strlen($data), $page));

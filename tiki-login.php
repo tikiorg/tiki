@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.41 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.42 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.41 2004-08-26 19:23:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.42 2004-09-28 12:59:13 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -115,7 +115,7 @@ if ($isvalid) {
 			$group = $userlib->get_user_default_group($user);
     			$groupHome = $userlib->get_group_home($group);
     			if ($groupHome) {
-                    $url = strpos($groupHome,'http://')==0 ? $groupHome : "tiki-index.php?page=".$groupHome;
+                    $url = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
     			}
 		}
 		//unset session variable in case user su's
