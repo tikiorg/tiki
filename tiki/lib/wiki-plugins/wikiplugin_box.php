@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.11 2004-07-01 22:54:18 telenieko Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.12 2004-08-20 07:14:16 chealer Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -28,9 +28,9 @@ function wikiplugin_box($data, $params) {
 	
 	extract ($params);
 	
-	$smarty->assign('plugin_box_align', $align ? $align : '');
-	$smarty->assign('plugin_box_width', $width ? $width : '');
-	$smarty->assign('plugin_box_bg',  $bg ? $bg : '');
+	if (isset($align)) $smarty->assign('plugin_box_align', $align ? $align : '');
+	if (isset($width)) $smarty->assign('plugin_box_width', $width ? $width : '');
+	if (isset($bg)) $smarty->assign('plugin_box_bg',  $bg ? $bg : '');
 	
 	$smarty->assign('plugin_box_title', $title);
 	
