@@ -1179,8 +1179,7 @@ class Comments extends TikiLib {
 	    $bind_mid=array($object[0], $object[1], $parentId, 's', $threshold);
 	}
 
-	$query = "select * from `tiki_comments` $mid $time_cond
-		order by".$this->convert_sortmode($sort_mode).",`threadId`";
+	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
 	//print("$query<br/>");
 	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
 	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
