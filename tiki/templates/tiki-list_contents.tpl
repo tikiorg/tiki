@@ -49,7 +49,7 @@
 <td class="heading"><a class="tableheading" href="tiki-list_contents.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Desc{/tr}</a></td>
 <td class="heading">{tr}Current ver{/tr}</td>
 <td class="heading">{tr}Next ver{/tr}</td>
-<td class="heading">{tr}Versions{/tr}</td>
+<td class="heading">{tr}Future vers{/tr}</td>
 <td class="heading">{tr}Old vers{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>

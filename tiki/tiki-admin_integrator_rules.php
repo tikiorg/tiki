@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.21 2004-03-31 07:38:41 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.22 2004-09-08 19:51:49 mose Exp $
  *
  * Admin interface for rules management
  *
@@ -161,7 +161,7 @@ if (isset($_REQUEST["action"]))
     case 'rm':
         if ($ruleID != 0) {
 					$area = "delintegratorrule";
-					if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+					if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 						key_check($area);
 						$integrator->remove_rule($ruleID);
 					} else {

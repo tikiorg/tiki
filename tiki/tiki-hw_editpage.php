@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.5 2004-03-19 18:09:59 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.6 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -127,7 +127,7 @@ $_REQUEST["comment"] = '';
 include_once("textareasize.php");
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 ask_ticket('edit-page');
 

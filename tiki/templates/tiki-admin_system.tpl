@@ -25,6 +25,7 @@
 <td>({$tempcache.cant} {tr}files{/tr} / {$tempcache.total|kbsize})</td>
 </tr>
 </table>
+{if count($templates)}
 <br />
 <table class="normal">
 <tr><td colspan="3" class="heading">{tr}Templates compiler{/tr}</td></tr>
@@ -36,4 +37,4 @@
 </tr>
 {/foreach}
 </table>
-
+{/if}

@@ -1,4 +1,11 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 ini_set( 'include_path', ini_get( 'include_path' ) . ":lib/sheet" );
 
 // Nice dependencies, mostly for excel support. Don't try changing the order.

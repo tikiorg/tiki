@@ -1,5 +1,12 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.8 2004-08-27 21:04:17 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.9 2004-09-08 19:52:27 mose Exp $
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 
 function diff2($page1, $page2, $type='sidediff') {
 	$page1 = split("\n", $page1);

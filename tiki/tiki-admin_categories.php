@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.32 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.33 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.32 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.33 2004-09-08 19:51:49 mose Exp $
 //
 
 // Initialization
@@ -132,7 +132,7 @@ if (isset($_REQUEST["categId"])) {
 
 if (isset($_REQUEST["removeObject"])) {
 	$area = 'delcategobject';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$categlib->remove_object_from_category($_REQUEST["removeObject"], $_REQUEST["parentId"]);
 	} else {
@@ -142,7 +142,7 @@ if (isset($_REQUEST["removeObject"])) {
 
 if (isset($_REQUEST["removeCat"])) {
 	$area = "delcateg";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$categlib->remove_category($_REQUEST["removeCat"]);
 	} else {

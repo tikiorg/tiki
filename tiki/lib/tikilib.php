@@ -858,24 +858,18 @@ class TikiLib extends TikiDB {
 	$ret = array();
 	$n = ceil($result->numRows() / 10);
 	$i = 0;
-
+	$xdata=array();
+	$ydata=array();
 	while ($res = $result->fetchRow()) {
 	    if ($i % $n == 0) {
-		$data = array(
-			date("j M", $res["day"]),
-			$res["pageviews"]
-			);
+		$xdata[] = date("j M", $res["day"]);
 	    } else {
-		$data = array(
-			"",
-			$res["pageviews"]
-			);
+		$xdata = '';
 	    }
-
-	    $i++;
-	    $ret[] = $data;
+	    $ydata[] = $res["pageviews"];
 	}
-
+	$ret['xdata']=$xdata;
+	$ret['ydata']=$ydata;
 	return $ret;
     }
 
@@ -897,15 +891,32 @@ class TikiLib extends TikiDB {
 			require_once('lib/quizzes/quizlib.php');
 		}
 	$quizlib->compute_quiz_stats();
-	$data[] = array( "wiki",   $this->getOne("select sum(`hits`) from `tiki_pages`",array()));
-	$data[] = array( "img-g",  $this->getOne("select sum(`hits`) from `tiki_galleries`",array()));
-	$data[] = array( "file-g", $this->getOne("select sum(`hits`) from `tiki_file_galleries`",array()));
-	$data[] = array( "faqs",   $this->getOne("select sum(`hits`) from `tiki_faqs`",array()));
-	$data[] = array( "quizzes",$this->getOne("select sum(`timesTaken`) from `tiki_quiz_stats_sum`",array()));
-	$data[] = array( "arts",   $this->getOne("select sum(`reads`) from `tiki_articles`",array()));
-	$data[] = array( "blogs",  $this->getOne("select sum(`hits`) from `tiki_blogs`",array()));
-	$data[] = array( "forums", $this->getOne("select sum(`hits`) from `tiki_forums`",array()));
-	$data[] = array( "games",  $this->getOne("select sum(`hits`) from `tiki_games`",array()));
+	$data['xdata'][] = tra('wiki');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_pages`',array());
+
+	$data['xdata'][] = tra('img-g');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_galleries`',array());
+
+	$data['xdata'][] = tra('file-g');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_file_galleries`',array());
+
+	$data['xdata'][] = tra('faqs');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_faqs`',array());
+
+	$data['xdata'][] = tra('quizzes');
+	$data['ydata'][] = $this->getOne('select sum(`timesTaken`) from `tiki_quiz_stats_sum`',array());
+
+	$data['xdata'][] = tra('arts');
+	$data['ydata'][] = $this->getOne('select sum(`reads`) from `tiki_articles`',array());
+	
+	$data['xdata'][] = tra('blogs');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_blogs`',array());
+
+	$data['xdata'][] = tra('forums');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_forums`',array());
+
+	$data['xdata'][] = tra('games');
+	$data['ydata'][] = $this->getOne('select sum(`hits`) from `tiki_games`',array());
 	return $data;
     }
 
@@ -1706,8 +1717,8 @@ class TikiLib extends TikiDB {
 	$user = addslashes($user);
 
 	// TODO: same as list_users
-	$query = "select u.*, p.value as realName from tiki_friends as f, users_users as u left join tiki_user_preferences p on u.login=p.user and p.prefName = 'realName' where u.login=f.friend and f.user='$user' and f.user <> f.friend $mid order by $sort_mode limit $offset, $maxRecords";
-	$query_cant = "select count(*) from tiki_friends as f, users_users as u left join tiki_user_preferences p on u.login=p.user and p.prefName = 'realName' where u.login=f.friend and f.user='$user' $mid";
+	$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`='$user' and f.`user` <> f.`friend` $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`='$user' $mid";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
 	$ret = Array();
@@ -1754,8 +1765,8 @@ class TikiLib extends TikiDB {
 	// TODO: This is lousy, later we have to configure what fields would be fetched
 	// but how to get preferences avoiding the join, sort by any field and paginate without
 	// loading all user list in memory?
-	$query = "select u.*, f.user is not null as friend, p.value as realName from users_users as u left join tiki_friends as f on u.login=f.friend and f.user='".addslashes($user)."' left join tiki_user_preferences p on u.login=p.user and p.prefName='realName' $mid order by $sort_mode limit $offset, $maxRecords";
-	$query_cant = "select count(*) from users_users u left join tiki_user_preferences p on u.login=p.user and p.prefName='realName' $mid";
+	$query = "select u.*, f.`user` is not null as friend, p.`value` as realName from `users_users` as u left join `tiki_friends` as f on u.`login`=f.`friend` and f.`user`='".addslashes($user)."' left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from `users_users` u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
 	$ret = Array();
@@ -3122,7 +3133,7 @@ class TikiLib extends TikiDB {
 	    if( preg_match("/\/ *\}$/",$plugin_start) )
 	    {
 		$plugin_end='';
-		$pos_end=$pos_start+strlen($plugin_start);
+		$pos_end = $pos + strlen($plugin_start);
 	    } else if( preg_match( "/^ *~pp~|^ *~np~/", $plugin_start ) ) {
 		$plugin_end = preg_replace( '/^(.)/', '$1/', $plugin_start );
 		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
@@ -3162,12 +3173,7 @@ class TikiLib extends TikiDB {
 
 		if( $plugin_start == "~pp~" )
 		{
-		    if( strstr( $plugin_data, '<' ) )
-		    {
-			$noparsed["data"][] = "<pre>" . htmlspecialchars( $plugin_data ) . "</pre>";
-		    } else {
-			$noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
-		    }
+		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
 		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
 		    $plugin_start2 = $plugins[1];
@@ -3175,15 +3181,7 @@ class TikiLib extends TikiDB {
 		    $plugin_end2 = $plugins[1];
 		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
-			$noparsed["data"][] = $plugin_data;
-			/* very doubtful, and it breaks modules that produce html
-		    if( strstr( $plugin_data, '<' ) )
-		    {
-			$noparsed["data"][] = htmlspecialchars( $plugin_data );
-		    } else {
-			$noparsed["data"][] = $plugin_data;
-		    }
-			*/
+		    $noparsed["data"][] = $plugin_data;
 		}
 
 		// Replace plugin section with its output in data
@@ -3203,24 +3201,25 @@ class TikiLib extends TikiDB {
 		// Construct plugin function name
 		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
 
-		// Construct argument list array
-		$params = split(',', trim($plugins[2]));
-		$arguments = array();
+		    // Construct argument list array
+		    $params = split(',', trim($plugins[2]));
+		    $arguments = array();
 
-		foreach ($params as $param) {
-		    // the following str_replace line is to decode the &gt; char when html is turned off
-		    // perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-		    $decoded_param = str_replace('&gt;', '>', $param);
-		    $decoded_param = str_replace('&lt;', '<', $decoded_param);
-		    $parts = split( '=>?', $decoded_param );
+		    foreach ($params as $param) {
+			// the following str_replace line is to decode the &gt; char when html is turned off
+			// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+			$decoded_param = str_replace('&gt;', '>', $param);
+			$decoded_param = str_replace('&lt;', '<', $decoded_param);
+			$decoded_param = str_replace('&quot;', '"', $decoded_param);
+			$parts = split( '=>?', $decoded_param );
 
-		    if (isset($parts[0]) && isset($parts[1])) {
-			$name = trim($parts[0]);
-			$argument = trim($parts[1]);
-			// the following preg_replace removes more unwanted css attributes passed after ";" (including)
-			$arguments[$name] = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
+			if (isset($parts[0]) && isset($parts[1])) {
+			    $name = trim($parts[0]);
+			    $argument = trim($parts[1]);
+			    // the following preg_replace removes more unwanted css attributes passed after ";" (including)
+			    $arguments[$name] = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
+			}
 		    }
-		}
 
 		if (file_exists($php_name)) {
 		    include_once ($php_name);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.10 2004-06-16 06:12:08 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.11 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ $smarty->assign('info', $info);
 // Remove a role from the activity
 if (isset($_REQUEST['remove_role']) && $_REQUEST['activityId']) {
   $area = 'delgalaxiactivityrole';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$activityManager->remove_activity_role($_REQUEST['activityId'], $_REQUEST['remove_role']);
   } else {

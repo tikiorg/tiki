@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.11 2004-01-31 14:10:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.12 2004-09-08 19:53:00 mose Exp $
  *
  */
 
@@ -40,6 +40,7 @@ td.form {
 /* Cells in forms using a background color */
 td.formcolor {
     color: #001000;
+	 background-color: transparent;
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 10px;
     text-align: left;
@@ -50,6 +51,7 @@ td.formcolor {
 /* Table headings */
 td.heading {
     color: #001000;
+	 background-color: transparent;	 
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 11px;
     font-weight: bold;
@@ -73,6 +75,7 @@ td.button {
 .tableheading:visited:hover, .tableheading:visited {
     text-decoration: none;
     color: #00B000;
+	 background-color: transparent;
 }
 
 /*
@@ -86,12 +89,14 @@ table.findtable {
 
 /* Tables odd rows */
 td.odd {
-    color: lightgreen;
+    color: #90EE90;
+	 background-color: transparent;
     border: 1px outset #00A000;
 }
 
 td.even {
-    color: lightgreen;
+    color: #90EE90;
+	 background-color: transparent;
     border: 1px outset #00A000;
 }
 
@@ -101,7 +106,8 @@ td.even {
  */
 caption {
     color: #00E000;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+	 background-color: transparent;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 11px;
     font-weight: bold;
     text-align: right;

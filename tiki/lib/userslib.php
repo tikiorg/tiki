@@ -338,6 +338,7 @@ class UsersLib extends TikiLib {
 
 function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '') {
 	
+	$now = date('U');
 	$mid = '';
 	$bindvars = array();
 	$mmid = '';
@@ -375,6 +376,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    $groups = $this->get_user_groups($user);
 	    $aux["groups"] = $groups;
 	    $aux["currentLogin"] = $res["currentLogin"];
+	    $aux["age"] = $now - $res["registrationDate"];
 	    $ret[] = $aux;
 	}
 
@@ -658,6 +660,7 @@ function get_included_groups($group) {
 	$res = $result->fetchRow();
 	$groups = $this->get_user_groups($user);
 	$res["groups"] = $groups;
+	$res["age"] = date('U') - $res['registrationDate'];
 	return $res;
     }
     
@@ -728,6 +731,7 @@ function get_included_groups($group) {
 	$result = $this->query($query, array((int)$user));
 	$res = $result->fetchRow();
 	$res["groups"] = $this->get_user_groups($res['login']);
+	$res["age"] = date('U') - $res['registrationDate'];
 	return $res;
     }
 

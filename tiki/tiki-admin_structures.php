@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.17 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.18 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ($tiki_p_edit_structures != 'y') {
 
 if (isset($_REQUEST['rremove'])) {
   $area = 'delstruct';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremove"], false);
 	} else {
@@ -31,7 +31,7 @@ if (isset($_REQUEST['rremove'])) {
 
 if (isset($_REQUEST['rremovex'])) {
   $area = 'delstructandpages';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$structlib->s_remove_page($_REQUEST["rremovex"], true);
 	} else {

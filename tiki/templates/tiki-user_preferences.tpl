@@ -47,11 +47,18 @@
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
+  {if $country == "None"}
+  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/Other.gif" />
+  {else}
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
-  <select name="country">
+  {/if}
+<select name="country">
+  <option value="Other" {if $country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
   {sortlinks}
-  {section name=ix loop=$flags}  
-  <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>  
+  {section name=ix loop=$flags}
+  {if $flags[ix] ne "Other"}
+  <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
+  {/if}
   {/section}
   {/sortlinks}
   </select>
@@ -218,7 +225,7 @@
 
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
-{if $feature_messages eq 'y'}
+{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
   <div class="cbox">
   <div class="cbox-title">{tr}User Messages{/tr}</div>
   <div class="cbox-data">
@@ -265,7 +272,7 @@
 
   {/if}
 
-{if $feature_tasks eq 'y'}
+{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 
   <div class="cbox">
   <div class="cbox-title">{tr}User Tasks{/tr}</div>
@@ -305,17 +312,36 @@
   {/if}
 
   <div class="cbox">
-  <div class="cbox-title">{tr}My Tiki{/tr}</div>
+  <div class="cbox-title"><a href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a></div>
   <div class="cbox-data">
 
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
+
+{if $feature_wiki eq 'y'}
 <tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_blogs eq 'y'}
 <tr><td class="form">{tr}My blogs{/tr}</td><td class="form"><input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_galleries eq 'y'}
 <tr><td class="form">{tr}My galleries{/tr}</td><td class="form"><input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_messages eq 'y'and $tiki_p_messages eq 'y'}
 <tr><td class="form">{tr}My messages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_msgs" {if $mytiki_msgs eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <tr><td class="form">{tr}My tasks{/tr}</td><td class="form"><input type="checkbox" name="mytiki_tasks" {if $mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $feature_trackers eq 'y'}
 <tr><td class="form">{tr}My items{/tr}</td><td class="form"><input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+
 {if $feature_workflow eq 'y'}
   {if $tiki_p_use_workflow eq 'y'}
     <tr><td class="form">{tr}My workflow{/tr}</td><td class="form"><input type="checkbox" name="mytiki_workflow" {if $mytiki_workflow eq 'y'}checked="checked"{/if} /></td></tr>

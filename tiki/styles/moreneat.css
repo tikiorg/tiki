@@ -1,12 +1,9 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.69 2004-08-26 19:24:11 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.70 2004-09-08 19:52:58 mose Exp $
 
 MoreNeat theme
 */
 
-.wikitopline {
-width: 100%;
-}
 
 
 body {
@@ -583,6 +580,7 @@ div.wikitext {
   clear: both;
 	padding : 1ex 2ex;
 }
+.wikitopline table { width: 100%; }
 
 /* Links to wiki pages */
 .wiki { color:#335966; text-decoration:underline;}
@@ -2006,3 +2004,39 @@ bottom : -2ex;
 display : inline;
 border : 1px dashed #adacaf; 
 }
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+

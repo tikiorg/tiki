@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.12 2004-08-20 07:14:16 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.13 2004-09-08 19:52:37 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -18,7 +18,6 @@ function wikiplugin_box_help() {
 
 function wikiplugin_box($data, $params) {
 	global $smarty;
-	
 	/* set default values for some args */
 	$title = tra("Message box");
 	

@@ -45,7 +45,7 @@ $smarty->assign('banId', $_REQUEST['banId']);
 $smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST['remove'])) {
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$banlib->remove_rule($_REQUEST['remove']);
 	} else {

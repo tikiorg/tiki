@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.49 2004-08-26 19:24:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.50 2004-09-08 19:53:04 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -60,12 +60,12 @@ onUpdate     : gotocal
 <div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_date}</a></div>
 </td>
 <td align="right" class="middle" nowrap="nowrap" width="100">
-<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a>
-<a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a>
-<a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a>
-<a href="tiki-calendar.php?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" align="top" /></a>
-<a href="tiki-calendar.php?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" align="top" /></a>
-<a href="tiki-calendar.php?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}quater{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}semester{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}year{/tr}" align="top" /></a>
 </td></tr></table>
 </div>
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.81 2004-09-08 17:11:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.82 2004-09-08 19:53:05 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -156,7 +156,7 @@
   </td>
 </tr>
 <tr>
-  <td colspan=2>
+  <td colspan="2">
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}->{/if}
 	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">

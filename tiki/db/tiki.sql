@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-09-02 19:26:40 $
-# $Author: sylvieg $
+# $Date: 2004-09-08 19:51:52 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1930,7 +1930,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MyTiki','tiki-my_tiki.php',50,'','','Registered');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Preferences','tiki-user_preferences.php',55,'feature_userPreferences','','Registered');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Messages','messu-mailbox.php',60,'feature_messages','tiki_p_messages','Registered');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tasks','tiki-user_tasks.php',65,'feature_tasks','tiki_p_tasks','Registered');
@@ -2017,6 +2017,11 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List galleries','tiki-file_galleries.php',605,'feature_file_galleries','tiki_p_view_file_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_view_file_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','');
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List FAQs','tiki-list_faqs.php',665,'feature_faqs','tiki_p_view_faqs','');
@@ -2108,13 +2113,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
-
-# Tiki Jukebox
-
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
 
 # --------------------------------------------------------
 
@@ -2333,7 +2331,7 @@ CREATE TABLE tiki_pages (
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
   page_size int(10) unsigned default 0,
-  lang varchar(16) default null,
+  lang varchar(16) default NULL,
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -3545,6 +3543,7 @@ DROP TABLE IF EXISTS tiki_user_votings;
 CREATE TABLE tiki_user_votings (
   user varchar(200) NOT NULL default '',
   id varchar(255) NOT NULL default '',
+  optionId int(10) NOT NULL default 0,
   PRIMARY KEY  (user,id)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3795,7 +3794,8 @@ CREATE TABLE users_permissions (
   PRIMARY KEY  (permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
-# Data set
+# 
+
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
@@ -3819,6 +3819,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_games', 'Can admin games', 'editors', 'games');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
@@ -3828,7 +3829,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_trackers', 'Can admin trackers', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_attach_trackers', 'Can attach files to tracker items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoapprove_submission', 'Submited articles automatically approved', 'editors', 'cms');
@@ -3861,6 +3861,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_drawings', 'Can edit drawings', 'basic', 'drawings');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
@@ -3874,6 +3876,17 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_read', 'Can read forums', 'basic', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_vote', 'Can vote comments in forums', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support', 'Can use live support system', 'basic', 'support');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_lock', 'Can lock pages', 'editors', 'wiki');
@@ -3927,7 +3940,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_validate_links', 'Can validate submited links', 'editors', 'directory');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view', 'Can view page/pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_calendar', 'Can browse the calendar', 'basic', 'calendar');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_chart', 'Can view charts', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_directory', 'Can use the directory', 'basic', 'directory');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_eph', 'Can view ephemerides', 'registered', 'tiki');
@@ -3955,24 +3968,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_author', 'Can view wiki page authors', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_header', 'Can view page wiki page headers, like pagename, description, wiki bar, etc.', 'basic', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
-
-# TikiJukebox permissions - Damosoft aka Damian
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
-
-# Homework permissions - ggeller
-INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
-
-# Community permissions
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
 
 # --------------------------------------------------------
 
@@ -4022,7 +4017,7 @@ CREATE TABLE users_users (
   avatarData longblob,
   avatarLibName varchar(200) default NULL,
   avatarType char(1) default NULL,
-  score int4 NOT NULL default 0,
+  score int(4) NOT NULL default 0,
   PRIMARY KEY  (userId),
   KEY score (score)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -4032,22 +4027,22 @@ INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md
 UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
 INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
 # --------------------------------------------------------
+# 
 
-# Inserts of all default values for preferences
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('allowRegister','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('anonCanEdit','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('article_comments_default_ordering','points_desc');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('article_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_author','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_date','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_expire','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_img','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_reads','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_size','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_title','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_topic','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_type','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_expire','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_visible','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('article_comments_default_ordering','points_desc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('article_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_create_user_auth','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_create_user_tiki','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_adminpass','');
@@ -4066,6 +4061,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_userdn','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_useroc','inetOrgPerson');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_method','tiki');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_skip_admin','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_comments_default_ordering','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_activity','y');
@@ -4087,29 +4084,31 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_right_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_top_bar','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_user','admin');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('count_admin_pvs','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('direct_pagination','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_columns','3');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_links_per_page','20');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_open_links','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('directory_validate_urls','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('direct_pagination','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('display_timezone','EST');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('email_encoding','utf-8');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_default_ordering','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('faq_comments_per_page','10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_autolinks','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_maps','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_article_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_articles','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_autolinks','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_babelfish','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_babelfish_logo','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_backlinks','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_banners','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_banning','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_comments','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blog_rankings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogposts_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_blogs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_bot_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_calendar','n');
@@ -4127,30 +4126,33 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_contact','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_custom_home','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_debug_console','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_debugger_console','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_directory','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_drawings','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_dump','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_dynamic_content','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_editcss','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_edit_templates','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_editcss','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_eph','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_faq_comments','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_faqs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_featuredLinks','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_file_galleries_rankings','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_parse','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_quickjump','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_rankings','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forums','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forum_topicd','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_galleries','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_forums','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_rankings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_games','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_history','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords_nw','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords_nw','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_html_pages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_galleries_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_integrator','n');
@@ -4160,6 +4162,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_left_column','y
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_listPages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_live_support','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_maps','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_menusfolderstyle','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_messages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_minical','n');
@@ -4169,19 +4172,20 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_newsreader','n'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_notepad','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_obzip','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_page_title','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phplayers','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_referer_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_right_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sandbox','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_fulltext','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_stats','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_shoutbox','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
@@ -4190,22 +4194,22 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_submissions','n
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_surveys','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tabs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tasks','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib2','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_theme_control','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib2','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_top_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackers','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_bookmarks','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userfiles','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_usermenu','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userPreferences','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userVersions','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_bookmarks','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_userfiles','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_usermenu','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_allowhtml','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');
@@ -4214,17 +4218,17 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_footnotes'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_monosp','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_multiprint','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_notepad','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pdf','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pictures','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_rankings','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','old');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_prefix','UserPage');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_xmlrpc','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('fgal_list_created','y');
@@ -4273,27 +4277,27 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_prefix','/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_default_order','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('keep_versions','1');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('lang_use_db','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('layout_section','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_date_format','%A %d of %B, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%M:%S %Z');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxRecords','10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_directories','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxVersions','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_articles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blog','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blogs','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_directories','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_file_galleries','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_file_gallery','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_forum','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_forums','10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_mapfiles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_galleries','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_gallery','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_mapfiles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_wiki','10');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxVersions','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('min_pass_length','1');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('modallgroups','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('pass_chr_num','n');
@@ -4308,33 +4312,32 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('registerPasscode','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rememberme','disabled');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('remembertime','7200');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rnd_num_reg','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_directories','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_articles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blog','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blogs','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_directories','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_gallery','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forums','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forum','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_mapfiles','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forums','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_mapfiles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('email_encoding','utf-8');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_refresh_rate','5');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_min_wordlength','3');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_max_syllwords','100');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_lru_purge_rate','5');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_lru_length','100');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_lru_purge_rate','5');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_max_syllwords','100');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_min_wordlength','3');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_refresh_rate','5');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('search_syll_age','48');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_date_format','%a %d of %b, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:%M %Z');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('shoutbox_autolink','n');
@@ -4342,26 +4345,31 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('slide_style','slidestyle.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','moreneat.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('system_os','unix');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tikiIndex','tiki-index.php');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tmpDir','temp');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_dir','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tikiIndex','tiki-index.php');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tmpDir','temp');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('uf_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('uf_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('urlIndex','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('use_proxy','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useRegisterPasscode','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useUrlIndex','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('use_proxy','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateEmail','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('warn_on_edit_time','2');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webmail_max_attachment','1500000');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webmail_view_html','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webserverauth','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiHomePage','HomePage');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiLicensePage','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiSubmitNotice','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_bot_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_cache','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_comments_default_ordering','points_desc');
@@ -4370,9 +4378,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_creator_admin','n'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_forum','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_forum_id','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiHomePage','HomePage');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_left_column','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiLicensePage','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_list_backlinks','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_list_comment','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_list_creator','y');
@@ -4388,20 +4394,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_list_versions','y'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_page_regex','strict');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_right_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_spellcheck','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wikiSubmitNotice','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
-
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 

@@ -6,9 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
-{
-    global $tikilib, $userlib, $user, $feature_score, $feature_friends;
+function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set') {
+    global $tikilib, $userlib, $user, $feature_score, $feature_friends, $highlight_group;
     
     $star = '';
 
@@ -28,14 +27,16 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set')
 	}
     } 
     
+		$ou = $other_user;
     if($userlib->user_exists($other_user)&&(!empty($friend) || $tikilib->get_user_preference($other_user,'user_information','public')=='public')) {
+			if (isset($info) and $highlight_group and in_array($highlight_group,$info['groups'])) { $ou = '<i class="highlightgroup"><b>'.$other_user.'</b></i>'; }
 		if (is_numeric($idletime)) {
-			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$other_user</a>$friend$star";
+			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='".tra("More info about $other_user")." ".tra("(idle for $idletime seconds)")."'>$ou</a>$friend$star";
 		} else {
-			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='".tra("More info about $other_user")."'>$other_user</a>$friend$star";
+			return "<a class='$class' href='tiki-user_information.php?view_user=$other_user' title='".tra("More info about $other_user")."'>$ou</a>$friend$star";
 		}
     } else {
-	return "<span class='$class'>$other_user</span>$friend$star";
+	return "<span class='$class'>$ou</span>$friend$star";
     }
 }
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.37 2004-08-16 02:27:03 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.38 2004-09-08 19:53:02 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -228,14 +228,12 @@
         <td><input type="checkbox" name="count_admin_pvs" id="general-pageviews"
               {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
         </td>
-<!-- Still under discussion
       </tr><tr>
         <td class="form"><label for="general-anon_modules">{tr}Hide anonymous-only modules from registered users{/tr}:</label></td>
         <td><input type="checkbox" name="modseparateanon" id="general-anon_modules"
               {if $modseparateanon eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
--->
       </tr></table>
 
       <table class="admin"><tr>
@@ -358,7 +356,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="button">
-						<input type="submit" name="siteidentityset" value="{tr}Change settings{/tr}" />
+						<input type="submit" name="siteidentityset" value="{tr}Change preferences{/tr}" />
 					</td>
 				</tr>
 			</table>

@@ -148,7 +148,7 @@ isMandatory = {$channels[user].isMandatory}
 
 {/section}
 </textarea><br />
-*** Not functionnal yet ***<br>
+*** Not functionnal yet ***fixed
 <input type="submit" name="save" value="{tr}Import{/tr}" />
 </form>
 

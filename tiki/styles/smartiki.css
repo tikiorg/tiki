@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.17 2004-08-12 22:31:52 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.18 2004-09-08 19:52:59 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -559,7 +559,7 @@ div.titlebar {
 DIV#page-bar {	margin-left: 5px;}
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-.button2, .button3 {
+.button2, .button3, .linkbut {
   background-color: #f0c040;
   border: 1px solid #676767;
 	padding-left: 4px;
@@ -574,8 +574,8 @@ DIV#page-bar {	margin-left: 5px;}
 .button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
 
 /* Links in buttons */
-.linkbut {  text-decoration: none; color: black; }
-.linkbut:hover { }
+.linkbut {  text-decoration: none; color: #424242; }
+.linkbut:hover {color: #000000; }
 
 /* When a cached version of an external link is displayed */
 div.cache {
@@ -613,6 +613,7 @@ div.wikitext {
   margin: 2px;
   clear: both;
 }
+.wikitopline table { width: 100%; }
 
 /* Links to wiki pages */
 .wiki { color:#436976; text-decoration:underline;}
@@ -2005,3 +2006,39 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+

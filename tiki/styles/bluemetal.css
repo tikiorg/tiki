@@ -611,7 +611,7 @@ p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Hel
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt; width: 95%;}
 
-.wikitopline { width: 95%; }
+.wikitopline table { width: 95%; }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -2066,3 +2066,39 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+

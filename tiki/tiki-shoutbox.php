@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.11 2004-07-08 12:50:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.12 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,7 +53,7 @@ $smarty->assign('user', $info["user"]);
 if ($tiki_p_admin_shoutbox == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		$area = 'delshoutboxitem';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$shoutboxlib->remove_shoutbox($_REQUEST["remove"]);
 		} else {

@@ -1,4 +1,12 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -17,7 +25,7 @@
 // | Based on OLE::Storage_Lite by Kawai, Takanori                        |
 // +----------------------------------------------------------------------+
 //
-// $Id: ole.php,v 1.1 2004-05-01 21:44:22 lphuberdeau Exp $
+// $Id: ole.php,v 1.2 2004-09-08 19:52:32 mose Exp $
 
 
 /**

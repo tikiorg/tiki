@@ -12,17 +12,20 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
-<!-- beginning of next bit -->
+{if $forumId > 0}
+<a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
+{else}
+<a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
+{/if}
+
 {if $tiki_p_admin eq 'y'}
 <a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 {/if}
 
 {if $forumId > 0}
 <h2>{tr}Edit this Forum:{/tr} {$name}</h2>
-<a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {else}
 <h2>{tr}Create New Forum{/tr}</h2>
-<a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
 {/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>

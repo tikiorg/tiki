@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.36 2004-08-12 22:31:54 teedog Exp $
+$Id: trollparty.css,v 1.37 2004-09-08 19:52:59 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -852,11 +852,11 @@ padding-right:10px;
 
 .wikitext H1, 
 .wikitext H2, 
-.wikitext H3
+.wikitext H3,
+.wikitext H4
 {
 font-weight: bold;
 margin:0;
-margin-top: 7px;
 padding-left:0px;
 padding-right:0px;
 }
@@ -868,6 +868,7 @@ font-size: 140%;
 }
 .wikitext H2
 {
+margin-top: 7px;
 font-size: 120%;
 }
 
@@ -1062,6 +1063,7 @@ padding: 3px 20px;
 margin: 1px 0px;
 clear: both;
 }
+.wikitopline table { width: 100% }
 
 /* 
 Links to wiki pages 
@@ -2618,18 +2620,55 @@ TABLE.admin {
 .codelisting  { 
 font-family : monospace;
 padding : 2ex;
-background-color : #333333;
-margin : 1ex;
-border : 1px dashed #003388; 
+background-color : #222222;
+margin : 1ex 0;
+border : 1px solid #666666; 
 }
 .codecaption {
 font-size : smaller;
-padding : .5ex 2ex;
-background-color : #333333;
+padding : .2ex 2ex;
+background-color : #424242;
 position : relative;
-bottom : -2ex;
+bottom : -1ex;
 display : inline;
-border : 1px dashed #003388; 
+border : 1px solid #666666; 
+border-bottom : 0;
+}
+
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #424242;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
 }
 
 /* wiki diff styles */

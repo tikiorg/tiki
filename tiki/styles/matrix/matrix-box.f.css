@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.f.css,v 1.5 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.f.css,v 1.6 2004-09-08 19:53:00 mose Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -11,7 +11,12 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-div.cbox, div.separator:hover, div#tiki-center > div.simplebox {
+div.cbox, div.separator:hover{
+    background: url(img/ltgreen.png) repeat;
+}
+
+/* Separate, because IE doesn't like Child selectors */
+div#tiki-center > div.simplebox {
     background: url(img/ltgreen.png) repeat;
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.15 2004-04-27 06:23:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.16 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if (!isset($_REQUEST["calendarId"])) {
 
 if (isset($_REQUEST["drop"])) {
 	$area = "delcalendar";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$calendarlib->drop_calendar($_REQUEST["drop"]);
 		$_REQUEST["calendarId"] = 0;

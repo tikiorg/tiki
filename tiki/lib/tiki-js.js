@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.56 2004-08-12 22:31:35 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.57 2004-09-08 19:52:22 mose Exp $
 var feature_no_cookie = 'n';
 
 function getElementById(id) {
@@ -320,22 +320,24 @@ function setfolderstate(foo, def) {
 	status = getCookie(foo, "menu");
 	if (status == "o") {
 		show(foo);
-	} else if (status != "c" && def == 'e') {
-		show(foo, "o");
+		src = "ofo.gif";
+	} else if (!status  && def != 'd') {
+		show(foo);
+		src = "ofo.gif";
 	}
 	else {
 		hide(foo);
+		src = "fo.gif";
 	}
-
-	setfoldericonstate(foo);
+	document.getElementsByName(foo + 'icn')[0].src = document.getElementsByName(foo + 'icn')[0].src.replace(/[^\\\/]*$/, src);
 }
 
 function setsectionstate(foo) {
-	status = getCookie(foo);
+	status = getCookie(foo, "menu");
         if (status == "o") {
-	    show(foo, "o");
+	    show(foo);
         } else if (status == "c") {
-            hide(foo, "c");
+            hide(foo);
         }
 }
 

@@ -1076,8 +1076,8 @@ class ImageGalsLib extends TikiLib {
 		return $res['imageId'];
 	}
 
-	function list_images($offset, $maxRecords, $sort_mode, $find) {
-		return $this->get_images($offset, $maxRecords, $sort_mode, $find);
+	function list_images($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
+		return $this->get_images($offset, $maxRecords, $sort_mode, $find, $galleryId);
 	}
 
     function get_random_image($galleryId = -1) {

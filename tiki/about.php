@@ -19,7 +19,7 @@ DOCUMENTATION
   documentation, in pdf format (350 pages) (outdated at the time of this writing):
   http://tikiwiki.org/tiki.pdf (version 1.6 but with many valuable help)
 
-* The documentation for 1.9 version is maintained on http://doc.tikiwiki.org,
+* The documentation for all versions is maintained on http://doc.tikiwiki.org,
   come and help if you can and wish.
 
 * Notes about the releases are accessible from http://tikiwiki.org/ReleaseProcess19
@@ -29,7 +29,7 @@ DOCUMENTATION
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see http://tikiwiki.org for the latest install help.
+  configure Tiki. Again, see http://tikiwiki.org/InstallTiki for the latest install help.
 
 
 COPYRIGHT

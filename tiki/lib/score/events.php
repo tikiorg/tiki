@@ -5,6 +5,12 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 // Each element of $events is an array with (dependent features, category, event name, translated description, default score, default expiration)
 $events = array(
 array("","General","login",tra("Login"),2,0),

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.css,v 1.6 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.css,v 1.7 2004-09-08 19:53:00 mose Exp $
  *
  * Directory styles
  *
@@ -13,10 +13,12 @@ span.dirsitetrail {
 td.dirfooter {
     font-size: 9px;
     color: #001000;
+	 background-color: transparent;
 }
 
 div.dirfooter {
     color: #001000;
+	 background-color: transparent;
     border: 2px ridge #00B000;
     font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;

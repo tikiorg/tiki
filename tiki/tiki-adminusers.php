@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.39 2004-08-12 22:31:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.40 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,7 +117,7 @@ if (isset($_REQUEST["newuser"])) {
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
 		$area = 'deluser';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_user($_REQUEST["user"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
@@ -127,7 +127,7 @@ if (isset($_REQUEST["newuser"])) {
 	}
 	if ($_REQUEST["action"] == 'removegroup') {
 		$area = 'deluserfromgroup';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
@@ -142,7 +142,7 @@ if (isset($_REQUEST["newuser"])) {
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST["submit_mult"] == "remove_users") {
 		$area = 'batchdeluser';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 == 'n' or ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])))) {
 			key_check($area);
 		foreach ($_REQUEST["checked"] as $deleteuser) {
 			$userlib->remove_user($deleteuser);
@@ -351,7 +351,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	$userinfo['email'] = '';
 	$userinfo['created'] = date('U');
 	$userinfo['registrationDate'] = '';
-	$userinfo['lastLogin'] = '';
+	$userinfo['age'] = '';
+	$userinfo['currentLogin'] = '';
 	$cookietab = "1";
 	$_REQUEST["user"] = 0;
 }

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.37 2004-08-26 19:24:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.38 2004-09-08 19:53:05 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -56,7 +56,9 @@
 <td><div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {/if}
 {/if}
+{if $feature_wiki_export eq 'y'}
 <td><div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div></td>
+{/if}
 {if $feature_wiki_discuss eq 'y'}
 <td><div class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="linkbut">{tr}discuss{/tr}</a></div></td>
 {/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.11 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_stats_quiz.php,v 1.12 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ $smarty->assign('quiz_info', $quiz_info);
 
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_quizzes == 'y') {
   $area = 'delquizstatsquiz';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$quizlib->remove_quiz_stat($_REQUEST["remove"]);
   } else {
@@ -72,7 +72,7 @@ if (isset($_REQUEST["remove"]) && $tiki_p_admin_quizzes == 'y') {
 
 if (isset($_REQUEST["clear"]) && $tiki_p_admin_quizzes == 'y') {
   $area = 'delquizstatsclear';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$quizlib->clear_quiz_stats($_REQUEST["clear"]);
   } else {

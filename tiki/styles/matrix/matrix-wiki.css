@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.11 2003-12-08 01:36:20 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.12 2004-09-08 19:53:00 mose Exp $
  *
  */
 
@@ -11,7 +11,8 @@
 /* When the page title is a link this is the style */
 .pagetitle, .pagetitle:hover, .pagetitle:active, .pagetitle:visited, .pagetitle:visited:hover {
     color: #00E000;
-    font-family: "Matrix_vs_miltown", Verdana, Arial, Helvetica, sans-serif;
+	 background-color: transparent;
+    font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-variant: small-caps;
     font-size: 30px;
@@ -22,16 +23,17 @@
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
     color: #001000;
+	 background-color: transparent;
     border: 3px ridge #00B000;
     padding: 1px;
     padding-bottom: 10px;
-    margin: 1px;
-    margin-top: 5px;
+    margin: 5px 1px 1px 1px;
     clear: both;
 }
+
 /* -= Wiki title bar =- */
 div.titlebar {
-    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-variant: small-caps;
     font-size: 20px;
     padding-left: 5px;
@@ -58,30 +60,32 @@ div#page-bar {
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 11px;
     text-align: center;
-    border: 1px solid lightgreen;
+    border: 1px solid;
+	 border-color: #90EE90;
     margin: 0px;
 }
 
 .button2:hover {
     color: #001000;
-    background: lightgreen;
+    background: #90EE90;
 }
 
 /* Links in buttons */
 .linkbut, .linkbut:visited, .linkbut:active {
     color: #00D000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .linkbut:hover, .linkbut:visited:hover, .highlight:hover {
     color: #001000;
     text-decoration: none;
-    background: lightgreen;
+    background: #90EE90;
 }
 
 .highlight {
     color: black;
-    background-color: lightgreen;
+    background-color: #90EE90;
 }
 
 /* When a cached version of an external link is displayed */
@@ -106,6 +110,7 @@ div.cachedpage {
  */
 .wikicache, .wikicache:active, .wikicache:hover {
     color: #00E000;
+	 background-color: transparent;
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 10px;
     text-decoration: none;
@@ -113,6 +118,7 @@ div.cachedpage {
 
 .wikicache:visited, .wikicache:visited:hover {
     color: #00B000;
+	 background-color: transparent;
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 10px;
     text-decoration: none;
@@ -124,24 +130,25 @@ table.wikitable {
 }
 
 td.wikicell {
-    border: 1px solid lightgreen;
+    border: 1px solid #90EE90;
     border-style: outset;
 }
 
 /* Links to wiki pages */
 .wiki, .wiki.active, .wiki:visited {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .wiki:hover, .wiki:visited:hover {
     color: #00F000;
+	 background-color: transparent;
     text-decoration: underline;
 }
 
 /* Date displayed for last modification date of pages */
 p.editdate {
-    font-size: smaller;
     margin-bottom: -1ex;
     font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -154,6 +161,7 @@ div.wiki-edithelp {
     font-size: 12px;
     padding: 6px;
     color: #001000;
+	 background-color: transparent;
 }
 
 /* Wiki structures navigation bar */
@@ -167,12 +175,13 @@ div.tocnav {
 }
 
 .tocnavlink {
-    color: lightgreen;
+    color: #90EE90;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .tocnavlink:hover {
-    color: lightgreen;
+    color: #90EE90;
     text-decoration: none;
     background-color: green;
 }
@@ -208,22 +217,26 @@ span.commentstitle {
 /* Links in comments and in the comment header */
 .commentshlink, .commentshlink:active, .commentshlink:visited, .commentslink, .commentslink:active {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .commentslink:visited {
     color: #00B000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .commentshlink:hover, .commentshlink:visited:hover, .commentslink:hover, .commentslink:visited:hover {
     color: #00F000;
+	 background-color: transparent;
     text-decoration: underline;
 }
 
 /* Code listing style */
 div.codelisting {
     color: black;
+	 background-color: transparent;
     border: 2px ridge #00A000;
     margin: 4px;
     padding-left: 20px;
@@ -246,6 +259,7 @@ td.userstorytitle {
 
 td.userstoryidwarn {
     color: red;
+	 background-color: transparent;
     border: 1px outset #A00000;
 }
 
@@ -265,11 +279,13 @@ table.userstory {
 /* Links to wiki pages without descriptions */
 :link[title = 'no description'], :link[title = 'no description']:visited {
     color: #E0E0E0;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 :link[title = 'no description']:hover, :link[title = 'no description']:visited:hover {
     color: #E0E0E0;
+	 background-color: transparent;
     text-decoration: underline;
 }
 

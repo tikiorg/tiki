@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.f.css,v 1.7 2004-01-31 14:10:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.f.css,v 1.8 2004-09-08 19:53:00 mose Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -14,7 +14,7 @@
 td.formcolor,
 td.heading,
 td.button,
-td.even,
+td.even
 {
     background: url(img/ltgreen.png) repeat;
 }

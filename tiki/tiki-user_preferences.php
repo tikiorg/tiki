@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.60 2004-08-16 02:26:41 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.61 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (!is_object($bloglib)) {
 }
 
 // User preferences screen
-if ($feature_userPreferences != 'y') {
+if ($feature_userPreferences != 'y' && $user != 'admin') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
 	$smarty->display("error.tpl");

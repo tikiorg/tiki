@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.8 2004-08-26 19:23:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.9 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+include('lib/map/usermap.php');
 
 $map_error="";
 
@@ -34,7 +35,12 @@ if (isset($_REQUEST["mapuser"])) {
 		if ($feature_userPreferences != 'y') {
 			$map_error=tra("This feature is disabled").": feature_userPreferences";
 		} else {
-			include('lib/map/usermap.php');
+			$tdo = "user";
+			if ($tikidomain) $tdo = "$tikidomain.user";
+		   $datastruct="Columns 2\n";
+	      $datastruct.="  user Char(20)\n";
+  	      $datastruct.="  realName Char(100)\n";
+			makemap($tdo,$datastruct);
 		}
 	} else {
 		$map_error=tra("No valid ogr2ogr executable");

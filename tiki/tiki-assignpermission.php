@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.19 2004-07-11 15:52:58 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.20 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,7 +59,7 @@ if (isset($_REQUEST["action"])) {
 
 	if ($_REQUEST["action"] == 'remove') {
 		$area = 'delpermassign';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_permission_from_group($_REQUEST["permission"], $group);
 			$logslib->add_log('perms',"unassigned perm ".$_REQUEST['permission']." from group $group");

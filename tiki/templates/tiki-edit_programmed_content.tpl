@@ -1,11 +1,11 @@
 <a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a><br /><br />
-<h3>{tr}Block description: {/tr}{$description}</h3>
-<h3>{tr}Create or edit content{/tr}</h3>
-{if $pId}
-{tr}You are editing block:{/tr}{$pId}<br />
-{/if}
 <a class="linkbut" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}create new block{/tr}</a>
 <a class="linkbut" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a><br />
+<h2>{tr}Block description: {/tr}{$description}</h2>
+<h2>{tr}Create or edit content{/tr}</h2>
+{if $pId}
+{tr}You are editing block:{/tr} {$pId}<br />
+{/if}
 
 <form action="tiki-edit_programmed_content.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
@@ -16,19 +16,20 @@
 <textarea rows="5" cols="40" name="data">{$data|escape}</textarea>
 </td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}</td>
-<td class="formcolor">{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}</td></tr>
+<td class="formcolor">{html_select_date time=$publishDate end_year="+1"} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
 <input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
 </form>
-<h3>{tr}Available content blocks{/tr}</h3>
+<h2>{tr}Versions{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-edit_programmed_content.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
+	<input type="hidden" name="contentId" value="{$contentId|escape}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>

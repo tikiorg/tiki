@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.127 2004-08-26 19:23:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.128 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -310,7 +310,7 @@ if($tiki_p_admin_wiki == 'y') {
 if(isset($_REQUEST["undo"])) {
     if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
 	$area = 'delundopage';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 	    key_check($area);
 
 	    // Remove the last version	

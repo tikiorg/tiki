@@ -71,7 +71,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
 if (isset($_REQUEST["remove"])) {
         check_ticket('jukebox-genres');
 	$area='deletegenre';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
         	$jukeboxlib->remove_genre($_REQUEST["remove"]);
 	} else {

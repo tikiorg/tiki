@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.17 2004-08-16 02:27:04 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.18 2004-09-08 19:53:05 mose Exp $ *}
 
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
 
@@ -15,7 +15,7 @@
 {if $faq_stats}<span class="button2"> <a class="linkbut" href="#faq_stats">{tr}FAQs{/tr}</a></span>{/if}
 {if $user_stats}<span class="button2"> <a class="linkbut" href="#user_stats">{tr}User{/tr}</a></span>{/if}
 {if $quiz_stats}<span class="button2"> <a class="linkbut" href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
-{if $feature_referer_stats eq 'y'}<span class="button2"> <a class="linkbut" href="tiki-referer_stats.php">{tr}Referer stats{/tr}{/if}
+{if $feature_referer_stats eq 'y'}<span class="button2"> <a class="linkbut" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
 </p>
 </div>
 
@@ -156,10 +156,10 @@
 {/if}
 <!-- Quiz stats -->
 </table>
+{* commented charts section depending on removed (apparently temporarily) phplot library
 <br />
 <br />
 <br />
-{*
 <a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br /><br />
 
 
@@ -170,7 +170,6 @@
 </div>
 <br /><br />
 {/if}
-
 <form action="tiki-stats.php" method="post">
 {tr}Show chart for the last {/tr}
 <input type="text" name="days" size="10" value="{$days|escape}" /> {tr}days (0=all){/tr}
@@ -185,7 +184,6 @@
 {/if}
 <br />
 *}
-
 <br />
 <br />
 <br />

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.262 2004-08-28 23:12:30 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.263 2004-09-08 19:51:51 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -369,6 +369,8 @@ $smarty->assign("feature_wiki_page_footer",'n');
 $feature_wiki_realtime_static = 'n';
 $wiki_realtime_static_group = "Anonymous";
 $smarty->assign('wiki_realtime_static_group', 'Anonymous');
+$feature_wiki_export = 'y';
+$smarty->assign('feature_wiki_export', $feature_wiki_export);
 $feature_forum_rankings = 'y';
 $feature_forum_parse = 'n';
 $feature_forum_quickjump = 'n';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.16 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.17 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,7 +68,7 @@ if (isset($_REQUEST["refresh"])) {
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delrss';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$rsslib->remove_rss_module($_REQUEST["remove"]);
 	} else {

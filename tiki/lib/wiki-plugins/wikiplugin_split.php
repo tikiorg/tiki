@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.19 2004-04-27 23:30:48 franck Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.20 2004-09-08 19:52:38 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -44,7 +44,9 @@ function wikiplugin_split($data, $params) {
    foreach ($sections as $i)
    {
    	// split by --- but not by ----
-		$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
+	//	$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
+	//	not to eat the character close to - and to split on --- and not ----
+		$rows[] = preg_split("/(?<!-)---(?!-)/", $i);
       $maxcols = max($maxcols, count(end($rows)));
    }
 

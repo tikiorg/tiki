@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.10 2004-06-16 01:32:04 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.11 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,7 @@ if ($tiki_p_admin_drawings != 'y') {
 
 if (isset($_REQUEST["remove"])) {
 	$area = 'deldrawing';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$drawlib->remove_drawing($_REQUEST["remove"]);
 	} else {
@@ -37,7 +37,7 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["removeall"])) {
 	$area = 'deldrawingall';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$drawlib->remove_all_drawings($_REQUEST["removeall"]);
 	} else {
@@ -47,7 +47,7 @@ if (isset($_REQUEST["removeall"])) {
 
 if (isset($_REQUEST['del'])) {
 	$area = 'deldraw';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		foreach (array_keys($_REQUEST['draw'])as $id) {
 			$drawlib->remove_drawing($id);
