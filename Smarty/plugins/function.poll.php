@@ -10,7 +10,7 @@ function smarty_function_poll($params, &$smarty)
 	include_once('lib/polls/polllib.php');
 
     if (empty($id)) { 
-      $id = $pollllib->get_random_active_poll();
+      $id = $polllib->get_random_active_poll();
     }
     if($id) {
       $menu_info = $polllib->get_poll($id);

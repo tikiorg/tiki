@@ -12,22 +12,24 @@
 00004 include_once('lib/Galaxia/src/Observers/Logger.php');  
 00005 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/BaseManager.php');  
 00006 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/<a class="code" href="classProcessManager.html">ProcessManager</a>.php');  
-00007 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/<a class="code" href="classRoleManager.html">RoleManager</a>.php');  
-00008 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/<a class="code" href="classActivityManager.html">ActivityManager</a>.php'); 
-00009 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/GraphViz.php'); 
-00010 
-00012 $roleManager = <span class="keyword">new</span> <a class="code" href="classRoleManager.html">RoleManager</a>($dbTiki);
-00014 $activityManager = <span class="keyword">new</span> <a class="code" href="classActivityManager.html">ActivityManager</a>($dbTiki);
-00016 $processManager = <span class="keyword">new</span> <a class="code" href="classProcessManager.html">ProcessManager</a>($dbTiki);
-00017 
-00018 $logger = <span class="keyword">new</span> Logger('lib/Galaxia/log/pm.log');
-00019 $processManager-&gt;attach_all($logger);
-00020 $activityManager-&gt;attach_all($logger);
-00021 $roleManager-&gt;attach_all($logger);
-00022 
-00023 $smarty-&gt;assign('is_active_help',tra('indicates <span class="keywordflow">if</span> the process is active. Invalid processes cant be active'));
-00024 ?&gt;
-</pre></div><hr><address style="align: right;"><small>Generated on Mon Apr 14 11:51:59 2003 for Galaxia by
+00007 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/InstanceManager.php');  
+00008 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/<a class="code" href="classRoleManager.html">RoleManager</a>.php');  
+00009 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/<a class="code" href="classActivityManager.html">ActivityManager</a>.php'); 
+00010 include_once('lib/Galaxia/src/<a class="code" href="classProcessManager.html">ProcessManager</a>/GraphViz.php'); 
+00011 
+00013 $roleManager = <span class="keyword">new</span> <a class="code" href="classRoleManager.html">RoleManager</a>($dbTiki);
+00015 $activityManager = <span class="keyword">new</span> <a class="code" href="classActivityManager.html">ActivityManager</a>($dbTiki);
+00017 $processManager = <span class="keyword">new</span> <a class="code" href="classProcessManager.html">ProcessManager</a>($dbTiki);
+00019 $instanceManager = <span class="keyword">new</span> InstanceManager($dbTiki);
+00020 
+00021 <span class="comment">//$logger = new Logger('lib/Galaxia/log/pm.log');</span>
+00022 <span class="comment">//$processManager-&gt;attach_all($logger);</span>
+00023 <span class="comment">//$activityManager-&gt;attach_all($logger);</span>
+00024 <span class="comment">//$roleManager-&gt;attach_all($logger);</span>
+00025 
+00026 $smarty-&gt;assign('is_active_help',tra('indicates <span class="keywordflow">if</span> the process is active. Invalid processes cant be active'));
+00027 ?&gt;
+</pre></div><hr><address style="align: right;"><small>Generated on Mon Apr 21 11:15:31 2003 for Galaxia by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.3-rc3 </small></address>
