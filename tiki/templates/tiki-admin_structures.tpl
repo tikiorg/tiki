@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.19 2003-11-23 11:41:22 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.20 2003-12-05 11:53:21 chris_holman Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info --->
@@ -27,10 +27,9 @@
 <tr>
   <td class="{cycle advance=false}">
   <a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}">
+      {$channels[ix].pageName}
 	  {if $channels[ix].page_alias}
-        {$channels[ix].page_alias}
-	  {else}
-		{$channels[ix].pageName}
+        ({$channels[ix].page_alias})
 	  {/if}
   </a>
   </td>
