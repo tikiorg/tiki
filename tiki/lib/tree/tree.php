@@ -1,13 +1,13 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.4 2004-01-06 20:46:57 gravesweeper Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/tree.php,v 1.5 2004-01-15 22:03:16 mose Exp $
  *
  * \brief Base tree maker
  *
  * \author zaufi@sendmail.ru
  *
  */
-require_once (TIKI_LIB_PATH.'/debug/debugger.php');
+require_once ('lib/debug/debugger.php');
 
 /**
  * \brief Base class for all tree makers
