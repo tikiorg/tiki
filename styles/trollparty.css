@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.10 2003-11-07 23:00:48 mose Exp $
+$Id: trollparty.css,v 1.11 2003-11-13 10:49:01 ohertel Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -182,7 +182,7 @@ margin-top: 13px;
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.box-title 
+.box-title 
 {
 border-bottom: 1px dashed #2255aa;
 font-size: 90%;

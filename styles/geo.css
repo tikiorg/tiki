@@ -187,7 +187,7 @@ div.box {
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.box-title {
+.box-title {
 	border-bottom:    1px dashed #999970;
 	font-size:   10px;
 	overflow:   hidden;

@@ -139,7 +139,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	background-color:    #044873;
 	border-bottom:   1px solid black;
 	color:   white;
