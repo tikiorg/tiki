@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.137 2003-11-28 04:28:07 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.138 2003-11-28 04:30:29 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,8 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] Module to display pages where last comments added
+* [MOD] added optionnal numebr of entries displaye in module titles
 * [MOD] navigation buttons added to structures
 * [MOD] refactoring modules templates system to be more generic
 * [FIX] fixd some bugs in edit language admin panel
