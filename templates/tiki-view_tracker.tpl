@@ -117,8 +117,8 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 </td>
 {/if}
+
 {section name=ix loop=$items[user].field_values}
-{if $items[user].field_values[ix].isTblVisible eq 'y'}
 
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
@@ -164,8 +164,9 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 </td>
 {/if}
 {/if}
-{/if}
 {/section}
+
+
 {if $tracker_info.showCreated eq 'y'}
 <td>{$items[user].created|tiki_short_datetime}</td>
 {/if}

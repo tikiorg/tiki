@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.42 2004-02-05 10:29:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.43 2004-02-05 20:55:46 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -211,6 +211,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		}
 		
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
+		$_REQUEST['show']  = 'view';
 		for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fid = $fields["data"][$i]["fieldId"];
 			$ins_id = 'ins_' . $fid;
@@ -265,9 +266,9 @@ if ($_REQUEST["itemId"]) {
 						}
 						$ins_fields["data"][$i]['links'] = array();
 						if ($lst) {
-							$links = $tikilib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
+							$links = $trklib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
 							foreach ($links as $link) {
-								$ins_fields["data"][$i]['links'][$link] = $tikilib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
+								$ins_fields["data"][$i]['links'][$link] = $trklib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
 							}
 							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
 						}
@@ -317,26 +318,6 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-
-/*
-$items=$trklib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields);
-$cant_pages = ceil($items["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages',$cant_pages);
-$smarty->assign('actual_page',1+($offset/$maxRecords));
-if($items["cant"] > ($offset+$maxRecords)) {
-  $smarty->assign('next_offset',$offset + $maxRecords);
-} else {
-  $smarty->assign('next_offset',-1); 
-}
-// If offset is > 0 then prev_offset
-if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
-} else {
-  $smarty->assign('prev_offset',-1); 
-}
-
-$smarty->assign_by_ref('items',$items["data"]);
-*/
 
 $users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);

@@ -245,6 +245,148 @@ class TrackerLib extends TikiLib {
 		return $this->get_tracker_item($itemId);
 	}
 
+	/* experimental shared */
+	function get_item_value($trackerId,$itemId,$fieldId) {
+		$query = "select ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`itemId`=?";
+		return $this->getOne($query,array((int) $trackerId,(int)$fieldId,(int)$itemId));
+	}
+
+	/* experimental shared */
+	function get_items_list($trackerId,$fieldId,$value) {
+		$query = "select distinct ttif.`itemid` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
+		$result = $this->query($query,array((int) $trackerId,(int)$fieldId,$value));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['itemid'];
+		}
+		return $ret;
+	}
+
+
+	/* experimental shared */
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '') {
+		$filters = array();
+		
+		$mid = " where tti.`trackerId`=? ";
+		$bindvars = array((int) $trackerId);
+
+		if ($status) {
+			$mid.= " and tti.`status`=? ";
+			$bindvars[] = $status;
+		}
+		if (!$sort_mode) {
+			$sort_mode = "lastModif_desc";
+		}
+
+		$csort_mode = '';
+		$corder = "asc";
+		if (substr($sort_mode,0,2) == "f_" or $filtervalue) {
+			if ($initial) {
+				$mid.= "and ttif.`value` like ?";
+				$bindvars[] = $initial.'%';
+			} 
+			if ($filtervalue) {
+				$mid.= "and ttif.`value` like ?";
+				$bindvars[] = '%'.$filtervalue.'%';
+				$csort_mode = $filterfield;
+				$corder = "asc";
+			} else {
+				list($a,$csort_mode,$corder) = split('_',$sort_mode);
+			}
+			$bindvars[] = $csort_mode;
+			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? ";
+		} else {
+			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
+			$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
+		}
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+		$opts = $optsl = array();
+		while ($res = $result->fetchRow()) {
+			$fields = array();
+			$opts = array();
+			$itid = $res["itemId"];
+			$query2 = "select ttf.`fieldId`, `value` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
+				where ttif.`fieldId`=ttf.`fieldId` and `isTblVisible`=? and`itemId`=? order by `position` asc";
+			$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
+			$pass = true;
+			$last = array();
+			$res2 = array();
+			$kx = "";
+			while ($res1 = $result2->fetchRow()) {
+				$inid = $res1['fieldId'];
+				$fil[$inid] = $res1['value'];
+			}
+			
+			foreach ($listfields as $fieldId=>$fopt) {
+				if (isset($fil[$fieldId])) {
+					$fopt['value'] = $fil[$fieldId];
+				} else {
+					$fopt['value'] = "";
+				}
+				if ($filtervalue) {
+					if ($fieldId == $filterfield) {
+						if (strtolower($fopt["value"]) != strtolower($filtervalue)) {
+							$pass = false;
+						}
+					}
+				}
+				$fopt["links"] = array();
+				$fopt["linkId"] = '';
+				if ($fopt["type"] == 'r') {
+					if (!$opts) {
+						$opts = split(',',$fopt['options']);
+					}
+					$fopt["linkId"] = $this->get_item_id($opts[0],$opts[1],$fopt["value"]);
+					$fopt["trackerId"] = $opts[0];
+				} elseif ($fopt["type"] == 'l') {
+					if (!$optsl) {
+						$optsl = split(',',$fopt['options']);
+					}
+					$fopt["links"] = array();
+					$lst = $last[$optsl[2]];
+					if ($lst) {
+						$links = $this->get_items_list($optsl[0],$optsl[1],$lst);
+						foreach ($links as $link) {
+							$fopt["links"][$link] = $this->get_item_value($optsl[0],$link,$optsl[3]);
+						}
+						$fopt["trackerId"] = $optsl[0];
+					}
+				}
+				if ($fopt["name"] == $csort_mode) {
+					$kx = $fopt["value"].$itid;
+				}
+				$last[$fieldId] = $fopt["value"];
+				$fields[] = $fopt;
+			}
+// var_dump($fields);die();
+			$res["field_values"] = $fields;
+			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
+			if ($pass) {
+				$kl = $kx.$itid;
+				$ret["$kl"] = $res;
+			}
+		}
+
+		if ($corder == 'asc') {
+			ksort($ret);
+		} else {
+			krsort($ret);
+		}
+		//$ret=$this->sort_items_by_condition($ret,$sort_mode);
+		$retval = array();
+		$retval["data"] = array_values($ret);
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+
+
 	function replace_item($trackerId, $itemId, $ins_fields, $status = 'o') {
 		global $user;
 
