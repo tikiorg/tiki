@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.10 2004-07-17 16:14:04 giottomx Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.11 2004-07-20 19:51:57 teedog Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -16,6 +16,7 @@
 # and may safely ignore any error messages that appear.
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pageid','n');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_wiki_history', 'Can view wiki page history', 'registered', 'wiki');
 
 #
 # Tables of the Opinion-Network
