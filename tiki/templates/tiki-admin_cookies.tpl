@@ -20,7 +20,7 @@
 <br/>
 
 <h2>{tr}Cookies{/tr}</h2>
-<a href="tiki-admin_cookies.php?removeall=1" class="link">Remove all cookies</a><br/><br/>
+<a href="tiki-admin_cookies.php?removeall=1" class="link">{tr}Remove all cookies{/tr}</a><br/><br/>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
