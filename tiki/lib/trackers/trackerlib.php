@@ -730,7 +730,7 @@ class TrackerLib extends TikiLib {
 
 	function field_types() {
 		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row.'));
-		$type['n'] = array('label'=>tra('numeric field'), 'opt'=>true,  'help'=>tra('Numeric options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
+		$type['n'] = array('label'=>tra('numeric field'), 'opt'=>true,  'help'=>tra('Numeric options: 1,size,prepend,append with size in chars, prepend will be displayed before the field append will be displayed just after, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
 		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: 1,size,prepend,append,max with size in chars, prepend will be display before the field append wil be display just after, max is the maximum number of characters that can be saved, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
 		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height,max with option is 1 or 0, rest is size indicated in chars and lines, max is the maximum number of characters that can be saved.'));
 		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas.') );
