@@ -395,14 +395,15 @@ class WikiLib extends TikiLib {
 	preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/", $page, $words2);
 	$words = array_unique(array_merge($words[0], $words2[0]));
 	$exps = array();
-
+	$bindvars=array();
 	foreach ($words as $word) {
-	    $exps[] = "pageName like '%$word%'";
+	    $exps[] = "`pageName` like ?";
+	    $bindvars[] = "%$word%";
 	}
 
 	$exp = implode(" or ", $exps);
 	$query = "select `pageName` from `tiki_pages` where $exp";
-	$result = $this->query($query);
+	$result = $this->query($query,$bindvars);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -426,8 +427,8 @@ class WikiLib extends TikiLib {
     function lock_page($page) {
 	global $user;
 
-	$query = "update `tiki_pages` set `flag`='L' where `pageName`=?";
-	$result = $this->query($query, array( $page ) );
+	$query = "update `tiki_pages` set `flag`=? where `pageName`=?";
+	$result = $this->query($query, array( "L",$page ) );
 
 	if (isset($user)) {
 	    $query = "update `tiki_pages` set `user`=? where `pageName`=?";
