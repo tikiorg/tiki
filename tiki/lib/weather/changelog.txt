@@ -1,0 +1,74 @@
+PHP Weather Script
+
+What's New / Changelog
+
+
+2003.10.10 - Weather 2.9 released
+Several changes a fixes submitted by others - thanks! :-)
+- kPa conversion for the Barometer by Bruce Buchanan <brucealmighty@nexicom.net>
+- Cache bug in Weather causing caching to fail fixed by Evren Yurtesen <yurtesen@ispro.net.tr>
+- Fix for a change in Weather.com's format which prevented parsing of Location 
+and Last Updated by boinger <boinger@fuck-you.org> http://fuck-you.org/ (no joke!)
+
+
+2003.07.23 - Weather 2.8 released
+- Weather.com changed the url for fetching weather data... again...
+- the webcell include was moved outside the class, so that calling it multiple
+times doesn't result in an error (duh)
+
+
+2003.05.23 - Weather 2.7 released
+- Weather.com changed the url for fetching weather data. Small update to
+fix this.
+- A couple fixes to sample.php as pointed out by a few people :-)
+
+
+2003.02.06 - Weather 2.5 released
+- Fix to getFeelsLike, which was not properly reporting the "feels like"
+temperature. Thanks to Fred Damstra for pointing this out!
+
+
+2003.01.09 - Weather 2.4 released
+- Weather.com changed their site format again - more major this time. (WebCell
+is really getting handy :-) ) This update is required to parse the new format.
+
+
+2002.11.23 - Weather 2.3 released
+- Weather.com changed their site format. This update is required to parse the
+new format.
+
+
+2002.07.25 - Weather 2.21 released
+- Weather.com moved some files around. Just had to update the URL in the 
+Weather.php class.
+- Removed the Warning error report from WebCell, just because it was annoying
+and wasn't necessary.
+
+
+2002.07.04 - Weather 2.2 released
+- this version uses a hacked version of WebCell and performs some data manipulation 
+in order to try and make it more robust (the Weather.com site is changing too 
+rapidly - this is an attempt to parse the code more reliably)
+- due to the above I was able to recombine the 2 scripts (from version 2.1) back 
+into a single script. 
+
+
+2002.06.06 - Weather 2.1 released
+- split into two versions, an American one and an International one
+- removed debug by default (accidently left on in last version)
+
+
+2002.04.29 - Weather 2.0 released
+- now uses WebCell to retrieve and parse much of the data, making it much easier to
+update to Weather.com's changing site formats. You must have a copy of WebCell in
+the directory with Weather. 
+- WebCell includes integrated caching functions. See Weather's creator function for
+information on how to use these with Weather
+- now returns proper variable types. eg: getTemp returns an integer, instead of a
+string
+- function getFeelsLike added - general updates to make it work with Weather.com's
+new site format
+
+
+2000.12.15 - Weather 0.5 beta released
+
