@@ -313,7 +313,7 @@ class QuizLib extends TikiLib {
       // update an existing quiz
       $query = "update tiki_quiz_question_options set 
       points=$points,
-      option = '$option'
+      optionText = '$option'
       where optionId = $optionId and questionId=$questionId";
       $result = $this->query($query);
     } else {
