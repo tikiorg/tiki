@@ -24,6 +24,13 @@ class NotepadLib extends TikiLib {
     return $res;	
   }
   
+  function set_note_parsing($user,$noteId,$mode)
+  {
+    $query = "update tiki_user_notes set parse_mode='$mode' where user='$user' and noteId=$noteId";
+    $this->query($query);
+    return true;
+  }
+  
   function remove_note($user,$noteId)
   {
     $query = "delete from tiki_user_notes where user='$user' and noteId=$noteId";

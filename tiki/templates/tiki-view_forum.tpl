@@ -136,82 +136,70 @@
 <tr>
   <td width="2%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
   <td width="40%" class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
-  <td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
-  <td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}reads{/tr}</a></td>
-  <td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'average_desc'}average_asc{else}average_desc{/if}">{tr}pts{/tr}</a></td>
-  <td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
-  <td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}">{tr}author{/tr}</a></td>
+  {if $forum_info.topics_list_replies eq 'y'}
+  	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'replies_desc'}replies_asc{else}replies_desc{/if}">{tr}replies{/tr}</a></td>
+  {/if}
+  {if $forum_info.topics_list_reads eq 'y'}
+  	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}reads{/tr}</a></td>
+  {/if}
+  {if $forum_info.topics_list_pts eq 'y'}
+  	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'average_desc'}average_asc{else}average_desc{/if}">{tr}pts{/tr}</a></td>
+  {/if}
+  {if $forum_info.topics_list_lastpost eq 'y'}
+  	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+  {/if}
+  {if $forum_info.topics_list_author eq 'y'}
+  	<td class="forumheading"><a class="lforumheading" href="tiki-view_forum.php?comments_threshold={$comments_threshold}&amp;forumId={$forum_info.forumId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={if $comments_sort_mode eq 'userName_desc'}userName_asc{else}userName_desc{/if}">{tr}author{/tr}</a></td>
+  {/if}
 </tr>
+{cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 {if $comments_coms[ix].commentDate > $last_forum_visit}
 {assign var="newtopic" value="_new"}
 {else}
 {assign var="newtopic" value=""}
 {/if}
-{if $smarty.section.ix.index % 2}
+
 <tr>
-  <td class="topictitleodd">
+  <td class="topictitle{cycle advance=false}">
   {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="folder" />{/if}
   {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="announce" />{/if}
   {if $comments_coms[ix].type eq 'h'}<img src="img/icons/folder_hot{$newtopic}.gif" alt="hot" />{/if}
   {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
   {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
   </td>
-  <td class="topictitleodd"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+  <td class="topictitle{cycle advance=false}"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $tiki_p_admin_forum eq 'y'}
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}edit{/tr}</a>
+     class="admlink"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}x{/tr}</a>
+     class="admlink"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
   {/if}
   {if $feature_forum_topicd eq 'y'}
   <br/>
   <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
   {/if}
   </td>
-  <td class="topicrepliesodd">{$comments_coms[ix].replies.numReplies}</td>
-  <td class="topicreadsodd">{$comments_coms[ix].hits}</td>
-  <td class="topicscoreodd">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
-  {if $comments_coms[ix].replies.numReplies}
-  <br/>
-  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
+  {if $forum_info.topics_list_replies eq 'y'}
+  	<td style="text-align:right;" class="topicreplies{cycle advance=false}">{$comments_coms[ix].replies.numReplies}</td>
   {/if}
-  </td>
-  <td class="topicauthorodd">{$comments_coms[ix].userName}</td>
-</tr>
-{else}
-<tr>
-  <td class="topictitleeven">
-  {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="folder" />{/if}
-  {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="announce" />{/if}
-  {if $comments_coms[ix].type eq 'h'}<img src="img/icons/folder_hot{$newtopic}.gif" alt="hot" />{/if}
-  {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
-  {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
-  </td>
-  <td class="topictitleeven"><a class="forumname" href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
-  {if $tiki_p_admin_forum eq 'y'}
-  <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}edit{/tr}</a>
-  <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}x{/tr}</a>
-  {/if}     
-  {if $feature_forum_topicd eq 'y'}
-  <br/>
-  <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
+  {if $forum_info.topics_list_reads eq 'y'}
+  	<td style="text-align:right;" class="topicreads{cycle advance=false}">{$comments_coms[ix].hits}</td>
   {/if}
-  </td>
-  <td class="topicreplieseven">{$comments_coms[ix].replies.numReplies}</td>
-  <td class="topicreadseven">{$comments_coms[ix].hits}</td>
-  <td class="topicscoreeven">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastposteven">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
-  {if $comments_coms[ix].replies.numReplies}
-  <br/>
-  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>
+  {if $forum_info.topics_list_pts eq 'y'}
+  	<td style="text-align:right;" class="topicscore{cycle advance=false}">{$comments_coms[ix].average|string_format:"%.2f"}</td>
   {/if}
-  </td>     
-  <td class="topicauthoreven">{$comments_coms[ix].userName}</td>
-{/if}
+  {if $forum_info.topics_list_lastpost eq 'y'}
+  	  <td class="topiclastpost{cycle advance=false}">{$comments_coms[ix].lastPost|date_format:"%b %d [%H:%M]"}
+	  {if $comments_coms[ix].replies.numReplies}
+	  <br/>
+	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
+	  {/if}
+	  </td>
+  {/if}
+  {if $forum_info.topics_list_author eq 'y'}
+  	<td class="topicauthor{cycle}">{$comments_coms[ix].userName}</td>
+  {/if}
 </tr>
 {/section}
 </table>

@@ -66,13 +66,14 @@ if($tikilib->page_exists($info['name'])) {
 }
 
 
-if(!isset($_REQUEST['parse_mode'])) $_REQUEST['parse_mode']='raw';
+if(!isset($_REQUEST['parse_mode'])) $_REQUEST['parse_mode']=$info['parse_mode'];
 if($_REQUEST['parse_mode']=='raw') {
   $info['parsed']=nl2br(htmlentities($info['data']));
 }
 if($_REQUEST['parse_mode']=='wiki') {
   $info['parsed']=$tikilib->parse_data($info['data']);
 }
+$notepadlib->set_note_parsing($user,$_REQUEST['noteId'],$_REQUEST['parse_mode']);
 $smarty->assign('parse_mode',$_REQUEST['parse_mode']);
 
 

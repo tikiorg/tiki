@@ -22,15 +22,18 @@
   <table width="100%" border="1" style="border: 1px solid black;">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
+    {if $forum_info.vote_threads eq 'y'}
     <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
-  <b>{tr}Vote{/tr}</b>: 
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
-  </td>{/if}
+	  <b>{tr}Vote{/tr}</b>: 
+	  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
+	  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
+	  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
+	  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
+	  <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
+  	  </td>
+  	{/if}
+  	{/if}
   <td style="font-size:8pt;">
   {tr}reads{/tr}: {$thread_info.hits}
   </td>
@@ -76,7 +79,7 @@
 <div id='{$postclass}' class="threadpost">
   <br/>
   {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
+    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?parentId={$parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
     <form method="post" action="tiki-view_forum_thread.php">
     <input type="hidden" name="comments_offset" value="{$comments_offset}" />
@@ -216,18 +219,29 @@
   </div>
   </td>
   <td  class="threads{cycle}r" width="85%">
-  <b>{$comments_coms[ix].title}</b>
-  {if $tiki_p_admin_forum eq 'y'}
-  [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}edit{/tr}</a>]
-  [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}x{/tr}</a>]
-  {/if}     
-  [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;quote={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink">{tr}quote{/tr}</a>]
-  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-  [<a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}">{tr}private message{/tr}</a>]
-  {/if}
+  <table width="100%">
+  <tr>
+  	<td>
+  		<b>{$comments_coms[ix].title}</b>
+  	</td>
+  	<td style="text-align:right;">
+	  {if $tiki_p_admin_forum eq 'y'}
+	  <a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
+	     class="admlink"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+	  <a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
+	     class="admlink"><img src='img/icons/trash.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+	  {/if}     
+	  <a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;quote={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
+	     class="admlink"><img src='img/icons/linkto.gif' border='0' alt='{tr}reply{/tr}' title='{tr}reply{/tr}' /></a>
+	  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+	  {/if}
+	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+		<a title="{tr}Save to notepad{/tr}" href="{sameurl savenotepad=$comments_coms[ix].threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+	  {/if}
+	</td>
+  </tr>
+  </table>
   <br/><br/>
   {$comments_coms[ix].parsed}
   <br/><br/>
@@ -236,6 +250,7 @@
     <td style="font-size:8pt;">
     {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  
     </td>
+    {if $forum_info.vote_threads eq 'y'}
     <td style="font-size:8pt;">
     {tr}score{/tr}</b>: {$comments_coms[ix].points}
     </td>
@@ -249,6 +264,7 @@
   <a class="forumvotelink" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
   <a class="forumvotelink" href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
     </td>
+    {/if}
     {/if}
   </tr>
   </table>

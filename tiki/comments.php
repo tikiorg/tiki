@@ -103,10 +103,10 @@ if($tiki_p_post_comments == 'y') {
       //Replace things between square brackets by links
       $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
       if($_REQUEST["comments_threadId"]==0) {
-        $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+        $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
       } else {
         if($tiki_p_edit_comments == 'y') {
-          $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+          $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
         }
       }
     } else {

@@ -80,6 +80,31 @@
 <option value="7776000" {if $pruneMaxAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
 </select>
 </td></tr>
+<tr>
+	<td class="formcolor">{tr}Topic list configuration{/tr}</td>
+	<td class="formcolor">
+		<table class="normal">
+			<tr>
+				<td>{tr}Replies{/tr}</td>
+				<td>{tr}Reads{/tr}</td>
+				<td>{tr}Points{/tr}</td>
+				<td>{tr}Last post{/tr}</td>
+				<td>{tr}author{/tr}</td>
+			</tr>
+			<tr>
+				<td><input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="topics_list_reads" {if $topics_list_reads eq 'y'}checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="topics_list_pts" {if $topics_list_pts eq 'y'}checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="topics_list_lastpost" {if $topics_list_lastpost eq 'y'}checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="topics_list_author" {if $topics_list_author eq 'y'}checked="checked"{/if} /></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Threads can be voted{/tr}</td>
+	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
+</tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -104,48 +129,29 @@
 <td class="heading">{tr}users{/tr}</td>
 <td class="heading">{tr}age{/tr}</td>
 <td class="heading">{tr}ppd{/tr}</td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+<!--<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>-->
 <td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print="false"}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].name}</td>
-<td style="text-align:right;" class="odd">{$channels[user].threads}</td>
-<td style="text-align:right;" class="odd">{$channels[user].comments}</td>
-<td style="text-align:right;" class="odd">{$channels[user].users}</td>
-<td style="text-align:right;" class="odd">{$channels[user].age}</td>
-<td style="text-align:right;" class="odd">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td style="text-align:right;" class="odd">{$channels[user].lastPost|tiki_short_datetime}</td>
-<td style="text-align:right;" class="odd">{$channels[user].hits}</td>
-<td class="odd">
+<td class="odd"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].age}</td>
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+<!--<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].lastPost|tiki_short_datetime}</td>-->
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
+<td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}">{tr}x{/tr}</a>
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}">{tr}edit{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
+   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}permissions{/tr}' title='{tr}permissions{/tr}' /></a>
 {/if}
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].name}</td>
-<td style="text-align:right;" class="even">{$channels[user].threads}</td>
-<td style="text-align:right;" class="even">{$channels[user].comments}</td>
-<td style="text-align:right;" class="even">{$channels[user].users}</td>
-<td style="text-align:right;" class="even">{$channels[user].age}</td>
-<td style="text-align:right;" class="even">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td style="text-align:right;" class="even">{$channels[user].lastPost|tiki_short_datetime}</td>
-<td style="text-align:right;" class="even">{$channels[user].hits}</td>
-<td class="even">
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}">{tr}x{/tr}</a>
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}">{tr}edit{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
-{/if}
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <div class="mini">

@@ -60,6 +60,12 @@ if($_REQUEST["forumId"]) {
   $info["topicOrdering"]='commentDate_desc';
   $info["threadOrdering"]='commentDate_desc';
   $info["usePruneUnreplied"]='n';
+  $info["topics_list_replies"]='y';
+  $info["topics_list_reads"]='y';
+  $info["topics_list_pts"]='y';
+  $info["topics_list_lastpost"]='y';
+  $info["topics_list_author"]='y';        
+  $info["vote_threads"]='y';        
   $info["pruneUnrepliedAge"]=60*60*24*30;
   $info["usePruneOld"]='n';
   $info["pruneMaxAge"]= 60*60*24*30;
@@ -75,6 +81,12 @@ $smarty->assign('section',$info["section"]);
 $smarty->assign('topicsPerPage',$info["topicsPerPage"]);
 $smarty->assign('mail',$info["mail"]);
 $smarty->assign('useMail',$info["useMail"]);
+$smarty->assign('topics_list_replies',$info['topics_list_replies']);
+$smarty->assign('topics_list_reads',$info['topics_list_reads']);
+$smarty->assign('topics_list_pts',$info['topics_list_pts']);
+$smarty->assign('topics_list_lastpost',$info['topics_list_lastpost']);
+$smarty->assign('topics_list_author',$info['topics_list_author']);
+$smarty->assign('vote_threads',$info['vote_threads']);
 $smarty->assign('usePruneUnreplied',$info["usePruneUnreplied"]);
 $smarty->assign('pruneUnrepliedAge',$info["pruneUnrepliedAge"]);
 $smarty->assign('usePruneOld',$info["usePruneOld"]);
@@ -108,10 +120,16 @@ if(isset($_REQUEST["save"])) {
   } else {
     $usePruneOld='n';
   }
+  $_REQUEST['vote_threads']=isset($_REQUEST['vote_threads'])?'y':'n';	
+  $_REQUEST['topics_list_reads']=isset($_REQUEST['topics_list_reads'])?'y':'n';
+  $_REQUEST['topics_list_replies']=isset($_REQUEST['topics_list_replies'])?'y':'n';
+  $_REQUEST['topics_list_pts']=isset($_REQUEST['topics_list_pts'])?'y':'n';
+  $_REQUEST['topics_list_lastpost']=isset($_REQUEST['topics_list_lastpost'])?'y':'n';
+  $_REQUEST['topics_list_author']=isset($_REQUEST['topics_list_author'])?'y':'n';
 
   if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
-  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"]);                         
+  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"],$_REQUEST['topics_list_replies'],$_REQUEST['topics_list_reads'],$_REQUEST['topics_list_pts'],$_REQUEST['topics_list_lastpost'],$_REQUEST['topics_list_author'],$_REQUEST['vote_threads']);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -135,6 +153,12 @@ if(isset($_REQUEST["save"])) {
   $info["usePruneOld"]='n';
   $info["pruneMaxAge"]= 60*60*24*30;
   $info["forumId"] = 0;
+   $info["topics_list_replies"]='y';
+  $info["topics_list_reads"]='y';
+  $info["topics_list_pts"]='y';
+  $info["topics_list_lastpost"]='y';
+  $info["topics_list_author"]='y';        
+  $info["vote_threads"]='y';        
   $smarty->assign('forumId',$info["forumId"]);
   $smarty->assign('name',$info["name"]);
   $smarty->assign('description',$info["description"]);
@@ -144,6 +168,12 @@ if(isset($_REQUEST["save"])) {
   $smarty->assign('topicsPerPage',$info["topicsPerPage"]);
   $smarty->assign('mail',$info["mail"]);
   $smarty->assign('useMail',$info["useMail"]);
+  $smarty->assign('topics_list_replies',$info['topics_list_replies']);
+  $smarty->assign('topics_list_reads',$info['topics_list_reads']);
+  $smarty->assign('topics_list_pts',$info['topics_list_pts']);
+  $smarty->assign('topics_list_lastpost',$info['topics_list_lastpost']);
+  $smarty->assign('topics_list_author',$info['topics_list_author']);
+  $smarty->assign('vote_threads',$info['vote_threads']);
   $smarty->assign('usePruneUnreplied',$info["usePruneUnreplied"]);
   $smarty->assign('pruneUnrepliedAge',$info["pruneUnrepliedAge"]);
   $smarty->assign('usePruneOld',$info["usePruneOld"]);

@@ -20,7 +20,8 @@ class Comments extends TikiLib {
                          $moderator, $mail, $useMail,
                          $usePruneUnreplied, $pruneUnrepliedAge,
                          $usePruneOld, $pruneMaxAge, $topicsPerPage,
-                         $topicOrdering, $threadOrdering,$section)
+                         $topicOrdering, $threadOrdering,$section,
+                         $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads)
   {
     $name = addslashes($name);
     $description = addslashes($description);
@@ -39,6 +40,12 @@ class Comments extends TikiLib {
                 usePruneUnreplied = '$usePruneUnreplied',
                 pruneUnrepliedAge = $pruneUnrepliedAge,
                 usePruneOld = '$usePruneOld',
+                vote_threads = '$vote_threads',
+                topics_list_reads = '$topics_list_reads',
+                topics_list_replies = '$topics_list_replies',
+                topics_list_pts = '$topics_list_pts',
+                topics_list_lastpost = '$topics_list_lastpost',
+                topics_list_author = '$topics_list_author',
                 topicsPerPage = $topicsPerPage,
                 topicOrdering = '$topicOrdering',
                 threadOrdering = '$threadOrdering',
@@ -49,12 +56,14 @@ class Comments extends TikiLib {
       $now = date("U");
       $query = "insert into tiki_forums(name, description, created, lastPost, threads,
                 comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
-                pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section) 
+                pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section,
+                topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
                         $pruneMaxAge, $topicsPerPage,
-                        '$topicOrdering','$threadOrdering','$section') ";
+                        '$topicOrdering','$threadOrdering','$section',
+                        '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads') ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
@@ -302,6 +311,7 @@ class Comments extends TikiLib {
     $res["parsed"] = $this->parse_comment_data($res["data"]);
     return $res;
   }
+
     
   function get_comment_father($id) {
     $query = "select parentId from tiki_comments where threadId=$id";
@@ -378,7 +388,7 @@ class Comments extends TikiLib {
      $data = $this->parse_smileys($data);
      $data = preg_replace("/---/","<hr/>",$data);
      // Reemplazar --- por <hr/>
-     return $data;
+     return nl2br($data);
   }    
   
   /*****************/

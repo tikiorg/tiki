@@ -405,6 +405,14 @@ $smarty->assign('blog_list_order',$blog_list_order);
 
 $blog_list_user = 'text';
 $smarty->assign('blog_list_user',$blog_list_user);
+
+$smarty->assign('forum_list_topics','y');
+$smarty->assign('forum_list_posts','y');
+$smarty->assign('forum_list_ppd','y');
+$smarty->assign('forum_list_lastpost','y');
+$smarty->assign('forum_list_visits','y');
+$smarty->assign('forum_list_desc','y');
+
 $blog_list_title = 'y';
 $blog_list_description = 'y';
 $blog_list_created = 'y';

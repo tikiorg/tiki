@@ -118,11 +118,11 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
               $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
               @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
           }
-          $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"]);
+          $commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"]);
           $commentslib->register_forum_post($_REQUEST["forumId"],0);
         } else {
           if($tiki_p_admin_forum == 'y') {
-            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"]);
+            $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], ($_REQUEST["comments_data"]),$_REQUEST["comment_topictype"]);
           }
         }
       } else {
@@ -174,7 +174,7 @@ if($tiki_p_admin_forum == 'y') {
 $smarty->assign('comment_preview','n');
 if(isset($_REQUEST["comments_previewComment"])) {
   $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
-  $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  $smarty->assign('comments_preview_data',($commentslib->parse_comment_data($_REQUEST["comments_data"])));
   $smarty->assign('comment_title',$_REQUEST["comments_title"]);
   $smarty->assign('comment_data',$_REQUEST["comments_data"]);
   $smarty->assign('comment_topictype',$_REQUEST["comment_topictype"]);
