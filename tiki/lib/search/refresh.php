@@ -6,33 +6,45 @@ function refresh_search_index() {
 
   // check if we have to run. Run every n-th click:
   $n=100; //todo: make it configurable
+  $n=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   if(rand(1,$n)==1) {
     // get a random location
-    $locs=array("wiki","forum","trackers","oldest"); // to be continued
+    $locs=array();
+    global $feature_wiki;
+    if ($feature_wiki == 'y') $locs[]="random_refresh_index_wiki";
+    global $feature_forums;
+    if ($feature_forums == 'y') $locs[]="random_refresh_index_forum";
+    global $feature_trackers;
+    if ($feature_trackers == 'y') $locs[]="random_refresh_index_trackers";
+    // comments can be everywhere?
+    $locs[]="random_refresh_index_comments";
+    // some refreshes to enhance the refreshing stats
+    $locs[]="refresh_index_oldest";
+    //print_r($locs);
     $location=$locs[rand(0,count($locs)-1)];
     // random refresh
-    switch ($location) {
-      case "wiki":
-        random_refresh_index_wiki();
-	break;
-      case "forum":
-        random_refresh_index_forum();
-	break;
-      case "trackers":
-        random_refresh_index_trackers();
-	break;
-      case "oldest":
-        refresh_index_oldest();
-	break;
-    }
+    //echo "$location";
+    call_user_func ($location);
+  }
+}
 
+function random_refresh_index_comments() {
+  //find random forum comment
+  global $tikilib;
+  // get random comment
+  $cant=$tikilib->getOne("select count(*) from `tiki_comments`",array());
+  if($cant>0) {
+    $query="select * from `tiki_comments`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["title"]." ".$res["data"]." ".$res["summary"]);
+    insert_index($words,$res["objectType"].'comment',$res["threadId"]);
   }
 }
 
 function random_refresh_index_forum() {
-  //find random forum comment
   global $tikilib;
   
 }
