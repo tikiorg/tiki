@@ -25,6 +25,14 @@ if(isset($_REQUEST["register"])) {
     die;
   }
   
+  if($rnd_num_reg == 'y') {
+  	if(!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode']) {
+    $smarty->assign('msg',tra("Wrong registration code"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;	
+  	}
+  }
+  
   // VALIDATE NAME HERE
   if(strtolower($_REQUEST["name"])=='admin') {
     $smarty->assign('msg',tra("Invalid username"));

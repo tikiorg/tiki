@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Mechanism to prevent script/robotic user registration is supported, Tiki generates
+  a graphical number that the user must enter in the registration form to be registered.
+  This feature is optional and can be enabled/disabled from the admin->login menu.
+* [NEW] New theme added: neat based on plone.
 * [NEW] A single wiki-page can be a multi-page page using ...page... to sepparate pages,
   individual pages can be viewed using navigation links or a slideshow.
 * [NEW] A wiki structure can be created/imported from a text representation of the tree
