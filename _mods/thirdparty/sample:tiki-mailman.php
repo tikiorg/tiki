@@ -8,14 +8,17 @@ a { text-decoration : none; color : #446688; }
 <table border="0" width="100%" height="100%">
 <tr><td valign="top" width="130" style="width:130px;border-right:1px dashed #999999;padding:10px;" rowspan="2">
 <?
-$urls['info'] = "http://ml.nguild.org/cgi-bin/mailman/listinfo/%s";
-$urls['parchives'] = "http://ml.nguild.org/pipermail/%s/";
-$urls['archives'] = "http://ml.nguild.org/cgi-bin/mailman/private/%s/";
-$urls['admin'] = "http://ml.nguild.org/cgi-bin/mailman/admin/%s";
-$urls['members'] = "http://ml.nguild.org/cgi-bin/mailman/admin/%s/members";
-$urls['queue'] = "http://ml.nguild.org/cgi-bin/mailman/admindb/%s";
+$domain = "[:::[domain]:::]";
+$options = "-a -V $domain";
 
-exec("sudo /usr/sbin/list_lists",$ls);
+$urls['info'] = "http://$domain/cgi-bin/mailman/listinfo/%s";
+$urls['parchives'] = "http://$domain/pipermail/%s/";
+$urls['archives'] = "http://$domain/cgi-bin/mailman/private/%s/";
+$urls['admin'] = "http://$domain/cgi-bin/mailman/admin/%s";
+$urls['members'] = "http://$domain/cgi-bin/mailman/admin/%s/members";
+$urls['queue'] = "http://$domain/cgi-bin/mailman/admindb/%s";
+
+exec("sudo /usr/sbin/list_lists $options",$ls);
 echo "<div style='font-weight:bold;font-size:1.2em;'><a href='http://nguild.org'>N'GUILD</a>LISTS</div>";
 echo "<div style='font-size:.8em;'><a href='list.php'>". array_shift($ls). "</a></div><br />\n";
 foreach ($ls as $l) {
