@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.55 2004-08-26 19:24:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.56 2004-09-15 17:02:02 sylvieg Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -128,7 +128,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 <table class="normal">
 <tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
-<tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label></td><td>
+<tr class="formcolor"><td><label for="groups_inc">{tr}Include the permissions of{/tr}:</label></td><td>
 <select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
 {foreach key=gr item=yn from=$inc}
 <option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
