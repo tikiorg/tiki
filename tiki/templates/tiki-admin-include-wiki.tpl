@@ -125,6 +125,7 @@
     </select>
     </td>
     </tr>
+    <tr><td colspan="2" class="form"><a href="tiki-admin.php?page=wiki&amp;purgestatic=y" class="link">{tr}remove ghost static pages{/tr}</a></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="staticwiki" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
