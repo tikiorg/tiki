@@ -37,7 +37,7 @@ if(isset($_REQUEST["postId"])) {
 }
 $smarty->assign('postId',$postId);
 
-$smarty->assign('data','');
+$smarty->assign('data',' ');
 $smarty->assign('created',date("U"));
 // If the articleId is passed then get the article data
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
@@ -59,7 +59,7 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
       die;  
     }
   }
-  
+  if(empty($data["data"])) $data["data"]=' ';
   $smarty->assign('data',$data["data"]);
   $smarty->assign('created',$data["created"]);
   $smarty->assign('parsed_data',$tikilib->parse_data($data["data"]));
@@ -78,7 +78,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('spellcheck','n');
   }
   }
-
+  if(empty($data)) $data=' ';
   $smarty->assign('data',$data);
   $smarty->assign('parsed_data',$parsed_data);
   $smarty->assign('preview','y');
