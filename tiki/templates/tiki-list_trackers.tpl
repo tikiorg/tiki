@@ -1,4 +1,14 @@
 <a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a><br /><br />
+
+<form method="get" action="tiki-list_trackers.php">
+<table class="findtable"><tr>
+<td>{tr}Find{/tr}</td>
+<td><input type="text" name="find" value="{$find|escape}" /></td>
+<td><input type="submit" value="{tr}find{/tr}" name="search" /></td>
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" /></td>
+</tr></table>
+</form>
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_trackers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
