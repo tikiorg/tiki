@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=RefererStats" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Referer stats{/tr}">

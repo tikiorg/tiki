@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Categories" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Categories{/tr}">
@@ -12,7 +12,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-directory_admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin directory categories tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 <br /><br />
 {* Display the title using parent *}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.24 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.25 2003-12-10 23:08:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,6 +96,7 @@ if (isset($_REQUEST["upload"])) {
 
 	if (!empty($_REQUEST["url"])) {
 		// Get the image from a URL
+		if (@getimagesize($_REQUEST["url"])) {
 		$fp = @fopen($_REQUEST["url"], "r");
 
 		if ($fp) {
@@ -112,6 +113,9 @@ if (isset($_REQUEST["upload"])) {
 			$size = strlen($data);
 		} else {
 			$error_msg = tra("Cannot get image from URL");
+		}
+		} else {
+			$error_msg = tra("That is not an image (or you have php < 4.0.5)");
 		}
 	} else {
 		// We process here file uploads

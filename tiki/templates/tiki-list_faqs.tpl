@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
 
 {if $feature_help eq 'y'}
-<!-- the help link info --->
+<!-- the help link info -->
 <a href="http://tikiwiki.org/tiki-index.php?page=FAQ" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}FAQ{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
@@ -13,7 +13,7 @@
 
 <!-- begin -->
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 <br /><br />
 {if $tiki_p_admin_faqs eq 'y'}

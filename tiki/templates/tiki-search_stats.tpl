@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=SearchStats" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Search Stats{/tr}">

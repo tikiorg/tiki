@@ -110,6 +110,8 @@ $lang=Array(
 "You should first ask that a calendar is created, so you can create events attached to it." => "Vous devez d'abord demandé qu'un calendrier soit créé pour pouvoir y attacher des événements.",
 "Go" => "Réactualiser",
 "this structure" => "cette structure",
+"Classified" => "Petite annonce",
+"Review" => "Compte rendu",
 // ### end of unused words
 
 // ### start of untranslated words

@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
 
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Banners" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Banners{/tr}">

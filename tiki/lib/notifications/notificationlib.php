@@ -39,24 +39,18 @@ class NotificationLib extends TikiLib {
 	}
 
 	function add_mail_event($event, $object, $email) {
-		$bindvars = array($event,$object,$email);
-		$query = "delete from `tiki_mail_events` where `event`=? and `object`=? and `email`=?";
-		$this->query($query,$bindvars,-1,-1,false);
 		$query = "insert into `tiki_mail_events`(`event`,`object`,`email`) values(?,?,?)";
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query, array($event,$object,$email) );
 	}
 
 	function remove_mail_event($event, $object, $email) {
-		
 		$query = "delete from `tiki_mail_events` where `event`=? and `object`=? and `email`=?";
 		$result = $this->query($query,array($event,$object,$email));
 	}
 
 	function get_mail_events($event, $object) {
-
-		$query = "select `email` from `tiki_mail_events`
-		where `event`=? and (`object`=? or `object`='*')";
-		$result = $this->query($query,array($event,(string) $object));
+		$query = "select `email` from `tiki_mail_events` where `event`=? and (`object`=? or `object`='*')";
+		$result = $this->query($query, array($event,$object) );
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.17 2003-09-05 20:14:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.18 2003-12-10 23:08:33 mose Exp $ *}
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
@@ -20,7 +20,7 @@
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
 <tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$groupname|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc">{$groupdesc|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc">{$groupdesc}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
 <select name="include_groups[]" multiple="multiple" size="4">
 {section name=ix loop=$users}
@@ -29,6 +29,7 @@
 {/section}
 </select>
 </td></tr>
+<tr><td class="formcolor">{tr}Home page{/tr}</td><td class="formcolor"><input type="text" name="home" value="{$grouphome|escape}" />
 {if $group ne ''}
 <tr><td  class="formcolor">&nbsp;
 <input type="hidden" name="olgroup" value="{$group|escape}">

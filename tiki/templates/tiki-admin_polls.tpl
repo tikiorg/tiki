@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Polls" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin polls{/tr}">

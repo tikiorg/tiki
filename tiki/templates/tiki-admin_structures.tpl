@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.20 2003-12-05 11:53:21 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.21 2003-12-10 23:08:33 mose Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
   
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Structures" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Structures{/tr}">
@@ -14,7 +14,7 @@
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>
 {/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 <h2>{tr}Structures{/tr}</h2>
 <table class="normal">

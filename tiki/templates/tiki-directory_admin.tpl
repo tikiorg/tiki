@@ -1,5 +1,5 @@
 <a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Directory" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Directory{/tr}">
@@ -11,7 +11,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-directory_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin directory tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 
 

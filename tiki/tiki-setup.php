@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.173 2003-12-02 08:30:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.174 2003-12-10 23:08:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1077,6 +1077,8 @@ if ($https_login == 'y' || $https_login_required == 'y') {
     $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 }
 
+// removal of preferences.php file suggested and patched by Lee Essen
+/* 
 if (!file_exists("templates_c/" . $tikidomain . "preferences.php")) {
     $prefs = $tikilib->get_all_preferences();
 
@@ -1107,13 +1109,21 @@ if (!file_exists("templates_c/" . $tikidomain . "preferences.php")) {
 } else {
     include_once ("templates_c/" . $tikidomain . "preferences.php");
 }
+*/
+// end of preferences.php removal
+// start of replacement : get all prefs from db once
+$prefs = $tikilib->get_all_preferences();
+foreach ($prefs as $name => $val) {
+	$$name = $val;
+	$smarty->assign("$name", $val);
+}
 
 $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
 if($useGroupHome == 'y' and isset($user)) {
     $group = $userlib->get_user_default_group($user);
     $groupHome = $userlib->get_group_home($group);
     if ($groupHome) {
-        $tikiIndex = $groupHome;
+        $tikiIndex = "tiki-index.php?page=".$groupHome;
     }
 } else {
     $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');

@@ -40,21 +40,19 @@
 <tr>
 {if $listpages[ix].show_image eq 'y'}
 <td valign="top">
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
-<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/>
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}"><img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/></a>
 {else}
-<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}"><img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 {else}
 {section name=it loop=$topics}
 {if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
-<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}"><img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 {/if}
 {/section}
 {/if}
-</a>
 {if ($listpages[ix].show_avatar eq 'y')}
   <td valign="top"><a href="tiki-user_preferences.php?view_user={$listpages[ix].author}">
   <img alt="{$listpages[ix].author}" border="1" src="{$listpages[ix].avatarLibName}" />

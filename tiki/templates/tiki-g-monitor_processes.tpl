@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor processes{/tr}</a>
-<!-- the help link info --->
+<!-- the help link info -->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaMonitorProcesses" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Monitor Processes{/tr}">
@@ -15,7 +15,7 @@
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
-<!--- beginning of next bit --->
+<!-- beginning of next bit -->
 
 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.23 2003-11-15 12:12:32 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.24 2003-12-10 23:08:33 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -97,7 +97,7 @@
 	</td>
 {/if}
 {if $art_list_type eq 'y'}	
-	<td class="{cycle advance=false}">{$listpages[changes].type}</td>
+	<td class="{cycle advance=false}">{tr}{$listpages[changes].type}{/tr}</td>
 {/if}
 {if $art_list_topic eq 'y'}	
 	<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>

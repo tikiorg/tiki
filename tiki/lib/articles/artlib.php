@@ -214,13 +214,19 @@ class ArtLib extends TikiLib {
 		return $topicId;
 	}
 
-	function remove_topic($topicId) {
+	function remove_topic($topicId, $all=0) {
 		$query = "delete from `tiki_topics` where `topicId`=?";
 
 		$result = $this->query($query,array($topicId));
 
-		$query = "delete from `tiki_articles` where `topicId`=?";
-		$result = $this->query($query,array($topicId));
+		if ($all == 1) {
+			$query = "delete from `tiki_articles` where `topicId`=?";
+			$result = $this->query($query,array($topicId));
+		}
+		else {
+			$query = "update `tiki_articles` set `topicId`=?, `topicName`=? where `topicId`=?";
+			$result = $this->query($query, array(NULL, NULL, $topicId));
+		}
 
 		return true;
 	}

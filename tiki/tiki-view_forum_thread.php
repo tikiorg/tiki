@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.48 2003-12-04 09:05:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.49 2003-12-10 23:08:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -472,7 +472,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 			    {
 
 				// if($tiki_p_edit_comments == 'y') {
-				$commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
+				$commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '',$_REQUEST["comments_data"]);
 
 				// PROCESS ATTACHMENT HERE        
 				if (($forum_info['att'] == 'att_all') || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {

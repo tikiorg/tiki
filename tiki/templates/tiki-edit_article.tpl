@@ -34,13 +34,14 @@
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 {/section}
+<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
 </td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
-<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
 {/section}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
@@ -72,9 +73,9 @@
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-  <tr><td class="formcolor">Own Image</td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
-    <tr><td class="formcolor">Own Image</td><td class="formcolor">
+    <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">
     <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
     </td></tr>
   {/if}
