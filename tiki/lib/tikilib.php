@@ -2986,7 +2986,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'user_desc') {
 }
 
 function get_all_preferences() {
-    static $preferences;
+    global $preferences;
 
     if (!$preferences) {
 	$query = "select `name` ,`value` from `tiki_preferences`";
@@ -3003,7 +3003,7 @@ function get_all_preferences() {
 }
 
 function get_preference($name, $default = '') {
-    static $preferences;
+    global $preferences;
 
     if (!$preferences) {
 	$preferences = $this->get_all_preferences();
@@ -3017,7 +3017,8 @@ function get_preference($name, $default = '') {
 }
 
 function set_preference($name, $value) {
-    global $preferences, $tikidomain;
+    global $preferences;
+    global $tikidomain;
 
     @unlink ("templates_c/" . $tikidomain . "preferences.php");
 
