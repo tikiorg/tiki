@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.38 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.39 2004-04-10 04:46:23 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,11 @@ $cur_time = getdate();
 $expireDate = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
+$smarty->assign('topline', '');
+$smarty->assign('subtitle', '');
+$smarty->assign('linkto', '');
+$smarty->assign('image_caption', '');
+$smarty->assign('lang', '');
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
 $smarty->assign('authorName', $authorName);
 $smarty->assign('topicId', '');
@@ -74,6 +79,11 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];
 	$smarty->assign('title', $article_data["title"]);
+  $smarty->assign('topline', $article_data["topline"]);
+  $smarty->assign('subtitle', $article_data["subtitle"]);
+  $smarty->assign('linkto', $article_data["linkto"]);
+  $smarty->assign('image_caption', $article_data["image_caption"]);
+  $smarty->assign('lang', $article_data["lang"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
 	$smarty->assign('useImage', $article_data["useImage"]);
@@ -140,10 +150,18 @@ $smarty->assign('preview', 0);
 // If we are in preview mode then preview it!
 if (isset($_REQUEST["preview"])) {
 	# convert from the displayed 'site' time to 'server' time
+	if (isset($_REQUEST["publish_Hour"])) {
 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	} else {
+		$publishDate = date('U');
+	}
+	if (isset($_REQUEST["expire_Hour"])) {
 	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+	} else {
+		$expireDate = $publishDate;
+	}
 
 	$smarty->assign('reads', '0');
 	$smarty->assign('preview', 1);
@@ -171,7 +189,17 @@ if (isset($_REQUEST["preview"])) {
 
 		$hasImage = 'y';
 	}
+	if (!isset($_REQUEST["topline"])) $_REQUEST['topline'] = '';
+	if (!isset($_REQUEST["subtitle"])) $_REQUEST['subtitle'] = '';
+	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
+	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
+	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 
+  $smarty->assign('topline', $_REQUEST["topline"]);
+  $smarty->assign('subtitle', $_REQUEST["subtitle"]);
+  $smarty->assign('linkto', $_REQUEST["linkto"]);
+  $smarty->assign('image_caption', $_REQUEST["image_caption"]);
+  $smarty->assign('lang', $_REQUEST["lang"]);
 	$smarty->assign('image_name', $_REQUEST["image_name"]);
 	$smarty->assign('image_type', $_REQUEST["image_type"]);
 	$smarty->assign('image_size', $_REQUEST["image_size"]);
@@ -256,10 +284,18 @@ if (isset($_REQUEST["save"])) {
 	include_once ("lib/imagegals/imagegallib.php");
 
 	# convert from the displayed 'site' time to 'server' time
+	if (isset($_REQUEST["publish_Hour"])) {
 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	} else {
+		$publishDate = date('U');
+	}
+	if (isset($_REQUEST["expire_Hour"])) {
 	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+	} else {
+		$expireDate = date('U');
+	}
 
 	if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
 		$body = $_REQUEST["body"];
@@ -308,14 +344,20 @@ if (isset($_REQUEST["save"])) {
 	$body = $imagegallib->capture_images($body);
 	$heading = $imagegallib->capture_images($heading);
 
-	if (!isset($_REQUEST["rating"]))
-		$_REQUEST['rating'] = 0;
-	  if (!isset($_REQUEST['topicId']) || $_REQUEST['topicId'] == '') $_REQUEST['topicId'] = 0;
+	if (!isset($_REQUEST["rating"])) $_REQUEST['rating'] = 0;
+	if (!isset($_REQUEST['topicId']) || $_REQUEST['topicId'] == '') $_REQUEST['topicId'] = 0;
+
+	if (!isset($_REQUEST["topline"])) $_REQUEST['topline'] = '';
+	if (!isset($_REQUEST["subtitle"])) $_REQUEST['subtitle'] = '';
+	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
+	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
+	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 
 	// If page exists
 	$artid = $tikilib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
 		$_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
-		$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
+		$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["topline"], $_REQUEST["subtitle"], 
+		$_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat);
 
 	/*
 	$links = $tikilib->get_links($body);
@@ -347,8 +389,11 @@ $smarty->assign_by_ref('types', $types);
 if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('cms', 0, -1, 'name_asc', '');
 }
-
 $smarty->assign_by_ref('templates', $templates["data"]);
+
+$languages = array();
+$languages = $tikilib->list_languages();
+$smarty->assign_by_ref('languages', $languages);
 
 $cat_type = 'article';
 $cat_objid = $articleId;

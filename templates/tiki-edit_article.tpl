@@ -10,10 +10,7 @@
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
-{* GGG 20040116 {if $feature_view_tpl eq 'y'} 
- Only show edit template button when the edit template feature is enabled
- and the user has edit template permission. *}
-{if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'} {* GGG *}
+{if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
@@ -30,7 +27,17 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
+<tr class="formcolor"><td>{tr}Topline{/tr}</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
 <tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
+<tr class="formcolor"><td>{tr}Subtitle{/tr}</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Link to{/tr}</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Language{/tr}</td><td><select name="lang">
+<option value="">{tr}All{/tr}</option>
+{section name=ix loop=$languages}
+<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+{/section}
+</select>
+</td></tr>
 <tr class="formcolor"><td>{tr}Author Name{/tr}</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Topic{/tr}</td><td>
 <select name="topicId">
@@ -91,6 +98,7 @@
 </td></tr>
 <tr class="formcolor"><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Image caption{/tr}</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr class="formcolor"><td>{tr}Apply template{/tr}</td><td>

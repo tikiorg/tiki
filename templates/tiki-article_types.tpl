@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.15 2004-03-28 15:33:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.16 2004-04-10 04:46:24 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -28,6 +28,11 @@
 <b>{tr}Show expire date{/tr}</b> - Show expire date<br />
 <b>{tr}Show reads{/tr}</b> - Show the number of times the article was read<br />
 <b>{tr}Show size{/tr}</b> - Show the size of the article<br />
+<b>{tr}Show topline{/tr}</b> - Show a small title over the title<br />
+<b>{tr}Show subtitle{/tr}</b> - Show the subtitle<br />
+<b>{tr}Show linkto{/tr}</b> - Show a link field<br />
+<b>{tr}Show Image Caption{/tr}</b> - Show a legend under the image<br />
+<b>{tr}Show Language{/tr}</b> - Show the language<br />
 <b>{tr}Creator can edit{/tr}</b> - The person who submits an article of this type can edit it<br />
 <b>{tr}Delete{/tr}</b> - Delete this type<br />
 <h3>{tr}List of types{/tr}</h3>
@@ -48,6 +53,11 @@
 <td>{tr}Show expire date{/tr}</td>
 <td>{tr}Show reads{/tr}</td>
 <td>{tr}Show size{/tr}</td>
+<td>{tr}Show topline{/tr}</td>
+<td>{tr}Show subtitle{/tr}</td>
+<td>{tr}Show linkto{/tr}</td>
+<td>{tr}Show Image Caption{/tr}</td>
+<td>{tr}Show lang{/tr}</td>
 <td>{tr}Creator can edit{/tr}</td>
 <td>{tr}Delete{/tr}</td>
 </tr>
@@ -72,6 +82,11 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="show_expdate[{$types[user].type}]" {if $types[user].show_expdate eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_reads[{$types[user].type}]" {if $types[user].show_reads eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_size[{$types[user].type}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_topline[{$types[user].type}]" {if $types[user].show_topline eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_subtitle[{$types[user].type}]" {if $types[user].show_subtitle eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_linkto[{$types[user].type}]" {if $types[user].show_linkto eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_image_caption[{$types[user].type}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="show_lang[{$types[user].type}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle}">
 {if $types[user].article_cnt eq 0}

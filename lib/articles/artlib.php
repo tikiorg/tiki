@@ -98,7 +98,8 @@ class ArtLib extends TikiLib {
 
 		$this->replace_article($data["title"], $data["authorName"], $data["topicId"], $data["useImage"], $data["image_name"],
 			$data["image_size"], $data["image_type"], $data["image_data"], $data["heading"], $data["body"], $data["publishDate"], $data["expireDate"],
-			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"], $data["rating"]);
+			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"],  $data["topline"],  $data["subtitle"],  $data["linkto"],  $data["caption_image"],  
+			$data["lang"], $data["rating"], $data['isfloat']);
 		$this->remove_submission($subId);
 	}
 
@@ -136,7 +137,9 @@ class ArtLib extends TikiLib {
 		}
 	}
 
-	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
+	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, 
+	$imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
+	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
 		global $smarty;
 
 		global $dbTiki;
@@ -174,16 +177,23 @@ class ArtLib extends TikiLib {
                 `created` = ?,
                 `author` = ? ,
                 `type` = ?,
-                `rating` = ?
+                `rating` = ?,
+`topline`=?, `subtitle`=?, `linkto`=?,`image_caption`=?, `lang`=?
                 where `subId` = ?";
 
-			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,$heading,$body,(int) $publishDate,(int) $now,$user,$type,(float) $rating,(int) $subId));
+			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,
+			$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,
+			$heading,$body,(int) $publishDate,(int) $now,$user,$type,(float) $rating,$topline, $subtitle, $linkto, $image_caption, $lang, (int) $subId));
 		} else {
 			// Insert the article
-			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`)
-                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,
+	`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,
+	`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`)
+                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,$imgdata,(int) $publishDate,(int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,(int) $image_y,$type,(float) $rating,$isfloat));
+			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,
+	$imgdata,(int) $publishDate,(int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
+	(int) $image_y,$type,(float) $rating,$isfloat,$topline, $subtitle, $linkto, $image_caption, $lang));
 		}
 
 		$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
@@ -342,7 +352,10 @@ class ArtLib extends TikiLib {
 		return true;
 	}
 
-	function edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit) {
+	function edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, 
+		$heading_only, $allow_comments, $comment_can_rate_article, $show_image, 
+		$show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, 
+		$show_size, $show_topline, $show_subtitle, $show_linkto, $show_image_caption, $show_lang, $creator_edit) {
 		if ($use_ratings == 'on') {$use_ratings = 'y';} else {$use_ratings = 'n';}
 		if ($show_pre_publ == 'on') {$show_pre_publ = 'y';} else {$show_pre_publ = 'n';}
 		if ($show_post_expire == 'on') {$show_post_expire = 'y';} else {$show_post_expire = 'n';}
@@ -356,6 +369,11 @@ class ArtLib extends TikiLib {
 		if ($show_expdate == 'on') {$show_expdate = 'y';} else {$show_expdate = 'n';}
 		if ($show_reads == 'on') {$show_reads = 'y';} else {$show_reads = 'n';}
 		if ($show_size == 'on') {$show_size = 'y';} else {$show_size = 'n';}
+		if ($show_topline == 'on') {$show_topline = 'y';} else {$show_topline = 'n';}
+		if ($show_subtitle == 'on') {$show_subtitle = 'y';} else {$show_subtitle = 'n';}
+		if ($show_linkto == 'on') {$show_linkto = 'y';} else {$show_linkto = 'n';}
+		if ($show_image_caption == 'on') {$show_image_caption = 'y';} else {$show_image_caption = 'n';}
+		if ($show_lang == 'on') {$show_lang = 'y';} else {$show_lang = 'n';}
 		if ($creator_edit == 'on') {$creator_edit = 'y';} else {$creator_edit = 'n';}
 		$query = "update `tiki_article_types` set
 			`use_ratings` = ?,
@@ -371,9 +389,16 @@ class ArtLib extends TikiLib {
 			`show_expdate` = ?,
 			`show_reads` = ?,
 			`show_size` = ?,
+			`show_topline` = ?,
+			`show_subtitle` = ?,
+			`show_linkto` = ?,
+			`show_image_caption` = ?,
+			`show_lang` = ?,
 			`creator_edit` = ?
 			where `type` = ?";
-		$result = $this->query($query, array($use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit, $type));
+		$result = $this->query($query, array($use_ratings, $show_pre_publ, $show_post_expire, $heading_only, 
+$allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, 
+$show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_linkto, $show_image_caption, $show_lang, $creator_edit, $type));
 	}
 
 	function remove_type($type) {

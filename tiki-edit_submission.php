@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.36 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.37 2004-04-10 04:46:23 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,11 @@ $publishDate = date('U');
 $expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
+$smarty->assign('topline', '');
+$smarty->assign('subtitle', '');
+$smarty->assign('linkto', '');
+$smarty->assign('image_caption', '');
+$smarty->assign('lang', '');
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
 $smarty->assign('authorName', $authorName);
 $smarty->assign('topicId', '');
@@ -77,6 +82,11 @@ if (isset($_REQUEST["subId"])) {
 	$publishDate = $article_data["publishDate"];
 	$expireDate = $article_data["expireDate"];
 	$smarty->assign('title', $article_data["title"]);
+  $smarty->assign('topline', $article_data["topline"]);
+  $smarty->assign('subtitle', $article_data["subtitle"]);
+  $smarty->assign('linkto', $article_data["linkto"]);
+  $smarty->assign('image_caption', $article_data["image_caption"]);
+  $smarty->assign('lang', $article_data["lang"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
 	$smarty->assign('useImage', $article_data["useImage"]);
@@ -181,6 +191,17 @@ if (isset($_REQUEST["preview"])) {
 		$hasImage = 'y';
 	}
 
+	if (!isset($_REQUEST["topline"])) $_REQUEST['topline'] = '';
+	if (!isset($_REQUEST["subtitle"])) $_REQUEST['subtitle'] = '';
+	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
+	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
+	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
+
+  $smarty->assign('topline', $_REQUEST["topline"]);
+  $smarty->assign('subtitle', $_REQUEST["subtitle"]);
+  $smarty->assign('linkto', $_REQUEST["linkto"]);
+  $smarty->assign('image_caption', $_REQUEST["image_caption"]);
+  $smarty->assign('lang', $_REQUEST["lang"]);
 	$smarty->assign('image_name', $_REQUEST["image_name"]);
 	$smarty->assign('image_type', $_REQUEST["image_type"]);
 	$smarty->assign('image_size', $_REQUEST["image_size"]);
@@ -333,9 +354,18 @@ if (isset($_REQUEST["save"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
+	if (!isset($_REQUEST["topline"])) $_REQUEST['topline'] = '';
+	if (!isset($_REQUEST["subtitle"])) $_REQUEST['subtitle'] = '';
+	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
+	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
+	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 
-	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr>'), $_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
-	/*                            
+	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), 
+	$_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
+	$body, $publishDate, $expireDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], 
+	$_REQUEST["rating"], $isfloat, $_REQUEST["topline"], $_REQUEST["subtitle"], $_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"]);
+
+	/*
   $links = $tikilib->get_links($body);
   $notcachedlinks = $tikilib->get_links_nocache($body);
   $cachedlinks = array_diff($links, $notcachedlinks);

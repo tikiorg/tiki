@@ -26,8 +26,6 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
-<tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Topic{/tr}</td><td class="formcolor">
 <select name="topicId">
 {section name=t loop=$topics}
@@ -46,6 +44,8 @@
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
+<tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>

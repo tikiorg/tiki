@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.10 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.11 2004-04-10 04:46:23 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,6 +51,11 @@ elseif(isset($_REQUEST["update_type"])) {
 		if (!isset($_REQUEST["show_expdate"][$this_type])) {$_REQUEST["show_expdate"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_reads"][$this_type])) {$_REQUEST["show_reads"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_size"][$this_type])) {$_REQUEST["show_size"][$this_type] = 'n';}
+		if (!isset($_REQUEST["show_topline"][$this_type])) {$_REQUEST["show_topline"][$this_type] = 'n';}
+		if (!isset($_REQUEST["show_subtitle"][$this_type])) {$_REQUEST["show_subtitle"][$this_type] = 'n';}
+		if (!isset($_REQUEST["show_image_caption"][$this_type])) {$_REQUEST["show_image_caption"][$this_type] = 'n';}
+		if (!isset($_REQUEST["show_linkto"][$this_type])) {$_REQUEST["show_linkto"][$this_type] = 'n';}
+		if (!isset($_REQUEST["show_lang"][$this_type])) {$_REQUEST["show_lang"][$this_type] = 'n';}
 		if (!isset($_REQUEST["creator_edit"][$this_type])) {$_REQUEST["creator_edit"][$this_type] = 'n';}
 		$artlib->edit_type($this_type, 
 				$_REQUEST["use_ratings"][$this_type], 
@@ -66,6 +71,11 @@ elseif(isset($_REQUEST["update_type"])) {
 				$_REQUEST["show_expdate"][$this_type], 
 				$_REQUEST["show_reads"][$this_type], 
 				$_REQUEST["show_size"][$this_type], 
+				$_REQUEST["show_topline"][$this_type], 
+				$_REQUEST["show_subtitle"][$this_type], 
+				$_REQUEST["show_linkto"][$this_type], 
+				$_REQUEST["show_image_caption"][$this_type], 
+				$_REQUEST["show_lang"][$this_type], 
 				$_REQUEST["creator_edit"][$this_type]);
 	}
 }
