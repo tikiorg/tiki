@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.6 $
+    * @version $Revision: 1.7 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -39,7 +39,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.6 $");
+                "\$Revision: 1.7 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -97,7 +97,7 @@
                 if ($count == 1) {
                     $sOutput  .= tra("One page links to")." (($page))";
                 } else {
-                    $sOutput = "$count ".tra("pages links to")." (($page))";
+                    $sOutput = "$count ".tra("pages link to")." (($page))";
                 }
                 $sOutput  .= "\n";
             }
