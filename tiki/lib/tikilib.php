@@ -259,8 +259,8 @@ class TikiLib {
 
 		$ips = explode('.', $_SERVER["REMOTE_ADDR"]);
 		$now = date("U");
-		$query = "select `tb` .message,tb.user,tb.ip1,tb.ip2,tb.ip3,tb.ip4,tb.mode from `tiki_banning` tb, tiki_banning_sections tbs where tbs.banId=tb.banId and tbs.section='$section' and ( (tb.use_dates = 'n') or (tb.date_from <= $now and tb.date_to >= $now))";
-		$result = $this->query($query);
+		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
+		$result = $this->query($query,array($section,'n',$now,$now));
 
 		while ($res = $result->fetchRow()) {
 			if (!$res['message']) {
@@ -290,29 +290,26 @@ class TikiLib {
 
 	/*shared*/
 	function replace_note($user, $noteId, $name, $data) {
-		$name = addslashes($name);
-
-		$data = addslashes($data);
 		$now = date("U");
 		$size = strlen($data);
 
 		if ($noteId) {
 			$query = "update `tiki_user_notes` set
-      `name` = '$name',
-      `data` = '$data',
-      `size` = $size,
-      `lastModif` = $now
-      where `user`='$user' and `noteId`=$noteId";
+      `name` = ?,
+      `data` = ?,
+      `size` = ?,
+      `lastModif` = ?
+      where `user`=? and `noteId`=?";
 
-			$this->query($query);
+			$this->query($query,array($name,$data,$size,$now,$user,$noteId));
 			return $noteId;
 		} else {
-			$query = "insert into tiki_user_notes(user,noteId,name,data,created,lastModif,size)
-      values('$user',$noteId,'$name','$data',$now,$now,$size)";
+			$query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`)
+      values(?,?,?,?,?,?,?)";
 
-			$this->query($query);
+			$this->query($query,array($user,$noteId,$name,$data,$now,$now,$size));
 			$noteId = $this->getOne(
-				"select max(`noteId`) from `tiki_user_notes` where `user`='$user' and `name`='$name' and `created`=$now");
+				"select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,$now));
 			return $noteId;
 		}
 	}
@@ -321,41 +318,42 @@ class TikiLib {
 	function add_user_watch($user, $event, $object, $type, $title, $url) {
 		global $userlib;
 
-		$object = addslashes($object);
-		$title = addslashes($title);
 		$hash = md5(uniqid('.'));
 		$email = $userlib->get_user_email($user);
-		$query = "replace into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`)
-  	values('$user','$event','$object','$email','$hash','$type','$title','$url')";
-		$this->query($query);
+		$query = "delete from `tiki_user_watches`
+  	where `user`=? and `event`=? and `object`=? and `email`=? and `hash`=? and `type`=? and `title`=? and `url`=?";
+		$this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url),-1,-1,false);
+		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`)
+  	values(?,?,?,?,?,?,?,?)";
+		$this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
 		return true;
 	}
 
 	/*shared*/
 	function remove_user_watch_by_hash($hash) {
-		$query = "delete from `tiki_user_watches` where `hash`='$hash'";
+		$query = "delete from `tiki_user_watches` where `hash`=?";
 
-		$this->query($query);
+		$this->query($query,array($hash));
 	}
 
 	/*shared*/
 	function remove_user_watch($user, $event, $object) {
-		$object = addslashes($object);
 
-		$query = "delete from `tiki_user_watches` where `user`='$user' and `event`='$event' and `object`='$object'";
-		$this->query($query);
+		$query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+		$this->query($query,array($user,$event,$object));
 	}
 
 	/*shared*/
 	function get_user_watches($user, $event = '') {
 		$mid = '';
-
+		$bindvars=array($user);
 		if ($event) {
-			$mid = " and `event`='$event' ";
+			$mid = " and `event`=? ";
+			$bindvars[]=$event;
 		}
 
-		$query = "select * from `tiki_user_watches` where `user`='$user' $mid";
-		$result = $this->query($query);
+		$query = "select * from `tiki_user_watches` where `user`=? $mid";
+		$result = $this->query($query,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -369,7 +367,7 @@ class TikiLib {
 	function get_watches_events() {
 		$query = "select distinct `event` from `tiki_user_watches`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -381,9 +379,9 @@ class TikiLib {
 
 	/*shared*/
 	function get_user_event_watches($user, $event, $object) {
-		$query = "select * from `tiki_user_watches` where `user`='$user' and `event`='$event' and `object`='$object'";
+		$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user,$event,$object));
 
 		if (!$result->numRows())
 			return false;
@@ -396,8 +394,8 @@ class TikiLib {
 	function get_event_watches($event, $object) {
 		$ret = array();
 
-		$query = "select * from `tiki_user_watches` where `event`='$event' and `object`='$object'";
-		$result = $this->query($query);
+		$query = "select * from `tiki_user_watches` where `event`=? and `object`=?";
+		$result = $this->query($query,array($event,$object));
 
 		if (!$result->numRows())
 			return $ret;
@@ -413,28 +411,26 @@ class TikiLib {
 	function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
 		$title = addslashes($title);
 
-		$description = addslashes($description);
-
 		if ($taskId) {
 			$query = "update `tiki_user_tasks` set
-      `title` = '$title',
-      `description` = '$description',
-      `date` = $date,
-      `status` = '$status',
-      `priority` = $priority,
-      `percentage` = $percentage,
-      `completed` = $completed
-      where `user`='$user' and `taskId`=$taskId";
+      `title` = ?,
+      `description` = ?,
+      `date` = ?,
+      `status` = ?,
+      `priority` = ?,
+      `percentage` = ?,
+      `completed` = ?
+      where `user`=? and `taskId`=?";
 
-			$this->query($query);
+			$this->query($query,array($title,$description,$date,$status,$priority,$percentage,$completed,$user,$taskId));
 			return $taskId;
 		} else {
 			$query = "insert into `tiki_user_tasks`(`user`,`taskId`,`title`,`description`,`date`,`status`,`priority`,`completed`,`percentage`)
-      values('$user',$taskId,'$title','$description',$date,'$status',$priority,$completed,$percentage)";
+      values(?,?,?,?,?,?,?,?,?)";
 
-			$this->query($query);
+			$this->query($query,array($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage));
 			$taskId = $this->getOne(
-				"select  max(`taskId`) from `tiki_user_tasks` where `user`='$user' and `title`='$title' and `date`=$date");
+				"select  max(`taskId`) from `tiki_user_tasks` where `user`=? and `title`=? and `date`=?",array($user,$title,$date));
 			return $taskId;
 		}
 	}
@@ -449,36 +445,39 @@ class TikiLib {
 
 	/*shared*/
 	function remove_task($user, $taskId) {
-		$query = "delete from `tiki_user_tasks` where `user`='$user' and `taskId`=$taskId";
+		$query = "delete from `tiki_user_tasks` where `user`=? and `taskId`=?";
 
-		$this->query($query);
+		$this->query($query,array($user,$taskId));
 	}
 
 	/*shared*/
 	function list_tasks($user, $offset, $maxRecords, $sort_mode, $find, $use_date, $pdate) {
 		$now = date("U");
-
+		$bindvars=array($user);
 		if ($use_date == 'y') {
-			$prio = " and date<=$pdate ";
+			$prio = " and date<=? ";
+			$bindvars2=$pdate;
 		} else {
 			$prio = '';
 		}
 
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " and (`title` like $findesc or `description` like $findesc)" . $prio;
+			$mid = " and (`title` like $findesc or `description` like $findesc)";
+			$bindvars[]=$findesc;
+			$bindvars[]=$findesc;
 		} else {
-			$mid = "" . $prio;
+			$mid = "" ;
 		}
 
-		$query = "select * from `tiki_user_tasks` where `user`='$user' $mid order by $sort_mode,`taskId` desc limit $offset,$maxRecords";
-		$query_cant = "select count(*) from `tiki_user_tasks` where `user`='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$mid.=$prio;
+		if(isset($bindvars2)) $bindvars[]=$bindvars2;
+
+		$query = "select * from `tiki_user_tasks` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode).",`taskId` desc";
+		$query_cant = "select count(*) from `tiki_user_tasks` where `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -495,11 +494,11 @@ class TikiLib {
 	function dir_stats() {
 		$aux = array();
 
-		$aux["valid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`='y'");
-		$aux["invalid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`='n'");
-		$aux["categs"] = $this->db->getOne("select count(*) from `tiki_directory_categories`");
-		$aux["searches"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_search`");
-		$aux["visits"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_sites`");
+		$aux["valid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('y'));
+		$aux["invalid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('n'));
+		$aux["categs"] = $this->db->getOne("select count(*) from `tiki_directory_categories`",array());
+		$aux["searches"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_search`",array());
+		$aux["visits"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_sites`",array());
 		return $aux;
 	}
 
@@ -508,15 +507,17 @@ class TikiLib {
 		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$mid = " where `isValid`='y' and (`name` like '%" . $find . "%' or `description` like '%" . $find . "%')";
+			$mid = " where `isValid`=? and (`name` like ? or `description` like ?)";
+			$bindvars=array('y','%'.$find.'%','%'.$find.'%');
 		} else {
-			$mid = " where `isValid`='y' ";
+			$mid = " where `isValid`=? ";
+			$bindvars=array('y');
 		}
 
-		$query = "select * from `tiki_directory_sites` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_directory_sites` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_directory_sites` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -531,29 +532,29 @@ class TikiLib {
 
 	/*shared*/
 	function get_directory($categId) {
-		$query = "select * from `tiki_directory_categories` where `categId`=$categId";
+		$query = "select * from `tiki_directory_categories` where `categId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($categId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	/*shared*/
 	function user_unread_messages($user) {
-		$cant = $this->getOne("select count(*) from `messu_messages` where `user`='$user' and `isRead`='n'");
+		$cant = $this->getOne("select count(*) from `messu_messages` where `user`=? and `isRead`=?",array($user,'n'));
 
 		return $cant;
 	}
 
 	/*shared*/
 	function get_online_users() {
-		$query = "select `user` ,`timestamp` from `tiki_sessions` where `user`<>''";
+		$query = "select `user` ,`timestamp` from `tiki_sessions` where `user`<>?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(''));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -2737,8 +2738,8 @@ class TikiLib {
 		for ($i = 0; $i < count($positions); $i++) {
 			$index = $positions[$i];
 
-			$query = "select `pageName`  from `tiki_pages` limit $index,1";
-			$name = $this->getOne($query);
+			$query = "select `pageName`  from `tiki_pages`";
+			$name = $this->getOne($query,array(),1,$index);
 			$ret[] = $name;
 		}
 
