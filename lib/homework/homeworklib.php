@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.11 2004-03-19 18:09:59 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.12 2004-03-22 05:11:08 ggeller Exp $
 
 /*
     The idea here is that all access to the hw tables goes through this
@@ -741,6 +741,8 @@ class HomeworkLib extends TikiLib {
 	return true;
   }
 
+
+  /*
   // Stub for now
   // Called by tiki-hw_rollback.php
   function hw_page_use_version($page, $version, $comment = ''){
@@ -760,6 +762,7 @@ class HomeworkLib extends TikiLib {
 	$result = $this->query($query,array($action,$page,$t,$user,$_SERVER["REMOTE_ADDR"],$comment));
 	return true;
   }
+  */
 
   // Fetch a list of all the pages for $assignmentId
   // Called by:
