@@ -90,7 +90,7 @@ class BlogLib extends TikiLib {
 		//Build uri for post
 		$parts = parse_url($_SERVER['REQUEST_URI']);
 		$uri = httpPrefix(). str_replace('tiki-blog_post',
-			'tiki-view_blog_post', $parts['path']). '?postId=' . $id . '&blogId=' . $post_info['blogId'];
+			'tiki-view_blog_post', $parts['path']). '?postId=' . $id . '&amp;blogId=' . $post_info['blogId'];
 		include ("lib/snoopy/Snoopy.class.inc");
 		$snoopy = new Snoopy;
 

@@ -171,7 +171,7 @@ class CalendarLib extends TikiLib {
 					"type" => (string)$res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
-					"url" => "tiki-calendar.php?todate=$i&editmode=1&calitemId=" . $res["calitemId"],
+					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
 					"name" => $res["name"],
 					"extra" => "<div align=right>... " . tra("click to edit"),
 					"head" => $head,
@@ -234,7 +234,7 @@ class CalendarLib extends TikiLib {
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "gal",
-						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&imageId=" . $res["imageid"],
+						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&amp;imageId=" . $res["imageid"],
 						"name" => $res["name"],
 						"head" =>
 							"<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["galname"]). "</b>",
@@ -446,7 +446,7 @@ class CalendarLib extends TikiLib {
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "track",
-						"url" => "tiki-view_tracker_item.php?trackerId=" . $res["tracker"] . "&offset=0&sort_mode=created_desc&itemId=" . $res["itemId"],
+						"url" => "tiki-view_tracker_item.php?trackerId=" . $res["tracker"] . "&amp;offset=0&amp;sort_mode=created_desc&amp;itemId=" . $res["itemId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
 						"description" => tra("new item in tracker")
@@ -521,7 +521,7 @@ class CalendarLib extends TikiLib {
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "eph",
-						"url" => "tiki-eph.php?day=" . date("d", $res["created"]). "&mon=" . date("m", $res['created']). "&year=" . date("Y", $res['created']),
+						"url" => "tiki-eph.php?day=" . date("d", $res["created"]). "&amp;mon=" . date("m", $res['created']). "&amp;year=" . date("Y", $res['created']),
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
 						"description" => addslashes(str_replace('"', "'", $res["description"]))
