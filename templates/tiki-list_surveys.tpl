@@ -13,7 +13,7 @@
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_survey eq 'y') or ($channels[user].individual_tiki_p_take_survey eq 'y')}
 <tr>
 <td class="{cycle advance=false}">
-{if $channels[user].status eq 'o'}
+{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
 <a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
 {else}
 <a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">

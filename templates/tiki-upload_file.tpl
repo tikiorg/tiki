@@ -18,6 +18,8 @@
 <tr><td class="formcolor">{tr}Upload from disk:{/tr}</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 <input name="userfile1" type="file"></td></tr>
+<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+<input type="checkbox" name="isbatch" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
 </table>
 </form>

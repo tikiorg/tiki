@@ -64,6 +64,11 @@ for($i=0;$i<count($channels["data"]);$i++) {
   } else {
     $channels["data"][$i]["individual"]='n';
   }
+  if($tikilib->user_has_voted($user,'survey'.$channels["data"][$i]["surveyId"])) {
+     $channels["data"][$i]["taken_survey"]='y';    	
+  } else {
+     $channels["data"][$i]["taken_survey"]='n';    		
+  }
 }
 
 

@@ -348,8 +348,12 @@
     </table>
     </form>
     </div>
-    </td>
     
+    
+    <div class="simplebox">
+    <a class="link" href="tiki-admin.php?rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
+    </div>
+    </td>
     
     <td width="40%" valign="top">
     <div class="simplebox">
@@ -380,6 +384,7 @@
     <option value="30" {if $warn_on_edit_time eq 2}selected="selected"{/if}>30</option>
     </select> mins
     </td></tr>
+    <tr><td class="form">{tr}Pictures{/tr}:</td><td><input type="checkbox" name="feature_wiki_pictures" {if $feature_wiki_pictures eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page title{/tr}:</td><td><input type="checkbox" name="feature_page_title" {if $feature_page_title eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>

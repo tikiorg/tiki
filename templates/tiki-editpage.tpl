@@ -83,6 +83,13 @@
 <a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="linkbut">{tr}export all versions{/tr}</a>
 </td></tr>
 {/if}
+{if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
+<tr><td class="formcolor">{tr}Upload picture{/tr}</td><td class="formcolor">
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+<input name="picfile1" type="file">
+</td></tr>
+{/if}
+
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page}">{tr}cancel edit{/tr}</a></td>

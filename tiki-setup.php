@@ -173,6 +173,8 @@ $smarty->assign('feature_blogposts_comments',$feature_blogposts_comments);
 
 $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description',$feature_wiki_description);
+$feature_wiki_pictures = 'n';
+$smarty->assign('feature_wiki_pictures',$feature_wiki_pictures);
 $feature_surveys = 'n';
 $smarty->assign('feature_surveys',$feature_surveys);
 $feature_newsletters = 'n';
