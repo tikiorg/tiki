@@ -5,7 +5,9 @@
 [<a class="link" href="tiki-minocal.php#add">{tr}Add{/tr}</a>]
 [<a class="link" href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a>]
 [<a class="link" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a> | 
-<a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a>]
+<a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a> |
+<a class="link" href="tiki-minical.php?view=list">{tr}List{/tr}</a>]
+
 <br/>
 <h3>{tr}Preferences{/tr}</h3>
 <form action="tiki-minical_prefs.php" method="post">
@@ -39,6 +41,15 @@
 	</td>
 </tr>
 <tr>
+	<td class="formcolor">{tr}Upcoming events{/tr}</td>
+	<td class="formcolor">
+	<select name="minical_upcoming">
+	{html_options output=$upcoming values=$upcoming selected=$minical_upcoming}
+	</select>
+	</td>
+</tr>
+
+<tr>
 	<td class="formcolor">&nbsp;</td>
 	<td class="formcolor">
 		<input type="submit" name="save" value="{tr}save{/tr}" />
@@ -57,7 +68,7 @@
   <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"></td>
 </tr>
 <tr>
-  <td class="formcolor">{tr}Or enter path{/tr}:</td><td class="formcolor"><input type="text" name="path" /></td>
+  <td class="formcolor">{tr}Or enter path or URL{/tr}:</td><td class="formcolor"><input type="text" name="path" /></td>
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>

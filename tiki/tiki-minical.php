@@ -24,9 +24,15 @@ if(!$user) {
 
 if(!isset($_REQUEST["eventId"])) $_REQUEST["eventId"]=0;
 
+
+
 if(isset($_REQUEST['remove'])) {
   $minicallib->minical_remove_event($user, $_REQUEST['remove']);
 }
+if(isset($_REQUEST['remove2'])) {
+  $minicallib->minical_remove_event($user, $_REQUEST['eventId']);
+}
+
 
 if(isset($_REQUEST['delete'])) {
   foreach(array_keys($_REQUEST["event"]) as $ev) {      	
@@ -51,6 +57,10 @@ $pdate_h = mktime(date("G"),date("i"),date("s"),date("m",$pdate),date("d",$pdate
 $smarty->assign('pdate',$pdate);
 $smarty->assign('pdate_h',$pdate_h);
 
+if(isset($_REQUEST['removeold'])) {
+  $minicallib->minical_remove_old($user,$pdate_h);
+}
+
 $ev_pdate = $pdate;
 $ev_pdate_h = $pdate_h;
 if($_REQUEST["eventId"]) {
@@ -60,6 +70,7 @@ if($_REQUEST["eventId"]) {
 } else {
   $info=Array();
   $info['title']='';
+  $info['topicId']=0;
   $info['description']='';
   $info['start']=mktime(date("H"),date("i"),date("s"),date("m",$pdate),date("d",$pdate),date("Y",$pdate));
   $info['duration']=60*60;
@@ -70,9 +81,10 @@ $smarty->assign('ev_pdate_h',$ev_pdate_h);
 
 if(isset($_REQUEST['save'])) {
   $start = mktime($_REQUEST['Time_Hour'],$_REQUEST['Time_Minute'],0,$_REQUEST['Date_Month'],$_REQUEST['Date_Day'],$_REQUEST['Date_Year']);
-  $minicallib->minical_replace_event($user,$_REQUEST["eventId"],$_REQUEST["title"],$_REQUEST["description"],$start,($_REQUEST['duration_hours']*60*60)+($_REQUEST['duration_minutes']*60));
+  $minicallib->minical_replace_event($user,$_REQUEST["eventId"],$_REQUEST["title"],$_REQUEST["description"],$start,($_REQUEST['duration_hours']*60*60)+($_REQUEST['duration_minutes']*60),$_REQUEST['topicId']);
   $info=Array();
   $info['title']='';
+  $info['topicId']=0;  
   $info['description']='';
   $info['start']=mktime(date("h"),date("i"),date("s"),date("m",$pdate),date("d",$pdate),date("Y",$pdate));  
   $info['duration']=60*60;
@@ -91,6 +103,7 @@ $minical_interval = $tikilib->get_user_preference($user,'minical_interval',60*60
 $minical_start_hour = $tikilib->get_user_preference($user,'minical_start_hour',9);
 $minical_end_hour = $tikilib->get_user_preference($user,'minical_end_hour',20);
 $minical_public = $tikilib->get_user_preference($user,'minical_public','n');
+$minical_upcoming = $tikilib->get_user_preference($user,'minical_upcoming',7);
 
 // Interval is in hours
 if($_REQUEST['view']=='daily') {
@@ -127,7 +140,7 @@ if($_REQUEST['view']=='daily' || $_REQUEST['view']=='weekly') {
 // List view
 if($_REQUEST['view']=='list') {
 	if(!isset($_REQUEST["sort_mode"])) {
-	  $sort_mode = 'start_desc'; 
+	  $sort_mode = 'start_asc'; 
 	} else {
 	  $sort_mode = $_REQUEST["sort_mode"];
 	} 
@@ -152,8 +165,8 @@ if($_REQUEST['view']=='list') {
 	} else {
 	 $pdate = date("U");
 	}
-	$channels = $minicallib->minical_list_events($user,$offset,$maxRecords,$sort_mode,$find);
 	
+	$channels = $minicallib->minical_list_events($user,$offset,$maxRecords,$sort_mode,$find);
 	$cant_pages = ceil($channels["cant"] / $maxRecords);
 	$smarty->assign_by_ref('cant_pages',$cant_pages);
 	$smarty->assign('actual_page',1+($offset/$maxRecords));
@@ -168,8 +181,12 @@ if($_REQUEST['view']=='list') {
 	} else {
 	  $smarty->assign('prev_offset',-1); 
 	}
-	$smarty->assign_by_ref('channels',$channels["data"]);
+	$smarty->assign('channels',$channels["data"]);
 }
+
+
+$upcoming = $minicallib->minical_list_events_from_date($user,0,$minical_upcoming,'start_asc','',$pdate_h);
+$smarty->assign('upcoming',$upcoming['data']);
 
 $hours=range(0,23);
 $smarty->assign('hours',$hours);
@@ -180,6 +197,8 @@ $duration_minutes = $info['duration']%(60*60);
 $smarty->assign('duration_hours',$duration_hours);
 $smarty->assign('duration_minutes',$duration_minutes);
 
+$topics = $minicallib->minical_list_topics($user,0,-1,'name_asc','');
+$smarty->assign('topics',$topics['data']);
 
 include_once('tiki-mytiki_shared.php');
 

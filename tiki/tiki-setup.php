@@ -914,6 +914,7 @@ if($feature_warn_on_edit == 'y') {
   
   
   if($tikilib->semaphore_is_set($chkpage,$warn_on_edit_time*60)) {
+    $smarty->assign('semUser',$tikilib->get_semaphore_user($chkpage));
     $smarty->assign('beingEdited','y');
     $beingedited='y';
   } else {

@@ -1179,6 +1179,11 @@ class TikiLib {
   }
 
   // Semaphore functions ////
+  function get_semaphore_user($semName)
+  {
+    return $this->getOne("select user from tiki_semaphores where semName='$semName'");
+  }
+  
   function semaphore_is_set($semName,$limit)
   {
 
@@ -1193,13 +1198,19 @@ class TikiLib {
 
   function semaphore_set($semName)
   {
-    $now=date("U");
-    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
-    if($cant) {
-      $query = "update tiki_semaphores set timestamp='$now' where semName='$semName'";
-    } else {
-      $query = "insert into tiki_semaphores(semName,timestamp) values('$semName',$now)";
+    global $user;
+    if(!$user) {
+      $user='anonymous';
     }
+    $now=date("U");
+//    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
+    $query = "delete from tiki_semaphores where semName='$semName'";
+    $this->query($query);
+//    if($cant) {
+//      $query = "update tiki_semaphores set timestamp='$now',user='$user' where semName='$semName'";
+//    } else {
+      $query = "insert into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
+//    }
     $result = $this->query($query);
     return $now;
   }

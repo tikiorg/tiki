@@ -1,5 +1,5 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
-
+alter table tiki_semaphores add user varchar(200);
 drop table if exists tiki_minical_topics;
 create table tiki_minical_topics(
   user varchar(200),
