@@ -53,10 +53,10 @@
 	<td class="bloglistdescription{cycle advance=false}">&nbsp;{$listpages[changes].description}&nbsp;</td>
 {/if}
 {if $blog_list_created eq 'y'}
-	<td class="bloglistcreated{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_date_format:"%b %d"}&nbsp;</td>
+	<td class="bloglistcreated{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td><!--tiki_date_format:"%b %d" -->
 {/if}
 {if $blog_list_lastmodif eq 'y'}
-	<td class="bloglistlastModif{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_date_format:"%d of %b [%H:%M]"}&nbsp;</td>
+	<td class="bloglistlastModif{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
 {/if}
 {if $blog_list_user eq 'y'}
 	{if $blog_list_user eq 'link'}
