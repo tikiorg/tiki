@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.32 2004-06-06 08:42:48 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.33 2004-06-07 16:28:59 teedog Exp $
  *
  * \brief Categiries support class
  *
@@ -612,6 +612,20 @@ class CategLib extends TikiDB {
 	function get_link_related($link,$maxRows=10) {
 		return ($this->get_related($this->get_link_categories($link),$maxRows));
 	}
+	
+	// Moved from tikilib.php
+	function uncategorize_object($type, $id) {
+		// Fixed query. -rlpowell
+		$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
+		$catObjectId = $this->getOne($query, array((string) $type,(string) $id));
+
+		if ($catObjectId) {
+		    $query = "delete from `tiki_category_objects` where `catObjectId`=?";
+		    $result = $this->query($query,array((int) $catObjectId));
+		    $query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
+		    $result = $this->query($query,array((int) $catObjectId));
+		}
+    }
 
 }
 

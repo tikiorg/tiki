@@ -1433,7 +1433,12 @@ function add_pageview() {
 
     /*shared*/
     function remove_object($type, $id) {
-	$this->uncategorize_object($type, $id);
+    	global $categlib;
+
+		if (!is_object($categlib)) {
+		    require_once ("lib/categories/categlib.php");
+		}
+	$categlib->uncategorize_object($type, $id);
 	// Now remove comments
 	$object = $type . $id;
 	$query = "delete from `tiki_comments` where `object`=?  and `objectType`=?";
@@ -1444,7 +1449,8 @@ function add_pageview() {
 	return true;
     }
 
-    /*shared*/
+/* moving to categlib.php
+    // shared
     function uncategorize_object($type, $id) {
 	// Fixed query. -rlpowell
 	$query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
@@ -1457,6 +1463,7 @@ function add_pageview() {
 	    $result = $this->query($query,array((int) $catObjectId));
 	}
     }
+*/
 
     /*shared*/
     // \todo remove hardcoded html from get_categorypath()
