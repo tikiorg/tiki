@@ -25,7 +25,7 @@ class TrackerLib extends TikiLib {
 		}
 
 		$mid = " where `trackerId`=? ";
-		$bindvars=array((int) $trackerId)
+		$bindvars=array((int) $trackerId);
 
 		if ($status) {
 			$mid .= " and `status`=? ";
