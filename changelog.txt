@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.112 2003-10-06 08:52:25 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.113 2003-10-07 20:29:27 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,24 +18,29 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] newsletter enhancements - per newsletter determine whether users can
+  subscribe, whether the address must be validated, and whether to include an
+  unsubscribe msg when a newsletter is sent. Removed frequency as unused.
 * [NEW] plugin for automatic link building of sourceforge tracker items
   using {SF(aid=>xxxxxx)}{SF}
-* [NEW] Editable dynamic variables can be added to tiki objects using %name%. This allows
-  quick editing and displaying of short information in wiki pages and other objects.
-* [NEW] Last n messages posted in a forum can be displayed when listing forum topics
-  to provide a quick access to the last posts in the forum regardless if they are
-  new topics or replies to an existing thread. This is optional and the number of 
-  post titles to display can be configured.
-* [NEW] Wiki pages can be cached or not cached individually, this setting overrides
-  the global setting for caching wiki pages. (Allows to have all pages cached but
-  one or no pages cached but some, refresh times can differ too)
+* [NEW] Editable dynamic variables can be added to tiki objects using %name%.
+  This allows quick editing and displaying of short information in wiki pages
+  and other objects.
+* [NEW] Last n messages posted in a forum can be displayed when listing forum
+  topics to provide a quick access to the last posts in the forum regardless if
+  they are new topics or replies to an existing thread. This is optional and the
+  number of post titles to display can be configured.
+* [NEW] Wiki pages can be cached or not cached individually, this setting
+  overrides the global setting for caching wiki pages. (Allows to have all pages
+  cached but one or no pages cached but some, refresh times can differ too)
 * [NEW] Events added, now articles can be normal articles, reviews or events
 * [FIX] article topics no longer require an image file to be uploaded
 * [MOD] tiki-list_articles now accepts type and topic parms to filter articles
-* [NEW] Added a Jabber plugin {JABBER()}
+* [NEW] Added a Jabber plugin {JABBER()} Needs local jabber server to run.
 * [NEW] Basic error handling in function "query" in lib/tikilib.php
 * [NEW] assign page permissions to whole structures 
-* [NEW] added an optional &highlight=word+otherword to highlight some words in any page
+* [NEW] added an optional &highlight=word+otherword to highlight some words in
+  any page
 * [NEW] admin topics now allows existing topics to be changed
 * [FIX] fixed galaxia bugs while porting to adodb queries
 * [NEW] added a module to switch themes 
@@ -47,7 +52,8 @@ Version 1.8 --
 
 
 Version 1.7.1.1 -Eta Carinae-
-* [FIX] fixed a blocking bug that prevents wiki pages from being saved in some cases
+* [FIX] fixed a blocking bug that prevents wiki pages from being saved in some
+  cases
 
 
 Version 1.7.1 -Eta Carinae-
