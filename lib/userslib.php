@@ -1246,6 +1246,7 @@ function get_included_groups($group) {
     }
 
 		function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0) {
+  	global $cachelib;  
 	if (!$this->group_exists($olgroup))
 	    return $this->add_group($group, $desc, $home,$utracker,$gtracker);
 
