@@ -29,7 +29,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
   <td class="form">{tr}Reg users can change theme{/tr}:</td>
   <td>
     <table><tr>
-    <td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td>
+    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td>
     <td>
       <div id="select_available_styles" {if count($available_styles) > 0}style="display:none;"{else}style="display:block;"{/if}>
         <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">Restrict available themes</a>
@@ -53,7 +53,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
   <td class="form">{tr}Reg users can change language{/tr}:</td>
   <td>
     <table><tr>
-    <td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td>
+    <td style="width: 20px"><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td>
     <td>
       <div id="select_available_languages" {if count($available_languages) > 0}style="display:none;"{else}style="display:block;"{/if}>
         <a class="link" href="javascript:show('available_languages');hide('select_available_languages');">Restrict available languages</a>
