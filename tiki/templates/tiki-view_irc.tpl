@@ -30,15 +30,15 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 {* \TODO {$irc_log_rows[b].localtime|tiki_short_time} *}
 {if $irc_log_rows[b].action eq 'a'}
 	<div style="color:#563514;background-color:{cycle};padding:1px;">
-	<tt>{$irc_log_rows[b].time} : </tt><i><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}</i>
+	<tt>{$irc_log_rows[b].time} </tt><i><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}</i>
 	</div>
 {elseif $irc_log_rows[b].action eq 'v'}
 	<div style="color:#898989;background-color:{cycle};padding:1px;">
-	<tt>{$irc_log_rows[b].time} : {$irc_log_rows[b].data}
+	<tt>{$irc_log_rows[b].time} {$irc_log_rows[b].data}
 	</div>
 {else}
 	<div style="background-color:{cycle};padding:1px;">
-	<tt>{$irc_log_rows[b].time} : </tt><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}
+	<tt>{$irc_log_rows[b].time} </tt><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}
 	</div>
 {/if}
 {/section}

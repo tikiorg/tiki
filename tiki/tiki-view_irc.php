@@ -69,8 +69,8 @@ $fullname = TIKI_IRCBOT_LOG_DIR . '/' . $irc_log_selected;
 
 $action_map = array(
 	'Action'	=> 'a',
-	'Joined'	=> 'v',
-	'Log'	=> 'v',
+	'Join'		=> 'v',
+	'Log'		=> 'v',
 	'Nick'		=> 'v',
 	'Part'		=> 'v',
 	'Privmsg'	=> 'n',
@@ -98,7 +98,7 @@ if (is_file($fullname)) {
 	$lines = file($fullname);
 	foreach($lines as $line) {
 		$line = trim($line);
-		if (preg_match('/(^\[[^\]]*\])(.*)/', $line, $matches)) {
+		if (preg_match('/\[([^\]]*)\](.*)/', $line, $matches)) {
 			$time = $matches[1];
 			$line = trim($matches[2]);
 		} else {
@@ -119,8 +119,16 @@ if (is_file($fullname)) {
 		if (preg_match('/^([^: ]*):(.*)/', $line, $matches)) {
 			$action = trim($matches[1]);
 			$line	= trim($matches[2]);
-			if ($action == 'Log') {
-				$line = 'log ' . $line;
+			switch ($action) {
+				case 'Join':
+					$line = 'joined: ' . $line;
+					break;
+				case 'Log':
+					$line = 'log ' . $line;
+					break;
+				case 'Part':
+					$line = 'signoff: ' . $line;
+					break;
 			}
 		} else {
 			$action = 'Privmsg';
