@@ -309,3 +309,6 @@ tc.message_id,
 tc.in_reply_to
 from old2_tiki_comments tc, tiki_polls tp
 where tc.object = concat('poll', tp.pollId);
+
+drop table old2_tiki_comments;
+
