@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.12 2004-07-08 12:50:38 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.13 2004-07-13 17:37:48 teedog Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -24,6 +24,7 @@ function decodeHTML($string) {
 
 function wikiplugin_code($data, $params) {
 	$code = $data;
+	$out = '';
 
 	extract ($params);
 	if (isset($caption)) {
