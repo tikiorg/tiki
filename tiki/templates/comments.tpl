@@ -1,12 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.23 2003-10-10 09:28:33 traivor Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.24 2003-10-12 04:54:57 mose Exp $ *}
 
+<a name="comments"></a>
 <br />
 {if $comments_show eq 'y'}
 <div id="comzoneopen">
 {else}
 <div id="comzone">
 {/if}
-
   
   {if $tiki_p_read_comments eq 'y'}
     {if $comments_cant gt 0}
