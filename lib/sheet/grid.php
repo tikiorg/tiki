@@ -1019,7 +1019,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						else
 							$width = $info['colspan'];
 
-						$sheet->setValue( $value );
+						$sheet->setValue( utf8_encode( $value ) );
 						$sheet->setSize( $width, $height );
 					}
 			}
@@ -1048,10 +1048,10 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 					if( isset( $sheet->calcGrid[$row][$col] ) )
 					{
 						$formula = "=" . $sheet->calcGrid[$row][$col];
-						$out->writeFormula( $row, $col, $formula );
+						$out->writeFormula( $row, $col, utf8_decode( $formula ) );
 					}
 					else
-						$out->write( $row, $col, $value );
+						$out->write( $row, $col, utf8_decode( $value ) );
 
 					$width = $height = 1;
 					if( is_array( $sheet->mergeInfo[$row][$col] ) )
