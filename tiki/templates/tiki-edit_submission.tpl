@@ -2,7 +2,33 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a><br /><br />
+<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Submissions{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit submissions tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!--- beginning of next bit --->
+
+
+
+
+
+
+
+
+
+
+<br /><br />
 [<a class="link" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>]
 <br /><br />
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='tikieditsubmission'>
