@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.4 2003-08-18 08:42:22 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remote_backup.php,v 1.5 2004-03-28 07:32:23 mose Exp $
 
-// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

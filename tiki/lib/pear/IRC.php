@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2002-2003 The PHP Group                                     |
+// | Copyright (c) 2002-2004 The PHP Group                                     |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: IRC.php,v 1.1 2003-07-13 00:13:13 rossta Exp $
+// $Id: IRC.php,v 1.2 2004-03-28 07:32:47 mose Exp $
 
 /**
 * Class for handling the client side of the IRC protocol (RFC 2812)
