@@ -5,6 +5,12 @@ include_once('lib/userslib.php');
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
 
+if($feature_xmlrpc != 'y') {
+  
+  die;  
+}
+
+
 $tikilib = new Tikilib($dbTiki);
 $userlib = new Userslib($dbTiki);
 

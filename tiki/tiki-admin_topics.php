@@ -2,6 +2,13 @@
 
 require_once('tiki-setup.php');
 
+if($feature_articles != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {

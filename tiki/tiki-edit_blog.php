@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_blogs != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // Now check permissions to access this page
 if($tiki_p_create_blogs != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot create or edit blogs"));

@@ -44,10 +44,12 @@ if(!page_exists($page)) {
 include_once("tiki-pagesetup.php");
 
 // Now check permissions to access this page
+if($page != 'SandBox') {
 if($tiki_p_edit != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot edit this page"));
   $smarty->display('error.tpl');
   die;  
+}
 }
 
 
@@ -60,6 +62,7 @@ if($info["flag"]=='L') {
   die;
 }
 
+if($page != 'SandBox') {
 // Permissions
 // if this page has at least one permission then we apply individual group/page permissions
 // if not then generic permissions apply
@@ -77,6 +80,7 @@ if($tiki_p_admin != 'y') {
       die;  
     }
   }
+}
 }
 
 if($tiki_p_admin != 'y') {

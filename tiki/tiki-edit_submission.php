@@ -2,6 +2,13 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($feature_submissions != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
 // Now check permissions to access this page
 if($tiki_p_submit_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot send submissions"));
