@@ -23,7 +23,7 @@
 <td id="{cycle advance=false}">&nbsp;{$history[hist].version}&nbsp;</td>
 <td id="{cycle advance=false}">&nbsp;{$history[hist].ip}&nbsp;</td>
 <td id="{cycle advance=false}">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td id="{cycle}">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&page={$history[hist].pageName|escape:"url"}&preview=1&version={$history[hist].version}">{tr}view{/tr}</a>&nbsp;</td>
+<td id="{cycle}">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&amp;page={$history[hist].pageName|escape:"url"}&amp;preview=1&amp;version={$history[hist].version}">{tr}view{/tr}</a>&nbsp;</td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">
