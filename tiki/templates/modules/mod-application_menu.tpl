@@ -28,9 +28,13 @@
 {/if}
 
 {if $user}
-  <div class="separator"><a class='separator' href="javascript:setCookie('mymenu','c');hide('mymenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('mymenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('mymenu');">[-]</a>{/if} 
   <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
-  <a class='separator' href="javascript:setCookie('mymenu','o');show('mymenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('mymenu');">[+]</a>{/if} 
+  </div>
   <div id='mymenu' style="{$mnu_mymenu}">
   {if $feature_userPreferences eq 'y'}
       &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br/>  
@@ -73,9 +77,13 @@
 {/if}
 
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('wfmenu','c');hide('wfmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('wfmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('wfmenu');">[-]</a>{/if} 
   <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
-  <a class='separator' href="javascript:setCookie('wfmenu','o');show('wfmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('wfmenu');">[+]</a>{/if}
+  </div>
   <div id='wfmenu' style="{$mnu_workflow}">
   {if $tiki_p_admin_workflow eq 'y'}
       &nbsp;<a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a><br/>  
@@ -89,7 +97,13 @@
   </div>
 {/if}
 {if $feature_wiki eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('wikimenu','c');hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a> <a class='separator' href="javascript:setCookie('wikimenu','o');show('wikimenu');">[+]</a></div>
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('wikimenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('wikimenu');">[-]</a>{/if}
+  <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('wikimenu');">[+]</a>{/if}
+  </div>
   <div id="wikimenu" style="{$mnu_wikimenu}">
   {if $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-index.php" class="linkmenu">{tr}home{/tr}</a><br/>
@@ -125,9 +139,13 @@
   </div>
 {/if}
 {if $feature_galleries eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('galmenu','c');hide('galmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('galmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('galmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
-  <a class='separator' href="javascript:setCookie('galmenu','o');show('galmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('galmenu');">[+]</a>{/if}
+  </div>
   <div id='galmenu' style="{$mnu_galmenu}">
   {if $tiki_p_view_image_gallery eq 'y'}
     &nbsp;<a href="tiki-galleries.php" class="linkmenu">{tr}Galleries{/tr}</a><br/>
@@ -145,7 +163,13 @@
 {/if}
 
 {if $feature_articles eq 'y' or $feature_submissions eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('cmsmenu','c');hide('cmsmenu');">[-]</a> <a class='separator' href='tiki-view_articles.php'>{tr}Articles{/tr}</a> <a class='separator' href="javascript:setCookie('cmsmenu','o');show('cmsmenu');">[+]</a></div>
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('cmsmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('cmsmenu');">[-]</a>{/if}
+  <a class='separator' href='tiki-view_articles.php'>{tr}Articles{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('cmsmenu');">[+]</a>{/if}
+  </div>
   <div id='cmsmenu' style="{$mnu_cmsmenu}">
   {if $tiki_p_read_article eq 'y'}
   &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles Home{/tr}</a><br/>
@@ -178,9 +202,13 @@
 {/if}
 
 {if $feature_blogs eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('blogmenu','c');hide('blogmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('blogmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('blogmenu');">[-]</a>{/if}
   <a class='separator' href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
-  <a class='separator' href="javascript:setCookie('blogmenu','o');show('blogmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('blogmenu');">[+]</a>{/if}
+  </div>
   <div id='blogmenu' style="{$mnu_blogmenu}">
   {if $tiki_p_read_blog eq 'y'}
   &nbsp;<a href="tiki-list_blogs.php" class="linkmenu">{tr}List blogs{/tr}</a><br/>
@@ -201,9 +229,13 @@
 {/if}
 
 {if $feature_forums eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('formenu','c');hide('formenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('formenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('formenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-forums.php">{tr}Forums{/tr}</a>
-  <a class='separator' href="javascript:setCookie('formenu','o');show('formenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('formenu');">[+]</a>{/if}
+  </div>
   <div id='formenu' style="{$mnu_formenu}">
   {if $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}List forums{/tr}</a><br/>
@@ -218,9 +250,13 @@
 {/if}
 
 {if $feature_directory eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('dirmenu','c');hide('dirmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('dirmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('dirmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
-  <a class='separator' href="javascript:setCookie('dirmenu','o');show('dirmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('dirmenu');">[+]</a>{/if}
+  </div>
   <div id='dirmenu' style="{$mnu_dirmenu}">
   {if $tiki_p_view_directory eq 'y'}
   &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Browse Directory{/tr}</a><br/>
@@ -232,9 +268,13 @@
 {/if}
 
 {if $feature_file_galleries eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('filegalmenu','c');hide('filegalmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('filegalmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('filegalmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
-  <a class='separator' href="javascript:setCookie('filegalmenu','o');show('filegalmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('filegalmenu');">[+]</a>{/if}
+  </div>
   <div id='filegalmenu' style="{$mnu_filegalmenu}">
   {if $tiki_p_view_file_gallery eq 'y'}
   &nbsp;<a href="tiki-file_galleries.php" class="linkmenu">{tr}List galleries{/tr}</a><br/>
@@ -249,9 +289,13 @@
 {/if}
 
 {if $feature_faqs eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('faqsmenu','c');hide('faqsmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('faqsmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('faqsmenu');">[-]</a>{/if} 
   <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
-  <a class='separator' href="javascript:setCookie('faqsmenu','o');show('faqsmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('faqsmenu');">[+]</a>{/if}
+  </div>
   <div id='faqsmenu' style="{$mnu_faqsmenu}">
   {if $tiki_p_view_faqs eq 'y'}
   &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}List FAQs{/tr}</a><br/>
@@ -263,9 +307,13 @@
 {/if}
 
 {if $feature_quizzes eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('quizmenu','c');hide('quizmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('quizmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('quizmenu');">[-]</a>{/if} 
   <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
-  <a class='separator' href="javascript:setCookie('quizmenu','o');show('quizmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('quizmenu');">[+]</a>{/if}
+  </div>
   <div id='quizmenu' style="{$mnu_quizmenu}">
   &nbsp;<a href="tiki-list_quizzes.php" class="linkmenu">{tr}List Quizzes{/tr}</a><br/>
   {if $tiki_p_view_quiz_stats eq 'y'}
@@ -278,9 +326,13 @@
 {/if}
 
 {if $feature_trackers eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('trkmenu','c');hide('trkmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('trkmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('trkmenu');">[-]</a>{/if} 
   <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
-  <a class='separator' href="javascript:setCookie('trkmenu','o');show('trkmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('trkmenu');">[+]</a>{/if}
+  </div>
   <div id='trkmenu' style="{$mnu_trkmenu}">
   &nbsp;<a href="tiki-list_trackers.php" class="linkmenu">{tr}List Trackers{/tr}</a><br/>
   {if $tiki_p_admin_trackers eq 'y'}
@@ -290,9 +342,13 @@
 {/if}
 
 {if $feature_surveys eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('srvmenu','c');hide('srvmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('srvmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('srvmenu');">[-]</a>{/if} 
   <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
-  <a class='separator' href="javascript:setCookie('srvmenu','o');show('srvmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('srvmenu');">[+]</a>{/if}
+  </div>
   <div id='srvmenu' style="{$mnu_srvmenu}">
   &nbsp;<a href="tiki-list_surveys.php" class="linkmenu">{tr}List Surveys{/tr}</a><br/>
   {if $tiki_p_view_survey_stats eq 'y'}
@@ -305,9 +361,13 @@
 {/if}
 
 {if $feature_newsletters eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('nlmenu','c');hide('nlmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('nlmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('nlmenu');">[-]</a>{/if} 
   <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
-  <a class='separator' href="javascript:setCookie('nlmenu','o');show('nlmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('nlmenu');">[+]</a>{/if}
+  </div>
   <div id='nlmenu' style="{$mnu_nlmenu}">
   {if $tiki_p_admin_newsletters eq 'y'}
   &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send newsletters{/tr}</a><br/>
@@ -318,9 +378,13 @@
 
 
 {if $feature_eph eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('ephmenu','c');hide('ephmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('ephmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('ephmenu');">[-]</a>{/if} 
   <a href="tiki-eph.php" class="separator">{tr}Ephemerides{/tr}</a>
-  <a class='separator' href="javascript:setCookie('ephmenu','o');show('ephmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('ephmenu');">[+]</a>{/if}
+  </div>
   <div id='ephmenu' style="{$mnu_ephmenu}">
   {if $tiki_p_eph_admin eq 'y'}
   &nbsp;<a href="tiki-eph_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
@@ -330,9 +394,13 @@
 
 
 {if $feature_charts eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('chartmenu','c');hide('chartmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('chartmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('chartmenu');">[-]</a>{/if} 
   <a href="tiki-charts.php" class="separator">{tr}Charts{/tr}</a>
-  <a class='separator' href="javascript:setCookie('chartmenu','o');show('chartmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('chartmenu');">[+]</a>{/if}
+  </div>
   <div id='chartmenu' style="{$mnu_chartmenu}">
   {if $tiki_p_admin_charts eq 'y'}
   &nbsp;<a href="tiki-admin_charts.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
@@ -358,7 +426,13 @@
  $user_is_operator eq 'y'
  }
  
-  <div class="separator"><a class='separator' href="javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('admmnu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('admmnu');">[-]</a>{/if}
+  {if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('admmnu');">[+]</a>{/if}
+  </div>
   <div id='admmnu' style="{$mnu_admmnu}">
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br/>
@@ -431,9 +505,13 @@
   </div>
 {/if}
 {if $feature_usermenu eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:setCookie('usrmenu','c');hide('usrmenu');">[-]</a> 
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class='separator' href="javascript:toggle('usrmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  {else}<a class='separator' href="javascript:toggle('usrmenu');">[-]</a>{/if} 
   <a href="tiki-usermenu.php" class="separator">{tr}User Menu{/tr}</a>
-  <a class='separator' href="javascript:setCookie('usrmenu','o');show('usrmenu');">[+]</a></div>
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('usrmenu');">[+]</a>{/if}
+  </div>
   <div id='usrmenu' style="{$mnu_usrmenu}">
   {section name=ix loop=$usr_user_menus}
   &nbsp;<a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="linkmenu">{$usr_user_menus[ix].name}</a><br/>
