@@ -31,7 +31,7 @@
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}
-      {if $right_modules[homeix].data ne ''}<table cellspacing="0" cellpadding="0" width="100%" ><tr><td width="100%"><div align="right"><img hspace="4" alt="right shadow" src="styles/3dblue/modr.gif" /></div></td></tr></table>{/if}
+      {if $right_modules[homeix].data|strip ne " "}<table cellspacing="0" cellpadding="0" width="100%" ><tr><td width="100%"><div align="right"><img hspace="4" alt="right shadow" src="styles/3dblue/modr.gif" /></div></td></tr></table>{/if}
       {/section}
       
       </td>
