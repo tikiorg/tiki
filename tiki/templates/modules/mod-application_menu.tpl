@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.101 2004-06-14 06:07:33 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.102 2004-06-16 22:04:09 luciash Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -32,13 +32,16 @@
   <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('mymenu');">[-]</a>{/if}
   {if $feature_userPreferences eq 'y'}
-  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
   {else}
   <span class="separator">{tr}MyTiki{/tr}</span>
   {/if}
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mymenu');">[+]</a>{/if} 
   </div>
   <div id="mymenu" style="{$mnu_mymenu}">
+	{if $feature_userPreferences eq 'y'}
+			&nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a><br />
+	{/if}
   {if $feature_userPreferences eq 'y'}
       &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />  
   {/if}
@@ -531,7 +534,7 @@
   <a class="separator" href="javascript:icntoggle('admmnu');"><img src="img/icons/fo.gif" style="border: 0" name="admmnuicn" alt="{tr}AdmMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('admmnu');">[-]</a>{/if}
   {if $tiki_p_admin eq 'y'}
-  <a class="separator" href='tiki-admin.php'>{tr}Admin (click!){/tr}</a>
+  <a class="separator" href='tiki-admin.php'>{tr}Admin{/tr}</a>
   {else}
   {tr}Admin{/tr}
   {/if}
@@ -539,6 +542,9 @@
   </div>
   <div id="admmnu" style="{$mnu_admmnu}">
   {sortlinks}
+	{if $tiki_p_admin eq 'y'}
+		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a><br />
+	{/if}
 	{if $feature_debug_console eq 'y'}
 		&nbsp;<a href="javascript:toggle('debugconsole');" class="linkmenu">{tr}Debugger console{/tr}</a><br />
 	{/if}
