@@ -5,6 +5,15 @@
       {tr}CMS features{/tr}<br />
       <form action="tiki-admin.php?page=cms" method="post">
         <table class="admin"><tr>
+          <td class="form"><label for="articles-submission">
+				{if $feature_help eq 'y'}<a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Articles{/tr}">{/if}
+				{tr}Submissions{/tr}
+				{if $feature_help eq 'y'}</a>{/if}
+				:</td>
+          <td><input type="checkbox" name="feature_submissions" id="articles-submission"
+              {if $feature_submissions eq 'y'}checked="checked"{/if} /></td>
+
+        </tr><tr>
           <td class="form"><label for="articles-rank">{tr}Rankings{/tr}:</label></td>
           <td><input type="checkbox" name="feature_cms_rankings" id="articles-rank"
               {if $feature_cms_rankings eq 'y'}checked="checked"{/if} /></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.48 2004-06-08 05:15:56 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.49 2004-06-12 01:39:06 lfagundes Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -69,12 +69,12 @@
             {if $feature_articles eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Articles{/tr}">{/if}
-				{tr}Submissions{/tr}
+				{if $feature_help eq 'y'}<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}">{/if}
+				{tr}Forums{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td><input type="checkbox" name="feature_submissions"
-            {if $feature_submissions eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_forums"
+            {if $feature_forums eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -87,13 +87,13 @@
             {if $feature_faqs eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
 				
-        <td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}">{/if}
-				{tr}Forums{/tr}
+				<td class="form">
+				{if $feature_help eq 'y'}<a href="{$helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Shoutbox{/tr}">{/if}
+				{tr}Shoutbox{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td><input type="checkbox" name="feature_forums"
-            {if $feature_forums eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_shoutbox"
+            {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -107,12 +107,12 @@
         <td>&nbsp;</td>
         
 				<td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Shoutbox{/tr}">{/if}
-				{tr}Shoutbox{/tr}
+				{if $feature_help eq 'y'}<a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">{/if}
+				{tr}Trackers{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td><input type="checkbox" name="feature_shoutbox"
-            {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_trackers"
+            {if $feature_trackers eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -126,12 +126,12 @@
         <td>&nbsp;</td>
         
 				<td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">{/if}
-				{tr}Trackers{/tr}
+				{if $feature_help eq 'y'}<a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if}
+				{tr}Webmail{/tr} :
 				{if $feature_help eq 'y'}</a>{/if}
-				:</td>
-        <td><input type="checkbox" name="feature_trackers"
-            {if $feature_trackers eq 'y'}checked="checked"{/if}/></td>
+				</td>
+        <td><input type="checkbox" name="feature_webmail"
+            {if $feature_webmail eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -145,12 +145,12 @@
         <td>&nbsp;</td>
         
 				<td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}Webmail{/tr}">{/if}
-				{tr}Webmail{/tr} :
+				{if $feature_help eq 'y'}<a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if}
+				{tr}Surveys{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
-				</td>
-        <td><input type="checkbox" name="feature_webmail"
-            {if $feature_webmail eq 'y'}checked="checked"{/if}/></td>
+				:</td>
+        <td><input type="checkbox" name="feature_surveys"
+            {if $feature_surveys eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -164,12 +164,12 @@
         <td>&nbsp;</td>
         
 				<td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">{/if}
-				{tr}Surveys{/tr}
+				{if $feature_help eq 'y'}<a href="{$helpurl}Ephemerides" target="tikihelp" class="tikihelp" title="{tr}Ephemerides{/tr}">{/if}
+				{tr}Ephemerides{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td><input type="checkbox" name="feature_surveys"
-            {if $feature_surveys eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_eph"
+            {if $feature_eph eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -183,12 +183,12 @@
         <td>&nbsp;</td>
         
 				<td class="form">
-				{if $feature_help eq 'y'}<a href="{$helpurl}Ephemerides" target="tikihelp" class="tikihelp" title="{tr}Ephemerides{/tr}">{/if}
-				{tr}Ephemerides{/tr}
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}Search" target="tikihelp" class="tikihelp" title="{tr}Search{/tr}">{/if}				
+				{tr}Search{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td><input type="checkbox" name="feature_eph"
-            {if $feature_eph eq 'y'}checked="checked"{/if}/></td>
+        <td ><input type="checkbox" name="feature_search"
+            {if $feature_search eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -200,17 +200,6 @@
         <td><input type="checkbox" name="feature_featuredLinks"
             {if $feature_featuredLinks eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        
-				<td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}Search" target="tikihelp" class="tikihelp" title="{tr}Search{/tr}">{/if}				
-				{tr}Search{/tr}
-				{if $feature_help eq 'y'}</a>{/if}
-				:</td>
-        <td ><input type="checkbox" name="feature_search"
-            {if $feature_search eq 'y'}checked="checked"{/if}/></td>
-      </tr>
-			
-			<tr>
         <td class="form">
         	{if $feature_help eq 'y'}<a href="{$helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}Banners{/tr}">{/if}
         	{tr}Banners{/tr}
@@ -218,17 +207,7 @@
         	:</td>
         <td><input type="checkbox" name="feature_banners"
             {if $feature_banners eq 'y'}checked="checked"{/if}/></td>
-        <td>&nbsp;</td>
-        
-				<td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}FullTextSearch" target="tikihelp" class="tikihelp" title="{tr}Full Text Search{/tr}">{/if}
-				{tr}Full Text Search{/tr}
-				{if $feature_help eq 'y'}</a>{/if}
-				:</td>
-        <td><input type="checkbox" name="feature_search_fulltext"
-            {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td>
       </tr>
-			
 			<tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}Games" target="tikihelp" class="tikihelp" title="{tr}Games{/tr}">{/if}
@@ -238,14 +217,13 @@
         <td><input type="checkbox" name="feature_games" 
             {if $feature_games eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        
-				<td class="form">
-		        	{if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
-					{tr}Search stats{/tr}
-					{if $feature_help eq 'y'}</a>{/if}
-					:</td>
-        <td><input type="checkbox" name="feature_search_stats"
-            {if $feature_search_stats eq 'y'}checked="checked"{/if}/></td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Workflow{/tr}">{/if}
+        		{tr}Workflow engine{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_workflow"
+            {if $feature_workflow eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			
 			<tr>
@@ -265,24 +243,7 @@
 					:</td>
         <td><input type="checkbox" name="feature_live_support"
             {if $feature_live_support eq 'y'}checked="checked"{/if}/></td>
-      </tr>
-			
-			<tr>
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}HtmlPages" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if}
-        		{tr}HTML pages{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_html_pages"
-            {if $feature_html_pages eq 'y'}checked="checked"{/if}/></td>
-        <td>&nbsp;</td>
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Workflow{/tr}">{/if}
-        		{tr}Workflow engine{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_workflow"
-            {if $feature_workflow eq 'y'}checked="checked"{/if}/></td>
+
       </tr><tr>
 {* beginning of mini calendar function option *}
         <td class="form">
@@ -551,12 +512,12 @@
             {if $feature_custom_home eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}DynamicContent" target="tikihelp" class="tikihelp" title="{tr}Dynamic Content System{/tr}">{/if}
-        		{tr}Dynamic Content System{/tr}
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}HtmlPages" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if}
+        		{tr}HTML pages{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
-        <td><input type="checkbox" name="feature_dynamic_content"
-            {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_html_pages"
+            {if $feature_html_pages eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Drawings{/tr}">{/if}
@@ -567,12 +528,12 @@
             {if $feature_drawings eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}AllowSmileys" target="tikihelp" class="tikihelp" title="{tr}Allow Smileys{/tr}">{/if}        
-		        {tr}Allow Smileys{/tr}
-		        {if $feature_help eq 'y'}</a>{/if}
-		        :</td>
-        <td><input type="checkbox" name="feature_smileys"
-            {if $feature_smileys eq 'y'}checked="checked"{/if}/></td>
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}DynamicContent" target="tikihelp" class="tikihelp" title="{tr}Dynamic Content System{/tr}">{/if}
+        		{tr}Dynamic Content System{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_dynamic_content"
+            {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{/if}
@@ -582,7 +543,13 @@
         <td><input type="checkbox" name="feature_charts"
             {if $feature_charts eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td class="form" colspan="2">&nbsp;</td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}AllowSmileys" target="tikihelp" class="tikihelp" title="{tr}Allow Smileys{/tr}">{/if}        
+		        {tr}Allow Smileys{/tr}
+		        {if $feature_help eq 'y'}</a>{/if}
+		        :</td>
+        <td><input type="checkbox" name="feature_smileys"
+            {if $feature_smileys eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
 
         <td class="heading" colspan="5" 
@@ -659,7 +626,15 @@
         		:</td>
         <td><input type="checkbox" name="contact_anon"
             {if $contact_anon eq 'y'}checked="checked"{/if}/></td>            
-                   
+        <td>&nbsp;</td>
+	<td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}SearchStats{/tr}">{/if}
+			{tr}Search stats{/tr}
+			{if $feature_help eq 'y'}</a>{/if}
+			:</td>
+        <td><input type="checkbox" name="feature_search_stats"
+            {if $feature_search_stats eq 'y'}checked="checked"{/if}/></td>
+
         </tr><tr>
 
         <td class="heading" colspan="5"

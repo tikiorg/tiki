@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.9 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_cms.php,v 1.10 2004-06-12 01:39:06 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["cmsfeatures"])) {
 	check_ticket('admin-inc-cms');
+
+	if (isset($_REQUEST["feature_submissions"]) && $_REQUEST["feature_submissions"] == "on") {
+		$tikilib->set_preference("feature_submissions", 'y');
+
+		$smarty->assign("feature_submissions", 'y');
+	} else {
+		$tikilib->set_preference("feature_submissions", 'n');
+
+		$smarty->assign("feature_submissions", 'n');
+	}
+
 	if (isset($_REQUEST["feature_cms_rankings"]) && $_REQUEST["feature_cms_rankings"] == "on") {
 		$tikilib->set_preference("feature_cms_rankings", 'y');
 
