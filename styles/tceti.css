@@ -25,7 +25,7 @@ body {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {  
-  background-color: white;  
+  background-color: #CCCCFF;  
   height: 100%;  
   margin-top: 0px; 
   margin-bottom: 0px; 
@@ -54,7 +54,7 @@ DIV#tiki-mid {
 DIV#tiki-bot {  
   padding-top: 10px;  
   margin-top: 0px;  
-  background-color: white;  
+  background-color: #ccccff;   
   padding-bottom: 15px; 
 }
 
@@ -63,17 +63,18 @@ TD#leftcolumn {
   padding-left: 2px; 
   padding-right: 2px; 
   vertical-align: top;  
-  background-color: white;  
+  background-color: #6699CC;  
   width: 180px;
 }
 TD#rightcolumn {  
   padding-left: 2px; 
   vertical-align: top;  
-  background-color: white;  
+  background-color: #6699CC;  
   width: 180px;
 }
 TD#centercolumn { 
   padding-right: 14px;
+  background-color: #ccccff;
   vertical-align: top; 
 }
 
@@ -152,6 +153,7 @@ div.cbox {
   margin-top: 4px;  
   margin-bottom: 0px;
   border: 1px solid black;  
+  background-color: white;
   padding-bottom: 10px;  
   overflow: hidden; 
   width: 100%;
@@ -178,7 +180,10 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data {
   overflow: hidden;
-  margin-left: 5px;  margin-right: 5px;
+  background-color: white;
+  margin-left: 5px;  
+  margin-right: 2px;
+  padding-right: 5px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color: black;
   width: 100%;
 }
@@ -202,7 +207,7 @@ div.imagerank {  margin-left: 5px;  margin-right: 5px;  margin-bottom: 10px;  ma
  * used for example in the admin screen */
 div.fgaldesc, div.galdesc, div.simplebox {  
   margin-left: 1px;  margin-right: 4px;  margin-top: 5px;  margin-bottom: 5px;
-  padding-left: 2px;  padding-top: 2px;  padding-bottom: 2px;  padding-right: 2px;
+  padding-left: 2px;  padding-top: 2px;  padding-bottom: 2px;  padding-right: 5px;
   color: black;
   border: 1px solid black;  
   font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px;
