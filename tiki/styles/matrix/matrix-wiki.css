@@ -1,0 +1,350 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.3 2003-07-13 00:09:14 zaufi Exp $
+ *
+ */
+
+/*
+ * Wiki page preferences
+ */
+
+
+ /* Titles */
+/* When the page title is a link this is the style */
+.pagetitle, .pagetitle:hover, .pagetitle:active, .pagetitle:visited, .pagetitle:visited:hover
+{
+  color : #00E000;
+  font-family: "Matrix_vs_miltown", Verdana, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 30px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+/*
+ * Currently this code too buggy with my favorite konqueror :()
+ */
+/*
+div#tiki-center h1 > a.pagetitle
+{
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-image: url(module.data.png);
+  background-repeat: repeat;
+  border: 1px solid green;
+}
+*/
+
+/* Text in wiki pages is displayed using the following style */
+div.wikitext
+{
+  color: #001000;
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+  border: 3px ridge #00B000;
+  padding: 1px;
+  padding-bottom: 10px;
+  margin: 1px;
+  margin-top: 5px;
+  clear: both;
+}
+/* -= Wiki title bar =- */
+div.titlebar
+{
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+  font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
+  font-size: 18px;
+  padding-left: 5px;
+  /*margin: 1px 1px;*/
+  border: 1px outset #00B000;
+}
+
+
+/* The bar where the actions for a page are displayed */
+div#page-bar { margin-left: 5px; }
+
+/*
+ * Wiki action buttons (the buttons displayed at the end of
+ * each page to edit/print/remove/etc a page
+ */
+div.button2
+{
+  color: green;
+  background: transparent;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight : bold;
+  border: 1px solid lightgreen;
+  padding: 0.1em;
+  margin: 0.0ex 0px;
+}
+div.button2:hover { color: #001000; background: lightgreen; }
+
+/* Links in buttons */
+.linkbut, .linkbut:visited, .linkbut:active
+{
+  color: #00D000;
+  text-decoration: none;
+}
+.linkbut:hover, .linkbut:visited:hover
+{
+  color: #001000;
+  text-decoration: none;
+  background: lightgreen;
+}
+
+
+/* When a cached version of an external link is displayed */
+div.cache
+{
+  border: 1px solid green;
+  padding: 0.1em;
+  margin: 0.1ex 0px;
+  width: 100%;
+}
+div.cachedpage
+{
+  border: 1px solid green;
+  padding: 0.1em;
+  margin: 0.1ex 0px;
+  width: 100%;
+}
+
+/*
+ * When an external link is cached a small link
+ * to the cached version (cache) is displayed
+ * using this style
+ */
+.wikicache, .wikicache:active, .wikicache:hover
+{
+  color: #00E000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  text-decoration: none;
+}
+.wikicache:visited, .wikicache:visited:hover
+{
+  color: #00B000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+
+/* User table on wiki page */
+table.wikitable
+{
+  border: 1px solid black;
+}
+td.wikicell
+{
+  border: 1px solid lightgreen;
+  border-style: outset;
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+
+}
+
+
+/* Links to wiki pages */
+.wiki, .wiki.active, .wiki:visited { color: #00E000; text-decoration: none; }
+.wiki:hover, .wiki:visited:hover   { color: #00F000; text-decoration: underline; }
+
+
+/* Date displayed for last modification date of pages */
+p.editdate
+{
+  font-size: smaller;
+  margin-bottom: -1ex;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+/* The edit-help used to display the wiki syntax when editing a page */
+div.wiki-edithelp
+{
+    background: url(wiki-page.png);
+    border: 1px outset #00A000;
+    font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: smaller;
+    padding: 6px;
+    color: #001000;
+}
+
+/* Wiki structures navigation bar */
+div.tocnav
+{
+  font-family: "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  background: url(module.data.png) repeat;
+  border: 2px ridge #00A000;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 30px;
+}
+
+.tocnavlink       { color: lightgreen; text-decoration: none; }
+.tocnavlink:hover { color: lightgreen; text-decoration: none; background-color: green; }
+
+
+/* Links to open and close the comments area */
+.opencomlink, .opencomlink:active
+{
+  color: #00E000;
+  text-decoration: none;
+}
+.opencomlink:hover
+{
+  color: #00E000;
+  background: green;
+  text-decoration: none;
+}
+
+/* The whole comment (attachment) area when it is visible and when it is not */
+#edithelpzone { display: none;  }
+#attzone      { display: none; margin-top: 10px; }
+#comzone      { display: none;  }
+#comzoneopen  { display: block; }
+
+/* Post comment form */
+div.commentspost
+{
+ display: inherit;
+}
+
+/* Cell in the post form */
+TD.comform
+{
+  color: #001000;
+  background: url(wiki-page.png) repeat;
+  border: 1px outset #00A000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  vertical-align: center;
+  text-align: left;
+}
+
+/* Help box*/
+div.commentsedithelp
+{
+  color: #001000;
+  background: url(wiki-page.png) repeat;
+  border: 1px outset #00A000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: smaller;
+  margin: 1px;
+  padding: 4px;
+  vertical-align: center;
+}
+
+/* The toolbar where the ordering number of comments and find box are found */
+div.commentstoolbar
+{
+  background: url(wiki-page.png) repeat;
+  border: 1px outset #00A000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: smaller;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 4px;
+}
+
+/* The comment title */
+span.commentstitle
+{
+  font-weight: bold;
+  font-size: 12px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+/* The comment */
+div.commentscomment
+{
+  margin-bottom: 10px;
+}
+/* The header for a comment */
+div.commentheader
+{
+  color: #001000;
+  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: smaller;
+}
+div.commentscomment > div.commentheader
+{
+  background: url(wiki-page.png) repeat;
+  border: 1px outset #00A000;
+}
+
+/* The text */
+div.commenttext
+{
+
+  background: url(module.data.png) repeat;
+  border: 1px outset #00A000;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+}
+
+/* Links in comments and in the comment header */
+.commentshlink, .commentshlink:active, .commentshlink:visited,
+.commentslink,  .commentslink:active
+{
+  color: #00E000;
+  text-decoration: none;
+}
+.commentslink:visited
+{
+  color: #00B000;
+  text-decoration: none;
+}
+.commentshlink:hover, .commentshlink:visited:hover,
+.commentslink:hover,  .commentslink:visited:hover
+{
+  color: #00F000;
+  text-decoration: underline;
+}
+
+/* Code listing style */
+div.codelisting
+{
+  color: black;
+  background: url(wiki-page.png) repeat;
+  border: 2px ridge #00A000;
+  margin: 4px;
+  padding-left: 20px;
+}
+
+/* My UserStory wiki pluin styles */
+td.userstoryid, td.userstorystatus
+{
+  background: url(wiki-page.png) repeat;
+  text-align: center;
+  width: 12%;
+  border: 1px outset #00A000;
+}
+td.userstorytitle
+{
+  background: url(wiki-page.png) repeat;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 1em;
+  width: auto;
+  border: 1px outset #00A000;
+}
+td.userstoryidwarn
+{
+  color: red;
+  background: url(error-page.png) repeat;
+  border: 1px outset #A00000;
+}
+td.userstorydata
+{
+}
+table.userstory
+{
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
