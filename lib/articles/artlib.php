@@ -54,10 +54,9 @@ class ArtLib extends TikiLib {
     if($articleId) {
       $query = "delete from tiki_articles where articleId=$articleId";
       $result = $this->query($query);
-
+	  $this->remove_object('article',$articleId);
       return true;
     }
-    $this->remove_object('article',$articleId);
   }
   
   function remove_submission($subId)
