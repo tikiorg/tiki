@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.220 2004-05-06 09:23:54 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.221 2004-05-06 10:03:38 lfagundes Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -941,7 +941,7 @@ $wiki_3d_height = 500;
 $wiki_3d_navigation_depth = 1;
 $wiki_3d_feed_animation_interval = 500;
 $wiki_3d_existing_page_color = "#00CC55";
-$wiki_3d_missing_page_color = "#BB0000";
+$wiki_3d_missing_page_color = "#FF5555";
 
 $smarty->assign('wiki_feature_3d', $wiki_feature_3d);
 $smarty->assign('wiki_3d_width', $wiki_3d_width);
