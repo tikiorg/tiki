@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.70 2004-02-20 08:38:37 koobla Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.71 2004-02-22 18:22:49 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -726,6 +726,7 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+$smarty->assign('quicktagscant', $quicktags["cant"]);
 ask_ticket('edit-page');
 
 // Display the Index Template
