@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.21 2003-11-17 00:35:02 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.22 2003-11-18 22:20:33 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -118,7 +118,7 @@ class TikiIntegrator
         else
             $query = "update `tiki_integrator_rules` 
                       set `repID`=?,`ord`=?,`srch`=?,`repl`=?,`type`=?,`casesense`=?,
-                      rxmod`=?,`enabled`=?,`description`=? where `ruleID`=?";
+                      `rxmod`=?,`enabled`=?,`description`=? where `ruleID`=?";
         $result = $tikilib->query($query, array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr));
         // Clear cached pages for this repository
         $this->clear_cache($repID);
