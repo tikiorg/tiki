@@ -229,7 +229,7 @@ class ProcessMonitor extends Base {
     return $retval;
   }
 
-  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars='') {
+  function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='') {
     if($find) {
       $findesc = $this->qstr('%'.$find.'%');
       $mid=" where (`properties` like $findesc)";
@@ -251,8 +251,8 @@ class ProcessMonitor extends Base {
 
     $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
     $query_cant.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."activities` ga ON gia.`activityId` = ga.`activityId` LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp ON gp.`pId`=gi.`pId` $mid";
-    $result = $this->query($query,$wherevars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant,$wherevars);
+    $result = $this->query($query,$where,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$where);
     $ret = Array();
     while($res = $result->fetchRow()) {
       $iid = $res['instanceId'];
