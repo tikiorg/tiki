@@ -454,6 +454,7 @@ class TrackerLib extends TikiLib {
 			if (!$status) {
 				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
 			}
+			if (empty($status)) { $status = 'o'; }
 			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
 			$result = $this->query($query,array((int) $trackerId,(int) $now,(int) $now,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $now,(int) $trackerId));
