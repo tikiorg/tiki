@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.24 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.25 2004-06-13 22:03:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.24 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.25 2004-06-13 22:03:15 teedog Exp $
 //
 
 // Initialization
@@ -168,6 +168,7 @@ if ($_REQUEST["parentId"]) {
 	$path = $categlib->get_category_path($_REQUEST["parentId"]);
 	$p_info = $categlib->get_category($_REQUEST["parentId"]);
 	$father = $p_info["parentId"];
+	$categ_name = $p_info['name'];
 } else {
 	$path = "";
 	$father = 0;
@@ -175,6 +176,7 @@ if ($_REQUEST["parentId"]) {
 
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
+$smarty->assign('categ_name', $categ_name);
 /*
 // ---------------------------------------------------
 // Convert $childrens
