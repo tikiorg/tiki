@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.4 2004-04-12 00:54:37 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.5 2004-04-30 23:53:01 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -88,6 +88,12 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 
 		$smarty->assign_by_ref('title', $info["title"]);
 		$smarty->assign_by_ref('description', $info["description"]);
+
+		$info = $sheetlib->get_sheet_layout($_REQUEST["sheetId"]);
+
+		$smarty->assign_by_ref('className', $info["className"]);
+		$smarty->assign_by_ref('headerRow', $info["headerRow"]);
+		$smarty->assign_by_ref('footerRow', $info["footerRow"]);
 	}
 }
 
@@ -125,7 +131,12 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('title', $_REQUEST["title"]);
 	$smarty->assign_by_ref('description', $_REQUEST["description"]);
 
+	$smarty->assign_by_ref('className', $_REQUEST["className"]);
+	$smarty->assign_by_ref('headerRow', $_REQUEST["headerRow"]);
+	$smarty->assign_by_ref('footerRow', $_REQUEST["footerRow"]);
+
 	$gid = $sheetlib->replace_sheet($_REQUEST["sheetId"], $_REQUEST["title"], $_REQUEST["description"], $user );
+	$sheetlib->replace_layout($gid, $_REQUEST["className"], $_REQUEST["headerRow"], $_REQUEST["footerRow"] );
 
 	$cat_type = 'sheet';
 	$cat_objid = $gid;

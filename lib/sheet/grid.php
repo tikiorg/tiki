@@ -73,6 +73,13 @@ class TikiSheet
 	 */
 	var $rowCount;
 	var $columnCount;
+	
+	/**
+	 * Layout parameters.
+	 */
+	var $headerRow;
+	var $footerRow;
+	var $className;
 
 	/**
 	 * Internal values.
@@ -85,6 +92,20 @@ class TikiSheet
 	var $usedRow;
 	var $usedCol;
 	// }}}2
+	
+	/** getHandlerList {{{2
+	 * Returns an array containing the list of all valid
+	 * handlers for general file import/export.
+	 * @return An array.
+	 * @static 
+	 */
+	function getHandlerList()
+	{
+		return array(
+			'TikiSheetSerializeHandler',
+			'TikiSheetCSVHandler'
+		);
+	}// }}}2
 	
 	/** TikiSheet {{{2
 	 * Initializes the data container.
@@ -102,8 +123,31 @@ class TikiSheet
 
 		$this->rowCount = INITIAL_ROW_COUNT;
 		$this->columnCount = INITIAL_COL_COUNT;
-	}
 
+		$this->headerRow = 0;
+		$this->footerRow = 0;
+		$this->className = '';
+	}
+	
+	/** configureLayout {{{2
+	 * Assigns the different parameters for the output
+	 * @param $className	The clas that will be assigned
+	 *						to the table tag of the output.
+	 *						If used for an other output than
+	 *						HTML, it can be used as an identifier
+	 *						for the type of layout.
+	 * @param $headerRow	The amount of rows that are considered
+	 *						as part of the header.
+	 * @param $footerRow	The amount of rows that are considered
+	 *						as part of the footer.
+	 */
+	function configureLayout( $className, $headerRow = 0, $footerRow = 0 )
+	{
+		$this->className = $className;
+		$this->headerRow = $headerRow;
+		$this->footerRow = $footerRow;
+	}
+	
 	/** getColumnIndex {{{2
 	 * Returns the index of the column from a cell ID.
 	 * @param $id Cell ID in [A-Z]+[0-9]+ format.
@@ -185,6 +229,16 @@ class TikiSheet
 
 		$this->rowCount = $maxRow + 1;
 		$this->columnCount = $maxCol + 1;
+
+		for( $y = 0; $this->rowCount > $y; $y++ )
+			for( $x = 0; $this->columnCount > $x; $x++ )
+			{
+				if( empty( $this->mergeInfo[$y][$x]['width'] ) )
+					$this->mergeInfo[$y][$x]['width'];
+
+				if( empty( $this->mergeInfo[$y][$x]['height'] ) )
+					$this->mergeInfo[$y][$x]['height'];
+			}
 
 		return true;
 	}
@@ -307,7 +361,7 @@ class TikiSheet
 	 */
 	function initCell( $cellID, $col = null )
 	{
-		if( $col == null )
+		if( $col === null )
 		{
 			$this->usedRow = $this->getRowIndex( $cellID );
 			$this->usedCol = $this->getColumnIndex( $cellID );
@@ -339,7 +393,9 @@ class TikiSheet
 	}
 	
 	/** setCalculation {{{2
-	 *
+	 * Assigns a calculation to the currently initialized
+	 * cell.
+	 * @param $calculation The calculation to set.
 	 */
 	function setCalculation( $calculation )
 	{
@@ -357,7 +413,9 @@ class TikiSheet
 	}
 	
 	/** setValue {{{2
-	 *
+	 * Assigns a value to the currently initialized
+	 * cell.
+	 * @param $value The value to set.
 	 */
 	function setValue( $value )
 	{
@@ -399,6 +457,14 @@ class TikiSheetDataHandler
 		trigger_error( "Abstract method call. _save() not defined in " . get_class( $this ), E_USER_ERROR );
 	}
 
+	/** name {{{2
+	 * Identifies the handler in a readable form.
+	 * @return The name of the handler.
+	 */
+	function name()
+	{
+		trigger_error( "Abstract method call. name() not defined in " . get_class( $this ), E_USER_ERROR );
+	}
 	/** supports {{{2
 	 * Function to indicate the features that are supported
 	 * by the handler.
@@ -600,23 +666,134 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
-		if( $file = @fopen( $this->file, "w" ) )
+		$data = serialize( $sheet );
+
+		if( $this->file == "php://stdout" )
 		{
-			$data = serialize( $sheet );
-
-			$return =  @fwrite( $file, $data );
-
-			@fclose( $file );
-			return $return;
+			echo $data;
+			return true;
 		}
 		else
-			return false;
+		{
+			if( $file = @fopen( $this->file, "w" ) )
+			{
+				$return =  @fwrite( $file, $data );
+
+				@fclose( $file );
+				return $return;
+			}
+			else
+				return false;
+		}
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "TikiSheet File";
 	}
 
 	// supports {{{2
 	function supports( $type )
 	{
 		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_SAVE_CALC | TIKISHEET_SAVE_CELL | TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CALC | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+	}
+
+	// version {{{2
+	function version()
+	{
+		return "0.1-dev";
+	}
+ } // }}}1
+
+/** TikiSheetCSVHandler {{{1
+ * Class that stores the sheet representation in a
+ * standard text file as a serialized PHP object.
+ */
+class TikiSheetCSVHandler extends TikiSheetDataHandler
+{
+	var $file;
+	var $lineLen;
+	
+	/** Constructor {{{2
+	 * Initializes the the serializer on a file.
+	 * @param $file The file path to save or load from.
+	 */
+	function TikiSheetCSVHandler( $file, $lineLen = 1024 )
+	{
+		$this->file = $file;
+		$this->lineLen = $lineLen;
+	}
+
+	// _load {{{2
+	function _load( &$sheet )
+	{
+		if( $file = @fopen( $this->file, "r" ) )
+		{
+			$row = 0;
+			while( $data = @fgetcsv( $file, $this->lineLen ) )
+			{
+				foreach( $data as $col=>$value )
+				{
+					$sheet->initCell( $row, $col );
+					$sheet->setValue( $value );
+					$sheet->setSize( 1, 1 );
+				}
+
+				$row++;
+			}
+
+			@fclose( $file );
+
+			return true;
+		}
+		else
+			return false;
+	}
+
+	// _save {{{2
+	function _save( &$sheet )
+	{
+		$total = array();
+
+		foreach( $sheet->dataGrid as $row )
+			if( is_array( $row ) )
+				$total[] = implode( ",", $row );
+
+		if( is_array( $total ) )
+			$total = implode( "\n", $total );
+
+		if( $this->file == "php://stdout" )
+		{
+			echo $total;
+
+			return true;
+		}
+		else
+		{
+			if( $file = @fopen( $this->file, "w" ) )
+			{
+				if( !@fwrite( $file, $total ) )
+					return false;
+
+				@fclose( $file );
+				return true;
+			}
+			else
+				return false;
+		}
+	}
+
+	// name {{{2
+	function name()
+	{
+		return "CSV File";
+	}
+
+	// supports {{{2
+	function supports( $type )
+	{
+		return ( ( TIKISHEET_SAVE_DATA | TIKISHEET_LOAD_DATA ) & $type ) > 0;
 	}
 
 	// version {{{2
@@ -633,6 +810,12 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
  * the sheets themselves. The data will only be filled
  * and extracted based on the given sheet ID. As a default
  * value, the most recent entries will be read.
+ *
+ * The database loader will also select the appropriate
+ * layout based on the timestamped database entries. Using
+ * the database handler will not require to specify manually
+ * using TikiSheet::configureLayout() as it is required by all
+ * other known handler as this comment is being written.
  */
 class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 {
@@ -655,7 +838,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	{
 		global $tikilib;
 		
-		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height` FROM `tiki_sheet_values` WHERE ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( (int)$this->readDate, (int)$this->readDate ) );
+		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height` FROM `tiki_sheet_values` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
 
 		while( $row = $result->fetchRow() )
 		{
@@ -665,6 +848,12 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			$sheet->setCalculation( $calculation );
 			$sheet->setSize( $width, $height );
 		}
+
+		// Fetching the layout informations.
+		$result = $tikilib->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( $this->sheetId, (int)$this->readDate, (int)$this->readDate ) );
+
+		if( $row = $result->fetchRow() )
+			$sheet->configureLayout( $row['className'], $row['headerRow'], $row['footerRow'] );
 
 		return true;
 	}
@@ -701,6 +890,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 			{
 				extract( $coord );
 				$value = $sheet->dataGrid[$row][$col];
+
 				$calc = $sheet->calcGrid[$row][$col];
 				$width = $sheet->mergeInfo[$row][$col]['width'];
 				$height = $sheet->mergeInfo[$row][$col]['height'];
@@ -709,7 +899,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$updates[] = $col;
 
 				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = array( $this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height );
+					$inserts[] = array( (int)$this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height );
 
 			}
 		}
@@ -723,7 +913,9 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		if( sizeof( $inserts ) > 0 )
 			foreach( $inserts as $values )
-				$tikilib->query( "INSERT INTO tiki_sheet_values (sheetId, begin, rowIndex, columnIndex, value, calculation, width, height ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )", $values ); 
+			{
+				$tikilib->query( "INSERT INTO tiki_sheet_values (sheetId, begin, rowIndex, columnIndex, value, calculation, width, height ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )", $values );
+			}
 
 		// }}}3
 
@@ -749,7 +941,7 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// version {{{2
 	function version()
 	{
-		return "0.1-dev";
+		return "0.1-beta";
 	}
 } // }}}1
 
@@ -759,37 +951,30 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
  */
 class TikiSheetOutputHandler extends TikiSheetDataHandler
 {
-	var $headerRows;
-	var $footerRows;
-	
-	function TikiSheetOutputHandler( $headerRows = 0, $footerRows = 0 )
-	{
-		$this->headerRows = $headerRows;
-		$this->footerRows = $footerRows;
-	}
-
+	// _save {{{2
 	function _save( &$sheet )
 	{
-		if( $this->headerRows + $this->footerRows > $sheet->getRowCount() )
+		if( $sheet->headerRow + $sheet->footerRow > $sheet->getRowCount() )
 			return false;
 
-		echo "<table>\n";
+		$class = empty( $sheet->className ) ? "" : " class='{$sheet->className}'";
+		echo "<table{$class}>\n";
 		
-		if( $this->headerRows > 0 )
+		if( $sheet->headerRow > 0 )
 		{
 			echo "	<thead>\n";
-			$this->drawRows( $sheet, 0, $this->headerRows );
+			$this->drawRows( $sheet, 0, $sheet->headerRow );
 			echo "	</thead>\n";
 		}
 
 		echo "	<tbody>\n";
-		$this->drawRows( $sheet, $this->headerRows, $sheet->getRowCount() - $this->footerRows );
+		$this->drawRows( $sheet, $sheet->headerRow, $sheet->getRowCount() - $sheet->footerRow );
 		echo "	</tbody>\n";
 		
-		if( $this->footerRows > 0 )
+		if( $sheet->footerRow > 0 )
 		{
 			echo "	<tfoot>\n";
-			$this->drawRows( $sheet, $sheet->getRowCount() - $this->footerRows, $sheet->getRowCount() );
+			$this->drawRows( $sheet, $sheet->getRowCount() - $sheet->footerRow, $sheet->getRowCount() );
 			echo "	</tfoot>\n";
 		}
 
@@ -798,6 +983,12 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		return true;
 	}
 
+	/** drawRows {{{2
+	 * Draws out a defined set of rows from the sheet.
+	 * @param $sheet The data container.
+	 * @param $begin The index of the begining row. (included)
+	 * @param $end The index of the end row (excluded)
+	 */
 	function drawRows( &$sheet, $begin, $end )
 	{
 		for( $i = $begin; $end > $i; $i++ )
@@ -806,8 +997,8 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 
 			for( $j = 0; $sheet->getColumnCount() > $j; $j++ )
 			{
-				$width = $sheet->mergeInfo[$i][$j]['width'];
-				$height = $sheet->mergeInfo[$i][$j]['height'];
+				$width = $height = "";
+				extract( $sheet->mergeInfo[$i][$j] );
 				$append = "";
 
 				if( empty( $width ) || empty( $height ) )
@@ -850,6 +1041,13 @@ class SheetLib extends TikiLib
 		return $result->fetchRow();
 	}
 
+	function get_sheet_layout( $sheetId ) // {{{2
+	{
+		$result = $this->query( "SELECT `className`, `headerRow`, `footerRow` FROM `tiki_sheet_layout` WHERE `sheetId` = ? AND `end` IS NULL", array( $sheetId ) );
+
+		return $result->fetchRow();
+	}
+	
 	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
 	{
 		switch( $sort_mode )
@@ -890,6 +1088,8 @@ class SheetLib extends TikiLib
 	function remove_sheet( $sheetId ) // {{{2
 	{
 		$this->query( "DELETE FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
+		$this->query( "DELETE FROM `tiki_sheet_values` WHERE `sheetId` = ?", array( $sheetId ) );
+		$this->query( "DELETE FROM `tiki_sheet_layout` WHERE `sheetId` = ?", array( $sheetId ) );
 	}
 
 	function replace_sheet( $sheetId, $title, $description, $author ) // {{{2
@@ -908,6 +1108,30 @@ class SheetLib extends TikiLib
 		}
 	}
 
+	function replace_layout( $sheetId, $className, $headerRow, $footerRow ) // {{{2
+	{
+		if( $row = $this->get_sheet_layout( $sheetId ) )
+		{
+			if( $row[ 'className' ] == $className
+			 && $row[ 'headerRow' ] == $headerRow
+			 && $row[ 'footerRow' ] == $footerRow )
+				return true; // No changes have to be made
+		}
+
+		$headerRow = empty( $headerRow ) ? 0 : $headerRow;
+
+		$footerRow = empty( $footerRow ) ? 0 : $footerRow;
+
+		$stamp = time();
+
+		echo $className;
+
+		$this->query( "UPDATE `tiki_sheet_layout` SET `end` = ? WHERE sheetId = ? AND `end` IS NULL", array( $stamp, $sheetId ) );
+		$this->query( "INSERT INTO `tiki_sheet_layout` ( `sheetId`, `begin`, `className`, `headerRow`, `footerRow` ) VALUES( ?, ?, ?, ?, ? )", array( $sheetId, $stamp, $className, (int)$headerRow, (int)$footerRow ) );
+
+		return true;
+	}
+	
 } // }}}1
 
 $sheetlib = &new SheetLib( $tikilib->db );

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.53 2004-04-30 08:38:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.54 2004-04-30 23:53:01 lphuberdeau Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -328,6 +328,20 @@ ALTER TABLE `tiki_untranslated` CHANGE `lang` `lang` char(16) NOT NULL default '
 #added on 2004-04-16 franck
 ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
+
+UPDATE `tiki_quicktags` set `tagcategory`='wiki';
+
+#added on 2004-04-19 lphuberdeau - Additional table for TikiSheet
+CREATE TABLE tiki_sheet_layout (
+  sheetId int(8) NOT NULL default '0',
+  begin int(10) NOT NULL default '0',
+  end int(10) default NULL,
+  headerRow int(4) NOT NULL default '0',
+  footerRow int(4) NOT NULL default '0',
+  className varchar(64) default NULL,
+  UNIQUE KEY sheetId (sheetId,begin)
+) TYPE=MyISAM;
+
 UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`=NULL;
 
 #added on 2004-4-26 sylvie
@@ -448,3 +462,4 @@ ALTER TABLE `tiki_quizzes` ADD `shuffleAnswers` char(1) ;
 #
 # Improved Quizzes end
 #
+

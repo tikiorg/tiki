@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.189 2004-04-30 04:27:38 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.190 2004-04-30 23:53:01 lphuberdeau Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2739,6 +2739,16 @@ CREATE TABLE tiki_sessions (
 # --------------------------------------------------------
 
 # Tables for TikiSheet
+CREATE TABLE tiki_sheet_layout (
+  sheetId int(8) NOT NULL default '0',
+  begin int(10) NOT NULL default '0',
+  end int(10) default NULL,
+  headerRow int(4) NOT NULL default '0',
+  footerRow int(4) NOT NULL default '0',
+  className varchar(64) default NULL,
+  UNIQUE KEY sheetId (sheetId,begin)
+) TYPE=MyISAM;
+
 CREATE TABLE tiki_sheet_values (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
