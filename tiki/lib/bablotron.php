@@ -63,8 +63,8 @@ class bablotron {
 		$tbl = 'babl_words_' . $this->lan;
 		$word = addslashes(trim($word));
 		$sndx = substr($word, 0, 2);
-		$query = "select word from $tbl where di = '$sndx'";
-		@$result = $this->db->query($query);
+		$query = "select `word` from `$tbl` where `di`=?";
+		@$result = $this->db->query($query, array($sndx));
 
 		if (DB::isError($result))
 			return array();
@@ -101,8 +101,8 @@ class bablotron {
 		$tbl = 'babl_words_' . $this->lan;
 
 		$word = addslashes(trim($word));
-		$query = "select word from $tbl where word='$word'";
-		@$result = $this->db->query($query);
+		$query = "select `word` from `$tbl` where `word`=?";
+		@$result = $this->db->query($query,array($word));
 
 		if (DB::isError($result))
 			return true;
