@@ -74,7 +74,7 @@ if($offset>0) {
 }
 $smarty->assign_by_ref('channels',$channels["data"]);
 
-$smarty->assign('tasks_useDates',$tasks_useDates);
+
 
 $smarty->assign('mid','tiki-eph.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
