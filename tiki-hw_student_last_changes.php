@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_last_changes.php,v 1.2 2004-02-18 04:06:37 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_last_changes.php,v 1.3 2004-02-22 14:49:05 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -8,6 +8,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Adapted from tiki-lastchanges.php
+
+// Todo:
+// Lots of code cleanup.
+// tiki-hw_student_last_changes.tpl still isn't quite right.
+// The works should apear in reverse cronological order!
 
 // Initialization
 require_once ('tiki-setup.php');
