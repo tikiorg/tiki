@@ -14,7 +14,7 @@
 <input type="submit" name="go" value="{tr}go{/tr}" />
 </form>
 
-<h2>Add a related category</h2>
+<h2>{tr}Add a related category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
 <input type="hidden" name="parent" value="{$parent}" />
 <table class="normal">
