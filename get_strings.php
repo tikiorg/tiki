@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.31 2004-02-20 15:05:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.32 2004-03-03 20:12:31 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,7 +120,10 @@ function addToWordlist (&$wordlist, $sentence) {
     $words = preg_split  ("/[\s]+/", $sentence);
     
     foreach ($words as $dummy => $word) {
-      $wordlist[strtolower($word)] = 1;
+	if (function_exists('mb_strtolower'))
+      	$wordlist[mb_strtolower($word)] = 1;
+	else
+		$wordlist[$word] = 1;
     }
   }
 }
