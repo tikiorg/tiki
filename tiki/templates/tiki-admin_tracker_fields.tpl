@@ -44,13 +44,14 @@
 <div  align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-admin_tracker_fields.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </form>
-   </td>
+<td>
+<form method="get" action="tiki-admin_tracker_fields.php">
+<input type="text" name="find" value="{$find|escape}" />
+<input type="submit" value="{tr}find{/tr}" name="search" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+</form>
+</td>
 </tr>
 </table>
 <table class="normal">
