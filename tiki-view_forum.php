@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.44 2003-11-21 01:33:47 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.45 2003-11-21 01:40:55 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -703,7 +703,6 @@ $smarty->assign('comments_cant', $comments_cant);
 
 $comments_maxRecords = $_REQUEST["comments_maxComments"];
 $comments_cant_pages = ceil($comments_cant / $comments_maxRecords);
-echo "p: $comments_cant_pages c: $comments_cant o:$comments_objectId";
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 
