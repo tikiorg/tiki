@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.124 2003-08-13 09:58:38 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.125 2003-08-13 11:52:14 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -886,6 +886,7 @@ $use_proxy = $tikilib->get_preference("use_proxy", 'n');
 $proxy_host = $tikilib->get_preference("proxy_host", '');
 $proxy_port = $tikilib->get_preference("proxy_port", '');
 $session_db = $tikilib->get_preference("session_db", 'n');
+$session_lifetime = $tikilib->get_preference("session_lifetime", 0);
 $wikiHomePage = $tikilib->get_preference("wikiHomePage", 'HomePage');
 $smarty->assign('wikiHomePage', $wikiHomePage);
 

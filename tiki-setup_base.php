@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.24 2003-08-13 09:58:38 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.25 2003-08-13 11:52:14 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,12 @@ require_once("lib/tikilib.php");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
+
+// set session lifetime
+$session_lifetime = $tikilib->get_preference('session_lifetime','0');
+if ($session_lifetime > 0) {
+	ini_set('session.gc_maxlifetime',$session_lifetime*60);
+}
 
 // is session data  stored in DB or in filesystem?
 $session_db = $tikilib->get_preference('session_db','n');
@@ -35,7 +41,6 @@ if ($session_db == 'y') {
 	include('adodb-session.php');
 }
 session_start();
-
 
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 
