@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.14 2003-12-31 02:34:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.15 2004-01-20 06:30:37 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.14 2003-12-31 02:34:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.15 2004-01-20 06:30:37 mose Exp $
 //
 
 // Initialization
@@ -51,26 +51,54 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 
-//$children = $categlib->get_child_categories($_REQUEST["parentId"]);
-//$smarty->assign_by_ref('children',$children);
-
-// Convert $childrens 
-//$debugger->var_dump('$children');
 $ctall = $categlib->get_all_categories();
-$tree_nodes = array();
 
-foreach ($ctall as $c) {
-	$tree_nodes[] = array(
-		"id" => $c["categId"],
-		"parent" => $c["parentId"],
-		"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '">' . $c["name"] . '</a><br />'
-	);
+if ($feature_phplayers == 'y') {
+	function mktree($ind,$indent="",$back) {
+		global $ctall;
+		$kids = array();
+		foreach ($ctall as $v) {
+			if ($v['parentId'] == $ind) {
+				$kids[] = $v;
+			}
+		}
+		if (count($kids)) {
+			foreach ($kids as $k) {
+				$back.= $indent."|".$k['name']."|tiki-browse_categories.php?parentId=".$k['categId']."\n";
+				$back.= mktree($k['categId'],".$indent","");
+			}
+			return $back;
+		} else {
+			return "";
+		}
+	}
+	$itall = mktree(0,".","");
+	include_once ("lib/phplayers/lib/PHPLIB.php");
+	include_once ("lib/phplayers/lib/layersmenu-common.inc.php");
+	include_once ("lib/phplayers/lib/treemenu.inc.php");
+	$phplayers = new TreeMenu();
+	$phplayers->setDirrootCommon("lib/phplayers");
+	$phplayers->setLibjsdir("lib/phplayers/libjs/");
+	$phplayers->setImgdir("lib/phplayers/images/");
+	$phplayers->setImgwww("lib/phplayers/images/");
+	$phplayers->setTpldirCommon("lib/phplayers/templates/");
+	$phplayers->setMenuStructureString($itall);
+	$phplayers->parseStructureForMenu("treemenu1");
+	$phpitall = $phplayers->newTreeMenu("treemenu1");
+	$smarty->assign('tree', $phpitall);
+} else {
+	$tree_nodes = array();
+	foreach ($ctall as $c) {
+		$tree_nodes[] = array(
+			"id" => $c["categId"],
+			"parent" => $c["parentId"],
+			"data" => '<a class="catname" href="tiki-browse_categories.php?parentId=' . $c["categId"] . '">' . $c["name"] . '</a><br />'
+		);
+	}
+	$tm = new CatBrowseTreeMaker("categ");
+	$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
+	$smarty->assign('tree', $res);
 }
-
-//$debugger->var_dump('$tree_nodes');
-$tm = new CatBrowseTreeMaker("categ");
-$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
-$smarty->assign('tree', $res);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';

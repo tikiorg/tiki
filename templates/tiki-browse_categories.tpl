@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.8 2003-12-31 02:34:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-browse_categories.tpl,v 1.9 2004-01-20 06:30:38 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-browse_categories.php">{tr}Categories{/tr}</a>
 <br /><br />
@@ -15,8 +15,6 @@
 </div>
 
 <br /><br />
-
-<div class="tree" id="top">
 <div class="treetitle">{tr}Current category{/tr}: 
 <a href="tiki-browse_categories.php?parentId=0" class="categpath">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -30,21 +28,25 @@
 <a class="catname" href="tiki-browse_categories.php?parentId={$father}" title="Upper level">..</a>
 </div>
 {/if}
+
+<table width="100%">
+<tr><td>
+<div class="tree">
 {$tree}
 </div>
-
+</td
+<td width="20">&nbsp;</td>
+<td>
 
 <h3>{tr}Objects{/tr} ({$cantobjects})</h3>
 {if $cantobjects > 0}
-<table class="catobjects">
+<table class="normal">
 {cycle values="odd,even" print=false}
 {section name=ix loop=$objects}
-<tr>
-  <td class="categobjectsname{cycle advance=false}" valign="top">
-    <a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a><br />
-    ({tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"}{/tr}&nbsp;)
-  </td>
-  <td class="categobjectsdata{cycle}" valign="top">{$objects[ix].description}&nbsp;</td>
+<tr class="{cycle}" >
+<td>{tr}{$objects[ix].type|replace:"wiki page":"Wiki"|replace:"article":"Article"}{/tr}</td>
+<td><a href="{$objects[ix].href}" class="catname">{$objects[ix].name}</a></td>
+<td>{$objects[ix].description}&nbsp;</td>
 </tr>
 {/section}
 </table>
@@ -71,3 +73,5 @@
  </div>
 </div>
 {/if}
+</td></tr></table>
+

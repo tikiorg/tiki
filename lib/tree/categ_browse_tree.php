@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.3 2003-08-07 04:34:13 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_browse_tree.php,v 1.4 2004-01-20 06:30:38 mose Exp $
  *
  * \brief Categories browse tree
  *
@@ -51,7 +51,7 @@ class CatBrowseTreeMaker extends TreeMaker {
 	// Unsymmetrical calls is not important :)
 	//
 	function node_start_code($nodeinfo) {
-		return '<div class="treenode">';
+		return '<div class="treenode">&nbsp;';
 	}
 
 	//
@@ -64,7 +64,7 @@ class CatBrowseTreeMaker extends TreeMaker {
 
 	//
 	function node_data_start_code($nodeinfo) {
-		return '';
+		return '&nbsp;&nbsp;';
 	}
 
 	//

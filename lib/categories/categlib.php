@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.26 2004-01-01 03:19:12 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.27 2004-01-20 06:30:38 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -227,8 +227,7 @@ class CategLib extends TikiLib {
 			$bindvars=array((int) $categId);
 		}
 
-		$query = "select tbl1.`catObjectId`,`categId`,`type`,`objId`,`description`,
-			`created`,`name`,`href`,`hits`
+		$query = "select tbl1.`catObjectId`,`categId`,`type`,`objId`,`description`, `created`,`name`,`href`,`hits`
 			from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid order by tbl2.".$this->convert_sortmode($sort_mode);
 		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
