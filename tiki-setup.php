@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.233 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.234 2004-06-11 05:02:31 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -270,9 +270,10 @@ if (!isset($_SESSION["appname"])) {
 
 $smarty->assign("appname", $appname);
 
+
 if (isset($_REQUEST["PHPSESSID"])) {
     $tikilib->update_session($_REQUEST["PHPSESSID"]);
-} else if (function_exists("session_id")) {
+} elseif (function_exists("session_id")) {
     $tikilib->update_session(session_id());
 }
 
@@ -1824,4 +1825,11 @@ if (isset($_REQUEST['comzone'])) {
 		$show_comzone=$_REQUEST['comzone'];
 		if ($show_comzone=='show') $smarty->assign('show_comzone', 'y');
 }
+
+/* trick for use with doc/devtools/cvsup.sh */
+if (is_file('.lastup') and is_readable('.lastup')) {
+	$lastup = file('.lastup');
+	$smarty->assign('lastup',$lastup[0]);
+}
+
 ?>
