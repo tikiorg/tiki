@@ -3899,13 +3899,17 @@ class TikiLib extends TikiDB {
 
 	// This recursive function handles pre- and no-parse sections and plugins
 	function parse_first(&$data, &$preparsed, &$noparsed) {
-	    global $dbTiki;
+	    global $dbTiki, $feature_wiki_plugins_allcaps;
 	    // Handle pre- and no-parse sections
 	    $this->parse_pp_np($data, $preparsed, $noparsed);
 
 	    // Find the plugins
 	    // note: [1] is plugin name, [2] is plugin arguments
-	    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    if ($feature_wiki_plugins_allcaps == 'y') {
+		    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    } else {
+	    	preg_match_all("/\{([a-zA-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    }
 
 	    // if true, replace only CODE plugin, if false, replace all other plugins
 	    $code_first = true;
