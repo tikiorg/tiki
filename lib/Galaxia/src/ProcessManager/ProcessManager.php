@@ -299,6 +299,8 @@ class ProcessManager extends BaseManager {
 	foreach ($actids as $name => $actid) {
 		$am->compile_activity($pid,$actid);
 	}
+        // create a graph for the new process
+        $am->build_process_graph($pid);
   	unset($am);
   	unset($rm);
   	$msg = sprintf(tra('Process %s %s imported'),$proc_info['name'],$proc_info['version']);
@@ -329,25 +331,70 @@ class ProcessManager extends BaseManager {
     // Make new versions unactive
     $proc_info['version'] = $version;
     $proc_info['isActive'] = 'n';
-    $pid = $this->replace_process(/*new proc!*/ 0, $proc_info);
+    // create a new process, but don't create start/end activities
+    $pid = $this->replace_process(0, $proc_info, false);
     // And here copy all the activities & so
-    $aM = new ActivityManager($this->db);
+    $am = new ActivityManager($this->db);
     $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$oldpid";
 	$result = $this->query($query);
+    $newaid = array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
-      $aM->replace_activity($pid,0,$res);
+      $oldaid = $res['activityId'];
+      $newaid[$oldaid] = $am->replace_activity($pid,0,$res);
     }
+    // create transitions
     $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where pId=$oldpid";
 	$result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
-      $aM->add_transition($pid,$res['actFromId'],$res['actToId']);
+      if (empty($newaid[$res['actFromId']]) || empty($newaid[$res['actToId']])) {
+          continue;
+      }
+      $am->add_transition($pid,$newaid[$res['actFromId']],$newaid[$res['actToId']]);
     }
-    
+    // create roles
+    $rm = new RoleManager($this->db);
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId=$oldpid";
+    $result = $this->query($query);
+    $newrid = array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      if(!$rm->role_name_exists($pid,$res['name'])) {
+        $rid=$rm->replace_role($pid,0,$res);
+      } else {
+        $rid = $rm->get_role_id($pid,$res['name']);
+      }
+      $newrid[$res['roleId']] = $rid;
+    }
+    // map users to roles
+    if (count($newrid) > 0) {
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$oldpid";
+      $result = $this->query($query);
+      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        if (empty($newrid[$res['roleId']])) {
+          continue;
+        }
+        $rm->map_user_to_role($pid,$res['user'],$newrid[$res['roleId']]);
+      }
+    }
+    // add roles to activities
+    if (count($newaid) > 0 && count($newrid ) > 0) {
+      $query = "select * from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId in (" . join(', ',array_keys($newaid)) . ")";
+      $result = $this->query($query);
+      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        if (empty($newaid[$res['activityId']]) || empty($newrid[$res['roleId']])) {
+          continue;
+        }
+        $am->add_activity_role($newaid[$res['activityId']],$newrid[$res['roleId']]);
+      }
+    }
+
     //Now since we are copying a process we should copy
     //the old directory structure to the new directory
     $oldname = $proc_info['normalized_name'];
     $newname = $this->_get_normalized_name($pid);
 	$this->_rec_copy(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
+
+    // create a graph for the new process
+    $am->build_process_graph($pid);
     return $pid;
   }
   
@@ -440,10 +487,10 @@ class ProcessManager extends BaseManager {
     $this->query($query);
     
     // Remove the directory structure
-    if (is_dir(GALAXIA_PROCESSES."/$name")) {
+    if (!empty($name) && is_dir(GALAXIA_PROCESSES."/$name")) {
       $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);
     }
-    if (GALAXIA_TEMPLATES && is_dir(GALAXIA_TEMPLATES."/$name")) {
+    if (GALAXIA_TEMPLATES && !empty($name) && is_dir(GALAXIA_TEMPLATES."/$name")) {
       $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
     }
     // And finally remove the proc
@@ -462,7 +509,7 @@ class ProcessManager extends BaseManager {
   */
   function replace_process($pId, $vars, $create = true)
   {
-    $TABLE_NAME = '".GALAXIA_TABLE_PREFIX."processes';
+    $TABLE_NAME = GALAXIA_TABLE_PREFIX."processes";
     $now = date("U");
     $vars['lastModif']=$now;
     $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        
@@ -578,6 +625,9 @@ class ProcessManager extends BaseManager {
        $parts[count($parts)-1]++;
      } else {
        $parts[0]++;
+       for ($i = 1; $i < count($parts); $i++) {
+         $parts[$i] = 0;
+       }
      }
      return implode('.',$parts);
    }
