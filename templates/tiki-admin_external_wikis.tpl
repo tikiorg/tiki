@@ -1,6 +1,27 @@
-<a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a> 
+<a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ExternalWiki" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin ExternalWiki{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}tiki admin external wikis tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+ 
 <br /><br />
-<h2>{tr}Create/edit extwiki{/tr}</h2>
+<h2>{tr}Create/Edit External Wiki{/tr}</h2>
 <form action="tiki-admin_external_wikis.php" method="post">
 <input type="hidden" name="extwikiId" value="{$extwikiId|escape}" />
 <table class="normal">
@@ -10,7 +31,9 @@
 </table>
 </form>
 
-<h2>{tr}extwiki{/tr}</h2>
+<h2>{tr}External Wiki{/tr}</h2>
+<!--- second table --->
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
