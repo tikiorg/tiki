@@ -25,6 +25,7 @@ create table tiki_survey_questions (
   position integer(5),
   votes integer(10),
   value integer(10),
+  average decimal(4,2),
   primary key(questionId)
 );
 

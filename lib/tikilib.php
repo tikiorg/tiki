@@ -22,6 +22,68 @@ class TikiLib {
   }
   
   /* Surveys */
+  function add_survey_hit($surveyId)
+  {
+    $now=date("U"); 	 
+    $query = "update tiki_surveys set taken=taken+1, lastTaken=$now where surveyId=$surveyId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);	
+  }
+  
+  function register_survey_text_option_vote($questionId,$value)
+  {
+    $value=addslashes($value);  	 
+    $cant = $this->db->getOne("select count(*) from tiki_survey_question_options where qoption='$value'");	
+    if($cant) {
+      $query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and	qoption='$value'";
+    } else {
+      $query = "insert into tiki_survey_question_options(questionId,qoption,votes)
+                values($questionId,'$value',1)";
+                	
+    }
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function register_survey_rate_vote($questionId,$rate)
+  {
+    $query = "update tiki_survey_questions set votes=votes+1, value=value+$rate where questionId=$questionId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "update tiki_survey_questions set average=value/votes where questionId=$questionId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    	
+  }
+  
+  function register_survey_option_vote($questionId,$optionId)
+  {
+    
+    $query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and optionId=$optionId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function clear_survey_stats($surveyId)
+  {
+    $query = "update tiki_surveys set taken=0 where surveyId=$surveyId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "select * from tiki_survey_questions where surveyId=$surveyId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    // Remove all the options for each question
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
+      $questionId = $res["questionId"];
+      $query2 = "updatet iki_survey_question_options set votes=0 where questionId=$questionId";
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+    }
+    $query = "update tiki_survey_questions set value=0,votes=0 where surveyId=$surveyId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
   function replace_survey($surveyId,$name,$description,$status)
   {
     $name = addslashes($name);
@@ -124,9 +186,12 @@ class TikiLib {
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
     $ret = Array();
+    $votes = 0;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
       $ret[]=$res;
+      $votes += $res["votes"];
     }
+    $res2["ovotes"]=$votes;
     $res2["qoptions"]=$ret;
     return $res2;
   }
@@ -177,10 +242,13 @@ class TikiLib {
       $result2 = $this->db->query($query2);
       if(DB::isError($result2)) $this->sql_error($query2, $result2);
       $ret2 = Array();
+      $votes=0;
       while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) { 
         $ret2[]=$res2;
+        $votes += $res2["votes"];
       }
       $res["qoptions"]=$ret2;
+      $res["ovotes"]=$votes;
       $ret[] = $res;
     }
     $retval = Array();
