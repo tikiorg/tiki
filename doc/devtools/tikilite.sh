@@ -69,7 +69,7 @@ echo "Removing Custom images..."
 rm -rf img/custom
 
 echo "Removing Languages except default..."
-find lang/* -type d | grep -v "/$LANG_DEF" | xargs -- rm -rf
+find lang/* -type d | grep -v "/$LANG_DEF" | grep -v CVS | xargs -- rm -rf
 
 echo "Removing Galaxia..."
 rm -rf lib/Galaxia
@@ -95,7 +95,7 @@ echo "Removing Popups..."
 rm -rf popups
 
 echo "Removing Styles except default..."
-find styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
+find styles/* -type d | grep -v $THEME_DEF | grep -v CVS | xargs -- rm -rf
 find styles/ -type f -name "*.css" | grep -v $THEME_DEF | xargs -- rm -f
 find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 rm -rf styles/README.matrix-theme
