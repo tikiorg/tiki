@@ -316,7 +316,13 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 if(isset($_REQUEST["save"])) {
-if((md5($info["data"]) != md5($_REQUEST["edit"])) ) {
+  $cat_type='wiki page';
+  $cat_objid = $_REQUEST["page"];
+  $cat_desc = substr($_REQUEST["edit"],0,200);
+  $cat_name = $_REQUEST["page"];
+  $cat_href="tiki-index.php?page=".$cat_objid;
+  include_once("categorize.php");
+if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["data"]) != md5($_REQUEST["edit"])) ) {
   $page = $_REQUEST["page"];
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $edit = $_REQUEST["edit"];  
@@ -347,12 +353,6 @@ if((md5($info["data"]) != md5($_REQUEST["edit"])) ) {
     $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
   }
   
-  $cat_type='wiki page';
-  $cat_objid = $_REQUEST["page"];
-  $cat_desc = substr($_REQUEST["edit"],0,200);
-  $cat_name = $_REQUEST["page"];
-  $cat_href="tiki-index.php?page=".$cat_objid;
-  include_once("categorize.php");
   
   header("location: tiki-index.php?page=$page");
   die;
