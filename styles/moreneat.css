@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.57 2004-07-01 16:09:41 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.58 2004-07-01 16:43:16 teedog Exp $
 
 MoreNeat theme
 */
@@ -1909,9 +1909,24 @@ margin : 1ex;
 border : 1px dashed #adacaf; }
 
 /**** coloration for QUOTE plugin *****/
-.quote {
-padding : 2ex;
-background-color : #edeeef;
-margin : 1ex;
-border : 1px solid #adacaf;
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+font-weight: normal;
+font-size: 8pt;
+background-color: #edeeef;
 }
