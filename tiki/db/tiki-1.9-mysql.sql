@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.18 2004-04-10 04:44:30 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.19 2004-04-15 03:48:07 franck Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -3565,6 +3565,30 @@ CREATE TABLE tiki_zones (
   PRIMARY KEY  (zone)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+
+#
+# Table structure for table `tiki_download`
+#
+# Creation: Jul 03, 2003 at 07:42 PM
+# Last update: Apr 15 2004 at 07:42 PM
+#
+
+DROP TABLE IF EXISTS `tiki_download`;
+CREATE TABLE `tiki_download` (
+  `id` int(11) NOT NULL auto_increment,
+  `object` varchar(255) NOT NULL default '',
+  `userId` int(8) NOT NULL default '0',
+  `type` varchar(20) NOT NULL default '',
+  `date` int(14) NOT NULL default '0',
+  `IP` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `object` (`object`,`userId`,`type`),
+  KEY `userId` (`userId`),
+  KEY `type` (`type`),
+  KEY `date` (`date`)
+) TYPE=MyISAM AUTO_INCREMENT=32 ;
+# --------------------------------------------------------
+
 
 #
 # Table structure for table `users_grouppermissions`

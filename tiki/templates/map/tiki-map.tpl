@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.13 2003-11-23 22:27:35 gongo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.14 2004-04-15 03:48:07 franck Exp $ *}
 
 <div align="center">
    <form action="tiki-map.phtml" method="get">
@@ -34,6 +34,8 @@
      <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
      </a>
      {/if}
+     &nbsp;
+     <input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" />
      <br/>
 		  <small>{tr}Click on the map or click redraw{/tr}</small>
 		  <input type="hidden" name="minx" value="{$minx}" />
