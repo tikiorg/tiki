@@ -1090,4 +1090,21 @@ if ($diff)
 	htmlspecialchars($pagename)), 0);
 }
 */
+
+
+    // \todo remove html hardcoded in diff2
+    function diff2($page1, $page2) {
+        $page1 = split("\n", $page1);
+        $page2 = split("\n", $page2);
+        $z = new WikiDiff($page1, $page2);
+        if ($z->isEmpty()) {
+            $html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
+        } else {
+            //$fmt = new WikiDiffFormatter;
+            $fmt = new WikiUnifiedDiffFormatter;
+            $html = $fmt->format($z, $page1);
+        }
+        return $html;
+    }
+
 ?>
