@@ -604,7 +604,6 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_edit
 DROP TABLE IF EXISTS tiki_calendars;
 CREATE TABLE tiki_calendars (
   calendarId int(14) NOT NULL auto_increment,
-  groupname varchar(30) NOT NULL default '',
   user varchar(40) NOT NULL default '',
   name varchar(80) NOT NULL default '',
   description varchar(255) default NULL,

@@ -18,12 +18,6 @@
 <option value='n' {if $visible eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor">
-<select name="groupname">
-{section name=ix loop=$groups}
-<option value="{$groups[ix].groupName}" {if $groups[ix].groupName eq $groupname}selected="selected"{/if}>{$groups[ix].groupName}</option>
-{/section}
-</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -46,7 +40,6 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupname_desc'}groupname_asc{else}groupname_desc{/if}">{tr}group{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'public_desc'}public_asc{else}public_desc{/if}">{tr}public{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'visible_desc'}visible_asc{else}visible_desc{/if}">{tr}visible{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
@@ -56,7 +49,6 @@
 <tr>
 <td class="{cycle advance=false}">{$calendars[cal].calendarId}</td>
 <td class="{cycle advance=false}"><a class="tablename" href="tiki-calendar.php?calIds[]={$calendars[cal].calendarId}">{$calendars[cal].name}</a></td>
-<td class="{cycle advance=false}">{$calendars[cal].groupname}</td>
 <td class="{cycle advance=false}">{$calendars[cal].public}</td>
 <td class="{cycle advance=false}">{$calendars[cal].visible}</td>
 <td class="{cycle}">
