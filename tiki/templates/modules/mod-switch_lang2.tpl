@@ -1,5 +1,5 @@
 {tikimodule name="switch_lang2"}
-<div class="box-title">{tr}Language{/tr}: {$language}</div>
+<div class="box-title">{tr}Language: {/tr}`$language`</div>
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 {section name=ix loop=$languages}
