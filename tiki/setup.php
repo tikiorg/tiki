@@ -50,11 +50,10 @@ class Smarty_Sterling extends Smarty {
     global $style_base;
     
     if(isset($style)&&isset($style_base)) {
+
       if(file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
         $_smarty_tpl_file="styles/$style_base/$_smarty_tpl_file";
-      } else {
-				$_smarty_tpl_file=preg_replace("/styles\/$style_base\//","",$_smarty_tpl_file);
-			}
+      } 
     }
     
     $_smarty_cache_id = $language.$_smarty_cache_id;
