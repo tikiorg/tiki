@@ -1316,7 +1316,7 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_
 ### Newsletters
 
 
-# $Id: tiki.sql,v 1.19 2003-01-06 21:00:15 lrargerich Exp $
+# $Id: tiki.sql,v 1.20 2003-01-08 15:55:36 lrargerich Exp $
 
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_webmail','webmail','Can use webmail');
@@ -1493,3 +1493,6 @@ create table tiki_tracker_item_fields(
 
 
 ### END OF CHANGES FOR 1.5
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_upload_picture','wiki','Can upload pictures to wiki pages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_files','file galleries','Can upload zip files with files');
