@@ -717,4 +717,74 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
   }
 }
 
+class Quiz {
+	var $version;
+	var $timestamp;
+	var $online;
+	var $studentAttempts;
+	var $name;
+	var $description;
+	var $datePub;
+	var $dateExp;
+  var $shuffleQuestions;
+	var $shuffleAnswers;
+	var $limitDisplay;
+	var $questionsPerPage;
+	var $timeLimited;
+	var $timeLimit;
+	var $multiSession;
+	var $canRepeat;
+	var $repetitions;
+	var $gradingMethod;
+	var $showScore;
+	var $showCorrectAnswers;
+	var $publishStats;
+	var $additionalQuestions;
+	var $forum;
+	var $forumName;
+	var $data;
+
+	function Quiz(){
+		$this->id = 0;
+		$this->version = 0;
+		$this->timestamp = date('U');
+		$this->online = 'n';
+		$this->studentAttempts = 0;
+		$this->name = "";
+		$this->description = "";
+		$this->datePub = 0;
+		$this->dateExp = 0;
+		$this->shuffleQuestions = "n";
+		$this->shuffleAnswers = "n";
+		$this->limitDisplay = "n";
+		$this->questionsPerPage = 0;
+		$this->timeLimited = "n";
+		$this->timeLimit = "0";
+		$this->multiSession = "n";
+		$this->canRepeat = "n";
+		$this->repetitions = 0;
+		$this->gradingMethod = "machine";
+		$this->showScore = "immediately";
+		$this->showCorrectAnswers = "immediately";
+		$this->publishStats = "immediately";
+		$this->additionalQuestions = "n";
+		$this->forum = "n";
+		$this->forumName = "";
+		$this->data = "";
+	}
+
+  function from_text($lines){
+    // Set the question according to an array of text lines.
+  }
+  function getQuestion(){
+    return $this->question;
+  }
+  function to_text(){
+    // Export the question to an array of text lines.
+  }
+  function getAnswerCount(){
+    // How many possible answers (i.e. choices in a multiple-choice)
+  }
+}
+
 ?>
