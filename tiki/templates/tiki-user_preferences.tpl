@@ -137,7 +137,7 @@
       {/if}
     {/section}
         </select>
-		{if $feature_editcss and $tiki_p_create_css}
+		{if $feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 			<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
 		{/if}
 				</td></tr>
