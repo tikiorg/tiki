@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.26 2004-01-14 20:34:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.27 2004-01-15 08:55:21 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -70,8 +70,8 @@ class="prevnext">{tr}All{/tr}</a>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="Click here to edit this group"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
-<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="Click here to edit this group">{$users[user].groupName}</a></td>
+<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="{tr}Click here to edit this group{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
+<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="{tr}Click here to edit this group{/tr}">{$users[user].groupName}</a></td>
 <td>{$users[user].groupDesc}</td>
 <td>
 {section name=ix loop=$users[user].included}
@@ -81,7 +81,7 @@ class="prevnext">{tr}All{/tr}</a>
 <td>
 {capture assign=over}{section name=grs loop=$users[user].perms}{$users[user].perms[grs]}(<a class="link"
 href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)<br />{/section}{/capture}
-<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}" title="Click here to assign permissions to this group" {popup text="<br />$over"|escape:"javascript"|escape:"html"
+<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}" title="{tr}Click here to assign permissions to this group{/tr}" {popup text="<br />$over"|escape:"javascript"|escape:"html"
 sticky="true" caption="{tr}Permissions{/tr}" closetext="{tr}close{/tr}" right="true"}><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /> ({$smarty.section.grs.total})</a>
 </td>
 <td style="width: 20px;">
