@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.1 2004-06-30 22:38:10 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.2 2004-07-01 15:45:57 teedog Exp $
  *
  * TikiWiki QUOTE plugin.
  * 
@@ -17,7 +17,8 @@ function wikiplugin_quote_help() {
 
 function wikiplugin_quote($data, $params) {
 	/* set default values for some args */
-	$title = tra("Message box");
+	$title = tra("Quote:");
+	$width = '100%';
 	
 	// Remove first <ENTER> if exists...
 	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
@@ -25,7 +26,7 @@ function wikiplugin_quote($data, $params) {
 	extract ($params);
 	$w    = (isset($width)) ? " width=\"$width\""  : "";
 	$bg   = (isset($bg))    ? " background:$bg;" : "";
-    $al   = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
+    $al   = (isset($align) && ($align == 'right' || $align == 'center')) ? " align=\"$align\"" : "";
     
 	$begin  = "<table$al$w><tr><td$w><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
     $begin .= "<div class='cbox-title'>$title</div><div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
