@@ -154,11 +154,11 @@ class NlLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			if (!empty($res['email'])) {
 				// $this->newsletter_subscribe($nlId, $res['email']);
-				$out[] = $res['email'];
+				$ret[] = $res['email'];
 			}
 		}
-		$out = array_unique($out);
-		foreach ($out as $o) {
+		$ret = array_unique($ret);
+		foreach ($ret as $o) {
 			$this->newsletter_subscribe($nlId, $o);
 		}
 		return $ret;
