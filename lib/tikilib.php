@@ -243,9 +243,16 @@ class TikiLib {
       if(DB::isError($result2)) $this->sql_error($query2, $result2);
       $ret2 = Array();
       $votes=0;
+      $total_votes = $this->get_one("select sum(votes) from tiki_survey_question_options where questionId=$questionId");
       while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) { 
-        $ret2[]=$res2;
+        if($total_votes) {
+          $average = $res2["votes"]/$total_votes;	
+        } else {
+          $average = 0;	
+        }
         $votes += $res2["votes"];
+        $res2["average"]=$average;
+        $ret2[]=$res2;
       }
       $res["qoptions"]=$ret2;
       $res["ovotes"]=$votes;
