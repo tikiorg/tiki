@@ -11,26 +11,27 @@ class MenuLib extends TikiLib {
 	}
 
 	function list_menus($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (name like $findesc or description like $findesc)";
+			$mid = " where (`name` like ? or `description` like ?)";
+			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select * from tiki_menus $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_menus $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_menus` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_menus` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$query = "select count(*) from tiki_menu_options where menuId=" . $res["menuId"];
+		while ($res = $result->fetchRow()) {
+			$query = "select count(*) from `tiki_menu_options` where `menuId`=?";
 
-			$res["options"] = $this->getOne($query);
+			$res["options"] = $this->getOne($query,array($res["menuId"]));
 			$ret[] = $res;
 		}
 
@@ -41,37 +42,39 @@ class MenuLib extends TikiLib {
 	}
 
 	function replace_menu($menuId, $name, $description, $type) {
-		$description = addslashes($description);
-
-		$name = addslashes($name);
 		// Check the name
 		if ($menuId) {
-			$query = "update tiki_menus set name='$name',description='$description',type='$type' where menuId=$menuId";
+			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=? where `menuId`=?";
+			$bindvars=array($name,$description,$type,$menuId);
 		} else {
-			$query = "replace into tiki_menus(name,description,type)
-                values('$name','$description','$type')";
+			// was: replace into. probably we need a delete here
+			$query = "insert into `tiki_menus`(`name`,`description`,`type`)
+                values(?,?,?)";
+			$bindvars=array($name,$description,$type);
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 		return true;
 	}
 
 	function get_max_option($menuId) {
-		$query = "select max(position) from tiki_menu_options where menuId=$menuId";
+		$query = "select max(`position`) from `tiki_menu_options` where `menuId`=?";
 
-		$max = $this->getOne($query);
+		$max = $this->getOne($query,array($menuId));
 		return $max;
 	}
 
 	function replace_menu_option($menuId, $optionId, $name, $url, $type, $position) {
-		$name = addslashes($name);
 		// Check the name
 		if ($optionId) {
 			$query
-				= "update tiki_menu_options set name='$name',url='$url',type='$type',position=$position where optionId=$optionId";
+				= "update `tiki_menu_options` set `name`=?,url=?,type=?,position=? where `optionId`=?";
+				$bindvars=array($name,$url,$type,$position,$optionId);
 		} else {
-			$query = "replace into tiki_menu_options(menuId,name,url,type,position)
+			// was: replace into ...
+			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`)
                 values($menuId,'$name','$url','$type',$position)";
+			$bindvars=array($menuId,$name,$url,$type,$position);
 		}
 
 		$result = $this->query($query);
@@ -79,30 +82,30 @@ class MenuLib extends TikiLib {
 	}
 
 	function remove_menu($menuId) {
-		$query = "delete from tiki_menus where menuId=$menuId";
+		$query = "delete from `tiki_menus` where `menuId`=?";
 
-		$result = $this->query($query);
-		$query = "delete from tiki_menu_options where menuId=$menuId";
-		$result = $this->query($query);
+		$result = $this->query($query,array($menuId));
+		$query = "delete from `tiki_menu_options` where `menuId`=?";
+		$result = $this->query($query,array($menuId));
 		return true;
 	}
 
 	function remove_menu_option($optionId) {
-		$query = "delete from tiki_menu_options where optionId=$optionId";
+		$query = "delete from `tiki_menu_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 		return true;
 	}
 
 	function get_menu_option($optionId) {
-		$query = "select * from tiki_menu_options where optionId=$optionId";
+		$query = "select * from `tiki_menu_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 }

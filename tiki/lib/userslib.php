@@ -1050,10 +1050,10 @@ class UsersLib extends TikiLib {
 			$pass,
 			$email,
 			$provpass,
-			$now,
+			(int) $now,
 			$hash,
-			$new_pass_due,
-			$now
+			(int) $new_pass_due,
+			(int) $now
 		));
 
 		$this->assign_user_to_group($user, 'Registered');
