@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.5 2003-08-08 19:40:36 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.6 2003-08-14 00:38:24 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,11 +14,11 @@ include_once ('lib/usermodules/usermoduleslib.php');
 
 global $smarty;
 
-$check_req = (isset($_REQUEST["unassign"])
-           || isset($_REQUEST["up"])
-           || isset($_REQUEST["down"])
-           || isset($_REQUEST["left"])
-           || isset($_REQUEST["right"]));
+$check_req = (isset($_REQUEST["mc_unassign"])
+           || isset($_REQUEST["mc_up"])
+           || isset($_REQUEST["mc_down"])
+           || isset($_REQUEST["mc_left"])
+           || isset($_REQUEST["mc_right"]));
 
 if ($tiki_p_configure_modules != 'y' && $check_req) {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
@@ -45,16 +45,16 @@ if ($check_req) {
     if (!$usermoduleslib->user_has_assigned_modules($user))
         $usermoduleslib->create_user_assigned_modules($user);
     // Handle control icon click
-	if (isset($_REQUEST["up"]))
-		$usermoduleslib->swap_up_user_module($_REQUEST["up"], $user);
-	elseif (isset($_REQUEST["down"]))
-		$usermoduleslib->swap_down_user_module($_REQUEST["down"], $user);
-	elseif (isset($_REQUEST["left"]))
-		$usermoduleslib->set_column_user_module($_REQUEST["left"], $user, 'l');
-	elseif (isset($_REQUEST["right"]))
-		$usermoduleslib->set_column_user_module($_REQUEST["right"], $user, 'r');
+	if (isset($_REQUEST["mc_up"]))
+		$usermoduleslib->swap_up_user_module($_REQUEST["mc_up"], $user);
+	elseif (isset($_REQUEST["mc_down"]))
+		$usermoduleslib->swap_down_user_module($_REQUEST["mc_down"], $user);
+	elseif (isset($_REQUEST["mc_left"]))
+		$usermoduleslib->set_column_user_module($_REQUEST["mc_left"], $user, 'l');
+	elseif (isset($_REQUEST["mc_right"]))
+		$usermoduleslib->set_column_user_module($_REQUEST["mc_right"], $user, 'r');
 	else
-		$usermoduleslib->unassign_user_module($_REQUEST["unassign"], $user);
+		$usermoduleslib->unassign_user_module($_REQUEST["mc_unassign"], $user);
 }
 
 // TODO: Need to fix this stupid way... Must replace only my own args... (or not?)
