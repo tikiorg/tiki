@@ -183,7 +183,8 @@
 
 {/if}
 
-<div class="wikitext">
+<div class="wikitext"
+{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'wikitext_only' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
 {if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
