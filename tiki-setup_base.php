@@ -175,6 +175,7 @@ if($feature_userPreferences == 'y') {
         $style = $user_style;
       }
     }
+    
     if($change_language == 'y') {
       $user_language = $tikilib->get_user_preference($user,'language',$language);
       if($user_language) {

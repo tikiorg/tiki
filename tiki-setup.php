@@ -563,6 +563,31 @@ if(!file_exists('templates_c/preferences.php')) {
 
 
 
+if($feature_userPreferences == 'y') {
+  // Check for FEATURES for the user
+  $user_style = $tikilib->get_preference("style", 'jalist2.css');
+  if($user) {
+    if($change_theme == 'y') {
+      $user_style = $tikilib->get_user_preference($user,'theme',$style);
+      if($user_style) {
+        $style = $user_style;
+      }
+    }
+    
+    if($change_language == 'y') {
+      $user_language = $tikilib->get_user_preference($user,'language',$language);
+      if($user_language) {
+        $language = $user_language;
+      }
+    }
+  }
+  $smarty->assign('style',$style);
+  $smarty->assign('language',$language);
+}
+
+$stlstl=explode('.',$style);
+$style_base = $stlstl[0];
+
 
 
 

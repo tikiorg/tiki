@@ -203,6 +203,7 @@ class POP3{
         }
 
         function ListMessage($msg) {
+                $date=0;
                 $list = array();
                 $list["has_attachment"] = false;
                 $list["size"] = '';

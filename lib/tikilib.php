@@ -7628,24 +7628,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $data = preg_replace("/\{rm\}/", "&rlm;", $data);
     // smileys
     $data = $this->parse_smileys($data);
-    // tables
-    preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
-    foreach(array_unique($pages[1]) as $page) {
-      $pagex=substr($page,1,strlen($page)-2);
-      $repl='<table cellpadding="0" cellspacing="0" border="1">';
-      // First split by lines
-      $lines = explode("\\",$pagex);
-      foreach ($lines as $line) {
-        $repl.='<tr>';
-        $columns = explode("&",$line);
-        foreach($columns as $column) {
-          $repl.='<td valign="top">'.$column.'</td>';  
-        }  
-        $repl.='</tr>';  
-      }
-      $repl.='</table>'; 
-      $data = str_replace($page, $repl, $data);
-    }
+    
 
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
@@ -7708,39 +7691,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
     }
 
-    // New syntax for tables
-    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
-     $maxcols = 1;
-      $cols = array();
-      for($i = 0; $i < count($tables[0]); $i++) {
-        $rows = explode('||', $tables[0][$i]);
-        $col[$i] = array();
-        for ($j = 0; $j < count($rows); $j++) {
-          $cols[$i][$j] = explode('|', $rows[$j]);
-          if (count($cols[$i][$j]) > $maxcols)
-            $maxcols = count($cols[$i][$j]);
-        }
-      }
-      for ($i = 0; $i < count($tables[0]); $i++) {
-        $repl = '<table border=1>';
-        for ($j = 0; $j < count($cols[$i]); $j++) {
-          $ncols = count($cols[$i][$j]);
-          if ($ncols == 1 && !$cols[$i][$j][0])
-          	continue;
-          $repl .= '<tr>';
-          for ($k = 0; $k < $ncols; $k++) {
-            $repl .= '<td';
-            if ($k == $ncols - 1 && $ncols < $maxcols)
-              $repl .= ' colspan=' . ($maxcols-$k);
-            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
-          }
-          $repl.='</tr>';
-        }
-        $repl.='</table>';
-        $data = str_replace($tables[0][$i],$repl,$data);
-      }
-    }
-
+    
     // Replace dynamic content occurrences
     if(preg_match_all("/\{content +id=([0-9]+)\}/",$data,$dcs)) {
       for($i=0;$i<count($dcs[0]);$i++) {
@@ -7885,6 +7836,61 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     // Title bars
     $data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
+    
+    // New syntax for tables
+    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+     $maxcols = 1;
+      $cols = array();
+      for($i = 0; $i < count($tables[0]); $i++) {
+        $rows = explode('||', $tables[0][$i]);
+        $col[$i] = array();
+        for ($j = 0; $j < count($rows); $j++) {
+          $cols[$i][$j] = explode('|', $rows[$j]);
+          if (count($cols[$i][$j]) > $maxcols)
+            $maxcols = count($cols[$i][$j]);
+        }
+      }
+      for ($i = 0; $i < count($tables[0]); $i++) {
+        $repl = '<table border=1>';
+        for ($j = 0; $j < count($cols[$i]); $j++) {
+          $ncols = count($cols[$i][$j]);
+          if ($ncols == 1 && !$cols[$i][$j][0])
+          	continue;
+          $repl .= '<tr>';
+          for ($k = 0; $k < $ncols; $k++) {
+            $repl .= '<td';
+            if ($k == $ncols - 1 && $ncols < $maxcols)
+              $repl .= ' colspan=' . ($maxcols-$k);
+            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+          }
+          $repl.='</tr>';
+        }
+        $repl.='</table>';
+        $data = str_replace($tables[0][$i],$repl,$data);
+      }
+    }
+
+    
+    // tables
+    preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
+    foreach(array_unique($pages[1]) as $page) {
+      $pagex=substr($page,1,strlen($page)-2);
+      $repl='<table cellpadding="0" cellspacing="0" border="1">';
+      // First split by lines
+      $lines = explode("\\",$pagex);
+      foreach ($lines as $line) {
+        $repl.='<tr>';
+        $columns = explode("&",$line);
+        foreach($columns as $column) {
+          $repl.='<td valign="top">'.$column.'</td>';  
+        }  
+        $repl.='</tr>';  
+      }
+      $repl.='</table>'; 
+      $data = str_replace($page, $repl, $data);
+    }
+    
+    
     // Now tokenize the expression and process the tokens
     // Use tab and newline as tokenizing characters as well  ////
     $lines = explode("\n",$data);
