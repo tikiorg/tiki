@@ -36,3 +36,5 @@
    src='img/icons/admin_metatags.png' alt='{tr}Meta Tags{/tr}' /></a>
 <a href="tiki-admin.php?page=search" title="{tr}Search{/tr}" class="link"><img border='0'
    src='img/icons/admin_search.png' alt='{tr}Search{/tr}' /></a>
+<a href="tiki-admin.php?page=jukebox" title="{tr}Jukebox{/tr}" class="link"><img border='0'
+   src='img/icons/admin_jukebox.png' alt='{tr}Jukebox{/tr}' /></a>
