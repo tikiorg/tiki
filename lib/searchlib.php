@@ -10,6 +10,23 @@ class SearchLib Extends TikiLib {
     }
     $this->db = $db;  
   }
+  
+  function register_search($words)
+  {
+   $words=addslashes($words);
+   $words = preg_split("/\s/",$words);
+   foreach($words as $word) {
+     $word=trim($word);
+     $cant = $this->getOne("select count(*) from tiki_search_stats where term='$word'");
+     if($cant) {
+       $query = "update tiki_search_stats set hits=hits+1 where term='$word'";
+     } else {
+       $query = "insert into tiki_search_stats(term,hits) values('$word',1)";
+     }
+
+     $result = $this->query($query);
+   }
+  }
 
   function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
     $words = trim($words);

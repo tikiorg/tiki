@@ -1,9 +1,10 @@
 <?php
 include_once("tiki-setup_base.php");
 include_once("lib/ziplib.php");
+include_once('lib/wiki/exportlib.php');
 if($tiki_p_admin_wiki!='y') die;
 if(!isset($_REQUEST["page"])) {
-  $tikilib->MakeWikiZip();
+  $exportlib->MakeWikiZip();
   header("location: dump/export.tar");
 } else {
   if(isset($_REQUEST["all"])) $all=0; else $all=1;

@@ -200,8 +200,8 @@ $smarty->assign('footnote','');
 $smarty->assign('has_footnote','n');
 if($feature_wiki_footnotes == 'y') {
  if($user) {
-    $x = $tikilib->get_footnote($user,$page);
-    $footnote=$tikilib->get_footnote($user,$page);
+    $x = $wikilib->get_footnote($user,$page);
+    $footnote=$wikilib->get_footnote($user,$page);
     $smarty->assign('footnote',$footnote);
     if($footnote) $smarty->assign('has_footnote','y');
     $smarty->assign('parsed_footnote',$tikilib->parse_data($footnote));
@@ -212,9 +212,9 @@ if($feature_wiki_footnotes == 'y') {
       $smarty->assign('has_footnote','y');
 
       if(empty($_REQUEST['footnote'])) {
-        $tikilib->remove_footnote($user,$page);
+        $wikilib->remove_footnote($user,$page);
       } else {
-        $tikilib->replace_footnote($user,$page,$_REQUEST['footnote']);
+        $wikilib->replace_footnote($user,$page,$_REQUEST['footnote']);
       }
     }
   }

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/search/searchstatslib.php');
 
 if($feature_search_stats != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,7 +16,7 @@ if($tiki_p_admin != 'y') {
 }
 
 if(isset($_REQUEST["clear"])) {
-  $tikilib->clear_search_stats();	
+  $searchstatslib->clear_search_stats();	
 }
 
 
@@ -41,7 +42,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_search_stats($offset,$maxRecords,$sort_mode,$find);
+$channels = $searchstatslib->list_search_stats($offset,$maxRecords,$sort_mode,$find);
 
 
 

@@ -155,6 +155,67 @@ class FileGalLib extends TikiLib {
     return $galleryId;
   }
   
+  function process_batch_file_upload($galleryId,$file,$user,$description)
+  {
+
+    global $fgal_match_regex;
+    global $fgal_nmatch_regex;
+    global $fgal_use_db;
+    global $fgal_use_dir;
+    $description = addslashes($description);
+    include_once('lib/pclzip.lib.php');
+    $archive = new PclZip($file);
+    $archive->extract('temp');
+    $files=Array();
+    $h = opendir("temp");
+    $gal_info = $this->get_gallery($galleryId);
+    while (($file = readdir($h)) !== false) {
+    if( $file!='.' && $file!='..' && is_file("temp/$file") && $file!='license.txt' ) {
+      $files[]=$file;
+      // check filters
+      $upl=1;
+      if(!empty($fgal_match_regex)) {
+        if(!preg_match("/$gal_match_regex/",$file,$reqs)) $upl=0;
+      }
+      if(!empty($fgal_nmatch_regex)) {
+        if(preg_match("/$gal_nmatch_regex/",$file,$reqs)) $upl=0;
+      }
+
+      $fp = fopen('temp/'.$file,"rb");
+      $data = '';
+      $fhash='';
+      if($fgal_use_db == 'n') {
+        $fhash = md5($name = $file);
+        @$fw = fopen($fgal_use_dir.$fhash,"w");
+        if(!$fw) {
+          $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+          $smarty->display("styles/$style_base/error.tpl");
+          die;
+        }
+      }
+      while(!feof($fp)) {
+        if($fgal_use_db == 'y') {
+          $data .= fread($fp,8192*16);
+        } else {
+          $data = fread($fp,8192*16);
+          fwrite($fw,$data);
+        }
+      }
+      fclose($fp);
+      if($fgal_use_db == 'n') {
+        fclose($fw);
+        $data='';
+      }
+      $size = filesize('temp/'.$file);
+      $name = $file;
+      $type = '';
+      $fileId = $this->insert_file($galleryId,$name,$description,$name, $data, $size, '', $user,$fhash);
+      unlink('temp/'.$file);
+    }
+  }
+  closedir($h);
+  }
+  
 }
 
 $filegallib= new FileGalLib($dbTiki);

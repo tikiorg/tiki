@@ -79,6 +79,54 @@ class WikiLib extends TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
+  
+  // Functions for wiki page footnotes
+  function get_footnote($user,$page)
+  {
+    $page = addslashes($page);
+    $count = $this->getOne("select count(*) from tiki_page_footnotes where user='$user' and pageName='$page'");
+    if(!$count) {
+      return '';
+    } else {
+      return $this->getOne("select data from tiki_page_footnotes where user='$user' and pageName='$page'");
+    }
+  }
+  
+  function replace_footnote($user,$page,$data)
+  {
+    $page=addslashes($page);
+    $data=addslashes($data);
+    $query = "replace into tiki_page_footnotes(user,pageName,data) values('$user','$page','$data')";
+    $this->query($query);
+  }
+
+  function remove_footnote($user,$page)
+  {
+    $page=addslashes($page);
+    $query = "delete from tiki_page_footnotes where user='$user' and pageName='$page'";
+    $this->query($query);
+  }  
+  
+  function wiki_link_structure()
+  {
+    $query = "select pageName from tiki_pages order by pageName asc";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      print($res["pageName"]." ");
+      $page = $res["pageName"];
+      $query2 = "select toPage from tiki_links where fromPage='$page'";
+      $result2 = $this->query($query2);
+      $pages=Array();
+      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+        if( ($res2["toPage"]<>$res["pageName"]) && (!in_array($res2["toPage"],$pages)) ) {
+          $pages[]=$res2["toPage"];
+          print($res2["toPage"]." ");
+        }
+      }
+      print("\n");
+    }
+  }
+
 
   
 }

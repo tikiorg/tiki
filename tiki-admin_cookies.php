@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/taglines/taglinelib.php');
 
 if($tiki_p_edit_cookies != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -14,7 +15,7 @@ if(!isset($_REQUEST["cookieId"])) {
 $smarty->assign('cookieId',$_REQUEST["cookieId"]);
 
 if($_REQUEST["cookieId"]) {
-  $info = $tikilib->get_cookie($_REQUEST["cookieId"]);
+  $info = $taglinelib->get_cookie($_REQUEST["cookieId"]);
 } else {
   $info = Array();
   $info["cookie"]='';
@@ -24,11 +25,11 @@ $smarty->assign('cookie',$info["cookie"]);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_cookie($_REQUEST["remove"]);
+  $taglinelib->remove_cookie($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["removeall"])) {
-  $tikilib->remove_all_cookies();
+  $taglinelib->remove_all_cookies();
 }
 
 if(isset($_REQUEST["upload"])) {
@@ -38,7 +39,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
     $data=fgets($fp,255);
     if(!empty($data)) {
          $data = str_replace("\n","",$data);
-         $tikilib->replace_cookie(0,$data);
+         $taglinelib->replace_cookie(0,$data);
     }
   }
   fclose($fp);
@@ -81,7 +82,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_cookies($offset,$maxRecords,$sort_mode,$find);
+$channels = $taglinelib->list_cookies($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/refererstats/refererlib.php');
 
 
 if($feature_referer_stats != 'y') {
@@ -17,7 +18,7 @@ if($tiki_p_view_referer_stats != 'y') {
 }
 
 if(isset($_REQUEST["clear"])) {
-  $tikilib->clear_referer_stats();	
+  $refererlib->clear_referer_stats();	
 }
 
 /*
@@ -50,7 +51,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_referer_stats($offset,$maxRecords,$sort_mode,$find);
+$channels = $refererlib->list_referer_stats($offset,$maxRecords,$sort_mode,$find);
 
 
 

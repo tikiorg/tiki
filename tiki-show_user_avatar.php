@@ -1,6 +1,7 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-show_user_avatar.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-show_user_avatar.php,v 1.3 2003-03-21 15:48:16 lrargerich Exp $
 
 include_once("tiki-setup_base.php");
+include_once('lib/userprefs/userprefslib.php');
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -9,7 +10,7 @@ if(!isset($_REQUEST["user"])) {
   die;
 }
 
-$info = $tikilib->get_user_avatar_img($_REQUEST["user"]);
+$info = $userprefslib->get_user_avatar_img($_REQUEST["user"]);
 $type = $info["avatarFileType"];
 $content = $info["avatarData"];
 

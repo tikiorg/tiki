@@ -1,9 +1,11 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/wikilib.php');
+
 
 if($feature_wiki != 'y') {
  die;
 }
-$tikilib->wiki_link_structure();
+$wikilib->wiki_link_structure();
 ?>
