@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.17 2004-07-16 18:46:05 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.18 2004-07-16 19:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,7 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 
 	foreach ($_REQUEST["checked"] as $deletepage) {
 		$histlib->remove_all_versions($deletepage);
+		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("page"),$deletepage));
 	}
 	} elseif ($_REQUEST['submit_mult'] == 'categorize') {
 		$categorize_mode = TRUE;
@@ -92,12 +93,14 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'a
 			$cat_name = $pageinfo['pageName'];
 			$cat_href="tiki-index.php?page=".$cat_objid;
 			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+				$categ_object = $categlib->get_category($cat_acat);
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 				if (!$catObjectId) {
 					// The object is not cateorized  
 					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 				}
 				$categlib->categorize($catObjectId, $cat_acat);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> added to %s <b>%s</b>."),tra("page"),$cat_objid,tra("category"),$categ_object['name']));
 			}
 		}
 	}
@@ -121,9 +124,11 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'r
 			$pageinfo = $tikilib->get_page_info($page);
 			$cat_objid = $pageinfo['pageName'];
 			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
+				$categ_object = $categlib->get_category($cat_acat);
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 				if ($catObjectId) {
 					$categlib->remove_object_from_category($catObjectId, $cat_acat);
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("page"),$cat_objid,tra("category"),$categ_object['name']));
 				}
 			}
 		}
@@ -199,6 +204,8 @@ if ($offset > 0) {
 $smarty->assign('tiki_p_admin',$tiki_p_admin);
 $smarty->assign('feature_categories', $feature_categories);
 $smarty->assign('tiki_p_admin_categories', $tiki_p_admin_categories);
+
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.37 2004-07-16 18:30:27 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.38 2004-07-16 19:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,6 +162,7 @@ if (isset($_REQUEST["newuser"])) {
 		foreach ($_REQUEST['checked'] as $user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
 				$userlib->assign_user_to_group($user, $group);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> assigned to %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
 			}
 		}
 	}
@@ -170,6 +171,7 @@ if (isset($_REQUEST["newuser"])) {
 		foreach ($_REQUEST['checked'] as $user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
 				$userslibadmin->remove_user_from_group($user, $group);
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
 			}
 		}
 	}
