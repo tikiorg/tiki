@@ -80,5 +80,5 @@ include_once('tiki-mytiki_shared.php');
 
 
 $smarty->assign('mid','messu-mailbox.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

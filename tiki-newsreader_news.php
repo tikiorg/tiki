@@ -109,5 +109,5 @@ $section='newsreader';
 include_once('tiki-section_options.php');
 
 $smarty->assign('mid','tiki-newsreader_news.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

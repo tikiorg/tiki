@@ -62,6 +62,12 @@ $section='faqs';
 include_once('tiki-section_options.php');
 
 
+if($feature_theme_control == 'y') {
+	$cat_type='faq';
+	$cat_objid = $_REQUEST["faqId"];
+	include('tiki-tc.php');
+}
+
 // Display the template
 $smarty->assign('mid','tiki-view_faq.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

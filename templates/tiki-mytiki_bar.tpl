@@ -7,10 +7,12 @@
 <div align="center"><small>{tr}MyTiki{/tr}</small></div>
 </a></td>
 
+{if $feature_userPreferences eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_preferences.php">
 <img  width="48" height="48" border="0" src="img/mytiki/prefs.gif" alt="{tr}Prefs{/tr}" /><br/>
 <div align="center"><small>{tr}Prefs{/tr}</small></div>
 </a></td>
+{/if}
 
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <td valign="top"><a class="link" href="messu-mailbox.php">

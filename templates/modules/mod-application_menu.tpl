@@ -10,22 +10,6 @@
 {/if}
 {/if}
 
-
-{if $user}
-  &nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}My Tiki{/tr}</a><br/>
-{/if}
-<!--
-{if $user}
-{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-  &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}messages{/tr}</a><br/>
-{/if}
-{if $feature_tasks}
-  &nbsp;<a href="tiki-user_tasks.php" class="linkmenu">{tr}tasks{/tr}</a><br/>
-{/if}
-{/if}
--->
-
-
 {if $feature_contact eq 'y'}
   &nbsp;<a href="tiki-contact.php" class="linkmenu">{tr}contact us{/tr}</a><br/>
 {/if}
@@ -42,9 +26,42 @@
   &nbsp;<a href="tiki-list_games.php" class="linkmenu">{tr}games{/tr}</a><br/>
 {/if}
 
-{if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
-  &nbsp;<a href="tiki-webmail.php" class="linkmenu">{tr}webmail{/tr}</a><br/>
+{if $user}
+  <div class="separator"><a class='separator' href="javascript:setCookie('mymenu','c');hide('mymenu');">[-]</a> 
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
+  <a class='separator' href="javascript:setCookie('mymenu','o');show('mymenu');">[+]</a></div>
+  <div id='mymenu' style="{$mnu_mymenu}">
+  {if $feature_userPreferences eq 'y'}
+      &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br/>  
+  {/if}
+  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+     &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}Messages{/tr}</a><br/> 
+  {/if}
+  {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
+      &nbsp;<a href="tiki-user_tasks.php" class="linkmenu">{tr}Tasks{/tr}</a><br/>
+  {/if}
+  
+  {if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
+      &nbsp;<a href="tiki-user_bookmarks.php" class="linkmenu">{tr}Bookmarks{/tr}</a><br/>
+  {/if}
+  {if $user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
+      &nbsp;<a href="tiki-user_assigned_modules.php" class="linkmenu">{tr}Modules{/tr}</a><br/>
+  {/if}
+  {if $feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
+    &nbsp;<a href="tiki-newsreader_servers.php" class="linkmenu">{tr}Newsreader{/tr}</a><br/>  
+  {/if}
+  {if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
+    &nbsp;<a href="tiki-webmail.php" class="linkmenu">{tr}Webmail{/tr}</a><br/>  
+  {/if}
+  {if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+    &nbsp;<a href="tiki-user_notepad.php" class="linkmenu">{tr}Notepad{/tr}</a><br/>  
+  {/if}
+  {if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
+    &nbsp;<a href="tiki-userfiles.php" class="linkmenu">{tr}My files{/tr}</a><br/>  
+  {/if}
+  </div>
 {/if}
+
 
 {if $feature_wiki eq 'y'}
   <div class="separator"><a class='separator' href="javascript:setCookie('wikimenu','c');hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a> <a class='separator' href="javascript:setCookie('wikimenu','o');show('wikimenu');">[+]</a></div>
@@ -274,6 +291,20 @@
   </div>
 {/if}
 
+
+{if $feature_eph eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:setCookie('ephmenu','c');hide('ephmenu');">[-]</a> 
+  <a href="tiki-eph.php" class="separator">{tr}Ephemerides{/tr}</a>
+  <a class='separator' href="javascript:setCookie('ephmenu','o');show('ephmenu');">[+]</a></div>
+  <div id='ephmenu' style="{$mnu_ephmenu}">
+  {if $tiki_p_eph_admin eq 'y'}
+  &nbsp;<a href="tiki-eph_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
+
+
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
  $tiki_p_admin_categories eq 'y' or
@@ -305,6 +336,7 @@
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br/>
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br/>
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br/>
+      &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br/>
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br/>

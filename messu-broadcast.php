@@ -60,7 +60,7 @@ if(isset($_REQUEST['send'])) {
   // must have a subject or body non-empty (or both)
   if(empty($_REQUEST['subject'])&&empty($_REQUEST['body'])) {
     $smarty->assign('message','ERROR: Either the subject or body must be non-empty');
-    $smarty->display('tiki.tpl');
+    $smarty->display("styles/$style_base/tiki.tpl");
     die;
   }
     
@@ -90,7 +90,7 @@ if(isset($_REQUEST['send'])) {
   } else {
     $message = 'ERROR: No valid users to send the message';
     $smarty->assign('message',$message);
-    $smarty->display('tiki.tpl');
+    $smarty->display("styles/$style_base/tiki.tpl");
     die;
   }
  
@@ -109,6 +109,6 @@ $section='user_messages';
 include_once('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

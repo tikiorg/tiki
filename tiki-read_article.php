@@ -85,6 +85,12 @@ if($feature_article_comments == 'y') {
 $section='cms';
 include_once('tiki-section_options.php');
 
+if($feature_theme_control == 'y') {
+	$cat_type='article';
+	$cat_objid = $_REQUEST["articleId"];
+	include('tiki-tc.php');
+}
+
 // Display the Index Template
 $smarty->assign('mid','tiki-read_article.tpl');
 $smarty->assign('show_page_bar','n');

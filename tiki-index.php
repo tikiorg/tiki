@@ -264,6 +264,12 @@ if($structlib->page_is_in_structure($page)) {
 	$smarty->assign('struct_struct',$struct);   
 } 
 
+if($feature_theme_control == 'y') {
+	$cat_type='wiki page';
+	$cat_objid = $_REQUEST["page"];
+	include('tiki-tc.php');
+}
+
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');

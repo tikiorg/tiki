@@ -182,6 +182,12 @@ $smarty->assign_by_ref('images',$images["data"]);
 
 $section='galleries';
 include_once('tiki-section_options.php');
+if($feature_theme_control == 'y') {
+	$cat_type='image gallery';
+	$cat_objid = $_REQUEST["galleryId"];
+	include('tiki-tc.php');
+}
+
 
 
 // Display the template

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/categories/categlib.php');
 
 if($feature_categories != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));

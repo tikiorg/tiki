@@ -91,7 +91,11 @@ if($feature_blogposts_comments == 'y') {
 
 $section='blogs';
 include_once('tiki-section_options.php');
-
+if($feature_theme_control == 'y') {
+	$cat_type='blog';
+	$cat_objid = $_REQUEST['blogId'];
+	include('tiki-tc.php');
+}
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog_post.tpl');

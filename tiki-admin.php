@@ -1104,6 +1104,15 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_userfiles",'n');
     $smarty->assign("feature_userfiles",'n');
   }
+
+  if(isset($_REQUEST["feature_theme_control"]) && $_REQUEST["feature_theme_control"]=="on") {
+    $tikilib->set_preference("feature_theme_control",'y'); 
+    $smarty->assign("feature_theme_control",'y');
+  } else {
+    $tikilib->set_preference("feature_theme_control",'n');
+    $smarty->assign("feature_theme_control",'n');
+  }
+
   
   if(isset($_REQUEST["feature_eph"]) && $_REQUEST["feature_eph"]=="on") {
     $tikilib->set_preference("feature_eph",'y'); 

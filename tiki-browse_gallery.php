@@ -230,6 +230,12 @@ if($feature_image_galleries_comments == 'y') {
 $section='galleries';
 include_once('tiki-section_options.php');
 
+if($feature_theme_control == 'y') {
+	$cat_type='image gallery';
+	$cat_objid = $_REQUEST["galleryId"];
+	include('tiki-tc.php');
+}
+
 
 // Display the template
 $smarty->assign('mid','tiki-browse_gallery.tpl');

@@ -388,7 +388,6 @@ class CategLib extends TikiLib {
     }
     $this->categorize($catObjectId,$categId);
   }
-
   // FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
   
   function get_child_categories($categId)
@@ -402,6 +401,17 @@ class CategLib extends TikiLib {
       $res["children"]=$this->getOne($query);
       $query = "select count(*) from tiki_category_objects where categId=$id";
       $res["objects"]=$this->getOne($query);
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
+  function get_all_categories()
+  {
+    $query =" select name,categId from tiki_categories order by name";
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res;
     }
     return $ret;
