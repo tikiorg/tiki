@@ -1,4 +1,17 @@
-<a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
+
+{if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Bookmarks{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
+
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
+
+
+
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
