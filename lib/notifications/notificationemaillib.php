@@ -10,13 +10,22 @@
 function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='') { 
 	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
 
+	// Per-forum From address overrides global default.
+	if( $forum_info['outbound_from'] )
+	{
+	    $my_sender = $forum_info['outbound_from'];
+	} else {
+	    $my_sender = $sender_email;
+	}
+
 	//outbound email ->  will be sent in utf8 - from sender_email
 	if ($forum_info['outbound_address']) {
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$mail->setSubject($title);
 		$mail->setText($title."\n".$data);
-		$mail->setHeader("Reply-To", $sender_email);
+		$mail->setHeader("Reply-To", $my_sender);
+		$mail->setHeader("From", $my_sender);
 		if ($event == 'forum_post_thread') {
 			$mail->setSubject($topicName);
 			if ($inReplyTo)
@@ -73,6 +82,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		}
 	}
 }
+
 /** \brief test if email already in the notification list
  */
 function testEmailInList($nots, $email) {
@@ -82,12 +92,13 @@ function testEmailInList($nots, $email) {
 	}
 	return false;
 }
+
 /** \brief send the email notifications dealing with wiki page  changes to
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
 function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine) {
-	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $sender_email, $wiki_watch_editor;;
+	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;;
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
 
@@ -157,6 +168,7 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		}
 	}
 }
+
 /** \brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email 
   * \param $list : emails list or (users, email) list
   * \param $type: type of the list element =  'email'|'watch'
