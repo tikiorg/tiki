@@ -71,7 +71,7 @@ if (file_exists($file))
 	require_once($file);
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
-	ini_set('include_path', $current_path.$separator.'lib/adodb');
+	ini_set('include_path', $current_path.$separator.'lib/adodb'.$separator.'lib/pear');
 #	error_reporting(E_ALL); # show any error messages triggered
 	include_once('adodb-errorpear.inc.php');
 #	include_once('adodb-errorhandler.inc.php');
