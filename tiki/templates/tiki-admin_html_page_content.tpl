@@ -1,8 +1,9 @@
 <a class="pagetitle" href="tiki-admin_html_page_content.php?pageName={$pageName}">{tr}Admin HTML page dynamic zones{/tr}</a><br/>
 <h2>{tr}Page{/tr}: {$pageName}</h2><br/><br/>
 [<a class="link" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-|<a class="link" href="tiki-admin_html_pages.php?pageName={$pageName}">{tr}Edit this HTML page{/tr}</a>]
+|<a class="link" href="tiki-admin_html_pages.php?pageName={$pageName}">{tr}Edit this page{/tr}</a>]
 |<a class="link" href="tiki-page.php?pageName={$pageName}">{tr}View page{/tr}</a>]<br/><br/>
+
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>
 <form action="tiki-admin_html_page_content.php" method="post">
@@ -20,7 +21,7 @@
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-{/if
+{/if}
 
 <h2>{tr}Dynamic zones{/tr}</h2>
 <div  align="center">

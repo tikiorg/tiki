@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/htmlpages/htmlpageslib.php');  
 
 if($feature_html_pages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -21,7 +22,7 @@ if(!isset($_REQUEST["pageName"])) {
 $smarty->assign('pageName',$_REQUEST["pageName"]);
 
 if($_REQUEST["pageName"]) {
-  $info = $tikilib->get_html_page($_REQUEST["pageName"]);
+  $info = $htmlpageslib->get_html_page($_REQUEST["pageName"]);
 } else {
   $info = Array();
   $info["pageName"]='';
@@ -33,7 +34,7 @@ $smarty->assign('info',$info);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_html_page($_REQUEST["remove"]);
+  $htmlpageslib->remove_html_page($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
@@ -46,7 +47,7 @@ $smarty->assign('preview','n');
 if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview','y');
   //$parsed = $tikilib->parse_data($_REQUEST["content"]);
-  $parsed = $tikilib->parse_html_page($_REQUEST["pageName"],$_REQUEST["content"]);
+  $parsed = $htmlpageslib->parse_html_page($_REQUEST["pageName"],$_REQUEST["content"]);
   $smarty->assign('parsed',$parsed);
   $info["content"]=$_REQUEST["content"];
   $info["refresh"]=$_REQUEST["refresh"];
@@ -56,7 +57,7 @@ if(isset($_REQUEST["preview"])) {
 }
 
 if(isset($_REQUEST["save"]) && !empty($_REQUEST["pageName"])) {
-  $tid = $tikilib->replace_html_page($_REQUEST["pageName"], $_REQUEST["type"],$_REQUEST["content"],$_REQUEST["refresh"]);
+  $tid = $htmlpageslib->replace_html_page($_REQUEST["pageName"], $_REQUEST["type"],$_REQUEST["content"],$_REQUEST["refresh"]);
   $smarty->assign("pageName",'');
   $info["pageName"]='';
   $info["content"]='';
@@ -86,7 +87,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_html_pages($offset,$maxRecords,$sort_mode,$find);
+$channels = $htmlpageslib->list_html_pages($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
