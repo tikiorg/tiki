@@ -12,16 +12,20 @@ function _translate_lang($key) {
   global $lang_use_db;
   if ($lang_use_db!='y') {
     include("lang/$language/language.php");
-    if(isset($lang[$key[2]]))
-        if ($key[1] == "{tr}")
+    if(isset($lang[$key[2]])) {
+        if ($key[1] == "{tr}") {
           return $lang[$key[2]];// no more possible translation in block.tr.php
-        else
+        }
+        else {
           return $key[1].$lang[$key[2]]."{/tr}";// perhaps variable substitution to do in block.tr.php
-    else if (strstr($key[2], "{\$")) {
+        }
+    }// not found in language.php
+    elseif (strstr($key[2], "{\$")) {
          return $key[1].$key[2]."{/tr}";// keep the tags to be perhaps translated in block.tr.php
     }
-    else
+    else {
          return $key[2];
+    }
    }
    else {
     global $tikilib;
