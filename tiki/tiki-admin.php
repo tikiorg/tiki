@@ -1079,6 +1079,32 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_newsreader",'n');
   }
   
+  if(isset($_REQUEST["feature_notepad"]) && $_REQUEST["feature_notepad"]=="on") {
+    $tikilib->set_preference("feature_notepad",'y'); 
+    $smarty->assign("feature_notepad",'y');
+  } else {
+    $tikilib->set_preference("feature_notepad",'n');
+    $smarty->assign("feature_notepad",'n');
+  }
+
+  if(isset($_REQUEST["feature_userfiles"]) && $_REQUEST["feature_userfiles"]=="on") {
+    $tikilib->set_preference("feature_userfiles",'y'); 
+    $smarty->assign("feature_userfiles",'y');
+  } else {
+    $tikilib->set_preference("feature_userfiles",'n');
+    $smarty->assign("feature_userfiles",'n');
+  }
+  
+  if(isset($_REQUEST["feature_eph"]) && $_REQUEST["feature_eph"]=="on") {
+    $tikilib->set_preference("feature_eph",'y'); 
+    $smarty->assign("feature_eph",'y');
+  } else {
+    $tikilib->set_preference("feature_eph",'n');
+    $smarty->assign("feature_eph",'n');
+  }
+
+
+  
   if(isset($_REQUEST["feature_contact"]) && $_REQUEST["feature_contact"]=="on") {
     $tikilib->set_preference("feature_contact",'y'); 
     $smarty->assign("feature_contact",'y');

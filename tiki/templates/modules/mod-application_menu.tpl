@@ -10,19 +10,24 @@
 {/if}
 {/if}
 
+
 {if $user}
-{if $feature_userPreferences eq 'y' and $user}
   &nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}My Tiki{/tr}</a><br/>
 {/if}
+<!--
+{if $user}
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
   &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}messages{/tr}</a><br/>
 {/if}
 {if $feature_tasks}
   &nbsp;<a href="tiki-user_tasks.php" class="linkmenu">{tr}tasks{/tr}</a><br/>
 {/if}
+{/if}
+-->
+
+
 {if $feature_contact eq 'y'}
   &nbsp;<a href="tiki-contact.php" class="linkmenu">{tr}contact us{/tr}</a><br/>
-{/if}
 {/if}
 
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}

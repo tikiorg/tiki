@@ -142,10 +142,7 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 $smarty->assign('tasks_useDates',$tasks_useDates);
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
+include_once('tiki-mytiki_shared.php');
 
 
 $smarty->assign('mid','tiki-user_tasks.tpl');

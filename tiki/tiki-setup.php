@@ -320,6 +320,15 @@ $smarty->assign('feature_trackers',$feature_trackers);
 $feature_directory = 'n';
 $smarty->assign('feature_directory',$feature_directory);
 
+$feature_notepad = 'n';
+$smarty->assign('feature_notepad',$feature_notepad);
+$feature_userfiles = 'n';
+$smarty->assign('feature_userfiles',$feature_userfiles);
+$feature_eph = 'n';
+$smarty->assign('feature_eph',$feature_eph);
+
+
+
 $feature_contact = 'n';
 $smarty->assign('feature_contact',$feature_contact);
 $contact_user = $tikilib->get_preference('contact_user','admin');

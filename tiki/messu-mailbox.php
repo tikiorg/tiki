@@ -73,10 +73,7 @@ if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {
 $smarty->assign_by_ref('items',$items["data"]);
 
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($user);
-  $smarty->assign('unread',$unread);
-}
+include_once('tiki-mytiki_shared.php');
 
 
 $smarty->assign('mid','messu-mailbox.tpl');
