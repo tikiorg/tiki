@@ -17,6 +17,21 @@ if ($tiki_p_jukebox_albums != 'y') {
 	die;
 }
 
+if(!isset($_REQUEST["albumId"])) {
+	$_REQUEST["albumId"]=0;
+}
+
+if(isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
+} else {
+	$find = '';
+}
+
+$smarty->assign('find',$find);
+
+$smarty->assign('albumId',$_REQUEST["albumId"]);
+
+
 ask_ticket('jukebox-albums');
 
 // Display the template
