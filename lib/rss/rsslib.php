@@ -11,21 +11,23 @@ class RSSLib extends TikiLib {
 	}
 
 	function list_rss_modules($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$mid = " where (name like '%" . $find . "%' or description like '%" . $find . "%')";
+			$findesc="%" . $find . "%";
+			$mid = " where (`name` like ? or `description` like ?)";
+			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select * from tiki_rss_modules $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_rss_modules $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_rss_modules` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_rss_modules` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res["minutes"] = $res["refresh"] / 60;
 
 			$ret[] = $res;
@@ -39,39 +41,39 @@ class RSSLib extends TikiLib {
 
 	function replace_rss_module($rssId, $name, $description, $url, $refresh) {
 		//if($this->rss_module_name_exists($name)) return false;
-		$description = addslashes($description);
-
-		$name = addslashes($name);
 		// Check the name
 		$refresh = 60 * $refresh;
 
 		if ($rssId) {
-			$query = "update tiki_rss_modules set name='$name',description='$description',refresh=$refresh,url='$url' where rssId=$rssId";
+			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=? where `rssId`=?";
+			$bindvars=array($name,$description,$refresh,$url,$rssId);
 		} else {
-			$query = "replace into tiki_rss_modules(name,description,url,refresh,content,lastUpdated)
-                values('$name','$description','$url',$refresh,'',1000000)";
+			// was: replace into, no clue why.
+			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`)
+                values(?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$url,$refresh,'',1000000);
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 		return true;
 	}
 
 	function remove_rss_module($rssId) {
-		$query = "delete from tiki_rss_modules where rssId=$rssId";
+		$query = "delete from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($rssId));
 		return true;
 	}
 
 	function get_rss_module($rssId) {
-		$query = "select * from tiki_rss_modules where rssId=$rssId";
+		$query = "select * from `tiki_rss_modules` where `rssId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($rssId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
@@ -145,25 +147,24 @@ class RSSLib extends TikiLib {
 		$info = $this->get_rss_module($rssId);
 
 		$data = $this->httprequest($info['url']);
-		$datai = addslashes($data);
 
 		$now = date("U");
-		$query = "update tiki_rss_modules set content='$datai', lastUpdated=$now where rssId=$rssId";
-		$result = $this->query($query);
+		$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
+		$result = $this->query($query,array($data,(int) $now,$rssId));
 		return $data;
 	}
 
 	function rss_module_name_exists($name) {
-		$query = "select name from tiki_rss_modules where name='$name'";
+		$query = "select `name` from `tiki_rss_modules` where `name`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name));
 		return $result->numRows();
 	}
 
 	function get_rss_module_id($name) {
-		$query = "select rssId from tiki_rss_modules where name='$name'";
+		$query = "select `rssId` from `tiki_rss_modules` where `name`=?";
 
-		$id = $this->getOne($query);
+		$id = $this->getOne($query,array($name));
 		return $id;
 	}
 
