@@ -49,7 +49,7 @@
 <textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value}</textarea>
 {/if}
 {if $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
+{html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
 {/if}
 {if $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].name}">
