@@ -12,7 +12,12 @@ function wikiplugin_tracker($data, $params) {
 	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group;
 	//var_dump($_REQUEST);
 	extract ($params);
-
+	if (!isset($showtitle)) {
+		$showtitle = "n";
+	}
+	if (!isset($showdesc)) {
+		$showdesc = "n";
+	}
 	if (!isset($trackerId)) {
 		return ("<b>missing tracker ID for plugin TRACKER</b><br/>");
 	}
@@ -71,8 +76,12 @@ function wikiplugin_tracker($data, $params) {
 		$back.= '~np~<form><input type="hidden" name="trackit" value="1" />';
 		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 		$back.= '<input type="hidden" name="refresh" value="1" />';
-		$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
-		$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
+		if ($showtitle == 'y') {
+			$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
+		}
+		if ($showdesc == 'y') {
+			$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
+		}
 		$back.= '<table>';
 		foreach ($flds['data'] as $f) {
 			if ($f['type'] == 'u' and $f['options'] == '1') {
