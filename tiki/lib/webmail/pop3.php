@@ -57,7 +57,7 @@ class POP3{
         function POP3Command($command, &$result) {
                 if ($this->DEBUG) {echo "<b>Sending Command: </b>".$command."<br>";flush();}
                 @fputs($this->connection, "$command\r\n");
-                $result = @fgets($this->connection, 100);
+                $result = @fgets($this->connection, 256);
 
                 if (eregi("^(\+OK)", $result)) :
                         if ($this->DEBUG) {echo "<b>Result OK: </b><br>";flush();}

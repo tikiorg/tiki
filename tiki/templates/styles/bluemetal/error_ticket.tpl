@@ -59,18 +59,36 @@
                         <td id="page36"><img src="styles/bluemetal/page_0.gif" width="4" height="1" alt="" border="0" /></td>
                       </tr>
                     </table></td>
-                  <td width="100%" rowspan="3" id="page24"> <div id="tiki-center"> 
-<br />
-                <div class="cbox"> 
-                  <div class="cbox-title">{tr}Error{/tr}</div>
-                  <div class="cbox-data">{$msg}<br />
-                    <br />
-                    <a href="javascript:history.back()" class="linkmenu">{tr}Go 
-                    back{/tr}</a><br />
-                    <br />
-                    <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home 
-                    page{/tr}</a></div>
-                </div></div></td>
+                  <td width="100%" rowspan="3" id="page24" valign="center"> <div id="tiki-center"> 
+<div class="cbox">
+<div class="cbox-title">{tr}Confirmation required{/tr}</div>
+<div class="cbox-data">
+{$msg}<br /><br />
+<form action="{$self}{if $query}?{$query|escape}{/if}" method="post">
+{foreach key=k item=i from=$post}
+<input type="hidden" name="{$k}" value="{$i|escape}" />
+{/foreach}
+<input type="submit" name="ticket_action_button" value="{tr}Click here to confirm your action{/tr}" />
+</form><br /><br />
+<div class="button2"><a href="#" onClick="toggle('details');" class="linkbut">{tr}Details{/tr}</a></div>
+<div class="wikitext" id="details" style="display:none;">
+{foreach key=kp item=ip from=$smarty.post}
+<div>POST {$kp} = {$ip|escape}</div>
+{/foreach}
+{foreach key=kg item=ig from=$smarty.get}
+<div>GET {$kg} = {$ig|escape}</div>
+{/foreach}
+<br /><br />
+<div>
+<i>For more information about CSRF security risks, refer to <a href="http://www.tux.org/~peterw/csrf.txt">http://www.tux.org/~peterw/csrf.txt</a>.</i>
+</div>
+</div>
+<br /><br />
+<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+<a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+</div>
+</div>
+                </div></td>
 					  {if $feature_right_column eq 'y'}
                   <td id="rightcolumn" rowspan="3"> {section name=homeix loop=$right_modules} 
                     {$right_modules[homeix].data} {/section}</td>

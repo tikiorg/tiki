@@ -66,10 +66,10 @@ class MenuLib extends TikiLib {
 	function replace_menu_option($menuId, $optionId, $name, $url, $type, $position, $section, $perm, $groupname) {
 		if ($optionId) {
 			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?  where `optionId`=?";
-			$bindvars=array($name,$url,$type,$position,$section,$perm,$groupname,$optionId);
+			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$optionId);
 		} else {
 			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`) values(?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$menuId,$name,$url,$type,$position,$section,$perm,$groupname);
+			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname);
 		}
 
 		$result = $this->query($query, $bindvars);

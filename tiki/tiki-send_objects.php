@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.11 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_objects.php,v 1.12 2004-01-26 23:09:04 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,7 +125,7 @@ if (isset($_REQUEST["send"])) {
 				} else {
 					$errorMsg = $result->faultstring();
 
-					$msg .= tra('page'). ': ' . $page . tra(' not sent'). $errorMsg . "<br/>";
+					$msg .= tra('page'). ': ' . $page . tra(' not sent').': '. tra($errorMsg) . "<br/>";
 				}
 			}
 		}
@@ -174,7 +174,7 @@ if (isset($_REQUEST["send"])) {
 				} else {
 					$errorMsg = $result->faultstring();
 
-					$msg .= tra('page'). ': ' . $article . tra(' not sent'). $errorMsg . "<br/>";
+					$msg .= tra('page'). ': ' . $article . tra(' not sent'). ': '.tra($errorMsg) . "<br/>";
 				}
 			}
 		}
@@ -195,7 +195,7 @@ $articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, date("U"),
 $smarty->assign_by_ref('pages', $pages["data"]);
 $smarty->assign_by_ref('articles', $articles["data"]);
 
-ask_ticket('send-object');
+ask_ticket('send-objects');
 
 // Display the template
 $smarty->assign('mid', 'tiki-send_objects.tpl');

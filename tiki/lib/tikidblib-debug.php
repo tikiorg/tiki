@@ -218,6 +218,10 @@ function convert_query(&$query) {
 
 }
 
+function ifNull($narg1,$narg2) {
+  return $this->db->ifNull($narg1,$narg2);
+}
+
 function blob_encode(&$blob) {
     switch($this->db->blobEncodeType) {
         case 'I':

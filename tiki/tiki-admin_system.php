@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.8 2003-12-19 12:18:34 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.9 2004-01-26 23:09:03 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,11 +93,11 @@ $buf = '';
 
 if (isset($_GET['do'])) {
 	if ($_GET['do'] == 'templates_c') {
-		erase_dir_content('templates_c');
+		erase_dir_content("templates_c/$tikidomain");
 	} elseif ($_GET['do'] == 'temp_cache') {
-		erase_dir_content('temp/cache');
+		erase_dir_content("temp/cache/$tikidomain");
 	} elseif ($_GET['do'] == 'modules_cache') {
-		erase_dir_content('modules/cache');
+		erase_dir_content("modules/cache/$tikidomain");
 	}
 }
 

@@ -978,7 +978,7 @@ class ImageGalsLib extends TikiLib {
 		} 
 		if ($xsize != 0 && $ysize == $xsize) {
 			// we don't know yet.
-			$mid = "and greatest(d.`xsize`,d.`ysize`) = greatest(?,?) ";
+			$mid = "and (d.`xsize` = ? or d.`ysize` = ?) order by `xysize` desc";
 			$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
 		}
 		
@@ -990,12 +990,12 @@ class ImageGalsLib extends TikiLib {
                      i.`description`, i.`created`, i.`user`,
                      i.`hits`, i.`path`,
                      d.`xsize`,d.`ysize`,d.`type`,d.`filesize`,
-                     d.`filetype`,d.`filename`
+                     d.`filetype`,d.`filename`,d.`xsize` * d.`ysize` as `xysize`
                  from `tiki_images` i, `tiki_images_data` d where
                      i.`imageId`=? and d.`imageId`=i.`imageId`
                      and d.`type`=?
                      $mid";
-		$result = $this->query($query,$bindvars);
+		$result = $this->query($query,$bindvars,1);
 		$res = $result->fetchRow();
 		return $res;
 	}

@@ -3876,7 +3876,7 @@ function parse_data($data) {
 	    $html = $span1.$span2;
 	    //It's important to replace only once
 	    $dvar_preg = preg_quote( $dvar );
-	    $data = preg_replace("/%$dvar_preg%/",$html,$data,1);
+	    $data = preg_replace("+%$dvar_preg%+",$html,$data,1);
 	    //Further replacements only with the value
 	    $data = str_replace("%$dvar%",$value,$data);			
 

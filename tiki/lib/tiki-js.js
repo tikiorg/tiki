@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.37 2004-01-21 20:52:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.38 2004-01-26 23:10:34 redflo Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -466,9 +466,9 @@ function confirmTheLink(theLink, theMsg)
     }
                                                                                                                   
     var is_confirmed = confirm(theMsg);
-    if (is_confirmed) {
-        theLink.href += '&amp;is_js_confirmed=1';
-    }
+    //if (is_confirmed) {
+    //    theLink.href += '&amp;is_js_confirmed=1';
+    //}
                                                                                                                   
     return is_confirmed;
 } 
