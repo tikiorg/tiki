@@ -9,7 +9,7 @@
     *
     * Params:
     * <ul>
-    * <li>info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment, 
+    * <li>info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment,
     * creator, version, flag, versions,links,backlinks
     * <li> exclude (allows multiple pagenames) : HomePage|RecentChanges
     * <li> include_self     : by default, false
@@ -20,15 +20,15 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version 1.0
+    * @version $Revision: 1.5 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
         function getDefaultArguments() {
-            return array('exclude' => array(),
+            return array('exclude' => '',
                 'include_self' => 0,
                 'noheader' => 0,
-                'page' => $_REQUEST["page"],
+                'page' => '[pagename]',
                 'info' => false );
         }
         function getName() {
@@ -39,7 +39,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.4 $");
+                "\$Revision: 1.5 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -60,13 +60,20 @@
                     false;
                 }
             }
+            $sOutput = "";
+            // Verify if the page exists
+            if (!PluginsLibUtil::isPage($page)) {
+                return $this->error("The page <b>$page</b> doesn't exists");
+            }
             //
             /////////////////////////////////
             // Process backlinks
             /////////////////////////////////
             //
-            $backlinks = $wikilib->get_backlinks($page);
-            foreach($backlinks as $backlink) {
+
+            $aBackRequest = array();
+            $aBackLinks = $wikilib->get_backlinks($page);
+            foreach($aBackLinks as $backlink) {
                 if (!in_array($backlink["fromPage"], $exclude)) {
                     $aBackRequest[] = $backlink["fromPage"];
                 }
@@ -74,8 +81,11 @@
             if ($include_self) {
                 $aBackRequest[] = $page;
             }
-            $sOutput = "";
-            $aPages = $this->list_pages(0, -1, 'pageName_desc', $aBackRequest);
+            if (!$aBackRequest) {
+                return tra("No pages links to")." (($page))";
+            } else {
+                $aPages = $this->list_pages(0, -1, 'pageName_desc', $aBackRequest);
+            }
             //
             /////////////////////////////////
             // Start of Output
@@ -84,26 +94,23 @@
             if (!$noheader) {
                 // Create header
                 $count = $aPages["cant"];
-                if (!$count) {
-                    $sOutput  .= tra("No pages link to")." (($page))";
-                } elseif ($count == 1) {
+                if ($count == 1) {
                     $sOutput  .= tra("One page links to")." (($page))";
                 } else {
                     $sOutput = "$count ".tra("pages links to")." (($page))";
                 }
                 $sOutput  .= "\n";
             }
-
-            $sOutput.=PluginsLibUtil::createTablePages($aPages["data"],$info);
+            $sOutput  .= PluginsLibUtil::createTable($aPages["data"], $info);
             return $sOutput;
         }
     }
     function wikiplugin_backlinks($data, $params) {
-        $plugin=new WikiPluginBackLinks();
+        $plugin = new WikiPluginBackLinks();
         return $plugin->run($data, $params);
     }
     function wikiplugin_backlinks_help() {
-        $plugin=new WikiPluginBackLinks();
+        $plugin = new WikiPluginBackLinks();
         return $plugin->getDescription();
     }
 ?>
