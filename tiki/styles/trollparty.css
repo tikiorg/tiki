@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.18 2004-01-04 06:22:08 mose Exp $
+$Id: trollparty.css,v 1.19 2004-01-05 08:11:40 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -686,6 +686,23 @@ td.findtable
 /* 
 Odd rows in several listings 
 */
+tr.odd {
+background-color: #121212;
+vertical-align: top;
+text-align: left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+background-color: #323232;
+vertical-align: top;
+text-align: left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
+
 TD.odd,
 td.gallistnameodd,
 td.gallistdescriptionodd,

@@ -380,6 +380,18 @@ table.findtable { width: 97%; margin-bottom: 20px; padding-bottom: 10px;}
 td.findtable { font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 11px;}
 
 /* Odd rows in several listings */
+tr.odd {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; color : Black; background-color: #EFEFEF; vertical-align: top; text-align: left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #F0EFF1; color : #000066; vertical-align: top; text-align: left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
 TD.odd,td.gallistnameodd,td.gallistdescriptionodd,td.gallistcreatedodd,td.gallistlastModifodd, td.gallistuserodd,
 td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
 td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
