@@ -910,6 +910,14 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_surveys",'n');
   }
   
+  if(isset($_REQUEST["feature_newsletters"]) && $_REQUEST["feature_newsletters"]=="on") {
+    $tikilib->set_preference("feature_newsletters",'y'); 
+    $smarty->assign("feature_newsletters",'y');
+  } else {
+    $tikilib->set_preference("feature_newsletters",'n');
+    $smarty->assign("feature_newsletters",'n');
+  }
+  
   if(isset($_REQUEST["feature_drawings"]) && $_REQUEST["feature_drawings"]=="on") {
     $tikilib->set_preference("feature_drawings",'y'); 
     $smarty->assign("feature_drawings",'y');

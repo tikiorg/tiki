@@ -170,6 +170,8 @@ $feature_bot_bar = 'y';
 
 $feature_surveys = 'n';
 $smarty->assign('feature_surveys',$feature_surveys);
+$feature_newsletters = 'n';
+$smarty->assign('feature_newsletters',$feature_newsletters);
 $feature_webmail = 'n';
 $smarty->assign('feature_webmail',$feature_webmail);
 $feature_obzip = 'n';
@@ -502,7 +504,12 @@ if(!strstr($_SERVER["REQUEST_URI"],'tiki-login')) {
   }  
 }
 
-
+$smarty->assign('mnu_nlmenu','display:none;');
+if(isset($_COOKIE["nlmenu"])) {
+  if($_COOKIE["nlmenu"]=='o') {
+    $smarty->assign('mnu_nlmenu','display:block;');
+  }	
+}
 $smarty->assign('mnu_wikimenu','display:none;');
 if(isset($_COOKIE["wikimenu"])) {
   if($_COOKIE["wikimenu"]=='o') {
