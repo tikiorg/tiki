@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.51 2004-06-06 08:39:55 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.52 2004-06-15 19:42:40 teedog Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -136,7 +136,9 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 {/foreach}
 </select>
 </td></tr>
-<tr class="formcolor"><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
+<tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:<br />
+({tr}Use wiki page name or full URL{/tr})
+</label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
 {if $groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
 <select name="groupstracker">
