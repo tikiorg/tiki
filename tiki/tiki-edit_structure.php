@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.19 2003-12-20 09:11:00 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.20 2003-12-22 04:53:06 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,20 +80,15 @@ if (isset($_REQUEST["create"])) {
 }
 
 if (isset($_REQUEST["move_node"])) {
-	$move_node = $_REQUEST["move_node"];
-	if (0 == strcmp($move_node, tra("Promote"))) {
+	if ($_REQUEST["move_node"] == '1') {
 		$structlib->promote_node($_REQUEST["page_ref_id"]);
-	}
-	elseif (0 == strcmp($move_node, tra("Demote"))) {
+	} elseif ($_REQUEST["move_node"] == '2') {
+		$structlib->move_before_previous_node($_REQUEST["page_ref_id"]);
+	}	elseif ($_REQUEST["move_node"] == '3') {
+		$structlib->move_after_next_node($_REQUEST["page_ref_id"]);
+	} elseif ($_REQUEST["move_node"] == '4') {
 		$structlib->demote_node($_REQUEST["page_ref_id"]);
 	}
-	elseif (0 == strcmp($move_node, tra("Next"))) {
-		$structlib->move_after_next_node($_REQUEST["page_ref_id"]);
-	}
-	elseif (0 == strcmp($move_node, tra("Previous"))) {
-		$structlib->move_before_previous_node($_REQUEST["page_ref_id"]);
-	}
-	
 }
 
 $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
