@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/userprefs/userprefslib.php');
 
 // User preferences screen
 
@@ -68,15 +69,15 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
     $t_pinfo = pathinfo($tmpfname);
     $t_type = $t_pinfo["extension"];
     $t_type='image/'.$t_type;
-    $tikilib->set_user_avatar($user,'u','',$name, $size, $t_type, $t_data);
+    $userprefslib->set_user_avatar($user,'u','',$name, $size, $t_type, $t_data);
   } else {
-    $tikilib->set_user_avatar($user,'u','',$name, $size, $type, $data);    
+    $userprefslib->set_user_avatar($user,'u','',$name, $size, $type, $data);    
   }
 }  
 
 
 if(isset($_REQUEST["uselib"])) {
-  $tikilib->set_user_avatar($user,'l',$_REQUEST["avatar"],'','','','');
+  $userprefslib->set_user_avatar($user,'l',$_REQUEST["avatar"],'','','','');
 }
 
 $avatars=Array();

@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/registration/registrationlib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -76,7 +77,7 @@ if(isset($_REQUEST["register"])) {
   
   if($system_os != 'windows') {
     if($validateUsers=='y') {
-      $ret = $tikilib->SnowCheckMail($_REQUEST["email"]);
+      $ret = $registrationlib->SnowCheckMail($_REQUEST["email"]);
       if(!$ret[0]) {
         $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
         $smarty->display("styles/$style_base/error.tpl");

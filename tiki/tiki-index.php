@@ -245,8 +245,8 @@ $smarty->assign('footnote','');
 $smarty->assign('has_footnote','n');
 if($feature_wiki_footnotes == 'y') {
   if($user) {
-    $x = $tikilib->get_footnote($user,$page);
-    $footnote=$tikilib->get_footnote($user,$page);
+    $x = $wikilib->get_footnote($user,$page);
+    $footnote=$wikilib->get_footnote($user,$page);
     $smarty->assign('footnote',$tikilib->parse_data($footnote));
     if($footnote) $smarty->assign('has_footnote','y');
   }

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/imagegals/imagegallib.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -110,7 +111,7 @@ if(isset($_REQUEST["upload"])) {
       // Fixed by Flo
       if(substr($filename,strlen($filename)-3)=='zip') {
         if($tiki_p_batch_upload_images == 'y') {
-        if($tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user) == 0) {
+        if($imagegallib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user) == 0) {
           $smarty->assign('msg',tra('Error processing zipped image package'));
           $smarty->display("styles/$style_base/error.tpl");
           die;

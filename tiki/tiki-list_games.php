@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/games/gamelib.php');
 
 if($feature_games != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -124,7 +125,7 @@ while($file=readdir($h)) {
     } else {
       $desc='';
     }
-    $game["hits"]=$tikilib->get_game_hits($file);
+    $game["hits"]=$gamelib->get_game_hits($file);
     $game["desc"]=$desc;
     $game["game"]=$file;
     $games[]=$game;
@@ -145,7 +146,7 @@ $smarty->assign_by_ref('games',$games);
 $smarty->assign('play','n');
 
 if(isset($_REQUEST["game"])) {
- $tikilib->add_game_hit($_REQUEST["game"]);
+ $gamelib->add_game_hit($_REQUEST["game"]);
  $game = $_REQUEST["game"];
  $parts=explode('.',$game);
  $source='games/flash/'.implode('.',Array($parts[0],$parts[1]));

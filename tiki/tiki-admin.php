@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/exportlib.php');
 
 include_once ("lib/webmail/htmlMimeMail.php");
 include_once ("lib/ziplib.php");
@@ -490,7 +491,7 @@ if(isset($_REQUEST["wikiprefs"])) {
 
 if(isset($_REQUEST["wikiexport"])) {
   //$cosa=$tikilib->export_wiki_page('HomePage',1);
-  $tikilib->MakeWikiZip();
+  $exportlib->MakeWikiZip();
   die;
   //print(nl2br($cosa));
 }

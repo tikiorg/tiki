@@ -2,6 +2,12 @@
 include_once('lib/diff.php');
 require_once('lib/Date.php');
 
+// This class is included by all the Tiki php scripts, so it's important
+// to keep the class as small as possible to improve performance.
+// What goes in this class:
+// * generic functions that MANY scripts must use
+// * shared functions (marked as /*shared*/) are functions that are
+//   called from Tiki modules.
 
 class TikiLib {
   var $db;  // The PEAR db object used to access the database
@@ -9,6 +15,7 @@ class TikiLib {
   var $flag;
   var $parser;
 
+  // Constructor receiving a PEAR::Db database object.
   function TikiLib($db)
   {
     if(!$db) {
@@ -18,6 +25,7 @@ class TikiLib {
   }
 
   // This is only for performance collection of all queries
+  // uncomment it if you want to profile queries
   /*
   function query($query) {
     //for performance stats
@@ -40,28 +48,30 @@ class TikiLib {
     return $result;
   }
   */
-  // Here comes the original
 
+  // Queries the database reporting an error if detected
   function query($query) {
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return $result;
   }
 
-
+  // Gets one column for the database.
   function getOne($query) {
     $result = $this->db->getOne($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return $result;
   }
-
+  
+  // Reports SQL error from PEAR::db object.
   function sql_error($query, $result)
   {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
 
-  function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
+
+  /*shared*/ function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
   {
     $title = addslashes($title);	
     $descrpition = addslashes($description);
@@ -86,20 +96,20 @@ class TikiLib {
     }
   }
    
-  function complete_task($user,$taskId)
+  /*shared*/ function complete_task($user,$taskId)
   {
     $now = date("U");
     $query = "update tiki_user_tasks set completed=$now, status='c', percentage=100 where user='$user' and taskId=$taskId";
     $this->query($query);
   }
   
-  function remove_task($user,$taskId)
+  /*shared*/ function remove_task($user,$taskId)
   {
     $query = "delete from tiki_user_tasks where user='$user' and taskId=$taskId";
     $this->query($query);  	
   }
 
-  function list_tasks($user,$offset,$maxRecords,$sort_mode,$find,$use_date,$pdate)
+  /*shared*/ function list_tasks($user,$offset,$maxRecords,$sort_mode,$find,$use_date,$pdate)
   {
     $now = date("U");
     if($use_date=='y') {
@@ -129,34 +139,7 @@ class TikiLib {
     return $retval;
   }
 
-  // Functions for wiki page footnotes
-  function get_footnote($user,$page)
-  {
-    $page = addslashes($page);
-    $count = $this->getOne("select count(*) from tiki_page_footnotes where user='$user' and pageName='$page'");
-    if(!$count) {
-      return '';
-    } else {
-      return $this->getOne("select data from tiki_page_footnotes where user='$user' and pageName='$page'");
-    }
-  }
-  
-  function replace_footnote($user,$page,$data)
-  {
-    $page=addslashes($page);
-    $data=addslashes($data);
-    $query = "replace into tiki_page_footnotes(user,pageName,data) values('$user','$page','$data')";
-    $this->query($query);
-  }
-
-  function remove_footnote($user,$page)
-  {
-    $page=addslashes($page);
-    $query = "delete from tiki_page_footnotes where user='$user' and pageName='$page'";
-    $this->query($query);
-  }  
-  
-  function dir_stats()
+  /*shared*/ function dir_stats()
   {
     $aux=Array();
     $aux["valid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='y'");
@@ -167,7 +150,7 @@ class TikiLib {
     return $aux;
   }
   
-  function dir_list_all_valid_sites2($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function dir_list_all_valid_sites2($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -191,14 +174,13 @@ class TikiLib {
   }
   
   
-  function user_unread_messages($user)
+  /*shared*/ function user_unread_messages($user)
   {
     $cant = $this->getOne("select count(*) from messu_messages where user='$user' and isRead='n'");
     return $cant;
   }
 
-  // Get online users
-  function get_online_users()
+  /*shared*/ function get_online_users()
   {
     $query = "select user from tiki_sessions where user<>''";
     $result = $this->query($query);
@@ -210,112 +192,8 @@ class TikiLib {
     return $ret;
   }
 
-  // Validate emails...
-  function SnowCheckMail($Email,$Debug=false)
-  {
-    $HTTP_HOST=$_SERVER['HTTP_HOST'];
-    $Return =array();
-    // Variable for return.
-    // $Return[0] : [true|false]
-    // $Return[1] : Processing result save.
 
-    if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $Email)) {
-        $Return[0]=false;
-        $Return[1]="${Email} is E-Mail form that is not right.";
-        if ($Debug) echo "Error : {$Email} is E-Mail form that is not right.<br>";
-        return $Return;
-    }
-    else if ($Debug) echo "Confirmation : {$Email} is E-Mail form that is not right.<br>";
-
-    // E-Mail @ by 2 by standard divide. if it is $Email this "lsm@ebeecomm.com"..
-    // $Username : lsm
-    // $Domain : ebeecomm.com
-    // list function reference : http://www.php.net/manual/en/function.list.php
-    // split function reference : http://www.php.net/manual/en/function.split.php
-    list ( $Username, $Domain ) = split ("@",$Email);
-
-    // That MX(mail exchanger) record exists in domain check .
-    // checkdnsrr function reference : http://www.php.net/manual/en/function.checkdnsrr.php
-    if ( checkdnsrr ( $Domain, "MX" ) )  {
-        if($Debug) echo "Confirmation : MX record about {$Domain} exists.<br>";
-        // If MX record exists, save MX record address.
-        // getmxrr function reference : http://www.php.net/manual/en/function.getmxrr.php
-        if ( getmxrr ($Domain, $MXHost))  {
-      if($Debug) {
-                echo "Confirmation : Is confirming address by MX LOOKUP.<br>";
-              for ( $i = 0,$j = 1; $i < count ( $MXHost ); $i++,$j++ ) {
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Result($j) - $MXHost[$i]<BR>";
-        }
-            }
-        }
-        // Getmxrr function does to store MX record address about $Domain in arrangement form to $MXHost.
-        // $ConnectAddress socket connection address.
-        $ConnectAddress = $MXHost[0];
-    }
-    else {
-        // If there is no MX record simply @ to next time address socket connection do .
-        $ConnectAddress = $Domain;
-        if ($Debug) echo "Confirmation : MX record about {$Domain} does not exist.<br>";
-    }
-
-    // fsockopen function reference : http://www.php.net/manual/en/function.fsockopen.php
-    $Connect = fsockopen ( $ConnectAddress, 25 );
-
-    // Success in socket connection
-    if ($Connect)
-    {
-        if ($Debug) echo "Connection succeeded to {$ConnectAddress} SMTP.<br>";
-        // Judgment is that service is preparing though begin by 220 getting string after connection .
-        // fgets function reference : http://www.php.net/manual/en/function.fgets.php
-        if ( ereg ( "^220", $Out = fgets ( $Connect, 1024 ) ) ) {
-
-            // Inform client's reaching to server who connect.
-            fputs ( $Connect, "HELO $HTTP_HOST\r\n" );
-                if ($Debug) echo "Run : HELO $HTTP_HOST<br>";
-            $Out = fgets ( $Connect, 1024 ); // Receive server's answering cord.
-
-            // Inform sender's address to server.
-            fputs ( $Connect, "MAIL FROM: <{$Email}>\r\n" );
-                if ($Debug) echo "Run : MAIL FROM: &lt;{$Email}&gt;<br>";
-            $From = fgets ( $Connect, 1024 ); // Receive server's answering cord.
-
-            // Inform listener's address to server.
-            fputs ( $Connect, "RCPT TO: <{$Email}>\r\n" );
-                if ($Debug) echo "Run : RCPT TO: &lt;{$Email}&gt;<br>";
-            $To = fgets ( $Connect, 1024 ); // Receive server's answering cord.
-
-            // Finish connection.
-            fputs ( $Connect, "QUIT\r\n");
-                if ($Debug) echo "Run : QUIT<br>";
-
-            fclose($Connect);
-
-                // Server's answering cord about MAIL and TO command checks.
-                // Server about listener's address reacts to 550 codes if there does not exist
-                // checking that mailbox is in own E-Mail account.
-                if ( !ereg ( "^250", $From ) || !ereg ( "^250", $To )) {
-                    $Return[0]=false;
-                    $Return[1]="${Email} is address done not admit in E-Mail server.";
-                    if ($Debug) echo "{$Email} is address done not admit in E-Mail server.<br>";
-                    return $Return;
-                }
-        }
-    }
-    // Failure in socket connection
-    else {
-        $Return[0]=false;
-        $Return[1]="Can not connect E-Mail server ({$ConnectAddress}).";
-        if ($Debug) echo "Can not connect E-Mail server ({$ConnectAddress}).<br>";
-        return $Return;
-    }
-    $Return[0]=true;
-    $Return[1]="{$Email} is E-Mail address that there is no any problem.";
-    return $Return;
-  }
-
-
-  /* Shared listing functions used for modules */
-  function get_user_items($user)
+  /*shared*/ function get_user_items($user)
   {
     $items = Array();
     $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
@@ -366,7 +244,7 @@ class TikiLib {
     return $ret;
   }
 
-  function compute_quiz_stats()
+  /*shared*/ function compute_quiz_stats()
   {
     $query = "select quizId from tiki_user_quizzes";
     $result = $this->query($query);
@@ -384,7 +262,7 @@ class TikiLib {
     }
   }
 
-  function list_quizzes($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_quizzes($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -408,7 +286,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_quiz_sum_stats($offset,$maxRecords,$sort_mode,$find)
   {
     $this->compute_quiz_stats();
     $sort_mode = str_replace("_"," ",$sort_mode);
@@ -431,7 +309,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_surveys($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_surveys($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -454,7 +332,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
+  /*shared*/ function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
   {
     $filters=Array();
     if($fields) {
@@ -508,71 +386,8 @@ class TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
-  /* End of shared listing functions */
 
-  function MakeWikiZip()
-  {
-    $zipname         = "wikidb.zip";
-    include_once("tar.class.php");
-    $tar = new tar();
-    $query = "select pageName from tiki_pages order by pageName asc";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $page = $res["pageName"];
-      $content = $this->export_wiki_page($page, 0);
-      $tar->addData($page,$content,date("U"));
-    }
-    $tar->toTar("dump/export.tar",FALSE);
-    return '';
-  }
-
-  function export_wiki_page($pageName,$nversions=1)
-  {
-    $info=$this->get_page_info($pageName);
-    $head = '';
-    $head .= "Date: " . $this->get_rfc2822_datetime($info["lastModif"]) . "\r\n";
-    $head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
-    $iter = $this->get_page_history($pageName);
-    $parts = array();
-    $parts[]=MimeifyPageRevision($info);
-    if($nversions>1 || $nversions==0) {
-    foreach ($iter as $revision) {
-        $parts[] = MimeifyPageRevision($revision);
-        if ($nversions > 0 && count($parts) >= $nversions)
-            break;
-    }
-    }
-    if (count($parts) > 1)
-        return $head . MimeMultipart($parts);
-    assert($parts);
-    return $head . $parts[0];
-  }
-
-  function set_user_avatar($user,$type,$avatarLibName,$avatarName,$avatarSize,$avatarType,$avatarData)
-  {
-    $avatarData = addslashes($avatarData);
-    $avatarName = addslashes($avatarName);
-    $query = "update users_users set
-      avatarType = '$type',
-      avatarLibName = '$avatarLibName',
-      avatarName = '$avatarName',
-      avatarSize = '$avatarSize',
-      avatarFileType = '$avatarType',
-      avatarData = '$avatarData'
-      where login='$user'";
-    $result = $this->query($query);
-  }
-
-  function get_user_avatar_img($user)
-  {
-    $query = "select * from users_users where login='$user'";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function get_user_avatar($user)
+  /*shared*/ function get_user_avatar($user)
   {
     if(empty($user)) return '';
     if(!$this->user_exists($user)) {
@@ -595,8 +410,7 @@ class TikiLib {
     return $ret;
   }
 
-  /* Sections for forums */
-  function get_forum_sections()
+  /*shared*/ function get_forum_sections()
   {
     $query = "select distinct section from tiki_forums where section<>''";
     $result = $this->query($query);
@@ -607,10 +421,8 @@ class TikiLib {
     return $ret;
   }
 
-  /* Webmails */
-
   /* Referer stats */
-  function register_referer($referer)
+  /*shared*/ function register_referer($referer)
   {
      $referer = addslashes($referer);
      $now=date("U");
@@ -622,46 +434,16 @@ class TikiLib {
      }
      $result = $this->query($query);
   }
-
-  function clear_referer_stats()
-  {
-    $query = "delete from tiki_referer_stats";
-    $result = $this->query($query);
-  }
-
-  function list_referer_stats($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (referer like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_referer_stats $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_referer_stats $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  /* referer stats */
-
+ 
   // File attachments functions for the wiki ////
-  function add_wiki_attachment_hit($id)
+  /*shared*/ function add_wiki_attachment_hit($id)
   {
     $query = "update tiki_wiki_attachments set downloads=downloads+1 where attId=$id";
     $result = $this->query($query);
     return true;
   }
   
-  function get_wiki_attachment($attId)
+  /*shared*/ function get_wiki_attachment($attId)
   {
     $query = "select * from tiki_wiki_attachments where attId=$attId";
     $result = $this->query($query);
@@ -670,215 +452,8 @@ class TikiLib {
     return $res;
   }
 
-  // End File attachments functions for the wiki ////
-
-  // Batch image uploads ////
-    // Batch image uploads ////
-    // Fixed by FLO
-  function process_batch_image_upload($galleryId,$file,$user)
-  {
-    global $gal_match_regex;
-    global $gal_nmatch_regex;
-    global $gal_use_db;
-    global $gal_use_dir;
-    global $tmpDir;
-    $numimages=0;
-    include_once('lib/pclzip.lib.php');
-    $archive = new PclZip($file);
-    // Read Archive contents
-    $ziplist=$archive->listContent();
-    if (!$ziplist) return(false); // Archive invalid
-    for ($i=0; $i<sizeof($ziplist); $i++) {
-      $file=$ziplist["$i"]["filename"];
-      if (!$ziplist["$i"]["folder"]) {
-        //copied
-        $gal_info = $this->get_gallery($galleryId);
-        $upl=1;
-        if(!empty($gal_match_regex)) {
-          if(!preg_match("/$gal_match_regex/",$file,$reqs)) $upl=0;
-        }
-        if(!empty($gal_nmatch_regex)) {
-          if(preg_match("/$gal_nmatch_regex/",$file,$reqs)) $upl=0;
-        }
-        //extract file
-
-        $archive->extractByIndex($ziplist["$i"]["index"],$tmpDir,dirname($file)); //extract and remove (dangerous) pathname
-        $file=basename($file);
-        //determine filetype and dimensions
-        $imageinfo=getimagesize($tmpDir."/".$file);
-        if ($imageinfo["0"] > 0 && $imageinfo["1"] > 0 && $imageinfo["2"] > 0 ) {
-          if (chkgd2()) {
-            $type = $imageinfo["mime"];
-          } else {
-            $mimetypes=array("1" => "gif", "2" => "jpg", "3" => "png",
-                             "4" => "swf", "5" => "psd", "6" => "bmp",
-                             "7" => "tiff", "8" => "tiff", "9" => "jpc",
-                             "10" => "jp2", "11" => "jpx", "12" => "jb2",
-                             "13" => "swc", "14" => "iff");
-            $type="image/".$mimetypes[$imageinfo["2"]];
-          }
-          
-          $exp=substr($file,strlen($file)-3,3);
-          $fp = fopen($tmpDir."/".$file,"rb");
-          $size=filesize($tmpDir."/".$file);
-          $data = fread($fp,$size);
-          fclose($fp);
-          if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
-            $img = imagecreatefromstring($data);
-            $size_x = imagesx($img);
-            $size_y = imagesy($img);
-            if ($size_x > $size_y)
-              $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
-            else
-              $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
-            $tw = ((int)($size_x / $tscale));
-            $ty = ((int)($size_y / $tscale));
-            if (chkgd2()) {
-              $t = imagecreatetruecolor($tw,$ty);
-              imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
-            } else {
-              $t = imagecreate($tw,$ty);
-              $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
-            }
-            // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-            //$tmpfname = 'temp.jpg';
-            $tmpfname = tempnam ($tmpDir , "FOO").'.jpg';
-            imagejpeg($t,$tmpfname);
-            // Now read the information
-            $fp = fopen($tmpfname,"rb");
-            $t_data = fread($fp, filesize($tmpfname));
-            fclose($fp);
-            unlink($tmpfname);
-            $t_pinfo = pathinfo($tmpfname);
-            $t_type = $t_pinfo["extension"];
-            $t_type='image/'.$t_type;
-            $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
-            $numimages++;
-            unlink($tmpDir."/".$file);
-          } else {
-            $tmpfname='';
-            $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, 0, 0, $user,'','');
-            $numimages++;
-            unlink($tmpDir."/".$file);
-          }
-        }
-      }
-    }
-  return $numimages;
-  }
-
-
-
-  function process_batch_file_upload($galleryId,$file,$user,$description)
-  {
-
-    global $fgal_match_regex;
-    global $fgal_nmatch_regex;
-    global $fgal_use_db;
-    global $fgal_use_dir;
-    $description = addslashes($description);
-    include_once('lib/pclzip.lib.php');
-    $archive = new PclZip($file);
-    $archive->extract('temp');
-    $files=Array();
-    $h = opendir("temp");
-    $gal_info = $this->get_gallery($galleryId);
-    while (($file = readdir($h)) !== false) {
-    if( $file!='.' && $file!='..' && is_file("temp/$file") && $file!='license.txt' ) {
-      $files[]=$file;
-      // check filters
-      $upl=1;
-      if(!empty($fgal_match_regex)) {
-        if(!preg_match("/$gal_match_regex/",$file,$reqs)) $upl=0;
-      }
-      if(!empty($fgal_nmatch_regex)) {
-        if(preg_match("/$gal_nmatch_regex/",$file,$reqs)) $upl=0;
-      }
-
-      $fp = fopen('temp/'.$file,"rb");
-      $data = '';
-      $fhash='';
-      if($fgal_use_db == 'n') {
-        $fhash = md5($name = $file);
-        @$fw = fopen($fgal_use_dir.$fhash,"w");
-        if(!$fw) {
-          $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
-          $smarty->display("styles/$style_base/error.tpl");
-          die;
-        }
-      }
-      while(!feof($fp)) {
-        if($fgal_use_db == 'y') {
-          $data .= fread($fp,8192*16);
-        } else {
-          $data = fread($fp,8192*16);
-          fwrite($fw,$data);
-        }
-      }
-      fclose($fp);
-      if($fgal_use_db == 'n') {
-        fclose($fw);
-        $data='';
-      }
-      $size = filesize('temp/'.$file);
-      $name = $file;
-      $type = '';
-      $fileId = $this->insert_file($galleryId,$name,$description,$name, $data, $size, '', $user,$fhash);
-      unlink('temp/'.$file);
-    }
-  }
-  closedir($h);
-  }
-
-  function register_search($words)
-  {
-   $words=addslashes($words);
-   $words = preg_split("/\s/",$words);
-   foreach($words as $word) {
-     $word=trim($word);
-     $cant = $this->getOne("select count(*) from tiki_search_stats where term='$word'");
-     if($cant) {
-       $query = "update tiki_search_stats set hits=hits+1 where term='$word'";
-     } else {
-       $query = "insert into tiki_search_stats(term,hits) values('$word',1)";
-     }
-
-     $result = $this->query($query);
-   }
-  }
-
-  function clear_search_stats()
-  {
-    $query = "delete from tiki_search_stats";
-    $result = $this->query($query);
-
-  }
-
-  function list_search_stats($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (term like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_search_stats $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_search_stats $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
- 
-
   // Last visit module ////
-  function get_news_from_last_visit($user)
+  /*shared*/ function get_news_from_last_visit($user)
   {
     if(!$user) return false;
     $last = $this->getOne("select lastLogin from users_users where login='$user'");
@@ -891,8 +466,6 @@ class TikiLib {
     $ret["users"]  = $this->getOne("select count(*) from users_users where registrationDate>$last");
     return $ret;
   }
-
-  // Last visit module ////
 
   // ShoutBox ////
   function list_shoutbox($offset,$maxRecords,$sort_mode,$find)
@@ -951,31 +524,9 @@ class TikiLib {
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
-
   // ShoutBox ////
 
-  function wiki_link_structure()
-  {
-    $query = "select pageName from tiki_pages order by pageName asc";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      print($res["pageName"]." ");
-      $page = $res["pageName"];
-      $query2 = "select toPage from tiki_links where fromPage='$page'";
-      $result2 = $this->query($query2);
-      $pages=Array();
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
-        if( ($res2["toPage"]<>$res["pageName"]) && (!in_array($res2["toPage"],$pages)) ) {
-          $pages[]=$res2["toPage"];
-          print($res2["toPage"]." ");
-        }
-      }
-      print("\n");
-    }
-  }
-
   // Templates ////
-
   /*shared*/ function list_templates($section,$offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
@@ -1015,29 +566,7 @@ class TikiLib {
   }
   // templates ////
 
-  function add_game_hit($game)
-  {
-    $cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
-    if($cant) {
-      $query = "update tiki_games set hits = hits+1 where gameName='$game'";
-    } else {
-      $query = "insert into tiki_games(gameName,hits,points,votes) values('$game',1,0,0)";
-    }
-    $result = $this->query($query);
-  }
-
-  function get_game_hits($game)
-  {
-    $cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
-    if($cant) {
-      $hits = $this->getOne("select hits from tiki_games where gameName='$game'");
-    } else {
-      $hits =0;
-    }
-    return $hits;
-  }
-
-  function list_games($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_games($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1061,66 +590,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_cookies($offset,$maxRecords,$sort_mode,$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (cookie like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_cookies $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_cookies $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function replace_cookie($cookieId, $cookie)
-  {
-    $cookie=addslashes($cookie);
-    // Check the name
-
-    if($cookieId) {
-      $query = "update tiki_cookies set cookie='$cookie' where cookieId=$cookieId";
-    } else {
-      $query = "replace into tiki_cookies(cookie)
-                values('$cookie')";
-    }
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_cookie($cookieId)
-  {
-    $query = "delete from tiki_cookies where cookieId=$cookieId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_cookie($cookieId)
-  {
-    $query = "select * from tiki_cookies where cookieId=$cookieId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function remove_all_cookies()
-  {
-    $query = "delete from tiki_cookies";
-    $result = $this->query($query);
-  }
-
-  function pick_cookie()
+  /*shared*/ function pick_cookie()
   {
     $cant = $this->getOne("select count(*) from tiki_cookies");
     if(!$cant) return '';
@@ -1131,7 +601,7 @@ class TikiLib {
   }
 
   // Stats ////
-  function add_pageview()
+  /*shared*/ function add_pageview()
   {
     $dayzero = mktime(0,0,0,date("m"),date("d"),date("Y"));
     $cant = $this->getOne("select count(*) from tiki_pageviews where day=$dayzero");
@@ -1174,17 +644,16 @@ class TikiLib {
    return $data;
   }
 
-  // Stats ////
 
   // User assigned modules ////
-  function get_user_id($user)
+  /*shared*/ function get_user_id($user)
   {
     $id = $this->db->getOne("select userId from users_users where login='$user'");
     if(DB::isError($id)) return false;
     return $id;
   }
 
-  function get_user_groups($user)
+  /*shared*/ function get_user_groups($user)
   {
     $userid = $this->get_user_id($user);
     $query = "select groupName from users_usergroups where userId='$userid'";
@@ -1198,7 +667,6 @@ class TikiLib {
   }
 
   // User assigned modules ////
-
   // User bookmarks ////
   function get_folder_path($folderId,$user)
   {
@@ -1373,7 +841,7 @@ class TikiLib {
   }
   // End Faqs ////
 
-  function genPass()
+  /*shared*/ function genPass()
   {
         $vocales="aeiou";
         $consonantes="bcdfghjklmnpqrstvwxyz";
