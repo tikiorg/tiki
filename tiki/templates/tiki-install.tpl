@@ -172,28 +172,28 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
     	{/if}
 	{/if}
-{*
-	<p><p>
-	<form method="post" action="tiki-install.php">
-	<h1>Tiki Applications</h1>
-	<table>
-		<tr><td>
-			<select name="apps">
-				{section name=ix loop=$apps}
-					<option value="{$apps[ix].name|escape}">{$apps[ix].desc}</option>
-				{/section}
-			</select>
-		</td><td>
-			<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available applicationss</a>
-		</td></tr>
-		<tr><td>
-			<input type="submit" name="install_app" value="install" />	    
-			<input type="submit" name="remove_app" value="remove" />	    
-		</td></tr>
-		<tr><td>
-			<p>
-		</td></tr>
-	</table>
-	</form><br/>
-*}
+	{if $app_available eq 'y'}
+		<p><p>
+		<form method="post" action="tiki-install.php">
+		<h1>Tiki Applications</h1>
+		<table>
+			<tr><td>
+				<select name="apps">
+					{section name=ix loop=$apps}
+						<option value="{$apps[ix].name|escape}">{$apps[ix].desc}</option>
+					{/section}
+				</select>
+			</td><td>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available applicationss</a>
+			</td></tr>
+			<tr><td>
+				<input type="submit" name="install_app" value="install" />	    
+				<input type="submit" name="remove_app" value="remove" />	    
+			</td></tr>
+			<tr><td>
+				<p>
+			</td></tr>
+		</table>
+		</form><br/>
+	{/if}
 </div>
