@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-08-26 22:13:51 $
+# $Date: 2004-08-28 11:57:36 $
 # $Author: redflo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1457,7 +1457,7 @@ DROP TABLE IF EXISTS tiki_galleries_scales;
 CREATE TABLE tiki_galleries_scales (
   galleryId int(14) NOT NULL default '0',
   scale int(11) NOT NULL default '0',
-  PRIMARY KEY  (galleryId,xsize,ysize)
+  PRIMARY KEY  (galleryId,scale)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
