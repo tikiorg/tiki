@@ -558,6 +558,7 @@ CREATE TABLE tiki_files (
 drop table if exists tiki_semaphores;
 create table tiki_semaphores (
   semName varchar(250) not null,
+  user varchar(200),
   timestamp integer(14),
   primary key(semName)
 );
