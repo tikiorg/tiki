@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.11 2003-12-18 09:49:08 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.12 2003-12-18 09:58:03 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -1606,11 +1606,12 @@ div#loadstats {
 	margin-top: 3px;
 }
 .tocnav {
+	background-color: #ededed;
 	margin-bottom: 16px;
 }
 .tocnav table {
 	width: 100%;
-	background-color: #ededed;
+	background-color: #ffffff;
 }
 .tocnav a {
 	font-size: 90%;
