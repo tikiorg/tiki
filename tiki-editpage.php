@@ -134,8 +134,6 @@ if(!page_exists($page)) {
 
 include_once("tiki-pagesetup.php");
 
-
-
 // Now check permissions to access this page
 if($page != 'SandBox') {
 if($tiki_p_edit != 'y') {
@@ -221,8 +219,6 @@ if($feature_wiki_footnotes == 'y') {
   }
 }
 
-
-
 if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
   $_REQUEST["edit"]=$template_data["content"];
@@ -248,6 +244,18 @@ if(isset($_REQUEST["edit"])) {
   } else {
     $edit_data = ''; 
   }
+}
+
+if($wiki_feature_copyrights == 'y') {
+ if(isset($_REQUEST['copyrightTitle'])) {
+  $smarty->assign('copyrightTitle',$_REQUEST["copyrightTitle"]); 
+ }
+ if(isset($_REQUEST['copyrightYear'])) {
+  $smarty->assign('copyrightYear',$_REQUEST["copyrightYear"]); 
+ }
+ if(isset($_REQUEST['copyrightAuthors'])) {
+  $smarty->assign('copyrightAuthors',$_REQUEST["copyrightAuthors"]); 
+ }
 }
 
 $smarty->assign('commentdata','');
@@ -317,11 +325,10 @@ function parse_output(&$obj, &$parts,$i) {
   }
 }
 
-
-
 // Pro
 // Check if the page has changed
 if(isset($_REQUEST["save"])) {
+
   include_once("lib/imagegals/imagegallib.php");
   $cat_type='wiki page';
   $cat_objid = $_REQUEST["page"];
@@ -329,51 +336,69 @@ if(isset($_REQUEST["save"])) {
   $cat_name = $_REQUEST["page"];
   $cat_href="tiki-index.php?page=".$cat_objid;
   include_once("categorize.php");
-if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["data"]) != md5($_REQUEST["edit"])) ) {
-  $page = $_REQUEST["page"];
-  if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $edit = $_REQUEST["edit"];  
-  } else {
-    $edit = strip_tags($_REQUEST["edit"]);
-  }
 
-  // Parse $edit and eliminate image references to external URIs (make them internal)
-  $edit = $imagegallib->capture_images($edit);
-  
-  // If page exists
-  if(!$tikilib->page_exists($_REQUEST["page"])) {
-    // Extract links and update the page
-    
-	$links = $tikilib->get_links($_REQUEST["edit"]);
-	/*
-	$notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
-	$cachedlinks = array_diff($links, $notcachedlinks);
-	$tikilib->cache_links($cachedlinks); 
-	*/
-    $t = date("U");
-    $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
-  } else {
-    $links = $tikilib->get_links($edit);
-    /*
-    $tikilib->cache_links($links);
-    */
-    if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
-      $minor=true;
+  if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["data"]) != md5($_REQUEST["edit"])) ) {
+
+    $page = $_REQUEST["page"];
+
+    if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
+      $edit = $_REQUEST["edit"];  
     } else {
-      $minor=false;
+      $edit = strip_tags($_REQUEST["edit"]);
     }
-    $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor);
+
+    // add permisions here otherwise return error!
+    if($wiki_feature_copyrights == 'y'
+      && isset($_REQUEST['copyrightTitle'])
+      && isset($_REQUEST['copyrightYear'])
+      && isset($_REQUEST['copyrightAuthors'])
+      && !empty($_REQUEST['copyrightYear'])
+      && !empty($_REQUEST['copyrightTitle'])
+    ) {
+      include_once("lib/copyrights/copyrightslib.php");
+      $copyrightslib = new CopyrightsLib($dbTiki);
+      $copyrightYear = $_REQUEST['copyrightYear'];
+      $copyrightTitle = $_REQUEST['copyrightTitle'];
+      $copyrightAuthors = $_REQUEST['copyrightAuthors'];
+      $copyrightslib->add_copyright($page,$copyrightTitle,$copyrightYear,$copyrightAuthors,$user);
+    }
+
+    // Parse $edit and eliminate image references to external URIs (make them internal)
+    $edit = $imagegallib->capture_images($edit);
+  
+    // If page exists
+    if(!$tikilib->page_exists($_REQUEST["page"])) {
+      // Extract links and update the page
+
+	  $links = $tikilib->get_links($_REQUEST["edit"]);
+	  /*
+	  $notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
+	  $cachedlinks = array_diff($links, $notcachedlinks);
+	  $tikilib->cache_links($cachedlinks); 
+	  */
+      $t = date("U");
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
+    } else {
+      $links = $tikilib->get_links($edit);
+      /*
+      $tikilib->cache_links($links);
+      */
+      if(isset($_REQUEST['isminor'])&&$_REQUEST['isminor']=='on') {
+        $minor=true;
+      } else {
+        $minor=false;
+      }
+      $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor);
+    }
+
+    $page = urlencode($page);
+    header("location: tiki-index.php?page=$page");
+    die;
+  } else {
+    $page = urlencode($page);
+    header("location: tiki-index.php?page=$page");
+    die;
   }
-  
-  
-  $page = urlencode($page);
-  header("location: tiki-index.php?page=$page");
-  die;
-} else {
-  $page = urlencode($page);
-  header("location: tiki-index.php?page=$page");
-  die;
-}
 }
 
 if($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {

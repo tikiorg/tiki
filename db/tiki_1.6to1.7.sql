@@ -591,4 +591,19 @@ create table galaxia_instance_comments(
   primary key(cId)
 );
 
+### Copyright management
+drop table if exists tiki_copyrights;
+create table tiki_copyrights(
+	copyrightId integer(12) not null auto_increment,
+	page varchar(200),
+	title varchar(200),
+	year int,
+	authors varchar(200),
+	copyright_order int,
+	userName varchar(200),
+    primary key(copyrightId)
+);
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_edit_copyrights','wiki','Can edit copyright notices','admin');
+
 #### Workflow schema ends

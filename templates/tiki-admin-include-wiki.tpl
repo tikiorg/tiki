@@ -286,6 +286,19 @@
     </table>
     </form>
     </div>
+
+    <div class="simplebox">
+    {tr}Copyright Management{/tr}
+    <form action="tiki-admin.php#wiki" method="post">
+    <table>
+    <tr><td class="form">{tr}Enable Feature{/tr}:</td><td><input type="checkbox" name="wiki_feature_copyrights" {if $wiki_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}License Page{/tr}: </td><td><input type="text" name="wikiLicensePage" value="{$wikiLicensePage}" /></td></tr>
+    <tr><td class="form">{tr}Submit Notice{/tr}: </td><td><input type="text" name="wikiSubmitNotice" value="{$wikiSubmitNotice}" /></td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="wikisetcopyright" value="{tr}Set{/tr}" /></td></tr>    
+    </table>
+    </form>
+    </div>
+
     </td></tr>
     </table>
 </div>

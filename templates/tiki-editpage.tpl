@@ -76,6 +76,15 @@
 {if $page ne 'SandBox'}
 <tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="comment" value="{$commentdata}" /></td>
 {/if}
+{if $wiki_feature_copyrights  eq 'y'}
+<tr><td class="formcolor">{tr}Copyright{/tr}:</td><td class="formcolor">
+<table border="0">
+<tr><td class="formcolor">Title:</td><td><input size="40" class="wikitext" name="copyrightTitle" value="{$copyrightTitle}" /></td></tr>
+<tr><td class="formcolor">Year:</td><td><input size="4" class="wikitext" name="copyrightYear" value="{$copyrightYear}" /></td></tr>
+<tr><td class="formcolor">Authors:</td><td><input size="40" class="wikitext" name="copyrightAuthors" value="{$copyrightAuthors}" /></td></tr>
+</table>
+</td>
+{/if}
 {if $tiki_p_use_HTML eq 'y'}
 <tr><td class="formcolor">{tr}Allow HTML{/tr}: </td><td class="formcolor"><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 {/if}
@@ -98,6 +107,13 @@
 
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
+
+{if $wiki_feature_copyrights  eq 'y'}
+<tr><td class="formcolor">{tr}License{/tr}:</td><td class="formcolor"><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td>
+{if $wikiSubmitNotice neq ""}
+<tr><td class="formcolor">{tr}Important{/tr}:</td><td class="formcolor"><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
+{/if}
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" />{tr}Minor{/tr}
