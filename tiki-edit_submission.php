@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.22 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.23 2003-10-23 03:24:12 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,6 +41,7 @@ if (isset($_REQUEST["subId"])) {
 $smarty->assign('subId', $subId);
 $smarty->assign('allowhtml', 'y');
 $publishDate = date('U');
+$expireDate = date('U');
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
 $authorName = $tikilib->get_user_preference($user,'realName',$user);
@@ -84,6 +85,7 @@ if (isset($_REQUEST["subId"])) {
 	$article_data = $tikilib->get_submission($_REQUEST["subId"]);
 
 	$publishDate = $article_data["publishDate"];
+	$expireDate = $article_data["expireDate"];
 	$smarty->assign('title', $article_data["title"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
@@ -148,8 +150,10 @@ $smarty->assign('preview', 0);
 // If we are in preview mode then preview it!
 if (isset($_REQUEST["preview"])) {
 	# convert from the displayed 'site' time to 'server' time
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
-		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]));
+	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 
 	$smarty->assign('reads', '0');
 	$smarty->assign('preview', 1);
@@ -264,8 +268,10 @@ if (isset($_REQUEST["save"])) {
 	include_once ("lib/imagegals/imagegallib.php");
 
 	# convert from the displayed 'site' time to 'server' time
-	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
-		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]));
+	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
 
 	if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
 		$body = $_REQUEST["body"];
@@ -359,6 +365,8 @@ $smarty->assign_by_ref('templates', $templates["data"]);
 
 $smarty->assign('publishDate', $publishDate);
 $smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($publishDate));
+$smarty->assign('expireDate', $expireDate);
+$smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($expireDate));
 $smarty->assign('siteTimeZone', $dc->getTzName());
 
 // Display the Index Template

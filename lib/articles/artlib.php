@@ -92,7 +92,7 @@ class ArtLib extends TikiLib {
 			$data["image_y"] = 0;
 
 		$this->replace_article($data["title"], $data["authorName"], $data["topicId"], $data["useImage"], $data["image_name"],
-			$data["image_size"], $data["image_type"], $data["image_data"], $data["heading"], $data["body"], $data["publishDate"],
+			$data["image_size"], $data["image_type"], $data["image_data"], $data["heading"], $data["body"], $data["publishDate"], $data["expireDate"],
 			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"], $data["rating"]);
 		$this->remove_submission($subId);
 	}

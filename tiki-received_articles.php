@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.7 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.8 2003-10-23 03:24:12 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,7 @@ if ($_REQUEST["receivedArticleId"]) {
 	$info["image_y"] = 0;
 	$info["image_data"] = '';
 	$info["publishDate"] = date("U");
+	$info["expireDate"] = date("U");
 	$info["created"] = date("U");
 	$info["heading"] = '';
 	$info["body"] = '';
@@ -73,10 +74,12 @@ if (isset($_REQUEST["accept"])) {
 	// CODE TO ACCEPT A PAGE HERE
 	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$expireDate = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 
 	$commlib->update_received_article($_REQUEST["receivedArticleId"], $_REQUEST["title"], $_REQUEST["authorName"],
 		$_REQUEST["useImage"], $_REQUEST["image_x"], $_REQUEST["image_y"],
-		$publishDate, $_REQUEST["heading"], $_REQUEST["body"], $_REQUEST["type"], $_REQUEST["rating"]);
+		$publishDate, $expireDate, $_REQUEST["heading"], $_REQUEST["body"], $_REQUEST["type"], $_REQUEST["rating"]);
 	$commlib->accept_article($_REQUEST["receivedArticleId"], $_REQUEST["topic"]);
 	$smarty->assign('preview', 'n');
 	$smarty->assign('receivedArticleId', 0);
@@ -90,6 +93,8 @@ if (isset($_REQUEST["preview"])) {
 
 	$info["publishDate"] = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$info["expireDate"] = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]);
 	$info["title"] = $_REQUEST["title"];
 	$info["authorName"] = $_REQUEST["authorName"];
 	$info["receivedArticleId"] = $_REQUEST["receivedArticleId"];
@@ -115,6 +120,7 @@ $smarty->assign('image_size', $info["image_size"]);
 $smarty->assign('image_x', $info["image_x"]);
 $smarty->assign('image_y', $info["image_y"]);
 $smarty->assign('publishDate', $info["publishDate"]);
+$smarty->assign('expireDate', $info["expireDate"]);
 $smarty->assign('created', $info["created"]);
 $smarty->assign('heading', $info["heading"]);
 $smarty->assign('body', $info["body"]);
@@ -132,9 +138,11 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	$publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
 		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
+	$expireDate = mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+		0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
 	$commlib->update_received_article($_REQUEST["receivedArticleId"], $_REQUEST["title"], $_REQUEST["authorName"],
-		$_REQUEST["useImage"], $_REQUEST["image_x"], $_REQUEST["image_y"], $publishDate, $_REQUEST["heading"], $_REQUEST["body"]);
+		$_REQUEST["useImage"], $_REQUEST["image_x"], $_REQUEST["image_y"], $publishDate, $expireDate, $_REQUEST["heading"], $_REQUEST["body"]);
 	$smarty->assign('receivedArticleId', $_REQUEST["receivedArticleId"]);
 	$smarty->assign('title', $_REQUEST["title"]);
 	$smarty->assign('authorName', $_REQUEST["authorName"]);
@@ -143,6 +151,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('image_x', $_REQUEST["image_x"]);
 	$smarty->assign('image_y', $_REQUEST["image_y"]);
 	$smarty->assign('publishDate', $publishDate);
+	$smarty->assign('expireDate', $expireDate);
 	$smarty->assign('heading', $_REQUEST["heading"]);
 	$smarty->assign('body', $_REQUEST["body"]);
 }
