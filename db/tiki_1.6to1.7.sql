@@ -1,3 +1,39 @@
+### Live support chat system
+### under construction
+drop table if exists tiki_live_support_requests;
+create table tiki_live_support_requests(
+	reqId char(32) not null,
+	user varchar(200),
+	tiki_user varchar(200),
+	email varchar(200),
+	operator varchar(200),
+	operator_id char(32),
+	user_id char(32),
+	reason varchar(250),
+	req_timestamp integer(14),
+	timestamp integer(14),
+	status varchar(40),
+	resolution varchar(40),
+	chat_started integer(14),
+	chat_ended integer(14),
+	primary key(reqId)
+);
+
+drop table if exists tiki_live_support_events;
+create table tiki_live_support_events(
+	eventId integer(14) not null auto_increment,
+	reqId char(32) not null,
+	type varchar(40),
+	seqId integer(14),
+	senderId varchar(32),
+	data text,
+	timestamp integer(14),
+	primary key(eventId)
+);
+
+### Live support chat system ends
+
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_autoapp','forums','Auto approve forum posts','admin');
 
 drop table if exists tiki_user_postings;
