@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.37 2003-09-22 23:19:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.38 2003-10-14 12:11:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,8 +95,8 @@ function tra($content) {
         global $tikilib;
 
         global $language;
-        $query = "select tran from tiki_language where source='" . addslashes($content). "' and lang='" . $language . "'";
-        $result = $tikilib->db->query($query);
+        $query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
+        $result = $tikilib->db->query($query, array($content,$language));
         $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 
         if (!$res)
@@ -106,10 +106,10 @@ function tra($content) {
             global $record_untranslated;
 
             if ($record_untranslated == 'y') {
-                $query = "insert into tiki_untranslated (source,lang) values('" . addslashes($content). "','" . $language . "')";
+                $query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 
                 //No eror checking here
-                $tikilib->db->query($query);
+                $tikilib->db->query($query, array($content,$language));
             }
 
             return $content;
