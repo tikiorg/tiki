@@ -102,11 +102,14 @@ $smarty->assign("page",$map->name." Map");
  
 $layerbol=FALSE;
 
-if (isset($_REQUEST['Redraw'])) {
-	$_REQUEST['x'] = floor($map->width / 2);
-	$_REQUEST['y'] = floor($map->height / 2);
+/*if (isset($_REQUEST['Redraw'])) {
+	
+        //$_REQUEST['x'] = floor($map->width / 2);
+        //$_REQUEST['y'] = floor($map->height / 2);
+	$_REQUEST['x'] = floor($_REQUEST['size']/2);
+	$_REQUEST['x'] = floor($_REQUEST['size']*2/$_REQUEST['x']);
 }
-  
+  */
 if(isset($_REQUEST['size'])&&is_numeric($_REQUEST['size'])&&($_REQUEST['size']>0)&&($_REQUEST['size']<2000))
 {
     $xsize=floor($_REQUEST['size']);
@@ -128,10 +131,11 @@ $map->scalebar->Set("width",$xsize);
 $map_view=$map->getMetaData("VIEW1");
 $smarty->assign('map_view', $map_view);
 
-$number_of_views=23;
+$number_of_views=30;
 $counter=0;
 $view_name[]="";
 $view_values[]=0;
+
 
 for($i=1;$i<$number_of_views;$i++)
  {
@@ -162,7 +166,7 @@ for($i=1;$i<$number_of_views;$i++)
 
      $view_values[$i]=array($v_minx,$v_miny,$v_maxx,$v_maxy);
      $counter++;
-   }
+  }
 }
  $smarty->assign('view_name',$view_name);
  $smarty->assign('view_values',$view_values);
@@ -170,7 +174,33 @@ for($i=1;$i<$number_of_views;$i++)
 if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])&& isset($_REQUEST['maxx']) && isset($_REQUEST['maxy']))
 {	 			 
 
-	if(isset($_REQUEST['Go']))
+if(isset($_REQUEST['search'])){
+
+//$smarty->assign('msg', tra("enter your search "));
+
+	if(empty($_REQUEST['mapsearch'])){
+              print_r("empty search");
+	}
+	else{
+		for($view_count=1;$view_count<$counter+1;$view_count++){
+		    if($_REQUEST['mapsearch']==$view_name[$view_count]){
+			print_r($_REQUEST['mapsearch']);
+			print_r($view_name[$view_count]);
+			$j=$view_count;
+			$view_minx=$view_values[$j][0];
+			$view_miny=$view_values[$j][1];
+			$view_maxx=$view_values[$j][2];
+			$view_maxy=$view_values[$j][3];
+			$my_extent=ms_newrectObj();
+			$my_extent->setextent($view_minx,$view_miny,$view_maxx,$view_maxy);
+
+		   }
+		}
+	}	
+
+}
+
+if(isset($_REQUEST['Go']))
 	 {
 	         if(empty($map_view)||!(in_array($_REQUEST['view'],$view_name))||empty($_REQUEST['view'])){
                       $my_extent = ms_newrectObj();
@@ -180,7 +210,8 @@ if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])&& isset($_REQUEST['maxx
                  for($view_count=1;$view_count<$counter+1;$view_count++){
                     if($_REQUEST['view']==$view_name[$view_count]){
                             $j=$view_count;
-                            $view_minx=$view_values[$j][0];
+                            
+			    $view_minx=$view_values[$j][0];
                             $view_miny=$view_values[$j][1];
                             $view_maxx=$view_values[$j][2];
                             $view_maxy=$view_values[$j][3];
@@ -230,10 +261,11 @@ if (isset($_REQUEST['zoom']))
   if (isset($_REQUEST['x']) && isset($_REQUEST['y']) && $zoom!=0)
   { 
  	$my_point->setXY(floor($_REQUEST['x']*$size/$_REQUEST['oldsize']),floor($_REQUEST['y']*$size/$_REQUEST['oldsize']));
-  }
-  else{
-   	$my_point->setXY(($map->width)/2,($map->height)/2);
-  }
+ }
+ else{
+	$my_point->setXY(($map->width)/2,($map->height)/2);
+
+ }
 
   if($zoom==0){  // It is a query 
     
@@ -268,23 +300,22 @@ if (isset($_REQUEST['zoom']))
 }
 else{
   $zoom=1;
-}  
-
+}
+$count_group=0;
 //define which layer is visible
 
 for ($j=0;$j<$map->numlayers;$j++)
 {
+    
   $my_layer=$map->getLayer($j);
-
-  $my_layer_group=$my_layer->group;
-
+    
   if (isset($_REQUEST[str_replace(" ","_",$my_layer->name)]))
   {
     if ($_REQUEST[str_replace(" ","_",$my_layer->name)]==1)
     {
       $my_layer->Set("status",MS_ON);
     }
-  } else
+  }else
   {
     // test to see if we are not on the first drawing
     if ($layerbol)
@@ -296,15 +327,15 @@ for ($j=0;$j<$map->numlayers;$j++)
   //Display labels
   if ($my_layer->labelitem!="")
   {
-  		$layer_label[$j]="On";
-  		if (isset($_REQUEST[str_replace(" ","_",$my_layer->name)."_label"]))
-    {
-  		  $my_layers_label_checked[$j]="checked";
-  		} else
-  		{
-  		  $my_layers_label_checked[$j]="";
-  		  $my_layer->Set("labelmaxscale",0);
-  		}
+  	$layer_label[$j]="On";
+  	if (isset($_REQUEST[str_replace(" ","_",$my_layer->name)."_label"]))
+	{
+  	   $my_layers_label_checked[$j]="checked";
+  	} else
+  	{
+           $my_layers_label_checked[$j]="";
+  	   $my_layer->Set("labelmaxscale",0);
+  	}
   } else
   {
     $layer_label[$j]="Off";
@@ -343,7 +374,10 @@ for ($j=0;$j<$map->numlayers;$j++)
       $my_layer->close();
     }   
   }
-}  
+
+} 
+
+
 $map_querymsg.="</table>";
 
 $smarty->assign('map_querymsg',$map_querymsg);
@@ -411,7 +445,13 @@ if(isset($_REQUEST['view_user'])) {
   for ($j=0;$j<$map->numlayers;$j++)
   {
     $my_layers[$j]=$map->getLayer($j);
-      
+
+	//getting layer by group
+	if(!empty($my_layers[$j]->group)){
+	$my_layer_group[$j]=$my_layers[$j]->group;
+	$smarty->assign('unique_layer_group', array_unique($my_layer_group));
+	}
+
     //Metadata handling
     $link=$my_layers[$j]->getMetadata("WIKI");
     if ($link!="")

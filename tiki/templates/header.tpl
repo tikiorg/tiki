@@ -30,7 +30,7 @@
 	{popup_init src="lib/overlib.js"}
 {/if}
 <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
-<link rel="icon" href="favicon.png" />
+{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 {include file="bidi.tpl"}
 <title>
 {$siteTitle}
@@ -41,6 +41,7 @@
 {elseif $thread_info.title ne ''} : {$thread_info.title}
 {elseif $post_info.title ne ''} : {$post_info.title}
 {elseif $forum_info.name ne ''} : {$forum_info.name}
+{elseif $categ_info.name ne ''} : {$categ_info.name}
 {/if}
 </title>
 
@@ -87,9 +88,8 @@
 
 </head>
 
-<body
-{if $is_a_wiki_page eq 'y' and $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'whole_page' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-{if $feature_article_comments eq 'y' and $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if} id="{$mid|replace:".tpl":""}">
+<body {if $is_a_wiki_page eq 'y' and $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'whole_page' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+{if $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}  id="{$mid|replace:".tpl":""}">
 {if $minical_reminders>100}
 	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}

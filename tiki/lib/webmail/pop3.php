@@ -5,7 +5,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+/************************
+Patch by rlpowel see in the source
+**************************/
 /*************************************************************************/
 #  Mailbox 0.9.2a   by Sivaprasad R.L (http://netlogger.net)             #
 #  eMailBox 0.9.3   by Don Grabowski  (http://ecomjunk.com)              #
@@ -53,7 +55,7 @@ class POP3{
 
 	$this->has_error = true;
 	//               echo "<center>\n";
-	//        	 echo "<b>Error:</b> $error\n";
+	if ($this->DEBUG)        	 echo "<b>Error:</b> $error\n";
 	//               echo "</center>\n";
 	$this->CloseConnection();
 	//if ($this->exit) exit;
@@ -64,7 +66,6 @@ class POP3{
 	if ($this->DEBUG) {echo "<b>Sending Command: </b>".$command."<br>";flush();}
 	@fputs($this->connection, "$command\r\n");
 	$result = @fgets($this->connection, 10485760);
-
 	if (eregi("^(\+OK)", $result))
 	{
 	    if ($this->DEBUG) {echo "<b>Result OK: </b><br>";flush();}

@@ -73,6 +73,7 @@ class StructLib extends TikiLib {
 
 	function s_remove_page($page_ref_id, $delete) {
 		// Now recursively remove
+		global $user;
 
 		$query = "select `page_ref_id`, ts.`page_id`, `pageName` ";
     $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
@@ -85,11 +86,11 @@ class StructLib extends TikiLib {
 		}
 
     //Only delete a page if other structures arent referencing it
-		if ($delete) {
+		if ($delete && $tiki_p_remove == 'y') {
       $page_info = $this->s_get_page_info($page_ref_id);
   		$query = "select count(*) from `tiki_structures` where `page_id`=?";
 	  	$count = $this->getOne($query, array((int)$page_info["page_id"]));
-      if ($count = 1) {
+      if ($count = 1 && $wikilib->is_editable($page_info["pageName"], $user)) {
 			  $this->remove_all_versions($page_info["pageName"]);
       }
 		}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.15 2004-09-08 19:52:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.16 2004-09-28 12:59:22 mose Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -26,64 +26,38 @@ function decodeHTML($string) {
 }
 
 function wikiplugin_code($data, $params) {
-	if( is_array( $params ) )
-	{
-	    extract ($params);
+	if( is_array( $params ) ) {
+		extract ($params);
 	}
-
 	$code = $data;
 	$out = '';
-
 	if (isset($caption)) {
 		$out = '<div class="codecaption">'.$caption.'</div>';
 	}
-
 	if (isset($colors) and ($colors == 'php')) {
 		$out.= "<div class='codelisting'>~np~".highlight_string(decodeHTML(trim($code)),1)."~/np~</div>";
 	} else {
 		if (isset($ln) && $ln == 1) {
-			$lines = explode("\n", $code);
-
-			$i = 1; // current line number
+			$lines = explode("\n", trim($code));
 			$code = '';
-			// Will skip leading and trailing empty lines
-			// to make snippet look better :)
-			$fl = 0;          // 'first code line printed' flag
-			$ae = '';         // 
-
+			$i = 1; 
 			foreach ($lines as $line) {
-				$len = strlen($line);
-
-				if (!($len || $fl))
-					continue; // skip leading empty lines
-
-				if ($len) {
-					// OK len >0
-					$code .= $ae . ($fl ? "\n" : '') . sprintf("%3d", $i). ':  ' . $line;
-
-					$fl = 1; // first line already printed
-					$ae = '';
-				} else {
-					$ae .= "\n" . sprintf("%3d", $i). ':  ' . $line;
-				}
+				$code .= sprintf("% 3d",$i) . ' . ' . $line . "\n";
 				$i++;
 			}
-			$code = trim($code);
 		}
-		if (isset($wrap) && $wrap == 1)
-		{
-		    if (isset($wiki) && $wiki == 1) {
-			$out.= "<div class='codelisting'>\n".trim($code)."\n</div>";
-		    } else {
-			$out.= "<div class='codelisting'>~np~".trim($code)."~/np~</div>";
-		    }
+		if (isset($wrap) && $wrap == 1) {
+			if (isset($wiki) && $wiki == 1) {
+				$out.= "<div class='codelisting'>\n".$code."\n</div>";
+			} else {
+				$out.= "<div class='codelisting'>~np~".$code."~/np~</div>";
+			}
 		} else {
-		    if (isset($wiki) && $wiki == 1) {
-			$out.= "<pre class='codelisting'>\n".trim($code)."\n</pre>";
-		    } else {
-			$out.= "<pre class='codelisting'>~np~".trim($code)."~/np~</pre>";
-		    }
-		    //$data = "<div class='codelisting'><pre>" . $code . "</pre></div>";
+			if (isset($wiki) && $wiki == 1) {
+				$out.= "<pre class='codelisting'>\n".$code."\n</pre>";
+			} else {
+				$out.= "<pre class='codelisting'>~np~".$code."~/np~</pre>";
+			}
 		}
 	}
 	return $out;

@@ -673,11 +673,11 @@ class TikiLib extends TikiDB {
 		break;
 
 	    case 'l':
-		$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt=\"$user\"/>";
+		$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt='$user' />";
 		break;
 
 	    case 'u':
-		$ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt=\"$user\"/>";
+		$ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt='$user' />";
 		break;
 	}
 
@@ -3876,9 +3876,9 @@ class TikiLib extends TikiDB {
 	if ($feature_wikiwords == 'y') {
 	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 	    if ($feature_wikiwords_usedash == 'y') {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
 	    } else {
-		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
 	    }
 		$words = $this->get_hotwords();
 		foreach (array_unique($pages[2])as $page_parse) {

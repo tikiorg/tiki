@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.263 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.264 2004-09-28 12:59:13 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1338,7 +1338,13 @@ $group = $userlib->get_user_default_group($user);
 if($useGroupHome == 'y') {
     $groupHome = $userlib->get_group_home($group);
     if ($groupHome) {
-        $tikiIndex = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
+	if (strpos($groupHome,'http://') === 0) {
+		$tikiIndex = $groupHome;
+	} else {
+		$tikiIndex = "tiki-index.php?page=".$groupHome;
+		$wikiHomePage = $groupHome;
+		$smarty->assign('wikiHomePage',$wikiHomePage);
+	}
     }
 }
 
@@ -1356,7 +1362,7 @@ if ($feature_userPreferences == 'y') {
         if ($change_theme == 'y') {
             $user_style = $tikilib->get_user_preference($user, 'theme', $style);
 
-            if ($user_style) {
+            if ($user_style and (is_file("styles/$user_style") or is_file("styles/$tikidomain/$user_style"))) {
 									$style = $user_style;
             }
         }
@@ -1692,6 +1698,16 @@ if ($feature_debug_console == 'y') {
 
 $smarty->assign_by_ref('num_queries',$num_queries);
 
+if (is_file("styles/$tikidomain/favicon.png")) {
+	$smarty->assign('favicon',"styles/$tikidomain/favicon.png");
+} elseif (is_file("favicon.png")) {
+	$smarty->assign('favicon',"favicon.png");
+} else {
+	$smarty->assign('favicon',false);
+}
+
+
+
 /*
  * Check location for Tiki Integrator script and setup aux CSS file if needed by repository
  */
@@ -1720,8 +1736,19 @@ if ($feature_search == 'y') {
  * Whether to show comments zone on page load by default
  */
 if (isset($_REQUEST['comzone'])) {
-		$show_comzone=$_REQUEST['comzone'];
-		if ($show_comzone=='show') $smarty->assign('show_comzone', 'y');
+	$comzone=$_REQUEST['comzone'];
+	if ($comzone=='show') {
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-read_article') and $feature_article_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-poll_results') and $feature_poll_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-index') and $feature_wiki_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-view_faq') and $feature_faq_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-browse_gallery') and $feature_image_galleries_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-list_file_gallery') and $feature_file_galleries_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-view_blog') and $feature_blog_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-view_blog_post') and $feature_blogposts_comments=='y') $show_comzone='y';
+		if (strstr($_SERVER['REQUEST_URI'], 'tiki-map') and $feature_map_comments=='y') $show_comzone='y';
+		if ($show_comzone=='y') $smarty->assign('show_comzone', 'y');
+	}
 }
 
 /* trick for use with doc/devtools/cvsup.sh */

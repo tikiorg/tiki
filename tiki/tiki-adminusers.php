@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.41 2004-09-24 11:20:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.42 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,9 @@ function batchImportUsers() {
 		$data = fgetcsv($fhandle, 1000);
 		$temp_max = count($fields);
 		for ($i = 0; $i < $temp_max; $i++) {
+			if ($fields[$i] == "login" && function_exists("mb_detect_encoding") && mb_detect_encoding($data[$i], "ASCII, UTF-8, ISO-8859-1") ==  "ISO-8859-1") {
+				$data[$i] = utf8_encode($data[$i]);
+			}
 			@$ar[$fields[$i]] = $data[$i];
 		}
 		$userrecs[] = $ar;

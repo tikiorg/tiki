@@ -1213,6 +1213,7 @@ class ImageGalsLib extends TikiLib {
 		    $aux["hits"] = $res["hits"];
 		    $aux["public"] = $res["public"];
 		    $aux["theme"] = $res["theme"];
+				$aux["geographic"] = $res["geographic"];
 		    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 		    $ret[] = $aux;
 		}
@@ -1304,6 +1305,7 @@ class ImageGalsLib extends TikiLib {
 		$aux["hits"] = $res["hits"];
 		$aux["public"] = $res["public"];
 		$aux["theme"] = $res["theme"];
+		$aux["geographic"] = $res["geographic"];
 		$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
 		$ret[] = $aux;
 	    }

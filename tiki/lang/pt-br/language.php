@@ -287,7 +287,7 @@ $lang=Array(
 // "no attachment on this page." => "no attachment on this page.",
 // "Displays an attachment or a list of them" => "Displays an attachment or a list of them",
 // "Displays a SWF on the wiki page" => "Displays a SWF on the wiki page",
-// "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage",
+// "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage",
 // "Displays the output of a tracker content" => "Displays the output of a tracker content",
 // "missing tracker ID for plugin TRACKER" => "missing tracker ID for plugin TRACKER",
 // "missing fields list" => "missing fields list",

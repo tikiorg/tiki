@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.29 2004-09-19 19:37:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.30 2004-09-28 12:59:38 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -14,7 +14,7 @@
 
 body {
  /* setting up the background. the color, then bg image and its form of repeating. */
- background: #ffffff; /* url('background.png') repeat-y; Someone forgot to upload that pic? */
+ background: #ffffff url('simple/bg.png') top center repeat-y;
  /* shorthand for default font setting. size in percentage and font-family here */
  font: 75% 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
  /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
@@ -86,6 +86,9 @@ input[type='submit'], input[type='file'], select {
 	background: #f0f9ff;
 	color: #000;
 	font-size: 0.9em;
+}
+select {
+	text-align: right;
 }
 
 textarea {
@@ -361,6 +364,9 @@ a:hover.removemod {
 .shoutboxmodmsg, div.shoutboxmsg {
 	text-align: left;
 }
+textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by msie5) */
+	width: auto;
+}
 
 /*
  * common page classes
@@ -427,7 +433,7 @@ a:hover.removemod {
 }
 
 .wikitext {
- background-color: #ffffff;
+ background-color: transparent;
 }
 
 .wikitopline {

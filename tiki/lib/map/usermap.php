@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.3 2004-09-08 19:52:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/map/usermap.php,v 1.4 2004-09-28 12:59:21 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-function makemap($name,$datastruct,$symbol="Symbol (34,16711680,9)") {
+function makemap($name,$datastruct,$data,$cols=0,$symbol="Symbol (34,16711680,9)") {
 
 	global $tikilib;
 	global $map_path;
@@ -33,6 +33,12 @@ function makemap($name,$datastruct,$symbol="Symbol (34,16711680,9)") {
 	  die;
 	}
 
+	if (count($data[0])<=2) {
+	  $smarty->assign('msg',tra("not enough fields in data"));
+	  $smarty->display("error.tpl");
+	  die;	
+	}
+
 	$fdmif=@fopen($miffile,"w");
 	if (!$fdmif) {
 	  $smarty->assign('msg',tra("Could not create \$tdo.mif in data directory"));
@@ -49,38 +55,36 @@ function makemap($name,$datastruct,$symbol="Symbol (34,16711680,9)") {
 	fwrite($fdmif,"Charset \"WindowsLatin1\"\n");
 	fwrite($fdmif,"Delimiter \",\"\n");
 	fwrite($fdmif,"CoordSys Earth Projection 1, 104\n");
+	fwrite($fdmif,"Columns ".strval($cols+2)."\n");
 	fwrite($fdmif,$datastruct);
+	fwrite($fdmif,"  Lat float\n");
+	fwrite($fdmif,"  Lon float\n");
 	fwrite($fdmif,"Data\n");
 
-	$query = "select * from `users_users`";
-	$result = $tikilib->query($query, array());
-	while ($res = $result->fetchRow()) {
-		$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lat')";
-		$lat = $tikilib->getOne($query,array($res["login"]));
-		$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lon')";
-		$lon = $tikilib->getOne($query,array($res["login"]));
-		$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'realName')";
-		$realName = $tikilib->getOne($query,array($res["login"]));
-		
-		if (isset($lat) && isset($lon) && $lat && $lon) {
-			if ($lat>=0) {
-				$lat=(($lat*$pres) % (90*$pres))/$pres;
+	$count=count($data);
+	for ($i=0;$i<$count;$i++) {
+		if (isset($data[$i][0]) && isset($data[$i][1]) && $data[$i][0] && $data[$i][1]) {
+			if ($data[$i][0]>=0) {
+				$data[$i][0]=(($data[$i][0]*$pres) % (90*$pres))/$pres;
 			} else {
-				$lat=-((-$lat*$pres) % (90*$pres))/$pres;
+				$data[$i][0]=-((-$data[$i][0]*$pres) % (90*$pres))/$pres;
 			}
-			if ($lon>=0) {
-				$lon=(($lon*$pres) % (180*$pres))/$pres;
+			if ($data[$i][1]>=0) {
+				$data[$i][1]=(($data[$i][1]*$pres) % (180*$pres))/$pres;
 			} else {
-				$lon=-((-$lon*$pres) % (180*$pres))/$pres;
+				$data[$i][1]=-((-$data[$i][1]*$pres) % (180*$pres))/$pres;
 			}
-			if (!isset($realName)) {
-				$realName="";
+			
+			$count2=count($data[$i]);
+			$j=2;
+			while($j<$count2) {
+				fwrite($fdmid,"\"".$data[$i][$j]."\",");
+				$j++;
 			}
-			fwrite($fdmid,"\"".substr($res["login"],0,20)."\",\"".substr($realName,0,100)."\"\n");
-			fwrite($fdmif,"Point ".$lon." ".$lat."\n");
+			fwrite($fdmid,$data[$i][0].",".$data[$i][1]."\n");
+			fwrite($fdmif,"Point ".$data[$i][1]." ".$data[$i][0]."\n");
 			fwrite($fdmif,"   ".$symbol."\n");
 		}
-		
 	}
 
 	fclose($fdmid);

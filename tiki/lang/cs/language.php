@@ -875,7 +875,7 @@ $lang=Array(
 "No version indicated" => "Nebyla nalezena žádná verze",
 "failed" => "nepodařilo se",
 "Include an article" => "Vložit článek",
-"~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles do wikistránky",
+"~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles do wikistránky",
 "no attachment on this page." => "žádná příloha k této stránce.",
 "Displays an attachment or a list of them" => "Zobrazí attachment nebo jejich seznam",
 "comment" => "komentář",

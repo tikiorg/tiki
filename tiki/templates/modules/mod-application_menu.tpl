@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.113 2004-09-24 15:48:11 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.114 2004-09-28 12:59:40 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -237,7 +237,7 @@
     &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View submissions{/tr}</a><br />
     {/if}
   {/if}
-  {if $tiki_p_edit_article eq 'y' && $tiki_p_submit_article != 'y'}
+  {if $tiki_p_edit_article eq 'y' && $feature_submissions ne 'y'}
       &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}Edit article{/tr}</a><br />
   {/if}
   {if $tiki_p_send_articles eq 'y' and $feature_comm eq 'y'}

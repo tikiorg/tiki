@@ -1076,7 +1076,7 @@ $lang=Array(
 "failed" => "a échoué",
 "Displays browser client info" => "Affiche les informations du browser client",
 "Include an article" => "Inclure un article",
-"~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insère des articles dans une page Wiki",
+"~np~{~/np~ARTICLES(max=>3,topic=>topicName)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>nomTopic)}{ARTICLES} Insère des articles dans une page Wiki",
 "no attachment on this page." => "aucun fichier joint sur cette page",
 "Displays an attachment or a list of them" => "Afficher un fichier joint ou leur liste",
 "comment" => "commentaire",

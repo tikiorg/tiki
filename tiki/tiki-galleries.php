@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.34 2004-09-19 19:36:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.35 2004-09-28 12:59:13 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,7 @@ require_once ('tiki-setup.php');
 
 include_once ("lib/imagegals/imagegallib.php");
 include_once ('lib/categories/categlib.php');
+include_once ('lib/map/usermap.php');
 
 // Now check permissions to access this page
 /*
@@ -300,6 +301,50 @@ if (isset($_REQUEST["removegal"])) {
   } else {
     key_get($area);
   }
+}
+
+if (isset($_REQUEST["make_map"])) {
+		if ($_REQUEST["galleryId"] > 0) {
+			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
+
+			if ($tiki_p_admin ne 'y' || !$user || $info["user"] != $user) {
+				$smarty->assign('msg', tra("Permission denied you cannot make the map of this gallery"));
+
+				$smarty->display("error.tpl");
+				die;
+			}
+
+			$tdo = "gal.".strtr(trim($info["name"])," ","_");
+			if ($tikidomain) {
+				$tdo = "$tikidomain.".$tdo;
+			}
+	      $datastruct="  name Char(200)\n";
+	      $datastruct.="  description Char(250)\n";
+	      $datastruct.="  image Char(250)\n";
+	      // Prepare the data
+
+	      // Franck you need to move this to a lib somewhere -- Damian
+	      $query = "select * from `tiki_images` Where `galleryID`=?";
+	   	$result = $tikilib->query($query, array($_REQUEST["galleryId"]));
+			$i=0;
+			$data=array();
+			while ($res = $result->fetchRow()) {
+				$name=substr($res["name"],0,20);
+				$description=substr($res["description"],0,250);
+				$lat=$res["lat"];
+				$lon=$res["lon"];
+				$link="<img src='show_image.php?id=".$res["imageId"]."' />";
+				if (isset($lat) && isset($lon) && $lat && $lon) {
+					$data[$i][0]=$lat;
+					$data[$i][1]=$lon;
+					$data[$i][2]=$name;
+					$data[$i][3]=$description;
+					$data[$i][4]=$link;
+					$i++;
+				}
+			}
+			makemap($tdo,$datastruct,$data,3);
+		}
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

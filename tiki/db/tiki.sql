@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-09-24 15:54:34 $
-# $Author: sylvieg $
+# $Date: 2004-09-28 12:59:14 $
+# $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3829,7 +3829,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_quizzes', 'Can admin quizzes', 'editors', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_articles', 'Can admin received articles', 'editors', 'comm');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_received_pages', 'Can admin received pages', 'editors', 'comm');
@@ -3872,7 +3871,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_structures', 'Can create and edit structures', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_submission', 'Can edit submissions', 'editors', 'cms');
@@ -3890,7 +3888,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');

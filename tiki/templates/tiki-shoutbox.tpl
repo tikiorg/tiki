@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.17 2004-08-26 19:24:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.18 2004-09-28 12:59:39 mose Exp $ *}
 <a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
 {if $feature_help eq 'y'}
@@ -52,7 +52,7 @@
 
 {section name=user loop=$channels}
 <div class="shoutboxmsg">
-<b><a href="tiki-user_information.php?view_user={$channels[user].user}">{$channels[user].user}</a></b> {tr}at{/tr}: {$channels[user].timestamp|tiki_long_time}
+<b><a href="tiki-user_information.php?view_user={$channels[user].user}">{$channels[user].user}</a></b>, {$channels[user].timestamp|tiki_long_date}, {$channels[user].timestamp|tiki_long_time}
 {if $tiki_p_admin_shoutbox eq 'y'}
   [
   <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">x</a>
