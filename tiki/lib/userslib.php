@@ -1142,9 +1142,14 @@ class UsersLib extends TikiLib {
 
     function get_user_by_hash($hash) {
 	$query = "select `login` from `users_users` where `hash`=?";
-
 	$pass = $this->getOne($query, array($hash));
 	return $pass;
+    }
+
+    function get_user_by_email($email) {
+    $query = "select `login` from `users_users` where `email`=?";
+    $pass = $this->getOne($query, array($email));
+    return $pass;
     }
 
     function is_due($user) {
