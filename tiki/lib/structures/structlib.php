@@ -11,6 +11,65 @@ class StructLib extends TikiLib {
     $this->db = $db;  
   }
   
+  
+  function s_export_structure($structure)
+  {
+	global $exportlib;
+	global $dbTiki;
+  	include_once('lib/wiki/exportlib.php');
+  	$zipname         = "$structure.zip";
+    include_once("lib/tar.class.php");
+    $tar = new tar();
+  	$pages = $this->s_get_structure_pages($structure);
+    foreach($pages as $page) {	
+    	$data = $exportlib->export_wiki_page($page,0);
+    	$tar->addData($page,$data,date("U"));
+    }	
+	$tar->toTar("dump/$structure.tar",FALSE);
+    header("location: dump/$structure.tar");
+    return '';    
+  }
+  
+  function s_get_structure_pages($structure)
+  {
+	$ret = Array($structure); 	
+  	$structure = addslashes($structure);
+  	$query = "select page from tiki_structures where parent='$structure' order by pos asc";
+	$result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
+    	$page = $res['page'];
+		$ret[]=$page;
+    	$ret2 = $this->s_get_structure_pages($page);
+    	if(count($ret2) > 0) {
+    		$ret = array_merge($ret,$ret2);
+    	}
+    }
+    return $ret;
+  }
+  
+  function s_export_structure_tree($structure,$level=0)
+  {
+  	$structure = addslashes($structure);
+  	$query = "select page from tiki_structures where parent='$structure' order by pos asc";
+	$result = $this->query($query);
+	if($level==0) {
+		print($structure);print("\n");
+		$this->s_export_structure_tree($structure,$level+1);	
+	} else { 
+	    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
+	   		for($i=0;$i<$level;$i++) {
+	   			print(" ");
+	   		}
+	    	$page = $res['page'];
+	    	print($page);print("\n");
+	    	$this->s_export_structure_tree($page,$level+1);
+	    }
+	}
+  }
+  
+  
+  
+  
   function s_remove_page($page,$delete)
   {
     // Now recursively remove

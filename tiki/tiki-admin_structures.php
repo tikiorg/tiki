@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
+include_once("lib/ziplib.php");
 
 if($tiki_p_edit_structures != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -16,6 +17,16 @@ if(isset($_REQUEST['rremovex'])) {
   $structlib->s_remove_page($_REQUEST["rremovex"],false);	
 }
 
+if(isset($_REQUEST['export'])) {
+  $structlib->s_export_structure($_REQUEST['export']);
+}
+
+if(isset($_REQUEST['export_tree'])) {
+  header("content-type: text/plain");
+  $structlib->s_export_structure_tree($_REQUEST['export_tree']);
+  die;
+}
+
 
 $smarty->assign('askremove','n');
 if(isset($_REQUEST['remove'])) {
@@ -25,6 +36,29 @@ if(isset($_REQUEST['remove'])) {
 
 if(isset($_REQUEST["create"])) {
   $structlib->s_create_page('','',$_REQUEST["name"]);
+}
+
+if(isset($_REQUEST["create_from_tree"])) {
+	$tree_lines = explode("\n",$_REQUEST["tree"]);
+	$parents = Array('');
+	$previous = Array('');
+	foreach($tree_lines as $line) {
+		// count the tabs
+		$tabs = 0;
+		while(substr($line,0,1)==" ") {
+			$tabs++;
+			$line=substr($line,1);
+		}
+		$parents[$tabs+1]=$line;
+		$parent = $parents[$tabs];
+		if(isset($previous[$tabs])) {
+			$prev=$previous[$tabs];
+		} else {
+			$prev = '';
+		}
+		$structlib->s_create_page($parent,$prev,$line);
+		$previous[$tabs]=$line;
+	}
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
