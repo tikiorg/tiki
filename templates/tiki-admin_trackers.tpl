@@ -21,19 +21,19 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
 <div class="tabs">
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},4);" class="linkbut">{tr}Trackers{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Trackers{/tr}</a></span>
 {if $trackerId}
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},4);" class="linkbut">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},4);" class="linkbut">{tr}Create trackers{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Create trackers{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},4);" class="linkbut">{tr}Import/export{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Import/export{/tr}</a></span>
 </div>
 {/if}
 
 {cycle name=content values="1,2,3,4" print=false advance=false}
 {* --- tab with list --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext" {if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 
 <div  align="center">
@@ -83,7 +83,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 </div>
 
 {* --- tab with form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
 <div class="simplebox">
@@ -182,13 +182,13 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 </div>
 
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Import/export trackers{/tr}</h2>
 
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="import" value="1">
-<textarea name="rawmeat" cols="42" rows="32" wrap="soft">
+<textarea name="rawmeat" cols="62" rows="32" wrap="soft">
 {if $trackerId}
 [TRACKER]
 trackerId = {$trackerId}
