@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.2 2004-02-05 05:25:28 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.3 2004-02-05 19:10:00 ggeller Exp $
 require_once("doc/devtools/ggg-trace.php");
 $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
@@ -153,6 +153,14 @@ class HomeworkLib extends TikiLib {
 	return true;
   }
 
+  // Unlock a page
+  //
+  // $pageID - The index in hw_pages
+  function hw_page_unlock($pageId) {
+	global $ggg_tracer;
+	$ggg_tracer->outln(__FILE__." line ".__LINE__.' function hw_page_unlock is only a stub!');
+  }
+
   // Grab a homework wiki-like page based on the user (student) and
   //  the assignmentId from the hw_pages table.
   //  
@@ -212,10 +220,10 @@ class HomeworkLib extends TikiLib {
   //  
   //  db: hw_pages table, read only
   //  
-  //  $info   write-only
-  //  $id     read-only 
-  //  $lock   read-only
-  //  returns status
+  //  $info   write-only - put a row from the database
+  //  $id     read-only  - index into hw_pages table
+  //  $lock   read-only  - lock the page
+  //  returns status,    - "HW_OK", "HW_INVALID_ID", or "HW_PAGE_LOCKED"
   function hw_page_fetch_by_id(&$info, $id, $lock=false) {
 	// global $ggg_tracer;
 
@@ -310,12 +318,41 @@ class HomeworkLib extends TikiLib {
 
   // Stub: Need more args?
   // Called by: tiki-hw_editpage.php
-  function hw_page_update($pageId, $data, $comment) {
+  //
+  // db - hw_pages table (rw)
+  //
+  // args:
+  // $pageId (ro) - index into hw_pages table
+  // $data (ro) - new body of page
+  // $comment (ro) - new comment for page
+  // $unlock (ro) - ulnlock page?
+  //
+  function hw_page_update($pageId, $data, $comment, $unlock = true) {
     global $ggg_tracer;
     $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_update.");
-    $ggg_tracer->outln("Have to update the version number\n  \
-                        Store the usersRole etc.\n \
-                        Need more args?");
+    $ggg_tracer->outln("Have to update the version number!");
+    $ggg_tracer->outln("Have to update the time stamp!");
+
+	$oldInfo = array();
+	$status = $this->hw_page_fetch_by_id(&$oldInfo, $pageId, false);
+	if ($status != 'HW_OK'){
+	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: Call to hw_page_fetch_by_id failed!"));
+	  $smarty->display("error.tpl");
+	  die;  
+	}
+
+   	$query = "insert into `hw_history`(`id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`) values(?,?,?,?,?,?,?)";
+	$result = $this->query($query,array($oldInfo["id"], (int)$oldInfo["version"], (int)$oldInfo["lastModif"], $oldInfo["user"], $oldInfo["ip"], $oldInfo["comment"], $oldInfo["data"]));
+
+	$version = (int)$oldInfo["version"] + 1;
+	$lastModif = date("U");
+	$ip = $_SERVER["REMOTE_ADDR"];
+
+
+	$query = "update `hw_pages` set `version` = ?, `lastModif` = ?, `ip` = ? , `data` = ?, `comment` = ?  where `id`=?";
+	$this->query($query,array($version,$lastModif,$ip,$data,$comment,$pageId));
+	if ($unlock)
+	  $this->hw_page_unlock($pageId);
   }
 
   // Create a homework page
