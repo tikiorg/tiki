@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.50 2004-03-04 06:42:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.51 2004-04-09 04:05:22 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -21,25 +21,24 @@
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
 {/if}
 
-<br /><br /><br />
+<br /><br />
 
+{if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
-
-{* ---------------------- tabs -------------------- *}
 <div class="tabs">
-<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Users{/tr}</a></span>
 {if $userinfo.userId}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Edit user{/tr} <i>{$userinfo.login}</i></span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
 {else}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Add a new user{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Add a new user{/tr}</a></span>
 {/if}
 </span>
 </div>
+{/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false}
-
+{cycle name=content values="1,2,3,4" print=false advance=false assign=focustab}
 {* ---------------------- tab with list -------------------- *}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Users{/tr}</h2>
 
 <form method="get" action="tiki-adminusers.php">
@@ -126,7 +125,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </div>
 
 {* ---------------------- tab with form -------------------- *}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 {else}
