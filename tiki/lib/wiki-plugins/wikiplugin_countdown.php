@@ -15,7 +15,7 @@
  * wiki page.
  */
 function wikiplugin_countdown_help() {
-	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004)}".tra("text")."{COUNTDOWN}~/np~";
+	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004[,locatetime=>on])}".tra("text")."{COUNTDOWN}~/np~";
 }
 function wikiplugin_countdown($data, $params) {
 	extract ($params);
@@ -24,8 +24,12 @@ function wikiplugin_countdown($data, $params) {
 		return ("<b>COUNTDOWN: Missing 'enddate' parameter for plugin</b><br/>");
 	}
 
-	//--------------------------
-	$now = strtotime ("now");
+	if (isset($localtime) && $localtime == 'on')
+		$tz = $_COOKIE['tz_offset'];
+	else
+		$tz = 0;
+
+	$now = strtotime ("now") + $tz;
 	$then = strtotime ($enddate);
 	$difference = $then - $now;
 	$num = $difference/86400;
