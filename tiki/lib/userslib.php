@@ -887,6 +887,7 @@ class UsersLib extends TikiLib {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
+	    $cant++;
 	    if ($group && $this->group_has_permission($group, $res['permName'])) {
 		$hasPerm = 'y';
 	    } else {
