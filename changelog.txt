@@ -1,5 +1,8 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Users with the right permission can do "minor" edits on wiki pages
+  minor edits are not reflected in the history nor are notified by
+  email to users "watching" the page.
 * [NEW] Forums: Option to allow wiki markup in forum/comment posts.
 * [NEW] Forums: the topic description can be disabled when browsing forums.
 * [NEW] Checkboxes added in page history to remove many versions of a page.

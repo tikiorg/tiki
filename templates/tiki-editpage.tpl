@@ -99,7 +99,11 @@
 
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page}">{tr}cancel edit{/tr}</a></td>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor">
+{if $tiki_p_minor eq 'y'}
+<input type="checkbox" name="isminor" />{tr}Minor{/tr}
+{/if}
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page}">{tr}cancel edit{/tr}</a></td>
 </tr>
 </table>
 </form>

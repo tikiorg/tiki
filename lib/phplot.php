@@ -2600,7 +2600,7 @@ class PHPlot{
 						$this->DrawDots();
 					}
 					break;
-				case "points";
+				case "points":
 					$this->DrawPlotBorder();
 					$this->DrawLabels();
 					if ( $this->data_type == "text-data") {

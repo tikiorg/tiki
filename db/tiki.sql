@@ -1498,7 +1498,7 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_uplo
 
 ### CHANGES FOR 1.6 ###
 
-
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minor','wiki','Can save as minor edit','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editor');
 

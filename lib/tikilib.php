@@ -4076,7 +4076,7 @@ class TikiLib {
     $this->query($query);
   }
 
-  function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip,$description='')
+  function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip,$description='',$minor=false)
   {
     global $smarty;
     global $dbTiki;
@@ -4104,31 +4104,34 @@ class TikiLib {
     // (I commented it out so it can be further examined by CVS change control)
     //$pageName=addslashes($pageName);
     $comment=addslashes($comment);
-    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description)
-              values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
-    if($pageName != 'SandBox') {
-      $result = $this->query($query);
-    }
-    // Update the pages table with the new version of this page
     $version += 1;
+    if(!$minor) {
+      $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description)
+              values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
+      if($pageName != 'SandBox') {
+        $result = $this->query($query);
+      }
+    
+    // Update the pages table with the new version of this page
+    
     //$edit_data = addslashes($edit_data);
-    $emails = $notificationlib->get_mail_events('wiki_page_changes','wikipage'.$pageName);
-    foreach($emails as $email) {
-      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-      $smarty->assign('mail_page',$pageName);
-      $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_user',$edit_user);
-      $smarty->assign('mail_comment',$edit_comment);
-      $smarty->assign('mail_last_version',$version);
-      $smarty->assign('mail_data',$edit_data);
-      $foo = parse_url($_SERVER["REQUEST_URI"]);
-	  $machine =httpPrefix().$foo["path"];
-      $smarty->assign('mail_machine',$machine);
-      $smarty->assign('mail_pagedata',$edit_data);
-      $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-      @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);
-    }
-
+      $emails = $notificationlib->get_mail_events('wiki_page_changes','wikipage'.$pageName);
+      foreach($emails as $email) {
+        $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+        $smarty->assign('mail_page',$pageName);
+        $smarty->assign('mail_date',date("U"));
+        $smarty->assign('mail_user',$edit_user);
+        $smarty->assign('mail_comment',$edit_comment);
+        $smarty->assign('mail_last_version',$version);
+        $smarty->assign('mail_data',$edit_data);
+        $foo = parse_url($_SERVER["REQUEST_URI"]);
+	    $machine =httpPrefix().$foo["path"];
+        $smarty->assign('mail_machine',$machine);
+        $smarty->assign('mail_pagedata',$edit_data);
+        $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
+        @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);
+      }
+    }  
     $query = "update tiki_pages set description='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
     $result = $this->query($query);
     // Parse edit_data updating the list of links from this page
@@ -4138,7 +4141,7 @@ class TikiLib {
       $this->replace_link($pageName,$page);
     }
     // Update the log
-    if($pageName != 'SandBox') {
+    if($pageName != 'SandBox' && !$minor) {
       $action = "Updated";
       $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName',$t,'$edit_user','$edit_ip','$edit_comment')";
       $result = $this->query($query);
