@@ -54,7 +54,7 @@
 {else}
 <td class="even">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
 {if $tiki_p_edit eq 'y'}
-<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">edit</a>)
+<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
 {/if}
 </td>
 <td class="even">&nbsp;{$listpages[changes].hits}&nbsp;</td>

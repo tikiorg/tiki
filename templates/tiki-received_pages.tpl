@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-received_pages.php">Received pages</a><br/><br/>
+<a class="pagetitle" href="tiki-received_pages.php">{tr}Received pages{/tr}</a><br/><br/>
 {if $receivedPageId > 0 or $view eq 'y'}
-<h2>Preview</h2>
+<h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>
 {/if}
 {if $receivedPageId > 0}
@@ -18,14 +18,14 @@
 </form>
 {/if}
 
-<h2>Received pages</h2>
+<h2>{tr}Received pages{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-received_pages.php">
      <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="submit" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
