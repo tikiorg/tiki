@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.55 2003-11-04 14:03:44 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.56 2003-11-04 14:24:12 zaufi Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -548,4 +548,4 @@ INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove
 INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
 INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
 INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
