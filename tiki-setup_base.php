@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.72 2004-04-11 23:38:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.73 2004-04-26 17:56:21 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -504,6 +504,9 @@ unset($allperms);
 $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
 $style = $tikilib->get_preference("style", 'moreneat.css');
+if (isset($tkidomain) and is_file("styles/$tikidomain/$style")) {
+	$style = "$tikidomain/$style";
+}
 $smarty->assign('style', $style);
 
 $icon_style = $tikilib->get_preference("icon_style", 'default');
