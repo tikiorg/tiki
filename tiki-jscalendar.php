@@ -7,6 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($feature_jscalendar) and $feature_jscalendar == 'y') {
 	$jslang['en'] = "en";
 	$jslang['fr'] = "fr-utf8";
+	$jslang['pt-br'] = "br-utf8";
   $smarty->assign('uses_jscalendar', 'y'); 
   $smarty->assign('feature_jscalendar', 'y'); 
 	if (isset($language) and isset($jslang["$language"])) {
