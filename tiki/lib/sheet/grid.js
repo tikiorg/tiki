@@ -733,8 +733,6 @@ Grid.prototype.draw = function()
 
 	total += '</table>\n';
 
-	total += "<div class='submit'><a href='#' onclick='g.target.style.visibility = \"hidden\"; g.prepareSubmit(); g.target.submit();'>Save</a></div>\n";
-
 	this.target.innerHTML =  total;
 	this.selection = new Selection( this.nbRow, this.nbCol );
 }
