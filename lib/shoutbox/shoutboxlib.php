@@ -5,7 +5,7 @@ class ShoutboxLib extends TikiLib {
   {
     # this is probably uneeded now
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to ShoutboxLib constructor");  
     }
     $this->db = $db;  
   }

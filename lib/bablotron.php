@@ -9,7 +9,7 @@ class bablotron {
   function bablotron($db,$lan)
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to BablotronLib constructor");  
     }
     $this->db = $db;  
     $this->lan = $lan;

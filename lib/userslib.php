@@ -4,16 +4,13 @@
   // a pear DB object
 
 class UsersLib extends TikiLib {
-#  var $db;  // The PEAR db object used to access the database
+ # var $db;  // The PEAR db object used to access the database
   
   var $usergroups_cache;
   var $groupperm_cache;
 
   function UsersLib($db) 
   {
-    if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
-    }
     $this->db = $db;  
     // Initialize caches
     $this->usergroups_cache=array();

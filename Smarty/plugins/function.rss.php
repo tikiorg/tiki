@@ -1,10 +1,11 @@
 <?php
-include_once('lib/rss/rsslib.php');
+
 
 function smarty_function_rss($params, &$smarty)
 {
     global $tikilib;
-
+    global $dbTiki;
+	include_once('lib/rss/rsslib.php');
     extract($params);
     // Param = zone
     if(empty($id)) {

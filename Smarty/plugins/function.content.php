@@ -1,8 +1,9 @@
 <?php
-include_once('lib/dcs/dcslib.php');
 function smarty_function_content($params, &$smarty)
 {
     global $tikilib;
+    global $dbTiki;
+    include_once('lib/dcs/dcslib.php');
     extract($params);
     // Param = zone
 

@@ -5,7 +5,7 @@ class MailinLib extends TikiLib {
   function MailinLib($db) 
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to MailinLib constructor");  
     }
     $this->db = $db;  
   }

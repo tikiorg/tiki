@@ -5,7 +5,7 @@ class WikiLib extends TikiLib {
   function WikiLib($db) 
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to WikiLib constructor");  
     }
     $this->db = $db;  
   }

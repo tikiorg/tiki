@@ -5,7 +5,7 @@ class DirLib extends TikiLib {
   function DirLib($db) 
   {
     if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
+      die("Invalid db object passed to DirLib constructor");  
     }
     $this->db = $db;  
   }
