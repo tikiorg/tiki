@@ -29,10 +29,9 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
-//include_once("lib/userslib/userslib.php");
 function wikiplugin_include_help() {
 	return tra("Include a page").":<br />~np~{INCLUDE(page=> [,start=>] [,stop=>])}{INCLUDE}~/np~";
 }
@@ -45,7 +44,21 @@ function wikiplugin_include($data, $params) {
 		return ("<b>missing page for plugin INCLUDE</b><br/>");
 	}
 	$data = $tikilib->get_page_info($page);
-	if (!($userlib->user_has_permission($user,'tiki_p_view') or ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')))) {
+
+	// evaluate if object or system permissions enables user to see the included page
+	$canbeseen="n";
+	if ($userlib->object_has_one_permission($page,'wiki page')) {
+		if ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')) {
+			$canbeseen="y";
+		}
+	} else {
+		if ($userlib->user_has_permission($user,'tiki_p_view')) {
+			$canbeseen="y";
+		}
+	}
+
+	if ($canbeseen=="n") {
+//		I think is safer to show nothing instead of a message saying that a page can't be accessed
 //		$text="<b>User $user has no permission to access $page</b><br/>";
 		$text="";
 		return($text);
