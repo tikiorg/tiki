@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.3 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.4 2003-10-21 09:04:56 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,10 @@ if (!isset($_REQUEST["imagescale"])) {
 	$_REQUEST["imagescale"] = 0.4;
 }
 
+if (!isset($_REQUEST["autobreak"])) {
+	$_REQUEST["autobreak"] = 'off';
+}
+
 if (!isset($_REQUEST["convertpages"])) {
 	$convertpages = array();
 
@@ -84,6 +88,7 @@ $smarty->assign('h2height', $_REQUEST["h2height"]);
 $smarty->assign('h3height', $_REQUEST["h3height"]);
 $smarty->assign('tbheight', $_REQUEST["tbheight"]);
 $smarty->assign('imagescale', $_REQUEST["imagescale"]);
+$smarty->assign('autobreak', $_REQUEST["autobreak"]);
 $smarty->assign('find', $find);
 
 //add pages
