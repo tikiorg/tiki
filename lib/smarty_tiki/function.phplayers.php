@@ -65,7 +65,6 @@ function smarty_function_phplayers($params, &$smarty) {
 			}
 			$output.= ".|".$cd["name"]."|".$cd["url"]."\n";
 		}
-echo "$output";
 		$phplayers->setMenuStructureString($output);
 	} elseif (!empty($file)) {
 		if (is_file($file)) {	
@@ -80,6 +79,15 @@ echo "$output";
 		$phplayers->setDownArrowImg("down-galaxy.png");
 		$phplayers->setForwardArrowImg("forward-galaxy.png");
 		$phplayers->setVerticalMenuTpl("layersmenu-vertical_menu-galaxy.ihtml");
+		$phplayers->setSubMenuTpl("layersmenu-sub_menu-galaxy.ihtml");
+		$phplayers->$new["$type"]($struct["$type"]);
+		$phplayers->printHeader();
+		$phplayers->printMenu($struct["$type"]);
+		$phplayers->printFooter();
+	} elseif ($type == 'horiz') {
+		$phplayers->setDownArrowImg("down-galaxy.png");
+		$phplayers->setForwardArrowImg("forward-galaxy.png");
+		$phplayers->setHorizontalMenuTpl("layersmenu-horizontal_menu.ihtml");
 		$phplayers->setSubMenuTpl("layersmenu-sub_menu-galaxy.ihtml");
 		$phplayers->$new["$type"]($struct["$type"]);
 		$phplayers->printHeader();
