@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.24 2003-10-15 22:17:29 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.25 2003-10-20 15:48:17 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,12 +27,12 @@ $id = "pageName";
 $titleId = "pageName";
 $descId = "comment";
 $dateId = "lastModif";
-$readrepl = $tikiIndex."?page=";
+$readrepl = "tiki-index.php?page=";
 
 require ("tiki-rss_readcache.php");
 
 if ($output == "EMPTY") {
-  $changes = $histlib -> get_last_changes(14, 0, $max_rss_wiki, $sort_mode = $dateId.'_desc');
+  $changes = $tikilib -> list_pages(0, $max_rss_wiki, 'lastModif_desc');
   // FIX: get_last_changes does not return pages with german umlauts (they are left out)
   $output = "";
 }
