@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.15 2004-04-10 04:44:31 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.16 2004-04-29 20:06:18 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -305,17 +305,17 @@ go
 
 
 CREATE TABLE "sessions"(
-  "SESSKEY" char(32) NOT NULL,
-  "EXPIRY" numeric(11,0) NOT NULL,
-  "EXPIREREF" varchar(64) default '',
-  "DATA" text NOT NULL,
-  PRIMARY KEY ("SESSKEY")
+  "sesskey" char(32) NOT NULL,
+  "expiry" numeric(11,0) NOT NULL,
+  "expireref" varchar(64) default '',
+  "data" text NOT NULL,
+  PRIMARY KEY ("sesskey")
 
 ) 
 go
 
 
-CREATE  INDEX "sessions_EXPIRY" ON "sessions"("EXPIRY")
+CREATE  INDEX "sessions_expiry" ON "sessions"("expiry")
 go
 
 --
@@ -743,7 +743,7 @@ calitemId numeric(14 ,0) identity,
   "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
   "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
   "url" varchar(255) default NULL NULL,
-  "lang" char(2) default 'en' NOT NULL,
+  "lang" char(16) default 'en' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   "description" image default '',
   "user" varchar(40) default NULL NULL,
@@ -2154,7 +2154,7 @@ go
 
 CREATE TABLE "tiki_language" (
   "source" image NOT NULL,
-  "lang" char(2) default '' NOT NULL,
+  "lang" char(16) default '' NOT NULL,
   "tran" image default '',
   PRIMARY KEY ("source","lang")
 ) 
@@ -2175,7 +2175,7 @@ go
 
 
 CREATE TABLE "tiki_languages" (
-  "lang" char(2) default '' NOT NULL,
+  "lang" char(16) default '' NOT NULL,
   "language" varchar(255) default NULL NULL,
   PRIMARY KEY ("lang")
 ) 
@@ -2523,7 +2523,7 @@ go
 
 CREATE TABLE "tiki_menu_languages" (
 menuId numeric(8 ,0) identity,
-  "language" char(2) default '' NOT NULL,
+  "language" char(16) default '' NOT NULL,
   PRIMARY KEY ("menuId","language")
 )   
 go
@@ -2722,6 +2722,35 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_edit_structures','')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','')
 go
 
 
@@ -3506,6 +3535,7 @@ page_id numeric(14 ,0) identity,
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
   "page_size" numeric(10,0) default 0,
+  "lang" varchar(16) default null,
   PRIMARY KEY ("page_id")
 
 
@@ -4084,6 +4114,39 @@ go
 
 -- --------------------------------------------------------
 
+-- Tables for TikiSheet
+CREATE TABLE "tiki_sheet_values" (
+  "sheetId" numeric(8,0) default '0' NOT NULL,
+  "begin" numeric(10,0) default '0' NOT NULL,
+  "end" numeric(10,0) default NULL NULL,
+  "rowIndex" numeric(4,0) default '0' NOT NULL,
+  "columnIndex" numeric(4,0) default '0' NOT NULL,
+  "value" varchar(255) default NULL NULL,
+  "calculation" varchar(255) default NULL NULL,
+  "width" numeric(4,0) default '1' NOT NULL,
+  "height" numeric(4,0) default '1' NOT NULL,
+
+
+) 
+go
+
+
+CREATE  INDEX "tiki_sheet_values_sheetId_2" ON "tiki_sheet_values"("sheetId","rowIndex","columnIndex")
+go
+CREATE UNIQUE INDEX "tiki_sheet_values_sheetId" ON "tiki_sheet_values"("sheetId","begin","rowIndex","columnIndex")
+go
+
+CREATE TABLE "tiki_sheets" (
+sheetId numeric(8 ,0) identity,
+  "title" varchar(200) default '' NOT NULL,
+  "description" text default '',
+  "author" varchar(200) default '' NOT NULL,
+  PRIMARY KEY ("sheetId")
+) 
+go
+
+
+
 --
 -- Table structure for table `tiki_shoutbox`
 --
@@ -4440,7 +4503,7 @@ go
 CREATE TABLE "tiki_tracker_fields" (
 fieldId numeric(12 ,0) identity,
   "trackerId" numeric(12,0) default '0' NOT NULL,
-  "name" varchar(80) default NULL NULL,
+  "name" varchar(255) default NULL NULL,
   "options" text default '',
   "position" numeric(4,0) default NULL NULL,
   "type" char(1) default NULL NULL,
@@ -4630,7 +4693,7 @@ go
 CREATE TABLE "tiki_untranslated" (
 id numeric(14 ,0) identity,
   "source" image NOT NULL,
-  "lang" char(2) default '' NOT NULL,
+  "lang" char(16) default '' NOT NULL,
   PRIMARY KEY ("source","lang")
 
 
@@ -5188,6 +5251,63 @@ go
 
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `tiki_download`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Apr 15 2004 at 07:42 PM
+--
+
+-- DROP TABLE `tiki_download`
+go
+
+
+CREATE TABLE `tiki_download` (
+  `id` numeric(11,0) NOT NULL auto_increment,
+  `object` varchar(255) default '' NOT NULL,
+  `userId` numeric(8,0) default '0' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `date` numeric(14,0) default '0' NOT NULL,
+  `IP` varchar(50) default '' NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `object` (`object`,`userId`,`type`),
+  KEY `userId` (`userId`),
+  KEY `type` (`type`),
+  KEY `date` (`date`)
+)  "AUTO_INCREMENT"=32 
+go
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_download`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Apr 15 2004 at 07:42 PM
+--
+
+-- DROP TABLE `tiki_download`
+go
+
+
+CREATE TABLE `tiki_download` (
+  `id` numeric(11,0) NOT NULL auto_increment,
+  `object` varchar(255) default '' NOT NULL,
+  `userId` numeric(8,0) default '0' NOT NULL,
+  `type` varchar(20) default '' NOT NULL,
+  `date` numeric(14,0) default '0' NOT NULL,
+  `IP` varchar(50) default '' NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `object` (`object`,`userId`,`type`),
+  KEY `userId` (`userId`),
+  KEY `type` (`type`),
+  KEY `date` (`date`)
+) 
+go
+
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users_grouppermissions`
@@ -5387,6 +5507,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_sheet', 'Can admin sheet', 'admin', 'sheet')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox')
 go
 
@@ -5536,6 +5660,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_sheet', 'Can create and edit sheets', 'editors', 'sheet')
 go
 
 
@@ -5695,6 +5823,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_newsletters', 'Can send newsletters', 'admin', 'newsletters')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_send_pages', 'Can send pages to other sites', 'registered', 'comm')
 go
 
@@ -5832,6 +5964,14 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_referer_stats', 'Can view referer stats', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_sheet', 'Can view sheet', 'basic', 'sheet')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_sheet_history', 'Can view sheet history', 'admin', 'sheet')
 go
 
 
@@ -6603,6 +6743,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_search','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_sheet','n')
 go
 
 
@@ -7535,81 +7679,83 @@ tagId numeric(4 ,0) identity,
   "taglabel" varchar(255) default NULL NULL,
   "taginsert" varchar(255) default NULL NULL,
   "tagicon" varchar(255) default NULL NULL,
+  "tagcategory" varchar(255) default NULL NULL,
   PRIMARY KEY ("tagId")
+  KEY `tagcategory` (`tagcategory`)
 )   
 go
 
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('bold','__text__','images/ed_format_bold.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','images/ed_format_bold.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('underline','===text===','images/ed_format_underline.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','images/ed_format_underline.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('external link','[http://example.com|text]','images/ed_link.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','images/ed_link.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('wiki link','((text))','images/ed_copy.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','images/ed_copy.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('heading1','!text','images/ed_custom.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','images/ed_custom.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('box','^text^','images/ed_about.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('box','^text^','images/ed_about.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('rss feed','{rss id= }','images/ico_link.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('rss feed','{rss id= }','images/ico_link.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('dynamic content','{content id= }','images/book.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic content','{content id= }','images/book.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('tagline','{cookie}','images/footprint.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('tagline','{cookie}','images/footprint.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('hr','---','images/ed_hr.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','images/ed_hr.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('center text','::text::','images/ed_align_center.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('center text','::text::','images/ed_align_center.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('colored text','~~--FF0000:text~~','images/fontfamily.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','images/fontfamily.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('dynamic variable','%text%','images/book.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','images/book.gif','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','wiki')
 go
 
 
