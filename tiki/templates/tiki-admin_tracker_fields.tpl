@@ -13,7 +13,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
-<select name="type" id='trkfldtype' onChange="javascript:chgTrkFld();">
+<select name="type" id='trkfldtype' onchange="javascript:chgTrkFld();">
 <option value="c" {if $type eq 'c'}selected="selected"{/if}>{tr}checkbox{/tr}</option>
 <option value="t" {if $type eq 't'}selected="selected"{/if}>{tr}text field{/tr}</option>
 <option value="a" {if $type eq 'a'}selected="selected"{/if}>{tr}textarea{/tr}</option>

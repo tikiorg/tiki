@@ -243,7 +243,7 @@ Errors:<br/>
 			<input type="hidden" name="find" value="{$find2|escape}" />
 			<input type="hidden" name="where" value="{$where2|escape}" />
 			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
-			{tr}From:{/tr}<select name="filter_tran_name" onChange="javascript:document.getElementById('filtran').submit();">
+			{tr}From:{/tr}<select name="filter_tran_name" onchange="javascript:document.getElementById('filtran').submit();">
 			<option value="" {if $filter_tran_name eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
 			{section name=ix loop=$items}
 			<option value="{$items[ix].activityId|escape}" {if $filter_tran_name eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>

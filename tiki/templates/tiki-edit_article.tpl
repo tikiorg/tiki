@@ -39,7 +39,7 @@
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
 </td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
-<select id='articletype' name='type' onChange='javascript:chgArtType();'>
+<select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
 {/section}
@@ -91,7 +91,7 @@
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
-<select name="templateId" onChange="javascript:document.getElementById('tikieditarticle').submit();">
+<select name="templateId" onchange="javascript:document.getElementById('tikieditarticle').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
 <option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
