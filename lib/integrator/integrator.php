@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.8 2003-10-18 23:17:00 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.9 2003-10-19 13:20:19 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -80,6 +80,7 @@ class TikiIntegrator extends TikiLib
         $repl  = addslashes($repl);
         $rxmod = addslashes($rxmod);
         $descr = addslashes($descr);
+
         if ($ord == 0)
         {
             $query = "select max(ord) from tiki_integrator_rules where repID='$repID'";

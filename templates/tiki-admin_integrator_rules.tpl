@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.7 2003-10-18 23:17:01 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.8 2003-10-19 13:20:19 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -53,55 +53,52 @@
 
 <table class="normal">
   <tr>
-    <td class="formcolor"><span title="{tr}0 = auto{/tr}">{tr}Rule order{/tr}</span></td>
-    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}0 = auto{/tr}" />&nbsp;
+    <td class="formcolor"><span title="{tr}According this order rules will be applied (0 = auto){/tr}">{tr}Rule order{/tr}</span></td>
+    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied (0 = auto){/tr}" />&nbsp;
     </td>
   </tr><tr>
-    <td class="formcolor">{tr}Search{/tr}</td>
-    <td class="formcolor"><input type="text" name="srch" value="{$srch|escape}" /></td>
+    <td class="formcolor"><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
+    <td class="formcolor"><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Replace{/tr}</td>
-    <td class="formcolor"><input type="text" name="repl" value="{$repl|escape}" /></td>
+    <td class="formcolor"><span title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</span></td>
+    <td class="formcolor"><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Regex{/tr}</td>
+    <td class="formcolor"><span title="{tr}Is this regular expression or simpel search/replacer{/tr}">{tr}Regex{/tr}</span></td>
     <td class="formcolor">
-      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} /> &nbsp;&nbsp;
-      {tr}Use preg_replace or str_replace to filter text{/tr}
+      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simpel search/replacer{/tr}" /> &nbsp;&nbsp;
     </td>
   </tr><tr>
-    <td class="formcolor">{tr}Case sensitive{/tr}</td>
+    <td class="formcolor"><span title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</td>
     <td class="formcolor">
-      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} /> &nbsp;&nbsp;
-      {tr}Use case sensitive str_replace{/tr}
+      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" /> &nbsp;&nbsp;
     </td>
   </tr><tr>
-    <td class="formcolor">{tr}<span title="set of: imsxeADSXUu">Regex modifiers{/tr}</span></td>
+    <td class="formcolor">{tr}<span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">Regex modifiers{/tr}</span></td>
     <td class="formcolor">
-      <input type="text" name="rxmod" value="{$rxmod|escape}" /> &nbsp;&nbsp;
+      <input type="text" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" /> &nbsp;&nbsp;
       {tr}Aux modifiers for preg_replace{/tr}
     </td>
   </tr><tr>
-    <td class="formcolor">{tr}Description{/tr}</td>
-    <td class="formcolor"><textarea name="description" rows="4">{$description|escape}</textarea></td>
+    <td class="formcolor"><span title="{tr}Human readable text descriptions of rule{/tr}">{tr}Description{/tr}</td>
+    <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text descriptions of rule{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
   </tr><tr>
     <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
   </tr><tr>
-    <td class="formcolor">{tr}Apply all rules{/tr}</td>
-    <td class="formcolor"><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} /></td>
+    <td class="formcolor"><span title="{tr}Apply all rules or just this to generate preview{/tr}">{tr}Apply all rules{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}Code preview{/tr}</td>
-    <td class="formcolor"><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} /></td>
+    <td class="formcolor"><span title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}HTLM preview{/tr}</td>
-    <td class="formcolor"><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} /></td>
+    <td class="formcolor"><span title="{tr}Generate HTML preview{/tr}">{tr}HTML preview{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor">{tr}File{/tr}</td>
+    <td class="formcolor"><span title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</td>
     <td class="formcolor">
-      <input type="text" name="file" value="{$file|escape}" /> &nbsp;&nbsp;
-      {tr}Test file from repository (empty = configured start page){/tr}
+      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" /> &nbsp;&nbsp;
     </td>
   </tr><tr>
     <td class="formcolor">&nbsp;</td>
@@ -130,7 +127,7 @@
 {* Table with list of repositories *}
 <table class="normal" id="integrator_rules">
   <tr>
-    <td class="heading" rowspan="2">#</td>
+    <td class="heading" rowspan="2"><span title="{tr}Rule order{/tr}">#</span></td>
     <td class="heading">{tr}Search{/tr}</td>
     <td class="heading">{tr}Replace{/tr}</td>
     <td class="heading">{tr}Regex{/tr}</td>
