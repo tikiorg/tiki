@@ -260,7 +260,6 @@
   
   {/if}
 
-{if $feature_mytiki eq 'y'}
 <br />
 
     <div class="cbox">
@@ -288,4 +287,3 @@
       </div>
     </div>
  </div>
-{/if}
