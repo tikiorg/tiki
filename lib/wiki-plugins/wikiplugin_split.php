@@ -1,14 +1,21 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.10 2003-10-24 15:40:11 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.11 2003-11-02 02:50:01 zaufi Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
+ * Usage:
+ *
+ *  {SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1])}
+ *
+ * If `joincols' eq true (yes) 'colspan' attribute will be generated if column missed.
+ * If `fixedsize' eq true (yes) 'width' attribute will be generated for TDs.
+ * Both paramaters have default value 'y'
  *
  */
 
 function wikiplugin_split_help() {
-	return tra("Split a page into columns").":<br />~np~{SPLIT()}".tra("column")."---".tra("column")."---".tra("column")."{SPLIT}~/np~";
+	return tra("Split a page into rows and columns").":<br />~np~{SPLIT()}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
 }
 
 /*
@@ -36,25 +43,48 @@ function wikiplugin_split($data, $params) {
 	if (substr($data, 0, 1) == "\n") $data = substr($data, 1);
 
 	extract ($params);
-	$sections = preg_split("/---+/", $data);
+    $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
+    $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
+    // Split data by rows and cells
+	$sections = preg_split("/@{3,}+/", $data);
+    $rows = array();
+    $maxcols = 0;
+    foreach ($sections as $i)
+    {
+        $rows[] = preg_split("/-{3,}+/", $i);
+        $maxcols = max($maxcols, count(end($rows)));
+    }
 
     // Is there split sections present?
     // Do not touch anything if no... even don't generate <table>
-    if (!is_array($sections) || count($sections) <= 1)
+    if (count($rows) <= 1 && count($rows[0]) <= 1)
         return $data;
 
-	$columnSize = floor(100 / count($sections));
-	$result = "<table border='0' width='100%'><tr>";
+	$columnSize = floor(100 / $maxcols);
+	$result = '<table border="0"'.($fixedsize ? ' width="100%"' : '').'>';
 
     // Attention: Dont forget to remove leading empty line in section ...
     //            it should remain from previous '---' line...
     // Attention: origianl text must be placed between \n's!!!
-	foreach ($sections as $i)
-		$result .= "<td valign='top' width='" . $columnSize . "%'>
-                   \n".((substr($data, 0, 1) == "\n") ? substr($i, 1) : $i)."\n</td>";
-
+    foreach ($rows as $r)
+    {
+        $result .= "<tr>";
+        $idx = 1;
+	    foreach ($r as $i)
+        {
+            var_dump($maxcols - $idx);
+            // Generate colspan for last element if needed
+            $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
+            $idx++;
+            // Add cell to table
+    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.">
+                       \n".((substr($i, 0, 1) == "\n") ? substr($i, 1) : $i)."\n</td>";
+        }
+        
+        $result .= "</tr>";
+    }
     // Close HTML table (no \n at end!)
-	$result .= "</tr></table>";
+	$result .= "</table>";
 
 	return $result;
 }
