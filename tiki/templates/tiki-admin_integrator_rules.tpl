@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.10 2003-11-08 19:50:33 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.11 2003-11-10 04:33:18 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -88,7 +88,11 @@
     <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of rule{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+    <td class="formcolor">
+      <input type="submit" name="save" value="{tr}Save{/tr}" />&nbsp;&nbsp;
+      <input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}" />&nbsp;
+      {tr}Enabled{/tr}
+    </td>
   </tr><tr>
     <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
   </tr><tr>
@@ -144,7 +148,11 @@
   {cycle values="odd,even" print=false}
   {section name=rule loop=$rules}
     <tr>
-      <td class="{cycle advance=false}"{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>{$rules[rule].ord|escape}</td>
+      <td class="{cycle advance=false}"{if (strlen($rules[rule].description) > 0)} rowspan="2"{/if}>
+        {if $rules[rule].enabled ne 'y'}<s>{$rules[rule].ord|escape}</s>
+        {else}{$rules[rule].ord|escape}
+        {/if}
+      </td>
       <td class="{cycle advance=false}">{$rules[rule].srch|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].repl|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].type|escape}</td>

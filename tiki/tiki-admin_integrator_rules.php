@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.14 2003-11-09 05:22:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.15 2003-11-10 04:33:18 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -36,6 +36,7 @@ $casesense   =  isset ($_REQUEST["casesense"])   ? ($_REQUEST["casesense"] == 'o
 $code        =  isset ($_REQUEST["code"])        ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
 $html        =  isset ($_REQUEST["html"])        ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
 $all         =  isset ($_REQUEST["all"])         ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
+$enabled     =  isset ($_REQUEST["enabled"])     ? ($_REQUEST["enabled"]   == 'on' ? 'y' : 'n')  : 'n';
 
 if (!isset($_REQUEST["repID"]) || $repID <= 0)
 {
@@ -53,7 +54,8 @@ if (isset($_REQUEST["save"]))
     // ... and all mandatory paramaters r OK
     if (strlen($srch)  > 0)
         $integrator->add_replace_rule($repID, $ruleID, $ord, $srch, $repl,
-                                      $type, $casesense, $rxmod, $description);
+                                      $type, $casesense, $rxmod, $enabled, 
+                                      $description);
     else
     {
         $smarty->assign('msg', tra("Search is mandatory field"));
@@ -74,6 +76,7 @@ if (isset($_REQUEST["preview"]))
     $rule["type"]        = $type;
     $rule["casesense"]   = $casesense;
     $rule["rxmod"]       = $rxmod;
+    $rule["enabled"]     = $enabled;
     $rule["description"] = $description;
 
     // Reassign values in form
@@ -84,6 +87,7 @@ if (isset($_REQUEST["preview"]))
     $smarty->assign('type',        $rule["type"]);
     $smarty->assign('casesense',   $rule["casesense"]);
     $smarty->assign('rxmod',       $rule["rxmod"]);
+    $smarty->assign('enabled',     $rule["enabled"]);
     $smarty->assign('description', $rule["description"]);
 
     // Have smth to show?
@@ -112,11 +116,13 @@ if (isset($_REQUEST["preview"]))
                 $rules = $integrator->list_rules($repID);
                 if (is_array($rules))
                     foreach ($rules as $r)
-                        if ($r["ruleID"] !== $ruleID)
+                        if (($r["ruleID"] !== $ruleID) && $r["enabled"])
                             $data = $integrator->apply_rule($rep, $r, $data);
             }
-            // Apply rule
+            // Apply rule (make this rule 'enabled' :)
+            $se = $rule["enabled"]; $rule["enabled"] = 'y';
             $data = $integrator->apply_rule($rep, $rule, $data);
+            $rule["enabled"] = $se;
         }
         $smarty->assign_by_ref('preview_data', $data);
     }
@@ -138,6 +144,7 @@ if (isset($_REQUEST["action"]))
             $smarty->assign('type',        $rule["type"]);
             $smarty->assign('casesense',   $rule["casesense"]);
             $smarty->assign('rxmod',       $rule["rxmod"]);
+            $smarty->assign('enabled',     $rule["enabled"]);
             $smarty->assign('description', $rule["description"]);
         }
         break;
