@@ -1,16 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.31 2004-07-01 00:07:02 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.32 2004-07-11 13:45:05 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.31 2004-07-01 00:07:02 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.32 2004-07-11 13:45:05 redflo Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
+require_once ('lib/userslib/userslib_admin.php');
 
 /*
 if (!isset($_REQUEST["login"])) {
@@ -97,7 +98,7 @@ $isdue = false;
 //} else {
 
 // Verify user is valid
-$isvalid = $userlib->validate_user($user, $pass, $challenge, $response);
+$isvalid = $userslibadmin->validate_user($user, $pass, $challenge, $response);
 
 // If the password is valid but it is due then force the user to change the password by
 // sending the user to the new password change screen without letting him use tiki

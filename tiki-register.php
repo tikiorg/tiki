@@ -5,6 +5,8 @@ require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 include_once('lib/webmail/tikimaillib.php');
+require_once ('lib/userslib/userslib_admin.php');
+
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -130,7 +132,7 @@ if(isset($_REQUEST["register"])) {
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine =httpPrefix().$foo1;
-    $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+    $userslibadmin->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
 		$logslib->add_log('register','created account '.$_REQUEST["name"]);
     // Send the mail
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
@@ -147,7 +149,7 @@ if(isset($_REQUEST["register"])) {
     
     $smarty->assign('showmsg','y');
   } elseif ($email_valid != 'no') {
-    $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+    $userslibadmin->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
 		$logslib->add_log('register','created account '.$_REQUEST["name"]);
     $smarty->assign('msg',tra("Thank you for you registration. You may log in now."));
     $smarty->assign('showmsg','y');

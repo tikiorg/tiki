@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.39 2004-05-04 02:02:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.40 2004-07-11 13:45:05 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+require_once ('lib/userslib/userslib_admin.php');
 
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
@@ -56,7 +57,7 @@ if (isset($_REQUEST["newgroup"])) {
 		$smarty->display("error.tpl");
 		die;
 	} else {
-		$userlib->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
+		$userslibadmin->add_group($_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -72,7 +73,7 @@ if (isset($_REQUEST["newgroup"])) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
 	check_ticket('admin-groups');
-	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
+	$userslibadmin->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {

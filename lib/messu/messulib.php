@@ -70,12 +70,15 @@ class Messu extends TikiLib {
 		return true;
 	}
 
+	/* I think this is totally unneeded here. remove it later.
+	 * 11. jul. 2004 redflo.
 	function validate_user($user, $pass) {
 		global $userlib;
 
 		$cant = $userlib->validate_user($user, $pass, '', '');
 		return $cant;
 	}
+	*/
 
 	function list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '') {
 		$bindvars = array($user);
