@@ -3,7 +3,7 @@
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.2 2003-01-13 15:04:02 lrargerich Exp $
+// $Id: TimeZone.php,v 1.3 2003-02-25 23:25:12 rossta Exp $
 //
 // Date_TimeZone Class
 //
@@ -250,12 +250,12 @@ class Date_TimeZone
     function inDaylightTime($date)
     {
         $env_tz = "";
-        if(getenv("PHP_TZ")) { //mn
-            $env_tz = getenv("PHP_TZ"); //mn
+        if(getenv("TZ")) {
+            $env_tz = getenv("TZ");
         }
-        putenv("PHP_TZ=".$this->id); //mn
+        putenv("TZ=".$this->id);
         $ltime = localtime($date->getTime(), true);
-        putenv("PHP_TZ=".$env_tz); //mn
+        putenv("TZ=".$env_tz);
         return $ltime['tm_isdst'];
     }
 
@@ -3636,6 +3636,13 @@ if(isset($_DATE_TIMEZONE_DEFAULT)
     Date_TimeZone::setDefault(getenv('TZ'));
 } elseif (Date_TimeZone::isValidID(date('T'))) {
     Date_TimeZone::setDefault(date('T'));
+} elseif (substr(php_uname(), 0, 7) == "Windows") { 
+    include_once('TimeZoneWindows.php');
+    if (isset($_DATE_TIMEZONE_DATA_WINDOWS[date('T')])) {
+        Date_TimeZone::setDefault($_DATE_TIMEZONE_DATA_WINDOWS[date('T')]);
+    } else {
+        Date_TimeZone::setDefault('UTC');
+    }
 } else {
     Date_TimeZone::setDefault('UTC');
 }

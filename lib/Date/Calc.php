@@ -22,7 +22,7 @@ define('DATE_CALC_BEGIN_WEEKDAY', 1);
  * obtain it through the world-wide-web, please send a note to
  * license@php.net so we can mail you a copy immediately.
  *
- * Copyright (c) 1999, 2002 ispi
+ * Copyright (c) 1999, 2002, 2003 ispi
  *
  * @access public
  *
