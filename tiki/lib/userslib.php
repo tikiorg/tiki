@@ -1028,6 +1028,15 @@ function get_included_groups($group) {
 		return $utr;
 	}
 
+	function get_user_tracker($groups) {
+		foreach ($groups as $gr) {
+			$utrid = $this->getOne("select `usersTrackerId` from `users_groups` where `groupname`=?",array($gr));
+			if ($utrid > 0) {
+				return $utrid;
+			}
+		}
+	}
+
   function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
 	$values = array();
 
