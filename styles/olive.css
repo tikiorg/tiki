@@ -480,7 +480,7 @@ input {
 }
 
 /* Cells in forms using a background color */
-.formcolor td, 
+.formcolor, 
 .galform td, 
 .editblogform td, 
 .editfgalform td, 
@@ -795,7 +795,7 @@ DIV#page-bar {
 	color: Black;
 	font-weight: bold;
 	background-color: white;
-	border: 1px solid #84aa00;
+	// border: 1px solid #84aa00;
 	padding-left: 0.1em;
 	padding-right: 0.1em;
 	padding-top: 0.1em;
@@ -810,6 +810,9 @@ DIV#page-bar {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
+  border: 1px solid #84aa00;
+	padding-left: 2px;
+	padding-right: 2px;
 	background-color: white;
 	text-decoration: none;
 }
@@ -819,6 +822,9 @@ DIV#page-bar {
 	font-size: 11px;
 	background-color: white;
 	color: black;
+  border: 1px solid #84aa00;
+	padding-left: 2px;
+	padding-right: 2px;
 	text-decoration: none;
 }
 
@@ -826,8 +832,11 @@ DIV#page-bar {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
+  border: 1px solid #84aa00;
+	padding-left: 2px;
+	padding-right: 2px;
 	background-color: #CCCCCC;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 /* When a cached version of an external link is displayed */
