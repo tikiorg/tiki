@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.12 2003-08-15 21:40:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.13 2003-08-21 00:51:21 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 

@@ -311,7 +311,7 @@ class ImageGalsLib extends TikiLib {
 			//imagick can read everything ... we assume
 			return true;
 		} else if ($this->uselib == "gd") {
-			switch ($imagetype) {
+			switch (strtolower($imagetype)) {
 			case 'jpeg':
 			case 'pjpeg':
 			case 'jpg':
@@ -401,8 +401,9 @@ class ImageGalsLib extends TikiLib {
 
 				//determine filetype and dimensions
 				$this->getfileinfo($tmpDir . "/" . $file);
-
-				$exp = substr($file, strlen($file) - 3, 3);
+				
+				$foo=explode(".",$file);
+				$exp=end($foo);
 				// read image and delete it after
 				$this->readimagefromfile($tmpDir . "/" . $file);
 				unlink ($tmpDir . "/" . $file);

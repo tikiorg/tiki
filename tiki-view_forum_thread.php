@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.25 2003-08-15 22:37:48 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.26 2003-08-21 00:51:20 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -142,22 +142,25 @@ if (count($prev_thread['data'])) {
 	$smarty->assign('prev_topic', false);
 }
 
-if ($tiki_p_admin_forum == 'y') {
-	if (isset($_REQUEST['delsel'])) {
-		foreach (array_values($_REQUEST['forumthread'])as $thread) {
-			$commentslib->remove_comment($thread);
-
-			$commentslib->register_remove_post($_REQUEST['forumId'], $_REUQEST['comments_parentId']);
+if($tiki_p_admin_forum == 'y') {
+	if(isset($_REQUEST['delsel'])) {
+		if (isset($_REQUEST['forumthread'])) {
+			foreach(array_values($_REQUEST['forumthread']) as $thread) {
+				$commentslib->remove_comment($thread);
+				$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
+			}
 		}
 	}
 
 	if (isset($_REQUEST['remove_attachment'])) {
 		$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
 	}
-
-	if (isset($_REQUEST['movesel'])) {
-		foreach (array_values($_REQUEST['forumthread'])as $thread) {
-			$commentslib->set_parent($thread, $_REQUEST['moveto']);
+	
+	if(isset($_REQUEST['movesel'])) {
+		if (isset($_REQUEST['forumthread'])) {
+			foreach(array_values($_REQUEST['forumthread']) as $thread) {
+		    	$commentslib->set_parent($thread,$_REQUEST['moveto']);
+		    }
 		}
 	}
 }
@@ -601,9 +604,10 @@ if (!isset($_REQUEST['time_control']))
 
 $commentslib->set_time_control($_REQUEST['time_control']);
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"], $comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"], $_REQUEST['comments_threshold']);
-$comments_cant = $commentslib->count_comments($comments_objectId);
-$smarty->assign('comments_below', $comments_coms["below"]);
-$smarty->assign('comments_cant', $comments_cant);
+$replies_cant = $comments_coms['cant'];
+$smarty->assign('comments_below',$comments_coms["below"]);
+$smarty->assign('comments_cant',$comments_cant);
+$smarty->assign('replies_cant',$replies_cant);
 
 $comments_maxRecords = $_REQUEST["comments_maxComments"];
 $comments_cant_pages = ceil($comments_coms["cant"] / $comments_maxRecords);

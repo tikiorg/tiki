@@ -683,7 +683,7 @@ closeon="!a|!map|!area|!strong|!sup|!font|!i|!b|!u|!tt|!img|!s|!big|!small|!stri
   endtag="present"
   pictureforedit="tags/tag.gif"
   comment="Map"
-
+  closeon="!area"
  [ par="name" ]
 >
 

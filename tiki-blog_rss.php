@@ -1,40 +1,45 @@
 <?php
-
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.12 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.13 2003-08-21 00:51:20 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-require_once ('tiki-setup.php');
 
-require_once ('lib/tikilib.php');
-include_once ('lib/blogs/bloglib.php');
+  require_once('tiki-setup.php');
+  require_once('lib/tikilib.php');
+  include_once('lib/blogs/bloglib.php');
 
-header ("content-type: text/xml");
-$foo = parse_url($_SERVER["REQUEST_URI"]);
+  header("content-type: text/xml");
+  $foo = parse_url($_SERVER["REQUEST_URI"]);
 
-if ($rss_blog != 'y') {
-	die;
-}
+  if($rss_blog != 'y') {
+   die;
+  }
 
-if (!isset($_REQUEST["blogId"])) {
-	die;
-}
+  if($tiki_p_read_blog != 'y') {
+    $smarty->assign('msg',tra("Permission denied you can not view this section"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
 
-$foo1 = str_replace("tiki-blog_rss.php", $tikiIndex, $foo["path"]);
-$foo2 = str_replace("tiki-blog_rss.php", "img/tiki.jpg", $foo["path"]);
-$foo3 = str_replace("tiki-blog_rss", "tiki-view_blog", $foo["path"]);
-$foo4 = str_replace("tiki-blogs_rss.php", "lib/rss/rss-style.css", $foo["path"]);
-$home = httpPrefix(). $foo1;
-$img = httpPrefix(). $foo2;
-$read = httpPrefix(). $foo3;
-$css = httpPrefix(). $foo4;
-$title = $tikilib->get_preference("title", "Tiki RSS feed for the weblog:");
-$now = date("U");
-$changes = $bloglib->list_blog_posts($_REQUEST["blogId"], 0, $max_rss_blog, 'created_desc', '', $now);
-$info = $tikilib->get_blog($_REQUEST["blogId"]);
-$blogtitle = $info["title"];
-$blogdesc = $info["description"];
+  if(!isset($_REQUEST["blogId"])) {
+    die;
+  }
+
+  $foo1=str_replace("tiki-blog_rss.php",$tikiIndex,$foo["path"]);
+  $foo2=str_replace("tiki-blog_rss.php","img/tiki.jpg",$foo["path"]);
+  $foo3=str_replace("tiki-blog_rss","tiki-view_blog",$foo["path"]);
+  $foo4=str_replace("tiki-blog_rss.php","lib/rss/rss-style.css",$foo["path"]);
+  $home = httpPrefix().$foo1;
+  $img = httpPrefix().$foo2;
+  $read = httpPrefix().$foo3;
+  $css = httpPrefix().$foo4;
+  $title = $tikilib->get_preference("title","Tiki RSS feed for the weblog:");
+  $now = date("U");
+  $changes = $bloglib->list_blog_posts($_REQUEST["blogId"], 0,$max_rss_blog,'created_desc', '', $now);
+  $info = $tikilib->get_blog($_REQUEST["blogId"]);
+  $blogtitle = $info["title"];
+  $blogdesc = $info["description"];
 
 print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 print '<?xml-stylesheet href="' . $css . '" type="text/css"?>' . "\n";

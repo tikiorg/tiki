@@ -195,7 +195,7 @@ a moderator approves it.{/tr}</small>
 {/if}
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data|escape}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="20" cols="80">{$comment_data|escape}</textarea></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>

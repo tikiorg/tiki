@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.10 2003-08-15 21:43:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.11 2003-08-21 00:51:21 redflo Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 
 {if $feature_help eq 'y'}

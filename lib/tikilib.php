@@ -1499,7 +1499,7 @@ class TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_comments`,`tiki_forums`  where `object`=md5(concat('forum',$forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_comments`,`tiki_forums`  where `forumId`=$forumId `object`=md5(concat('forum',$forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
 		$query_cant = "select count(*) from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',$forumId)) and `parentId`=0 $mid order by $sort_mode limit $offset,$maxRecords";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
@@ -2588,6 +2588,41 @@ class TikiLib {
 						$res[] = $parts[0];
 					}
 				}
+        // avoid caching URLs with common binary file extensions
+        $extension = substr($parts[0], -4);
+        $binary = array(
+                                        '.arj',
+                                        '.asf',
+                                        '.avi',
+                                        '.bz2',
+                                        '.dat',
+                                        '.doc',
+                                        '.exe',
+                                        '.hqx',
+                                        '.mov',
+                                        '.mp3',
+                                        '.mpg',
+                                        '.ogg',
+                                        '.pdf',
+                                        '.ram',
+                                        '.rar',
+                                        '.rpm',
+                                        '.rtf',
+                                        '.sea',
+                                        '.sit',
+                                        '.tar',
+                                        '.tgz',
+                                        '.wav',
+                                        '.wmv',
+                                        '.xls',
+                                        '.zip',
+                                        'ar.Z', // .tar.Z
+                                        'r.gz'  // .tar.gz
+                                        );
+        if (in_array($extension, $binary)) {
+                $res[] = $parts[0];
+        }
+
 			}
 
 			$links = array_unique($res);
@@ -3659,9 +3694,13 @@ class TikiLib {
 				$arguments = array();
 
 				foreach ($params as $param) {
-					$parts = explode('=>', $param);
+          // the following str_replace line is to decode the &gt; char when html is turned off
+          // perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+          $decoded_param = str_replace('&gt;', '>', $param);
+          $parts = explode( '=>', $decoded_param );
 
 					if (isset($parts[0]) && isset($parts[1])) {
+					$parts = explode('=>', $param);
 						$name = trim($parts[0]);
 
 						$arguments[$name] = trim($parts[1]);
@@ -3702,11 +3741,9 @@ class TikiLib {
 		// Replace Hotwords
 		if ($feature_hotwords == 'y') {
 			foreach ($words as $word => $url) {
-				// The "space" char is included in the non-alpha-numerical set below I think
-				// $line  = preg_replace("/(^$word| $word) /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
-				// Why do we ever want a special char immediately in front of a hotword?
-				// $line  = preg_replace("/([^A-Za-z0-9])$word /i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
-				$line  = preg_replace("/(^$word| $word)([^A-Za-z0-9])/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+				// \b is a word boundary, \s is a space char
+				$line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+				$line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
 			}
 		}
 
@@ -4004,8 +4041,9 @@ class TikiLib {
 		if ($feature_wikiwords == 'y') {
 			// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 			preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-
+			$words = $this->get_hotwords();
 			foreach (array_unique($pages[2])as $page_parse) {
+			if (!array_key_exists($page_parse, $words)) {
 				if ($desc = $this->page_exists_desc($page_parse)) {
 					$repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
 				} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
@@ -4023,7 +4061,7 @@ class TikiLib {
 					if($desc = $this->page_exists_desc($plural_tmp)) {
 						$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 					} else {
-						$repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+						$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
 					}
 				} else {
 					$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
@@ -4031,6 +4069,7 @@ class TikiLib {
 
 				$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
 			//$data = str_replace($page_parse,$repl,$data);
+			}
 			}
 		}
 

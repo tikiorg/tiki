@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.15 2003-08-15 21:15:09 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.16 2003-08-21 00:51:21 redflo Exp $ *}
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">

@@ -271,6 +271,8 @@ a moderator approves it.{/tr}</small>
 <br/><br/>
 {/if}
 {/if}
+
+{if $replies_cant > 0}
 <!-- TOOLBAR -->
   <div class="forumtoolbar">
   <form method="post" action="tiki-view_forum_thread.php">
@@ -335,6 +337,7 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
+
 {if $tiki_p_admin_forum eq 'y'}
 <table class="normal">
 	<tr>
@@ -371,6 +374,7 @@ a moderator approves it.{/tr}</small>
   <td class="forumheading">{tr}author{/tr}</td>
   <td class="forumheading">{tr}message{/tr}</td>
 </tr>
+{/if}
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 <tr>
