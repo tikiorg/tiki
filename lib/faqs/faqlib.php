@@ -139,7 +139,7 @@ class FaqLib extends TikiLib {
 			$result = $this->query($query,array((int) $faqId));
 			$query = "delete from `tiki_faq_questions` where `faqId`=? and question=?";
 			$result = $this->query($query,array((int) $faqId,$question),-1,-1,false);
-			$query = "insert into tiki_faq_questions(faqId,question,answer)
+			$query = "insert into `tiki_faq_questions`(`faqId`,`question`,`answer`)
                 		values(?,?,?)";
 			$result = $this->query($query,array((int) $faqId,$question,$answer));
 		}
