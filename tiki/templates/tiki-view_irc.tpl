@@ -28,6 +28,7 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 <div class="simplebox">
 {section name=b loop=$irc_log_rows}
 {* \TODO {$irc_log_rows[b].localtime|tiki_short_time} *}
+{$irc_log_rows[b].name}
 {if $irc_log_rows[b].action eq 'a'}
 	<div style="color:#563514;background-color:{cycle};padding:1px;">
 	<tt>{$irc_log_rows[b].time} </tt><i><b>{$irc_log_rows[b].nick}</b> {$irc_log_rows[b].data}</i>
