@@ -119,7 +119,6 @@ Your tiki is not properly set up:
 
 $errors
 ";
-		}
 
 		if (!TikiSetup::isWindows()) {
 			print "
@@ -143,8 +142,6 @@ Once you have executed these commands, this message will disappear!
 	";
 		}
 		
-		if ($errors) {
-			exit;
 		}
 	}
 }
