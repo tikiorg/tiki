@@ -108,7 +108,7 @@
 <tr>
 <td class="odd"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="odd">{$perms[user].permName}</td>
-<td class="odd"><select name="level[{$perms[user].permName}]"><select name="level">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
+<td class="odd"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
 <!--<td class="odd">{$perms[user].hasPerm}</td>-->
 <td class="odd">{$perms[user].type}</td>
 <td class="odd">{$perms[user].permDesc}</td>

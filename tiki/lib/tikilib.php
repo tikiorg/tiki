@@ -613,7 +613,7 @@ class TikiLib {
     if(!$user) return false;
     $last = $this->getOne("select lastLogin from users_users where login='$user'");
     $ret = Array();
-    $ret["lastVisit"] = $this->getOne("select lastLogin from users_users where login='$user'");
+    $ret["lastVisit"] = $last;
     $ret["images"] = $this->getOne("select count(*) from tiki_images where created>$last");
     $ret["pages"] = $this->getOne("select count(*) from tiki_pages where lastModif>$last");
     $ret["files"]  = $this->getOne("select count(*) from tiki_files where created>$last");
@@ -3884,10 +3884,10 @@ class TikiLib {
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
       $pattern = $pages[0][$i];
-      $pattern=str_replace('|','\|',$pattern);
-      $pattern=str_replace('(','\(',$pattern);
-      $pattern=str_replace(')','\)',$pattern);
-      $pattern=str_replace('/','\/',$pattern);
+      //$pattern=str_replace('|','\|',$pattern);
+      //$pattern=str_replace('(','\(',$pattern);
+      //$pattern=str_replace(')','\)',$pattern);
+      $pattern=str_replace('/','\/',preg_quote($pattern));
 
       $pattern = "/".$pattern."/";
       // Replace links to external wikis
@@ -4014,9 +4014,10 @@ class TikiLib {
 	  }
       if( $this->is_cached($link) && $cachepages == 'y') {
         $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
-        $link2 = str_replace("/","\/",$link);
-        $link2 = str_replace("?","\?",$link2);
-        $link2 = str_replace("&","\&",$link2);
+        //$link2 = str_replace("/","\/",$link);
+        //$link2 = str_replace("?","\?",$link2);
+        //$link2 = str_replace("&","\&",$link2);
+	$link2=str_replace("/","\/",preg_quote($link));
         $pattern = "/\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
         $pattern = "/\[$link2\|([^\]\|]+)\]/";
@@ -4024,9 +4025,10 @@ class TikiLib {
         $pattern = "/\[$link2\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a> $cosa",$data);
       } else {
-        $link2 = str_replace("/","\/",$link);
-        $link2 = str_replace("?","\?",$link2);
-        $link2 = str_replace("&","\&",$link2);
+        //$link2 = str_replace("/","\/",$link);
+        //$link2 = str_replace("?","\?",$link2);
+        //$link2 = str_replace("&","\&",$link2);
+	$link2=str_replace("/","\/",preg_quote($link));
         $pattern = "/\[$link2\|([^\]\|]+)([^\]])*\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
         $pattern = "/\[$link2\]/";
