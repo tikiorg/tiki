@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.34 2004-10-08 09:59:44 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.35 2004-10-25 12:20:29 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.34 2004-10-08 09:59:44 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.35 2004-10-25 12:20:29 chealer Exp $
 //
 
 // Initialization
@@ -207,7 +207,7 @@ $smarty->assign('categ_name', $categ_name);
 // ---------------------------------------------------
 // Convert $childrens
 //$debugger->var_dump('$children');
-$ctall = $categlib->get_all_categories_ext();
+$ctall = $categlib->get_all_categories();
 $tree_nodes = array();
 
 foreach ($ctall as $c) {
@@ -246,8 +246,8 @@ function array_csort($marray, $column) {
 	}
 }
 
-$catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
-$catree = array_csort($catree['data'],'categpath');
+$catree = $categlib->list_categs();
+$catree = array_csort($catree,'categpath');
 $smarty->assign('catree', $catree);
 
 // var_dump($catree); 

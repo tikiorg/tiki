@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.62 2004-10-15 15:54:49 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.63 2004-10-25 12:20:28 chealer Exp $
  *
  * \brief Categories support class
  *
@@ -47,56 +47,6 @@ class CategLib extends TikiLib {
 		} else {
 			return unserialize($cachelib->getCached("allcategs"));
 		}
-	}
-	
-	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
-		$cats = $this->get_object_categories($type, $objid);
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$bindvals=array($findesc,$findesc);
-			$mid = " where (`name` like ? or `description` like ?)";
-		} else {
-      $bindvals=array();
-			$mid = "";
-		}
-
-		$query = "select * from `tiki_categories` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_categories` $mid";
-		$result = $this->query($query,$bindvals,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvals);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			if (in_array($res["categId"], $cats)) {
-				$res["incat"] = 'y';
-			} else {
-				$res["incat"] = 'n';
-			}
-      
-      $catpath = $this->get_category_path($res["categId"]);
-			$tepath = array();	
-			foreach ($catpath as $cat) {
-				$tepath[] = $cat['name'];
-			}
-			$categpath = implode("::",$tepath);
-			$res["categpath"] = $categpath;
-			$res["tepath"] = $tepath;
-			$res["deep"] = count($tepath);
-			global $userlib;
-			if ($userlib->object_has_one_permission($res['categId'], 'category')) {
-				$res['has_perm'] = 'y';
-			} else {
-				$res['has_perm'] = 'n';
-			}
-			$ret["$categpath"] = $res;
-		}
-		ksort($ret);
-		
-		$retval = array();
-    $retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
-		return $retval;
 	}
 	
 	function get_category_path($categId) {
@@ -635,22 +585,6 @@ class CategLib extends TikiLib {
 	}
 
 	function get_all_categories() {
-		global $cachelib;
-	/*
-		// inhibited because allcateg_ext is cached now
-		$query = " select `name`,`categId`,`parentId` from `tiki_categories` order by `name`";
-		$result = $this->query($query,array());
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-	*/
-		return $this->get_all_categories_ext();
-	}
-
-	// Same as get_all_categories + it also get info about count of objects
-	function get_all_categories_ext() {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
 			$ret = array();
