@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.32 2004-03-31 10:12:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.33 2004-05-04 02:08:32 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,6 +83,8 @@ function batchImportUsers() {
 	@$smarty->assign('discardlist', $discarded);
 }
 
+$cookietab = "1";
+
 // Process the form to add a user here
 if (isset($_REQUEST["newuser"])) {
 	check_ticket('admin-users');
@@ -99,7 +101,7 @@ if (isset($_REQUEST["newuser"])) {
 			} else {
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
-					setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {
 					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to create new %s with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
@@ -270,18 +272,18 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			}
 		}
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	$cookietab = "2";
 } else {
 	$userinfo['login'] = '';
 	$userinfo['email'] = '';
 	$userinfo['created'] = date('U');
 	$userinfo['registrationDate'] = '';
 	$userinfo['lastLogin'] = '';
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
+	$cookietab = "1";
 	$_REQUEST["user"] = 0;
 }
 if (isset($_REQUEST['add'])) {
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	$cookietab = "2";
 }
 
 $smarty->assign('userinfo', $userinfo);
@@ -290,6 +292,9 @@ $smarty->assign('username', $username);
 $smarty->assign('usermail', $usermail);
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
+
+setcookie('tab',$cookietab);
+$smarty->assign('cookietab',$cookietab);
 
 ask_ticket('admin-users');
 
