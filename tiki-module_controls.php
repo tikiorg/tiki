@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.8 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.9 2003-11-15 23:56:01 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,7 +36,7 @@ if (!$user && $check_req) {
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
-
+$url = $_SERVER["REQUEST_URI"];
 if ($check_req) {
 //    global $debugger;
 //    $debugger->msg('Module control clicked: '.$check_req);
@@ -52,16 +52,16 @@ if ($check_req) {
 		$usermoduleslib->move_module($_REQUEST["mc_move"], $user);
 	else
 		$usermoduleslib->unassign_user_module($_REQUEST["mc_unassign"], $user);
+    // Remove module movemet paramaters from an URL
+    // \todo What if 'mc_xxx' arg was not at the end? (if smbd fix URL by hands...)
+    //       should I handle this very special (hack?) case?
+    $url = preg_replace('/(.*)(\?|&){1}(mc_up|mc_down|mc_move|mc_unassign)=[^&]*/','\1', $url);
 }
 
-// TODO: Need to fix this stupid way... Must replace only my own args... (or not?)
-$pos = strpos($_SERVER["REQUEST_URI"], "?");
-
-if ($pos)
-	$url = substr($_SERVER["REQUEST_URI"], 0, $pos);
-else
-	$url = $_SERVER["REQUEST_URI"];
+// Fix locaton if parameter was removed...
+if ($url != $_SERVER["REQUEST_URI"]) header('location: '.$url);
 
 $smarty->assign('current_location', $url);
+$smarty->assign('mpchar', (strpos($url, '?') ? '&' : '?'));
 
 ?>
