@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 1. June 2003
+// Last modified: 23. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -434,6 +434,7 @@ class HAWIKI_wiki
   var $extwiki;       // array with external wiki declaration
   var $navlink;       // array with navigation links (home, menue etc.)
   var $smiley_dir;    // where smiley gif's are stored
+  var $link_jingle;   // where link wav file for VoiceXML is located
   var $firstColumn;   // flag to determine parser position
   var $listLine;      // flag to indicate that line belongs to a list
   var $listNumbering; // array with current list numbers
@@ -445,6 +446,7 @@ class HAWIKI_wiki
     $this->wiki_string = $input;
     $this->wiki_base = $wiki_base;
     $this->smiley_dir = "";       // has to be set later by function call
+    $this->link_jingle = "";      // dito
     $this->extwiki = array();
     $this->navlink = array();
     $this->firstColumn = true;
@@ -888,6 +890,21 @@ class HAWIKI_wiki
       }
     }
 
+    // set jingle for VoiceXML links
+    if ($this->link_jingle)
+    {
+      // jingle has been set by hawiki user
+      $this->deck->set_voice_jingle($this->link_jingle);
+    }
+    else
+    {
+      if (file_exists(getcwd() . "/lib/hawhaw/link.wav"))
+      {
+        // default wav file available ==> use it!
+        $this->deck->set_voice_jingle("./lib/hawhaw/link.wav");
+      }
+    }
+    
     // output appropriate markup language
     $this->deck->create_page();
   }
@@ -925,6 +942,12 @@ class HAWIKI_wiki
   function set_smiley_dir($dir)
   {
     $this->smiley_dir = $dir;
+  }
+
+
+  function set_link_jingle($url)
+  {
+    $this->link_jingle = $url;
   }
 
 
