@@ -3,16 +3,16 @@
 
 
 {tr}You can view the page by following this link:
-    {$mail_machine}/tiki-index.php?page={$mail_page}{/tr}
+    {$mail_machine}/tiki-index.php?page={$mail_page|escape:"url"}{/tr}
 
 
 {tr}You can edit the page by following this link:
-    {$mail_machine}/tiki-editpage.php?page={$mail_page}{/tr}
+    {$mail_machine}/tiki-editpage.php?page={$mail_page|escape:"url"}{/tr}
 
 
 {tr}You can view a diff back to the previous version by following
 this link:
-    {$mail_machine}/tiki-pagehistory.php?page={$mail_page}&amp;diff2={$mail_last_version}{/tr}
+    {$mail_machine}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&diff2={$mail_last_version}{/tr}
 
 
 {tr}Comment:{/tr} {$mail_comment}
