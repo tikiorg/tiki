@@ -36,7 +36,7 @@
 <h3>{tr}View item{/tr}</h3>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-{assign var=ustatus value=$items[user].status|default:"p"}
+{assign var=ustatus value=$info.status|default:"p"}
 <tr class="formcolor"><td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
 <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
 {/if}
