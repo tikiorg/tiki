@@ -629,16 +629,22 @@ class TikiLib {
     if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
     $query = "select count(*) from tiki_images" . $whgal;
     $cant = $this->getOne($query);
-    $pick = rand(0,$cant-1);
-    $ret = Array();
-    $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
-    $result=$this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $ret["galleryId"] = $res["galleryId"];
-    $ret["imageId"] = $res["imageId"];
-    $ret["name"] = $res["name"];
-    $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
-    $ret["gallery"] = $this->getOne($query);
+		$ret = Array();
+		if ($cant) {
+			$pick = rand(0,$cant-1);
+			$query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
+			$result=$this->query($query);
+			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+			$ret["galleryId"] = $res["galleryId"];
+			$ret["imageId"] = $res["imageId"];
+			$ret["name"] = $res["name"];
+			$query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
+			$ret["gallery"] = $this->getOne($query);
+		} else {
+			$ret["galleryId"] = 0;
+			$ret["imageId"] = 0;
+			$ret["name"] = tra("No image yet, sorry.");
+		}
     return($ret);
   }
 
@@ -2396,8 +2402,8 @@ class TikiLib {
 
   function set_preference($name, $value)
   {
-    global $preferences;
-    @unlink('templates_c/preferences.php');
+    global $preferences,$tikidomain;
+    @unlink("templates_c/$tikidomain/preferences.php");
     //refresh cache
     if(isset($preferences[$name])) {
       unset ($preferences[$name]);
