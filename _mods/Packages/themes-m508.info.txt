@@ -5,7 +5,7 @@ revision:
 $Revision: 1.1 $
 
 lastmodif:
-$Date: 2004-09-30 02:16:23 $
+$Date: 2004-11-05 14:52:02 $
 
 files: 
 themes/508/styles/508.css styles/508.css
