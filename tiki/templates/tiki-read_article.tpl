@@ -9,18 +9,6 @@
 <br />
 {if $show_subtitle eq 'y' and $subtitle}<div class="articlesubtitle">{$subtitle}</div>{/if}
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})
-{if $feature_multilingual and $show_lang and $lang} - 
-		{if count($trads) > 1}
-			<form action="tiki-read_article.php" method="post">
-			<select name="articleId" onchange="articleId.form.submit()">
-			{section name=i loop=$trads}
-			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
-			{/section}
-			</form>
-		{elseif $trads[0].langName}
-			{$trads[0].langName}
-		{/if}
-{/if}
 </span><br />
 </div>
 
@@ -69,6 +57,7 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 <table class="wikitopline"><tr><td>
 ({$size} bytes)
 </td>
+{if $feature_multilingual and $show_lang and $lang}{include file="translated-lang.tpl" td='y'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>

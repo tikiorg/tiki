@@ -1,5 +1,5 @@
 {* displays a cell with the languages of the translation set *}
-	{if count($trads) > 1 && $trads[0].langName}
+	{if count($trads) > 1 || $trads[0].langName}
 		{if $td}<td style="text-align:right;">{/if}
 		{if count($trads) > 1}
 			<form action="tiki-index.php" method="post">
