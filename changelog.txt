@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.121 2003-10-22 18:20:38 dheltzel Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.122 2003-10-22 20:07:16 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,8 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [MOD] tiki-install.php now tries to create the dirs it needs. Less need to run
+  setup.sh
 * [NEW] Installation profiles allow for a pre-configured site at install time.
 * [MOD] added a simple cache system for topic_image.php with optionnal 
   reload=1 as argument for forcing cache reload (performance gain in articles)
@@ -26,8 +28,6 @@ Version 1.8 --
   from tiki_modules, as you would expect.
 * [MOD] added an anchor jump to comments on comments and attachment links
 * [NEW] Plugin to include information from an article.
-* [NEW] Ability to turn certain fields off in the view article page, similar to
-  what is permitted for the list article page.
 * [MOD] Improved thread display of comments
 * [NEW] newsletter enhancements - per newsletter determine whether users can
   subscribe, whether the address must be validated, and whether to include an
