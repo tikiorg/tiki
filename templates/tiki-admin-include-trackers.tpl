@@ -15,7 +15,7 @@
 
 <br />
 <div class="admin">
-Attachements
+Attachments
 <form action="tiki-admin.php?page=trackers" method="post">
 <input type="text" name="find" value="{$find|escape}">
 <input type="submit" name="action" value="{tr}find{/tr}">
