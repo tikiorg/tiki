@@ -1,7 +1,7 @@
 <?php // -*- coding:utf-8 -*-
 /** \brief this table associates language extension and language name in the current language and language name in the native language
- * CAREFULL: is utf8 encoding
- * PLEASE : translators update this file will your language name in your own language
+ * CAUTION: it is utf-8 encoding used here too
+ * PLEASE : translators, please, update this file with your language name in your own language
  **/
     $langmapping = array(
 	    'cs' => array(	'Český',		tra("Czech")		),
@@ -17,6 +17,7 @@
 	    'no' => array(	'Norwegian',	tra("Norwegian")	),
 	    'pl' => array(	'Polish',		tra("Polish")		),
 	    'ru' => array(	'Russian',		tra("Russian")		),
+      'sk' => array(	'Slovenský',		tra("Slovak")		),
 	    'sv' => array(	'Swedish',		tra("Swedish")		),
 	    'tw' => array(	'Twi',			tra("Twi")			),
 	    'zh' => array(	'Chinese',		tra("Chinese")		)
