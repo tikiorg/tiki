@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.13 2003-10-27 12:25:10 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.14 2003-10-27 12:32:52 sylvieg Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
@@ -47,7 +47,7 @@
 {section name=user loop=$topics}
 <tr>
 <td class="{cycle advance=false}">{$topics[user].name}</td>
-<td class="{cycle advance=false}"><img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}" />
+<td class="{cycle advance=false}"><img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}&amp;reload=1" />
 </td>
 <td class="{cycle advance=false}">{$topics[user].active}</td>
 <td class="{cycle advance=false}">{$topics[user].arts} ({$topics[user].subs})</td>
