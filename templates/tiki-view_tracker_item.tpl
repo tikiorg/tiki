@@ -50,10 +50,9 @@
 {assign var=fca value=$ins_fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
-<td width="50%" nowrap="nowrap">{$iu.name}</td>{cycle name=$fca}
+<td width="50%" nowrap="nowrap"><tt>{if $ins_fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
 {/foreach}
 </table>
-{$ins_fields[ix].pvalue}
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
 {else}
