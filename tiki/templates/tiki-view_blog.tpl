@@ -51,8 +51,8 @@
 {/if}
 </small>
 </td><td style='text-align:right'>
-<a href='tiki-print_blog_post.php?listpages[ix].postId={$postId}'><img src='img/icons/print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
-<a href='tiki-send_blog_post.php?listpages[ix].postId={$postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
+<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
+<a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
 </td></tr></table>
 </div>
 </div>
