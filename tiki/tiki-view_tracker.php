@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.39 2004-02-02 11:00:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.40 2004-02-03 05:53:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,6 +52,14 @@ if ($tiki_p_view_trackers != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
+	$defaultvalues = $_REQUEST['vals'];
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+} else {
+	$defaultvalues = array();
+}
+$smarty->assign('defaultvalues', $defaultvalues);
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
