@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.12 2003-11-11 23:17:57 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.13 2003-11-12 23:50:12 franck Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -312,6 +312,24 @@
   {/if}
   {if $tiki_p_admin_faqs eq 'y'}
   &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}Admin FAQs{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
+
+{if $feature_maps eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:toggle('mapsmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="mapsmenu" />&nbsp;</a>
+  {else}<a class="separator" href="javascript:toggle('mapsmenu');">[-]</a>{/if} 
+  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mapsmenu');">[+]</a>{/if}
+  </div>
+  <div id="mapsmenu" style="{$mnu_mapsmenu}">
+  {if $tiki_p_map_view eq 'y'}
+  &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a><br />
+  {/if}
+  {if $tiki_p_map_edit eq 'y'}
+  &nbsp;<a href="tiki-map_upload.php" class="linkmenu">{tr}Layer management{/tr}</a><br />
   {/if}
   </div>
 {/if}

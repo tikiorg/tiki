@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.13 2003-11-11 23:17:56 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.14 2003-11-12 23:50:11 franck Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -248,8 +248,10 @@
   <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
   </div>
   <div id="mapsmenu" style="{$mnu_mapsmenu}">
-  {if $tiki_p_map_edit eq 'y'}
+  {if $tiki_p_map_view eq 'y'}
   &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a><br />
+  {/if}
+  {if $tiki_p_map_edit eq 'y'}
   &nbsp;<a href="tiki-map_upload.php" class="linkmenu">{tr}Layer management{/tr}</a><br />
   {/if}
   </div>

@@ -243,6 +243,21 @@
   </div>
 {/if}
 
+{if $feature_maps eq 'y'}
+  <div class="separator">
+  <a class="separator" href="javascript:toggle('mapsmenu');">::</a>
+  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  </div>
+  <div id="mapsmenu" style="{$mnu_mapsmenu}">
+  {if $tiki_p_map_view eq 'y'}
+  <div class="separated"><a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a></div>
+  {/if}
+  {if $tiki_p_map_edit eq 'y'}
+  <div class="separated"><a href="tiki-map_upload.php" class="linkmenu">{tr}Layer management{/tr}</a></div>
+  {/if}
+  </div>
+{/if}
+
 {if $feature_quizzes eq 'y'}
   <div class="separator">
   <a class='separator' href="#" onclick="javascript:toggle('quizmenu');">.:</a>

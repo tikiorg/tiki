@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.6 2003-11-10 02:26:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.7 2003-11-12 23:50:10 franck Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br/><br/>
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
@@ -40,6 +40,7 @@
 <a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&mode=editing">
 <img src="img/icons/config.gif" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
 </a>
+{/if}
 {if $user and $feature_user_watches eq 'y'}
  {if $user_watching_map[user] eq 'n'}
   	<a href="tiki-map_edit.php?watch_event=map_changed&watch_object={$files[user]}&watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
@@ -48,7 +49,6 @@
 	{/if}
 {/if}	
 </td>
-{/if}
 </tr>
 {/if}
 {sectionelse}
