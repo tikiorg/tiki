@@ -45,7 +45,9 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  			<input type="text" name="host" value="localhost" />
 	  			</td><td>
 	  			<small>Hostname or IP for your MySQL database, example:
-	  			localhost if running in the same machine as tiki</small>
+	  			localhost if running in the same machine as tiki<br />
+				If you use Oracle, insert your TNS Name here<br />
+				If you use SQLite, insert the path and filename to your database file</small>
 	  			</td></tr></table>
 	  		
 	  		</td>
