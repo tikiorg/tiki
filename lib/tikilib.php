@@ -5591,26 +5591,36 @@ if (!function_exists('file_get_contents')) {
 		ob_end_clean();
 		return $retval;
 	}
-	/* \brief  substr with a utf8 string
+	/* \brief  substr with a utf8 string - works only with $start and $length positive ou nuls
 	 * This function is the same as substr but works with multibyte
 	 * The first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD and it indicates how many bytes follow for this character.
 	 * All further bytes in a multibyte sequence are in the range 0x80 to 0xBF.
        */
-	function utf8Substr($str, $start, $len){
+	function utf8Substr($str, $start, $len = ''){
 		if (function_exists('mb_subtr')) /* php is compile with the mulitbyte support */
 			return mb_substr($string, $start, $len);
-		for ($s = 0; $start > 0;--$start)
+		$limit = strlen($str);
+		for ($s = 0; $start > 0;--$start) {// found the real start
+			if ($s >= $limit)
+				break;
 			if ($str[$s] <= "\x7F")
 				++$s;
 			else
 				while ($str[$s] > "\x7F")
 					++$s;
-		for ($e = $s; $len > 0; --$len)
-			if ($str[$e] <= "\x7F")
-				++$e;
-			else
-				while ($str[$e] > "\x7F")
+		}
+		if ($len == '')
+			return substr($str, $s);
+		else
+			for ($e = $s; $len > 0; --$len) {//found the real end
+				if ($e >= $limit)
+					break;
+				if ($str[$e] <= "\x7F")
 					++$e;
+				else
+					while ($str[$e] > "\x7F")
+						++$e;
+			}
 		return substr($str, $s, $e - $s);
 	} 
 
