@@ -46,7 +46,7 @@ function tra($content)
     if(DB::isError($result)) return $content;
     if(!isset($res["tran"])) {
       global $record_untranslated;
-      if ($record_untranslated==true) {
+      if ($record_untranslated=='y') {
 	$query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
         //No eror checking here
         $tikilib->db->query($query);

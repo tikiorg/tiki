@@ -60,6 +60,7 @@
       <td><input name="edit_rec_tran_{$smarty.section.it.index}" size=20 maxlength=255></td>
       <td align="center"><input type="submit" name="edit_rec_{$smarty.section.it.index}" value="{tr}translate{/tr}" />
   {/section}
+  <tr><td align="center"><input type="submit" name="tran_reset" value="{tr}reset table{/tr}" /></td></tr>
   </table>
   {if $tr_recnum != 0}
     <input type="submit" name="lessrec" value="{tr}previous page{/tr}" />

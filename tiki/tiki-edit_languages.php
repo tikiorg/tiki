@@ -141,6 +141,11 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
         }
       }
     } // end of for ...
+    // for resetting untranslated
+    if(isset($_REQUEST["tran_reset"])) {
+      $query="delete from tiki_untranslated";
+      $result=$tikilib->query($query);
+    }
   } 
   
   

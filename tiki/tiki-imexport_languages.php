@@ -50,7 +50,7 @@ if (isset($_REQUEST["exp_language"])) {
 
 if (isset($_REQUEST["import"])) {
   include_once('lang/'.$imp_language.'/language.php');
-  $impmsg=$impmsg."Included lang/".$imp_language."/language.php";
+  $impmsg="Included lang/".$imp_language."/language.php";
   $query="insert into tiki_languages values ('".$imp_language."','')";
   $result=$tikilib->query($query);
   while (list ($key, $val) = each($lang)) {
@@ -58,7 +58,7 @@ if (isset($_REQUEST["import"])) {
     $result=$tikilib->query($query);
 
   }
-      $smarty->assign('impmsg',$impmsg);
+  $smarty->assign('impmsg',$impmsg);
 }
 
 // Export
