@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.2 2003-09-25 01:05:31 rlpowell Exp $ *}{include file="header.tpl"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.3 2003-10-16 15:42:45 luciash Exp $ *}{include file="header.tpl"}
 {* Main template for TikiWiki layout *}
 <div id="main">
   {if $feature_top_bar eq 'y'}
@@ -28,15 +28,14 @@
       </div><!-- used to be right -->
     {/if}
 
-    {* Calculate size of center div *}
+    {* Calculate size of center div (this is really needed! luci) *}
 
-    {* The below is no longer being used. -rlpowell *}
     {php} $add_style=''; {/php}
     {if $feature_left_column eq 'y' and count($left_modules) gt 0}
 	    {php} $add_style.='margin-left: 25%;'; {/php}
     {/if}
     {if $feature_right_column eq 'y' and count($right_modules) gt 0}
-	    {php} $add_style.='margin-right: 25%;'; {/php}
+	    {php} $add_style.=' margin-right: 25%;'; {/php}
     {/if}
     {php}
 	  $add_style = strlen($add_style) ? ' style="'.$add_style.'"' : '';
@@ -46,7 +45,7 @@
 
     {* Display main content in center column *}
     <a name="content"></a>
-    <div id="maincontent">
+    <div id="maincontent"{$add_style}>
       {include file=$mid}
       {if $show_page_bar eq 'y'}
         {include file="tiki-page_bar.tpl"}
