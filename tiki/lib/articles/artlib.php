@@ -300,7 +300,19 @@ class ArtLib extends TikiLib {
 // Article Type functions
 	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads) {
 
-		$query = "insert into `tiki_article_types`(`$type`,`$use_ratings`,`$show_pre_publ`,`$show_post_expire`,`$heading_only`,`$allow_comments`,`$show_image`,`$show_avatar`,`$show_author`,`$show_pubdate`,`$show_expdate`,`$show_reads`)
+		if ($use_ratings == 'on') {$use_ratings = 'y';} else {$use_ratings = 'n';}
+		if ($show_pre_publ == 'on') {$show_pre_publ = 'y';} else {$show_pre_publ = 'n';}
+		if ($show_post_expire == 'on') {$show_post_expire = 'y';} else {$show_post_expire = 'n';}
+		if ($heading_only == 'on') {$heading_only = 'y';} else {$heading_only = 'n';}
+		if ($allow_comments == 'on') {$allow_comments = 'y';} else {$allow_comments = 'n';}
+		if ($show_image == 'on') {$show_image = 'y';} else {$show_image = 'n';}
+		if ($show_avatar == 'on') {$show_avatar = 'y';} else {$show_avatar = 'n';}
+		if ($show_author == 'on') {$show_author = 'y';} else {$show_author = 'n';}
+		if ($show_pubdate == 'on') {$show_pubdate = 'y';} else {$show_pubdate = 'n';}
+		if ($show_expdate == 'on') {$show_expdate = 'y';} else {$show_expdate = 'n';}
+		if ($show_reads == 'on') {$show_reads = 'y';} else {$show_reads = 'n';}
+
+		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`)
                      values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads));
 
@@ -312,7 +324,7 @@ class ArtLib extends TikiLib {
 	function remove_type($type) {
 		$query = "delete from `tiki_article_types` where `type`=?";
 
-		$result = $this->query($query,array($topicId));
+		$result = $this->query($query,array($type));
 
 		return true;
 	}
