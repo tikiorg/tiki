@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.44 2004-04-10 18:36:28 lphuberdeau Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.45 2004-04-27 17:57:23 sylvieg Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -476,11 +476,10 @@
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
         <td><input type="checkbox" name="feature_sheet" {if $feature_sheet eq 'y'}checked="checked"{/if}/></td>
-
 	<td>&nbsp;</td>
-	<td class="form">
+	<td class="form">{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=TikiMultilingual" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Multilingual{/tr}">{/if}{tr}Multilingual{/tr}{if $feature_help eq 'y'}</a>{/if}:</td>
+	<td><input type="checkbox" name="feature_multilingual" {if $feature_multilingual eq 'y'}checked="checked"{/if}/
 	</td>
-	<td></td>
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.212 2004-04-10 18:36:28 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.213 2004-04-27 17:57:22 sylvieg Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -552,6 +552,8 @@ $direct_pagination = 'n';
 $smarty->assign('direct_pagination', $direct_pagination);
 $feature_sheet = 'n';
 $smarty->assign('feature_sheet', $feature_sheet);
+$feature_multilingual = 'y';
+$smarty->assign('feature_multilingual', $feature_multilingual);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
@@ -676,8 +678,6 @@ $smarty->assign('contact_user', $contact_user);
 $default_sender_email = $tikilib->get_user_email($contact_user);
 $sender_email = $tikilib->get_preference('sender_email', $default_sender_email);
 $smarty->assign('sender_email', $sender_email);
-$email_encoding = $tikilib->get_preference('email_encoding', 'utf-8');
-$smarty->assign('email_encoding', $email_encoding);
 
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html', $webmail_view_html);
