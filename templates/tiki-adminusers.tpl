@@ -1,7 +1,33 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.21 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.22 2003-08-15 01:14:52 dgdaniels Exp $ *}
 
-<a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a><br/><br/>
+<a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin users{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin users tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+<br/><br/>
 <h3>{tr}Add a new user{/tr}</h3>
+
+
+
+
+
+
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr><td class="formcolor">{tr}User{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
