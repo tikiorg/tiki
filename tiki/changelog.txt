@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.147 2004-02-26 20:52:14 lfagundes Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.148 2004-03-02 10:27:18 djnz Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -17,6 +17,7 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
+* [MOD] Parse absolute URI correctly in group home page setting
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
 

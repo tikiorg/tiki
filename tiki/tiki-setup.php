@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.199 2004-02-24 21:51:44 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.200 2004-03-02 10:27:18 djnz Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1191,7 +1191,7 @@ if (isset($user)) {
 	if($useGroupHome == 'y') {
     $groupHome = $userlib->get_group_home($group);
     if ($groupHome) {
-      $tikiIndex = "tiki-index.php?page=".$groupHome;
+        $tikiIndex = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
 		}
 	}
 }
