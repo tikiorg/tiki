@@ -460,7 +460,7 @@ class ImageGalsLib extends TikiLib {
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
 			$query = "update `tiki_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 
-			$result = $this->query($query,array($id));
+			$result = $this->query($query,array((int) $id));
 		}
 
 		return true;
@@ -832,9 +832,9 @@ class ImageGalsLib extends TikiLib {
 		$cantvars=array();
 		if ($galleryId != -1 && is_numeric($galleryId)) {
 			$mid .= " and i.`galleryId`=? ";
-			$bindvars[]=$galleryId;
+			$bindvars[]=(int) $galleryId;
 			$midcant = "where `galleryId`=? ";
-			$cantvars[]=$galleryId;
+			$cantvars[]=(int) $galleryId;
 		}
 
 		$query = "select i.`path` ,i.`imageId`,i.`name`,i.`description`,i.`created`,
@@ -1233,7 +1233,7 @@ class ImageGalsLib extends TikiLib {
 
 		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
               and `xsize`*`ysize` > ? order by `xsize`*`ysize` asc";
-		$result = $this->query($query,array($id,$xy));
+		$result = $this->query($query,array((int) $id,(int) $xy));
 		$res = $result->fetchRow();
 		return $res;
 	}
