@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.8 2004-01-28 02:45:14 musus Exp $
+// $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.9 2004-01-28 04:06:29 musus Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.8 2004-01-28 02:45:14 musus Exp $
+# $Header: /cvsroot/tikiwiki/tiki/display_banner.php,v 1.9 2004-01-28 04:06:29 musus Exp $
 
 // Only to be called from edit_banner or view_banner to display the banner without adding
 // impressions to the banner
@@ -15,10 +15,10 @@ if (!isset($_REQUEST["id"])) {
 }
 
 include_once("lib/init/initlib.php");
-include_once ("db/tiki-db.php");
-include_once ("lib/tikilib.php");
+include_once ('db/tiki-db.php');
+include_once ('lib/tikilib.php');
 $tikilib = new Tikilib($dbTiki);
-include_once ("lib/banners/bannerlib.php");
+include_once ('lib/banners/bannerlib.php');
 
 if (!isset($bannerlib)) {
 	$bannerlib = new BannerLib($dbTiki);
@@ -34,7 +34,7 @@ case 'useHTML':
 	break;
 
 case 'useImage':
-	$raw = "<img border=\"0\" src=\"banner_image.php?id=" . $id . "\" />";
+	$raw = "<img border='0' src=\"banner_image.php?id=" . $id . "\" />";
 
 	break;
 
