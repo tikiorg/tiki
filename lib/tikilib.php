@@ -7866,6 +7866,7 @@ function parse_data($data)
     }
 
 
+	// Replace Hotwords
     $data = stripslashes($data);
     if($feature_hotwords == 'y') {
       $words = $this->get_hotwords();
@@ -7908,7 +7909,6 @@ function parse_data($data)
     }
 
     // Replace links to slideshows
-
     if($feature_drawings == 'y') {
     // Replace drawings
     // Replace rss modules
@@ -7976,10 +7976,10 @@ function parse_data($data)
     $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
     // Center text
     $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
+
     // Links to internal pages
     // If they are parenthesized then don't treat as links
     // Prevent ))PageName(( from being expanded    \"\'
-
     //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
     // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
     preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
@@ -8160,10 +8160,10 @@ function parse_data($data)
         $line = '<font face="courier" size="2">'.str_replace(' ','&nbsp;',substr($line,1)).'</font>';
         $line.='<br/>';
       } else {
-        // Reemplazar las bold
+        // Replace bold text
         $line = preg_replace("/__([^_]+)__/","<b>$1</b>",$line);
         $line = preg_replace("/\'\'([^']+)\'\'/","<i>$1</i>",$line);
-        // Reemplazar las definiciones
+        // Replace definition lists
         $line = preg_replace("/^;([^:]+):([^\n]+)/","<dl><dt>$1</dt><dd>$2</dd></dl>",$line);
         if(0) {
         $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/","<a class='wiki' $target href='$1'>$2</a>",$line);

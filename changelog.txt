@@ -1,5 +1,8 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] User Notepads section added, users can sketch notes view them and remove them,
+  the notes can be viewed as parsed wiki pages or unparsed. Useful to keep memos,
+  user personal information, etc.
 * [NEW] Newsreader added, users can add newsservers, browse groups from the servers
   and read the articles from any group. A save position option is provided to highlight
   new messages per group/user
@@ -34,6 +37,8 @@ Version 1.6 -Tau Ceti-
 * [NEW] Contact-us feature added showing the user an option to send a message to the admin unser (configurable)
   and an option to send an email to admin.
 * [NEW] Inter-user messaging added, users can read,write messages to other Tiki users.
+  an option and permissions are provided to broadcast a message to a group of users or
+  to all the users.
 * [NEW] User information page added to see information about a user. The user can make his information
   public/private from his user preferences
 * [NEW] Tiki tags are now allowed in FAQ answers
@@ -95,7 +100,7 @@ Version 1.5 -Regulus-
 * [NEW] All the Javascript code has been packed into a library
 * [NEW] BiDi support. Added support for BiDi languages. 
   Added BiDi.css file to control BiDi directionality and layout.
-* [NEW] Added ~ns~ ~/ns~ syntax to the Wiki to make page sections unparsed. Can be used to put HTML code or
+* [NEW] Added ~np~ ~/np~ syntax to the Wiki to make page sections unparsed. Can be used to put HTML code or
   anything that you want as-is without wiki syntax being parsed.
 * [NEW] Fulltext searching added (optional). By enabling this feature, results will be sorted by the relevance of the
   match to the search query.  Also, search results will be ordered first by relevance, and then by section

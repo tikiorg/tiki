@@ -321,6 +321,17 @@ class UsersLib extends TikiLib {
       return $this->usergroups_cache[$user];
     }
   }
+  
+  function get_group_users($group)
+  {
+    $query = "select login from users_users uu,users_usergroups ug where uu.userId=ug.userId and groupName='$group'";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res["login"];  
+    }  
+    return $ret;
+  }
 
   function get_user_info($user) 
   {
@@ -483,10 +494,10 @@ class UsersLib extends TikiLib {
   function group_has_permission($group,$perm) 
   {
     if(!isset($perm,$this->groupperm_cache[$group][$perm])) {
-    $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
-    $result = $this->query($query);
-    $this->groupperm_cache[$group][$perm]=$result->numRows();
-    return $result->numRows();
+      $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
+      $result = $this->query($query);
+      $this->groupperm_cache[$group][$perm]=$result->numRows();
+      return $result->numRows();
     } else {
       return $this->groupperm_cache[$group][$perm];
     }

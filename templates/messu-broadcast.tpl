@@ -8,6 +8,19 @@
 <form action="messu-broadcast.php" method="post">
 <table class="normal" width="70%">
   <tr>
+    <td class="formcolor">{tr}Group{/tr}:</td>
+    <td class="formcolor">
+    <select name="group">
+    {if $tiki_p_broadcast_all eq 'y'}
+    <option value="all" selected="selected">{tr}All users{/tr}</option>
+    {/if}
+	{section name=ix loop=$groups}
+	<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
+	{/section}
+    </select>
+    </td>
+  </tr>
+  <tr>
     <td class="formcolor">{tr}Priority{/tr}:</td><td class="formcolor">
     <select name="priority">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>

@@ -63,7 +63,8 @@ create table tiki_user_tasks(
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can broadcast messages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can broadcast messages to groups');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast_all','messu','Can broadcast messages to all user');
 
 drop table if exists messu_messages;
 create table messu_messages(

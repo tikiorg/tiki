@@ -44,14 +44,18 @@ if(isset($_REQUEST['reply'])||isset($_REQUEST['replyall'])) {
   $messulib->flag_message($_SESSION['user'], $_REQUEST['msgId'], 'isReplied', 'y');
 }
 
+if(isset($_REQUEST['group'])) {
+  if($_REQUEST['group']=='all') {
+    $all_users = $userlib->get_users(0,-1,'login_desc','');
+  } else {
+    $all_users = $userlib->get_group_users($_REQUEST['group']);
+  }
+}
 
-$all_users = $userlib->get_users(0,-1,'login_desc','');
 
 if(isset($_REQUEST['send'])) {
   $smarty->assign('sent',1);
-  
   $message = '';
-  
   // Validation:
   // must have a subject or body non-empty (or both)
   if(empty($_REQUEST['subject'])&&empty($_REQUEST['body'])) {
@@ -97,6 +101,9 @@ if(isset($_REQUEST['send'])) {
   
   $smarty->assign('message',$message);
 }
+
+$groups = $userlib->get_groups(0,-1,'groupName_asc','');
+$smarty->assign_by_ref('groups',$groups["data"]);
 
 include_once('tiki-mytiki_shared.php');
 $smarty->display('tiki.tpl');
