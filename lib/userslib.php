@@ -271,7 +271,6 @@ class UsersLib extends TikiLib {
 	} else {
 		$result = NULL;
 	}
-
 	switch ($result) {
 	    case USER_VALID:
 		$userTiki = true;
@@ -286,7 +285,7 @@ class UsersLib extends TikiLib {
 	}
 
 	// if we aren't using LDAP this will be quick
-	if ((!$auth_pear && !$auth_pam && !$auth_cas) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin)) || ($auth_cas && $cas_skip_admin) && $user == "admin")) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas) || ((($auth_pear && $skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)
 		return $this->update_lastlogin($user);
@@ -300,6 +299,7 @@ class UsersLib extends TikiLib {
 	}
 	// next see if we need to check PAM
 	elseif ($auth_pam) {
+
 		$result = $this->validate_user_pam($user, $pass);
 		switch ($result) {
 		case USER_VALID:
@@ -510,7 +510,7 @@ class UsersLib extends TikiLib {
 	// get all of the PAM options from the database
 	$pam_service = $tikilib->get_preference("pam_service", "tikiwiki");
 
-	if (pam_auth($user, $pass, $error)) {
+	if (pam_auth($user, $pass, &$error)) {
 		return USER_VALID;
 	} else {
 	// Uncomment the following to see errors on that
