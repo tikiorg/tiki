@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.133 2004-10-28 01:04:38 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.134 2004-12-07 08:27:39 gunnarre Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -469,7 +469,7 @@ $smarty->assign('feature_wiki_comments','y');
  */
 
 // Comments engine!
-if ($feature_wiki_comments == 'y' and $tiki_p_wiki_view_comments == 'y') {
+if ($feature_wiki_comments == 'y' and $tiki_p_read_comments == 'y') {
     $comments_per_page = $wiki_comments_per_page;
     $comments_default_ordering = $wiki_comments_default_ordering;
     $comments_vars=Array('page');
