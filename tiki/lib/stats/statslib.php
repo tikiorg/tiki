@@ -48,7 +48,7 @@ class StatsLib extends TikiLib {
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select `pageName`, `hits`, `page_size` as len ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `pageName`, `hits`, `page_size` as `len` ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_pages` $mid";
 		$result = $this->query($query,$bindvars,-1,0);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -211,8 +211,8 @@ class StatsLib extends TikiLib {
 	function forum_stats() {
 		$stats = array();
 		$stats["forums"] = $this->getOne("select count(*) from `tiki_forums`",array());
-		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=`forumId` and `objectType`=? and `parentId`=?",array('forum',0));
-		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=`forumId` and `objectType`=? and `parentId`<>?",array('formu',0));
+		$stats["topics"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`=?",array('forum',0));
+		$stats["threads"] = $this->getOne( "select count(*) from `tiki_comments`,`tiki_forums` where `object`=".$this->sql_cast('`forumId`','string')." and `objectType`=? and `parentId`<>?",array('forum',0));
 		$stats["tpf"] = ($stats["forums"] ? $stats["topics"] / $stats["forums"] : 0);
 		$stats["tpt"] = ($stats["topics"] ? $stats["threads"] / $stats["topics"] : 0);
 		$stats["visits"] = $this->getOne("select sum(`hits`) from `tiki_forums`",array());
