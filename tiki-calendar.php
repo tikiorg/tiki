@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.25 2003-12-18 01:13:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.26 2003-12-19 04:22:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -226,6 +226,7 @@ $smarty->assign('viewmode', $_SESSION['CalendarViewMode']);
 if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
 	$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
 	$_REQUEST["calitemId"] = 0;
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
 }
 
 if (!isset($_REQUEST["calitemId"]))
@@ -307,6 +308,8 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 		"name" => $_REQUEST["name"],
 		"description" => $_REQUEST["description"]
 	));
+	//setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"");	
+	//$_REQUEST["calitemId"] = 0;
 }
 
 if ($_REQUEST["calitemId"]) {
@@ -396,6 +399,7 @@ if ($_REQUEST["editmode"]) {
 	$smarty->assign('listcat', $listcat);
 	$smarty->assign('listloc', $listloc);
 	$smarty->assign_by_ref('languages', $languages);
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");	
 }
 
 $smarty->assign('customlocations', $info["customlocations"]);
@@ -591,6 +595,8 @@ include_once ('tiki-section_options.php');
 if ($feature_jscalendar == 'y') {
 	$smarty->assign('uses_jscalendar', 'y');
 }
+
+$smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");
 
