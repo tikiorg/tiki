@@ -3471,10 +3471,8 @@ class TikiLib {
 
 		if (!$result->numRows())
 			return false;
-
-		$ret = $res = $result->fetchRow();
-		$ret["pageName"] = $pageName;
-		return $ret;
+		else
+			return $result->fetchRow();
 	}
 
 	function how_many_at_start($str, $car) {
@@ -3704,10 +3702,11 @@ class TikiLib {
 		// Replace Hotwords
 		if ($feature_hotwords == 'y') {
 			foreach ($words as $word => $url) {
-				$line = preg_replace("/ $word /i", " <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ", $line);
-
-				$line = preg_replace("/([^A-Za-z0-9])$word /i", "$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ", $line);
-				$line = preg_replace("/ $word([^A-Za-z0-9])/i", " <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1", $line);
+				// The "space" char is included in the non-alpha-numerical set below I think
+				// $line  = preg_replace("/(^$word| $word) /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
+				// Why do we ever want a special char immediately in front of a hotword?
+				// $line  = preg_replace("/([^A-Za-z0-9])$word /i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
+				$line  = preg_replace("/(^$word| $word)([^A-Za-z0-9])/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
 			}
 		}
 
@@ -4166,7 +4165,7 @@ class TikiLib {
 
 			//print("todo el tag es: ".$page_parse."<br/>");
 			//print_r($imgdata);
-			$repl = "<div class=\"innerimg\"><img alt='an image' src='" . $imgdata["src"] . "' border='0' ";
+			$repl = "<div class=\"innerimg\"><img alt='" . tra('Image') . "' src='".$imgdata["src"]."' border='0' ";
 
 			if ($imgdata["width"])
 				$repl .= " width='" . $imgdata["width"] . "'";
@@ -4677,6 +4676,7 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		global $dbTiki;
 		global $notificationlib;
 		global $feature_user_watches;
+		global $wiki_watch_editor;
 		global $sender_email;
 		include_once ('lib/notifications/notificationlib.php');
 		$this->invalidate_cache($pageName);
@@ -4742,6 +4742,7 @@ foreach(array_unique($pages[1]) as $page_parse) {
 				$nots = $this->get_event_watches('wiki_page_changed', $pageName);
 
 				foreach ($nots as $not) {
+					if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
 					$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 					$smarty->assign('mail_page', $pageName);
