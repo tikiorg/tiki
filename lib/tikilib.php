@@ -5015,7 +5015,7 @@ function invalidate_cache($page) {
     $this->query($query, array(0,$page) );
 }
 
-function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang=null) {
+function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='') {
     global $smarty;
 
     global $dbTiki;
@@ -5115,7 +5115,7 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     }
 }
 
-function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang=null) {
+function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
     global $smarty;
 
     if ($pageName == 'SandBox')
