@@ -2,43 +2,43 @@
   <div class="tiki-title">{tr}Sections{/tr}</div>
   <div class="tiki-content">
     <table><tr>
-      <td style="text-align:center;"><a title="" href="tiki-admin.php?page=features"><img src="img/icons/admin_features.png" alt="" /><br />
+      <td style="text-align:center;"><a title="" href="tiki-admin.php?page=features">{tikicon iname="features" igroup="admin" iexplain="Features"}<br />
 	{tr}Features{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=general"><img src="img/icons/admin_general.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=general">{tikicon iname="general" igroup="admin" iexplain="General"}<br />
 	{tr}General{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=login"><img src="img/icons/admin_login.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=login">{tikicon iname="Login" igroup="admin" iexplain="Login"}<br />
 	{tr}Login{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=wiki"><img src="img/icons/admin_wiki.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=wiki">{tikicon iname="wiki" igroup="admin" iexplain="Wiki"}<br />
 	{tr}Wiki{/tr}</a></td>
     </tr><tr>
-      <td><a title="" href="tiki-admin.php?page=gal"><img src="img/icons/admin_imagegal.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=gal">{tikicon iname="imagegal" igroup="admin" iexplain="Image Galleries"}<br />
 	{tr}Image Galleries{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=fgal"><img src="img/icons/admin_filegal.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=fgal">{tikicon iname="filegal" igroup="admin" iexplain="File Galleries"} <br />
 	{tr}File Galleries{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=blogs"><img src="img/icons/admin_blogs.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=blogs">{tikicon iname="blogs" igroup="admin" iexplain="Blogs"}<br />
 	{tr}Blogs{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=forums"><img src="img/icons/admin_forums.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=forums">{tikicon iname="forums" igroup="admin" iexplain="Forums"}<br />
 	{tr}Forums{/tr}</a></td>
     </tr><tr>
-      <td><a title="" href="tiki-admin.php?page=polls"><img src="img/icons/admin_polls.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=polls">{tikicon iname="polls" igroup="admin" iexplain="Polls"}<br />
 	{tr}Polls{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=rss"><img src="img/icons/admin_rss.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=rss">{tikicon iname="rss" igroup="admin" iexplain="RSS"}<br />
 	{tr}RSS{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=cms"><img src="img/icons/admin_articles.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=cms">{tikicon iname="articles" igroup="admin" iexplain="Articles"}<br />
 	{tr}Articles{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=faqs"><img src="img/icons/admin_faqs.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=faqs">{tikicon iname="faqs" igroup="admin" iexplain="FAQs"}<br />
 	{tr}FAQs{/tr}</a></td>
     </tr><tr>
-      <td><a title="" href="tiki-admin.php?page=trackers"><img src="img/icons/admin_trackers.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=trackers">{tikicon iname="trackers" igroup="admin" iexplain="Trackers"}<br />
 	{tr}Trackers{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=webmail"><img src="img/icons/admin_webmail.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=webmail">{tikicon iname="webmail" igroup="admin" iexplain="Web Mail"}<br />
 	{tr}Webmail{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=directory"><img src="img/icons/admin_directory.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=directory">{tikicon iname="directory" igroup="admin" iexplain="directory"}<br />
 	{tr}Directory{/tr}</a></td>
-      <td><a title="" href="tiki-admin.php?page=userfiles"><img src="img/icons/admin_userfiles.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=userfiles">{tikicon iname="userfiles" igroup="admin" iexplain="User Files"}<br />
 	{tr}User files{/tr}</a></td>
    </tr><tr>
-      <td><a title="" href="tiki-admin.php?page=maps"><img src="img/icons/admin_maps.png" alt="" /><br />
+      <td><a title="" href="tiki-admin.php?page=maps">{tikicon iname="maps" igroup="admin" iexplain="Maps"}<br />
 	{tr}Maps{/tr}</a></td>
     </tr></table>
   </div>
