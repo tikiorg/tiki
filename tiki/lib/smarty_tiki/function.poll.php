@@ -19,7 +19,7 @@ function smarty_function_poll($params, &$smarty) {
       $channels = $polllib->list_poll_options($id,0,-1,'optionId_asc','');
 			if ($feature_poll_comments == 'y') {
 				$commentslib = new Comments($dbTiki);
-				$comments_count = $commentslib->count_comments("poll".$menu_info["pollId"]);
+				$comments_count = $commentslib->count_comments("poll:".$menu_info["pollId"]);
 			}
 			$smarty->assign('comments', $comments_count);
       $smarty->assign('ownurl',/*httpPrefix().*/$_SERVER["REQUEST_URI"]);
