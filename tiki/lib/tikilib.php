@@ -409,6 +409,18 @@ function get_dsn_by_name($name) {
     return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
 }
 
+/* convert data to iso-8601 format */
+function iso_8601 ($timestamp) { 
+	$main_date = date("Y-m-d\TH:i:s", $timestamp); 
+	
+	$tz = date("O", $timestamp); 
+	$tz = substr_replace ($tz, ':', 3, 0); 
+	
+	$return = $main_date . $tz; 
+	
+	return $return; 
+}
+
 /*shared*/
 function check_rules($user, $section) {
     // Admin is never banned
