@@ -28,6 +28,9 @@ a moderator approves it.{/tr}</small>
   {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
   <br/><small>posts:{$thread_info.user_posts}</small>
   {/if}
+  {if $thread_info.userName and $forum_info.ui_level eq 'y'}
+  <br/><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
+  {/if}
   {if $thread_info.userName and $forum_info.ui_online eq 'y' and $thread_info.user_online eq 'y'}
   <br/><small>now online</small>
   {/if}
@@ -152,7 +155,7 @@ a moderator approves it.{/tr}</small>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
       {if $feature_smileys eq 'y'}
-      <td rowspan="2" class="forumform">
+      <td rowspan="3" class="forumform">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
@@ -188,6 +191,14 @@ a moderator approves it.{/tr}</small>
       </td>
       {/if}
     </tr>
+    {if $forum_info.forum_use_password eq 'a'}
+    <tr>
+    	<td class='forumform'>{tr}Password{/tr}</td>
+    	<td class='forumform'>
+    		<input type="password" name="password" />
+    	</td>
+    </tr>
+    {/if}
     <tr>
       <td class="forumform">Comment</td>
       <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
@@ -319,6 +330,9 @@ a moderator approves it.{/tr}</small>
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_posts eq 'y'}
   <br/><small>posts:{$comments_coms[ix].user_posts}</small>
+  {/if}
+  {if $comments_coms[ix].userName and $forum_info.ui_level eq 'y'}
+  <br/><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_online eq 'y' and $comments_coms[ix].user_online eq 'y'}
   <br/><small>now online</small>

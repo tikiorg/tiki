@@ -10,6 +10,14 @@ create table  tiki_user_postings(
 	primary key(user)
 );
 
+alter table tiki_forums add ui_level char(1);
+update tiki_forums set ui_level='n';
+
+alter table tiki_forums add forum_password char(32);
+update tiki_forums set forum_password = '';
+alter table tiki_forums add forum_use_password char(1);
+update tiki_forums set forum_use_password = 'n';
+
 alter table tiki_forums add moderator_group varchar(200);
 update tiki_forums set moderator_group='';
 

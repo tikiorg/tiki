@@ -44,6 +44,14 @@
 {/section}
 </select>
 </td></tr>
+<tr><td class="formcolor">{tr}Password protected{/tr}</td><td class="formcolor">
+<select name="forum_use_password">
+<option value="n" {if $forum_use_password eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+<option value="t" {if $forum_use_password eq 't'}selected="selected"{/if}>{tr}Topics only{/tr}</option>
+<option value="a" {if $forum_use_password eq 'a'}selected="selected"{/if}>{tr}All posts{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password}" /></td></tr>
 
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
@@ -141,6 +149,7 @@
 		<td>{tr}avatar{/tr}</td>
 		<td>{tr}flag{/tr}</td>
 		<td>{tr}posts{/tr}</td>
+		<td>{tr}user level{/tr}</td>
 		<td>{tr}email{/tr}</td>
 		<td>{tr}online{/tr}</td>
 	</tr>
@@ -148,6 +157,7 @@
 		<td><input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} /></td>
 		<td><input type="checkbox" name="ui_flag" {if $ui_flag eq 'y'}checked="checked"{/if} /></td>
 		<td><input type="checkbox" name="ui_posts" {if $ui_posts eq 'y'}checked="checked"{/if} /></td>
+		<td><input type="checkbox" name="ui_level" {if $ui_level eq 'y'}checked="checked"{/if} /></td>
 		<td><input type="checkbox" name="ui_email" {if $ui_email eq 'y'}checked="checked"{/if} /></td>
 		<td><input type="checkbox" name="ui_online" {if $ui_online eq 'y'}checked="checked"{/if} /></td>
 	</tr>		
@@ -207,7 +217,7 @@
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
    <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}"><img src='img/icons/trash.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src='img/icons/config.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
    <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' title='{tr}permissions{/tr}' /></a>
 {/if}
 </td>

@@ -130,9 +130,10 @@ class Comments extends TikiLib {
                          $show_description,
                          $inbound_address,$outbound_address,
                          $topic_smileys, $topic_summary,
-                         $ui_avatar, $ui_flag, $ui_posts, $ui_email, $ui_online,
+                         $ui_avatar, $ui_flag, $ui_posts, $ui_level,$ui_email, $ui_online,
                          $approval_type,
-                         $moderator_group)
+                         $moderator_group,
+                         $forum_password, $forum_use_password)
   {
     $name = addslashes($name);
     $moderator_group = addslashes($moderator_group);
@@ -165,10 +166,13 @@ class Comments extends TikiLib {
                 ui_avatar = '$ui_avatar',
                 ui_flag = '$ui_flag',
                 ui_posts = '$ui_posts',
+                ui_level = '$ui_level',
                 ui_email = '$ui_email',
                 ui_online = '$ui_online',
                 approval_type = '$approval_type',
                 moderator_group = '$moderator_group',
+                forum_password = '$forum_password',
+                forum_use_password = '$forum_use_password',
                 topics_list_pts = '$topics_list_pts',
                 topics_list_lastpost = '$topics_list_lastpost',
                 topics_list_author = '$topics_list_author',
@@ -186,7 +190,7 @@ class Comments extends TikiLib {
                 topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
                 inbound_address,outbound_address,
                 topic_smileys,topic_summary,
-                ui_avatar,ui_flag,ui_posts,ui_email,ui_online,approval_type,moderator_group) 
+                ui_avatar,ui_flag,ui_posts,ui_level,ui_email,ui_online,approval_type,moderator_group,forum_password,forum_use_password) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
@@ -195,7 +199,7 @@ class Comments extends TikiLib {
                         '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
                         '$inbound_address','$outbound_address',
                         '$topic_smileys','$topic_summary',
-                        '$ui_avatar','$ui_flag','$ui_posts','$ui_email','$ui_online','$approval_type','$moderator_group') ";
+                        '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password') ";
      $result = $this->query($query);
      $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
@@ -443,6 +447,7 @@ class Comments extends TikiLib {
     $res["parsed"] = $this->parse_comment_data($res["data"]);
     
     $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
+    $res['user_level']=$this->getOne("select level from tiki_user_postings where user='".$res['userName']."'");
     if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
 
       $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
@@ -577,6 +582,7 @@ class Comments extends TikiLib {
       // Get the last reply
       $tid = $res["threadId"];
       $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
+      $res['user_level']=$this->getOne("select level from tiki_user_postings where user='".$res['userName']."'");
       if($this->get_user_preference($res['userName'],'email is public','n')=='y') {
       	$res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
       } else {
@@ -627,6 +633,7 @@ class Comments extends TikiLib {
       // Get the last reply
       $tid = $res["threadId"];
       $res['user_posts']=$this->getOne("select posts from tiki_user_postings where user='".$res['userName']."'");
+      $res['user_level']=$this->getOne("select level from tiki_user_postings where user='".$res['userName']."'");
       $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
       $res['user_online']='n';
       if($res['userName']) {
@@ -772,7 +779,7 @@ class Comments extends TikiLib {
       	$level = 1;
       }
       
-      $query = "update tiki_user_postins set level=$level where user='$userName'";
+      $query = "update tiki_user_postings set level=$level where user='$userName'";
       $this->query($query);
      
     }
