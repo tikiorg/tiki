@@ -21,6 +21,18 @@ class UserPrefsLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
+
+	function get_userprefs($user) {
+		$query = "select * from `tiki_user_preferences` where `user`=?";
+		$result = $this->query($query,array($user));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		return $ret;
+	}
 }
 
 $userprefslib = new UserPrefsLib($dbTiki);
