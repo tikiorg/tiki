@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.47 2003-12-24 01:17:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.48 2003-12-27 16:31:59 vulgrin Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,10 +69,19 @@ if ($rememberme != 'disabled') {
 $auth_method = $tikilib->get_preference('auth_method', 'tiki');
 
 // if the auth method is 'web site', look for the username in $_SERVER
+
+// if the server is IIS and they are using integrated login, the users set up by the admin might not be the same string as what IIS sends
+// to solve this, we try a couple of variations in order, from most secure to least, to see if one matches.
 if ($auth_method == 'ws') {
     if (isset($_SERVER['REMOTE_USER'])) {
         if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
             $_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
+        }elseif	($userlib->user_exists(str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']))) {
+        	// Check for the domain\username with just one backslash
+        	$_SESSION["$user_cookie_site"] = str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']);
+        }elseif ($userlib->user_exists(substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2))){
+        	// Check for the username without the domain name
+        	$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
         }
     }
 }
