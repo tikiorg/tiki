@@ -3281,7 +3281,7 @@ class TikiLib {
 
 	if ($find) {
 	    $mid = " where `pageName` like ? ";
-	    $bindvars=array('%" . $find . "%');
+	    $bindvars=array('%' . $find . '%');
 	} else {
 	    $mid = "";
 	    $bindvars=array();
@@ -3290,7 +3290,9 @@ class TikiLib {
 	// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	$query = "select `creator` ,`pageName`, `hits`, length(`data`) as len ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by $sort_mode";
+	$query = "select `creator` ,`pageName`, `hits`, length(`data`)
+	as len, `lastModif`, `user`, `ip`, `comment`, `version`, `flag`
+	from `tiki_pages` $mid order by $sort_mode";
 	$query_cant = "select count(*) from `tiki_pages` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
