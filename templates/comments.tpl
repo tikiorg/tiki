@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.38 2004-03-31 07:38:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.39 2004-04-13 16:46:51 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -23,7 +23,7 @@
   			<tr>
 			  	<td>
 			    	<span class="commentstitle">{$parent_com.title}</span><br />
-			  		{tr}by{/tr} {$parent_com.userName} {tr}on{/tr} {$parent_com.commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$parent_com.average|string_format:"%.2f"}]
+			  		{tr}by{/tr} {$parent_com.userName} {tr}on{/tr} {$parent_com.commentDate|tiki_long_datetime} ({tr}Score{/tr}:{$parent_com.average|string_format:"%.2f"})
 			  	</td>
 			 </tr>
 		</table>
@@ -99,7 +99,7 @@
   			<tr>
 			  	<td>
 			    	<span class="commentstitle">{$comments_coms[com].title}</span><br />
-			  		{tr}by{/tr} {$comments_coms[com].userName} {tr}on{/tr} {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
+			  		{tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$comments_coms[com].userName}">{$comments_coms[com].userName}</a> {tr}on{/tr} {$comments_coms[com].commentDate|tiki_long_datetime} ({tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"})
 			  	</td>
 			  	<td valign="top" style="text-align:right;" >
 			    	{if $tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y'}
@@ -150,7 +150,7 @@
 				{/if}
   				<li><a class="commentshlink" 
 href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].replies_flat[rep].parentId}#threadId{$comments_coms[com].replies_flat[rep].threadId}">{$comments_coms[com].replies_flat[rep].title}</a>
-   				<a class="link" href="tiki-user_information.php?view_user={$comments_coms[com].replies_flat[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies_flat[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies_flat[rep].points}) {tr}on{/tr} {$comments_coms[com].replies_flat[rep].commentDate|tiki_long_datetime}</a></li>
+   				{tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$comments_coms[com].replies_flat[rep].userName}">{$comments_coms[com].replies_flat[rep].userName}</a> {tr}on{/tr} {$comments_coms[com].replies_flat[rep].commentDate|tiki_long_datetime} ({tr}Score{/tr}: {$comments_coms[com].replies_flat[rep].points})</li>
 				{assign var="lastlevel" value=$level}
   			{/section}
   			</li></ul>
