@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.9 2003-11-11 12:02:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.10 2003-11-26 06:27:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,8 @@
 $features_toggles = array(
 	"feature_articles",
 	"feature_autolinks",
+	"feature_babelfish",
+	"feature_babelfish_logo",
 	"feature_banners",
 	"feature_banning",
 	"feature_blogs",
@@ -43,9 +45,11 @@ $features_toggles = array(
 	"feature_maps",
 	"feature_messages",
 	"feature_minical",
+  "feature_modulecontrols",
 	"feature_newsletters",
 	"feature_newsreader",
 	"feature_notepad",
+  "feature_phplayers",
 	"feature_phpopentracker",
 	"feature_polls",
 	"feature_quizzes",
@@ -63,21 +67,18 @@ $features_toggles = array(
 	"feature_theme_control",
 	"feature_top_bar",
 	"feature_trackers",
-	"feature_view_tpl",
+	"feature_userPreferences",
 	"feature_user_bookmarks",
 	"feature_user_watches",
 	"feature_userfiles",
 	"feature_usermenu",
-	"feature_userPreferences",
+	"feature_view_tpl",
 	"feature_webmail",
 	"feature_wiki",
 	"feature_workflow",
 	"feature_xmlrpc",
 	"layout_section",
-	"user_assigned_modules",
-	"feature_babelfish",
-	"feature_babelfish_logo",
-  "feature_modulecontrols"
+	"user_assigned_modules"
 );
 
 // Process Features form(s)
