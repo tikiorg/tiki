@@ -1,4 +1,3 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.28 2003-12-02 05:03:35 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -259,6 +258,7 @@ onmouseover="this.style.textDecoration='underline';"
 </form>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
+date        : "{$focusdate|date_format}",      // initial date
 inputField  : "todate",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "datrigger",       // ID of the span where the date is to be shown
