@@ -2,27 +2,24 @@ contributor:
 $Author: mose $
 
 revision:
-1.2.6
+1.2.8
 
 lastmodif:
-$Date: 2004-11-11 14:34:12 $
+$Date: 2004-11-13 22:43:52 $
 
 files: 
 features/cc/cc.php cc.php
 features/cc/lib/cclib.php lib/cc/cclib.php
-features/cc/templates/admincc.tpl templates/cc/admincc.tpl
-features/cc/templates/app.tpl templates/cc/app.tpl
-features/cc/templates/ccform.tpl templates/cc/ccform.tpl
-features/cc/templates/createcc.tpl templates/cc/createcc.tpl
-features/cc/templates/help.tpl templates/cc/help.tpl
-features/cc/templates/history.tpl templates/cc/history.tpl
+features/cc/templates/currencies.tpl templates/cc/currencies.tpl 
+features/cc/templates/currencies_form.tpl templates/cc/currencies_form.tpl
 features/cc/templates/index.tpl templates/cc/index.tpl
-features/cc/templates/registercc.tpl templates/cc/registercc.tpl
-features/cc/templates/tr_record.tpl templates/cc/tr_record.tpl
+features/cc/templates/ledgers.tpl templates/cc/ledgers.tpl
+features/cc/templates/transactions.tpl templates/cc/transactions.tpl
+features/cc/templates/transactions_form.tpl templates/cc/transactions_form.tpl
 
 sql-install:
 create table if not exists cc_cc ( seq int not null primary key auto_increment, id varchar(255) not null unique, cc_name varchar(255) not null, cc_description text, owner_id varchar(255), requires_approval char(1) not null, listed char(1) not null default 'n', index ( id ), index ( cc_name(6) ));
-create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(255) null, cc_id varchar(255) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date int(11), index ( acct_id ), index ( cc_id ), index ( last_tr_date));
+create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(255) null, cc_id varchar(255) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date int(11), approved char(1), index ( acct_id ), index ( cc_id ), index ( last_tr_date));
 create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date int(11) not null, acct_id varchar(255) not null, other_id varchar(255) not null, other_domain varchar(255) not null, cc_id varchar(255) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cc','n');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cc_use', 'Can use community currencies', 'registered', 'cc');
@@ -39,6 +36,8 @@ INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Transactions','cc.php?page=transactions',1480,'','tiki_p_cc_use','');
 
 sql-upgrade:
+: 1.2.8
+alter table cc_ledger add approved char(1);
 : 1.2.6
 update users_permissions set level='registered' where permName='tiki_p_cc_create';
 alter table cc_cc add listed char(1) not null default 'n';
