@@ -387,33 +387,35 @@ function convert_binary() {
 
 /*shared*/
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
-    global $use_proxy,$proxy_host,$proxy_port;
+	  global $use_proxy,$proxy_host,$proxy_port;
 		// test url :
-		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+]$/",$url)) return false;
-    // rewrite url if sloppy # added a case for https urls
-    if ((strpos($url, "http://") !== 0) or (strpos($url, "https://") !== 0)) {
-	$url = "http://" . $url;
-    }
-    // (cdx) params for HTTP_Request.
-    // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
-    $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
-
-    if (substr_count($url, "/") < 3) {
-	$url .= "/";
-    }
-    // Proxy settings
-    if ($use_proxy == 'y') {
-	$aSettingsRequest["proxy_host"]=$proxy_host;
-	$aSettingsRequest["proxy_port"]=$proxy_port;
-    }
-    $req = &new HTTP_Request($url, $aSettingsRequest);
-    // (cdx) return false when can't connect
-    // I prefer throw a PEAR_Error. You decide ;)
-    if (PEAR::isError($oError=$req->sendRequest())) {
-	return false;
-    } 
-    $data = $req->getResponseBody();
-    return $data;
+		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+]*$/",$url)) return false;
+	  // rewrite url if sloppy # added a case for https urls
+	  if ( (substr($url,0,7) <> "http://") and
+	       (substr($url,0,8) <> "https://")
+	     ) {
+			$url = "http://" . $url;
+	  }
+	  // (cdx) params for HTTP_Request.
+	  // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
+	  $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
+	
+	  if (substr_count($url, "/") < 3) {
+			$url .= "/";
+	  }
+	  // Proxy settings
+	  if ($use_proxy == 'y') {
+			$aSettingsRequest["proxy_host"]=$proxy_host;
+			$aSettingsRequest["proxy_port"]=$proxy_port;
+	  }
+	  $req = &new HTTP_Request($url, $aSettingsRequest);
+	  // (cdx) return false when can't connect
+	  // I prefer throw a PEAR_Error. You decide ;)
+	  if (PEAR::isError($oError=$req->sendRequest())) {
+			return false;
+	  } 
+	  $data = $req->getResponseBody();
+	  return $data;
 }
 
 /*shared*/
