@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.41 2004-04-14 18:37:45 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.42 2004-04-17 23:08:14 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -90,29 +90,17 @@
   {* This section (comment) is only displayed * }
   {* if a reply to it is being composed * }
   {* The $parent_com is only set in this case *}
-  {if $parent_com}
-{tr}reply{/tr}
-  <table class="normal">
-  <tr>
-  	<td class="odd">
-  		<a name="threadId{$parent_com.threadId}"></a>
-  		<table >
-  			<tr>
-			  	<td>
-			    	<span class="commentstitle">{$parent_com.title}</span><br />
-			  		{tr}by{/tr} {$parent_com.userName} {tr}on{/tr} {$parent_com.commentDate|tiki_long_datetime} ({tr}Score{/tr}:{$parent_com.average|string_format:"%.2f"})
-			  	</td>
-			 </tr>
-		</table>
-	</td>
-  </tr>
-  <tr>
-  	<td class="even">
-  		{$parent_com.parsed}
-  	</td>
-  </tr>
-  </table>
-  {/if}
+  {if $tiki_p_post_comments eq 'y'}
+ <a name="form"></a>
+<table style="width:100%;"><tr><td>
+    <h2>
+    {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment the selected comment{/tr}{else}{tr}Post new comment{/tr}{/if}
+    </h2>
+    {if $comments_threadId > 0 || $parent_com}
+</td><td align="right">
+<a class="linkbut" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>
+    {/if}
+</td></tr></table>
 
   {if $comment_preview eq 'y'}
   <b>{tr}Preview{/tr}</b>
@@ -131,10 +119,7 @@
   </table>
   {/if}
 
-  {if $tiki_p_post_comments eq 'y'}
-    {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="link" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
-    {/if}
+
     <form method="post" action="{$comments_father}" id='editpostform'>
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />

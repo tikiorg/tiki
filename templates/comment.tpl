@@ -5,7 +5,7 @@
   		<table>
   			<tr>
 			  	<td>
-			    	<span class="commentstitle">{$comment.title}</span><br />
+			    	<span class="commentstitle">{if $comments_reply_threadId == $comment.threadId}<img src="img/flagged.gif" /><span class="highlight">{$comment.title}</span>{else}{$comment.title}{/if}</span><br />
 			  		{tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$comment.userName}">{$comment.userName}</a> {tr}on{/tr} {$comment.commentDate|tiki_long_datetime} ({tr}Score{/tr}:{$comment.average|string_format:"%.2f"})
 			  	</td>
 			  	<td valign="top" style="text-align:right;" >
@@ -26,7 +26,7 @@
 			  		{/if}
 		{if $tiki_p_post_comments == 'y'}
 					<br /><br />
-  		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comment.threadId}&amp;post_reply=1#threadId{$comment.threadId}">{tr}reply{/tr}</a>
+  		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comment.threadId}&amp;post_reply=1#form">{tr}reply{/tr}</a>
 		{/if}
 			  	</td>
 			 </tr>
