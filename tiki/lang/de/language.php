@@ -1642,7 +1642,7 @@ $lang=Array(
 "Username cannot contain whitespace" => "Benutzername darf keine Leerzeichen enthalten",
 "Username is too long" => "Benutzername zu lang",
 "username" => "Benutzername",
-"Username" => "Username",
+"Username" => "Benutzername",
 "Users and admins" => "Benutzer und Admins",
 "Users can configure modules" => "Benutzer k&ouml;nnen Module konfigurieren",
 "Users can register" => "Benutzer k&ouml;nnen sich registrieren",
@@ -2260,5 +2260,6 @@ in Admin-Allgemein abgestellt haben.
 "Rules" => "Regeln",
 "User/IP" => "Benutzername/IP",
 "Display menus as folders" => "Men&uuml;s als Ordner darstellen",
+"Repeat password" => "Pa&szlig;wort wiederholen",
 "##end###" => "###end###");
 ?>
