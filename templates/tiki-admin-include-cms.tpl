@@ -14,8 +14,8 @@
               {if $feature_article_comments eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="articles-spell">{tr}Spellchecking{/tr}:</label></td>
-          <td><input type="checkbox" name="cms_spellcheck" id="articles-spell"
-              {if $cms_spellcheck eq 'y'}checked="checked"{/if} /></td>
+          <td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="cms_spellcheck" id="articles-spell"
+              {if $cms_spellcheck eq 'y'}checked="checked"{/if} />{else}{tr}Not Installed{/tr}{/if}</td>
         </tr><tr>
           <td class="form"><label for="articles-templates">{tr}Use templates{/tr}:</label></td>
           <td><input type="checkbox" name="feature_cms_templates" id="articles-templates"
