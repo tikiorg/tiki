@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 5. October 2003
+// Last modified: 17. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -15,7 +15,7 @@
 // PARTICULAR PURPOSE. See the GNU Library General Public License for more details.
 // http://www.gnu.org/copyleft/lgpl.html
 //
-// This software is EARLY BETA STAGE!!!
+// This software is BETA STAGE!!!
 //
 // This library requires hawiki_cfg.inc and hawiki_parser.inc
 //
@@ -363,8 +363,8 @@ class HAWIKI_page
         case HAWIKI_TOKEN_WIKINAME:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>WikiName:</b> extwiki:%s page:%s label:%s<br>\n",
-                   $po["extwiki"], $po["page"], $po["label"]);
+            printf("<b>WikiName:</b> extwiki:%s page:%s label:%s dtmf:%s<br>\n",
+                   $po["extwiki"], $po["page"], $po["label"], $po["dtmf"]);
 
           if ($po["extwiki"])
           {
@@ -390,6 +390,10 @@ class HAWIKI_page
           }
           else
             $link = new HAW_link($po["label"], $this->wiki_base . $po["page"]);
+            
+          if (isset($po["dtmf"]))
+            // assign DTMF key
+            $link->set_voice_dtmf($po["dtmf"]);
 
           $link->set_br(0);
           $this->deck->add_link($link);
