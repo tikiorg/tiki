@@ -44,7 +44,7 @@
 <option value="tiki-list_file_gallery?galleryId={$home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>]
 </select></td></tr>
 <tr><td>{tr}General{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
-<option value=",,,">{tr}Choose{/tr} ...</optio4n>
+<option value=",,,">{tr}Choose{/tr} ...</option>
 <option value="tiki-chat.php,{tr}Chat{/tr},feature_chat,tiki_p_chat">{tr}Chat{/tr}</option>
 <option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>
 <option value="tiki-games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>
@@ -109,7 +109,7 @@
 </td></tr></table>
 </td></tr></table>
 <h2>{tr}Menu options{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -146,8 +146,10 @@
 <td class="odd">{$channels[user].perm}</td>
 <td class="odd">{$channels[user].groupname}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+	  <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
+title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>  
+	<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="Click here to edit this menu"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -161,8 +163,10 @@
 <td class="even">{$channels[user].perm}</td>
 <td class="even">{$channels[user].groupname}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
+title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   <a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="Click here to edit this menu"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}

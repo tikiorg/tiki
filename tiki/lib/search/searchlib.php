@@ -346,8 +346,8 @@ class SearchLib extends TikiLib {
 		$offset=0;
 	      }
 
-	      $query="select s.`page` pa, s.`location`, s.`last_update`, s.`count`,
-	          t.`lastModif`,t.`trackerId` tr from 
+	      $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+	          t.`lastModif`,t.`trackerId` from 
 	  	  `tiki_searchindex` s, `tiki_tracker_items` t where `searchword` in
 	  	  (".implode(',',array_fill(0,count($words),'?')).") and
 		  s.`location`='trackeritem' and
