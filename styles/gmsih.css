@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.4 2003-12-16 15:48:06 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.5 2003-12-16 16:38:49 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -394,7 +394,12 @@ TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forum
 	text-align: left;
 	vertical-align: top;
 }
-
+tr.formcolor { 
+	background-color: #FFF7E6;
+}
+tr.formcolor:hover { 
+	background-color: #eee7d6;
+}
 /* The table */
 TABLE.normal, table.listgallery, table.creategalform, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
