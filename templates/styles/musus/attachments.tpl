@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.2 2004-01-07 19:48:56 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.3 2004-01-09 14:07:59 musus Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -59,7 +59,7 @@ title="{tr}Click here to delete this attachment{/tr}"><img border="0" alt="{tr}R
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 <table class="normal">
 <tr>
- <td class="formcolor">
+ <td>
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
                         <input size="16" name="userfile1" type="file" />
    <label for="attach-comment">{tr}comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250"/>

@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a></h1>
+<a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a>
 
 <!-- the help link info -->
   
@@ -13,7 +13,6 @@
 {/if}
 
 <!-- begin -->
-
 
 <h2>{tr}Create/edit channel{/tr}</h2>
 <form action="tiki-admin_chat.php" method="post">
@@ -55,11 +54,11 @@
 </table>
 <table>
 <tr>
-<td class="heading"><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}bane_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}refresh{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}bane_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></th>
+<th><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}active{/tr}</a></th>
+<th><a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}refresh{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
@@ -71,8 +70,8 @@
 <td>
    &nbsp;&nbsp;<a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
-title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -84,8 +83,8 @@ title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remo
 <td>
    &nbsp;&nbsp;<a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
-title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">{tr}edit{/tr}</a>
+title="{tr}Click here to delete this channel{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}

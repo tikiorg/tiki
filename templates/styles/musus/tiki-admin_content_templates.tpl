@@ -59,8 +59,8 @@
 </table>
 <table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}last modif{/tr}</a></td>
+<td class="heading"><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading"><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}last modif{/tr}</a></td>
 <td class="heading">{tr}sections{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -73,14 +73,14 @@
 [{section name=ix loop=$channels[user].sections}
 &nbsp;&nbsp;({$channels[user].sections[ix]} <a  href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
-title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
+title="{tr}Click here to delete this template{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td>
    &nbsp;&nbsp;<a  href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
 title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a  href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   <a  href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -91,14 +91,14 @@ title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Rem
 [{section name=ix loop=$channels[user].sections}
 ({$channels[user].sections[ix]} &nbsp;&nbsp;<a  href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
-title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
+title="{tr}Click here to delete this template{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td>
    &nbsp;&nbsp;<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
-title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}Click here to delete this template{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}

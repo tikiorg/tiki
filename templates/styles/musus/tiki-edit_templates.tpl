@@ -14,15 +14,6 @@
 
 <!-- begin -->
 
-
-
-
-
-
-
-
-
-
 <br /><br />
 {if $template}<h2>{tr}Template{/tr}: {$template}</h2>{/if}
 {if $mode eq 'listing'}
@@ -34,11 +25,11 @@
 {section name=user loop=$files}
 {if $smarty.section.user.index % 2}
 <tr>
-<td class="odd"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
+<td class="odd"><a href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
 </tr>
 {else}
 <tr>
-<td class="even"><a class="link" href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
+<td class="even"><a href="tiki-edit_templates.php?template={$files[user]}">{$files[user]}</a></td>
 </tr>
 {/if}
 {sectionelse}
@@ -47,7 +38,7 @@
 </table>
 {/if}
 {if $mode eq 'editing'}
-<a class="link" href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br />
+<a href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br />
 <form action="tiki-edit_templates.php" method="post">
 <textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">

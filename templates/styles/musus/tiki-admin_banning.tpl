@@ -16,20 +16,20 @@
 <form action="tiki-admin_banning.php" method="post">
 <input type="hidden" name="banId" value="{$banId|escape}" />
 <table>
-<tr class="cell">
+<tr>
 	<td><label for="banning-title">{tr}Rule title{/tr}</label></td>
 	<td>
 		<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" />
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
 	<td>
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
 		<input type="text" name="user" id="banning-userregex" value="{$info.user|escape}" />
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td><label for="banning-ipregex">{tr}IP regex matching{/tr}:</label></td>
 	<td>
 		<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
@@ -39,12 +39,12 @@
 		<input type="text" name="ip4" value="{$info.ip4|escape}" size="3" />
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td>{tr}Banned from sections{/tr}:</td>
 	<td>
 		<table><tr>
 		{section name=ix loop=$sections}
-        <td class="formcolor">
+        <td>
 			<input type="checkbox" name="section[{$sections[ix]}]" id="banning-section" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} /> <label for="banning-section">{$sections[ix]}</label>
         </td>
         {* see if we should go to the next row *}
@@ -67,31 +67,31 @@
 		</table>
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
 	<td>
 		<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td>{tr}Rule active from{/tr}</td>
 	<td>
 		{html_select_date prefix="date_from" time="$info.date_from"}
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td>{tr}Rule active until{/tr}</td>
 	<td>
 		{html_select_date prefix="date_to" time="$info.date_to"}
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td><label for="banning-mess">{tr}Custom message to the user{/tr}</label></td>
 	<td>
 		<textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea>
 	</td>
 </tr>
-<tr class="cell">
+<tr>
 	<td>&nbsp;</td>
 	<td>
 		<input type="submit" name="save" value="{tr}save{/tr}" />

@@ -11,7 +11,7 @@
       <tr class="cell"><td><label for="copyleft-year">{tr}Year{/tr}:</label></td><td><input size="4" class="wikitext" type="text" name="copyrightYear" id="copyleft-year" value="{$copyrights[i].year|escape}" /></td></tr>
       <tr class="cell"><td><label for="copyleft-authors">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-authors" value="{$copyrights[i].authors|escape}" /></td></tr>
     </table>
-  </td><td class="formcolor" align="right">
+  </td><td align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this copyright?{/tr}')" 
@@ -28,6 +28,6 @@ title="{tr}Click here to delete this copyright{/tr}"><img border="0" alt="{tr}Re
       <tr class="cell"><td><label for="copyleft-yyyy">{tr}Year{/tr}:</label></td><td><input size="4" class="wikitext" type="text" name="copyrightYear" id="copyleft-yyyy" value="{$copyrights[i].year|escape}" /></td></tr>
       <tr class="cell"><td><label for="copyleft-auth">{tr}Authors{/tr}:</label></td><td><input size="40" class="wikitext" type="text" name="copyrightAuthors" id="copyleft-auth" value="{$copyrights[i].authors|escape}" /></td></tr>
     </table><input type="hidden" name="page" value="{$page|escape}"/>
-</td><td class="formcolor"><input type="submit" name="addcopyright" value="{tr}add{/tr}" /></td></tr>
+</td><td><input type="submit" name="addcopyright" value="{tr}add{/tr}" /></td></tr>
 </form>
 </table>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.2 2004-01-07 19:51:18 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.3 2004-01-09 14:08:24 musus Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -222,25 +222,25 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
     <table class="normal">
     <tr>
       {if $parent_coms}
-	<td class="formcolor">{tr}Reply to parent comment{/tr}</td>
+	<td>{tr}Reply to parent comment{/tr}</td>
       {else}
-	<td class="formcolor">{tr}Post new comment{/tr}</td>
+	<td>{tr}Post new comment{/tr}</td>
       {/if}
-      <td class="formcolor">
+      <td>
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       </td>
     </tr>
     <tr>
-      <td class="formcolor"><label for="comments-title">{tr}Title{/tr} </label><span style="color: red">{tr}Required{/tr}</span></td>
-      <td class="formcolor"><input type="text" size="40" name="comments_title" id="comments-title" value="{$comment_title|escape}" /></td>
+      <td><label for="comments-title">{tr}Title{/tr} </label><span style="color: red">{tr}Required{/tr}</span></td>
+      <td><input type="text" size="40" name="comments_title" id="comments-title" value="{$comment_title|escape}" /></td>
     </tr>
 
 {* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
 {if $comment_can_rate_article eq 'y'}
     <tr>
-      <td class="formcolor"><label for="comments-rating">{tr}Rating{/tr} </label></td>
-      <td class="formcolor">
+      <td><label for="comments-rating">{tr}Rating{/tr} </label></td>
+      <td>
         <select name="comment_rating" id="comments-rating">
         <option value="" {if $comment_rating eq ''}selected="selected"{/if}>No</option>
         <option value="0" {if $comment_rating eq 0}selected="selected"{/if}>0</option>
@@ -262,13 +262,13 @@ href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;co
 
     {if $feature_smileys eq 'y'}
     <tr>
-      <td class="formcolor"><label for="comments-smileys">{tr}Smileys{/tr}</label></td>
-      <td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost"}</td>
+      <td><label for="comments-smileys">{tr}Smileys{/tr}</label></td>
+      <td>{include file="tiki-smileys.tpl" area_name="editpost"}</td>
     </tr>
     {/if}
     <tr>
-      <td class="formcolor"><label for="editpost">{tr}Comment{/tr}</label></td>
-      <td class="formcolor"><textarea id="editpost" name="comments_data" rows="6" cols="80">{$comment_data|escape}</textarea></td>
+      <td><label for="editpost">{tr}Comment{/tr}</label></td>
+      <td><textarea id="editpost" name="comments_data" rows="6" cols="80">{$comment_data|escape}</textarea></td>
     </tr>
     </table>
     </form>
