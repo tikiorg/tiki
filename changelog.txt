@@ -1,5 +1,8 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Added a general Calendar feature for tiki content browsing and groups calendar
+  management. Uses overlib and some javascript enhancements.
+* [NEW] Added a MODULE plugin to display modules inside wiki pages
 * [NEW] Added copyrights management system.
 * [NEW] Authentication: Tiki can use the WebServer authentication if admin wants, the
   user is automatically logged to Tiki once the WebServer authentication is used.
