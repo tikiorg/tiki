@@ -5285,7 +5285,6 @@ class TikiLib extends TikiDB {
 				    }
 				    closedir($h);
 				}
-				}
 
 				/* What is this $tikidomain section?
 				 * Some files that call this method used to list styles without considering
