@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.56 2003-12-08 05:26:45 gongo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.57 2003-12-08 05:43:26 gongo Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -165,9 +165,9 @@
 {/if}
 
 {if $print_page eq 'y'}
-  <p><div class="editdate" align="center">
+  <div class="editdate" align="center"><p>
     {tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}
-  </div></p>
+  </p></div>
 {/if}
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
