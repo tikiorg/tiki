@@ -145,7 +145,7 @@ function add_user_watch($user, $event, $object, $type, $title, $url) {
     $hash = md5(uniqid('.'));
     $email = $userlib->get_user_email($user);
     $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
-    $this->query($query,array($user,$event,$object);
+    $this->query($query,array($user,$event,$object));
     $query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
     $query.= "values(?,?,?,?,?,?,?,?)";
     $this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
@@ -5149,7 +5149,7 @@ function format_language_list($languages) {
     // translated names.
     $mapping = array(
 	    'cs' => array(
-		'Český',
+		'??esk??',
 		tra("Czech")
 		),
 	    'da' => array(
@@ -5165,7 +5165,7 @@ function format_language_list($languages) {
 		tra("English")
 		),
 	    'es' => array(
-		'Español',
+		'Espa??ol',
 		tra("Spanish")
 		),
 	    'el' => array(
@@ -5173,7 +5173,7 @@ function format_language_list($languages) {
 		tra("Greek")
 		),
 	    'fr' => array(
-		    'Français',
+		    'Fran??ais',
 		    tra("French")
 		    ),
 	    'it' => array(
