@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.25 2004-02-24 00:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.26 2004-02-24 00:49:15 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -98,11 +98,11 @@ if (isset($_REQUEST["newuser"])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
 			} else {
 				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
-					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 					setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {
-					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to create new %s with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
+					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to create new %s with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
 				}
 			}
 		}
@@ -113,10 +113,13 @@ if (isset($_REQUEST["action"])) {
 	check_ticket('admin-users');
 	if ($_REQUEST["action"] == 'delete') {
 		$userlib->remove_user($_REQUEST["user"]);
+		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
 	}
 	if ($_REQUEST["action"] == 'removegroup') {
 		$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
+		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
 	}
+	$_REQUEST["user"] = '';
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
