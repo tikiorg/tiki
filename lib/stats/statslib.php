@@ -43,9 +43,7 @@ class StatsLib extends TikiLib {
     $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit 0,-1";
     $query_cant = "select count(*) from tiki_pages $mid";
     $result = $this->query($query);
-    $result_cant = $this->query($query_cant);
-    $res2 = $result_cant->fetchRow();
-    $cant = $res2[0];
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     $num_or = 0;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
