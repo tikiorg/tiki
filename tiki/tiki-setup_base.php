@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.73 2004-04-26 17:56:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.74 2004-04-26 19:32:45 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -504,7 +504,7 @@ unset($allperms);
 $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
 $style = $tikilib->get_preference("style", 'moreneat.css');
-if (isset($tkidomain) and is_file("styles/$tikidomain/$style")) {
+if (isset($tikidomain) and is_file("styles/$tikidomain/$style")) {
 	$style = "$tikidomain/$style";
 }
 $smarty->assign('style', $style);
@@ -529,10 +529,10 @@ if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
 }
 
 // added for wirtual hosting suport
-if (!isset($tikidomain)) {
-    $tikidomain = "";
+if (!isset($tikidomain) or !$tikidomain) {
+	$tikidomain = "";
 } else {
-    $tikidomain .= "/";
+	$tikidomain.= "/";
 }
 
 $smarty->assign("tikidomain", $tikidomain);
