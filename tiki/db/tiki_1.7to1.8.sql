@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.20 2003-09-28 23:13:59 rlpowell Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.21 2003-09-29 01:24:34 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -356,6 +356,10 @@ ALTER TABLE `tiki_forums` ADD `outbound_from` VARCHAR( 250 ) AFTER `outbound_add
 # e-mail. -rlpowell
 ALTER TABLE `tiki_comments` ADD `message_id` VARCHAR( 250 ) AFTER `smiley` ;
 ALTER TABLE `tiki_comments` ADD `in_reply_to` VARCHAR( 250 ) AFTER `message_id` ;
+
+# Some more indexes for performance 
+CREATE INDEX `hash` on `tiki_comments`(`hash`);
+CREATE INDEX `in_reply_to` on `tiki_comments`(`in_reply_to`);
 
 # \todo rename to tiki_sessions
 # \todo lower case these field names, postgres dislikes non-lowercase fields

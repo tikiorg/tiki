@@ -1381,11 +1381,12 @@ class Comments extends TikiLib {
 
 	    $object = md5($objectId);
 	    $query = "insert into
-		`tiki_comments`(object, commentDate, userName, title, data,
-			votes, points, hash, parentId, average, hits, type, summary,
-			smiley, user_ip, message_id, in_reply_to )
-		values( ?, ?, ?, ?, ?,
-			0, 0, ?, ?, 0, 0, ?, ?, ?, ?, ?, ? )";
+		`tiki_comments`(`object`, `commentDate`, `userName`, `title`, `data`,
+			`votes`, `points`, `hash`, `parentId`, `average`, `hits`, `type`, `summary`,
+			`smiley`, `user_ip`, `message_id`, `in_reply_to` )
+		values ( ?, ?, ?, ?, ?,
+			0, 0, ?, ?, 0, 0, ?, ?, 
+			?, ?, ?, ?)";
 
 	    $result = $this->query($query, 
 		    array( $object, $now, $userName, $title, $data,
