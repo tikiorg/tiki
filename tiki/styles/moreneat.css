@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.56 2004-06-28 16:16:28 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.57 2004-07-01 16:09:41 teedog Exp $
 
 MoreNeat theme
 */
@@ -1907,3 +1907,11 @@ padding : 2ex;
 background-color : #edeeef;
 margin : 1ex;
 border : 1px dashed #adacaf; }
+
+/**** coloration for QUOTE plugin *****/
+.quote {
+padding : 2ex;
+background-color : #edeeef;
+margin : 1ex;
+border : 1px solid #adacaf;
+}
