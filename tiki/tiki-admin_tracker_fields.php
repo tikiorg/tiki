@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.17 2004-01-04 19:47:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.18 2004-01-20 06:33:14 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,9 @@ if (!isset($_REQUEST["trackerId"])) {
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
+
+$field_types = $trklib->field_types();
+$smarty->assign('field_types', $field_types);
 
 if (!isset($_REQUEST["fieldId"])) {
 	$_REQUEST["fieldId"] = 0;
