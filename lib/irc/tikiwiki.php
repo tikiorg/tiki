@@ -10,15 +10,16 @@ require_once('irclib.php');
 
 $channel = isset($argv[1]) ? $argv[1] : 'tikiwiki';
 
+# \TODO get domain from mySQL
+
 $options = array(
-    'server'    => 'irc.freenode.net',
+    'server'    => 'orwell.freenode.org',
     'port'      => 6667,
     'nick'      => 'tikibot',
-    # \TODO get domain from mySQL
     'realname'  => 'http://wiki.netebb.com/irc',
     'identd'    => 'tikibot',
     'host'      => '127.0.0.1',
-    'log_types' => array(0, 1, 2, 3, 4, 5, 6),
+    'log_types' => array(0, 1),
 	'channel'	=> $channel,
 );
 
