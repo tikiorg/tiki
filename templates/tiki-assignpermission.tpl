@@ -53,9 +53,12 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=shoutbox">{tr}shoutbox{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=drawings">{tr}drawings{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=html%20pages">{tr}HTML pages{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=trackers">{tr}Trackers{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=trackers">{tr}Trackers{/tr}</a>
+   ]<br/>
+   [
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=surveys">{tr}Surveys{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=webmail">{tr}Webmail{/tr}</a>
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=webmail">{tr}Webmail{/tr}</a>|
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=newsletters">{tr}Newsletters{/tr}</a>
    ]
  </td>
 </tr>
