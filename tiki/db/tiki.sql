@@ -428,7 +428,7 @@ CREATE TABLE tiki_blog_posts (
   postId int(8) NOT NULL auto_increment,
   blogId int(8) NOT NULL default '0',
   data text,
-	data_size int(11) NOT NULL unsigned default '0',
+  data_size int(11) unsigned NOT NULL default '0',
   created int(14) default NULL,
   user varchar(200) default NULL,
   trackbacks_to text,
