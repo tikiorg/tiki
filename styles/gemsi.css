@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.23 2004-02-02 06:23:49 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.24 2004-02-04 05:11:03 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -51,16 +51,23 @@ input[type=submit]:hover {
 	border: 1px solid black;
 }
 H1 {
+	padding-left: 35px;
+	padding-top: 3px;
+	height: 35px;
+	background-image: url("/img/wiki_up/fleche.jpg");
+	background-repeat: no-repeat;
+	
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 180%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
 	clear: both;
 }
+
 H2 {
 	font-weight: bold;
-	font-size: 22px;
+	font-size: 140%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
@@ -68,7 +75,7 @@ H2 {
 }
 H3 {
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 120%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
@@ -76,7 +83,7 @@ H3 {
 }
 
 ul {
-	margin: 0;
+	margin: 0 20px 0 20px;
 }
 a {
 	text-decoration: none;
@@ -118,6 +125,7 @@ TD#leftcolumn {
 TD#rightcolumn {
 	vertical-align: top;
 	width: 180px;
+	margin-left: 10px;
 }
 TD#centercolumn {
 	vertical-align: top;
@@ -419,19 +427,19 @@ TD.third {
 }
 .pagetitle, .forumspagetitle {
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 160%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 }
 a.pagetitle, a.forumspagetitle {
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 160%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 }
 a.pagetitle:hover, a.forumspagetitle:hover {
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 160%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	text-decoration: underline;
 	color: red;
@@ -486,7 +494,7 @@ DIV#page-bar {
 }
 .button2 {
 	display: inline;
-	font-size: 80%;
+	font-size: 85%;
 	background-color: white;
 	border: 1px solid #6cb0f8;
 	margin: 0px;
@@ -529,7 +537,7 @@ div.cachedpage {
 	width: 100%;
 }
 .wikicache {
-	font-size: 80%;
+	font-size: 90%;
 	color: #999999;
 }
 .wikicache:active {
@@ -562,6 +570,7 @@ div.wikitext {
 	padding-left: 1px;
 	min-width: 400px;
 	max-width: 700px;
+	right: 20px;
 	clear: both;
 }
 .wiki {
@@ -609,7 +618,7 @@ TD.eventhumb {
 }
 div.gallerytitle {
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 160%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: black;
 }
@@ -650,7 +659,7 @@ div.browseimage {
 }
 div.imagetitle {
 	font-weight: bold;
-	font-size: 26px;
+	font-size: 120%;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: black;
 }
@@ -741,7 +750,7 @@ div.article {
 }
 div.articletitle {
 	background-color: #eee7d6;
-	font-size: 13px;
+	font-size: 110%;
 	font-weight: bold;
 	padding: 0 10px 0 10px;
 }
@@ -754,39 +763,36 @@ div.articleheading table tr td:first-child img {
 	margin-right: 20px;
 }
 div.articletrailer {
-	font-size: 11px;
 	padding: 0 10px 0 10px;
 }
 span.articleheading {
-	font-size: 12px;
 }
 div.articlebody {
 	padding: 5px 10px 5px 10px;;
 	margin: 10px 0px;
-	font-size: 12px;
 	clear: both;
 }
 span.titlea {
-	font-size: 18px;
+	font-size: 120%;
 	font-weight: bold;
 }
 span.titleb {
-	font-size: 10px;
+	font-size: 90%;
 }
 span.trailer {
-	font-size: 10px;
+	font-size: 90%;
 	font-weight: bold;
 }
 /* ********************* CALENDAR ****************************************** */
 .day {
-	font-size: 9px;
+	font-size: 80%;
 	color: black;
 }
 .day:hover {
 	background-color: #CCCCCC;
 }
 .today {
-	font-size: 9px;
+	font-size: 80%;
 	color: black;
 	font-weight: bold;
 }
@@ -794,7 +800,7 @@ span.trailer {
 	background-color: #CCCCCC;
 }
 .nav {
-	font-size: 9px;
+	font-size: 80%;
 	color: black;
 	font-weight: bold;
 }
@@ -802,13 +808,13 @@ span.trailer {
 	background-color: #CCCCCC;
 }
 .changedate {
-	font-size: 8px;
+	font-size: 80%;
 	background-color: white;
 	color: black;
 	font-weight: bold;
 }
 .date {
-	font-size: 9px;
+	font-size: 80%;
 	background-color: white;
 	color: Black;
 	font-weight: bold;
@@ -844,23 +850,19 @@ div.commentstoolbar {
 }
 span.commentstitle {
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 110%;
 }
 div.commentscomment {
-	font-size: 11px;
 	margin-bottom: 20px;
 }
 div.commentheader {
 	background-color: #eee7d6;
 	border: 0px solid blue;
-	font-size: 11px;
 }
 div.commenttext {
-	font-size: 11px;
 	margin-left: 5px;
 }
 .commentshlink {
-	font-size: 11px;
 	color: black;
 }
 .commentshlink:hover {
@@ -881,7 +883,6 @@ td.chatchannels {
 td.chatarea {
 	padding-left: 0px;
 	margin-left: 0px;
-	font-size: 11px;
 	color: black;
 	background-color: white;
 }
@@ -895,16 +896,13 @@ table.chatform {
 td.tdchatform {
 	color: Black;
 	background-color: #EFEFEF;
-	font-size: 11px;
 	text-align: left;
 }
 span.chnormal {
 	color: red;
-	font-size: 11px;
 }
 span.chuser {
 	color: blue;
-	font-size: 11px;
 	font-weight: bold;
 }
 /* ********************* POLLS ********************************************* */
@@ -912,14 +910,13 @@ div.pollresults {
 	background-color: white;
 	border: 1px solid #999999;
 	margin-top: 5px;
-	font-size: 14px;
+	font-size: 120%;
 	padding-left: 5px;
 }
 table.pollresults {
 	width: 100%;
 }
 td.pollr {
-	font-size: 11px;
 	color: black;
 }
 /* ********************* FORUMS ******************************************** */
@@ -931,33 +928,27 @@ table.threads {
 	width: 100%;
 }
 td.viewthreadl {
-	font-size: 11px;
 	background-color: #FFF7E6;
 	height: 30px;
 	width: 30%;
 	vertical-align: top;
 }
 td.viewthreadr {
-	font-size: 11px;
 	background-color: #FFF7E6;
 	height: 30px;
 }
 td.threadsevenl {
 	width: 30%;
-	font-size: 12px;
 	background-color: #FFF7E6;
 }
 td.threadsevenr {
-	font-size: 13px;
 	background-color: white;
 }
 td.threadsoddl {
 	width: 30%;
-	font-size: 12px;
 	background-color: #FFF7E6;
 }
 td.threadsoddr {
-	font-size: 13px;
 	background-color: white;
 }
 td.threadseparator {
@@ -980,17 +971,14 @@ div.forumtoolbar {
 }
 td.forumtoolbar {
 	color: black;
-	font-size: 11px;
 	font-weight: bold;
 	vertical-align: bottom;
 }
 .toolbarlink {
 	color: white;
-	font-size: 11px;
 	font-weight: bold;
 }
 .forumvotelink {
-	font-size: 12px;
 	color: black;
 }
 /* ********************* CATEGORIES **************************************** */
@@ -1016,7 +1004,6 @@ td.tdsubcat {
 	width: 25%;
 }
 .categlink {
-	font-size: 11px;
 	color: black;
 	font-weight: bold;
 }
@@ -1028,16 +1015,13 @@ table.catobjects {
 }
 td.categobjectsnameeven, td.categobjectsdataeven {
 	background-color: white;
-	font-size: 11px;
 }
 td.categobjectsnameodd, td.categobjectsdataodd {
 	background-color: #FFF7E6;
-	font-size: 11px;
 }
 .catname {
 	padding: 1px 10px 1px 10px;
 	color: black;
-	font-size: 11px;
 }
 .catname:hover {
 	text-decoration: underline;
@@ -1080,7 +1064,6 @@ div.faqlistquestions {
 	background-color: #FFF7E6;
 	border: 1px solid #999999;
 	color: black;
-	font-size: 11px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -1088,18 +1071,15 @@ div.faqqa {
 	background-color: #FFF7E6;
 	border: 1px solid #999999;
 	color: black;
-	font-size: 12px;
 	margin-bottom: 20px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	padding-left: 5px;
 }
 div.faqquestion {
-	font-size: 12px;
 	margin-bottom: 5px;
 }
 div.faqanswer {
-	font-size: 12px;
 }
 /* ********************* QUIZZES ******************************************* */
 div.questionblock {
@@ -1149,7 +1129,7 @@ width: 100%;
 .Cal0, .Cal1, .Cal2 {
 	border-top: 1px dashed #cccccc;
 	color: #425262;
-	font-size: 10px;
+	font-size: 90%;
 	padding-right: 0px;
 }
 
@@ -1183,7 +1163,6 @@ width: 100%;
 a.caltab {
 	text-decoration: none;
 	font-weight: bold;
-	font-size: 11px;
 	background-color: #dedede;
 	color: #000000;
 }
@@ -1204,7 +1183,6 @@ a.caltab:hover {
 
 a.caltabon {
 	font-weight: bold;
-	font-size: 11px;
 	color: #000000;
 }
 
@@ -1226,7 +1204,6 @@ div.tabcal, div.tabnav {
 	background-color: #ffffff;
 	border: 1px solid #666666;
 	border-bottom: 1px solid #aeaeae;
-	font-size: 11px;
 }
 
 div.tabrow {
@@ -1234,7 +1211,6 @@ margin-left: 29px;
 background-color: #efefef;
 border: 1px solid #787878;
 border-bottom: 0;
-font-size: 11px;
 }
 td.middle {
 	vertical-align: middle; 
@@ -1250,7 +1226,7 @@ width: 100%;
 	margin-left: 3px;
 	border: 1px outset black;
 	padding: 1px 5px 1px 5px;
-	font-size: 10px;
+	font-size: 90%;
 	cursor: pointer;
 	background-color: #e3d4a8;
 }
@@ -1265,7 +1241,7 @@ width: 100%;
 }
 
 .caltoggle {
-	font-size: 9px;
+	font-size: 80%;
 	margin-bottom: 7px;
 }
 
@@ -1282,7 +1258,7 @@ width: 200px;
 }
 
 .calfocus {
-	font-size: 10px;
+	font-size: 90%;
 	background-color: transparent;
 }
 
@@ -1291,7 +1267,7 @@ width: 200px;
 }
 
 .calfocuson {
-	font-size: 10px;
+	font-size: 90%;
 	background-color: #f3e498;
 }
 
@@ -1304,7 +1280,7 @@ min-height: 60px;
 
 .Calwiki {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	margin-top: 0;
 	padding-left: 3px;
 	padding-right: 3px;
@@ -1322,7 +1298,7 @@ min-height: 60px;
 
 .Calblog {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1339,7 +1315,7 @@ min-height: 60px;
 
 .Calgal {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1356,7 +1332,7 @@ min-height: 60px;
 
 .Calart {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1373,7 +1349,7 @@ min-height: 60px;
 
 .Calforum {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1390,7 +1366,7 @@ min-height: 60px;
 
 .Caldir {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1407,7 +1383,7 @@ min-height: 60px;
 
 .Calfgal {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1424,7 +1400,7 @@ min-height: 60px;
 
 .Calfaq {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1441,7 +1417,7 @@ min-height: 60px;
 
 .Calquiz {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1458,7 +1434,7 @@ min-height: 60px;
 
 .Caltrack {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1475,7 +1451,7 @@ min-height: 60px;
 
 .Calsurv {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1492,7 +1468,7 @@ min-height: 60px;
 
 .Calnl {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1509,7 +1485,7 @@ min-height: 60px;
 
 .Caleph {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1526,7 +1502,7 @@ min-height: 60px;
 
 .Calchart {
 	border-top: 1px dashed #cccccc;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1554,7 +1530,7 @@ min-height: 60px;
 .calweb {
 	color: black;
 	font-weight: bold;
-	font-size: 10px;
+	font-size: 90%;
 	padding-left: 3px;
 	padding-right: 3px;
 }
@@ -1600,7 +1576,6 @@ div#attzoneopen {
  * Currently in Attachments and comments only.
  */
 caption {
-	font-size: 11px;
 	font-weight: bold;
 	text-align: right;
 }
@@ -1647,7 +1622,7 @@ TABLE.admin {
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
 	background-color: #dedede;
-	font-size: 70%;
+	font-size: 80%;
 	color: #666666;
 	padding: 5px;
 }
@@ -1740,7 +1715,6 @@ div#loadstats {
 }
 /* for tabs */
 div.tabs {
-	font-size: 11px;
 	white-space: nowrap;
 	cursor: default !important;
 	font-weight: 700 !important;
@@ -1750,7 +1724,8 @@ div.tabs {
 .content {
 	position: relative;
 	border: 1px solid #999999;
-	width: 600px  !important;
+	min-width: 400px;
+	max-width: 700px;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	z-index: 80;
@@ -1822,7 +1797,7 @@ a.removeTab{
 .treemenudiv	{
 	display: block;
 	white-space: nowrap;
-	font-size: 14px;
+	font-size: 110%;
 }
 a.phplm	{
 	color: #000000;
