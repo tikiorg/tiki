@@ -39,19 +39,35 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
   global $tiki_p_map_edit;
   $msg=tra("An error as occured with the mapfile: ").$mapfile."<br\><br\>".$errmsg."<br/>";
   
-  $pos=strpos($errmsg,"(line");
-  $line=substr($errmsg,$pos+5);
+  $pos=strpos($errmsg,":(");
+  if ($errmsg[$pos+2]=='l')
+  {
+    $line=substr($errmsg,$pos+6);
+  } else {
+    $line=substr($errmsg,$pos+2);
+  }
   $pos=strpos($line,")");
   $line=substr($line,0,$pos);
   
-  $fcontents = file($map_path.$mapfile);
+  if ($errmsg[$pos+2]!='l') $line++;
   
-  $msg.="<pre>   ".$fcontents[$line-3];
-  $msg.="   ".$fcontents[$line-2];
+  $fcontents = file($map_path.$mapfile);
+
+  $msg .="<pre>";
+  
+  if ($line>=4) {
+    $msg.="   ".$fcontents[$line-4];
+    $msg.="   ".$fcontents[$line-3];
+    $msg.="   ".$fcontents[$line-2];
+  }
   $msg.="-->".$fcontents[$line-1];
-  $msg.="   ".$fcontents[$line+0];
-  $msg.="   ".$fcontents[$line+1];
-  $msg.="   ".$fcontents[$line+2]."<pre/><br/>";
+  if ($line+3<count($fcontents)) {
+    $msg.="   ".$fcontents[$line+0];
+    $msg.="   ".$fcontents[$line+1];
+    $msg.="   ".$fcontents[$line+2];
+    $msg.="   ".$fcontents[$line+3];
+  }
+  $msg.="<pre/><br/>";
   
   if ($tiki_p_map_edit == 'y')
   {
