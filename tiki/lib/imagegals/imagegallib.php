@@ -653,7 +653,7 @@ class ImageGalsLib extends TikiLib {
 
 		// rewritten by flo
 		$query = "select `imageId`, `path` from `tiki_images` where `galleryId`=?";
-		$result = $this->query($queryi,array($galleryId));
+		$result = $this->query($query,array($galleryId));
 
 		while ($res = $result->fetchRow()) {
 			$query2 = "delete from `tiki_images_data` where `imageId`=? and `type`=?";
