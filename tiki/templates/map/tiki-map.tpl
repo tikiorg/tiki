@@ -38,8 +38,8 @@
 		  <input type="hidden" name="miny" value="{$miny}">
 		  <input type="hidden" name="maxx" value="{$maxx}">
 		  <input type="hidden" name="maxy" value="{$maxy}">
-		  <a href="/tiki/tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp
-		  <a href="/tiki/tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a>
+		  <a href="tiki-index.php?page={$map_help}"><small>{tr}Help{/tr}</small></a>&nbsp
+		  <a href="tiki-index.php?page={$map_comments}"><small>{tr}Comments{/tr}</small></a>
 		</td></tr>
 		</table>
 		</td>
@@ -63,8 +63,8 @@
 		  <table class="normal">
 		  <tr><td class="heading">
 		  <b>Layer</b></td><td class="heading"><b>{tr}On{/tr}</b></td>
-		  <td class="heading"><img src="/tiki/img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}"></td>
-		  <td class="heading"><img src="/tiki/img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}"></td></tr>
+		  <td class="heading"><img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}"></td>
+		  <td class="heading"><img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}"></td></tr>
 		  {section name=j loop=$my_layers}
 		  <tr>
 		  {if $smarty.section.j.index % 2}
@@ -100,7 +100,7 @@
 		  {if $layer_download[j] eq "T"}
 		  <small>
 		  <a href="tiki-map_download.phtml?mapfile={$mapfile}&layer={$my_layers[j]->name}">
-		  <img src="/tiki/img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}">
+		  <img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}">
 		  </a>
 		  </small>
 		  {/if}
