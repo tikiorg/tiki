@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 
+
 /*
 require_once "lib/NNTP.php";
 $nntp = new Net_NNTP;

@@ -239,6 +239,8 @@ $feature_messages = 'n';
 $smarty->assign('feature_messages',$feature_messages);
 $feature_tasks = 'n';
 $smarty->assign('feature_tasks',$feature_tasks);
+$feature_newsreader = 'n';
+$smarty->assign('feature_newsreader',$feature_newsreader);
 $feature_wiki_footnotes = 'n';
 $smarty->assign('feature_wiki_footnotes',$feature_wiki_footnotes);
 

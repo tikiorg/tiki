@@ -1,5 +1,6 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+
 ## Wiki footnotes
 drop table if exists tiki_page_footnotes;
 create table tiki_page_footnotes(
