@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.178 2004-04-10 18:24:57 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.179 2004-04-10 18:36:27 lphuberdeau Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4012,6 +4012,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sandbox','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_fulltext','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_search','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_shoutbox','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_stats','n');
