@@ -60,11 +60,11 @@
 </tr>
 {sectionelse}
 <tr>
-	<td class="heading" colspan="4">{tr}No notes yet{/tr}</td>
+	<td class="formcolor" colspan="4">{tr}No notes yet{/tr}</td>
 </tr>
 {/section}
 <tr>
-	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
+	<td class="formcolor" colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
 </tr>
 </table>
 </form>

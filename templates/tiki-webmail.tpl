@@ -36,11 +36,11 @@
 <tr><td class="formcolor">{tr}Account name{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="account" value="{$info.account}" /></td></tr>
 <tr><td class="formcolor">{tr}POP server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
 <tr><td class="formcolor">{tr}SMTP server{/tr}</td><td class="formcolor"><input type="text" name="smtp" value="{$info.smtp}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td></tr>
-<tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td  colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="yes" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="no" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Username{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
-<tr><td class="formcolor">{tr}Password{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
-<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs}" /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="yes" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="no" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Username{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
+<tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
+<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
 <h3>{tr}User accounts{/tr}</h3>
