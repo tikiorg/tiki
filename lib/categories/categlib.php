@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.64 2004-10-25 13:39:38 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.65 2004-10-25 14:23:03 chealer Exp $
  *
  * \brief Categories support class
  *
@@ -39,23 +39,25 @@ class CategLib extends TikiLib {
 				$res["categpath"] = $categpath;
 				$res["tepath"] = $tepath;
 				$res["deep"] = count($tepath);
-				if ($checkperms) {
-					global $userlib;
-					if ($userlib->object_has_one_permission($res['categId'], 'category')) {
-						$res['has_perm'] = 'y';
-					} else {
-						$res['has_perm'] = 'n';
-					}
-				}
 				$ret["$categpath"] = $res;
 			}
 			ksort($ret);
 			$back = array_values($ret);
 			$cachelib->cacheItem("allcategs",serialize($back));
-			return $back;
 		} else {
-			return unserialize($cachelib->getCached("allcategs"));
+			$back = unserialize($cachelib->getCached("allcategs"));
 		}
+		if ($checkperms) {
+			global $userlib;
+			foreach ($back as $key => $cat) {
+				if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
+					$back[$key]['has_perm'] = 'y';
+				} else {
+					$back[$key]['has_perm'] = 'n';
+				}
+			}
+		}
+		return $back;
 	}
 	
 	function get_category_path($categId) {
