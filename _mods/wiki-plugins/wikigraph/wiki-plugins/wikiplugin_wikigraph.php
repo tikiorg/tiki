@@ -91,6 +91,7 @@ $garg = array(
 	$mapdata = $wikigraphlib->get_graph_map($data, $level, $garg);
 	//$mapdata = $wikilib->get_graph_map($data, $level, $garg);
 	$mapdata = preg_replace("/\n|\r/", '', $mapdata);
+        $mapdata = preg_replace("/\&#45;/", '-', $mapdata);
 	$ret .= "<map name='$mapname'>$mapdata</map></div>";
 	return $ret;
 }
