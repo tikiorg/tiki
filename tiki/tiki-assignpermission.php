@@ -27,6 +27,15 @@ if(!$userlib->group_exists($group)) {
 $smarty->assign_by_ref('group',$group);
 
 
+if(isset($_REQUEST['allper'])) {
+  if($_REQUEST['oper']=='assign') {
+    $userlib->assign_level_permissions($group,$_REQUEST['level']);
+  } else {
+    $userlib->remove_level_permissions($group,$_REQUEST['level']);
+  }
+}
+
+
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='assign') {
     $userlib->assign_permission_to_group($_REQUEST["perm"],$group);  
@@ -67,6 +76,24 @@ if(!isset($_REQUEST["type"])) {
   $_REQUEST["type"]='';
 } 
 $smarty->assign('type',$_REQUEST["type"]);
+
+if(isset($_REQUEST["createlevel"])) {
+  $userlib->create_dummy_level($_REQUEST['level']);
+}
+
+if(isset($_REQUEST['update'])) {
+ foreach(array_keys($_REQUEST['permName']) as $per) {
+    $userlib->change_permission_level($per,$_REQUEST['level'][$per]);
+    if(isset($_REQUEST['perm'][$per])) {
+      $userlib->assign_permission_to_group($per,$group);  
+    } else {
+      $userlib->remove_permission_from_group($per,$group); 
+    }
+ }
+}
+
+$levels = $userlib->get_permission_levels();
+$smarty->assign('levels',$levels);
 
 $perms = $userlib->get_permissions($offset,$maxRecords,$sort_mode,$find,$_REQUEST["type"],$group);
 $cant_pages = ceil($perms["cant"] / $maxRecords);

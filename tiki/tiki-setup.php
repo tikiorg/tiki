@@ -305,6 +305,11 @@ $smarty->assign('feature_trackers',$feature_trackers);
 $feature_directory = 'n';
 $smarty->assign('feature_directory',$feature_directory);
 
+$feature_contact = 'n';
+$smarty->assign('feature_contact',$feature_contact);
+$contact_user = $tikilib->get_preference('contact_user','admin');
+$smarty->assign('contact_user',$contact_user);
+
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html',$webmail_view_html);
 $webmail_max_attachment = 1500000;

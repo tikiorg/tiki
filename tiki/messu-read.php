@@ -2,6 +2,13 @@
 require_once('tiki-setup.php');
 include_once('lib/messu/messulib.php');
 
+if(!$user) {
+   $smarty->assign('msg',tra("You are not logged in"));
+   $smarty->display("styles/$style_base/error.tpl");
+   die;
+}
+
+
 if($feature_messages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");

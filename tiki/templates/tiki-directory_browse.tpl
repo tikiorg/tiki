@@ -24,6 +24,7 @@
 
 {if count($categs)}
 <br/><br>
+<b>{tr}Subcategories{/tr}</b><br/>
 {* The table with the subcategories *}
 <div class="dircategs">
 <table  width="100%">
@@ -69,6 +70,7 @@
 <br/>
 {* The links *}
 {if $categ_info.allowSites eq 'y' and count($items) > 0}
+<b>{tr}Links{/tr}</b><br/>
 <div class="dirlistsites">
 <form method="post" action="tiki-directory_browse.php">
 <input type="hidden" name="parent" value="{$parent}" />

@@ -117,7 +117,7 @@
     </tr>
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="6" cols="30">{$comment_data}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="16" cols="80">{$comment_data}</textarea></td>
     </tr>
     </table>
     </form>

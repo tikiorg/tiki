@@ -66,6 +66,7 @@
 <tr><td class="form">{tr}Newsletters{/tr}:</td><td><input type="checkbox" name="feature_newsletters" {if $feature_newsletters eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Directory{/tr}:</td><td><input type="checkbox" name="feature_directory" {if $feature_directory eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Messages{/tr}:</td><td><input type="checkbox" name="feature_messages" {if $feature_messages eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Contact{/tr}:</td><td><input type="checkbox" name="feature_contact" {if $feature_contact eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -189,6 +190,8 @@
 &nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
 </td>
 </tr>
+
+<tr><td class="form">{tr}Contact user{/tr}:</td><td>{if $feature_contact eq 'y'}<input type="text" name="contact_user" value="{$contact_user}" />{else}{tr}contact feature disabled{/tr}{/if}</td></tr>
 
 <tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>

@@ -325,6 +325,49 @@ class UsersLib extends TikiLib {
     return $res;
   }
   
+  function change_permission_level($perm,$level)
+  {
+    $level=addslashes($level);
+    $query = "update users_permissions set level='$level' where permName='$perm'";
+    $this->query($query);
+  }
+  
+  function assign_level_permissions($group,$level)
+  {
+    $query = "select permName from users_permissions where level='$level'";
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $this->assign_permission_to_group($res['permName'],$group);
+    }
+  }
+  
+  function remove_level_permissions($group,$level)
+  {
+    $query = "select permName from users_permissions where level='$level'";
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $this->remove_permission_from_group($res['permName'],$group);
+    }
+  }
+  
+  function create_dummy_level($level) {
+    $query = "replace into users_permissions(permName,permDesc,type,level) values('','','','$level')";
+    $this->query($query);
+  }
+  
+  function get_permission_levels()
+  {
+    $query = "select distinct(level) from users_permissions";
+    $result = $this->query($query);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res['level'];
+    }
+    return $ret;
+  }
+  
   function get_userid_info($user) 
   {
     $query = "select * from users_users where userId='$user'";
@@ -355,7 +398,7 @@ class UsersLib extends TikiLib {
       }
     } 
     
-    $query = "select permName,type, permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select permName,type,level,permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from users_permissions $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -365,6 +408,7 @@ class UsersLib extends TikiLib {
       $aux["permName"] = $res["permName"];
       $aux["permDesc"] = $res["permDesc"];
       $aux["type"] = $res["type"];
+      $aux['level'] = $res["level"];
       if($group) {
         if($this->group_has_permission($group,$aux["permName"])) {
           $aux["hasPerm"]='y';

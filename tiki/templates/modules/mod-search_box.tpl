@@ -11,6 +11,9 @@
     {if $feature_wiki eq 'y'}
     <option value="wikis">{tr}Wiki Pages{/tr}</option>
     {/if}
+    {if $feature_directory eq 'y'}
+    <option value="directory">{tr}Directory{/tr}</option>
+    {/if}
     {if $feature_galleries eq 'y'}
     <option value="galleries">{tr}Image Gals{/tr}</option>
     <option value="images">{tr}Images{/tr}</option>

@@ -43,14 +43,14 @@
 <tr>
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
 <td class="odd">&nbsp;{$lastchanges[changes].action}&nbsp;</td>
 <td class="odd">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
 <td class="odd">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
 <td class="odd">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
 {else}
 <td class="even">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
+<td class="even">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
 <td class="even">&nbsp;{$lastchanges[changes].action}&nbsp;</td>
 <td class="even">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
 <td class="even">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>

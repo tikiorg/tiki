@@ -16,7 +16,7 @@
 Q: {$channels[ix].question}
 </div>
 <div class="faqanswer">
-A: {$channels[ix].answer}
+A: {$channels[ix].parsed}
 </div>
 </div>
 {/section}

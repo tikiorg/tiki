@@ -1,7 +1,7 @@
 {if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 <div class="box">
 <div class="box-title">
-<a class="cboxtlink" href="tiki-user_bookmarks.php">{tr}Bookmakrs{/tr}</a>
+<a class="cboxtlink" href="tiki-user_bookmarks.php">{tr}Bookmarks{/tr}</a>
 </div>
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

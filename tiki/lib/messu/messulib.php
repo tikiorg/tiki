@@ -25,8 +25,8 @@ class Messu extends Tikilib {
     $from = addslashes($from);
     $to = addslashes($to);
     $cc = addslashes($cc);
-    $subject = addslashes($subject);
-    $body = strip_tags(addslashes($body));
+    $subject = strip_tags(addslashes($subject));
+    $body = strip_tags(addslashes($body),'<a><b><img><i>');
     // Prevent duplicates
     $hash = md5($subject.$body);
     if($this->getOne("select count(*) from messu_messages where user='$user' and user_from='$from' and hash='$hash'")) {
@@ -90,6 +90,7 @@ class Messu extends Tikilib {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $res["len"]=strlen($res["body"]);
+      if(empty($res['subject'])) $res['subject']=tra('NONE');
       $ret[] = $res;
     }
     $retval = Array();
@@ -159,6 +160,8 @@ class Messu extends Tikilib {
     $query = "select * from messu_messages where user='$user' and msgId='$msgId'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res['parsed']=$this->parse_data($res['body']);
+    if(empty($res['subject'])) $res['subject']=tra('NONE');
     return $res;
   }
  

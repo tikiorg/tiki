@@ -827,6 +827,7 @@ class TikiLib {
 
   function list_html_page_content($pageName,$offset,$maxRecords,$sort_mode,$find)
   {
+    $pageName = addslashes($pageName);
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
       $mid=" where pageName='$pageName' and (name like '%".$find."%' or content like '%".$find."%')";
@@ -923,6 +924,7 @@ class TikiLib {
 
   function remove_html_page_content($pageName,$zone)
   {
+    $pageName = addslashes($pageName);
     $query = "delete from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='$zone'";
     $result = $this->query($query);
     return true;
@@ -930,6 +932,7 @@ class TikiLib {
 
   function get_html_page($pageName)
   {
+    $pageName = addslashes($pageName);
     $query = "select * from tiki_html_pages where pageName='$pageName'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
@@ -939,6 +942,7 @@ class TikiLib {
 
   function get_html_page_content($pageName,$zone)
   {
+    $pageName = addslashes($pageName);
     $query = "select * from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='$zone'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
@@ -1833,6 +1837,7 @@ class TikiLib {
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res['parsed'] = $this->parse_data($res['answer']);
       $ret[] = $res;
     }
     $retval = Array();
@@ -2988,6 +2993,7 @@ class TikiLib {
   function receive_page($pageName,$data,$comment,$site,$user,$description)
   {
     $data = addslashes($data);
+    $pageNAme = addslashes($pageName);
     $comment = addslashes($comment);
     $description = addslashes($description);
     $now = date("U");
@@ -3305,7 +3311,7 @@ class TikiLib {
 
   function replace_rss_module($rssId, $name, $description, $url, $refresh)
   {
-    if($this->rss_module_name_exists($name)) return false;
+    //if($this->rss_module_name_exists($name)) return false;
     $description = addslashes($description);
     $name = addslashes($name);
     // Check the name
@@ -6085,12 +6091,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function vote_page($page, $points)
   {
+    $page = addslashes($page);
     $query = "update pages set points=points+$points, votes=votes+1 where pageName='$page'";
     $result = $this->query($query);
   }
 
   function get_votes($page)
-  {
+  { 
+    $page = addslashes($page);
     $query = "select points,votes from pages where pageName='$page'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -6599,6 +6607,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // Removes a specific version of a page
   function remove_version($page,$version,$comment='')
   {
+    $page = addslashes($page);
     $query="delete from tiki_history where pageName='$page' and version='$version'";
     $result=$this->query($query);
     $action="Removed version $version";
@@ -6611,6 +6620,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // Removes all the versions of a page and the page itself
   function remove_all_versions($page,$comment='')
   {
+    $page = addslashes($page);
     $this->invalidate_cache($page);
     $query = "delete from tiki_pages where pageName = '$page'";
     $result = $this->query($query);
@@ -6628,6 +6638,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function use_version($page,$version,$comment='')
   {
+    $page = addslashes($page);
     $this->invalidate_cache($page);
     $query = "select * from tiki_history where pageName='$page' and version='$version'";
     $result=$this->query($query);
@@ -6656,6 +6667,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // version in the tiki_history then the last version becomes the actual version
   function remove_last_version($page,$comment='')
   {
+    $page = addslashes($page);
     $this->invalidate_cache($page);
     $query = "select * from tiki_history where pageName='$page' order by lastModif desc";
     $result = $this->query($query);
@@ -7130,6 +7142,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // Returns information about a specific version of a page
   function get_version($page, $version)
   {
+    $page = addslashes($page);
     $query = "select * from tiki_history where pageName='$page' and version=$version";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -7140,6 +7153,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // without the data itself
   function get_page_history($page)
   {
+    $page = addslashes($page);
     $query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
     $result = $this->query($query);
     $ret = Array();
@@ -7161,6 +7175,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function is_locked($page)
   {
+    $page = addslashes($page);
     $query = "select flag from tiki_pages where pageName='$page'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -7170,6 +7185,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function lock_page($page)
   {
+    $page = addslashes($page);
     $query = "update tiki_pages set flag='L' where pageName='$page'";
     $result = $this->query($query);
     return true;
@@ -7177,6 +7193,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function unlock_page($page)
   {
+    $page = addslashes($page);
     $query = "update tiki_pages set flag='' where pageName='$page'";
     $result = $this->query($query);
     return true;
@@ -7199,6 +7216,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // This implements all the functions needed to use Tiki
   function page_exists($pageName)
   {
+    $pageName = addslashes($pageName);
     $query = "select pageName from tiki_pages where pageName = '$pageName'";
     $result = $this->query($query);
     return $result->numRows();
@@ -7206,6 +7224,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function page_exists_desc($pageName)
   {
+    $pageName = addslashes($pageName);
     $query = "select description from tiki_pages where pageName = '$pageName'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
@@ -7216,12 +7235,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function version_exists($pageName, $version)
   {
+    $pageName = addslashes($pageName);
     $query = "select pageName from tiki_history where pageName = '$pageName' and version='$version'";
     $result = $this->query($query);
     return $result->numRows();
   }
 
   function add_hit($pageName) {
+    $pageName = addslashes($pageName);
     $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
     $result = $this->query($query);
     return true;
@@ -7276,6 +7297,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function get_page_info($pageName)
   {
+    $pageName = addslashes($pageName);
     $query = "select * from tiki_pages where pageName='$pageName'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
@@ -8424,6 +8446,7 @@ function parse_data($data)
   }
 
   function invalidate_cache($page) {
+    $pageName = addslashes($pageName);
     $query = "update tiki_pages set cache_timestamp=0 where pageName='$page'";
     $this->query($query);
   }
@@ -8509,6 +8532,7 @@ function parse_data($data)
   function update_page_version($pageName,$version,$edit_data,$edit_comment, $edit_user, $edit_ip,$lastModif,$description='')
   {
     global $smarty;
+    $pageName = addslashes($pageName);
     if($pageName=='SandBox') return;
     // Collect pages before modifying edit_data
     $pages = $this->get_pages($edit_data);

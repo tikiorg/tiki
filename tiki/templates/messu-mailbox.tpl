@@ -4,24 +4,24 @@
 <br/><br/>
 
 <form action="messu-mailbox.php" method="get">
-Messages:
+{tr}Messages{/tr}:
 <select name="flags">
-<option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>Read</option>
-<option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>Unread</option>
-<option value="isFlagged_y" {if $flag eq 'isFlagged' and $flagval eq 'y'}selected="selected"{/if}>Flagged</option>
-<option value="isFlagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>Unflagged</option>
-<option value="" {if $flag eq ''}selected="selected"{/if}>All</option>
+<option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
+<option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
+<option value="isFlagged_y" {if $flag eq 'isFlagged' and $flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
+<option value="isFlagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
+<option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 </select>
-Priority:
+{tr}Priority{/tr}:
 <select name="priority">
-<option value="" {if $priority eq ''}selected="selected"{/if}>All</option>
-<option value="1" {if $priority eq 1}selected="selected"{/if}>1</option>
-<option value="2" {if $priority eq 2}selected="selected"{/if}>2</option>
-<option value="3" {if $priority eq 3}selected="selected"{/if}>3</option>
-<option value="4" {if $priority eq 4}selected="selected"{/if}>4</option>
-<option value="5" {if $priority eq 5}selected="selected"{/if}>5</option>
+<option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
+<option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
+<option value="2" {if $priority eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
+<option value="3" {if $priority eq 3}selected="selected"{/if}>{tr}3{/tr}</option>
+<option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
+<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 </select>
-Containing:
+{tr}Containing{/tr}:
 <input type="text" name="find" value="{$find}" />
 <input type="submit" name="filter" value="filter" />
 </form>
@@ -34,22 +34,22 @@ Containing:
 <input type="hidden" name="flag" value="{$flag}" />
 <input type="hidden" name="flagval" value="{$flagval}" />
 <input type="hidden" name="priority" value="{$priority}" />
-<input type="submit" name="delete" value="delete" />
+<input type="submit" name="delete" value="{tr}delete{/tr}" />
 <select name="action">
-<option value="isRead_n">Mark as unread</option>
-<option value="isRead_y">Mark as read</option>
-<option value="isFlagged_n">Mark as unflagged</option>
-<option value="isFlagged_y">Mark as flagged</option>
+<option value="isRead_n">{tr}Mark as unread{/tr}</option>
+<option value="isRead_y">{tr}Mark as read{/tr}</option>
+<option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
+<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 </select>
-<input type="submit" name="mark" value="mark" />
+<input type="submit" name="mark" value="{tr}mark{/tr}" />
 <table class="normal" width="100%">
   <tr>
     <td class="heading" width="3%">&nbsp;</td>
     <td class="heading" width="4%">&nbsp;</td>
-    <td class="heading" width="20%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">from</a></td>
-    <td class="heading" width="40%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">subject</a></td>
-    <td class="heading" width="25%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">date</a></td>
-    <td class="heading" width="8%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">size</a></td>
+    <td class="heading" width="15%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}from{/tr}</a></td>
+    <td class="heading" width="40%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
+    <td class="heading" width="30%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
+    <td class="heading" width="8%"><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
@@ -62,7 +62,7 @@ Containing:
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
   </tr>
   {sectionelse}
-  <tr><td colspan="6">No messages to display<td></tr>
+  <tr><td colspan="6">{tr}No messages to display{/tr}<td></tr>
   {/section}
 </table>
 </form>

@@ -173,6 +173,11 @@ if(isset($_REQUEST["rss"])) {
 // Change preferences
 if(isset($_REQUEST["prefs"])) {
   
+  if(isset($_REQUEST['contact_user'])) {
+    $tikilib->set_preference('contact_user',$_REQUEST['contact_user']);
+    $smarty->assign('contact_user',$_REQUEST['contact_user']);
+  }
+  
   if(isset($_REQUEST["tikiIndex"])) {
     $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
@@ -1026,6 +1031,14 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_directory",'n');
     $smarty->assign("feature_directory",'n');
+  }
+  
+  if(isset($_REQUEST["feature_contact"]) && $_REQUEST["feature_contact"]=="on") {
+    $tikilib->set_preference("feature_contact",'y'); 
+    $smarty->assign("feature_contact",'y');
+  } else {
+    $tikilib->set_preference("feature_contact",'n');
+    $smarty->assign("feature_contact",'n');
   }
   
   if(isset($_REQUEST["feature_messages"]) && $_REQUEST["feature_messages"]=="on") {

@@ -126,6 +126,22 @@ class SearchLib Extends TikiLib {
     );
     return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext);
   }
+  
+  function find_directory($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
+  {
+    static $search_directory = array(
+      'from'      => 'tiki_directory_sites',
+      'name'      => 'name',
+      'data'      => 'description',
+      'hits'      => 'hits',
+      'lastModif' => 'lastModif',
+      'href'      => 'tiki-directory_redirect.php?siteId=%d',
+      'id'        => array('siteId'),
+      'pageName'  => 'name',
+      'search'    => array(),
+    );
+    return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext);
+  }
 
   function find_images($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {

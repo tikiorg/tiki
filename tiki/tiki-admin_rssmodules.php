@@ -31,6 +31,7 @@ if($_REQUEST["rssId"]) {
   $info["url"]='';
   $info["refresh"]=15;
 }
+
 $smarty->assign('name',$info["name"]);
 $smarty->assign('description',$info["description"]);
 $smarty->assign('url',$info["url"]);
@@ -41,8 +42,13 @@ if(isset($_REQUEST["remove"])) {
 }
 
 if(isset($_REQUEST["save"])) {
-  
   $tikilib->replace_rss_module($_REQUEST["rssId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["refresh"]);
+  $smarty->assign('rssId',0);
+  $smarty->assign('name','');
+  $smarty->assign('description','');
+  $smarty->assign('url','');
+  $smarty->assign('refresh',900);
+  
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

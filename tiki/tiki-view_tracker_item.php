@@ -103,7 +103,7 @@ if(isset($_REQUEST["remove"])) {
 if($tiki_p_modify_tracker_items == 'y') {
 if(isset($_REQUEST["save"])) {
   // Save here the values for this item
-  $trklib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields,$status);
+  $trklib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields,$_REQUEST["status"]);
   for($i=0;$i<count($fields["data"]);$i++ ) {
     $name=$fields["data"][$i]["name"];
     $ins_name='ins_'.$name;
