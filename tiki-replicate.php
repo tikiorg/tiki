@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate.php,v 1.1 2004-02-29 01:22:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-replicate.php,v 1.2 2005-01-05 19:22:42 jburleyebuilt Exp $
 
 require_once ('tiki-setup.php');
 include_once 'lib/logs/logslib.php';
@@ -9,7 +9,7 @@ if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 		$smarty->assign('errortitle',tra("Please login"));
 	} else {
-		$smarty->assign('msg', tra("You dont have permission to use this feature"));
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	}
 	$smarty->display("error.tpl");
 	die;

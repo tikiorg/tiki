@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_results.php,v 1.11 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_results.php,v 1.12 2005-01-05 19:22:41 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 }
 
 if ($tiki_p_admin_quizzes != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;

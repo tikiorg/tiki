@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.63 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.64 2005-01-05 19:22:42 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,7 +43,7 @@ if (isset($_REQUEST["view_user"])) {
 		if ($tiki_p_admin == 'y') {
 			$userwatch = $_REQUEST["view_user"];
 		} else {
-			$smarty->assign('msg', tra("You dont have permission to view other users data"));
+			$smarty->assign('msg', tra("You do not have permission to view other users data"));
 
 			$smarty->display("error.tpl");
 			die;

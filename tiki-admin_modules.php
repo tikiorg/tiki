@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.36 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.37 2005-01-05 19:22:40 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,7 +39,7 @@ if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y') {
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("You dont have permission to use this feature"));
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 		$smarty->display("error.tpl");
 		die;

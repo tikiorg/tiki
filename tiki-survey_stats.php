@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-survey_stats.php,v 1.11 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-survey_stats.php,v 1.12 2005-01-05 19:22:42 jburleyebuilt Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ include_once ('lib/surveys/surveylib.php');
 
 /*
 if($tiki_p_admin != 'y') {
-	$smarty->assign('msg',tra("You dont have permission to use this feature"));
+	$smarty->assign('msg',tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -26,7 +26,7 @@ if ($feature_surveys != 'y') {
 }
 
 if ($tiki_p_view_survey_stats != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;

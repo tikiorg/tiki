@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.22 2004-09-08 19:51:49 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.23 2005-01-05 19:22:40 jburleyebuilt Exp $
  *
  * Admin interface for rules management
  *
@@ -18,7 +18,7 @@ if ($feature_integrator != 'y')
 }
 if (($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
-    $smarty->assign('msg', tra("You dont have permission to use this feature"));
+    $smarty->assign('msg', tra("You do not have permission to use this feature"));
     $smarty->display("error.tpl");
     die;
 }
