@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.6 2003-11-13 05:55:46 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.7 2003-11-23 22:27:35 gongo Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br/><br/>
 <h3>{tr}{$dir}{/tr}</h3>
@@ -16,7 +16,7 @@
 </td>
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;directory={$dirs[user]}&amp;action=deldir"
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this directory?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
@@ -32,7 +32,7 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this di
 </td>
 <td class="even">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;directory={$dirs[user]}&amp;action=deldir"
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this directory?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
@@ -50,7 +50,7 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this di
 </td>
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;file={$files[user]}&amp;action=delete"
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this file?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
@@ -64,7 +64,7 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this fi
 </td>
 <td class="even">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;file={$files[user]}&amp;action=delete"
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this file?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>

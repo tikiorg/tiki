@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.12 2003-11-20 11:44:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.13 2003-11-23 22:27:35 gongo Exp $ *}
 
 <div align="center">
    <form action="tiki-map.phtml" method="get">
@@ -30,7 +30,7 @@
 		  <input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
 		  {if $tiki_p_map_edit eq 'y'}
      &nbsp;
-     <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">
+     <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
      <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
      </a>
      {/if}
@@ -113,7 +113,7 @@
 		  {/if}
 		  {if $layer_download[j] eq "T"}
 		  <small>
-		  <a href="tiki-map_download.phtml?mapfile={$mapfile}&layer={$my_layers[j]->name}">
+		  <a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[j]->name}">
 		  <img src="img/icons/ico_save.gif" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" />
 		  </a>
 		  </small>
