@@ -1,4 +1,22 @@
 <h1><a class="pagetitle" href="tiki-admin_chat.php">{tr}Chat Administration{/tr}</a></h1>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
 <h2>{tr}Create/edit channel{/tr}</h2>
 <form action="tiki-admin_chat.php" method="post">
 <input type="hidden" name="channelId" value="{$channelId|escape}" />
