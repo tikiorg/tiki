@@ -6,6 +6,9 @@
 include_once ('lib/wiki/wikilib.php');
 
 include_once ('lib/graphviz/GraphViz.php');
+// the functions in wikigraphlilb.php have been in wikilib.php, 
+// check if wikilib.php is needed at all
+include_once ('lib/graphviz/wikigraphlib.php');
 
 function wikiplugin_wikigraph_help() {
 	$back = tra("Renders a graph, with linked pages navigation visually figured.\n");
