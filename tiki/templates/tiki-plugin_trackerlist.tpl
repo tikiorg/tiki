@@ -26,18 +26,18 @@
 {/if}
 {/foreach}
 {if $tracker_info.showCreated eq 'y'}
-<th><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
 	$tr_sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></th>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<th><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
+<td class="heading"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode={if 
 	$tr_sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<th width="5%">{tr}coms{/tr}</th>
+<td class="heading" width="5%">{tr}coms{/tr}</th>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-<th width="5%">{tr}atts{/tr}</th>
+<td class="heading" width="5%">{tr}atts{/tr}</th>
 {/if}
 </tr>
 
