@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.95 2004-07-21 19:47:43 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.96 2004-07-22 00:06:48 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,18 +163,14 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
   }
 }
 
+// upload pictures here
 $wiki_up = "img/wiki_up";
 if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
-// Upload pictures here
-if ((isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) 
-if (($feature_wiki_pictures_new == 'y') || ($feature_wiki_pictures == 'y')) {
+if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
   if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
     $picname = $_FILES['picfile1']['name'];
 
     move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
-    
-    if($feature_wiki_picture == 'y')
-      $_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$picname}";
   }
 }
 
