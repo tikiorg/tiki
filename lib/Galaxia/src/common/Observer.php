@@ -9,7 +9,7 @@
   a specific event.
   Example:
   
-  $log = new Logger(); //Logger extends Observer
+  $log = new Logger($logfile); //Logger extends Observer
   $foo = new Foo(); //Foo extends Observable
   $foo->attach('moo',$log); //Now $log observers 'moo' events in $foo class
   // of

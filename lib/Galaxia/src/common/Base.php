@@ -1,20 +1,20 @@
 <?php
+include_once(GALAXIA_LIBRARY.'/src/common/Observable.php');
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
 /*!
 This class is derived by all the API classes so they get the
 database connection, database methods and the Observable interface.
 */
-include_once('lib/Galaxia/src/common/Observable.php');
 class Base extends Observable {
-  var $db;  // The PEAR db object used to access the database
+  var $db;  // The ADODB object used to access the database
 	var $num_queries = 0;
 
-  // Constructor receiving a PEAR::Db database object.
+  // Constructor receiving a ADODB database object.
   function Base($db)
   {
     if(!$db) {
-      die("Invalid db object passed to BaseManager constructor");
+      die("Invalid db object passed to Base constructor");
     }
     $this->db = $db;
   }

@@ -1,29 +1,30 @@
 <?php
 
-include_once ('lib/Galaxia/src/common/Observable.php');
+// Load configuration of the Galaxia Workflow Engine
+include_once (dirname(__FILE__) . '/config.php');
 
-include_once ('lib/Galaxia/src/common/Observer.php');
-include_once ('lib/Galaxia/src/Observers/Logger.php');
-include_once ('lib/Galaxia/src/ProcessManager/BaseManager.php');
-include_once ('lib/Galaxia/src/ProcessManager/ProcessManager.php');
-include_once ('lib/Galaxia/src/ProcessManager/InstanceManager.php');
-include_once ('lib/Galaxia/src/ProcessManager/RoleManager.php');
-include_once ('lib/Galaxia/src/ProcessManager/ActivityManager.php');
-include_once ('lib/Galaxia/src/ProcessManager/GraphViz.php');
+include_once (GALAXIA_LIBRARY.'/src/ProcessManager/ProcessManager.php');
+include_once (GALAXIA_LIBRARY.'/src/ProcessManager/InstanceManager.php');
+include_once (GALAXIA_LIBRARY.'/src/ProcessManager/RoleManager.php');
+include_once (GALAXIA_LIBRARY.'/src/ProcessManager/ActivityManager.php');
+include_once (GALAXIA_LIBRARY.'/src/ProcessManager/GraphViz.php');
 
-/// $RoleManager is the object that will be used to manipulate roles.
-$roleManager = new RoleManager($dbTiki);
+/// $roleManager is the object that will be used to manipulate roles.
+$roleManager = new RoleManager($dbGalaxia);
 /// $activityManager is the object that will be used to manipulate activities.
-$activityManager = new ActivityManager($dbTiki);
-/// $ProcessManager is the object that will be used to manipulate processes
-$processManager = new ProcessManager($dbTiki);
-///
-$instanceManager = new InstanceManager($dbTiki);
+$activityManager = new ActivityManager($dbGalaxia);
+/// $processManager is the object that will be used to manipulate processes.
+$processManager = new ProcessManager($dbGalaxia);
+/// $instanceManager is the object that will be used to manipulate instances.
+$instanceManager = new InstanceManager($dbGalaxia);
 
-//$logger = new Logger('lib/Galaxia/log/pm.log');
-//$processManager->attach_all($logger);
-//$activityManager->attach_all($logger);
-//$roleManager->attach_all($logger);
-$smarty->assign('is_active_help', tra('indicates if the process is active. Invalid processes cant be active'));
+if (defined('GALAXIA_LOGFILE') && GALAXIA_LOGFILE) {
+    include_once (GALAXIA_LIBRARY.'/src/Observers/Logger.php');
+
+    $logger = new Logger(GALAXIA_LOGFILE);
+    $processManager->attach_all($logger);
+    $activityManager->attach_all($logger);
+    $roleManager->attach_all($logger);
+}
 
 ?>

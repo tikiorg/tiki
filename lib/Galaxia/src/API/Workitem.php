@@ -1,4 +1,5 @@
 <?php
+include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 //!! Workitem.php
 //! A class representing workitems
 /*!

@@ -1,4 +1,10 @@
 <?php
+include_once(GALAXIA_LIBRARY.'/src/common/Base.php');
+//!! GUI
+//! A GUI class for use in typical user interface scripts
+/*!
+This class provides methods for use in typical user interface scripts
+*/
 class GUI extends Base {
 
   /*!
@@ -32,19 +38,20 @@ class GUI extends Base {
     $query = "select distinct(gp.pId), 
     				 gp.isActive,                    
                      gp.name as procname, 
+                     gp.normalized_name as normalized_name, 
                      gp.version as version
               from
-              	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
-              	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
-              	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
-              	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
+              	".GALAXIA_TABLE_PREFIX."processes gp INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               where gp.isActive='y' and user='$user'
 		            $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(distinct(gp.pId)) from
-              	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
-              	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
-              	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
-              	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
+              	".GALAXIA_TABLE_PREFIX."processes gp INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               where gp.isActive='y' and gur.user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -52,11 +59,11 @@ class GUI extends Base {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get instances per activity
       $pId=$res['pId'];
-      $res['activities']=$this->getOne("select count(*) from galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
-              	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
-              	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
+      $res['activities']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes gp INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               	where gp.pId=$pId and gur.user='$user'");
-	  $res['instances']=$this->getOne("select count(*) from galaxia_instances gi INNER JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN galaxia_activity_roles gar ON gia.activityId=gar.activityId INNER JOIN galaxia_user_roles gur ON gar.roleId=gur.roleId where gi.pId=$pId and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
+	  $res['instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gi.pId=$pId and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
       $ret[] = $res;
     }
     $retval = Array();
@@ -93,24 +100,24 @@ class GUI extends Base {
                      gp.pId,
                      gp.isActive
               from
-              	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
-              	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
-              	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
-              	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
+              	".GALAXIA_TABLE_PREFIX."processes gp INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               where gp.isActive='y' and user='$user'
 		            $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(distinct(gp.pId)) from
-              	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
-              	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
-              	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
-              	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
+    $query_cant = "select count(distinct(ga.activityId)) from
+              	".GALAXIA_TABLE_PREFIX."processes gp INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gp.pId=ga.pId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=ga.activityId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
+              	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               where gp.isActive='y' and gur.user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get instances per activity
-	  $res['instances']=$this->getOne("select count(*) from galaxia_instances gi INNER JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN galaxia_activity_roles gar ON gia.activityId=gar.activityId INNER JOIN galaxia_user_roles gur ON gar.roleId=gur.roleId where gia.activityId=".$res['activityId']." and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
+	  $res['instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gia.activityId=".$res['activityId']." and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
       $ret[] = $res;
     }
     $retval = Array();
@@ -151,20 +158,20 @@ class GUI extends Base {
                      gp.version as version,
                      gp.pId
               from
-				galaxia_instances gi 
-				INNER JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId
-				INNER JOIN galaxia_activities ga ON gia.activityId = ga.activityId
-				INNER JOIN galaxia_activity_roles gar ON gia.activityId=gar.activityId
-				INNER JOIN galaxia_user_roles gur ON gur.roleId=gar.roleId
-				INNER JOIN galaxia_processes gp ON gp.pId=ga.pId
+				".GALAXIA_TABLE_PREFIX."instances gi 
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.activityId = ga.activityId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gar.roleId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.pId=ga.pId
 				where (gia.user='$user' or (gia.user='*' and gur.user='$user')) $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(distinct(gp.pId)) from
-								galaxia_instances gi 
-				INNER JOIN galaxia_instance_activities gia ON gi.instanceId=gia.instanceId
-				INNER JOIN galaxia_activities ga ON gia.activityId = ga.activityId
-				INNER JOIN galaxia_activity_roles gar ON gia.activityId=gar.activityId
-				INNER JOIN galaxia_user_roles gur ON gur.roleId=gar.roleId
-				INNER JOIN galaxia_processes gp ON gp.pId=ga.pId
+    $query_cant = "select count(distinct(gi.instanceId)) from
+								".GALAXIA_TABLE_PREFIX."instances gi 
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."activities ga ON gia.activityId = ga.activityId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gar.roleId
+				INNER JOIN ".GALAXIA_TABLE_PREFIX."processes gp ON gp.pId=ga.pId
 				where (gia.user='$user' or (gia.user='*' and gur.user='$user')) $mid ";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
@@ -182,8 +189,8 @@ class GUI extends Base {
   function gui_abort_instance($user,$activityId,$instanceId)
   {
     // Users can only abort instances belonging to them
-	if(!$this->getOne("select count(*) from galaxia_instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
-	$query = "update galaxia_instances set status='aborted' where instanceId=$instanceId";
+	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
+	$query = "update ".GALAXIA_TABLE_PREFIX."instances set status='aborted' where instanceId=$instanceId";
 	$this->query($query);
 	    	
   }
@@ -191,8 +198,8 @@ class GUI extends Base {
   function gui_exception_instance($user,$activityId,$instanceId)
   {
     // Users can only abort instances belonging to them
-	if(!$this->getOne("select count(*) from galaxia_instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;	
-    $query = "update galaxia_instances set status='exception' where instanceId=$instanceId";
+	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;	
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set status='exception' where instanceId=$instanceId";
 	$this->query($query);
   }
 
@@ -200,17 +207,17 @@ class GUI extends Base {
   function gui_send_instance($user,$activityId,$instanceId)
   {
 	if(!
-	  ($this->getOne("select count(*) from galaxia_instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'"))
+	  ($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'"))
 	  ||
 	  ($this->getOne("select count(*) 
-	                  from galaxia_instance_activities gia
-	                  INNER JOIN galaxia_activity_roles gar ON gar.activityId=gia.activityId
-	                  INNER JOIN galaxia_user_roles gur ON gar.roleId=gur.roleId
+	                  from ".GALAXIA_TABLE_PREFIX."instance_activities gia
+	                  INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=gia.activityId
+	                  INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
 	                  where gia.instanceId=$instanceId and gia.activityId=$activityId and gia.user='*' and gur.user='$user'
 	  				 "))
 	  )
  	  return false;	
-    include_once('lib/Galaxia/src/API/Instance.php');
+    include_once(GALAXIA_LIBRARY.'/src/API/Instance.php');
     $instance = new Instance($this->db);
     $instance->getInstance($instanceId);
     $instance->complete($activityId,true,false);
@@ -219,8 +226,8 @@ class GUI extends Base {
   
   function gui_release_instance($user,$activityId,$instanceId)
   {
-   	if(!$this->getOne("select count(*) from galaxia_instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
-	$query = "update galaxia_instance_activities set user='*' where instanceId=$instanceId and activityId=$activityId";
+   	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;
+	$query = "update ".GALAXIA_TABLE_PREFIX."instance_activities set user='*' where instanceId=$instanceId and activityId=$activityId";
 	$this->query($query);    
   }
   
@@ -228,12 +235,12 @@ class GUI extends Base {
   {
 	// Grab only if roles are ok  
 	if(!$this->getOne("select count(*) 
-	                  from galaxia_instance_activities gia
-	                  INNER JOIN galaxia_activity_roles gar ON gar.activityId=gia.activityId
-	                  INNER JOIN galaxia_user_roles gur ON gar.roleId=gur.roleId
+	                  from ".GALAXIA_TABLE_PREFIX."instance_activities gia
+	                  INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gar.activityId=gia.activityId
+	                  INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
 	                  where gia.instanceId=$instanceId and gia.activityId=$activityId and gia.user='*' and gur.user='$user'
 	  				 "))	return false;
-	$query = "update galaxia_instance_activities set user='$user' where instanceId=$instanceId and activityId=$activityId";
+	$query = "update ".GALAXIA_TABLE_PREFIX."instance_activities set user='$user' where instanceId=$instanceId and activityId=$activityId";
 	$this->query($query);    
   }
 }

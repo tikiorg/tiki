@@ -1,9 +1,10 @@
 <?php
 
-include_once ('lib/Galaxia/src/common/Base.php');
+// Load configuration of the Galaxia Workflow Engine
+include_once (dirname(__FILE__) . '/config.php');
 
-include_once ('lib/Galaxia/src/GUI/GUI.php');
+include_once (GALAXIA_LIBRARY.'/src/GUI/GUI.php');
 
-$GUI = new GUI($dbTiki);
+$GUI = new GUI($dbGalaxia);
 
 ?>

@@ -3,13 +3,13 @@
 Inheritance diagram for Observable:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=89pt]{classObservable__inherit__graph}
+\includegraphics[width=307pt]{classObservable__inherit__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{CompactItemize}
 \item 
-{\bf attach} (\$event,\&\$obj)
+{\bf attach} (\$event, \&\$obj)
 \item 
 {\bf attach\_\-all} (\&\$obj)
 \item 
@@ -18,19 +18,18 @@ Inheritance diagram for Observable:\begin{figure}[H]
 \subsection*{Public Attributes}
 \begin{CompactItemize}
 \item 
-\index{_observers@{\_\-observers}!Observable@{Observable}}\index{Observable@{Observable}!_observers@{\_\-observers}}
-{\bf \_\-observers} = Array()\label{classObservable_m0}
+{\bf \$\_\-observers} = Array()\label{classObservable_o0}
 
 \end{CompactItemize}
 \subsection*{Protected Member Functions}
 \begin{CompactItemize}
 \item 
-{\bf notify\_\-all} (\$event,\$msg)
+{\bf notify\_\-all} (\$event, \$msg)
 \end{CompactItemize}
 
 
 \subsection{Detailed Description}
-Methods to override: NONE This class implements the {\bf Observer} design pattern defining Observable objects, when a class extends Observable Observers can be attached to the class listening for some event. When an event is detected in any method of the derived class the method can call notify\-All(\$event,\$msg) to notify all the observers listening for event \$event. The {\bf Observer} objects must extend the {\bf Observer} class and define the notify(\$event,\$msg) method. 
+Methods to override: NONE This class implements the {\bf Observer}{\rm (p.\,\pageref{classObserver})} design pattern defining Observable objects, when a class extends Observable Observers can be attached to the class listening for some event. When an event is detected in any method of the derived class the method can call notify\-All(\$event,\$msg) to notify all the observers listening for event \$event. The {\bf Observer}{\rm (p.\,\pageref{classObserver})} objects must extend the {\bf Observer}{\rm (p.\,\pageref{classObserver})} class and define the notify(\$event,\$msg) method. 
 
 
 
@@ -66,8 +65,6 @@ Definition at line 52 of file Observable.php.\index{Observable@{Observable}!noti
 Method used to notify objects of an event. This is called in the methods of the derived class that want to notify some event. 
 
 Definition at line 64 of file Observable.php.
-
-Referenced by Process\-Manager::activate\_\-process(), Process\-Manager::deactivate\_\-process(), Process\-Manager::import\_\-process(), Process\-Manager::remove\_\-process(), and Process\-Manager::replace\_\-process().
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 

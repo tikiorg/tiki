@@ -1,4 +1,5 @@
 <?php
+include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 //!! Instance
 //! A class representing a process instance.
 /*!
@@ -31,7 +32,7 @@ class Instance extends Base {
   */
   function getInstance($instanceId) {
     // Get the instance data
-    $query = "select * from `galaxia_instances` where `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instances` where `instanceId`=?";
     $result = $this->query($query,array($instanceId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -47,7 +48,7 @@ class Instance extends Base {
 		$this->nextActivity = $res['nextActivity'];
 		$this->nextUser = $res['nextUser'];
     // Get the activities where the instance is (ids only is ok)
-    $query = "select * from `galaxia_instance_activities` where  `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where  `instanceId`=?";
 		$result = $this->query($query,array($instanceId));    
 		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->activities[]=$res;
@@ -63,12 +64,12 @@ class Instance extends Base {
   function setNextActivity($actname) {
     $pId = $this->pId;
     $actname=trim($actname);
-    $aid = $this->getOne("select `activityId` from `galaxia_activities` where `pId`=? and `name`=?",array($pId,$actname));
-    if(!$this->getOne("select count(*) from `galaxia_activities` where `activityId`=? and `pId`=?",array($aid,$pId))) {
+    $aid = $this->getOne("select `activityId` from `".GALAXIA_TABLE_PREFIX."activities` where `pId`=? and `name`=?",array($pId,$actname));
+    if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=? and `pId`=?",array($aid,$pId))) {
     	trigger_error(tra('Fatal error: setting next activity to an unexisting activity'),E_USER_WARNING);
     }
     $this->nextActivity=$aid;
-    $query = "update `galaxia_instances` set `nextActivity`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `nextActivity`=? where `instanceId`=?";
     $this->query($query,array($aid,$this->instanceId));
   }
 
@@ -80,7 +81,7 @@ class Instance extends Base {
   function setNextUser($user) {
     $pId = $this->pId;
     $this->nextUser = $user;
-    $query = "update `galaxia_instances` set `nextUser`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `nextUser`=? where `instanceId`=?";
     $this->query($query,array($user,$this->instanceId));
   }
  
@@ -93,7 +94,7 @@ class Instance extends Base {
   function _createNewInstance($activityId,$user) {
   	// Creates a new instance setting up started,ended,user
   	// and status
-  	$pid = $this->getOne("select `pId` from `galaxia_activities` where `activityId`=?",array($activityId));
+  	$pid = $this->getOne("select `pId` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId));
   	$this->status = 'active';
   	$this->nextActivity = 0;
   	$this->setNextUser('');
@@ -102,19 +103,19 @@ class Instance extends Base {
   	$this->started=$now;
   	$this->owner = $user;
   	$props=serialize($this->properties);
-		$query = "insert into `galaxia_instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
+		$query = "insert into `".GALAXIA_TABLE_PREFIX."instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
   	$this->query($query,array($now,0,'active',$pid,$user,$props));
-  	$this->instanceId = $this->getOne("select max(`instanceId`) from `galaxia_instances` where `started`=? and `owner`=?",array($now,$user));
+  	$this->instanceId = $this->getOne("select max(`instanceId`) from `".GALAXIA_TABLE_PREFIX."instances` where `started`=? and `owner`=?",array($now,$user));
   	$iid=$this->instanceId;
   	
   	// Now update the properties!
     $props = serialize($this->properties);
-    $query = "update `galaxia_instances` set `properties`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `properties`=? where `instanceId`=?";
     $this->query($query,array($props,$iid));
 
-  	// Then add in galaxia_instance_activities an entry for the
+  	// Then add in ".GALAXIA_TABLE_PREFIX."instance_activities an entry for the
   	// activity the user and status running and started now
-  	$query = "insert into `galaxia_instance_activities`(`instanceId`,`activityId`,`user`,`started`,`status`) values(?,?,?,?,?)";
+  	$query = "insert into `".GALAXIA_TABLE_PREFIX."instance_activities`(`instanceId`,`activityId`,`user`,`started`,`status`) values(?,?,?,?,?)";
   	$this->query($query,array($iid,$activityId,$user,$now,'running'));
   }
   
@@ -125,7 +126,7 @@ class Instance extends Base {
   function set($name,$value) {
     $this->properties[$name] = $value;
     $props = serialize($this->properties);
-    $query = "update `galaxia_instances` set `properties`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `properties`=? where `instanceId`=?";
     $this->query($query,array($props,$this->instanceId));
   }
   
@@ -163,7 +164,7 @@ class Instance extends Base {
   function setStatus($status) {
     $this->status = $status; 
     // and update the database
-    $query = "update `galaxia_instances` set `status`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `status`=? where `instanceId`=?";
     $this->query($query,array($status,$this->instanceId));  
   }
   
@@ -194,7 +195,7 @@ class Instance extends Base {
   function setOwner($user) {
     $this->owner = $user;
     // save database
-    $query = "update `galaxia_instances` set `owner`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `owner`=? where `instanceId`=?";
     $this->query($query,array($owner,$this->instanceId));  
   }
   
@@ -208,7 +209,7 @@ class Instance extends Base {
 		for($i=0;$i<count($this->activities);$i++) {
 			if($this->activities[$i]['activityId']==$activityId) {
 				$this->activities[$i]['user']=$theuser;
-				$query = "update `galaxia_instance_activities` set `user`=? where `activityId`=? and `instanceId`=?";
+				$query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `user`=? where `activityId`=? and `instanceId`=?";
 
 				$this->query($query,array($theuser,$activityId,$this->instanceId));
 			}
@@ -236,7 +237,7 @@ class Instance extends Base {
 		for($i=0;$i<count($this->activities);$i++) {
 			if($this->activities[$i]['activityId']==$activityId) {
 				$this->activities[$i]['status']=$status;
-				$query = "update `galaxia_instance_activities` set `status`=? where `activityId`=? and `instanceId`=?";
+				$query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `status`=? where `activityId`=? and `instanceId`=?";
 				$this->query($query,array($status,$activityId,$this->instanceId));
 			}
 		}  
@@ -264,7 +265,7 @@ class Instance extends Base {
 		for($i=0;$i<count($this->activities);$i++) {
 			if($this->activities[$i]['activityId']==$activityId) {
 				$this->activities[$i]['started']=$now;
-				$query = "update `galaxia_instance_activities` set `started`=? where `activityId`=? and `instanceId`=?";
+				$query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `started`=? where `activityId`=? and `instanceId`=?";
 				$this->query($query,array($now,$activityId,$this->instanceId));
 			}
 		}  
@@ -300,7 +301,7 @@ class Instance extends Base {
   */
   function setStarted($time) {
     $this->started=$time;
-    $query = "update `galaxia_instances` set `started`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `started`=? where `instanceId`=?";
     $this->query($query,array($time,$this->instanceId));    
   }
   
@@ -316,7 +317,7 @@ class Instance extends Base {
   */
   function setEnded($time) {
   	$this->ended=$time;
-    $query = "update `galaxia_instances` set `ended`=? where `instanceId`=?";
+    $query = "update `".GALAXIA_TABLE_PREFIX."instances` set `ended`=? where `instanceId`=?";
     $this->query($query,array($time,$this->instanceId));    
   }
   
@@ -357,20 +358,20 @@ class Instance extends Base {
   	
   	// If we are completing a start activity then the instance must 
   	// be created first!
-		$type = $this->getOne("select `type` from `galaxia_activities` where `activityId`=?",array($activityId));  	
+		$type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId));  	
   	if($type=='start') {
   	  $this->_createNewInstance($activityId,$theuser);
   	}
 	  	
 		// Now set ended
 		$now = date("U");
-		$query = "update `galaxia_instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
+		$query = "update `".GALAXIA_TABLE_PREFIX."instance_activities` set `ended`=? where `activityId`=? and `instanceId`=?";
 		$this->query($query,array($now,$activityId,$this->instanceId));
   	
   	//Add a workitem to the instance 
   	$iid = $this->instanceId;
   	if($addworkitem) {
-			$max = $this->getOne("select max(`orderId`) from `galaxia_workitems` where `instanceId`=?",array($iid));
+			$max = $this->getOne("select max(`orderId`) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array($iid));
 			if(!$max) {
 				$max=1;
 			} else {
@@ -387,7 +388,7 @@ class Instance extends Base {
 			}
 			$ended = date("U");
 			$properties = serialize($this->properties);
-			$query="insert into `galaxia_workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";		
+			$query="insert into `".GALAXIA_TABLE_PREFIX."workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";		
 			$this->query($query,array($iid,$max,$activityId,$started,$ended,$properties,$putuser));
   	}
   	
@@ -403,9 +404,9 @@ class Instance extends Base {
   	//If the activity ending is autorouted then send to the
   	//activity
   	if ($type != 'end') {
-	  	if (($force) || ($this->getOne("select `isAutoRouted` from `galaxia_activities` where `activityId`=?",array($activityId)) == 'y')) 	{
+	  	if (($force) || ($this->getOne("select `isAutoRouted` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId)) == 'y')) 	{
 	  		// Now determine where to send the instance
-	  		$query = "select `actToId` from `galaxia_transitions` where `actFromId`=?";
+	  		$query = "select `actToId` from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=?";
 				$result = $this->query($query,array($activityId));
 				$candidates = Array();
 				while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -443,9 +444,9 @@ class Instance extends Base {
   function terminate() {
   	//Set the status of the instance to completed
   	$now = date("U");
-  	$query = "update `galaxia_instances` set `status`=?, `ended`=? where `instanceId`=?";
+  	$query = "update `".GALAXIA_TABLE_PREFIX."instances` set `status`=?, `ended`=? where `instanceId`=?";
   	$this->query($query,array('completed',$now,$this->instanceId));
-  	$query = "delete from `galaxia_instance_activities` where `instanceId`=?";
+  	$query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=?";
   	$this->query($query,array($this->instanceId));
   	$this->status = 'completed';
   	$this->activities = Array();
@@ -462,10 +463,10 @@ class Instance extends Base {
     //if this instance is also in
     //other activity if so do
     //nothing
-		$type = $this->getOne("select `type` from `galaxia_activities` where `activityId`=?",array($activityId));
+		$type = $this->getOne("select `type` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId));
 		
 		// Verify the existance of a transition
-		if(!$this->getOne("select count(*) from `galaxia_transitions` where `actFromId`=? and `actToId`=?",array($from,$activityId))) {
+		if(!$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=? and `actToId`=?",array($from,$activityId))) {
 			trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'),E_USER_WARNING);
 		}
     
@@ -475,11 +476,11 @@ class Instance extends Base {
     	$putuser = $this->nextUser;
     } else {
 	    $candidates = Array();
-	    $query = "select `roleId` from `galaxia_activity_roles` where `activityId`=?";
+	    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
 			$result = $this->query($query,array($activityId)); 
 			while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$roleId = $res['roleId'];
-				$query2 = "select `user` from `galaxia_user_roles` where `roleId`=?";
+				$query2 = "select `user` from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=?";
 				$result2 = $this->query($query2,array($roleId)); 
 				while ($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
 					$candidates[] = $res2['user'];
@@ -495,17 +496,17 @@ class Instance extends Base {
     //if not splitting delete first
     //please update started,status,user
     if(!$split) {
-      $query = "delete from `galaxia_instance_activities` where `instanceId`=? and `activityId`=?";
+      $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=? and `activityId`=?";
       $this->query($query,array($this->instanceId,$from));
 		}
     $now = date("U");
     $iid = $this->instanceId;
-    $query="replace into `galaxia_instance_activities`(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
+    $query="replace into `".GALAXIA_TABLE_PREFIX."instance_activities`(`instanceId`,`activityId`,`user`,`status`,`started`) values(?,?,?,?,?)";
     $this->query($query,array($iid,$activityId,$putuser,'running',$now));
     
     //we are now in a new activity
     $this->activities=Array();
-    $query = "select * from `galaxia_instance_activities` where `instanceId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_activities` where `instanceId`=?";
 		$result = $this->query($query,array($iid));
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->activities[]=$res;
@@ -522,32 +523,12 @@ class Instance extends Base {
     //if the activity is not interactive then
 		//execute the code for the activity and
 		//complete the activity
-    $isInteractive = $this->getOne("select `isInteractive` from `galaxia_activities` where `activityId`=?",array($activityId));
+    $isInteractive = $this->getOne("select `isInteractive` from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?",array($activityId));
     if ($isInteractive=='n') {
-      // Now execute the code for the activity but we are in a method!
-      // so just use an fopen with http mode
-      $parsed = parse_url($_SERVER["REQUEST_URI"]);
-			$URI = httpPrefix().$parsed["path"];
-			$parts = explode('/',$URI);
-			$parts[count($parts)-1] = "tiki-g-run_activity.php?activityId=$activityId&amp;iid=$iid&amp;auto=1";
-			$URI = implode('/',$parts);
-      $fp = fopen($URI,"r");
-      $data = '';
-      if (!$fp) {
-        trigger_error(tra("Fatal error: cannot execute automatic activity $activityId"),E_USER_WARNING);
-        die;
-      }
-      while (!feof($fp)) {
-        $data.=fread($fp,8192);
-      }
-	  
-      /*
-      if(!empty($data)) {
-				trigger_error(tra("Fatal error: automatic activity produced some output:$data"),E_USER_WARNING);      
-      }
-      */
-      fclose($fp);
-      
+
+      // Now execute the code for the activity (function defined in lib/Galaxia/config.php)
+      galaxia_execute_activity($activityId, $iid , 1);
+
       // Reload in case the activity did some change
       $this->getInstance($this->instanceId);
       $this->complete($activityId);
@@ -559,7 +540,7 @@ class Instance extends Base {
   */
   function get_instance_comment($cId) {
     $iid = $this->instanceId;
-    $query = "select * from `galaxia_instance_comments` where `instanceId`=? and `cId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? and `cId`=?";
     $result = $this->query($query,array($iid,$cId));
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 		return $res;
@@ -574,15 +555,15 @@ class Instance extends Base {
 		}
   	$iid = $this->instanceId;
   	if ($cId) {
-  		$query = "update `galaxia_instance_comments` set `title`=?,`comment`=? where `instanceId`=? and `cId`=?";
+  		$query = "update `".GALAXIA_TABLE_PREFIX."instance_comments` set `title`=?,`comment`=? where `instanceId`=? and `cId`=?";
 			$this->query($query,array($title,$comment,$iid,$cId));
   	} else {
   		$hash = md5($title.$comment);
-  		if ($this->getOne("select count(*) from `galaxia_instance_comments` where `instanceId`=? and `hash`=?",array($iid,$hash))) {
+  		if ($this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? and `hash`=?",array($iid,$hash))) {
 				return false;
 			}
 			$now = date("U");
-			$query ="insert into `galaxia_instance_comments`(`instanceId`,`user`,`activityId`,`activity`,`title`,`comment`,`timestamp`,`hash`) values(?,?,?,?,?,?,?,?)";
+			$query ="insert into `".GALAXIA_TABLE_PREFIX."instance_comments`(`instanceId`,`user`,`activityId`,`activity`,`title`,`comment`,`timestamp`,`hash`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query,array($iid,$user,$activityId,$activity,$title,$comment,$now,$hash));
   	}  
   }
@@ -592,7 +573,7 @@ class Instance extends Base {
   */
   function remove_instance_comment($cId) {
     $iid = $this->instanceId;
-    $query = "delete from `galaxia_instance_comments` where `cId`=? and `instanceId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."instance_comments` where `cId`=? and `instanceId`=?";
     $this->query($query,array($cId,$iid));
   }
  
@@ -601,7 +582,7 @@ class Instance extends Base {
   */
   function get_instance_comments() {
     $iid = $this->instanceId;
-    $query = "select * from `galaxia_instance_comments` where `instanceId`=? order by ".$this->convert_sortmode("timestamp_desc");
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."instance_comments` where `instanceId`=? order by ".$this->convert_sortmode("timestamp_desc");
 		$result = $this->query($query,array($iid));    
 		$ret = Array();
 		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    

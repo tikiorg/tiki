@@ -1,4 +1,5 @@
 <?php
+include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 //!! Abstract class representing activities
 //! An abstract class representing activities
 /*!
@@ -24,7 +25,7 @@ class BaseActivity extends Base {
     $this->db=$db;
   }
   
-  function Base($db)
+  function BaseActivity($db)
   {
     $this->db=$db;
   }
@@ -36,7 +37,7 @@ class BaseActivity extends Base {
   */
   function getActivity($activityId) 
   {
-    $query = "select * from `galaxia_activities` where `activityId`=?";
+    $query = "select * from `".GALAXIA_TABLE_PREFIX."activities` where `activityId`=?";
     $result = $this->query($query,array($activityId));
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -79,7 +80,7 @@ class BaseActivity extends Base {
     //Now get backward transitions
     
     //Now get roles
-    $query = "select `roleId` from `galaxia_activity_roles` where `activityId`=?";
+    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=?";
     $result=$this->query($query,array($res['activityId']));
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $this->roles[] = $res['roleId'];
@@ -90,7 +91,7 @@ class BaseActivity extends Base {
   
   /*! Returns an Array of roleIds for the given user */
   function getUserRoles($user) {
-    $query = "select `roleId` from `galaxia_user_roles` where `user`=?";
+    $query = "select `roleId` from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=?";
     $result=$this->query($query,array($user));
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -103,7 +104,7 @@ class BaseActivity extends Base {
   for the given user */  
   function getActivityRoleNames() {
     $aid = $this->activityId;
-    $query = "select gr.`roleId`, `name` from `galaxia_activity_roles` gar, `galaxia_roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
+    $query = "select gr.`roleId`, `name` from `".GALAXIA_TABLE_PREFIX."activity_roles` gar, `".GALAXIA_TABLE_PREFIX."roles` gr where gar.`roleId`=gr.`roleId` and gar.`activityId`=?";
     $result=$this->query($query,array($aid));
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {

@@ -27,53 +27,45 @@ Collaboration diagram for Process\-Manager:\begin{figure}[H]
 \item 
 {\bf import\_\-process} (\$data)
 \item 
-{\bf new\_\-process\_\-version} (\$p\-Id,\$minor=true)
+{\bf new\_\-process\_\-version} (\$p\-Id, \$minor=true)
 \item 
-{\bf process\_\-name\_\-exists} (\$name,\$version)
+{\bf process\_\-name\_\-exists} (\$name, \$version)
 \item 
 {\bf get\_\-process} (\$p\-Id)
 \item 
-{\bf list\_\-processes} (\$offset,\$max\-Records,\$sort\_\-mode,\$find,\$where='')
+{\bf list\_\-processes} (\$offset, \$max\-Records, \$sort\_\-mode, \$find, \$where='')
 \item 
 {\bf invalidate\_\-process} (\$pid)
 \item 
 {\bf remove\_\-process} (\$p\-Id)
 \item 
-{\bf replace\_\-process} (\$p\-Id,\$vars)
+{\bf replace\_\-process} (\$p\-Id, \$vars, \$create=true)
 \item 
-\index{_rec_copy@{\_\-rec\_\-copy}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!_rec_copy@{\_\-rec\_\-copy}}
-{\bf \_\-rec\_\-copy} (\$dir1,\$dir2)\label{classProcessManager_a13}
+{\bf \_\-rec\_\-copy} (\$dir1, \$dir2)\label{classProcessManager_a13}
 
 \item 
-\index{_start_element_handler@{\_\-start\_\-element\_\-handler}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!_start_element_handler@{\_\-start\_\-element\_\-handler}}
-{\bf \_\-start\_\-element\_\-handler} (\$parser,\$element,\$attribs)\label{classProcessManager_a14}
+{\bf \_\-start\_\-element\_\-handler} (\$parser, \$element, \$attribs)\label{classProcessManager_a14}
 
 \item 
-\index{_end_element_handler@{\_\-end\_\-element\_\-handler}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!_end_element_handler@{\_\-end\_\-element\_\-handler}}
-{\bf \_\-end\_\-element\_\-handler} (\$parser,\$element)\label{classProcessManager_a15}
+{\bf \_\-end\_\-element\_\-handler} (\$parser, \$element)\label{classProcessManager_a15}
 
 \item 
-\index{_data_handler@{\_\-data\_\-handler}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!_data_handler@{\_\-data\_\-handler}}
-{\bf \_\-data\_\-handler} (\$parser,\$data)\label{classProcessManager_a16}
+{\bf \_\-data\_\-handler} (\$parser, \$data)\label{classProcessManager_a16}
 
 \end{CompactItemize}
 \subsection*{Public Attributes}
 \begin{CompactItemize}
 \item 
-\index{parser@{parser}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!parser@{parser}}
-{\bf parser}\label{classProcessManager_m0}
+{\bf \$parser}\label{classProcessManager_o0}
 
 \item 
-\index{tree@{tree}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!tree@{tree}}
-{\bf tree}\label{classProcessManager_m1}
+{\bf \$tree}\label{classProcessManager_o1}
 
 \item 
-\index{current@{current}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!current@{current}}
-{\bf current}\label{classProcessManager_m2}
+{\bf \$current}\label{classProcessManager_o2}
 
 \item 
-\index{buffer@{buffer}!ProcessManager@{ProcessManager}}\index{ProcessManager@{ProcessManager}!buffer@{buffer}}
-{\bf buffer}\label{classProcessManager_m3}
+{\bf \$buffer}\label{classProcessManager_o3}
 
 \end{CompactItemize}
 
@@ -83,7 +75,7 @@ This class is used to add,remove,modify and list processes.
 
 
 
-Definition at line 12 of file src/Process\-Manager/Process\-Manager.php.
+Definition at line 9 of file Process\-Manager.php.
 
 \subsection{Constructor \& Destructor Documentation}
 \index{ProcessManager@{Process\-Manager}!ProcessManager@{ProcessManager}}
@@ -93,7 +85,7 @@ Definition at line 12 of file src/Process\-Manager/Process\-Manager.php.
 
 Constructor takes a PEAR::Db object to be used to manipulate roles in the database. 
 
-Definition at line 22 of file src/Process\-Manager/Process\-Manager.php.
+Definition at line 19 of file Process\-Manager.php.
 
 \subsection{Member Function Documentation}
 \index{ProcessManager@{Process\-Manager}!activate_process@{activate\_\-process}}
@@ -103,52 +95,42 @@ Definition at line 22 of file src/Process\-Manager/Process\-Manager.php.
 
 Sets a process as active 
 
-Definition at line 34 of file src/Process\-Manager/Process\-Manager.php.
-
-References Observable::notify\_\-all().\index{ProcessManager@{Process\-Manager}!deactivate_process@{deactivate\_\-process}}
+Definition at line 31 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!deactivate_process@{deactivate\_\-process}}
 \index{deactivate_process@{deactivate\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::deactivate\_\-process (\$ {\em p\-Id})}\label{classProcessManager_a2}
 
 
 De-activates a process 
 
-Definition at line 45 of file src/Process\-Manager/Process\-Manager.php.
-
-References Observable::notify\_\-all().
-
-Referenced by remove\_\-process().\index{ProcessManager@{Process\-Manager}!get_process@{get\_\-process}}
+Definition at line 42 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!get_process@{get\_\-process}}
 \index{get_process@{get\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::get\_\-process (\$ {\em p\-Id})}\label{classProcessManager_a8}
 
 
 Gets a process by p\-Id. Fields are returned as an asociative array 
 
-Definition at line 363 of file src/Process\-Manager/Process\-Manager.php.
-
-Referenced by import\_\-process(), new\_\-process\_\-version(), replace\_\-process(), and serialize\_\-process().\index{ProcessManager@{Process\-Manager}!import_process@{import\_\-process}}
+Definition at line 370 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!import_process@{import\_\-process}}
 \index{import_process@{import\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::import\_\-process (\$ {\em data})}\label{classProcessManager_a5}
 
 
 Creates a process from the process data structure, if you want to convert an XML to a process then use first unserialize\_\-process and then this method. 
 
-Definition at line 234 of file src/Process\-Manager/Process\-Manager.php.
-
-References get\_\-process(), Observable::notify\_\-all(), and replace\_\-process().\index{ProcessManager@{Process\-Manager}!invalidate_process@{invalidate\_\-process}}
+Definition at line 231 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!invalidate_process@{invalidate\_\-process}}
 \index{invalidate_process@{invalidate\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::invalidate\_\-process (\$ {\em pid})}\label{classProcessManager_a10}
 
 
 Marks a process as an invalid process 
 
-Definition at line 407 of file src/Process\-Manager/Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!list_processes@{list\_\-processes}}
+Definition at line 415 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!list_processes@{list\_\-processes}}
 \index{list_processes@{list\_\-processes}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::list\_\-processes (\$ {\em offset}, \$ {\em max\-Records}, \$ {\em sort\_\-mode}, \$ {\em find}, \$ {\em where} = '')}\label{classProcessManager_a9}
 
 
 Lists processes (all processes) 
 
-Definition at line 375 of file src/Process\-Manager/Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!new_process_version@{new\_\-process\_\-version}}
+Definition at line 382 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!new_process_version@{new\_\-process\_\-version}}
 \index{new_process_version@{new\_\-process\_\-version}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::new\_\-process\_\-version (\$ {\em p\-Id}, \$ {\em minor} = true)}\label{classProcessManager_a6}
 
@@ -159,53 +141,43 @@ Creates a new process based on an existing process changing the process version.
 \item[{\bf Todo}]copy process activities and so \end{Desc}
 
 
-Definition at line 311 of file src/Process\-Manager/Process\-Manager.php.
-
-References get\_\-process(), and replace\_\-process().\index{ProcessManager@{Process\-Manager}!process_name_exists@{process\_\-name\_\-exists}}
+Definition at line 318 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!process_name_exists@{process\_\-name\_\-exists}}
 \index{process_name_exists@{process\_\-name\_\-exists}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::process\_\-name\_\-exists (\$ {\em name}, \$ {\em version})}\label{classProcessManager_a7}
 
 
 This function can be used to check if a process name exists, note that this is NOT used by replace\_\-process since that function can be used to create new versions of an existing process. The application must use this method to ensure that processes have unique names. 
 
-Definition at line 353 of file src/Process\-Manager/Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!remove_process@{remove\_\-process}}
+Definition at line 360 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!remove_process@{remove\_\-process}}
 \index{remove_process@{remove\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::remove\_\-process (\$ {\em p\-Id})}\label{classProcessManager_a11}
 
 
 Removes a process by p\-Id 
 
-Definition at line 416 of file src/Process\-Manager/Process\-Manager.php.
-
-References deactivate\_\-process(), and Observable::notify\_\-all().\index{ProcessManager@{Process\-Manager}!replace_process@{replace\_\-process}}
+Definition at line 424 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!replace_process@{replace\_\-process}}
 \index{replace_process@{replace\_\-process}!ProcessManager@{Process\-Manager}}
-\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::replace\_\-process (\$ {\em p\-Id}, \$ {\em vars})}\label{classProcessManager_a12}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::replace\_\-process (\$ {\em p\-Id}, \$ {\em vars}, \$ {\em create} = true)}\label{classProcessManager_a12}
 
 
 Updates or inserts a new process in the database, \$vars is an asociative array containing the fields to update or to insert as needed. \$p\-Id is the process\-Id 
 
-Definition at line 451 of file src/Process\-Manager/Process\-Manager.php.
-
-References get\_\-process(), and Observable::notify\_\-all().
-
-Referenced by import\_\-process(), and new\_\-process\_\-version().\index{ProcessManager@{Process\-Manager}!serialize_process@{serialize\_\-process}}
+Definition at line 463 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!serialize_process@{serialize\_\-process}}
 \index{serialize_process@{serialize\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::serialize\_\-process (\$ {\em p\-Id})}\label{classProcessManager_a3}
 
 
 Creates an XML representation of a process. 
 
-Definition at line 56 of file src/Process\-Manager/Process\-Manager.php.
-
-References get\_\-process().\index{ProcessManager@{Process\-Manager}!unserialize_process@{unserialize\_\-process}}
+Definition at line 53 of file Process\-Manager.php.\index{ProcessManager@{Process\-Manager}!unserialize_process@{unserialize\_\-process}}
 \index{unserialize_process@{unserialize\_\-process}!ProcessManager@{Process\-Manager}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Process\-Manager::unserialize\_\-process (\$ {\em xml})}\label{classProcessManager_a4}
 
 
 Creates a process PHP data structure from its XML representation 
 
-Definition at line 138 of file src/Process\-Manager/Process\-Manager.php.
+Definition at line 135 of file Process\-Manager.php.
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 
-src/Process\-Manager/Process\-Manager.php\end{CompactItemize}
+Process\-Manager.php\end{CompactItemize}
