@@ -2246,44 +2246,47 @@ class TikiLib {
 	function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
 		global $userlib;
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars=array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (`title` like $findesc or `heading` like $findesc or `body` like $findesc) ";
+			$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
+			$bindvars=array($findesc,$findesc,$findesc);
 		} else {
 			$mid = '';
 		}
 
 		if ($date) {
+			$bindvars[]=(int) $date;
 			if ($mid) {
-				$mid .= " and  `publishDate`<=$date ";
+				$mid .= " and  `publishDate`<=? ";
 			} else {
-				$mid = " where `publishDate`<=$date ";
+				$mid = " where `publishDate`<=? ";
 			}
 		}
 
 		if ($type) {
+			$bindvars[]=$type;
 			if ($mid) {
-				$mid .= " and `type`='$type'";
+				$mid .= " and `type`=? ";
 			} else {
-				$mid = " where `type`='$type'";
+				$mid = " where `type`=? ";
 			}
 		}
 
 		if ($topicId) {
+			$bindvars[]=$topicId;
 			if ($mid) {
-				$mid .= " and `topicId`=$topicId";
+				$mid .= " and `topicId`=?";
 			} else {
-				$mid = " where `topicId`=$topicId";
+				$mid = " where `topicId`=?";
 			}
 		}
 
-		$query = "select * from `tiki_articles` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_articles` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

@@ -103,9 +103,9 @@ class ArtLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update tiki_articles set reads=reads+1 where articleId=$articleId";
+			$query = "update `tiki_articles` set `reads`=`reads`+1 where `articleId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($articleId));
 		}
 
 		return true;
@@ -113,9 +113,9 @@ class ArtLib extends TikiLib {
 
 	function remove_article($articleId) {
 		if ($articleId) {
-			$query = "delete from tiki_articles where articleId=$articleId";
+			$query = "delete from `tiki_articles` where `articleId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($articleId));
 			$this->remove_object('article', $articleId);
 			return true;
 		}
@@ -123,9 +123,9 @@ class ArtLib extends TikiLib {
 
 	function remove_submission($subId) {
 		if ($subId) {
-			$query = "delete from tiki_submissions where subId=$subId";
+			$query = "delete from `tiki_submissions` where `subId`=$subId";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($subId));
 
 			return true;
 		}
@@ -138,55 +138,48 @@ class ArtLib extends TikiLib {
 		global $dbTiki;
 		global $sender_email;
 		include_once ('lib/notifications/notificationlib.php');
-		$title = addslashes($title);
-		$heading = addslashes($heading);
-		$authorName = addslashes($authorName);
-		$imgdata = addslashes($imgdata);
-		$imgname = addslashes($imgname);
-		$body = addslashes($body);
 		$hash = md5($title . $heading . $body);
 		$now = date("U");
-		$query = "select name from tiki_topics where topicId = $topicId";
-		$topicName = $this->getOne($query);
-		$topicName = addslashes($topicName);
+		$query = "select `name` from `tiki_topics` where `topicId` = ?";
+		$topicName = $this->getOne($query,array($topicId));
 		$size = strlen($body);
 
 		if ($subId) {
 			// Update the article
-			$query = "update tiki_submissions set
-                title = '$title',
-                authorName = '$authorName',
-                topicId = $topicId,
-                topicName = '$topicName',
-                size = $size,
-                useImage = '$useImage',
-                isfloat = '$isfloat',
-                image_name = '$imgname',
-                image_type = '$imgtype',
-                image_size = '$imgsize',
-                image_data = '$imgdata',
-                image_x = $image_x,
-                image_y = $image_y,
-                heading = '$heading',
-                body = '$body',
-                publishDate = $publishDate,
-                created = $now,
-                author = '$user' ,
-                type = '$type',
-                rating = $rating
-                where subId = $subId";
+			$query = "update `tiki_submissions` set
+                `title` = ?,
+                `authorName` = ?,
+                `topicId` = ?,
+                `topicName` = ?,
+                `size` = ?,
+                `useImage` = ?,
+                `isfloat` = ?,
+                `image_name` = ?,
+                `image_type` = ?,
+                `image_size` = ?,
+                `image_data` = ?,
+                `image_x` = ?,
+                `image_y` = ?,
+                `heading` = ?,
+                `body` = ?,
+                `publishDate` = ?,
+                `created` = ?,
+                `author` = ? ,
+                `type` = ?,
+                `rating` = ?
+                where `subId` = ?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($title,$authorName,$topicId,$topicName,$size,$useImage,$isfloat,$imgname,$imgtype,$imgsize,$imgdata,$image_x,$image_y,$heading,$body,$publishDate,$now,$user,$type,$rating,$subId));
 		} else {
 			// Insert the article
-			$query = "insert into tiki_submissions(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
-                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
+			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`)
+                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$publishDate,$now,$heading,$body,$hash,$user,0,0,0,$size,$topicName,$image_x,$image_y,$type,$rating,$isfloat));
 		}
 
-		$query = "select max(subId) from tiki_submissions where created = $now and title='$title' and hash='$hash'";
-		$id = $this->getOne($query);
+		$query = "select max(`subId`) from `tiki_submissions` where `created` = ? and `title`=? and `hash`=?";
+		$id = $this->getOne($query,array($now,$title,$hash));
 		$emails = $notificationlib->get_mail_events('article_submitted', '*');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = httpPrefix(). $foo["path"];
@@ -212,61 +205,58 @@ class ArtLib extends TikiLib {
 	function add_topic($name, $imagename, $imagetype, $imagesize, $imagedata) {
 		$now = date("U");
 
-		$imagename = addslashes($imagename);
-		$name = addslashes($name);
-		$imagedata = addslashes($imagedata);
-		$query = "insert into tiki_topics(name,image_name,image_type,image_size,image_data,active,created)
-                     values('$name','$imagename','$imagetype',$imagesize,'$imagedata','y',$now)";
-		$result = $this->query($query);
+		$query = "insert into `tiki_topics`(`name`,`image_name`,`image_type`,`image_size`,`image_data`,`active`,`created`)
+                     values(?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($name,$imagename,$imagetype,$imagesize,$imagedata,'y',$now));
 
-		$query = "select max(topicId) from tiki_topics where created=$now and name='$name'";
-		$topicId = $this->getOne($query);
+		$query = "select max(`topicId`) from `tiki_topics` where `created`=? and `name`=?";
+		$topicId = $this->getOne($query,array($now,$name));
 		return $topicId;
 	}
 
 	function remove_topic($topicId) {
-		$query = "delete from tiki_topics where topicId=$topicId";
+		$query = "delete from `tiki_topics` where `topicId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($topicId));
 
-		$query = "delete from tiki_articles where topicId=$topicId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_articles` where `topicId`=?";
+		$result = $this->query($query,array($topicId));
 
 		return true;
 	}
 
 	function activate_topic($topicId) {
-		$query = "update tiki_topics set active='y' where topicId=$topicId";
+		$query = "update `tiki_topics` set `active`=? where `topicId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array('y',$topicId));
 	}
 
 	function deactivate_topic($topicId) {
-		$query = "update tiki_topics set active='n' where topicId=$topicId";
+		$query = "update `tiki_topics` set `active`=? where `topicId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array('n',$topicId));
 	}
 
 	function get_topic($topicId) {
-		$query = "select topicId,name,image_name,image_size,image_type from tiki_topics where topicId=$topicId";
+		$query = "select `topicId`,`name`,`image_name`,`image_size`,`image_type` from `tiki_topics` where `topicId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($topicId));
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function list_topics() {
-		$query = "select topicId,name,image_name,image_size,image_type,active from tiki_topics order by name";
+		$query = "select `topicId`,`name`,`image_name`,`image_size`,`image_type`,`active` from `tiki_topics` order by `name`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$res["subs"] = $this->getOne("select count(*) from tiki_submissions where topicId=" . $res["topicId"]);
+		while ($res = $result->fetchRow()) {
+			$res["subs"] = $this->getOne("select count(*) from `tiki_submissions` where `topicId`=?",array($res["topicId"]));
 
-			$res["arts"] = $this->getOne("select count(*) from tiki_articles where topicId=" . $res["topicId"]);
+			$res["arts"] = $this->getOne("select count(*) from `tiki_articles` where `topicId`=?",array($res["topicId"]));
 			$ret[] = $res;
 		}
 
@@ -274,13 +264,13 @@ class ArtLib extends TikiLib {
 	}
 
 	function list_active_topics() {
-		$query = "select * from tiki_topics where active='y'";
+		$query = "select * from `tiki_topics` where `active`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array('y'));
 
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
