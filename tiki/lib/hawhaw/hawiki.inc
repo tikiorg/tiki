@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 2. November 2003
+// Last modified: 8. November 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -220,8 +220,8 @@ class HAWIKI_page
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Text:</b> %s<br>\n", $po["text"]);
 
-          if (strlen($po["text"]) == 0)
-            die("length of text is 0"); // for test only
+          //if (strlen($po["text"]) == 0)
+          //  die("length of text is 0"); // for test only
 
           $text = new HAW_text(HAWIKI_unhtmlentities($po["text"]), $this->textformat);
           $text->set_br(0);

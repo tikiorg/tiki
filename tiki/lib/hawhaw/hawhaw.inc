@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 31. October 2003
+// Last modified: 3. November 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -27,6 +27,7 @@
 // - bugfix: added <prompt> element in various VoiceXML output scenarios
 // - optimization: inhibit <break> tag for PVX voice browser
 // - bugfix: create voice <break> tags for empty HAW_text objects
+// - optimization: added catch handler for HAW_voicerecorder class
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.3b");
@@ -687,7 +688,9 @@ class HAW_deck
 
       // PublicVoiceXML browser cannot handle <break> elements!!!
       if (strstr(strtolower($HTTP_USER_AGENT), "publicvoicexml"))
+      {
         $this->supportsVXMLBreakTag = false;
+      }
     }
     else
     {
@@ -5731,6 +5734,10 @@ class HAW_voicerecorder
       // create event handler for noinput
       HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
     
+      // create catch handler for disconnect
+      printf("<catch event=\"connection.disconnect.hangup\"><submit next=\"%s\" enctype=\"multipart/form-data\" method=\"post\" namelist=\"haw_recording\"/></catch>\n",
+              $this->url);
+
       echo "</record>\n";
     }
   }

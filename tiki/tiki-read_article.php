@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.17 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.18 2003-11-08 14:50:21 nhuffschmid Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,6 +140,12 @@ if ($feature_theme_control == 'y') {
 
 	$cat_objid = $_REQUEST["articleId"];
 	include ('tiki-tc.php');
+}
+
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+	include_once ("lib/hawhaw/hawtikilib.php");
+
+	HAWTIKI_read_article($article_data, $pages);
 }
 
 // Display the Index Template
