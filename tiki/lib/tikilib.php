@@ -6,7 +6,6 @@ require_once ('lib/pear/Date.php');
 include_once ('lib/pear/HTTP/Request.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
-require_once ('lib/webmail/tikimaillib.php');
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
 
@@ -176,7 +175,7 @@ function remove_user_watch_by_hash($hash) {
 }
 
 /*shared*/
-function remove_user_watch($user, $event, $object) {
+function remove_events_watches($user, $event, $object) {
     $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
     $this->query($query,array($user,$event,$object));
 }
@@ -236,6 +235,7 @@ function get_event_watches($event, $object) {
 
     return $ret;
 }
+
 
 /*shared*/
 function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
@@ -2786,6 +2786,9 @@ function remove_all_versions($page, $comment = '') {
 
   $this->remove_object('wiki page', $page);
 
+   $query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
+   $this->query($query,array('wiki_page_changed', $page));
+
   return true;
 }
 
@@ -3461,9 +3464,7 @@ function add_hit($pageName) {
 function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '') {
     global $smarty;
     global $dbTiki;
-    global $notificationlib;
     global $sender_email;
-    include_once ('lib/notifications/notificationlib.php');
     include_once ("lib/commentslib.php");
 
     $commentslib = new Comments($dbTiki);
@@ -3518,43 +3519,20 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
         $ip,
         $comment
         ));
-    }
 
-    $emails = $notificationlib->get_mail_events('wiki_page_changes', '*');
-
-    foreach ($emails as $email) {
-  $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-  $smarty->assign('mail_page', $name);
-  $smarty->assign('mail_date', date("U"));
-  $smarty->assign('mail_user', $user);
-  $smarty->assign('mail_comment', $comment);
-  $smarty->assign('mail_last_version', 1);
-  $smarty->assign('mail_data', $data);
-  $foo = parse_url($_SERVER["REQUEST_URI"]);
-  $machine = httpPrefix(). dirname( $foo["path"] );
-  $smarty->assign('mail_machine', $machine);
-  $smarty->assign('mail_pagedata', $data);
-  $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-
-  if( $this->get_preference('wiki_forum') )
-  {
-      $forums = $commentslib->list_forums( 0, 1,
-        'name_asc',
-        $this->get_preference('wiki_forum') );
-    if ($forums) {
-      $forumEmail = $forums["data"][0]["outbound_from"];
-
-      @mail($email, $name, $mail_data,
-        "From: $forumEmail\r\nContent-type: text/plain;charset=utf-8\r\n"
-     );
-    }
-  } else {
-      @mail($email, tra('Wiki page'). ' ' . $name . '
-        ' . tra('changed'), $mail_data,
-        "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n"
-     );
-  }
+    //  Deal with mail notifications.
+    include_once('lib/notifications/notificationemaillib.php');
+	//This is put away: sender_email must be enough!
+	//  if( $this->get_preference('wiki_forum') ) {
+	//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
+	//    if ($forums)
+	//      $fromEmail = $forums["data"][0]["outbound_from"];
+	//    else
+	//      $fromEmail = $sender_email;
+	//  }
+    $foo = parse_url($_SERVER["REQUEST_URI"]);
+    $machine = httpPrefix(). dirname( $foo["path"] );
+    sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
     }
 
     return true;
@@ -4885,13 +4863,10 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     global $smarty;
 
     global $dbTiki;
-    global $notificationlib;
     global $feature_user_watches;
     global $wiki_watch_author;
     global $wiki_watch_comments;
-    global $wiki_watch_editor;
     global $sender_email;
-    //include_once ('lib/notifications/notificationlib.php');
     include_once ("lib/commentslib.php");
 
     $commentslib = new Comments($dbTiki);
@@ -4921,92 +4896,29 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     $version += 1;
 
     if (!$minor) {
+  if ($pageName != 'SandBox') {
   $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
       values(?,?,?,?,?,?,?,?)";
-
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-  if ($pageName != 'SandBox') {
       $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
   }
-  // Update the pages table with the new version of this page
 
-  $emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName);
-
-  foreach ($emails as $email) {
-      $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-      $smarty->assign('mail_page', $pageName);
-      $smarty->assign('mail_date', date("U"));
-      $smarty->assign('mail_user', $edit_user);
-      $smarty->assign('mail_comment', $edit_comment);
-      $smarty->assign('mail_last_version', $version);
-      $smarty->assign('mail_data', $edit_data);
-      $foo = parse_url($_SERVER["REQUEST_URI"]);
-      $machine = httpPrefix(). dirname( $foo["path"] );
-      $smarty->assign('mail_machine', $machine);
-      $smarty->assign('mail_pagedata', $edit_data);
-      $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-
-      if( $this->get_preference('wiki_forum') )
-      {
-    $forums = $commentslib->list_forums( 0, 1,
-      'name_asc',
-      $this->get_preference('wiki_forum') );
-
-    $forumEmail = $forums["data"][0]["outbound_from"];
-
-    @mail($email, $pageName, $mail_data,
-      "From: $forumEmail\r\nContent-type: text/plain;charset=utf-8\r\n"
-         );
-      } else {
-    @mail($email, tra('Wiki page'). ' ' . $pageName . '
-      ' . tra('changed'), $mail_data,
-      "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n"
-         );
-      }
+       //  Deal with mail notifications.
+       include_once('lib/notifications/notificationemaillib.php');
+		//This is put away: sender_email must be enough!
+		//  if( $this->get_preference('wiki_forum') ) {
+		//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
+		//    if ($forums)
+		//      $fromEmail = $forums["data"][0]["outbound_from"];
+		//    else
+		//      $fromEmail = $sender_email;
+		//  }
+    $foo = parse_url($_SERVER["REQUEST_URI"]);
+    $machine = httpPrefix(). dirname( $foo["path"] );
+    sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
   }
 
-  if ($feature_user_watches == 'y') {
-      $nots = $this->get_event_watches('wiki_page_changed', $pageName);
-      $isBuilt = false;
 
-      foreach ($nots as $not) {
-    if ($wiki_watch_editor != 'y' && $not['user'] == $user)
-       break;
-    if (!$isBuilt) {
-       $isBuilt = true;
-       $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-       $smarty->assign('mail_page', $pageName);
-       $smarty->assign('mail_date', date("U"));
-       $smarty->assign('mail_user', $edit_user);
-       $smarty->assign('mail_comment', $edit_comment);
-       $smarty->assign('mail_last_version', $version);
-       $smarty->assign('mail_data', $edit_data);
-       $smarty->assign('mail_hash', $not['hash']);
-       $foo = parse_url($_SERVER["REQUEST_URI"]);
-       $machine = httpPrefix(). dirname( $foo["path"] );
-       $smarty->assign('mail_machine', $machine);
-       $parts = explode('/', $foo['path']);
-
-        if (count($parts) > 1)
-           unset ($parts[count($parts) - 1]);
-
-       $smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
-       $smarty->assign('mail_pagedata', $edit_data);
-       $mail = new TikiMail();
-    }
-    global $language;// TODO: optimise by grouping user by language
-    $languageEmail = $this->get_user_preference($not['user'], "language", $language);
-    $mail->setUser($not['user']);
-    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed_subject.tpl');
-    $mail->setSubject(sprintf($mail_data, $pageName));
-    $mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_wiki_page_changed.tpl');
-    $mail->setText($mail_data);
-    $mail->buildMessage();
-    $mail->send(array($not['email']));
-      }
-  }
-    }
 
     $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
     $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
