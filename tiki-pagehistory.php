@@ -46,7 +46,7 @@ if(!$tikilib->page_exists($page)) {
   die;
 }
 
-if(isset($_REQUEST["delete"])) {
+if(isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
   foreach(array_keys($_REQUEST["hist"]) as $version) {      	
     $tikilib->remove_version($_REQUEST["page"],$version);
   }
