@@ -24,8 +24,8 @@
 </form>
 <h3>{tr}Available content blocks{/tr}</h3>
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-edit_programmed_content.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -36,10 +36,10 @@
 </table>
 <table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publishing Date{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'data_desc'}data_asc{else}data_desc{/if}">{tr}Data{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th><a href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'contentId_desc'}contentId_asc{else}contentId_desc{/if}">{tr}Id{/tr}</a></th>
+<th><a href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publishing Date{/tr}</a></th>
+<th><a href="tiki-edit_programmed_content.php?contentId={$contentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'data_desc'}data_asc{else}data_desc{/if}">{tr}Data{/tr}</a></th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {section name=changes loop=$listpages}
 <tr>
@@ -53,8 +53,8 @@
 {/if}
 {/if}
 <td class="{$class}">&nbsp;{$listpages[changes].pId}&nbsp;</td>
-<td  class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-<td  class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
+<td class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
+<td class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
 <td class="{$class}">
 <a href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
 <a href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>
@@ -67,8 +67,7 @@
 {/section}
 </table>
 <br />
-<div align="center">
-<div class="mini">
+<div align="center" class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-edit_programmed_content.php?find={$find}&amp;contentId={$contentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -84,5 +83,4 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

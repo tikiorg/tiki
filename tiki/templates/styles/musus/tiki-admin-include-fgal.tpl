@@ -4,7 +4,7 @@
     <div class="simplebox">
       <form action="tiki-admin.php?page=fgal" method="post">
         <table class="admin"><tr>
-          <td><label>{tr}Home Gallery (main gallery){/tr}</label></td>
+          <td><label>{tr}Home Gallery (main gallery){/tr}: </label></td>
           <td><select name="homeFileGallery">
               {section name=ix loop=$file_galleries}
                 <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
@@ -18,27 +18,27 @@
       <form action="tiki-admin.php?page=fgal" method="post">
         <table class="admin"><tr>
           <td><label>{tr}Rankings{/tr}:</label></td>
-          <td><input type="checkbox" name="feature_file_galleries_rankings" 
+          <td><input type="checkbox" name="feature_file_galleries_rankings" id="" 
               {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
           <td><label>{tr}Comments{/tr}:</label></td>
-          <td><input type="checkbox" name="feature_file_galleries_comments"
+          <td><input type="checkbox" name="feature_file_galleries_comments" id="" 
               {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
           <td><label>{tr}Use database to store files{/tr}:</label></td>
-          <td><input type="radio" name="fgal_use_db" value="y"
+          <td><input type="radio" name="fgal_use_db" value="y" id="" 
               {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
           <td><label>{tr}Use a directory to store files{/tr}:</label></td>
-          <td><input type="radio" name="fgal_use_db" value="n"
+          <td><input type="radio" name="fgal_use_db" id="" value="n"
               {if $fgal_use_db eq 'n'}checked="checked"{/if}/>
-              {tr}Directory path{/tr}:<br /><input type="text" name="fgal_use_dir" value="{$fgal_use_dir|escape}" size="50" /></td>
+              {tr}Directory path{/tr}:<br /><input type="text" name="fgal_use_dir" id="" value="{$fgal_use_dir|escape}" size="50" /></td>
         </tr><tr>
-          <td><label>{tr}Uploaded filenames must match regex{/tr}:</label></td>
-          <td><input type="text" name="fgal_match_regex" value="{$fgal_match_regex|escape}"/></td>
+          <td><label>{tr}Uploaded filenames must match the regular expression{/tr}:</label></td>
+          <td><input type="text" name="fgal_match_regex" id="" value="{$fgal_match_regex|escape}"/></td>
         </tr><tr>
-          <td><label>{tr}Uploaded filenames cannot match regex{/tr}:</label></td>
-          <td><input type="text" name="fgal_nmatch_regex"
+          <td><label>{tr}Uploaded filenames cannot match the regular expression{/tr}:</label></td>
+          <td><input type="text" name="fgal_nmatch_regex" id="" 
               value="{$fgal_nmatch_regex|escape}"/><a {popup sticky="true"
               trigger="onClick" caption="Storing files in a directory"
               text="If you decide to store files in a directory you must ensure
@@ -59,25 +59,25 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}.</a></td>
       <form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin"><tr>
           <td><label>{tr}Name{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_name" {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_name" id="" {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}Description{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_description" {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_description" id="" {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}Created{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_created" {if $fgal_list_created eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_created" id="" {if $fgal_list_created eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}Last modified{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_lastmodif" {if $fgal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_lastmodif" id="" {if $fgal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}User{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_user" {if $fgal_list_user eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_user" id="" {if $fgal_list_user eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}Files{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_files" {if $fgal_list_files eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_files" id="" {if $fgal_list_files eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label>{tr}Hits{/tr}</label></td>
-          <td><input type="checkbox" name="fgal_list_hits" {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
+          <td><input type="checkbox" name="fgal_list_hits" id="" {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="filegallistprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
@@ -87,11 +87,11 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}.</a></td>
       <form method="post" action="tiki-admin.php?page=fgal">
         <table class="admin"><tr>
           <td><label>{tr}Default number of comments per page{/tr}: </label></td>
-          <td><input size="5" type="text" name="file_galleries_comments_per_page"
+          <td><input size="5" type="text" name="file_galleries_comments_per_page" id="" 
                value="{$file_galleries_comments_per_page|escape}" /></td>
         </tr><tr>
           <td><label>{tr}Comments default ordering{/tr}</label></td>
-          <td><select name="file_galleries_comments_default_ordering">
+          <td><select name="file_galleries_comments_default_ordering" id="">
               <option value="commentDate_desc" {if $file_galleries_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
 			  <option value="commentDate_asc" {if $file_galleries_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
               <option value="points_desc" {if $file_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>

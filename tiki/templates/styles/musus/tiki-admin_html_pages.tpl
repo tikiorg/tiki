@@ -25,9 +25,9 @@
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
 <input type="hidden" name="pageName" value="{$pageName|escape}" />
 <table>
-<tr><td>{tr}Page name{/tr}:</td><td><input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" /></td></tr>
+<tr><td><label>{tr}Page name{/tr}:</label></td><td><input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" /></td></tr>
 {if $tiki_p_use_content_templates eq 'y'}
-<tr><td>{tr}Apply template{/tr}</td><td>
+<tr><td><label>{tr}Apply template{/tr}</label></td><td>
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
@@ -36,13 +36,13 @@
 </select>
 </td></tr>
 {/if}
-<tr><td>{tr}Type{/tr}:</td><td>
+<tr><td><label>{tr}Type{/tr}:</label></td><td>
 <select name="type">
 <option value='d' {if $info.type eq 'd'}selected="selected"{/if}>{tr}Dynamic{/tr}</option>
 <option value='s' {if $info.type eq 's'}selected="selected"{/if}>{tr}Static{/tr}</option>
 </select>
 </td></tr>
-<tr><td>{tr}Refresh rate (if dynamic) [seconds]{/tr}:</td><td><input type="text" size="40" name="refresh" value="{$info.refresh|escape}" /></td></tr>
+<tr><td><label>{tr}Refresh rate (if dynamic) [seconds]{/tr}:</label></td><td><input type="text" size="40" name="refresh" value="{$info.refresh|escape}" /></td></tr>
 <tr><td>{tr}Content{/tr}: ({tr}Use {literal}{{/literal}ed id=name} or {literal}{{/literal}ted id=name} to insert dynamic zones{/tr})</td><td><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
 <tr><td >&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -76,9 +76,9 @@
 <td>{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td>{$channels[user].created|tiki_short_datetime}</td>
 <td>
-   &nbsp;&nbsp;<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
+     <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
-title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>  
    <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="Click here to edit this HTML page"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
    <a href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
@@ -90,9 +90,9 @@ title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/
 <td>{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td>{$channels[user].created|tiki_short_datetime}</td>
 <td>
-   &nbsp;&nbsp;<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
+     <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
-title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>  
    <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="Click here to edit this HTML page"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
    <a href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
@@ -103,17 +103,17 @@ title="Click here to delete this HTML page"><img alt="{tr}Remove{/tr}" src="img/
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>&nbsp;
+<a class="prevnext" href="tiki-admin_html_pages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
 </div>

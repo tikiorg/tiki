@@ -1,33 +1,21 @@
 <a class="pagetitle" href="tiki-backup.php">{tr}Backups{/tr}</a>
 <!-- the help link info -->
-  
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Backups" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin backups{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
 <!-- link to tpl -->
-
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
-
 <!-- begin -->
-
-
-
-
-
-
-
 <br /><br />
 <h2>{tr}List of available backups{/tr}</h2>
-
 <table>
 <tr>
-<td class="heading">{tr}Filename{/tr}</td>
-<td class="heading">{tr}Created{/tr}</td>
-<td class="heading">{tr}Size{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<th>{tr}Filename{/tr}</th>
+<th>{tr}Created{/tr}</th>
+<th>{tr}Size{/tr}</th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$backups}
@@ -59,7 +47,7 @@
 <i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i>
 <br /><br />
 <a href="tiki-backup.php?generate=1" class="linkbut">{tr}Create new backup{/tr}</a>
-<b>Warning : Backups are known not to work since some time now. Don't rely on them. Chealer9 20031117</b>
+<b>Warning: Backups are known not to work. Don't rely on them.</b>
 </div>
 <br />
 <div class="simplebox">

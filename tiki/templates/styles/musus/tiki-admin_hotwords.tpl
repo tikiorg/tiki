@@ -1,23 +1,18 @@
 <a class="pagetitle" href="tiki-admin_hotwords.php">{tr}Admin Hotwords{/tr}</a>
 <!-- the help link info -->
-  
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Hotwords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin hotwords{/tr}"><img src='img/icons/help.gif' alt='help' /></a>{/if}
-
 <!-- link to tpl -->
-
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin hotwords tpl{/tr}">
-<img src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
-
+<img src="img/icons/info.gif" alt="edit tpl" /></a>{/if}
 <!-- begin -->
 
 <h2>{tr}Add Hotword{/tr}</h2>
-
 <form method="post" action="tiki-admin_hotwords.php">
 <table>
-<tr><td>{tr}Word{/tr}</td><td><input type="text" name="word"></td></tr>
-<tr><td>{tr}URL{/tr}</td><td><input type="text" name="url" /></td></tr>
+<tr><td><label>{tr}Word{/tr}</label></td><td><input type="text" name="word"></td></tr>
+<tr><td><label>{tr}URL{/tr}</label></td><td><input type="text" name="url" /></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
@@ -68,17 +63,17 @@ title="Click here to delete this hotword"><img alt="{tr}Remove{/tr}" src="img/ic
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>&nbsp;
+<a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
 </div>

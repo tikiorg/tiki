@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-forums.tpl,v 1.2 2004-01-17 01:19:09 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-forums.tpl,v 1.3 2004-01-26 04:02:32 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 
@@ -6,10 +6,10 @@
 <a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 <br /><br />
 {/if}
-<div  align="center">
+<div align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-forums.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -20,12 +20,12 @@
 </table>
 <table>
 <tr>
-<td  class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading"><a href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 {if $forum_list_topics eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
+	<td class="heading"><a href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
 {/if}	
 {if $forum_list_posts eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
+	<td class="heading"><a href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
 {/if}	
 <!--<td class="heading">{tr}users{/tr}</td>-->
 <!--<td class="heading">{tr}age{/tr}</td>-->
@@ -33,10 +33,10 @@
 	<td class="heading">{tr}ppd{/tr}</td>
 {/if}	
 {if $forum_list_lastpost eq 'y'}	
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+	<td class="heading"><a href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
 {/if}
 {if $forum_list_visits eq 'y'}
-	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
+	<td class="heading"><a href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
 {/if}	
 </tr>
 {assign var=section_old value=""}
@@ -59,15 +59,15 @@
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>
 {if $forum_list_topics eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
+	<td class="{cycle advance=false}">{$channels[user].threads}</td>
 {/if}
 {if $forum_list_posts eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
+	<td class="{cycle advance=false}">{$channels[user].comments}</td>
 {/if}
 <!--<td class="inf{cycle advance=false}">{$channels[user].users}</td> -->
 <!--<td class="{cycle advance=false}">{$channels[user].age}</td> -->
 {if $forum_list_ppd eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+	<td class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 {/if}
 {if $forum_list_lastpost eq 'y'}	
 <td class="{cycle advance=false}">
@@ -76,8 +76,8 @@
 </td>
 {/if}
 {if $forum_list_visits eq 'y'}
-	<td style="text-align:right;" class="{cycle}">{$channels[user].hits}</td>
-{/if}	
+	<td class="{cycle}">{$channels[user].hits}</td>
+{/if}
 </tr>
 {/section}
 </table>
@@ -92,12 +92,10 @@
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-forums.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{section loop=$cant_pages name="foo"}
+{assign var="selector_offset" value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-forums.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>
 </div>
-

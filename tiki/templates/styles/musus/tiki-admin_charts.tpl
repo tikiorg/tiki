@@ -1,23 +1,17 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
-
 <!-- the help link info -->
-  
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Charts" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Charts{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
-
 <!-- link to tpl -->
-
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
-
 <!-- beginning of next bit -->
-
 <br /><br />
-<h2>{tr}Add or edit a chart{/tr} <a href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a></h2>
+<h2>{tr}Add or edit a chart{/tr} <a href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a></h2>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="chartId" value="{$info.chartId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -26,35 +20,35 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 	<tr>
-		<td>{tr}Title{/tr}</td>
+		<td><label>{tr}Title{/tr}</label></td>
 		<td><input type="text" maxlength="250" name="title" value="{$info.title|escape}" /></td>
 	</tr>
 	<tr>
-		<td>{tr}Description{/tr}</td>
+		<td><label>{tr}Description{/tr}</label></td>
 		<td><textarea rows="4" cols="40" name="description">{$info.description|escape}</textarea></td>
 	</tr>
 	<tr>
-		<td>{tr}Active{/tr}</td>
+		<td><label>{tr}Active{/tr}</label></td>
 		<td><input type="checkbox" name="isActive" {if $info.isActive eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Users can vote for only one item from this chart per period{/tr}</td>
+		<td><label>{tr}Users can vote for only one item from this chart per period{/tr}</label></td>
 		<td><input id='chksc' type="checkbox" name="singleChartVotes" {if $info.singleChartVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Prevent users from voting for the same item more than once{/tr}</td>
+		<td><label>{tr}Prevent users from voting for the same item more than once{/tr}</label></td>
 		<td><input id="chksi" type="checkbox" name="singleItemVotes" {if $info.singleItemVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Users can suggest new items{/tr}</td>
+		<td><label>{tr}Users can suggest new items{/tr}</label></td>
 		<td><input {literal}onchange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id="chksug" type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Auto validate user suggestions{/tr}</td>
+		<td><label>{tr}Auto validate user suggestions{/tr}</label></td>
 		<td><input {literal}onchange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id="chkaut" type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
 	</tr>
 	<tr>
-		<td>{tr}Ranking shows{/tr}</td>
+		<td><label>{tr}Ranking shows{/tr}</label></td>
 		<td>
 			<select name="topN">
 				<option value="0" {if $info.topN eq 0}selected="selected"{/if}>{tr}All items{/tr}</option>
@@ -68,7 +62,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>{tr}Voting system{/tr}</td>
+		<td><label>{tr}Voting system{/tr}</label></td>
 		<td>
 			<select name="maxVoteValue">
 				<option value="1" {if $info.maxVoteValue eq 1}selected="selected"{/if}>{tr}Vote items{/tr}</option>
@@ -78,7 +72,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>{tr}Ranking frequency{/tr}</td>
+		<td><label>{tr}Ranking frequency{/tr}</label></td>
 		<td>
 			<select name="frequency">
 				<option value="0" {if $info.frequency eq "0"}selected="selected"{/if}>{tr}Realtime{/tr}</option>
@@ -90,19 +84,19 @@
 		</td>
 	</tr>	
 	<tr>
-		<td>{tr}Show Average{/tr}</td>
+		<td><label>{tr}Show Average{/tr}</label></td>
 		<td><input type="checkbox" name="showAverage" {if $info.showAverage eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Show Votes{/tr}</td>
+		<td><label>{tr}Show Votes{/tr}</label></td>
 		<td><input type="checkbox" name="showVotes" {if $info.showVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Use Cookies for unregistered users{/tr}</td>
+		<td><label>{tr}Use Cookies for unregistered users{/tr}</label></td>
 		<td><input type="checkbox" name="useCookies" {if $info.useCookies eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
-		<td>{tr}Users can vote again after{/tr}</td>
+		<td><label>{tr}Users can vote again after{/tr}</label></td>
 		<td>
 			<select id="selva" name="voteAgainAfter" {literal}onchange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal}>
 				<option value="0" {if $info.voteAgainAfter eq "0"}selected="selected"{/if}>{tr}Anytime{/tr}</option>
@@ -124,7 +118,7 @@
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable"><tr><td>{tr}Find{/tr}</td><td><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
+<table class="findtable"><tr><td><label>{tr}Find{/tr}</label></td><td><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
 </form>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -157,18 +151,18 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="{sameurl offset=$prev_offset}">{tr}prev{/tr}</a>] 
 {/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>

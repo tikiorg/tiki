@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin-include-features.tpl,v 1.5 2004-01-20 23:59:47 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin-include-features.tpl,v 1.6 2004-01-26 03:53:55 musus Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -566,22 +566,22 @@
       </tr><tr>
         <td class="heading" colspan="5" align="center">{tr}General Layout options{/tr}</td>
       </tr><tr>
-        <td>{tr}Left column{/tr}:</td>
+        <td><label>{tr}Left column{/tr}: </label></td>
         <td><input type="checkbox" name="feature_left_column" id="" {if $feature_left_column eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td>{tr}Layout per section{/tr}:</td>
+        <td><label>{tr}Layout per section{/tr}: </label></td>
         <td><input type="checkbox" name="layout_section" id="" {if $layout_section eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-        <td>{tr}Right column{/tr}:</td>
+        <td><label>{tr}Right column{/tr}: </label></td>
         <td><input type="checkbox" name="feature_right_column" id="" {if $feature_right_column eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td align="center" colspan="2"><a href="tiki-admin_layout.php">{tr}Admin layout per section{/tr}</a></td>
       </tr><tr>
-        <td>{tr}Top bar{/tr}:</td>
+        <td><label>{tr}Top bar{/tr}: </label></td>
         <td><input type="checkbox" name="feature_top_bar" id="" {if $feature_top_bar eq 'y'}checked="checked"{/if}/></td>
         <td colspan="3">&nbsp;</td>
       </tr><tr>
-        <td>{tr}Bottom bar{/tr}:</td>
+        <td><label>{tr}Bottom bar{/tr}: </label></td>
         <td><input type="checkbox" name="feature_bot_bar" id="" {if $feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
         <td colspan="3">&nbsp;</td>
       </tr><tr>

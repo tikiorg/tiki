@@ -38,15 +38,15 @@
 </td></tr>
 
 <tr><td>{tr}Type{/tr}</td><td>
-<select id='articletype' name='type' onchange='javascript:chgArtType();'>
+<select id="articletype" name="type" onchange="javascript:chgArtType();">
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
 {/section}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
-<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td>{tr}Rating{/tr}</td><td>
-<select name='rating'>
+<tr id="isreview" {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td>{tr}Rating{/tr}</td><td>
+<select name="rating">
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
 <option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
@@ -99,7 +99,7 @@
 
 {include file=categorize.tpl}
 
-<tr><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading|escape}</textarea></td></tr>
+<tr><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" id="subheading" name="heading" rows="5" cols="80" wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr><td>{tr}Quicklinks{/tr}</td><td>
 {assign var=area_name value="subbody"}
 {include file=tiki-edit_help_tool.tpl}
@@ -107,7 +107,7 @@
 </tr>
 <tr><td>{tr}Body{/tr}</td><td>
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
-<textarea class="wikiedit" id='subbody' name="body" rows="25" cols="80" wrap="virtual">{$body|escape}</textarea></td></tr>
+<textarea class="wikiedit" id="subbody" name="body" rows="25" cols="80" wrap="virtual">{$body|escape}</textarea></td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}

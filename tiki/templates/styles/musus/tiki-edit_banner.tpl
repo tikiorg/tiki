@@ -35,22 +35,18 @@
    <input type="text" name="zoneName" size="10" /><br />
    <input type="submit" name="create_zone" value="{tr}create zone{/tr}" />
    </td>
-   </tr>
-   
+   </tr>   
    </table>
 </div>
 
-
-
 <div class="simplebox">
-<table >
+<table>
 <tr><td colspan="2">{tr}Show the banner only between these dates{/tr}:</td></tr>
 <tr><td>{tr}From date{/tr}:</td><td>{html_select_date time=$fromDate prefix="fromDate_" end_year="+2"}</td></tr>
 <tr><td>{tr}To date{/tr}:</td><td>{html_select_date time=$toDate prefix="toDate_" end_year="+2"}</td></tr>
 <tr><td>{tr}Use dates{/tr}</td><td><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/></td></tr>
 </table>
 </div>
-
 
 <div class="simplebox">
 <table with="100%">
