@@ -1236,23 +1236,18 @@ function get_usage_chart_data() {
 // User assigned modules ////
 /*shared*/
 function get_user_id($user) {
-    $id = $this->db->getOne("select `userId` from `users_users` where `login`=?", array($user));
-
+    $id = $this->getOne("select `userId` from `users_users` where `login`=?", array($user),-1,-1,false);
     return $id;
 }
 
 /*shared*/
 function get_user_groups($user) {
     $userid = $this->get_user_id($user);
-
-    $query = "select `groupName`  from `users_usergroups` where `userId`='$userid'";
-    $result = $this->query($query);
+    $query = "select `groupName`  from `users_usergroups` where `userId`=?";
     $ret = array();
-
     while ($res = $result->fetchRow()) {
 	$ret[] = $res["groupName"];
     }
-
     $ret[] = "Anonymous";
     return $ret;
 }
@@ -1263,7 +1258,6 @@ function list_faqs($offset, $maxRecords, $sort_mode, $find) {
 
     if ($find) {
 	$findesc = '%' . $find . '%';
-
 	$mid = " where (`title` like ? or `description` like ?)";
 	$bindvars=array($findesc,$findesc);
     } else {
@@ -1291,13 +1285,9 @@ function list_faqs($offset, $maxRecords, $sort_mode, $find) {
 
 /*shared */
 function get_faq($faqId) {
-    $query = "select * from `tiki_faqs` where `faqId`=$faqId";
-
-    $result = $this->query($query);
-
-    if (!$result->numRows())
-	return false;
-
+    $query = "select * from `tiki_faqs` where `faqId`=?";
+    $result = $this->query($query,array((int)$faqId));
+    if (!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
 }
@@ -1306,10 +1296,8 @@ function get_faq($faqId) {
 /*shared*/
 function genPass() {
     $vocales = "aeiouAEIOU";
-
     $consonantes = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ0123456789_";
     $r = '';
-
     for ($i = 0; $i < 8; $i++) {
 	if ($i % 2) {
 	    $r .= $vocales{rand(0, strlen($vocales) - 1)};
@@ -1317,7 +1305,6 @@ function genPass() {
 	    $r .= $consonantes{rand(0, strlen($consonantes) - 1)};
 	}
     }
-
     return $r;
 }
 
@@ -1329,8 +1316,7 @@ function genPass() {
 // column to tiki_pages
 function pageRank($loops = 16) {
     $query = "select `pageName`  from `tiki_pages`";
-
-    $result = $this->query($query);
+    $result = $this->query($query,array());
     $ret = array();
 
     while ($res = $result->fetchRow()) {
@@ -1354,9 +1340,7 @@ function pageRank($loops = 16) {
 	    // Get all the pages linking to this one
 	    // Fixed query.  -rlpowell
 	    $query = "select `fromPage`  from `tiki_links` where `toPage` = ?";
-
 	    $result = $this->query($query, array( $pagename ) );
-
 	    $sum = 0;
 
 	    while ($res = $result->fetchRow()) {
@@ -1365,12 +1349,8 @@ function pageRank($loops = 16) {
 		if (isset($pages[$linking])) {
 		    // Fixed query.  -rlpowell
 		    $q2 = "select count(*) from `tiki_links` where `fromPage`= ?";
-
 		    $cant = $this->getOne($q2, array($linking) );
-
-		    if ($cant == 0)
-			$cant = 1;
-
+		    if ($cant == 0) $cant = 1;
 		    $sum += $pages[$linking] / $cant;
 		}
 	    }
@@ -1379,7 +1359,7 @@ function pageRank($loops = 16) {
 	    $pages[$pagename] = $val;
 	    // Fixed query.  -rlpowell
 	    $query = "update `tiki_pages` set `pageRank`=? where `pageName`=?";
-	    $result = $this->query($query, array($val, $pagename) );
+	    $result = $this->query($query, array((int)$val, $pagename) );
 
 	    // Update
 	}
@@ -1396,6 +1376,7 @@ function pageRank($loops = 16) {
 // language: language to use
 // element: element where the text is going to be replaced (a textarea or similar)
 /*shared*/
+// \todo replace the hardcoded html by smarty template
 function spellcheckreplace($what, $where, $language, $element) {
     global $smarty;
 
@@ -1469,54 +1450,47 @@ function spellcheckword($word, $lang) {
     return $result;
 }
 
+// \todo remove html hardcoded in diff2
 function diff2($page1, $page2) {
     $page1 = split("\n", $page1);
-
     $page2 = split("\n", $page2);
     $z = new WikiDiff($page1, $page2);
-
     if ($z->isEmpty()) {
 	$html = '<hr><br/>[' . tra("Versions are identical"). ']<br/><br/>';
     } else {
 	//$fmt = new WikiDiffFormatter;
 	$fmt = new WikiUnifiedDiffFormatter;
-
 	$html = $fmt->format($z, $page1);
     }
-
     return $html;
 }
 
 /*shared*/
 function get_forum($forumId) {
-    $query = "select * from `tiki_forums` where `forumId`='$forumId'";
-
-    $result = $this->query($query);
+    $query = "select * from `tiki_forums` where `forumId`=?";
+    $result = $this->query($query,array((int)$forumId));
     $res = $result->fetchRow();
     return $res;
 }
 
 /*shared*/
 function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array("forum",0);
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " and (`title` like $findesc or `data` like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " and (`title` like ? or `data` like ?)";
+	$bindvars[] = $findesc;
+	$bindvars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select * from `tiki_comments`,`tiki_forums` where
-	`object`=forumId and `objectType` = 'forum' and `parentId`=0 $mid
-	order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from
-	`tiki_comments`,`tiki_forums` where
-	`object`=forumId and `objectType` = 'forum' and `parentId`=0 $mid
-	order by $sort_mode limit $offset,$maxRecords";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $query = "select * from `tiki_comments`,`tiki_forums` ";
+		$query.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_comments`,`tiki_forums` ";
+		$query_cant.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid";
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $now = date("U");
     $ret = array();
 
@@ -1532,27 +1506,22 @@ function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function list_forum_topics($forumId, $offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array($forumId,$forumId,'forum',0);
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " and (`title` like $findesc or `data` like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " and (`title` like ? or `data` like ?)";
+	$bindvars[] = $findesc;
+	$bindvars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select * from `tiki_comments`,`tiki_forums`  where
-	`forumId`=$forumId `object`=$forumId and `objectType` =
-	'forum' and `parentId`=0 $mid order by $sort_mode limit
-	$offset,$maxRecords";
-    $query_cant = "select count(*) from
-	`tiki_comments`,`tiki_forums` where
-	`object`=$forumId and `objectType` = 'forum' and
-	`parentId`=0 $mid order by $sort_mode limit
-	$offset,$maxRecords";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $query = "select * from `tiki_comments`,`tiki_forums` where ";
+	  $query.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_comments`,`tiki_forums` where ";
+		$query_cant.= " `forumId`=? and `object`=? and `objectType`=? and `parentId`=? $mid";
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $now = date("U");
     $ret = array();
 
@@ -1568,26 +1537,25 @@ function list_forum_topics($forumId, $offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function list_forums($offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array();
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " where (`name` like $findesc or `description` like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " where (`name` like ? or `description` like ?)";
+	$bindvars[] = $findesc;
+	$bindvars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select * from `tiki_forums` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_forums` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_forums` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $now = date("U");
     $ret = array();
 
     while ($res = $result->fetchRow()) {
 	$forum_age = ceil(($now - $res["created"]) / (24 * 3600));
-
 	$res["age"] = $forum_age;
 
 	if ($forum_age) {
@@ -1598,10 +1566,8 @@ function list_forums($offset, $maxRecords, $sort_mode, $find) {
 
 	// Now select `users` 
 	$objectId = $res["forumId"];
-	$query = "select distinct `username` from
-	    `tiki_comments` where `object`='$objectId' and
-	    `objectType` = 'forum'";
-	$result2 = $this->query($query);
+	$query = "select distinct `username` from `tiki_comments` where `object`=? and `objectType`=?";
+	$result2 = $this->query($query,array((int)$objectId,"forum"));
 	$res["users"] = $result2->numRows();
 
 	if ($forum_age) {
@@ -1622,15 +1588,13 @@ function list_forums($offset, $maxRecords, $sort_mode, $find) {
 /*shared*/
 function remove_object($type, $id) {
     $this->uncategorize_object($type, $id);
-
     // Now remove comments
     $object = $type . $id;
-    $query = "delete from `tiki_comments` where `object`=?
-	and `objectType` = ?";
+    $query = "delete from `tiki_comments` where `object`=?  and `objectType`=?";
     $result = $this->query($query, array( $id, $type ));
     // Remove individual permissions for this object if they exist
-    $query = "delete from `users_objectpermissions` where `objectId`='$object' and `objectType`='$type'";
-    $result = $this->query($query);
+    $query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
+    $result = $this->query($query,array($object,$type));
     return true;
 }
 
@@ -1642,7 +1606,6 @@ function uncategorize_object($type, $id) {
 
     if ($catObjectId) {
 	$query = "delete from `tiki_category_objects` where `catObjectId`=?";
-
 	$result = $this->query($query,array((int) $catObjectId));
 	$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 	$result = $this->query($query,array((int) $catObjectId));
@@ -1652,7 +1615,6 @@ function uncategorize_object($type, $id) {
 /*shared*/
 function get_categorypath($cats) {
     global $dbTiki;
-
     global $smarty;
     global $tikilib;
     global $feature_categories;
@@ -1694,13 +1656,11 @@ function in_multi_array($needle, $haystack) {
 	    if (is_array($haystack[$tmpkey])) {
 		if ($this->in_multi_array($needle, $haystack[$tmpkey])) {
 		    $in_multi_array = true;
-
 		    break;
 		}
 	    }
 	}
     }
-
     return $in_multi_array;
 }
 
@@ -1801,20 +1761,20 @@ function get_categoryobjects($catids) {
 
 /*shared*/
 function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array();
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " where (`pagename` like $findesc or `data` like $findesc)";
+	$findesc = '%'.$find.'%';
+	$mid = " where (`pagename` like ? or `data` like ?)";
+	$bindvbars[] = $findesc;
+	$bindvbars[] = $findesc;
     } else {
 	$mid = "";
     }
 
-    $query = "select * from `tiki_received_pages` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_received_pages` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_received_pages` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
 
     while ($res = $result->fetchRow()) {
@@ -1836,13 +1796,9 @@ function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', 
 // Functions for polls ////
 /*shared*/
 function get_poll($pollId) {
-    $query = "select * from `tiki_polls` where `pollId`=$pollId";
-
-    $result = $this->query($query);
-
-    if (!$result->numRows())
-	return false;
-
+    $query = "select * from `tiki_polls` where `pollId`=?";
+    $result = $this->query($query,array((int)$pollId));
+    if (!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
 }
@@ -1851,7 +1807,6 @@ function get_poll($pollId) {
 /*shared*/
 function poll_vote($pollId, $optionId) {
     $query = "update `tiki_poll_options` set `votes`= (`votes` + 1) where `optionId`=$optionId";
-
     $result = $this->query($query);
     $query = "update `tiki_polls` set `votes`=(`votes`+1) where `pollId`=$pollId";
     $result = $this->query($query);
