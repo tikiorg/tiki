@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.63 2004-10-25 12:20:28 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.64 2004-10-25 13:39:38 chealer Exp $
  *
  * \brief Categories support class
  *
@@ -23,10 +23,10 @@ class CategLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_categs() {
+	function list_categs($checkperms=false) {
 		global $cachelib;
 		if (!$cachelib->isCached("allcategs")) {
-			$query = "select * from `tiki_categories`";
+			$query = "select * from `tiki_categories` order by ".$this->convert_sortmode('name_asc');
 			$result = $this->query($query,array());
 			$ret = array();
 			while ($res = $result->fetchRow()) {
@@ -38,6 +38,15 @@ class CategLib extends TikiLib {
 				$categpath = implode("::",$tepath);
 				$res["categpath"] = $categpath;
 				$res["tepath"] = $tepath;
+				$res["deep"] = count($tepath);
+				if ($checkperms) {
+					global $userlib;
+					if ($userlib->object_has_one_permission($res['categId'], 'category')) {
+						$res['has_perm'] = 'y';
+					} else {
+						$res['has_perm'] = 'n';
+					}
+				}
 				$ret["$categpath"] = $res;
 			}
 			ksort($ret);
