@@ -2702,7 +2702,8 @@ class TikiLib {
     function get_links($data) {
 	$links = array();
 
-	if (preg_match_all("/\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
+	// Ignore things like [[foo]. -Robin
+	if (preg_match_all("/[^\[]\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
 	    $res = $r1[1];
 
 	    $links = array_unique($res);
