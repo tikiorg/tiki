@@ -3,6 +3,11 @@
 require_once('tiki-setup.php');
 include_once('lib/polls/polllib.php');
 
+if(!isset($polllib)) {
+  $polllib = new PollLib($dbTiki);
+}
+
+
 if($feature_polls != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");

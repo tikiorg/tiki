@@ -1,17 +1,16 @@
 <?php
 require_once('lib/tikilib.php'); # httpScheme()
 
-
 function smarty_function_poll($params, &$smarty)
 {
     global $tikilib;
+    global $dbTiki;
     extract($params);
     // Param = zone
-    global $dbTiki;
-    include_once('lib/polls/polllib.php');
+	include_once('lib/polls/polllib.php');
 
     if (empty($id)) { 
-      $id = $polllib->get_random_active_poll();
+      $id = $pollllib->get_random_active_poll();
     }
     if($id) {
       $menu_info = $polllib->get_poll($id);
