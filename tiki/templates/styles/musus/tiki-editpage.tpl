@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.6 2004-02-01 07:45:21 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-editpage.tpl,v 1.7 2004-02-02 18:44:22 musus Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 

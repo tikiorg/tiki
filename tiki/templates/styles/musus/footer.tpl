@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/footer.tpl,v 1.2 2004-02-01 07:43:28 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/footer.tpl,v 1.3 2004-02-02 18:44:22 musus Exp $ *}
 
 {*if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'*}
   {* Include debugging console. Note it shoudl be processed as near as possible to the end of file *}
