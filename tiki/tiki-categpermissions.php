@@ -61,7 +61,7 @@ $smarty->assign_by_ref('perms', $perms['data']);
 $path = $categlib->get_category_path($categId);
 $smarty->assign_by_ref('path', $path);
 
-ask_ticket('category-perms');
+//ask_ticket('category-perms');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
 $smarty->assign('show_page_bar', 'y');
