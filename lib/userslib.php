@@ -917,6 +917,33 @@ class UsersLib extends TikiLib {
     return true;
   }
   
+	function change_group($olgroup,$group,$desc)
+	{
+		if (!$this->group_exists($olgroup)) return $this->add_group($group,$desc);
+		$query = "update users_groups set groupName='$group', groupDesc='$desc' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update users_usergroups set groupName='$group' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update users_grouppermissions set groupName='$group' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update users_objectpermissions set groupName='$group' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update tiki_group_inclusion set groupName='$group' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update tiki_newsreader_marks set groupName='$group' where groupName='$olgroup'";
+		$result = $this->query($query);
+		$query = "update tiki_modules set groups=replace(groups,'$olgroup','$group') where groups like '%$olgroup%'";
+		$result = $this->query($query);
+		return true;
+	}
+	
+	function remove_all_inclusions($group) {
+		if(!$this->group_exists($group)) return false;
+		$query = "delete from tiki_group_inclusion where groupName='$group'";
+		$result = $this->query($query);
+		return true;
+	}
+	
   function set_user_fields($u) {
   global $feature_clear_passwords;
   	if (@$u['password']) {
