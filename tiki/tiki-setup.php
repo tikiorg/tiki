@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.195 2004-01-29 00:12:45 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.196 2004-02-05 09:34:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1181,14 +1181,17 @@ if($feature_mailin == 'y' && $mailin_autocheck == 'y')
 }
 
 $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
-if($useGroupHome == 'y' and isset($user)) {
-    $group = $userlib->get_user_default_group($user);
+$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
+$group = '';
+
+if (isset($user)) {
+	$group = $userlib->get_user_default_group($user);
+	if($useGroupHome == 'y') {
     $groupHome = $userlib->get_group_home($group);
     if ($groupHome) {
-        $tikiIndex = "tiki-index.php?page=".$groupHome;
-    }
-} else {
-    $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
+      $tikiIndex = "tiki-index.php?page=".$groupHome;
+		}
+	}
 }
 $smarty->assign('tikiIndex',$tikiIndex);
 
@@ -1261,6 +1264,7 @@ $stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];
 
 $smarty->assign('user', $user);
+$smarty->assign('group', $group);
 $smarty->assign('lock', false);
 $smarty->assign('title', $title);
 $smarty->assign('maxRecords', $maxRecords);

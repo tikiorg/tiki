@@ -785,29 +785,36 @@ function get_included_groups($group) {
 		}
 	}
 
-    function get_user_default_group($user) {
-	$query = "select `default_group` from `users_users` where `login` = ?";
-	$result = $this->query($query, array($user));
-	if($result->numRows()) {
-	    $res = $result->fetchRow();
-	    $ret = $res['default_group'];
-	} else {
-	    $ret ='';
+	function get_user_default_group($user) {
+		$query = "select `default_group` from `users_users` where `login` = ?";
+		$result = $this->getOne($query, array($user));
+		$ret = '';
+		if (!is_null($result)) {
+			$ret = $result;
+		} else {
+			$groups = $this->get_user_groups($user);
+			foreach ($groups as $gr) {
+				if ($gr != "Anonymous" and $gr != "Registered") {
+					$ret = $gr;
+					break;
+				}
+			}
+			if (!$ret) {
+				$ret = "Registered";
+			}
+		}
+		return $ret;
 	}
-	return $ret;
-    }
 
-    function get_group_home($group) {
-	$query = "select `groupHome` from `users_groups` where `groupName`=?";
-	$result = $this->query($query,array($group));
-	if($result->numRows()) {
-	    $res = $result->fetchRow();
-	    $ret = $res['groupHome'];
-	} else {
-	    $ret ='';
+	function get_group_home($group) {
+		$query = "select `groupHome` from `users_groups` where `groupName`=?";
+		$result = $this->getOne($query,array($group));
+		$ret ='';
+		if (!is_null($result)) {
+			$ret = $result;
+		}
+		return $ret;
 	}
-	return $ret;
-    }
 
     function get_group_users($group) {
 	$query = "select `login`  from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
