@@ -1,7 +1,12 @@
-alter table tiki_mail_events add user varchar(200);
-alter table tiki_mail_events add hash char(32);
-alter table tiki_mail_events add type varchar(80);
-update tiki_mail_events set user='admin';
+drop table if exists tiki_user_watches;
+create table tiki_user_watches(
+  user varchar(200) not null,
+  event varchar(40) not null,
+  object varchar(200) not null,
+  hash char(32),
+  email varchar(200),
+  primary key(user,event,object)
+);
 
 alter table tiki_user_notes add parse_mode char(20);
 update tiki_user_notes set parse_mode='raw';
