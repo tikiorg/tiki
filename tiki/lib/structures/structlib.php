@@ -554,7 +554,7 @@ class StructLib extends TikiLib {
     $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		while ($res = $result->fetchRow()) {
-      $next_page = $this->get_structure_info($res["page_ref_id"]);
+      $next_page = $this->s_get_structure_info($res["page_ref_id"]);
       //Add each structure head only once
       if (!in_array($next_page["page_ref_id"], $pages_added)) {
         $pages_added[] = $next_page["page_ref_id"];
