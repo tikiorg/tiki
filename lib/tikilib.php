@@ -434,10 +434,6 @@ class TikiLib {
 
     /*shared*/
     function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
-	// This *really* shouldn't be necessary now that the
-	// query itself has been fixed up. -rlpowell
-	//	$title = addslashes($title);
-
 	if ($taskId) {
 	    $query = "update `tiki_user_tasks` set
 		`title` = ?,
@@ -923,10 +919,6 @@ class TikiLib {
     /* Referer stats */
     /*shared*/
     function register_referer($referer) {
-	// This *really* shouldn't be necessary now that the
-	// query itself has been fixed up. -rlpowell
-	//	$referer = addslashes($referer);
-
 	$now = date("U");
 	$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
 
@@ -4457,276 +4449,258 @@ class TikiLib {
 	    }
 	}
 
-	// tables
-	/*
-	   preg_match_all("/(\%[^\%]+\%)/",$data,$pages);
-	   foreach(array_unique($pages[1]) as $page_parse) {
-	   $pagex=substr($page_parse,1,strlen($page_parse)-2);
-	   $repl='<table cellpadding="0" cellspacing="0" border="1">';
-// First split by lines
-$lines = explode("\\",$pagex);
-foreach ($lines as $line) {
-$repl.='<tr>';
-$columns = explode("&",$line);
-foreach($columns as $column) {
-$repl.='<td valign="top">'.$column.'</td>';
-}
-$repl.='</tr>';
-}
-$repl.='</table>';
-$data = str_replace($page_parse, $repl, $data);
-}
-	 */
 
-// 26-Jun-2003, by zaufi
-//
-// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
-//
-preg_match_all("/\{maketoc\}/", $data, $tocs);
-$anch = array();
-
-// 08-Jul-2003, by zaufi
-// HotWords will be replace only in ordinal text
-// It looks __realy__ goofy in Headers or Titles
-
-// Get list of HotWords
-$words = $this->get_hotwords();
-
-// Now tokenize the expression and process the tokens
-// Use tab and newline as tokenizing characters as well  ////
-$lines = explode("\n", $data);
-$data = '';
-$listbeg = array();
-$divdepth = array();
-$inTable = 0;
-
-// loop: process all lines
-foreach ($lines as $line) {
-
-    // Check for titlebars...
-    // NOTE: that title bar should be start from begining of line and
-    //       be alone on that line to be autoaligned... else it is old styled
-    //       styled title bar...
-    if (substr(ltrim($line), 0, 2) == '-=' && substr(rtrim($line), -2, 2) == '=-') {
-	// This is not list item -- must close lists currently opened
-	while (count($listbeg))
-	    $data .= array_shift($listbeg);
-
+	// 26-Jun-2003, by zaufi
 	//
-	$align_len = strlen($line) - strlen(ltrim($line));
-
-	// My textarea size is about 120 space chars.
-	//define('TEXTAREA_SZ', 120);
-
-	// NOTE: That strict math formula (split into 3 areas) gives
-	//       bad visual effects...
-	// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left" 
-	//        : (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+	// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
 	//
-	// Going to introduce some heuristic here :)
-	// Visualy (remember that space char is thin) center starts at 25 pos
-	// and 'right' from 60 (HALF of full width!) -- thats all :)
-	//
-	// NOTE: Guess align only if more than 10 spaces before -=title=-
-	if ($align_len > 10) {
-	    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+	preg_match_all("/\{maketoc\}/", $data, $tocs);
+	$anch = array();
 
-	    $align = ' style="text-align: ' . $align . ';"';
-	} else
-	    $align = '';
+	// 08-Jul-2003, by zaufi
+	// HotWords will be replace only in ordinal text
+	// It looks __realy__ goofy in Headers or Titles
 
-	//
-	$line = trim($line);
-	$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-	$data .= $line;
-	// TODO: Case is handled ...  no need to check other conditions
-	//       (it is apriory known all they false, moreover sometimes
-	//       check procedure need > O(0) of compexity)
-	//       -- continue to next line...
-	//       MUST replace all remaining parse blocks to the same logic...
-	continue;
-    }
+	// Get list of HotWords
+	$words = $this->get_hotwords();
 
-    // Replace old styled titlebars 
-    if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
-	$data .= $line;
+	// Now tokenize the expression and process the tokens
+	// Use tab and newline as tokenizing characters as well  ////
+	$lines = explode("\n", $data);
+	$data = '';
+	$listbeg = array();
+	$divdepth = array();
+	$inTable = 0;
 
-	continue;
-    }
+	// loop: process all lines
+	foreach ($lines as $line) {
 
-    // check if we are inside a table, if so, ignore monospaced and do
-    // not insert <br/>
-    $inTable += substr_count($line, "<table");
-    $inTable -= substr_count($line, "</table");
-
-    // If the first character is ' ' and we are not in pre then we are in pre
-    global $feature_wiki_monosp;
-
-    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
-	// This is not list item -- must close lists currently opened
-	while (count($listbeg))
-	    $data .= array_shift($listbeg);
-
-	// If the first character is space then
-	// change spaces for &nbsp;
-	$line = '<font face="courier" size="2">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
-	$line .= '<br/>';
-    } else {
-	// Replace Hotwords before begin
-	$line = $this->replace_hotwords($line, $words);
-
-	// Replace monospaced text
-	$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
-	// Replace bold text
-	$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-	$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-	// Replace definition lists
-	$line = preg_replace("/^;([^:]+):([^\n]+)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-
-	if (0) {
-	    $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
-
-	    // Segundo intento reemplazar los [link] comunes
-	    $line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
-	    $line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
-	}
-
-	// This line is parseable then we have to see what we have
-	if (substr($line, 0, 3) == '---') {
-	    // This is not list item -- must close lists currently opened
-	    while (count($listbeg))
-		$data .= array_shift($listbeg);
-
-	    $line = '<hr/>';
-	} else {
-	    $litype = substr($line, 0, 1);
-
-	    if ($litype == '*' || $litype == '#') {
-		$listlevel = $this->how_many_at_start($line, $litype);
-
-		$liclose = '</li>';
-		$addremove = 0;
-
-		if ($listlevel < count($listbeg)) {
-		    while ($listlevel != count($listbeg))
-			$data .= array_shift($listbeg);
-
-		    if (substr(current($listbeg), 0, 5) != '</li>')
-			$liclose = '';
-		} elseif ($listlevel > count($listbeg)) {
-		    $listyle = '';
-
-		    while ($listlevel != count($listbeg)) {
-			array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
-
-			if ($listlevel == count($listbeg)) {
-			    $listate = substr($line, $listlevel, 1);
-
-			    if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-				$thisid = 'id' . microtime() * 1000000;
-
-				$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-				$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-				$addremove = 1;
-			    }
-			}
-
-			$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-		    }
-
-		    $liclose = '';
-		}
-
-		if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
-		    $data .= array_shift($listbeg);
-
-		    $listyle = '';
-		    $listate = substr($line, $listlevel, 1);
-
-		    if (($listate == '+' || $listate == '-')) {
-			$thisid = 'id' . microtime() * 1000000;
-
-			$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-			$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-			$addremove = 1;
-		    }
-
-		    $data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-		    $liclose = '';
-		    array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
-		}
-
-		$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
-
-		if (substr(current($listbeg), 0, 5) != '</li>')
-		    array_unshift($listbeg, '</li>' . array_shift($listbeg));
-	    } elseif ($litype == '+') {
-		// Must append paragraph for list item of given depth...
-		$listlevel = $this->how_many_at_start($line, $litype);
-
-		// Close lists down to requested level
-		while ($listlevel < count($listbeg))
-		    $data .= array_shift($listbeg);
-
-		if (count($listbeg)) {
-		    if (substr(current($listbeg), 0, 5) != '</li>') {
-			array_unshift($listbeg, '</li>' . array_shift($listbeg));
-
-			$liclose = '<li>';
-		    } else
-			$liclose = '<br/>';
-		} else
-		    $liclose = '';
-
-		$line = $liclose . substr($line, count($listbeg));
-	    } else {
+	    // Check for titlebars...
+	    // NOTE: that title bar should be start from begining of line and
+	    //       be alone on that line to be autoaligned... else it is old styled
+	    //       styled title bar...
+	    if (substr(ltrim($line), 0, 2) == '-=' && substr(rtrim($line), -2, 2) == '=-') {
 		// This is not list item -- must close lists currently opened
 		while (count($listbeg))
 		    $data .= array_shift($listbeg);
 
-		// Get count of (possible) header signs at start
-		$hdrlevel = $this->how_many_at_start($line, '!');
+		//
+		$align_len = strlen($line) - strlen(ltrim($line));
 
-		// If 1st char on line is '!' and its count less than 6 (max in HTML)
-		if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
-		    // Remove possible hotwords replaced :)
-		    $line = strip_tags($line);
+		// My textarea size is about 120 space chars.
+		//define('TEXTAREA_SZ', 120);
 
-		    // OK. Parse headers here...
-		    $anchor = '';
-		    $aclose = '';
+		// NOTE: That strict math formula (split into 3 areas) gives
+		//       bad visual effects...
+		// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left" 
+		//        : (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+		//
+		// Going to introduce some heuristic here :)
+		// Visualy (remember that space char is thin) center starts at 25 pos
+		// and 'right' from 60 (HALF of full width!) -- thats all :)
+		//
+		// NOTE: Guess align only if more than 10 spaces before -=title=-
+		if ($align_len > 10) {
+		    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+
+		    $align = ' style="text-align: ' . $align . ';"';
+		} else
+		    $align = '';
+
+		//
+		$line = trim($line);
+		$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+		$data .= $line;
+		// TODO: Case is handled ...  no need to check other conditions
+		//       (it is apriory known all they false, moreover sometimes
+		//       check procedure need > O(0) of compexity)
+		//       -- continue to next line...
+		//       MUST replace all remaining parse blocks to the same logic...
+		continue;
+	    }
+
+	    // Replace old styled titlebars 
+	    if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
+		$data .= $line;
+
+		continue;
+	    }
+
+	    // check if we are inside a table, if so, ignore monospaced and do
+	    // not insert <br/>
+	    $inTable += substr_count($line, "<table");
+	    $inTable -= substr_count($line, "</table");
+
+	    // If the first character is ' ' and we are not in pre then we are in pre
+	    global $feature_wiki_monosp;
+
+	    if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
+		// This is not list item -- must close lists currently opened
+		while (count($listbeg))
+		    $data .= array_shift($listbeg);
+
+		// If the first character is space then
+		// change spaces for &nbsp;
+		$line = '<font face="courier">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
+	    }
+
+	    // Replace Hotwords before begin
+	    $line = $this->replace_hotwords($line, $words);
+
+	    // Replace monospaced text
+	    $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+	    // Replace bold text
+	    $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+	    $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+	    // Replace definition lists
+	    $line = preg_replace("/^;([^:]+):([^\n]+)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+
+	    if (0) {
+		$line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
+
+		// Segundo intento reemplazar los [link] comunes
+		$line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
+		$line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
+	    }
+
+	    // This line is parseable then we have to see what we have
+	    if (substr($line, 0, 3) == '---') {
+		// This is not list item -- must close lists currently opened
+		while (count($listbeg))
+		    $data .= array_shift($listbeg);
+
+		$line = '<hr/>';
+	    } else {
+		$litype = substr($line, 0, 1);
+
+		if ($litype == '*' || $litype == '#') {
+		    $listlevel = $this->how_many_at_start($line, $litype);
+
+		    $liclose = '</li>';
 		    $addremove = 0;
 
-		    // Close lower level divs if opened
-		    for (;current($divdepth) >= $hdrlevel; array_shift($divdepth))
-			$data .= '</div>';
+		    if ($listlevel < count($listbeg)) {
+			while ($listlevel != count($listbeg))
+			    $data .= array_shift($listbeg);
 
-		    // May be spesial signs present after '!'s?
-		    $divstate = substr($line, $hdrlevel, 1);
+			if (substr(current($listbeg), 0, 5) != '</li>')
+			    $liclose = '';
+		    } elseif ($listlevel > count($listbeg)) {
+			$listyle = '';
 
-		    if ($divstate == '+' || $divstate == '-') {
-			// OK. Must insert flipper after HEADER, and then open new div...
-			$thisid = 'id' . microtime() * 1000000;
+			while ($listlevel != count($listbeg)) {
+			    array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
 
-			$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-			$aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-			array_unshift($divdepth, $hdrlevel);
-			$addremove = 1;
+			    if ($listlevel == count($listbeg)) {
+				$listate = substr($line, $listlevel, 1);
+
+				if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+				    $thisid = 'id' . microtime() * 1000000;
+
+				    $data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+				    $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+				    $addremove = 1;
+				}
+			    }
+
+			    $data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+			}
+
+			$liclose = '';
 		    }
 
-		    // Is any {maketoc} present on page?
-		    if (count($tocs[0]) > 0) {
-			// OK. Must insert <a id=...> before HEADER and collect TOC entry
-			$thisid = 'id' . microtime() * 1000000;
+		    if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
+			$data .= array_shift($listbeg);
 
-			array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid'>" . substr($line, $hdrlevel + $addremove). '</a>');
-			$anchor = "<a id='$thisid'>";
-			$aclose = '</a>' . $aclose;
+			$listyle = '';
+			$listate = substr($line, $listlevel, 1);
+
+			if (($listate == '+' || $listate == '-')) {
+			    $thisid = 'id' . microtime() * 1000000;
+
+			    $data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+			    $listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+			    $addremove = 1;
+			}
+
+			$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+			$liclose = '';
+			array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
 		    }
 
-		    $line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+		    $line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
+
+		    if (substr(current($listbeg), 0, 5) != '</li>')
+			array_unshift($listbeg, '</li>' . array_shift($listbeg));
+		} elseif ($litype == '+') {
+		    // Must append paragraph for list item of given depth...
+		    $listlevel = $this->how_many_at_start($line, $litype);
+
+		    // Close lists down to requested level
+		    while ($listlevel < count($listbeg))
+			$data .= array_shift($listbeg);
+
+		    if (count($listbeg)) {
+			if (substr(current($listbeg), 0, 5) != '</li>') {
+			    array_unshift($listbeg, '</li>' . array_shift($listbeg));
+
+			    $liclose = '<li>';
+			} else
+			    $liclose = '<br/>';
+		    } else
+			$liclose = '';
+
+		    $line = $liclose . substr($line, count($listbeg));
 		} else {
-		    if (!strcmp($line, "...page...")) {
+		    // This is not list item -- must close lists currently opened
+		    while (count($listbeg))
+			$data .= array_shift($listbeg);
+
+		    // Get count of (possible) header signs at start
+		    $hdrlevel = $this->how_many_at_start($line, '!');
+
+		    // If 1st char on line is '!' and its count less than 6 (max in HTML)
+		    if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
+			// Remove possible hotwords replaced :)
+			//   Umm, *why*?  Taking this out lets page
+			//   links in headers work, which can be nice.
+			//   -rlpowell
+			// $line = strip_tags($line);
+
+			// OK. Parse headers here...
+			$anchor = '';
+			$aclose = '';
+			$addremove = 0;
+
+			// Close lower level divs if opened
+			for (;current($divdepth) >= $hdrlevel; array_shift($divdepth))
+			    $data .= '</div>';
+
+			// May be spesial signs present after '!'s?
+			$divstate = substr($line, $hdrlevel, 1);
+
+			if ($divstate == '+' || $divstate == '-') {
+			    // OK. Must insert flipper after HEADER, and then open new div...
+			    $thisid = 'id' . microtime() * 1000000;
+
+			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+			    $aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+			    array_unshift($divdepth, $hdrlevel);
+			    $addremove = 1;
+			}
+
+			// Is any {maketoc} present on page?
+			if (count($tocs[0]) > 0) {
+			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
+			    $thisid = 'id' . microtime() * 1000000;
+
+			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid'>" . substr($line, $hdrlevel + $addremove). '</a>');
+			    $anchor = "<a id='$thisid'>";
+			    $aclose = '</a>' . $aclose;
+			}
+
+			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+		    } elseif (!strcmp($line, "...page...")) {
 			// Close lists and divs currently opened
 			while (count($listbeg))
 			    $data .= array_shift($listbeg);
@@ -4747,209 +4721,186 @@ foreach ($lines as $line) {
 		    }
 		}
 	    }
-	}
-    }
 
-    $data .= $line;
-}
-
-// Close lists may remains opened
-while (count($listbeg))
-    $data .= array_shift($listbeg);
-
-    // Close header divs may remains opened
-    for ($i = 1; $i <= count($divdepth); $i++)
-    $data .= '</div>';
-
-    // 26-Jun-2003, by zaufi
-    // Replace {maketoc} from collected list of headers
-    $html = '';
-
-    foreach ($anch as $tocentry) {
-	$html .= $tocentry . "\n";
-    }
-
-if (count($anch))
-    $html = $this->parse_data($html);
-
-    $data = str_replace("{maketoc}", $html, $data);
-
-    // Replace rss modules
-    if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
-	if (!isset($rsslib)) {
-	    include ('lib/rss/rsslib.php');
+	    $data .= $line;
 	}
 
-	for ($i = 0; $i < count($rsss[0]); $i++) {
-	    $id = $rsss[1][$i];
+	// Close lists may remains opened
+	while (count($listbeg))
+	    $data .= array_shift($listbeg);
 
-	    $max = $rsss[3][$i];
+	// Close header divs may remains opened
+	for ($i = 1; $i <= count($divdepth); $i++)
+	    $data .= '</div>';
 
-	    if (empty($max))
-		$max = 99;
+	// 26-Jun-2003, by zaufi
+	// Replace {maketoc} from collected list of headers
+	$html = '';
 
-	    $rssdata = $rsslib->get_rss_module_content($id);
-	    $items = $rsslib->parse_rss_data($rssdata);
-	    $repl = '<ul>';
+	foreach ($anch as $tocentry) {
+	    $html .= $tocentry . "\n";
+	}
 
-	    for ($j = 0; $j < count($items) && $j < $max; $j++) {
-		$repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a></li>';
+	if (count($anch))
+	    $html = $this->parse_data($html);
+
+	$data = str_replace("{maketoc}", $html, $data);
+
+	// Replace rss modules
+	if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
+	    if (!isset($rsslib)) {
+		include ('lib/rss/rsslib.php');
 	    }
 
-	    $repl .= '</ul>';
-	    $data = str_replace($rsss[0][$i], $repl, $data);
-	}
-    }
+	    for ($i = 0; $i < count($rsss[0]); $i++) {
+		$id = $rsss[1][$i];
 
-// Close BiDi DIVs if any
-for ($i = 0; $i < $bidiCount; $i++) {
-    $data .= "</div>";
-}
+		$max = $rsss[3][$i];
 
-foreach ($noparsed as $np) {
-    $data = str_replace($np["key"], $np["data"], $data);
-}
+		if (empty($max))
+		    $max = 99;
 
-foreach ($preparsed as $pp) {
-    $data = str_replace($pp["key"], "<pre>" . $pp["data"] . "</pre>", $data);
-}
+		$rssdata = $rsslib->get_rss_module_content($id);
+		$items = $rsslib->parse_rss_data($rssdata);
+		$repl = '<ul>';
 
-// Process pos_handlers here
-foreach ($this->pos_handlers as $handler) {
-    $data = $handler($data);
-}
+		for ($j = 0; $j < count($items) && $j < $max; $j++) {
+		    $repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a></li>';
+		}
 
-return $data;
-}
-
-function parse_smileys($data) {
-    global $feature_smileys;
-
-    if ($feature_smileys == 'y') {
-	$data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
-    }
-
-    return $data;
-}
-
-function parse_comment_data($data) {
-    $data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a class=\"commentslink\" href=\"$1\">$2</a>", $data);
-
-    // Segundo intento reemplazar los [link] comunes
-    $data = preg_replace("/\[([^\]\|]+)\]/", "<a class=\"commentslink\" href=\"$1\">$1</a>", $data);
-    // Llamar aqui a parse smileys
-    $data = $this->parse_smileys($data);
-    $data = preg_replace("/---/", "<hr/>", $data);
-    // Reemplazar --- por <hr/>
-    return $data;
-}
-
-function get_pages($data) {
-    global $page_regex;
-
-    global $feature_wikiwords;
-
-    if ($feature_wikiwords == 'y') {
-	preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-
-	preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages2);
-	preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages3);
-	$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
-    } else {
-	preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
-
-	preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages2);
-	$pages = array_unique(array_merge($pages[1], $pages2[1]));
-    }
-
-    return $pages;
-}
-
-function clear_links($page) {
-    $query = "delete from `tiki_links` where `fromPage`=?";
-    $result = $this->query($query, array($page));
-}
-
-function replace_link($pageFrom, $pageTo) {
-    $query = "replace into tiki_links(fromPage,toPage)
-	values(?, ?)";
-    $result = $this->query($query, array($pageFrom,$pageTo));
-}
-
-function invalidate_cache($page) {
-    $query = "update `tiki_pages` set `cache_timestamp`=0
-	where `pageName`=?";
-    $this->query($query, array($page) );
-}
-
-function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
-    global $smarty;
-
-    global $dbTiki;
-    global $notificationlib;
-    global $feature_user_watches;
-    global $wiki_watch_editor;
-    global $sender_email;
-    include_once ('lib/notifications/notificationlib.php');
-    $this->invalidate_cache($pageName);
-    // Collect pages before modifying edit_data (see update of links below)
-    $pages = $this->get_pages($edit_data);
-
-    if (!$this->page_exists($pageName))
-	return false;
-
-    $t = date("U");
-    // Get this page information
-    $info = $this->get_page_info($pageName);
-    // Store the old version of this page in the history table
-    $version = $info["version"];
-    $lastModif = $info["lastModif"];
-    $user = $info["user"];
-    $ip = $info["ip"];
-    $comment = $info["comment"];
-    $data = $info["data"];
-    // WARNING: POTENTIAL BUG
-    // The line below is not consistent with the rest of Tiki
-    // (I commented it out so it can be further examined by CVS change control)
-    //$pageName=addslashes($pageName);
-    // But this should work (comment added by redflo):
-    $version += 1;
-
-    if (!$minor) {
-	$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-	    values(?,?,?,?,?,?,?,?)";
-
-	if ($pageName != 'SandBox') {
-	    $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		$repl .= '</ul>';
+		$data = str_replace($rsss[0][$i], $repl, $data);
+	    }
 	}
 
-	// Update the pages table with the new version of this page
-
-	//$edit_data = addslashes($edit_data);
-	$emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName);
-
-	foreach ($emails as $email) {
-	    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-	    $smarty->assign('mail_page', $pageName);
-	    $smarty->assign('mail_date', date("U"));
-	    $smarty->assign('mail_user', $edit_user);
-	    $smarty->assign('mail_comment', $edit_comment);
-	    $smarty->assign('mail_last_version', $version);
-	    $smarty->assign('mail_data', $edit_data);
-	    $foo = parse_url($_SERVER["REQUEST_URI"]);
-	    $machine = httpPrefix(). $foo["path"];
-	    $smarty->assign('mail_machine', $machine);
-	    $smarty->assign('mail_pagedata', $edit_data);
-	    $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-	    @mail($email, tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+	// Close BiDi DIVs if any
+	for ($i = 0; $i < $bidiCount; $i++) {
+	    $data .= "</div>";
 	}
 
-	if ($feature_user_watches == 'y') {
-	    $nots = $this->get_event_watches('wiki_page_changed', $pageName);
+	foreach ($noparsed as $np) {
+	    $data = str_replace($np["key"], $np["data"], $data);
+	}
 
-	    foreach ($nots as $not) {
-		if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
+	foreach ($preparsed as $pp) {
+	    $data = str_replace($pp["key"], "<pre>" . $pp["data"] . "</pre>", $data);
+	}
+
+	// Process pos_handlers here
+	foreach ($this->pos_handlers as $handler) {
+	    $data = $handler($data);
+	}
+
+	return $data;
+    }
+
+    function parse_smileys($data) {
+	global $feature_smileys;
+
+	if ($feature_smileys == 'y') {
+	    $data = preg_replace("/\(:([^:]+):\)/", "<img alt=\"$1\" src=\"img/smiles/icon_$1.gif\" />", $data);
+	}
+
+	return $data;
+    }
+
+    function parse_comment_data($data) {
+	$data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a class=\"commentslink\" href=\"$1\">$2</a>", $data);
+
+	// Segundo intento reemplazar los [link] comunes
+	$data = preg_replace("/\[([^\]\|]+)\]/", "<a class=\"commentslink\" href=\"$1\">$1</a>", $data);
+	// Llamar aqui a parse smileys
+	$data = $this->parse_smileys($data);
+	$data = preg_replace("/---/", "<hr/>", $data);
+	// Reemplazar --- por <hr/>
+	return $data;
+    }
+
+    function get_pages($data) {
+	global $page_regex;
+
+	global $feature_wikiwords;
+
+	if ($feature_wikiwords == 'y') {
+	    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+
+	    preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages2);
+	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages3);
+	    $pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
+	} else {
+	    preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
+
+	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages2);
+	    $pages = array_unique(array_merge($pages[1], $pages2[1]));
+	}
+
+	return $pages;
+    }
+
+    function clear_links($page) {
+	$query = "delete from `tiki_links` where `fromPage`=?";
+	$result = $this->query($query, array($page));
+    }
+
+    function replace_link($pageFrom, $pageTo) {
+	$query = "replace into tiki_links(fromPage,toPage)
+	    values(?, ?)";
+	$result = $this->query($query, array($pageFrom,$pageTo));
+    }
+
+    function invalidate_cache($page) {
+	$query = "update `tiki_pages` set `cache_timestamp`=0
+	    where `pageName`=?";
+	$this->query($query, array($page) );
+    }
+
+    function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
+	global $smarty;
+
+	global $dbTiki;
+	global $notificationlib;
+	global $feature_user_watches;
+	global $wiki_watch_editor;
+	global $sender_email;
+	include_once ('lib/notifications/notificationlib.php');
+	$this->invalidate_cache($pageName);
+	// Collect pages before modifying edit_data (see update of links below)
+	$pages = $this->get_pages($edit_data);
+
+	if (!$this->page_exists($pageName))
+	    return false;
+
+	$t = date("U");
+	// Get this page information
+	$info = $this->get_page_info($pageName);
+	// Store the old version of this page in the history table
+	$version = $info["version"];
+	$lastModif = $info["lastModif"];
+	$user = $info["user"];
+	$ip = $info["ip"];
+	$comment = $info["comment"];
+	$data = $info["data"];
+	// WARNING: POTENTIAL BUG
+	// The line below is not consistent with the rest of Tiki
+	// (I commented it out so it can be further examined by CVS change control)
+	//$pageName=addslashes($pageName);
+	// But this should work (comment added by redflo):
+	$version += 1;
+
+	if (!$minor) {
+	    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
+		values(?,?,?,?,?,?,?,?)";
+
+	    if ($pageName != 'SandBox') {
+		$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+	    }
+
+	    // Update the pages table with the new version of this page
+
+	    //$edit_data = addslashes($edit_data);
+	    $emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName);
+
+	    foreach ($emails as $email) {
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
 		$smarty->assign('mail_page', $pageName);
@@ -4958,701 +4909,722 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 		$smarty->assign('mail_comment', $edit_comment);
 		$smarty->assign('mail_last_version', $version);
 		$smarty->assign('mail_data', $edit_data);
-		$smarty->assign('mail_hash', $not['hash']);
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = httpPrefix(). $foo["path"];
 		$smarty->assign('mail_machine', $machine);
-		$parts = explode('/', $foo['path']);
-
-		if (count($parts) > 1)
-		    unset ($parts[count($parts) - 1]);
-
-		$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
 		$smarty->assign('mail_pagedata', $edit_data);
-		$mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
-		@mail($not['email'], tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		$mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
+		@mail($email, tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+	    }
+
+	    if ($feature_user_watches == 'y') {
+		$nots = $this->get_event_watches('wiki_page_changed', $pageName);
+
+		foreach ($nots as $not) {
+		    if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;
+		    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+
+		    $smarty->assign('mail_page', $pageName);
+		    $smarty->assign('mail_date', date("U"));
+		    $smarty->assign('mail_user', $edit_user);
+		    $smarty->assign('mail_comment', $edit_comment);
+		    $smarty->assign('mail_last_version', $version);
+		    $smarty->assign('mail_data', $edit_data);
+		    $smarty->assign('mail_hash', $not['hash']);
+		    $foo = parse_url($_SERVER["REQUEST_URI"]);
+		    $machine = httpPrefix(). $foo["path"];
+		    $smarty->assign('mail_machine', $machine);
+		    $parts = explode('/', $foo['path']);
+
+		    if (count($parts) > 1)
+			unset ($parts[count($parts) - 1]);
+
+		    $smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+		    $smarty->assign('mail_pagedata', $edit_data);
+		    $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
+		    @mail($not['email'], tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		}
 	    }
 	}
-    }
 
-    $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=? where `pageName`=?";
-    $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,$pageName));
-    // Parse edit_data updating the list of links from this page
-    $this->clear_links($pageName);
-
-    // Pages collected above
-    foreach ($pages as $page) {
-	$this->replace_link($pageName, $page);
-    }
-
-    // Update the log
-    if ($pageName != 'SandBox' && !$minor) {
-	$action = "Updated";
-
-	$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
-	$maxversions = $this->get_preference("maxVersions", 0);
-
-	if ($maxversions) {
-	    // Select only versions older than keep_versions days
-	    $keep = $this->get_preference('keep_versions', 0);
-
-	    $now = date("U");
-	    $oktodel = $now - ($keep * 24 * 3600);
-	    $query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
-	    $result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
-	    $toelim = $result->numRows();
-
-	    while ($res = $result->fetchRow()) {
-		$page = $res["pageName"];
-
-		$version = $res["version"];
-		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-		$this->query($query,array($pageName,$version));
-	    }
-	}
-    }
-}
-
-function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '') {
-    global $smarty;
-
-    if ($pageName == 'SandBox')
-	return;
-
-    // Collect pages before modifying edit_data
-    $pages = $this->get_pages($edit_data);
-
-    if (!$this->page_exists($pageName))
-	return false;
-
-    $t = date("U");
-    $query = "delete from `tiki_history`
-	where `pageName`=? and `version`=,?";
-    $result = $this->query($query, array( $pageName, $version) );
-    $query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description)
-	values(?,?,?, ?,?,?, ?,?)";
-    $result = $this->query($query,
-	    array($pageName,$version,$lastModif,
-		$edit_user,$edit_ip,$edit_comment,
-		$edit_data,$description)
-	    );
-
-    //print("version: $version<br/>");
-    // Get this page information
-    $info = $this->get_page_info($pageName);
-
-    if ($version >= $info["version"]) {
-	$query = "update `tiki_pages`
-	    set `data`=?, comment=?,
-	lastModif=?, version=?, user=?,
-	ip=?, description=?
-	    where `pageName`=?";
-
-	$result = $this->query($query,
-		array( $edit_data, $edit_comment, $t,
-		    $version, $edit_user, $edit_ip, $description,
-		    $pageName ) );
+	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=? where `pageName`=?";
+	$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,$pageName));
 	// Parse edit_data updating the list of links from this page
 	$this->clear_links($pageName);
 
-	// Pages are collected at the top of the function before adding slashes
+	// Pages collected above
 	foreach ($pages as $page) {
 	    $this->replace_link($pageName, $page);
 	}
+
+	// Update the log
+	if ($pageName != 'SandBox' && !$minor) {
+	    $action = "Updated";
+
+	    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+	    $result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
+	    $maxversions = $this->get_preference("maxVersions", 0);
+
+	    if ($maxversions) {
+		// Select only versions older than keep_versions days
+		$keep = $this->get_preference('keep_versions', 0);
+
+		$now = date("U");
+		$oktodel = $now - ($keep * 24 * 3600);
+		$query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
+		$result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
+		$toelim = $result->numRows();
+
+		while ($res = $result->fetchRow()) {
+		    $page = $res["pageName"];
+
+		    $version = $res["version"];
+		    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+		    $this->query($query,array($pageName,$version));
+		}
+	    }
+	}
     }
-}
+
+    function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '') {
+	global $smarty;
+
+	if ($pageName == 'SandBox')
+	    return;
+
+	// Collect pages before modifying edit_data
+	$pages = $this->get_pages($edit_data);
+
+	if (!$this->page_exists($pageName))
+	    return false;
+
+	$t = date("U");
+	$query = "delete from `tiki_history`
+	    where `pageName`=? and `version`=,?";
+	$result = $this->query($query, array( $pageName, $version) );
+	$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description)
+	    values(?,?,?, ?,?,?, ?,?)";
+	$result = $this->query($query,
+		array($pageName,$version,$lastModif,
+		    $edit_user,$edit_ip,$edit_comment,
+		    $edit_data,$description)
+		);
+
+	//print("version: $version<br/>");
+	// Get this page information
+	$info = $this->get_page_info($pageName);
+
+	if ($version >= $info["version"]) {
+	    $query = "update `tiki_pages`
+		set `data`=?, comment=?,
+	    lastModif=?, version=?, user=?,
+	    ip=?, description=?
+		where `pageName`=?";
+
+	    $result = $this->query($query,
+		    array( $edit_data, $edit_comment, $t,
+			$version, $edit_user, $edit_ip, $description,
+			$pageName ) );
+	    // Parse edit_data updating the list of links from this page
+	    $this->clear_links($pageName);
+
+	    // Pages are collected at the top of the function before adding slashes
+	    foreach ($pages as $page) {
+		$this->replace_link($pageName, $page);
+	    }
+	}
+    }
 
 # TODO move all of these date/time functions to a static class: TikiDate
-function get_timezone_list($use_default = false) {
-    static $timezone_options;
+    function get_timezone_list($use_default = false) {
+	static $timezone_options;
 
-    if (!$timezone_options) {
-	$timezone_options = array();
+	if (!$timezone_options) {
+	    $timezone_options = array();
 
-	if ($use_default)
-	    $timezone_options['default'] = '-- Use Default Time Zone --';
+	    if ($use_default)
+		$timezone_options['default'] = '-- Use Default Time Zone --';
 
-	foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
-	    $offset = $tz['offset'];
+	    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
+		$offset = $tz['offset'];
 
-	    $absoffset = abs($offset /= 60000);
-	    $plusminus = $offset < 0 ? '-' : '+';
-	    $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
-	    $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
-		    $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
-		    }
-		    }
-
-		    return $timezone_options;
-		    }
-
-		    function get_server_timezone() {
-		    static $server_timezone;
-
-		    if (!$server_timezone) {
-		    $server_time = new Date();
-
-		    $server_timezone = $server_time->tz->getID();
-		    }
-
-		    return $server_timezone;
-		    }
-
-# TODO rename get_site_timezone()
-		    function get_display_timezone($user = false) {
-			static $display_timezone = false;
-
-			if (!$display_timezone) {
-			    $server_time = $this->get_server_timezone();
-
-			    if ($user) {
-				$display_timezone = $this->get_user_preference($user, 'display_timezone');
-
-				if (!$display_timezone || $display_timezone == 'default') {
-				    $display_timezone = $this->get_preference('display_timezone', $server_time);
-				}
-			    } else {
-				$display_timezone = $this->get_preference('display_timezone', $server_time);
-			    }
+		$absoffset = abs($offset /= 60000);
+		$plusminus = $offset < 0 ? '-' : '+';
+		$gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
+		$tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
+			$timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+			}
 			}
 
-			return $display_timezone;
-		    }
+			return $timezone_options;
+			}
 
-/**
- * Retrieves the user's preferred offset for displaying dates.
- *
- * $user: the logged-in user.
- * returns: the preferred offset to UTC.
- */
-function get_display_offset($_user = false) {
+			function get_server_timezone() {
+			static $server_timezone;
 
-    // Cache preference from DB
-    $display_tz = "UTC";
+			if (!$server_timezone) {
+			$server_time = new Date();
 
-    // Default to UTCget_display_offset
-    $display_offset = 0;
+			$server_timezone = $server_time->tz->getID();
+			}
 
-    // Load pref from DB is cache is empty
-    if ($_user)
-	$display_tz = $this->get_display_timezone($_user);
+			return $server_timezone;
+			}
 
-    // Recompute offset each request in case DST kicked in
-    if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
-	$display_offset = intval($_COOKIE["tz_offset"]);
+# TODO rename get_site_timezone()
+			function get_display_timezone($user = false) {
+			    static $display_timezone = false;
 
-    return $display_offset;
-}
+			    if (!$display_timezone) {
+				$server_time = $this->get_server_timezone();
 
-/**
- * Retrieves a TikiDate object for converting to/from display/UTC timezones
- *
- * $user: the logged-in user
- * returns: reference to a TikiDate instance with the appropriate offsets
- */
-function &get_date_converter($_user = false) {
-    static $date_converter;
+				if ($user) {
+				    $display_timezone = $this->get_user_preference($user, 'display_timezone');
 
-    if (!$date_converter) {
-	$display_offset = $this->get_display_offset($_user);
+				    if (!$display_timezone || $display_timezone == 'default') {
+					$display_timezone = $this->get_preference('display_timezone', $server_time);
+				    }
+				} else {
+				    $display_timezone = $this->get_preference('display_timezone', $server_time);
+				}
+			    }
 
-	$date_converter = &new TikiDate($display_offset);
-    }
+			    return $display_timezone;
+			}
 
-    return $date_converter;
-}
+			/**
+			 * Retrieves the user's preferred offset for displaying dates.
+			 *
+			 * $user: the logged-in user.
+			 * returns: the preferred offset to UTC.
+			 */
+			function get_display_offset($_user = false) {
 
-function get_long_date_format() {
-    static $long_date_format = false;
+			    // Cache preference from DB
+			    $display_tz = "UTC";
 
-    if (!$long_date_format)
-	$long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
+			    // Default to UTCget_display_offset
+			    $display_offset = 0;
 
-    return $long_date_format;
-}
+			    // Load pref from DB is cache is empty
+			    if ($_user)
+				$display_tz = $this->get_display_timezone($_user);
 
-function get_short_date_format() {
-    static $short_date_format = false;
+			    // Recompute offset each request in case DST kicked in
+			    if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
+				$display_offset = intval($_COOKIE["tz_offset"]);
 
-    if (!$short_date_format)
-	$short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
+			    return $display_offset;
+			}
 
-    return $short_date_format;
-}
+			/**
+			 * Retrieves a TikiDate object for converting to/from display/UTC timezones
+			 *
+			 * $user: the logged-in user
+			 * returns: reference to a TikiDate instance with the appropriate offsets
+			 */
+			function &get_date_converter($_user = false) {
+			    static $date_converter;
 
-function get_long_time_format() {
-    static $long_time_format = false;
+			    if (!$date_converter) {
+				$display_offset = $this->get_display_offset($_user);
 
-    if (!$long_time_format)
-	$long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
+				$date_converter = &new TikiDate($display_offset);
+			    }
 
-    return $long_time_format;
-}
+			    return $date_converter;
+			}
 
-function get_short_time_format() {
-    static $short_time_format = false;
+			function get_long_date_format() {
+			    static $long_date_format = false;
 
-    if (!$short_time_format)
-	$short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
+			    if (!$long_date_format)
+				$long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
 
-    return $short_time_format;
-}
+			    return $long_date_format;
+			}
 
-function get_long_datetime_format() {
-    static $long_datetime_format = false;
+			function get_short_date_format() {
+			    static $short_date_format = false;
 
-    if (!$long_datetime_format)
-	$long_datetime_format = $this->get_long_date_format(). ' [' . $this->get_long_time_format(). ']';
+			    if (!$short_date_format)
+				$short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
 
-    return $long_datetime_format;
-}
+			    return $short_date_format;
+			}
 
-function get_short_datetime_format() {
-    static $short_datetime_format = false;
+			function get_long_time_format() {
+			    static $long_time_format = false;
 
-    if (!$short_datetime_format)
-	$short_datetime_format = $this->get_short_date_format(). ' [' . $this->get_short_time_format(). ']';
+			    if (!$long_time_format)
+				$long_time_format = $this->get_preference('long_time_format', '%H:%M:%S %Z');
 
-    return $short_datetime_format;
-}
+			    return $long_time_format;
+			}
 
-function server_time_to_site_time($timestamp, $user = false) {
-    $date = new Date($timestamp);
+			function get_short_time_format() {
+			    static $short_time_format = false;
 
-    $date->setTZbyID($this->get_server_timezone());
-    $date->convertTZbyID($this->get_display_timezone($user));
-    return $date->getTime();
-}
+			    if (!$short_time_format)
+				$short_time_format = $this->get_preference('short_time_format', '%H:%M %Z');
 
-/**
+			    return $short_time_format;
+			}
 
- */
-function get_site_date($timestamp, $user = false) {
-    static $localed = false;
+			function get_long_datetime_format() {
+			    static $long_datetime_format = false;
 
-    if (!$localed) {
-	$this->set_locale($user);
+			    if (!$long_datetime_format)
+				$long_datetime_format = $this->get_long_date_format(). ' [' . $this->get_long_time_format(). ']';
 
-	$localed = true;
-    }
+			    return $long_datetime_format;
+			}
 
-    $original_tz = date('T', $timestamp);
+			function get_short_datetime_format() {
+			    static $short_datetime_format = false;
 
-    $format = '%b %e, %Y';
-    $rv = strftime($format, $timestamp);
-    $rv .= " =timestamp\n";
-    $rv .= strftime('%Z', $timestamp);
-    $rv .= " =strftime('%Z')\n";
-    $rv .= date('T', $timestamp);
-    $rv .= " =date('T')\n";
+			    if (!$short_datetime_format)
+				$short_datetime_format = $this->get_short_date_format(). ' [' . $this->get_short_time_format(). ']';
 
-    $date = &new Date($timestamp);
+			    return $short_datetime_format;
+			}
+
+			function server_time_to_site_time($timestamp, $user = false) {
+			    $date = new Date($timestamp);
+
+			    $date->setTZbyID($this->get_server_timezone());
+			    $date->convertTZbyID($this->get_display_timezone($user));
+			    return $date->getTime();
+			}
+
+			/**
+
+			 */
+			function get_site_date($timestamp, $user = false) {
+			    static $localed = false;
+
+			    if (!$localed) {
+				$this->set_locale($user);
+
+				$localed = true;
+			    }
+
+			    $original_tz = date('T', $timestamp);
+
+			    $format = '%b %e, %Y';
+			    $rv = strftime($format, $timestamp);
+			    $rv .= " =timestamp\n";
+			    $rv .= strftime('%Z', $timestamp);
+			    $rv .= " =strftime('%Z')\n";
+			    $rv .= date('T', $timestamp);
+			    $rv .= " =date('T')\n";
+
+			    $date = &new Date($timestamp);
 
 # Calling new Date() changes the timezone of the $timestamp var!
 # so we only change the timezone to UTC if the original TZ wasn't UTC
 # to begin with.
 # This seems really buggy, but I don't have time to delve into right now.
-    $rv .= date('T', $timestamp);
-    $rv .= " =date('T')\n";
+			    $rv .= date('T', $timestamp);
+			    $rv .= " =date('T')\n";
 
-    $rv .= $date->format($format);
-    $rv .= " =new Date()\n";
+			    $rv .= $date->format($format);
+			    $rv .= " =new Date()\n";
 
-    $rv .= date('T', $timestamp);
-    $rv .= " =date('T')\n";
+			    $rv .= date('T', $timestamp);
+			    $rv .= " =date('T')\n";
 
-    if ($original_tz == 'UTC') {
-	$date->setTZbyID('UTC');
+			    if ($original_tz == 'UTC') {
+				$date->setTZbyID('UTC');
 
-	$rv .= $date->format($format);
-	$rv .= " =setTZbyID('UTC')\n";
-    }
+				$rv .= $date->format($format);
+				$rv .= " =setTZbyID('UTC')\n";
+			    }
 
-    $tz_id = $this->get_display_timezone($user);
+			    $tz_id = $this->get_display_timezone($user);
 
-    if ($date->tz->getID() != $tz_id) {
+			    if ($date->tz->getID() != $tz_id) {
 # let's convert to the displayed timezone
-	$date->convertTZbyID($tz_id);
+				$date->convertTZbyID($tz_id);
 
-	$rv .= $date->format($format);
-	$rv .= " =convertTZbyID($tz_id)\n";
-    }
+				$rv .= $date->format($format);
+				$rv .= " =convertTZbyID($tz_id)\n";
+			    }
 
 #return $rv;
 
 # if ($format == "%b %e, %Y")
 #   $format = $tikilib->get_short_date_format();
-    return $date;
-}
+			    return $date;
+			}
 
 # TODO rename to server_time_to_site_time()
-function get_site_time($timestamp, $user = false) {
+			function get_site_time($timestamp, $user = false) {
 #print "<pre>get_site_time()</pre>";
-    $date = $this->get_site_date($timestamp, $user);
+			    $date = $this->get_site_date($timestamp, $user);
 
-    return $date->getTime();
-}
+			    return $date->getTime();
+			}
 
-function date_format($format, $timestamp, $user = false) {
-    //$date = $this->get_site_date($timestamp, $user);
-    // JJ - ignore conversion - we have no idea what TZ they're using
+			function date_format($format, $timestamp, $user = false) {
+			    //$date = $this->get_site_date($timestamp, $user);
+			    // JJ - ignore conversion - we have no idea what TZ they're using
 
-    // strftime doesn't do translations correctly
-    // return strftime($format,$timestamp);
-    $date = new Date($timestamp);
+			    // strftime doesn't do translations correctly
+			    // return strftime($format,$timestamp);
+			    $date = new Date($timestamp);
 
-    return $date->format($format);
-}
+			    return $date->format($format);
+			}
 
-function get_long_date($timestamp, $user = false) {
-    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
-}
+			function get_long_date($timestamp, $user = false) {
+			    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
+			}
 
-function get_short_date($timestamp, $user = false) {
-    return $this->date_format($this->get_short_date_format(), $timestamp, $user);
-}
+			function get_short_date($timestamp, $user = false) {
+			    return $this->date_format($this->get_short_date_format(), $timestamp, $user);
+			}
 
-function get_long_time($timestamp, $user = false) {
-    return $this->date_format($this->get_long_time_format(), $timestamp, $user);
-}
+			function get_long_time($timestamp, $user = false) {
+			    return $this->date_format($this->get_long_time_format(), $timestamp, $user);
+			}
 
-function get_short_time($timestamp, $user = false) {
-    return $this->date_format($this->get_short_time_format(), $timestamp, $user);
-}
+			function get_short_time($timestamp, $user = false) {
+			    return $this->date_format($this->get_short_time_format(), $timestamp, $user);
+			}
 
-function get_long_datetime($timestamp, $user = false) {
-    return $this->date_format($this->get_long_datetime_format(), $timestamp, $user);
-}
+			function get_long_datetime($timestamp, $user = false) {
+			    return $this->date_format($this->get_long_datetime_format(), $timestamp, $user);
+			}
 
-function get_short_datetime($timestamp, $user = false) {
-    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
-}
+			function get_short_datetime($timestamp, $user = false) {
+			    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
+			}
 
-function get_site_timezone_shortname($user = false) {
-    // UTC, or blank for local
-    $dc = &$this->get_date_converter($user);
+			function get_site_timezone_shortname($user = false) {
+			    // UTC, or blank for local
+			    $dc = &$this->get_date_converter($user);
 
-    return $dc->getTzName();
-}
+			    return $dc->getTzName();
+			}
 
-function get_server_timezone_shortname($user = false) {
-    // Site time is always UTC, from the user's perspective.
-    return "UTC";
-}
+			function get_server_timezone_shortname($user = false) {
+			    // Site time is always UTC, from the user's perspective.
+			    return "UTC";
+			}
 
-/**
-  get_site_time_difference - Return the number of seconds needed to add to a
-  'system' time to return a 'site' time.
- */
-function get_site_time_difference($user = false) {
-    $dc = &$this->get_date_converter($user);
+			/**
+			  get_site_time_difference - Return the number of seconds needed to add to a
+			  'system' time to return a 'site' time.
+			 */
+			function get_site_time_difference($user = false) {
+			    $dc = &$this->get_date_converter($user);
 
-    $display_offset = $dc->display_offset;
-    $server_offset = $dc->server_offset;
-    return $display_offset - $server_offset;
-}
+			    $display_offset = $dc->display_offset;
+			    $server_offset = $dc->server_offset;
+			    return $display_offset - $server_offset;
+			}
 
-/**
-  Timezone saavy replacement for mktime()
- */
-function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-    global $user; # ugh!
+			/**
+			  Timezone saavy replacement for mktime()
+			 */
+			function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
+			    global $user; # ugh!
 
-	if ($year <= 69)
-	    $year += 2000;
+				if ($year <= 69)
+				    $year += 2000;
 
-    if ($year <= 99)
-	$year += 1900;
+			    if ($year <= 99)
+				$year += 1900;
 
-    $date = new Date();
-    $date->setHour($hour);
-    $date->setMinute($minute);
-    $date->setSecond($second);
-    $date->setMonth($month);
-    $date->setDay($day);
-    $date->setYear($year);
+			    $date = new Date();
+			    $date->setHour($hour);
+			    $date->setMinute($minute);
+			    $date->setSecond($second);
+			    $date->setMonth($month);
+			    $date->setDay($day);
+			    $date->setYear($year);
 
 #$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
 #print "<pre> make_time() start";
 #print_r($date);
-    if ($timezone_id)
-	$date->setTZbyID($timezone_id);
+			    if ($timezone_id)
+				$date->setTZbyID($timezone_id);
 
 #print_r($date);
 #$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
 #print $rv;
-    return $date->getTime();
-}
+			    return $date->getTime();
+			}
 
-/**
-  Timezone saavy replacement for mktime()
- */
-function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
-    global $user; # ugh!
+			/**
+			  Timezone saavy replacement for mktime()
+			 */
+			function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
+			    global $user; # ugh!
 
-	if ($year <= 69)
-	    $year += 2000;
+				if ($year <= 69)
+				    $year += 2000;
 
-    if ($year <= 99)
-	$year += 1900;
+			    if ($year <= 99)
+				$year += 1900;
 
-    $date = new Date();
-    $date->setHour($hour);
-    $date->setMinute($minute);
-    $date->setSecond($second);
-    $date->setMonth($month);
-    $date->setDay($day);
-    $date->setYear($year);
+			    $date = new Date();
+			    $date->setHour($hour);
+			    $date->setMinute($minute);
+			    $date->setSecond($second);
+			    $date->setMonth($month);
+			    $date->setDay($day);
+			    $date->setYear($year);
 
 #print "<pre> make_server_time() start\n";
 #print_r($date);
-    if ($timezone_id)
-	$date->setTZbyID($timezone_id);
+			    if ($timezone_id)
+				$date->setTZbyID($timezone_id);
 
 #print_r($date);
-    $date->convertTZbyID($this->get_server_timezone());
+			    $date->convertTZbyID($this->get_server_timezone());
 #print_r($date);
 #print "make_server_time() end\n</pre>";
-    return $date->getTime();
-}
+			    return $date->getTime();
+			}
 
-/**
-  Per http://www.w3.org/TR/NOTE-datetime
- */
-function get_iso8601_datetime($timestamp, $user = false) {
-    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
-}
+			/**
+			  Per http://www.w3.org/TR/NOTE-datetime
+			 */
+			function get_iso8601_datetime($timestamp, $user = false) {
+			    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
+			}
 
-    function get_rfc2822_datetime($timestamp = false, $user = false) {
-	if (!$timestamp)
-	    $timestamp = time();
+			function get_rfc2822_datetime($timestamp = false, $user = false) {
+			    if (!$timestamp)
+				$timestamp = time();
 
 # rfc2822 requires dates to be en formatted
-	$saved_locale = @setlocale(0);
-	@setlocale ('en_US');
+			    $saved_locale = @setlocale(0);
+			    @setlocale ('en_US');
 #was return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
-	$rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
+			    $rv = $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user). $this->get_rfc2822_timezone_offset($timestamp, $user);
 
 # switch back to the 'saved' locale
-	if ($saved_locale)
-	    @setlocale ($saved_locale);
+			    if ($saved_locale)
+				@setlocale ($saved_locale);
 
-	return $rv;
-    }
+			    return $rv;
+			}
 
-    function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
-	if ($time === false)
-	    $time = time();
+			function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
+			    if ($time === false)
+				$time = time();
 
-	$secs = $this->date_format('%Z', $time, $user);
+			    $secs = $this->date_format('%Z', $time, $user);
 
-	if ($secs < 0) {
-	    $sign = '-';
+			    if ($secs < 0) {
+				$sign = '-';
 
-	    $secs = -$secs;
-	} else {
-	    $sign = '+';
-	}
+				$secs = -$secs;
+			    } else {
+				$sign = '+';
+			    }
 
-	$colon = $no_colon ? '' : ':';
-	$mins = intval(($secs + 30) / 60);
+			    $colon = $no_colon ? '' : ':';
+			    $mins = intval(($secs + 30) / 60);
 
-	return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
-    }
+			    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
+			}
 
-function list_languages($path = false) {
-    $languages = array();
+			function list_languages($path = false) {
+			    $languages = array();
 
-    if (!$path)
-	$path = "lang";
+			    if (!$path)
+				$path = "lang";
 
-    if (!is_dir($path))
-	return array();
+			    if (!is_dir($path))
+				return array();
 
-    $h = opendir($path);
+			    $h = opendir($path);
 
-    while ($file = readdir($h)) {
-	if ($file != '.' && $file != '..' && is_dir("$path/$file") && strlen($file) == 2) {
-	    $languages[] = $file;
-	}
-    }
-
-    closedir ($h);
-
-    // Format and return the list
-    return $this->format_language_list($languages);
-}
-
-// Returns a list of languages formatted as a twodimensionel array
-// with 'value' being the language code and 'name' being the name of
-// the language.
-function format_language_list($languages) {
-
-    // Comparison function used to sort languages by their name in the
-    // current locale.
-    function formatted_language_compare($a, $b) {
-	return strcmp($a['name'], $b['name']);
-    }
-
-    // The list of available languages so far with both English and
-    // translated names.
-    $mapping = array(
-	    'cs' => array(
-		'Czech',
-		tra("Czech")
-		),
-	    'da' => array(
-		'Danish',
-		tra("Danish")
-		),
-	    'de' => array(
-		'German',
-		tra("German")
-		),
-	    'en' => array(
-		'English',
-		tra("English")
-		),
-	    'es' => array(
-		'Spanish',
-		tra("Spanish")
-		),
-	    'el' => array(
-		'Greek',
-		tra("Greek")
-		),
-	    'fr' => array(
-		    'French',
-		    tra("French")
-		    ),
-	    'it' => array(
-		    'Italian',
-		    tra("Italian")
-		    ),
-	    'ja' => array(
-		    'Japanese',
-		    tra("Japanese")
-		    ),
-	    'nl' => array(
-		    'Dutch',
-		    tra("Dutch")
-		    ),
-	    'no' => array(
-		    'Norwegian',
-		    tra("Norwegian")
-		    ),
-	    'pl' => array(
-		    'Polish',
-		    tra("Polish")
-		    ),
-	    'ru' => array(
-		    'Russian',
-		    tra("Russian")
-		    ),
-	    'es' => array(
-		    'Spanish',
-		    tra("Spanish")
-		    ),
-	    'sv' => array(
-		    'Swedish',
-		    tra("Swedish")
-		    ),
-	    'tw' => array(
-		    'Twi',
-		    tra("Twi")
-		    ),
-	    'zh' => array(
-		    'Chinese',
-		    tra("Chinese")
-		    )
-		);
-
-	    $formatted = array();
-
-	    // run through all the language codes:
-	    foreach ($languages as $lc) {
-		if (isset($mapping[$lc])) {
-		    // known language
-		    if ($mapping[$lc][0] == $mapping[$lc][1]) {
-			// Skip repeated text, 'English (English, en)' looks silly.
-			$formatted[] = array(
-				'value' => $lc,
-				'name' => $mapping[$lc][0] . " ($lc)"
-				);
-		    } else {
-			$formatted[] = array(
-				'value' => $lc,
-				'name' => $mapping[$lc][1] . ' (' . $mapping[$lc][0] . ', ' . $lc . ')'
-				    );
+			    while ($file = readdir($h)) {
+				if ($file != '.' && $file != '..' && is_dir("$path/$file") && strlen($file) == 2) {
+				    $languages[] = $file;
 				}
-				} else {
-				// unknown language
-				$formatted[] = array(
-				    'value' => $lc,
-				    'name' => tra("Unknown language"). " ($lc)"
-				    );
-				}
-				}
+			    }
 
-				// Sort the languages by their name in the current locale
-				usort($formatted, 'formatted_language_compare');
-				return $formatted;
-				}
+			    closedir ($h);
 
-				function get_language($user = false) {
-				static $language = false;
+			    // Format and return the list
+			    return $this->format_language_list($languages);
+			}
 
-				if (!$language) {
-				    if ($user) {
-					$language = $this->get_user_preference($user, 'language', 'en');
+			// Returns a list of languages formatted as a twodimensionel array
+			// with 'value' being the language code and 'name' being the name of
+			// the language.
+			function format_language_list($languages) {
 
-					if (!$language || $language == 'default')
-					    $language = $this->get_preference('language', 'en');
-				    } else
-					$language = $this->get_preference('language', 'en');
-				}
+			    // Comparison function used to sort languages by their name in the
+			    // current locale.
+			    function formatted_language_compare($a, $b) {
+				return strcmp($a['name'], $b['name']);
+			    }
 
-				return $language;
-				}
+			    // The list of available languages so far with both English and
+			    // translated names.
+			    $mapping = array(
+				    'cs' => array(
+					'Czech',
+					tra("Czech")
+					),
+				    'da' => array(
+					'Danish',
+					tra("Danish")
+					),
+				    'de' => array(
+					'German',
+					tra("German")
+					),
+				    'en' => array(
+					'English',
+					tra("English")
+					),
+				    'es' => array(
+					'Spanish',
+					tra("Spanish")
+					),
+				    'el' => array(
+					'Greek',
+					tra("Greek")
+					),
+				    'fr' => array(
+					    'French',
+					    tra("French")
+					    ),
+				    'it' => array(
+					    'Italian',
+					    tra("Italian")
+					    ),
+				    'ja' => array(
+					    'Japanese',
+					    tra("Japanese")
+					    ),
+				    'nl' => array(
+					    'Dutch',
+					    tra("Dutch")
+					    ),
+				    'no' => array(
+					    'Norwegian',
+					    tra("Norwegian")
+					    ),
+				    'pl' => array(
+					    'Polish',
+					    tra("Polish")
+					    ),
+				    'ru' => array(
+					    'Russian',
+					    tra("Russian")
+					    ),
+				    'es' => array(
+					    'Spanish',
+					    tra("Spanish")
+					    ),
+				    'sv' => array(
+					    'Swedish',
+					    tra("Swedish")
+					    ),
+				    'tw' => array(
+					    'Twi',
+					    tra("Twi")
+					    ),
+				    'zh' => array(
+					    'Chinese',
+					    tra("Chinese")
+					    )
+					);
 
-function get_locale($user = false) {
+				    $formatted = array();
+
+				    // run through all the language codes:
+				    foreach ($languages as $lc) {
+					if (isset($mapping[$lc])) {
+					    // known language
+					    if ($mapping[$lc][0] == $mapping[$lc][1]) {
+						// Skip repeated text, 'English (English, en)' looks silly.
+						$formatted[] = array(
+							'value' => $lc,
+							'name' => $mapping[$lc][0] . " ($lc)"
+							);
+					    } else {
+						$formatted[] = array(
+							'value' => $lc,
+							'name' => $mapping[$lc][1] . ' (' . $mapping[$lc][0] . ', ' . $lc . ')'
+							    );
+							}
+							} else {
+							// unknown language
+							$formatted[] = array(
+							    'value' => $lc,
+							    'name' => tra("Unknown language"). " ($lc)"
+							    );
+							}
+							}
+
+							// Sort the languages by their name in the current locale
+							usort($formatted, 'formatted_language_compare');
+							return $formatted;
+							}
+
+							function get_language($user = false) {
+							static $language = false;
+
+							if (!$language) {
+							    if ($user) {
+								$language = $this->get_user_preference($user, 'language', 'en');
+
+								if (!$language || $language == 'default')
+								    $language = $this->get_preference('language', 'en');
+							    } else
+								$language = $this->get_preference('language', 'en');
+							}
+
+							return $language;
+							}
+
+							function get_locale($user = false) {
 # TODO move to admin preferences screen
-    static $locales = array(
-	    'de' => 'de_DE',
-	    'dk' => 'da_DK',
-	    'en' => 'en_US',
-	    'fr' => 'fr_FR',
-	    'he' => 'he_IL', # hebrew
-	    'it' => 'it_IT', # italian
-	    'pl' => 'pl_PL', # polish
-	    'po' => 'po',
-	    'ru' => 'ru_RU',
-	    'sp' => 'es_ES',
-	    'sw' => 'sw_SW', # swahili
-	    'tw' => 'tw_TW',
-	    );
+							    static $locales = array(
+								    'de' => 'de_DE',
+								    'dk' => 'da_DK',
+								    'en' => 'en_US',
+								    'fr' => 'fr_FR',
+								    'he' => 'he_IL', # hebrew
+								    'it' => 'it_IT', # italian
+								    'pl' => 'pl_PL', # polish
+								    'po' => 'po',
+								    'ru' => 'ru_RU',
+								    'sp' => 'es_ES',
+								    'sw' => 'sw_SW', # swahili
+								    'tw' => 'tw_TW',
+								    );
 
-    if (!isset($locale) or !$locale) {
-	if (isset($locales[$this->get_language($user)]))
-	    $locale = $locales[$this->get_language($user)];
+							    if (!isset($locale) or !$locale) {
+								if (isset($locales[$this->get_language($user)]))
+								    $locale = $locales[$this->get_language($user)];
 #print "<pre>get_locale(): locale=$locale\n</pre>";
-    }
+							    }
 
-    return $locale;
-}
+							    return $locale;
+							}
 
-function set_locale($user = false) {
-    static $locale = false;
+							function set_locale($user = false) {
+							    static $locale = false;
 
-    if (!$locale) {
+							    if (!$locale) {
 # breaks the RFC 2822 code
-	$locale = @setlocale(LC_TIME, $this->get_locale($user));
+								$locale = @setlocale(LC_TIME, $this->get_locale($user));
 #print "<pre>set_locale(): locale=$locale\n</pre>";
-    }
+							    }
 
-    return $locale;
-}
+							    return $locale;
+							}
 } //end of class
 
 function compare_links($ar1, $ar2) {
