@@ -743,6 +743,7 @@ function get_included_groups($group) {
     }
 
     function remove_user($user) {
+		global $cachelib;
 	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
 	$query = "delete from `users_users` where `login` = ?";
@@ -750,10 +751,12 @@ function get_included_groups($group) {
 	$query = "delete from `users_usergroups` where `userId`=?";
 	$result = $this->query($query, array( $userId ) );
 
+	$cachelib->invalidate('userslist');
 	return true;
     }
 
 	function change_login($from,$to) {
+		global $cachelib;
 		$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($from));
 		if ($userId) {
 			$this->query("update `users_users` set `login`=? where `userId` = ?", array($to,(int)$userId));
@@ -838,7 +841,8 @@ function get_included_groups($group) {
 			$this->query("update `galaxia_instances` set `nextUser`=? where `nextUser`=?", array($to,$from));
 			$this->query("update `galaxia_instance_comments` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `galaxia_instance_acivities` set `user`=? where `user`=?", array($to,$from));
-			
+
+			$cachelib->invalidate('userslist');
 			return true;
 		} else {
 			return false;
@@ -1202,7 +1206,7 @@ function get_included_groups($group) {
     }
 
     function confirm_user($user) {
-	global $feature_clear_passwords;
+	global $feature_clear_passwords,$cachelib;
 
 	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
@@ -1222,12 +1226,11 @@ function get_included_groups($group) {
 		    '',
 		    $user
 		    ));
+			$cachelib->invalidate('userslist');
     }
 
     function add_user($user, $pass, $email, $provpass = '') {
-	global $pass_due, $tikilib;
-
-
+	global $pass_due, $tikilib, $cachelib;
 	global $feature_clear_passwords;
 	// Generate a unique hash; this is also done below in set_user_fields()
 	//$hash = md5($user . $pass . $email);
@@ -1267,6 +1270,7 @@ function get_included_groups($group) {
 	    $this->assign_user_to_group($user, $user);
 	}
 
+			$cachelib->invalidate('userslist');
 	return true;
     }
 
