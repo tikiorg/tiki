@@ -1,4 +1,20 @@
-<a class="pagetitle" href="tiki-live_support_admin.php">{tr}Live support system{/tr}</a>
+<a class="pagetitle" href="tiki-live_support_admin.php">
+{tr}Live support system{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=LiveSupport" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Live Support{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin live support tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+
 <br /><br />
 [ <a class="link" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a> |
 <a class="link" {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a> |
