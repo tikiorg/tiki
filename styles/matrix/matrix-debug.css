@@ -1,11 +1,11 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.7 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.8 2003-08-09 23:20:04 zaufi Exp $
  *
  * Debug console used styles.
  *
  */
 
-div#debugconsole {
+div.debugconsole {
 	position: absolute;
 	background-color: #002000;
 	color: #00A000;
@@ -124,7 +124,7 @@ span.dbgerror:hover {
 }
 
 /* make all text fields full sized */
-div#debugconsole * input[type = text] {
+div.debugconsole * input[type = text] {
 	width: 99%;
 	font: normal 12px courier, Fixed, monospace;
 }
