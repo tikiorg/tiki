@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.42 2004-08-16 02:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.43 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-modules.php")!=FALSE) {
 
 include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
+global $modseparateanon;
+global $language;
 
 clearstatcache();
 $now = date("U");
@@ -54,8 +56,12 @@ $these_modules =& $$these_modules_name;
 $temp_max = count($these_modules);
 for ($i = 0; $i < $temp_max; $i++) {
 	$r = &$these_modules[$i];
+	parse_str($r["params"], $module_params);
 	$pass = 'y';
-	if ($modallgroups != 'y') {
+	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
+		$pass="n";
+	}
+	elseif ($modallgroups != 'y') {
 		if ($r["groups"]) {
 			$module_groups = unserialize($r["groups"]);
 		} else {
@@ -98,7 +104,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$r["rows"] = 10;
 		}
 		$module_rows = $r["rows"];
-		parse_str($r["params"], $module_params);
 		$smarty->assign_by_ref('module_rows',$r["rows"]);
 		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $r["cache_time"])) {
 			$r["data"] = '';

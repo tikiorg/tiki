@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.18 2004-07-15 22:21:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.19 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,7 @@ if ($_REQUEST["questionId"]) {
 // $smarty->assign('answer',$info["answer"]);      AWC moved this
 if (isset($_REQUEST["remove"])) {
   $area = 'delfaqquestion';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$faqlib->remove_faq_question($_REQUEST["remove"]);
   } else {
@@ -148,7 +148,7 @@ $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '', $_REQU
 $smarty->assign_by_ref('suggested', $suggested["data"]);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 ask_ticket('faq-questions');
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.27 2004-08-26 19:23:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.28 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -242,6 +242,10 @@ if (isset($_REQUEST["loginprefs"])) {
 	$b = (isset($_REQUEST['feature_ticketlib2']) && $_REQUEST['feature_ticketlib2'] == 'on') ? 'y' : 'n';
 	$tikilib->set_preference('feature_ticketlib2', $b);
 	$smarty->assign('feature_ticketlib2', $b);
+
+	$v = isset($_REQUEST['highlight_group']) ? $_REQUEST['highlight_group'] : '';
+	$tikilib->set_preference('highlight_group', $v);
+	$smarty->assign('highlight_group', $v);
 }
 
 if (isset($_REQUEST["auth_pear"])) {
@@ -595,5 +599,8 @@ $smarty->assign("registerPasscode", $tikilib->get_preference("registerPasscode",
 $smarty->assign("validateUsers", $tikilib->get_preference("validateUsers", 'n'));
 $smarty->assign("validateEmail", $tikilib->get_preference("validateEmail", 'n'));
 $smarty->assign("forgotPass", $tikilib->get_preference("forgotPass", 'n'));
+$smarty->assign("highlight_group", $tikilib->get_preference("highlight_group", ''));
+$smarty->assign("listgroups", $listgroups = $userlib->list_all_groups());
+
 ask_ticket('admin-inc-login');
 ?>

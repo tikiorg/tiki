@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.71 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.72 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -488,7 +488,7 @@ if ($user) {
 if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
 		$area = 'deltrackercomment';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
 		} else {
@@ -529,7 +529,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
 			$area = 'deltrackerattach';
-			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 				key_check($area);
 				$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 			} else {

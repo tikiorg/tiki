@@ -48,7 +48,7 @@ class StructLib extends TikiLib {
 		foreach ( $structure_tree as $node ) {
 			//This special case indicates head of structure
 			if ($node["first"] and $node["last"]) {
-				print ("Use this tree to copy the structure: " . $node['pageName'] . "\n\n");
+				print (tra("Use this tree to copy the structure").": " . $node['pageName'] . "\n\n");
 			}
 			elseif ($node["first"] or !$node["last"]) {
 				if ($node["first"] and !$first) {

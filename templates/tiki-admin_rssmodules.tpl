@@ -25,7 +25,7 @@
 {/if}
 <ul>
 {section name=ix loop=$items}
-<li><a href="{$items[ix].link}" class="link">{$items[ix].title}</a>{if $items[ix].pubDate ne ""}<br><span class="rssdate">({$items[ix].pubDate})</span>{/if}</li>
+<li><a href="{$items[ix].link}" class="link">{$items[ix].title}</a>{if $items[ix].pubDate ne ""}<br /><span class="rssdate">({$items[ix].pubDate})</span>{/if}</li>
 {/section}
 </ul>
 </div>

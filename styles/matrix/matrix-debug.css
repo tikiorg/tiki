@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.9 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-debug.css,v 1.10 2004-09-08 19:53:00 mose Exp $
  *
  * Debug console used styles.
  *
@@ -43,19 +43,20 @@ div.debugconsole table#log,
 div.debugconsole table#sqltable,
 div.debugconsole table#permissions {
     color: #00A000;
-    border: 1px solid #00B000;
     border-left: none;
     border-right: none;
     background: none;
     border-collapse: collapse;
     border-spacing: 0px;
+    border-bottom: 1px solid #00B000;
+    border-top: 1px solid #00B000;
 }
 
 /*
  * Table elements in debugger console
  */
 div.debugconsole td.heading {
-    border: 1px solid #00B000;
+    border-bottom: 1px solid #00B000;
     border-left: none;
     border-right: none;
     border-top: none;
@@ -73,7 +74,6 @@ div.debugconsole td.odd {
     border-bottom: none;
     background-image: none;
     background-color: #002000;
-    background: none;
     color: #00A000;
     vertical-align: top;
 }
@@ -98,29 +98,34 @@ div.debugconsole table#sqltable td + td {
 /* State of permission/feature in table */
 span.on-option {
     color: #00C000;
+	 background-color: transparent;
 }
 
 span.off-option {
     color: #005000;
+	 background-color: transparent;
 }
 
 span.on-option:hover {
     color: #00F000;
+	 background-color: transparent;
 }
 
 span.off-option:hover {
     color: #008000;
+	 background-color: transparent;
 }
 
 /* Debugger error massage */
 span.dbgerror {
     color: red;
+	 background-color: transparent;
     display: block;
 }
 
 span.dbgerror:hover {
     color: black;
-    background: #A00000;
+    background-color: #A00000;
 }
 
 /* make all text fields full sized */

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.36 2004-07-15 22:55:16 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.37 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,7 +58,7 @@ $smarty->assign_by_ref('blog_data', $blog_data);
 
 if (isset($_REQUEST['remove_image'])) {
   $area = 'delblogpostimage';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$bloglib->remove_post_image($_REQUEST['remove_image']);
   } else {
@@ -88,7 +88,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 	if (empty($data["data"]))
 		$data["data"] = '';
 
-	$smarty->assign('data', $data["data"]);
+	$smarty->assign('data', htmldecode( $data["data"] ) );
 	$smarty->assign('title', $data["title"]);
 	$smarty->assign('trackbacks_to', $data["trackbacks_to"]);
 	$smarty->assign('created', $data["created"]);
@@ -119,14 +119,37 @@ if ($postId) {
 
 $smarty->assign('preview', 'n');
 
-if (isset($_REQUEST["preview"])) {
-	$data = $_REQUEST["data"];
+if ($tiki_p_admin != 'y') {
+    if ($tiki_p_use_HTML != 'y') {
+	$_REQUEST["allowhtml"] = 'off';
+    }
+}
 
-	$parsed_data = $tikilib->parse_data($_REQUEST["data"]);
+if(isset($_REQUEST["data"])) {
+
+    if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
+		and isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on")) {
+	$edit_data = $_REQUEST["data"];  
+    } else {
+	$edit_data = htmlspecialchars($_REQUEST["data"]);
+    }
+
+
+} else {
+    if (isset($data["data"])) {
+	$edit_data = $data["data"];
+    } else {
+	$edit_data = '';
+    }
+}
+
+if (isset($_REQUEST["preview"])) {
+	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
+	$parsed_data = $tikilib->parse_data($parsed_data);
 
 	if ($blog_spellcheck == 'y') {
 		if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-			$parsed_data = $tikilib->spellcheckreplace($data, $parsed_data, $language, 'blogedit');
+			$parsed_data = $tikilib->spellcheckreplace($edit_data, $parsed_data, $language, 'blogedit');
 
 			$smarty->assign('spellcheck', 'y');
 		} else {
@@ -134,10 +157,8 @@ if (isset($_REQUEST["preview"])) {
 		}
 	}
 
-	if (empty($data))
-		$data = '';
+	$smarty->assign('data', htmldecode( $edit_data ) );
 
-	$smarty->assign('data', $data);
 	if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
 	        $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
 	} else {
@@ -213,13 +234,13 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 		}
 	}
 
-	$_REQUEST["data"] = $imagegallib->capture_images($_REQUEST["data"]);
+	$edit_data = $imagegallib->capture_images($edit_data);
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 
 	if ($_REQUEST["postId"] > 0) {
-		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $_REQUEST["data"], $user, $title, $_REQUEST['trackback']);
+		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
 	} else {
-		$postid = $bloglib->blog_post($_REQUEST["blogId"], $_REQUEST["data"], $user, $title, $_REQUEST['trackback']);
+		$postid = $bloglib->blog_post($_REQUEST["blogId"], $edit_data, $user, $title, $_REQUEST['trackback']);
 
 		$smarty->assign('postId', $postid);
 	}
@@ -230,13 +251,11 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 		die;
 	}
 
-	$data = $_REQUEST["data"];
-	$parsed_data = $tikilib->parse_data($_REQUEST["data"]);
+	$parsed_data = $tikilib->apply_postedit_handlers($edit_data);
+	$parsed_data = $tikilib->parse_data($parsed_data);
 
-	if (empty($data))
-		$data = '';
+	$smarty->assign('data', htmldecode( $edit_data ) );
 
-	$smarty->assign('data', $data);
         if (isset($_REQUEST["blogpriv"]) && $_REQUEST["blogpriv"] == 'on') {
                 $smarty->assign('blogpriv', 'y');  // remember priv setting whilst in preview mode
         } else {
@@ -271,6 +290,12 @@ $sameurl_elements = array(
 	'postId'
 );
 
+function htmldecode($string) {
+   $string = strtr($string, array_flip(get_html_translation_table(HTML_ENTITIES)));
+   $string = preg_replace("/&#([0-9]+);/me", "chr('\\1')", $string);
+   return $string;
+}
+
 $smarty->assign_by_ref('blogs', $blogs);
 $section = 'blogs';
 include_once ('tiki-section_options.php');
@@ -278,7 +303,7 @@ include_once ('tiki-section_options.php');
 include_once("textareasize.php");
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 ask_ticket('blog');
 // Display the Index Template

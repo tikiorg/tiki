@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.27 2004-08-11 18:55:39 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.28 2004-09-08 19:52:59 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -191,6 +191,7 @@ div.box-title table {
 .wikitext {
  background-color: #ffffff;
 }
+.wikitopline table { width: 100%; }
 .wiki-edithelp {
  display: none;
 }
@@ -360,3 +361,39 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+

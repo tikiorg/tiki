@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.8 2004-08-12 22:31:26 teedog Exp $
-# written and maintained by mose@feu.org
-
+# $Id: tikirelease.sh,v 1.9 2004-09-08 19:51:55 mose Exp $
+# written and maintained by mose@tikiwiki.org
+#
 # HOWTO release TikiWiki ?
 # --------------------------
 # 
@@ -9,35 +9,37 @@
 #    identity and settings (note that the script could be used on other projects)
 #
 # 1/ Create and test pre-release packages by executing the script with the release
-#    version as argument, using the format major.minor.sub (ex. ./tikirelease.sh 1.7.3)
+#    version as argument, using the format major.minor.sub 
+#    ./tikirelease.sh 1.9.preRC3
 #
-# 2/ After testing, tag the release with instructions on http://tikiwiki.org/TikiCvsTags
-#    for example : cvs tag REL-1-7-3
-#    
-# 3/ Uncomment the second "RELTAG=" line and the "grep -rl" line as instructed below
-#
-# 4/ Execute the script with the release version as argument, using the format
-#    major.minor.sub (like in 1.7.3)
-#    
-# 5/ Test the produced tarball and share the testing with friends if possible
+# 2/ Test the produced tarball and share the testing : you need at least 3 install 
+#    from 3 different people
 # 
-# 6/ When the tarball is validated you can copy-paste the produced line to upload
+# 3/ After testing, tag the release with instructions on http://tikiwiki.org/TikiCvsTags
+#    cvs -d:ext:mose@cvs.sf.net:/cvsroot/tikiwiki rtag -r BRANCH-1-9 REL-1-9-RC3 fulltiki
+#    
+# 4/ Uncomment the second "RELTAG=" line and the "grep -rl" line as instructed below
+#
+# 5/ Execute the script with the release version as argument, using the format
+#    major.minor.sub (like in 1.9.RC3)
+#    
+# 6/ When the tarball is tested once you can copy-paste the produced line to upload
 #    both .gz and .bz2 to sourceforge
 #    
 # 7/ If you are release technician on sourceforge, add the files to the repository 
 #    in admin sf section. If you are not, ask a release technician to do it 
 # 
-# 8/ Warn people that do .zip, .7z, .rpm that the archive is avalaible so they can
+# 8/ Warn people that do .rpm and ebuilds that the archive is avalaible so they can
 #    complete the packaging process with new files. If you don't know who does that,
 #    warn everybody.
 #
-# 9/ unless in step 6/ you warned everybody you have now to announce the good news
+# 9/ unless in step 8/ you warned everybody you have now to announce the good news
 #    on devel mailing-list and ask marc to launch the announce-speading process 
 #    (manually for now).
 #
 #
-# All that process has to be relayed on live irc channel : irc.freenode.net #tikiwiki
-#
+# All that process has to be relayed on live irc channel : 
+# irc://irc.freenode.net/#tikiwiki
 #
 # ############################################################
 # start of configuration
@@ -49,14 +51,14 @@ MODULE="tikiwiki"
 
 # when creating pre-release packages, change RELTAG to the correct branch
 # comment this line when ready to release (step 3)
-RELTAG="BRANCH-1-8"
+RELTAG="BRANCH-1-9"
 
 # end of configuration
 # ############################################################
 
 if [ -z $1 ]; then
 echo "Usage: tikirelease.sh <release-tag>"
-	echo "  separated by dots like in 1.7.3"
+	echo "  separated by dots like in 1.9.RC3"
 	exit 0
 fi
 
@@ -76,7 +78,6 @@ fi
 mkdir $VER
 cd $VER
 cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER -r $RELTAG $MODULE
-#cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER $MODULE
 find $MODULE-$VER -name CVS -type d | xargs -- rm -rf
 find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name Thumbs.db -exec rm -f {} \;
@@ -93,8 +94,10 @@ rm -rf $MODULE-$VER/SPIDERCORE
 rm -rf $MODULE-$VER/Smarty
 rm -rf $MODULE-$VER/templates_c/%*
 
-#uncomment for real release: remove all instances of "(CVS)" in templates
-#grep -rl ' (CVS) ' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\) / /"
+# uncomment for real release: remove all instances of "(CVS)" in templates
+# grep -rl ' (CVS)' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\)//"
+# or that one for the pre-release test tarball
+# grep -rl ' (CVS)' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\)/ (pre-release)/"
 chmod 775 $MODULE-$VER/setup.sh
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.17 2004-08-11 18:55:36 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.18 2004-09-08 19:52:58 mose Exp $
  *
  * My first TIKI theme :)
  *
@@ -21,7 +21,7 @@
 .catlists {
   border-top: 1px solid #ffffff;
   padding: 1px 6px 1px 6px;
-  background-color: none;
+  background-color: transparent;
   color: #666666;
 } 
 .catlists:last-child {
@@ -32,16 +32,19 @@
 }
 .cattitle {
   color: #000000; 
+  background-color: transparent;
   font-weight: bold;
 }
 .catlists a.link {
   color: #666666; 
+  background-color: transparent;
   padding: 0px 4px 0px 4px;
   border: 1px solid #aaaaaa;
   -moz-border-radius: 6px;
 }
 .catlists a.link:hover {
   color: #000000;
+  background-color: transparent;
 } 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
@@ -170,7 +173,7 @@ div#loadstats {
 	-moz-border-radius : 5px 5px 0 0; 
 	border-bottom : 0; 
 	color: #666666;
-	font-weight: 700 !important;
+	font-weight: bold !important;
 	padding: 1px 5px 1px 5px;
 }
 .tabmark a:active {
@@ -199,13 +202,13 @@ div#loadstats {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
   padding: 1px;
   margin: 2px;
-  vertcal-align: middle;
+  vertical-align: middle;
 }
 
 /**** coloration for c o d e plugin *****/
@@ -270,3 +273,5 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+
+.wikitopline table{ width: 100%; }

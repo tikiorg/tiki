@@ -1,4 +1,12 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+
 /*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
@@ -22,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @package 
  * @author diogene
  * @copyright Copyright (c) 2004
- * @version $Id: HTTPHeader.php,v 1.1 2004-06-12 16:19:26 lphuberdeau Exp $
+ * @version $Id: HTTPHeader.php,v 1.2 2004-09-08 19:52:36 mose Exp $
  * @access public
  **/
 class HTTPHeader {

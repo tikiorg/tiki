@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.15 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_servers.php,v 1.16 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,7 +35,7 @@ if (!isset($_REQUEST["serverId"]))
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delnewsserver';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$newslib->remove_server($user, $_REQUEST['remove']);
   } else {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.10 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.11 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,7 @@ if ($feature_user_watches != 'y') {
 
 if (isset($_REQUEST['hash'])) {
   $area = 'deluserwatch';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$tikilib->remove_user_watch_by_hash($_REQUEST['hash']);
   } else {
@@ -33,7 +33,7 @@ if (isset($_REQUEST['hash'])) {
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
   $area = 'delwatches';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 	foreach (array_keys($_REQUEST["watch"])as $item) {
 		$tikilib->remove_user_watch_by_hash($item);

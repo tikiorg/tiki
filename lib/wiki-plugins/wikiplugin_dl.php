@@ -7,7 +7,8 @@ function wikiplugin_dl($data, $params) {
 	global $tikilib;
 
 	global $replacement;
-	extract ($params);
+	if (isset($param))
+		extract ($params);
 	$result = '<dl>';
 	$lines = split("\n", $data);
 

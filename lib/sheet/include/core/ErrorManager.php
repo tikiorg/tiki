@@ -1,4 +1,12 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+
 /*
 --Licence et conditions d'utilisations--
 -Français-
@@ -34,7 +42,7 @@ $incErrorManager = true;
  * @package 
  * @author Diogene
  * @copyright Copyright (c) 2003
- * @version $Id: ErrorManager.php,v 1.1 2004-06-12 16:19:25 lphuberdeau Exp $
+ * @version $Id: ErrorManager.php,v 1.2 2004-09-08 19:52:33 mose Exp $
  * @access public
  **/
 class ErrorManager extends Object {

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.13 2004-01-31 14:10:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.14 2004-09-08 19:53:00 mose Exp $
  *
  * General HTML redefinitions
  * There is no Tiki related things -- just pure HTML redefinitions
@@ -28,44 +28,55 @@ body {
     margin-left: 0px;
     margin-bottom: 0px;
     margin-right: 0px;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+td {
+    color: #00B000;
+    background-color: transparent;
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 11px;
 }
 
 a, a:visited, a.link, a.link:visited, :link, :link:visited {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 a:visited:hover, a:hover, a.link:visited:hover, a.link:hover, :link:visited:hover, :link:hover {
     color: #00F000;
+	 background-color: transparent;
     text-decoration: underline;
 }
 
 a.link:active, a:active, :link:active {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 hr {
     color: #00A000;
+	 background-color: transparent;
     border: 1px outset green;
 }
 
 h1 {
-    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: 30px;
     text-transform: uppercase;
 }
 
 h2 {
-    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-variant: small-caps;
     font-size: 25px;
 }
 
 h3 {
-    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-variant: small-caps;
     font-size: 20px;
 }
@@ -86,7 +97,7 @@ form {
 input, textarea, select {
     color: #001000;
     background: #D8DFC8;
-    font: normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+    font: normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
 div#leftcolumn * input,
@@ -104,7 +115,7 @@ span.warn {
 
 /* Code fragments */
 pre, code {
-    font: normal 12px courier, Fixed;
+    font: normal 12px courier, Fixed, monospace;
 }
 
 pre {

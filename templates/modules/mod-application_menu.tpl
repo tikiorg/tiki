@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.109 2004-08-26 19:24:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.110 2004-09-08 19:53:07 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -42,7 +42,7 @@
 	{if $feature_userPreferences eq 'y'}
 			&nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a><br />
 	{/if}
-  {if $feature_userPreferences eq 'y'}
+  {if $feature_userPreferences eq 'y' || $user eq 'admin'}
       &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />  
   {/if}
   {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}

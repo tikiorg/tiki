@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.163 2004-08-23 22:28:11 redflo Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.164 2004-09-08 19:51:49 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -22,6 +22,63 @@ Version 1.10
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
+- (rc3) ---------------------------------------------------------------------
+* [NEW] changes in score and friendship new feature
+* [NEW] new wikiplugin Versions mandatory for building up the doc 
+* [NEW] new wikiplugin SHOWPAGES 
+* [NEW] new wikiplugin Snarf for including a web page 
+* [NEW] Default charset for sending mail 
+* [MOD] Code Wiki Plugin : added caption param 
+* [MOD] Calendar last modif events modules ModuleLastModifEvents 
+* [MOD] RSSModules admin displays size of cached rss data 
+* [MOD] RSSModules admin "display feed title" is complete and working now 
+* [MOD] RSSModules publish date is shown in preview, too 
+* [MOD] Redesign of the forum styles 'threaded', 'plain' and 'headers only' 
+* [MOD] New usermap feature to add users on tikimap 
+* [MOD] tiki-install can be deactivated automatically by adding location and die;
+* [MOD] Multiple users can be removed at the same time 
+* [MOD] Multiple users can be assigned to and removed from multiple groups at the same time
+* [MOD] Default group of multiple users can be set at the same time
+* [MOD] Removed some unprofessional wording from admin gallerys screen. 
+* [MOD] image libraries are detected or not, removed the use at your own risk warnings.
+* [FIX] Submit and article via tiki-edit_submission.php and expiry date is 
+  one year from now. (OK). Then, edit this same article with tiki-edit_article.php 
+  and the expiry date become today. (so the article disappears). 
+* [FIX] Wiki page edit warning is not reset after user saves page
+* [FIX] Cancel edit no longer functioned 
+* [FIX] score_event caused error when anonymous viewed scored features 
+* [FIX] Live Support Fixed live support JS file 
+* [FIX] Live Support Fixed live support chat request window 
+* [FIX] Live Support Fixed bugs in LS transcripts 
+* [FIX] Live Support Fixed bugs in transcript display 
+* [FIX] categories : fixed display bug in tree on admin page 
+* [FIX] who_is_there module no longer showed idle time and not xhtml compliant 
+* [FIX] bug #986208external link: the wiki undo function was broken 
+* [FIX] All newer modules/ code now has path disclosure protection 
+* [FIX] tiki tabs - now IE friendly 
+* [FIX] calendar/jscalendar - sits better in middle column 
+* [FIX] maps upload dir navigation fixed 
+* [FIX] maps display fixed 
+* [FIX] CODE plugin no longer spews errors when no caption is defined 
+* [FIX] CookieMonster : problem of cookie management and navigation memory 
+* [FIX] Forums have avatar, userlevel, posting, online and email details back
+* [FIX] admin category panel is fixed for adding many levels of subcategories
+* [FIX] access to image in gallery only if permission to its gallery is available
+* [FIX] fixed postgresql install by enhancing the convertscript 
+* [FIX] RSSModules external link: Forums RSS provides access to "restricted" forums 
+* [FIX] RSSModules display of rss 1.0, 2.0 and atom 0.3 working now 
+* [FIX] RSSModules most rss feeds should work now 
+* [FIX] RSSModules Single-blog RSS feed broken 1.9rc2+external link 
+* [FIX] RSSModules objects remained categorized even if all parent categories were removed 
+* [FIX] Multi-tiki install fixed in case of upgrade of existing multitiki 
+* [FIX] Killed the HashBug? (np replaced by hashes) 
+* [FIX] use of / in agentinfo 
+* [FIX] themes fixes in geo, tiki and trollparty styles 
+* [FIX] exit; applied after header redirections 
+* [FIX] Many more path disclosure fixes 
+* [FIX] jspopup fix ported from 1.8 from SF bugs 
+* [FIX] More path disclosure fixes
+* [FIX] exit; applied after header redirection to prevent code execution
 - (rc2) ---------------------------------------------------------------------
 * [NEW] lang/hu/language.php - Magyar - tra('Hungarian')
 * [FIX] tiki-install.php don't spits out many errors anymore

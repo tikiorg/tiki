@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.28 2004-04-29 18:15:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.29 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,7 +82,7 @@ $smarty->assign('isMandatory', $info["isMandatory"]);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'deltrackerfield';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$trklib->remove_tracker_field($_REQUEST["remove"],$_REQUEST["trackerId"]);
 		$logslib->add_log('admintrackerfields','removed tracker field '.$_REQUEST["remove"].' from tracker '.$tracker_info['name']);

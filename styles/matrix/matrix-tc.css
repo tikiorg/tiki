@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.11 2004-01-31 14:10:45 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-tc.css,v 1.12 2004-09-08 19:53:00 mose Exp $
  *
  */
 
@@ -78,6 +78,7 @@ div#tiki-center {
     padding-left: 2px;
     padding-right: 2px;
     color: #00E000;
+	 background-color: transparent;
     width: auto;
 }
 

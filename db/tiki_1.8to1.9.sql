@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.88 2004-09-03 19:54:39 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.89 2004-09-08 19:51:53 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -41,7 +41,7 @@ ALTER  TABLE  `tiki_pages`  modify  `wiki_cache` INT( 10  ) default null;
 
 # added on 2004-01-16 by mose (expanded groupname field)
 ALTER TABLE `users_groups` CHANGE `groupName` `groupName` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE `users_groups` DROP PRIMARY KEY , ADD PRIMARY KEY ( `groupName` ( 30 ) ); 
+ALTER TABLE `users_groups` DROP PRIMARY KEY , ADD PRIMARY KEY ( `groupName` ( 30 ) );
 
 ALTER TABLE `users_usergroups` CHANGE `groupName` `groupName` VARCHAR( 255 ) NOT NULL;
 ALTER TABLE `users_usergroups` DROP PRIMARY KEY , ADD PRIMARY KEY ( `userId` , `groupName` ( 30 ) );
@@ -367,7 +367,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # Homework tables start
 #
 #added on 2004-4-27 ggeller
-#revised  20040903 ggeller
 #
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
@@ -625,7 +624,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_p
 #added 7/12/04 sylvie
 UPDATE `tiki_menu_options` set `name`='Upload file' where `name`='Upload  File' and menuId='42';
 UPDATE `tiki_menu_options` set `name`='MyTiki' where `name`='MonTiki (clic!)' and menuId='42';
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered');
 UPDATE `tiki_menu_options` set `name`='Admin' where `name`='Admin (click!)' and menuId='42';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
@@ -641,4 +640,18 @@ UPDATE `tiki_menu_options` set `url`='tiki-blog_rankings.php' where `url`='tiki-
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
 
+#revised  20040903 ggeller
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 
+#added 20040906 chris_holman
+CREATE TABLE tiki_structure_versions (
+  structure_id int(14) NOT NULL auto_increment,
+  version int(14) default NULL,
+  PRIMARY KEY  (structure_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+ALTER TABLE `tiki_structures` ADD `structure_id` int(14) NOT NULL AFTER `page_ref_id`;
+ALTER TABLE `tiki_structures` ADD `page_version` int(8) default NULL AFTER `page_id`;
+
+# added on 2004-09-07 by chealer for baptiste (modification of 1.7 to 1.8 upgrade script made after 1.8.1 release, for older installs) : adding attachments handling to the mail-in feature
+ALTER TABLE tiki_mailin_accounts ADD attachments CHAR(1) NOT NULL DEFAULT 'n';

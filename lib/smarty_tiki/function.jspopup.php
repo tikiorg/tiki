@@ -15,7 +15,7 @@ function smarty_function_jspopup($params, &$smarty)
         return;
     }
     if(!isset($scrollbars)) $scrollbars='yes';
-    if(!isset($scrollbars)) $menubar='no';
+    if(!isset($menubar)) $menubar='no';
     if(!isset($resizable))  $resizable='yes';
     if(!isset($height)) $height='400';
     if(!isset($width)) $width='600';

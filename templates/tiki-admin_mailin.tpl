@@ -19,7 +19,7 @@
 <table class="normal">
   <tr>
     <td class="heading" width="25%">
-      [<a class="tablename" href="tiki-admin_mailin.php">{tr}add new{/tr} {tr}Account{/tr}</a>]
+      <a class="linkbut" href="tiki-admin_mailin.php#add">{tr}Add new Mail-in account{/tr}</a>
     </td>
     <td class="heading" width="50%">
       {tr}Account{/tr}
@@ -29,9 +29,9 @@
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
     <tr>
-      <td class="{cycle advance=false}" align="right">
-        [<a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}" class="tablename">{tr}edit{/tr}</a> |
-         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" class="tablename">{tr}delete{/tr}</a>]
+      <td class="{cycle advance=false}" align="middle">
+        <a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}#add"><img border='0' title='{tr}edit{/tr}' alt='{tr}edit{/tr}' src='img/icons/edit.gif' /></a> 
+         <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" ><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
       </td>
       <td class="{cycle advance=false}">{$accounts[ix].account}</td>
       <td class="{cycle}">{$accounts[ix].type}</td>
@@ -44,7 +44,7 @@
 {/if}
 <br />
 
-<h3>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h3>
+<a name="add" /><h2>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h2>
 <form action="tiki-admin_mailin.php" method="post">
   <input type="hidden" name="accountId" value="{$accountId|escape}" />
   <table class="normal">
@@ -154,9 +154,7 @@
 </form>
 
 
-<br /><br /><br />
-<b><a class="readlink" href="tiki-mailin.php">{tr}Check Mail-in accounts{/tr}</a></b>
-<br /><br />
+<a name="check" /><h2><a href="tiki-mailin.php#check">{tr}Check Mail-in accounts{/tr}</a></h2>
 <form action="tiki-admin_mailin.php" method="post">
   <table class="normal">
     <tr class="formcolor">

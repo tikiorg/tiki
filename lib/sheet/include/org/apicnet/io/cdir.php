@@ -1,8 +1,15 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 //
 // $Archive: /iPage/V1.1/include/dir.php $
-// $Date: 2004-06-12 16:19:25 $
-// $Revision: 1.1 $
+// $Date: 2004-09-08 19:52:34 $
+// $Revision: 1.2 $
 //
 // $History: dir.php $
 // 
@@ -33,7 +40,7 @@ if ( !defined( "INCLUCDED_DIR" ) ) {
 * Filenames are stored in the same case as the are stored in the filesystem
 * sFilter is only applied to files.
  * @package or.apicnet.io
- * @version $Id: cdir.php,v 1.1 2004-06-12 16:19:25 lphuberdeau Exp $
+ * @version $Id: cdir.php,v 1.2 2004-09-08 19:52:34 mose Exp $
  * @access public
  **/
 Class CDir extends ErrorManager {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.5 2004-03-12 20:58:26 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.6 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -120,7 +120,7 @@ $smarty->assign_by_ref("assignment_data",$assignment_data);
 
 include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','');
+$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $smarty->assign('mid', 'tiki-hw_teacher_assignment_edit.tpl');

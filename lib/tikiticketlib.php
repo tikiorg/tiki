@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.13 2004-08-26 19:23:20 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.14 2004-09-08 19:52:27 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -51,45 +51,45 @@ function key_get($area, $confirmation_text = '') {
 		$ticket = md5(uniqid(rand()));
 		$tikilib->set_user_preference($whose,'ticket',$ticket);
 		$smarty->assign('ticket',$ticket);
+		$_SESSION["ticket_$area"] = time();
+		if (empty($confirmation_text)) {
+			$confirmation_text = tra('Click here to confirm your action');
+		}
+		$smarty->assign('confirmation_text', $confirmation_text);
+		$smarty->assign('confirmaction', $_SERVER['REQUEST_URI']);
+		$smarty->display("confirm.tpl");
+		die();
 	}
-	$_SESSION["ticket_$area"] = time();
-	if (empty($confirmation_text)) {
-		$confirmation_text = tra('Click here to confirm your action');
-	}
-	$smarty->assign('confirmation_text', $confirmation_text);
-	$smarty->assign('confirmaction', $_SERVER['REQUEST_URI']);
-	$smarty->display("confirm.tpl");
-	die();
 }
 
 function key_check($area) {
 	global $tikilib,$smarty,$feature_ticketlib2,$user;
-	if (isset($_SESSION["ticket_$area"])
-		and $_SESSION["ticket_$area"] < date('U')
-		and $_SESSION["ticket_$area"] > (date('U')-(60*15))) {
-		if ($feature_ticketlib2 == 'y') {
+	if ($feature_ticketlib2 != 'y') {
+		return true;
+	} else {
+		if (isset($_SESSION["ticket_$area"])
+			and $_SESSION["ticket_$area"] < date('U')
+			and $_SESSION["ticket_$area"] > (date('U')-(60*15))) {
 			$smarty->load_filter('pre', 'ticket');
 			if ($user) {
 				$whose = $user;
 			} else { 
 				$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
 			}
-		  if (isset($_REQUEST) and is_array($_REQUEST)
+			if (isset($_REQUEST) and is_array($_REQUEST)
 				and (!isset($_REQUEST['ticket']) 
 				or $_REQUEST['ticket'] != $tikilib->get_user_preference($whose,'ticket'))) {
 				unset($_REQUEST);
 			} else {
 				return true;
 			}
-		} else {
-			return true;
 		}
+		unset($_SESSION["ticket_$area"]);
+		$smarty->assign('msg',tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+		$smarty->assign('nocreate',1);
+		$smarty->display("error.tpl");
+		die();
 	}
-	unset($_SESSION["ticket_$area"]);
-	$smarty->assign('msg',tra('Sea Surfing (CSRF) detected. Operation blocked.'));
-	$smarty->assign('nocreate',1);
-	$smarty->display("error.tpl");
-	die();
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.11 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_related.php,v 1.12 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,7 @@ $smarty->assign_by_ref('path', $path);
 // Remove a relationship
 if (isset($_REQUEST["remove"])) {
   $area = 'deldirrelated';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$dirlib->dir_remove_related($_REQUEST["parent"], $_REQUEST["categId"]);
 	} else {

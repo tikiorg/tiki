@@ -1,6 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.4 2004-03-31 10:04:59 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.5 2004-09-08 19:51:51 mose Exp $
+
+// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 
 // !! you need to have $offset var setup with default value 0
 // !! you need to setup $cant var to the total number of items in list

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.10 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.11 2004-09-08 19:53:00 mose Exp $
  *
  * Define styles for:
  *  Messages, RSS, Shoutbox
@@ -45,8 +45,9 @@ div.messureadhead {
     margin-top: 20px;
 }
 
-div.messureadhead td[style = "font-weight:bold;"] {
+div.messureadhead td[style = "font-weight:bold"] {
     color: #001000;
+	 background-color: transparent;
     border: 1px outset #00A000;
 }
 
@@ -54,7 +55,7 @@ div.messureadhead > table {
     width: 100%;
 }
 
-div.messureadhead td[style = "font-weight:bold;"] + td {
+div.messureadhead td[style = "font-weight:bold"] + td {
     border: 1px outset #00A000;
     width: 100%;
 }
@@ -68,6 +69,7 @@ div.messureadbody {
 /* Links to read emails (the subject in the mailbox listing) */
 .readlink, .readlink:active, .readlink:visited {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
@@ -81,16 +83,19 @@ div.messureadbody {
  */
 .rsslink, rsslink:visited, .rsslink:active {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 rsslink:visited {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 .rsslink:hover, .rsslink:visited:hover {
     color: #00F000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
@@ -118,17 +123,20 @@ textarea.tshoutbox {
 div.shoutboxmodmsg.linkmodule,
 div.shoutboxmodmsg.linkmodule:visited {
     color: #00E000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 /* help links style */
 .tikihelp, .tikihelp:visited {
     color: #001000;
+	 background-color: transparent;
     text-decoration: none;
 }
 /* help links style */
 .tikihelp:visited:hover, .tikihelp:hover {
     color: #001000;
+	 background-color: transparent;
     cursor: help;
     text-decoration: none;
 }

@@ -65,7 +65,7 @@ function parse($stmt)
   // blobs
   $stmt=preg_replace("/longblob|tinyblob|blob/","blob",$stmt);
   // text datatypes
-  $stmt=preg_replace("\n[ \t]+(.+) (text)/","\n  $1 clob",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(.+) (text)/","\n  $1 clob",$stmt);
   // quote column names
   $stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
   // quote and record table names

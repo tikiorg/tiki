@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.2 2004-07-08 12:50:34 damosoft Exp $
+<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.3 2004-09-08 19:51:57 mose Exp $
 /* 
  * The listing associates country names used as filenames for flags in TikiWiki for language translation
  */
@@ -10,6 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 // Here come the dynamically generated strings for img/flags/*.gif
+tra('Algeria');
 tra('American_Samoa');
 tra('Angola');
 tra('Antigua');

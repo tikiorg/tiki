@@ -25,7 +25,7 @@
 class tiki extends Wollabot_Module {
 	
 	function tiki() {
-		$this->bind_prefix('tiki_do','.. ');
+		$this->bind_prefix('tiki_do','t. ');
 		$this->bind_prefix('tiki_do','!T ');
 		$this->bind_prefix('tiki_do','!tiki ');
 	}

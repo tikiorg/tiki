@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.25 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.26 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,10 +65,6 @@ if (!isset($_REQUEST["postId"])) {
 
 //Build absolute URI for this
 $parts = parse_url($_SERVER['REQUEST_URI']);
-$uri = httpPrefix(). $parts['path'] . '?blogId=' . $_REQUEST['blogId'] . '&postId=' . $_REQUEST['postId'];
-$uri2 = httpPrefix(). $parts['path'] . '/' . $_REQUEST['blogId'] . '/' . $_REQUEST['postId'];
-$smarty->assign('uri', $uri);
-$smarty->assign('uri2', $uri2);
 
 $postId = $_REQUEST["postId"];
 $post_info = $bloglib->get_post($_REQUEST["postId"]);
@@ -78,6 +74,11 @@ $_REQUEST["blogId"] = $post_info["blogId"];
 $blog_data = $bloglib->get_blog($_REQUEST['blogId']);
 $smarty->assign('blog_data', $blog_data);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
+
+$uri = httpPrefix(). $parts['path'] . '?blogId=' . $_REQUEST['blogId'] . '&postId=' . $_REQUEST['postId'];
+$uri2 = httpPrefix(). $parts['path'] . '/' . $_REQUEST['blogId'] . '/' . $_REQUEST['postId'];
+$smarty->assign('uri', $uri);
+$smarty->assign('uri2', $uri2);
 
 if (!isset($_REQUEST['offset']))
 	$_REQUEST['offset'] = 0;
@@ -95,12 +96,9 @@ $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
 
-// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
-$tikilib->parse_first( $post_info["data"], $preparsed, $noparsed );
-
+//print(htmlspecialchars($post_info["data"]));
 $parsed_data = $tikilib->parse_data($post_info["data"]);
+//print(htmlspecialchars($parsed_data));
 
 if (!isset($_REQUEST['page']))
 	$_REQUEST['page'] = 1;
@@ -124,10 +122,6 @@ if ($_REQUEST['page'] > 1) {
 $smarty->assign('first_page', 1);
 $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['page']);
-
-// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->parse_first( $post_info["data"], $preparsed, $noparsed );
-$tikilib->parse_first( $parsed_data, $preparsed, $noparsed );
 
 $smarty->assign('parsed_data', $parsed_data);
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.16 2004-06-16 01:43:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.17 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ $smarty->assign('position', $info["position"]);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delquizquestion';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$quizlib->remove_quiz_question($_REQUEST["remove"]);
   } else {

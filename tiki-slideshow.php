@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.18 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow.php,v 1.19 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -149,13 +149,13 @@ $slide_data = $tikilib->parse_data($slides[$_REQUEST["slide"] + 1]);
 if (isset($reqs[1][$_REQUEST["slide"] - 1])) {
 	$slide_prev_title = $reqs[1][$_REQUEST["slide"] - 1];
 } else {
-	$slide_prev_title = 'prev';
+	$slide_prev_title = '';
 }
 
 if (isset($reqs[1][$_REQUEST["slide"] + 1])) {
 	$slide_next_title = $reqs[1][$_REQUEST["slide"] + 1];
 } else {
-	$slide_next_title = 'next';
+	$slide_next_title = '';
 }
 
 $smarty->assign('slide_prev_title', $slide_prev_title);

@@ -7,6 +7,6 @@ if( is_array( $_SESSION['tiki_cookie_jar'] ) )
 <script type="text/javascript">
 var tiki_cookie_jar = new Array();
 tiki_cookie_jar = {
-	<?=implode( ",\n\t", $list )?>
+	<?php echo implode( ",\n\t", $list ) ?>
 };
 </script>

@@ -11,7 +11,7 @@
 <a href="http://tikiwiki.org/tiki-index.php?page=TranslationDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_translations.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}edit translations template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}edit translations template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 {if $error}

@@ -1,5 +1,11 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.7 2004-08-17 16:33:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.8 2004-09-08 19:52:27 mose Exp $
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 /**
  * A class to render Diffs in different formats.

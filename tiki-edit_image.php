@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.10 2004-05-01 01:06:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.11 2004-09-08 19:51:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,6 +101,13 @@ if (isset($_REQUEST["editimage"])) {
 
 	if ($imagegallib->edit_image($_REQUEST['edit'], $_REQUEST['name'], $_REQUEST['description'])) {
 		$smarty->assign('show', 'y');
+		$cat_type = 'image';
+		$cat_objid = $_REQUEST["edit"];
+		$cat_desc = $_REQUEST['description'];
+		$cat_name = $_REQUEST['name'];
+		$cat_href = "tiki-browse_image.php?imageId=".$cat_objid;
+		include_once("categorize.php");
+
 	} else {
 		$smarty->assign('msg', tra("Failed to edit the image"));
 

@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-{* Index we display a wiki page here *} <br>
+{* Index we display a wiki page here *} <br />
 
 <div id="tiki-main">
 
@@ -135,7 +135,7 @@
 <table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
                         <td align="CENTER"> 
-<div align="center">{if $user}<font size="2">Welcome</font> {$user}<br>
+<div align="center">{if $user}<font size="2">Welcome</font> {$user}<br />
                             <A class=linkmodule 
       href="tiki-logout.php">{tr}[sign out]{/tr}</A>{else} </div>
 <FORM action={$login_url} method=post name=LoginForm>

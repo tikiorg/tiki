@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.6 2004-05-08 18:01:00 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.7 2004-09-08 19:51:51 mose Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -163,7 +163,7 @@ if (isset($_REQUEST["removesheet"])) {
 		die;
 	}
   $area = 'delsheet';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$sheetlib->remove_sheet($_REQUEST["removesheet"]);
   } else {

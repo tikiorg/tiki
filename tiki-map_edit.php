@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.14 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.15 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,7 +84,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 $smarty->assign('tiki_p_map_delete', $tiki_p_map_delete);
 if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 	$area = 'delmap';
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		if(!unlink($map_path.$_REQUEST["mapfile"])) {
 			$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.44 2004-08-12 22:31:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.45 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,7 +95,7 @@ if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
 		$userslibadmin->remove_group($_REQUEST["group"]);
 		$area = 'delgroup';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_group($_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed group '.$_REQUEST["group"]);
@@ -105,7 +105,7 @@ if (isset($_REQUEST["action"])) {
 	}
 	if ($_REQUEST["action"] == 'remove') {
 		$area = 'delgroupperm';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
 			$logslib->add_log('admingroups','removed permission '.$_REQUEST["permission"].' from group '.$_REQUEST["group"]);

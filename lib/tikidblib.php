@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.13 2004-08-26 19:23:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.14 2004-09-08 19:52:22 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -144,6 +144,7 @@ function sql_error($query, $values, $result) {
     foreach ($values as $k=>$v) {
       $outp.= "<tr class='formcolor'><td>$k</td><td>$v</td></tr>";
     }
+    $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td>Error Message</td><td>".$this->db->ErrorMsg()."</td></tr>\n";
     $outp.= "</table>";
     //if($result===false) echo "<br>\$result is false";
     //if($result===null) echo "<br>\$result is null";

@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.3 2004-08-26 19:24:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.4 2004-09-08 19:52:38 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -17,28 +17,32 @@ function wikiplugin_versions_help() {
 
 function wikiplugin_versions($data, $params) {
 	
-	extract ($params);
+	if (isset($params) and is_array($params)) {
+		extract ($params);
+	}
 	$data = trim($data);
-	$type = "default";
-	$hosts = array();
+	$navbar = '';
+	if (!isset($default)) { $default = 'Default'; }
 	
-	preg_match_all('/---\(([^\)]*)\)---*/',$data,$v);
+	preg_match_all('/---\(([^\):]*)( : [^\)]*)?\)---*/',$data,$v);
 
-	if (!isset($_REQUEST['tikiversion']) and isset($_SERVER['TIKI_VERSION'])) {
-		if (in_array($_SERVER['TIKI_VERSION'],$v[1])) {
-			$p = array_search($_SERVER['TIKI_VERSION'],$v[1]) + 1;
+	if (isset($type) and $type == 'host') {
+		if (isset($_SERVER['TIKI_VERSION'])) {
+			$vers = $_SERVER['TIKI_VERSION'];
 		} else {
-			$p = 0;
+			$vers = $default;
 		}
-		$type = "host";
-	} elseif (isset($_REQUEST['tikiversion'])) {
-		if (in_array($_REQUEST['tikiversion'],$v[1])) {
-			$p = array_search($_REQUEST['tikiversion'],$v[1]) + 1;
+	} else {
+		if (isset($_REQUEST['tikiversion'])) {
+			$vers = $_REQUEST['tikiversion'];
 		} else {
-			$p = 0;
+			$vers = $default;
 		}
 		$type = "request";
-		$hosts = split(',',$_SERVER['TIKI_ALL_VERSIONS']);
+	}
+	
+	if (in_array($vers,$v[1])) {
+		$p = array_search($vers,$v[1]) + 1;
 	} else {
 		$p = 0;
 	}
@@ -48,9 +52,9 @@ function wikiplugin_versions($data, $params) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 		$data = substr($data,strpos("\n",$data));
-	} elseif (isset($v[1][$p-1]) and strpos($data,'---('.$v[1][$p-1].')---')) {
-		$data = substr($data,strpos($data,'---('.$v[1][$p-1].')---'));
-		$data = preg_replace('/\)---*[\r\n]*/',"''\n","''".substr($data,4));
+	} elseif (isset($v[1][$p-1]) and strpos($data,'---('.$v[1][$p-1])) {
+		$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
+		$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>".substr($data,4));
 		if (strpos($data,'---(')) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
@@ -58,30 +62,35 @@ function wikiplugin_versions($data, $params) {
 	
 	
 	if (isset($nav) and $nav == 'y') {
-		$nav = '<div class="versionav">';
-		if ($type == 'host') {
-			$nav.= '<span class="button2"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">Default</a></span>';
-		} else {
-			$nav.= '<span class="button2"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">Default</a></span>';
-		}
+		$highed = false;
 		for ($i=0;$i<count($v[1]);$i++) {
-			$ver = $v[1][$i];
+			$version = $v[1][$i];
+			$ver = $version.$v[2][$i];
 			if ($i == $p-1) {
-				$version = "<b class=\"highlight\">$ver</b>";
+				$high = " highlight";
+				$highed = true;
 			} else {
-				$version = $ver;
+				$high = '';
 			}
 			if ($type == 'host') {
-				$vv = preg_replace('/[^a-z0-9]/','',strtolower($ver));
-				$nav.= ' <span class="button2"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $version .'</a></span>';
+				$vv = preg_replace('/[^a-z0-9]/','',strtolower($version));
+				$navbar.= ' <span class="button2'.$high.'"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $ver .'</a></span>';
 			} elseif ($type == 'request') {
-				$nav.= ' <span class="button2"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
+				$navbar.= ' <span class="button2'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'&amp;tikiversion='. urlencode($version) .'" class="linkbut">'. $ver .'</a></span>';
 			} else {
-				$nav.= ' <span class="button2"><a href="'. $_SERVER['REQUEST_URI'] .'&amp;tikiversion='. urlencode($ver) .'" class="linkbut">'. $version .'</a></span>';
+				$navbar.= ' <span class="button2'.$high.'"><a href="'. $_SERVER['REQUEST_URI'] .'&amp;tikiversion='. urlencode($version) .'" class="linkbut">'. $ver .'</a></span>';
 			}
 		}
-		$data = $nav."<div style='border: 1px solid #999999;padding : 0 2ex;'>\n".$data."\n</div></div>";
+		
+		if (!$highed) { $high = " highlight"; } else { $high = ''; }
+		if ($type == 'host') {
+			$navbar = '<span class="button2'.$high.'"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+		} else {
+			$navbar = '<span class="button2'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+		}
+		$data = '<div class="versions"><div class="versionav">'.$navbar."</div>".$data."\n</div>";
 	}
+
 	return $data;
 }
 

@@ -43,7 +43,7 @@
 {if $result eq 'y'}
 <table class="normal">
 <tr>
-  <td class="heading">{tr}Page{/tr}</td>
+  <td class="heading">{tr}page{/tr}</td>
   <td class="heading">{tr}excerpt{/tr}</td>
   <td class="heading">{tr}result{/tr}</td>
   <td class="heading">{tr}body{/tr}</td>

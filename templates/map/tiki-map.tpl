@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.22 2004-08-12 22:31:58 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.23 2004-09-08 19:53:06 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -69,11 +69,22 @@
 		  <select name="size" size="1">
 		  {html_options values=$possiblesizes selected=$size output=$displaysizes}
 		  </select>
-		  <br />
-		  <small>{tr}select zoom/pan/query and image size{/tr}</small>
-		</td></tr>
-		<tr><td align="center"> 
-		<input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
+		<br />
+		 <input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />	
+		 <br />
+		 <small>{tr}select zoom/pan/query and image size{/tr}</small>
+		 </td></tr>
+		 <tr><td align="center">
+		 
+		 {if $map_view == "" }
+		  {*if view is empty do not display empty list, else display view list*} 
+		 {else}
+		 <select name="view" size="1">
+		   <option selected value="#">Select country,and Go!
+		   {html_options values=$view_name name=$view output=$view_name}
+		   </select>
+		   <input type="submit" name="Go" value="Go" />		       
+		&nbsp;{/if}
 		 {if $tiki_p_map_edit eq 'y'}
      			&nbsp; 
      			<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
@@ -82,8 +93,9 @@
      		{/if}
      &nbsp;
      <a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a>
-     <br />
-		  <small>{tr}Click on the map or click redraw{/tr}</small>
+						
+<br /> 
+		   <small>{tr}Click on the map or click redraw{/tr}</small>
 		  <input type="hidden" name="minx" value="{$minx}" />
 		  <input type="hidden" name="miny" value="{$miny}" />
 		  <input type="hidden" name="maxx" value="{$maxx}" />
@@ -96,12 +108,12 @@
 		</td>
 		<td valign="top">
 		  <table class="normal">
-		  <tr><td align="left" valign="middle">
+		  <tr><td class="heading" align="center"><b>Overview</b></td></tr>
+		  <tr><td align="center" valign="middle" bgcolor="FFFFFF">
 		    <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
-		  </td ></tr>
-		  <tr><td>
+		  </td ></tr>	   
 		    <tr><td class="heading" align="center"><b>Legend</b></td></tr>
-		    <tr><td align="center"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
+		    <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
 		  </td></tr>
 		  <tr><td>
 		  <div class="separator">
@@ -126,7 +138,7 @@
 		  {else}
 		  <td class="even">
 		  {/if}
-		{tr}{$layer_wiki[j]}{/tr}
+		  {tr}{$layer_wiki[j]}{/tr}
 		  </td>	
 		  {if $smarty.section.j.index % 2}
 		  <td class="odd">
@@ -177,7 +189,7 @@
 	   </tr>
 	   </table>
    </td></tr>
-	  </table>
+	  </table>		  
 	  </form>
 	  {$map_querymsg}
 </div>

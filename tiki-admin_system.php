@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.16 2004-08-12 22:31:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.17 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -128,13 +128,15 @@ $modules = du("modules/cache/$tikidomain");
 $smarty->assign('modules', $modules);
 
 $templates=array();
+
 foreach($languages as $clang) {
-	if(is_dir("templates_c/$tikidomain/".$clang["value"])) {
-		$templates[$clang["value"]] = du("templates_c/$tikidomain/".$clang["value"]);
+	if(is_dir("templates_c/$tikidomain/")) {
+		$templates[$clang["value"]] = du("templates_c/$tikidomain/", $clang["value"]);
 	} else {
 		$templates[$clang["value"]] = du("templates_c/", $tikidomain.$clang["value"]);
 	}
 }
+
 $smarty->assign_by_ref('templates', $templates);
 
 $smarty->assign('mid', 'tiki-admin_system.tpl');

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.16 2004-04-03 09:36:39 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.17 2004-09-08 19:51:49 mose Exp $
  *
  * Admin interface for repositories management
  *
@@ -73,7 +73,7 @@ if (isset($_REQUEST["action"]))
         break;
     case 'rm':
         if ($repID != 0) {
-					if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+					if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 						key_check($area);
 						$integrator->remove_repository($repID);
 					} else {

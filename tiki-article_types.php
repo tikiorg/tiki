@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.11 2004-04-10 04:46:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.12 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,7 +29,7 @@ if(isset($_REQUEST["add_type"])) {
 }
 elseif(isset($_REQUEST["remove_type"])) {
 	$area = "delarticletype";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$artlib->remove_type($_REQUEST["remove_type"]);
 	} else {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.13 2004-08-26 19:24:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.14 2004-09-08 19:53:05 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -18,7 +18,7 @@
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 
-{if $mytiki_pages eq 'y'}
+{if $feature_wiki eq 'y' and $mytiki_pages eq 'y'}
 <div id="content1" class="content">
   <div class="cbox">
   <div class="cbox-title">
@@ -45,7 +45,7 @@
 </div>
 {/if}
 
-{if $mytiki_gals eq 'y'}
+{if $feature_galleries eq 'y' and $mytiki_gals eq 'y'}
 <div id="content2" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}User Galleries{/tr}</div>
@@ -64,7 +64,7 @@
 </div>
 {/if}
 
-{if $mytiki_items eq 'y'}
+{if $feature_trackers eq 'y' and $mytiki_items eq 'y'}
 <div id="content3" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Assigned items{/tr}</div>
@@ -84,7 +84,7 @@
 </div>
 {/if}
 
-{if $mytiki_msgs eq 'y'}
+{if $feature_messages eq 'y' and $mytiki_msgs eq 'y'}
 <div id="content4" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Unread Messages{/tr}</div>
@@ -99,7 +99,7 @@
 </div>
 {/if}
 
-{if $mytiki_tasks eq 'y'}
+{if $feature_tasks eq 'y' and $mytiki_tasks eq 'y'}
 <div id="content5" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Tasks{/tr}</div>
@@ -116,7 +116,7 @@
 
 
 
-{if $mytiki_blogs eq 'y'}
+{if $feature_blogs eq y && $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}User Blogs{/tr}</div>

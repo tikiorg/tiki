@@ -1,6 +1,6 @@
 Tiki Copyright
 ----------------
-$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.6 2004-06-19 14:22:44 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.7 2004-09-08 19:51:49 mose Exp $
 
 The following list gathers the copyrights holders for tikiwiki 
 at the state of 1.7 version. Each member of that list wrote at 
@@ -23,156 +23,438 @@ working on its automatisation ..
 That list is accessible on http://tikiwiki.org/tiki-community.php 
 for people that are listed.
 
-ohertel
-Country: Germany
-Role: Developer, Translator de
-Name: Oliver Hertel
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Sat 19 Jun, 2004
+ang
+Country: Hungary
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Tue 07 Sep, 2004
+
+sylvie
+Country: France
+Name: sylvie greverend
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Tue 07 Sep, 2004
 
 marclaporte
 Country: Canada
 Name: Marc Laporte
 Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Fri 18 Jun, 2004
+Last login on tw.o : Tue 07 Sep, 2004
 
-jaan1024
-Country: Other
-Registered on tw.o : Thu 17 Jun, 2004
-Last login on tw.o : Fri 18 Jun, 2004
-
-freevic
-Country: Canada
-Registered on tw.o : Fri 19 Sep, 2003
-Last login on tw.o : Fri 18 Jun, 2004
-
-Terence
+MacGyver
 Country: United_States
-Role: SpiderDog
-Name: Terence?
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Thu 17 Jun, 2004
+Registered on tw.o : Wed 19 Nov, 2003
+Last login on tw.o : Tue 07 Sep, 2004
 
-DennisDaniels
+jkring
 Country: United_States
-Name: Dennis Daniels
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Thu 17 Jun, 2004
+Name: Jim Kring
+Registered on tw.o : Wed 20 Aug, 2003
+Last login on tw.o : Mon 06 Sep, 2004
 
-george.geller
-Country: Other
-Registered on tw.o : Wed 29 Oct, 2003
-Last login on tw.o : Thu 17 Jun, 2004
+runix
+Registered on tw.o : Mon 06 Sep, 2004
+Last login on tw.o : Mon 06 Sep, 2004
 
 Damian
 Country: United_Kingdom
 Role: project admin, developer
 Name: Damian Parker
 Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Thu 17 Jun, 2004
+Last login on tw.o : Mon 06 Sep, 2004
+
+avgasse
+Country: Belgium
+Registered on tw.o : Sat 07 Feb, 2004
+Last login on tw.o : Mon 06 Sep, 2004
+
+na
+Country: Solomon_Islands
+Registered on tw.o : Tue 13 Jul, 2004
+Last login on tw.o : Sun 05 Sep, 2004
+
+stuartd
+Registered on tw.o : Tue 08 Jun, 2004
+Last login on tw.o : Sun 05 Sep, 2004
+
+george.geller
+Country: Other
+Registered on tw.o : Wed 29 Oct, 2003
+Last login on tw.o : Sun 05 Sep, 2004
+
+patvdv
+Country: Belgium
+Name: Patrick Van der Veken
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Sun 05 Sep, 2004
 
 az3rty
 Country: Greece
 Registered on tw.o : Mon 05 Apr, 2004
-Last login on tw.o : Wed 16 Jun, 2004
+Last login on tw.o : Sun 05 Sep, 2004
 
-lfagundes
-Country: Brazil
-Registered on tw.o : Sat 27 Sep, 2003
-Last login on tw.o : Wed 16 Jun, 2004
+Giotto
+Country: Hungary
+Registered on tw.o : Tue 18 May, 2004
+Last login on tw.o : Sat 04 Sep, 2004
 
-sylvie
-Country: United_States
-Name: sylvie greverend
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Wed 16 Jun, 2004
+guyfr
+Country: Canada
+Registered on tw.o : Mon 26 Apr, 2004
+Last login on tw.o : Fri 03 Sep, 2004
+
+luci
+Country: Czech_Republic
+Registered on tw.o : Wed 30 Jul, 2003
+Last login on tw.o : Thu 02 Sep, 2004
+
+hsaelens
+Country: Belgium
+Registered on tw.o : Mon 26 Jan, 2004
+Last login on tw.o : Thu 02 Sep, 2004
+
+gmuslera
+Country: Uruguay
+Name: Gustavo Muslera
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Thu 02 Sep, 2004
 
 mose
 Country: France
 Role: misc technical lead and community support
 Name: mose
 Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Wed 16 Jun, 2004
+Last login on tw.o : Wed 01 Sep, 2004
 
-RussWilde
-Country: United_Kingdom
-Registered on tw.o : Sat 20 Dec, 2003
-Last login on tw.o : Wed 16 Jun, 2004
-
-gene203
-Country: South_Korea
-Registered on tw.o : Sun 04 Apr, 2004
-Last login on tw.o : Tue 15 Jun, 2004
-
-Chealer9
-Country: Canada
-Role: Out-of-date Mascot
-Name: Philippe Cloutier
-Registered on tw.o : Fri 01 Aug, 2003
-Last login on tw.o : Tue 15 Jun, 2004
-
-jcwinnie
-Country: United_States
-Registered on tw.o : Mon 08 Dec, 2003
-Last login on tw.o : Mon 14 Jun, 2004
-
-pmichelazzo
+lfagundes
 Country: Brazil
-Registered on tw.o : Sun 15 Feb, 2004
-Last login on tw.o : Mon 14 Jun, 2004
+Registered on tw.o : Sat 27 Sep, 2003
+Last login on tw.o : Wed 01 Sep, 2004
+
+claborne
+Registered on tw.o : Mon 02 Feb, 2004
+Last login on tw.o : Wed 01 Sep, 2004
 
 telenieko
 Country: Spain
-Registered on tw.o : Fri 16 Apr, 2004
-Last login on tw.o : Mon 14 Jun, 2004
+Registered on tw.o : Thu 15 Apr, 2004
+Last login on tw.o : Tue 31 Aug, 2004
 
-gmuslera
-Country: Uruguay
-Name: Gustavo Muslera
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Mon 14 Jun, 2004
+DennisDaniels
+Country: United_States
+Name: Dennis Daniels
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Tue 31 Aug, 2004
+
+Stryker
+Country: Canada
+Name: Chris Austin
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Mon 30 Aug, 2004
+
+van_woods
+Country: United_States
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Mon 30 Aug, 2004
 
 lphuberdeau
 Country: Canada
 Registered on tw.o : Fri 09 Apr, 2004
-Last login on tw.o : Sat 12 Jun, 2004
+Last login on tw.o : Sun 29 Aug, 2004
 
-patvdv
-Country: Belgium
-Name: Patrick Van der Veken
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Sat 12 Jun, 2004
+MagicFab
+Country: Canada
+Registered on tw.o : Fri 17 Oct, 2003
+Last login on tw.o : Sun 29 Aug, 2004
+
+baci
+Country: United_States
+Registered on tw.o : Sun 08 Feb, 2004
+Last login on tw.o : Sun 29 Aug, 2004
+
+redflo
+Country: Germany
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Sat 28 Aug, 2004
 
 tom
 Country: France
 Role: developer
 Name: Tom Bouillut
 Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Fri 11 Jun, 2004
+Last login on tw.o : Sat 28 Aug, 2004
+
+JeanFrancoisNoubel
+Country: France
+Registered on tw.o : Fri 05 Dec, 2003
+Last login on tw.o : Fri 27 Aug, 2004
+
+massimoi
+Country: Italy
+Registered on tw.o : Tue 26 Aug, 2003
+Last login on tw.o : Fri 27 Aug, 2004
+
+deragon
+Country: Canada
+Registered on tw.o : Mon 02 Feb, 2004
+Last login on tw.o : Thu 26 Aug, 2004
+
+najb
+Country: Canada
+Registered on tw.o : Mon 02 Aug, 2004
+Last login on tw.o : Thu 26 Aug, 2004
+
+sdl
+Country: United_Kingdom
+Registered on tw.o : Mon 03 Nov, 2003
+Last login on tw.o : Thu 26 Aug, 2004
+
+sabdelma
+Registered on tw.o : Mon 28 Jun, 2004
+Last login on tw.o : Wed 25 Aug, 2004
+
+mchurchward
+Country: Canada
+Registered on tw.o : Mon 25 Aug, 2003
+Last login on tw.o : Tue 24 Aug, 2004
+
+roysinn
+Country: Canada
+Registered on tw.o : Thu 09 Oct, 2003
+Last login on tw.o : Tue 24 Aug, 2004
+
+Terence
+Country: United_States
+Role: SpiderDog
+Name: Terence?
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Tue 24 Aug, 2004
+
+broubrou
+Country: Other
+Registered on tw.o : Wed 31 Dec, 2003
+Last login on tw.o : Mon 23 Aug, 2004
+
+rlpowell
+Country: United_States
+Name: Robin Lee Powell
+Registered on tw.o : Thu 18 Sep, 2003
+Last login on tw.o : Mon 23 Aug, 2004
+
+jasondiceman
+Country: Canada
+Registered on tw.o : Sun 06 Jun, 2004
+Last login on tw.o : Mon 23 Aug, 2004
+
+Franck
+Country: Fiji
+Role: mapserver expert
+Name: Franck Martin
+Registered on tw.o : Mon 04 Aug, 2003
+Last login on tw.o : Mon 23 Aug, 2004
+
+cipuf
+Registered on tw.o : Wed 05 Nov, 2003
+Last login on tw.o : Sun 22 Aug, 2004
+
+colorado
+Country: United_States
+Registered on tw.o : Wed 15 Oct, 2003
+Last login on tw.o : Sat 21 Aug, 2004
+
+bburgaud
+Registered on tw.o : Thu 04 Dec, 2003
+Last login on tw.o : Fri 20 Aug, 2004
+
+filmil
+Country: Netherlands
+Registered on tw.o : Thu 05 Feb, 2004
+Last login on tw.o : Thu 19 Aug, 2004
+
+DevNiv
+Country: Germany
+Registered on tw.o : Wed 31 Dec, 2003
+Last login on tw.o : Wed 18 Aug, 2004
+
+hina
+Country: France
+Registered on tw.o : Wed 25 Feb, 2004
+Last login on tw.o : Tue 17 Aug, 2004
+
+freevic
+Country: Canada
+Registered on tw.o : Fri 19 Sep, 2003
+Last login on tw.o : Mon 16 Aug, 2004
+
+dmytro
+Country: Japan
+Registered on tw.o : Sat 12 Jun, 2004
+Last login on tw.o : Mon 16 Aug, 2004
+
+techtonik
+Country: Belarus
+Registered on tw.o : Wed 10 Dec, 2003
+Last login on tw.o : Sun 15 Aug, 2004
+
+jcwinnie
+Country: United_States
+Registered on tw.o : Mon 08 Dec, 2003
+Last login on tw.o : Sun 15 Aug, 2004
+
+magius
+Country: Italy
+Registered on tw.o : Fri 18 Jul, 2003
+Last login on tw.o : Sat 14 Aug, 2004
+
+berryweb
+Country: United_Kingdom
+Registered on tw.o : Fri 14 May, 2004
+Last login on tw.o : Thu 12 Aug, 2004
 
 YannickMajoros
 Country: Belgium
 Registered on tw.o : Wed 15 Oct, 2003
-Last login on tw.o : Fri 11 Jun, 2004
+Last login on tw.o : Mon 09 Aug, 2004
+
+rubaiyat
+Country: United_States
+Registered on tw.o : Wed 15 Oct, 2003
+Last login on tw.o : Mon 09 Aug, 2004
+
+gene203
+Country: South_Korea
+Registered on tw.o : Sun 04 Apr, 2004
+Last login on tw.o : Sun 08 Aug, 2004
+
+andrzej
+Country: Poland
+Registered on tw.o : Wed 01 Oct, 2003
+Last login on tw.o : Thu 29 Jul, 2004
+
+ohertel
+Country: Germany
+Role: Developer, Translator de
+Name: Oliver Hertel
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Sun 25 Jul, 2004
+
+RussWilde
+Country: United_Kingdom
+Registered on tw.o : Sat 20 Dec, 2003
+Last login on tw.o : Sat 24 Jul, 2004
+
+beerlounge.de
+Country: Germany
+Registered on tw.o : Mon 06 Oct, 2003
+Last login on tw.o : Wed 21 Jul, 2004
+
+xenfasa
+Country: Other
+Registered on tw.o : Mon 13 Oct, 2003
+Last login on tw.o : Mon 19 Jul, 2004
+
+pmichelazzo
+Country: Brazil
+Registered on tw.o : Sun 15 Feb, 2004
+Last login on tw.o : Mon 19 Jul, 2004
 
 wolff_borg
 Country: Australia
 Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Fri 11 Jun, 2004
+Last login on tw.o : Sat 17 Jul, 2004
 
-ang
-Country: Hungary
-Registered on tw.o : Sun 06 Jul, 2003
-Last login on tw.o : Thu 10 Jun, 2004
+jaan1024
+Country: Other
+Registered on tw.o : Thu 17 Jun, 2004
+Last login on tw.o : Fri 16 Jul, 2004
 
-redflo
-Country: Germany
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Wed 09 Jun, 2004
+shinhan
+Country: Yugoslavia
+Registered on tw.o : Mon 28 Jul, 2003
+Last login on tw.o : Thu 15 Jul, 2004
 
-hsaelens
-Country: Belgium
-Registered on tw.o : Mon 26 Jan, 2004
+luca
+Country: Italy
+Registered on tw.o : Fri 26 Sep, 2003
+Last login on tw.o : Thu 15 Jul, 2004
+
+sQuare
+Country: Austria
+Registered on tw.o : Sun 07 Dec, 2003
+Last login on tw.o : Wed 14 Jul, 2004
+
+zibas
+Country: Other
+Registered on tw.o : Fri 19 Dec, 2003
+Last login on tw.o : Wed 14 Jul, 2004
+
+chris.holman
+Country: United_Kingdom
+Registered on tw.o : Thu 10 Jul, 2003
+Last login on tw.o : Mon 12 Jul, 2004
+
+bluybrink
+Country: Slovakia
+Registered on tw.o : Thu 14 Aug, 2003
+Last login on tw.o : Mon 12 Jul, 2004
+
+freephile
+Country: Other
+Registered on tw.o : Tue 08 Jul, 2003
+Last login on tw.o : Mon 28 Jun, 2004
+
+terris
+Country: Other
+Registered on tw.o : Thu 14 Aug, 2003
+Last login on tw.o : Sun 27 Jun, 2004
+
+fukuchi
+Country: Japan
+Name: Kentaro Fukuchi
+Registered on tw.o : Tue 05 Aug, 2003
+Last login on tw.o : Sun 27 Jun, 2004
+
+Buiu
+Country: Brazil
+Registered on tw.o : Thu 23 Oct, 2003
+Last login on tw.o : Fri 25 Jun, 2004
+
+zaufi
+Country: Russia
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Fri 25 Jun, 2004
+
+ZZamboni
+Country: Other
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Tue 22 Jun, 2004
+
+jorgercosta
+Country: Other
+Registered on tw.o : Fri 16 Apr, 2004
+Last login on tw.o : Tue 22 Jun, 2004
+
+agorski
+Registered on tw.o : Mon 21 Jun, 2004
+Last login on tw.o : Mon 21 Jun, 2004
+
+derisavi
+Country: Other
+Registered on tw.o : Wed 04 Feb, 2004
+Last login on tw.o : Thu 17 Jun, 2004
+
+TonyColley
+Country: United_States
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Tue 15 Jun, 2004
+
+jahlewis
+Country: United_States
+Registered on tw.o : Tue 08 Jul, 2003
+Last login on tw.o : Tue 15 Jun, 2004
+
+phunkymunky
+Country: United_Kingdom
+Registered on tw.o : Thu 28 Aug, 2003
 Last login on tw.o : Wed 09 Jun, 2004
 
 sting
@@ -180,75 +462,39 @@ Country: Taiwan
 Registered on tw.o : Thu 24 Jul, 2003
 Last login on tw.o : Wed 09 Jun, 2004
 
-Franck
-Country: Fiji
-Role: mapserver expert
-Name: Franck Martin
+marcius
+Country: Italy
 Registered on tw.o : Tue 05 Aug, 2003
-Last login on tw.o : Wed 09 Jun, 2004
+Last login on tw.o : Tue 08 Jun, 2004
 
-colorado
-Country: United_States
-Registered on tw.o : Wed 15 Oct, 2003
+aw
+Country: United_Kingdom
+Registered on tw.o : Sat 06 Sep, 2003
+Last login on tw.o : Tue 08 Jun, 2004
+
+halon
+Country: Belgium
+Registered on tw.o : Sat 25 Oct, 2003
 Last login on tw.o : Tue 08 Jun, 2004
 
 gillesm
 Registered on tw.o : Mon 03 Nov, 2003
 Last login on tw.o : Mon 07 Jun, 2004
 
-terris
-Country: Other
-Registered on tw.o : Thu 14 Aug, 2003
-Last login on tw.o : Mon 07 Jun, 2004
-
-phunkymunky
-Country: United_Kingdom
-Registered on tw.o : Thu 28 Aug, 2003
-Last login on tw.o : Sun 06 Jun, 2004
-
-techtonik
-Country: Belarus
-Registered on tw.o : Wed 10 Dec, 2003
+phil
+Country: France
+Url: http://perso.wanadoo.fr/philippe.baret/
+Registered on tw.o : Tue 15 Jul, 2003
 Last login on tw.o : Sat 05 Jun, 2004
-
-luci
-Country: Czech_Republic
-Registered on tw.o : Wed 30 Jul, 2003
-Last login on tw.o : Thu 03 Jun, 2004
-
-beerlounge.de
-Country: Germany
-Registered on tw.o : Mon 06 Oct, 2003
-Last login on tw.o : Wed 02 Jun, 2004
-
-martinmanyhats
-Registered on tw.o : Wed 02 Jun, 2004
-Last login on tw.o : Wed 02 Jun, 2004
-
-rubaiyat
-Country: United_States
-Registered on tw.o : Wed 15 Oct, 2003
-Last login on tw.o : Tue 01 Jun, 2004
-
-jorgercosta
-Country: Other
-Registered on tw.o : Fri 16 Apr, 2004
-Last login on tw.o : Tue 01 Jun, 2004
-
-derisavi
-Country: Other
-Registered on tw.o : Wed 04 Feb, 2004
-Last login on tw.o : Mon 31 May, 2004
 
 millette
 Country: Canada
 Registered on tw.o : Thu 04 Dec, 2003
-Last login on tw.o : Sat 29 May, 2004
+Last login on tw.o : Sat 05 Jun, 2004
 
-DevNiv
-Country: Germany
-Registered on tw.o : Wed 31 Dec, 2003
-Last login on tw.o : Thu 27 May, 2004
+martinmanyhats
+Registered on tw.o : Wed 02 Jun, 2004
+Last login on tw.o : Wed 02 Jun, 2004
 
 jenolan
 Country: Australia
@@ -262,102 +508,54 @@ tofreal
 Registered on tw.o : Thu 08 Apr, 2004
 Last login on tw.o : Tue 25 May, 2004
 
-fukuchi
-Country: Japan
-Name: Kentaro Fukuchi
-Registered on tw.o : Tue 05 Aug, 2003
-Last login on tw.o : Tue 25 May, 2004
-
 as6o
 Registered on tw.o : Fri 23 Apr, 2004
-Last login on tw.o : Mon 24 May, 2004
-
-marcius
-Country: Italy
-Registered on tw.o : Wed 06 Aug, 2003
-Last login on tw.o : Sat 22 May, 2004
-
-filmil
-Country: Netherlands
-Registered on tw.o : Thu 05 Feb, 2004
-Last login on tw.o : Thu 20 May, 2004
-
-sQuare
-Country: Austria
-Registered on tw.o : Sun 07 Dec, 2003
-Last login on tw.o : Wed 19 May, 2004
+Last login on tw.o : Tue 25 May, 2004
 
 StarRider
 Country: United_States
 Registered on tw.o : Sat 15 Nov, 2003
-Last login on tw.o : Wed 19 May, 2004
+Last login on tw.o : Fri 21 May, 2004
 
-luca
-Country: Italy
-Registered on tw.o : Fri 26 Sep, 2003
-Last login on tw.o : Mon 17 May, 2004
+PrezKennedy
+Country: United_States
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Wed 19 May, 2004
 
 plillevold
 Country: Norway
 Registered on tw.o : Sun 07 Mar, 2004
 Last login on tw.o : Sun 16 May, 2004
 
-notgod
-Registered on tw.o : Wed 12 May, 2004
-Last login on tw.o : Wed 12 May, 2004
-
-van_woods
-Country: United_States
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Wed 12 May, 2004
-
-roysinn
-Country: Canada
-Registered on tw.o : Thu 09 Oct, 2003
-Last login on tw.o : Wed 12 May, 2004
-
 OneOfMany
 Country: Other
 Registered on tw.o : Fri 23 Jan, 2004
-Last login on tw.o : Mon 10 May, 2004
+Last login on tw.o : Wed 12 May, 2004
 
-andrzej
-Country: Poland
-Registered on tw.o : Wed 01 Oct, 2003
-Last login on tw.o : Thu 06 May, 2004
-
-chris.holman
-Country: United_Kingdom
-Registered on tw.o : Thu 10 Jul, 2003
-Last login on tw.o : Thu 06 May, 2004
+notgod
+Registered on tw.o : Wed 12 May, 2004
+Last login on tw.o : Wed 12 May, 2004
 
 pemen
 Registered on tw.o : Tue 04 May, 2004
 Last login on tw.o : Tue 04 May, 2004
 
-aw
-Country: United_Kingdom
-Registered on tw.o : Sat 06 Sep, 2003
+gongo
+Country: Belgium
+Registered on tw.o : Sun 14 Sep, 2003
 Last login on tw.o : Mon 03 May, 2004
 
-rlpowell
-Country: United_States
-Name: Robin Lee Powell
-Registered on tw.o : Thu 18 Sep, 2003
-Last login on tw.o : Sun 02 May, 2004
-
-guyfr
-Country: Canada
-Registered on tw.o : Mon 26 Apr, 2004
-Last login on tw.o : Wed 28 Apr, 2004
+limako
+Registered on tw.o : Wed 08 Oct, 2003
+Last login on tw.o : Fri 30 Apr, 2004
 
 DavidBright
 Country: United_States
 Registered on tw.o : Thu 21 Aug, 2003
 Last login on tw.o : Sat 24 Apr, 2004
 
-limako
-Registered on tw.o : Wed 08 Oct, 2003
+mhryciuk
+Registered on tw.o : Mon 19 Apr, 2004
 Last login on tw.o : Wed 21 Apr, 2004
 
 lueders
@@ -365,54 +563,25 @@ Country: Germany
 Registered on tw.o : Sat 02 Aug, 2003
 Last login on tw.o : Sat 10 Apr, 2004
 
-shinhan
-Country: Yugoslavia
-Registered on tw.o : Mon 28 Jul, 2003
-Last login on tw.o : Thu 08 Apr, 2004
+aneuhaus
+Country: Germany
+Registered on tw.o : Wed 03 Dec, 2003
+Last login on tw.o : Tue 06 Apr, 2004
 
 spider
 Country: United_States
 Registered on tw.o : Sun 04 Jan, 2004
-Last login on tw.o : Wed 07 Apr, 2004
+Last login on tw.o : Tue 06 Apr, 2004
 
 ibtubed
 Country: United_States
 Registered on tw.o : Thu 11 Sep, 2003
 Last login on tw.o : Tue 06 Apr, 2004
 
-bburgaud
-Registered on tw.o : Thu 04 Dec, 2003
-Last login on tw.o : Sat 03 Apr, 2004
-
-zaufi
-Country: Russia
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Fri 02 Apr, 2004
-
-halon
-Country: Belgium
-Registered on tw.o : Sat 25 Oct, 2003
-Last login on tw.o : Thu 01 Apr, 2004
-
-mnemoc
-Country: Chile
-Registered on tw.o : Fri 27 Feb, 2004
-Last login on tw.o : Tue 30 Mar, 2004
-
-jkring
-Country: United_States
-Name: Jim Kring
-Registered on tw.o : Wed 20 Aug, 2003
-Last login on tw.o : Tue 30 Mar, 2004
-
-broubrou
-Registered on tw.o : Wed 31 Dec, 2003
-Last login on tw.o : Mon 29 Mar, 2004
-
-gongo
-Country: Belgium
-Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Wed 24 Mar, 2004
+rcogley
+Country: Japan
+Registered on tw.o : Fri 09 Jan, 2004
+Last login on tw.o : Sat 27 Mar, 2004
 
 DaveSanders
 Country: United_States
@@ -422,37 +591,23 @@ Url: http://www.steelsphere.com
 Registered on tw.o : Sun 06 Jul, 2003
 Last login on tw.o : Tue 23 Mar, 2004
 
-baci
-Registered on tw.o : Sun 08 Feb, 2004
-Last login on tw.o : Mon 22 Mar, 2004
-
 elecnix
 Registered on tw.o : Thu 11 Sep, 2003
-Last login on tw.o : Sat 20 Mar, 2004
+Last login on tw.o : Sun 21 Mar, 2004
 
 swayambhu
-Registered on tw.o : Sat 25 Oct, 2003
-Last login on tw.o : Sat 20 Mar, 2004
-
-bluybrink
-Country: Slovakia
-Registered on tw.o : Thu 14 Aug, 2003
+Registered on tw.o : Fri 24 Oct, 2003
 Last login on tw.o : Fri 19 Mar, 2004
 
 einstine
 Country: United_States
 Registered on tw.o : Fri 11 Jul, 2003
-Last login on tw.o : Wed 17 Mar, 2004
-
-freephile
-Country: Other
-Registered on tw.o : Tue 08 Jul, 2003
-Last login on tw.o : Sat 13 Mar, 2004
+Last login on tw.o : Thu 18 Mar, 2004
 
 lsces
 Country: United_Kingdom
 Registered on tw.o : Wed 11 Feb, 2004
-Last login on tw.o : Thu 11 Mar, 2004
+Last login on tw.o : Mon 15 Mar, 2004
 
 zcecil
 Country: Taiwan
@@ -485,21 +640,6 @@ Country: United_States
 Registered on tw.o : Thu 07 Aug, 2003
 Last login on tw.o : Mon 01 Mar, 2004
 
-PrezKennedy
-Country: United_States
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Sun 29 Feb, 2004
-
-jahlewis
-Country: United_States
-Registered on tw.o : Tue 08 Jul, 2003
-Last login on tw.o : Fri 27 Feb, 2004
-
-Buiu
-Country: Brazil
-Registered on tw.o : Thu 23 Oct, 2003
-Last login on tw.o : Wed 25 Feb, 2004
-
 luis
 Country: Argentina
 Registered on tw.o : Mon 07 Jul, 2003
@@ -509,23 +649,9 @@ liedekef
 Registered on tw.o : Mon 23 Feb, 2004
 Last login on tw.o : Tue 24 Feb, 2004
 
-deragon
-Country: Canada
-Registered on tw.o : Mon 02 Feb, 2004
-Last login on tw.o : Tue 24 Feb, 2004
-
-dheltzel
-Country: United_States
-Name: Dennis Heltzel
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Sun 22 Feb, 2004
-
 schmitta
+Country: France
 Registered on tw.o : Thu 22 Jan, 2004
-Last login on tw.o : Sat 21 Feb, 2004
-
-massimoi
-Registered on tw.o : Tue 26 Aug, 2003
 Last login on tw.o : Sat 21 Feb, 2004
 
 koobla
@@ -564,12 +690,8 @@ Country: Other
 Registered on tw.o : Fri 29 Aug, 2003
 Last login on tw.o : Sat 14 Feb, 2004
 
-rcogley
-Country: Japan
-Registered on tw.o : Fri 09 Jan, 2004
-Last login on tw.o : Sat 14 Feb, 2004
-
 mikelcu
+Country: United_States
 Registered on tw.o : Tue 10 Feb, 2004
 Last login on tw.o : Fri 13 Feb, 2004
 
@@ -578,14 +700,9 @@ Country: United_States
 Registered on tw.o : Tue 29 Jul, 2003
 Last login on tw.o : Fri 13 Feb, 2004
 
-TonyColley
-Country: United_States
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Tue 10 Feb, 2004
-
 btodoroff
-Country: Other
-Registered on tw.o : Fri 19 Dec, 2003
+Country: United_States
+Registered on tw.o : Thu 18 Dec, 2003
 Last login on tw.o : Tue 10 Feb, 2004
 
 loic
@@ -593,12 +710,6 @@ Country: France
 Name: Loïc Monthorin
 Registered on tw.o : Mon 14 Jul, 2003
 Last login on tw.o : Mon 09 Feb, 2004
-
-phil
-Country: France
-Url: http://perso.wanadoo.fr/philippe.baret/
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Thu 05 Feb, 2004
 
 thraxisp
 Registered on tw.o : Mon 27 Oct, 2003
@@ -615,13 +726,9 @@ Registered on tw.o : Sun 14 Sep, 2003
 Last login on tw.o : Mon 02 Feb, 2004
 
 pacoit
+Country: United_States
 Registered on tw.o : Thu 21 Aug, 2003
 Last login on tw.o : Fri 30 Jan, 2004
-
-aneuhaus
-Country: Germany
-Registered on tw.o : Wed 03 Dec, 2003
-Last login on tw.o : Mon 19 Jan, 2004
 
 siridhar
 Country: India
@@ -633,7 +740,7 @@ Last login on tw.o : Mon 19 Jan, 2004
 
 rasa
 Country: United_States
-Registered on tw.o : Mon 07 Jul, 2003
+Registered on tw.o : Sun 06 Jul, 2003
 Last login on tw.o : Sat 17 Jan, 2004
 
 Traivor
@@ -641,13 +748,8 @@ Country: United_States
 Registered on tw.o : Tue 02 Sep, 2003
 Last login on tw.o : Thu 15 Jan, 2004
 
-xenfasa
-Country: Other
-Registered on tw.o : Mon 13 Oct, 2003
-Last login on tw.o : Tue 13 Jan, 2004
-
 mbravo
-Registered on tw.o : Fri 12 Dec, 2003
+Registered on tw.o : Thu 11 Dec, 2003
 Last login on tw.o : Thu 08 Jan, 2004
 
 eduardo
@@ -664,17 +766,6 @@ Country: Canada
 Registered on tw.o : Mon 11 Aug, 2003
 Last login on tw.o : Wed 07 Jan, 2004
 
-Stryker
-Country: Canada
-Name: Chris Austin
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Fri 02 Jan, 2004
-
-gclift
-Country: Other
-Registered on tw.o : Fri 08 Aug, 2003
-Last login on tw.o : Mon 29 Dec, 2003
-
 paradime
 Country: Other
 Registered on tw.o : Mon 14 Jul, 2003
@@ -684,26 +775,16 @@ tex
 Country: Germany
 Name: Christoph Drieschner
 Url: http://texorama.de
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Sat 20 Dec, 2003
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Fri 19 Dec, 2003
 
 Squee-D
 Country: New_Zealand
 Registered on tw.o : Sun 07 Dec, 2003
 Last login on tw.o : Thu 18 Dec, 2003
 
-MagicFab
-Country: Colombia
-Registered on tw.o : Fri 17 Oct, 2003
-Last login on tw.o : Wed 17 Dec, 2003
-
 pyrotknix
 Registered on tw.o : Sun 23 Nov, 2003
-Last login on tw.o : Wed 10 Dec, 2003
-
-MacGyver
-Country: United_States
-Registered on tw.o : Wed 19 Nov, 2003
 Last login on tw.o : Wed 10 Dec, 2003
 
 DanielX
@@ -721,10 +802,6 @@ Country: Japan
 Registered on tw.o : Wed 17 Sep, 2003
 Last login on tw.o : Wed 03 Dec, 2003
 
-JFNoubel
-Registered on tw.o : Sun 30 Nov, 2003
-Last login on tw.o : Tue 02 Dec, 2003
-
 mgfeller
 Country: Switzerland
 Registered on tw.o : Sun 10 Aug, 2003
@@ -740,15 +817,10 @@ Name: djamel
 Registered on tw.o : Wed 09 Jul, 2003
 Last login on tw.o : Wed 26 Nov, 2003
 
-mchurchward
-Country: Canada
-Registered on tw.o : Mon 25 Aug, 2003
-Last login on tw.o : Wed 26 Nov, 2003
-
 connermo
 Country: Other
 Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Mon 17 Nov, 2003
+Last login on tw.o : Sun 16 Nov, 2003
 
 mikespub
 Country: Belgium
@@ -789,7 +861,7 @@ Last login on tw.o : Thu 23 Oct, 2003
 
 kadams54
 Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Thu 23 Oct, 2003
+Last login on tw.o : Wed 22 Oct, 2003
 
 anarkim
 Country: Denmark
@@ -831,25 +903,18 @@ Url: http://thetinfoilhat.com
 Registered on tw.o : Thu 03 Jul, 2003
 Last login on tw.o : Mon 15 Sep, 2003
 
+kodewulf
+Country: Australia
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Mon 15 Sep, 2003
+
 michiel
-Registered on tw.o : Wed 27 Aug, 2003
+Registered on tw.o : Tue 26 Aug, 2003
 Last login on tw.o : Wed 27 Aug, 2003
 
 wvdploeg
 Registered on tw.o : Wed 27 Aug, 2003
 Last login on tw.o : Wed 27 Aug, 2003
-
-MartinGeisler
-Country: Denmark
-Name: Martin Geisler
-Url: http://gimpster.com/
-Registered on tw.o : Mon 28 Jul, 2003
-Last login on tw.o : Sat 23 Aug, 2003
-
-ZZamboni
-Country: Other
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Tue 19 Aug, 2003
 
 mortenson
 Country: Japan
@@ -857,7 +922,7 @@ Registered on tw.o : Thu 31 Jul, 2003
 Last login on tw.o : Sun 03 Aug, 2003
 
 btallman
-Country: Other
+Country: United_States
 Registered on tw.o : Wed 09 Jul, 2003
 Last login on tw.o : Sun 03 Aug, 2003
 
@@ -870,33 +935,22 @@ ricardo
 Registered on tw.o : Mon 07 Jul, 2003
 Last login on tw.o : Fri 25 Jul, 2003
 
-kodewulf
-Country: Australia
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Thu 24 Jul, 2003
-
 mariana
 Country: Argentina
 Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Tue 08 Jul, 2003
-
-rockpaper
-Registered on tw.o : Fri 16 Jan, 2004
-
-spider99
-Registered on tw.o : Tue 30 Dec, 2003
-
-bulldogtor
-Registered on tw.o : Mon 24 Nov, 2003
-
-limited1
-Registered on tw.o : Thu 31 Jul, 2003
+Last login on tw.o : Mon 07 Jul, 2003
 
 swf
 Country: United_States
 Name: Scott W Fischer
 Registered on tw.o : Thu 03 Jul, 2003
 Last login on tw.o : Mon 26 Jan, 2004
+
+dheltzel
+Country: United_States
+Name: Dennis Heltzel
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Sun 22 Feb, 2004
 
 jasko
 Country: United_States
@@ -908,6 +962,11 @@ Country: Other
 Registered on tw.o : Tue 08 Jul, 2003
 Last login on tw.o : Fri 03 Oct, 2003
 
+gclift
+Country: Other
+Registered on tw.o : Fri 08 Aug, 2003
+Last login on tw.o : Sun 28 Dec, 2003
+
 oliver
 Country: Other
 Registered on tw.o : Mon 18 Aug, 2003
@@ -918,15 +977,47 @@ Country: United_States
 Registered on tw.o : Tue 09 Sep, 2003
 Last login on tw.o : Sun 29 Feb, 2004
 
+MartinGeisler
+Country: Denmark
+Name: Martin Geisler
+Url: http://gimpster.com/
+Registered on tw.o : Mon 28 Jul, 2003
+Last login on tw.o : Sat 23 Aug, 2003
+
 jomar
 Country: United_States
 Registered on tw.o : Wed 04 Feb, 2004
-Last login on tw.o : Fri 30 Apr, 2004
+Last login on tw.o : Mon 28 Jun, 2004
 
 stella12
 Country: New_Zealand
 Registered on tw.o : Thu 08 Apr, 2004
-Last login on tw.o : Wed 16 Jun, 2004
+Last login on tw.o : Tue 07 Sep, 2004
+
+mnemoc
+Country: Chile
+Registered on tw.o : Fri 27 Feb, 2004
+Last login on tw.o : Sat 17 Jul, 2004
+
+dimm
+Country: Greece
+Registered on tw.o : Sun 05 Sep, 2004
+Last login on tw.o : Tue 07 Sep, 2004
+
+egodwin
+Country: Canada
+Registered on tw.o : Mon 01 Mar, 2004
+Last login on tw.o : Tue 07 Sep, 2004
+
+yturgeon
+Country: Other
+Registered on tw.o : Sat 28 Aug, 2004
+Last login on tw.o : Sat 28 Aug, 2004
+
+spatialguru
+Country: Canada
+Registered on tw.o : Thu 01 Jul, 2004
+Last login on tw.o : Thu 05 Aug, 2004
 
 afahlvik
 
@@ -942,23 +1033,33 @@ aurel42
 
 avanderbilt
 
-berryweb
-
 bobenrieth
+
+bozze
+
+bulldogtor
+
+c0ldfusi0n
 
 carolg
 
+chealer
+
 chuck
+
+cyantree
 
 dabase
 
 dgreen34
 
-dmytro
+dim_m
 
 eraserhd
 
 essele
+
+ezago
 
 fhcorrea
 
@@ -968,7 +1069,11 @@ gertdewit
 
 gilshwartz
 
+gravesweeper
+
 gunnarre
+
+gunner98
 
 hfwang
 
@@ -990,6 +1095,8 @@ krose
 
 lechuckdapirate
 
+limited1
+
 llunax
 
 lnewby
@@ -1004,8 +1111,6 @@ mattlangley1
 
 mcgucken
 
-mhryciuk
-
 mikewalsh
 
 natig
@@ -1016,13 +1121,19 @@ notix
 
 oliverscheck
 
+opn-tech
+
 otalunak
 
 p3k
 
+penny336
+
 pippone
 
 plungerman
+
+pnimish
 
 popovich
 
@@ -1034,7 +1145,11 @@ ramiro_v
 
 razorwyre
 
+rockpaper
+
 ronchon
+
+rpgoldman
 
 rsaugier
 

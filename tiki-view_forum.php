@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.76 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.77 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -145,7 +145,7 @@ if ($tiki_p_forums_report == 'y') {
 if ($tiki_p_admin_forum == 'y') {
 	if (isset($_REQUEST['remove_attachment'])) {
   	$area = 'delforumattach';
-  	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     	key_check($area);
 			$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
   	} else {
@@ -155,7 +155,7 @@ if ($tiki_p_admin_forum == 'y') {
 
 	if (isset($_REQUEST['delsel_x'])) {
 		$area = 'delforumtopics';
-		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 		if (isset($_REQUEST['forumtopic'])) {
 	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
@@ -631,7 +631,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
                 && $tiki_p_forum_post == 'y')
        ) {
 			$area = 'delforumcomm';
-		  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		  if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     		key_check($area);
         $comments_show = 'y';
         $commentslib->remove_comment($_REQUEST["comments_threadId"]);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.59 2004-08-26 19:24:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.60 2004-09-08 19:53:01 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -439,7 +439,7 @@
         <td><input type="checkbox" name="feature_sheet" {if $feature_sheet eq 'y'}checked="checked"{/if}/></td>
 	<td>&nbsp;</td>
 	      <td class="form">
-            {if $feature_help eq 'y'}<a href="{$helpurl}TikiMultilingual" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Multilingual{/tr}">{/if}
+            {if $feature_help eq 'y'}<a href="{$helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Multilingual{/tr}">{/if}
             {tr}Multilingual{/tr}{if $feature_help eq 'y'}</a>{/if}
             :</td>
 	<td><input type="checkbox" name="feature_multilingual" {if $feature_multilingual eq 'y'}checked="checked"{/if} />
@@ -458,7 +458,7 @@
         <td><input type="checkbox" name="feature_friends" {if $feature_friends eq 'y'}checked="checked"{/if}/></td>
 	<td>&nbsp;</td>
 	      <td class="form">
-            {if $feature_help eq 'y'}<a href="{$helpurl}TikiMultilingual" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score{/tr}">{/if}
+            {if $feature_help eq 'y'}<a href="{$helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score{/tr}">{/if}
             {tr}Best language{/tr}{if $feature_help eq 'y'}</a>{/if}
             :</td>
 	<td><input type="checkbox" name="feature_best_language" {if $feature_best_language eq 'y'}checked="checked"{/if} />

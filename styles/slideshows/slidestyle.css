@@ -1,3 +1,7 @@
+body {
+background-color : #7d554b;
+}
+
 tt, pre {
 	font-family:    Lucida Console, Courier New, Courier, monotype;
 	font-size:   20px;
@@ -12,7 +16,7 @@ h1 {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   36px;
 	font-weight:   bold;
-	color:   black;
+	margin : 0;
 }
 
 ul {
@@ -24,7 +28,8 @@ li:hover {
 	background:   #000000;
 }
 
-a {
+a, a:visited {
+	color : #423200;
 	text-decoration:    none;
 	filter:   FlipH;
 }
@@ -33,13 +38,24 @@ h2 {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   24px;
 	color:   #3333FF;
+	margin : 0;
 }
-
+.maintable {
+background-color : #fffdeb;
+width : 700px;
+}
+.title {
+color : #423200;
+background-color : #a7967d;
+padding : 20px 30px 0 30px;
+}
 .Main {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	font-size:   24px;
 	color:   #000000;
 	list-style-type:   circle;
+	width : 400px;
+	padding : 20px 30px;
 }
 
 .slidedata {
@@ -55,13 +71,13 @@ h2 {
 }
 
 .footer {
-	font-family:    "Times New Roman", Times, serif;
+	background-color : #97866d;
+	color:   #feeea8;
 	font-size:   18px;
-	font-style:   italic;
 }
-
-.buttons {
-	font-family:    Verdana, Arial, Helvetica, sans-serif;
+.footer td {
+padding : 3px 30px;
+}
+a.buttons, a.buttons:visited {
 	color:   white;
-	font-size:   14px;
 }

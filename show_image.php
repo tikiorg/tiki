@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.24 2004-08-26 22:13:51 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.25 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.24 2004-08-26 22:13:51 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.25 2004-09-08 19:51:49 mose Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -106,7 +106,19 @@ $type = $imagegallib->filetype;
 
 //echo"<pre>";print_r(get_defined_vars());echo"</pre>";
 
+
+# Client-Side image cache (based on Etag Headers)
+# Etag value is based on the md5 hash of the image. It should change everytime the image changes. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
+$etag=md5($imagegallib->image);
+
+#if the client sends the HTTP_IF_NONE_MATCH header (because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header (304)
+if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag){
+        header("HTTP/1.0 304 Not Modified");
+        exit();
+}
+		
 header ("Content-type: $type");
+header ("Etag: $etag");
 
 //line commented out by teedog
 //I noticed that the browser sometimes sends erroneous "Range:" headers when calling show_image.php

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.6 2004-04-16 05:53:35 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.7 2004-09-08 19:51:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,7 +36,7 @@ if ($_REQUEST["tagId"]) {
 
 if (isset($_REQUEST["remove"])) {
 	$area = "delquicktag";
-	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+	if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
 		$quicktagslib->remove_quicktag($_REQUEST["remove"]);
 	} else {

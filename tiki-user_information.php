@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.21 2004-08-26 19:23:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.22 2004-09-08 19:51:51 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,6 +96,7 @@ $userbreadCrumb = $tikilib->get_user_preference($userwatch,'userbreadCrumb',$ano
 $smarty->assign_by_ref('realName',$realName);
 $smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
+
 $smarty->assign_by_ref('homePage',$homePage);
 
 $avatar = $tikilib->get_user_avatar($userwatch);
@@ -117,6 +118,11 @@ if ($email_isPublic != 'n') {
 }
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
+$userPage = $feature_wiki_userpage_prefix.$userinfo['login'];
+if ($tikilib->page_exists($userPage))
+	$smarty->assign('userPage', $userPage);
+else
+	$smarty->assign('userPage', '');
 
 ask_ticket('user-information');
 

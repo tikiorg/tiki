@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.8 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.9 2004-09-08 19:53:00 mose Exp $
  *
  * Define styles for: Categories
  *
@@ -25,6 +25,7 @@ td.tdcategpath {
 .categlink, .categlink:visited, .categlink:active,
 .catname,   .catname:visited,   .catname:active {
     color: #00B000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
@@ -32,11 +33,13 @@ td.tdcategpath {
 .categlink:hover, .categlink:visited:hover,
 .catname:hover,   .catname:visited:hover {
     color: #00F000;
+	 background-color: transparent;
     text-decoration: none;
 }
 
 table.catobjects {
     color: #001000;
+	 background-color: transparent;
     width: 100%;
     border: 2px ridge #00B000;
 }

@@ -1,4 +1,11 @@
 <?php
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
 /*Information sur la configuration des chemins*/
 @define("APATH_ROOT_WIN", 		str_replace(basename(dirname(__FILE__)), "", dirname(__FILE__)));
 @define("APATH_ROOT", 			ereg_replace("//","/",join('/',preg_split("/[\/\\\]/",APATH_ROOT_WIN))."/"));

@@ -1,5 +1,5 @@
 <div class="cbox">
-<div class="cbox-title">{tr}Users & groups{/tr}</div>
+<div class="cbox-title">{tr}Users &amp; groups{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
@@ -51,7 +51,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
         <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
       </div>
       <div id="available_styles" {if count($available_styles) == 0}style="display:none;"{else}style="display:block;"{/if}>
-        {tr}Available styles:{/tr}<br>
+        {tr}Available styles:{/tr}<br />
         <select name="available_styles[]" multiple="multiple" size="5">
           {section name=ix loop=$styles}
             <option value="{$styles[ix]|escape}"
@@ -75,7 +75,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
         <a class="link" href="javascript:show('available_languages');hide('select_available_languages');">{tr}Restrict available languages{/tr}</a>
       </div>
       <div id="available_languages" {if count($available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
-        {tr}Available languages:{/tr}<br>
+        {tr}Available languages:{/tr}<br />
         <select name="available_languages[]" multiple="multiple" size="5">
           {section name=ix loop=$languages}
             <option value="{$languages[ix].value|escape}"
@@ -131,6 +131,14 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <td><input type="checkbox" name="feature_ticketlib" {if $feature_ticketlib eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Protect against CSRF with a ticket{/tr}:</td>
 <td><input type="checkbox" name="feature_ticketlib2" {if $feature_ticketlib2 eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Highlight Group{/tr}:</td><td>
+<select name="highlight_group">
+<option value="0">{tr}choose a group ...{/tr}</option>
+{foreach key=g item=gr from=$listgroups}
+<option value="{$gr|escape}" {if $gr eq $highlight_group} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
+{/foreach}
+</select>
+</td></tr>
 
 <tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>

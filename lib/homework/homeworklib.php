@@ -1,10 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.19 2004-05-05 00:46:35 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.20 2004-09-08 19:52:28 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
+	exit;
 }
 
 
