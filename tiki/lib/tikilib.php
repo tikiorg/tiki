@@ -3788,6 +3788,7 @@ function parse_pp_np(&$data, &$preparsed, &$noparsed) {
 
 // This recursive function handles pre- and no-parse sections and plugins
 function parse_first(&$data, &$preparsed, &$noparsed) {
+		global $dbTiki;
     // Handle pre- and no-parse sections
     $this->parse_pp_np($data, $preparsed, $noparsed);
 
