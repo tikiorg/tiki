@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-old_polls.php">{tr}Polls{/tr}</a><br/><br/>
 <div align="center">
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-old_polls.php">
      <input type="text" name="find" value="{$find}" />
