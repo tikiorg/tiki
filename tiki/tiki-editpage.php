@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.42 2003-08-21 00:51:20 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.43 2003-09-02 12:05:51 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,17 +129,15 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
 	}
 }
 
-if (substr($page, 0, 8) == "UserPage") {
-	$name = substr($page, 8);
-
-	if ($user != $name) {
-		if ($tiki_p_admin != 'y') {
-			$smarty->assign('msg', tra("You cannot edit this page because it is a user personal page"));
-
-			$smarty->display("styles/$style_base/error.tpl");
-			die;
-		}
-	}
+if(strcasecmp(substr($page,0,8),"UserPage")==0) {
+	$name = substr($page,8);
+	if(strcasecmp($user,$name)!=0) {
+		if($tiki_p_admin != 'y') {
+ 			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
+ 			$smarty->display("styles/$style_base/error.tpl");
+ 			die;
+ 		}
+ 	}
 }
 
 if ($_REQUEST["page"] == 'SandBox' && $feature_sandbox != 'y') {
