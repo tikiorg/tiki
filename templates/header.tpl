@@ -66,30 +66,14 @@
     
 {* --- tabs block (for myTiki, calendar, and more to come) --- *}
 {if $uses_tabs eq 'y'}
-<script src="lib/tabs/utils.js" type="text/javascript"></script>
-<script src="lib/tabs/viewport.js" type="text/javascript"></script>
-<script src="lib/tabs/global.js" type="text/javascript"></script>
-<script src="lib/tabs/cookie.js" type="text/javascript"></script>
-<script src="lib/tabs/tabs.js" type="text/javascript"></script>
-<script language='Javascript' type='text/javascript'>
-// <![CDATA[
-TabParams = {literal}{{/literal}
-	useClone         : false,
-	alwaysShowClone  : false,
-	eventType        : "click",
-	tabTagName       : "span"
-	{literal}}{/literal};
-// ]]>
-</script>
+{* tabs lib removed because non-free *}
 {/if}
 
 {$trl}
 
 </head>
 
-<body {if $uses_tabs eq 'y'}onload="tabInit()"{/if} 
-{if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} >
-
+<body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
 {if $minical_reminders>100}
 <iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}

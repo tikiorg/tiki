@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.12 2004-03-31 09:55:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.13 2004-04-08 22:55:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,7 +106,7 @@ if (isset($_GET['do'])) {
 }
 
 if (isset($_GET['compiletemplates'])) {
-	cache_templates('templates',$_GET['compiletemplates']);
+	cache_templates('templates',$tikidomain.$_GET['compiletemplates']);
 	$logslib->add_log('system','compiled templates');
 }
 
@@ -124,7 +124,7 @@ $smarty->assign('modules', $modules);
 
 $templates=array();
 foreach($languages as $clang) {
-	if(is_dir("templates_c/".$clang["value"])) {
+	if(is_dir("templates_c/$tikidomain".$clang["value"])) {
 		$templates[$clang["value"]] = du("templates_c/$tikidomain".$clang["value"]);
 	} else {
 		$templates[$clang["value"]] = array("cant"=>0,"total"=>0);

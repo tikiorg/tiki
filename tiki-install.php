@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.55 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.56 2004-04-08 22:55:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.55 2004-03-28 07:32:23 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.56 2004-04-08 22:55:06 mose Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -92,12 +92,12 @@ function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$db
 	$pass_tiki=addslashes($pass_tiki);
 	$dbs_tiki=addslashes($dbs_tiki);
 	$fw = fopen('db/local.php', 'w');
-	$filetowrite="<?php\n\$db_tiki=\"$db_tiki\";\n";
-	$filetowrite.="\$dbversion_tiki=\"$dbversion_tiki\";\n";
-	$filetowrite.="\$host_tiki=\"$host_tiki\";\n";
-	$filetowrite.="\$user_tiki=\"$user_tiki\";\n";
-	$filetowrite.="\$pass_tiki=\"$pass_tiki\";\n";
-	$filetowrite.="\$dbs_tiki=\"$dbs_tiki\";\n";
+	$filetowrite="<?php\n\$db_tiki='".$db_tiki."';\n";
+	$filetowrite.="\$dbversion_tiki='".$dbversion_tiki."';\n";
+	$filetowrite.="\$host_tiki='".$host_tiki."';\n";
+	$filetowrite.="\$user_tiki='".$user_tiki."';\n";
+	$filetowrite.="\$pass_tiki='".$pass_tiki."';\n";
+	$filetowrite.="\$dbs_tiki='".$dbs_tiki."';\n";
 	$filetowrite.="?>";
         fwrite($fw, $filetowrite);
 	fclose ($fw);
@@ -429,7 +429,7 @@ $tiki_version = '1.9';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
-$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase/MSSQL','SQLLite');
+$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase','SQLLite','MSSQL');
 
 $dbtodsn = array(
 	"MySQL 3.x" => "mysql",
@@ -437,8 +437,9 @@ $dbtodsn = array(
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle 8i" => "oci8",
 	"Oracle 9i" => "oci8",
-	"Sybase/MSSQL" => "sybase",
-	"SQLLite" => "sqlite"
+	"Sybase" => "sybase",
+	"SQLLite" => "sqlite",
+	"MSSQL" => "mssql"
 );
 
 $smarty->assign_by_ref('dbservers', $dbservers);
@@ -503,6 +504,7 @@ if (!file_exists('db/local.php')) {
 		$dbTiki = &ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+			// echo $dbTiki->ErrorMsg();
 			$dbcon = false;
 			$smarty->assign('dbcon', 'n');
 		} else {

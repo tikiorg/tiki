@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.8 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.9 2004-04-08 22:55:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,8 +10,9 @@
 require_once ('tiki-setup.php');
 
 $isvalid = false;
-$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '');
-
+if (isset($_REQUEST["user"]) && isset($_REQUEST["pass"])) {
+	$isvalid = $userlib->validate_user($_REQUEST["user"], $_REQUEST["pass"], '', '');
+}
 if ($isvalid) {
 	//session_register("user",$_REQUEST["user"]); 
 	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
