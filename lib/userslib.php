@@ -524,22 +524,22 @@ class UsersLib extends TikiLib {
 	}
 
 	function get_users_names($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where login like $findesc";
+			$findesc = '%' . $find . '%';
+			$mid = " where `login` like ?";
+			$bindvars=array($findesc);
 		} else {
 			$mid = '';
+			$bindvars=array();
 		}
 
-		$query = "select login from users_users $mid order by $sort_mode limit $offset,$maxRecords";
-		$result = $this->query($query);
+		$query = "select `login` from `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res["login"];
 		}
 

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.11 2003-08-08 12:18:14 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.12 2003-08-11 07:06:54 redflo Exp $
  *
  * \brief Categiries support class
  *
@@ -137,7 +137,9 @@ class CategLib extends TikiLib {
 	function is_categorized($type, $objId) {
 
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `type`=? and `objId`=?";
-		$result = $this->query($query,array($type,$objId));
+		$bindvars=array($type,$objId);
+		settype($bindvars["1"],"string");
+		$result = $this->query($query,$bindvars);
 
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
@@ -264,7 +266,10 @@ class CategLib extends TikiLib {
 
 		$query = "select `categId` from `tiki_category_objects` tco, `tiki_categorized_objects` tto
     where tco.`catObjectId`=tto.`catObjectId` and `type`=? and `objId`=?";
-		$result = $this->query($query,array($type,$objId));
+		//settype($objId,"string"); //objId is defined as varchar
+		$bindvars=array($type,$objId);
+		settype($bindvars["1"],"string");
+		$result = $this->query($query,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

@@ -520,20 +520,21 @@ class Comments extends TikiLib {
 	}
 
 	function list_forums($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where `name` like $findesc or description like $findesc";
+			$mid = " where `name` like ? or `description` like ? ";
+			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_forums` $mid order by section asc,$sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_forums` $mid order by `section` asc,".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_forums` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$now = date("U");
 		$ret = array();
 
@@ -550,8 +551,8 @@ class Comments extends TikiLib {
 
 			// Now select users
 			$objectId = md5('forum' . $res["forumId"]);
-			$query = "select distinct(username) from `tiki_comments` where `object`='$objectId'";
-			$result2 = $this->query($query);
+			$query = "select distinct `username` from `tiki_comments` where `object`=?";
+			$result2 = $this->query($query,array($objectId));
 			$res["users"] = $result2->numRows();
 
 			if ($forum_age) {
@@ -559,6 +560,7 @@ class Comments extends TikiLib {
 			} else {
 				$res["users_per_day"] = 0;
 			}
+
 
 			$query2 = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and commentDate=" . $res["lastPost"];
 			$result2 = $this->query($query2);
@@ -817,9 +819,9 @@ class Comments extends TikiLib {
 	}
 
 	function get_comment_replies($id, $sort_mode, $offset, $max, $threshold = 0) {
-		$query = "select `threadId`,title,userName,points,commentDate,parentId from `tiki_comments` where `parentId`=$id and average>=$threshold order by $sort_mode,commentDate desc limit $offset,$max";
+		$query = "select `threadId`,`title`,`userName`,`points`,`commentDate`,`parentId` from `tiki_comments` where `parentId`=? and `average`>=? order by ".$this->convert_sortmode($sort_mode).",`commentDate` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($id,$threshold),$max,$offset);
 		$retval = array();
 		$retval["numReplies"] = $result->numRows();
 		$ret = array();
@@ -843,13 +845,13 @@ class Comments extends TikiLib {
 	}
 
 	function pick_cookie() {
-		$cant = $this->getOne("select count(*) from tiki_cookies");
+		$cant = $this->getOne("select count(*) from `tiki_cookies`",array());
 
 		if (!$cant)
 			return '';
 
 		$bid = rand(0, $cant - 1);
-		$cookie = $this->getOne("select cookie from `tiki_cookies` limit $bid,1");
+		$cookie = $this->query("select `cookie` from `tiki_cookies`",array(),1,$bid);
 		$cookie = str_replace("\n", "", $cookie);
 		return 'Cookie: ' . $cookie . '';
 	}
@@ -1034,7 +1036,7 @@ class Comments extends TikiLib {
 
 			$res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
 			$query = "select max(`commentDate`) from `tiki_comments` where `parentId`=?";
-			$res["lastPost"] = $this->getOne($queryi,array($tid));
+			$res["lastPost"] = $this->getOne($query,array($tid));
 
 			if (!$res["lastPost"])
 				$res["lastPost"] = $res["commentDate"];
