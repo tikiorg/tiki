@@ -254,7 +254,6 @@ onmouseover="this.style.textDecoration='underline';"
 <form action="tiki-calendar.php" method="get" class="daterow">
 <img src="img/icons/calendar.gif" width="16" height="16" vspace="2" hspace="2" align="top"
 /><input type="hidden" id="todate" name="todate" value="{$focusdate}" /><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
-<input type="hidden" name="viewmode" value="{$viewmode}" />
 <input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut" />
 </form>
 <script type="text/javascript">
