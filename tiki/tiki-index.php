@@ -1,4 +1,6 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.88 2004-02-11 16:14:53 ggeller Exp $
+
 // Initialization
 
 require_once('tiki-setup.php');

@@ -1,3 +1,4 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/pleaselogin.tpl,v 1.2 2004-02-11 16:14:53 ggeller Exp $ *}
 {* Index we display a wiki page here *}
 {include file="header.tpl"}
 {if $feature_bidi eq 'y'}
