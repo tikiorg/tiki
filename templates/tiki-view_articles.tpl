@@ -35,12 +35,12 @@
 <div class="articletrailer">
 (<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes
 {if $tiki_p_edit_article eq 'y'}
-[<a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">Edit</a>] 
+[<a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{tr}Edit{/tr}</a>] 
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-[<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">Remove</a>]
+[<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{tr}Remove{/tr}</a>]
 {/if}
-[<a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">Print</a>]
+[<a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{tr}Print{/tr}</a>]
 )
 </div>
 {/section}
