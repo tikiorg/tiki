@@ -3805,3 +3805,4 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols'
 
 # Dynamic variables
 CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
