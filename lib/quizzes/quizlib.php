@@ -286,12 +286,18 @@ class QuizLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $questionsPerPage, $timeLimited, $timeLimit) {
+	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit) {
 		if ($quizId) {
 			// update an existing quiz
-			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?, `questionsPerPage` = ?, ";
-			$query.= "`timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
-			$bindvars=array($name,$description,$canRepeat,$storeResults,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
+ 			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?, `immediateFeedback` = ?, `showAnswers` = ?,	`shuffleQuestions` = ?, `shuffleAnswers` = ?, `questionsPerPage` = ?, ";
+ 			$query.= "`timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
+ 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
+
+//                         $query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?, `questionsPerPage` = ?, ";
+//                         $query.= "`timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
+//                         $bindvars=array($name,$description,$canRepeat,$storeResults,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
+
+
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz

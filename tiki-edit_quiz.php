@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.10 2004-04-30 04:12:43 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,37 +57,18 @@ if ($tiki_p_admin_quizzes != 'y') {
 
 $_REQUEST["questionsPerPage"] = 999;
 
-if ($_REQUEST["quizId"]) {
-	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
-} else {
-	$info = array();
-
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["canRepeat"] = 'n';
-	$info["storeResults"] = 'n';
-	$info["questionsPerPage"] = 10;
-	$info["timeLimited"] = 'n';
-	$info["timeLimit"] = 60 * 60;
-}
-
-$smarty->assign('name', $info["name"]);
-$smarty->assign('description', $info["description"]);
-$smarty->assign('canRepeat', $info["canRepeat"]);
-$smarty->assign('storeResults', $info["storeResults"]);
-$smarty->assign('questionsPerPage', $info["questionsPerPage"]);
-$smarty->assign('timeLimited', $info["timeLimited"]);
-$smarty->assign('timeLimit', $info["timeLimit"]);
-
-if (isset($_REQUEST["remove"])) {
-  $area = 'delquiz';
-  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
-    key_check($area);
-		$quizlib->remove_quiz($_REQUEST["remove"]);
-  } else {
-    key_get($area);
-  }
-}
+$info = array();
+$info["name"] = '';
+$info["description"] = '';
+$info["canRepeat"] = 'n';
+$info["storeResults"] = 'n';
+$info["immediateFeedback"] = 'n';
+$info["showAnswers"] = 'n';
+$info["shuffleQuestions"] = 'n';
+$info["shuffleAnswers"] = 'n';
+$info["questionsPerPage"] = 10;
+$info["timeLimited"] = 'n';
+$info["timeLimit"] = 60 * 60;
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz');
@@ -103,21 +84,72 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["storeResults"] = 'n';
 	}
 
+	if (isset($_REQUEST["immediateFeedback"]) && $_REQUEST["immediateFeedback"] == 'on') {
+		$_REQUEST["immediateFeedback"] = 'y';
+	} else {
+		$_REQUEST["immediateFeedback"] = 'n';
+	}
+
+	if (isset($_REQUEST["showAnswers"]) && $_REQUEST["showAnswers"] == 'on') {
+		$_REQUEST["showAnswers"] = 'y';
+	} else {
+		$_REQUEST["showAnswers"] = 'n';
+	}
+
+	if (isset($_REQUEST["shuffleQuestions"]) && $_REQUEST["shuffleQuestions"] == 'on') {
+		$_REQUEST["shuffleQuestions"] = 'y';
+	} else {
+		$_REQUEST["shuffleQuestions"] = 'n';
+	}
+
+	if (isset($_REQUEST["shuffleAnswers"]) && $_REQUEST["shuffleAnswers"] == 'on') {
+		$_REQUEST["shuffleAnswers"] = 'y';
+	} else {
+		$_REQUEST["shuffleAnswers"] = 'n';
+	}
+
 	if (isset($_REQUEST["timeLimited"]) && $_REQUEST["timeLimited"] == 'on') {
 		$_REQUEST["timeLimited"] = 'y';
 	} else {
 		$_REQUEST["timeLimited"] = 'n';
 	}
 
-	$qid = $quizlib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["canRepeat"],
-		$_REQUEST["storeResults"], $_REQUEST["questionsPerPage"], $_REQUEST["timeLimited"], $_REQUEST["timeLimit"]);
-
+	$qid = $quizlib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"],
+																$_REQUEST["description"],	$_REQUEST["canRepeat"],
+																$_REQUEST["storeResults"], $_REQUEST["immediateFeedback"],
+																$_REQUEST["showAnswers"],	$_REQUEST["shuffleQuestions"],
+																$_REQUEST["shuffleAnswers"], $_REQUEST["questionsPerPage"],
+																$_REQUEST["timeLimited"], $_REQUEST["timeLimit"]);
 	$cat_type = 'quiz';
 	$cat_objid = $qid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-take_quiz.php?quizId=" . $cat_objid;
 	include_once ("categorize.php");
+} elseif ($_REQUEST["quizId"]) {
+	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
+}
+
+$smarty->assign('name', $info["name"]);
+$smarty->assign('description', $info["description"]);
+$smarty->assign('canRepeat', $info["canRepeat"]);
+$smarty->assign('storeResults', $info["storeResults"]);
+$smarty->assign('immediateFeedback',$info["immediateFeedback"]);
+$smarty->assign('showAnswers',$info["showAnswers"]);
+$smarty->assign('shuffleQuestions',$info["shuffleQuestions"]);
+$smarty->assign('shuffleAnswers',$info["shuffleAnswers"]);
+$smarty->assign('questionsPerPage', $info["questionsPerPage"]);
+$smarty->assign('timeLimited', $info["timeLimited"]);
+$smarty->assign('timeLimit', $info["timeLimit"]);
+
+if (isset($_REQUEST["remove"])) {
+  $area = 'delquiz';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$quizlib->remove_quiz($_REQUEST["remove"]);
+  } else {
+    key_get($area);
+  }
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
