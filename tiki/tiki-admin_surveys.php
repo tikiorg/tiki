@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.11 2004-06-04 02:41:42 dgdaniels Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.12 2004-06-04 03:25:22 dgdaniels Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ if (!isset($_REQUEST["surveyId"])) {
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
 
 $smarty->assign('individual', 'n');
-
+//begin checking for perms
 if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 	$smarty->assign('individual', 'y');
 
@@ -62,7 +62,7 @@ if ($_REQUEST["surveyId"]) {
 
 	$info["name"] = '';
 	$info["description"] = '';
-	$info["status"] = 'o';
+	$info["status"] = 'o'; //check to see if survey is open
 }
 
 $smarty->assign('info', $info);
@@ -161,7 +161,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-// Fill array with possible number of questions per page
+// Fill array with possible number of questions per page (qpp)
 $qpp = array(
 	1,
 	2,
