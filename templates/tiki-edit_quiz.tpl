@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.15 2004-04-30 23:01:59 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.16 2004-05-15 19:45:34 dgdaniels Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -11,7 +11,7 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Quizzes" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 <!-- link to tpl -->
@@ -28,39 +28,93 @@
 <br /><br />
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+{* redundant
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
+*}
+
+
 <h2>{tr}Create/edit quizzes{/tr}</h2>
+{*check perms first *}
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=quiz%20{$name}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a><br /><br />
+<a class="link" href="tiki-objectpermissions.php?objectName=quiz%20{$name}&amp;objectType=quiz&amp;permType=quizzes&amp;objectId={$quizId}">{tr}There are individual permissions set for this quiz{/tr}</a>
+<br /><br />
 {/if}
+<! --- begin form to create/ edit quizzes -->
 <form action="tiki-edit_quiz.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <table class="normal">
-<tr><td class="formcolor"><label for="quiz-name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="quiz-name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor"><label for="quiz-desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="quiz-desc" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-name">{tr}Name{/tr}:</label>
+</td>
+<td class="formcolor">
+<input type="text" name="name" id="quiz-name" value="{$name|escape}" />
+</td>
+</tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-desc">{tr}Description{/tr}:</label>
+</td>
+<td class="formcolor">
+<textarea name="description" id="quiz-desc" rows="4" cols="40">{$description|escape}</textarea>
+</td>
+</tr>
 {include file=categorize.tpl}
-<tr class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
+<tr class="formcolor">
+<td>{tr}Publish Date{/tr}</td>
+<td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
-</td></tr>
-<tr class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
+</td>
+</tr>
+<tr class="formcolor">
+<td>{tr}Expiration Date{/tr}</td>
+<td>
 {html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
-</td></tr>
-<tr><td class="formcolor"><label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</td><td class="formcolor"><input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="quiz-results">{tr}Store quiz results{/tr}</td><td class="formcolor"><input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="immediate-feedback">{tr}Immediate feedback{/tr}</td><td class="formcolor"><input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="show-answers">{tr}Show correct answers{/tr}</td><td class="formcolor"><input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="shuffle-questions">{tr}Shuffle questions{/tr}</td><td class="formcolor"><input type="checkbox" name="shuffleQuestions" id="shuffle-questions" {if $shuffleQuestions eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="shuffle-answers">{tr}Shuffle answers{/tr}</td><td class="formcolor"><input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} /></td></tr>
+</td>
+</tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</td><td class="formcolor"><input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /></td></tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-results">{tr}Store quiz results{/tr}</td>
+<td class="formcolor">
+<input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
+<tr>
+<td class="formcolor"><label for="immediate-feedback">{tr}Immediate feedback{/tr}</td><td class="formcolor"><input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} /></td></tr>
+<tr>
+<td class="formcolor">
+<label for="show-answers">{tr}Show correct answers{/tr}</td><td class="formcolor"><input type="checkbox" name="showAnswers" id="show-answers" {if $showAnswers eq 'y'}checked="checked"{/if} /></td></tr>
+<tr>
+<td class="formcolor">
+<label for="shuffle-questions">{tr}Shuffle questions{/tr}</td><td class="formcolor">
+<input type="checkbox" name="shuffleQuestions" id="shuffle-questions" {if $shuffleQuestions eq 'y'}checked="checked"{/if} />
+</td>
+</tr>
+<tr>
+<td class="formcolor">
+<label for="shuffle-answers">{tr}Shuffle answers{/tr}</td><td class="formcolor">
+<input type="checkbox" name="shuffleAnswers" id="shuffle-answers" {if $shuffleAnswers eq 'y'}checked="checked"{/if} /></td></tr>
 <!--<tr><td class="formcolor"><label for="quiz-perpage">{tr}Questions per page{/tr}</td><td class="formcolor"><select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$questionsPerPage output=$qpp}</select></td></tr>-->
-<tr><td class="formcolor"><label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label></td><td class="formcolor"><input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor"><label for="quiz-maxtime">{tr}Maximum time{/tr}</label></td><td class="formcolor"><select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td></tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-timelimit">{tr}Quiz is time limited{/tr}</label></td><td class="formcolor">
+<input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} />
+</td>
+</tr>
+<tr>
+<td class="formcolor">
+<label for="quiz-maxtime">{tr}Maximum time{/tr}</label></td><td class="formcolor"><select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+
+<!-- begin form for searching quizzes --->
+
 <h2>{tr}quizzes{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -74,15 +128,36 @@
    </td>
 </tr>
 </table>
+
+<!-- begin table for displaying quiz data --->
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizId_desc'}quizId_asc{else}quizId_desc{/if}">{tr}ID{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'canRepeat_desc'}canRepeat_asc{else}canRepeat_desc{/if}">{tr}canRepeat{/tr}</a></td>
-<td class="heading">{tr}timeLimit{/tr}</td>
+<td class="heading">
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizId_desc'}quizId_asc{else}quizId_desc{/if}">{tr}ID{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'canRepeat_desc'}canRepeat_asc{else}canRepeat_desc{/if}">{tr}canRepeat{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
+</td>
+
+
 <td class="heading">{tr}questions{/tr}</td>
 <td class="heading">{tr}results{/tr}</td>
+
+{* still stuck on being able to sort by number of questions and results! 
+<a class="tableheading" href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'results_desc'}results_asc{else}results_desc{/if}">{tr}results{/tr}</a>
+</td>
+*}
+
+
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$channels}
