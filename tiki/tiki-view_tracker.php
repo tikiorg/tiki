@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.16 2003-12-08 21:54:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.17 2003-12-17 12:17:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,7 +144,6 @@ if ($user) {
 	if (isset($_REQUEST["monitor"])) {
 		$user_email = $tikilib->get_user_email($user);
 		$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
-
 		if (in_array($user_email, $emails)) {
 			$notificationlib->remove_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
 			$mail_msg = tra('Your email address has been removed from the list of addresses monitoring this tracker');
@@ -154,10 +153,8 @@ if ($user) {
 		}
 		$smarty->assign('mail_msg', $mail_msg);
 	}
-
 	$user_email = $tikilib->get_user_email($user);
 	$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
-
 	if (in_array($user_email, $emails)) {
 		$smarty->assign('email_mon', tra('Cancel monitoring'));
 	} else {
@@ -168,10 +165,8 @@ if ($user) {
 if (!isset($_REQUEST["save"])) {
 	if ($_REQUEST["itemId"]) {
 		$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
-
 		for ($i = 0; $i < count($fields["data"]); $i++) {
 			$name = $fields["data"][$i]["name"];
-
 			$ins_name = 'ins_' . $name;
 			$ins_fields["data"][$i]["ins_name"] = $ins_name;
 			$ins_fields["data"][$i]["value"] = $info["$name"];
@@ -183,15 +178,13 @@ if ($tiki_p_create_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		// Save here the values for this item
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields);
-
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 		for ($i = 0; $i < count($fields["data"]); $i++) {
 			$name = $fields["data"][$i]["name"];
-
 			$ins_name = 'ins_' . $name;
 			$ins_fields["data"][$i]["ins_name"] = $ins_name;
 			$ins_fields["data"][$i]["value"] = '';
 		}
-
 		$smarty->assign('itemId', '');
 	}
 }
@@ -257,6 +250,8 @@ include_once('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('tiki_p_filter_tracker_items', 'n');
+
+$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');

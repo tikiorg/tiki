@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.15 2003-12-16 07:26:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.16 2003-12-17 12:17:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,27 +33,20 @@ if (!isset($_REQUEST["trackerId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
-
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 $smarty->assign('individual', 'n');
-
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
-
 	if ($tiki_p_admin != 'y') {
 		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-
 		foreach ($perms["data"] as $perm) {
 			$permName = $perm["permName"];
-
 			if ($userlib->object_has_permission($user, $_REQUEST["trackerId"], 'tracker', $permName)) {
 				$$permName = 'y';
-
 				$smarty->assign("$permName", 'y');
 			} else {
 				$$permName = 'n';
-
 				$smarty->assign("$permName", 'n');
 			}
 		}
@@ -74,7 +67,6 @@ $ins_fields = $fields;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$name = $fields["data"][$i]["name"];
-
 	$ins_name = 'ins_' . $name;
 	$ins_fields["data"][$i]["ins_name"] = $ins_name;
 
@@ -84,7 +76,6 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-
 		if (isset($_REQUEST["$ins_name"])) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_name"];
 		} else {
@@ -94,7 +85,6 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
-
 		if (isset($_REQUEST["$ins_name" . "Day"])) {
 			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_name" . "Hour"], $_REQUEST["$ins_name" . "Minute"],
 				0, $_REQUEST["$ins_name" . "Month"], $_REQUEST["$ins_name" . "Day"], $_REQUEST["$ins_name" . "Year"]);
@@ -104,12 +94,9 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	if ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$name"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$name"];
-
-			;
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-
 		if (isset($_REQUEST["$ins_name"]) && $_REQUEST["$ins_name"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
 		} else {
@@ -152,6 +139,7 @@ if ($_REQUEST["itemId"]) {
 
 $smarty->assign_by_ref('fields', $fields["data"]);
 $smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
+$smarty->assign_by_ref('ins_keys', $keys);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
@@ -206,22 +194,16 @@ $smarty->assign('email_mon', '');
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
 		$user_email = $tikilib->get_user_email($user);
-
 		$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
-
 		if (in_array($user_email, $emails)) {
 			$notificationlib->remove_mail_event('tracker_item_modified', $_REQUEST["itemId"], $user_email);
-
 			$mail_msg = tra('Your email address has been removed from the list of addresses monitoring this item');
 		} else {
 			$notificationlib->add_mail_event('tracker_item_modified', $_REQUEST["itemId"], $user_email);
-
 			$mail_msg = tra('Your email address has been added to the list of addresses monitoring this item');
 		}
-
 		$smarty->assign('mail_msg', $mail_msg);
 	}
-
 	$user_email = $tikilib->get_user_email($user);
 	$emails = $notificationlib->get_mail_events('tracker_item_modified', $_REQUEST["itemId"]);
 
@@ -238,36 +220,27 @@ if ($tracker_info["useComments"] == 'y') {
 			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
 		}
 	}
-
 	if (isset($_REQUEST["commentId"])) {
 		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
-
 		$smarty->assign('comment_title', $comment_info["title"]);
 		$smarty->assign('comment_data', $comment_info["data"]);
 	} else {
 		$_REQUEST["commentId"] = 0;
-
 		$smarty->assign('comment_title', '');
 		$smarty->assign('comment_data', '');
 	}
-
 	$smarty->assign('commentId', $_REQUEST["commentId"]);
-
 	if ($_REQUEST["commentId"] && $tiki_p_admin_trackers != 'y') {
 		$_REQUEST["commentId"] = 0;
 	}
-
 	if ($tiki_p_comment_tracker_items == 'y') {
 		if (isset($_REQUEST["save_comment"])) {
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"],
-				$_REQUEST["comment_data"], $user);
-
+			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user);
 			$smarty->assign('comment_title', '');
 			$smarty->assign('comment_data', '');
 			$smarty->assign('commentId', 0);
 		}
 	}
-
 	$comments = $trklib->list_item_comments($_REQUEST["itemId"], 0, -1, 'posted_desc', '');
 	$smarty->assign_by_ref('comments', $comments["data"]);
 }
@@ -275,58 +248,44 @@ if ($tracker_info["useComments"] == 'y') {
 if ($tracker_info["useAttachments"] == 'y') {
 	if (isset($_REQUEST["removeattach"])) {
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
-
 		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
 			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 		}
 	}
-
 	if (isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y')) {
 		// Process an attachment here
 		if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 			$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-
 			$data = '';
 			$fhash = '';
-
 			if ($t_use_db == 'n') {
 				$fhash = md5($name = $_FILES['userfile1']['name']);
-
 				$fw = fopen($t_use_dir . $fhash, "wb");
-
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
-
 					$smarty->display("error.tpl");
 					die;
 				}
 			}
-
 			while (!feof($fp)) {
 				if ($t_use_db == 'y') {
 					$data .= fread($fp, 8192 * 16);
 				} else {
 					$data = fread($fp, 8192 * 16);
-
 					fwrite($fw, $data);
 				}
 			}
-
 			fclose ($fp);
-
 			if ($t_use_db == 'n') {
 				fclose ($fw);
-
 				$data = '';
 			}
-
 			$size = $_FILES['userfile1']['size'];
 			$name = $_FILES['userfile1']['name'];
 			$type = $_FILES['userfile1']['type'];
 			$trklib->item_attach_file($_REQUEST["itemId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash);
 		}
 	}
-
 	$attextra = 'n';
 	if (strstr($tracker_info["orderAttachments"],'|')) {
 		$attextra = 'y';
@@ -347,6 +306,8 @@ $section = 'trackers';
 include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
+$smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 $smarty->display("tiki.tpl");
