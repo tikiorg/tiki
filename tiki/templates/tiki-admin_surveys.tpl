@@ -1,23 +1,26 @@
 <a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 
 <!-- the help link info -->
-  
+
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Surveys" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Surveys{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=SurveysDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Surveys{/tr}">
 <img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>{/if}
 
-<!-- link to tpl -->
+<!-- link to tpl and help-->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
 <img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>{/if}
 
-<!-- beginning of next bit -->
+<!-- the two link buttons -->
 
 <br /><br />
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
+
+<!-- describe the new survey -->
 <br /><br />
+
 {if $info.surveyId > 0}
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
 <a href="tiki-admin_surveys.php">Create new survey</a>
@@ -30,11 +33,28 @@
 <form action="tiki-admin_surveys.php" method="post">
 <input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea></td></tr>
+<tr class="formcolor">
+<!-- the tiny field for giving it a name-->
+<td>{tr}Name{/tr}:</td>
+<td>
+
+<!-- % works here -->
+<input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
+
+
+
+</tr>
+<tr class="formcolor">
+<td>{tr}Description{/tr}:</td>
+<td>
+<!-- % !work here hence the wonkiness in formatting... ugly as dirt -->
+<textarea name="description" rows="4" cols="80">{$info.description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
-<tr class="formcolor"><td>{tr}Status{/tr}</td><td>
+<tr class="formcolor">
+<td>{tr}Status{/tr}</td>
+<td>
 <select name="status">
+<!-- the survey has an on and off button... could be applied to quizzes -->
 <option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}open{/tr}</option>
 <option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
 </select>
@@ -42,26 +62,39 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+<!--  find in existing surveys -->
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
    <td>
    <form method="get" action="tiki-admin_surveys.php">
-     <input type="text" name="find" value="{$find|escape}" />
+     <input type="text" name="find" size= "40" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
+<!--  existing surveys -->
+
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></td>
+<td class="heading">
+<!--  table: sort by ID -->
+<a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></td>
+<!--  table: sort by name -->
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<!--  table: sort by description-->
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}stat{/tr}</a></td>
+<!--  table: sort by stat: which appears rediculous becuase there is nothing to sort-->
+<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}status{/tr}</a></td>
+<!--  table: sort by question but it doesn't work and I don't know why-->
+{*
+<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}questions{/tr}</td>
+*}
 <td class="heading">{tr}questions{/tr}</td>
+
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -91,6 +124,8 @@
 </tr>
 {/section}
 </table>
+<!--  the little page adjust... need to find the $maxRecords value so that we can set that to a user controlled value-->
+
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_surveys.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -110,3 +145,4 @@
 </div>
 </div>
 
+<!--end tiki-admin_surveys.tpl... last edited by dgd-->
