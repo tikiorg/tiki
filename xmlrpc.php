@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.10 2003-02-12 16:12:46 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.11 2003-02-14 16:19:34 rossta Exp $
 
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -215,7 +215,8 @@ function getPost($params) {
     return new xmlrpcresp(0, 101, "Post not found");
   }
 
-  $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
+#  $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
+  $dateCreated=$tikilib->get_iso8601_datetime($post_data["created"]));    
   // added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
   $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
                                  "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
@@ -259,8 +260,8 @@ function getRecentPosts($params) {
 
   $arrayval = Array();
   foreach($posts["data"] as $post) {
-  	# TODO $tikilib->get_xmlrpc_datetime_format()
-    $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
+#    $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
+    $dateCreated=$tikilib->get_iso8601_datetime($post["created"]));    
     $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
                                  "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
                                  "content" => new xmlrpcval($post["data"]),
