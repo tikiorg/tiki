@@ -327,6 +327,11 @@ $smarty->assign('feature_trackers',$feature_trackers);
 $feature_directory = 'n';
 $smarty->assign('feature_directory',$feature_directory);
 
+$feature_usermenu = 'n';
+$smarty->assign('feature_usermenu',$feature_usermenu);
+$feature_minical = 'n';
+$smarty->assign('feature_minical',$feature_minical);
+
 $feature_notepad = 'n';
 $smarty->assign('feature_notepad',$feature_notepad);
 $feature_userfiles = 'n';
@@ -767,6 +772,13 @@ if(isset($_COOKIE["mymenu"])) {
   }	
 }
 
+$smarty->assign('mnu_usrmenu','display:none;');
+if(isset($_COOKIE["usrmenu"])) {
+  if($_COOKIE["usrmenu"]=='o') {
+    $smarty->assign('mnu_usrmenu','display:block;');
+  }	
+}
+
 
 $smarty->assign('mnu_wikimenu','display:none;');
 if(isset($_COOKIE["wikimenu"])) {
@@ -839,9 +851,18 @@ if(isset($_COOKIE["filegalmenu"])) {
 
 
 
-
-
-
+if($user && $feature_usermenu == 'y') {
+  $smarty->assign('foo_usr','hsah');
+  if(!isset($_SESSION['usermenu'])) {
+	  include_once('lib/usermenu/usermenulib.php');
+	  $user_menus = $usermenulib->list_usermenus($user,0,-1,'position_asc','');
+	  $smarty->assign('usr_user_menus',$user_menus['data']);
+	  $_SESSION['usermenu']=$user_menus['data'];
+  } else {
+  	  $user_menus = $_SESSION['usermenu'];
+	  $smarty->assign('usr_user_menus',$user_menus);
+  }
+}
 
 
 include_once("tiki-modules.php");
@@ -957,6 +978,8 @@ if($feature_stats == 'y') {
     }
   }
 }
+
+
 
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");
