@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.31 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.32 2004-03-31 10:12:38 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -106,10 +106,11 @@ if (isset($_REQUEST["newuser"])) {
 				}
 			}
 		}
+		if (isset($tikifeedback[0]['msg'])) {
+			$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+		}
 	}
-}
-
-if (isset($_REQUEST["action"])) {
+} elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
 		$area = 'deluser';
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
@@ -131,6 +132,9 @@ if (isset($_REQUEST["action"])) {
 		}
 	}
 	$_REQUEST["user"] = '';
+	if (isset($tikifeedback[0]['msg'])) {
+		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+	}					
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -225,6 +229,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			}
 			if ($userlib->change_user_password($_POST['name'],$_POST["pass"])) {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
+				$logslib->add_log('adminusers','','changed password for '.$_POST['name']);
 			} else {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
 			}
@@ -232,6 +237,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		if ($userinfo['email'] != $_POST['email']) {
 			if ($userlib->change_user_email($_POST['name'],$_POST['email'],'')) {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
+				$logslib->add_log('adminusers','','changed email for '.$_POST['name'].' from '.$userinfo['email'].' to '.$_POST["email"]);
 				$userinfo['email'] = $_POST['email'];
 			} else {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
@@ -239,7 +245,8 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		}
 		if ($chlogin) {
 			if ($userlib->change_login($userinfo['login'],$_POST['name'])) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['login'],$_POST["name"]));
+				$logslib->add_log('adminusers','','changed login for '.$_POST['name'].' from '.$userinfo['login'].' to '.$_POST["name"]);
 				$userinfo['login'] = $_POST['name'];
 			} else {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
