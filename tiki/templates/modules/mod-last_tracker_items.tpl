@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_tracker_items.tpl,v 1.6 2003-11-23 03:53:04 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_tracker_items.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
 
 {if $feature_trackers eq 'y'}
-{tikimodule title="{tr}Last Items{/tr}" name="last_tracker_items"}
+{if $nonums eq 'y'}
+{eval var="{tr}Last `$module_rows` Items{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Last Items{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="last_tracker_items"}
 <table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modLastItems}
 <tr>{if $nonums != 'y'}<td class="module" >{$smarty.section.ix.index_next})</td>{/if}

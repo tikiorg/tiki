@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_best_voted_topics.tpl,v 1.6 2003-11-23 03:15:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_best_voted_topics.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
 
 {if $feature_forums eq 'y'}
-{tikimodule title="{tr}Top topics{/tr}" name="forums_best_voted_topics"}
+{if $nonums eq 'y'}
+{eval var="{tr}Top `$module_rws` topics{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Top topics{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="forums_best_voted_topics"}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modForumsTopTopics}
       <tr>
