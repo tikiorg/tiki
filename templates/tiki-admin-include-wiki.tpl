@@ -125,6 +125,8 @@
     </select>
     </td>
     </tr>
+    <tr><td colspan="2" class="form">{tr}Full path to directory for storing static pages (must be writable):{/tr}<br /><input name="staticpath" size="30" value="{$wiki_realtime_static_path}"></tr>
+    <tr><td colspan="2" class="form"><a href="tiki-admin.php?page=wiki&amp;rebuildstatic=y" class="link">{tr}(re)build all static pages{/tr}</a></td></tr>
     <tr><td colspan="2" class="form"><a href="tiki-admin.php?page=wiki&amp;purgestatic=y" class="link">{tr}remove ghost static pages{/tr}</a></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="staticwiki" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
