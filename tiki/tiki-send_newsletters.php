@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.9 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.10 2004-03-11 18:39:56 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -105,6 +105,7 @@ if (isset($_REQUEST["send"])) {
 	$mail = new htmlMimeMail();
 	$mail->setFrom('noreply@noreply.com');
 	$mail->setSubject($_REQUEST["subject"]);
+	$mail->setHeadCharset("utf-8");
 	$sent = 0;
 
 	foreach ($subscribers as $email) {
@@ -116,12 +117,10 @@ if (isset($_REQUEST["send"])) {
 		} else {
 			$unsubmsg = ' ';
 		}
-		$mail->setHeadCharset("utf-8");
 		$mail->setTextCharset("utf-8");
 		$mail->setHtmlCharset("utf-8");
 		$mail->setFrom($sender_email);
 		$mail->setHTML($_REQUEST["data"] . $unsubmsg, strip_tags($_REQUEST["data"]));
-
 		if ($mail->send($to_array, 'mail'))
 			$sent++;
 	}
