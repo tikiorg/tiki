@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.10 2003-08-22 02:43:44 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.11 2003-08-22 06:48:33 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,12 +93,13 @@ if (isset($_REQUEST["prefs"])) {
 		$tikilib->set_preference("tmpDir", $tdir);
 		$smarty->assign("tmpDir", $tdir);
 	}
+	$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
 }
 
-	// Handle Password Change Request
-	else if (isset($_REQUEST["newadminpass"])) {
+// Handle Password Change Request
+elseif (isset($_REQUEST["newadminpass"])) {
 	if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
-		$smarty->assign("msg", tra("The passwords dont match"));
+		$smarty->assign("msg", tra("The passwords don't match"));
 
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
@@ -116,6 +117,7 @@ if (isset($_REQUEST["prefs"])) {
 	}
 
 	$userlib->change_user_password("admin", $_REQUEST["adminpass"]);
+	$smarty->assign('pagetop_msg', tra("Your admin password has been changed"));
 }
 
 // Get list of available styles
