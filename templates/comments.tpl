@@ -1,7 +1,7 @@
 {if $tiki_p_read_comments eq 'y'}
 <br/>
 <small>({$comments_cant} {tr}comments{/tr})</small>
-<small> [ <a href="javascript:flip('comzone');" class="linkbut">{tr}Toggle display of comment zone{/tr}</a> ]</small>
+<small> [ <a href="javascript:flip('comzone');" class="linkbut" title="{tr}Click twice if once is not enough !{/tr}">{tr}Toggle display of comment zone{/tr}</a> ]</small>
 {/if}
 
 {if $comments_show eq 'y'}
