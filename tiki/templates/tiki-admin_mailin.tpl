@@ -9,8 +9,8 @@
 
 <!-- link to tpl -->
 {if $feature_view_tpl eq 'y'}
-  <a href="tiki-edit_templates.php?template=templates/tiki-admin_mailin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin mailin tpl{/tr}">
-  <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>
+  <a href="tiki-edit_templates.php?template=templates/tiki-admin_mailin.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin mailin template{/tr}">
+  <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>
 {/if}
 
 <!-- begin -->
