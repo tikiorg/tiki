@@ -9,7 +9,7 @@ function wikiplugin_tracker_help() {
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $dbTiki, $notificationlib;
+	global $tikilib, $dbTiki, $notificationlib, $user, $group;
 	//var_dump($_REQUEST);
 	extract ($params);
 
@@ -20,15 +20,23 @@ function wikiplugin_tracker($data, $params) {
 		$action = tra("Save");
 	}
 	$tracker = $tikilib->get_tracker($trackerId);
+	
 	if ($tracker) {
 		include_once('lib/trackers/trackerlib.php');
 		include_once('lib/notifications/notificationlib.php');	
+		$tracker = array_merge($tracker,$trklib->get_tracker_options($trackerId));
 
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit']) {
 			foreach ($_REQUEST['track'] as $fld=>$val) {
-				$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val);
+				$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
 			}
-			$trklib->replace_item($trackerId,0,$ins_fields);
+			if (isset($_REQUEST['authorfieldid']) and $_REQUEST['authorfieldid']) {
+				$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $user, 'type' => 'u', 'options' => 1);
+			}
+			if (isset($_REQUEST['authorgroupfieldid']) and $_REQUEST['authorgroupfieldid']) {
+				$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorgroupfieldid'], 'value' => $group, 'type' => 'g', 'options' => 1);
+			}
+			$rid = $trklib->replace_item($trackerId,0,$ins_fields,$tracker['newItemStatus']);
 			return "<div>$data</div>";
 		}
 		$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
@@ -51,8 +59,14 @@ function wikiplugin_tracker($data, $params) {
 		$back.= '<div class="wikitext">'.$tracker["description"].'</div>';
 		$back.= '<table>';
 		foreach ($flds['data'] as $f) {
-			if (in_array($f['name'],$outf)) {
-				if (in_array($f['name'],$optional)) {
+			if ($f['type'] == 'u' and $f['options'] == '1') {
+				$back.= '<input type="hidden" name="authorfieldid" value="'.$f['fieldId'].'" />';
+			}
+			if ($f['type'] == 'g' and $f['options'] == '1') {
+				$back.= '<input type="hidden" name="authorgroupfieldid" value="'.$f['fieldId'].'" />';
+			}
+			if (in_array($f['fieldId'],$outf)) {
+				if (in_array($f['fieldId'],$optional)) {
 					$f['name'] = "<i>".$f['name']."</i>";
 				}
 				if ($f['type'] == 't') {
@@ -60,11 +74,11 @@ function wikiplugin_tracker($data, $params) {
 					$back.= '<input type="text" size="30" name="track['.$f["fieldId"].']" value=""/>';
 				} elseif ($f['type'] == 'a') {
 					$back.= "<tr><td>".$f['name']."</td><td>";
-					$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']"></textarea>';
+					$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
 				} elseif ($f['type'] == 'd') {
 					$list = split(',',$f['options']);
 					$back.= "<tr><td>".$f['name']."</td><td>";
-					$back.= '<select name="track['.$f["name"].']">';
+					$back.= '<select name="track['.$f["fieldId"].']">';
 					foreach ($list as $item) {
 						$back.= '<option value="'.$item.'">'.$item.'</option>';
 					}
