@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.2 2004-05-03 04:21:10 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.3 2004-05-10 09:55:25 damosoft Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -153,10 +153,12 @@
 </div> {* End of main wiki page *}
 
 {if $has_footnote eq 'y'}<div class="wikitext">{$footnote}</div>{/if}
+
+{if $tiki_p_edit eq 'y'}
 <p class="editdate">
-  {tr}Created by{/tr}: {$creator|userlink}
-  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+  {tr}Last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}
