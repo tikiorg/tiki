@@ -513,4 +513,204 @@ class QuizLib extends TikiLib {
 
 $quizlib = new QuizLib($dbTiki);
 
+
+// Find the next non-blank or return -1
+function NextText($text){
+	$found = -1;
+	for ($i = 0; $i < count($text); $i++){
+		if (strlen($text[$i]) > 0){
+			$found = $i;
+			break;
+		}
+	}
+	return $found;
+}
+
+// Find the next blank or retrun the last element
+function NextBlank($text){
+	$found = 0;
+	for ($i = 0; $i < count($text); $i++){
+		$found = $i;
+		if ($text[$i] == "")
+			break;
+	}
+	return $found;
+}
+
+function quizlib_error_exit($s){
+	$smarty->assign('msg', $s);
+
+	$smarty->display("error.tpl");
+	die;
+}
+
+// Called by tiki-edit_quiz_questions.php
+// Convert a block of text into an array of question objects.
+function TextToQuestions($text){
+
+	$text = preg_replace("/\r\n/", "\n" , $text);
+	$text = preg_replace("/\n\r/", "\n" , $text);
+	$text = preg_replace("/\r/", "\n" , $text);
+	$text = preg_replace("/\t/", " " , $text);
+	$text = preg_replace("/[ ]+/", " " , $text);
+
+	$text = preg_split("/\n/", $text);
+
+	if ($text[count($text)-1] != "")
+		$text[] = "";
+
+	for ($i = 0; $i < count($text); $i++){
+		$text[$i] = trim($text[$i]);
+		if (!ctype_print($text[$i])){
+			quizlib_error_exit("lib/quizlib.php line ".__LINE__.": Your text has invalid character(s) near line $i.");
+		}
+	}
+
+	$questions = Array();
+
+ 	while (NextText($text) != -1){
+ 		$text = array_slice($text,NextText($text));
+ 		$lines = array_slice($text, 0, NextBlank($text));
+ 		$text = array_slice($text,NextBlank($text));
+		if (count($lines) > 0){
+			$question = new HW_QuizQuestionMultipleChoice($lines);
+			array_push($questions, $question);
+		}
+ 	}
+	return $questions;
+}
+
+// An abstract class
+class HW_QuizQuestion {
+  var $question;
+  function from_text($lines){
+    // Set the question according to an array of text lines.
+  }
+  function getQuestion(){
+    return $this->question;
+  }
+  function to_text(){
+    // Export the question to an array of text lines.
+  }
+  function getAnswerCount(){
+    // How many possible answers (i.e. choices in a multiple-choice)
+  }
+}
+
+// A multiple-choice quiz question
+// e.g.
+//   $question = "What is your favorite color?";
+//   $choices = Array(Array('text'=>"Red",  'correct'=>1),
+//                    Array('text'=>"Blue", 'correct'=>1),
+//                    Array('text'=>"Green",'correct'=>1));
+//   Any of the answers are correct in this example.
+class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
+  var $choices  = Array();
+
+  function HW_QuizQuestionMultipleChoice($lines){
+    $this->from_text($lines);
+  }
+
+  // Import from text array
+  // $lines is in array of text items.
+  //   The 0th line is the question.
+  //   The rest of the lines are answers.
+  //   Correct answers start with a "*"
+  function from_text($lines){
+    // echo "Line ".__LINE__." HW_QuizQuestionMC::from_text() \n";
+    $this->question = $lines[0];
+    $this->choices  = Array();
+    $lines = array_slice($lines,1);
+    foreach ($lines as $line){
+      if (preg_match("/^\*\s*(.*)/",$line,$match)) // Ignore spaces after the "*"
+				$a = Array('text'=>$match[1],'correct'=>1);
+      else
+				$a = Array('text'=>$line,'correct'=>0);
+      array_push($this->choices, $a);
+    }
+  }
+
+  function to_text($show_answer = False){
+    // Export the question to an array of text lines.
+    $lines = Array();
+    array_push($lines, $this->question);
+    foreach($this->choices as $choice){
+      if ($show_answer && $choice['correct'])
+				array_push($lines, "*".$choice['text']);
+      else
+				array_push($lines, " ".$choice['text']);
+    }
+    return $lines;
+  }
+
+	function getChoiceCount(){
+    return count($this->choices);
+	}
+
+	function getChoice($i){
+    return $this->choices[$i]['text'];
+	}
+
+	function getCorrect($i){
+    return $this->choices[$i]['correct'];
+	}
+  
+	function dump(){
+    echo "question = \"".$this->question."\"\n";
+    echo "choices =\n";
+    foreach ($this->choices as $choice){
+      if ($choice['correct'])
+				echo "*";
+      else
+				echo " ";
+      echo $choice['text']."\n";
+    }
+  }
+}
+
+// A Yes-No quiz question
+// e.g.
+//   $question = "Do you wiki?";
+//   $answer   = -1 (unknown), 0 (no), 1 (yes)
+class HW_QuizQuestionYesNo extends HW_QuizQuestion {
+  var $question;
+  var $answer  = -1;
+
+  function HW_QuizQuestionYesNo($lines){
+    $this->from_text($lines);
+  }
+
+  // Import from text array
+  // $lines is in array of text items.
+  //   The 0th line is the question.
+  //   The first line is the answer.
+  function from_text($lines){
+    $this->question = $lines[0];
+    if (preg_match("/^\s*[Yy][Ee][Ss]\s*$/",$lines[1])) // Ignore spaces and case
+      $this->answer = 1;
+    else if (preg_match("/^\s*[Nn][Oo]\s*$/",$lines[1])) // Ignore spaces and case
+      $this->answer = 0;
+    else
+      $this->answer = -1;
+  }
+
+  function to_text($show_answer = False){
+    // Export the question to an array of text lines.
+    $lines = Array();
+    array_push($lines, $this->question);
+    if ($this->answer == 1)
+      array_push($lines, " Yes");
+    else if ($this->answer == 0)
+      array_push($lines, " No");
+    else
+      array_push($lines, " Unknown");
+    return $lines;
+  }
+
+  function dump(){
+    echo "question = \"".$this->question."\"\n";
+    echo "answer = $this->answer\n";
+  }
+}
+
 ?>
