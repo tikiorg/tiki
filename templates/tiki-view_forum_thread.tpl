@@ -17,8 +17,8 @@ a moderator approves it.{/tr}</small>
 {else}
 {assign var="postclass" value="forumpost"}
 {/if}
-<div class="viewthread">
-<table class="viewthread">
+
+<table class="normal">
 <tr>
   <td class="viewthreadl" width="15%">
   <div align="center">
@@ -105,7 +105,7 @@ a moderator approves it.{/tr}</small>
 
   </td>
   <td class="viewthreadr">  
-  <table width="100%" border="1" style="border: 1px solid black; vertical-align: bottom;">
+  <table vertical-align: bottom;">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     {if $forum_info.vote_threads eq 'y'}
@@ -131,7 +131,7 @@ a moderator approves it.{/tr}</small>
 <br/>
 {if $tiki_p_admin_form eq 'y' or $thread_info.type ne 'l'}
 {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_post eq 'y'}
-<div>
+
 [<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
  <a class="forumbutlink" href="javascript:hide('{$postclass}');">{tr}Hide Post Form{/tr}</a>]
 [{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
@@ -282,9 +282,9 @@ a moderator approves it.{/tr}</small>
   <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
   <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
 
-  <table width="95%" cellpadding="0" cellspacing="0">
+  <table class="normal">
   <tr>
-    <td class="forumtoolbar">{tr}Comments{/tr} 
+    <td class="heading">{tr}Comments{/tr} 
         <select name="comments_maxComments">
         <option value="10" {if $comments_maxComments eq 10 }selected="selected"{/if}>10</option>
         <option value="20" {if $comments_maxComments eq 20 }selected="selected"{/if}>20</option>
@@ -292,14 +292,14 @@ a moderator approves it.{/tr}</small>
         <option value="999999" {if $comments_maxComments eq 999999 }selected="selected"{/if}>All</option>
         </select>
     </td>
-    <td class="forumtoolbar">{tr}Sort{/tr}
+    <td class="heading">{tr}Sort{/tr}
         <select name="comments_sort_mode">
           <option value="commentDate_desc" {if $comments_sort_mode eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date{/tr}</option>
           <option value="points_desc" {if $comments_sort_mode eq 'points_desc'}selected="selected"{/if}>{tr}Score{/tr}</option>
           <option value="title_desc" {if $comments_sort_mode eq 'title_desc'}selected="selected"{/if}>{tr}Title{/tr}</option>
         </select>
     </td>
-    <td class="forumtoolbar">{tr}Threshold{/tr}
+    <td class="heading">{tr}Threshold{/tr}
         <select name="comments_threshold">
         <option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
         <option value="0.01" {if $comments_threshold > '0.01'}selected="selected"{/if}>0</option>
@@ -310,12 +310,12 @@ a moderator approves it.{/tr}</small>
         </select>
     
     </td>
-    <td class="forumtoolbar">{tr}Search{/tr}
+    <td class="heading">{tr}Search{/tr}
         <input type="text" size="7" name="comments_commentFind" value="{$comments_commentFind}" />
     </td>
     
-    <td><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
-    <td class="forumtoolbar">
+    <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
+    <td class="heading">
     &nbsp;<a class="toolbarlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset=0&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}Top{/tr}</a>
     </td>
   </tr>
@@ -366,7 +366,7 @@ a moderator approves it.{/tr}</small>
 </table>
 {/if}
 
-<table class="threads" >
+<table class="normal" >
 <tr>
   <td class="forumheading">{tr}author{/tr}</td>
   <td class="forumheading">{tr}message{/tr}</td>

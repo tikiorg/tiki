@@ -1,5 +1,12 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] A single wiki-page can be a multi-page page using ...page... to sepparate pages,
+  individual pages can be viewed using navigation links or a slideshow.
+* [NEW] A wiki structure can be created/imported from a text representation of the tree
+  where structure levels are depicted by indenting the text with single spaces.
+* [NEW] All pages in a structure can be exported from the admin structures page
+* [NEW] A text representation of a Wiki structure can be exported then it can be used
+  to create (recreate) the structure in another system. 
 * [NEW] Blogs: Blog posts now support multi-page posts, the first page will be displayed
   when listing blog posts (can be used as a heading) and the other pages are navigable
   when reading a blog post.

@@ -20,19 +20,19 @@
 	<br/><br/>
 	{$description}
 {/if}
-<br/>
+<br/><br/>
 
-<div class="sortoptions">
+
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
     [<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span>]
-</div>
+
 
   <div class="thumbnails">
-    <table width="100%" cellpadding="0" cellspacing="0">
+    <table class="galtable" width="100%" cellpadding="0" cellspacing="0">
       <tr>
         {section name=idx loop=$images}
           <td align="center" {if (($smarty.section.idx.index / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>

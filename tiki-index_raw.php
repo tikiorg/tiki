@@ -116,6 +116,27 @@ if($tiki_p_admin_wiki == 'y') {
 
 
 $pdata = $tikilib->parse_data_raw($info["data"]);
+
+ if(!isset($_REQUEST['pagenum'])) $_REQUEST['pagenum']=1;
+  $pages = $wikilib->get_number_of_pages($pdata);
+  $pdata=$wikilib->get_page($pdata,$_REQUEST['pagenum']);
+  $smarty->assign('pages',$pages);
+  if($pages>$_REQUEST['pagenum']) {
+  	$smarty->assign('next_page',$_REQUEST['pagenum']+1);
+  } else {
+  	$smarty->assign('next_page',$_REQUEST['pagenum']);
+  }
+  if($_REQUEST['pagenum']>1) {
+  	$smarty->assign('prev_page',$_REQUEST['pagenum']-1);
+  } else {
+  	$smarty->assign('prev_page',1);
+  }
+  $smarty->assign('first_page',1);
+  $smarty->assign('last_page',$pages);
+  $smarty->assign('pagenum',$_REQUEST['pagenum']);
+
+
+
 $smarty->assign_by_ref('parsed',$pdata);
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);

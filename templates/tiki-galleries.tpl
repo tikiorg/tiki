@@ -82,38 +82,38 @@
 <td class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $gal_list_imgs eq 'y'}   
-<td class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></td>
+<td style="text-align:right;"  class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'images_desc'}images_asc{else}images_desc{/if}">{tr}Imgs{/tr}</a></td>
 {/if}
 {if $gal_list_visits eq 'y'}   
-<td class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
+<td style="text-align:right;"  class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
-<td class="gallistheading">{tr}Actions{/tr}</td>
+<td width="20%" class="gallistheading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
 {if $gal_list_name eq 'y'}
-  <td class="gallistname{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a>&nbsp;</td>
+  <td class="gallistname{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].id}">{$galleries[changes].name}</a></td>
 {/if}
 {if $gal_list_description eq 'y'}  
-  <td class="gallistdescription{cycle advance=false}">{$galleries[changes].description}&nbsp;</td>
+  <td class="gallistdescription{cycle advance=false}">{$galleries[changes].description}</td>
 {/if}
 {if $gal_list_created eq 'y'}  
-  <td class="gallistcreated{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}&nbsp;</td>
+  <td class="gallistcreated{cycle advance=false}">{$galleries[changes].created|tiki_short_datetime}</td>
 {/if}
 {if $gal_list_lastmodif eq 'y'} 
-  <td class="gallistlastModif{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}&nbsp;</td>
+  <td class="gallistlastModif{cycle advance=false}">{$galleries[changes].lastModif|tiki_short_datetime}</td>
 {/if}  
-  <!--<td class="gallisttheme{cycle advance=false}">{$galleries[changes].theme}&nbsp;</td>-->
+  <!--<td class="gallisttheme{cycle advance=false}">{$galleries[changes].theme}</td>-->
 {if $gal_list_user eq 'y'}   
-  <td class="gallistuser{cycle advance=false}">{$galleries[changes].user}&nbsp;</td>
+  <td class="gallistuser{cycle advance=false}">{$galleries[changes].user}</td>
 {/if}  
 {if $gal_list_imgs eq 'y'}   
-  <td style="text-align:right;" class="gallistimages{cycle advance=false}">{$galleries[changes].images}&nbsp;</td>
+  <td style="text-align:right;" class="gallistimages{cycle advance=false}">{$galleries[changes].images}</td>
 {/if}
 {if $gal_list_visits eq 'y'}     
-  <td style="text-align:right;" class="gallisthits{cycle advance=false}">{$galleries[changes].hits}&nbsp;</td>
+  <td style="text-align:right;" class="gallisthits{cycle advance=false}">{$galleries[changes].hits}</td>
 {/if}  
   <td class="gallistactions{cycle}">
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}

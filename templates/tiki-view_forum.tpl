@@ -232,14 +232,14 @@ a moderator approves it.{/tr}</small>
 	<td class="forumheading" colspan='18'>moderator actions</td>
 </tr>
 <tr>	
-	<td class="forumodd" colspan="6">
+	<td class="odd" colspan="6">
 	<input type="image" name="movesel" src="img/icons/topic_move.gif" border='0' alt='{tr}move{/tr}' title='{tr}move selected topics{/tr}' />
 	<input type="image" name="unlocksel" src="img/icons/topic_unlock.gif" border='0' alt='{tr}unlock{/tr}' title='{tr}unlock selected topics{/tr}' />
 	<input type="image" name="locksel" src="img/icons/topic_lock.gif" border='0' alt='{tr}lock{/tr}' title='{tr}lock selected topics{/tr}' />
 	<input type="image" name="delsel" src="img/icons/topic_delete.gif" border='0' alt='{tr}delete{/tr}' title='{tr}delete selected topics{/tr}' />
 	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
 	</td>
-	<td style="text-align:right;" class="forumodd" colspan="2">
+	<td style="text-align:right;" class="odd" colspan="2">
 	{if $reported > 0}
 	<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a></small><br/>
 	{/if}

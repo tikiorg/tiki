@@ -29,9 +29,10 @@
 {/if}
 
   
-  <div style="width:97%" class="fgaldesc">
+{if strlen($description) > 0}
     {$description}
-  </div>
+    <br/>
+{/if}
 
   <h3>{tr}Gallery Files{/tr}</h3>
 <div align="center">

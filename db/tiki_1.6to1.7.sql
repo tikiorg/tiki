@@ -378,6 +378,7 @@ create table tiki_charts(
   lastChart integer(14),
   voteAgainAfter integer(14),
   created integer(14),
+  hist integer(12),
   primary key(chartId)
 );
 

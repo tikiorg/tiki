@@ -55,7 +55,22 @@
 <div class="tocnav">
 <table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
 </div>
-{/if}{$parsed}</div>
+{/if}{$parsed}
+{if $pages > 1}
+	<div align="center">
+		<a href="tiki-index.php?page={$page}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+
+		<a href="tiki-index.php?page={$page}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+
+		<small>{tr}page{/tr}:{$pagenum}/{$pages}</small>
+
+		<a href="tiki-index.php?page={$page}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+
+
+		<a href="tiki-index.php?page={$page}&amp;pagenum={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+	</div>
+{/if}
+</div>
 
 {if $has_footnote eq 'y'}
 <div class="wikitext">
@@ -93,7 +108,7 @@
 </tr>
 {sectionelse}
 <tr>
- <td colspan="5">{tr}No attachments for this page{/tr}</td>
+ <td colspan="19" class="even">{tr}No attachments for this page{/tr}</td>
 </tr>
 {/section}
 </table>

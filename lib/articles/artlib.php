@@ -20,7 +20,12 @@ class ArtLib extends TikiLib {
   function get_page($data,$i)
   {
   	$parts = explode("...page...",$data);
-  	return $parts[$i-1];
+  	if(substr($parts[$i-1],1,5)=="<br/>") {
+  		return substr($parts[$i-1],6);
+  	} else {
+  		return $parts[$i-1];
+  	}
+
   }
   
   function approve_submission($subId)
