@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.22 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.23 2003-08-10 22:38:47 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,17 +52,24 @@ print ("</br>");
 
 $files = array();
 
-/// Get the tpl files: the filenames end with tpl and the files are in the directory templates/ and tempaltes/*/
-$dirs = array('templates/');
+/// Get the tpl files: the filenames end with tpl and the files are in the directory templates/ and tempaltes/*/ and templates/styles/*/
+$dirs = array(
+	'templates/',
+	'templates/styles/'
+);
 chdir ('templates/'); // see bug on is_dir on php.net
 $handle = opendir('.');
-
 while ($file = readdir($handle)) {
 	if (is_dir($file) && $file != "." && $file != "..")
 		$dirs[] = "templates/$file/";
 }
-
-chdir ("..");
+chdir ('styles/'); // see bug on is_dir on php.net
+$handle = opendir('.');
+while ($file = readdir($handle)) {
+	if (is_dir($file) && $file != "." && $file != "..")
+		$dirs[] = "templates/styles/$file/";
+}
+chdir ("../..");
 
 foreach ($dirs as $dir) {
 	$handle = opendir($dir);
@@ -91,12 +98,10 @@ $dirs = array(
 
 chdir ('lib/');
 $handle = opendir('.');
-
 while ($file = readdir($handle)) {
 	if (is_dir($file) && $file != "." && $file != "..")
 		$dirs[] = "lib/$file/";
 }
-
 chdir ("..");
 
 foreach ($dirs as $dir) {
