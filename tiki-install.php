@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.48 2004-01-15 09:56:26 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.49 2004-01-26 14:49:31 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.48 2004-01-15 09:56:26 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.49 2004-01-26 14:49:31 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -85,7 +85,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.8") {
+function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.9") {
 	$db_tiki=addslashes($db_tiki);
 	$host_tiki=addslashes($host_tiki);
 	$user_tiki=addslashes($user_tiki);
