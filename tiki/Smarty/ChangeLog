@@ -1,3 +1,222 @@
+2002-11-01  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/function.html_options.php:
+    added label attribute to all option outputs, cover w3c spec.
+
+    * NEWS: update NEWS file
+
+    * docs/designers.sgml: update docs for optgroup output
+
+    * plugins/function.html_options.php:
+    make html_options work with optgroup, make func modular and recursive.
+
+2002-10-29  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php: set mtime on compile files so they match source files
+
+2002-10-18  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php: added proper support for open_basedir setting
+
+    * docs/designers.sgml: clear up docs on index, iteration and rownum
+
+2002-10-16  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/modifier.default.php: fix warning message in default modifier
+
+2002-09-25  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml
+      plugins/modifier.strip.php
+      NEWS: added strip variable modifier
+
+2002-09-24  Andrei Zmievski  <andrei@php.net>
+
+    * NEWS: *** empty log message ***
+
+    * Smarty_Compiler.class.php:
+    Fix to be able to use $smarty.x variables as arrays.
+
+2002-09-23  Monte Ohrt  <monte@ispi.net>
+
+    * Config_File.class.php:
+    add support for mac/dos formatted config files (fix newlines)
+
+    * docs/programmers.sgml: add optional tags to clear_cache parameters
+
+    * docs/designers.sgml:
+    fix error with include_php description, add $this to description
+
+2002-09-20  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      docs/getting-started.sgml: fixed errors with example setup docs
+
+2002-09-16  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/block.textformat.php
+      docs/designers.sgml
+      NEWS: add textformat block function
+
+2002-09-10  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+    add assign attribute to cycle function documentation
+
+    * docs/designers.sgml
+      docs/programmers.sgml: fix typos
+
+2002-09-09  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/function.debug.php
+      templates/header.tpl:
+    fix header in debug template, fix typo in header.tpl example
+
+2002-08-15  mohrt  <mohrt@pb1.pair.com>
+
+    * docs/programmers.sgml: fix typos
+
+2002-08-08  mohrt  <mohrt@pb1.pair.com>
+
+    * RELEASE_NOTES
+      Smarty.class.php:
+    supress warnings from unlink() and is_dir(), let error handler deal with it
+
+2002-08-07  mohrt  <mohrt@pb1.pair.com>
+
+    * docs/appendixes.sgml
+      docs/designers.sgml
+      docs/programmers.sgml
+      Config_File.class.php
+      NEWS
+      README
+      RELEASE_NOTES
+      Smarty.class.php
+      Smarty_Compiler.class.php: update files with new version numbers
+
+2002-08-02  mohrt  <mohrt@pb1.pair.com>
+
+    * NEWS: update NEWS file with credits
+
+    * NEWS
+      Smarty.class.php: added assign_by_ref() and append_by_ref() functions
+
+2002-08-01  mohrt  <mohrt@pb1.pair.com>
+
+    * TODO
+      NEWS
+      Smarty.class.php:
+    changed default warning type for plugin errors from E_USER_WARNING to E_USER_ERROR
+
+2002-07-29  mohrt  <mohrt@pb1.pair.com>
+
+    * plugins/function.html_select_time.php
+      docs/designers.sgml
+      NEWS: added paramters to html_select_time plugin
+
+2002-07-25  Andrei Zmievski  <andrei@pb1.pair.com>
+
+    * TODO: *** empty log message ***
+
+2002-07-24  mohrt  <mohrt@pb1.pair.com>
+
+    * QUICKSTART: update QUICKSTART guide
+
+    * NEWS
+      debug.tpl
+      plugins/modifier.debug_print_var.php:
+    update debug console to show objects, fix warning in debug.tpl
+
+2002-07-23  mohrt  <mohrt@pb1.pair.com>
+
+    * docs/programmers.sgml: fix load_filter examples
+
+    * Config_File.class.php
+      NEWS: fix error when there are no sections in config file
+
+2002-07-19  mohrt  <mohrt@pb1.pair.com>
+
+    * docs/getting-started.sgml: fix error in install guide
+
+2002-07-18  mohrt  <mohrt@pb1.pair.com>
+
+    * Smarty_Compiler.class.php:
+    correct the expression match for smarty:nodefaults
+
+2002-07-17  mohrt  <mohrt@pb1.pair.com>
+
+    * Smarty_Compiler.class.php: fix default modifier to work with config vars
+
+    * Smarty_Compiler.class.php: got args to strstr backwards...
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+    change default modifiers to array instead of string
+
+    * Smarty_Compiler.class.php
+      docs/designers.sgml
+      Smarty.class.php: add default modifier logic, minor doc updates
+
+    * NEWS
+      Smarty.class.php
+      plugins/function.popup_init.php:
+    make popup_init xhtml compliant, minor variable name changes for consistancy
+
+2002-07-16  mohrt  <mohrt@pb1.pair.com>
+
+    * NEWS: update NEWS file
+
+    * plugins/function.debug.php
+      Smarty.class.php
+      debug.tpl
+      NEWS:
+    fix problem with filenames on windows, add ability to supply expire time in seconds when clearing cache or compiled files
+
+2002-07-15  mohrt  <mohrt@pb1.pair.com>
+
+    * Smarty.class.php:
+    fixed problem with insert tags when loading function from script attribute
+    and caching enabled (Monte)
+
+2002-07-14  mohrt  <mohrt@pb1.pair.com>
+
+    * NEWS
+      Smarty.class.php: fix bug with debug_tpl file path for Windows
+
+2002-07-12  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php: fix append function with array/string issue
+
+2002-07-11  Monte Ohrt  <monte@ispi.net>
+
+    * RELEASE_NOTES: update release notes
+
+    * NEWS
+      README
+      RELEASE_NOTES
+      Smarty.class.php
+      Smarty_Compiler.class.php
+      Config_File.class.php: update files to 2.2.0 tags, get ready for release
+
+2002-07-09  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php: make debug.tpl work with any delimiter
+
+    * NEWS
+      Smarty.class.php:
+    change tests in append and assign to != '' instead of empty(), which is more accurate
+
+2002-07-08  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml: minor doc update
+
+    * Smarty.class.php:
+    cast var as an array, simplify and get rid of PHP warning messages
+
 2002-07-03  Monte Ohrt  <monte@ispi.net>
 
     * Smarty.class.php: one more N

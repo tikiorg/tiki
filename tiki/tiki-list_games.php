@@ -28,7 +28,13 @@ if(isset($_REQUEST["upload"])) {
     $parts=explode('.',$name2);
     $namec=implode('.',Array($parts[0],$parts[1]));
     if($namec!=$name1) {
-      $smarty->assign('msg',tra("The thumbnail name must be $name1.gif or $name1.jpg or $name1.png"));
+        $smarty->assign('msg',                                                                                                          tra("The thumbnail name must be").
+        " $name1.gif ".
+        tra("or").
+        " $name1.jpg ".
+        tra("or").
+        " $name1.png");
+
       $smarty->display('error.tpl');
       die;  
     }

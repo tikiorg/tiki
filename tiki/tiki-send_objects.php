@@ -128,7 +128,9 @@ if(isset($_REQUEST["send"])) {
         new xmlrpcval(base64_encode($page_info["heading"]),"string"),
         new xmlrpcval(base64_encode($page_info["body"]),"string"),
         new xmlrpcval($page_info["hash"],"string"),
-        new xmlrpcval($page_info["author"],"string")
+        new xmlrpcval($page_info["author"],"string"),
+        new xmlrpcval($page_info["type"],"string"),
+        new xmlrpcval($page_info["rating"],"string")
         ));
         $result=$client->send($searchMsg);
         if(!$result) {
@@ -161,7 +163,7 @@ $smarty->assign('form_sendpages',$form_sendpages);
 
 
 $pages = $tikilib->list_pages(0, -1,  'pageName_asc',$find);
-$articles = $tikilib->list_articles(0,-1,'publishDate_desc',$find, date("U"));
+$articles = $tikilib->list_articles(0,-1,'publishDate_desc',$find, date("U"),$user);
 $smarty->assign_by_ref('pages',$pages["data"]);
 $smarty->assign_by_ref('articles',$articles["data"]);
 

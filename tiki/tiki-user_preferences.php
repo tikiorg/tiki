@@ -28,6 +28,7 @@ if(isset($_REQUEST["view_user"])) {
 } else {
   $userwatch = $user;
 }
+$smarty->assign('userwatch',$userwatch);
 
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);

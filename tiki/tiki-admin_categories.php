@@ -170,7 +170,7 @@ $faqs = $tikilib->list_faqs(0, -1,  'title_asc', $find_objects);
 $smarty->assign_by_ref('faqs',$faqs["data"]);
 
 
-$articles = $tikilib->list_articles(0,-1,'title_asc', $find_objects, '');
+$articles = $tikilib->list_articles(0,-1,'title_asc', $find_objects, '',$user);
 $smarty->assign_by_ref('articles',$articles["data"]);
 
 // Display the template

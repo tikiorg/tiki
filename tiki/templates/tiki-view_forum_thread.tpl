@@ -80,8 +80,8 @@
     <tr>
       <td class="forumform">{tr}Post{/tr}</td>
       <td class="forumform">
-      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/></td>
-      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
+      <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
+      <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/></td>
       <td class="forumform">{tr}smileys{/tr}</td>
     </tr>
     <tr>

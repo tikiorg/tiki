@@ -611,8 +611,6 @@ create table tiki_categorized_objects (
 
 
 ### COMMUNICATION CENTER
-DROP TABLE IF EXISTS tiki_received_articles;
-CREATE
 
 DROP TABLE IF EXISTS tiki_received_pages;
 CREATE TABLE tiki_received_pages (
@@ -937,6 +935,8 @@ CREATE TABLE tiki_received_articles(
   body longblob,
   hash char(32),
   author varchar(200),
+  type varchar(50),
+  rating decimal(2,2),
   primary key(receivedArticleId)  
 );
 

@@ -117,7 +117,7 @@ class TikiLib {
     $bid = rand(0,$cant-1);
     $cookie = $this->db->getOne("select cookie from tiki_cookies limit $bid,1");
     $cookie = str_replace("\n","",$cookie);
-    return 'Cookie: '.$cookie.'';    
+    return '<i>"'.$cookie.'"</i>';    
   }
   
   
@@ -1646,7 +1646,7 @@ class TikiLib {
   function accept_article($receivedArticleId,$topic) 
   {
     $info = $this->get_received_article($receivedArticleId);
-    $this->replace_article ($info["title"],$info["authorName"],$topic,$info["useImage"],$info["image_name"],$info["image_size"],$info["image_type"],$info["image_data"],$info["heading"],$info["body"],$info["publishDate"],$info["author"],0,$info["image_x"],$info["image_y"]);  
+    $this->replace_article ($info["title"],$info["authorName"],$topic,$info["useImage"],$info["image_name"],$info["image_size"],$info["image_type"],$info["image_data"],$info["heading"],$info["body"],$info["publishDate"],$info["author"],0,$info["image_x"],$info["image_y"],$info["type"],$info["rating"]);  
     $query = "delete from tiki_received_articles where receivedArticleId = $receivedArticleId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
@@ -1750,7 +1750,7 @@ class TikiLib {
     return $res;
   }
   
-  function update_received_article($receivedArticleId,$title,$authorName,$useImage,$image_x,$image_y,$publishDate,$heading,$body)
+  function update_received_article($receivedArticleId,$title,$authorName,$useImage,$image_x,$image_y,$publishDate,$heading,$body,$type,$rating)
   {
     $title = addslashes($title);
     $authorName = addslashes($authorName);
@@ -1768,7 +1768,9 @@ class TikiLib {
       useImage = '$useImage',
       image_x = $image_x,
       image_y = $image_y,
-      publishDate = $publishDate
+      publishDate = $publishDate,
+      type = '$type',
+      rating = $rating
       where receivedArticleId=$receivedArticleId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
@@ -1784,7 +1786,7 @@ class TikiLib {
     if(DB::isError($result)) $this->sql_error($query, $result);
   }
   
-  function receive_article($site,$user,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author)
+  function receive_article($site,$user,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author,$type,$rating)
   {
     $title = addslashes($title);
     $authorName = addslashes($authorName);
@@ -1795,8 +1797,8 @@ class TikiLib {
     $query = "delete from tiki_received_articles where title='$title' and receivedFromsite='$site' and receivedFromUser='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
-    $query = "insert into tiki_received_articles(receivedDate,receivedFromSite,receivedFromUser,title,authorName,size,useImage,image_name,image_type,image_size,image_x,image_y,image_data,publishDate,created,heading,body,hash,author)
-    values($now,'$site','$user','$title','$authorName',$size,'$use_image','$image_name','$image_type',$image_size,$image_x,$image_y,'$image_data',$publishDate,$created,'$heading','$body','$hash','$author')";
+    $query = "insert into tiki_received_articles(receivedDate,receivedFromSite,receivedFromUser,title,authorName,size,useImage,image_name,image_type,image_size,image_x,image_y,image_data,publishDate,created,heading,body,hash,author,type,rating)
+    values($now,'$site','$user','$title','$authorName',$size,'$use_image','$image_name','$image_type',$image_size,$image_x,$image_y,'$image_data',$publishDate,$created,'$heading','$body','$hash','$author','$type',$rating)";
     $result = $this->db->query($query);
     
     if(DB::isError($result)) $this->sql_error($query, $result);
@@ -3900,7 +3902,7 @@ class TikiLib {
     if(!$data) return false;
     if(!$data["image_x"]) $data["image_x"]=0;
     if(!$data["image_y"]) $data["image_y"]=0;
-    $this->replace_article ($data["title"],$data["authorName"],$data["topicId"],$data["useImage"],$data["image_name"],$data["image_size"],$data["image_type"],$data["image_data"],$data["heading"],$data["body"],$data["publishDate"],$data["author"],0,$data["image_x"],$data["image_y"]);  
+    $this->replace_article ($data["title"],$data["authorName"],$data["topicId"],$data["useImage"],$data["image_name"],$data["image_size"],$data["image_type"],$data["image_data"],$data["heading"],$data["body"],$data["publishDate"],$data["author"],0,$data["image_x"],$data["image_y"],$data["type"],$data["rating"]);  
     $this->remove_submission($subId);
   }
   
@@ -4682,11 +4684,39 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $res["xsize"]=imagesx($img);
       $res["ysize"]=imagesy($img);
       // Rebuild the thumbnail for this image
+      
+      // Patch by evanb
+      /*
       $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
       print("From: ".$res["xsize"]."x".$res["ysize"]." to: ".$gal_info["thumbSizeX"]."x".$gal_info["thumbSizeY"]."<br/>");
       //imagecopyresized ( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $res["xsize"], $res["ysize"]);
        $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $res["xsize"], $res["ysize"]);
       $tmpfname = tempnam ("/tmp", "FOO").'.jpg';
+      */
+
+      // Patch by evan b begins
+      // First scale the image acording to whichever dimension is larger
+      if ($res["xsize"] > $res["ysize"])
+	$tscale = ((int)$res["xsize"] / $gal_info["thumbSizeX"]);
+      else
+	$tscale = ((int)$res["ysize"] / $gal_info["thumbSizeY"]);
+
+      $tw = ((int)($res["xsize"] / $tscale));
+      $ty = ((int)($res["ysize"] / $tscale));
+      //print("From: ".$res["xsize"]."x".$res["ysize"]." to: ".$tw."x".$ty."<br/>");
+      //imagecopyresized ( $t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
+      /*
+      if (function_exists("imagecreatetruecolor") and function_exists("imagecopyresampled")) {
+        $t = imagecreatetruecolor($tw,$ty);
+        imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
+      } else {  
+      */
+        $t = imagecreate($tw,$ty);
+        $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $res["xsize"], $res["ysize"]);
+      /*}*/
+      $tmpfname = tempnam ("/tmp", "FOO").'.jpg';
+      // Patch ends
+      
       imagejpeg($t,$tmpfname);
       // Now read the information
       $fp = fopen($tmpfname,"r");
