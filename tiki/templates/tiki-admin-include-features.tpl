@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.42 2004-04-08 22:55:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.43 2004-04-09 01:47:55 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -438,12 +438,15 @@
         		:</td>
         <td><input type="checkbox" name="feature_jscalendar" {if $feature_jscalendar eq 'y'}checked="checked"{/if}/></td>
 
-				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Tabs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:
-{tr}TikiTabs{/tr}">{/if}
+        <td>&nbsp;</td>
+        <td class="form">
+				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Tabs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}TikiTabs{/tr}">{/if}
 				{tr}Use Tabs{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
         <td><input type="checkbox" name="feature_tabs" {if $feature_tabs eq 'y'}checked="checked"{/if}/></td>
+
+      </tr>
 
             <tr>
         
