@@ -8,7 +8,7 @@
 {tr}Users have visited{/tr} {$stats.visits} {tr}sites from the directory{/tr}<br/>
 {tr}Users have searched{/tr} {$stats.searches} {tr}times from the directory{/tr}<br/>
 <br/><br/>
-<h2>{tr}Menu{tr}</h2>
+<h2>{tr}Menu{/tr}</h2>
 <ul>
  <li><a class="link" href="tiki-directory_admin_categories.php">{tr}Admin categories{/tr}</a></li>
  <li><a class="link" href="tiki-directory_admin_sites.php">{tr}Admin sites{/tr}</a></li>
