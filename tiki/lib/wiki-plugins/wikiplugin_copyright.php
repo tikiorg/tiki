@@ -13,7 +13,7 @@ require_once ("lib/copyrights/copyrightslib.php");
 // text
 // {COPYRIGHT}
 function wikiplugin_copyright_help() {
-	return tra("Insert copyright notices");
+	return tra("Insert copyright notices").":<br />~np~{COPYRIGHT()}~title~~year~~authors~".tra("text")."{COPYRIGHT}~/np~";
 }
 
 function wikiplugin_copyright($data, $params) {

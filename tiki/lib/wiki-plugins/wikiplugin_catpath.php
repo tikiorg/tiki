@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.3 2003-08-07 03:02:11 rossta Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.4 2003-09-08 14:52:23 sylvieg Exp $
  *
  * TikiWiki CATPATH plugin.
  * 
@@ -13,7 +13,7 @@
  * 
   */
 function wikiplugin_catpath_help() {
-	return tra("Insert the full category path for each category that this wiki page belongs to");
+	return tra("Insert the full category path for each category that this wiki page belongs to").":<br />~np~{CATPATH(divider=>,top=>yes|no)}{CATPATH}~/np~";
 }
 
 function wikiplugin_catpath($data, $params) {

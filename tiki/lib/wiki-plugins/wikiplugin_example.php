@@ -15,7 +15,7 @@
  * wiki page.
  */
 function wikiplugin_example_help() {
-	return tra("Example").": ~np~{EXAMPLE(face=> size=>)}".tra("data")."{EXAMPLE}~/np~";
+	return tra("Example").":<br />~np~{EXAMPLE(face=> size=>)}".tra("text")."{EXAMPLE}~/np~";
 }
 function wikiplugin_example($data, $params) {
 	extract ($params);

@@ -13,7 +13,7 @@
  * Currently only displays wiki pages; very much a work in progress
   */
 function wikiplugin_catorphans_help() {
-	return tra("Display Tiki objects that have not been categorized");
+	return tra("Display Tiki objects that have not been categorized").":<br />~np~{CATORPHANS(objects=>wiki|article|blog|faq|fgal|igal|newsletter|poll|quizz|survey|tracker)}{CATORPHANS}~/np~";
 }
 
 function wikiplugin_catorphans($data, $params) {
