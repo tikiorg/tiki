@@ -88,7 +88,7 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this te
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
 [{section name=ix loop=$channels[user].sections}
-({$channels[user].sections[ix]} &nbsp;&nbsp;<a title="{tr}delete{/tr} class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+({$channels[user].sections[ix]} &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
