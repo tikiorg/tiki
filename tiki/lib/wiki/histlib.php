@@ -60,7 +60,7 @@ class HistLib extends TikiLib {
 		$pages = $this->get_pages($res["data"]);
 
 		foreach ($pages as $a_page) {
-			$this->replace_link($page, $a_page);
+			$this->replace_link($page, $a_page, false);
 		}
 
 		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
