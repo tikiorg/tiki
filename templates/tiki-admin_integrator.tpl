@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.7 2003-10-19 16:41:06 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.8 2003-11-03 02:47:53 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -35,6 +35,9 @@
   </tr><tr>
     <td class="formcolor"><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</td>
     <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
+  </tr><tr>
+    <td class="formcolor"><span title="{tr}Is files from repository can be cached{/tr}">{tr}Cachable{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="cachable" {if $cachable eq 'y'}checked="checked"{/if} title="{tr}Is files from repository can be cached{/tr}" /></td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Human readable text description of repository{/tr}">{tr}Description{/tr}</td>
     <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>

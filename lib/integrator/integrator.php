@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.12 2003-10-29 00:00:10 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.13 2003-11-03 02:47:53 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -9,10 +9,13 @@
 
 class TikiIntegrator extends TikiLib
 {
+    var $c_rep;                         //!< cached value for repository data
+    
     function TikiIntegrator($db)
     {
         if (!$db) die("Invalid db object passed to TikiIntegrator constructor");
         $this->db = $db;
+        $c_rep = false;
     }
     /// Repository management
     //\{
@@ -27,7 +30,7 @@ class TikiIntegrator extends TikiLib
         return $ret;
     }
     /// Add/Update
-    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $descr)
+    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cachable, $descr)
     {
         $name  = addslashes($name);
         $path  = addslashes($path);
@@ -35,22 +38,32 @@ class TikiIntegrator extends TikiLib
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,description)
-                      values('$name','$path','$start','$css','$vis','$descr')";
+            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,cachable,description)
+                      values('$name','$path','$start','$css','$vis','$cachable','$descr')";
         else
             $query = "update tiki_integrator_reps 
                       set name='$name',path='$path',start_page='$start',
-                      css_file='$css',visibility='$vis',description='$descr'
-                      where repID='$repID'";
+                      css_file='$css',visibility='$vis',cachable='$cachable',
+                      description='$descr' where repID='$repID'";
         $result = $this->query($query);
+        // Invalidate cached repository if needed
+        if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
+            unset($this->c_rep);
     }
     /// Get one entry by ID
     function get_repository($repID)
     {
-        $query = "select * from tiki_integrator_reps where repID='$repID'";
-        $result = $this->query($query);
-        if (!$result->numRows()) return false;
-        $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+        // Check if we already cache requested repository info
+        if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
+            return $this->c_rep;
+        else
+        {   // Need to select it...
+            $query = "select * from tiki_integrator_reps where repID='$repID'";
+            $result = $this->query($query);
+            if (!$result->numRows()) return false;
+            $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+            $c_rep = $res;
+        }
         return $res;
     }
     /// Remove repository and all rules configured for it
@@ -60,6 +73,9 @@ class TikiIntegrator extends TikiLib
         $result = $this->query($query);
         $query = "delete from tiki_integrator_reps where repID=$repID";
         $result = $this->query($query);
+        // Check if we remove cached repository
+        if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
+            unset($this->c_rep);
     }
     //\}
     /// Rules management
@@ -136,6 +152,17 @@ class TikiIntegrator extends TikiLib
               $d = str_replace($rule["srch"], $repl, $d);
         }
         return $d;
+    }
+    /// Apply all rules in defined order and returns a filtered text
+    function apply_all_rules($repID, $data)
+    {
+        $rules = $this->list_rules($repID);
+        // Get repository configuration data
+        $rep = $this->get_repository($repID);
+        if (is_array($rules))
+            foreach ($rules as $rule)
+                $data = $this->apply_rule($rep, $rule, $data);
+        return $data;
     }
     //\}
     /// Build full path to file inside given repository
@@ -228,6 +255,46 @@ class TikiIntegrator extends TikiLib
             $this->add_replace_rule($dstID, 0, $rule["ord"], $rule["srch"], $rule["repl"],
                                     $rule["type"], $rule["casesense"], $rule["rxmod"],
                                     $rule["description"]);
+    }
+    /**
+     * \brief Filter file
+     * Returns ready for integration data from given file. Cache used if neccessary.
+     * \param $repID -- repository ID to get file from
+     * \param $file -- file name to return data from
+     * \param $use_cache -- use or not cache :)
+     * \param $url -- URL to associate with cached data
+     *
+     * \note File is not checked for existence...
+     */
+    function get_file($repID, $file, $use_cache = true, $url = '')
+    {
+        global $tikilib;
+        $data = '';
+        // Try to get data from cache
+        if ($use_cache && $url != '' && $tikilib->is_cached($url))
+            $data = $tikilib->get_cache($tikilib->get_cache_id($url));
+
+        // If smth found in cache return it... else try to get it by usual way.
+        if ($data != '' && isset($data["data"]) && ($data["data"] != '')) return $data["data"];
+
+        // Get file content to string
+        $data = @file_get_contents($file);
+        if (isset($php_errormsg))
+            $data .= "ERROR: ".$php_errormsg;
+        else
+        {
+            // Now we need to hack this file by applying all configured rules...
+            $data = $this->apply_all_rules($repID, $data);
+            // Add result to cache
+            $tikilib->cache_url($url, $data);
+        }
+        return $data;
+    }
+    /// Clear cache for given repository (specified by URL mask)
+    function clear_cache($urlmask)
+    {
+        $query = "delete from tiki_link_cache where url like '$urlmask'";
+        $result = $this->query($query);
     }
 }
 
