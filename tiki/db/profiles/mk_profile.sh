@@ -26,6 +26,18 @@ grep "INSERT INTO tiki_preferences" $DUMP_FILE >$PROFILE_DUMP
 grep "INSERT INTO users_grouppermissions" $DUMP_FILE >>$PROFILE_DUMP
 grep "INSERT INTO users_groups" $DUMP_FILE >>$PROFILE_DUMP
 grep "INSERT INTO users_permissions" $DUMP_FILE >>$PROFILE_DUMP
+# more configurable information
+grep "INSERT INTO tiki_article_types" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_banners" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_calendar_categories" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_calendar_locations" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_calendars" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_categories" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_extwiki" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_group_inclusion" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_modules" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_newsreader_servers" $DUMP_FILE >>$PROFILE_DUMP
+grep "INSERT INTO tiki_quicktags" $DUMP_FILE >>$PROFILE_DUMP
 
 # Create the profile
 # The first lime in the profile should be a comment that gives a brief description of the profile.

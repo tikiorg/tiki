@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.2 2003-12-24 01:17:24 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.3 2004-01-02 23:19:28 mose Exp $
 #
 # That script is done for fast merging fixes that are done on branch
 # refer to http://tikiwiki.org/tiki-index.php?page=CvsBranch18
@@ -33,11 +33,9 @@ echo "# or adapt (especially comment of commit)"
 echo "cvs -q update -dP -r BRANCH-1-8 $FILES"
 echo "cvs -q tag -r BRANCH-1-8 -F BRANCH-1-8-HEAD $FILES"
 echo "cvs -q up -AdP $FILES"
-echo "touch mergelog"
 for i in $FILES; do
-	echo "cvs -q up -dkk -j MERGE-BRANCH-1-8-to-HEAD -j BRANCH-1-8-HEAD $i >> mergelog 2>&1"
+	echo "cvs -q up -dkk -j MERGE-BRANCH-1-8-to-HEAD -j BRANCH-1-8-HEAD $i"
 done
-echo "less mergelog"
 echo "cvs ci -m'Instant-Auto-Merge from BRANCH to HEAD' $FILES"
 echo "cvs -q tag -r BRANCH-1-8-HEAD -F MERGE-BRANCH-1-8-to-HEAD $FILES"
 echo "cvs -q up -r BRANCH-1-8 -dP $FILES"

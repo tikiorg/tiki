@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.11 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.12 2004-01-02 23:19:29 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -49,13 +49,15 @@
 <td class="heading">{tr}Show reads{/tr}</td>
 <td class="heading">{tr}Show size{/tr}</td>
 <td class="heading">{tr}Creator can edit{/tr}</td>
-<td class="heading">{tr}Delete{/tr}</td>
+<td class="heading">{tr}# Articles / Delete{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}
 <input type="hidden" name="type_array[{$types[user].type}]" />
 <tr>
-<td class="{cycle advance=false}">{tr}{$types[user].type}{/tr}</td>
+<td class="{cycle advance=false}">
+  <a class="link" href="tiki-view_articles.php?type={$types[user].type}">{tr}{$types[user].type}{/tr}</a>
+</td>
 <td class="{cycle advance=false}"><input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_pre_publ[{$types[user].type}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_post_expire[{$types[user].type}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} /></td>
@@ -71,7 +73,11 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="show_size[{$types[user].type}]" {if $types[user].show_size eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle}">
+{if $types[user].article_cnt eq 0}
 <a class="link" href="tiki-article_types.php?remove_type={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
+{else}
+{$types[user].article_cnt}
+{/if}
 </td>
 </tr>
 {/section}

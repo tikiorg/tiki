@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.26 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.27 2004-01-02 23:19:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,12 +60,14 @@ $smarty->assign('assign_rows', 10);
 $smarty->assign('assign_params', '');
 
 if (isset($_REQUEST["clear_cache"])) {
+	check_ticket('admin-modules');
 	$modlib->clear_cache(); 
 }
 
 $module_groups = array();
 
 if (isset($_REQUEST["edit_assign"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["edit_assign"] = urldecode($_REQUEST["edit_assign"]);
 
 	$info = $modlib->get_assigned_module($_REQUEST["edit_assign"]);
@@ -102,18 +104,21 @@ if (isset($_REQUEST["edit_assign"])) {
 }
 
 if (isset($_REQUEST["unassign"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["unassign"] = urldecode($_REQUEST["unassign"]);
 
 	$modlib->unassign_module($_REQUEST["unassign"]);
 }
 
 if (isset($_REQUEST["modup"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["modup"] = urldecode($_REQUEST["modup"]);
 
 	$modlib->module_up($_REQUEST["modup"]);
 }
 
 if (isset($_REQUEST["moddown"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["moddown"] = urldecode($_REQUEST["moddown"]);
 
 	$modlib->module_down($_REQUEST["moddown"]);
@@ -121,6 +126,7 @@ if (isset($_REQUEST["moddown"])) {
 
 /* Edit or delete a user module */
 if (isset($_REQUEST["um_update"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["um_update"] = urldecode($_REQUEST["um_update"]);
 
 	$smarty->assign_by_ref('um_name', $_REQUEST["um_name"]);
@@ -136,6 +142,7 @@ if (!isset($_REQUEST["groups"])) {
 $smarty->assign('preview', 'n');
 
 if (isset($_REQUEST["preview"])) {
+	check_ticket('admin-modules');
 	$smarty->assign('preview', 'y');
 
 	$smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
@@ -183,6 +190,7 @@ if (isset($_REQUEST["preview"])) {
 }
 
 if (isset($_REQUEST["assign"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["assign"] = urldecode($_REQUEST["assign"]);
 
 	$smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
@@ -208,12 +216,14 @@ if (isset($_REQUEST["assign"])) {
 }
 
 if (isset($_REQUEST["um_remove"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
 
 	$modlib->remove_user_module($_REQUEST["um_remove"]);
 }
 
 if (isset($_REQUEST["um_edit"])) {
+	check_ticket('admin-modules');
 	$_REQUEST["um_edit"] = urldecode($_REQUEST["um_edit"]);
 
 	$um_info = $tikilib->get_user_module($_REQUEST["um_edit"]);
@@ -271,7 +281,7 @@ $sameurl_elements = array(
 	'where',
 	'find'
 );
-
+ask_ticket('admin-modules');
 $smarty->assign('mid', 'tiki-admin_modules.tpl');
 $smarty->display("tiki.tpl");
 

@@ -136,6 +136,9 @@ class ArtLib extends TikiLib {
 
 		global $dbTiki;
 		global $sender_email;
+      if ($expireDate < $publishDate) {
+         $expireDate = $publishDate;
+      }
 		if(empty($imgdata)) $imgdata='';
 		include_once ('lib/notifications/notificationlib.php');
 		$hash = md5($title . $heading . $body);
@@ -390,6 +393,7 @@ class ArtLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			$res['article_cnt'] = $this->getOne("select count(*) from tiki_articles where type = ?",array($res['type']));
 			$ret[] = $res;
 		}
 

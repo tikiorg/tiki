@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.98 2003-12-23 08:57:32 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.99 2004-01-02 23:19:27 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -872,3 +872,12 @@ UPDATE tiki_menu_options SET `url` = 'tiki-list_games.php' WHERE `url`='tiki-gam
 # added on 2003-12-23 by mose
 UPDATE users_permissions SET `level`='editors' WHERE `level`='editor';
 
+# added on 2004-01-02 by mose
+DROP TABLE IF EXISTS tiki_searchsyllable;
+CREATE TABLE tiki_searchsyllable(
+  syllable varchar(80) NOT NULL default '',
+  lastUsed int(11) NOT NULL default '0',
+  lastUpdated int(11) NOT NULL default '0',
+  PRIMARY KEY  (syllable),
+  KEY lastUsed (lastUsed)
+) TYPE=MyISAM;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.9 2003-11-21 06:15:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.10 2004-01-02 23:19:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,6 +60,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('position', $info["position"]);
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-menu-options');
 	$menulib->remove_menu_option($_REQUEST["remove"]);
 
 	$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
@@ -67,6 +68,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
 		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"]);
 
@@ -124,6 +126,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('allchannels', $allchannels["data"]);
+ask_ticket('admin-menu-options');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_menu_options.tpl');
