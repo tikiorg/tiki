@@ -78,8 +78,15 @@ if($user) {
   }
 }
 
-
-
+$home_blog = $tikilib->get_preference("home_blog",1);
+$smarty->assign_by_ref('home_blog',$home_blog);
+$home_gallery = $tikilib->get_preference("home_gallery",1);
+$smarty->assign_by_ref('home_gallery',$home_gallery);
+$feature_xmlrpc = $tikilib->get_preference("feature_xmlrpc", 'n');
+$feature_blog_rankings = $tikilib->get_preference("feature_blog_rankings", 'y');
+$feature_cms_rankings = $tikilib->get_preference("feature_cms_rankings", 'y');
+$feature_gal_rankings = $tikilib->get_preference("feature_gal_rankings", 'y');
+$feature_wiki_rankings = $tikilib->get_preference("feature_wiki_rankings", 'y');
 $feature_lastChanges = $tikilib->get_preference("feature_lastChanges", 'y');
 $feature_dump = $tikilib->get_preference("feature_dump", 'y');
 $feature_ranking = $tikilib->get_preference("feature_ranking", 'y');
@@ -95,11 +102,17 @@ $feature_galleries = $tikilib->get_preference("feature_galleries",'y');
 $feature_featuredLinks = $tikilib->get_preference("feature_featuredLinks",'y');
 $feature_hotwords = $tikilib->get_preference("feature_hotwords",'y');
 
+$feature_wiki = $tikilib->get_preference("feature_wiki",'y');
 $feature_articles = $tikilib->get_preference("feature_articles",'n');
 $feature_submissions = $tikilib->get_preference("feature_submissions",'n');
 $feature_blogs = $tikilib->get_preference("feature_blogs",'n');
 $feature_xmlrpc = $tikilib->get_preference("feature_xmlrpc",'n');
 
+$smarty->assign_by_ref('feature_xmlrpc',$feature_xmlrpc);
+$smarty->assign_by_ref('feature_cms_rankings',$feature_cms_rankings);
+$smarty->assign_by_ref('feature_blog_rankings',$feature_blog_rankings);
+$smarty->assign_by_ref('feature_gal_rankings',$feature_gal_rankings);
+$smarty->assign_by_ref('feature_wiki_rankings',$feature_wiki_rankings);
 $smarty->assign_by_ref('feature_hotwords',$feature_hotwords);
 $smarty->assign_by_ref('feature_lastChanges',$feature_lastChanges);
 $smarty->assign_by_ref('feature_dump',$feature_dump);
@@ -114,7 +127,7 @@ $smarty->assign_by_ref('feature_userPreferences', $feature_userPreferences);
 $smarty->assign_by_ref('feature_userVersions', $feature_userVersions);
 $smarty->assign_by_ref('feature_galleries',$feature_galleries);
 $smarty->assign_by_ref('feature_featuredLinks',$feature_featuredLinks);
-
+$smarty->assign_by_ref('feature_wiki',$feature_wiki);
 $smarty->assign_by_ref('feature_articles',$feature_articles);
 $smarty->assign_by_ref('feature_submissions',$feature_submissions);
 $smarty->assign_by_ref('feature_blogs',$feature_blogs);
@@ -123,6 +136,7 @@ $smarty->assign_by_ref('feature_xmlrpc',$feature_xmlrpc);
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $modallgroups = $tikilib->get_preference("modallgroups",'y');
+$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 
 $cachepages = $tikilib->get_preference("cachepages",'y');
 $cacheimages = $tikilib->get_preference("cacheimages",'y');
@@ -131,6 +145,7 @@ $allowRegister = $tikilib->get_preference("allowRegister",'n');
 $title = $tikilib->get_preference("title","");
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $maxArticles = $tikilib->get_preference("maxArticles",10);
+$smarty->assign_by_ref('tikiIndex',$tikiIndex);
 $smarty->assign_by_ref('maxArticles',$maxArticles);
 $smarty->assign_by_ref('style',$style);
 $smarty->assign_by_ref('popupLinks',$popupLinks);

@@ -18,6 +18,11 @@ if((!isset($_SESSION["user"])) || ($_SESSION["user"]!='admin')) {
 
 // Change preferences
 if(isset($_REQUEST["prefs"])) {
+  if(isset($_REQUEST["tikiIndex"])) {
+    $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
+    $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
+  }
+
   if(isset($_REQUEST["style"])) {
     $tikilib->set_preference("style",$_REQUEST["style"]); 
     $smarty->assign_by_ref('style',$_REQUEST["style"]);
@@ -74,10 +79,14 @@ if(isset($_REQUEST["prefs"])) {
   if(isset($_REQUEST["maxVersions"])) {
     $tikilib->set_preference("maxVersions",$_REQUEST["maxVersions"]);	
   }
+  
+  
+}
+
+if(isset($_REQUEST["cmsprefs"])) {
   if(isset($_REQUEST["maxArticles"])) {
     $tikilib->set_preference("maxArticles",$_REQUEST["maxArticles"]);
   }
-  
 }
 
 if(isset($_REQUEST["wikifeatures"])) {
@@ -96,6 +105,15 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_dump",'n');
     $smarty->assign("feature_dump",'n');
   }
+
+  if(isset($_REQUEST["feature_wiki_rankings"]) && $_REQUEST["feature_wiki_rankings"]=="on") {
+    $tikilib->set_preference("feature_wiki_rankings",'y'); 
+    $smarty->assign("feature_wiki_rankings",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_rankings",'n');
+    $smarty->assign("feature_wiki_rankings",'n');
+  }
+
   
   if(isset($_REQUEST["feature_ranking"]) && $_REQUEST["feature_ranking"]=="on") {
     $tikilib->set_preference("feature_ranking",'y'); 
@@ -155,7 +173,63 @@ if(isset($_REQUEST["wikifeatures"])) {
 }
 
 
+if(isset($_REQUEST["galfeatures"])) {
+      
+  if(isset($_REQUEST["feature_gal_rankings"]) && $_REQUEST["feature_gal_rankings"]=="on") {
+    $tikilib->set_preference("feature_gal_rankings",'y'); 
+    $smarty->assign("feature_gal_rankings",'y');
+  } else {
+    $tikilib->set_preference("feature_gal_rankings",'n');
+    $smarty->assign("feature_gal_rankings",'n');
+  }
+}
+
+if(isset($_REQUEST["cmsfeatures"])) {
+      
+  if(isset($_REQUEST["feature_cms_rankings"]) && $_REQUEST["feature_cms_rankings"]=="on") {
+    $tikilib->set_preference("feature_cms_rankings",'y'); 
+    $smarty->assign("feature_cms_rankings",'y');
+  } else {
+    $tikilib->set_preference("feature_cms_rankings",'n');
+    $smarty->assign("feature_cms_rankings",'n');
+  }
+}
+
+if(isset($_REQUEST["blogfeatures"])) {
+  if(isset($_REQUEST["feature_blog_rankings"]) && $_REQUEST["feature_blog_rankings"]=="on") {
+    $tikilib->set_preference("feature_blog_rankings",'y'); 
+    $smarty->assign("feature_blog_rankings",'y');
+  } else {
+    $tikilib->set_preference("feature_blog_rankings",'n');
+    $smarty->assign("feature_blog_rankings",'n');
+  }
+}
+
+if(isset($_REQUEST["blogset"])) {
+  $tikilib->set_preference("home_blog",$_REQUEST["homeBlog"]);
+}
+
+if(isset($_REQUEST["galset"])) {
+  $tikilib->set_preference("home_gallery",$_REQUEST["homeGallery"]);
+}
+
+
 if(isset($_REQUEST["features"])) {
+  if(isset($_REQUEST["feature_wiki"]) && $_REQUEST["feature_wiki"]=="on") {
+    $tikilib->set_preference("feature_wiki",'y'); 
+    $smarty->assign("feature_wiki",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki",'n');
+    $smarty->assign("feature_wiki",'n');
+  }
+  if(isset($_REQUEST["feature_xmlrpc"]) && $_REQUEST["feature_xmlrpc"]=="on") {
+    $tikilib->set_preference("feature_xmlrpc",'y'); 
+    $smarty->assign("feature_xmlrpc",'y');
+  } else {
+    $tikilib->set_preference("feature_xmlrpc",'n');
+    $smarty->assign("feature_xmlrpc",'n');
+  }
+
   if(isset($_REQUEST["feature_search"]) && $_REQUEST["feature_search"]=="on") {
     $tikilib->set_preference("feature_search",'y'); 
     $smarty->assign("feature_search",'y');
@@ -163,6 +237,33 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_search",'n');
     $smarty->assign("feature_search",'n');
   }
+
+  if(isset($_REQUEST["feature_articles"]) && $_REQUEST["feature_articles"]=="on") {
+    $tikilib->set_preference("feature_articles",'y'); 
+    $smarty->assign("feature_articles",'y');
+  } else {
+    $tikilib->set_preference("feature_articles",'n');
+    $smarty->assign("feature_articles",'n');
+  }
+  
+  if(isset($_REQUEST["feature_submissions"]) && $_REQUEST["feature_submissions"]=="on") {
+    $tikilib->set_preference("feature_submissions",'y'); 
+    $smarty->assign("feature_submissions",'y');
+  } else {
+    $tikilib->set_preference("feature_submissions",'n');
+    $smarty->assign("feature_submissions",'n');
+  }
+  
+  if(isset($_REQUEST["feature_blogs"]) && $_REQUEST["feature_blogs"]=="on") {
+    $tikilib->set_preference("feature_blogs",'y'); 
+    $smarty->assign("feature_blogs",'y');
+  } else {
+    $tikilib->set_preference("feature_blogs",'n');
+    $smarty->assign("feature_blogs",'n');
+  }
+
+
+
 
   if(isset($_REQUEST["feature_hotwords"]) && $_REQUEST["feature_hotwords"]=="on") {
     $tikilib->set_preference("feature_hotwords",'y'); 
@@ -263,12 +364,26 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('languages',$languages);
 
+$blogs=$tikilib->list_blogs(0,-1,'created_desc','');
+$smarty->assign_by_ref('blogs',$blogs["data"]);
+$galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin','');
+$smarty->assign_by_ref('galleries',$galleries["data"]);
+
 $tags = $tikilib->get_tags();
 $smarty->assign_by_ref("tags",$tags);
 
 // Preferences to load
 // anonCanEdit
 // maxVersions
+$home_blog = $tikilib->get_preference("home_blog",1);
+$home_gallery = $tikilib->get_preference("home_gallery",1);
+$smarty->assign('home_blog_url','tiki-view_blog.php?blogId='.$home_blog);
+$smarty->assign('home_gallery_url','tiki-browse_gallery.php?galleryId='.$home_gallery);
+$hbloginfo = $tikilib->get_blog($home_blog);
+$hgalinfo = $tikilib->get_gallery($home_gallery);
+$smarty->assign('home_blog_name',substr($hbloginfo["title"],0,20));
+$smarty->assign('home_gal_name',substr($hgalinfo["name"],0,20));
+
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
 $maxVersions = $tikilib->get_preference("maxVersions", 20);

@@ -5,14 +5,15 @@ include_once('lib/userslib.php');
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
 
-if($feature_xmlrpc != 'y') {
-  
-  die;  
-}
 
 
 $tikilib = new Tikilib($dbTiki);
 $userlib = new Userslib($dbTiki);
+
+if($tikilib->get_preference("feature_xmlrpc",'n') != 'y') {
+  die;  
+}
+
 
 $map = array (
         "blogger.newPost" => array( "function" => "newPost"),
