@@ -1,6 +1,6 @@
 {if $tiki_p_read_comments eq 'y'}
 <br/>
-<small>({$comments_cant} {tr}comments{/tr})</small>
+<small><a href="javascript:flip('comzone');" class="linkbut">({$comments_cant} {tr}comments{/tr})</a></small>
 {/if}
 
 {if $comments_show eq 'y'}
