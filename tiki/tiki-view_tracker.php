@@ -174,7 +174,7 @@ $smarty->assign_by_ref('sort_mode',$sort_mode);
 if(!isset($_REQUEST["status"])) $_REQUEST["status"]='';
 $smarty->assign('status',$_REQUEST["status"]);
 
-$items=$trklib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$_REQUEST["status"]);
+$items=$trklib->list_tracker_items($_REQUEST["trackerId"],$offset,$maxRecords,$sort_mode,$fields,$_REQUEST["status"]);
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
