@@ -1,8 +1,8 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.1 2003-10-13 17:18:09 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.2 2003-10-14 05:02:27 zaufi Exp $
  * 
- * Tiki integrator support class
+ * \brief Tiki integrator support class
  *
  */
 
@@ -173,6 +173,34 @@ class TikiIntegrator extends TikiLib
         }
         // Nothing found...
         return '';
+    }
+    /**
+     * \brief Copy rules from one repository to another
+     *
+     * Variant #1 (stupid but working):
+     *  a) get rules list for repository 1
+     *  b) fix repID for all elements of list
+     *  c) insert new rules for repository 2
+     *
+     * Variant #2 (better but need smth special):
+     *  a) create temporary type=hash table ... (stored in memory and
+     *     auto deleted on connection close -- is all DBs support this?)
+     *     a.1) create table name like original_table_name;
+     *          work for MySQL > 4.1 (smth else?)
+     *  b) select into it rules of rep 1
+     *  c) fix it
+     *  d) copy to main rules table
+     *
+     */
+    function copy_rules($r1, $r2)
+    {
+        $rules1 = $his->list_rules($r1);
+        // 
+        foreach ($rules as $rule)
+           $this->add_replace_rule($rule["repID"], $r2, $rule["srch"],
+                                   $rule["repl"], $rule["type"], $rule["casesense"],
+                                   $rule["rxmod"], $rule["description"]);
+        //
     }
 }
 
