@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.13 2004-04-08 22:55:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.14 2004-04-09 16:27:14 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -7,7 +7,7 @@
 
 require_once ('tiki-setup.php');
 
-function du($path) {
+function du($path, $begin=null) {
 	if (!$path or !is_dir($path)) return 0;
 	$total = 0; 
 	$cant = 0;
@@ -19,7 +19,9 @@ function du($path) {
 			$total+= $du['total'];
 			$cant+= $du['cant'];
 			unset($file);
-		} elseif (!is_dir($path.'/'.$file)) {
+		} elseif (!is_dir($path.'/'.$file)) { 
+			if (isset($begin) && substr($file, 0, strlen($begin)) != $begin)
+				continue; // the file name doesn't begin with the good beginning
 			$stats = stat($path.'/'.$file);
 			$total += $stats['size'];
 			$cant++;
@@ -127,7 +129,7 @@ foreach($languages as $clang) {
 	if(is_dir("templates_c/$tikidomain".$clang["value"])) {
 		$templates[$clang["value"]] = du("templates_c/$tikidomain".$clang["value"]);
 	} else {
-		$templates[$clang["value"]] = array("cant"=>0,"total"=>0);
+		$templates[$clang["value"]] = du("templates_c/", substr($tikidomain.$clang["value"], 1));
 	}
 }
 $smarty->assign_by_ref('templates', $templates);
