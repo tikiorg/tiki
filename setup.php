@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.20 2003-08-21 00:21:35 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.21 2003-08-21 00:33:09 rossta Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if (get_magic_quotes_gpc()) {
 }
 
 // Define and load Smarty components
-define('SMARTY_DIR', 'Smarty/');
+define('SMARTY_DIR', 'lib/smarty/');
 require_once (SMARTY_DIR . 'Smarty.class.php');
 
 class Smarty_Sterling extends Smarty {
@@ -38,7 +38,7 @@ class Smarty_Sterling extends Smarty {
 	//$this->debug_tpl = 'debug.tpl';
 	}
 
-	function _smarty_include($_smarty_include_tpl_file, $_smarty_include_vars) {
+	function _smarty_include($_smarty_include_tpl_file) {
 		global $style;
 
 		global $style_base;
@@ -49,7 +49,7 @@ class Smarty_Sterling extends Smarty {
 			}
 		}
 
-		return parent::_smarty_include($_smarty_include_tpl_file, $_smarty_include_vars);
+		return parent::_smarty_include($_smarty_include_tpl_file);
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
