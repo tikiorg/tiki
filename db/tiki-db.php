@@ -1,4 +1,14 @@
 <?php
+$separator='';
+$current_path=ini_get('include_path');
+if(strstr($current_path, ';')) {
+	$separator=';'; 
+} else {
+	$separator=':'; 
+}
+if($separator=='') $separator = ':'; // guess
+ini_set('include_path', $current_path.$separator.'lib/pear');
+
 // Database connection for the tiki system
 require_once('DB.php');
 $host_tiki   = 'localhost';
