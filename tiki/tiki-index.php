@@ -135,9 +135,9 @@ if(count($slides)>1) {
 	$smarty->assign('show_slideshow','y');
 } else {
 	$smarty->assign('show_slideshow','n');
-	$pdata = $tikilib->parse_data($info["data"]);
-	$smarty->assign_by_ref('parsed',$pdata);
 }
+$pdata = $tikilib->parse_data($info["data"]);
+$smarty->assign_by_ref('parsed',$pdata);
 
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);
