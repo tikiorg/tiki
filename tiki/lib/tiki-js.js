@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.23 2003-11-12 15:55:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.24 2003-11-12 20:42:53 gillesm Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -23,7 +23,7 @@ function chgArtType() {
 }
 
 function chgTrkFld() {
-	if (document.getElementById('trkfldtype').value == 'd') {
+	if (document.getElementById('trkfldtype').value == 'd' || document.getElementById('trkfldtype').value == 'i' ) {
 		document.getElementById('trkfldoptions').style.display = "block";
 	} else {
 		document.getElementById('trkfldoptions').style.display = "none";

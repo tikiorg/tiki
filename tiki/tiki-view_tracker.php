@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.8 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.9 2003-11-12 20:42:53 gillesm Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,6 +89,31 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 	}
 
+	if ($fields["data"][$i]["type"] == 'i')	{
+	   $userfile=$fields["data"][$i]["value"] ;
+	   if (isset($_FILES[$userfile]) && is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
+	        if (!empty($gal_match_regex)) {
+		  	 if (!preg_match("/$gal_match_regex/", $_FILES[$userfile1]['name'], $reqs)) {
+					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+					$smarty->display("styles/$style_base/error.tpl");
+					die;
+				}
+			}
+
+			if (!empty($gal_nmatch_regex)) {
+				if (preg_match("/$gal_nmatch_regex/", $_FILES[$userfile]['name'], $reqs)) {
+					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+					$smarty->display("styles/$style_base/error.tpl");
+					die;
+				}
+			}
+			$type = $_FILES[$userfile]['type'];
+			$size = $_FILES[$userfile]['size'];
+			$filename = $_FILES[$userfile1]['name'];
+			$ins_fields["data"][$i]["value"]=$filename;
+	  }
+	}
+	
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
 
