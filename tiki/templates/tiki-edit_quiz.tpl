@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-edit_quiz.php">Admin quizzes</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_quiz.php">{tr}Admin quizzes{/tr}</a><br/><br/>
 [<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 |<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 |<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
