@@ -220,8 +220,12 @@ class POP3{
                         if (trim($line) == "." OR feof($this->connection)) {
                                   break;
                         }
-                        if (eregi("^Subject: (.*)", $line, $reg))
+                        if (eregi("^Subject: (.*)", $line, $reg)) {
                                 $list["subject"] = $reg[1];
+                        	// if subject is empty, set a default subject
+                        	if (trim($reg[1]) == "" OR is_null($reg[1]))
+																$list["subject"] = "<NO SUBJECT>";
+                        }
                         if (eregi("^Date: (.*)", $line, $reg))
                                 $date = $reg[1];
                         if (eregi("^From: (.*)", $line, $reg))
