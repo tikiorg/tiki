@@ -2,22 +2,6 @@
 <h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 <a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
-{*
-{if $can_write eq 'n'}
-  <b>We have problems!</b><br/>
-  The following directories must be writeable by Tiki, please
-  check the permissions on those directories and then re-run
-  the install script. <br/><br/>
-  db/<br/>
-  img/wiki<br/>
-  img/wiki_up<br/>
-  modules/cache<br/>
-  templates_c<br/>
-  backups<br/>
-  dump<br/>
-  temp<br/><br/>
-  <a href="tiki-install.php" class="link">try again!</a>
-*}
 	{if $dbcon eq 'n' or $resetdb eq 'y'}
 	  <b>Tiki cannot find a database connection</b><br/>
 	  Please enter your database connection info<br/><br/>
@@ -189,5 +173,4 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     	{/if}
 	{/if}
 
-{*{/if}*}
 </div>
