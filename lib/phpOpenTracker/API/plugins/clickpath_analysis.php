@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: clickpath_analysis.php,v 1.1 2003-04-25 18:43:54 lrargerich Exp $
+// $Id: clickpath_analysis.php,v 1.2 2003-05-12 16:34:50 lechuckdapirate Exp $
 //
 
 require_once POT_INCLUDE_PATH . 'API/Clickpath.php';
@@ -24,7 +24,7 @@ require_once POT_INCLUDE_PATH . 'API/Plugin.php';
 * phpOpenTracker API - Clickpath Analysis
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
@@ -82,6 +82,7 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
         E_USER_ERROR
       );
     }
+
     $parameters['document_color']    = isset($parameters['document_color'])    ? $parameters['document_color']    : 'black';
     $parameters['exit_targets']      = isset($parameters['exit_targets'])      ? $parameters['exit_targets']      : false;
     $parameters['exit_target_color'] = isset($parameters['exit_target_color']) ? $parameters['exit_target_color'] : 'red';
@@ -154,8 +155,6 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
       )
     );
 
-
-
     while ($row = $this->db->fetchRow()) {
       if (!isset($this->_documents[$row['document_id']])) {
         $this->_documents[$row['document_id']] = array(
@@ -177,6 +176,7 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
 
       $clickpaths[$visitor][$node]['document']   = $row['document_id'];
       $clickpaths[$visitor][$node]['time_spent'] = 1;
+
       if (isset($previousTimestamp)) {
         $clickpaths[$visitor][$node-1]['time_spent'] = $row['timestamp'] - $previousTimestamp;
       }
@@ -184,6 +184,7 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
       $previousTimestamp = $row['timestamp'];
       $node++;
     }
+
     if (!isset($clickpaths)) {
       return $result;
     }
@@ -227,11 +228,9 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
     }
 
     for ($i = 0; $i < sizeof($clickpaths) - 1; $i++) {
-
       $pathLength = sizeof($clickpaths[$i]);
 
       if ($parameters['referers'] && $i <= $numClickpaths) {
-
         $this->db->query(
           sprintf(
             'SELECT referers.string     AS referer,
@@ -287,6 +286,7 @@ class phpOpenTracker_API_clickpath_analysis extends phpOpenTracker_API_Plugin {
         }
       }
     }
+
     if (empty($this->_paths)) {
       return $result;
     }
