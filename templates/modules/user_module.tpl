@@ -2,7 +2,7 @@
 <div class="box-title">
 {$user_title}
 </div>
-<span class="user-box-text"><div class="box-data"></span>
+<div class="box-data">
 {eval var=$user_data}
 </div>
 </div>
