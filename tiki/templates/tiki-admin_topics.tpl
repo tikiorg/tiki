@@ -1,15 +1,15 @@
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a><br/><br/>
-<h3>Create a new topic</h3>
+<h3>{tr}Create a new topic{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
 <table class="normal">
-<tr><td class="formcolor">Name</td><td class="formcolor"><input type="text" name="name" /></td></tr>
-<tr><td class="formcolor">Upload Image</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<tr><td class="formcolor">{tr}Topic Name{/tr}</td><td class="formcolor"><input type="text" name="name" /></td></tr>
+<tr><td class="formcolor">{tr}Upload Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtopic" value="add" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtopic" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
 
-<h3>List of topics</h3>
+<h3>{tr}List of topics{/tr}</h3>
 <table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
@@ -33,7 +33,7 @@
 {else}
 <a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">{tr}Deactivate{/tr}</a>
 {/if}
-{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Topic%20{$topics[user].name}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}">{tr}perms{/tr}</a>{if $topics[user].individual eq 'y'}){/if}
+{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Topic{/tr}%20{$topics[user].name}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}">{tr}perms{/tr}</a>{if $topics[user].individual eq 'y'}){/if}
 </td>
 </tr>
 {else}
@@ -49,7 +49,7 @@
 {else}
 <a class="link" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">{tr}Deactivate{/tr}</a>
 {/if}
-{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Topic%20{$topics[user].name}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}">{tr}perms{/tr}</a>{if $topics[user].individual eq 'y'}){/if}
+{if $topics[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName={tr}Topic{/tr}%20{$topics[user].name}&amp;objectType=topic&amp;permType=topics&amp;objectId={$topics[user].topicId}">{tr}perms{/tr}</a>{if $topics[user].individual eq 'y'}){/if}
 </td>
 </tr>
 {/if}

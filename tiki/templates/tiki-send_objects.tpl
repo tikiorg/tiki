@@ -51,7 +51,7 @@
 </div>
 <div class="cbox-data">
 <div class="simplebox">
-<b>Pages</b>: 
+<b>{tr}Pages{/tr}</b>: 
 {section name=ix loop=$sendpages}
 {$sendpages[ix]}&nbsp;
 {/section}
@@ -85,7 +85,7 @@
 </div>
 <div class="cbox-data">
 <div class="simplebox">
-<b>Articles</b>: 
+<b>{tr}Articles{/tr}</b>: 
 {section name=ix loop=$sendarticles}
 {$sendarticles[ix]}&nbsp;
 {/section}

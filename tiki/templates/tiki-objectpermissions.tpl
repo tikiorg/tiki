@@ -1,4 +1,4 @@
-<h2>{tr}Assign permissions to {$objectName}{/tr}</h2>
+<h2>{tr}Assign permissions to {/tr}{$objectName}</h2>
 <a href="{$referer}" class="link">{tr}back{/tr}</a>
 <div>
 <h3>{tr}Current permissions for this object{/tr}:</h3>
@@ -25,7 +25,7 @@
 <option value="{$perms[prm].permName}">{$perms[prm].permName}</option>
 {/section}
 </select>
-to group:
+{tr}to group{/tr}:
 <select name="group">
 {section name=grp loop=$groups}
 <option value="{$groups[grp].groupName}">{$groups[grp].groupName}</option>
