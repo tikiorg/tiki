@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.40 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.41 2004-02-01 18:20:27 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -39,7 +39,7 @@
 {* ---------------------- tab with list -------------------- *}
 <div id="content{cycle name=content}" class="content">
 <h2>{tr}Users{/tr}</h2>
-<div align="center">
+
 <form method="get" action="tiki-adminusers.php">
 <table class="findtable"><tr>
 <td>{tr}Find{/tr}</td>
