@@ -112,6 +112,14 @@ if(isset($_REQUEST["register"])) {
       }
     }
 
+  $emails = $notificationlib->get_mail_events('user_registers','*');
+  foreach($emails as $email) {
+    $smarty->assign('mail_user',$_REQUEST["name"]);
+    $smarty->assign('mail_date',date("U"));
+    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+    $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
+    mail($email, tra('New user registration'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+  }
   
   if($validateUsers == 'y' and $email_valid != 'no') {
     //$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
@@ -120,14 +128,6 @@ if(isset($_REQUEST["register"])) {
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine =httpPrefix().$foo1;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-    $emails = $notificationlib->get_mail_events('user_registers','*');
-    foreach($emails as $email) {
-      $smarty->assign('mail_user',$_REQUEST["name"]);
-      $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-      $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
-      mail($email, tra('New user registration'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
-    }
     // Send the mail
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
     $smarty->assign('mail_machine',$machine);
