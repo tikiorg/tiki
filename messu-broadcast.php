@@ -59,7 +59,7 @@ if(isset($_REQUEST['send'])) {
   // Validation:
   // must have a subject or body non-empty (or both)
   if(empty($_REQUEST['subject'])&&empty($_REQUEST['body'])) {
-    $smarty->assign('message','ERROR: Either the subject or body must be non-empty');
+    $smarty->assign('message',tra('ERROR: Either the subject or body must be non-empty'));
     $smarty->display("styles/$style_base/tiki.tpl");
     die;
   }
@@ -73,10 +73,11 @@ if(isset($_REQUEST['send'])) {
         if($messulib->get_user_preference($a_user,'allowMsgs','y')) {
           $users[] = $a_user;
         } else {
+	  // TODO: needs translation as soon as there is a solution for strings with embedded variables
           $message.="User $a_user can not receive messages<br/>";
         }
       } else {
-        $message.="Invalid user: $a_user<br/>";
+        $message.=tra("Invalid user")."$a_user<br/>";
       }
     }
   }
@@ -85,9 +86,9 @@ if(isset($_REQUEST['send'])) {
   
   // Validation: either to, cc or bcc must have a valid user
   if(count($users)>0) {
-    $message.="Message will be sent to: ".implode(',',$users)."<br/>";
+    $message.=tra("Message will be sent to: ").implode(',',$users)."<br/>";
   } else {
-    $message = 'ERROR: No valid users to send the message';
+    $message = tra('ERROR: No valid users to send the message');
     $smarty->assign('message',$message);
     $smarty->display("styles/$style_base/tiki.tpl");
     die;

@@ -1674,7 +1674,7 @@ $lang=Array(
 "View this tracker items" => "Eintr&auml;ge dieses Trackers ansehen",
 "view" => "betrachten",
 "Viewing blog post" => "Betrachte Blog-Post",
-"visit the site for more games and fun" => "Besuchen Sie die Site f&uuml;r weiter Spiele und Unterhaltung",
+"visit the site for more games and fun" => "Besuchen Sie die Site f&uuml;r weitere Spiele und Unterhaltung.",
 "Visits (desc)" => "Besuche (abst.)",
 "Visits to file galleries" => "Visits auf Dateigalerien",
 "Visits to forums" => "Visits auf Foren",
@@ -2199,24 +2199,9 @@ in Admin-Allgemein abgestellt haben.
 "1 day" => "1 Tag",
 "1 week" => "1 Woche",
 "1 month" => "1 Monat",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
+"ERROR: Either the subject or body must be non-empty" => "FEHLER: Text und Betreff d&uuml;rfen nicht leer sein.",
+"ERROR: No valid users to send the message" => "FEHLER: Keine g&uuml;ltigen Benutzer zum Verschicken der Nachricht.",
+"Invalid user:" => "Unbekannter Benutzer:",
+"Message will be sent to: " => "Die Nachricht wird versand an: ",
 "##end###" => "###end###");
 ?>
