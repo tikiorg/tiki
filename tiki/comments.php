@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.32 2004-06-22 22:25:46 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.33 2004-06-23 16:59:05 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -168,7 +168,7 @@ if ($tiki_p_post_comments == 'y') {
 		$message_id = '';
 
 		$object = explode(':', $comments_objectId );
-		if( $object[0] == 'forum' )
+		if( $object[0] == 'forum' && isset( $_REQUEST["comments_grandParentId"] ) )
 		{
 		    $parent_id = $_REQUEST["comments_grandParentId"];
 		} else {
