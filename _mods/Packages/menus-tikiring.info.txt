@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-09-30 16:35:06 $
+$Date: 2004-09-30 16:41:24 $
 
 author:
 the Tikiwiki community
@@ -20,7 +20,8 @@ Description:
 The menu including all tiki sites. hardstamped to menuId=41
 
 Changelog:
-1 initial package
+1.2 added dev.tw.o
+1.1 initial package
 
 sql-install:
 insert ignore into `tiki_menus` (`menuId`,`name`,`description`,`type`) values (41,"Tiki Ring","Tiki Ring menu. see http://tikiwiki.org/TikiRing","d");
@@ -41,6 +42,7 @@ INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VA
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'irc.tikiwiki.org',    'http://irc.tikiwiki.org',      240);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'edu.tikiwiki.org',    'http://edu.tikiwiki.org',      250);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'sec.tikiwiki.org',    'http://sec.tikiwiki.org',      260);
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'dev.tikiwiki.org',    'http://dev.tikiwiki.org',      260);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'mods.tikiwiki.org',   'http://mods.tikiwiki.org',     270);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'maps.tikiwiki.org',   'http://maps.tikiwiki.org',     280);
 INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`) VALUES (41, 'o', 'dupli.tikiwiki.org',  'http://dupli.tikiwiki.org',    290);
