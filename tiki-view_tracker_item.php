@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.29 2004-01-24 23:10:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.30 2004-01-27 18:36:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,6 +58,9 @@ if ($tiki_p_view_trackers != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$status_types = $trklib->status_types();
+$smarty->assign('status_types', $status_types);
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
@@ -328,11 +331,20 @@ if ($tracker_info["useAttachments"] == 'y') {
 	$smarty->assign('attextra', $attextra);
 }
 
+$tabi = 2;
 if (isset($_REQUEST['show'])) {
-	if ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'att') {
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");	
+	if ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'com') {
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");	
+	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'att') {
+		if ($tracker_info["useAttachments"] == 'y') $tabi++;
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");	
+	} elseif (isset($_REQUEST['mod']))  {
+		if ($tracker_info["useAttachments"] == 'y') $tabi++;
+		if ($tracker_info["useComments"] == 'y') $tabi++;
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");
 	}
-}
+} 
+
 $section = 'trackers';
 include_once ('tiki-section_options.php');
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.35 2004-01-26 23:45:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.36 2004-01-27 18:36:37 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -12,20 +12,31 @@
 <br />
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
-<span class="button2"><a href="tiki-adminusers.php" class="linkbuton">{tr}Admin users{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+{if $username}
+<span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a new user{/tr}</a></span>
+{/if}
 <br /><br /><br />
 
-{cycle name=tabs values="1,2,3" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false}
+
+{* ---------------------- tabs -------------------- *}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
-<span id="tab{cycle name=tabs}" class="tab">{tr}Add a new user{/tr}</span>
-{if $ins_fields}
+{if $username}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Edit user{/tr} <i>{$username}</i></span>
+{if $fields}
 <span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
 {/if}
+{else}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Add a new user{/tr}</span>
+{/if}
+</span>
 </div>
 
-{cycle name=content values="1,2,3" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false}
 
+{* ---------------------- tab with list -------------------- *}
 <div id="content{cycle name=content}" class="content">
 <h2>{tr}Users{/tr}</h2>
 <div align="center">
@@ -40,6 +51,7 @@
 </tr></table>
 </form>
 
+{if $cant_pages > 1}
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
@@ -52,6 +64,7 @@ class="prevnext">{$initials[ini]}</a> .
 <a href="tiki-adminusers.php?initial={if $find}&amp;find={$find|escape:"url"}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{tr}All{/tr}</a>
 </div>
+{/if}
 
 <table class="normal">
 <tr>
@@ -86,6 +99,7 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 </tr>
 {/section}
 </table>
+{if $cant_pages > 1}
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
@@ -107,8 +121,10 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 
 </div>
 </div>
+{/if}
 </div>
 
+{* ---------------------- tab with form -------------------- *}
 <div id="content{cycle name=content}" class="content">
 <h2>{tr}Add a new user{/tr}</h2>
 
@@ -147,28 +163,29 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {/if}
 </div>
 
-{if $ins_fields}
+{if $fields}
 <div id="content{cycle name=content}" class="content">
 <table class="normal">
-{section name=ix loop=$ins_fields}
+{section name=ix loop=$fields}
 {if $fields[ix].type eq 'h'}
 </table>
 <h3>{$fields[ix].label}</h3>
 <table class="normal">
 {elseif $fields[ix].type ne 'x'}
-<tr class="formcolor"><td>{$fields[ix].label}</td>
+<tr class="formcolor"><td>{$fields[ix].name}</td>
 <td>
-{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
-{$ins_fields[ix].value|date_format:$daformat}
-{elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue}
+{if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
+{$fields[ix].value|date_format:$daformat}
+{elseif $fields[ix].type eq 'a'}
+{$fields[ix].pvalue}
 {else}
-{$ins_fields[ix].value}
+{$fields[ix].value|default:"&nbsp;"}
 {/if}
 </td>
 </tr>
 {/if}
 {/section}
 </table>
+<span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$usersTrackerId}&amp;itemId={$useritemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
 </div>
 {/if}
