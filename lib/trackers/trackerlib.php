@@ -207,8 +207,7 @@ class TrackerLib extends TikiLib {
 
 
 	/* experimental shared */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '') {
-		$filters = array();
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='') {
 		
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array((int) $trackerId);
@@ -229,12 +228,17 @@ class TrackerLib extends TikiLib {
 
 		$csort_mode = '';
 		$corder = "asc";
-		if (substr($sort_mode,0,2) == "f_" or $filtervalue) {
+		if (substr($sort_mode,0,2) == "f_" or $filtervalue or $exactvalue) {
 			if ($initial) {
 				$mid.= "and ttif.`value` like ?";
 				$bindvars[] = $initial.'%';
-			} 
-			if ($filtervalue) {
+			}
+			if ($exactvalue) {
+				$mid.= "and ttif.`value`=?";
+				$bindvars[] = $exactvalue;
+				$csort_mode = $filterfield;
+				$corder = "asc";
+			} elseif ($filtervalue) {
 				$mid.= "and ttif.`value` like ?";
 				$bindvars[] = '%'.$filtervalue.'%';
 				$csort_mode = $filterfield;
@@ -244,9 +248,9 @@ class TrackerLib extends TikiLib {
 			}
 			$bindvars[] = $csort_mode;
 			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
 			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? ";
+			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? ";
 		} else {
 			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
 			$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
@@ -259,10 +263,9 @@ class TrackerLib extends TikiLib {
 			$fields = array();
 			$opts = array();
 			$itid = $res["itemId"];
-			$query2 = "select ttf.`fieldId`, `value` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
-				where ttif.`fieldId`=ttf.`fieldId` and `isPublic`=? and`itemId`=? order by `position` asc";
+			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
+				where ttif.`fieldId`=ttf.`fieldId` and `isPublic`=? and `itemId`=? order by `position` asc";
 			$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
-			$pass = true;
 			$last = array();
 			$res2 = array();
 			$kx = "";
@@ -275,13 +278,6 @@ class TrackerLib extends TikiLib {
 					$fopt['value'] = $fil[$fieldId];
 				} else {
 					$fopt['value'] = "";
-				}
-				if ($filtervalue) {
-					if ($fieldId == $filterfield) {
-						if (strtolower($fopt["value"]) != strtolower($filtervalue)) {
-							$pass = false;
-						}
-					}
 				}
 				$fopt["linkId"] = '';
 				if ($fopt["type"] == 'r') {
@@ -314,10 +310,8 @@ class TrackerLib extends TikiLib {
 // var_dump($fields);die();
 			$res["field_values"] = $fields;
 			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-			if ($pass) {
 				$kl = $kx.$itid;
 				$ret["$kl"] = $res;
-			}
 		}
 
 		if ($corder == 'asc') {

@@ -82,6 +82,7 @@ function wikiplugin_trackerlist($data, $params) {
 			$tr_offset = $_REQUEST['tr_offset'];
 		} else {
 			$tr_offset = 0;
+			$query_array['tr_offset'] = 0;
 		}
 		$smarty->assign_by_ref('tr_offset',$tr_offset);
 

@@ -129,7 +129,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 &nbsp;[<a class="prevnext" href="{$smarty.server.PHP_SELF}{
 	if $query_string}?{$query_string}&amp;{else}?{/if}{
 	if $tr_initial}tr_initial={$tr_initial}{/if}{
-	if $tr_prev_offset}&amp;tr_offset={$tr_next_offset}{/if}{
+	if $tr_next_offset}&amp;tr_offset={$tr_next_offset}{/if}{
 	if $tr_sort_mode}&amp;tr_sort_mode=f_{$tr_sort_mode}{/if}"
 >{tr}next{/tr}</a>]
 {/if}
