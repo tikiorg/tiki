@@ -1404,7 +1404,7 @@ if($feature_stats == 'y') {
 /*
 if($feature_phpopentracker == 'y') {
 
-	include_once('phpOpenTracker.php');
+	include_once('lib/phpOpenTracker/phpOpenTracker.php');
 	// log access
 	phpOpenTracker::log();
 }

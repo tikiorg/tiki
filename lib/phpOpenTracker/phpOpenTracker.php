@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: phpOpenTracker.php,v 1.2 2003-06-19 21:18:52 awcolley Exp $
+// $Id: phpOpenTracker.php,v 1.1 2003-08-07 03:05:17 rossta Exp $
 //
 
 if (!defined('POT_INCLUDE_PATH')) {
@@ -34,7 +34,7 @@ require_once POT_INCLUDE_PATH . 'Version.php';
 * phpOpenTracker
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.2 $
+* @version  $Revision: 1.1 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker {
