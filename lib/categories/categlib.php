@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.44 2004-06-18 19:52:31 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.45 2004-06-18 20:00:27 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -321,7 +321,8 @@ class CategLib extends TikiLib {
 	
 	// get the permissions assigned to the parent categories of an object
 	function get_object_categories_perms($user, $type, $objId) {
-
+		global $tiki_p_admin;
+		
 		$is_categorized = $this->is_categorized("$type",$objId);
 		if ($is_categorized) {
 			global $userlib;
@@ -330,33 +331,37 @@ class CategLib extends TikiLib {
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 			foreach ($perms["data"] as $perm) {
 				$perm = $perm["permName"];
-				foreach ($parents as $categId) {
-					if ($userlib->object_has_one_permission($categId, 'category')) {
-						if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
-							$return_perms["$perm"] = 'y';
+				if ($tiki_p_admin == 'y') {
+					$return_perms["$perm"] = 'y';
+				} else {
+					foreach ($parents as $categId) {
+						if ($userlib->object_has_one_permission($categId, 'category')) {
+							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
+								$return_perms["$perm"] = 'y';
+							} else {
+								$return_perms["$perm"] = 'n';
+								// better-sorry-than-safe approach:
+								// if a user lacks a given permission regarding a particular category,
+								// that category takes precedence when considering if user has that permission
+								break 1;
+								// break out of one FOREACH loop
+							}
 						} else {
-							$return_perms["$perm"] = 'n';
-							// better-sorry-than-safe approach:
-							// if a user lacks a given permission regarding a particular category,
-							// that category takes precedence when considering if user has that permission
-							break 1;
-							// break out of one FOREACH loop
-						}
-					} else {
-						$categpath = $this->get_category_path($categId);
-						$arraysize = count($categpath);
-						for ($i=$arraysize-2; $i>=0; $i--) {
-							if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
-								if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm)) {
-									$return_perms["$perm"] = 'y';
-							   		break 1;
-								} else {
-									$return_perms["$perm"] = 'n';
-									// better-sorry-than-safe approach:
-									// if a user lacks a given permission regarding a particular category,
-									// that category takes precedence when considering if user has that permission
-									break 2;
-									// break out of one FOR loop and one FOREACH loop
+							$categpath = $this->get_category_path($categId);
+							$arraysize = count($categpath);
+							for ($i=$arraysize-2; $i>=0; $i--) {
+								if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
+									if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm)) {
+										$return_perms["$perm"] = 'y';
+								   		break 1;
+									} else {
+										$return_perms["$perm"] = 'n';
+										// better-sorry-than-safe approach:
+										// if a user lacks a given permission regarding a particular category,
+										// that category takes precedence when considering if user has that permission
+										break 2;
+										// break out of one FOR loop and one FOREACH loop
+									}
 								}
 							}
 						}
