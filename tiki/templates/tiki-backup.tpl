@@ -1,4 +1,27 @@
-<a class="pagetitle" href="tiki-backup.php">{tr}Backups{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-backup.php">{tr}Backups{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Backups" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin backups{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+
+<br/><br/>
 <h2>{tr}List of available backups{/tr}</h2>
 
 <table class="normal">
@@ -24,15 +47,19 @@
 <br/>
 {if $restore eq 'y'}
 <div class="simplebox">
-<strong>{tr}Restoring a backup{/tr}</strong><br/>
-<small><strong>{tr}Warning!{/tr}: </strong><i>{tr}Restoring a backup destoys all the data in your Tiki database. All your tables will be replaced with the information in the backup.{/tr}</i></small><br/><br/>
+<strong>{tr}Restoring a backup{/tr}</strong>
+<br/>
+<strong>{tr}Warning!{/tr}: </strong>
+<i>{tr}Restoring a backup destoys all the data in your Tiki database. All your tables will be replaced with the information in the backup.{/tr}</i>
+<br/><br/>
 <a href="tiki-backup.php?rrestore={$restorefile}" class="link">{tr}Click here to confirm restoring{/tr}</a>
 </div>
 <br/>
 {/if}
 <div class="simplebox">
 <strong>{tr}Create new backup{/tr}</strong><br/>
-<small><i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i></small><br/><br/>
+<i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i>
+<br/><br/>
 <a href="tiki-backup.php?generate=1" class="link">{tr}Click here to create a new backup{/tr}</a>
 </div>
 <br/>
