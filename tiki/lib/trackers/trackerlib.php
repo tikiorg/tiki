@@ -335,24 +335,11 @@ class TrackerLib extends TikiLib {
 		return $res;
 	}
 
-	function get_item($trackerId,$field) {
-		$query = "select * from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf where tti.`trackerId`=ttf.`trackerId` and ttf.`trackerId`=? and ttf.`name`=?";
-		$result = $this->query($query,array((int) $trackerId,$field));
-
-		if (!$result->numrows())
-			return false;
-
-		$res = $result->fetchrow();
-		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldid`=ttf.`fieldid` and `itemid`=?";
-		$result = $this->query($query,array((int) $itemid));
-		$fields = array();
-
-		while ($res2 = $result->fetchrow()) {
-			$name = ereg_replace("[^a-zA-Z0-9]","",$res2["name"]);
-			$res["$name"] = $res2["value"];
-		}
-
-		return $res;
+	function get_item($trackerId,$field,$value) {
+		$query = "select distinct ttif.`itemid` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`name`=? and ttif.`value`=?";
+		$itemId = $this->getOne($query,array((int) $trackerId,$field,$value));
+		return $this->get_tracker_item($itemId);
 	}
 
 	function replace_item($trackerId, $itemId, $ins_fields, $status = 'o') {

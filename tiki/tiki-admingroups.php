@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.15 2004-01-14 06:12:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.16 2004-01-14 20:34:06 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,7 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once('lib/trackers/trackerlib.php');
 
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
@@ -123,7 +124,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$grouptrackerid,$groupperms) = array('','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$grouptrackerid,$groupperms,$trackerinfo,$memberlist) = array('','','','','','','','');
 
 if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
@@ -137,12 +138,37 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	if(isset($re["groupHome"]))
 		$grouphome = $re["groupHome"];
 
-	if(isset($re["usersTrackerId"]))
-		$userstrackerid = $re["usersTrackerId"];
-		
-	if(isset($re["groupTrackerId"]))
-		$grouptrackerid = $re["groupTrackerId"];
+	if ($userTracker == 'y') {
+		if(isset($re["usersTrackerId"])) {
+			$userstrackerid = $re["usersTrackerId"];
+		}
+	}
 
+	if ($groupTracker == 'y') {	
+		if(isset($re["groupTrackerId"])) {
+			$grouptrackerid = $re["groupTrackerId"];
+			$fields = $trklib->list_tracker_fields($grouptrackerid, 0, -1, 'position_asc', '');
+			$info = $trklib->get_item($grouptrackerid,'groupName',$groupname);
+			for ($i = 0; $i < count($fields["data"]); $i++) {
+				if ($fields["data"][$i]["type"] != 'h') {
+					$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
+					$ins_name = 'ins_' . $name;
+					if ($fields["data"][$i]["type"] == 'c') {
+						if (!isset($info["$name"])) $info["$name"] = 'n';
+					} else {
+						if (!isset($info["$name"])) $info["$name"] = '';
+					}
+					$ins_fields["data"][$i]["value"] = $info["$name"];
+					if ($fields["data"][$i]["type"] == 'a') {
+						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+					}
+				}
+			}
+			//	 var_dump($ins_fields['data']);
+			$smarty->assign_by_ref('fields', $fields["data"]);
+			$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
+		}
+	}
 	$groupperms = $re["perms"];
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
 
