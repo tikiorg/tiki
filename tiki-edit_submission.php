@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.27 2003-11-03 03:34:25 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.28 2003-11-10 16:38:12 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,17 +61,6 @@ $smarty->assign('body', '');
 $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
-
-if (isset($_REQUEST["subId"])) {
-	if ($_REQUEST["subId"] > 0) {
-		if ($tiki_p_edit_submission != 'y') {
-			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
-
-			$smarty->display("styles/$style_base/error.tpl");
-			die;
-		}
-	}
-}
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
@@ -134,6 +123,17 @@ if (isset($_REQUEST["subId"])) {
 
 	$smarty->assign('parsed_body', $parsed_body);
 	$smarty->assign('parsed_heading', $parsed_heading);
+}
+
+if (isset($_REQUEST["subId"])) {
+	if ($_REQUEST["subId"] > 0) {
+		if ($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) {
+			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
+
+			$smarty->display("styles/$style_base/error.tpl");
+			die;
+		}
+	}
 }
 
 if (isset($_REQUEST["allowhtml"])) {

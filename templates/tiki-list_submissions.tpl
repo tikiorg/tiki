@@ -59,7 +59,7 @@
 <td class="{cycle advance=false}">{$listpages[changes].author}</td>
 {/if}
 <td class="{cycle}" >
-	{if $tiki_p_edit_submission eq 'y'}
+	{if $tiki_p_edit_submission eq 'y' or $listpages[changes].author eq $user}
 		<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 	{/if}
 	{if $tiki_p_remove_submission eq 'y'}
