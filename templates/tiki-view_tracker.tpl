@@ -45,6 +45,9 @@
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x
 loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].label}</a></td>
+{if $tiki_p_admin_trackers eq 'y'}
+<td class="heading" width="5%">&nbsp;</td>
+{/if}
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -58,9 +61,6 @@ loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <td class="heading" width="5%">{tr}atts{/tr}</td>
-{/if}
-{if $tiki_p_admin_trackers eq 'y'}
-<td class="heading" width="5%">{tr}action{/tr}</td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
