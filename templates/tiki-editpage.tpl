@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.27 2003-10-25 01:18:14 zaufi Exp $ *}
+
 {popup_init src="lib/overlib.js"}
 
 <!--Check to see if there is an editing conflict-->
@@ -101,6 +103,21 @@
 {if $wiki_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
+
+<tr>
+  <td class="formcolor">{tr}Import HTML{/tr}:</td>
+  <td class="formcolor">
+    <input class="wikitext" type="text" name="suck_url" value="{$suck_url|escape}" />&nbsp;
+  </td>
+</tr>
+<tr>
+  <td class="formcolor">&nbsp;</td>
+  <td class="formcolor">
+    <input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" />&nbsp;
+    <input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
+    {tr}Try to convert HTML to wiki{/tr}
+  </td>
+</tr>
 {if $tiki_p_admin_wiki eq 'y'}
 <tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
