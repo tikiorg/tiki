@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.13 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.14 2004-07-15 16:39:02 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,6 +79,10 @@ if (!isset($_REQUEST["offset"])) {
 	$offset = $_REQUEST["offset"];
 }
 
+if (!empty($_REQUEST['max_records'])) {
+	$maxRecords = $_REQUEST['max_records'];
+}
+
 $smarty->assign_by_ref('offset', $offset);
 
 if (isset($_REQUEST["find"])) {
@@ -95,6 +99,7 @@ $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign('maxRecords', $maxRecords);
 
 if ($listpages["cant"] > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
@@ -108,6 +113,9 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+
+global $tiki_p_admin;
+$smarty->assign('tiki_p_admin',$tiki_p_admin);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
