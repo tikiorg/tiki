@@ -10,13 +10,25 @@ function smarty_function_phplayers($params, &$smarty) {
 	global $tikilib;
 	extract($params);
 
+	$types['vert'] = 'layersmenu.inc.php';
 	$types['tree'] = 'treemenu.inc.php';
 	$types['phptree'] = 'phptreemenu.inc.php';
 	$types['plain'] = 'phptreemenu.inc.php';
 
+	$classes['vert'] = 'LayersMenu';
 	$classes['tree'] = 'TreeMenu';
 	$classes['phptree'] = 'PHPTreeMenu';
 	$classes['plain'] = 'PlainMenu';
+	
+	$struct['vert'] = 'vermenu2';
+	$struct['tree'] = 'treemenu1';
+	$struct['phptree'] = 'treemenu1';
+	$struct['plain'] = 'treemenu1';
+
+	$new['vert'] = 'newVerticalMenu';
+	$new['tree'] = 'newTreeMenu';
+	$new['phptree'] = 'newTreeMenu';
+	$new['plain'] = 'newTreeMenu';
 
 	if (empty($type)) {
 		$type = 'tree';
@@ -24,6 +36,7 @@ function smarty_function_phplayers($params, &$smarty) {
 
 	include_once ("lib/phplayers/lib/PHPLIB.php");
 	include_once ("lib/phplayers/lib/layersmenu-common.inc.php");
+	include_once ("lib/phplayers/lib/layersmenu.inc.php");
 	include_once ("lib/phplayers/lib/".$types["$type"]);
 	// beware ! that below is a variable class declaration
 	$class = $classes["$type"];
@@ -55,7 +68,20 @@ function smarty_function_phplayers($params, &$smarty) {
 			$phplayers->setMenuStructureFile("lib/phplayers/layersmenu-vertical-2.txt");
 		}
 	}
-	$phplayers->parseStructureForMenu("treemenu1");
-	echo $phplayers->newTreeMenu("treemenu1");
+	
+	$phplayers->parseStructureForMenu($struct["$type"]);
+	if ($type == 'vert') {
+		$phplayers->setDownArrowImg("down-galaxy.png");
+		$phplayers->setForwardArrowImg("forward-galaxy.png");
+		$phplayers->setVerticalMenuTpl("layersmenu-vertical_menu-galaxy.ihtml");
+		$phplayers->setSubMenuTpl("layersmenu-sub_menu-galaxy.ihtml");
+		$phplayers->$new["$type"]($struct["$type"]);
+		$phplayers->printHeader();
+		$phplayers->printMenu($struct["$type"]);
+		$phplayers->printFooter();
+	} else {
+		echo $phplayers->$new["$type"]($struct["$type"]);
+	}
+	
 }
 ?>
