@@ -138,7 +138,8 @@
 {if $feature_wiki_description}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />[<a class="link" href="javascript:textareaSize('editwiki', +20, 0)">{tr}bigger area{/tr}</a>]
+<br/>[<a class="link" href="javascript:textareaSize('editwiki', -20, 0)">{tr}smaller area{/tr}</a>]</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata|escape}</textarea>
 </td>
 {if $feature_wiki_footnotes eq 'y'}
