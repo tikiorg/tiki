@@ -31,7 +31,7 @@
 <tr>
   <td valign="top">
   <div class="cbox">
-  <div class="cbox-title">{tr}Send me a mesasge{/tr}</div>
+  <div class="cbox-title">{tr}Send me a message{/tr}</div>
   <div class="cbox-data">
   <div class="simplebox">
   <form method="post" action="tiki-user_information.php">
