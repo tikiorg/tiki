@@ -86,9 +86,6 @@
 </div>
 
 <table class="normal">
-<tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
-{include file=tiki-edit_help_tool.tpl}
-</td>
 
 {include file=categorize.tpl}
 {include file=structures.tpl}
@@ -139,7 +136,11 @@
 {if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}</td>
+<tr><td class="formcolor">{tr}Edit{/tr}:<br /><br />
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
+{tr}Quicklinks{/tr}:<br /><br />
+{include file=tiki-edit_help_tool.tpl}
+</td>
 <td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

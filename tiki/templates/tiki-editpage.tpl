@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.41 2004-01-09 19:47:48 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.42 2004-01-17 23:17:50 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -27,10 +27,6 @@
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
 <table class="normal">
-<tr class="formcolor"><td>{tr}Quicklinks{/tr}:</td><td>
-{include file=tiki-edit_help_tool.tpl}
-</td></tr>
-
 {include file=categorize.tpl}
 {include file=structures.tpl}
 
@@ -54,7 +50,11 @@
 {if $feature_wiki_description eq 'y'}
 <tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr class="formcolor"><td>{tr}Edit{/tr}:<br/><br />{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}</td>
+<tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
+{tr}Quicklinks{/tr}:<br /><br />
+{include file=tiki-edit_help_tool.tpl}
+</td>
 <td>
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
