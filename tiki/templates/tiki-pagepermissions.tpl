@@ -1,4 +1,4 @@
-<h2>{tr}Assign permissions to page: {$page}{/tr}</h2>
+<h2>{tr}Assign permissions to page{/tr}: {$page}</h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
@@ -17,20 +17,20 @@
 <option value="{$perms[prm].permName}">{$perms[prm].permName}</option>
 {/section}
 </select>
-to group:
+{tr}to group{/tr}:
 <select name="group">
 {section name=grp loop=$groups}
 <option value="{$groups[grp].groupName}">{$groups[grp].groupName}</option>
 {/section}
 </select>
 </form>
-<h2>Send email notifications when this page changes to:</h2>
+<h2>{tr}Send email notifications when this page changes to{/tr}:</h2>
 <form action="tiki-pagepermissions.php" method="post">
 <input type="hidden" name="page" value="{$page}" />
-add email: <input type="text" name="email" />
-<input type="submit" name="addemail" value="add" />
+{tr}add email{/tr}: <input type="text" name="email" />
+<input type="submit" name="addemail" value="{tr}add{/tr}" />
 </form>
-<h3>Notifications:</h3>
+<h3>{tr}Notifications{/tr}:</h3>
 {section name=ix loop=$emails}
 {$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br/>
 {/section}

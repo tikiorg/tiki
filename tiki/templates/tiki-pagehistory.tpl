@@ -18,7 +18,7 @@
 </table>
 {/if}
 {if $diff2 eq 'y'}
-<h3>Diff to version: {$version}</h3>
+<h3>{tr}Diff to version{/tr}: {$version}</h3>
 {$diffdata}
 {/if}
 <br/>
