@@ -66,7 +66,7 @@
 {/foreach}
 
 {elseif $ins_fields[ix].type eq 'u'}
-<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}">{$ins_fields[ix].value}</a>
+<a href="tiki-user_information.php?view_user={$ins_fields[ix].value|escape:"url"}">{$ins_fields[ix].value}</a>
 
 {elseif $ins_fields[ix].type eq 'a'}
 {$ins_fields[ix].pvalue|default:"&nbsp;"}
