@@ -46,7 +46,6 @@
   <tr>
   	<td class="even">
 {if $comments_style != 'commentsStyle_headers'}
-<pre>{$comments_style}</pre>
   		{$comment.parsed}
 {/if}
   		{if $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != ''}
