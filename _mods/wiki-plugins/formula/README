@@ -1,0 +1,16 @@
+$Header: /cvsroot/tikiwiki/_mods/wiki-plugins/formula/README,v 1.1 2004-05-09 22:56:16 damosoft Exp $
+
+FORMULA
+-------
+
+This plugin renders mathematical formulas in wiki pages. The formulas should
+be written in LaTeX format, simple ones will be in plain html and complex ones
+will render a graphic.
+
+This plugin requires latex installed, or at least path-accesible installed 
+latex, dvips, and Imagemagic's convert. It uses the bash script tex2png
+that initially should be in the lib directory of the Tikiwiki installation.
+
+To enable it, it should be copied to the wiki-plugin directory.
+
+ggeller
