@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.3 2004-03-19 18:09:59 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.4 2004-04-26 04:24:32 ggeller Exp $ *}
 {* Copyright 2004 George G. Geller *}
 
 <!-- templates/tiki-hw_editpage.tpl start -->
@@ -72,8 +72,6 @@
     </tr>
   </table>
 </form>
-{* <br />
-<!--<a href="javascript:replaceSome('editwiki','foo','bar');">foo2bar</a>--> *}
 {include file=tiki-edit_help.tpl}
 
-<!-- templates/tiki-hw_editpage.tpl start -->
+<!-- templates/tiki-hw_editpage.tpl end -->
