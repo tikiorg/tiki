@@ -14,7 +14,7 @@ function smarty_function_jspopup($params, &$smarty)
     if(!isset($resizable))  $resizable='yes';
     if(!isset($height)) $height='400';
     if(!isset($width)) $width='600';
-    print("href='#' onClick='javascript:window.open(\"$href\",\"\",\"menubar=$menubar,scrollbars=$scrollbars,resizable=$resizable,height=$height,width=$width\");' ");
+    print("href='#' onclick='javascript:window.open(\"$href\",\"\",\"menubar=$menubar,scrollbars=$scrollbars,resizable=$resizable,height=$height,width=$width\");' ");
 }
 
 /* vim: set expandtab: */
