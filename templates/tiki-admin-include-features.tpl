@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.21 2003-10-13 18:25:33 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.22 2003-10-16 01:25:06 redflo Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
- * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
+ * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
  * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
  *}
 
