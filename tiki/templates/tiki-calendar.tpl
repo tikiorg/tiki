@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.44 2004-04-30 10:42:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.45 2004-05-28 10:17:16 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -28,6 +28,7 @@
 <form action="tiki-calendar.php" method="post" name="f">
 <span title="{tr}Date Selector{/tr}" id="datrigger" class="daterow" >{$focusdate|tiki_long_date}</span>
 <span class="date">&lt;- {tr}click to navigate{/tr}</span>
+<input type="hidden" name="todateit" id="todate" value="" />
 </form>
 <script type="text/javascript">
 {literal}function gotocal()  { {/literal}
