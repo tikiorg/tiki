@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.35 2003-10-14 22:10:13 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.36 2003-10-16 02:19:35 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -442,3 +442,9 @@ CREATE TABLE tiki_rss_feeds (
   PRIMARY KEY  (name, rssVer)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
+
+# added a legth field in wiki pages table for db abstraction needs (length() is not common in sql)
+ALTER TABLE `tiki_pages` ADD `page_size` int(10) unsigned default 0;
+UPDATE tiki_pages set page_size=length(data);
+
+

@@ -3268,38 +3268,37 @@ function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'nam
 }
 
 function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
-    $sort_mode = $this->convert_sortmode($sort_mode);
 
-    if ($sort_mode == '`size` desc') {
-	$sort_mode = ' length(`data`) desc';
+    if ($sort_mode == 'size_desc') {
+	$sort_mode = 'page_size_desc';
     }
 
-    if ($sort_mode == '`size` asc') {
-	$sort_mode = ' length(`data`) asc';
+    if ($sort_mode == 'size_asc') {
+	$sort_mode = 'page_size_asc';
     }
 
     $old_sort_mode = '';
 
     if (in_array($sort_mode, array(
-		    '`versions` desc',
-		    '`versions` asc',
-		    '`links` asc',
-		    '`links` desc',
-		    '`backlinks` asc',
-		    '`backlinks` desc'
+		    'versions_desc',
+		    'versions_asc',
+		    'links_asc',
+		    'links_desc',
+		    'backlinks_asc',
+		    'backlinks_desc'
 		    ))) {
 	$old_offset = $offset;
 
 	$old_maxRecords = $maxRecords;
 	$old_sort_mode = $sort_mode;
-	$sort_mode = '`user` desc';
+	$sort_mode = 'user_desc';
 	$offset = 0;
 	$maxRecords = -1;
     }
 
     if (is_array($find)) { // you can use an array of pages
-        $mid = " where `pageName` IN ('".implode("','", $find)."')";
-        $bindvars = array();
+        $mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+        $bindvars = $find;
     } elseif (is_string($find)) { // or a string
         $mid = " where `pageName` like ? ";
         $bindvars = array('%' . $find . '%');
@@ -3311,9 +3310,8 @@ function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select `creator` ,`pageName`, `hits`, length(`data`)
-	as len, `lastModif`, `user`, `ip`, `comment`, `version`, `flag`
-	from `tiki_pages` $mid order by $sort_mode";
+    $query = "select `creator` ,`pageName`, `hits`, `page_size` as len, `lastModif`, `user`, `ip`, `comment`, `version`, `flag` ";
+		$query.= " from `tiki_pages` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_pages` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
@@ -3340,37 +3338,37 @@ function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',
     }
 
     // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
-    if ($old_sort_mode == '`versions` asc') {
+    if ($old_sort_mode == 'versions_asc') {
 	usort($ret, 'compare_versions');
     }
 
-    if ($old_sort_mode == '`versions` desc') {
+    if ($old_sort_mode == 'versions_desc') {
 	usort($ret, 'r_compare_versions');
     }
 
-    if ($old_sort_mode == '`links` desc') {
+    if ($old_sort_mode == 'links_desc') {
 	usort($ret, 'compare_links');
     }
 
-    if ($old_sort_mode == '`links` asc') {
+    if ($old_sort_mode == 'links_asc') {
 	usort($ret, 'r_compare_links');
     }
 
-    if ($old_sort_mode == '`backlinks` desc') {
+    if ($old_sort_mode == 'backlinks_desc') {
 	usort($ret, 'compare_backlinks');
     }
 
-    if ($old_sort_mode == '`backlinks` asc') {
+    if ($old_sort_mode == 'backlinks_asc') {
 	usort($ret, 'r_compare_backlinks');
     }
 
     if (in_array($old_sort_mode, array(
-		    '`versions` desc',
-		    '`versions` asc',
-		    '`links` asc',
-		    '`links` desc',
-		    '`backlinks` asc',
-		    '`backlinks` desc'
+		    'versions_desc',
+		    'versions_asc',
+		    'links_asc',
+		    'links_desc',
+		    'backlinks_asc',
+		    'backlinks_desc'
 		    ))) {
 	$ret = array_slice($ret, $old_offset, $old_maxRecords);
     }
@@ -3624,7 +3622,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
     if ($this->page_exists($name))
 	return false;
 
-    $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`) values(?,?,?,?,?,?,?,?,?,?)";
+    $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) ";
+		$query.= " values(?,?,?,?,?,?,?,?,?,?)";
     $result = $this->query($query, array(
 		$name,
 		(int)$hits,
@@ -3635,7 +3634,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
 		$user,
 		$ip,
 		$description,
-		$user
+		$user,
+		(int)strlen($data)
 		));
 
     $this->clear_links($name);
@@ -4967,15 +4967,15 @@ function clear_links($page) {
 }
 
 function replace_link($pageFrom, $pageTo) {
-    $query = "replace into tiki_links(fromPage,toPage)
-	values(?, ?)";
+    $query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
+    $result = $this->query($query, array($pageFrom,$pageTo));
+    $query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
     $result = $this->query($query, array($pageFrom,$pageTo));
 }
 
 function invalidate_cache($page) {
-    $query = "update `tiki_pages` set `cache_timestamp`=0
-	where `pageName`=?";
-    $this->query($query, array($page) );
+    $query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
+    $this->query($query, array(0,$page) );
 }
 
 function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
@@ -5091,8 +5091,8 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 	}
     }
 
-    $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=? where `pageName`=?";
-    $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,$pageName));
+    $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
+    $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
 
@@ -5143,15 +5143,10 @@ function update_page_version($pageName, $version, $edit_data, $edit_comment, $ed
 	return false;
 
     $t = date("U");
-    $query = "delete from `tiki_history`
-	where `pageName`=? and `version`=,?";
-    $result = $this->query($query, array( $pageName, $version) );
-    $query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description)
-	values(?,?,?, ?,?,?, ?,?)";
-    $result = $this->query($query,
-	    array($pageName,$version,$lastModif,
-		$edit_user,$edit_ip,$edit_comment,
-		$edit_data,$description)
+    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+    $result = $this->query($query, array( $pageName,(int) $version) );
+    $query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
+    $result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
 	    );
 
     //print("version: $version<br/>");
@@ -5159,16 +5154,8 @@ function update_page_version($pageName, $version, $edit_data, $edit_comment, $ed
     $info = $this->get_page_info($pageName);
 
     if ($version >= $info["version"]) {
-	$query = "update `tiki_pages`
-	    set `data`=?, comment=?,
-	lastModif=?, version=?, user=?,
-	ip=?, description=?
-	    where `pageName`=?";
-
-	$result = $this->query($query,
-		array( $edit_data, $edit_comment, $t,
-		    $version, $edit_user, $edit_ip, $description,
-		    $pageName ) );
+	$query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?  where `pageName`=?";
+	$result = $this->query($query, array( $edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName ) );
 	// Parse edit_data updating the list of links from this page
 	$this->clear_links($pageName);
 
