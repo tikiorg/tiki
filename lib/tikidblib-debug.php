@@ -27,7 +27,13 @@ function qstr($str) {
     // These functions are only for performance collection of all queries
     // uncomment them if you want to profile queries
     // to record the query stats, create a table:
-    // create table tiki_querystats(qcount number,qtext varchar(255),qtime float);
+    // CREATE TABLE tiki_querystats (
+    //   qcount int(11) default NULL,
+    //   qtext varchar(255) default NULL,
+    //   qtime float default NULL,
+    //   UNIQUE KEY qtext (qtext)
+    // ) TYPE=MyISAM;
+    //
     // to show queries to tune use queries like this one:
     // select `qcount` *qtime , qtext from `tiki_querystats` order by 1 ;
 
