@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/comments.tpl,v 1.1 2003-07-13 00:03:47 zaufi Exp $ *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/comments.tpl,v 1.2 2003-07-13 00:31:16 zaufi Exp $ *}
+<br>
 {if $comments_show eq 'y'}
 <div id="comzoneopen">
 {else}
