@@ -68,7 +68,7 @@ border-top: 1px solid #999999;
 /* The three columns */
 DIV#leftcolumn {  position: absolute; top: 20px; left: 0px; bottom: 0px; vertical-align: top; width: 180px; margin-bottom: 40px;}
 DIV#rightcolumn {  position: absolute; top: 20px; right: 0px; bottom: 0px; vertical-align: top;  width: 180px; margin-bottom: 40px;}
-DIV#centercolumn { position: absolute; top: 20px; left: 0px; right: 0px: bottom: 50px; vertical-align: top; margin-bottom: 40px; }
+DIV#centercolumn { position: absolute; top: 20px; left: 0px; right: 0px; bottom: 50px; vertical-align: top; margin-bottom: 40px; }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center { margin-bottom: 40px; }
