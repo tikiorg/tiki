@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.11 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.12 2003-09-08 08:03:05 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -180,7 +180,7 @@ $smarty->assign('comment_preview', 'n');
 if (isset($_REQUEST["comments_previewComment"])) {
 	$smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
 
-	$smarty->assign('comments_preview_data', nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
 	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
 	$smarty->assign('comment_data', $_REQUEST["comments_data"]);
 	$smarty->assign('comment_preview', 'y');
