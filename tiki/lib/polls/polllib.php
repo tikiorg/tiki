@@ -11,26 +11,27 @@ class PollLib extends TikiLib {
 	}
 
 	function list_polls($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (title like $findesc)";
+			$mid = " where (`title` like ?)";
+			$bindvars=array($findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_polls $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_polls` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$query = "select count(*) from tiki_poll_options where pollId=" . $res["pollId"];
+		while ($res = $result->fetchRow()) {
+			$query = "select count(*) from `tiki_poll_options` where `pollId`=?";
 
-			$res["options"] = $this->getOne($query);
+			$res["options"] = $this->getOne($query,array($res["pollId"]));
 			$ret[] = $res;
 		}
 
@@ -43,23 +44,23 @@ class PollLib extends TikiLib {
 	function list_active_polls($offset, $maxRecords, $sort_mode, $find) {
 		$now = date("U");
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (active='a' or active='c') and publishDate<=$now and (title like $findesc)";
+			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? and (`title` like ?)";
+			$bindvars=array('a','c',(int) $now,$findesc);
 		} else {
-			$mid = " where (active='a' or active='c') and publishDate<=$now ";
+			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? ";
+			$bindvars=array('a','c',(int) $now);
 		}
 
-		$query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_polls $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_polls` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -72,23 +73,23 @@ class PollLib extends TikiLib {
 	function list_current_polls($offset, $maxRecords, $sort_mode, $find) {
 		$now = date("U");
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where active='c' and publishDate<=$now and (title like $findesc)";
+			$mid = " where `active`=? and `publishDate`<=? and (`title` like ?)";
+			$bindvars=array('a',(int) $now,$findesc);
 		} else {
-			$mid = " where active='c' and publishDate<=$now ";
+			$mid = " where `active`=? and `publishDate`<=? ";
+			$bindvars=array('a',(int) $now);
 		}
 
-		$query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_polls $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_polls` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -101,23 +102,23 @@ class PollLib extends TikiLib {
 	function list_all_polls($offset, $maxRecords, $sort_mode, $find) {
 		$now = date("U");
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where publishDate<=$now and (title like $findesc)";
+			$mid = " where `publishDate`<=? and (`title` like ?)";
+			$bindvars=array((int) $now,$findesc);
 		} else {
-			$mid = " where publishDate<=$now ";
+			$mid = " where `publishDate`<=? ";
+			$bindvars=array((int) $now);
 		}
 
-		$query = "select * from tiki_polls $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_polls $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_polls` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -128,23 +129,24 @@ class PollLib extends TikiLib {
 	}
 
 	function list_poll_options($pollId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where pollId=$pollId and (title like $findesc)";
+			$mid = " where `pollId`=? and (`title` like ?)";
+			$bindvars=array((int) $pollId,$findesc);
 		} else {
-			$mid = " where pollId=$pollId ";
+			$mid = " where `pollId`=?";
+			$bindvars=array((int) $pollId);
 		}
 
-		$query = "select * from tiki_poll_options $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_poll_options $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_poll_options` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_poll_options` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -155,11 +157,11 @@ class PollLib extends TikiLib {
 	}
 
 	function remove_poll($pollId) {
-		$query = "delete from tiki_polls where pollId=$pollId";
+		$query = "delete from `tiki_polls` where `pollId`=?";
 
-		$result = $this->query($query);
-		$query = "delete from tiki_poll_options where pollId=$pollId";
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $pollId));
+		$query = "delete from `tiki_poll_options` where `pollId`=?";
+		$result = $this->query($query,array((int) $pollId));
 		$this->remove_object('poll', $pollId);
 		return true;
 	}
@@ -167,61 +169,61 @@ class PollLib extends TikiLib {
 	function set_last_poll() {
 		$now = date("U");
 
-		$query = "select max(publishDate) from tiki_polls where publishDate<=$now";
-		$last = $this->getOne($query);
-		$query = "update tiki_polls set active='c' where publishDate=$last";
-		$result = $this->query($query);
+		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
+		$last = $this->getOne($query,array((int) $now));
+		$query = "update `tiki_polls` set `active`='c' where `publishDate`=?";
+		$result = $this->query($query,array($last));
 	}
 
 	function close_all_polls() {
 		$now = date("U");
 
-		$query = "select max(publishDate) from tiki_polls where publishDate<=$now";
-		$last = $this->getOne($query);
-		$query = "update tiki_polls set active='x' where publishDate<$last and publishDate<=$now";
-		$result = $this->query($query);
+		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
+		$last = $this->getOne($query,array((int) $now));
+		$query = "update `tiki_polls` set `active`='x' where `publishDate`<? and `publishDate`<=?";
+		$result = $this->query($query,array('x',$last,array((int) $now)));
 	}
 
 	function active_all_polls() {
 		$now = date("U");
 
-		$query = "update tiki_polls set active='a' where publishDate<=$now";
-		$result = $this->query($query);
+		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
+		$result = $this->query($query,array('a',(int) $now));
 	}
 
 	function remove_poll_option($optionId) {
-		$query = "delete from tiki_poll_options where optionId=$optionId";
+		$query = "delete from `tiki_poll_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 		return true;
 	}
 
 	function get_poll_option($optionId) {
-		$query = "select * from tiki_poll_options where optionId=$optionId";
+		$query = "select * from `tiki_poll_options` where `optionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($optionId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function replace_poll($pollId, $title, $active, $publishDate) {
-		$title = addslashes($title);
 
 		// Check the name
 		if ($pollId) {
-			$query = "update tiki_polls set title='$title',active='$active',publishDate=$publishDate where pollId=$pollId";
+			$query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=? where `pollId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($title,$active,$publishDate,$pollId));
 		} else {
-			$query = "replace into tiki_polls(title,active,publishDate,votes)
-                values('$title','$active',$publishDate,0)";
+			// was a replace into ... nobody knows why 
+			$query = "insert into tiki_polls(`title`,`active`,`publishDate`,`votes`)
+                values(?,?,?,?)";
 
-			$result = $this->query($query);
-			$pollId = $this->getOne("select max(pollId) from tiki_polls where title='$title' and publishDate=$publishDate");
+			$result = $this->query($query,array($title,$active,$publishDate,0));
+			$pollId = $this->getOne("select max(`pollId`) from `tiki_polls` where `title`=? and `publishDate`=?",array($title,$publishDate));
 		}
 
 		return $pollId;
@@ -232,13 +234,15 @@ class PollLib extends TikiLib {
 
 		// Check the name
 		if ($optionId) {
-			$query = "update tiki_poll_options set title='$title' where optionId=$optionId";
+			$query = "update `tiki_poll_options` set `title`=? where `optionId`=?";
+			$result = $this->query($query,array($title,$optionId));
 		} else {
-			$query = "replace into tiki_poll_options(pollId,title,votes)
-                values($pollId,'$title',0)";
+			// was a replace into ... why?
+			$query = "insert into `tiki_poll_options`(`pollId`,`title`,`votes`)
+                values(?,?,?)";
+			$result = $this->query($query,array($pollId,$title,0));
 		}
 
-		$result = $this->query($query);
 		return true;
 	}
 
