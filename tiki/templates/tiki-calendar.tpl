@@ -130,7 +130,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 .<br/>
 </div>
 {section name=items loop=$cell[w][d].items}
-<div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId}style="padding:5px;border:1px solid black;"{/if}>
+<div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$cell[w][d].items[items].over"} 
 class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
@@ -147,7 +147,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 {/if}
 </table>
 
-{if $editmode}
+{if $editmode and $tiki_p_add_events}
 <h2>{tr}Edit Calendar Item{/tr} : <span style="font-size:80%;">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
 
 {if $calitemId}
@@ -160,7 +160,9 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
+{if $tiki_p_change_events}
 <input type="hidden" name="calitemId" value="{$calitemId}">
+{/if}
 <table class="normal" style="width:100%;">
 <tr><td class="formcolor">{tr}Calendrier{/tr}</td><td class="formcolor">
 <select name="calendarId">
@@ -312,7 +314,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 {/if}
 
 <tr><td class="formcolor"></td><td class="formcolor">
-{if $calitemId}<input type="submit" name="copy" value="{tr}duplicate{/tr}" />{/if}
+{if $calitemId and $tiki_p_change_events}<input type="submit" name="copy" value="{tr}duplicate{/tr}" />{/if}
 <input type="submit" name="save" value="{tr}save{/tr}" />
 <a href="tiki-calendar.php?calitemId={$calitemId}&delete=1" class="link" style="margin-left:42px;"/>{tr}delete{/tr}</a>
 </td></tr>
