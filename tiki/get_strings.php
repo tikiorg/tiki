@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.35 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.36 2004-04-12 17:16:00 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -139,7 +139,27 @@ function writeTranslationPair ($fd, $key, $val) {
 		      '"' . addphpslashes ($key) . '"' . " => " .
 		      '"' . addphpslashes ($val) . '",');
 }
-
+/* \brief: give the closest translation
+ * \return the closest translated string
+ * \param closeEnglish: the English string of the return string
+ */
+function leven($key, $dictionary, $closeEnglish) {
+	  $dist = 256;
+	  foreach ($dictionary as $english=>$trans) {
+	    $d = levenshtein (strtolower (substr ($key, 0, 255)),
+			      strtolower (substr ($english, 0, 255)));
+	    if ($d < $dist) {
+	      $dist = $d;
+	      $closeTrans   = $trans;
+	      $closeEnglish = $english;
+	    }
+	  }
+	  
+	  if ($dist < 1 + strlen ($key)/5)
+	    return $closeTrans;
+	  else
+	    return '';
+}
 ////////////////////////////////////////////////////////////////////////////
 
 require_once('tiki-setup.php');
@@ -456,21 +476,25 @@ foreach ($languages as $sel) {
 	$closeText  = "";
 	$moduleText = "";
 	if ($close) {
-	  $dist = 256;
-	  foreach ($dictionary as $english=>$trans) {
-	    $d = levenshtein (strtolower (substr ($key, 0, 255)),
-			      strtolower (substr ($english, 0, 255)));
-	    if ($d < $dist) {
-	      $dist = $d;
-	      $closeTrans   = $trans;
-	      $closeEnglish = $english;
-	    }
-	  }
-	  
-	  if ($dist < 1 + strlen ($key)/5) {
-	    $closeText = ' // ## CLOSE: "' . addphpslashes ($closeEnglish) .
-	                 '" => "' . addphpslashes ($closeTrans) . '",';
-	  }
+		$closeTrans= leven($key, $dictionary, &$closeEnglish);
+		if ($closeTrans) {
+			$closeText = ' // ## CLOSE: "' . addphpslashes ($closeEnglish) . '" => "' . addphpslashes ($closeTrans) . '",';
+		} else  if (strstr($key, "{\$")) { // perhaps a merge betwwen different strings
+			$parts = preg_split("/( *\{\\\$[^\}]+\} *)/", $key, -1, PREG_SPLIT_DELIM_CAPTURE| PREG_SPLIT_NO_EMPTY);
+			$line = "";
+			foreach ($parts as $part) {
+				if (strstr($part, "{\$"))
+					$line .= $part;
+				else if ($dictionary[$part])
+					$line .= $dictionary[$part];
+				else if ($closeTrans = leven($part, $dictionary, &$closeEnglish))
+					$line .= "CLOSE:".$closeTrans;
+				else
+					$line .= $part;
+			}
+			if ($line != $key)
+				$closeText = ' // ## CLOSE: "' . $line. '",';
+		}
 	}
 
 	if ($module) {
