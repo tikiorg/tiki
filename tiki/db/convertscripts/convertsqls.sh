@@ -3,24 +3,21 @@
 TIKISERVER="tikigmsih"
 VERSION="1.9"
 
-cd ..
-cp tiki.sql tiki-$VERSION-mysql.sql
 
-wget http://$TIKISERVER/db/convertscripts/mysql3topgsql72.php
-wget http://$TIKISERVER/db/convertscripts/mysql3tosybase.php
-wget http://$TIKISERVER/db/convertscripts/mysql3tosqlite.php
-wget http://$TIKISERVER/db/convertscripts/mysql3tooci8.php
+wget -O pgsql72..sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3topgsql72.php?version=$VERSION" 
+wget -O sybase.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosybase.php?version=$VERSION" 
+wget -O sqlite.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosqlite.php?version=$VERSION"
+wget -O oci8.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tooci8.php?version=$VERSION" 
 
-rm mysql3topgsql72.php
-rm mysql3tosybase.php
-rm mysql3tosqlite.php
-rm mysql3tooci8.php
+rm -f *.sql.tmp 
+rm -f ../tiki-$VERSION-*.sql
 
-rm -f tiki-$VERSION-pgsql.sql tiki-$VERSION-sybase.sql tiki-$VERSION-sqlite.sql tiki-$VERSION-oci8.sql
+cp ../tiki.sql ../tiki-$VERSION-mysql.sql
+mv $VERSION.to_pgsql72.sql ../tiki-$VERSION-pgsql.sql
+mv $VERSION.to_sybase.sql ../tiki-$VERSION-sybase.sql
+mv $VERSION.to_sqlite.sql ../tiki-$VERSION-sqlite.sql
+mv $VERSION.to_oci8.sql ../tiki-$VERSION-oci8.sql
 
-mv tiki-1.8-mysql.sql_to_pgsql72.sql tiki-$VERSION-pgsql.sql
-mv tiki-1.8-mysql.sql_to_sybase.sql tiki-$VERSION-sybase.sql
-mv tiki-1.8-mysql.sql_to_sqlite.sql tiki-$VERSION-sqlite.sql
-mv tiki-1.8-mysql.sql_to_oci8.sql tiki-$VERSION-oci8.sql
 
-cd convertscripts
+echo "Done."
+exit 0
