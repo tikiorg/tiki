@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.46 2004-06-18 20:12:39 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.47 2004-06-18 20:29:07 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -334,10 +334,9 @@ class CategLib extends TikiLib {
 				$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 				$cachelib->cacheItem("categories_permission_names",serialize($perms));
 			} else {
-				$perm = unserialize($cachelib->getCached("categories_permission_names"));
+				$perms = unserialize($cachelib->getCached("categories_permission_names"));
 			}
 
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 			foreach ($perms["data"] as $perm) {
 				$perm = $perm["permName"];
 				if ($tiki_p_admin == 'y') {
