@@ -77,7 +77,7 @@ class NlLib extends TikiLib {
 		$smarty->assign('info', $info);
 		$code = md5($this->genPass());
 		$now = date("U");
-		if ($info.validateAddr == 'y') {
+		if ($info["validateAddr"] == 'y') {
 			$email = addslashes($email);
 			// Generate a code and store it and send an email  with the
 			// URL to confirm the subscription put valid as 'n'
@@ -99,6 +99,7 @@ class NlLib extends TikiLib {
 		} else {
 			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
 			   values($nlId,'$email','$code','y',$now)";
+			$result = $this->query($query);
 		}
 		$this->update_users($nlId);
 	}
