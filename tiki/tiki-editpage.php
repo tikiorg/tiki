@@ -316,6 +316,7 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 if(isset($_REQUEST["save"])) {
+  include_once("lib/imagegals/imagegallib.php");
   $cat_type='wiki page';
   $cat_objid = $_REQUEST["page"];
   $cat_desc = substr($_REQUEST["edit"],0,200);
@@ -331,7 +332,7 @@ if((md5($info["description"]) != md5 ($_REQUEST["description"]))||(md5($info["da
   }
 
   // Parse $edit and eliminate image references to external URIs (make them internal)
-  $edit = $tikilib->capture_images($edit);
+  $edit = $imagegallib->capture_images($edit);
   
   // If page exists
   if(!$tikilib->page_exists($_REQUEST["page"])) {
