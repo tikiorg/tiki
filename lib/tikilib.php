@@ -1544,7 +1544,7 @@ function add_pageview() {
 	return $in_multi_array;
     }
 
-/*
+/* moved to categlib.php; will delete this code if no problems arise
     // shared
     function get_categoryobjects($catids) {
 	global $dbTiki;
@@ -1640,8 +1640,8 @@ function add_pageview() {
     }
 */
 
-    /** shared used in mod-last_category_objects
-     */
+/* moved to categlib.php; will delete this code if no problems arise
+    // shared used in mod-last_category_objects
     function last_category_objects($categId, $maxRecords, $type="") {
 	$mid = "and tbl1.`categId`=?";
 	$bindvars = array((int)$categId);
@@ -1660,6 +1660,7 @@ function add_pageview() {
 	}
 	return $ret;
     }
+*/
 
     /*shared*/
     function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
