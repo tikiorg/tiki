@@ -9,8 +9,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.text.AttributedString;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+
 public class Node extends Vertex {
 	int relativeBallSize, ballSize;
 
@@ -26,19 +28,24 @@ public class Node extends Vertex {
 	public int id;
 	public static int idCounter = 0;
 	SpeedVector speed = new SpeedVector(0, 0, 0);
-	public static Node centeredNode;
-	public Vector links;
-	public Vertex neighbour;
+
+	public HashMap links;
 	private boolean positionFixed;
 	private boolean isCentered;
 
 	public String name;
 
-	public Node(String name) {
+	public Graph parentGraph;
+
+	public int distanceFromCenter = 0;
+	public boolean passed = false;
+
+	public Node(String name, Graph graph) {
 		super();
-		links = new Vector();
+		links = new HashMap();
 		mat = new Matrix3D();
-		
+		parentGraph = graph;
+
 		this.name = name;
 
 		relativeBallSize = Config.ballsize;
@@ -50,7 +57,7 @@ public class Node extends Vertex {
 		setBounds();
 
 	}
-	
+
 	public static void setBalancer(BalanceThread a) {
 		balancer = a;
 	}
@@ -59,7 +66,7 @@ public class Node extends Vertex {
 
 		SpeedVector sp = new SpeedVector(x - node.x, y - node.y, z - node.z);
 
-		float distance = 2;
+		float distance = 2f;
 		float module = sp.module();
 		float d;
 
@@ -67,19 +74,37 @@ public class Node extends Vertex {
 
 		module /= 50;
 
-		if (this.centered() || node.centered()) {
+		if (this.isLinkedTo(node)) {
 			module -= distance;
 			if (module > 0) {
-				sp.resize(-1 * module * module);
+				sp.resize((float) (-1 * module * module));
 			} else {
 				sp.resize(1 * module * module);
 			}
 		} else {
 			sp.resize(
-				10 * (float) (Math.pow(Math.E, 1 / Math.sqrt(module)) - 1));
+				3 * (float) (Math.pow(Math.E, 1 / Math.sqrt(module)) - 1));
+
 		}
 
 		return sp;
+	}
+
+	public SpeedVector getForceToCenter() {
+		SpeedVector sp = new SpeedVector(0, 0, 0);
+		if (!this.centered()) {
+			return new SpeedVector(0, 0, 0);
+		} else {
+			return new SpeedVector(-x / 4, -y / 4, -z / 4);
+		}
+	}
+
+	/**
+	 * @param node
+	 * @return
+	 */
+	private boolean isLinkedTo(Node node) {
+		return links.containsKey(node);
 	}
 
 	/**
@@ -90,16 +115,24 @@ public class Node extends Vertex {
 	}
 
 	public void center() {
-		isCentered = true;
-
+		
 		try {
-			centeredNode.isCentered = false;
+			Graph.centerNode.unCenter();
 		} catch (NullPointerException e) {
+			System.out.println("No center node");
 		}
 
-		centeredNode = this;
-		x = y = z = 0;
+		isCentered = true;
+		Graph.centerNode = this;
+		//x = y = z = 0;
 
+	}
+
+	public void unCenter() {
+		isCentered = false;
+		x++; //= length();
+		y++; //= length();
+		z++; //= length();
 	}
 
 	public void clearSpeed() {
@@ -111,7 +144,11 @@ public class Node extends Vertex {
 	}
 
 	public void balance() {
-		if (!this.positionFixed()) {
+		if (centered()) {
+			clearSpeed();
+			addSpeed(getForceToCenter());
+			change(speed.x, speed.y, speed.z);
+		} else if (!this.positionFixed()) {
 			change(speed.x, speed.y, speed.z);
 		}
 	}
@@ -123,7 +160,6 @@ public class Node extends Vertex {
 	public void releasePosition() {
 		positionFixed = false;
 	}
-
 
 	public void fixPosition() {
 		positionFixed = true;
@@ -198,8 +234,7 @@ public class Node extends Vertex {
 		return mouseover;
 
 	}
-	
-	
+
 	synchronized public void transform() {
 		mat.transform(this);
 	}
@@ -215,14 +250,15 @@ public class Node extends Vertex {
 		y = Math.min(Math.max(y, Config.ymin), Config.ymax);
 		z = Math.min(Math.max(z, Config.zmin), Config.zmax);
 	}
-	
-	public void addLink(Vertex node) {
-		links.add(node);
+
+	public void addLink(Node node) {
+		links.put(node, new Object());
+		node.links.put(this, new Object());
 	}
 
 	public void paint(Graphics g) {
 		Graphics2D graphic = (Graphics2D) g;
-		
+
 		double zc = Z - ZC;
 		double scale;
 		if (Math.abs(zc) > 1)
@@ -237,8 +273,10 @@ public class Node extends Vertex {
 			scale = 0.1;
 
 		g.setColor(Config.graphstringcolor);
-		for (Enumeration e = links.elements(); e.hasMoreElements();) {
-			neighbour = (Vertex) e.nextElement();
+		Set linkSet = links.keySet();
+
+		for (Iterator it = linkSet.iterator(); it.hasNext();) {
+			Node neighbour = (Node) it.next();
 			g.drawLine(u, v, neighbour.u, neighbour.v);
 		}
 
@@ -271,7 +309,20 @@ public class Node extends Vertex {
 		graphic.setComposite(al2);
 	}
 
+	public void removeLink(Node neighbour) {
+		links.remove(neighbour);
+	}
 
-		
+	public void clean() {
+		Set linkSet = links.keySet();
+
+		for (Iterator it = linkSet.iterator(); it.hasNext();) {
+			Node neighbour = (Node) it.next();
+			neighbour.removeLink(this);
+		}
+
+		Graph.nodeNameMap.remove(this.name);
+		parentGraph.remove(this);
+	}
 
 }

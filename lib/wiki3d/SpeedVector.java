@@ -34,6 +34,13 @@ public class SpeedVector {
 		makeInteger();
 	}
 
+	public SpeedVector(double xi, double yi, double zi) {
+		fx=(float)xi;
+		fy=(float)yi;
+		fz=(float)zi;
+		makeInteger();
+	}
+
 	public void add(SpeedVector s) {
 		this.fx += s.fx;
 		this.fy += s.fy;
@@ -54,9 +61,9 @@ public class SpeedVector {
 	}
 	
 	private void makeInteger() {
-		this.x = Math.round(this.fx);
-		this.y = Math.round(this.fy);
-		this.z = Math.round(this.fz);
+		this.x = (int)Math.ceil(this.fx);
+		this.y = (int)Math.ceil(this.fy);
+		this.z = (int)Math.ceil(this.fz);
 	}
 
 	public SpeedVector reverse() {
