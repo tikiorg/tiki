@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.12 2004-07-20 19:57:42 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.13 2004-07-20 20:27:44 teedog Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
@@ -161,12 +161,15 @@
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
-<span class="tabbut">
-{if $comments_cant > 0}
+{if $feature_wiki_comments eq 'y' and $show_page eq 'y'  && ($tiki_p_read_comments eq 'y' || $tiki_p_admin_wiki eq 'y' || $tiki_p_admin eq 'y')}
+{if $comments_cant > 0 || $tiki_p_post_comments eq 'y'}
+	<span class="tabbut">
+	{if $comments_cant > 0}
 	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
-{else}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+	{else}
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}post comment{/tr}</a>
+	{/if}
+	</span>
 {/if}
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
