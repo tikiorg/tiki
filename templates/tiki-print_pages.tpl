@@ -8,7 +8,7 @@
 <form action="tiki-print_pages.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles}" />
 <input type="hidden" name="printpages" value="{$form_printpages}" />
-{tr}filter{/tr}:<input type="text" name="find" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br/>
+{tr}filter{/tr}:<input type="text" name="find" value="{$find}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br/>
 </form>
 </div>
 </div>

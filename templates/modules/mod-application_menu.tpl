@@ -110,7 +110,7 @@
   {if $feature_sandbox eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-editpage.php?page=SandBox" class="linkmenu">{tr}sandbox{/tr}</a><br/>
   {/if}
-  {if $feature_wiki_multiprint eq 'y'}
+  {if $feature_wiki_multiprint eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-print_pages.php" class="linkmenu">{tr}print{/tr}</a><br/>
   {/if}
   {if $tiki_p_send_pages eq 'y' and $feature_comm eq 'y'}

@@ -9,11 +9,18 @@ if($feature_wiki_multiprint != 'y') {
   die;  
 }
 
+// Now check permissions if user can view wiki pages
+if($tiki_p_view != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
 
 if(!isset($_REQUEST["printpages"])) {
   $printpages = Array();
 } else {
-  $printpages = unserialize(urldecode($printpages));
+  $printpages = unserialize(urldecode($_REQUEST["printpages"]));
 }
 
 if(isset($_REQUEST["find"])) {
@@ -33,18 +40,6 @@ if(isset($_REQUEST["clearpages"])) {
 }
 
 
-
-if(isset($_REQUEST["print"])) {
-  // Create XMLRPC object
-  
-  
-  foreach($printpages as $page) {
-    $page_info = $tikilib->get_page_info($page);
-    print("Imprimir $page <br/>");
-  }
-}  
-  
-  
 $smarty->assign('printpages',$printpages);
 $form_printpages = urlencode(serialize($printpages));
 $smarty->assign('form_printpages',$form_printpages);
