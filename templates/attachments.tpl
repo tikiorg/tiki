@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.15 2004-02-05 08:36:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.16 2004-02-05 10:34:47 damosoft Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -17,35 +17,35 @@
 
  <table class="normal">
  <caption> {tr}List of attached files{/tr} </caption>
- <tr>
-  <th></th><th>
-   <a title="{tr}Click here to sort by name{/tr}" class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
-  </th><th>
-   <a title="{tr}Click here to sort by description{/tr}" class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a>
-  </th><th>
-   <a title="{tr}Click here to sort by the date uploaded{/tr}" class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a>
-  </th><th>
-   <a title="{tr}Click here to sort by size{/tr}" class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a>
-  </th><th>
-   <a title="{tr}Click here to sort by number of downloads{/tr}" class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}"><b>&gt;</b></a>
-  </th>
+ <tr class="heading">
+  <td>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
+  </td><td>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a>
+  </td><td>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a>
+  </td><td>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a>
+  </td><td>
+   <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}"><b>&gt;</b></a>
+  </td>
  </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=ix loop=$atts}
-<tr class="{cycle}">
-<td><span class="mini">{$smarty.section.ix.index_next}</span></td>
-<td>
+<tr>
+<td class="{cycle advance=false}"><span class="mini">{$smarty.section.ix.index_next}</span></td>
+<td class="{cycle advance=false}">
  {$atts[ix].filename|iconify}
- <a title="{tr}Click here to download this file{/tr}" class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
+ <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
  {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-  &nbsp;&nbsp;<a title="{tr}Click here to delete this attachment{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" 
+  &nbsp;&nbsp;<a class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this attachment?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>&nbsp;&nbsp;
  {/if}
  </td>
- <td><small>{$atts[ix].comment}</small></td>
- <td><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
- <td style="text-align:right;">{$atts[ix].filesize|kbsize}</td>
- <td style="text-align:right;">{$atts[ix].downloads}</td>
+ <td class="{cycle advance=false}"><small>{$atts[ix].comment}</small></td>
+ <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
+ <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
+ <td style="text-align:right;" class="{cycle}">{$atts[ix].downloads}</td>
 </tr>
 {/section}
 </table>
