@@ -47,7 +47,7 @@
 <td class="formcolor">{tr}long desc{/tr}</td></tr>
 <tr>
 <td class="formcolor"><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[date]" value="{$ui.created}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
 <td class="formcolor"><input type="text" size="2" name="ui[downloads]" value="{$ui.downloads}" /></td>
 <td class="formcolor"><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
 <td class="formcolor"><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
