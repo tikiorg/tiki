@@ -1,3 +1,4 @@
+<!- templates/tiki-take_quiz.tpl start ->
 <form name="aform" action="tiki-take_quiz.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br />
@@ -48,3 +49,4 @@ settimeleft(itid);
 </div>
 {/if}
 </form>
+<!- templates/tiki-take_quiz.tpl end ->
