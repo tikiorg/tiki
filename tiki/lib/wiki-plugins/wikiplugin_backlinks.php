@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.7 $
+    * @version $Revision: 1.8 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -32,14 +32,14 @@
                 'info' => false );
         }
         function getName() {
-            return tra("BackLinks");
+            return "BackLinks";
         }
         function getDescription() {
             return tra("List all pages which link to specific pages").":<br />~np~{BACKLINKS(info=>hits|user,exclude=>HomePage|SandBox,include_self=>1,noheader=>0,page=>HomePage)}{BACKLINKS}~/np~";
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.7 $");
+                "\$Revision: 1.8 $");
         }
         function run ($data, $params) {
             global $wikilib;
