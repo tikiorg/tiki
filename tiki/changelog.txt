@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.107 2003-09-24 03:58:43 dheltzel Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.108 2003-09-24 14:02:19 dheltzel Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,8 +18,9 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] Events added, now articles can be normal articles, reviews or events
 * [FIX] article topics no longer require an image file to be uploaded
-* [NEW] tiki-list_articles now accepts type and topic parms to filter articles
+* [MOD] tiki-list_articles now accepts type and topic parms to filter articles
 * [NEW] Added a Jabber plugin {JABBER()}
 * [NEW] Basic error handling in function "query" in lib/tikilib.php
 * [NEW] assign page permissions to whole structures 
