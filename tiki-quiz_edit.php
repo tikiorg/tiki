@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.7 2004-05-18 21:01:31 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.8 2004-05-20 12:29:34 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -42,10 +42,9 @@ if ($feature_quizzes != 'y') {
 	die;
 }
 
-// When the quiz id is not indicated, we redirect to the list of quizzes.
-if (!isset($_REQUEST["quizId"])) {
-	header ("location: tiki-list_quizzes.php");
-	die;
+// quizId of 0 is used as a default; There should not be a row in the db with an id of zero.
+if(!isset($_REQUEST["quizId"])){
+	$_REQUEST["quizId"] = 0;
 }
 
 $smarty->assign('individual', 'n');
@@ -102,17 +101,22 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 	}
 }
 
-if (isset($_REQUEST["save"])) {
-// 	foreach ($_REQUEST as $key => $val){
-// 		echo $key." = ".$val."<br>";
-// 	}
-// 	die;
 
+// When the quiz id is not indicated, create a new quiz
+if ($_REQUEST["quizId"] == 0) {
+	$quizNew = new Quiz;
+	echo "line ".__LINE__."<br>";
+	$lines = $quizNew->show_html();
+	foreach ($lines as $line){
+		echo $line;
+	}
+	die;
+} else if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
+
 	$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
 	$cat_name = $_REQUEST["name"];
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
-	//	$cat_objid = $_REQUEST["quizId"];
 	include_once ("categorize.php");
 
 	echo "line: ".__LINE__."<br>";
@@ -191,13 +195,14 @@ if (isset($_REQUEST["save"])) {
 	die;
 }
 
-
+// $quizOld = $quizlib->fetch_quiz($_REQUEST["quizId"]);
 $quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
-// echo "line ".__LINE__."<br>";
-// foreach ($quiz as $key => $val){
-// 	echo $key." = ".$val."<br>";
-// }
-// die;
+echo "line ".__LINE__."<br>";
+foreach ($quiz as $key => $val){
+	echo $key." = ".$val."<br>";
+}
+echo date("r",$quiz['publishDate'])."<br>";
+die;
 
 $smarty->assign('quiz', $quiz);
 
@@ -284,7 +289,7 @@ for ($i = 1; $i <= 10; $i++){
 	$qpp[] = $i;
 	$repetitions[] = $i;
 }
-$repetitions[] = "Unlimited";
+$repetitions[] = "unlimited";
 $smarty->assign('repetitions', $repetitions);
 $smarty->assign('qpp', $qpp);
 

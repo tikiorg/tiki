@@ -718,6 +718,7 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
 }
 
 class Quiz {
+	var $id;
 	var $version;
 	var $timestamp;
 	var $online;
@@ -752,17 +753,17 @@ class Quiz {
 		$this->studentAttempts = 0;
 		$this->name = "";
 		$this->description = "";
-		$this->datePub = 0;
-		$this->dateExp = 0;
+		$this->datePub = mktime(0, 0, 0, 1, 1,  date("Y"));
+		$this->dateExp = mktime(0, 0, 0, 1, 1,  date("Y")+10);
 		$this->shuffleQuestions = "n";
 		$this->shuffleAnswers = "n";
-		$this->limitDisplay = "n";
-		$this->questionsPerPage = 0;
+		$this->limitDisplay = "y";
+		$this->questionsPerPage = 1;
 		$this->timeLimited = "n";
 		$this->timeLimit = "0";
 		$this->multiSession = "n";
-		$this->canRepeat = "n";
-		$this->repetitions = 0;
+		$this->canRepeat = "y";
+		$this->repetitions = 'unlimited';
 		$this->gradingMethod = "machine";
 		$this->showScore = "immediately";
 		$this->showCorrectAnswers = "immediately";
@@ -772,9 +773,36 @@ class Quiz {
 		$this->forumName = "";
 		$this->data = "";
 	}
-
-  function from_text($lines){
-    // Set the question according to an array of text lines.
+  function show_html(){
+    // dump as html text
+		$lines = array();
+		$lines[] = "id = ".$this->id."<br />";
+		$lines[] = "version = ".$this->version."<br />";
+		$lines[] = "timestamp = ".date("r",$this->timestamp)."<br />";
+		$lines[] = "online = ".$this->online."<br />";
+		$lines[] = "studentAttempts = ".$this->studentAttempts."<br />";
+		$lines[] = "name = ".$this->name."<br />";
+		$lines[] = "description = ".$this->description."<br />";
+		$lines[] = "datePub = ".date("r",$this->datePub)."<br />";
+		$lines[] = "dateExp = ".date("r",$this->dateExp)."<br />";
+		$lines[] = "shuffleQuestions = ".$this->shuffleQuestions."<br />";
+		$lines[] = "shuffleAnswers = ".$this->shuffleAnswers."<br />";
+		$lines[] = "limitDisplay = ".$this->limitDisplay."<br />";
+		$lines[] = "questionsPerPage = ".$this->questionsPerPage."<br />";
+		$lines[] = "timeLimited = ".$this->timeLimited."<br />";
+		$lines[] = "timeLimit = ".$this->timeLimit."<br />";
+		$lines[] = "multiSession = ".$this->multiSession."<br />";
+		$lines[] = "canRepeat = ".$this->canRepeat."<br />";
+		$lines[] = "repetitions = ".$this->repetitions."<br />";
+		$lines[] = "gradingMethod = ".$this->gradingMethod."<br />";
+		$lines[] = "showScore = ".$this->showScore."<br />";
+		$lines[] = "showCorrectAnswers = ".$this->showCorrectAnswers."<br />";
+		$lines[] = "publishStats = ".$this->publishStats."<br />";
+		$lines[] = "additionalQuestions = ".$this->additionalQuestions."<br />";
+		$lines[] = "forum = ".$this->forum."<br />";
+		$lines[] = "forumName = ".$this->forumName."<br />";
+		$lines[] = "data = ".$this->data."<br />";
+		return $lines;
   }
   function getQuestion(){
     return $this->question;
