@@ -1,16 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.14 2003-08-07 21:00:03 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.15 2003-08-07 21:57:30 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ('lib/usermodules/usermoduleslib.php');
-
-/*
- * Menu controls currently deactivated
- */
 include_once('tiki-module_controls.php');
+
 clearstatcache();
 $now = date("U");
 
