@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.10 2003-09-21 20:04:48 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.11 2003-09-22 00:13:12 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,6 +104,11 @@ if (isset($_REQUEST["import"])) {
 		if (isset($part["pagename"])) {
 		    // PHPWiki footnotes.  -rlpowell
 		    $part["body"] = preg_replace("/\[\[([^\]]+)\]/", "(Was Footnote: $1)", $part["body"]);
+
+		    // Fixing [description|URL] format of PHPWiki.
+		    // -rlpowell
+		    $part["body"] = preg_replace("/\[([^\[\|\]]+)\|(http:[^\]\|\]]+)\]/",
+			"[$2|$1]", $part["body"]);
 
 		    // Parse the body replacing links to Tiki links
 		    $part["body"] = preg_replace("/ (http:\/\/[^ ]+) /", " [$1] ", $part["body"]);
