@@ -3,7 +3,7 @@
 // $CVSHeader$
 
 /*
-V4.01 23 Oct 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.01 23 Oct 2003  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
          Contributed by Ross Smith (adodb@netebb.com). 
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
@@ -11,6 +11,9 @@ V4.01 23 Oct 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights rese
 	  Set tabs to 4 for best viewing.
 
 */
+
+// security - hide paths
+if (!defined('ADODB_SESSION')) die();
 
 include_once ADODB_SESSION . '/crypt.inc.php';
 
