@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_file_galleries.tpl,v 1.7 2003-11-23 03:15:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_file_galleries.tpl,v 1.8 2003-11-24 01:33:46 zaufi Exp $ *}
 
 {if $feature_file_galleries eq 'y'}
-{tikimodule title="{tr}Last modified file galleries{/tr}" name="last_file_galleries"}
+{if $nonums eq 'y'}
+{eval var="{tr}Last `$module_rows` modified file galleries{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Last modified file galleries{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="last_file_galleries"}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastFileGalleries}
       <tr>

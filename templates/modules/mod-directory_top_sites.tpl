@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_top_sites.tpl,v 1.6 2003-11-23 03:15:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_top_sites.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
 
 {if $feature_directory eq 'y'}
-{tikimodule title="{tr}Top Sites{/tr}" name="directory_top_sites"}
+{if $nonums eq 'y'}
+{eval var="{tr}Top $module_rows Sites{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Top Sites{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="directory_top_sites"}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modTopdirSites}
       <tr>

@@ -1,7 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.9 2003-11-23 03:53:04 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_submissions.tpl,v 1.10 2003-11-24 01:33:46 zaufi Exp $ *}
 
 {if $feature_submissions eq 'y'}
-{tikimodule title="{tr}Last submissions{/tr}" name="last_submissions"}
+{if $nonums eq 'y'}
+{eval var="{tr}Last `$module_rows` submissions{/tr}" assign="tpl_module_title"}
+{else}
+{eval var="{tr}Last submissions{/tr}" assign="tpl_module_title"}
+{/if}
+{tikimodule title=$tpl_module_title name="last_submissions"}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastSubmissions}
       <tr>
