@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.17 2004-02-04 12:24:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.18 2004-02-05 10:29:16 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,6 +52,8 @@ $info["defaultOrderKey"] = '';
 $info["defaultOrderDir"] = 'asc';
 $info["newItemStatus"] = 'o';
 $info["modItemStatus"] = 'o';
+$info["writerCanModify"] = '';
+$info["writerGroupCanModify"] = '';
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 
 if ($_REQUEST["trackerId"]) {
@@ -75,6 +77,8 @@ $smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
 $smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('modItemStatus', $info["modItemStatus"]);
+$smarty->assign('writerCanModify', $info["writerCanModify"]);
+$smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 
 $outatt = array();
 $info["orderPopup"] = '';
@@ -152,6 +156,14 @@ if (isset($_REQUEST["save"])) {
 
 	if (isset($_REQUEST["modItemStatus"]) && $_REQUEST["modItemStatus"]) {
 		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
+	}
+
+	if (isset($_REQUEST["writerCanModify"]) && $_REQUEST["writerCanModify"]) {
+		$tracker_options["writerCanModify"] = $_REQUEST["writerCanModify"];
+	}
+
+	if (isset($_REQUEST["writerGroupCanModify"]) && $_REQUEST["writerGroupCanModify"]) {
+		$tracker_options["writerGroupCanModify"] = $_REQUEST["writerGroupCanModify"];
 	}
 
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {

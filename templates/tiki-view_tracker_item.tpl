@@ -279,12 +279,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {elseif $ins_fields[ix].type eq 'g'}
+{if $ins_fields[ix].options}
+{$ins_fields[ix].value}
+{else}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}" {if $ins_fields[ix].value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
+{/if}
 
 {elseif $ins_fields[ix].type eq 'l'}
 {foreach key=tid item=tlabel from=$ins_fields[ix].links}

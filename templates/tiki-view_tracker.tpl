@@ -17,7 +17,6 @@
 <div class="wikitext">{$mail_msg}</div>
 {/if}
 <br />
-
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></span>
@@ -271,12 +270,16 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {/if}
 
 {elseif $fields[ix].type eq 'g'}
+{if $fields[ix].options and $group}
+{$group}
+{else}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}">{$groups[ux]}</option>
 {/section}
 </select>
+{/if}
 
 {elseif $fields[ix].type eq 'e'}
 {assign var=fca value=$fields[ix].options}

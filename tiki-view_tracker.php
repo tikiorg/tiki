@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.42 2004-02-05 07:58:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.43 2004-02-05 10:29:16 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,6 +130,18 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 
+	} elseif ($fields["data"][$i]["type"] == 'g') {
+		if (($fields["data"][$i]["options"] == 2 or $fields["data"][$i]["options"] == 1) and $fields["data"][$i]["options"] and $group) {
+			$ins_fields["data"][$i]["value"] = $group;
+		} else {
+			$ins_fields["data"][$i]["value"] = '';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+
 	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
@@ -231,12 +243,12 @@ if ($user) {
 if (isset($_REQUEST["save"])) {
 	if ($tiki_p_create_tracker_items == 'y') {
 		check_ticket('view-trackers');
-		if (isset($tracker_info['newItemStatus'])) $tracker_info['newItemStatus'] = 'o';
+		if (!isset($tracker_info['newItemStatus'])) $tracker_info['newItemStatus'] = 'o';
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $tracker_info['newItemStatus']);
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 		$smarty->assign('itemId', '');
 		
-		if (isset($ins_categs)) {
+		if (count($ins_categs)) {
 			$cat_type = "tracker ".$_REQUEST["trackerId"];
 			$cat_objid = $_REQUEST["itemId"];
 			$cat_desc = "";
