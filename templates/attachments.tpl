@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.17 2004-02-05 11:44:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.18 2004-03-01 18:42:36 damosoft Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -17,16 +17,16 @@
 
  <table class="normal">
  <caption> {tr}List of attached files{/tr} </caption>
- <tr class="heading">
-  <td>
+ <tr>
+  <td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
-  </td><td>
+  </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a>
-  </td><td>
+  </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a>
-  </td><td>
+  </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a>
-  </td><td>
+  </td><td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}"><b>&gt;</b></a>
   </td>
  </tr>
@@ -57,8 +57,8 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this at
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 {if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}
 <table class="normal">
-<tr class="formcolor">
- <td>
+<tr>
+ <td class="formcolor">
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
                         <input size="16 " name="userfile1" type="file" id="attach-upload" />
    <label for="attach-comment">{tr}comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
