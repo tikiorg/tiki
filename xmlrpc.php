@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.18 2004-05-02 19:49:24 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.19 2004-06-27 03:05:41 mose Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -143,7 +143,7 @@ function editPost($params) {
   }
  
   $now=date("U");
-  $id = $bloglib->update_post($postid,$content,$username,$title);
+  $id = $bloglib->update_post($postid,$blogid,$content,$username,$title);
   return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
 // :TODO: deletePost

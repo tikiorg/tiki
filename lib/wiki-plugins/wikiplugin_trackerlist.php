@@ -4,8 +4,8 @@
 // {TRACKER()}{TRACKER}
 
 function wikiplugin_trackerlist_help() {
-	$help = tra("Displays the output of a tracker content").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>login:email:name)}Notice{TRACKERLIST}~/np~";
+	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
+	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
 function wikiplugin_trackerlist($data, $params) {

@@ -28,6 +28,22 @@ class HistLib extends TikiLib {
 
 	function use_version($page, $version, $comment = '') {
 		$this->invalidate_cache($page);
+		
+		// Store the current page in tiki_history before rolling back
+		if ($page != 'Sandbox') {
+			$info = $this->get_page_info($page);
+			$old_version = $this->get_page_latest_version($page) + 1;
+		    $lastModif = $info["lastModif"];
+		    $user = $info["user"];
+		    $ip = $info["ip"];
+		    $comment = $info["comment"];
+		    $data = $info["data"];
+		    $description = $info["description"];
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
+		    			values(?,?,?,?,?,?,?,?)";
+		    $this->query($query,array($page,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		}
+		
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
 
@@ -108,6 +124,21 @@ class HistLib extends TikiLib {
 			$aux["comment"] = $res["comment"];
 			//$aux["percent"] = levenshtein($res["data"],$actual);
 			$ret[] = $aux;
+		}
+
+		return $ret;
+	}
+	
+	function get_page_latest_version($page) {
+
+		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
+		$result = $this->query($query,array($page),1);
+		$ret = array();
+		
+		if ($res = $result->fetchRow()) {
+			$ret = $res['version'];
+		} else {
+			$ret = FALSE;
 		}
 
 		return $ret;

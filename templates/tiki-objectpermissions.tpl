@@ -4,10 +4,13 @@
 <h3>{tr}Current permissions for this object{/tr}:</h3>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
+{cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
-<tr><td class="odd">{$page_perms[pg].groupName}</td><td class="odd">{$page_perms[pg].permName}</td><td class="odd">(<a class="link" href="tiki-objectpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove{/tr}</a>)</td></tr>
+<tr><td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
+<td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
+<td class="{cycle advance=true}"><a class="link" href="tiki-objectpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page|escape:"url"}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}" title="{tr}Delete{/tr}"><img src="img/icons2/delete.gif" width="12" height="12" alt="{tr}delete{/tr}" border="0"/></a></td></tr>
 {sectionelse}
-<tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
+<tr><td colspan="3" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
 <h3>{tr}Assign permissions to this object{/tr}</h3>

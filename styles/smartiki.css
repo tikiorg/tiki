@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.12 2004-06-21 02:42:35 dgdaniels Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.13 2004-06-27 03:05:53 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -617,6 +617,7 @@ div.wikitext {
 /* Links to wiki pages */
 .wiki { color:#436976; text-decoration:underline;}
 .wiki:hover {color: #436976;text-decoration:underline;}
+.wikinew { text-decoration: underline; font-weight: bold;}
 
 /* Date displayed for last modification date of pages */
 p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }

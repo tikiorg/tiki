@@ -763,9 +763,9 @@ div.searchdate {
 
 /***********************************************  THE WIKI ***********************************************************/
 div.titlebar {
-	background:    #5B6C71;
-	color:   white;
-	border:   1px solid white;
+	background:    #AAAAAA;
+	color:   #000000;
+	border:   1px solid CCCCCC;
 	padding-left:   1px;
 	padding-right:   1px;
 	padding-top:   1px;
@@ -910,6 +910,15 @@ div.wikitext {
 .wiki:hover {
 	color:    black;
 	background-color:   #CCCCCC;
+}
+
+.wikinew {
+	color: #FF0000;
+	font-weight: bold;
+}
+
+.wikinew:hover {
+	color: #FF0000;
 }
 
 /* Date displayed for last modification date of pages */

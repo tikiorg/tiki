@@ -846,6 +846,15 @@ class TikiLib extends TikiDB {
      * Score methods begin
      */
 
+    // All information about an event type
+    // shared
+    function get_event($event) {
+	$query = "select * from `tiki_score` where `event`=?";
+	$result = $this->query($query,array($event));
+	return $result->fetchRow();
+    }
+
+
     /* 
      * Checks if an event should be scored and grants points to proper user
      * $multiplier is for rating events, in which the score will
@@ -854,9 +863,13 @@ class TikiLib extends TikiDB {
      * shared
      */
     function score_event($user, $event_type, $id = '', $multiplier=false) {
+		if (!is_object($scorelib)) {
+			include_once("lib/score/scorelib.php");
+		}
 	if ($user == 'admin') { return; }
 
 	$event = $this->get_event($event_type);
+	
 	if (!$event || !$event['score']) {
 	    return;
 	}
@@ -870,19 +883,27 @@ class TikiLib extends TikiDB {
 	    $expire = $event['expiration'];
 	    $event_id = $event_type . '_' . $id;
 
-	    $query = "select * from tiki_users_score where user='$user' and event_id='$event_id' and (not $expire || expire > now())";
-	    if ($this->getOne($query)) {
+	    $query = "select count(*) from `tiki_users_score` where `user`=? and `event_id`=?";
+	    $bindvars = array($user, $event_id);
+	    if ($expire) {
+		$query .= " and `expire` > ?";
+		$bindvars[] = time();
+	    }
+	    if ($this->getOne($query, $bindvars)) {
 		return;
 	    }
 
-	    $query = "replace into tiki_users_score (user, event_id, score, expire) values ('$user', '$event_id', $score, now() + interval $expire minute)";
-	    $this->query($query);
+	    $query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
+	    $this->query($query, array($user, $event_id));
+
+	    $query = "insert into `tiki_users_score` (`user`, `event_id`, `score`, `expire`) values (?, ?, ?, ?)"; 
+	    $this->query($query, array($user, $event_id, $score, time() + ($expire*60)));
 	}
 
-	$query = "update users_users set score = score + $score where login='$user'";
+	$query = "update `users_users` set `score` = `score` + ? where `login`=?";
 	$event['id'] = $id; // just for debug
 
-	$this->query($query);
+	$this->query($query, array($score, $user));
 	return;	
     }
 
@@ -893,7 +914,7 @@ class TikiLib extends TikiDB {
 	    $start = "0";
 	}
 	// admin doesn't go on ranking
-	$query = "select userId, login, score from users_users where login <> 'admin' order by score desc limit $start, $limit";
+	$query = "select `userId`, `login`, `score` from `users_users` where `login` <> 'admin' order by `score` desc limit $start, $limit";
 
 	$result = $this->query($query);
 	$ranking = array();
@@ -926,7 +947,7 @@ class TikiLib extends TikiDB {
 
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
-	    $star = "<img src=\"images/$star\" alt=\"$alt\" />&nbsp;";
+	    $star = "<img src=\"images/$star\" height=\"11\" width=\"11\" alt=\"$alt\" />&nbsp;";
 	}
 
 	return $star;
@@ -1984,6 +2005,15 @@ class TikiLib extends TikiDB {
 	    $query = "update `tiki_files` set `downloads`=`downloads`+1 where `fileId`=?";
 	    $result = $this->query($query,array((int) $id));
 	}
+
+	global $feature_score;
+	if ($feature_score == 'y') {
+	    $this->score_event($user, 'fgallery_download', $id);
+	    $query = "select `user` from `tiki_files` where `fileId`=?";
+	    $owner = $this->getOne($query, array((int)$id));
+	    $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id");
+	}
+	
 	return true;
     }
 
@@ -2288,6 +2318,12 @@ class TikiLib extends TikiDB {
 	    return false;
 	}
 
+	global $feature_score, $user;
+	if ($feature_score == 'y' && $user != $res['user']) {
+	    $this->score_event($user, 'blog_read', $blogId);
+	    $this->score_event($res['user'], 'blog_is_read', "$user:$blogId");
+	}
+	
 	return $res;
     }
 
@@ -4425,7 +4461,7 @@ class TikiLib extends TikiDB {
 		    } else {
 			$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
 
-			$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki wikinew">?</a>';
+		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:")." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
 		    }
 
 		    $data = preg_replace($pattern, "$repl", $data);
@@ -4459,7 +4495,7 @@ class TikiLib extends TikiDB {
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
 		    } else {
-			$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
+		  $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		    }
 
 		    $page_parse_pq = preg_quote($page_parse, "/");
@@ -4501,17 +4537,17 @@ class TikiLib extends TikiDB {
 				// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 				$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 			    } else {
-				$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki wikinew'>?</a>";
+			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 			    }
 			} else {
-			    $repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
+			    $repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse).'" title="'.tra("Create page:").' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
 			}
 
 			$data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
 			//$data = str_replace($page_parse,$repl,$data);
-		    }
+			}
 		}
-	    }
+	}
 
 	    // This protects ))word((, I think?
 	    $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/", "$1" . "$2" . "$3", $data);
@@ -5208,30 +5244,36 @@ class TikiLib extends TikiDB {
 		    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
 			values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-		    $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		    /* the following doesn't work because tiki dies if the above query fails
-		       if (!$result) {
-		       $query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
-		       $result = $this->query($query2,array($pageName,(int) $version));
-		       $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		       }
-		     */
+		$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		/* the following doesn't work because tiki dies if the above query fails
+		if (!$result) {
+			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
+			$result = $this->query($query2,array($pageName,(int) $version));
+			$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		}
-
-		//  Deal with mail notifications.
-		include_once('lib/notifications/notificationemaillib.php');
-		//This is put away: sender_email must be enough!
-		//  if( $this->get_preference('wiki_forum') ) {
-		//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-		//    if ($forums)
-		//      $fromEmail = $forums["data"][0]["outbound_from"];
-		//    else
-		//      $fromEmail = $sender_email;
-		//  }
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = httpPrefix(). dirname( $foo["path"] );
-		sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
+		*/
 	    }
+
+	    //  Deal with mail notifications.
+	    include_once('lib/notifications/notificationemaillib.php');
+	    //This is put away: sender_email must be enough!
+	    //  if( $this->get_preference('wiki_forum') ) {
+	    //      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
+	    //    if ($forums)
+	    //      $fromEmail = $forums["data"][0]["outbound_from"];
+	    //    else
+	    //      $fromEmail = $sender_email;
+	    //  }
+	    $foo = parse_url($_SERVER["REQUEST_URI"]);
+	    $machine = httpPrefix(). dirname( $foo["path"] );
+	    sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
+
+		global $feature_score;
+	        if ($feature_score == 'y') {
+        	    $this->score_event($user, 'wiki_edit');
+	        }
+
+	}
 
 	    if ($lang) {// not sure it is necessary
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";

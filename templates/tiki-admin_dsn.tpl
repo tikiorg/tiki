@@ -44,6 +44,8 @@
    <a title="{tr}edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="3">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 <div align="center">

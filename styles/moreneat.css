@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.54 2004-06-20 21:21:45 dgdaniels Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.55 2004-06-27 03:05:53 mose Exp $
 
 MoreNeat theme
 */
@@ -58,7 +58,7 @@ text-decoration: none;
 /********************************************* GENERAL LAYOUT *********************************************************/
 
 /* This div encloses the whole Tiki application */
-DIV#tiki-main { margin: 0px;  }
+DIV#tiki-main { margin: 0px;  width : 100%; }
 
 /* This is the header */
 DIV#tiki-top {  
@@ -113,22 +113,23 @@ font-size: 10px;
 
 
 /* This is the middle */
-DIV#tiki-mid {  background: #E9ECEF;  height: auto;  padding-bottom: 0px; }
+DIV#tiki-mid {  background: #E9ECEF;  height: auto; }
 
-DIV#tiki-mid table { width: 100%; }
+DIV#tiki-center table { }
+#tikimidtbl { width: 100%; }
 
 /* And this is the footer */
 DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; }
 
 /* The three columns */
-TD#leftcolumn {  padding-left: 1px; padding-right: 0px; vertical-align: top;  width: 180px;}
-TD#rightcolumn {  padding-left: 0px; vertical-align: top;   width: 180px;}
-TD#centercolumn { padding-right: 10px; vertical-align: top;}
+TD#leftcolumn {  padding-right: 0px; vertical-align: top;  width: 180px;}
+TD#rightcolumn {  padding-left: 0px; vertical-align: top;  width: 180px;}
+TD#centercolumn {  vertical-align: top;}
 
 /* And this is what lies inside the centercolumn */
 /*new tiki-center below fixes center column sliding under right column in IE (xen)*/
 /*DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }*/
-DIV#tiki-center {  margin-left: 1px;  margin-right: 1px;  padding-left: 1px;  padding-right: 1px; }
+DIV#tiki-center {  }
 
 div#debugconsole {
   position: absolute;
@@ -145,6 +146,7 @@ div#debugconsole {
 span.on-option { color: #0000C0; }
 span.off-option { color: #7B8B44; }
 
+#overDiv table {width : auto !important; }
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
 
 /* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
@@ -303,11 +305,11 @@ div.imagerank {  margin-left: 5px;  margin-right: 5px;  margin-bottom: 10px;  ma
 /* A simple box is just a div with a border around and some margin 
  * used for example in the admin screen */
 div.simplebox {  
-  margin-left: 1px;  margin-right: 1px;  margin-top: 5px;  margin-bottom: 5px;
-  padding-left: 2px;  padding-top: 2px;  padding-bottom: 2px;  padding-right: 2px;
+  padding: 1ex;
   color: black;
-  border: 1px solid #8CACBB;  background: white;  
-   font-size: 10px;
+  border: 1px solid #8CACBB;  
+	background: white;  
+  font-size: 10px;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
@@ -345,14 +347,14 @@ TD.formbor
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
-table.viewthread, table.jukeboxlist
+table.viewthread, table.jukeboxlist, table.userlist
 {  padding:0px; margin: 0px; border-collapse: collapse; width: 100%;}
 
 
 TABLE.normalnoborder {  width: 97%;}
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
+TD.heading, td.userlistheading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
 td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
 {
   color: black; font-size: 10px;
@@ -432,12 +434,12 @@ td.listfilesfilesizeodd,td.listfilescreatedodd,td.listfilesdlsodd,td.listfilesna
 td.listarttitleodd,td.listarttopicodd,td.listartpublishDateodd,td.listartauthorodd,td.listartreadsodd,td.listarthasimageodd,
 td.listartuseimageodd,td.listartactionsodd,td.listartsizeodd,td.forumstableodd,td.forumstableinfoodd,td.topictitleodd,
 td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd,td.jukeboxlistnameodd, 
-td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd, 
+td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd, td.userlistodd, 
 td.jukeboxlistvisitsodd
 {border: 1px solid #8CACBB;  border-collapse: collapse;  font-size: 10px; color : black; background-color: #F2F4F5; vertical-align: top; text-align: left;}
 
 /* Even rows in several listings */
-TD.even,td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven,td.gallistlastModifeven, td.gallistusereven ,
+TD.even,td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven,td.gallistlastModifeven, td.gallistusereven , td.userlisteven, 
 td.gallistimageseven,td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
 td.listgalhitseven, td.listgalusereven,td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
 td.bloglistcreatedeven,td.bloglistlastModifeven,td.bloglistusereven,td.bloglistpubliceven,td.bloglistpostseven,
@@ -461,9 +463,9 @@ a.pagetitle, a.forumspagetitle {font-size: 26px; font-family: "Trebuchet MS",Ver
 a.pagetitle:hover,a.forumspagetitle:hover {font-size: 26px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; color : black;}
 
 /* Non-linking titles (three levels) */
-H1 { font-size: 24px;  color : #436976; margin-bottom: 3px; }
-H2 { font-size: 18px;  color : #234956; margin-bottom: 3px; }
-H3 { font-size: 14px;  color : #032936; margin-bottom: 3px; }
+H1 { font-size: 24px;  color : #436976; margin: 6px 0 2px 0; }
+H2 { font-size: 18px;  color : #234956; margin: 3px 0 1px 0; }
+H3 { font-size: 14px;  color : #032936; margin: 1px 0; }
 
 /* Links where no special link style apply (usually with the general application background) */
 .link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .jukeboxlink,
@@ -572,8 +574,7 @@ div.wikitext {
   background: white;
      font-size: 12px;
   border: 1px solid #99bec6;
-  margin-left: 1px; margin-right: 1px; margin-top: 0px; margin-bottom: 5px;
-  width: 100%; /*xen fixes IE formating.  i.e. Middle column sliding under right*/
+  width: auto; /*xen fixes IE formating.  i.e. Middle column sliding under right*/
   clear: both;
 	padding : 1ex 2ex;
 }
@@ -727,7 +728,7 @@ div.articletitle {
   color: #424242; font-size: 11px; 
   background: white;
   border-bottom: 0px;
-  padding-right: 0.8em; 
+/*  padding-right: 0.8em; */
   padding-bottom: .1em;
   margin-top: 5px;
   clear: both;
@@ -763,6 +764,7 @@ div.articletrailer {
 div.articleheadingtext {  
 font-size: 10px; 
 display: inline;
+width: 100%;
 }
 
 
@@ -819,7 +821,7 @@ span.trailer {  font-size: 10px; }
 /* The comment title */
 span.commentstitle {  font-weight: bold;  font-size: 12px;  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  width: 100%;}
 
-.subcomment{width: 100%}
+.subcomment { margin : 0 1ex 0 2ex;}
 /************************************************************ CHAT *********************************************************/
 
 table.chatroom { border-color: #5A4A39;  border-style: solid;  border-width: 2px;  width: 97%;}

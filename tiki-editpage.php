@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.89 2004-06-20 09:58:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.90 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,6 +21,7 @@ if ($feature_wiki != 'y') {
   die;
 }
 
+/* Should not check for global tiki_p_view here... see permission check farther downs
 if ($tiki_p_view != 'y') {
   $smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
@@ -36,6 +37,7 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_ant
 		die;
 	}
 }
+*/
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
@@ -389,6 +391,7 @@ if(!page_exists($page)) {
 */
 include_once ("tiki-pagesetup.php");
 
+/* this doesn't seem necessary since the check is done a few lines down
 // Now check permissions to access this page
 if ($page != 'SandBox') {
   if ($tiki_p_edit != 'y') {
@@ -398,6 +401,7 @@ if ($page != 'SandBox') {
     die;
   }
 }
+*/
 
 // Get page data
 $info = $tikilib->get_page_info($page);
@@ -414,21 +418,22 @@ if ($info["flag"] == 'L') {
 }
 
 if ($page != 'SandBox') {
-  // Permissions
-  // if this page has at least one permission then we apply individual group/page permissions
-  // if not then generic permissions apply
-  if ($tiki_p_admin != 'y') {
-    if ($userlib->object_has_one_permission($page, 'wiki page')) {
-      if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit')) {
-        $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-
-        $smarty->display("error.tpl");
-        die;
-      }
-    } else {
-      if ($tiki_p_edit != 'y') {
-        $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
-
+	// Permissions
+	// if this page has at least one permission then we apply individual group/page permissions
+	// if not then generic permissions apply
+	if ($tiki_p_admin != 'y') {
+		if ($userlib->object_has_one_permission($page, 'wiki page')) {
+			// check for both edit and view perm; no view perm means no edit perm either
+			if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit') or
+				!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_view')) {
+				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		} else {
+			// check for both edit and view perm; no view perm means no edit perm either
+			if ($tiki_p_edit != 'y' or $tiki_p_view != 'y') {
+				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
         $smarty->display("error.tpl");
         die;
       }

@@ -17,16 +17,8 @@
 {/if}
 <br /><br />
 
-{if $request_friendship}
-<center>{tr}FriendshipRequestSent{/tr}</center>
-<br /><br />
-{/if}
-{if $friendship_accepted}
-<center>{$friendship_accepted}</center>
-<br /><br />
-{/if}
-{if $friendship_refused}
-<center>{$friendship_refused}</center>
+{if $msg}
+<center>{$msg}</center>
 <br /><br />
 {/if}
 
@@ -88,10 +80,10 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-  <td class="userlistlogin{cycle advance=false}">
+  <td class="userlist{cycle advance=false}">
   {if $feature_score eq 'y'}{$listpages[channel].score|star}{/if}<a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].login}</a>
   </td>
-  <td class="userlistrealname{cycle advance=false}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
+  <td class="userlist{cycle advance=true}"><a class="userlistlogin{cycle advance=false}" href="tiki-user_information.php?view_user={$listpages[changes].login}">{$listpages[changes].realname}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">

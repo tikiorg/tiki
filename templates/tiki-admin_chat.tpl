@@ -87,6 +87,10 @@
 </td>
 </tr>
 {/if}
+{sectionelse}
+<tr><td class="odd" colspan="5">
+{tr}No records found{/tr}
+</td></tr>
 {/section}
 </table>
 <div class="mini">

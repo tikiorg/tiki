@@ -3,6 +3,10 @@
 {include file=tiki-directory_bar.tpl}
 <br /><br />
 
+{if $categs[0] eq ''}
+{tr}You cannot add sites until Directory Categories are setup.{/tr}<br/>
+{tr}Please contact the Site Administrator{/tr}
+{else}
 {if $save eq 'y'}
 <h2>{tr}Site added{/tr}</h2>
 {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
@@ -44,7 +48,7 @@
   </tr>
   <tr>
     <td class="formcolor">{tr}URL:{/tr}</td>
-    <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>
+    <td class="formcolor"><input type="text" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" /></td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Categories:{/tr}</td>
@@ -81,3 +85,4 @@
 </form>
 {/if}
 <br /><br /><br />
+{/if}

@@ -32,10 +32,10 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listusers}
 <tr>
-  <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
-  <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].realName}&nbsp;</td>
+  <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
+  <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].realName}&nbsp;</td>
 {if $feature_score eq 'y'}
-  <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].score}&nbsp;</td>
+  <td class="userlist{cycle advance=true}">&nbsp;{$listusers[changes].score}&nbsp;</td>
 {/if}
 </tr>
 {sectionelse}

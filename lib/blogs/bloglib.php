@@ -200,6 +200,11 @@ class BlogLib extends TikiLib {
 			$result = $this->query($query,array((int) $now,(int) $now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments,$show_avatar));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
 			$blogId = $this->getOne($query2,array((int) $now));
+
+			global $feature_score;
+			if ($feature_score == 'y') {
+			    $this->score_event($user, 'blog_new');
+			}
 		}
 
 		return $blogId;
@@ -348,6 +353,11 @@ class BlogLib extends TikiLib {
 			}
 		}
 
+		global $feature_score;
+		if ($feature_score == 'y') {
+		    $this->score_event($user, 'blog_post');
+		}
+
 		return $id;
 	}
 
@@ -404,10 +414,10 @@ class BlogLib extends TikiLib {
 		return $res;
 	}
 
-	function update_post($postId, $data, $user, $title = '', $trackbacks = '') {
+	function update_post($postId, $blogId, $data, $user, $title = '', $trackbacks = '') {
 		$trackbacks = serialize($this->send_trackbacks($postId, $trackbacks));
-		$query = "update `tiki_blog_posts` set `trackbacks_to`=?,`data`=?,`user`=?,`title`=? where `postId`=?";
-		$result = $this->query($query,array($trackbacks,$data,$user,$title,$postId));
+		$query = "update `tiki_blog_posts` set `blogId`=?,`trackbacks_to`=?,`data`=?,`user`=?,`title`=? where `postId`=?";
+		$result = $this->query($query,array($blogId,$trackbacks,$data,$user,$title,$postId));
 	}
 
 	function list_user_posts($user, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {

@@ -53,6 +53,8 @@
 <td style="text-align:right;">{$channels[user].items}</td>
 {/if}
 </tr>
+{sectionelse}
+<tr><td colspan="5" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 <! --- Beginning of the prev/next advance buttons found at bottom of page -->

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.242 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.243 2004-06-27 03:05:41 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1286,15 +1286,14 @@ $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $group = '';
 
-if (isset($user)) {
-	$group = $userlib->get_user_default_group($user);
-	if($useGroupHome == 'y') {
+$group = $userlib->get_user_default_group($user);
+if($useGroupHome == 'y') {
     $groupHome = $userlib->get_group_home($group);
     if ($groupHome) {
         $tikiIndex = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
-		}
-	}
+    }
 }
+
 $smarty->assign('tikiIndex',$tikiIndex);
 
 $user_dbl = 'y';
@@ -1590,78 +1589,75 @@ if ($user && $feature_usermenu == 'y') {
 }
 
 include_once ("tiki-modules.php");
-$smarty->assign('beingEdited', 'n');
 
 if ($feature_warn_on_edit == 'y') {
-    // Check if the page is being edited
-    if (isset($_REQUEST['page'])) {
-        $chkpage = $_REQUEST['page'];
+    
+    if (strstr($_SERVER['REQUEST_URI'], 'tiki-editpage')) {
+    	$current_page = 'tiki-editpage';
+    } elseif (strstr($_SERVER['REQUEST_URI'], 'tiki-index')) {
+    	$current_page = 'tiki-index';
     } else {
-        $chkpage = $wikiHomePage;
+    	$current_page = NULL;
     }
 
-    // Notice if a page is being edited or if it was being edited and not anymore
-    //print($GLOBALS["HTTP_REFERER"]);
-    // IF isset the referer and if the referer is editpage then unset taking the pagename from the
-    // query or homepage if not query
-    if (isset($_SERVER['HTTP_REFERER'])) {
+    if ($current_page == 'tiki-editpage' || $current_page == 'tiki-index') {
+		// initiate all the variables
+        $smarty->assign('editpageconflict', 'n');
+        $editpageconflict = 'n';
+	    $smarty->assign('beingEdited', 'n');
+	    $beingedited = 'n';
+	    if (!empty($_REQUEST['page'])) {
+	        $chkpage = $_REQUEST['page'];
+	    } elseif ($current_page == 'tiki-index') {
+	    	$chkpage = $wikiHomePage;
+	    } else {
+	    	$chkpage = NULL;
+	    }
+	    //When tiki-index or tiki-editpage is loading, check if page is locked
+        if (!empty($chkpage) && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
+        	//When tiki-editpage.php is loading, check to see if there is an editing conflict
+        	if ($current_page == 'tiki-editpage' && $tikilib->get_semaphore_user($chkpage) != $user) {
+	            $smarty->assign('editpageconflict', 'y');
+	            $editpageconflict = 'y';
+        	}
+	        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
+	        $smarty->assign('beingEdited', 'y');
+	        $beingedited = 'y';
+        } elseif (!empty($chkpage) && $current_page == 'tiki-editpage' && !isset($_REQUEST['save'])) { // Don't lock page when saving
+			//Lock the page that is being edited
+            $_SESSION["edit_lock_$chkpage"] = $tikilib->semaphore_set($chkpage);
+	        $smarty->assign('beingEdited', 'y');
+	        $beingedited = 'y';
+        } elseif (!empty($chkpage) && $current_page == 'tiki-editpage' && isset($_REQUEST['save'])) {
+        	//Unlock the page when saving
+        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
+        }
+    }
+
+/* 
+// since modern browsers can open pages in new windows or tabs, it is a bad idea to unlock a page
+// just because a user browsed from tiki-editpage to another page; commenting out this code
+    // Remove pagelock if user just came from tiki-editpage without saving
+    // If the referer is editpage then unset semaphore, taking the pagename from the query
+    if (!empty($_SERVER['HTTP_REFERER'])) {
         if (strstr($_SERVER['HTTP_REFERER'], 'tiki-editpage')) {
             $purl = parse_url($_SERVER['HTTP_REFERER']);
-
-            if (!isset($purl["query"])) {
-                $purl["query"] = '';
-            }
-
-            parse_str($purl["query"], $purlquery);
-
-            if (!isset($purlquery["page"])) {
-                $purlquery["page"] = $wikiHomePage;
-            }
-
-            if (isset($_SESSION["edit_lock"])) {
-                $tikilib->semaphore_unset($purlquery["page"], $_SESSION["edit_lock"]);
+            if (!empty($purl["query"])) {
+	            parse_str($purl["query"], $purlquery);
+	            $chkpage = $purlquery["page"];
+	            if (!empty($chkpage)) {
+		            if (isset($_SESSION["edit_lock_$chkpage"])) {
+		                $tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
+		            }
+		        }
             }
         }
     }
+*/
 
-    if (strstr($_SERVER['REQUEST_URI'], 'tiki-editpage')) {
-        $purl = parse_url($_SERVER['REQUEST_URI']);
-
-        if (!isset($purl["query"])) {
-            $purl["query"] = '';
-        }
-
-        parse_str($purl["query"], $purlquery);
-
-        if (!isset($purlquery["page"])) {
-            $purlquery["page"] = $wikiHomePage;
-        }
-
-        //When tiki-editpage.php is loading, check to see if there is an editing conflict
-        if ($tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $user) {
-            $smarty->assign('editpageconflict', 'y');
-
-            $editpageconflict = 'y';
-        } else {
-            if (!(isset($_REQUEST['save']))) { // Don't editlock $wikiHomePage when saving any wiki page
-                $_SESSION["edit_lock"] = $tikilib->semaphore_set($purlquery["page"]);
-
-                $smarty->assign('editpageconflict', 'n');
-                $editpageconflict = 'n';
-            }
-        }
-    }
-
-    if ($tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
-        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
-
-        $smarty->assign('beingEdited', 'y');
-        $beingedited = 'y';
-    } else {
-        $smarty->assign('beingEdited', 'n');
-
-        $beingedited = 'n';
-    }
+} else {
+	$smarty->assign('beingEdited', 'n');
+	$smarty->assign('editpageconflict', 'n');
 }
 
 if (isset($_REQUEST["pollVote"])) {

@@ -57,6 +57,12 @@ class FileGalLib extends TikiLib {
 		$result = $this->query($query,array((int) $now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
 		$fileId = $this->getOne($query,array((int) $now));
+
+		global $feature_score;
+		if ($feature_score == 'y') {
+		    $this->score_event($user, 'fgallery_new_file');
+		}
+
 		return $fileId;
 	}
 
@@ -243,6 +249,10 @@ class FileGalLib extends TikiLib {
 			$result = $this->query($query,$bindvars);
 			$galleryId
 				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,(int) $now));
+			global $feature_score;
+			if ($feature_score == 'y') {
+			    $this->score_event($user, 'fgallery_new');
+			}
 		}
 
 		return $galleryId;

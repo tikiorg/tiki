@@ -14,13 +14,6 @@ class ScoreLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	// All information about an event type
-	function get_event($event) {
-		$query = "select * from `tiki_score` where `event`=?";
-		$result = $this->query($query,array($event));
-		return $result->fetchRow();
-	}
-
 	// User's general classification on site
 	function user_position($user) {
 		$score = $this->getOne("select `score` from `users_users` where `login`=?",array($user));

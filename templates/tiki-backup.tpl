@@ -69,7 +69,6 @@
 {tr}If any of your forums have attachments stored in the directory you will need to backup these using FTP or SCP.{/tr}<br />
 <br /><br />
 <a href="tiki-backup.php?generate=1" class="linkbut">{tr}Create new backup{/tr}</a>
-<b>Warning : Backups are known not to work since some time now. Don't rely on them. Chealer9 20031117 - 20040306</b>
 </div>
 <br />
 <div class="simplebox">

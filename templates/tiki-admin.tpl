@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 <h2><a title="{tr}refresh{/tr}" class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a>
-{if $feature_help}
+{if $feature_help eq 'y'}
 <a title="{tr}Help{/tr}" href="{$helpurl}TikiAdminSettings" target="help"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 </h2>
