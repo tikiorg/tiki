@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.1 2004-07-23 22:05:42 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.2 2004-07-23 22:26:18 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,6 +85,14 @@ class StaticLib extends TikiLib {
 			copy("styles/$style", "static/styles/$style");
 		}
 
+	}
+	
+	function rename_page($oldpagename, $newpagename) {
+		
+	}
+	
+	function remove_page($pagename) {
+		
 	}
 	
 	function rebuild_all_pages() {
