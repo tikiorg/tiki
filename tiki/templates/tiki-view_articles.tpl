@@ -65,22 +65,28 @@
 <div class="articletrailer">
 <table >
 <tr>
-<td>
 {if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
+    <td width=20%>
     <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
+    </td>
+    {if $listpages[ix].size > 0}
+      <td width=25%>
+      ({$listpages[ix].size} {tr}bytes{/tr})
+      </td>
+    {/if}
   {/if}
-  {if $listpages[ix].size > 0} - {$listpages[ix].size} {tr}bytes{/tr}{/if}
   {if ($feature_article_comments eq 'y')
    and ($tiki_p_read_comments eq 'y')
-   and ($listpages[ix].allow_comments eq 'y')} - 
+   and ($listpages[ix].allow_comments eq 'y')}
+    <td width=30%>
     {if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
     {elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
     {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
+    </td%>
     {/if}
   {/if}
 {/if}
-</td>
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
   <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
