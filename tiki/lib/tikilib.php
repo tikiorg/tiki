@@ -1599,11 +1599,25 @@ function get_poll($pollId) {
 
 //This should be moved to a poll module (currently in tiki-setup.php
 /*shared*/
-function poll_vote($pollId, $optionId) {
+function poll_vote($user, $pollId, $optionId) {
+    $query = "select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?";
+    $previous_vote = $this->getOne($query,array( $user, "poll" . $pollId));
+
+    // Only need to increase vote numbers if the user hasn't voted before.
+    if( !$previous_vote || $previous_vote == 0 )
+    {
+	$query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
+	$result = $this->query($query,array((int)$pollId));
+    }
+    else
+    {
+	// Decrement old vote.
+	$query = "update `tiki_poll_options` set `votes`=`votes`-1 where `optionId`=?";
+	$result = $this->query($query,array((int)$previous_vote));
+    }
+
     $query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
     $result = $this->query($query,array((int)$optionId));
-    $query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
-    $result = $this->query($query,array((int)$pollId));
 }
 
 // end polls ////
@@ -1620,21 +1634,21 @@ function get_menu($menuId) {
 
 /*shared*/
 function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false) {
-	global $smarty,$user;
-	$ret = array();
-	$retval = array();
-	$bindvars = array((int)$menuId);
-	$usergroups = $this->get_user_groups($user);
-	if ($find) {
-		$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
-		$bindvars[] = '%'. $find . '%';
-		$bindvars[] = '%'. $find . '%';
-	} else {
-		$mid = " where `menuId`=? ";
-	}
-	$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_menu_options` $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+    global $smarty,$user;
+    $ret = array();
+    $retval = array();
+    $bindvars = array((int)$menuId);
+    $usergroups = $this->get_user_groups($user);
+    if ($find) {
+	$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
+	$bindvars[] = '%'. $find . '%';
+	$bindvars[] = '%'. $find . '%';
+    } else {
+	$mid = " where `menuId`=? ";
+    }
+    $query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_menu_options` $mid";
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
 		if (!$full) {
@@ -1711,15 +1725,23 @@ function user_has_voted($user, $id) {
 
 // Registers a user vote
 /*shared*/
-function register_user_vote($user, $id) {
+function register_user_vote($user, $id, $optionId = 0) {
     // If user is not logged in then register in the session
     if (!$user) {
 	$_SESSION["votes"][] = $id;
+    } else {
+	if( $optionId != 0 )
+	{
+	    $query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
+	    $result = $this->query($query,array($user,(string) $id));
+	    $query = "insert into `tiki_user_votings`(`user`,`id`, `optionId` ) values(?,?,?)";
+	    $result = $this->query($query,array($user,(string) $id, $optionId));
 	} else {
-	$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
-	$result = $this->query($query,array($user,(string) $id));
-	$query = "insert into `tiki_user_votings`(`user`,`id`) values(?,?)";
-	$result = $this->query($query,array($user,(string) $id));
+	    $query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
+	    $result = $this->query($query,array($user,(string) $id));
+	    $query = "insert into `tiki_user_votings`(`user`,`id` ) values(?,?)";
+	    $result = $this->query($query,array($user,(string) $id));
+	}
     }
 }
 
