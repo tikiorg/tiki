@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.20 2003-09-27 08:42:09 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.21 2003-10-06 07:14:55 traivor Exp $ *}
 
 <br />
 {if $comments_show eq 'y'}
@@ -120,7 +120,7 @@
   {section name=com loop=$comments_coms}
   {if $parent_coms}
   <ul>
-  <li>
+  <li style="list-style-type: none;">
   {/if}
   <table class="normal">
   <tr>
