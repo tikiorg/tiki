@@ -73,6 +73,15 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		}
 	}
 }
+/** \brief test if email already in the notification list
+ */
+function testEmailInList($nots, $email) {
+	for ($i = count($nots) - 1; $i >=0; --$i) {
+		if ($nots[$i]['email'] == $email)
+			return true;
+	}
+	return false;
+}
 /** \brief send the email notifications dealing with wiki page  changes to
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
@@ -103,12 +112,14 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 		foreach ($emails as $email) {
 			if ($wiki_watch_editor != "y" && $email == $edit_user)
 				continue;
-			$not['email'] =  $email;
-			if ($not['user'] = $userlib->get_user_by_email($email))
-				$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
-			else
-				$not['language'] = $defaultLanguage;
-			$nots[] = $not;
+			if (!testEmailInList($nots, $email)) {
+				$not['email'] =  $email;
+				if ($not['user'] = $userlib->get_user_by_email($email))
+					$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
+				else
+					$not['language'] = $defaultLanguage;
+				$nots[] = $not;
+			}
 		}
 	}
 
