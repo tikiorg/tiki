@@ -26,7 +26,7 @@
           <td class="even">
             {$children[ix].objects}
           </td>
-          <td>
+          <td class="even">
             [<a class="link" href="tiki-admin_categories.php?parentId={$children[ix].parentId}&amp;categId={$children[ix].categId}">{tr}edit{/tr}</a>|<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeCat={$children[ix].categId}">{tr}x{/tr}</a>]
           </td>
         </tr>

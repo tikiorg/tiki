@@ -227,7 +227,7 @@ $feature_file_galleries_rankings = 'n';
 $language = 'en';
 $lang_use_db = 'n';
 
-if (strstr(PHP_OS,'Windows')) $tmpDir='C:/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
+if (strstr(PHP_OS,'Windows')) $tmpDir='C:/Windows/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
 
 $feature_left_column = 'y';
 $feature_right_column = 'y';
@@ -1043,6 +1043,14 @@ $user_preferences=Array();
 
 
 include_once('tiki-handlers.php');
+
+/*
+if($feature_phpopentracker == 'y') {
+	include 'phpOpenTracker.php';
+	// log access
+	phpOpenTracker::log();
+}
+*/
 
 
 if($feature_obzip == 'y') {

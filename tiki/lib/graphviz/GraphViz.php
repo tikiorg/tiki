@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.2 2003-04-02 20:17:01 lrargerich Exp $
+// $Id: GraphViz.php,v 1.3 2003-04-04 15:13:20 lrargerich Exp $
 //
 
 /**
@@ -313,7 +313,7 @@ class Image_GraphViz {
         $serialized_graph = serialize($this->graph);
 
         if (empty($file)) {
-            $file = tempnam('/tmp', 'graph_');
+            $file = tempnam('temp', 'graph_');
         }
 
         if ($fp = @fopen($file, 'w')) {
