@@ -9,7 +9,12 @@
 <input type="hidden" name="faqId" value="{$faqId}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" ><textarea type="text" rows="2" cols="60" name="question">{$question}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor" ><textarea type="text" rows="8" cols="60" name="answer">{$answer}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+{assign var=area_name value="faqans"}
+{include file=tiki-edit_help_tool.tpl}
+</td>
+</tr>
+<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor" ><textarea id='faqans' type="text" rows="8" cols="60" name="answer">{$answer}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor" ><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -49,26 +54,16 @@
 <td class="heading"><a class="tableheading" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}question{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].questionId}</td>
-<td class="odd">{$channels[user].question}</td>
-<td class="odd">
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{tr}edit{/tr}</a>
+<td width="5%" class="{cycle advance=false}">{$channels[user].questionId}</td>
+<td class="{cycle advance=false}">{$channels[user].question}</td>
+<td width="8%" class="{cycle}">
+   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$channels[user].questionId}</td>
-<td class="even">{$channels[user].question}</td>
-<td class="even">
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{tr}edit{/tr}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br/>
@@ -90,6 +85,7 @@
 {/if}
 </div>
 </div>
+{if count($suggested) > 0}
 <h2>{tr}Suggested questions{/tr}</h2>
 <table class="normal">
 <tr>
@@ -105,5 +101,8 @@
   <td class="{cycle}">{$suggested[ix].answer}</td>
 </tr>
 {/section}
-
 </table>
+{else}
+<h2>{tr}No suggested questions{/tr}</h2>
+{/if}
+

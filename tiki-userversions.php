@@ -36,7 +36,7 @@ $smarty->assign_by_ref('ruser',$_REQUEST["ruser"]);
 $smarty->assign('preview',false);
 
 if(isset($_REQUEST["preview"])) {
-  $version = $tikilib->get_version($_REQUEST["page"],$_REQUEST["version"]);
+  $version = $histlib->get_version($_REQUEST["page"],$_REQUEST["version"]);
   $version["data"] = $tikilib->parse_data($version["data"]);
   if($version) {
     $smarty->assign_by_ref('preview',$version);

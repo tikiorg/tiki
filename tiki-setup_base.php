@@ -3,9 +3,9 @@
 require_once("setup.php");
 //print("tiki-setup_base 2:".$tiki_timer->elapsed()."<br/>");
 require_once("lib/tikilib.php");
+
 //print("tiki-setup_base 3:".$tiki_timer->elapsed()."<br/>");
 $tikilib = new TikiLib($dbTiki);
-
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
 

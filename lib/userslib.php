@@ -586,6 +586,8 @@ class UsersLib extends TikiLib {
     $result =  $this->query($query);
     $query = "delete from tiki_group_inclusion where groupName = '$group' or includeGroup='$group'";
     $result =  $this->query($query);
+    $query = "delete from users_grouppermisions where groupName='$group'";
+    $result =  $this->query($query);
     return true;
   }
   

@@ -134,7 +134,7 @@
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td class="heading">{tr}Status{/tr}</td>
+<td class="heading">&nbsp;</td>
 {/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y'}
@@ -154,7 +154,13 @@
 {section name=user loop=$items}
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td class="{cycle advance=false}">{$items[user].status}</td>
+<td style="text-align:center;" width="2%" class="{cycle advance=false}">
+{if $items[user].status eq 'o'}
+<img src='img/icons/ofo.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
+{else}
+<img src='img/icons/fo.gif' border='0' alt='{tr}closed{/tr}' title='{tr}closed{/tr}' />
+{/if}
+</td>
 {/if}
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isTblVisible eq 'y'}
@@ -188,7 +194,7 @@
 <td class="{cycle advance=false}">{$items[user].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $tracker_info.useComments eq 'y'}
-<td class="{cycle advance=false}">{$items[user].comments}</td>
+<td width="5%" style="text-align:right;" class="{cycle advance=false}">{$items[user].comments}</td>
 {/if}
 </tr>
 {cycle print=false}

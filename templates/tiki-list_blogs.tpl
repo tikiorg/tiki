@@ -95,7 +95,7 @@
 		{/if}
 	{/if}
 	{if $tiki_p_admin eq 'y'}
-	    {if $listpages[changes].individual eq 'y'}({/if}<a class="bloglink" href="tiki-objectpermissions.php?objectName=blog%20{$listpages[changes].title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}perms{/tr}' alt='{tr}perms{/tr}' src='img/icons/myinfo.gif' /></a>{if $listpages[changes].individual eq 'y'}){/if}
+	    {if $listpages[changes].individual eq 'y'}({/if}<a class="bloglink" href="tiki-objectpermissions.php?objectName=blog%20{$listpages[changes].title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$listpages[changes].blogId}"><img border='0' title='{tr}perms{/tr}' alt='{tr}perms{/tr}' src='img/icons/key.gif' /></a>{if $listpages[changes].individual eq 'y'}){/if}
 	{/if}
 	
 </td>

@@ -29,48 +29,29 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}questions{/tr}</a></td>
-<td class="heading">{tr}suggested{/tr}</td>
+<!--<td class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>-->
+<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
+<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}questions{/tr}</a></td>
 {if $tiki_p_admin_faqs eq 'y'}
 <td class="heading">{tr}action{/tr}</td>
 {/if}
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd"><a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a></td>
-<td class="odd">{$channels[user].description}</td>
-<td class="odd">{$channels[user].created|tiki_short_datetime}</td>
-<td class="odd">{$channels[user].hits}</td>
-<td class="odd">{$channels[user].questions}</td>
-<td class="odd">{$channels[user].suggested}</td>
+<td class="{cycle advance=false}"><a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a></td>
+<td class="{cycle advance=false}">{$channels[user].description}</td>
+<!--<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>-->
+<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
+<td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions} ({$channels[user].suggested})</td>
 {if $tiki_p_admin_faqs eq 'y'}
-<td class="odd">
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{tr}questions{/tr}</a>
+<td width="12%" class="{cycle}">
+   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}"><img src='img/icons/config.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
+   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}"><img src='img/icons/question.gif' alt='{tr}questions{/tr}' title='{tr}questions{/tr}' border='0' /></a>
+   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
 </td>
 {/if}
 </tr>
-{else}
-<tr>
-<td class="even"><a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a></td>
-<td class="even">{$channels[user].description}</td>
-<td class="even">{$channels[user].created|tiki_short_datetime}</td>
-<td class="even">{$channels[user].hits}</td>
-<td class="even">{$channels[user].questions}</td>
-<td class="even">{$channels[user].suggested}</td>
-{if $tiki_p_admin_faqs eq 'y'}
-<td class="even">
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{tr}questions{/tr}</a>
-</td>
-{/if}
-</tr>
-{/if}
 {/section}
 </table>
 <br/>

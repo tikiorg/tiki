@@ -163,3 +163,7 @@
 {/if}
 </div>
 </div>
+{if $tiki_p_admin eq 'y'}
+<br/><br/>
+<a href="tiki-admin.php?page=gal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}

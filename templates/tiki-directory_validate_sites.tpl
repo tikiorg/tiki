@@ -20,14 +20,14 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
-<td class="{cycle advance=false}"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
+<td width="2%" style="text-align:center;" class="{cycle advance=false}"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
 <td class="{cycle advance=false}">{$items[user].name}</td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>
-<td class="{cycle advance=false}">
-   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{tr}edit{/tr}</a>
+<td width="7%" class="{cycle advance=false}">
+   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+   <a class="link" href="tiki-directory_admin_sites.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
 </td>
 </tr>
 <tr>

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/wikilib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -43,7 +44,7 @@ if(!$tikilib->page_exists($page)) {
 }
 
 // Get the backlinks for the page "page"
-$backlinks = $tikilib->get_backlinks($page);
+$backlinks = $wikilib->get_backlinks($page);
 $smarty->assign_by_ref('backlinks',$backlinks);
 
 

@@ -280,8 +280,71 @@ class WikiLib extends TikiLib {
     $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
     $result = $this->query($query);
   }
+  
+  // Like pages are pages that share a word in common with the current page
+  function get_like_pages($page)
+  {
+    preg_match_all("/([A-Z])([a-z]+)/",$page,$words);
+    // Add support to ((x)) in either strict or full modes
+    preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/",$page,$words2);
+    $words=array_unique(array_merge($words[0], $words2[0]));
+    $exps = Array();
+    foreach($words as $word) {
+      $exps[] = "pageName like '%$word%'";
+    }
+    $exp = implode(" or ",$exps);
+    $query = "select pageName from tiki_pages where $exp";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res["pageName"];
+    }
+    return $ret;
+  }
+  
+  function is_locked($page)
+  {
+    $page = addslashes($page);
+    $query = "select flag from tiki_pages where pageName='$page'";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    if($res["flag"]=='L') return true;
+    return false;
+  }
 
+  function lock_page($page)
+  {
+    global $user;
+    $page = addslashes($page);
+    $query = "update tiki_pages set flag='L' where pageName='$page'";
+    $result = $this->query($query);
+    if(isset($user)) {
+    	$query = "update tiki_pages set user='$user' where pageName='$page'";
+    	$result = $this->query($query);
+    }
+    return true;
+  }
 
+  function unlock_page($page)
+  {
+    $page = addslashes($page);
+    $query = "update tiki_pages set flag='' where pageName='$page'";
+    $result = $this->query($query);
+    return true;
+  }
+
+  // Returns backlinks for a given page
+  function get_backlinks($page)
+  {
+    $query = "select fromPage from tiki_links where toPage = '$page'";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux["fromPage"] = $res["fromPage"];
+      $ret[] = $aux;
+    }
+    return $ret;
+  }
   
 }
 

@@ -36,11 +36,11 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></td>
+<td width="2%" class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}status{/tr}</a></td>
-<td class="heading">{tr}questions{/tr}</td>
+<td width="2%" class="heading"><a class="tableheading" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}stat{/tr}</a></td>
+<td style="text-align:right;" width="3%" class="heading">{tr}questions{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -49,13 +49,19 @@
 <td class="{cycle advance=false}">{$channels[user].surveyId}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>
-<td class="{cycle advance=false}">{$channels[user].status}</td>
-<td class="{cycle advance=false}">{$channels[user].questions}</td>
-<td class="{cycle}">
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{tr}questions{/tr}</a>
-   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}">{tr}perms{/tr}</a>{if $channels[user].individual eq 'y'}){/if}
+<td style="text-align:center;" class="{cycle advance=false}">
+{if $channels[user].status eq 'o'}
+	<img src='img/icons/ofo.gif' alt='{tr}open{/tr}' />
+{else}
+	<img src='img/icons/fo.gif' alt='{tr}closed{/tr}' />
+{/if}
+</td>
+<td style="text-align:right;" width="3%" class="{cycle advance=false}">{$channels[user].questions}</td>
+<td width="16%" class="{cycle}">
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src='img/icons/config.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='img/icons/question.gif' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}' /></a>
+   {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$channels[user].name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' border='0' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
 </td>
 </tr>
 {/section}

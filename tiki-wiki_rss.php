@@ -1,7 +1,7 @@
 <?php
-
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/wiki/histlib.php');
 
 if($rss_wiki != 'y') {
  die;
@@ -13,7 +13,7 @@ $foo2=str_replace("tiki-wiki_rss.php","img/tiki.jpg",$foo["path"]);
 $home = httpPrefix().$foo1;
 $img = httpPrefix().$foo2;
 $title = $tikilib->get_preference("title","pepe");
-$changes =   $tikilib->get_last_changes(999, 0, $max_rss_wiki, $sort_mode = 'lastModif_desc');
+$changes =   $histlib->get_last_changes(999, 0, $max_rss_wiki, $sort_mode = 'lastModif_desc');
 //print_r($changes);die;
 print('<');
 print('?xml version="1.0" ?');

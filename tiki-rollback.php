@@ -29,7 +29,7 @@ if(!isset($_REQUEST["version"])) {
   $smarty->assign_by_ref('version',$_REQUEST["version"]); 
 }
 
-if(!$tikilib->version_exists($page,$version)) {
+if(!$histlib->version_exists($page,$version)) {
   $smarty->assign('msg',tra("Unexistant version"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
@@ -46,7 +46,7 @@ if($tiki_p_rollback != 'y') {
 
 
 
-$version = $tikilib->get_version($page,$version);
+$version = $histlib->get_version($page,$version);
 $version["data"] = $tikilib->parse_data($version["data"]);
 $smarty->assign_by_ref('preview',$version);
 

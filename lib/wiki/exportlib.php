@@ -48,6 +48,30 @@ class ExportLib extends TikiLib {
     return $head . $parts[0];
   }  
   
+  // Returns all the versions for this page
+  // without the data itself
+  function get_page_history($page)
+  {
+    $page = addslashes($page);
+    $query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux = Array();
+      $aux["version"] = $res["version"];
+      $aux["lastModif"] = $res["lastModif"];
+      $aux["user"] = $res["user"];
+      $aux["ip"] = $res["ip"];
+      $aux["data"] = $res["data"];
+      $aux["pageName"] = $res["pageName"];
+      $aux["description"] = $res["description"];
+      $aux["comment"] = $res["comment"];
+      //$aux["percent"] = levenshtein($res["data"],$actual);
+      $ret[]=$aux;
+    }
+    return $ret;
+  }
+  
 }
 
 $exportlib= new ExportLib($dbTiki);

@@ -103,12 +103,12 @@
 	<td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 {/if}
 {if $fgal_list_files eq 'y'}	
-	<td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'files_desc'}files_asc{else}files_desc{/if}">{tr}Files{/tr}</a></td>
+	<td style="text-align:right;" class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'files_desc'}files_asc{else}files_desc{/if}">{tr}Files{/tr}</a></td>
 {/if}
 {if $fgal_list_hits eq 'y'}
-	<td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
+	<td style="text-align:right;"  class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
 {/if}
-<td class="listfgalheading">{tr}Actions{/tr}</td>
+<td width="15%" class="listfgalheading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}
@@ -145,11 +145,11 @@
 	{/if}
 	
 	{if $fgal_list_files eq 'y'}
-		<td class="listfgalfiles{cycle advance=false}">{$galleries[changes].files}&nbsp;</td>
+		<td style="text-align:right;"  class="listfgalfiles{cycle advance=false}">{$galleries[changes].files}&nbsp;</td>
 	{/if}
 	
 	{if $fgal_list_hits eq 'y'}
-		<td class="listfgalvisits{cycle advance=false}">{$galleries[changes].hits}&nbsp;</td>
+		<td style="text-align:right;"  class="listfgalvisits{cycle advance=false}">{$galleries[changes].hits}&nbsp;</td>
 	{/if}
 	
 	
@@ -202,3 +202,8 @@
 {/if}
 </div>
 </div>
+{if $tiki_p_admin eq 'y'}
+<br/><br/>
+<a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}
+

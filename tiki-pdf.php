@@ -1,6 +1,9 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/structures/structlib.php');
+include_once('lib/wiki/wikilib.php');
+
 
 // Create the HomePage if it doesn't exist
 if(!$tikilib->page_exists("HomePage")) {
@@ -28,9 +31,9 @@ require_once('tiki-pagesetup.php');
 // for example lock/unlock
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {
-    $tikilib->lock_page($page);
+    $wikilib->lock_page($page);
   } elseif ($_REQUEST["action"]=='unlock') {
-    $tikilib->unlock_page($page);
+    $wikilib->unlock_page($page);
   }  
 }
 

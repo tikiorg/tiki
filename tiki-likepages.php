@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/wikilib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -42,7 +43,7 @@ if(!$tikilib->page_exists($page)) {
   die;
 }
 
-$likepages = $tikilib->get_like_pages($page);
+$likepages = $wikilib->get_like_pages($page);
 $smarty->assign_by_ref('likepages',$likepages);
 
 // Display the template

@@ -14,8 +14,6 @@ if($user != 'admin') {
   }
 }
 
-
-
 if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
   $left_modules = $usermoduleslib->get_assigned_modules_user($user,'l');
   $right_modules = $usermoduleslib->get_assigned_modules_user($user,'r');
