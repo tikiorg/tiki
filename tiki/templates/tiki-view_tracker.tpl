@@ -196,5 +196,13 @@
 {if $next_offset >= 0}
 &nbsp;[<a class="prevnext" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">{tr}next{/tr}</a>]
 {/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
 </div>
 </div>

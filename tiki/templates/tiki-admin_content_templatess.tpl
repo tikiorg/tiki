@@ -63,11 +63,19 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_cookies.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_cookies.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-content_templates_cookies.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+{/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-content_templates_cookies.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
 {/if}
 </div>
 </div>
