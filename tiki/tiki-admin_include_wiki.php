@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.40 2004-07-30 18:27:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.41 2004-08-03 20:53:32 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,6 +121,10 @@ if (isset($_REQUEST['staticwiki'])) {
 		}
 		$tikilib->set_preference('wiki_realtime_static_path', $_REQUEST['staticpath']);
 		$smarty->assign('wiki_realtime_static_path', $_REQUEST['staticpath']);
+	}
+	if (!empty($_REQUEST['staticgroup'])){
+		$tikilib->set_preference('wiki_realtime_static_group', $_REQUEST['staticgroup']);
+		$smarty->assign('wiki_realtime_static_group', $_REQUEST['staticgroup']);
 	}
 }
 
@@ -785,6 +789,9 @@ if ($feature_forums == 'y') {
 	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 	$smarty->assign_by_ref("all_forums", $all_forums["data"]);
 }
+
+$allgroups = $userlib->get_groups();
+$smarty->assign('allgroups', $allgroups['data']);
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
