@@ -9,7 +9,7 @@ class TrackerLib extends TikiLib {
 
 	/* Tiki tracker construction options */
 	// Return an array with items assigned to the user or a user group
-	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '') {
+	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '') {
 		$filters = array();
 
 		if ($fields) {
@@ -37,9 +37,14 @@ class TrackerLib extends TikiLib {
 		}
 
 		if ($csort_mode) {
+			$bs[] = $csort_mode;
+			if ($initial) {
+				$bs[] = $initial.'%';
+				$initial = "and ttif.`value` like ?";
+			}
 			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.`value`";
-			$bdvars = array_merge($bindvars,array($csort_mode));
+			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? $initial order by ttif.`value`";
+			$bdvars = array_merge($bindvars,$bs);
 		} else {
 			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
 			$bdvars = $bindvars;
@@ -67,11 +72,12 @@ class TrackerLib extends TikiLib {
 				if (count($filters) > 0) {
 					if ($filters["$fieldId"]["value"]) {
 						if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
-							if (!strstr($res2["value"], $filters["$fieldId"]["value"]))
+							if (!stristr($res2["value"], $filters["$fieldId"]["value"]))
 								$pass = false;
 						} else {
-							if ($res2["value"] != $filters["$fieldId"]["value"])
+							if (strtolower($res2["value"]) != strtolower($filters["$fieldId"]["value"])) {
 								$pass = false;
+							}
 						}
 					}
 					if (ereg_replace("[^a-zA-Z0-9]","",$res2["name"]) == $csort_mode) {
