@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 15. May 2003
+// Last modified: 25. May 2003
 // Tested with PHP 3.0.7, 3.0.13, 4.0.0 and 4.1.1
 //
 // This library is free software; you can redistribute it and/or modify it under the
@@ -17,25 +17,13 @@
 // http://www.gnu.org/copyleft/lgpl.html
 //
 // If you modify this library, you have to make sure that the "powered by HAWHAW"
-// copyright link below the display area in a HTML style generated page is kept
-// unchanged.
+// copyright link below the display area is kept unchanged.
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
-//
-// Modifications against V4.09:
-// - bugfix: create function of HAW_hidden class now considers special characters
-// - enhancement: special treatment for Ericsson T68 phones: gif-enabled
-// - bugfix: check for "empty" forms (submit button only)
-// - optimization: seperate ? and > characters when echo'ing leading WML xml line
-// - new feature: VoiceXML
-// - enhancement: HTML output for Reqwireless Browser
-// - enhancement: HTML PDA output for Pendragon Browser
-// - bugfix: check presence of text in HAW_text::create() with isset()
-// - bugfix: create proper border attributes in HAW_table elements (HTML)
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V4.10b");
+define("HAW_VERSION", "HAWHAW V5.0");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -43,6 +31,16 @@ define("HAW_HTML", 1);
 define("HAW_WML",  2);
 define("HAW_HDML", 3);
 define("HAW_VXML", 4);
+
+// constants for forced markup output
+define("HAW_OUTPUT_AUTOMATIC", 0);
+define("HAW_OUTPUT_BIGSCREEN", 1);
+define("HAW_OUTPUT_WAP",       2);
+define("HAW_OUTPUT_HDML",      3);
+define("HAW_OUTPUT_PDA",       4);
+define("HAW_OUTPUT_IMODE",     5);
+define("HAW_OUTPUT_MML",       6);
+define("HAW_OUTPUT_VOICEXML",  7);
 
 // constants for page elements
 define("HAW_PLAINTEXT", 1);
@@ -113,7 +111,8 @@ define("HAW_INPUT_ALPHABET", 3);
 define("HAW_INPUT_NUMERIC", 4);
 
 // constants for VoiceXML
-define("HAW_VOICE_PAUSE", 300); // pause after text output
+define("HAW_VOICE_PAUSE", 300);   // pause after text output
+define("HAW_VOICE_ENUMERATE", 1); // activate enumeration
 
 function HAW_specchar($input, $deck)
 {
@@ -241,6 +240,9 @@ function HAW_voice_eventhandler($handler, $audio_array, $deck)
       printf("<catch%s event=\"%s\">", $count, $handler); 
 
       HAW_voice_audio(HAW_specchar($val["text"], $deck), $val["src"], 0);
+
+      if ($val["url"])
+        printf("<goto next=\"%s\"/>", $val["url"]);
 
       echo "</catch>\n"; 
     }
@@ -433,14 +435,15 @@ class HAW_hdmlcardset
   This class is the top level class of all HAWHAW classes. Your page should consist
   of exactly one HAW_deck object. For WML browsers one deck with one card will be
   generated. For HDML browsers one deck including as much cards as necessary will
-  generated. HTML browsers will receive a normal HTML page. For AvantGo and i-mode
-  browsers appropriate HTML code is created.
+  generated. HTML browsers will receive a normal HTML page, PDA browsers will
+  receive handheldfriendly HTML etc.
   <p>Do not overload HAW_deck objects! Remember that a lot of WAP clients can not
   handle more than about 1400 byte of compiled data.
   <p><b>Examples:</b><p>
   $myPage = new HAW_deck();<br>
   $myPage = new HAW_deck("My WAP page");<br>
   $myPage = new HAW_deck("", HAW_ALIGN_CENTER);<br>
+  $myPage = new HAW_deck("PDA edition", HAW_ALIGN_CENTER, HAW_OUTPUT_PDA);<br>
   ...<br>
   $myPage->set_bgcolor("blue");<br>
   ...<br>
@@ -452,6 +455,7 @@ class HAW_deck
 {
   var $title;
   var $alignment;
+  var $output;
   var $timeout;
   var $red_url;
   var $disable_cache = false;
@@ -470,7 +474,7 @@ class HAW_deck
 
   // browser dependent properties
   var $pureHTML = true;	        	// Big-screen-HTML-code (default)
-  var $avantgostyle = false;		// AvantGo browser needs special HTML code
+  var $PDAstyle = false;		// PDA browsers needs special HTML code
   var $iModestyle = false;		// cHTML too
   var $upbrowser = false;               // UP browser
   var $owgui_1_3 = false;               // Openwave GUI Extensions for WML 1.3
@@ -518,23 +522,40 @@ class HAW_deck
   var $voice_timeout = 0;
   var $voice_text = "";
   var $voice_audio_src = "";
+  var $voice_jingle = "";
   var $voice_help = array();
   var $voice_noinput = array();
   var $voice_nomatch = array();
+  var $voice_property = array();
 
   /**
     Constructor
-    @param title (optional, default: HAW_NOTITLE)<br>
+    @param title (optional, default: HAW_NOTITLE) <br>
        If a string is provided here, it will be displayed
        in the HTML title bar, respectively somewhere on the WAP display. Using a
        title you will normally have to spend one of your few lines on your WAP
        display. Consider that some WAP phones/SDK's and handheld devices don't
        display the title at all.
-    @param alignment (optional, default: HAW_ALIGN_LEFT)<br>
+    @param alignment (optional, default: HAW_ALIGN_LEFT) <br>
        You can enter HAW_ALIGN_CENTER
        or HAW_ALIGN_RIGHT to modify the alignment of the whole page.
+    @param output (optional, default: HAW_OUTPUT_AUTOMATIC) <br>
+       You can override HAWHAW's automatic browser detection and force a certain
+       output type.<br>
+       Possible value are:<br>
+       <ul>
+       <li>HAW_OUTPUT_AUTOMATIC (default)</li>
+       <li>HAW_OUTPUT_BIGSCREEN</li>
+       <li>HAW_OUTPUT_WAP</li>
+       <li>HAW_OUTPUT_HDML</li>
+       <li>HAW_OUTPUT_PDA</li>
+       <li>HAW_OUTPUT_IMODE</li>
+       <li>HAW_OUTPUT_MML</li>
+       <li>HAW_OUTPUT_VOICEXML</li>
+       </ul><br>
+       With this parameter you can offer dedicated links for PC users, WAP users, PDA users etc.
   */
-  function HAW_deck($title=HAW_NOTITLE, $alignment=HAW_ALIGN_LEFT)
+  function HAW_deck($title=HAW_NOTITLE, $alignment=HAW_ALIGN_LEFT, $output=HAW_OUTPUT_AUTOMATIC)
   {
     // register_globals=off in PHP4 inhibits automatic setup of global variables!
     $HTTP_USER_AGENT = getenv(HTTP_USER_AGENT);
@@ -546,6 +567,7 @@ class HAW_deck
       $this->title = $title;
 
     $this->alignment = $alignment;
+    $this->output = $output;
     $this->timeout = 0;
     $this->red_url = "";
 
@@ -559,43 +581,53 @@ class HAW_deck
     $this->debug = $HTTP_GET_VARS["hawdebug"];
 
     // manipulate HTTP environment variables in case of debug mode
-    if ($this->debug == "wml")
-      $HTTP_ACCEPT = "text/vnd.wap.wml";
-    elseif ($this->debug == "hdml")
-      $HTTP_ACCEPT = "hdml;version=3.0";
-    elseif ($this->debug == "avantgo")
-      $HTTP_USER_AGENT = "avantgo";
-    elseif ($this->debug == "chtml")
-      $HTTP_USER_AGENT = "DoCoMo";
-    elseif ($this->debug == "mml")
-      $HTTP_USER_AGENT = "J-";
-    elseif ($this->debug == "up")
+    if ($this->debug)
     {
-      $HTTP_ACCEPT = "text/vnd.wap.wml";
-      $HTTP_USER_AGENT = "UP.Browser";
-    }
-    elseif ($this->debug == "owgui")
-    {
-      $HTTP_ACCEPT = "text/vnd.wap.wml";
-      $HTTP_USER_AGENT = "UP/GUI...UP.Link ";
-    }
-    elseif ($this->debug == "vxml")
-    {
-      $HTTP_ACCEPT = "text/x-vxml";
-      $HTTP_USER_AGENT = "Tellme";
+      if ($this->debug == "wml")
+        $HTTP_ACCEPT = "text/vnd.wap.wml";
+      elseif ($this->debug == "hdml")
+        $HTTP_ACCEPT = "hdml;version=3.0";
+      elseif ($this->debug == "pda")
+        $HTTP_USER_AGENT = "avantgo";
+      elseif ($this->debug == "chtml")
+        $HTTP_USER_AGENT = "DoCoMo";
+      elseif ($this->debug == "mml")
+        $HTTP_USER_AGENT = "J-";
+      elseif ($this->debug == "up")
+      {
+        $HTTP_ACCEPT = "text/vnd.wap.wml";
+        $HTTP_USER_AGENT = "UP.Browser";
+      }
+      elseif ($this->debug == "owgui")
+      {
+        $HTTP_ACCEPT = "text/vnd.wap.wml";
+        $HTTP_USER_AGENT = "UP/GUI...UP.Link ";
+      }
+      elseif ($this->debug == "vxml")
+      {
+        $HTTP_ACCEPT = "text/x-vxml";
+        $HTTP_USER_AGENT = "Tellme";
+      }
+
+      $this->output = HAW_OUTPUT_AUTOMATIC; // turn off forced output for debugging
     }
 
 
     // determine markup language to create
 
-    if (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
+    if (($this->output == HAW_OUTPUT_BIGSCREEN) ||
+        ($this->output == HAW_OUTPUT_PDA) ||
+        ($this->output == HAW_OUTPUT_IMODE) ||
+        ($this->output == HAW_OUTPUT_MML) ||              // until here forced HTML output
+        strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
         strstr(strtolower($HTTP_USER_AGENT), "portalmmm") ||
         strstr(strtolower($HTTP_USER_AGENT), "opera ") ||
         strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb"))
     {
       $this->ml = HAW_HTML;   // create HTML (even when device accepts text/vnd.wap.wml too!)
     }
-    elseif (strstr(strtolower($HTTP_ACCEPT), "text/vnd.wap.wml"))
+    elseif (($this->output == HAW_OUTPUT_WAP) ||  // forced WML output
+            (strstr(strtolower($HTTP_ACCEPT), "text/vnd.wap.wml")))
     {
       $this->ml = HAW_WML;  // create WML
 
@@ -609,9 +641,11 @@ class HAW_deck
            strstr($HTTP_USER_AGENT, "UP.Link")) // Non-UP.Link gateways sometimes have problems!
         $this->owgui_1_3 = true; // device accepts Openwave GUI extensions for WML 1.3
     }
-    elseif (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3.")) // HDML 3.0 and 3.1 
+    elseif (($this->output == HAW_OUTPUT_HDML) ||                  // forced HDML output
+            (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3."))) // HDML 3.0 and 3.1 
       $this->ml = HAW_HDML; // create HDML
-    elseif (strstr(strtolower($HTTP_ACCEPT), "vxml") || // VoiceXML signalled in accept header
+    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||   // forced VoiceXML output
+            strstr(strtolower($HTTP_ACCEPT), "vxml") || // VoiceXML signalled in accept header
             strstr($HTTP_USER_AGENT, "Tellme"))         // Tellme studio voice browser
       $this->ml = HAW_VXML; // create VoiceXML
     else
@@ -630,18 +664,21 @@ class HAW_deck
     $this->number_of_forms = 0;
     $this->number_of_linksets = 0;
 
-    if (strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
+    if (($this->output == HAW_OUTPUT_PDA) ||
+        strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
+        strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
         strstr(strtolower($HTTP_USER_AGENT), "pendragonweb"))
     {
-      // AvantGo browser detected
-      $this->avantgostyle = true;
+      // PDA browser detected
+      $this->PDAstyle = true;
       $this->pureHTML = false;
       $this->display_banners = false;
 //      $this->border = 1; // needed anymore ???
 //      $this->width = 150;
 //      $this->height = 150;
     }
-    elseif (strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
+    elseif (($this->output == HAW_OUTPUT_IMODE) ||
+            strstr(strtolower($HTTP_USER_AGENT), "docomo") ||
             strstr(strtolower($HTTP_USER_AGENT), "portalmmm"))
     {
       // i-mode browser detected
@@ -649,16 +686,11 @@ class HAW_deck
       $this->pureHTML = false;
       $this->display_banners = false;
     }
-    elseif (strstr(strtolower($HTTP_USER_AGENT), "j-"))
+    elseif (($this->output == HAW_OUTPUT_MML) ||
+            strstr(strtolower($HTTP_USER_AGENT), "j-"))
     {
       // MML browser detected
       $this->MMLstyle = true;
-      $this->pureHTML = false;
-      $this->display_banners = false;
-    }
-    elseif (strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb"))
-    {
-      // Reqwireless browser detected
       $this->pureHTML = false;
       $this->display_banners = false;
     }
@@ -1160,15 +1192,13 @@ class HAW_deck
 
 
   /**
-    Sets the URL of a WAP site, a HTML-browsing user is invited to enter via WAP.
-    Has no effect on WML created pages. <br>
-    Note:  Below the display of a HTML-created page, a small copyright link to the
+    Sets the URL of a website, a bigscreen-browsing user is invited to visit via WAP. <br>
+    Note: On bigscreen browsers a small copyright link to the
     HAWHAW information page will be created automatically by HAWHAW. The information
-    page in return invites the visitor to take a look via WAP at your hybrid page.
+    page invites the user to visit your site with a WAP phone.
     Therefore by default your hostname and your refering script will be part of this
-    copyright link. You can modify this value, e.g. if your application directs the
-    user with get-method queries across different pages, but you want to make
-    visible the entry page only.
+    copyright link. You can modify this value, e.g. if your application leads the
+    user across different pages, but you want to make visible the entry page only.
     @param waphome Some URL string.
   */
   function set_waphome($waphome)
@@ -1207,17 +1237,34 @@ class HAW_deck
 
 
   /**
+    Play jingle before link &lt;label&gt;s are spoken. <br>
+    Note: Voice users can not distinguish between plain text and link text. Playing
+    a short jingle before each link will make voice navigation easier.
+    @param url Some wav-file.
+  */
+  function set_voice_jingle($url)
+  {
+    if (!is_string($url))
+      die("invalid argument in set_voice_jingle()");
+
+    $this->voice_jingle = $url;
+  }
+
+
+  /**
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this deck.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -1227,14 +1274,16 @@ class HAW_deck
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
@@ -1244,16 +1293,39 @@ class HAW_deck
     Sets nomatch text for voice browsers. <br>
     @param text Some text to complain that user input was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
+  }
+
+
+  /**
+    Sets a name/value property pair for VoiceXML decks. <br>
+    Attention: This function should be used by experienced VoiceXML developers
+    only! name/value combinations which are not compliant to the VoiceXML
+    standard or are not supported by the voice platform, will throw an
+    semantic error and terminate voice output. Please refer to the
+    <a href="http://www.w3.org/TR/voicexml20/#dml6.3" target="_blank">
+    W3C VoiceXML Recommendation (chapter 6.3)</a>
+    for detailled info about valid name/value combinations. 
+    @param name Name of property (e.g. "bargein", "timeout", etc.)
+    @param value Value of property (e.g. "false", "10s", etc.)
+  */
+  function set_voice_property($name, $value)
+  {
+    $arr["name"]  = $name;
+    $arr["value"] = $value;
+
+    $this->voice_property[] = $arr;
   }
 
 
@@ -1295,8 +1367,8 @@ class HAW_deck
 
   /**
     Creates the page in the according markup language. Depending on the clients
-    browser type HTML (pure HTML, handheldfriendly AvantGo HTML, i-mode cHTML, MML),
-    WML, HDML or VoiceXML code is created.
+    browser type, HTML (pure HTML, handheldfriendly HTML, i-mode cHTML, MML),
+    WML, HDML or VoiceXML is thrown out.
   */
   function create_page()
   {
@@ -1352,7 +1424,7 @@ class HAW_deck
         }
       }
 
-      if ($this->avantgostyle)
+      if ($this->PDAstyle)
       {
         echo "<meta name=\"HandheldFriendly\" content=\"True\">\n";
       }
@@ -1591,9 +1663,13 @@ class HAW_deck
         if ($this->disable_cache)
           echo "<meta http-equiv=\"Expires\" content=\"0\"/>\n";
 
+        // define voice deck properties
+        while (list($key, $val) = each($this->voice_property))
+          printf("<property name=\"%s\" value=\"%s\"/>\n", $val["name"], $val["value"]); 
+
         echo "<form>\n";
 
-        if ($this->voice_audio)
+        if ($this->voice_text || $this->voice_audio_src)
         {
           // create introducing audio output for VoiceXML deck
 
@@ -2165,16 +2241,19 @@ class HAW_form
     }
       // not necessary in WML, HDML and VoiceXML!
 
-    if (($deck->ml == HAW_VXML) && $this->voice_audio)
+    if ($deck->ml == HAW_VXML)
     {
-      // create introducing audio output for VoiceXML form
-  
-      echo "<block>";
-
-      HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                      $this->voice_audio_src, HAW_VOICE_PAUSE);
+      if ($this->voice_text || $this->voice_audio_src)
+      {
+        // create introducing audio output for VoiceXML form
     
-      echo "</block>\n";
+        echo "<block>";
+  
+        HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
+                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+      
+        echo "</block>\n";
+      }
     }
 
     $i = 0;
@@ -2242,7 +2321,6 @@ class HAW_text
   var $text;
   var $attrib;
   var $br;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
 
@@ -2262,7 +2340,6 @@ class HAW_text
     $this->text = $text;
     $this->attrib = $attrib;
     $this->br = 1; // default: 1 line break after text
-    $this->voice_mute = false;
     $this->voice_text = $text;
     $this->voice_audio_src = "";
   }
@@ -2277,20 +2354,6 @@ class HAW_text
       die("invalid argument in set_br()");
 
     $this->br = $br;
-  }
-
-  /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: &lt;text&gt; is normally spoken by default. If no text-to-speech-conversion
-    shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
   }
 
   /**
@@ -2395,7 +2458,7 @@ class HAW_text
     {
       // VoiceXML
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         // create audio output for VoiceXML text
 
@@ -2438,7 +2501,6 @@ class HAW_image
   var $localsrc;
   var $chtml_icon;
   var $mml_icon;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
 
@@ -2463,8 +2525,7 @@ class HAW_image
     $this->localsrc = "";	// no localsrc attribute
     $this->chtml_icon = 0;	// no cHTML icon
     $this->mml_icon = 0;	// no MML icon
-    $this->voice_mute = true;
-    $this->voice_text = $alt;
+    $this->voice_text = "";
     $this->voice_audio_src = "";
   }
 
@@ -2525,23 +2586,8 @@ class HAW_image
   }
 
   /**
-    Sets muting on/off for voice browsers (default: true). <br>
-    Note: Images are not really helpful for voice users. Anyway, the HAWHAW API allows
-    to assign voice output to HAW_image objects. If muting is turned off, the
-    &lt;alt&gt; text will be spoken.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets text to be spoken by voice browsers. <br>
-    @param text Some text that replaces &lt;alt&gt;.
+    @param text Some text that represents the image for voice users.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
   */
   function set_voice_text($text, $audio_src="")
@@ -2551,7 +2597,6 @@ class HAW_image
 
     $this->voice_text = $text;
     $this->voice_audio_src = $audio_src;
-    $this->voice_mute = false;  // muting is automatically turned off
   }
 
   function get_elementtype()
@@ -2661,7 +2706,7 @@ class HAW_image
     {
       // VoiceXML
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         // create image-related audio output for VoiceXML images
 
@@ -2785,16 +2830,19 @@ class HAW_table
 
       printf("<table columns=\"%d\">\n", $max_columns);
     }
-    elseif (($deck->ml == HAW_VXML) && $this->voice_text)
+    elseif ($deck->ml == HAW_VXML)
     {
-      // create introducing audio output for VoiceXML table
-
-      echo "<block>";
-
-      HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                      $this->voice_audio_src, HAW_VOICE_PAUSE);
-    
-      echo "</block>\n";
+      if ($this->voice_text || $this->voice_audio_src)
+      {
+        // create introducing audio output for VoiceXML table
+  
+        echo "<block>";
+  
+        HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
+                        $this->voice_audio_src, HAW_VOICE_PAUSE);
+      
+        echo "</block>\n";
+      }
     }
 
     for ($i = 0; $i < $this->number_of_rows; $i++)
@@ -2938,7 +2986,6 @@ class HAW_input
   var $format;
   var $mode;
   var $br;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_type;
@@ -2965,7 +3012,6 @@ class HAW_input
     $this->type = HAW_INPUT_TEXT;
     $this->mode = HAW_INPUT_ALPHABET;
     $this->br = 1;
-    $this->voice_mute = false;
     $this->voice_text = $label;
     $this->voice_audio_src = "";
     $this->voice_type = "digits";
@@ -2976,7 +3022,7 @@ class HAW_input
 
   /**
     Set size of the input field. <br>
-    Note: Will be ignored in case of HDML output.
+    Note: Will be ignored in case of HDML/VoiceXML output.
     @param size Number of characters fitting into the input field.
   */
   function set_size($size)
@@ -3043,20 +3089,6 @@ class HAW_input
   }
 
   /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: &lt;label&gt; is normally spoken by default. If no text-to-speech-conversion
-    shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets text to be spoken by voice browsers. <br>
     @param text Some alternative text that replaces &lt;label&gt;.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
@@ -3094,7 +3126,10 @@ class HAW_input
   }
 
   /**
-    Defines an external grammar for an input field in voice decks.
+    Defines an external grammar for an input field in voice decks. <br>
+    Attention: This function should be used by experienced VoiceXML developers
+    only! Please refer to the W3C VoiceXML Recommendation for detailled info
+    about grammar definitions. 
     @param src URL specifying the location of the grammar, e.g. "http://www.foo.com/myinput.grxml".
     @param type Media type of the grammar, e.g. "application/srgs+xml".
   */
@@ -3113,14 +3148,16 @@ class HAW_input
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this input.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -3129,14 +3166,16 @@ class HAW_input
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
@@ -3145,14 +3184,16 @@ class HAW_input
     Sets nomatch text for voice browsers. <br>
     @param text Some text to complain that user input was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
   }
@@ -3291,7 +3332,7 @@ class HAW_input
                 $this->voice_grammar["src"], $this->voice_grammar["type"]);
       }
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         echo "<prompt>";
 
@@ -3334,6 +3375,14 @@ class HAW_textarea
   var $cols;
   var $mode;
   var $br;
+  var $voice_text;
+  var $voice_audio_src;
+  var $voice_noinput;
+  var $voice_rec_url;
+  var $voice_rec_beep;
+  var $voice_rec_maxtime;
+  var $voice_rec_finalsilence;
+  var $voice_rec_type;
 
   /**
     Constructor
@@ -3352,6 +3401,14 @@ class HAW_textarea
     $this->cols   = $cols;
     $this->mode   = HAW_INPUT_ALPHABET;
     $this->br     = 1;
+    $this->voice_text             = $label;
+    $this->voice_audio_src        = "";
+    $this->voice_noinput          = array();
+    $this->voice_rec_url          = "";
+    $this->voice_rec_beep         = true;
+    $this->voice_rec_maxtime      = "";
+    $this->voice_rec_finalsilence = "";
+    $this->voice_rec_type         = "";
   }
 
 
@@ -3379,6 +3436,85 @@ class HAW_textarea
       die("invalid argument in set_br()");
 
     $this->br = $br;
+  }
+
+  /**
+    Sets text to be spoken by voice browsers. <br>
+    Note: Applies only if voice recording has been activated.
+    @param text Some alternative text that replaces &lt;label&gt;.
+    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+  */
+  function set_voice_text($text, $audio_src="")
+  {
+    if (!is_string($text))
+      die("invalid argument in set_voice_text()");
+
+    $this->voice_text = $text;
+    $this->voice_audio_src = $audio_src;
+  }
+
+  /**
+    Sets noinput text for voice browsers. <br>
+    Note: Applies only if voice recording has been activated.
+    @param text Some text to inform the user that no input has been received.
+    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
+  */
+  function set_voice_noinput($text, $audio_src="", $url="")
+  {
+    if (!is_string($text))
+      die("invalid argument in set_voice_noinput()");
+
+    $arr["text"] = $text;
+    $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
+
+    $this->voice_noinput[] = $arr;
+  }
+
+  /**
+    Activates voice recording. <br><br>
+    Note: <i>HAW_textarea</i> objects normally are used for quite voluminous text input.
+    Automated speech recognition for such input is quite impossible. To come around
+    this problem you can use the VoiceXML voice recording feature. Voice users will be
+    asked for some voice input and the result will be sent encrypted as multipart/form-data
+    to some other url, which normally will be another PHP/HAWHAW script. Here you can
+    store the received data as .wav file on your server, play it to the user, or do whatever
+    you want. Saving of the received voice data is similar to normal PHP file upload handling.
+    <br><br>
+    Voice recording is a very powerful feature which offers many oportunities to
+    create high-sophisticated voice applications. Nevertheless, the form handling for
+    <i>HAW_form</i> objects with recording-enabled <i>HAW_textarea</i> objects is different
+    in comparison to other <i>HAW_form</i>s:<br><br>
+    Your <i>HAW_form</i> object should consist of one <i>HAW_textarea</i> object and one
+    <i>HAW_submit</i> object only! The evaluating script defined in the <i>url</i>
+    parameter will receive the voice recording, and no other form elements which have been
+    defined additionally in your form! The <i>url</i> you have defined in the constructor
+    of your <i>HAW_form</i> object becomes meaningless in case of voice input!
+    @param url URL of the receiving script.
+    @param beep (Optional) Make beep before recording start: true (default) or false.
+  */
+  function set_voice_recording($url, $beep=true)
+  {
+    if (!is_string($url) || !is_bool($beep))
+      die("invalid argument in set_voice_recording()");
+
+    $this->voice_rec_url  = $url;
+    $this->voice_rec_beep = $beep;
+  }
+
+  /**
+    Sets some additional attributes for voice recording. <br>
+    Note: Per default platformdependent settings will apply. <br>
+    @param maxtime Maximum duration to record in seconds
+    @param finalsilence (optional) Interval of silence that indicates end of speech (in seconds)
+    @param type (optional) Media format of the resulting recording, e.g. "audio/x-wav"
+  */
+  function set_voice_record_attributes($maxtime, $finalsilence="", $type="")
+  {
+    $this->voice_rec_maxtime      = $maxtime;
+    $this->voice_rec_finalsilence = $finalsilence;
+    $this->voice_rec_type         = $type;
   }
 
   function get_name()
@@ -3463,7 +3599,53 @@ class HAW_textarea
     }
     elseif ($deck->ml == HAW_VXML)
     {
-      // HAW_textarea in VoiceXML is for further analysis
+      // VoiceXML
+
+      if ($this->voice_rec_url)
+      {
+        // voice recording has been activated 
+
+        if ($this->voice_rec_maxtime)
+          $maxtime = sprintf(" maxtime=\"%ds\"", $this->voice_rec_maxtime);
+        else
+          $maxtime = "";
+  
+        if ($this->voice_rec_finalsilence)
+          $finalsilence = sprintf(" finalsilence=\"%ds\"", $this->voice_rec_finalsilence);
+        else
+          $finalsilence = "";
+  
+        if ($this->voice_rec_type)
+          $type = sprintf(" type=\"%s\"", $this->voice_rec_type);
+        else
+          $type = "";
+  
+        if ($this->voice_rec_beep)
+          $beep = "true";
+        else
+          $beep = "false";
+  
+        printf("<record name=\"%s\" beep=\"%s\"%s%s%s>\n",
+               $this->name, $beep, $maxtime, $finalsilence, $type);
+  
+        if ($this->voice_text || $this->voice_audio_src)
+        {
+          echo "<prompt>";
+  
+          HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
+                          $this->voice_audio_src, 0);
+  
+          echo "</prompt>\n";
+        }
+
+        printf("<filled><submit next=\"%s\" enctype=\"multipart/form-data\" method=\"post\" namelist=\"%s\"/></filled>\n",
+                $this->voice_rec_url, $this->name);
+
+        // create event handler for noinput
+        HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
+    
+        echo "</record>\n";
+      }
     }
   }
 };
@@ -3493,7 +3675,6 @@ class HAW_select
   var $value;
   var $options;
   var $number_of_options;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_help;
@@ -3516,8 +3697,7 @@ class HAW_select
     $this->type = $type;
     $this->value = false;
     $this->number_of_options = 0;
-    $this->voice_mute = false;
-    $this->voice_text = "";
+    $this->voice_text = HAW_VOICE_ENUMERATE;
     $this->voice_audio_src = "";
     $this->voice_help = array();
     $this->voice_noinput = array();
@@ -3547,20 +3727,6 @@ class HAW_select
   }
 
   /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: Per default all available select options are spoken. If no
-    text-to-speech-conversion shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets text to be spoken by voice browsers. <br>
     @param text Some alternative text that replaces the enumeration of select options.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
@@ -3578,14 +3744,16 @@ class HAW_select
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this select element.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -3594,14 +3762,16 @@ class HAW_select
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
@@ -3610,14 +3780,16 @@ class HAW_select
     Sets nomatch text for voice browsers. <br>
     @param text Some text to complain that user input was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
   }
@@ -3710,11 +3882,11 @@ class HAW_select
 
       printf("<field name=\"%s\">\n", $this->name);
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         echo "<prompt>";
 
-        if ($this->voice_text)
+        if ($this->voice_text != HAW_VOICE_ENUMERATE)
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
         else
@@ -3764,7 +3936,6 @@ class HAW_radio
   var $value;
   var $buttons;
   var $number_of_buttons;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_help;
@@ -3780,8 +3951,7 @@ class HAW_radio
   {
     $this->name  = $name;
     $this->number_of_buttons = 0;
-    $this->voice_mute = false;
-    $this->voice_text = "";
+    $this->voice_text = HAW_VOICE_ENUMERATE;
     $this->voice_audio_src = "";
     $this->voice_help = array();
     $this->voice_noinput = array();
@@ -3811,20 +3981,6 @@ class HAW_radio
   }
 
   /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: Per default all available button elements are spoken. If no
-    text-to-speech-conversion shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets text to be spoken by voice browsers. <br>
     @param text Some alternative text that replaces the enumeration of buttons.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
@@ -3842,14 +3998,16 @@ class HAW_radio
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this radio button element.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -3858,14 +4016,16 @@ class HAW_radio
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
@@ -3874,14 +4034,16 @@ class HAW_radio
     Sets nomatch text for voice browsers. <br>
     @param text Some text to complain that user input was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
   }
@@ -3961,11 +4123,11 @@ class HAW_radio
 
       printf("<field name=\"%s\">\n", $this->name);
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         echo "<prompt>";
 
-        if ($this->voice_text)
+        if ($this->voice_text != HAW_VOICE_ENUMERATE)
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
         else
@@ -4015,7 +4177,6 @@ class HAW_checkbox
   var $name;
   var $value;
   var $state;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_help;
@@ -4037,26 +4198,11 @@ class HAW_checkbox
     $this->value = $value;
     $this->label = $label;
     $this->state = $state;
-    $this->voice_mute = false;
     $this->voice_text = $label;
     $this->voice_audio_src = "";
     $this->voice_help = array();
     $this->voice_noinput = array();
     $this->voice_nomatch = array();
-  }
-
-  /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: &lt;label&gt; is normally spoken by default. If no text-to-speech-conversion
-    shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
   }
 
   /**
@@ -4077,14 +4223,16 @@ class HAW_checkbox
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this checkbox.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -4093,30 +4241,34 @@ class HAW_checkbox
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
 
   /**
     Sets nomatch text for voice browsers. <br>
-    @param text Some text to complain that user input was not recognized.
+    @param text Some text to complain that user input (typically "yes" or "no") was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
   }
@@ -4193,7 +4345,7 @@ class HAW_checkbox
 
       printf("<field type=\"boolean\" name=\"%s\">\n", $this->name);
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         echo "<prompt>";
 
@@ -4472,7 +4624,6 @@ class HAW_link
   var $title;
   var $accesskey;
   var $br;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_timeout;
@@ -4494,7 +4645,6 @@ class HAW_link
     $this->accesskey = HAW_NO_ACCESSKEY; // no accesskey assigned
                                          // can be assigned later from HAW_linkset object if required
     $this->br = 1; // default: 1 line break after text
-    $this->voice_mute = false;
     $this->voice_text = $label;
     $this->voice_audio_src = "";
     $this->voice_timeout = 10; // voice decks with text and links only terminate after 10 sec
@@ -4513,20 +4663,6 @@ class HAW_link
   }
 
   /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: Links are read like plain text by default. If the link &lt;label&gt;
-    should not be text-to-speech-converted, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets link text to be spoken by voice browsers. <br>
     @param text Some alternative text that replaces &lt;label&gt;.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
@@ -4538,7 +4674,6 @@ class HAW_link
 
     $this->voice_text = $text;
     $this->voice_audio_src = $audio_src;
-    $this->voice_mute = false;  // muting is automatically turned off
   }
 
   /**
@@ -4611,7 +4746,7 @@ class HAW_link
         $br .= "<br>";
 
       printf("<a href=\"%s\"%s%s>%s</a>%s\n",
-             HAW_specchar($this->url, $deck), $title_option, $accesskey_option,
+             $this->url, $title_option, $accesskey_option,
              HAW_specchar($this->label, $deck), $br);
     }
 
@@ -4664,11 +4799,17 @@ class HAW_link
       $deck->voice_links .= sprintf("<link next=\"%s\"><grammar>[%s]</grammar></link>\n",
                                      HAW_specchar($this->url, $deck), $label);
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         // create audio output for VoiceXML link
 
         echo "<block>";
+
+        if ($deck->voice_jingle)
+        {
+          // play jingle before link label is spoken
+          printf("<audio src=\"%s\"></audio>", $deck->voice_jingle);
+        }
 
         $pause = $this->br * HAW_VOICE_PAUSE; // short pause for each break
 
@@ -4705,7 +4846,6 @@ class HAW_phone
   var $label;
   var $number;
   var $title;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
 
@@ -4721,23 +4861,8 @@ class HAW_phone
     $this->label = $phone_number;
     $this->number = ereg_replace("[^+0-9]", "", $phone_number);
     $this->title = $title;
-    $this->voice_mute = false;
     $this->voice_text = $phone_number;
     $this->voice_audio_src = "";
-  }
-
-  /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: &lt;phone_number&gt; is normally spoken by default. If no text-to-speech-conversion
-    shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
   }
 
   /**
@@ -4804,7 +4929,7 @@ class HAW_phone
       // create phone number in VXML
       // VoiceXML transfer is not supported yet
 
-      if (!$this->voice_mute)
+      if ($this->voice_text || $this->voice_audio_src)
       {
         // create audio output for VoiceXML text
 
@@ -4825,8 +4950,9 @@ class HAW_phone
 
 
 /**
-  This class defines a set of links. The links have to be defined as separate
-  HAW_link objects and are attached to the linkset with a special "add_link" function.
+  This class defines a set of links. It should be preferably used for all kinds of menus.
+  The links have to be defined as separate HAW_link objects and are attached to the
+  linkset with a special "add_link" function.
   For WAP devices browser-dependent WML code will be created. On all UP-browser-based
   WAP devices linksets allow easier navigation through WML decks by using the "onpick"
   WML option and therefore are improving the "usability" of an application. Instead of
@@ -4853,7 +4979,6 @@ class HAW_linkset
 {
   var $element;
   var $number_of_elements;
-  var $voice_mute;
   var $voice_text;
   var $voice_audio_src;
   var $voice_help;
@@ -4867,8 +4992,7 @@ class HAW_linkset
   function HAW_linkset()
   {
     $this->number_of_elements = 0;
-    $this->voice_mute = false;
-    $this->voice_text = "";
+    $this->voice_text = HAW_VOICE_ENUMERATE;
     $this->voice_audio_src = "";
     $this->voice_help = array();
     $this->voice_noinput = array();
@@ -4894,20 +5018,6 @@ class HAW_linkset
   }
 
   /**
-    Sets muting on/off for voice browsers (default: false). <br>
-    Note: Per default all available link &lt;label&gt;s are spoken. If no
-    text-to-speech-conversion shall be done, set_voice_mute(true) must be called.
-    @param mute Mute indicator: true or false.
-  */
-  function set_voice_mute($mute)
-  {
-    if (!is_bool($mute))
-      die("invalid argument in set_voice_mute()");
-
-    $this->voice_mute = $mute;
-  }
-
-  /**
     Sets text to be spoken by voice browsers. <br>
     @param text Some alternative text that replaces the enumeration of link &lt;label&gt;s.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
@@ -4925,14 +5035,16 @@ class HAW_linkset
     Sets help text for voice browsers. <br>
     @param text Some helpful information concerning this linkset.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_help($text, $audio_src="")
+  function set_voice_help($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_help()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_help[] = $arr;
   }
@@ -4941,14 +5053,16 @@ class HAW_linkset
     Sets noinput text for voice browsers. <br>
     @param text Some text to inform the user that no input has been received.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_noinput($text, $audio_src="")
+  function set_voice_noinput($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_noinput()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_noinput[] = $arr;
   }
@@ -4957,14 +5071,16 @@ class HAW_linkset
     Sets nomatch text for voice browsers. <br>
     @param text Some text to complain that user input was not recognized.
     @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
   */
-  function set_voice_nomatch($text, $audio_src="")
+  function set_voice_nomatch($text, $audio_src="", $url="")
   {
     if (!is_string($text))
       die("invalid argument in set_voice_nomatch()");
 
     $arr["text"] = $text;
     $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
 
     $this->voice_nomatch[] = $arr;
   }
@@ -5049,11 +5165,11 @@ class HAW_linkset
 
         echo "<field name=\"haw_menu_item\">\n";
   
-        if (!$this->voice_mute)
+        if ($this->voice_text || $this->voice_audio_src)
         {
           echo "<prompt>";
   
-          if ($this->voice_text)
+          if ($this->voice_text != HAW_VOICE_ENUMERATE)
             HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                             $this->voice_audio_src, 0);
           else

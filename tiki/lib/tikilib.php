@@ -752,6 +752,7 @@ class TikiLib {
     $result = $this->query($query);
   }
 
+
   function get_pv_chart_data($days)
   {
     $now = mktime(0,0,0,date("m"),date("d"),date("Y"));

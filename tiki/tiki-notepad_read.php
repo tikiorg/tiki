@@ -68,7 +68,7 @@ if($tikilib->page_exists($info['name'])) {
 
 if(!isset($_REQUEST['parse_mode'])) $_REQUEST['parse_mode']=$info['parse_mode'];
 if($_REQUEST['parse_mode']=='raw') {
-  $info['parsed']=nl2br(htmlentities($info['data']));
+  $info['parsed']=nl2br(htmlspecialchars($info['data']));
 }
 if($_REQUEST['parse_mode']=='wiki') {
   $info['parsed']=$tikilib->parse_data($info['data']);

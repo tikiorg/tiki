@@ -2,8 +2,8 @@
 
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
-// Copyright (C) 2003 Norbert Huffschmid & TikiWiki project team
-// Last modified: 20. May 2003
+// Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
+// Last modified: 1. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,12 +20,14 @@
 // List of supported/workarounded wiki elements:
 //
 // plain text
+// non-parsed sections
 // bold text __bold__
 // italic text ''italic''
 // colored text ~~#0000FF:colored~~ (workaround: bold)
 // monospaced BLANK text (workaround: small)
 // headings ! !! !!!
-// paragraphs -= paragraph =- (workaround: big and bold)
+// numbered lists
+// paragraphs -= paragraph =- (workaround: big and bold within rules)
 // WikiNames
 // links
 // tables
@@ -33,6 +35,7 @@
 // horizontal rules ----
 // images
 // smileys
+// plugins (for HTML browsers only)
 
 
 // ---------------------  begin of config part  ---------------------
@@ -41,7 +44,7 @@ define("HAWIKI_TITLE", "TikiWiki");       // -> "title" of created HAWHAW deck
 define("HAWIKI_MAXINPUTCHARS", 100000);   // maximum wiki size
 define("HAWIKI_DISP_WIDTH",  300);        // HAWHAW display width (pixel)
 define("HAWIKI_DISP_HEIGHT", 300);        //                height
-define("HAWIKI_DISP_BGCOLOR", "#FFFFFF"); //                background color
+define("HAWIKI_DISP_BGCOLOR", "#00BB77"); //                background color
 
 // error messages (modify these string for country adaptions
 define("HAWIKI_ERROR", "Error:");
@@ -53,14 +56,13 @@ define("HAWIKI_ERROR_INVWIKISYNTAX", "Invalid wiki syntax");
 
 
 // token definitions
-define("HAWIKI_TOKEN_EOF",        0);
 define("HAWIKI_TOKEN_NEWLINE",    1);
 define("HAWIKI_TOKEN_TEXT",       2);
 define("HAWIKI_TOKEN_BOLD",       3);
 define("HAWIKI_TOKEN_ITALIC",     4);
-define("HAWIKI_TOKEN_HEADING1",   5);
-define("HAWIKI_TOKEN_HEADING2",   6);
-define("HAWIKI_TOKEN_HEADING3",   7);
+define("HAWIKI_TOKEN_HEADING",    5);
+define("HAWIKI_TOKEN_BULLIST",    6);
+define("HAWIKI_TOKEN_NUMLIST",    7);
 define("HAWIKI_TOKEN_PARAGRAPH",  8);
 define("HAWIKI_TOKEN_COLORED",    9);
 define("HAWIKI_TOKEN_MONOSPACED", 10);
@@ -71,7 +73,8 @@ define("HAWIKI_TOKEN_LINK",       14);
 define("HAWIKI_TOKEN_TABLE",      15);
 define("HAWIKI_TOKEN_IMAGE",      16);
 define("HAWIKI_TOKEN_SMILEY",     17);
-define("HAWIKI_TOKEN_DUMMY",      18);
+define("HAWIKI_TOKEN_PLUGIN",     18);
+define("HAWIKI_TOKEN_DUMMY",      19);
 
 // internal trace facilities for debugging
 define("HAWIKI_DEBUG_NONE",   0);
@@ -95,15 +98,345 @@ function HAWIKI_error($error_msg)
 }
 
 
+function HAWIKI_lexan(&$input, $isFirstColumn)
+{
+  // lexical analyser for tikiwiki pages
+
+  $po = array(); // array for parser output
+
+  $po["text"] = ""; // init text output
+
+  if (strlen($input) == 0)
+    return(0);  // end of input reached
+
+  if (preg_match("/^~np~((.|[\r\n])*?)~\/np~/", $input, $matches))
+  {
+    // non-parsed section
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 9);
+    $po["token"] = HAWIKI_TOKEN_TEXT;
+    return($po);
+  }
+
+  if (preg_match("/^([\r\n]+)/", $input, $matches))
+  {
+    // new line(s)
+    $po["count"] = substr_count($matches[1], "\n");
+    $input = substr($input, strlen($matches[1]));
+    $po["token"] = HAWIKI_TOKEN_NEWLINE;
+    return($po);
+  }
+
+  if (preg_match("/^__/", $input))
+  {
+    // format bold
+    $input = substr($input, 2);
+    $po["token"] = HAWIKI_TOKEN_BOLD;
+    return($po);
+  }
+
+  if (preg_match("/^''/", $input))
+  {
+    // format italic
+    $input = substr($input, 2);
+    $po["token"] = HAWIKI_TOKEN_ITALIC;
+    return($po);
+  }
+
+  if (preg_match("/^-=(.*?)=-/", $input, $matches))
+  {
+    // paragraph
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 4);
+    $po["token"] = HAWIKI_TOKEN_PARAGRAPH;
+    return($po);
+  }
+
+  if (preg_match("/^\^(.*?)\^/", $input, $matches))
+  {
+    // box
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 2);
+    $po["token"] = HAWIKI_TOKEN_BOX;
+    return($po);
+  }
+
+  if ($isFirstColumn && preg_match("/^(!+)/", $input, $matches))
+  {
+    // heading
+    $po["level"] = strlen($matches[1]);
+    $input = substr($input, $po["level"]);
+    $po["token"] = HAWIKI_TOKEN_HEADING;
+    return($po);
+  }
+
+  if ($isFirstColumn && preg_match("/^(\*+)/", $input, $matches))
+  {
+    // bullet list
+    $po["level"] = strlen($matches[1]);
+    $input = substr($input, $po["level"]);
+    $po["token"] = HAWIKI_TOKEN_BULLIST;
+    return($po);
+  }
+
+  if ($isFirstColumn && preg_match("/^(#+)/", $input, $matches))
+  {
+    // numbered list
+    $po["level"] = strlen($matches[1]);
+    $input = substr($input, $po["level"]);
+    $po["token"] = HAWIKI_TOKEN_NUMLIST;
+    return($po);
+  }
+
+  if ($isFirstColumn && preg_match("/^ /", $input))
+  {
+    // monospaced
+    $input = substr($input, 1);
+    $po["token"] = HAWIKI_TOKEN_MONOSPACED;
+    return($po);
+  }
+
+  if (preg_match("/^::/", $input))
+  {
+    // centered text (not supported)
+    $input = substr($input, 2);
+    $po["token"] = HAWIKI_TOKEN_DUMMY;
+    return($po);
+  }
+
+  if (preg_match("/^~~#(\w*?):/", $input, $matches))
+  {
+    // colored text start
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($matches[1]) + 4);
+    $po["token"] = HAWIKI_TOKEN_COLORED;
+    return($po);
+  }
+
+  if (preg_match("/^~~/", $input))
+  {
+    // colored text end
+    $po["text"] = "";
+    $input = substr($input, 2);
+    $po["token"] = HAWIKI_TOKEN_COLORED;
+    return($po);
+  }
+
+  if (preg_match("/^\)\)(.*?)\(\(/", $input, $matches))
+  {
+    // No WikiName ==> plain text
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 4);
+    $po["token"] = HAWIKI_TOKEN_TEXT;
+    return($po);
+  }
+
+  if ($isFirstColumn && preg_match("/^(----*\r?\n)/", $input, $matches))
+  {
+    // horizontal rule
+    $input = substr($input, strlen($matches[1]));
+    $po["token"] = HAWIKI_TOKEN_RULE;
+    return($po);
+  }
+
+  if (preg_match("/^([A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*)/", $input, $matches))
+  {
+    // WikiName
+    $input = substr($input, strlen($matches[1]));
+    $po["extwiki"] = ""; // internal wiki page
+
+    $link = explode("|", $matches[1]); // test for alternative link label
+    if (count($link) > 1)
+    {
+      $po["page"]  = $link[0];
+      $po["label"] = $link[1];
+    }
+    else
+    {
+      $po["page"]  = $link[0]; // no extra labelling of link required
+      $po["label"] = $link[0];
+    }
+
+    $po["token"] = HAWIKI_TOKEN_WIKINAME;
+    return($po);
+  }
+
+  if (preg_match("/^\(\((.*?)\)\)/", $input, $matches))
+  {
+    // Forced WikiName ((a_page_with_any_name))
+    $input = substr($input, strlen($matches[1]) + 4);
+
+    $wikiname = explode(":", $matches[1]); // test for external wiki page
+    if (count($wikiname) > 1)
+    {
+      $po["extwiki"] = $wikiname[0];
+      $wikipage = $wikiname[1];
+    }
+    else
+    {
+      // if $matches contained no ':' ==> explode returns input string
+      $po["extwiki"] = ""; // internal wiki page
+      $wikipage = $wikiname[0];
+    }
+
+    $link = explode("|", $wikipage); // test for alternative link label
+    if (count($link) > 1)
+    {
+      $po["page"]  = $link[0];
+      $po["label"] = $link[1];
+    }
+    else
+    {
+      $po["page"]  = $link[0]; // no extra labelling of link required
+      $po["label"] = $link[0];
+    }
+
+    $po["token"] = HAWIKI_TOKEN_WIKINAME;
+    return($po);
+  }
+
+  if (preg_match("/^\[(.*?)\]/", $input, $matches))
+  {
+    // link
+    $input = substr($input, strlen($matches[1]) + 2);
+
+    $link = explode("|", $matches[1]); // test for alternative link label
+    if (count($link) > 1)
+    {
+      $po["url"]   = $link[0];
+      $po["label"] = $link[1];
+    }
+    else
+    {
+      $po["url"]   = $link[0]; // no extra labelling of link required
+      $po["label"] = $link[0];
+    }
+
+    $po["token"] = HAWIKI_TOKEN_LINK;
+    return($po);
+  }
+
+  if (preg_match("/^\|\|((.|[\r\n])*?)\|\|[\r\n]/", $input, $matches))
+  {
+    // table
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 4);
+    $po["text"] = ereg_replace("\|\|", "\n", $po["text"]); // consider both valid syntax formats
+    $po["token"] = HAWIKI_TOKEN_TABLE;
+    return($po);
+  }
+
+  if (preg_match("/^\{img (.*?)\}/", $input, $matches))
+  {
+    // image
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 6);
+
+    $po["text"] = trim($po["text"]); // strip leading and tailing whitespace
+    $po["text"] = ereg_replace(" +", " ", $po["text"]);
+    $img_arr = explode(" ", $po["text"]);
+
+    while (list($key, $value) = each($img_arr))
+    {
+      $value = ereg_replace("[\"']", "", $value); // unquote attribute (if quoted)
+
+      if (strtolower(substr($value, 0, 4)) == "src=")
+      {
+        $po["src"] = substr($value, 4, strlen($value) - 4);
+      }
+      elseif (strtolower(substr($value, 0, 5)) == "desc=")
+      {
+        $po["alt"] = substr($value, 5, strlen($value) - 5);
+      }
+      elseif (strtolower(substr($value, 0, 5)) == "link=")
+      {
+        $po["link"] = substr($value, 5, strlen($value) - 5);
+      }
+    }
+
+    $po["token"] = HAWIKI_TOKEN_IMAGE;
+    return($po);
+  }
+
+  if (preg_match("/^\(:(.*?):\)/", $input, $matches))
+  {
+    // smiley
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]) + 4);
+    $po["token"] = HAWIKI_TOKEN_SMILEY;
+    return($po);
+  }
+
+  if (preg_match("/^\{([A-Z]+)\(([^\)]*)\)\}/", $input, $matches))
+  {
+    // plugin
+    $plugin_name = $matches[1];
+    $params = split(',',trim($matches[2]));
+    $input = substr($input, strlen($matches[1]) + strlen($matches[2]) + 4);
+
+    if (preg_match("/^((.|[\r\n])*?)\{$plugin_name\}/", $input, $matches))
+    {
+      $plugin_data = $matches[1];
+      $input = substr($input, strlen($plugin_data) + strlen($plugin_name) + 2);
+
+      // the following code was borrowed from tikilib.php
+
+      $php_name = "lib/wiki-plugins/wikiplugin_" . strtolower($plugin_name) . ".php";
+      $func_name = "wikiplugin_" . strtolower($plugin_name);
+      $arguments = array();
+      foreach($params as $param)
+      {
+        $parts = explode("=>", $param);
+        if (isset($parts[0]) && isset($parts[1]))
+        {
+          $name = trim($parts[0]);
+          $arguments[$name] = trim($parts[1]);
+        }
+      }
+      if (file_exists($php_name))
+      {
+        include_once($php_name);
+        $po["html"] = $func_name($plugin_data,$arguments);
+      }
+    }
+    else
+      return(0); // no plugin end found
+
+    $po["token"] = HAWIKI_TOKEN_PLUGIN;
+    return($po);
+  }
+
+  // plain text - search next syntax element resp. eof
+  if (preg_match("/^(.*?)(~np~|__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|\{[A-Z]+\([^\)]*\)\}|$)/",
+      $input, $matches))
+  {
+    // plain text
+    $po["text"] = $matches[1];
+    $input = substr($input, strlen($po["text"]));
+
+    if (strlen($po["text"]) > 0)
+      $po["token"] = HAWIKI_TOKEN_TEXT;
+    else
+      return(0); // can happen in case of syntax errors
+
+    return($po);
+  }
+
+  return(0);
+}
+
+
 class HAWIKI_wiki
 {
   var $deck;          // HAW_deck object
   var $wiki_string;   // input in wiki syntax
   var $wiki_base;     // URL for WikiName links
-  var $navlink;       // array with navigation links (home, menue etc.)  
+  var $extwiki;       // array with external wiki declaration
+  var $navlink;       // array with navigation links (home, menue etc.)
   var $smiley_dir;    // where smiley gif's are stored
-  var $yytext;        // parser output
   var $firstColumn;   // flag to determine parser position
+  var $listLine;      // flag to indicate that line belongs to a list
+  var $listNumbering; // array with current list numbers
   var $debugflags;    // flags for dumping debug info
   var $textformat;    // text format: bold, italic etc.
 
@@ -112,8 +445,11 @@ class HAWIKI_wiki
     $this->wiki_string = $input;
     $this->wiki_base = $wiki_base;
     $this->smiley_dir = "";       // has to be set later by function call
+    $this->extwiki = array();
     $this->navlink = array();
     $this->firstColumn = true;
+    $this->listLine = false;
+    $this->listNumbering = array();
     $this->debugflags = HAWIKI_DEBUG_NONE;
     $this->textformat = HAW_TEXTFORMAT_NORMAL;
 
@@ -136,8 +472,10 @@ class HAWIKI_wiki
     // convert wiki text into HAWHAW object structure and create appropriate markup
 
     // remove remote debugging in stable versions !!!
-    global $HTTP_GET_VARS;
-    $url_debugflags = $HTTP_GET_VARS["hawikidebugremote"];
+//    global $HTTP_GET_VARS;
+//    $url_debugflags = $HTTP_GET_VARS["hawikidebugremote"];
+
+    $url_debugflags = $_GET["hawikidebugremote"];
     if ($url_debugflags && ($this->debugflags == HAWIKI_DEBUG_NONE))
       $this->debugflags = $url_debugflags;
 
@@ -168,11 +506,11 @@ class HAWIKI_wiki
 
     $input = $this->wiki_string;
 
-    while ($token = $this->lexan($input))
+    while ($po = HAWIKI_lexan($input, $this->firstColumn)) // evaluate parser output
     {
       $this->firstColumn = false; // default
 
-      switch ($token)
+      switch ($po["token"])
       {
         case HAWIKI_TOKEN_DUMMY:
         {
@@ -187,12 +525,18 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_NEWLINE:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Newline:</b> %d<br>\n", $this->yytext);
+            printf("<b>Newline:</b> %d<br>\n", $po["count"]);
 
           $text = new HAW_text("");
-          $text->set_br($this->yytext); // set number of line breaks
+          $text->set_br($po["count"]); // set number of line breaks
           $this->deck->add_text($text);
           $this->firstColumn = true;    // now we're again in column 0
+
+          // numbered list are terminated by all lines, that are not list elements
+          if ($this->listLine)
+            $this->listLine = false; // continuation of numbered list is possible
+          else
+            $this->listNumbering = array(); // init numbering array
 
           // reset text formatting
           $this->textformat = HAW_TEXTFORMAT_NORMAL;
@@ -203,12 +547,12 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_TEXT:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Plain text:</b> %s<br>\n", $this->yytext);
+            printf("<b>Text:</b> %s<br>\n", $po["text"]);
 
-          if (strlen($this->yytext) == 0)
+          if (strlen($po["text"]) == 0)
             die("length of text is 0"); // for test only
 
-          $text = new HAW_text($this->yytext, $this->textformat);
+          $text = new HAW_text($po["text"], $this->textformat);
           $text->set_br(0);
           $this->deck->add_text($text);
 
@@ -238,7 +582,7 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_COLORED:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Colored: %s</b><br>\n", $this->yytext);
+            printf("<b>Colored: %s</b><br>\n", $po["text"]);
 
           // color is not supported by HAWHAW -> display as bold
           $this->textformat ^= HAW_TEXTFORMAT_BOLD;
@@ -260,11 +604,13 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_PARAGRAPH:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Paragraph:</b> %s<br>\n", $this->yytext);
+            printf("<b>Paragraph:</b> %s<br>\n", $po["text"]);
 
-          $paragraph = new HAW_text($this->yytext, HAW_TEXTFORMAT_BIG);
-          $paragraph->set_br(0);
+          $rule = new HAW_rule();
+          $this->deck->add_rule($rule);
+          $paragraph = new HAW_text($po["text"], HAW_TEXTFORMAT_BIG);
           $this->deck->add_text($paragraph);
+          $this->deck->add_rule($rule);
 
           break;
         }
@@ -272,48 +618,74 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_BOX:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Box:</b> %s<br>\n", $this->yytext);
+            printf("<b>Box:</b> %s<br>\n", $po["text"]);
 
           // boxes are not supported by HAWHAW -> underline instead
-          $box = new HAW_text($this->yytext, HAW_TEXTFORMAT_UNDERLINE);
+          $box = new HAW_text($po["text"], HAW_TEXTFORMAT_UNDERLINE);
           $box->set_br(0);
           $this->deck->add_text($box);
 
           break;
         }
 
-        case HAWIKI_TOKEN_HEADING1:
+        case HAWIKI_TOKEN_HEADING:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Heading level 1:</b> %s<br>\n", $this->yytext);
+            printf("<b>Heading (level %d)</b><br>\n", $po["level"]);
 
-          $h1 = new HAW_text($this->yytext, HAW_TEXTFORMAT_BIG | HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_UNDERLINE );
-          $h1->set_br(0);
-          $this->deck->add_text($h1);
+          $this->textformat |= HAW_TEXTFORMAT_BOLD;
+
+          if ($po["level"] <= 2)
+            $this->textformat |= HAW_TEXTFORMAT_BIG;
+
+          if ($po["level"] == 1)
+            $this->textformat |= HAW_TEXTFORMAT_UNDERLINE;
 
           break;
         }
 
-        case HAWIKI_TOKEN_HEADING2:
+        case HAWIKI_TOKEN_BULLIST:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Heading level 2:</b> %s<br>\n", $this->yytext);
+            printf("<b>Bullet list (level %d)</b><br>\n", $po["level"]);
 
-          $h2 = new HAW_text($this->yytext, HAW_TEXTFORMAT_BIG | HAW_TEXTFORMAT_BOLD);
-          $h2->set_br(0);
-          $this->deck->add_text($h2);
+          $bullet = str_repeat("*", $po["level"]);
+
+          $text = new HAW_text($bullet . " ", HAW_TEXTFORMAT_BOLD);
+          $text->set_br(0);
+          $this->deck->add_text($text);
 
           break;
         }
 
-        case HAWIKI_TOKEN_HEADING3:
+        case HAWIKI_TOKEN_NUMLIST:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Heading level 3:</b> %s<br>\n", $this->yytext);
+            printf("<b>Numbered list (level %d)</b><br>\n", $po["level"]);
 
-          $h3 = new HAW_text($this->yytext, HAW_TEXTFORMAT_BOLD);
-          $h3->set_br(0);
-          $this->deck->add_text($h3);
+          if (isset($this->listNumbering[$po["level"]]))
+            $this->listNumbering[$po["level"]]++; // increment this level
+          else
+            $this->listNumbering[$po["level"]] = 1; // init this level
+
+          $number = "";
+
+          for ($n=1; $n <= $po["level"]; $n++)
+          {
+            // assemble current numbering
+            if (isset($this->listNumbering[$n]))
+              $number .= sprintf("%d.", $this->listNumbering[$n]);
+            else
+              $number .= "0.";
+          }
+
+          $number = substr($number, 0, -1); // remove trailing dot
+
+          $text = new HAW_text($number . " ", HAW_TEXTFORMAT_BOLD);
+          $text->set_br(0);
+          $this->deck->add_text($text);
+
+          $this->listLine = true;
 
           break;
         }
@@ -333,16 +705,33 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_WIKINAME:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>WikiName:</b> %s<br>\n", $this->yytext);
+            printf("<b>WikiName:</b> extwiki:%s page:%s label:%s<br>\n",
+                   $po["extwiki"], $po["page"], $po["label"]);
 
-          $link_arr = explode("|", $this->yytext);
+          if ($po["extwiki"])
+          {
+            // external wiki page ==> search url of this wiki
 
-          if ($link_arr[1])
-            // display alternative link text instead of URL
-            $link = new HAW_link($link_arr[1], $this->wiki_base . $link_arr[0]);
+            unset($link);
+
+            foreach ($this->extwiki as $value)
+            {
+              if ($value["name"] == $po["extwiki"])
+              {
+                // external wiki has been declared before
+                $link = new HAW_link($po["label"], ereg_replace("\$page", $po["page"], $value["url"]));
+              }
+            }
+
+            if (!isset($link))
+            {
+              // external wiki has not been declared!!!
+              $link = new HAW_link($po["label"], $this->wiki_base . $po["extwiki"] . ":" . $po["page"]);
+
+            }
+          }
           else
-            // display URL
-            $link = new HAW_link($link_arr[0], $this->wiki_base . $link_arr[0]);
+            $link = new HAW_link($po["label"], $this->wiki_base . $po["page"]);
 
           $link->set_br(0);
           $this->deck->add_link($link);
@@ -353,16 +742,9 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_LINK:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Link:</b> %s<br>\n", $this->yytext);
+            printf("<b>Link:</b> url:%s label:%s<br>\n", $po["url"], $po["label"]);
 
-          $link_arr = explode("|", $this->yytext);
-
-          if ($link_arr[1])
-            // display alternative link text instead of URL
-            $link = new HAW_link($link_arr[1], $link_arr[0]);
-          else
-            // display URL
-            $link = new HAW_link($link_arr[0], $link_arr[0]);
+          $link = new HAW_link($po["label"], $po["url"]);
 
           $link->set_br(0);
           $this->deck->add_link($link);
@@ -372,11 +754,15 @@ class HAWIKI_wiki
 
         case HAWIKI_TOKEN_TABLE:
         {
+          // format of "text":
+          // colums are seperated by '|' (this is pipe, not slash!)
+          // rows are seperated by '\n'
+
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Table:</b> %s<br>\n", $this->yytext);
+            printf("<b>Table:</b> %s<br>\n", $po["text"]);
 
           $table = new HAW_table();
-          $table_arr = explode("\n", $this->yytext);
+          $table_arr = explode("\n", $po["text"]);
 
           while (list($key1, $val1) = each($table_arr))
           {
@@ -401,27 +787,27 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_IMAGE:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Image:</b> %s<br>\n", $this->yytext);
+            printf("<b>Image:</b> src:%s alt:%s<br>\n", $po["src"], $po["alt"]);
 
-          $this->yytext = trim($this->yytext); // strip leading and tailing whitespace
-          $this->yytext = ereg_replace(" +", " ", $this->yytext);
-          $img_arr = explode(" ", $this->yytext);
-
-          while (list($key, $value) = each($img_arr))
+          if ($po["src"])
           {
-            if (strtolower(substr($value, 0, 4)) == "src=")
-            {
-              $img_html = substr($value, 4);
-              $img_wbmp = ereg_replace(".gif$|.png$|.jpg$", ".wbmp", $img_html);
-            }
-            elseif (strtolower(substr($value, 0, 5)) == "desc=")
-            {
-              $img_alt = substr($value, 5);
-            }
+            $img_wbmp = ereg_replace(".gif$|.png$|.jpg$", ".wbmp", $po["src"]);
+
+            if (!($img_alt = $po["alt"]))
+              $img_alt = $po["src"]; // set alternative text to src, if not available
+
+            $image = new HAW_image($img_wbmp, $po["src"], $img_alt);
+            $this->deck->add_image($image);
           }
 
-          $image = new HAW_image($img_wbmp, $img_html, $img_alt);
-          $this->deck->add_image($image);
+          if ($po["link"])
+          {
+            // HAWHAW does not support images as links
+            // ==> draw @-link next to image
+            $link = new HAW_link("@", $po["link"]);
+            $link->set_br(0);
+            $this->deck->add_link($link);
+          }
 
           break;
         }
@@ -429,14 +815,14 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_SMILEY:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Smiley:</b> %s<br>\n", $this->yytext);
+            printf("<b>Smiley:</b> %s<br>\n", $po["text"]);
 
           if ($this->smiley_dir)
           {
             // smiley directory has been set by the user
 
-            $img_html = $this->smiley_dir . "/icon_" . $this->yytext . ".gif";
-            $img_wbmp = $this->smiley_dir . "/icon_" . $this->yytext . ".wbmp";
+            $img_html = $this->smiley_dir . "/icon_" . $po["text"] . ".gif";
+            $img_wbmp = $this->smiley_dir . "/icon_" . $po["text"] . ".wbmp";
             $img_alt = ":)";
             $image = new HAW_image($img_wbmp, $img_html, $img_alt);
             $image->use_localsrc("smileyface");
@@ -446,10 +832,25 @@ class HAWIKI_wiki
           break;
         }
 
+        case HAWIKI_TOKEN_PLUGIN:
+        {
+          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
+            printf("<b>Plugin:</b> %s<br>\n", htmlspecialchars($po["html"]));
+
+          if ($po["html"])
+          {
+            // plugins return pure HTML ==> show on HTML browsers only
+            $rawhtml = new HAW_raw(HAW_HTML, $po["html"]);
+            $this->deck->add_raw($rawhtml);
+          }
+
+          break;
+        }
+
         default:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Unknown token:</b> %d<br>\n", $token);
+            printf("<b>Unknown token:</b> %d<br>\n", $po["token"]);
 
           break;
         }
@@ -500,12 +901,24 @@ class HAWIKI_wiki
     // pos:   HAWIKI_NAVLINK_TOP    (link is created at top of wiki page)
     //        HAWIKI_NAVLINK_BOTTOM (link is created at bottom of wiki page)
     //        HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM (top AND bottom)
-   
+
     $arr["label"] = $label;
     $arr["url"]   = $url;
     $arr["pos"]   = $pos;
 
     $this->navlink[] = $arr; // enhance array with navigation links
+  }
+
+
+  function set_extwiki($name, $url)
+  {
+    // define external wiki
+    // e.g. set_extwiki("HAWHAW", "http://www.hawhaw.de/tiki/tiki-index.php?page=$page");
+
+    $arr["name"] = $name;
+    $arr["url"]  = $url;
+
+    $this->extwiki[] = $arr; // enhance array with external wikis
   }
 
 
@@ -519,189 +932,6 @@ class HAWIKI_wiki
   {
     $this->debugflags = $flags;
   }
-
-
-  function lexan(&$input)
-  {
-    // lexical analyser
-
-    $this->yytext = ""; // init text to be delivered additionally to token
-   
-    if (strlen($input) == 0)
-      return(HAWIKI_TOKEN_EOF); // end of input reached
-
-    if (preg_match("/^([\r\n]+)/", $input, $matches))
-    {
-      // new line(s)
-      $this->yytext = substr_count($matches[1], "\n");
-      $input = substr($input, strlen($matches[1]));
-      return(HAWIKI_TOKEN_NEWLINE);
-    }
-
-    if (preg_match("/^__/", $input))
-    {
-      // format bold
-      $input = substr($input, 2);
-      return(HAWIKI_TOKEN_BOLD);
-    }
-
-    if (preg_match("/^''/", $input))
-    {
-      // format italic
-      $input = substr($input, 2);
-      return(HAWIKI_TOKEN_ITALIC);
-    }
-
-    if (preg_match("/^-=(.*?)=-/", $input, $matches))
-    {
-      // paragraph
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_PARAGRAPH);
-    }
-
-    if (preg_match("/^\^(.*?)\^/", $input, $matches))
-    {
-      // box
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 2);
-      return(HAWIKI_TOKEN_BOX);
-    }
-
-    if ($this->firstColumn && preg_match("/^!!!(.*)/", $input, $matches))
-    {
-      // heading 3
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 3);
-      return(HAWIKI_TOKEN_HEADING3);
-    }
-
-    if ($this->firstColumn && preg_match("/^!!(.*)/", $input, $matches))
-    {
-      // heading 2
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 2);
-      return(HAWIKI_TOKEN_HEADING2);
-    }
-
-    if ($this->firstColumn && preg_match("/^!(.*)/", $input, $matches))
-    {
-      // heading 1
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 1);
-      return(HAWIKI_TOKEN_HEADING1);
-    }
-
-    if ($this->firstColumn && preg_match("/^ /", $input))
-    {
-      // monospaced
-      $input = substr($input, 1);
-      return(HAWIKI_TOKEN_MONOSPACED);
-    }
-
-    if (preg_match("/^::/", $input))
-    {
-      // centered text (not supported)
-      $input = substr($input, 2);
-      return(HAWIKI_TOKEN_DUMMY);
-    }
-
-    if (preg_match("/^~~#(\w*?):/", $input, $matches))
-    {
-      // colored text start (not supported - displayed as bold)
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($matches[1]) + 4);
-      return(HAWIKI_TOKEN_COLORED);
-    }
-
-    if (preg_match("/^~~/", $input))
-    {
-      // colored text end (not supported - displayed as bold)
-      $this->yytext = "";
-      $input = substr($input, 2);
-      return(HAWIKI_TOKEN_COLORED);
-    }
-
-    if (preg_match("/^\)\)(.*?)\(\(/", $input, $matches))
-    {
-      // No WikiName ==> plain text
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_TEXT);
-    }
-
-    if ($this->firstColumn && preg_match("/^(----*\r?\n)/", $input, $matches))
-    {
-      // horizontal rule
-      $input = substr($input, strlen($matches[1]));
-      return(HAWIKI_TOKEN_RULE);
-    }
-
-    if (preg_match("/^([A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*)/", $input, $matches))
-    {
-      // WikiName
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext));
-      return(HAWIKI_TOKEN_WIKINAME);
-    }
-
-    if (preg_match("/^\(\((.*?)\)\)/", $input, $matches))
-    {
-      // Forced WikiName ((a_page_with_any_name))
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_WIKINAME);
-    }
-
-    if (preg_match("/^\[(.*?)\]/", $input, $matches))
-    {
-      // link
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 2);
-      return(HAWIKI_TOKEN_LINK);
-    }
-
-    if (preg_match("/^\|\|((.|[\r\n])*?)\|\|/", $input, $matches))
-    {
-      // table
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_TABLE);
-    }
-
-    if (preg_match("/^\{img (.*?)\}/", $input, $matches))
-    {
-      // image
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 6);
-      return(HAWIKI_TOKEN_IMAGE);
-    }
-
-    if (preg_match("/^\(:(.*?):\)/", $input, $matches))
-    {
-      // smiley
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_SMILEY);
-    }
-
-    // plain text - search next syntax element resp. eof
-    if (preg_match("/^(.*?)(__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|$)/",
-        $input, $matches))
-    {
-      // plain text
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext));
-
-      if (strlen($this->yytext) > 0)
-        return(HAWIKI_TOKEN_TEXT);
-      else
-        return(HAWIKI_TOKEN_EOF); // can happen in case of syntax errors
-    }
-
-    return(HAWIKI_TOKEN_EOF);
-  }
-
 };
 
 ?>

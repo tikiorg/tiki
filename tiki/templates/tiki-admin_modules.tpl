@@ -195,9 +195,9 @@ from Admin->General
 <table class="normal"><tr><td valign="top" class="odd">
 <h3>{tr}Edit/Create user module{/tr} 
 	{if $wysiwyg eq 'n'}
-		<a class="link" href="{sameurl wysiwyg='y'}">{tr}Use wysiwyg editor{/tr}</a>
+		<a class="link" href="tiki-admin_modules.php?wysiwyg='y'">{tr}Use wysiwyg editor{/tr}</a>
 	{else}
-		<a class="link" href="{sameurl wysiwyg='n'}">{tr}Use normal editor{/tr}</a>
+		<a class="link" href="tiki-admin_modules.php?wysiwyg='n'">{tr}Use normal editor{/tr}</a>
 	{/if}
 	
 </h3>
