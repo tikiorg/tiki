@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.39 2004-01-06 11:10:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.40 2004-01-25 01:28:16 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -225,6 +225,12 @@ if (isset($_REQUEST['mytikiprefs'])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'n');
 	}
+
+	if (isset($_REQUEST['mytiki_workflow']) && $_REQUEST['mytiki_workflow'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
+	}
 }
 
 $smarty->assign('mytiki_pages', $tikilib->get_user_preference($userwatch, 'mytiki_pages'), 'y');
@@ -233,6 +239,7 @@ $smarty->assign('mytiki_gals', $tikilib->get_user_preference($userwatch, 'mytiki
 $smarty->assign('mytiki_items', $tikilib->get_user_preference($userwatch, 'mytiki_items'), 'y');
 $smarty->assign('mytiki_msgs', $tikilib->get_user_preference($userwatch, 'mytiki_msgs'), 'y');
 $smarty->assign('mytiki_tasks', $tikilib->get_user_preference($userwatch, 'mytiki_tasks'), 'y');
+$smarty->assign('mytiki_workflow', $tikilib->get_user_preference($userwatch, 'mytiki_workflow'), 'y');
 
 if (isset($_REQUEST['tasksprefs'])) {
 	check_ticket('user-prefs');
