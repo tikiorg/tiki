@@ -1149,6 +1149,22 @@ function get_included_groups($group) {
 	$res["groups"] = $groups;
 	return $res;
     }
+    
+/* Moved from tikilib; also an unused function
+    function get_user_details($item, $login) {
+		global $user_details;
+
+		if (!isset($user_details[$login])) {
+		    $this->load_user_cache($login);
+		}
+
+		if ( isset($user_details[$login][$item]) ) {
+		    return $user_details[$login][$item];
+		} else {
+		    return false;
+		}
+    }
+*/
 
     function set_default_group($user,$group) {
 	$query = "update `users_users` set `default_group` = ?
