@@ -8168,7 +8168,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // Links to internal pages
     // If they are parenthesized then don't treat as links
     // Prevent ))PageName(( from being expanded    \"\'
-    preg_match_all("/([ \n\t\r\,\;^])?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;])/",$data,$pages);
+    preg_match_all("/([ \n\t\r\,\;\.]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     //print_r($pages);
     foreach(array_unique($pages[2]) as $page) {
       if($desc = $this->page_exists_desc($page)) {
@@ -8176,11 +8176,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       } else {
         $repl = "$page<a href='tiki-editpage.php?page=$page' class='wiki'>?</a>";
       } 
-      $data = preg_replace("/([ \n\t\r\,\;^])$page($|[ \n\t\r\,\;])/","$1"."$repl"."$2",$data);
+      $data = preg_replace("/([ \n\t\r\,\;\.]|^)$page($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
       //$data = str_replace($page,$repl,$data);
     }
     
-    $data = preg_replace("/([ \n\t\r^])\)\)([^\(]+)\(\(([ \n\t\r^])/","$1"."$2"."$3",$data);
+    $data = preg_replace("/([ \n\t\r\,\;\.]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
       
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages);
@@ -8448,7 +8448,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
    
 
   function get_pages($data) {
-    preg_match_all("/[ \n\t\r^]([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r])/",$data,$pages);
+    preg_match_all("/([ \n\t\r\,\;\.]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages2);
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages3);
     $pages = array_unique(array_merge($pages[1],$pages2[1],$pages3[1]));
