@@ -2997,8 +2997,7 @@ class TikiLib {
     // Underlined text
     $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
     // Center text
-    // NOTE: Do not remove \n in replace -- possible -=title=- inside
-    $data = preg_replace("/::([^\:]+)::/","<div align='center'>\n$1\n</div>",$data);
+    $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
 
     // Links to internal pages
     // If they are parenthesized then don't treat as links
@@ -3237,7 +3236,10 @@ class TikiLib {
     foreach ($lines as $line) {
 
       // Check for titlebars...
-      // NOTE: that title bar should be start from begining of line and be alone on that line!
+      // NOTE: that title bar should be start from begining of line and
+      //       be alone on that line to be autoaligned... else it is old styled
+      //       styled title bar...
+      
       if (substr(ltrim($line), 0, 2) == '-='
        && substr(rtrim($line), -2, 2) == '=-')
       {
@@ -3276,8 +3278,14 @@ class TikiLib {
 	//       MUST replace all remaining parse blocks to the same logic...
 	continue;
       }
+      // Replace old styled titlebars 
+      if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/","<div class='titlebar'>$1</div>",$line)))
+      {
+	$data .= $line;
+	continue;
+      }
       // If the first character is ' ' and we are not in pre then we are in pre
-      global $feature_wiki_monosp; //var_dump($feature_wiki_monosp);
+      global $feature_wiki_monosp;
       if(substr($line,0,1)==' ' && $feature_wiki_monosp=='y') {
         // This is not list item -- must close lists currently opened
 	while(count($listbeg)) $data.=array_shift($listbeg);
