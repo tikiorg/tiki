@@ -170,8 +170,25 @@
 	</span>
 {/if}
 {/if}
-{if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
+{if $feature_wiki_attachments      == 'y'
+  && ($tiki_p_wiki_view_attachments  == 'y'
+  &&  count($atts) > 0
+  ||  $tiki_p_wiki_attach_files      == 'y'
+  ||  $tiki_p_wiki_admin_attachments == 'y'
+  ||  $tiki_p_admin == 'y')}
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">
+{if $atts_cnt == 0
+  || $tiki_p_wiki_attach_files == 'y'
+  && $tiki_p_wiki_view_attachments == 'n'
+  && $tiki_p_wiki_admin_attachments == 'n'}
+	{tr}attach file{/tr}
+{elseif $atts_cnt == 1}
+	<span class="highlight">{tr}1 file attached{/tr}</span>
+{else}
+	<span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
+{/if}</a></span>
+{/if}
 
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
