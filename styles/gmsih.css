@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.14 2003-12-18 15:30:08 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.15 2003-12-22 08:17:12 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -459,8 +459,24 @@ div.cachedpage {
 	color: black;
 }
 table.wikitable {
+	border-spacing: 0;
+	border-bottom: 1px solid #cccccc;
+}
+table.wikitable tr {
+	background-color: #FFF7E6;
+}
+table.wikitable tr:hover {
+	background-color: #ffffff;
 }
 td.wikicell {
+	padding: 2px 5px 2px 5px;
+	border-spacing: 0;
+	border-collapse: top;
+	border-top: 1px solid #cccccc;
+	border-left: 1px dashed #cccccc;
+}
+td.wikicell:first-child {
+	border-left: 0;
 }
 div.wikitext {
 	padding-left: 1px;
