@@ -7896,6 +7896,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0',$description='') 
   {
+    // Collect pages before modifying data
+    $pages = $this->get_pages($data);
     $name = addslashes($name);
     $description = addslashes($description);
     $data = addslashes($data);
@@ -7905,7 +7907,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $this->clear_links($name);
-    $pages = $this->get_pages($data);
+    // Pages are collected before adding slashes
     foreach($pages as $a_page) {
       $this->replace_link($name,$a_page);
     }
@@ -8542,7 +8544,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $ip = $info["ip"];
     $comment = $info["comment"];
     $data = addslashes($info["data"]);
-    $pageName=addslashes($pageName);
+    // WARNING: POTENTIAL BUG
+    // The line below is not consistent with the rest of Tiki
+    // (I commented it out so it can be further examined by CVS change control)
+    //$pageName=addslashes($pageName);
     $comment=addslashes($comment);
     $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description) 
               values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
@@ -8605,6 +8610,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   {
     global $smarty;
     if($pageName=='SandBox') return;
+    // Collect pages before modifying edit_data
+    $pages = $this->get_pages($edit_data);
     $edit_data = addslashes($edit_data);
     $description = addslashes($description);
     $edit_comment = addslashes($edit_comment);
@@ -8628,7 +8635,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       if(DB::isError($result)) $this->sql_error($query,$result);  
       // Parse edit_data updating the list of links from this page
       $this->clear_links($pageName);
-      $pages = $this->get_pages($edit_data);
+      // Pages are collected at the top of the function before adding slashes
       foreach($pages as $page) {
          $this->replace_link($pageName,$page);
       }  
