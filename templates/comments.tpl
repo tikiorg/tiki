@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.21 2003-10-06 07:14:55 traivor Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.22 2003-10-10 07:06:27 traivor Exp $ *}
 
 <br />
 {if $comments_show eq 'y'}
@@ -11,7 +11,40 @@
   {if $tiki_p_read_comments eq 'y'}
     {if $comments_cant gt 0}
 
-  <form method="post" action="{$comments_father}">
+ 
+  {* This section (comment) is only displayed *}
+  {*if a reply to it is being composed *}
+  {* The $parent_com is only set in this case *}
+  {if $parent_com}
+  <table class="normal">
+  <tr>
+  	<td class="odd">
+  		<a name="threadId{$parent_com.threadId}"></a>
+  		<table >
+  			<tr>
+			  	<td>
+			    	<span class="commentstitle">{$parent_com.title}</span><br />
+			  		{tr}by{/tr} {$parent_com.userName} {tr}on{/tr} {$parent_com.commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$parent_com.average|string_format:"%.2f"}]
+			  	</td>
+			 </tr>
+		</table>
+	</td>
+  </tr>
+  <tr>
+  	<td class="even">
+  		{$parent_com.parsed}
+  		<br /><br />
+  		{if $parent_com.parentId > 0}
+  			[<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$parent_com.grandFather}">{tr}parent{/tr}</a>]
+  		{/if}
+  	</td>
+  </tr>
+  </table>
+  {/if}
+
+  {* Conversely, this section is not displayed if a reply is being composed *}
+  {if !$parent_com}
+ <form method="post" action="{$comments_father}">
   {section name=i loop=$comments_request_data}
   <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
   {/section}
@@ -57,71 +90,8 @@
   </tr>
   </table>
   </form>
-  
-  {if $parent_coms}
-  {section name=com loop=$parent_coms}
-  <table class="normal">
-  <tr>
-  	<td class="odd">
-  		<a name="threadId{$parent_coms[com].threadId}"></a>
-  		<table >
-  			<tr>
-			  	<td>
-			    	<span class="commentstitle">{$parent_coms[com].title}</span><br />
-			  		{tr}by{/tr} {$parent_coms[com].userName} {tr}on{/tr} {$parent_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$parent_coms[com].average|string_format:"%.2f"}]
-			  	</td>
-			  	<td valign="top" style="text-align:right;" >
-			    	{if $tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y'}
-			  			{tr}Vote{/tr}: 
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
-			  		{/if}
-			  		{if $tiki_p_remove_comments eq 'y'}
-			  			(<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$parent_coms[com].threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}remove{/tr}</a>)
-			  		{/if}
-			  		{if $tiki_p_edit_comments eq 'y'}
-			  			(<a class="link" href="{$comments_complete_father}comments_threadId={$parent_coms[com].threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}edit{/tr}</a>)
-			  		{/if}
-			  	</td>
-			 </tr>
-		</table>
-	</td>
-  </tr>
-  <tr>
-  	<td class="even">
-  		{$parent_coms[com].parsed}
-  		<br /><br />
-  		[<a class="commentslink"
-		href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parent_parentId={$comments_parentId}&amp;comments_parentId={$parent_coms[com].threadId}">{tr}reply to this{/tr}</a>
-  		{if $comments_parentId > 0}
-  			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$parent_coms[com].grandFather}">{tr}parent{/tr}</a>
-  		{/if}
-  		]
-  		{if $parent_coms[com].replies.numReplies > 0}
-  			<br />
-  			<ul>
-  			{section name=rep loop=$parent_coms[com].replies.replies}
-  				<li><a class="commentshlink"
-				href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parent_parentId={$comments_parentId}&amp;comments_parentId={$parent_coms[com].threadId}#threadId{$parent_coms[com].replies.replies[rep].threadId}">{$parent_coms[com].replies.replies[rep].title}</a>
-   				<a class="link"
-				href="tiki-user_information.php?view_user={$parent_coms[com].replies.replies[rep].userName}">{tr}by{/tr} {$parent_coms[com].replies.replies[rep].userName} ({tr}Score{/tr}: {$parent_coms[com].replies.replies[rep].points}) {tr}on{/tr} {$parent_coms[com].replies.replies[rep].commentDate|tiki_long_datetime}</a></li>
-  			{/section}
-  			</ul>
-  		{/if}
-  	</td>
-  </tr>
-  </table>
-  {/section}
-  {/if}
-
+ 
   {section name=com loop=$comments_coms}
-  {if $parent_coms}
-  <ul>
-  <li style="list-style-type: none;">
-  {/if}
   <table class="normal">
   <tr>
   	<td class="odd">
@@ -157,9 +127,9 @@
   		{$comments_coms[com].parsed}
   		<br /><br />
   		[<a class="commentslink"
-		href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parent_parentId={$comments_parentId}&amp;comments_parentId={$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
+		href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}&amp;post_reply=1#threadId{$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
   		{if $comments_parentId > 0}
-  			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}">{tr}parent{/tr}</a>
+  			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}#threadId{$comments_coms[com].parentId}">{tr}parent{/tr}</a>
   		{/if}
   		]
   		{if $comments_coms[com].replies.numReplies > 0}
@@ -167,7 +137,7 @@
   			<ul>
   			{section name=rep loop=$comments_coms[com].replies.replies}
   				<li><a class="commentshlink"
-				href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parent_parentId={$comments_parentId}&amp;comments_parentId={$comments_coms[com].threadId}#threadId{$comments_coms[com].replies.replies[rep].threadId}">{$comments_coms[com].replies.replies[rep].title}</a>
+				href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}#threadId{$comments_coms[com].replies.replies[rep].threadId}">{$comments_coms[com].replies.replies[rep].title}</a>
    				<a class="link"
 				href="tiki-user_information.php?view_user={$comments_coms[com].replies.replies[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies.replies[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies.replies[rep].points}) {tr}on{/tr} {$comments_coms[com].replies.replies[rep].commentDate|tiki_long_datetime}</a></li>
   			{/section}
@@ -176,11 +146,8 @@
   	</td>
   </tr>
   </table>
-  {if $parent_coms}
-  </li>
-  </ul>
-  {/if}
   {/section}
+  {/if}
 
 <br />
 <div align="center">   
