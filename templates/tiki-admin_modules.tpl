@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.20 2003-11-15 13:15:36 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.21 2003-11-17 14:12:38 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info --->
@@ -62,7 +62,7 @@ from Admin->General
 <h3>{tr}Assign new module{/tr}</h3>
 {else}
 <h3>{tr}Edit this assigned module:{/tr} {$assign_name}</h3>
-<a href="tiki-admin_modules.php">{tr}Assign new module{/tr}</a>
+<a href="tiki-admin_modules.php" class="linkbut">{tr}Assign new module{/tr}</a>
 {/if}
 {if $preview eq 'y'}
 {tr}Preview{/tr}<br/>
