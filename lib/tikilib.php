@@ -4637,7 +4637,7 @@ function parse_data($data) {
       // OK. Must insert <a id=...> before HEADER and collect TOC entry
       $thisid = 'id' . microtime() * 1000000;
 
-      array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid'>" . substr($line, $hdrlevel + $addremove). '</a>');
+      array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
       $anchor = "<a id='$thisid'>";
       $aclose = '</a>' . $aclose;
         }
