@@ -19,7 +19,7 @@
   <b>{$thread_info.title}</b><br/><br/>
   {$thread_info.parsed}
   <br/><br/>
-  <table width="100%" border="1" style="border: 1px solid black; background:white;">
+  <table width="100%" border="1" style="border: 1px solid black;">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
@@ -228,7 +228,7 @@
   <br/><br/>
   {$comments_coms[ix].parsed}
   <br/><br/>
-  <table style="border: 1px solid black; background:white;" width="100%">
+  <table style="border: 1px solid black;" width="100%">
   <tr>
     <td style="font-size:8pt;">
     {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  

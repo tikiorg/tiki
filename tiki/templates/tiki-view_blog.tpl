@@ -30,6 +30,7 @@
 </td></tr></table>
 </div>
 {section name=ix loop=$listpages}
+<div>
 <div class="posthead">
 <table width="100%"><tr><td align="left">
 <span class="posthead">{$listpages[ix].created|tiki_short_datetime}</span>
@@ -47,6 +48,7 @@
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
 {/if}
+</div>
 </div>
 {/section}
 <br/><br/>

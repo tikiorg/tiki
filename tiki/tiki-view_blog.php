@@ -137,6 +137,7 @@ $smarty->assign('find',$find);
 $listpages = $tikilib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $pdate);
 for($i=0;$i<count($listpages["data"]);$i++) {
   $listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($listpages["data"][$i]["data"]);
+  //print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
 }
 $maxRecords=$blog_data["maxPosts"];
 $cant_pages = ceil($listpages["cant"] / $maxRecords);

@@ -7403,6 +7403,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $feature_hotwords_nw;
     global $feature_wiki_pictures;
     global $tiki_p_upload_picture;
+    global $page;
+    global $dbTiki;
+    global $structlib;
+        
     if($feature_hotwords_nw == 'y') {
       $hotw_nw = "target='_blank'";
     } else {
@@ -7450,7 +7454,18 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
 
     }
-
+    
+    // Now replace a TOC
+    preg_match_all("/\{toc\}/",$data,$tocs);
+    if(count($tocs[0])>0) {
+      include_once("lib/structures/structlib.php");
+      if($structlib->page_is_in_structure($page)) {
+        $html='';
+        $toc=$structlib->get_subtree_toc($page,$page,$html);
+        $data=str_replace('{toc}',$html,$data);
+      }
+    }
+    
     // Now search for images uploaded by users
     if($feature_wiki_pictures=='y') {
       preg_match_all("/\{picture file=([^\}]+)\}/",$data,$pics);
@@ -7480,8 +7495,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     //$data = strip_tags($data);
     // BiDi markers
+    $bidiCount = 0;
     $bidiCount = preg_match_all("/(\{l2r\})/",$data,$pages);
     $bidiCount += preg_match_all("/(\{r2l\})/",$data,$pages);
+    
     $data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
     $data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
     $data = preg_replace("/\{lm\}/", "&lrm;", $data);
@@ -7872,9 +7889,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       } 
       $data.=$line;
     }
+    
 
     // Close BiDi DIVs if any
-    for ($i = 0; $i <= $bidiCount; $i++) {
+    for ($i = 0; $i < $bidiCount; $i++) {
       $data.="</div>";
     }
 

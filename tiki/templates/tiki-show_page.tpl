@@ -2,7 +2,11 @@
 {if $feature_wiki_description}
 <small>{$description}</small>
 {/if}
-<div class="wikitext">{$parsed}</div>
+<div class="wikitext">{if $structure eq 'y'}
+<div class="tocnav">
+<table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
+</div>
+{/if}{$parsed}</div>
 <p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} by {$lastUser}</p>
 {if $wiki_extras eq 'y'}
 <br/>

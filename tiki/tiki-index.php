@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/structures/structlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -213,6 +214,17 @@ if($feature_wiki_attachments == 'y') {
 }
 
 $smarty->assign('wiki_extras','y');
+
+$smarty->assign('structure','n');
+if($structlib->page_is_in_structure($page)) {
+  $smarty->assign('structure','y');
+  $prev=$structlib->get_prev_page($page);
+  $next=$structlib->get_next_page($page);
+  $struct=$structlib->get_structure($page);
+  $smarty->assign('struct_next',$next);
+  $smarty->assign('struct_prev',$prev);
+  $smarty->assign('struct_struct',$struct);
+}
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
