@@ -9,7 +9,7 @@
 			  		{tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$comment.userName}">{$comment.userName}</a> {tr}on{/tr} {$comment.commentDate|tiki_long_datetime} ({tr}Score{/tr}:{$comment.average|string_format:"%.2f"})
 			  	</td>
 			  	<td valign="top" style="text-align:right;" >
-			    	{if $tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y'}
+			    	{if ($tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y') and $comment.userName ne $user}
 			  			{tr}Vote{/tr}: 
 			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
 			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
