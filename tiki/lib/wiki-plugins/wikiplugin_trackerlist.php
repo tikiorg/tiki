@@ -57,8 +57,8 @@ function wikiplugin_trackerlist($data, $params) {
 			
 		if (isset($_REQUEST['tr_sort_mode'])) {
 			$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
-			$tr_sort_mode = $_REQUEST['tr_sort_mode'];
-		} else {
+			$sort_mode = $_REQUEST['tr_sort_mode'];
+		} elseif (!isset($sort_mode)) {
 			if (isset($tracker_info['defaultOrderKey'])) {
 				$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
 				if (isset($tracker_info['defaultOrderDir'])) {
@@ -69,8 +69,8 @@ function wikiplugin_trackerlist($data, $params) {
 			} else {
 				$sort_mode = '';
 			}
-			$tr_sort_mode = $sort_mode;
-		}
+		} 
+		$tr_sort_mode = $sort_mode;
 		$smarty->assign_by_ref('sort_mode', $tr_sort_mode);
 		
 		if (!isset($max)) {
