@@ -483,8 +483,8 @@ class TrackerLib extends TikiLib {
 	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus) {
 
 		if ($trackerId) {
-			$query = "update `tiki_trackers` set `name`=?,description=?, useAttachments=?,
-				useComments=?, showCreated=?,showLastModif=?,showStatus=? 
+			$query = "update `tiki_trackers` set `name`=?,`description`=?, `useAttachments`=?,
+				`useComments`=?, `showCreated`=?,`showLastModif`=?,`showStatus`=? 
 				where `trackerId`=?";
 
 			$bindvars=array($name,$description,$useAttachments,$useComments,$showCreated,
