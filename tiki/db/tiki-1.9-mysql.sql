@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.31 2004-06-05 15:17:28 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.32 2004-06-08 03:11:40 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -1970,7 +1970,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Received articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin types','tiki-articles_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','');
@@ -2783,6 +2783,7 @@ CREATE TABLE tiki_sheet_values (
   calculation varchar(255) default NULL,
   width int(4) NOT NULL default '1',
   height int(4) NOT NULL default '1',
+  format varchar(255) default NULL,
   UNIQUE KEY sheetId (sheetId,begin,rowIndex,columnIndex),
   KEY sheetId_2 (sheetId,rowIndex,columnIndex)
 ) TYPE=MyISAM;
@@ -2876,6 +2877,7 @@ CREATE TABLE tiki_submissions (
   title varchar(80) default NULL,
   subtitle varchar(255) default NULL,
   linkto varchar(255) default NULL,
+  lang varchar(16) default NULL,
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,
@@ -4591,3 +4593,13 @@ CREATE TABLE tiki_hw_pages (
 #
 # Homework tables end
 #
+
+#translated objects table
+CREATE TABLE tiki_translated_objects (
+  traId int(14) NOT NULL auto_increment,
+  type varchar(50) NOT NULL,
+  objId varchar(255) NOT NULL,
+  lang varchar(16) default NULL,
+  PRIMARY KEY (type, objId),
+  KEY ( traId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
