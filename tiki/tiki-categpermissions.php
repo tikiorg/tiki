@@ -17,6 +17,8 @@ global $categlib;
 if (!is_object($categlib)) {
 	include_once('lib/categories/categlib.php');
 }
+global $cachelib;
+global $userlib;
 
 // Get the category from the request var
 if (!isset($_REQUEST['categId'])) {
@@ -59,7 +61,12 @@ $groups = $userlib->get_groups(0, -1, 'groupName_desc');
 $smarty->assign_by_ref('groups', $groups['data']);
 
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
+if (!$cachelib->isCached("categories_permission_names")) {
+	$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
+	$cachelib->cacheItem("categories_permission_names",serialize($perms));
+} else {
+	$perm = unserialize($cachelib->getCached("categories_permission_names"));
+}
 $smarty->assign_by_ref('perms', $perms['data']);
 
 // Get the category path

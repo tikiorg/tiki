@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.45 2004-06-18 20:00:27 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.46 2004-06-18 20:12:39 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -320,14 +320,23 @@ class CategLib extends TikiLib {
 	}
 	
 	// get the permissions assigned to the parent categories of an object
-	function get_object_categories_perms($user, $type, $objId) {
-		global $tiki_p_admin;
-		
+	function get_object_categories_perms($user, $type, $objId) {		
 		$is_categorized = $this->is_categorized("$type",$objId);
 		if ($is_categorized) {
+			global $cachelib;
 			global $userlib;
+			global $tiki_p_admin;
+			
 			$parents = $this->get_object_categories("$type", $objId);
 			$return_perms = array(); // initialize array for storing perms to be returned
+
+			if (!$cachelib->isCached("categories_permission_names")) {
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
+				$cachelib->cacheItem("categories_permission_names",serialize($perms));
+			} else {
+				$perm = unserialize($cachelib->getCached("categories_permission_names"));
+			}
+
 			$perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 			foreach ($perms["data"] as $perm) {
 				$perm = $perm["permName"];
