@@ -24,7 +24,7 @@
       <br />
         <div class="cbox">
         <div class="cbox-title">
-        {tr}Error{/tr}
+        {$errortitle|default:"{tr}Error{/tr}"}
         </div>
         <div class="cbox-data">
         {$msg}<br /><br />

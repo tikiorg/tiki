@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.88 2004-02-11 16:14:53 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.89 2004-02-19 05:19:22 mose Exp $
 
 // Initialization
 
@@ -115,11 +115,11 @@ if(empty($info)) {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   if (!isset($user)){
-    $smarty->assign('msg',tra("Please login."));
-    $smarty->display("pleaselogin.tpl");
-    die;  
-  }
-  $smarty->assign('msg',tra("Permission denied you cannot view this page"));
+		$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+		$smarty->assign('errortitle',tra("Please login"));
+  } else {
+  	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	} 
   $smarty->display("error.tpl");
   die;  
 }
