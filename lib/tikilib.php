@@ -3152,24 +3152,24 @@ class TikiLib {
 
   function get_user_preference($user, $name, $default='')
   {
-    static $preferences;
-
-    if (!isset($preferences[$user][$name])) {
+    global $user_preferences;
+    if (!isset($user_preferences[$user][$name])) {
       $query = "select value from tiki_user_preferences where prefName='$name' and user='$user'";
       $result = $this->query($query);
       if($result->numRows()) {
         $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-        $preferences[$user][$name] = $res["value"];
+        $user_preferences[$user][$name] = $res["value"];
       } else {
-        $preferences[$user][$name] = $default;
+        $user_preferences[$user][$name] = $default;
       }
     }
-
-    return $preferences[$user][$name];
+    return $user_preferences[$user][$name];
   }
 
   function set_user_preference($user, $name, $value)
   {
+  	global $user_preferences;
+	$user_preferences[$user][$name]=$value;    
     $name = addslashes($name);
     $value = addslashes($value);
     $query = "replace into tiki_user_preferences(user,prefName,value) values('$user','$name','$value')";

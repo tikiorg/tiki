@@ -11,6 +11,7 @@ create table tiki_minical_events(
   primary key(eventId)
 );
 
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_usermenu','user','Can create items in personal menu','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minical','user','Can use the mini event calendar','registered');
 
