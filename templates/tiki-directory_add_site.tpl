@@ -30,6 +30,7 @@
 <form action="tiki-directory_add_site.php" method="post">
 <input type="hidden" name="parent" value="{$parent|escape}" />
 <input type="hidden" name="siteId" value="{$siteId|escape}" />
+{$msg}
 <table class="normal">
   <tr>
     <td class="formcolor">{tr}Name {/tr}<span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span>:</td>
@@ -48,7 +49,7 @@
     <td class="formcolor">
     <select name="siteCats[]" multiple="multiple" size="4" />
     {section name=ix loop=$categs}
-      <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path|escape:"html"}</option>
+      <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path}</option>
     {/section}
     </select>
     </td>
