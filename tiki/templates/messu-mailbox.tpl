@@ -1,12 +1,12 @@
 {*Smarty template*}
-<a title="{tr}Click here to view your mailbox{/tr}" class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
+<a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a title="{tr}Click here for help on your mailbox{/tr}" href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a title="{tr}Click here to edit this template{/tr}" href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+<a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
 {include file=tiki-mytiki_bar.tpl}
@@ -80,11 +80,11 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a title="{tr}Click here to view the previous page of messages{/tr}" class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>] 
+[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
- [<a title="{tr}Click here to view the next page of messages{/tr}" class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>
