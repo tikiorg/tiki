@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.8 2003-07-02 03:55:26 drieschner Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.9 2003-07-05 12:41:41 ohertel Exp $
 
 function chgArtType() {
   if(document.getElementById('articletype').value=='Article') {
@@ -23,22 +23,23 @@ function setMenuCon(foo1,foo2) {
 }
 
 function genPass(w1,w2,w3){
-  vo="aeiouAEIOU";
-  co="bcdfgjklmnprstvwxzBCDFGHJKLMNPQRSTVWXYZ0123456789_";
+  vo="aeiouAEU";
+  co="bcdfgjklmnprstvwxzBCDFGHJKMNPQRSTVWXYZ0123456789_$%#";
   s=Math.round(Math.random());
   l=8;
   p='';
-  for(i=0; i < l; i++){
-    if (s){
-      letra=vo.charAt(Math.round( 
-      Math.random() * (vo.length - 1) ));
+  for (i=0; i < l; i++)
+  {
+    if (s)
+    {
+      letter=vo.charAt(Math.round(Math.random() * (vo.length - 1) ));
       s=0;
-    }else{
-      letra=co.charAt(Math.round( 
-      Math.random() * (co.length - 1) ));
+    } else
+    {
+      letter=co.charAt(Math.round(Math.random() * (co.length - 1) ));
       s=1;
     }
-    p=p + letra;
+    p=p + letter;
   }
   document.getElementById(w1).value=p;
   document.getElementById(w2).value=p;
@@ -106,6 +107,21 @@ function icntoggle(foo) {
   document.getElementsByName(foo)[0].src = pic.src;
 }
 
+//
+// set folder icon state during page load
+//
+function setFolderIcons() { 
+  var elements      = document.forms[the_form].elements[elements_name];
+  var elements_cnt  = (typeof(elements.length) != 'undefined') ? elements.length : 0;
+  if (elements_cnt) {
+    for (var i = 0; i < elements_cnt; i++) {
+      elements[i].checked = document.forms[the_form].elements[switcher_name].checked;
+    } 
+  } else {
+    elements.checked        = document.forms[the_form].elements[switcher_name].checked;;
+  } // end if... else
+  return true;
+} // setFolderIcons()
 
 // name - name of the cookie
 // value - value of the cookie
