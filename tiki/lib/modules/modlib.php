@@ -31,7 +31,7 @@ class ModLib extends TikiLib {
 		$cache_time = is_numeric($cache_time) ? $cache_time : 0;
 		$rows = is_numeric($rows) ? $rows : 10;
 		$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type));
+		$result = $this->query($query,array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
 		if ($type == "D" || $type == "P") {
 			global $usermoduleslib;
 			$usermoduleslib->add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
