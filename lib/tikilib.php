@@ -23,6 +23,7 @@ class TikiLib extends TikiDB {
     var $parser;
     var $pre_handlers = array();
     var $pos_handlers = array();
+    var $postedit_handlers = array();
     var $usergroups_cache = array();
 
     var $num_queries = 0;
@@ -1575,25 +1576,25 @@ function get_categoryobjects($catids) {
     return $out;
 }
 
-/** shared used in mod-last_category_objects 
+/** shared used in mod-last_category_objects
  */
 function last_category_objects($categId, $maxRecords, $type="") {
-	$mid = "and tbl1.`categId`=?";
-	$bindvars = array((int)$categId);
-	if ($type) {
-		$mid.= " and tbl2.`type`=?";
-		$bindvars[] = $type;
-	}
-	$sort_mode = "created_desc";
-	$query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
-	$query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
-	$result = $this->query($query,$bindvars,$maxRecords,0);
+  $mid = "and tbl1.`categId`=?";
+  $bindvars = array((int)$categId);
+  if ($type) {
+    $mid.= " and tbl2.`type`=?";
+    $bindvars[] = $type;
+  }
+  $sort_mode = "created_desc";
+  $query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
+  $query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+  $result = $this->query($query,$bindvars,$maxRecords,0);
 
-	$ret = array('data'=>array());
-	while ($res = $result->fetchRow()) {
-		$ret['data'][] = $res;
-	}
-	return $ret;
+  $ret = array('data'=>array());
+  while ($res = $result->fetchRow()) {
+    $ret['data'][] = $res;
+  }
+  return $ret;
 }
 
 /*shared*/
@@ -3027,8 +3028,8 @@ function last_pages($maxRecords = -1) {
 
 
 function last_major_pages($maxRecords = -1) {
-  $query = "select tp.`pageName`,tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta 
-		on tp.`pageName`=ta.`pageName` and tp.`lastModif`=ta.`lastModif` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
+  $query = "select tp.`pageName`,tp.`lastModif`,tp.`user` from `tiki_pages` tp left join `tiki_actionlog` ta
+    on tp.`pageName`=ta.`pageName` and tp.`lastModif`=ta.`lastModif` where ta.`action`!='' order by tp.".$this->convert_sortmode('lastModif_desc');
   $result = $this->query($query,array(),$maxRecords,0);
   $ret = array();
   while ($res = $result->fetchRow()) {
@@ -3547,6 +3548,24 @@ function add_pos_handler($name) {
     }
 }
 
+// add a post edit filter which is called when a wiki page is edited and before
+// it is committed to the database (see tiki-handlers.php on its usage)
+function add_postedit_handler($name)
+{
+  if(!in_array($name,$this->postedit_handlers)) {
+    $this->postedit_handlers[]=$name;
+  }
+}
+
+// apply all the post edit handlers to the wiki page data
+function apply_postedit_handlers($data) {
+  // Process editpage_handlers here
+  foreach($this->postedit_handlers as $handler) {
+    $data = $handler($data);
+  }
+  return $data;
+}
+
 // This function handles wiki codes for those special HTML characters
 // that textarea won't leave alone.
 function parse_htmlchar(&$data) {
@@ -3837,11 +3856,11 @@ function parse_data($data) {
     global $feature_wikiwords;
 
     // Process pre_handlers here
-		if (is_array($this->pre_handlers)) {
+    if (is_array($this->pre_handlers)) {
     foreach ($this->pre_handlers as $handler) {
   $data = $handler($data);
     }
-		}
+    }
 
     // Handle pre- and no-parse sections and plugins
     $preparsed = array();
