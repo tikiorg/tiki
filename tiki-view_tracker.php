@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.70 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.71 2004-06-14 05:40:15 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -140,9 +140,10 @@ $writergroupfield = '';
 $mainfield = '';
 $mainfieldId = 0;
 $orderkey = false;
+$listfields = array();
+
 $usecategs = false;
 $ins_categs = array();
-$listfields = array();
 $textarea_options = false;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
@@ -174,7 +175,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		$listfields[$fid]['isSearchable'] = $fields["data"][$i]["isSearchable"];
 	}
 	
-	if ($fields["data"][$i]["type"] == 'f') {
+	if ($fields["data"][$i]["type"] == 'f') { // date and time
 		$fields["data"][$i]["value"] = '';
 		$ins_fields["data"][$i]["value"] = '';
 		if (isset($_REQUEST["$ins_id" . "Day"])) {
@@ -184,7 +185,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$ins_fields["data"][$i]["value"] = date("U");
 		}
 	
-	} elseif ($fields["data"][$i]["type"] == 'e') {
+	} elseif ($fields["data"][$i]["type"] == 'e') { // category
 		include_once('lib/categories/categlib.php');
 		$k = $fields["data"][$i]["options"];
 		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
@@ -194,7 +195,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 		$ins_fields["data"][$i]["value"] = '';
 
-	} elseif ($fields["data"][$i]["type"] == 'u') {
+	} elseif ($fields["data"][$i]["type"] == 'u') { // user selection
 		if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
@@ -212,7 +213,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 
-	} elseif ($fields["data"][$i]["type"] == 'g') {
+	} elseif ($fields["data"][$i]["type"] == 'g') { // group selection
 		if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
@@ -230,7 +231,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 
-	} elseif ($fields["data"][$i]["type"] == 'c') {
+	} elseif ($fields["data"][$i]["type"] == 'c') { // checkbox
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
 		} else {
@@ -242,7 +243,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 
-	} elseif ($fields["data"][$i]["type"] == 'a') {
+	} elseif ($fields["data"][$i]["type"] == 'a') { // textarea
 		if (isset($_REQUEST["$ins_id"])) {
 			if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
 				$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
@@ -272,14 +273,14 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if ($fields["data"][$i]["type"] == 'r')	{
+		if ($fields["data"][$i]["type"] == 'r')	{ // item link
 			if ($tiki_p_admin_trackers == 'y') {
 				$stt = 'poc';
 			} else {
 				$stt = 'o';
 			}
 			$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$stt);
-		} elseif ($fields["data"][$i]["type"] == 'i')	{
+		} elseif ($fields["data"][$i]["type"] == 'i')	{ // image
 			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 				if (!empty($gal_match_regex)) {
 					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
