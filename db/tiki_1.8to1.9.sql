@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.6 2004-01-16 01:32:22 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.7 2004-01-16 02:31:20 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -60,9 +60,10 @@ ALTER TABLE `users_grouppermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( `group
 ALTER TABLE `users_objectpermissions` CHANGE `groupName` `groupName` VARCHAR( 255 ) NOT NULL;
 ALTER TABLE `users_objectpermissions` DROP PRIMARY KEY , ADD PRIMARY KEY ( objectId,groupName(30),permName );
 
+ALTER TABLE `tiki_group_inclusion` DROP PRIMARY KEY ;
 ALTER TABLE `tiki_group_inclusion` CHANGE `groupName` `groupName` VARCHAR( 255 ) NOT NULL;
 ALTER TABLE `tiki_group_inclusion` CHANGE `includeGroup` `includeGroup` VARCHAR( 255 ) NOT NULL;
-ALTER TABLE `tiki_group_inclusion` DROP PRIMARY KEY , ADD PRIMARY KEY ( groupName(30),includeGroup(30) );
+ALTER TABLE `tiki_group_inclusion` ADD PRIMARY KEY ( groupName(30),includeGroup(30) );
 
 
 
