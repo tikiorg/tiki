@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_dmsg.php,v 1.3 2003-08-07 04:34:03 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_dmsg.php,v 1.4 2003-08-14 01:00:30 zaufi Exp $
  *
  * \brief 'debugger command' to show user messages in tab
  *
@@ -16,10 +16,6 @@ require_once ('lib/debug/debugger.php');
  * \brief Command 'watch'
  */
 class DbgCmd_DebugMessages extends DebuggerCommand {
-	function description() {
-		return 'Show debug messages';
-	}
-
 	/// Function to create interface part of command: return ["button name"] = <html code>
 	function draw_interface() {
 		global $smarty;
