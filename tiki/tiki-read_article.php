@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.42 2004-06-15 15:49:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.43 2004-06-17 18:52:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,7 +55,7 @@ if (!isset($_REQUEST["articleId"])) {
 		die;
 	}
 
-	if ($userlib->object_has_one_permission($article_data["topicId"], 'topic')) {
+	if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($article_data["topicId"], 'topic')) {
 		if (!$userlib->object_has_permission($user, $article_data["topicId"], 'topic', 'tiki_p_topic_read')) {
 			$smarty->assign('msg', tra("Permision denied"));
 
