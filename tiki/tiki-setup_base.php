@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.51 2004-02-24 21:51:45 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.52 2004-03-12 16:31:13 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,13 +92,19 @@ if (isset($_SESSION["$user_cookie_site"])) {
 } else {
     $user = NULL;
 }
-
-function tra($content) {
+/** translate a English string
+ * @param $content - English string
+ * @param $lg - language - if not specify = global current language
+ */
+function tra($content, $lg="") {
     global $lang_use_db;
+    global $language;
 
     if ($lang_use_db != 'y') {
-        global $lang;
-
+        if ($lg == "" || $lg == $language)
+           global $lang;
+        else
+           include ("lang/$lg/language.php");
         if ($content) {
             if (isset($lang[$content])) {
                 return $lang[$content];
@@ -109,9 +115,8 @@ function tra($content) {
     } else {
         global $tikilib;
 
-        global $language;
         $query = "select `tran` from `tiki_language` where `source`=? and `lang`=?";
-        $result = $tikilib->query($query, array($content,$language));
+        $result = $tikilib->query($query, array($content,$lg == ""? $language: $lg));
         $res = $result->fetchRow();
 
         if (!$res)
