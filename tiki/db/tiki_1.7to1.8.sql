@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.48 2003-10-25 14:17:36 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.49 2003-10-26 03:35:41 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -469,6 +469,7 @@ INSERT IGNORE INTO tiki_article_types(type,show_post_expire) VALUES ('Event','n'
 INSERT IGNORE INTO tiki_article_types(type,show_post_expire,heading_only,allow_comments) VALUES ('Classified','n','y','n');
 
 ALTER TABLE tiki_articles ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
+update tiki_articles set expireDate = 1104555540 where expireDate is null;
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
 
