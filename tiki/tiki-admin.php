@@ -1924,7 +1924,8 @@ $urlIndex = $tikilib->get_preference("urlIndex",'');
 
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');
-$maxVersions = $tikilib->get_preference("maxVersions", 20);
+$maxVersions = $tikilib->get_preference("maxVersions", 0);
+$keep_versions = $tikilib->get_preference("keep_versions", 1);
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $title = $tikilib->get_preference("title","");
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
@@ -1940,6 +1941,7 @@ $smarty->assign_by_ref('useUrlIndex',$useUrlIndex);
 $smarty->assign_by_ref('forgotPass',$forgotPass);
 $smarty->assign_by_ref('validateUsers',$validateUsers);
 $smarty->assign_by_ref('maxVersions',$maxVersions);
+$smarty->assign_by_ref('keep_versions',$keep_versions);
 $smarty->assign_by_ref('title',$title);
 $smarty->assign_by_ref('maxRecords',$maxRecords);
 
