@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.8 2004-06-10 16:21:01 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.9 2004-06-11 16:25:51 lfagundes Exp $ *}
 {* Module layout with controls *}
 
 <div class="box {$module_name}"><div class="box-title">
@@ -22,7 +22,7 @@
   </tr>
 </table>
 {else}
-  {$module_title|escape}
+  {$module_title}
 {/if}
 
 </div><div class="box-data">
