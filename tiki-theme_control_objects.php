@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.8 2004-05-30 05:10:57 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.9 2004-06-14 00:44:10 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,11 @@ case 'file gallery':
 	break;
 
 case 'forum':
-	$objects = $tikilib->list_forums(0, -1, 'name_asc', $find_objects);
+	require_once('lib/commentslib.php');
+	if (!isset($commentslib)) {
+		$commentslib = new Comments($dbTiki);
+	}
+	$objects = $commentslib->list_forums(0, -1, 'name_asc', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
