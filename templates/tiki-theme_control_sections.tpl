@@ -5,27 +5,15 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Theme Control{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-theme_control_sections.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}theme control sections tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
-
 
 <br /><br />
 <div class="simplebox">
@@ -39,7 +27,7 @@
 <br /><br />
 [<a class="link" href="tiki-theme_control_objects.php">{tr}Control by Object{/tr}</a>
 | <a class="link" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>]
-<h3>{tr}Assign themes to sections{/tr}</h3>
+<h2>{tr}Assign themes to sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
 <table class="normal">
 <tr>
@@ -69,7 +57,7 @@
 </table>
 </form> 
 
-<h3>{tr}Assigned sections{/tr}</h3>
+<h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
 <table class="normal">
 <tr>
