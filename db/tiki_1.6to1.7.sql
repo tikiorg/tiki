@@ -1,5 +1,4 @@
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoapprove_submission','cms','Submited articles automatically approved','editor');
-
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoapprove_submission','cms','Submited articles automatically approved','editors');
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forums_report','forums','Can report msgs to moderator','registered');
 ### forum posts can be reported to moderator ###
@@ -84,7 +83,7 @@ alter table tiki_comments add user_ip varchar(15);
 update tiki_comments set user_ip = '127.0.0.1';
 
 ### Forum attachments (!) ###
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_attach','forums','Can attach to forum posts','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forum_attach','forums','Can attach to forum posts','editors');
 
 drop table if exists tiki_forum_attachments;
 create table tiki_forum_attachments(
@@ -278,7 +277,7 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admi
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_chart','charts','Can view charts','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_vote_chart','charts','Can vote','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_suggest_chart_item','charts','Can suggest items','basic');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoval_chart_suggestions','charts','Autovalidate suggestions','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoval_chart_suggestions','charts','Autovalidate suggestions','editors');
 
 ## Change to track duplicate file uploads in file galleries
 alter table tiki_files add hash char(32);
@@ -668,7 +667,7 @@ CREATE TABLE tiki_calendar_items (
 ## Permissions
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_workflow','workflow','Can admin workflow processes','admin');
-INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_abort_instance','workflow','Can abort a process instance','editor');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_abort_instance','workflow','Can abort a process instance','editors');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_use_workflow','workflow','Can execute workflow activities','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_exception_instance','workflow','Can declare an instance as exception','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send_instance','workflow','Can send instances after completion','registered');
