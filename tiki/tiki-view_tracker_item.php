@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.33 2004-01-28 12:17:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.34 2004-01-28 12:43:38 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,80 +69,76 @@ $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_
 $ins_fields = $fields;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
-	if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers) {
-		$fid = $fields["data"][$i]["fieldId"];
-		
-		$ins_id = 'ins_' . $fid;
-		$fields["data"][$i]["ins_id"] = $ins_id;
-		
-		$filter_id = 'filter_' . $fid;
-		$fields["data"][$i]["filter_id"] = $filter_id;
+	$fid = $fields["data"][$i]["fieldId"];
+	
+	$ins_id = 'ins_' . $fid;
+	$fields["data"][$i]["ins_id"] = $ins_id;
+	
+	$filter_id = 'filter_' . $fid;
+	$fields["data"][$i]["filter_id"] = $filter_id;
 
-		if ($fields["data"][$i]["type"] == 'f') {
-			$fields["data"][$i]["value"] = '';
-			$ins_fields["data"][$i]["value"] = '';
-			if (isset($_REQUEST["$ins_id" . "Day"])) {
-				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
-				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
-			} else {
-				$ins_fields["data"][$i]["value"] = date("U");
-			}
-		
-		} elseif ($fields["data"][$i]["type"] == 'e') {
-			include_once('lib/categories/categlib.php');
-			$k = $ins_fields["data"][$i]["options"];
-			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-		
-		} elseif ($fields["data"][$i]["type"] == 'c') {
-			if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
-				$ins_fields["data"][$i]["value"] = 'y';
-			} else {
-				$ins_fields["data"][$i]["value"] = 'n';
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-
+	if ($fields["data"][$i]["type"] == 'f') {
+		$fields["data"][$i]["value"] = '';
+		$ins_fields["data"][$i]["value"] = '';
+		if (isset($_REQUEST["$ins_id" . "Day"])) {
+			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
+			0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 		} else {
-			if (isset($_REQUEST["$ins_id"])) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-			} else {
-				$fields["data"][$i]["value"] = '';
-			}
-			if ($fields["data"][$i]["type"] == 'i')	{
-				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-					if (!empty($gal_match_regex)) {
-						if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
+			$ins_fields["data"][$i]["value"] = date("U");
+		}
+	
+	} elseif ($fields["data"][$i]["type"] == 'e') {
+		include_once('lib/categories/categlib.php');
+		$k = $ins_fields["data"][$i]["options"];
+		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+	
+	} elseif ($fields["data"][$i]["type"] == 'c') {
+		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
+			$ins_fields["data"][$i]["value"] = 'y';
+		} else {
+			$ins_fields["data"][$i]["value"] = 'n';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+
+	} else {
+		if (isset($_REQUEST["$ins_id"])) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+		} else {
+			$ins_fields["data"][$i]["value"] = '';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+		if ($fields["data"][$i]["type"] == 'i')	{
+			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
+				if (!empty($gal_match_regex)) {
+					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+						$smarty->display("error.tpl");
+						die;
 					}
-					if (!empty($gal_nmatch_regex)) {
-						if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
-							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-							$smarty->display("error.tpl");
-							die;
-						}
-					}
-					$type = $_FILES["$ins_id"]['type'];
-					$size = $_FILES["$ins_id"]['size'];
-					$filename = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
-					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 				}
+				if (!empty($gal_nmatch_regex)) {
+					if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+						$smarty->display("error.tpl");
+						die;
+					}
+				}
+				$type = $_FILES["$ins_id"]['type'];
+				$size = $_FILES["$ins_id"]['size'];
+				$filename = $_FILES["$ins_id"]['name'];
+				$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
+				$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+				$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 			}
 		}
-	} else {
-		unset($ins_fields["data"][$i]);
 	}
 }
 
@@ -200,8 +196,6 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				}
-			} else {
-				unset($ins_fields["data"][$i]);
 			}
 		}
 	}
