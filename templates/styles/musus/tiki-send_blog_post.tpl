@@ -33,12 +33,12 @@
 {/if}	
 <h2>{tr}Post{/tr}</h2>
 <a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
-<br/><br/>
+<br /><br />
 <div class="posthead">
 <table ><tr><td align="left">
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
-	{$post_info.title}<br/>
+	{$post_info.title}<br />
 	<small> {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
 {else}
 	{$post_info.created|tiki_short_datetime}<small> {tr}posted by{/tr} {$post_info.user}</small>

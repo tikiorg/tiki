@@ -41,7 +41,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 <input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
-<tr class="editblogform"><td>{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}</td><td>
+<tr class="editblogform"><td>{tr}Data{/tr}{if $wysiwyg eq 'n'}<br /><br />{include file="textareasize.tpl" area_name='blogedit' formId='editpageform'}{/if}</td><td>
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
 <textarea id="blogedit" class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

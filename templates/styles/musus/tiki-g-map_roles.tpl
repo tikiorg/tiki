@@ -1,18 +1,18 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-map_roles.php?pid={$pid}">{tr}Map process roles{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-g-map_roles.php?pid={$pid}">{tr}Map process roles{/tr}</a><br /><br />
 <a class="linkbut" href="tiki-g-admin_processes.php">{tr}admin processes{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_activities.php?pid={$pid}">{tr}admin activities{/tr}</a>
 <a class="linkbut" href="tiki-g-admin_roles.php?pid={$pid}">{tr}admin roles{/tr}</a>
-<a class="linkbut" href="tiki-g-admin_processes.php?pid={$pid}">{tr}edit this process{/tr}</a><br/><br/>
-{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br/>
+<a class="linkbut" href="tiki-g-admin_processes.php?pid={$pid}">{tr}edit this process{/tr}</a><br /><br />
+{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
 
-process graph<br/>
+process graph<br />
 
 {if count($errors) > 0}
 <div class="wikitext">
-Errors:<br/>
+Errors:<br />
 {section name=ix loop=$errors}
-<small>{$errors[ix]}</small><br/>
+<small>{$errors[ix]}</small><br />
 {/section}
 </div>
 {/if}
@@ -36,7 +36,7 @@ Errors:<br/>
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
 		  		<td class="formcolor" >
-	  			{tr}Roles{/tr}:<br/>		  		
+	  			{tr}Roles{/tr}:<br />		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
@@ -70,7 +70,7 @@ Errors:<br/>
 	</form>
 {else}
 	<h3>{tr}Warning{/tr}</h3>
-	{tr}No roles are defined yet so no roles can be mapped{/tr}<br/>
+	{tr}No roles are defined yet so no roles can be mapped{/tr}<br />
 {/if}
 
 <h3>{tr}List of mappings{/tr}</h3>
@@ -125,7 +125,7 @@ Errors:<br/>
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

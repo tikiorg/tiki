@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-simple_plugin.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-simple_plugin.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
 
 <div class="catlists">
-    <div class="cbox-title">{$title}</div>
-    <div class="cbox-data">
+    <div class="tiki-title">{$title}</div>
+    <div class="tiki-content">
         {foreach key=t item=i from=$listcat}
             <b>{$t}:</b>
             {section name=o loop=$i}

@@ -1,13 +1,13 @@
-<a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a><br /><br />
 [<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
 |<a href="tiki-inexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 
 <table >
 <tr>
   <td valign="top" >
-  <div class="cbox">
-  <div class="cbox-title">{tr}Im- Export languages{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}Im- Export languages{/tr}</div>
+  <div class="tiki-content">
   <div class="simplebox">
   <form action="tiki-imexport_languages.php" method="post">
   <table>

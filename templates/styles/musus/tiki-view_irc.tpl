@@ -7,7 +7,7 @@ Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for detail
 <a class="pagetitle" href="tiki-view_irc.php">
 {tr}IRC log{/tr} {$irc_log_channel} {$irc_log_time|tiki_long_date}
 </a>
-<br/><br/>
+<br /><br />
 <div>
 <form method="get" action="tiki-view_irc.php">
 <table>

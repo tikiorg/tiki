@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-user_tasks.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-user_tasks.tpl,v 1.2 2004-01-16 19:37:25 musus Exp $ *}
 
 {if $feature_tasks eq 'y' and $user}
 
-{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" name="user_tasks"}
+{tikimodule title="<a class='tikitlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" name="user_tasks"}
 <form action="{$ownurl}" method="post">
 <input style="font-size: 9px;" type="text" name="modTasksTitle" />
 <input style="font-size: 9px;" type="submit" name="modTasksSave" value="{tr}add{/tr}" />

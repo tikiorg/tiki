@@ -13,13 +13,13 @@
 </select>
 <input type="submit" name="selrank" value="{tr}view{/tr}" />
 </form>
-<br/><br/>
+<br /><br />
 {section name=ix loop=$rankings}
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {$rankings[ix].title} ({$rankings[ix].y})
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <table >
 {section name=xi loop=$rankings[ix].data}
 <tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  class="form" align="right">{$rankings[ix].data[xi].hits}</td></tr>
@@ -27,5 +27,5 @@
 </table>
 </div>
 </div>
-<br/>
+<br />
 {/section}

@@ -25,7 +25,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 {if $receivedPageId > 0 or $view eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>
@@ -90,7 +90,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-received_pages.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -100,7 +100,7 @@
 &nbsp;[<a class="prevnext" href="tiki-received_pages.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-received_pages.php?offset={$selector_offset}&amp;sort_mode={$sort_mode}">

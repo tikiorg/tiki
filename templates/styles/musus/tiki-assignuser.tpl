@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-assignuser.tpl,v 1.2 2004-01-13 19:26:59 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-assignuser.tpl,v 1.3 2004-01-16 19:33:59 musus Exp $ *}
 
-<a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br/><br/>
+<a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <h3>{tr}User Information{/tr}</h3>
 <table>
 <tr><td>{tr}Login{/tr}:</td><td>{$user_info.login}</td></tr>
@@ -26,7 +26,7 @@
 </td></tr>
 </table>
 
-<br/>
+<br />
 <div align="center">
 <table class="findtable">
 <tr><td>{tr}Find{/tr}</td>
@@ -58,7 +58,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-assignuser.php?find={$find}&amp;assign_user={$assign_user}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;&nbsp;
@@ -68,7 +68,7 @@
 &nbsp;&nbsp;[<a class="prevnext" href="tiki-assignuser.php?find={$find}&amp;assign_user={$assign_user}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-assignuser.php?find={$find}&amp;assign_user={$assign_user}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>&nbsp;

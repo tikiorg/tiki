@@ -1,9 +1,9 @@
 <a class="pagetitle" href="tiki-config_pdf.php">{tr}Create PDF{/tr}</a><br /><br />
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}PDF Settings{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <form method="post" action="tiki-config_pdf.php">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />
@@ -23,11 +23,11 @@
 </div>
 <br />
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Filter{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <form action="tiki-config_pdf.php" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
 <input type="hidden" name="font" value="{$font|escape}" />
@@ -45,11 +45,11 @@
 </div>
 <br />
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Select Wiki Pages{/tr}
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <br />
 <form action="tiki-config_pdf.php" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
@@ -85,11 +85,11 @@
 </div>
 </div>
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 {tr}Create PDF{/tr}
 </div>
-<div class="cbox-data" align="center">
+<div class="tiki-content" align="center">
 <form action="tiki-export_pdf.php" method="post">
 <input type="hidden" name="convertpages" value="{$form_convertpages|escape}" />
 <input type="hidden" name="font" value="{$font|escape}" />

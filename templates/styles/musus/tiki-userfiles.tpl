@@ -1,7 +1,7 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 <h3>{tr}User Files{/tr}</h3>
 
 <div align="center">
@@ -60,7 +60,7 @@
 &nbsp;[<a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

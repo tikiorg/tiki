@@ -22,7 +22,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}List of processes{/tr} ({$cant})</h3>
 
@@ -95,7 +95,7 @@
 <td  class="heading" >{tr}Activs{/tr}</td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
-<td  class="heading" >{tr}Instances{/tr}<br/>
+<td  class="heading" >{tr}Instances{/tr}<br />
 </td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -160,7 +160,7 @@
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

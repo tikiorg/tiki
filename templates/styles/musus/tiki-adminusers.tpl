@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-adminusers.tpl,v 1.2 2004-01-13 19:31:33 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-adminusers.tpl,v 1.3 2004-01-16 19:33:59 musus Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 <!-- the help link info -->
@@ -15,7 +15,7 @@
 
 <!-- begin -->
 
-<br/><br/>
+<br /><br />
 <h2>{tr}Add a new user{/tr}</h2>
 
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
@@ -24,21 +24,21 @@
 <tr><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" /></td></tr>
 <tr><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
 <tr><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30" /></td></tr>
-<tr><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist" /><br/>{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked></td></tr>
+<tr><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist" /><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked></td></tr>
 <tr><td >&nbsp;</td><td><input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
-<br/>
+<br />
 <table>
 <tr><td><a href="javascript:genPass('genepass','pass','pass2');">{tr}Generate a password{/tr}</a></td>
 <td><input id='genepass' type="text" /></td></tr>
 </table>
-<br/>
+<br />
 {if (($added != "") || ($discarded != "")) }
 	<h2>{tr}Batch Upload Results{/tr}</h2>
 	{tr}Added users{/tr}: {$added}
 	{if ($discarded != "") }
-		 - {tr}Rejected users{/tr}: {$discarded}<br/><br/>
+		 - {tr}Rejected users{/tr}: {$discarded}<br /><br />
 		<table>
 			<tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
 			{section name=reject loop=$discardlist}
@@ -91,7 +91,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -101,7 +101,7 @@
 &nbsp;[<a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-adminusers.php?find={$find}&amp;offset={$selector_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">

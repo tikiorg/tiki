@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-my_tiki.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-my_tiki.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -16,7 +16,7 @@
 
 
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 
 
 
@@ -43,8 +43,8 @@
 
 {if $mytiki_pages eq 'y'}
 <div id="content1" class="content">
-  <div class="cbox">
-  <div class="cbox-title">
+  <div class="tiki">
+  <div class="tiki-title">
     <table width=100%>
     <tr>
       <td width=70%>{tr}User Pages{/tr}</td>
@@ -53,7 +53,7 @@
     </tr>
     </table>
   </div>
-  <div class="cbox-data">
+  <div class="tiki-content">
   <table >
   {section name=ix loop=$user_pages}
   <tr><td>
@@ -70,9 +70,9 @@
 
 {if $mytiki_gals eq 'y'}
 <div id="content2" class="content">
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Galleries{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}User Galleries{/tr}</div>
+  <div class="tiki-content">
   <table >
   {section name=ix loop=$user_galleries}
   <tr><td>
@@ -89,9 +89,9 @@
 
 {if $mytiki_items eq 'y'}
 <div id="content3" class="content">
-  <div class="cbox">
-  <div class="cbox-title">{tr}Assigned items{/tr}</div>
-  <div class="cbox-data">
+  <div class="tiki">
+  <div class="tiki-title">{tr}Assigned items{/tr}</div>
+  <div class="tiki-content">
   <table >
   {section name=ix loop=$user_items}
   <tr><td>
@@ -109,8 +109,8 @@
 
 {if $mytiki_msgs eq 'y'}
 <div id="content4" class="content">
-  <div class="cbox">
-  <div class="cbox-title">{tr}Unread Messages{/tr}</div>
+  <div class="tiki">
+  <div class="tiki-title">{tr}Unread Messages{/tr}</div>
   <table >
   {section name=ix loop=$msgs}
   <tr><td>
@@ -124,8 +124,8 @@
 
 {if $mytiki_tasks eq 'y'}
 <div id="content5" class="content">
-  <div class="cbox">
-  <div class="cbox-title">{tr}Tasks{/tr}</div>
+  <div class="tiki">
+  <div class="tiki-title">{tr}Tasks{/tr}</div>
   <table >
   {section name=ix loop=$tasks}
   <tr><td>
@@ -141,8 +141,8 @@
 
 {if $mytiki_blogs eq 'y'}
 <div id="content6" class="content">
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Blogs{/tr}</div>
+  <div class="tiki">
+  <div class="tiki-title">{tr}User Blogs{/tr}</div>
   <table >
   {section name=ix loop=$user_blogs}
   <tr><td>

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-eph.tpl,v 1.2 2004-01-16 18:01:05 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-eph.tpl,v 1.3 2004-01-16 19:37:25 musus Exp $ *}
 
-{tikimodule title="<a class=\"cboxtlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" name="eph"}
+{tikimodule title="<a class=\"tikitlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" name="eph"}
 {if $modephdata}
   <table>
   {if $modephdata.filesize}

@@ -35,7 +35,7 @@
           <td class="form">{tr}Use a directory to store files{/tr}:</td>
           <td class="form"><input type="radio" name="fgal_use_db" value="n"
               {if $fgal_use_db eq 'n'}checked="checked"{/if}/>
-              {tr}Directory path{/tr}:<br><input type="text" name="fgal_use_dir"
+              {tr}Directory path{/tr}:<br /><input type="text" name="fgal_use_dir"
               value="{$fgal_use_dir|escape}" size="50" /></td>
         </tr><tr>
           <td class="form">{tr}Uploaded filenames must match regex{/tr}:</td>

@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 <h3>{tr}Watches{/tr}</h3>
 
 

@@ -16,9 +16,9 @@
 
 
 
-<br/><br/>
+<br /><br />
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
-<br/><br/>
+<br /><br />
 <h3>{tr}Current heading{/tr}</h3>
 {if strlen($heading) > 0}
 {eval var=$heading}
@@ -55,4 +55,4 @@
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
-<br/>
+<br />

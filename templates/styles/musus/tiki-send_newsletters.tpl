@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr}</a><br/>
+<a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr}</a><br />
 {if $emited eq 'y'}
-{tr}The newsletter was sent to {$sent} email addresses{/tr}<br/><br/>
+{tr}The newsletter was sent to {$sent} email addresses{/tr}<br /><br />
 {/if}
 {if $presend eq 'y'}
 <div class="wikitext">{$subject}</div>
@@ -15,7 +15,7 @@
 </form>
 {else}
 {if $preview eq 'y'}
-<br/>
+<br />
 <div class="wikitext">{$info.subject}</div>
 <div class="wikitext">{$parsed}</div>
 {/if}
@@ -91,7 +91,7 @@
 &nbsp;[<a class="prevnext" href="tiki-send_newsletters.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-send_newsletters.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -11,7 +11,7 @@
 
 {include file="tiki-mytiki_bar.tpl"}
 {include file="messu-nav.tpl"}
-<br/><br/>
+<br /><br />
 
 <form action="messu-mailbox.php" method="get">
 	<label for="mess-mailmessages">{tr}Messages{/tr}:</label>

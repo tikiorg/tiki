@@ -10,11 +10,11 @@
 <table  border="0">
 <tr>
 <td >
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 What is Tiki?
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 Tiki is a powerful Content Management System easy to customize and
 configure designed to create Portals, community sites, intranets,
 and general web applications.
@@ -22,39 +22,39 @@ and general web applications.
 </div>
 </td>
 <td style="padding-right: 5px;">
-<div class="cbox">
-<div class="cbox-title">News</div>
-<div class="cbox-data">
+<div class="tiki">
+<div class="tiki-title">News</div>
+<div class="tiki-content">
 {content id=1}
 </div>
 </div>
 </td>
 </tr>
 </table>
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 Download!
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 Our last stable release is Tiki 1.3 -Pollux- you can download
 Tiki from <a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
 </div>
 </div>
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 Join us!
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 If you want to contribute with this project join our
 <a class="link" href="http://sourceforge.net/mail/?group_id=64258">mailing list</a>
 </div>
 </div>
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 Some of the many features in Tiki
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <ul>
 <li>A wiki system where users can edit pages using a powerful syntax</li>
 <li>Articles, reviews, topics and user submissions</li>
@@ -72,11 +72,11 @@ Some of the many features in Tiki
 </div>
 </div>
 
-<div class="cbox">
-<div class="cbox-title">
+<div class="tiki">
+<div class="tiki-title">
 Testing Tiki
 </div>
-<div class="cbox-data">
+<div class="tiki-content">
 <ol>
 <li>May be you want to start reading the tiki <a href="tiki-view_faq.php?faqId=1" class="link">FAQ</a></li>
 <li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-shoutbox.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-shoutbox.tpl,v 1.2 2004-01-16 19:37:25 musus Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox"}
@@ -6,9 +6,9 @@
       <form action="{$shout_ownurl}" method="post">
       <div align="center">
         <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
-	<br/>
+	<br />
 	<input type="submit" name="shout_send" value="{tr}send{/tr}" />
-      </div><br/>
+      </div><br />
       </form>
     {/if}
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-user_bookmarks.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-user_bookmarks.tpl,v 1.2 2004-01-16 19:37:25 musus Exp $ *}
 
 {if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
     {tikimodule title='<a href="tiki-user_bookmarks.php" class="flip">{tr}Bookmarks{/tr}</a>' name="user_bookmarks"}
@@ -18,7 +18,7 @@
 	</td></tr>
     {/section}
     </table>
-    <br/>
+    <br />
     <form name="bookmarks" action="{$ownurl}" method="post">
     <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
     <input style="font-size: 9px;" type="text" size="8" name="bookmark_urlname" />

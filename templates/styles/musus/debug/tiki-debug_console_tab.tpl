@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_console_tab.tpl,v 1.2 2004-01-13 19:40:35 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/debug/tiki-debug_console_tab.tpl,v 1.3 2004-01-16 19:35:59 musus Exp $ *}
 {* Debug console tab -- to display result of command *}
 
 {* Display command results if we have smth to show... *}
@@ -6,7 +6,7 @@
   <pre>&gt;&nbsp;{$command|escape:"html"}</pre>
   {if    $result_type == TEXT_RESULT }
     {* Show text in PRE section *}
-    <pre>{strip}{$command_result|escape:"html"|wordwrap:90:"\n":true|replace:"\n":"<br/>"}{/strip}</pre>
+    <pre>{strip}{$command_result|escape:"html"|wordwrap:90:"\n":true|replace:"\n":"<br />"}{/strip}</pre>
   {elseif $result_type == HTML_RESULT }
 
     {* Type HTML as is *}
@@ -18,5 +18,5 @@
     {include file=$result_tpl}
 
   {/if}{* Check result type *}
-<br/>
+<br />
 {/if}{* We have something to show as result *}

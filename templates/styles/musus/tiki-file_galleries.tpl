@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-file_galleries.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-file_galleries.tpl,v 1.2 2004-01-16 19:33:59 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -12,10 +12,10 @@
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
-<br/><br/>
+<br /><br />
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-<br/><br/>
+<br /><br />
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'}
@@ -84,7 +84,7 @@
 </table>
 </form>
 </div>
-<br/>
+<br />
 {/if}
 {/if}
 {if $galleryId>0}
@@ -97,7 +97,7 @@
 
 <h2>{tr}Available File Galleries{/tr}</h2>
 {if $tiki_p_create_file_galleries eq 'y'}
-<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br /><br />
 {/if}
 <div align="center">
 <table class="findtable">
@@ -209,7 +209,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="fgalprevnext" href="tiki-file_galleries.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -219,7 +219,7 @@
 &nbsp;[<a class="fgalprevnext" href="tiki-file_galleries.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-file_galleries.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
