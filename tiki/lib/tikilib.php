@@ -3392,8 +3392,7 @@ function add_pageview() {
 
     function get_all_preferences() {
 	global $preferences;
-
-	if (!$preferences) {
+	if (empty($preferences)) {
 	    $query = "select `name` ,`value` from `tiki_preferences`";
 
 	    $result = $this->query($query,array());
@@ -3410,7 +3409,7 @@ function add_pageview() {
     function get_preference($name, $default = '') {
 	global $preferences;
 
-	if (!$preferences) {
+	if (empty($preferences)) {
 	    $preferences = $this->get_all_preferences();
 	}
 
