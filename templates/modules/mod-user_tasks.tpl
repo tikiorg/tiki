@@ -18,7 +18,7 @@
 <input type="submit" name="modTasksDel" value="{tr}del{/tr}" />
 </form>
 <form action="{$ownurl}" method="post">
-<input type="text" name="modTasksTitle" />
+<input type="text" name="modTasksTitle" size="16" />
 <input type="submit" name="modTasksSave" value="{tr}add{/tr}" />
 </form>
 </div>
