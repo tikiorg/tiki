@@ -9,22 +9,63 @@ class WikiLib extends TikiLib {
     }
     $this->db = $db;  
   }
+
+  // 29-Jun-2003, by zaufi
+  // The 2 functions below contain duplicate code
+  // to remove <PRE> tags... (moreover I copy this code
+  // from tikilib.php, and paste to artlib.php, bloglib.php
+  // and wikilib.php)
+  // TODO: it should be separate function to avoid
+  // maintain 3 pieces... (but I don't know PHP and TIKI
+  // architecture very well yet to make this :()
   
   //Special parsing for multipage articles
   function get_number_of_pages($data)
   {
-  	$parts = explode("...page...",$data);
-  	return count($parts);	
+    // Temporary remove <PRE></PRE> secions to protect
+    // from broke <PRE> tags and leave well known <PRE>
+    // behaviour (i.e. type all text inside AS IS w/o
+    // any interpretation)
+    $preparsed=Array();
+    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/",$data,$preparse);
+    $idx=0;
+    foreach(array_unique($preparse[2]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
+      $idx=$idx+1;
+    }
+    $parts = explode("\n...page...\n",$data);
+    return count($parts);	
   }
   
   function get_page($data,$i)
   {
-  	$parts = explode("...page...",$data);
-  	if(substr($parts[$i-1],1,5)=="<br/>") {
-  		return substr($parts[$i-1],6);
-  	} else {
-  		return $parts[$i-1];
-  	}
+    // Temporary remove <PRE></PRE> secions to protect
+    // from broke <PRE> tags and leave well known <PRE>
+    // behaviour (i.e. type all text inside AS IS w/o
+    // any interpretation)
+    $preparsed=Array();
+    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/",$data,$preparse);
+    $idx=0;
+    foreach(array_unique($preparse[2]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
+      $idx=$idx+1;
+    }
+    // Get slides
+    $parts = explode("\n...page...\n",$data);
+    if(substr($parts[$i-1],1,5)=="<br/>") $ret=substr($parts[$i-1],6);
+    else $ret=$parts[$i-1];
+    // Replace back <PRE> sections
+    foreach($preparsed as $pp)
+      $ret=str_replace($pp["key"],"<pre>".$pp["data"]."</pre>",$ret);
+    return $ret;
   }
   
   function get_creator($name) 

@@ -178,7 +178,7 @@ $slides = split("-=[^=]+=-",$info["data"]);
 if(count($slides)>1) {
 	$smarty->assign('show_slideshow','y');
 } else {
-	$slides = explode("...page...",$info["data"]);
+	$slides = explode("\n...page...\n",$info["data"]);
 	if(count($slides)>1) {
 		$smarty->assign('show_slideshow','y');
 	} else {
