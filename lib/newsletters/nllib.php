@@ -146,15 +146,20 @@ class NlLib extends TikiLib {
 	}
 
 	function add_all_group_emails($nlId,$group) {
-		$groups =  array_merge(array($group),$this->get_included_groups($group));
+		$groups =  array_merge(array($group),$this->get_groups_all($group));
 		$mid = implode(" or ",array_fill(0,count($groups),"`groupName`=?"));
 		$query = "select `login`,`email`  from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and ($mid)";
 		$result = $this->query($query,$groups);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			if (!empty($res['email'])) {
-				$this->newsletter_subscribe($nlId, $res['email']);
+				// $this->newsletter_subscribe($nlId, $res['email']);
+				$out[] = $res['email'];
 			}
+		}
+		$out = array_unique($out);
+		foreach ($out as $o) {
+			$this->newsletter_subscribe($nlId, $o);
 		}
 		return $ret;
 	}

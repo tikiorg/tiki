@@ -1027,6 +1027,19 @@ function get_user_id($user) {
 }
 
 /*shared*/
+function get_groups_all($group) {
+  $query = "select `groupName`  from `tiki_group_inclusion` where `includeGroup`=?";
+  $result = $this->query($query, array($group));
+  $ret = array();
+  while ($res = $result->fetchRow()) {
+    $ret[] = $res["groupName"];
+    $ret2 = $this->get_groups_all($res["groupName"]);
+    $ret = array_merge($ret, $ret2);
+  }
+  return array_unique($ret);
+}
+
+/*shared*/
 function get_included_groups($group) {
   $query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
   $result = $this->query($query, array($group));
