@@ -8645,7 +8645,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     } else {
 /*	# this doesn't work, because 'hits' aren't the same across different sections, right?
       function find_pages_cmp ($a, $b) {
-        return ($a['hits'] > $b['hits']) ? -1 : (($a['hits'] < $b['hits']) ? -1 : 0);
+        return ($a['hits'] > $b['hits']) ? -1 : (($a['hits'] < $b['hits']) ? 1 : 0);
       }
     
       usort ($data, 'find_pages_cmp');
