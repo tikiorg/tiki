@@ -29,7 +29,7 @@
    </td>
 </tr>
 </table>
-<table>
+<table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'bannerId_desc'}bannerId_asc{else}bannerId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'client_desc'}client_asc{else}client_desc{/if}">{tr}Client{/tr}</a></td>
@@ -56,10 +56,10 @@
 <td class="odd">&nbsp;{$listpages[changes].clicks}&nbsp;</td>
 <td class="odd">
 {if $tiki_p_admin_banners eq 'y'}
-<a href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
 {/if}
-<a href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
+<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].bannerId}&nbsp;</td>
@@ -73,10 +73,10 @@
 <td class="even">&nbsp;{$listpages[changes].clicks}&nbsp;</td>
 <td class="even">
 {if $tiki_p_admin_banners eq 'y'}
-<a href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
-<a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Edit{/tr}</a>
+<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{tr}Remove{/tr}</a>
 {/if}
-<a href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
+<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{tr}Stats{/tr}</a>
 </td>
 {/if}
 </tr>
