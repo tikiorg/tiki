@@ -56,8 +56,8 @@
 			<td class="{cycle advance=false}">{$requests[ix].timestamp|tiki_short_time}</td>
 			<td class="{cycle}">
 		    {if $status eq 'online'}
-				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
-				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&role=observer" width="300" height="450"}>{tr}Join{/tr}</a>
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=operator" width="300" height="450"}>{tr}Accept{/tr}</a>
+				<a class="link" {jspopup href="tiki-live_support_chat_window.php?reqId=$requests[ix].reqId&amp;role=observer" width="300" height="450"}>{tr}Join{/tr}</a>
 			{else}
 				&nbsp;
 			{/if}
