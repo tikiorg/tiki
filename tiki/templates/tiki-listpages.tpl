@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.27 2004-07-16 19:40:38 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.28 2004-07-19 21:42:33 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -36,14 +36,14 @@
 per page</td></tr>
 
 </table>
+{if $rename_mode neq 'y'}
 <div align="center">
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-{*  at the moment, the only working option to use the checkboxes for is deleting pages.
-    so for now the checkboxes are visible iff $tiki_p_remove is set. Other applications make 
+{*  Other applications make 
     sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here:
 *}    
 {if $tiki_p_admin eq 'y' || $tiki_p_remove eq 'y' || $tiki_p_admin_categories eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
@@ -174,7 +174,7 @@ per page</td></tr>
 </table>
 {if $checkboxes_on eq 'y'} {* what happens to the checked items? *}
   <p align="left"> {*on the left to have it close to the checkboxes*}
-  {if $categorize_mode neq 'y'}
+  {if $categorize_mode neq 'y' && $rename_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
     <option value="" selected>-</option>
@@ -184,6 +184,9 @@ per page</td></tr>
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
     {if $feature_categories eq 'y' && $tiki_p_admin_categories eq 'y'}
       <option value="categorize" >{tr}categorize{/tr}</option>
+    {/if}
+    {if $tiki_p_admin eq 'y'}
+      <option value="rename">{tr}rename{/tr}</option>
     {/if}
   </select>
 {*
@@ -197,7 +200,7 @@ per page</td></tr>
 *}
 <input type="submit" value="{tr}ok{/tr}" />
 {*</noscript>*}
-  {else}
+  {elseif $categorize_mode eq 'y'}
   <select name="categorization">
   	<option value="add">{tr}Add selected to{/tr}</option>
   	<option value="remove">{tr}Remove selected from{/tr}</option>
@@ -231,4 +234,25 @@ per page</td></tr>
 {/if}
 </div>
 </div>
-
+{else}
+<form name="renameform" method="post" action="{$smarty.server.PHP_SELF}">
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<table class="normal">
+<tr><td class="heading">{tr}Rename from{/tr}</td>
+<td class="heading">{tr}to{/tr}</td></tr>
+{cycle values="even,odd" print=false}
+{section name=changes loop=$listpages}
+{if $listpages[changes].checked eq 'y'}
+<tr><td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
+	{if $tiki_p_edit eq 'y'}
+	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+	{/if}</td>
+<td class="{cycle advance=false}"><input type='text' size='40' name='newpages[{$listpages[changes].pageName|escape}]' value='{$listpages[changes].pageName|escape}'/></td></tr>
+{/if}
+{cycle print=false}
+{/section}
+</table>
+<input type="submit" value="{tr}rename{/tr}" />
+</form>
+{/if}
