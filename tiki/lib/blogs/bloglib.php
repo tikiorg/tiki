@@ -96,6 +96,8 @@ class BlogLib extends TikiLib {
   
   function add_blog_hit($blogId)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_blogs set hits = hits+1 where blogId=$blogId";
       $result = $this->query($query);

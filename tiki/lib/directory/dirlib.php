@@ -500,6 +500,8 @@ class DirLib extends TikiLib {
   // Site hit
   function dir_add_site_hit($siteId)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_directory_sites set hits=hits+1 where siteId=$siteId";
       $this->query($query);
@@ -509,6 +511,8 @@ class DirLib extends TikiLib {
   // Category hit
   function dir_add_category_hit($categId)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_directory_categories set hits=hits+1 where categId=$categId";
       $this->query($query);

@@ -12,6 +12,8 @@ class ChartLib extends TikiLib {
   
   function add_chart_hit($chartId)
   {
+  	global $count_admin_pvs;
+  	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
       $query = "update tiki_charts set hits=hits+1 where chartId=$chartId";
       $this->query($query);
