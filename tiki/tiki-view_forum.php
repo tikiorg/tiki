@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.51 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.52 2003-12-29 10:53:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,7 +197,6 @@ $smarty->assign('warning', 'n');
 
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
-	check_ticket('view-forum');
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
 	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
 		//Replace things between square brackets by links
@@ -233,6 +232,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
 			    || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
 			if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('view-forum');
 			    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 			    $data = '';
@@ -418,6 +418,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			// PROCESS ATTACHMENT HERE        
 			if ($threadId && ($forum_info['att'] == 'att_all') || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
 			    if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+				check_ticket('view-forum');
 				$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 				$data = '';
@@ -486,6 +487,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    // PROCESS ATTACHMENT HERE        
 			    if (($forum_info['att'] == 'att_all') || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
 				if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+	check_ticket('view-forum');
 				    $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 				    $data = '';
