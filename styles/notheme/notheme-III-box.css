@@ -1,11 +1,11 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-III-box.css,v 1.4 2003-11-13 10:49:03 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-III-box.css,v 1.5 2003-11-14 20:08:44 zaufi Exp $
  *
  */
 
 /* Make modules buttons like by default */
 div.box,
-.box-title {
+div.box-title {
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 0px;
