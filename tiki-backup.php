@@ -64,6 +64,7 @@ while($file=readdir($h)) {
 }
 closedir($h);
 $smarty->assign_by_ref('backups',$backups);
+$smarty->assign('tikidomain',$tikidomain);
 
 $smarty->assign('mid','tiki-backup.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
