@@ -97,7 +97,9 @@ if(!isset($_SESSION["appname"])) {
 $smarty->assign("appname","tiki");
 
 if(isset($_REQUEST["PHPSESSID"])) {
-  $tikilib->update_session($_REQUEST["PHPSESSID"]);
+  $tikilib->update_session($_REQUEST["PHPSESSID"]);}
+else if(function_exists("session_id")) {
+  $tikilib->update_session(session_id());
 }
 
 if(!isset($_SESSION["last_forum_visit"])) {

@@ -168,6 +168,8 @@ class ChatLib extends TikiLib {
   
   function replace_channel($channelId, $name, $description, $max_users, $mode, $active,$refresh)
   {
+    $description=addslashes($description);
+    $name=addslashes($name);
     if($channelId) {
       $query = "update tiki_chat_channels set name='$name',description='$description',refresh=$refresh,max_users=$max_users,mode='$mode',active='$active' where channelId=$channelId";
     } else {

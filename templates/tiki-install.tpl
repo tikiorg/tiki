@@ -12,6 +12,7 @@
   modules/cache<br/>
   templates_c<br/>
   backups<br/>
+  dump<br/>
   temp<br/><br/>
   <a href="tiki-install.php" class="link">try again!</a>
 {else}

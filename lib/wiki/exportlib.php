@@ -13,7 +13,7 @@ class ExportLib extends TikiLib {
   function MakeWikiZip()
   {
     $zipname         = "wikidb.zip";
-    include_once("tar.class.php");
+    include_once("lib/tar.class.php");
     $tar = new tar();
     $query = "select pageName from tiki_pages order by pageName asc";
     $result = $this->query($query);
