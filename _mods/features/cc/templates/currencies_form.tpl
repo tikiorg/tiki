@@ -3,14 +3,14 @@
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 <br /><br />
 {else}
-<a href="cc.php?page=currencies&amp;new" class="pagetitle">{tr}Create a new Currency{/tr}</a>
+<a href="cc.php?page=currencies&amp;new=1" class="pagetitle">{tr}Create a new Currency{/tr}</a>
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 <br /><br />
 {/if}
 
 <FORM action="cc.php?page={$page}" method='post'>
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">{tr}List Currencies{/tr}</a></span>
-<span class="button2"><a href="cc.php?page=currencies&my" class="linkbut">{tr}My Currencies{/tr}</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;my=1" class="linkbut">{tr}My Currencies{/tr}</a></span>
 <br /><br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}

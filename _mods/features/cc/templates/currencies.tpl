@@ -4,14 +4,14 @@
 
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">All Currencies</a></span>
 {if $tiki_p_cc_use eq 'y'}
-<span class="button2"><a href="cc.php?page=currencies&amp;reg" class="linkbut">Registered Currencies</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;reg=1" class="linkbut">Registered Currencies</a></span>
 {/if}
 <br /><br />
 {if $tiki_p_cc_use eq 'y'}
-<span class="button2"><a href="cc.php?page=currencies&amp;my" class="linkbut">Owned Currencies</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;my=1" class="linkbut">Owned Currencies</a></span>
 {/if}
 {if $tiki_p_cc_create eq 'y' or $tiki_p_cc_admin eq 'y'}
-<span class="button2"><a href="cc.php?page=currencies&amp;new" class="linkbut">Create new currency</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;new=1" class="linkbut">Create new currency</a></span>
 <br /><br />
 {/if}
 

@@ -1,4 +1,4 @@
-<h1><a href="cc.php?page=my_tr&amp;new" class="pagetitle">Record a transaction {if $currency} in cc {$currency}{/if}</a>
+<h1><a href="cc.php?page=my_tr&amp;new=1" class="pagetitle">Record a transaction {if $currency} in cc {$currency}{/if}</a>
 </h1>
 
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
