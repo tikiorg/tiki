@@ -82,7 +82,7 @@ class Comments extends TikiLib {
 		$this->query($query,$bindvars,-1,-1,false);
 		$bindvars [] = $now;
 		$query = "insert into `tiki_forum_reads`(`user`,`threadId`,`forumId`,`timestamp`)
-  	values(?,?,?,?)";
+		    values(?,?,?,?)";
 		$this->query($query,$bindvars);
 	}
 
@@ -880,9 +880,11 @@ class Comments extends TikiLib {
 			}
 		}
 
-		$data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", "<a class='commentslink' href='$1'>$2</a>", $data);
+		// Fix up special characters, so it can link to pages with ' in them.  -rlpowell
+		$data = htmlspecialchars( $data, ENT_QUOTES );
+		$data = preg_replace("/\[([^\|\]]+)\|([^\]]+)\]/", '<a class="commentslink" href="$1">$2</a>', $data);
 		// Segundo intento reemplazar los [link] comunes
-		$data = preg_replace("/\[([^\]\|]+)\]/", "<a class='commentslink' href='$1'>$1</a>", $data);
+		$data = preg_replace("/\[([^\]\|]+)\]/", '<a class="commentslink" href="$1">$1</a>', $data);
 
 		// Llamar aqui a parse smileys
 		$data = $this->parse_smileys($data);
