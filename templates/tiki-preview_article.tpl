@@ -23,8 +23,11 @@
 <tr><td  valign="top">
 {if $useImage eq 'y'}
   {if $hasImage eq 'y'}
-    <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
-    {*<img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" />*}
+    {if $articleId gt 0}
+      <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
+    {else}
+      <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" />
+    {/if}
   {else}
     <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
   {/if}
