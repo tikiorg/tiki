@@ -1,7 +1,7 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
 <div class="cbox-data">
-    <table>
+    <table class="admin">
     <tr><td  valign="top">
     <div class="simplebox">
     {tr}Dumps{/tr}:<br />
@@ -49,7 +49,7 @@
     <div class="simplebox">
     {tr}Wiki comments settings{/tr}
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table>
+    <table class="admin">
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page|escape}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
     </td><td>
@@ -59,7 +59,7 @@
     <option value="points_desc" {if $wiki_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikiprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -67,11 +67,11 @@
     <div class="simplebox">
     {tr}Wiki attachments{/tr}
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table>
+    <table class="admin">
     <tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td class="form"><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="w_use_dir" value="{$w_use_dir|escape}" /> </td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -79,7 +79,7 @@
     <div class="simplebox">
     {tr}Export Wiki Pages{/tr}
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table>
+    <table class="admin">
     <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></tr>
     </table>
     </form>
@@ -92,7 +92,7 @@
     
     <div class="simplebox">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table><tr>
+    <table class="admin"><tr>
     <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage|escape}" />
     <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
     </td>
@@ -102,13 +102,13 @@
     
     <div class="simplebox">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table><tr>
+    <table class="admin"><tr>
     <td colspan="2" class="form">{tr}Wiki Discussion{/tr}</td></tr><tr><td class="form">
     {tr}Discuss pages on forums{/tr}: </td><td>
     <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
     <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
     <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/></td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
+    <tr><td colspan="2" class="button"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
     </td>
     </tr></table>
     </form>
@@ -116,7 +116,7 @@
   
     <div class="simplebox">
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table><tr>
+    <table class="admin"><tr>
     <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
     <p>{tr}Strict allows page names with only letters, numbers, underscore, dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{/tr}<br />
     {tr}Full adds accented characters.{/tr}<br />
@@ -140,7 +140,7 @@
     <div class="simplebox">
     {tr}Wiki page list configuration{/tr}
     <form method="post" action="tiki-admin.php?page=wiki">
-    <table>
+    <table class="admin">
     	<tr>
     		<td class="form">{tr}Name{/tr}</td>
     		<td class="form">
@@ -215,9 +215,8 @@
     	</tr>
 
     	<tr>
-    		<td class="form">&nbsp;</td>
-    		<td class="form">
-   	 			<input type="submit" name="wikilistprefs" value="{tr}set{/tr}" />
+    		<td colspan="2" class="button">
+   	 			<input type="submit" name="wikilistprefs" value="{tr}Change preferences{/tr}" />
     		</td>
     	</tr>
     </table>
@@ -230,7 +229,7 @@
     <div class="simplebox">
     {tr}Wiki Features{/tr}:<br />
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table >
+    <table class="admin">
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
@@ -286,7 +285,7 @@
     </td></tr>
     <tr><td class="form">{tr}Automonospaced text{/tr}:</td><td><input type="checkbox" name="feature_wiki_monosp" {if $feature_wiki_monosp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show structures during page edit{/tr}:</td><td><input type="checkbox" name="feature_wiki_showstructs" {if $feature_wiki_showstructs eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -294,10 +293,10 @@
     <div class="simplebox">
     {tr}Wiki History{/tr}
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table>
+    <table class="admin">
     <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /></td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions|escape}" /></td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikisetprefs" value="{tr}Set{/tr}" /></td></tr>    
+    <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -305,11 +304,11 @@
     <div class="simplebox">
     {tr}Copyright Management{/tr}
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table>
+    <table class="admin">
     <tr><td class="form">{tr}Enable Feature{/tr}:</td><td><input type="checkbox" name="wiki_feature_copyrights" {if $wiki_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}License Page{/tr}: </td><td><input type="text" name="wikiLicensePage" value="{$wikiLicensePage|escape}" /></td></tr>
     <tr><td class="form">{tr}Submit Notice{/tr}: </td><td><input type="text" name="wikiSubmitNotice" value="{$wikiSubmitNotice|escape}" /></td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikisetcopyright" value="{tr}Set{/tr}" /></td></tr>    
+    <tr><td colspan="2" class="button"><input type="submit" name="wikisetcopyright" value="{tr}Change preferences{/tr}" /></td></tr>    
     </table>
     </form>
     </div>
@@ -317,11 +316,11 @@
     <div class="simplebox">
     {tr}Wiki Watch{/tr}:<br />
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table >
+    <table class="admin">
 <!--    <tr><td class="form">{tr}Enable watch by default for author{/tr}:</td><td><input type="checkbox" name="wiki_watch_author" {if $wiki_watch_author eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watches on comments{/tr}:</td><td><input type="checkbox" name="wiki_watch_comments" {if $wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>-->
     <tr><td class="form">{tr}Enable watches when I am the editor{/tr}:</td><td><input type="checkbox" name="wiki_watch_editor" {if $wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td align="center" colspan="2"><input type="submit" name="wikisetwatch" value="{tr}Set{/tr}" /></td></tr>    
+    <tr><td align="center" colspan="2"><input type="submit" name="wikisetwatch" value="{tr}Set{/tr}" /></td></tr>
     </table>
     </form>
     </div>

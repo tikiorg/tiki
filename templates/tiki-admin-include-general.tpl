@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.21 2003-11-13 08:52:16 markusvk Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.22 2003-11-13 10:39:55 ohertel Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -6,8 +6,8 @@
   </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
-      <table ><tr>
-        <td class="heading" colspan=2
+      <table class="admin"><tr>
+        <td class="heading" colspan="2" 
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Theme{/tr}:</td>
@@ -29,7 +29,7 @@
             {/section}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr/></td></tr>
+      </tr><tr><td colspan="2"><hr/></td></tr>      
       <tr>
         <td class="form">{tr}Use group homepages{/tr}:</td>
         <td><input type="checkbox" name="useGroupHome"
@@ -40,7 +40,7 @@
         <td class="form">{tr}Use URI as Home Page{/tr}:</td>
         <td><input type="checkbox" name="useUrlIndex"
               {if $useUrlIndex eq 'y'}checked="checked"{/if}/>
-            <input type="text" name="urlIndex" value="{$urlIndex|escape}"/>
+            <input type="text" name="urlIndex" value="{$urlIndex|escape}" size="50" />
         </td>
       </tr><tr>
         <td class="form">{tr}Home page{/tr}:</td>
@@ -78,7 +78,7 @@
             {/if}
             </select>
         </td>
-      </tr><tr><td colspan=2><hr/></td></tr><tr>
+      </tr><tr><td colspan="2"><hr/></td></tr><tr>
         <td class="form">{tr}Language{/tr}:</td>
         <td>
         <select name="language">
@@ -115,8 +115,8 @@
             </select>
         </td>
       </tr></table>
-      <table ><tr>
-        <td class="heading" colspan=5
+      <table class="admin"><tr>
+        <td class="heading" colspan="5"
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
         <td class="form" >
@@ -131,8 +131,8 @@
              value="{$site_closed_msg}" size="60"/></td>
       </tr>
       </table>
-      <table ><tr>
-        <td colspan=2><hr/></td>
+      <table class="admin"><tr>
+        <td colspan="2"><hr/></td>
       </tr><tr>
         <td class="form" >
           {tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</td>
@@ -147,8 +147,8 @@
         <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
       </tr>
       </table>
-      <table ><tr>
-        <td colspan=5><hr/></td></tr>
+      <table class="admin"><tr>
+        <td colspan="5"><hr/></td></tr>
         <tr>
         <td class="form" >
           {tr}Open external links in new window{/tr}:</td>
@@ -198,8 +198,8 @@
         </td>
         <td>&nbsp;</td>
       </tr></table>
-      <table ><tr>
-        <td colspan=2><hr/></td>
+      <table class="admin"><tr>
+        <td colspan="2"><hr/></td>
       </tr><tr>
         <td class="form" >
           {tr}Server name (for absolute URIs){/tr}:</td>
@@ -215,10 +215,10 @@
       </tr><tr>
 -->
         <td class="form">{tr}Temporary directory{/tr}:</td>
-        <td><input type="text" name="tmpDir" value="{$tmpDir|escape}" size="40" /></td>
+        <td><input type="text" name="tmpDir" value="{$tmpDir|escape}" size="50" /></td>
       </tr><tr>
         <td class="form">{tr}Sender Email{/tr}:</td>
-        <td><input type="text" name="sender_email" value="{$sender_email|escape}" size="40" /></td>
+        <td><input type="text" name="sender_email" value="{$sender_email|escape}" size="50" /></td>
       </tr><tr>
         <td class="form">{tr}Email Encoding{/tr}:</td>
         <td><select name="email_encoding">
@@ -257,8 +257,8 @@
         <td><input size="5" type="text" name="maxRecords"
                    value="{$maxRecords|escape}" />
       </tr></table>
-      <table ><tr>
-        <td class="heading" colspan=2
+      <table class="admin"><tr>
+        <td class="heading" colspan="2" 
             align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Long date format{/tr}:</td>
@@ -279,18 +279,18 @@
       </tr><tr>
         {assign var="fcnlink"
                 value="http://www.php.net/manual/en/function.strftime.php"}
-        <td colspan=2 align="center">
+        <td colspan="2" align="center">
           <a class="link" target="strftime" href="{$fcnlink}">
             {tr}Date and Time Format Help{/tr}</a></td>
       </tr>
       <tr>
         <td colspan="2" class="button">
-          <input type="submit" name="prefs" value="{tr}Update{/tr}" />
+          <input type="submit" name="prefs" value="{tr}Change preferences{/tr}" />
         </td>
       </tr></table>
       <!-- Obsolete from 1.7 timezone changes
-      <table ><tr>
-        <td class="heading" colspan=2
+      <table class="admin"><tr>
+        <td class="heading" colspan="2" 
             align="center">{tr}Time Zone{/tr}</td>
       </tr><tr>
         <td class="form"  style="vertical-align:middle;">
@@ -320,14 +320,14 @@
   </div>
   <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=general">
-      <table ><tr>
+      <table class="admin"><tr>
         <td class="form" >{tr}New password{/tr}:</td>
         <td ><input type="password" name="adminpass" /></td>
       </tr><tr>
         <td class="form">{tr}Repeat password{/tr}:</td>
         <td><input type="password" name="again" /></td>
       </tr><tr>
-        <td colspan="2" align="center">
+        <td colspan="2" class="button">
           <input type="submit" name="newadminpass"
                  value="{tr}Change password{/tr}" />
         </td>

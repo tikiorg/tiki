@@ -1,11 +1,8 @@
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>
 <div class="cbox-data">
-    <table>
-    <tr>
-      <td valign="top">
         <form action="tiki-admin.php?page=rss" method="post">
-        <table>
+        <table class="admin">
         <tr><td class="form">{tr}<b>Feed</b>{/tr}</td>
             <td class="form">{tr}<b>enable/disable</b>{/tr}</td>
             <td class="form">{tr}<b>Max number of items</b>{/tr}</td>
@@ -33,11 +30,8 @@
         <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Editor{/tr}</a>: (RDF 2.0)</td><td colspan="2"><input type="text" name="rssfeed_editor" size="50" value="{$rssfeed_editor|escape}" /></td></tr>
         <tr><td class="form"><a href="http://blogs.law.harvard.edu/tech/rss#optionalChannelElements" target="tikihelp" class="tikihelp" title="{tr}Documentation{/tr}: RDF">{tr}Webmaster{/tr}</a>: (RDF 2.0)</td><td colspan="2"><input type="text" name="rssfeed_webmaster" size="50" value="{$rssfeed_webmaster|escape}" /></td></tr>
        
-        <tr><td align="center" colspan="3"><input type="submit" name="rss" value="{tr}Set feeds{/tr}" /></td></tr>    
+        <tr><td colspan="3" class="button"><input type="submit" name="rss" value="{tr}Change preferences{/tr}" /></td></tr>
         </table>
         </form>
-      </td>
-    </tr>
-    </table>
 </div>
 </div>
