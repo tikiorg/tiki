@@ -6678,6 +6678,11 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forums','10')
 go
 
@@ -6804,6 +6809,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forum','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_mapfiles','y')
 go
 
 

@@ -3729,6 +3729,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_file_galleries'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_file_gallery','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_forum','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_forums','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_mapfiles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_galleries','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_image_gallery','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_wiki','10');
@@ -3754,6 +3755,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_galleries','y'
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forums','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forum','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_mapfiles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');

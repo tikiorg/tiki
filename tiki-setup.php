@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.148 2003-10-13 18:25:33 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.149 2003-10-13 23:03:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -609,6 +609,7 @@ $max_rss_wiki = 10;
 $max_rss_image_gallery = 10;
 $max_rss_file_gallery = 10;
 $max_rss_blog = 10;
+$max_rss_mapfiles = 10;
 
 $keep_versions = 1;
 

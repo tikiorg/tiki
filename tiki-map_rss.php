@@ -1,5 +1,6 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.2 2003-10-12 20:47:29 ohertel Exp $
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.3 2003-10-13 23:03:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,19 +27,29 @@ $readrepl = "tiki-map.phtml?mapfile=";
 // Get mapfiles from the mapfiles directory
 $tmp = array();
 $h = opendir($map_path);
+
 while (($file = readdir($h)) !== false)
 {
 	if (preg_match('/\.map$/i', $file))
 	{
-		$aux = array();
-		$aux["name"] = $file;
-		$aux["lastModif"] = filectime($map_path."/".$file);
-		$aux["description"] = "";
-		$tmp[] = $aux;
+		$filetlist[$file] = filemtime ($map_path."/".$file);
 	}
 }
+arsort($filetlist, SORT_NUMERIC);
+
+$aux = array();
+$i=0;
+while (list ($key, $val) = each ($filetlist))
+{
+  if ($i >= $max_rss_mapfiles) break;
+  $i++;
+	$aux["name"] = $key;
+	$aux["lastModif"] = $val;
+	$aux["description"] = "";
+	$tmp[] = $aux;
+}
+
 closedir ($h);
-sort ($tmp);
 $changes = array();
 $changes["data"] = $tmp;
 

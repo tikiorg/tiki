@@ -20,6 +20,7 @@
         <tr><td class="form">{tr}Feed for individual weblogs{/tr}:</td><td><input type="checkbox" name="rss_blog" {if $rss_blog eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_blog" size="5" value="{$max_rss_blog|escape}" /></td></tr>
         <tr><td class="form">{tr}Feed for forums{/tr}:</td><td><input type="checkbox" name="rss_forums" {if $rss_forums eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forums" size="5" value="{$max_rss_forums|escape}" /></td></tr>
         <tr><td class="form">{tr}Feed for individual forums{/tr}:</td><td><input type="checkbox" name="rss_forum" {if $rss_forum eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forum" size="5" value="{$max_rss_forum|escape}" /></td></tr>
+        <tr><td class="form">{tr}Feed for mapfiles{/tr}:</td><td><input type="checkbox" name="rss_mapfiles" {if $rss_mapfiles eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_mapfiles" size="5" value="{$max_rss_mapfiles|escape}" /></td></tr>
         
         <tr><td align="center" colspan="3"><input type="submit" name="rss" value="{tr}Set feeds{/tr}" /></td></tr>    
         </table>

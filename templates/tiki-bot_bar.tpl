@@ -32,7 +32,7 @@
 				<a href="tiki-forums_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Forums{/tr}</small>
 		{/if}
-		{if @$feature_maps eq 'y'}
+		{if $rss_mapfiles eq 'y'}
 				<a href="tiki-map_rss.php?ver=2&css"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Maps{/tr}</small>
 		{/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.4 2003-10-13 23:03:16 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,8 @@ if (isset($_REQUEST["rss"])) {
 	$smarty->assign("max_rss_forum", $_REQUEST["max_rss_forum"]);
 	$tikilib->set_preference('max_rss_forums', $_REQUEST["max_rss_forums"]);
 	$smarty->assign("max_rss_forums", $_REQUEST["max_rss_forums"]);
+	$tikilib->set_preference('max_rss_mapfiles', $_REQUEST["max_rss_mapfiles"]);
+	$smarty->assign("max_rss_mapfiles", $_REQUEST["max_rss_mapfiles"]);
 
 	if (isset($_REQUEST["rss_articles"]) && $_REQUEST["rss_articles"] == "on") {
 		$tikilib->set_preference("rss_articles", 'y');
@@ -98,6 +100,16 @@ if (isset($_REQUEST["rss"])) {
 		$smarty->assign('rss_forums', 'n');
 	}
 
+	if (isset($_REQUEST["rss_mapfiles"]) && $_REQUEST["rss_mapfiles"] == "on") {
+		$tikilib->set_preference("rss_mapfiles", 'y');
+
+		$smarty->assign('rss_mapfiles', 'y');
+	} else {
+		$tikilib->set_preference("rss_mapfiles", 'n');
+
+		$smarty->assign('rss_mapfiles', 'n');
+	}
+
 	if (isset($_REQUEST["rss_blog"]) && $_REQUEST["rss_blog"] == "on") {
 		$tikilib->set_preference("rss_blog", 'y');
 
@@ -135,6 +147,7 @@ if (isset($_REQUEST["rss"])) {
 	$smarty->assign("max_rss_blogs", $tikilib->get_preference("max_rss_blogs", 10));
 	$smarty->assign("max_rss_forums", $tikilib->get_preference("max_rss_forums", 10));
 	$smarty->assign("max_rss_forum", $tikilib->get_preference("max_rss_forum", 10));
+	$smarty->assign("max_rss_mapfiles", $tikilib->get_preference("max_rss_mapfiles", 10));
 	$smarty->assign("max_rss_file_galleries", $tikilib->get_preference("max_rss_file_galleries", 10));
 	$smarty->assign("max_rss_image_galleries", $tikilib->get_preference("max_rss_image_galleries", 10));
 	$smarty->assign("max_rss_file_gallery", $tikilib->get_preference("max_rss_file_gallery", 10));
