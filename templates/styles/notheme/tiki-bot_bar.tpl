@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.2 2003-08-01 10:31:19 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.3 2003-08-14 00:48:27 zaufi Exp $ *}
 
 <table width="100%">
   <tr>
@@ -33,7 +33,7 @@
     </table>
     </td>
     <td align="center"> {tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}  </td>
-    <td width="20%">
+    <td width="20%" align=right>
     <table>
       <tr>
         <td>

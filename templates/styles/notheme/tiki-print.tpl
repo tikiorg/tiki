@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-print.tpl,v 1.2 2003-08-01 10:31:19 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-print.tpl,v 1.3 2003-08-14 00:48:27 zaufi Exp $ *}
 
 {* Index we display a wiki page here *}
 
