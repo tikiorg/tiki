@@ -1,25 +1,34 @@
 <?php
-// Initialization
-require_once('tiki-setup.php');
 
-if($feature_wiki != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
-  die;  
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.7 2003-08-07 04:33:57 rossta Exp $
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+// Initialization
+require_once ('tiki-setup.php');
+
+if ($feature_wiki != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
+if ($feature_listPages != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled"));
 
-if($feature_listPages != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
-  die;  
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
 // Now check permissions to access this page
-if($tiki_p_view != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display("styles/$style_base/error.tpl");
-  die;  
+if ($tiki_p_view != 'y') {
+	$smarty->assign('msg', tra("Permission denied you cannot view pages"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
 /* mass-remove: 
@@ -30,74 +39,81 @@ if($tiki_p_view != 'y') {
    then we check permission to delete pages.
    if so, we call histlib's method remove_all_versions for all the checked pages.
 */
-if(isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
-  include_once("tiki-pagesetup.php");
-  // Now check permissions to remove the selected pages
-  if($tiki_p_remove != 'y') {
-    $smarty->assign('msg',tra("Permission denied you cannot remove pages"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;  
-  }
-  // permissions ok: go!
-  include_once('lib/wiki/histlib.php');
-  foreach($_REQUEST["checked"] as $deletepage) {      	
-    $histlib->remove_all_versions($deletepage);
-  }
+if (isset($_REQUEST["submit_mult"]) && isset($_REQUEST["checked"]) && $_REQUEST["submit_mult"] == "remove_pages") {
+	include_once ("tiki-pagesetup.php");
+
+	// Now check permissions to remove the selected pages
+	if ($tiki_p_remove != 'y') {
+		$smarty->assign('msg', tra("Permission denied you cannot remove pages"));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+
+	// permissions ok: go!
+	include_once ('lib/wiki/histlib.php');
+
+	foreach ($_REQUEST["checked"] as $deletepage) {
+		$histlib->remove_all_versions($deletepage);
+	}
 }
 
 // This script can receive the thresold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
 // it will default to 1 recovering information for today
-if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'pageName_asc'; 
+if (!isset($_REQUEST["sort_mode"])) {
+	$sort_mode = 'pageName_asc';
 } else {
-  $sort_mode = $_REQUEST["sort_mode"];
-} 
+	$sort_mode = $_REQUEST["sort_mode"];
+}
 
-
-$smarty->assign_by_ref('sort_mode',$sort_mode);
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
-if(!isset($_REQUEST["offset"])) {
-  $offset = 0;
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
 } else {
-  $offset = $_REQUEST["offset"]; 
+	$offset = $_REQUEST["offset"];
 }
-$smarty->assign_by_ref('offset',$offset);
 
-if(isset($_REQUEST["find"])) {
-  $find = $_REQUEST["find"];  
+$smarty->assign_by_ref('offset', $offset);
+
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
 } else {
-  $find = ''; 
+	$find = '';
 }
-$smarty->assign('find',$find);
+
+$smarty->assign('find', $find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_pages($offset,$maxRecords,$sort_mode,$find);
+$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages',$cant_pages);
-$smarty->assign('actual_page',1+($offset/$maxRecords));
+$smarty->assign_by_ref('cant_pages', $cant_pages);
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if($listpages["cant"] > ($offset + $maxRecords)) {
-  $smarty->assign('next_offset',$offset + $maxRecords);
+if ($listpages["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
-  $smarty->assign('next_offset',-1); 
+	$smarty->assign('next_offset', -1);
 }
+
 // If offset is > 0 then prev_offset
-if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
+if ($offset > 0) {
+	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
-  $smarty->assign('prev_offset',-1); 
+	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('listpages',$listpages["data"]);
+$smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);
 
 // Display the template
-$smarty->assign('mid','tiki-listpages.tpl');
+$smarty->assign('mid', 'tiki-listpages.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
+
 ?>

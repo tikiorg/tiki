@@ -1,72 +1,135 @@
 <?php
-  require_once('tiki-setup.php');
-  require_once('lib/tikilib.php');
 
-  if($rss_forum != 'y') {
-    die;
-  }
-  if(!isset($_REQUEST["forumId"])) {
-    die;
-  }
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_rss.php,v 1.9 2003-08-07 04:33:57 rossta Exp $
 
-  header("content-type: text/xml");
-  $foo = parse_url($_SERVER["REQUEST_URI"]);
-  $foo1=str_replace("tiki-forum_rss.php",$tikiIndex,$foo["path"]);
-  $foo2=str_replace("tiki-forum_rss.php","img/tiki.jpg",$foo["path"]);
-  $foo3=str_replace("tiki-forum_rss","tiki-view_forum_thread",$foo["path"]);
-  $foo4=str_replace("tiki-forum_rss.php","lib/rss/rss-style.css",$foo["path"]);
-  $home = httpPrefix().$foo1;
-  $img = httpPrefix().$foo2;
-  $read = httpPrefix().$foo3;
-  $css = httpPrefix().$foo4;
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+require_once ('tiki-setup.php');
 
-  $now = date("U");
-  $changes = $tikilib->list_forum_topics($_REQUEST["forumId"],0,$max_rss_forum,'commentDate_desc', '');
-  $info = $tikilib->get_forum($_REQUEST["forumId"]);
-  $forumname = $info["name"];
-  $forumdesc = $info["description"];
+require_once ('lib/tikilib.php');
 
-  $title = "Tiki RSS feed for forum:";
-  $desc = "Last topics in forum:";
+if ($rss_forum != 'y') {
+	die;
+}
 
-  print '<?xml version="1.0" encoding="UTF-8"?>'."\n";
-  print '<?xml-stylesheet href="'.$css.'" type="text/css"?>'."\n";
-?>
-<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/">
-<channel rdf:about="<?php echo $home; ?> <?php echo htmlspecialchars($forumname); ?>">
-  <title><?php echo $title; ?></title>
-  <link><?php echo $home; ?></link>
-  <description>
-    <?php echo $desc; ?> <?php echo htmlspecialchars($forumdesc); ?>
-  </description>
-  <image rdf:about="<?php echo $img; ?>">
-    <title><?php echo $title; ?> <?php echo htmlspecialchars($forumname); ?></title>
-    <link><?php echo $home?></link>
-  </image>
-  
-    <items>
-    <rdf:Seq>
-      <?php
-        // LOOP collecting last topics in forum (index)
-        foreach($changes["data"] as $chg) {
-          print('        <rdf:li resource="'.$read.'?forumId='.$chg["threadId"].'" />'."\n");
-        }        
-      ?>
-    </rdf:Seq>  
-  </items>
-</channel>
-  
-<?php
-  // LOOP collecting last topics in forum
-  foreach($changes["data"] as $chg) {
-    print('<item rdf:about="'.$read.'?forumId='.$chg["threadId"].'">'."\n");
-    print('<title>'.htmlspecialchars($chg["title"]).': '.
-    $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]).'</title>'."\n");
-    print('<link>'.$read.'?forumId='.$chg["threadId"].'</link>'."\n");
-    $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]);
-    print('<description>'.htmlspecialchars($chg["data"]).'</description>'."\n");
-    print('</item>'."\n\n");
-  }        
+if (!isset($_REQUEST["forumId"])) {
+	die;
+}
+
+header ("content-type: text/xml");
+$foo = parse_url($_SERVER["REQUEST_URI"]);
+$foo1 = str_replace("tiki-forum_rss.php", $tikiIndex, $foo["path"]);
+$foo2 = str_replace("tiki-forum_rss.php", "img/tiki.jpg", $foo["path"]);
+$foo3 = str_replace("tiki-forum_rss", "tiki-view_forum_thread", $foo["path"]);
+$foo4 = str_replace("tiki-forum_rss.php", "lib/rss/rss-style.css", $foo["path"]);
+$home = httpPrefix(). $foo1;
+$img = httpPrefix(). $foo2;
+$read = httpPrefix(). $foo3;
+$css = httpPrefix(). $foo4;
+
+$now = date("U");
+$changes = $tikilib->list_forum_topics($_REQUEST["forumId"], 0, $max_rss_forum, 'commentDate_desc', '');
+$info = $tikilib->get_forum($_REQUEST["forumId"]);
+$forumname = $info["name"];
+$forumdesc = $info["description"];
+
+$title = "Tiki RSS feed for forum:";
+$desc = "Last topics in forum:";
+
+print '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+print '<?xml-stylesheet href="' . $css . '" type="text/css"?>' . "\n";
+
 ?>
 
-</rdf:RDF>       
+<rdf:RDF xmlns:dc = "http://purl.org/dc/elements/1.1/"
+	xmlns:h = "http://www.w3.org/1999/xhtml" xmlns:rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns = "http://purl.org/rss/1.0/">
+	<channel rdf:about = "<?php echo $home; ?> <?php echo htmlspecialchars($forumname); ?>">
+		<title><?php
+
+		echo $title;
+
+		?>
+
+		</title>
+
+		<link>
+			<?php
+
+			echo $home;
+
+			?>
+
+		</link>
+
+		<description>
+			<?php
+
+			echo $desc;
+
+			?>
+
+			<?php
+
+			echo htmlspecialchars($forumdesc);
+
+			?>
+
+		</description>
+
+		<image rdf:about = "<?php echo $img; ?>"> <title><?php
+
+		echo $title;
+
+		?>
+
+		<?php
+
+		echo htmlspecialchars($forumname);
+
+		?>
+
+		</title>
+
+		<link>
+			<?php
+
+			echo $home
+
+			?>
+
+		</link> </image>
+
+		<items>
+			<rdf:Seq>
+				<?php
+
+			// LOOP collecting last topics in forum (index)
+			foreach ($changes["data"] as $chg) {
+				print ('        <rdf:li resource="' . $read . '?forumId=' . $chg["threadId"] . '" />' . "\n");
+			}
+
+			?>
+
+			</rdf:Seq>
+		</items>
+	</channel>
+
+	<?php
+
+	// LOOP collecting last topics in forum
+	foreach ($changes["data"] as $chg) {
+		print ('<item rdf:about="' . $read . '?forumId=' . $chg["threadId"] . '">' . "\n");
+
+		print ('<title>' . htmlspecialchars($chg["title"]). ': ' . $tikilib->date_format(
+			$tikilib->get_short_datetime_format(), $chg["commentDate"]). '</title>' . "\n");
+		print ('<link>' . $read . '?forumId=' . $chg["threadId"] . '</link>' . "\n");
+		$data = $tikilib->date_format($tikilib->get_short_datetime_format(), $chg["commentDate"]);
+		print ('<description>' . htmlspecialchars($chg["data"]). '</description>' . "\n");
+		print ('</item>' . "\n\n");
+	}
+
+	?>
+
+</rdf:RDF>

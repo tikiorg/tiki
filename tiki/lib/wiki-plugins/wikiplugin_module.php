@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.9 2003-08-01 10:31:03 redflo Exp $
+/* $Id: wikiplugin_module.php,v 1.10 2003-08-07 04:34:17 rossta Exp $
 Displays a module inlined in page
 
 Parameters
@@ -17,75 +17,103 @@ about module params : all params are passed in $module_params
 so if you need to use parmas just add them in MODULE()
 like the trackerId in the above example.
 */
-
 function wikiplugin_module_help() {
-  return tra("Displays a module inlined in page");
+	return tra("Displays a module inlined in page");
 }
 
-function wikiplugin_module($data,$params) {
-  global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, $tikidomain, 
-		$user, $feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
+function wikiplugin_module($data, $params) {
+	global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, $tikidomain, $user,
+		$feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
+
 	$out = '';
-  extract($params);
-	if(!isset($align)) {$align='left';}
-	if(!isset($max)) {$max='10';}
-	if(!isset($np)) {$np='0';}
-  if(!isset($module)) {
+	extract ($params);
+
+	if (!isset($align)) {
+		$align = 'left';
+	}
+
+	if (!isset($max)) {
+		$max = '10';
+	}
+
+	if (!isset($np)) {
+		$np = '0';
+	}
+
+	if (!isset($module)) {
 		$out = '<form class="box" id="modulebox">';
-		$out.= '<br /><select name="choose">';
-		$out.= '<option value="">'.tra('Please choose a module').'</option>';
-		$out.= '<option value="" style="background-color:#bebebe;">'.tra('to be used as argument').'</option>';
-		$out.= '<option value="" style="background-color:#bebebe;">{MODULE(module=>name_of_module)}</option>';
-		$handle=opendir('modules');
+
+		$out .= '<br /><select name="choose">';
+		$out .= '<option value="">' . tra('Please choose a module'). '</option>';
+		$out .= '<option value="" style="background-color:#bebebe;">' . tra('to be used as argument'). '</option>';
+		$out .= '<option value="" style="background-color:#bebebe;">{MODULE(module=>name_of_module)}</option>';
+		$handle = opendir('modules');
+
 		while ($file = readdir($handle)) {
-			if ((substr($file,0,4) == "mod-") and (substr($file,-4,4) == ".php")) {
-				$mod = substr(substr(basename($file),4),0,-4);
-				$out.= "<option value=\"$mod\">$mod</option>";
+			if ((substr($file, 0, 4) == "mod-") and (substr($file, -4, 4) == ".php")) {
+				$mod = substr(substr(basename($file), 4), 0, -4);
+
+				$out .= "<option value=\"$mod\">$mod</option>";
 			}
 		}
-		$out.= '</select></form>';
+
+		$out .= '</select></form>';
 	} else {
-		if(!isset($args)) {$args='';}
-		$cachefile = 'modules/cache/'.$tikidomain.'mod-'.$module.'.tpl.cache';
-		$phpfile = 'modules/mod-'.$module.'.php';
-		$template= 'modules/mod-'.$module.'.tpl';
-		$nocache= 'templates/modules/mod-'.$module.'.tpl.nocache';
-		if((!file_exists($cachefile)) || (file_exists($nocache)) || ( (time() - filemtime($cachefile))>$cache_time )){
-			if(file_exists($phpfile)) {
+		if (!isset($args)) {
+			$args = '';
+		}
+
+		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $module . '.tpl.cache';
+		$phpfile = 'modules/mod-' . $module . '.php';
+		$template = 'modules/mod-' . $module . '.tpl';
+		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
+
+		if ((!file_exists($cachefile)) || (file_exists($nocache)) || ((time() - filemtime($cachefile)) > $cache_time)) {
+			if (file_exists($phpfile)) {
 				$module_rows = $max;
+
 				$module_params = $params;
-				include_once($phpfile);
+				include_once ($phpfile);
 			}
-			$template_file = 'templates/'.$template;
-			if(file_exists($template_file)) {
+
+			$template_file = 'templates/' . $template;
+
+			if (file_exists($template_file)) {
 				$out = $smarty->fetch($template);
 			} else {
-				if($tikilib->is_user_module($module)) {
+				if ($tikilib->is_user_module($module)) {
 					$info = $tikilib->get_user_module($module);
-					$smarty->assign_by_ref('user_title',$info["title"]);
-					$smarty->assign_by_ref('user_data',$info["data"]);
+
+					$smarty->assign_by_ref('user_title', $info["title"]);
+					$smarty->assign_by_ref('user_data', $info["data"]);
 					$out = $smarty->fetch('modules/user_module.tpl');
 				}
 			}
-			$fp = fopen($cachefile,"w+");
-			fwrite($fp,$data,strlen($data));
-			fclose($fp);
+
+			$fp = fopen($cachefile, "w+");
+			fwrite($fp, $data, strlen($data));
+			fclose ($fp);
 		} else {
-			$fp = fopen($cachefile,"r");
-			$out = fread($fp,filesize($cachefile));
-			fclose($fp);
+			$fp = fopen($cachefile, "r");
+
+			$out = fread($fp, filesize($cachefile));
+			fclose ($fp);
 		}
-		$out = eregi_replace("\n","",$out);
+
+		$out = eregi_replace("\n", "", $out);
 	}
+
 	if ($out) {
 		if ($np) {
-  		$data = "<div style='float:$align;'>~pp~$out~/pp~</div>".$data;
+			$data = "<div style='float:$align;'>~pp~$out~/pp~</div>" . $data;
 		} else {
-  		$data = "<div style='float:$align;'>$out</div>".$data;
+			$data = "<div style='float:$align;'>$out</div>" . $data;
 		}
 	} else {
-		$data = "<div style='float:$align;color:#AA2200;'>".tra("Sorry no such module")."<br/><b>$module</b></div>".$data;
+		$data = "<div style='float:$align;color:#AA2200;'>" . tra("Sorry no such module"). "<br/><b>$module</b></div>" . $data;
 	}
+
 	return $data;
 }
+
 ?>

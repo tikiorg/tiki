@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.l.css,v 1.4 2003-08-03 00:34:39 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.l.css,v 1.5 2003-08-07 04:34:18 rossta Exp $
  *
  * Backgrounds for light version of 'Matrix' theme
  *
@@ -11,21 +11,14 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-
-table.catobjects
-{
-  background: #507050;
+table.catobjects {
+	background: #507050;
 }
 
-table.tcategpath,
-div.treenode:hover
-{
-  background: #404040;
+table.tcategpath, div.treenode:hover {
+	background: #404040;
 }
 
-div.tree#top,
-div.catlists > div.cbox-title,
-div.catlists > div.cbox-data
-{
-  background: #202020;
+div.tree#top, div.catlists > div.cbox-title, div.catlists > div.cbox-data {
+	background: #202020;
 }

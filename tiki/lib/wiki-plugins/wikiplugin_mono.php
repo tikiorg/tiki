@@ -16,28 +16,28 @@
 //      displayed using Courier New font, if available; otherwise uses the
 //      browser-specified "monospace" font
 //
-
 function wikiplugin_mono_help() {
-  return tra( "Displays the data using a monospace font" );
+	return tra("Displays the data using a monospace font");
 }
 
-function wikiplugin_mono( $data, $params ) {
-  global $tikilib;
-  extract( $params );
+function wikiplugin_mono($data, $params) {
+	global $tikilib;
 
-  $code = /* htmlentities( htmlspecialchars(*/ trim( $data )/* ) )*/;
-  $code = preg_replace( "/\n/", "<br />", $code );
-  
-  if (!isset($font)) { 
-    $font ="monospace"; 
-  } else {
-    $font .= ", monospace";
-  }
-  
-  $style = "style=\"font-family: ".$font.";\"";
-  $data = "<span ".$style.">".$code."</span>";
+	extract ($params);
 
-  return $data;
+	$code = /* htmlentities( htmlspecialchars(*/ trim($data) /* ) )*/;
+	$code = preg_replace("/\n/", "<br />", $code);
+
+	if (!isset($font)) {
+		$font = "monospace";
+	} else {
+		$font .= ", monospace";
+	}
+
+	$style = "style=\"font-family: " . $font . ";\"";
+	$data = "<span " . $style . ">" . $code . "</span>";
+
+	return $data;
 }
 
 ?>

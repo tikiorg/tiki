@@ -1,18 +1,29 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/select_banner.php,v 1.4 2003-04-04 21:31:00 lrargerich Exp $
+<?php
+
+// $Header: /cvsroot/tikiwiki/tiki/select_banner.php,v 1.5 2003-08-07 04:33:56 rossta Exp $
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+# $Header: /cvsroot/tikiwiki/tiki/select_banner.php,v 1.5 2003-08-07 04:33:56 rossta Exp $
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
-if(!isset($_REQUEST["zone"])) {
-  die;
+if (!isset($_REQUEST["zone"])) {
+	die;
 }
-include_once('db/tiki-db.php');
-include_once('lib/tikilib.php');
-include_once('lib/banners/bannerlib.php');
-if(!isset($bannerlib)) {
-  $bannerlib = new BannerLib($dbTiki);
+
+include_once ('db/tiki-db.php');
+include_once ('lib/tikilib.php');
+include_once ('lib/banners/bannerlib.php');
+
+if (!isset($bannerlib)) {
+	$bannerlib = new BannerLib($dbTiki);
 }
 
 $tikilib = new Tikilib($dbTiki);
 $banner = $bannerlib->select_banner($_REQUEST["zone"]);
-print($banner);
+print ($banner);
+
 ?>

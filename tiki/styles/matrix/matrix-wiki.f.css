@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.3 2003-08-02 20:39:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.f.css,v 1.4 2003-08-07 04:34:18 rossta Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -8,34 +8,18 @@
 /* Get styles w/o backgrounds */
 @import "matrix-wiki.css";
 
-
 /*
  * Define backgrounds (the only difference between two themes)
  */
-
-div.wikitext,
-div.titlebar,
-td.wikicell,
-div.wiki-edithelp,
-div.tocnav,
-TD.comform,
-div.commentsedithelp,
-div.commentstoolbar,
-div.commentscomment > div.commentheader,
-div.codelisting,
-td.userstoryid,
-td.userstorystatus,
-td.userstorytitle
-{
-  background: url(img/ltgreen.png) repeat;
+div.wikitext, div.titlebar, td.wikicell, div.wiki-edithelp, div.tocnav, TD.comform, div.commentsedithelp, div.commentstoolbar,
+	div.commentscomment > div.commentheader, div.codelisting, td.userstoryid, td.userstorystatus, td.userstorytitle {
+	background: url(img/ltgreen.png) repeat;
 }
 
-div.commenttext
-{
-  background: url(img/dark.png) repeat;
+div.commenttext {
+	background: url(img/dark.png) repeat;
 }
 
-td.userstoryidwarn
-{
-  background: url(img/red.png) repeat;
+td.userstoryidwarn {
+	background: url(img/red.png) repeat;
 }

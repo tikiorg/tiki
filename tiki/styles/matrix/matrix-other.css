@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.6 2003-08-02 20:39:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.7 2003-08-07 04:34:18 rossta Exp $
  *
  * Define styles for:
  *  Messages, RSS, Shoutbox, Categories
@@ -9,123 +9,132 @@
 /*
  * Messages
  */
+td.prio1 {
+	border:    1px outset #00A000;
+	background-color:   #004000;
+}
 
-td.prio1 { border: 1px outset #00A000; background-color: #004000; }
-td.prio2 { border: 1px outset #00A000; background-color: #006000; }
-td.prio3 { border: 1px outset #00A000; background-color: #008000; }
-td.prio4 { border: 1px outset #00A000; background-color: #805000; }
-td.prio5 { border: 1px outset #00A000; background-color: #803000; }
+td.prio2 {
+	border:    1px outset #00A000;
+	background-color:   #006000;
+}
+
+td.prio3 {
+	border:    1px outset #00A000;
+	background-color:   #008000;
+}
+
+td.prio4 {
+	border:    1px outset #00A000;
+	background-color:   #805000;
+}
+
+td.prio5 {
+	border:    1px outset #00A000;
+	background-color:   #803000;
+}
 
 /* Div containing links to flag/unflag messages when reading a message */
-div.messureadflag
-{
-  padding: 5px;
+div.messureadflag {
+	padding: 5px;
 }
 
 /* Header when reading a message */
-div.messureadhead
-{
-  border: 1px outset #00A000;
-  margin-top: 20px;
+div.messureadhead {
+	border:    1px outset #00A000;
+	margin-top:   20px;
 }
-div.messureadhead td[style="font-weight:bold;"]
-{
-  color: #001000;
-  border: 1px outset #00A000;
+
+div.messureadhead td[style = "font-weight:bold;"] {
+	color:    #001000;
+	border:   1px outset #00A000;
 }
-div.messureadhead > table
-{
-  width: 100%;
+
+div.messureadhead > table {
+	width: 100%;
 }
-div.messureadhead td[style="font-weight:bold;"] + td
-{
-  border: 1px outset #00A000;
-  width: 100%;
+
+div.messureadhead td[style = "font-weight:bold;"] + td {
+	border:    1px outset #00A000;
+	width:   100%;
 }
 
 /* Message body when reading */
-div.messureadbody
-{
-  border: 1px outset #00A000;
-  margin-top: 5px;
+div.messureadbody {
+	border:    1px outset #00A000;
+	margin-top:   5px;
 }
 
 /* Links to read emails (the subject in the mailbox listing) */
-.readlink, .readlink:active, .readlink:visited
-{
-  color: #00E000;
-  text-decoration: none;
+.readlink, .readlink:active, .readlink:visited {
+	color:    #00E000;
+	text-decoration:   none;
 }
-.readlink:hover, .readlink:visited:hover
-{
-  background-color: green;
-  text-decoration: none;
+
+.readlink:hover, .readlink:visited:hover {
+	background-color:    green;
+	text-decoration:   none;
 }
 
 /*
  * RSS
  */
-.rsslink, rsslink:visited, .rsslink:active
-{
-  color: #00E000;
-  text-decoration: none;
+.rsslink, rsslink:visited, .rsslink:active {
+	color:    #00E000;
+	text-decoration:   none;
 }
-rsslink:visited
-{
-  color: #00E000;
-  text-decoration: none;
+
+rsslink:visited {
+	color:    #00E000;
+	text-decoration:   none;
 }
-.rsslink:hover, .rsslink:visited:hover
-{
-  color: #00F000;
-  text-decoration: none;
+
+.rsslink:hover, .rsslink:visited:hover {
+	color:    #00F000;
+	text-decoration:   none;
 }
 
 /*
  * Shoutbox
  */
+div.shoutboxmsg {
+	border:    1px outset #00B000;
+	margin-top:   5px;
+}
 
-div.shoutboxmsg
-{
-  border: 1px outset #00B000;
-  margin-top: 5px;
+div.shoutboxmodmsg {
+/* Looks like transparent buggy in CVS konqueror */
+/* border: 1px inset transparent; */
 }
-div.shoutboxmodmsg
-{
-  /* Looks like transparent buggy in CVS konqueror */
-  /* border: 1px inset transparent; */
-}
+
 div.shoutboxmsg:hover /*,
 div.shoutboxmodmsg:hover */
 {
-  border: 1px inset #00E000;
+	border: 1px inset #00E000;
 }
-textarea.tshoutbox {}
 
-div.shoutboxmodmsg .linkmodule,
-div.shoutboxmodmsg .linkmodule:visited
-{
-  color: #00E000;
-  text-decoration: none;
+textarea.tshoutbox {
+}
+
+div.shoutboxmodmsg.linkmodule, div.shoutboxmodmsg.linkmodule:visited {
+	color:    #00E000;
+	text-decoration:   none;
 }
 
 /* Hack to make timesone selector shorter in user prefs of MyTiki */
-select[name='display_timezone']
-{
-  display: block;
-  width: 450px;
+select[name = 'display_timezone'] {
+	display:    block;
+	width:   450px;
 }
 
 /* help links style */
-.tikihelp, .tikihelp:visited
-{
-  color: #001000;
-  text-decoration: none;
+.tikihelp, .tikihelp:visited {
+	color:    #001000;
+	text-decoration:   none;
 }
 /* help links style */
-.tikihelp:visited:hover, .tikihelp:hover
-{
-  color: #001000;
-  cursor: help;
-  text-decoration: none;
+.tikihelp:visited:hover, .tikihelp:hover {
+	color:    #001000;
+	cursor:   help;
+	text-decoration:   none;
 }

@@ -1,10 +1,9 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.f.css,v 1.3 2003-08-02 20:39:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.f.css,v 1.4 2003-08-07 04:34:18 rossta Exp $
  *
  * Directory styles
  *
  */
-
 
 /* Get styles w/o backgrounds */
 @import "matrix-dir.css";
@@ -14,50 +13,57 @@
  */
 
 /* The list of categories */
-div.dircategs 
-{
+div.dircategs {
 }
 
 /* Links to categories */
-.dirlink {}
-.dirlink:hover {}
+.dirlink {
+}
+
+.dirlink:hover {
+}
 
 /* Links to subcategories */
-.dirsublink {}
-.dirsublink:hover {}
+.dirsublink {
+}
 
+.dirsublink:hover {
+}
 
 /* The list of sites in any category */
-div.dirlistsites
-{
+div.dirlistsites {
 }
 
 /* each site in the list of sites */
-div.dirsite
-{
+div.dirsite {
 }
 
-span.dirsitedesc  {}
-span.dirsitetrail {font-size: 10px;}
-span.dirsitecats  {}
+span.dirsitedesc {
+}
+
+span.dirsitetrail {
+	font-size: 10px;
+}
+
+span.dirsitecats {
+}
 
 /* Links to sites */
-.dirsitelink {}
-.dirsitelink:hover {}
+.dirsitelink {
+}
+
+.dirsitelink:hover {
+}
 
 /* Related categories */
-div.dirrelated
-{
+div.dirrelated {
 }
 
 /* Footer with stats for the directory */
-td.dirfooter
-{
-  font-size: 9px;
+td.dirfooter {
+	font-size: 9px;
 }
 
-div.dirfooter
-{
-  background: url(img/ltgreen.png) repeat;
+div.dirfooter {
+	background: url(img/ltgreen.png) repeat;
 }
-

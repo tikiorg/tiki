@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.2 2003-08-01 10:31:08 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.3 2003-08-07 04:34:18 rossta Exp $
  *
  */
 
@@ -16,153 +16,134 @@
 
 /* A simple box is just a div with a border around and some margin
  * used for example in the admin screen */
-div.simplebox
-{
-  border: 2px ridge WindowFrame;
-  font-size: small;
+div.simplebox {
+	border:    2px ridge WindowFrame;
+	font-size:   small;
 }
-div#tiki-center > div.simplebox
-{
-  color: InfoText;
-  background-color: InfoBackground;
-  padding: 5px;
+
+div#tiki-center > div.simplebox {
+	color:    InfoText;
+	background-color:   InfoBackground;
+	padding:   5px;
 }
 
 /* Boxes used for modules (modules are those boxes in the left/right columns) */
-div.box
-{
-  color: MenuText;
-  background-color: Menu;
-  width: 170px;
-  margin: 4px;
-  margin-bottom: 6px;
-  padding-bottom: 10px;
-  border-top: 2px outset ThreeDLightShadow;
-  border-left: 2px outset ThreeDLightShadow;
-  border-bottom: 2px outset ThreeDShadow;
-  border-right: 2px outset ThreeDShadow;
-  font-size: small;
+div.box {
+	color:    MenuText;
+	background-color:   Menu;
+	width:   170px;
+	margin:   4px;
+	margin-bottom:   6px;
+	padding-bottom:   10px;
+	border-top:   2px outset ThreeDLightShadow;
+	border-left:   2px outset ThreeDLightShadow;
+	border-bottom:   2px outset ThreeDShadow;
+	border-right:   2px outset ThreeDShadow;
+	font-size:   small;
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title
-{
-  color: HighlightText;
-  background-color: Highlight;
-  margin-top: 4px;
-  margin-bottom: 6px;
-  text-align: center;
-  font-variant: small-caps;
-  font-weight: bold;
-  letter-spacing: 0.1em;
+div.box-title {
+	color:    HighlightText;
+	background-color:   Highlight;
+	margin-top:   4px;
+	margin-bottom:   6px;
+	text-align:   center;
+	font-variant:   small-caps;
+	font-weight:   bold;
+	letter-spacing:   0.1em;
 }
 
 /* And this is the data */
-div.box-data
-{
-  margin: 0px;
-  padding: 4px;
+div.box-data {
+	margin:    0px;
+	padding:   4px;
 }
 
 /* Now the boxes for the rest of Tiki (non-modules */
-div.cbox
-{
-  color: WindowText;
-  background-color: Window;
-  margin-top: 20px;
-  padding-left: 2px;
-  padding-right: 2px;
-  padding-bottom: 20px;
-  border-top: 3px outset ThreeDLightShadow;
-  border-left: 3px outset ThreeDLightShadow;
-  border-bottom: 3px outset ThreeDShadow;
-  border-right: 3px outset ThreeDShadow;
+div.cbox {
+	color:    WindowText;
+	background-color:   Window;
+	margin-top:   20px;
+	padding-left:   2px;
+	padding-right:   2px;
+	padding-bottom:   20px;
+	border-top:   3px outset ThreeDLightShadow;
+	border-left:   3px outset ThreeDLightShadow;
+	border-bottom:   3px outset ThreeDShadow;
+	border-right:   3px outset ThreeDShadow;
 }
-div.cbox#error-box
-{
-  margin: 20px;
-  margin-top: 120px;
-  margin-right: 30px;
-  padding-left: 2px;
-  padding-right: 2px;
-  padding-bottom: 20px;
-  border: 3px outset #A00000;
-  text-align: center;
+
+div.cbox#error-box {
+	margin:    20px;
+	margin-top:   120px;
+	margin-right:   30px;
+	padding-left:   2px;
+	padding-right:   2px;
+	padding-bottom:   20px;
+	border:   3px outset #A00000;
+	text-align:   center;
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.cbox-title
-{
-  font-weight: bold;
-  text-transform: uppercase;
-  text-align: left;
-  margin-bottom: 20px;
-  border-bottom: 1px;
-  padding-left: 20px;
+div.cbox-title {
+	font-weight:    bold;
+	text-transform:   uppercase;
+	text-align:   left;
+	margin-bottom:   20px;
+	border-bottom:   1px;
+	padding-left:   20px;
 }
 
 /* And this is the data */
-div.cbox-data
-{
+div.cbox-data {
 }
-
 
 /* When modules display a list of items each item is enclosed
  * in a cell with the following style
  */
-td.module
-{
-  color: MenuText;
-  text-align: left;
+td.module {
+	color:    MenuText;
+	text-align:   left;
 }
 
-
-div.separator
-{
-  color: MenuText;
-  margin: 3px;
-  width: 95%;
+div.separator {
+	color:    MenuText;
+	margin:   3px;
+	width:   95%;
 }
 /* submenu div */
-div.separator + div[id]
-{
-  margin: 2px 0px 5px 0px;
-  padding-left: 2ex;
+div.separator + div[id] {
+	margin:    2px 0px 5px 0px;
+	padding-left:   2ex;
 }
 
-.linkmenu,   .linkmenu:visited,
-.linkmodule, .linkmodule:visited,
-.separator,  .separator:visited
-{
-  color: MenuText;
-  text-decoration: none;
+.linkmenu, .linkmenu:visited, .linkmodule, .linkmodule:visited, .separator, .separator:visited {
+	color:    MenuText;
+	text-decoration:   none;
 }
 
-.linkmenu:visited:hover,   .linkmenu:hover,
-.linkmodule:visited:hover, .linkmodule:hover,
-.separator:visited:hover,  .separator:hover
-{
-  color: MenuText;
-  text-decoration: underline;
-}
-.flip, .flip:visited, .flip:visited:hover, .flip:visited:hover, .flip:active
-{
-  color: HighlightText;
-  background-color: Highlight;
+.linkmenu:visited:hover, .linkmenu:hover, .linkmodule:visited:hover, .linkmodule:hover, .separator:visited:hover, .separator:hover {
+	color:    MenuText;
+	text-decoration:   underline;
 }
 
-div.box-title img
-{
-/*  visibility: hidden; */
-  display: none;
+.flip, .flip:visited, .flip:visited:hover, .flip:visited:hover, .flip:active {
+	color:    HighlightText;
+	background-color:   Highlight;
 }
-div.box-title:hover img
-{
-/*  visibility: visible; */
-  display: inline;
+
+div.box-title img {
+	/*  visibility: hidden; */
+	display: none;
 }
-div.box-title td
-{
-  vertical-align: middle;
-  text-align: center;
+
+div.box-title:hover img {
+	/*  visibility: visible; */
+	display: inline;
+}
+
+div.box-title td {
+	vertical-align:    middle;
+	text-align:   center;
 }

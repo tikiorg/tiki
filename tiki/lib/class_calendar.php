@@ -27,243 +27,450 @@
 // buildMinBox($name,$h)                  : Builds a select box for minutes
 // buildIntBox($name,$min,$max,$inter,$def=0) : Generic Select box indicating minimum, maximum, interval and default values
 // buildIntBoxMul($name,$min,$max,$inter,$def=0,$cu=0) : Idem but allowing multiple selections
-
 class Calendar {
-  var $lan;
-  
-  function Calendar($lan='ar') {
-    $this->lan=$lan;
-  }
- 
-  function validDate($d,$m,$y) {
-    return checkdate($m,$d,$y);
-  }
+	var $lan;
 
-  function buildYearBox($name,$ny) {
-    print("<select name=\"$name\">");
-    print("<option value=\"$ny\">$ny</option>");
-    for($i=0;$i<10;$i++) {
-    $y=$ny+$i;
-    print("<option value=\"$y\">$y</option>");
-    }
-    print("</select>");
-  }
+	function Calendar($lan = 'ar') {
+		$this->lan = $lan;
+	}
 
-  function buildMonthBox($name,$m) {
-    print("<select name=\"$name\">");
-    for($i=0;$i<12;$i++) {
-      $z=$i+1;
-      if($z<10) {$zst='0'.$z;}else{$zst=$z;}
-      $name=$this->nameOfMonth($z);
-      if($z==$m) {
-         print("<option value=\"$zst\" selected>$name</option>");
-      } else {
-         print("<option value=\"$zst\">$name</option>");
-      }
-    }
-    print("</select>");
-  }
+	function validDate($d, $m, $y) {
+		return checkdate($m, $d, $y);
+	}
 
-  function buildDayOfWeekBox($name,$mul=false,$d=1) {
-    if($mul) {$st='multiple size="1"';} else {$st='';}
-    print("<select name=\"$name\" $st>");
-    for($i=0;$i<7;$i++) {
-       $z=$i+1;
-       $dia=$this->dayOfWeekStrFromNo($z);
-       if($z==$d) {
-         print("<option value=\"$z\" selected>$dia</option>");
-       } else {
-         print("<option value=\"$z\">$dia</option>");
-       }
-    }
-    print("</select>");
-  }
-  
+	function buildYearBox($name, $ny) {
+		print ("<select name=\"$name\">");
 
-  function buildDayBox($name,$d,$m,$y) {
-    $cuantos=$this->daysInMonth($m,$y); 
-    print("<select name=\"$name\">");
-    for($i=0;$i<$cuantos;$i++) {
-      $z=$i+1;
-      if($z<10) {$zst='0'.$z;}else{$zst=$z;}
-      if($z==$d) {
-         print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-         print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
-  
-  function buildHourBox($name,$h) {
-    print("<select name=\"$name\">");
-    for($i=0;$i<24;$i++) {
-      if($i<10) {$zst='0'.$i;}else{$zst=$i;}
-      if($i==$h){      
-        print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-        print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
+		print ("<option value=\"$ny\">$ny</option>");
 
-  function buildMinBox($name,$m) {
-    print("<select name=\"$name\">");
-    for($i=0;$i<60;$i++) {
-      if($i<10) {$zst='0'.$i;}else{$zst=$i;}
-      if($i==$m){      
-        print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-        print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
-  
-  function buildMinBoxI($name,$m=60) {
-    print("<select name=\"$name\">");
-    for($i=5;$i<66;$i+=5) {
-      if($i<10) {$zst='0'.$i;}else{$zst=$i;}
-      if($i==$m){      
-        print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-        print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
+		for ($i = 0; $i < 10; $i++) {
+			$y = $ny + $i;
 
-  function buildIntBox($name,$min,$max,$inter,$def=0) {
-    print("<select name=\"$name\">");
-    for($i=$min;$i<=$max;$i+=$inter) {
-      if($i<10) {$zst='0'.$i;}else{$zst=$i;}
-      if($i==$def){      
-        print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-        print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
+			print ("<option value=\"$y\">$y</option>");
+		}
 
-  function buildIntBoxMul($name,$min,$max,$inter,$def=0,$cu=0) {
-    print("<select name=\"$name\" multiple size=\"$cu\">");
-    for($i=$min;$i<=$max;$i+=$inter) {
-      if($i<10) {$zst='0'.$i;}else{$zst=$i;}
-      if($i==$def){      
-        print("<option value=\"$zst\" selected>$zst</option>");
-      } else {
-        print("<option value=\"$zst\">$zst</option>");
-      }
-    }
-    print("</select>");
-  }
+		print ("</select>");
+	}
 
+	function buildMonthBox($name, $m) {
+		print ("<select name=\"$name\">");
 
+		for ($i = 0; $i < 12; $i++) {
+			$z = $i + 1;
 
-  function getDisplayMatrix($d,$m,$y) {
-    $dw=$this->dayOfWeek(1,$m,$y);
-    $cu=$this->daysInMonth($m,$y);
-    $hd=date('d');
-    $hm=date('m'); 
-    $hy=date('Y');
-    //Inicializo la matriz horrible...
-    for($i=0;$i<42;$i++) {
-      $mat[$i]='  ';
-    }
-    for($j=0;$j<$cu;$j++) {
-     $v=$j+1;
-     $mat[$j+($dw-1)]="$v";
-     if ($hm==$m && $hy==$y && $hd==$v) {
-       $mat[$j+($dw-1)]='+'.$mat[$j+($dw-1)].'';
-     }
-    }
-    return $mat;
-  }
+			if ($z < 10) {
+				$zst = '0' . $z;
+			} else {
+				$zst = $z;
+			}
 
-  function getPureMatrix($d,$m,$y) {
-    $dw=$this->dayOfWeek(1,$m,$y);
-    $cu=$this->daysInMonth($m,$y);
-    //Inicializo la matriz horrible...
-    for($i=0;$i<42;$i++) {
-      $mat[$i]='  ';
-    }
-    for($j=0;$j<$cu;$j++) {
-     $v=$j+1;
-     $mat[$j+($dw-1)]="$v";
-    }
-    return $mat;
-  }
+			$name = $this->nameOfMonth($z);
 
-  function validTime($h,$m,$s) {
-    return (($h<=24)&&($h>=0)&&($m<=60)&&($m>=0)&&($s>=0)&&($s<=60));
-  }
+			if ($z == $m) {
+				print ("<option value=\"$zst\" selected>$name</option>");
+			} else {
+				print ("<option value=\"$zst\">$name</option>");
+			}
+		}
 
-  // Returns true if the given year is 'leap' false if not. Year MUST use 4 digits!
-  function isLeap($year) {
-    if (($year%4==0)&&(($year%100<>0)||($year%400==0))) {
-       return true; 
-    } else {
-      return false;
-    }
-  }
+		print ("</select>");
+	}
 
+	function buildDayOfWeekBox($name, $mul = false, $d = 1) {
+		if ($mul) {
+			$st = 'multiple size="1"';
+		} else {
+			$st = '';
+		}
 
-  // Returns the name of month in the given language.
-  function nameOfMonth($month,$lan=false) {
-    $month=ceil($month);
-    if(!$lan) {$lan=$this->lan;}
-    $ar=array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre');
-    $br=array('','Janeiro','Fevereiro','Março','Abril','Junho','Julho','Agosto','Stembro','Outubro','Novembro','Dezembro');
-    $en=array('','January','February','March','April','May','June','July','August','September','October','November','December');
+		print ("<select name=\"$name\" $st>");
 
-    $coso=${$lan}[$month];
-    return ${$lan}[$month];
- }
+		for ($i = 0; $i < 7; $i++) {
+			$z = $i + 1;
 
-  // Returns the number of days in the given month for a give 4 DIGITS year.
-  function daysInMonth($month,$year) {
-    if(substr($month,0,1)=='0'){$month=substr($month,1,1);}
-    $vec=array(0,31,28,31,30,31,30,31,31,30,31,30,31);
-    if($this->isLeap($year)) {$vec[2]+=1;}
-    return $vec[$month];
-  }
+			$dia = $this->dayOfWeekStrFromNo($z);
 
-  // Returns the day of week for the passed date. 1=Sun,2=Mon,...,7=Sat
-  function dayOfWeek($dia,$mes,$anio) {
-    $u=mktime(10,1,1,$mes,$dia,$anio);
-    $w=date('w',$u);
-    return $w+1;
-  }
+			if ($z == $d) {
+				print ("<option value=\"$z\" selected>$dia</option>");
+			} else {
+				print ("<option value=\"$z\">$dia</option>");
+			}
+		}
 
-  function dayOfWeekStrFromNo($x,$lan=false){
-    if(!$lan) {$lan=$this->lan;}
-    $ar=array('','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
-    $en=array('','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-    $br=array('','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado');
-    return ${$lan}[$x];
-  }
+		print ("</select>");
+	}
 
+	function buildDayBox($name, $d, $m, $y) {
+		$cuantos = $this->daysInMonth($m, $y);
 
-  // Returns the day_of_week in the language choosen.
-  function dayOfWeekStr($dia,$mes,$anio,$lan=false){
-    if(!$lan) {$lan=$this->lan;}
-    $ar=array('','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado');
-    $en=array('','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-    $br=array('','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado');
-    $w=$this->dayOfWeek($dia,$mes,$anio);
-    return ${$lan}[$w];
-  }
+		print ("<select name=\"$name\">");
+
+		for ($i = 0; $i < $cuantos; $i++) {
+			$z = $i + 1;
+
+			if ($z < 10) {
+				$zst = '0' . $z;
+			} else {
+				$zst = $z;
+			}
+
+			if ($z == $d) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function buildHourBox($name, $h) {
+		print ("<select name=\"$name\">");
+
+		for ($i = 0; $i < 24; $i++) {
+			if ($i < 10) {
+				$zst = '0' . $i;
+			} else {
+				$zst = $i;
+			}
+
+			if ($i == $h) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function buildMinBox($name, $m) {
+		print ("<select name=\"$name\">");
+
+		for ($i = 0; $i < 60; $i++) {
+			if ($i < 10) {
+				$zst = '0' . $i;
+			} else {
+				$zst = $i;
+			}
+
+			if ($i == $m) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function buildMinBoxI($name, $m = 60) {
+		print ("<select name=\"$name\">");
+
+		for ($i = 5; $i < 66; $i += 5) {
+			if ($i < 10) {
+				$zst = '0' . $i;
+			} else {
+				$zst = $i;
+			}
+
+			if ($i == $m) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function buildIntBox($name, $min, $max, $inter, $def = 0) {
+		print ("<select name=\"$name\">");
+
+		for ($i = $min; $i <= $max; $i += $inter) {
+			if ($i < 10) {
+				$zst = '0' . $i;
+			} else {
+				$zst = $i;
+			}
+
+			if ($i == $def) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function buildIntBoxMul($name, $min, $max, $inter, $def = 0, $cu = 0) {
+		print ("<select name=\"$name\" multiple size=\"$cu\">");
+
+		for ($i = $min; $i <= $max; $i += $inter) {
+			if ($i < 10) {
+				$zst = '0' . $i;
+			} else {
+				$zst = $i;
+			}
+
+			if ($i == $def) {
+				print ("<option value=\"$zst\" selected>$zst</option>");
+			} else {
+				print ("<option value=\"$zst\">$zst</option>");
+			}
+		}
+
+		print ("</select>");
+	}
+
+	function getDisplayMatrix($d, $m, $y) {
+		$dw = $this->dayOfWeek(1, $m, $y);
+
+		$cu = $this->daysInMonth($m, $y);
+		$hd = date('d');
+		$hm = date('m');
+		$hy = date('Y');
+
+		//Inicializo la matriz horrible...
+		for ($i = 0; $i < 42; $i++) {
+			$mat[$i] = '  ';
+		}
+
+		for ($j = 0; $j < $cu; $j++) {
+			$v = $j + 1;
+
+			$mat[$j + ($dw - 1)] = "$v";
+
+			if ($hm == $m && $hy == $y && $hd == $v) {
+				$mat[$j + ($dw - 1)] = '+' . $mat[$j + ($dw - 1)] . '';
+			}
+		}
+
+		return $mat;
+	}
+
+	function getPureMatrix($d, $m, $y) {
+		$dw = $this->dayOfWeek(1, $m, $y);
+
+		$cu = $this->daysInMonth($m, $y);
+
+		//Inicializo la matriz horrible...
+		for ($i = 0; $i < 42; $i++) {
+			$mat[$i] = '  ';
+		}
+
+		for ($j = 0; $j < $cu; $j++) {
+			$v = $j + 1;
+
+			$mat[$j + ($dw - 1)] = "$v";
+		}
+
+		return $mat;
+	}
+
+	function validTime($h, $m, $s) {
+		return (($h <= 24) && ($h >= 0) && ($m <= 60) && ($m >= 0) && ($s >= 0) && ($s <= 60));
+	}
+
+	// Returns true if the given year is 'leap' false if not. Year MUST use 4 digits!
+	function isLeap($year) {
+		if (($year % 4 == 0) && (($year % 100 <> 0) || ($year % 400 == 0))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Returns the name of month in the given language.
+	function nameOfMonth($month, $lan = false) {
+		$month = ceil($month);
+
+		if (!$lan) {
+			$lan = $this->lan;
+		}
+
+		$ar = array(
+			'',
+			'Enero',
+			'Febrero',
+			'Marzo',
+			'Abril',
+			'Mayo',
+			'Junio',
+			'Julio',
+			'Agosto',
+			'Setiembre',
+			'Octubre',
+			'Noviembre',
+			'Diciembre'
+		);
+
+		$br = array(
+			'',
+			'Janeiro',
+			'Fevereiro',
+			'Março',
+			'Abril',
+			'Junho',
+			'Julho',
+			'Agosto',
+			'Stembro',
+			'Outubro',
+			'Novembro',
+			'Dezembro'
+		);
+
+		$en = array(
+			'',
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December'
+		);
+
+		$coso = ${$lan}[$month];
+		return ${$lan}[$month];
+	}
+
+	// Returns the number of days in the given month for a give 4 DIGITS year.
+	function daysInMonth($month, $year) {
+		if (substr($month, 0, 1) == '0') {
+			$month = substr($month, 1, 1);
+		}
+
+		$vec = array(
+			0,
+			31,
+			28,
+			31,
+			30,
+			31,
+			30,
+			31,
+			31,
+			30,
+			31,
+			30,
+			31
+		);
+
+		if ($this->isLeap($year)) {
+			$vec[2] += 1;
+		}
+
+		return $vec[$month];
+	}
+
+	// Returns the day of week for the passed date. 1=Sun,2=Mon,...,7=Sat
+	function dayOfWeek($dia, $mes, $anio) {
+		$u = mktime(10, 1, 1, $mes, $dia, $anio);
+
+		$w = date('w', $u);
+		return $w + 1;
+	}
+
+	function dayOfWeekStrFromNo($x, $lan = false) {
+		if (!$lan) {
+			$lan = $this->lan;
+		}
+
+		$ar = array(
+			'',
+			'Domingo',
+			'Lunes',
+			'Martes',
+			'Miercoles',
+			'Jueves',
+			'Viernes',
+			'Sabado'
+		);
+
+		$en = array(
+			'',
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday'
+		);
+
+		$br = array(
+			'',
+			'Domingo',
+			'Segunda-feira',
+			'Terça-feira',
+			'Quarta-feira',
+			'Quinta-feira',
+			'Sexta-feira',
+			'Sábado'
+		);
+
+		return ${$lan}[$x];
+	}
+
+	// Returns the day_of_week in the language choosen.
+	function dayOfWeekStr($dia, $mes, $anio, $lan = false) {
+		if (!$lan) {
+			$lan = $this->lan;
+		}
+
+		$ar = array(
+			'',
+			'Domingo',
+			'Lunes',
+			'Martes',
+			'Miercoles',
+			'Jueves',
+			'Viernes',
+			'Sabado'
+		);
+
+		$en = array(
+			'',
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday'
+		);
+
+		$br = array(
+			'',
+			'Domingo',
+			'Segunda-feira',
+			'Terça-feira',
+			'Quarta-feira',
+			'Quinta-feira',
+			'Sexta-feira',
+			'Sábado'
+		);
+
+		$w = $this->dayOfWeek($dia, $mes, $anio);
+		return ${$lan}[$w];
+	}
 }
 
 ?>
 
-
 <?php
- // example
- //$c=new calendar('en');
- //$x=$c->day_of_week_str(2,3,2000,'po');
- //print("$x\n");
- //'ç'
+
+// example
+//$c=new calendar('en');
+//$x=$c->day_of_week_str(2,3,2000,'po');
+//print("$x\n");
+//'ç'
+
 ?>

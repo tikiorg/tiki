@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_box.php,v 1.1 2003-06-30 02:47:24 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_box.php,v 1.2 2003-08-07 04:34:17 rossta Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -11,22 +11,21 @@
  *  {BOX}
  * 
  */
-
 function wikiplugin_box_help() {
-  return "Insert theme styled box on wiki page";
+	return "Insert theme styled box on wiki page";
 }
 
-function wikiplugin_box($data,$params) {
-  /* set default values for some args */
-  $title="Message box";
+function wikiplugin_box($data, $params) {
+	/* set default values for some args */
+	$title = "Message box";
 
-  extract($params);
-  $w = (isset($width)) ? " width=$width" : "";
-  $back =  (isset($bg)) ? " style='background:$bg'" : "";
-  $begin="<table$w><tr><td><div class=cbox$back><div class=cbox-title>$title</div><div class=cbox-data$back>";
-  $end="</div></div></td></tr></table>";
+	extract ($params);
+	$w = (isset($width)) ? " width=$width" : "";
+	$back = (isset($bg)) ? " style='background:$bg'" : "";
+	$begin = "<table$w><tr><td><div class=cbox$back><div class=cbox-title>$title</div><div class=cbox-data$back>";
+	$end = "</div></div></td></tr></table>";
 
-  return $begin . $data . $end;
+	return $begin . $data . $end;
 }
 
 ?>

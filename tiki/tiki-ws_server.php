@@ -1,31 +1,38 @@
 <?php
-include_once('tiki-setup.php');
+
+// $Header$
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+include_once ('tiki-setup.php');
+
 require_once 'SOAP/Server.php';
 
 // Your class
 class HelloServer {
-    var $__dispatch_map = array();
+	var $__dispatch_map = array();
 
-    function HelloServer() {
-        // Define the signature of the dispatch map
-        $this->__dispatch_map['sayHello'] =
-            array('in' => array('inputString' => 'string'),
-                  'out' => array('outputString' => 'string'),
-                  );
-    }
+	function HelloServer() {
+		// Define the signature of the dispatch map
+		$this->__dispatch_map['sayHello'] = array(
+			'in' => array('inputString' => 'string'),
+			'out' => array('outputString' => 'string'),
+		);
+	}
 
-    // Required function by SOAP_Server
-    function __dispatch($methodname) {
-        if (isset($this->__dispatch_map[$methodname]))
-            return $this->__dispatch_map[$methodname];
-        return NULL;
-    }
+	// Required function by SOAP_Server
+	function __dispatch($methodname) {
+		if (isset($this->__dispatch_map[$methodname]))
+			return $this->__dispatch_map[$methodname];
 
-    // Your function
-    function sayHello($inputString)
-    {
-        return 'Hello '.$inputString;
-    }
+		return NULL;
+	}
+
+	// Your function
+	function sayHello($inputString) {
+		return 'Hello ' . $inputString;
+	}
 }
 
 // Fire up PEAR::SOAP_Server
@@ -35,25 +42,26 @@ $server = new SOAP_Server;
 $helloServer = new HelloServer();
 
 // Add your object to SOAP server (note namespace)
-$server->addObjectMap($helloServer,'urn:HelloServer');
+$server->addObjectMap($helloServer, 'urn:HelloServer');
 
 // Handle SOAP requests coming is as POST data
-if (isset($_SERVER['REQUEST_METHOD']) &&
-    $_SERVER['REQUEST_METHOD']=='POST') {
-    $server->service($HTTP_RAW_POST_DATA);
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+	$server->service($HTTP_RAW_POST_DATA);
 } else {
-    // Deal with WSDL / Disco here
-    require_once 'SOAP/Disco.php';
+	// Deal with WSDL / Disco here
+	require_once 'SOAP/Disco.php';
 
-    // Create the Disco server
-    $disco = new SOAP_DISCO_Server($server,'HelloServer');
-    header("Content-type: text/xml");
-    if (isset($_SERVER['QUERY_STRING']) &&
-        strcasecmp($_SERVER['QUERY_STRING'],'wsdl')==0) {
-        echo $disco->getWSDL(); // if we're talking http://www.example.com/index.php?wsdl
-    } else {
-        echo $disco->getDISCO();
-    }
-    exit;
+	// Create the Disco server
+	$disco = new SOAP_DISCO_Server($server, 'HelloServer');
+	header ("Content-type: text/xml");
+
+	if (isset($_SERVER['QUERY_STRING']) && strcasecmp($_SERVER['QUERY_STRING'], 'wsdl') == 0) {
+		echo $disco->getWSDL(); // if we're talking http://www.example.com/index.php?wsdl
+	} else {
+		echo $disco->getDISCO();
+	}
+
+	exit;
 }
+
 ?>

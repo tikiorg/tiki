@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.f.css,v 1.4 2003-08-02 21:52:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.f.css,v 1.5 2003-08-07 04:34:18 rossta Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -11,19 +11,10 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-
-
-table.catobjects
-{
-  background: url(img/ltgreen.png) repeat;
+table.catobjects {
+	background: url(img/ltgreen.png) repeat;
 }
 
-
-div.tree#top,
-div.treenode:hover,
-div.catlists > div.cbox-title,
-div.catlists > div.cbox-data,
-table.tcategpath
-{
-  background: url(img/grey.png) repeat;
+div.tree#top, div.treenode:hover, div.catlists > div.cbox-title, div.catlists > div.cbox-data, table.tcategpath {
+	background: url(img/grey.png) repeat;
 }

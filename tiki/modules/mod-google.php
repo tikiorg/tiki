@@ -1,4 +1,5 @@
 <?php
+
 // Google menu item for e107
 // This menu item will display a search box for Google
 /*
@@ -13,4 +14,5 @@ echo "<script language='Javascript' type='text/javascript'>
 $smarty->assign('ownurl',$_SERVER["REQUEST_URI"]);
 }
 */
+
 ?>

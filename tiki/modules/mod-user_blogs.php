@@ -1,4 +1,7 @@
 <?php
-$ranking = $tikilib->list_user_blogs($user,false);
-$smarty->assign('modUserBlogs',$ranking);
+
+$ranking = $tikilib->list_user_blogs($user, false);
+
+$smarty->assign('modUserBlogs', $ranking);
+
 ?>
