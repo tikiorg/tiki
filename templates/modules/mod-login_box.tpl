@@ -40,9 +40,9 @@
       <tr>
         <td>
           <table>
-          <tr><td><span class="user-box-text">{tr}user{/tr}:</span></td></tr>
+          <tr><td>{tr}user{/tr}:</td></tr>
           <tr><td><input type="text" name="user"  size="20" /></td></tr>
-          <tr><td><span class="user-box-text">{tr}pass{/tr}:</span></td></tr>
+          <tr><td>{tr}pass{/tr}:</td></tr>
           <tr><td><input type="password" name="pass" size="20" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
           <tr>
@@ -68,7 +68,7 @@
           </tr>
           {/if}
           {if $show_stay_in_ssl_mode eq 'y'}
-          <tr><td><span class="user-box-text">{tr}stay in ssl mode{/tr}:&nbsp;</span>
+          <tr><td>{tr}stay in ssl mode{/tr}:&nbsp;
             <input type="checkbox" name="stay_in_ssl_mode" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
           </td>
           </tr>

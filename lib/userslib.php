@@ -501,7 +501,7 @@ class UsersLib {
   
   function is_due($user)
   {
-    $due = $this->db->getOne("select due from users_users where login='$user'");
+    $due = $this->db->getOne("select pass_due from users_users where login='$user'");
     if($due<=date("U")) return true;
     return false;
   }
@@ -528,7 +528,7 @@ class UsersLib {
     if($feature_clear_passwords == 'n') {
       $pass='';
     }
-    $query = "update users_users set hash='$hash',password='$pass',due=$new_pass_due where login='$user'";
+    $query = "update users_users set hash='$hash',password='$pass',pass_due=$new_pass_due where login='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
   }

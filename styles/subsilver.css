@@ -1283,3 +1283,16 @@ textarea.tshoutbox{
 	font-family: verdana, tahoma, arial, helvetica, sans-serif;
 	font-size: 10px;
 }
+/*************************************************** WIKI TOCS ***************************************************/
+
+div.tocnav {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  background: #EFEFEF;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 2px;
+}
+
+.tocnavlink { color:black; text-decoration: none; }
+.tocnavlink:hover {color: black; background-color: #EFEFEF; text-decoration:none;}
