@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.33 2003-09-10 05:47:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.34 2003-09-10 06:40:39 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -126,7 +126,7 @@ function tra($content) {
  */
 function utf8Substr($str, $start, $len = ''){
 	if (function_exists('mb_substr')) /* php is compiled with the mulitbyte support */
-		return mb_substr($string, $start, $len);
+		return ($len == '')? mb_substr($str, $start): mb_substr($str, $start, $len);
 	$limit = strlen($str);
 	for ($s = 0; $start > 0;--$start) {// found the real start
 		if ($s >= $limit)
