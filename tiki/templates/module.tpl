@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.11 2004-06-11 21:17:03 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.12 2004-06-19 18:57:10 ohertel Exp $ *}
 {* Module layout with controls *}
 
 <div class="box {$module_name}"><div class="box-title">
@@ -14,9 +14,9 @@
     </td>
     <td>
       {if $module_flip eq 'y'}
-        <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title|escape}</a>
+        <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>
       {else}
-        {$module_title|escape}
+        {$module_title}
       {/if}
     </td>
     <td width="11">
@@ -29,9 +29,9 @@
 </table>
 {else}
   {if $module_flip eq 'y'}
-    <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title|escape}</a>
+    <a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>
   {else}
-    {$module_title|escape}
+    {$module_title}
   {/if}
 {/if}
 
