@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.3 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.4 2003-08-15 21:42:27 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,13 +130,18 @@ if (isset($_REQUEST["loginprefs"])) {
 	  $tikilib->set_preference('http_basic_auth', $b); 
 	  $smarty->assign('http_basic_auth', $b);
 	*/
+
 	$b = (isset($_REQUEST['https_login']) && $_REQUEST['https_login'] == 'on') ? 'y' : 'n';
 	$tikilib->set_preference('https_login', $b);
+	$tikilib->set_preference('useUrlIndex', 'n');
 	$smarty->assign('https_login', $b);
+	$smarty->assign('useUrlIndex', 'n');
 
 	$b = (isset($_REQUEST['https_login_required']) && $_REQUEST['https_login_required'] == 'on') ? 'y' : 'n';
 	$tikilib->set_preference('https_login_required', $b);
+	$tikilib->set_preference('useUrlIndex', 'n');
 	$smarty->assign('https_login_required', $b);
+	$smarty->assign('useUrlIndex', 'n');
 
 	$v = isset($_REQUEST['http_domain']) ? $_REQUEST['http_domain'] : '';
 	$tikilib->set_preference('http_domain', $v);
