@@ -1319,7 +1319,7 @@ $smarty->assign_by_ref('timezone_server',$timezone_server);
 
 $long_date_format = $tikilib->get_preference('long_date_format', '%A %d ' . tra('of') . ' %B, %Y');
 $short_date_format = $tikilib->get_preference('short_date_format', '%a %d ' . tra('of') . ' %b, %Y');
-$long_time_format = $tikilib->get_preference('long_time_format', '%H:M:%S %Z');
+$long_time_format = $tikilib->get_preference('long_time_format', '%H:%M:%S %Z');
 $short_time_format = $tikilib->get_preference('short_time_format', '%H:%M %Z');
 $smarty->assign_by_ref('short_date_format',$short_date_format);
 $smarty->assign_by_ref('long_date_format',$long_date_format);
