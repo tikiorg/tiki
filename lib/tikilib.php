@@ -8230,18 +8230,23 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   }
 
   function get_timezone_list($use_default = false) {
-    require_once 'lib/Date.php';
-    $timezone_options = array();
-    if ($use_default)
-    	$timezone_options['default'] = '-- Use Default Time Zone --';
-    foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
-        $offset = $tz['offset'];
-        $absoffset = abs($offset /= 60000);
-        $plusminus = $offset < 0 ? '-' : '+';
-        $gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
-        $tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
-        $timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
-    }
+    static $timezone_options;
+    
+    if (!$timezone_options) {
+		require_once 'lib/Date.php';
+		$timezone_options = array();
+		if ($use_default)
+			$timezone_options['default'] = '-- Use Default Time Zone --';
+		foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $tz_key => $tz) {
+			$offset = $tz['offset'];
+			$absoffset = abs($offset /= 60000);
+			$plusminus = $offset < 0 ? '-' : '+';
+			$gmtoff = sprintf("GMT%1s%02d:%02d", $plusminus, $absoffset / 60, $absoffset - (intval($absoffset / 60) * 60));
+			$tzlongshort = $tz['longname'] . ' (' . $tz['shortname'] . ')';
+			$timezone_options[$tz_key] = sprintf('%-28.28s: %-36.36s %s', $tz_key, $tzlongshort, $gmtoff);
+		}
+	}
+	
     return $timezone_options;
   }
 
@@ -8309,6 +8314,63 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     if (!$short_datetime_format)
       $short_datetime_format = $this->get_short_date_format() . ' [' . $this->get_short_time_format() . ']';
     return $short_datetime_format;
+  }
+
+  function date_format($format, $timestamp, $user = null) {
+	static $localed = false;
+
+	if (!$localed) {
+#		@setlocale(LC_TIME, $tikilib->get_locale($user));
+		$localed = true;
+	}
+
+	require_once('lib/Date.php');
+
+	$original_tz = date('T', $timestamp);
+	
+$rv = "\n<pre>\n";
+$rv .= strftime($format, $timestamp);
+$rv .= " =timestamp\n";
+$rv .= strftime('%Z', $timestamp);
+$rv .= " =strftime('%Z')\n";
+$rv .= date('T', $timestamp);
+$rv .= " =date('T')\n";
+
+	$date = new Date($timestamp);
+
+# Calling new Date() changes the timezone of the $timestamp var!
+# so we only change the timezone to UTC if the original TZ wasn't UTC
+# to begin with.
+# This seems really buggy, but I don't have time to delve into right now.
+
+$rv .= date('T', $timestamp);
+$rv .= " =date('T')\n";
+
+$rv .= $date->format($format);
+$rv .= " =new Date()\n";
+
+$rv .= date('T', $timestamp);
+$rv .= " =date('T')\n";
+	
+	if ($original_tz == 'UTC') {
+		$date->setTZbyID('UTC');
+$rv .= $date->format($format);
+$rv .= " =setTZbyID('UTC')\n";
+	}
+	
+	$tz_id = $this->get_display_timezone($user);
+	if ($date->tz->getID() != $tz_id) {
+		# let's convert to the displayed timezone
+		$date->convertTZbyID($tz_id);
+$rv .= $date->format($format);
+$rv .= " =convertTZbyID($tz_id)\n";
+	}
+
+#return $rv;
+
+#	if ($format == "%b %e, %Y")
+#		$format = $tikilib->get_short_date_format();
+   	return $date->format($format);
   }
 
   function get_language($user = null) {

@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.9 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.10 2003-02-12 16:12:46 rossta Exp $
 
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -259,6 +259,7 @@ function getRecentPosts($params) {
 
   $arrayval = Array();
   foreach($posts["data"] as $post) {
+  	# TODO $tikilib->get_xmlrpc_datetime_format()
     $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
     $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
                                  "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),

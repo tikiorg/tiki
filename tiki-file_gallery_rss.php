@@ -45,7 +45,7 @@ print('>');
           print('<rdf:li resource="'.$read.'?fileId='.$chg["fileId"].'">'."\n");
           print('<title>'.$chg["filename"].'</title>'."\n");
           print('<link>'.$read.'?fileId='.$chg["fileId"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["created"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
           print('<description>'.$chg["description"].'</description>'."\n");
           print('</rdf:li>'."\n");
         }        

@@ -39,7 +39,7 @@ print('>');
           print('<rdf:li resource="'.$read.'?articleId='.$chg["articleId"].'">'."\n");
           print('<title>'.$chg["title"].'</title>'."\n");
           print('<link>'.$read.'?articleId='.$chg["articleId"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["publishDate"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["publishDate"]);
           print('<description>'.$chg["heading"].'</description>'."\n");
           print('</rdf:li>'."\n");
         }        

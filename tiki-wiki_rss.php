@@ -36,7 +36,7 @@ print('>');
           print('<rdf:li resource="'.$home.'?page='.$chg["pageName"].'">'."\n");
           print('<title>'.$chg["pageName"].' '.$chg["action"].'</title>'."\n");
           print('<link>'.$home.'?page='.$chg["pageName"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["lastModif"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["lastModif"]);
           if(!empty($chg["comment"])) {
             $comment="(".$chg["comment"].")";
           } else {
