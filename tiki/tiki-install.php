@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.21 2003-10-16 20:55:57 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.22 2003-10-20 21:34:17 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.21 2003-10-16 20:55:57 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.22 2003-10-20 21:34:17 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -270,6 +270,9 @@ if (isWindows()) {
 	$wwwuser = 'SYSTEM';
 
 	$wwwgroup = 'SYSTEM';
+//} else {
+//	$wwwuser = shell_exec('id -un');
+//	$wwwgroup = shell_exec('id -gn');
 }
 
 if (function_exists('posix_getuid')) {
@@ -544,6 +547,19 @@ if ($noadmin) {
 } else {
 	$smarty->assign('noadmin', 'n');
 }
+
+//Load Profiles
+$profiles = array();
+$h = opendir('db/profiles/');
+
+while ($file = readdir($h)) {
+	if (strstr($file, '.prf')) {
+		$profiles[] = $file;
+	}
+}
+
+closedir ($h);
+$smarty->assign('profiles', $profiles);
 
 //Load SQL scripts
 $files = array();

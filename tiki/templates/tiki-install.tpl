@@ -102,17 +102,23 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    You can now create a new database or update your current database<br/><br/>
 		    <form method="post" action="tiki-install.php">
 		    <table>
-			<tr><td>
-			Create database from scratch <input type="submit" name="scratch" value="create" />	    
+		    <tr><td>
+			Create database with profile :
+			<select name="profile">
+			{section name=ix loop=$profiles}
+			<option value="{$profiles[ix]|escape}">{$profiles[ix]}</option>
+			{/section}
+			</select>
+			<input type="submit" name="scratch" value="create" />	    
 		    </td></tr>
 		    <tr><td>
-		    Update database using script: 
-		    <select name="file">
-		    {section name=ix loop=$files}
-		    <option value="{$files[ix]|escape}">{$files[ix]}</option>
-		    {/section}
-		    </select>
-		    <input type="submit" name="update" value="update" />
+			Update database using script: 
+			<select name="file">
+			{section name=ix loop=$files}
+			<option value="{$files[ix]|escape}">{$files[ix]}</option>
+			{/section}
+			</select>
+			<input type="submit" name="update" value="update" />
 		    </td></tr>
 		    </table>
 		    </form><br/>
