@@ -1,4 +1,3 @@
-<!-- where's the starting of div? -->
 
 	<div id="power" style="text-align: center">
 		<a href="http://www.w3.org/Style/CSS/"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
@@ -38,6 +37,5 @@
 
 {include file="babelfish.tpl"}
 
-<div align="center">
+<div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {$num_queries} {tr}database queries used{/tr} ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>
-<!-- where's the closing of div? -->
