@@ -64,7 +64,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  		<td class="formcolor">Password:</td>
 	  		<td class="formcolor">
 		  	  <table><tr><td>
-	  		  <input type="text" name="pass" />
+	  		  <input type="password" name="pass" />
 	  		  </td><td>
 	  		  <small>Database password</small>
 	  		  </td></tr></table>
