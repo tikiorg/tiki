@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.23 2003-10-23 03:24:12 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.24 2003-10-23 04:12:06 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -327,7 +327,7 @@ if (isset($_REQUEST["save"])) {
 		die;
 	}
 
-	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr>'), $_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
+	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr>'), $_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["rating"], $isfloat);
 	/*                            
   $links = $tikilib->get_links($body);
   $notcachedlinks = $tikilib->get_links_nocache($body);
