@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.135 2003-11-21 11:55:15 redflo Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.136 2003-11-21 18:02:07 gmuslera Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -19,16 +19,34 @@ Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
 - (rc2) ------------------------------------------------------------
+* [MOD] Partly introduced customizable Quicktags
+* [MOD] Wiki Structures provide more flexible relationships to wiki pages
+* [MOD] Shoutbox enhanced to auto-replace URLs starting with 'http(s)|ftp(s)' 
+  to active links and URLs starting with 'www' string. It's made optional.
+* [MOD] All modules with numbers at left side (like ''last_...smth'' and 
+  ''top_...smth'') now have -+nonums+- parameter which is inhibit numbers 
+  output
+* [MOD] The select list of countries in User Preferences is translantable now 
+  and sorted alphabetically by translated strings
+* [MOD] SPLIT wiki plugin now have two parameters: -+fixedsize+- and 
+  -+joincols+-. Also it can split text by rows (use -+@@@+- as rows 
+  delimiter)
+* [MOD] New mail-in method: ''PREPEND'' -- opposite to ''APPEND''
+* [MOD] Czech and Italian translations
+* [NEW] TikiIntegrator
+* [FIX] Calendar: no year input fixed
+* [FIX] Fixed bug that caused changes to admin settings sometimes require a 
+  page reload to appear 
+* [FIX] renamed lang/sp folder to lang/es for spanish language
 * [MOD] Enhanced user menus so that the menu items only show if a
-        feature/permission/group is on. Added new application menu
-	as sample.
+  feature/permission/group is on. Added new application menu as sample.
 * [FIX] fixed pagination in forums
 * [FIX] fixed computation of number of queries
 * [MOD] Trackers are now faster if you have a large number of 
-        registred users
+  registred users
 * [NEW] new search engine with background collecting of searchwords.
-        This search engine is database independent. Use the "new_search"
-	module to be able to use the new search engine.
+  This search engine is database independent. Use the "new_search"
+  module to be able to use the new search engine.
 * [MOD] all links that were displayed with [ link ] now use
   linkbut css style for a more homogen navigation
 * [FIX] fixed rankings for authors in wiki and cms
@@ -37,7 +55,7 @@ Version 1.8 -Polaris-
   powers the search a lot ! uses highlighting feature.
 * [FIX] fixed smileys not displayed in chat
 * [NEW] added tikibot, the irc extension of tikiwiki, that uses
-  thiord party modules : wollabot and smartirc
+  third party modules : wollabot and smartirc
 * [NEW] site registering feature now make new tiki be added more easily
   in tikiwiki.org directlory links
 * [NEW] added an admin panel for custimisation of quicktags
@@ -45,9 +63,9 @@ Version 1.8 -Polaris-
 * [FIX] removed all unused duplicate templates from styles
 * [FIX] removed all hardcoded path from smarty display method
   so it will never complain about lacking tiki.tpl anymore
-* [NEW] WebHelp generation from Tiki structures, you can dump a structure to generate
-  a webhelp static version with search capabilities that can be distributed as a
-  standalone version of the selected tiki pages.
+* [NEW] WebHelp generation from Tiki structures, you can dump a structure to 
+  generate a webhelp static version with search capabilities that can be 
+  distributed as a standalone version of the selected tiki pages.
 * [NEW] Added 2 prefs cookie_domain and cookie_path for remember me cookie
 * [MOD] Modules for anonymous-only can now be hidden for registered users
 * [MOD] An alternative module-switch_lang2
