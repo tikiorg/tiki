@@ -188,7 +188,7 @@ class TikiLib {
   // Validate emails...
   function SnowCheckMail($Email,$Debug=false)
   {
-    global $HTTP_HOST;
+    $HTTP_HOST=$_SERVER['HTTP_HOST'];
     $Return =array();
     // Variable for return.
     // $Return[0] : [true|false]
@@ -2231,18 +2231,20 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit 0,-1";
     $query_cant = "select count(*) from tiki_pages $mid";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
     $res2 = $result_cant->fetchRow();
     $cant = $res2[0];
     $ret = Array();
+    $num_or = 0;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $pageName = $res["pageName"];
       $queryc = "select count(*) from tiki_links where toPage='$pageName'";
       $cant = $this->getOne($queryc);
       if($cant==0) {
+        $num_or++;
         $aux = Array();
         $aux["pageName"] = $pageName;
         $page = $aux["pageName"];
@@ -2284,7 +2286,7 @@ class TikiLib {
     }
     $retval = Array();
     $retval["data"] = $ret;
-    $retval["cant"] = $cant;
+    $retval["cant"] = $num_or;
     return $retval;
   }
 
@@ -6096,7 +6098,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $t_data = addslashes($t_data);
     } else {
       // Store data in directory
-      $fhash = md5($filename);
+      $fhash = md5(uniqid($filename));
       @$fw = fopen($gal_use_dir.$fhash,"wb");
       if(!$fw) {
         return false;
@@ -7809,6 +7811,7 @@ function parse_data($data)
       foreach($words as $word=>$url) {
         //print("Replace $word by $url<br/>");
         $data  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
+        $data  = preg_replace("/^$word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
       }
     }
 
