@@ -115,7 +115,7 @@ div.box {
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-  background-color:333366; 
+  background-color: #A8BFD5; 
   border-bottom: 1px solid black;
   color: white;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color: #000066;  font-weight: bold;
