@@ -3,9 +3,9 @@
 {/if}
 {$parsed}
 {if $tiki_p_edit_html_pages eq 'y'}
-<hr/><small><a class="link" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">edit</a>
+<span class="button2"><a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">edit</a></span>
 {if $type eq 'd'}
-<a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">content</a>
+<span class="button2"><a class="linkbut" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">content</a></span>
 {/if}
 </small>
 {/if}
