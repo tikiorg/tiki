@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_tracker_items.tpl,v 1.8 2003-11-29 08:10:16 mose Exp $ *}
 
 {if $feature_trackers eq 'y'}
 {if $nonums eq 'y'}
-{eval var="{tr}Last `$module_rows` Modified Items{/tr}"assign="tpl_module_title"}
+{eval var="{tr}Last `$module_rows` Modified Items{/tr}" assign="tpl_module_title"}
 {else}
 {eval var="{tr}Last Modified Items{/tr}" assign="tpl_module_title"}
 {/if}
