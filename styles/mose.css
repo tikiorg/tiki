@@ -1,7 +1,6 @@
 /* 
-Default2 style for Tiki 1.2 this is a short-version CSS template if you want to FULLY customize
-every aspect of Tiki adpat the subsilver CSS file, but normally this is the file you want to
-adapt to produce a new theme
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.13 2003-08-25 04:03:19 mose Exp $
+2003 - created and maintained by mose@feu.org
 */
 
 body {
@@ -48,13 +47,13 @@ DIV#tiki-main {
 /* 
 This is the header 
 */
-TABLE#tiki-top {
+#tiki-top {
 	font-size:    10px;
 	color:   #7a6a59;
-	width:   100%;
+	background-color:    #DED6C6;
 }
 
-#tiki-top.linkh {
+#tiki-top a.linkh {
 	color:    #FFFFFF;
 	font-weight:   bold;
 	letter-spacing:   2px;
@@ -63,49 +62,20 @@ TABLE#tiki-top {
 	padding-right:   4px;
 }
 
-#tiki-top.left {
-	border:    1px solid black;
-	background-color:   #000000;
-	color:   #FFFFFF;
-	padding-left:   3px;
-	padding-right:   3px;
-	font-size:   9px;
-	width:   174px;
+#tiki-top .center {
+	padding-left: 15px;
 }
 
-#tiki-top.right {
-	border:    1px solid black;
-	background-color:   #000000;
-	color:   #FFFFFF;
-	padding-left:   4px;
-	padding-right:   2px;
-	width:   174px;
-	font-size:   9px;
-	vertical-align:   bottom;
-}
-
-#tiki-top.left a, #tiki-top.right a {
-	color:    #FFFFFF;
-	text-decoration:   none;
-}
-
-#tiki-top.center {
-	background-color:    #DED6C6;
-	color:   #5A4A39;
-	vertical-align:   bottom;
-	width:   auto;
-}
-
-#tiki-top.link {
-	background-color:    #5A4A39;
+#tiki-top .link {
+	background-color:    #000000;
 	color:   #FFFFFF;
 	padding-left:   6px;
 	padding-right:   6px;
 	padding-bottom:   2px;
 }
 
-#tiki-top.link:hover {
-	background-color:    #000000;
+#tiki-top .link:hover {
+	background-color:    #423222;
 	text-decoration:   none;
 }
 
