@@ -18,6 +18,16 @@
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage}" /></td></tr>
+<tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
+<select name="section">
+<option value="" {if $section eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
+<option value="__new__"}>{tr}Create new{/tr}</option>
+{section name=ix loop=$sections}
+<option  {if $section eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]}">{$sections[ix]}</option>
+{/section}
+</select>
+<input name="new_section" type="text" />
+</td></tr>
 <tr><td class="formcolor">{tr}Moderator{/tr}:</td><td class="formcolor">
 <select name="moderator">
 {section name=ix loop=$users}

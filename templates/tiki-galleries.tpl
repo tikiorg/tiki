@@ -39,7 +39,9 @@
 {/if}
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
+{if $tiki_p_create_galleries eq 'y'}
 <a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">create new gallery</a><br/><br/>
+{/if}
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

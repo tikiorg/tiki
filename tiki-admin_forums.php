@@ -53,6 +53,7 @@ if($_REQUEST["forumId"]) {
   $info["controlFlood"]='n';
   $info["floodInterval"]=120;
   $info["moderator"]='admin';
+  $info["section"]='';
   $info["mail"]='';
   $info["topicsPerPage"]='20';
   $info["useMail"]='n';
@@ -70,6 +71,7 @@ $smarty->assign('floodInterval',$info["floodInterval"]);
 $smarty->assign('topicOrdering',$info["topicOrdering"]);
 $smarty->assign('threadOrdering',$info["threadOrdering"]);
 $smarty->assign('moderator',$info["moderator"]);
+$smarty->assign('section',$info["section"]);
 $smarty->assign('topicsPerPage',$info["topicsPerPage"]);
 $smarty->assign('mail',$info["mail"]);
 $smarty->assign('useMail',$info["useMail"]);
@@ -106,8 +108,10 @@ if(isset($_REQUEST["save"])) {
   } else {
     $usePruneOld='n';
   }
+
+  if($_REQUEST["section"]=='__new__') $_REQUEST["section"]=$_REQUEST["new_section"];
   
-  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"]);                         
+  $fid = $commentslib->replace_forum($_REQUEST["forumId"], $_REQUEST["name"], $_REQUEST["description"], $controlFlood,$_REQUEST["floodInterval"],$_REQUEST["moderator"], $_REQUEST["mail"], $useMail, $usePruneUnreplied, $_REQUEST["pruneUnrepliedAge"], $usePruneOld, $_REQUEST["pruneMaxAge"], $_REQUEST["topicsPerPage"], $_REQUEST["topicOrdering"], $_REQUEST["threadOrdering"], $_REQUEST["section"]);                         
   
   $cat_type='forum';
   $cat_objid = $fid;
@@ -230,6 +234,8 @@ $cat_type='forum';
 $cat_objid = $_REQUEST["forumId"];
 include_once("categorize_list.php");
 
+$sections = $tikilib->get_forum_sections();
+$smarty->assign_by_ref('sections',$sections);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_forums.tpl');

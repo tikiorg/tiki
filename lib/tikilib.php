@@ -20,6 +20,19 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
+
+  /* Sections for forums */
+  function get_forum_sections()
+  {
+    $query = "select distinct section from tiki_forums where section<>''";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res["section"];
+    }
+    return $ret;
+  }
   
   /* Webmails */
   
@@ -8988,7 +9001,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
             $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
           } else {
-            $repl="<img border='0' src='img/wiki/$name' alt='click to edit' />";
+            $repl="<img border='0' src='img/wiki/$name' alt='a drawing' />";
           }
         } else {
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
@@ -9230,7 +9243,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         }
                 
         // This line is parseable then we have to see what we have
-        if(strstr($line,"----")) {
+        if(substr($line,0,3)=='---') {
           if($listbeg) {
             while($listlevel>0) {
             $data.=$listbeg;

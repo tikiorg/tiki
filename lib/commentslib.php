@@ -30,10 +30,11 @@ class Comments {
                          $moderator, $mail, $useMail,
                          $usePruneUnreplied, $pruneUnrepliedAge,
                          $usePruneOld, $pruneMaxAge, $topicsPerPage,
-                         $topicOrdering, $threadOrdering)
+                         $topicOrdering, $threadOrdering,$section)
   {
     $name = addslashes($name);
     $description = addslashes($description);
+    $section = addslashes($section);
      	
     if($forumId) {
       $query = "update tiki_forums set
@@ -44,6 +45,7 @@ class Comments {
                 moderator = '$moderator',
                 mail = '$mail',
                 useMail = '$useMail',
+                section = '$section',
                 usePruneUnreplied = '$usePruneUnreplied',
                 pruneUnrepliedAge = $pruneUnrepliedAge,
                 usePruneOld = '$usePruneOld',
@@ -58,12 +60,12 @@ class Comments {
       $now = date("U");
       $query = "insert into tiki_forums(name, description, created, lastPost, threads,
                 comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
-                pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering) 
+                pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section) 
                 values ('$name','$description',$now,$now,0,
                         0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
                         $pruneUnrepliedAge,  '$usePruneOld',
                         $pruneMaxAge, $topicsPerPage,
-                        '$topicOrdering','$threadOrdering') ";
+                        '$topicOrdering','$threadOrdering','$section') ";
      $result = $this->db->query($query);
      if(DB::isError($result)) $this->sql_error($query, $result);   
      $forumId=$this->db->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
@@ -100,6 +102,53 @@ class Comments {
       $mid=" where name like '%".$find."%' or description like '%".$find."%'";  
     } else {
       $mid=""; 
+    }
+    $query = "select * from tiki_forums $mid order by section asc,$sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_forums $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $now = date("U");
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $forum_age = ceil(($now - $res["created"])/(24*3600));
+      $res["age"] = $forum_age;
+      if($forum_age) {
+        $res["posts_per_day"] = $res["comments"]/$forum_age;
+      } else {
+        $res["posts_per_day"] =0;
+      }
+      // Now select users
+      $objectId=md5('forum'.$res["forumId"]);
+      $query = "select distinct(username) from tiki_comments where object='$objectId'";
+      $result2 = $this->db->query($query);
+      $res["users"] = $result2->numRows();
+      if($forum_age) {
+        $res["users_per_day"] = $res["users"]/$forum_age;
+      } else {
+        $res["users_per_day"] =0;
+      }
+      
+      $query2= "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and commentDate=".$res["lastPost"];
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
+      $res["lastPostData"]=$res2;
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function list_forums_by_section($section,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where section='$section' name like '%".$find."%' or description like '%".$find."%'";  
+    } else {
+      $mid=" where section='$section' "; 
     }
     $query = "select * from tiki_forums $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_forums";
