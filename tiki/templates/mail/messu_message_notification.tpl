@@ -1,6 +1,6 @@
-Hi,
+{tr}Hi,{/tr}
 
-A new message was posted to you at {$mail_machine}
+{tr}A new message was posted to you at {$mail_machine}{/tr}
 
 From    :   {$mail_from}
 Subject :   {$mail_subject}
