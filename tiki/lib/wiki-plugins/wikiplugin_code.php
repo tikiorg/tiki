@@ -15,7 +15,7 @@ function wikiplugin_code($data,$params) {
   //If you want line numbering use something like this:
   //$lines = explode("\n",$code);
   //print_r($lines);
-  $data = "<div style='background-color:$bgcolor;'>".$code.'</div>';
+  $data = "<div style='background-color:$bgcolor;'><pre>".$code.'</pre></div>';
   return $data;
 }
 ?>
