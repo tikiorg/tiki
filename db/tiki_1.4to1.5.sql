@@ -1,3 +1,8 @@
+alter table tiki_pages add description varchar(200);
+alter table tiki_tags add description varchar(200);
+alter table tiki_history add description varchar(200);
+alter table tiki_received_pages add description varchar(200);
+
 ### Newsletters
 drop table if exists tiki_newsletters;
 create table tiki_newsletters(
@@ -25,12 +30,18 @@ create table tiki_newsletter_subscriptions (
 
 drop table if exists tiki_sent_newsletters;
 create table tiki_sent_newsletters (
-  
+  editionId integer(12) not null auto_increment,
+  nlId integer(12) not null,  
+  users integer(10),
+  sent integer(14),
+  subject varchar(200),
+  data longblob,
+  primary key(editionId)
 );
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_newsletters','newsletters','Can admin newsletters');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_newsletters','newsletters','Can subscribe to newsletters');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_email_newsletters','newsletters','Can subscribe any email to newsletters');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_email','newsletters','Can subscribe any email to newsletters');
 
 ### Newsletters
 
@@ -42,7 +53,7 @@ alter table tiki_history modify pageName varchar(160) NOT NULL;
 alter table tiki_actionlog modify pageName varchar(160) NOT NULL;
 alter table tiki_received_pages modify pageName varchar(160);
 
-# $Id: tiki_1.4to1.5.sql,v 1.12 2003-01-01 22:37:06 lrargerich Exp $
+# $Id: tiki_1.4to1.5.sql,v 1.13 2003-01-02 17:23:38 lrargerich Exp $
 
 alter table users_users add avatarName varchar(80);
 alter table users_users add avatarSize integer(14);

@@ -556,6 +556,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_comments",'n');
   }
   
+  if(isset($_REQUEST["feature_wiki_description"]) && $_REQUEST["feature_wiki_description"]=="on") {
+    $tikilib->set_preference("feature_wiki_description",'y'); 
+    $smarty->assign("feature_wiki_description",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_description",'n');
+    $smarty->assign("feature_wiki_description",'n');
+  }
+  
   if(isset($_REQUEST["wiki_spellcheck"]) && $_REQUEST["wiki_spellcheck"]=="on") {
     $tikilib->set_preference("wiki_spellcheck",'y'); 
     $smarty->assign("wiki_spellcheck",'y');

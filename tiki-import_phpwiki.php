@@ -75,6 +75,11 @@ while($file=readdir($h)) {
         $version=urldecode($part["version"]);
         $author=urldecode($part["author"]);
         $lastmodified=$part["lastmodified"];
+        if(isset($part["description"])) {
+          $description = $part["description"];
+        } else {
+          $description = '';
+        }
         $authorid=urldecode($part["author_id"]);
         $hits=urldecode($part["hits"]);
         $ex=substr($part["body"],0,25);
@@ -89,11 +94,11 @@ while($file=readdir($h)) {
             $msg='<b>'.tra('page not added (Exists)').'</b>';
           } else {
             $msg='<b>'.tra('overwriting old page').'</b>';
-            $tikilib->update_page($pagename,$part["body"],tra('updated by the phpwiki import process'),$author,$authorid);
+            $tikilib->update_page($pagename,$part["body"],tra('updated by the phpwiki import process'),$author,$authorid,$description);
           }
         } else {
           $msg=tra('page created');
-          $tikilib->create_page($pagename,$hits,$part["body"],$lastmodified,tra('created from phpwiki import'),$author,$authorid);
+          $tikilib->create_page($pagename,$hits,$part["body"],$lastmodified,tra('created from phpwiki import'),$author,$authorid,$description);
         }
         $aux["page"]=$pagename;
         $aux["version"]=$version;

@@ -7,4 +7,4 @@ Description:
 
 You can always cancel your subscription using:
 
-<a href="{$url_subscribe}?unsubscribe={$code}">{$url_subscribe}?unsubscribe={$code}</a>
+{$url_subscribe}?unsubscribe={$code}

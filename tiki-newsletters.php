@@ -10,13 +10,19 @@ if($feature_newsletters != 'y') {
   die;  
 }
 
-if(!$user && $tiki_p_subscribe_email_newsletters != 'y') {
+if(!$user && $tiki_p_subscribe_email != 'y') {
   $smarty->assign('msg',tra("You must be logged in to subscribe to newsletters"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
+if(!isset($_REQUEST["nlId"])) {
+ $_REQUEST["nlId"]=0;
+}
+$smarty->assign('nlId',$_REQUEST["nlId"]);
+
 $smarty->assign('subscribe','n');	
+$smarty->assign('subscribed','n');	
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $smarty->assign('url_subscribe',httpPrefix().$foo["path"]);
@@ -53,21 +59,23 @@ $smarty->assign('confirm','n');
 if(isset($_REQUEST["confirm_subscription"])) {
   $conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
   if($conf) {
-    $smarty->assign('confirm','n');
+    $smarty->assign('confirm','y');
     $smarty->assign('nl_info',$conf);	
   } 
 }
+$smarty->assign('unsub','n');
 if(isset($_REQUEST["unsubscribe"])) {
   $conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
   if($conf) {
-    $smarty->assign('unsub','n');
+    $smarty->assign('unsub','y');
     $smarty->assign('nl_info',$conf);	
   } 	
 }
 
 if($tiki_p_subscribe_newsletters == 'y') {
   if(isset($_REQUEST["subscribe"])) {
-    if($tiki_p_subscribe_email_newsletters != 'y') {
+    $smarty->assign('subscribed','y');
+    if($tiki_p_subscribe_email != 'y') {
       $_REQUEST["email"] = $userlib->get_user_email($user);	
     }	
     // Now subscribe the email address to the newsletter

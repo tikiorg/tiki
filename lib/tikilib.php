@@ -69,14 +69,16 @@ class TikiLib {
   function export_wiki_page($pageName,$nversions=1)
   {
     $info=$this->get_page_info($pageName);
+    
     $head = '';
     $head .= "Date: " . $this->Rfc2822DateTime($info["lastModif"]) . "\r\n";
     $head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
 
 
     $iter = $this->get_page_history($pageName);
+    
     $parts = array();
-    //$parts[]=MimeifyPageRevision($info);
+    $parts[]=MimeifyPageRevision($info);
     foreach ($iter as $revision) {
         $parts[] = MimeifyPageRevision($revision);
         if ($nversions > 0 && count($parts) >= $nversions)
@@ -4289,7 +4291,7 @@ class TikiLib {
     $info = $this->get_received_page($receivedPageId);
     if($this->page_exists($info["pageName"])) return false;
     $now=date("U");
-    $this->create_page($info["pageName"],0,$info["data"],$now,$info["comment"],$info["receivedFromUser"],$info["receivedFromSite"]);
+    $this->create_page($info["pageName"],0,$info["data"],$now,$info["comment"],$info["receivedFromUser"],$info["receivedFromSite"],$info["description"]);
     $query = "delete from tiki_received_pages where receivedPageId = $receivedPageId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
@@ -4457,18 +4459,19 @@ class TikiLib {
     if(DB::isError($result)) $this->sql_error($query, $result);
   }
   
-  function receive_page($pageName,$data,$comment,$site,$user)
+  function receive_page($pageName,$data,$comment,$site,$user,$description)
   {
     $data = addslashes($data);
     $comment = addslashes($comment);
+    $description = addslashes($description);
     $now = date("U");
     // Remove previous page sent from the same site-user (an update)
     $query = "delete from tiki_received_pages where pageName='$pageName' and receivedFromsite='$site' and receivedFromUser='$user'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
     // Now insert the page
-    $query = "insert into tiki_received_pages(pageName,data,comment,receivedFromSite, receivedFromUser, receivedDate)
-              values('$pageName','$data','$comment','$site','$user',$now)";
+    $query = "insert into tiki_received_pages(pageName,data,comment,receivedFromSite, receivedFromUser, receivedDate,description)
+              values('$pageName','$data','$comment','$site','$user',$now,'$description')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
               
@@ -7798,8 +7801,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result=$this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
-      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag)
-                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."')";
+      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
+                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
       $result2=$this->db->query($query);
       if(DB::isError($result2)) $this->sql_error($query,$result2);
     }
@@ -7819,8 +7822,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result=$this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
-      $query = "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag)
-                values('".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."')";
+      $query = "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
+                values('".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
       $result2=$this->db->query($query);
       if(DB::isError($result2)) $this->sql_error($query,$result2);
     }
@@ -8857,7 +8860,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // without the data itself
   function get_page_history($page) 
   {
-    $query = "select pageName, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
+    $query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $ret = Array();
@@ -9238,6 +9241,17 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     if(DB::isError($result)) $this->sql_error($query,$result);
     return $result->numRows();
   }
+  
+  function page_exists_desc($pageName) 
+  {
+    $query = "select description from tiki_pages where pageName = '$pageName'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    if(!$res["description"]) $res["description"]='no description';
+    return $res["description"];
+  }
 
   function version_exists($pageName, $version) 
   {
@@ -9254,13 +9268,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return true; 
   }
 
-  function create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0') 
+  function create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0',$description='') 
   {
     $name = addslashes($name);
+    $description = addslashes($description);
     $data = addslashes($data);
     $comment = addslashes($comment);
     if($this->page_exists($name)) return false;
-    $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip')";
+    $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,description) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip','$description')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $this->clear_links($name);
@@ -9552,8 +9567,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     preg_match_all("/([ \n\t\r\,\;^])?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;])/",$data,$pages);
     //print_r($pages);
     foreach(array_unique($pages[2]) as $page) {
-      if($this->page_exists($page)) {
-        $repl = "<a href='tiki-index.php?page=$page' class='wiki'>$page</a>";
+      if($desc = $this->page_exists_desc($page)) {
+        $repl = "<a title='".$desc."' href='tiki-index.php?page=$page' class='wiki'>$page</a>";
       } else {
         $repl = "$page<a href='tiki-editpage.php?page=$page' class='wiki'>?</a>";
       } 
@@ -9847,12 +9862,13 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     if(DB::isError($result)) $this->sql_error($query,$result); 
   }
 
-  function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip) 
+  function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip,$description='') 
   {
     global $smarty;
     // Collect pages before modifying edit_data (see update of links below)
     $pages = $this->get_pages($edit_data);
     $edit_data = addslashes($edit_data);
+    $description = addslashes($description);
     $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
     $t = date("U");
@@ -9867,8 +9883,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $data = addslashes($info["data"]);
     $pageName=addslashes($pageName);
     $comment=addslashes($comment);
-    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data) 
-              values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data')";
+    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description) 
+              values('$pageName',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
     if($pageName != 'SandBox') {              
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
@@ -9889,7 +9905,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);
     }
     
-    $query = "update tiki_pages set data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
+    $query = "update tiki_pages set description='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     // Parse edit_data updating the list of links from this page
@@ -9924,11 +9940,12 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
   }
   
-  function update_page_version($pageName,$version,$edit_data,$edit_comment, $edit_user, $edit_ip,$lastModif) 
+  function update_page_version($pageName,$version,$edit_data,$edit_comment, $edit_user, $edit_ip,$lastModif,$description='') 
   {
     global $smarty;
     if($pageName=='SandBox') return;
     $edit_data = addslashes($edit_data);
+    $description = addslashes($description);
     $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
     $t = date("U");
@@ -9936,8 +9953,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $query = "delete from tiki_history where pageName='$pageName' and version=$version";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
-    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data) 
-              values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data')";
+    $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data,description) 
+              values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data','$description')";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     
@@ -9945,7 +9962,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // Get this page information
     $info = $this->get_page_info($pageName);
     if($version>=$info["version"]) {
-      $query = "update tiki_pages set data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName'";
+      $query = "update tiki_pages set data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip', description='$description' where pageName='$pageName'";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);  
       // Parse edit_data updating the list of links from this page
