@@ -68,7 +68,22 @@
   </div>
 {/if}
 
-
+{if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:setCookie('wfmenu','c');hide('wfmenu');">[-]</a> 
+  <a href="tiki-my_tiki.php" class="separator">{tr}Workflow{/tr}</a>
+  <a class='separator' href="javascript:setCookie('wfmenu','o');show('wfmenu');">[+]</a></div>
+  <div id='wfmenu' style="{$mnu_workflow}">
+  {if $tiki_p_admin_workflow eq 'y'}
+      &nbsp;<a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a><br/>  
+      &nbsp;<a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor processes{/tr}</a><br/>  
+      &nbsp;<a href="tiki-g-monitor_activities.php" class="linkmenu">{tr}Monitor activities{/tr}</a><br/>  
+      &nbsp;<a href="tiki-g-monitor_instances.php" class="linkmenu">{tr}Monitor instances{/tr}</a><br/>  
+  {/if}
+  &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User processes{/tr}</a><br/>  
+  &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User activities{/tr}</a><br/>  
+  &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br/>  
+  </div>
+{/if}
 {if $feature_wiki eq 'y'}
   <div class="separator"><a class='separator' href="javascript:setCookie('wikimenu','c');hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a> <a class='separator' href="javascript:setCookie('wikimenu','o');show('wikimenu');">[+]</a></div>
   <div id="wikimenu" style="{$mnu_wikimenu}">

@@ -343,6 +343,9 @@ $feature_userfiles = 'n';
 $smarty->assign('feature_userfiles',$feature_userfiles);
 $feature_theme_control = 'n';
 $smarty->assign('feature_theme_control',$feature_theme_control);
+$feature_workflow = 'n';
+$smarty->assign('feature_workflow',$feature_workflow);
+
 $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
 
@@ -828,6 +831,14 @@ if(isset($_COOKIE["mymenu"])) {
     $smarty->assign('mnu_mymenu','display:block;');
   }	
 }
+
+$smarty->assign('mnu_workflow','display:none;');
+if(isset($_COOKIE["wfmenu"])) {
+  if($_COOKIE["wfmenu"]=='o') {
+    $smarty->assign('mnu_workflow','display:block;');
+  }	
+}
+
 
 $smarty->assign('mnu_usrmenu','display:none;');
 if(isset($_COOKIE["usrmenu"])) {

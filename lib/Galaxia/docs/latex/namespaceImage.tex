@@ -1,0 +1,27 @@
+\section{Image Namespace Reference}
+\label{namespaceImage}\index{Image@{Image}}
+
+
+
+
+\subsection{Detailed Description}
+PEAR::Image\_\-Graph\-Viz
+
+Purpose
+
+Allows for the creation of and the work with directed and undirected graphs and their visualization with AT\&T's Graph\-Viz tools. These can be found at {\tt http://www.research.att.com/sw/tools/graphviz/}
+
+Example
+
+require\_\-once 'Image/Graph\-Viz.php'; \$graph = new Image\_\-Graph\-Viz();
+
+\$graph-$>$add\-Node('Node1', array('URL' =$>$ 'http://link1', 'label' =$>$ 'This is a label', 'shape' =$>$ 'box' ) ); \$graph-$>$add\-Node('Node2', array('URL' =$>$ 'http://link2', 'fontsize' =$>$ '14' ) ); \$graph-$>$add\-Node('Node3', array('URL' =$>$ 'http://link3', 'fontsize' =$>$ '20' ) );
+
+\$graph-$>$add\-Edge(array('Node1' =$>$ 'Node2'), array('label' =$>$ 'Edge Label')); \$graph-$>$add\-Edge(array('Node1' =$>$ 'Node2'), array('color' =$>$ 'red'));
+
+\$graph-$>$image();
+
+\begin{Desc}
+\item[Author:]Sebastian Bergmann $<${\tt sb@sebastian-bergmann.de}$>$ Dr. Volker G\~{A}182bbels $<${\tt vmg@arachnion.de}$>$ \end{Desc}
+
+
