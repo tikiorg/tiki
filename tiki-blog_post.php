@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.29 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.30 2004-01-09 19:47:45 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,7 +57,7 @@ $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
 
 if (isset($_REQUEST['remove_image'])) {
-	check_ticket('blog-post');
+	check_ticket('blog');
 	$bloglib->remove_post_image($_REQUEST['remove_image']);
 }
 
@@ -91,7 +91,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 }
 
 if ($postId) {
-	check_ticket('blog-post');
+	check_ticket('blog');
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
@@ -265,7 +265,7 @@ include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
-ask_ticket('blog-post');
+ask_ticket('blog');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-blog_post.tpl');
 $smarty->assign('show_page_bar', 'n');

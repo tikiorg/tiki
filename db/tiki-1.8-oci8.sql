@@ -3587,6 +3587,30 @@ CREATE TABLE "tiki_searchindex"(
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
 
+-- LRU (last recently used) list for searching parts of words
+DROP TABLE "tiki_searchsyllable";
+
+
+CREATE TABLE "tiki_searchsyllable"(
+  "syllable" varchar(80) default '' NOT NULL,
+  "lastUsed" number(11) default '0' NOT NULL,
+  "lastUpdated" number(11) default '0' NOT NULL,
+  PRIMARY KEY ("syllable")
+) ;
+
+CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
+
+-- searchword caching table for search syllables
+DROP TABLE "tiki_searchwords";
+
+
+CREATE TABLE "tiki_searchwords"(
+  "syllable" varchar(80) default '' NOT NULL,
+  "searchword" varchar(80) default '' NOT NULL,
+  PRIMARY KEY ("syllable","searchword")
+) ;
+
+
 --
 -- Table structure for table `tiki_search_stats`
 --
@@ -4898,9 +4922,6 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user');
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar');
 
 
@@ -4938,6 +4959,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_comments', 'Can edit all comments', 'editors', 'comments');
@@ -5431,10 +5455,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('blog_list_visits','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('blog_spellcheck','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','n');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('change_language','y');
@@ -6209,6 +6233,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n');

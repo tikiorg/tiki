@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.21 2003-12-17 10:29:14 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.22 2004-01-09 19:47:45 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.21 2003-12-17 10:29:14 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.22 2004-01-09 19:47:45 redflo Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -147,7 +147,7 @@ if ($https_mode) {
 			if ($http_port != 80)
 				$prefix .= ':' . $http_port;
 
-			$prefix .= $httpxs_prefix;
+			$prefix .= $https_prefix;
 			$url = $prefix . $url;
 
 			if (SID)

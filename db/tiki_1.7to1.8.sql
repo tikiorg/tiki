@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.100 2004-01-03 00:28:56 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.101 2004-01-09 19:47:45 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -884,3 +884,9 @@ CREATE TABLE tiki_searchsyllable(
 
 # added on 2004-01-02 by xenfasa (typo in file name)
 UPDATE tiki_menu_options set `url`='tiki-browse_categories.php' where `url`='tiki-categories.php';
+
+#added 2004-01-07 sylvie (only because it is in tiki.sql)
+ALTER TABLE `sessions`ADD `EXPIREREF` VARCHAR(64) AFTER `EXPIRY`;
+
+# added on 2003-01-08 by Chealer9 (typo reported by xenfasa)
+UPDATE tiki_menu_options set `url`='tiki-article_types.php' where `url`='tiki-articles_types.php';

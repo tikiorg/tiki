@@ -24,7 +24,7 @@
 <h2>{tr}Create New Forum{/tr}</h2>
 {/if}
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$galleryId}">{tr}There are individual permissions set for this forum{/tr}</a>
+<a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>
 {/if}
 <form action="tiki-admin_forums.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />

@@ -117,19 +117,13 @@
     <div class="simplebox">
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>
-    <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
-    <p>{tr}Strict allows page names with only letters, numbers, underscore, dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{/tr}<br />
-    {tr}Full adds accented characters.{/tr}<br />
-    {tr}Complete allows <em>anything at all</em>.  I (<a
-    href="http://tikiwiki.org/tiki-index.php?page=UserPagerlpowell">rlpowell</a>)
-    cannot guarantee that it is bug-free or secure.{/tr}
-    </p>
-    <p>{tr}Note that this does not affect WikiWord recognition, only page names surrounded by (( and )).{/tr}
-    </p>
+    <td colspan="2" class="form">{tr}Wiki Link Format{/tr}</td></tr><tr><td class="form">
+    {tr}Controls recognition of Wiki links using the two parenthesis Wiki link syntax <i>((page name))</i>.{/tr}
+    </td></tr><tr><td>
     <select name="wiki_page_regex">
     <option value='complete' {if $wiki_page_regex eq 'complete'}selected="selected"{/if}>{tr}complete{/tr}</option>
-    <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
-    <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}strict{/tr}</option>
+    <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}latin{/tr}</option>
+    <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}english{/tr}</option>
     </select>
     <input type="submit" name="setwikiregex" value="{tr}set{/tr}" />
     </td>

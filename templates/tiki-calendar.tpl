@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.37 2003-12-19 04:22:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.38 2004-01-09 19:47:48 redflo Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -200,7 +200,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {/if}
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
-{if $feature_jscalendar}
+{if $feature_jscalendar eq 'y'}
 <input type="hidden" name="start_date_input" value="{$start}" id="start_date_input" />
 <span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span>
 <script type="text/javascript">
@@ -223,7 +223,7 @@ align       : "bR"
 </td></tr>
 
 <tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
-{if $feature_jscalendar}
+{if $feature_jscalendar eq 'y'}
 <input type="hidden" name="end_date_input" value="{$end}" id="end_date_input" />
 <span id="end_date_display" class="daterow">{$end|date_format:$daformat}</span>
 <script type="text/javascript">
@@ -253,7 +253,7 @@ align       : "bR"
 {if $description}<div class="mini">( {$description} )</div>{/if}
 </td></tr>
 
-<tr><td class="formcolor">{tr}Url{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url|escape}" />
+<tr><td class="formcolor">{tr}URL{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url|escape}" />
 {if $url}<span class="mini">( <a href="{$url}">{$url}</a> )</span>{/if}
 </td></tr>
 

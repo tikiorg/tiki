@@ -2617,6 +2617,24 @@ CREATE TABLE tiki_searchindex(
   KEY last_update (last_update)
 ) TYPE=MyISAM;
 
+# LRU (last recently used) list for searching parts of words
+DROP TABLE IF EXISTS tiki_searchsyllable;
+CREATE TABLE tiki_searchsyllable(
+  syllable varchar(80) NOT NULL default '',
+  lastUsed int(11) NOT NULL default '0',
+  lastUpdated int(11) NOT NULL default '0',
+  PRIMARY KEY  (syllable),
+  KEY lastUsed (lastUsed)
+) TYPE=MyISAM;
+
+# searchword caching table for search syllables
+DROP TABLE IF EXISTS tiki_searchwords;
+CREATE TABLE tiki_searchwords(
+  syllable varchar(80) NOT NULL default '',
+  searchword varchar(80) NOT NULL default '',
+  PRIMARY KEY  (syllable,searchword)
+) TYPE=MyISAM;
+
 
 #
 # Table structure for table `tiki_search_stats`
@@ -3596,7 +3614,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_blog_post', 'Can post to a blog', 'registered', 'blogs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast', 'Can broadcast messages to groups', 'admin', 'messu');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_broadcast_all', 'Can broadcast messages to all user', 'admin', 'messu');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_chat', 'Can use the chat system', 'registered', 'chat');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_comment_tracker_items', 'Can insert comments for tracker items', 'basic', 'trackers');
@@ -3807,8 +3825,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_title','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_user','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_list_visits','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('blog_spellcheck','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','y');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cacheimages','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cachepages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_language','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_theme','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('cms_bot_bar','y');
@@ -4067,6 +4085,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useRegisterPasscode','n
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useUrlIndex','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateEmail','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('warn_on_edit_time','2');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webmail_max_attachment','1500000');

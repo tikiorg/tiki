@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.16 2004-01-01 03:27:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.17 2004-01-09 19:47:48 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -128,7 +128,9 @@
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{$objects[ix].type}</td>
-        <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}">{tr}x{/tr}</a>]</td>
+        <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}"> 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this category?{/tr}')" 
+title="{tr}Click here to delete this category{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>]</td>
       </tr>
       {/section}
       </table>
