@@ -505,7 +505,7 @@ class TrackerLib extends TikiLib {
 		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height with option is 1 or 0, rest is size indicated in chars and lines.'));
 		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas.') );
 		$type['u'] = array('label'=>tra('user selector'), 'opt'=>true,  'help'=>tra('User Selector: use options for automatic field feeding : you can use 1 for author login or 2 for modificator login.'));
-		$type['g'] = array('label'=>tra('group selector'),'opt'=>false);
+		$type['g'] = array('label'=>tra('group selector'),'opt'=>true,  'help'=>tra('Group Selector: use options for automatic field feeding : you can use 1 for group of creation and 2 for group where modification come from. The default group has to be set, or the first group that come is chosen for a user, or the default group is Registered.'));
 		$type['f'] = array('label'=>tra('date and time'), 'opt'=>false);
 		$type['j'] = array('label'=>tra('jscalendar'),    'opt'=>false);
 		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options: xSize,ySize indicated in pixelsi.')  );

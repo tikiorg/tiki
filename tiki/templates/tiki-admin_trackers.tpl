@@ -132,6 +132,8 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 {/foreach}
 </select>
 </td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Item creator can modify his items?{/tr}</td><td><input type="checkbox" name="writerCanModify" {if $writerCanModify eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Member of the default group of creator can modify items?{/tr}</td><td><input type="checkbox" name="writerGroupCanModify" {if $writerGroupCanModify eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td><input type="text" name="defaultOrderKey" value="{$defaultOrderKey}" /></td></tr>
