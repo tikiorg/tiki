@@ -34,9 +34,57 @@ alter table tiki_pages add unique (pageName);
 alter table tiki_pages add fulltext (description);
 
 # Save the old structures!
-rename table tiki_structures to old2_tiki_structures;
+rename table tiki_structures to original_tiki_structures;
 
-# New structures table; really just a change to object.
+# Temporary structures table. No parent_id.
+CREATE TABLE temp_tiki_structures (
+  page_ref_id int(14) NOT NULL auto_increment,
+  parent_id int(14) DEFAULT NULL,
+  page_id int(14) NOT NULL,
+  page_alias varchar(240) NOT NULL default '',
+  pos int(4) default NULL,
+  PRIMARY KEY  (page_ref_id),
+  INDEX (page_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+#Copy structure heads (parent == '')
+insert into temp_tiki_structures(page_id, page_alias, pos) select 
+tp1.page_id,
+ts.page_alias,
+ts.pos
+from original_tiki_structures AS ts, tiki_pages AS tp1
+where ts.page=tp1.pageName AND ts.parent='';
+
+#Copy child nodes
+#Cannot enter parent_id until table is populated, use non-null dummy
+insert into temp_tiki_structures(parent_id, page_id, page_alias, pos) select 
+tp1.page_id,
+tp1.page_id,
+ts.page_alias,
+ts.pos
+from original_tiki_structures AS ts, tiki_pages AS tp1, tiki_pages AS tp2
+where ts.page=tp1.pageName AND ts.parent=tp2.pageName;
+
+#create a temporary table to hold parent/page relationship
+CREATE TABLE temp_parents (
+  parent_id int(14) NOT NULL,
+  page_id int(14) NOT NULL
+) TYPE=MyISAM;
+
+# Populate the temporary parents table. 
+insert into temp_parents(page_id, parent_id) select 
+ts_page.page_id, ts_parent.page_ref_id
+from original_tiki_structures AS ts_old, 
+   temp_tiki_structures AS ts_page, 
+   temp_tiki_structures AS ts_parent,
+   tiki_pages AS tp_page, 
+   tiki_pages AS tp_parent
+where ts_old.page=tp_page.pageName AND 
+      ts_old.parent=tp_parent.pageName AND
+      tp_page.page_id=ts_page.page_id AND 
+      tp_parent.page_id=ts_parent.page_id;
+
+# New structures table.
 CREATE TABLE tiki_structures (
   page_ref_id int(14) NOT NULL auto_increment,
   parent_id int(14) default NULL,
@@ -49,45 +97,26 @@ CREATE TABLE tiki_structures (
 
 #Copy structure heads (parent == '')
 insert into tiki_structures(page_id, page_alias, pos) select 
-tp1.page_id,
+ts.page_id,
 ts.page_alias,
 ts.pos
-from old2_tiki_structures AS ts, tiki_pages AS tp1
-where ts.page=tp1.pageName AND ts.parent='';
+from temp_tiki_structures AS ts
+where ts.parent_id IS NULL;
 
-#Copy child nodes
-#Cannot enter parent_id until table is populated
-insert into tiki_structures(page_id, page_alias, pos) select 
-tp1.page_id,
+#Copy the rest of the structure elements aross(parent_id == non null) 
+insert into tiki_structures(parent_id, page_id, page_alias, pos) select 
+tp.parent_id,
+ts.page_id,
 ts.page_alias,
 ts.pos
-from old2_tiki_structures AS ts, tiki_pages AS tp1, tiki_pages AS tp2
-where ts.page=tp1.pageName AND ts.parent=tp2.pageName;
+from temp_tiki_structures AS ts, temp_parents AS tp
+where ts.page_id=tp.page_id;
 
-#create a temporary table to hold parent/page relationship
-CREATE TABLE temp_parents (
-  parent_id int(14) NOT NULL,
-  page_id int(14) NOT NULL
-) TYPE=MyISAM;
-
-# Populate the table. 
-insert into temp_parents(page_id, parent_id) select 
-ts_page.page_id, ts_parent.page_ref_id
-from old2_tiki_structures AS ts_old, 
-   tiki_structures AS ts_page, 
-   tiki_structures AS ts_parent,
-   tiki_pages AS tp_page, 
-   tiki_pages AS tp_parent
-where ts_old.page=tp_page.pageName AND 
-      ts_old.parent=tp_parent.pageName AND
-      tp_page.page_id=ts_page.page_id AND 
-      tp_parent.page_id=ts_parent.page_id;
-
-#Copy the results across
 UPDATE tiki_structures AS ts, temp_parents AS tp 
 SET ts.parent_id=tp.parent_id 
 WHERE ts.page_id=tp.page_id;
 
-DROP TABLE old2_tiki_structures;
+DROP TABLE original_tiki_structures;
+DROP TABLE temp_tiki_structures;
 DROP TABLE temp_parents;
 
