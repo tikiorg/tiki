@@ -4,6 +4,8 @@ Tikiwiki Changelog
 
 Version 1.8 --
 
+* [FIX] moved wiki table parse code behind link parse code
+* [NEW] function targetBlank in tiki-js.lib
 * [MOD] CODE plugin now accepts php syntax highlighting {CODE(colors=>php)}
 * [NEW] Replace PEAR::DB with ADOdb to support PostgreSQL, Oracle, MSSQL, etc.
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
