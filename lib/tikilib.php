@@ -4218,15 +4218,16 @@ class TikiLib extends TikiDB {
 			// OK. Parse headers here...
 			$anchor = '';
 			$aclose = '';
+			$aclosediv = '';
 			$addremove = 0;
 
 			// May be special signs present after '!'s?
 			$divstate = substr($line, $hdrlevel, 1);
 			if ($divstate == '+' || $divstate == '-') {
-			    // OK. Must insert flipper after HEADER, and then open new div...
+			    // OK. Must insert flipper before HEADER, and then open new div after HEADER...
 			    $thisid = 'id' . microtime() * 1000000;
-			    $aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-			    $aclose .= '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+			    $aclose = '<a id="flipper' . $thisid . '" class="link" style="text-decoration : none;" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+			    $aclosediv = '<div id="' . $thisid . '" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 			    array_unshift($divdepth, $hdrlevel);
 			    $addremove = 1;
 			}
@@ -4238,7 +4239,7 @@ class TikiLib extends TikiDB {
 			    $anchor = "<a id='$thisid'>";
 			    $aclose = '</a>' . $aclose;
 			}
-			$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
+			$line = $anchor . "<h$hdrlevel>" . $aclose . " " . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclosediv;
 		    } elseif (!strcmp($line, "...page...")) {
 			// Close open paragraph, lists, and div's
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
