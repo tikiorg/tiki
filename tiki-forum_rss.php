@@ -17,8 +17,13 @@ if(!isset($_REQUEST["forumId"])) {
         require_once ('tiki-rss_error.php');
 }
 
+require_once('lib/commentslib.php');
+if (!isset($commentslib)) {
+	$commentslib = new Comments($dbTiki);
+}
+
 $feed = "forum";
-$tmp = $tikilib->get_forum($_REQUEST["forumId"]);
+$tmp = $commentslib->get_forum($_REQUEST["forumId"]);
 $title = tra("Tiki RSS feed for forum: ").$tmp["name"];
 $desc = $tmp["description"];
 $now = date("U");

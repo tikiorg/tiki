@@ -86,7 +86,11 @@ if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') 
 
 			// Check if we are bookmarking a forum
 			if (strstr($_SERVER["REQUEST_URI"], 'tiki-view_forum')) {
-				$info = $tikilib->get_forum($setup_query_data["forumId"]);
+				require_once('lib/commentslib.php');
+				if (!isset($commentslib)) {
+					$commentslib = new Comments($dbTiki);
+				}
+				$info = $commentslib->get_forum($setup_query_data["forumId"]);
 
 				$_REQUEST["bookmark_urlname"] = $info["name"];
 			}

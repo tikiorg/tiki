@@ -1294,13 +1294,15 @@ function add_pageview() {
 	return $result;
     }
 
-    /*shared*/
+/* Moved to commentslib a while ago
+    //shared
     function get_forum($forumId) {
 	$query = "select * from `tiki_forums` where `forumId`=?";
 	$result = $this->query($query,array((int)$forumId));
 	$res = $result->fetchRow();
 	return $res;
     }
+*/
 
     /*shared*/
     function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find) {
