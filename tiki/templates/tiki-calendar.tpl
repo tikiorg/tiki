@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.35 2003-12-07 17:40:51 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.36 2003-12-18 13:01:55 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -319,7 +319,7 @@ onUpdate     : gotocal
 </div>
 {/if}
 </td>
-<td align="center" width="100%" class="middle">
+<td style="text-align:center;" width="100%" class="middle">
 <div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_date}</a></div>
 </td>
 <td align="right" class="middle" nowrap="nowrap" width="90">
