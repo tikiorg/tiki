@@ -14,6 +14,8 @@
 'themes','nhs','1.1','A style sheet by sdl of the Tiki Community conforming to the NHS colour schemes','GNU/LGPL'
 'themes','purplemetal','1.1','Theme borrowed to another cms.','GNU/GPL'
 'themes','redmetal','1.1','Theme borrowed to another cms.','GNU/GPL'
+'themes','tarynsworld','1.0','The theme of Taryn', 'GNU/LGPL'
+'themes','underworld','1.0','Underworld dark theme','GNU/LGPL'
 'themes','veryorange','1.1','A style sheet by sdl of the Tiki Community conforming to the NHS colour schemes','GNU/LGPL'
 'themes','zaksworld','1.3','This is the theme in action at Zaks site','GNU/LGPL'
 'themes','ztheme','1.3','Simple theme, conservative colors. Designed for easy \"readability\" and use.','GNU/LGPL'
