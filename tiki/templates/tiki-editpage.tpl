@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.30 2003-10-27 17:06:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.31 2003-10-27 17:55:21 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -51,8 +51,8 @@
 {if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br /><a href="javascript:textareaSize('editwiki', +20, 0)">{tr}Bigger Area{/tr}</a>
-<br/><a href="javascript:textareaSize('editwiki', -20, 0)">{tr}Smaller Area{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />[<a class="link" href="javascript:textareaSize('editwiki', +20, 0)">{tr}bigger area{/tr}</a>]
+<br/>[<a class="link" href="javascript:textareaSize('editwiki', -20, 0)">{tr}smaller area{/tr}</a>]</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata|escape}</textarea>
 </td>
 {if $feature_wiki_footnotes eq 'y'}
