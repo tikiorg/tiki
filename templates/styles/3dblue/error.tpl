@@ -38,7 +38,7 @@
       {if $feature_right_column eq 'y'}
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
-      {$right_modules[homeix].data}i
+      {$right_modules[homeix].data}
       {if $right_modules[homeix].data ne ''}<table cellspacing="0" cellpadding="0" width="100%" ><tr><td width="100%"><div align="right"><img hspace="4" src="styles/3dblue/modr.gif" /></div></td></tr></table>{/if}
       {/section}
       </td>
