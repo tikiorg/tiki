@@ -1,4 +1,5 @@
 <?php
+// CAREFUL: patch for header with  charset iso-8859-1 for tiki
 //
 // +----------------------------------------------------------------------+
 // | PHP version 4.0                                                      |
@@ -52,7 +53,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.7 $
+* @version $Revision: 1.8 $
 * @package Mail
 */
 class Mail_mimeDecode extends PEAR {
@@ -473,6 +474,8 @@ class Mail_mimeDecode extends PEAR {
 
 				break;
 			}
+			if ($charset == "iso-8859-1")	// patch specifique tiki
+				$text = utf8_encode($text);
 
 			$input = str_replace($encoded, $text, $input);
 		}
