@@ -15,7 +15,7 @@
 [ {$num_queries} {tr}database queries used{/tr} ]<br />
 [ GZIP {$gzip} ] &nbsp; 
 [ {tr}Server load{/tr}: {$server_load} ] &nbsp; 
-[ <a href="http://tikiwiki.org" class="link" style="color:#727272;font-size:80%;">TikiWiki</a> ]</small>
+[ <a href="http://tikiwiki.org" class="link" style="color:#727272;font-size:85%;">TikiWiki</a> ]</small>
 </div>
 </td>
 {if $rss_wiki eq 'y'}
