@@ -202,7 +202,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}Secondary Validation (External XML Source) WORK IN PROGRESS, DON'T USE{/tr}</div>
+<div class="cbox-title">{tr}Secondary Validation with External XML Source{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
@@ -217,13 +217,13 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 	<div class="simplebox">&lt;<b>ELname</b> <b>ATname</b>="<b><i>ATvalue</i></b>"&gt; <b><i>ELvalue</i></b> &lt;/<b>ELname</b>&gt;
 	<br />where <b>EL</b> = element and <b>AT</b> = attribute</div>
 </td></tr>
-<tr><td class="form">{tr}Expected login permission ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element" value="{$auth_ext_xml_login_element|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected login permission ELEMENT path{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element" value="{$auth_ext_xml_login_element|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected login permission ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_element_value" value="{$auth_ext_xml_login_element_value|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected login permission ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute" value="{$auth_ext_xml_login_attribute|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected login permission ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_login_attribute_value" value="{$auth_ext_xml_login_attribute_value|escape}" size="20" /></td></tr>
 {section name=ix loop=$groups}
 <tr><td class="form">{tr}Add or remove user from <i>{$groups[ix].groupName}</i> group (according to XML){/tr}?</td><td><input type="checkbox" name="auth_ext_xml_manage_{$groups[ix].groupName}" {if $groups[ix].auth_ext_xml_manage_group eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT name{/tr}:</td><td><input type="text" name="auth_ext_xml_element_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element|escape}" size="20" /></td></tr>
+<tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT path{/tr}:</td><td><input type="text" name="auth_ext_xml_element_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ELEMENT value{/tr}:</td><td><input type="text" name="auth_ext_xml_element_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_element_value|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE name{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute|escape}" size="20" /></td></tr>
 <tr><td class="form">{tr}Expected <i>{$groups[ix].groupName}</i> group ATTRIBUTE value{/tr}:</td><td><input type="text" name="auth_ext_xml_attr_val_{$groups[ix].groupName}" value="{$groups[ix].auth_ext_xml_group_attribute_value|escape}" size="20" /></td></tr>
