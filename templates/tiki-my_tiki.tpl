@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.7 2003-10-14 09:46:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.8 2004-01-25 01:31:45 halon Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -39,6 +39,13 @@
 	{if $mytiki_blogs eq 'y'}
 		<span id="tab6" class="tab">{tr}My blogs{/tr}</span>
 	{/if}
+    {if $feature_workflow eq 'y'}
+      {if $tiki_p_use_workflow eq 'y'}
+        {if $mytiki_workflow eq 'y'}
+          <span id="tab7" class="tab">{tr}My workflow{/tr}</span>
+        {/if}
+      {/if}
+    {/if}
 </div>
 
 {if $mytiki_pages eq 'y'}
@@ -156,3 +163,10 @@
 </div>
 {/if}
 
+{if $feature_workflow eq 'y' && $tiki_p_use_workflow eq 'y' && $mytiki_workflow eq 'y'}
+  <div id="content7" class="content">
+      {include file="templates/tiki-g-my_activities.tpl"}
+      <br /><br />
+      {include file="templates/tiki-g-my_instances.tpl"}
+  </div>
+{/if}
