@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.22 2003-11-23 19:54:35 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.23 2003-11-23 22:03:39 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,8 +122,10 @@ for ($i = 0; $i < count($left_modules); $i++) {
                     $info = $tikilib->get_user_module($r["name"]);
 
                     // Ahora usar el template de user
+                    var_dump($info);
                     $smarty->assign_by_ref('user_title', $info["title"]);
                     $smarty->assign_by_ref('user_data', $info["data"]);
+                    $smarty->assign_by_ref('user_module_name', $info["name"]);
                     $data = $smarty->fetch('modules/user_module.tpl');
                 }
             }
