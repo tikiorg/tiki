@@ -1,6 +1,6 @@
 <?php
 /** 
- * @version V3.72 9 Aug 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * @version V4.05 13 Dec 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
  * Whenever there is any discrepancy between the two licenses, 
  * the BSD license will take precedence. 
@@ -56,7 +56,7 @@ global $ADODB_LANG,$ADODB_LANG_ARRAY;
 
 function adodb_error($provider,$dbType,$errno)
 {
-	var_dump($errno);
+	//var_dump($errno);
 	if (is_numeric($errno) && $errno == 0) return 0;
 	switch($provider) { 
 	case 'mysql': $map = adodb_error_mysql(); break;
@@ -79,8 +79,8 @@ function adodb_error($provider,$dbType,$errno)
 	default:
 		return DB_ERROR;
 	}	
-	print_r($map);
-	var_dump($errno);
+	//print_r($map);
+	//var_dump($errno);
 	if (isset($map[$errno])) return $map[$errno];
 	return DB_ERROR;
 }
@@ -94,12 +94,12 @@ function adodb_error_pg($errormsg)
             '/Relation [\"\'].*[\"\'] already exists|Cannot insert a duplicate key into (a )?unique index.*/'      => DB_ERROR_ALREADY_EXISTS,
             '/divide by zero$/'                     => DB_ERROR_DIVZERO,
             '/pg_atoi: error in .*: can\'t parse /' => DB_ERROR_INVALID_NUMBER,
-            '/ttribute [\"\'].*[\"\'] not found$|Relation [\"\'].*[\"\'] does not have attribute [\"\'].*[\"\']/' => DB_ERROR_NOSUCHFIELD,
+            '/ttribute [\"\'].*[\"\'] not found|Relation [\"\'].*[\"\'] does not have attribute [\"\'].*[\"\']/' => DB_ERROR_NOSUCHFIELD,
             '/parser: parse error at or near \"/'   => DB_ERROR_SYNTAX,
             '/referential integrity violation/'     => DB_ERROR_CONSTRAINT
         );
-   
-    foreach ($error_regexps as $regexp => $code) {
+	reset($error_regexps);
+    while (list($regexp,$code) = each($error_regexps)) {
         if (preg_match($regexp, $errormsg)) {
             return $code;
         }
@@ -199,7 +199,7 @@ static $MAP = array(
             1722 => DB_ERROR_INVALID_NUMBER,
             2289 => DB_ERROR_NOSUCHTABLE,
             2291 => DB_ERROR_CONSTRAINT,
-            2449 => DB_ERROR_CONSTRAINT,
+            2449 => DB_ERROR_CONSTRAINT
         );
 	   
 	return $MAP;
@@ -232,7 +232,9 @@ static $MAP = array(
            1006 => DB_ERROR_CANNOT_CREATE,
            1007 => DB_ERROR_ALREADY_EXISTS,
            1008 => DB_ERROR_CANNOT_DROP,
+		   1045 => DB_ERROR_ACCESS_VIOLATION,
            1046 => DB_ERROR_NODBSELECTED,
+		   1049 => DB_ERROR_NOSUCHDB,
            1050 => DB_ERROR_ALREADY_EXISTS,
            1051 => DB_ERROR_NOSUCHTABLE,
            1054 => DB_ERROR_NOSUCHFIELD,
@@ -242,6 +244,7 @@ static $MAP = array(
            1136 => DB_ERROR_VALUE_COUNT_ON_ROW,
            1146 => DB_ERROR_NOSUCHTABLE,
            1048 => DB_ERROR_CONSTRAINT,
+		    2002 => DB_ERROR_CONNECT_FAILED
        );
 	   
 	return $MAP;

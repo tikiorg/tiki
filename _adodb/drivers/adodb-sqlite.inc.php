@@ -1,6 +1,6 @@
 <?php
 /*
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -85,6 +85,7 @@ class ADODB_sqlite extends ADOConnection {
 	
 	function ErrorMsg() 
  	{
+		if ($this->_logsql) return $this->_errorMsg;
 		return ($this->_errorNo) ? sqlite_error_string($this->_errorNo) : '';
 	}
  
@@ -125,6 +126,8 @@ class ADODB_sqlite extends ADOConnection {
 	// returns true or false
 	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('sqlite_open')) return false;
+		
 		$this->_connectionID = sqlite_open($argHostname);
 		if ($this->_connectionID === false) return false;
 		$this->_createFunctions();
@@ -134,6 +137,8 @@ class ADODB_sqlite extends ADOConnection {
 	// returns true or false
 	function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename)
 	{
+		if (!function_exists('sqlite_open')) return false;
+		
 		$this->_connectionID = sqlite_popen($argHostname);
 		if ($this->_connectionID === false) return false;
 		$this->_createFunctions();
@@ -151,14 +156,16 @@ class ADODB_sqlite extends ADOConnection {
 		return $rez;
 	}
 	
-	function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$arg3=false,$secs2cache=0) 
+	function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0) 
 	{
 		$offsetStr = ($offset >= 0) ? " OFFSET $offset" : '';
 		$limitStr  = ($nrows >= 0)  ? " LIMIT $nrows" : ($offset >= 0 ? ' LIMIT 999999999' : '');
-	  	return $secs2cache ?
-	   		$this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr,$arg3)
-	  	:
-	   		$this->Execute($sql."$limitStr$offsetStr",$inputarr,$arg3);
+	  	if ($secs2cache)
+	   		$rs =& $this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr);
+	  	else
+	   		$rs =& $this->Execute($sql."$limitStr$offsetStr",$inputarr);
+			
+		return $rs;
 	}
 	
 	/*

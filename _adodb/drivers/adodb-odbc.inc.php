@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -125,7 +125,6 @@ class ADODB_odbc extends ADOConnection {
 
 	function ErrorMsg()
 	{
-		
 		if ($this->_haserrorfunctions) {
 			if ($this->_errorMsg !== false) return $this->_errorMsg;
 			if (empty($this->_connectionID)) return @odbc_errormsg();
@@ -157,6 +156,9 @@ class ADODB_odbc extends ADOConnection {
 	function _connect($argDSN, $argUsername, $argPassword, $argDatabasename)
 	{
 	global $php_errormsg;
+		
+		if (!function_exists('odbc_connect')) return false;
+		
 		if ($this->debug && $argDatabasename) {
 			ADOConnection::outp("For odbc Connect(), $argDatabasename is not used. Place dsn in 1st parameter.");
 		}
@@ -174,6 +176,9 @@ class ADODB_odbc extends ADOConnection {
 	function _pconnect($argDSN, $argUsername, $argPassword, $argDatabasename)
 	{
 	global $php_errormsg;
+	
+		if (!function_exists('odbc_connect')) return false;
+		
 		$php_errormsg = '';
 		if ($this->debug && $argDatabasename) {
 			ADOConnection::outp("For odbc PConnect(), $argDatabasename is not used. Place dsn in 1st parameter.");
@@ -633,7 +638,10 @@ class ADORecordSet_odbc extends ADORecordSet {
 	// speed up SelectLimit() by switching to ADODB_FETCH_NUM as ADODB_FETCH_ASSOC is emulated
 	function &GetArrayLimit($nrows,$offset=-1) 
 	{
-		if ($offset <= 0) return $this->GetArray($nrows);
+		if ($offset <= 0) {
+			$rs =& $this->GetArray($nrows);
+			return $rs;
+		}
 		$savem = $this->fetchMode;
 		$this->fetchMode = ADODB_FETCH_NUM;
 		$this->Move($offset);

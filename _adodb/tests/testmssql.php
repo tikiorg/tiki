@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * @version V3.72 9 Aug 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * @version V4.05 13 Dec 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
  * Whenever there is any discrepancy between the two licenses, 
  * the BSD license will take precedence. 
@@ -24,8 +24,20 @@ include('../tohtml.inc.php');
 
 
 
-$conn = &ADONewConnection("odbc_mssql");  // create a connection
-$conn->Connect('mssql-northwind','sa','natsoft');
+$conn = &ADONewConnection("mssql");  // create a connection
+$conn->Connect('localhost','sa','natsoft','northwind') or die('Fail');
+
+$p = $conn->Prepare('insert into products (productname,unitprice,dcreated) values (?,?,?)');
+echo "<pre>";
+print_r($p);
+
+$conn->debug=1;
+$conn->Execute($p,array('John'.rand(),33.3,$conn->DBDate(time())));
+
+$p = $conn->Prepare('select * from products where productname like ?');
+$arr = $conn->getarray($p,array('V%'));
+print_r($arr);
+die();
 
 //$conn = &ADONewConnection("mssql");
 //$conn->Connect('mangrove','sa','natsoft','ai');

@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * @version V3.72 9 Aug 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * @version V4.05 13 Dec 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
  * Whenever there is any discrepancy between the two licenses, 
  * the BSD license will take precedence. 
@@ -16,6 +16,8 @@
 error_reporting(E_ALL);
 function testsql()
 {
+
+//define('ADODB_FORCE_NULLS',1);
 
 include('../adodb.inc.php');
 include('../tohtml.inc.php');
@@ -39,10 +41,10 @@ $rs = $conn->Execute($sql); // Execute the query and get the empty recordset
 $record = array(); // Initialize an array to hold the record data to insert
 
 // Set the values for the fields in the record
-$record["firstname"] = "null";
+$record["firstname"] = 'null';
 $record["lastname"] = "Smith\$@//";
 $record["created"] = time();
-$record["id"] = -1;
+//$record["id"] = -1;
 
 // Pass the empty recordset and the array containing the data to insert
 // into the GetInsertSQL function. The function will process the data and return

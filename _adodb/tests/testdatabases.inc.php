@@ -1,14 +1,40 @@
 <?php
   
 /*
-V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
 */ 
  
  /* this file is used by the ADODB test program: test.php */
- 
+ ?>
+
+<table><tr valign=top><td>
+<form method=get>
+<input type=checkbox name="testaccess" value=1 <?php echo !empty($testaccess) ? 'checked' : '' ?>> <b>Access</b><br>
+<input type=checkbox name="testibase" value=1 <?php echo !empty($testibase) ? 'checked' : '' ?>> <b>Interbase</b><br>
+<input type=checkbox name="testmssql" value=1 <?php echo !empty($testmssql) ? 'checked' : '' ?>> <b>MSSQL</b><br>
+ <input type=checkbox name="testmysql" value=1 <?php echo !empty($testmysql) ? 'checked' : '' ?>> <b>MySQL</b><br>
+<input type=checkbox name="testmysqlodbc" value=1 <?php echo !empty($testmysqlodbc) ? 'checked' : '' ?>> <b>MySQL ODBC</b><br>
+<td><input type=checkbox name="testsqlite" value=1 <?php echo !empty($testsqlite) ? 'checked' : '' ?>> <b>SQLite</b><br>
+<input type=checkbox name="testproxy" value=1 <?php echo !empty($testproxy) ? 'checked' : '' ?>> <b>MySQL Proxy</b><br>
+<input type=checkbox name="testoracle" value=1 <?php echo !empty($testoracle) ? 'checked' : '' ?>> <b>Oracle (oci8)</b> <br>
+<input type=checkbox name="testpostgres" value=1 <?php echo !empty($testpostgres) ? 'checked' : '' ?>> <b>PostgreSQL</b><br>
+<input type=checkbox name="testpgodbc" value=1 <?php echo !empty($testpgodbc) ? 'checked' : '' ?>> <b>PostgreSQL ODBC</b><br>
+<td><input type=checkbox name="testdb2" value=1 <?php echo !empty($testdb2) ? 'checked' : '' ?>> DB2<br>
+<input type=checkbox name="testvfp" value=1 <?php echo !empty($testvfp) ? 'checked' : '' ?>> VFP<br>
+<input type=checkbox name="testado" value=1 <?php echo !empty($testado) ? 'checked' : '' ?>> ADO (for mssql and access)<br>
+<input type=checkbox name="nocountrecs" value=1 <?php echo !empty($nocountrecs) ? 'checked' : '' ?>> $ADODB_COUNTRECS=false<br>
+<input type=checkbox name="nolog" value=1 <?php echo !empty($nolog) ? 'checked' : '' ?>> No SQL Logging<br>
+<td><input type=submit>
+</form>
+</table>
+<?php
+
+if ($ADODB_FETCH_MODE != ADODB_FETCH_DEFAULT) print "<h3>FETCH MODE IS NOT ADODB_FETCH_DEFAULT</h3>";
+
+if (isset($nocountrecs)) $ADODB_COUNTRECS = false;
 
 // cannot test databases below, but we include them anyway to check
 // if they parse ok...
@@ -23,9 +49,11 @@ if (!strpos(PHP_VERSION,'5') === 0) {
 	ADOLoadCode("sqlanywhere");
 }
 
+
 flush();
 if (!empty($testpostgres)) {
 	//ADOLoadCode("postgres");
+
 	$db = &ADONewConnection('postgres');
 	print "<h1>Connecting $db->databaseType...</h1>";
 	if (@$db->Connect("localhost","tester","test","test")) {
@@ -73,7 +101,9 @@ if (!empty($testaccess)) {
 	$db = &ADONewConnection('access');
 	print "<h1>Connecting $db->databaseType...</h1>";
 	
-	if (@$db->PConnect("nwind", "", "", ""))
+	$dsn = "nwind";
+	$driver = "Driver={Microsoft Access Driver (*.mdb)};Dbq=d:\inetpub\adodb\northwind.mdb;Uid=Admin;Pwd=;";
+	if (@$db->PConnect($dsn, "", "", ""))
 		testdb($db,"create table ADOXYZ (id int, firstname char(24), lastname char(24),created datetime)");
 	else print "ERROR: Access test requires a Windows ODBC DSN=nwind, Access driver";
 	
@@ -109,12 +139,12 @@ if (!empty($testvfp)) { // ODBC
 
 // REQUIRES MySQL server at localhost with database 'test'
 if (!empty($testmysql)) { // MYSQL
-	
+
 	$db = &ADONewConnection('mysql');
 	print "<h1>Connecting $db->databaseType...</h1>";
 	if ($HTTP_SERVER_VARS['HTTP_HOST'] == 'localhost') $server = 'localhost';
 	else $server = "mangrove";
-	if ($db->PConnect($server, "root", "", "test")) {
+	if ($db->PConnect($server, "root", "", "northwind")) {
 		//$db->debug=1;$db->Execute('drop table ADOXYZ');
 		testdb($db,
 		"create table ADOXYZ (id int, firstname char(24), lastname char(24), created date)");
@@ -175,21 +205,23 @@ if (!empty($testdb2)) {
 	
 	$db = ADONewConnection();
 	print "<h1>Connecting $db->databaseType...</h1>";
-	if ($db->Connect("db2_sample", "", "", ""))
+	if ($db->Connect("db2_sample", "root", "natsoft", ""))
 		testdb($db,"create table ADOXYZ (id int, firstname varchar(24), lastname varchar(24),created date)");
 	else print "ERROR: DB2 test requires an server setup with odbc data source db2_sample".'<BR>'.$db->ErrorMsg();
 
 }
 
 
-
-ADOLoadCode("odbc_mssql");
+ADOLoadCode('odbc_mssql');
 if (!empty($testmssql)) { // MS SQL Server via ODBC
-	
 	$db = ADONewConnection();
 	
 	print "<h1>Connecting $db->databaseType...</h1>";
-	if (@$db->PConnect("mssql-northwind", "adodb", "natsoft", ""))  {
+	
+	$dsn = "mssql-northwind";
+	$dsn = "Driver={SQL Server};Server=localhost;Database=northwind;";
+	
+	if (@$db->PConnect($dsn, "adodb", "natsoft", ""))  {
 		testdb($db,"create table ADOXYZ (id int, firstname char(24) null, lastname char(24) null,created datetime null)");
 	}
 	else print "ERROR: MSSQL test 1 requires a MS SQL 7 server setup with DSN setup";
@@ -217,13 +249,16 @@ if (!empty($testmssql) && !empty($testado) ) { // ADO ACCESS MSSQL -- thru ODBC 
 
 ADOLoadCode("mssqlpo");
 if (!empty($testmssql)) { // MS SQL Server -- the extension is buggy -- probably better to use ODBC
-	$db = ADONewConnection();
+	$db = ADONewConnection("mssqlpo");
 	//$db->debug=1;
 	print "<h1>Connecting $db->databaseType...</h1>";
 	
-	$db->PConnect('tigress','adodb','natsoft','northwind');
-	
-	if (true or @$db->PConnect("mangrove", "sa", "natsoft", "ai")) {
+	$ok = $db->PConnect('tigress','adodb','natsoft','northwind');
+	//$rs = $db->Execute("exec sp_ddate");
+	//print_r($rs->fields);
+	//die();
+
+	if ($ok or @$db->PConnect("mangrove", "sa", "natsoft", "ai")) {
 		AutoDetect_MSSQL_Date_Order($db);
 	//	$db->Execute('drop table adoxyz');
 		testdb($db,"create table ADOXYZ (id int, firstname char(24) null, lastname char(24) null,created datetime null)");
@@ -238,7 +273,7 @@ if (!empty($testmssql) && !empty($testado)) { // ADO ACCESS MSSQL with OLEDB pro
 	//$db->debug=1;
 	$myDSN="SERVER=tigress;DATABASE=northwind;Trusted_Connection=yes";
 	//$myDSN='SERVER=(local)\NetSDK;DATABASE=northwind;';
-	if ($db->PConnect($myDSN, "sa", "natsoft", 'SQLOLEDB'))
+	if ($db->PConnect($myDSN, "adodb", "natsoft", 'SQLOLEDB'))
 		testdb($db,"create table ADOXYZ (id int, firstname char(24), lastname char(24),created datetime)");
 	else print "ERROR: MSSQL test 2 requires a MS SQL 7 on a server='mangrove', userid='sa', password='', database='ai'";
 
