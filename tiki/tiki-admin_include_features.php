@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.6 2003-08-15 00:04:46 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.7 2003-10-13 18:25:33 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 $features_toggles = array(
 	"feature_articles",
+	"feature_autolinks",
 	"feature_banners",
 	"feature_banning",
 	"feature_blogs",
