@@ -181,6 +181,31 @@ class UsersLib extends TikiDB {
 	//$query = "update `users_users` set `lastLogin`=$t where `login`='$user'";
 	//$result = $this->query($query);
     }
+    
+    function user_logout_cas() {
+    	global $tikilib;
+    	
+    	// just make sure we're supposed to be here
+		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas') {
+		    return false;
+		}
+		
+		$cas_version = $tikilib->get_preference('cas_version', '1.0');
+		$cas_hostname = $tikilib->get_preference('cas_hostname');
+		$cas_port = $tikilib->get_preference('cas_port');
+		$cas_path = $tikilib->get_preference('cas_path');
+		
+		// import phpCAS lib
+		include_once('CAS/CAS.php');
+
+		phpCAS::setDebug();
+
+		// initialize phpCAS
+		phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+		
+		// Logout
+    	phpCAS::logout();
+    }
 
     function genPass() {
 	// AWC: enable mixed case and digits, don't return too short password
@@ -494,8 +519,9 @@ class UsersLib extends TikiDB {
 		global $tikilib;
 
 		// just make sure we're supposed to be here
-		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas')
+		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas') {
 		    return false;
+		}
 
 		$cas_version = $tikilib->get_preference('cas_version', '1.0');
 		$cas_hostname = $tikilib->get_preference('cas_hostname');
