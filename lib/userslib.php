@@ -146,7 +146,11 @@ class UsersLib {
         $t = date("U");
         // Check
         $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
-        $query = "update users_users set lastLogin=$current where login='$user'";
+        if (is_null($current)) {
+	    // First time
+	    $current = $t;
+	}
+	$query = "update users_users set lastLogin=$current where login='$user'";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query,$result);
         // check
@@ -171,6 +175,11 @@ class UsersLib {
         $t = date("U");
         // Check
         $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
+        if (is_null($current)) {
+	    // First time
+	    $current = $t;
+	}
+	$query = "update users_users set lastLogin=$current where login='$user'";
         $query = "update users_users set lastLogin=$current where login='$user'";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query,$result);
