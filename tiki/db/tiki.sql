@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.209 2004-06-15 12:05:51 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.210 2004-06-15 14:38:07 fhcorrea Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -291,6 +291,8 @@ CREATE TABLE tiki_articles (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   created int(14) default NULL,
+  bibliographical_references text default NULL,
+  resume text default NULL,
   heading text,
   body text,
   hash varchar(32) default NULL,
@@ -2897,6 +2899,8 @@ CREATE TABLE tiki_submissions (
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
   created int(14) default NULL,
+  bibliographical_references text default NULL,
+  resume text default NULL,
   heading text,
   body text,
   hash varchar(32) default NULL,
