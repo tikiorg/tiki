@@ -2213,5 +2213,7 @@ $lang = Array(
 "1 week" => "1 week",
 "1 month" => "1 month",
 "Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
+"Batch upload (CSV file)" => "Batch upload (CSV file)",
+"Overwrite" => "Overwrite",
 "##end###" => "###סוף###");
 ?>

@@ -65,13 +65,17 @@
 </a></td>
 {/if}
 
-
 {if $feature_minical eq 'y'}
 <td valign="top"><a class="link" href="tiki-minical.php" title="{tr}Calendar{/tr}">
 <img  border="0" src="img/mytiki/minical.gif" alt="{tr}Calendar{/tr}" /><br/>
 </a></td>
 {/if}
 
+{if $feature_user_watches eq 'y'}
+<td valign="top"><a class="link" href="tiki-user_watches.php" title="{tr}MyWatches{/tr}">
+<img  border="0" src="img/mytiki/mywatches.gif" alt="{tr}MyWatches{/tr}" /><br/>
+</a></td>
+{/if}
 
 </tr></table>
 </div>

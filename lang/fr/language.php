@@ -2753,5 +2753,6 @@ a moderator approves it.",
 "Tuesday" => "Tuesday",
 "\n for rows" => "\n pour les rangées",
 "Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
+"Batch upload (CSV file)" => "Batch upload (CSV file)",
 "##end###" => "###end###");
 ?>
