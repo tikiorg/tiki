@@ -203,7 +203,7 @@ class UsersLib extends TikiLib {
 
     function validate_hash($user, $hash) {
 	return $this->db->getOne(
-		"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = ? and hash=?",
+		"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = ? and `hash`=?",
 		array($user, $hash)
 		);
     }
