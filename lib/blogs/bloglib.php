@@ -247,9 +247,9 @@ class BlogLib extends TikiLib {
     $query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
     $result = $this->query($query);
     $this->add_blog_activity($blogId);
-    if($user) {
-        $not = $this->get_user_event_watches($user,'blog_post',$blogId);
-		if($not) {
+    if($feature_user_watches == 'y') {
+        $nots = $this->get_event_watches('blog_post',$blogId);
+		foreach($nots as $not) {
 			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
 	        $smarty->assign('mail_title',$title);
 	        $smarty->assign('mail_blogid',$blogId);
@@ -267,7 +267,7 @@ class BlogLib extends TikiLib {
 	        $mail_data = $smarty->fetch('mail/user_watch_blog_post.tpl');
 	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data);          
         }
-      }
+	}    
 
     return $id;
   }

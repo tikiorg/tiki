@@ -72,6 +72,9 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_user_preference($userwatch,'user_dbl','n');
     $smarty->assign('user_dbl','n');
   }
+  $email_isPublic = isset($_REQUEST['email_isPublic']) ? 'y':'n';
+  $tikilib->set_user_preference($userwatch,'email is public',$email_isPublic);
+  
   header("location: tiki-user_preferences.php?view_user=$userwatch");
   die;
 }
@@ -245,7 +248,7 @@ $smarty->assign_by_ref('realName',$realName);
 $smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
 $smarty->assign_by_ref('homePage',$homePage);
-
+$smarty->assign('email_isPublic',$tikilib->get_user_preference($userwatch,'email is public','n'));
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar',$avatar);
 

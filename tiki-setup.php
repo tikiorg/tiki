@@ -1,4 +1,7 @@
 <?php
+
+//xdebug_start_profiling();
+
 function system_check() {
 	if (!function_exists('posix_getuid'))
 		return true;
@@ -74,7 +77,7 @@ $tiki_timer->start();
 
 
 include_once("tiki-setup_base.php");
-
+//print("profile: include tiki-setup_base:".$tiki_timer->elapsed()."<br/>");
 
 // The votes array stores the votes the user has made
 if(!isset($_SESSION["votes"])) {
@@ -1097,11 +1100,15 @@ if($feature_stats == 'y') {
   }
 }
 
+/*
 if($feature_phpopentracker == 'y') {
+
 	include_once('phpOpenTracker.php');
 	// log access
 	phpOpenTracker::log();
 }
+*/
+
 
 
 $user_preferences=Array();

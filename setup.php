@@ -13,7 +13,6 @@ if (get_magic_quotes_gpc ()) {
   }
 }
 
-
 // Define and load Smarty components
 define('SMARTY_DIR',"Smarty/");
 require_once(SMARTY_DIR.'Smarty.class.php');
