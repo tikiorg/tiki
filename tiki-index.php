@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.99 2004-06-07 20:37:33 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.100 2004-06-07 20:58:32 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,7 +162,7 @@ if($tiki_p_view != 'y') {
 }
 
 // Get translated page
-if ($feature_multilingual == 'y') {
+if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { //temporary patch
 	include_once("lib/multilingual/multilinguallib.php");
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
