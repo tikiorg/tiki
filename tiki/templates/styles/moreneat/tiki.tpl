@@ -87,3 +87,4 @@
 {/if}
 
 {include file="footer.tpl"}
+

@@ -226,15 +226,27 @@
       </tr>
       <tr>
         <td class="form">{tr}Browser width{/tr}: </td>
-	<td><input type="text" name="wiki_3d_width" value="{$wiki_3d_width|escape}" /></td>
+	<td><input type="text" name="wiki_3d_width" value="{$wiki_3d_width|escape}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Browser height{/tr}: </td>
-	<td><input type="text" name="wiki_3d_height" value="{$wiki_3d_height|escape}" /></td>
+	<td><input type="text" name="wiki_3d_height" value="{$wiki_3d_height|escape}" size="3" /></td>
       </tr>
       <tr>
         <td class="form">{tr}Navigation depth{/tr}: </td>
-	<td><input type="text" name="wiki_3d_navigation_depth" value="{$wiki_3d_navigation_depth|escape}" /></td>
+	<td><input type="text" name="wiki_3d_navigation_depth" value="{$wiki_3d_navigation_depth|escape}" size="1" /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Feed animation interval (milisecs){/tr}: </td>
+	<td><input type="text" name="wiki_3d_feed_animation_interval" value="{$wiki_3d_feed_animation_interval|escape}" size="4" /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Existing page node color{/tr}: </td>
+	<td><input type="text" name="wiki_3d_existing_page_color" value="{$wiki_3d_existing_page_color|escape}" size="7" /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Missing page node color{/tr}: </td>
+	<td><input type="text" name="wiki_3d_missing_page_color" value="{$wiki_3d_missing_page_color|escape}" size="7" /></td>
       </tr>
       <tr>
         <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change preferences{/tr}" /></td>

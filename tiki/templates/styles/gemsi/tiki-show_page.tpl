@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.3 2003-12-30 18:25:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.4 2004-05-03 04:21:09 lfagundes Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
@@ -98,6 +98,10 @@
 {/if}
 {/if}
 	
+{if $wiki_feature_3d eq 'y'}
+<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
+{/if}
+
 {if $feature_backlinks eq 'y' and $backlinks}
 <select name=page onchange="go(this)">
 <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>

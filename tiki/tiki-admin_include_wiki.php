@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.22 2004-05-02 19:49:24 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.23 2004-05-03 04:21:08 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -610,6 +610,21 @@ if (isset($_REQUEST["wikiset3d"])) {
 	if (isset($_REQUEST["wiki_3d_navigation_depth"])) {
 		$tikilib->set_preference("wiki_3d_navigation_depth", $_REQUEST["wiki_3d_navigation_depth"]);
 		$smarty->assign('wiki_3d_navigation_depth', $_REQUEST["wiki_3d_navigation_depth"]);
+	}
+
+	if (isset($_REQUEST["wiki_3d_feed_animation_interval"])) {
+		$tikilib->set_preference("wiki_3d_feed_animation_interval", $_REQUEST["wiki_3d_feed_animation_interval"]);
+		$smarty->assign('wiki_3d_feed_animation_interval', $_REQUEST["wiki_3d_feed_animation_interval"]);
+	}
+
+	if (isset($_REQUEST["wiki_3d_existing_page_color"])) {
+		$tikilib->set_preference("wiki_3d_existing_page_color", $_REQUEST["wiki_3d_existing_page_color"]);
+		$smarty->assign('wiki_3d_existing_page_color', $_REQUEST["wiki_3d_existing_page_color"]);
+	}
+
+	if (isset($_REQUEST["wiki_3d_missing_page_color"])) {
+		$tikilib->set_preference("wiki_3d_missing_page_color", $_REQUEST["wiki_3d_missing_page_color"]);
+		$smarty->assign('wiki_3d_missing_page_color', $_REQUEST["wiki_3d_missing_page_color"]);
 	}
 }
 
