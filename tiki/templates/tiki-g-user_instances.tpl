@@ -141,7 +141,7 @@
 	  {*exception*}
       {if $tiki_p_exception_instance eq 'y'}
 	  {if $items[ix].status ne 'aborted' and $items[ix].status ne 'exception' and $items[ix].user eq $user}
-	  <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
+	  <td><a href="tiki-g-user_instances.php?exception=1&amp;iid={$items[ix].instanceId}&amp;aid={$items[ix].activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
 	  {/if}
       {/if}
 	  {if $items[ix].isAutoRouted eq 'n' and $items[ix].actstatus eq 'completed'}
