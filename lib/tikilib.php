@@ -2759,6 +2759,17 @@ class TikiLib {
     $data = $new_data;
 
 
+    //Extract [link] sections almost before anything
+    $noparsedlinks=Array();
+    preg_match_all("/\[([^\]]*)\]/",$data,$noparseurl);
+    foreach(array_unique($noparseurl[1]) as $np) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$np;
+      $noparsedlinks[]=$aux;
+      $data=str_replace("$np",$key,$data);
+    }
+
 	//Note \x characters are automatically escaped
 	//$data = preg_replace("/\\./","$1",$data);
 
@@ -3033,7 +3044,6 @@ class TikiLib {
     }
 
 
-
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
@@ -3101,8 +3111,14 @@ class TikiLib {
      
     }
 
-    // Replace ))Words((
-    $data = preg_replace("/\(\(([^\)]+)\)\)/","$1",$data);
+    // reinsert hash-replaced links into page
+    foreach($noparsedlinks as $np) {
+      $data = str_replace($np["key"],$np["data"],$data);
+    }
+
+      // TODO: I think this is 1. just wrong and 2. not needed here? remove it?
+      // Replace ))Words((
+      $data = preg_replace("/\(\(([^\)]+)\)\)/","$1",$data);
 
     // Images
     preg_match_all("/(\{img [^\}]+})/",$data,$pages);
@@ -3142,7 +3158,6 @@ class TikiLib {
       }
       $data = str_replace($page_parse,$repl,$data);
     }
-
 
     $links = $this->get_links($data);
     
