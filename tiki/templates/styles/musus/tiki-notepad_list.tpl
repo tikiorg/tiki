@@ -43,7 +43,7 @@
 </tr>
 </table>
 <form action="tiki-notepad_list.php" method="post">
-<table class="normal">
+<table>
 <tr>
 <td style="text-align:center;" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
@@ -56,18 +56,18 @@
 <td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
-(<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{tr}save{/tr}</a>)</td>
+<td class="{cycle advance=false}"><a href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
+(<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}">{tr}save{/tr}</a>)</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;"  class="{cycle}">{$channels[user].size|kbsize}</td>
 </tr>
 {sectionelse}
 <tr>
-	<td class="formcolor" colspan="4">{tr}No notes yet{/tr}</td>
+	<td colspan="4">{tr}No notes yet{/tr}</td>
 </tr>
 {/section}
 <tr>
-	<td class="formcolor" colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
+	<td colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
 </tr>
 </table>
 </form>
@@ -94,14 +94,14 @@
 
 <h3>{tr}Upload file{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
-<table class="normal">
+<table>
 <!--
 <tr>
-  <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
+  <td>{tr}Name{/tr}:</td><td><input type="text" name="name" /></td>
 </tr>
 -->
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td>{tr}Upload file{/tr}:</td><td><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
 </tr>
 </table>
 </form>

@@ -2,10 +2,10 @@
 <form action="tiki-rename_page.php" method="post">
 <input type="hidden"  name="oldpage" value="{$page|escape}" />
 <input type="hidden"  name="page" value="{$page|escape}" />
-<table class="normal">
+<table>
 <tr>
-  <td class='formcolor'>{tr}New name{/tr}:</td>
-  <td class='formcolor'>
+  <td>{tr}New name{/tr}:</td>
+  <td>
     <input type='text' name='newpage' value='{$page|escape}'/>
     <input type="submit" name="rename" value='{tr}rename{/tr}' />
   </td>

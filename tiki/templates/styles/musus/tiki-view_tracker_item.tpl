@@ -96,17 +96,17 @@
   {if $tiki_p_admin_trackers eq 'y'}
   [
   <a
-    class="link"
+   
     href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}"
     title="{tr}Edit{/tr}">
     <img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" />
   </a>
   |
   <a
-    class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
+    href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}"
     onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this comment?{/tr}')"
     title="{tr}Click here to delete this comment{/tr}">
-    <img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" />
+    <img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" />
   </a>
   ]
   {/if}
@@ -171,7 +171,7 @@
           {$atts[ix].filename|iconify}
           <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
           {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-          <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+          <a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
           {/if}
         </td>
         <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>

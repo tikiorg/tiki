@@ -18,22 +18,22 @@
 {else}
 <form action="messu-compose.php" method="post">
 <table>
-	<tr class="cell">
+	<tr>
 		<td><label for="mess-composeto">{tr}To{/tr}:</label></td>
 		<td>
 			<input type="text" name="to" id="mess-composeto" value="{$to|escape}" /> 
 			<input type="submit" name="send" value="{tr}send{/tr}" />
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="mess-composecc">{tr}CC{/tr}:</label></td>
 		<td><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="mess-composebcc">{tr}BCC{/tr}:</label></td>
 		<td><input type="text" name="bcc" id="mess-composebcc" value="{$bcc|escape}" /></td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="mess-prio">{tr}Priority{/tr}:</label></td>
 		<td>
 			<select name="priority" id="mess-prio">
@@ -45,14 +45,14 @@
 			</select>
 		</td>
 	</tr>
-	<tr class="cell">
+	<tr>
 		<td><label for="mess-subj">{tr}Subject{/tr}:</label></td>
 		<td><input type="text" name="subject" id="mess-subj" value="{$subject|escape}" size="80" maxlength="255"/></td>
 	</tr>
 </table>
 <br />
 <table>
-	<tr class="cell">
+	<tr>
 		<td style="text-align: center;"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
 	</tr>
 </table>

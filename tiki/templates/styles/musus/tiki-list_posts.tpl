@@ -31,7 +31,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'postId_desc'}postId_asc{else}postId_desc{/if}">{tr}Id{/tr}</a></td>
 <td class="heading">{tr}Blog Title{/tr}</td>
@@ -49,8 +49,8 @@
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="odd">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
+<a href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
+<a href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
@@ -59,8 +59,8 @@
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
 <td class="even">
-<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
-<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
+<a href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{tr}Remove{/tr}</a>
+<a href="tiki-blog_post.php?postId={$listpages[changes].postId}">{tr}Edit{/tr}</a>
 </td>
 {/if}
 </tr>

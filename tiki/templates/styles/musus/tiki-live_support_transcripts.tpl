@@ -1,5 +1,5 @@
 <a href="tiki-live_support_transcripts.php" class="pagetitle">{tr}Support chat transcripts{/tr}</a><br /><br />
-<a class="link" href="tiki-live_support_admin.php">{tr}back to admin{/tr}</a>
+<a href="tiki-live_support_admin.php">{tr}back to admin{/tr}</a>
 <h2>{tr}Support requests{/tr}</h2>
 <form method="get" action="tiki-live_support_transcripts.php">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
@@ -33,7 +33,7 @@
 </tr>
 </table>
 </form>
-<table class="normal">
+<table>
 <tr>
 <td  class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}user{/tr}</a></td>
@@ -48,7 +48,7 @@
 <td class="{cycle advance=false}">{$items[ix].tiki_user}</td>
 <td class="{cycle advance=false}">{$items[ix].reason}</td>
 <td class="{cycle advance=false}">{$items[ix].operator}</td>
-<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}</a></td>
+<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}</a></td>
 </tr>
 {/section}
 </table>
@@ -75,7 +75,7 @@
 
 {if $smarty.request.view}
 <h3>{tr}Transcript{/tr}</h3>
-<table class="normal">
+<table>
 {section name=ix loop=$events}
 <tr>
 	<td  class="odd">

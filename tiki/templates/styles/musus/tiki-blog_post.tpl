@@ -69,7 +69,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 		{section name=ix loop=$post_images}
 		<tr>
 			<td>
-				<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
+				<a href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
 			</td>
 			<td>
 				<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br />

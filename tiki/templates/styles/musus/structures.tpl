@@ -1,5 +1,5 @@
 {if count($showstructs) ne 0}
-<tr class="cell">
+<tr>
 	<td>{tr}Structures:{/tr}</td>
 	<td>
   [ <a href="javascript:show('showstructs');">{tr}show structures{/tr}</a>

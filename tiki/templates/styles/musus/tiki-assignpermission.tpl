@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-assignpermission.tpl,v 1.2 2004-01-13 19:33:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-assignpermission.tpl,v 1.3 2004-01-17 01:10:25 musus Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 <a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
@@ -16,7 +16,7 @@
 <tr><td>{tr}Desc{/tr}:</td><td>{$group_info.groupDesc}</td></tr>
 <tr><td>{tr}Permissions{/tr}:</td><td>
 {section name=grp loop=$group_info.perms}
-{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br />
+{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br />
 {/section}
 </td></tr>
 </table>

@@ -29,28 +29,28 @@
 <a class="linkbut" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>
 <h2>{tr}Assign themes to sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table class="normal">
+<table>
 <tr>
-  <td class="formcolor">{tr}Section{/tr}</td>
-  <td class="formcolor">{tr}Theme{/tr}</td>
-  <td class="formcolor">&nbsp;</td>
+  <td>{tr}Section{/tr}</td>
+  <td>{tr}Theme{/tr}</td>
+  <td>&nbsp;</td>
 </tr>
 <tr>
-  <td class="formcolor">
+  <td>
     <select name="section">
       {section name=ix loop=$sections}
       <option value="{$sections[ix]|escape}">{$sections[ix]}</option>
       {/section}
     </select>
   </td>
-  <td class="formcolor">
+  <td>
     <select name="theme">
       {section name=ix loop=$styles}
       <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
-  <td class="formcolor">
+  <td>
     <input type="submit" name="assign" value="{tr}assign{/tr}" />
   </td>
 </tr>
@@ -59,7 +59,7 @@
 
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}section{/tr}</a></td>

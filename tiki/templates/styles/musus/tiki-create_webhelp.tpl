@@ -3,27 +3,27 @@
 <br /><br />
 
 {if  $generated eq 'y'}
-<a class="link" href="whelp/{$dir}/index.html">{tr}You can browse the generated WebHelp here{/tr}</a><br /><br />
+<a href="whelp/{$dir}/index.html">{tr}You can browse the generated WebHelp here{/tr}</a><br /><br />
 {/if}
 <form method="post" action="tiki-create_webhelp.php">
-<table class="normal">
+<table>
   <tr>
-  	<td class="formcolor">{tr}Structure{/tr}</td>
-  	<td class="formcolor">{$struct_info.pageName}</td>
+  	<td>{tr}Structure{/tr}</td>
+  	<td>{$struct_info.pageName}</td>
   </tr>
   <input type="hidden" name="name" value="{$struct_info.pageName}" />
   <input type="hidden" name="struct" value="{$struct_info.page_ref_id}" />
   <tr>
-  	<td class="formcolor">{tr}Directory{/tr}</td>
-  	<td class="formcolor"><input type="text" name="dir" value="{$struct_info.pageName}" /></td>
+  	<td>{tr}Directory{/tr}</td>
+  	<td><input type="text" name="dir" value="{$struct_info.pageName}" /></td>
   </tr>
   <tr>
-  	<td class="formcolor">{tr}Top page{/tr}</td>
-  	<td class="formcolor"><input type="text" name="top" value="{$struct_info.pageName}" /></td>
+  	<td>{tr}Top page{/tr}</td>
+  	<td><input type="text" name="top" value="{$struct_info.pageName}" /></td>
   </tr>
   <tr>
-  	<td class="formcolor">&nbsp;</td>
-  	<td class="formcolor"><input type="submit" name="create" value="{tr}Create{/tr}" /></td>
+  	<td>&nbsp;</td>
+  	<td><input type="submit" name="create" value="{tr}Create{/tr}" /></td>
   </tr>
 </table>  
 </form>

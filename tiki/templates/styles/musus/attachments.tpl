@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.4 2004-01-13 18:47:56 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/attachments.tpl,v 1.5 2004-01-17 01:11:54 musus Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -57,7 +57,7 @@ title="{tr}Click here to delete this attachment{/tr}"><img alt="{tr}Remove{/tr}"
 
 {if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
-<table class="normal">
+<table>
 <tr>
  <td>
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />

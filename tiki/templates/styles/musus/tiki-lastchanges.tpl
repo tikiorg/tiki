@@ -30,7 +30,7 @@
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}
 <div align="left">
-<table class="normal">
+<table>
 <tr>
 <td class="heading" bgcolor="#bbbbbb"><a class="tableheading" href="tiki-lastchanges.php?days={$days}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Date{/tr}</a></td>
 <td class="heading" bgcolor="#bbbbbb"><a class="tableheading" href="tiki-lastchanges.php?days={$days}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
@@ -43,16 +43,16 @@
 {section name=changes loop=$lastchanges}
 <tr>
 <td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="{cycle advance=false}">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"...":true}</a> (<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}">{tr}hist{/tr}</a>)
+<td class="{cycle advance=false}">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"...":true}</a> (<a href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}">{tr}hist{/tr}</a>)
 
-&nbsp;<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}"
+&nbsp;<a href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}"
  title="{tr}view{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
-<a class="link" href="tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}" title="{tr}rollback{/tr}">b</a>&nbsp;
+<a href="tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}" title="{tr}rollback{/tr}">b</a>&nbsp;
 {/if}
-<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version}" title="{tr}compare{/tr}">c</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}" title="{tr}diff{/tr}">d</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}" title="{tr}source{/tr}">s</a>
+<a href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff={$lastchanges[changes].version}" title="{tr}compare{/tr}">c</a>&nbsp;
+<a href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;diff2={$lastchanges[changes].version}" title="{tr}diff{/tr}">d</a>&nbsp;
+<a href="tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}" title="{tr}source{/tr}">s</a>
 
 
 </td>

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-pagepermissions.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-pagepermissions.tpl,v 1.3 2004-01-17 01:22:25 musus Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: {$page}</h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
-<table class="normal">
+<table>
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
 {cycle print=false values="even,odd"}
 {section  name=pg loop=$page_perms}
@@ -10,8 +10,8 @@
   <td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
   <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
   <td class="{cycle}">
-    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this page{/tr}</a>)
-    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
+    (<a href="tiki-pagepermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this page{/tr}</a>)
+    (<a href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
@@ -46,5 +46,5 @@
 </form>
 <h3>{tr}Notifications{/tr}:</h3>
 {section name=ix loop=$emails}
-{$emails[ix]} (<a class="link" href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br />
+{$emails[ix]} (<a href="tiki-pagepermissions.php?page={$page}&amp;removeemail={$emails[ix]}">x</a>)<br />
 {/section}

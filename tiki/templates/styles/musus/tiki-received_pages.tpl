@@ -34,13 +34,13 @@
 <h2>{tr}Edit received page{/tr}</h2>
 <form action="tiki-received_pages.php" method="post">
 <input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="pageName" value="{$pageName|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="10" cols="60">{$data|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor">
+<table>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="pageName" value="{$pageName|escape}" /></td></tr>
+<tr><td>{tr}Data{/tr}:</td><td><textarea name="data" rows="10" cols="60">{$data|escape}</textarea></td></tr>
+<tr><td>{tr}Comment{/tr}:</td><td>
 <input type="text" name="comment" value="{$comment|escape}" />
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -58,7 +58,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}name{/tr}</a></td>
@@ -82,10 +82,10 @@
 <td class="{cycle advance=false}">{$channels[user].receivedFromSite}</td>
 <td class="{cycle advance=false}">{$channels[user].receivedFromUser}</td>
 <td class="{cycle advance=false}">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='img/icons2/icn_view.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='img/icons2/post.gif' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' /></a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
+   <a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
+   <a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='img/icons2/icn_view.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+   <a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='img/icons2/post.gif' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' /></a>
+   <a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/section}

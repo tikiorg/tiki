@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-view_forum.tpl,v 1.3 2004-01-16 19:34:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-view_forum.tpl,v 1.4 2004-01-17 01:10:25 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -108,8 +108,8 @@ a moderator approves it.{/tr}</small>
     </tr>      
     {if $forum_info.forum_use_password ne 'n'}
     <tr>
-    	<td class='formcolor'>{tr}Password{/tr}</td>
-    	<td class='formcolor'>
+    	<td>{tr}Password{/tr}</td>
+    	<td>
     		<input type="password" name="password" />
     	</td>
     </tr>

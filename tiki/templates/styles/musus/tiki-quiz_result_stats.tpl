@@ -4,7 +4,7 @@
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
-<table class="normal">
+<table>
 <tr> 
   <td colspan="2" class="heading">{tr}Quiz stats{/tr}</td>
 </tr>
@@ -34,7 +34,7 @@ Answer:<br />
 <div class="quizanswer">{$result.answer}</div>
 <br />
 <h2>{tr}User answers{/tr}</h2>
-  <table class="normal">
+  <table>
   <tr>
    <td  class="heading">{tr}Question{/tr}</td>
    <td  class="heading">{tr}Answer{/tr}</td>

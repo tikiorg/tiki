@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-orphan_pages.tpl,v 1.2 2004-01-16 19:34:01 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-orphan_pages.tpl,v 1.3 2004-01-17 01:22:25 musus Exp $ *}
 
 <a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a><br /><br />
 <table class="findtable">
@@ -13,7 +13,7 @@
 </tr>
 </table>
 <div align="center">
-<table class="normal">
+<table>
 <tr>
 {if $wiki_list_name eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
@@ -57,9 +57,9 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $wiki_list_name eq 'y'}
-	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
+	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
 	{if $tiki_p_edit eq 'y'}
-	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+	<br />(<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
 	{/if}
 	</td>
 {/if}
@@ -93,7 +93,7 @@
 {/if}
 {if $wiki_list_versions eq 'y'}
 	{if $feature_history eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].versions}</td>
 	{/if}
@@ -103,7 +103,7 @@
 {/if}
 {if $wiki_list_backlinks eq 'y'}
 	{if $feature_backlinks eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].backlinks}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].backlinks}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].backlinks}</td>
 	{/if}

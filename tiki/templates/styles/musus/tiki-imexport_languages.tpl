@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a><br /><br />
-[<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
-|<a href="tiki-inexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
+[<a href="tiki-edit_languages.php">{tr}Edit and create Languages{/tr}</a>
+|<a href="tiki-inexport_languages.php">{tr}Im- Export Languages{/tr}</a>]
 
 <table >
 <tr>
@@ -12,7 +12,7 @@
   <form action="tiki-imexport_languages.php" method="post">
   <table>
   <tr><td align="center" colspan="2">Import</td></tr>
-  <tr><td  class="form">{tr}Select the language to Import{/tr}:</td><td>
+  <tr><td >{tr}Select the language to Import{/tr}:</td><td>
         <select name="imp_language">
         {section name=ix loop=$languages_files}
         <option value="{$languages_files[ix].value|escape}"
@@ -30,7 +30,7 @@
   <div class="simplebox">
   <table>
   <tr><td align="center" colspan="2">{tr}Export{/tr}</td></tr>
-  <tr><td  class="form">{tr}Select the language to Export{/tr}:</td><td>
+  <tr><td >{tr}Select the language to Export{/tr}:</td><td>
         <select name="exp_language">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"

@@ -116,7 +116,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">&nbsp;</a></td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
@@ -135,7 +135,7 @@
 
 
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}&amp;activityId={$items[ix].activityId}">{$items[ix].name}</a>
+	  <a href="tiki-g-admin_activities.php?pid={$items[ix].pId}&amp;activityId={$items[ix].activityId}">{$items[ix].name}</a>
 	  {if $items[ix].type eq 'standalone'}
 	  <a href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
 	  {/if}

@@ -32,7 +32,7 @@
 </form>
 </div>
 <div class="simplebox">
-<a class="link" href="tiki-admin.php?page=gal&amp;rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
+<a href="tiki-admin.php?page=gal&amp;rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
   <div class="simplebox">
 	{tr}Gallery listing configuration{/tr}

@@ -13,7 +13,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 {if $art_list_title eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
@@ -39,7 +39,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $art_list_title eq 'y'}
-	<td class="{cycle advance=false}"><a class="link" title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:20:"...":true}</a>
+	<td class="{cycle advance=false}"><a title="{$listpages[changes].title}" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{$listpages[changes].title|truncate:20:"...":true}</a>
 	{*if $listpages[changes].type eq 'Review'}(r){/if*}
 	</td>
 {/if}
@@ -60,13 +60,13 @@
 {/if}
 <td class="{cycle}" >
 	{if $tiki_p_edit_submission eq 'y' or $listpages[changes].author eq $user}
-		<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+		<a href="tiki-edit_submission.php?subId={$listpages[changes].subId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 	{/if}
 	{if $tiki_p_remove_submission eq 'y'}
-		<a class="link" href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
+		<a href="tiki-list_submissions.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].subId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
 	{/if}
 	{if $tiki_p_approve_submission eq 'y'}
-		<a class="link" href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' border='0' alt='{tr}Approve{/tr}' title='{tr}Approve{/tr}' /></a>
+		<a href="tiki-list_submissions.php?approve={$listpages[changes].subId}"><img src='img/icons2/post.gif' border='0' alt='{tr}Approve{/tr}' title='{tr}Approve{/tr}' /></a>
 	{/if}
 </td>
 </tr>

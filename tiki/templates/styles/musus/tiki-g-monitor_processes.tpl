@@ -89,7 +89,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
 <td  class="heading" >{tr}Activs{/tr}</td>
@@ -102,10 +102,10 @@
 {section name=ix loop=$items}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_processes.php?pid={$items[ix].pId}">{$items[ix].name} {$items[ix].version}</a>
+	  <a href="tiki-g-admin_processes.php?pid={$items[ix].pId}">{$items[ix].name} {$items[ix].version}</a>
 	</td>
 	<td class="{cycle advance=false}" style="text-align:right;">
-		<a href="tiki-g-monitor_activities.php?filter_process={$items[ix].pId}" class="link">{$items[ix].activities}</a>
+		<a href="tiki-g-monitor_activities.php?filter_process={$items[ix].pId}">{$items[ix].activities}</a>
 	</td>
 
 

@@ -20,7 +20,7 @@
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="normal">
+<table>
 <tr>
 {*  at the moment, the only working option to use the checkboxes for is deleting pages.
     so for now the checkboxes are visible iff $tiki_p_remove is set. Other applications make 
@@ -79,9 +79,9 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
 {if $wiki_list_name eq 'y'}
-	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
+	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
 	{if $tiki_p_edit eq 'y'}
-	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+	<br />(<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
 	{/if}
 	</td>
 {/if}
@@ -115,7 +115,7 @@
 {/if}
 {if $wiki_list_versions eq 'y'}
 	{if $feature_history eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].versions}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].versions}</td>
 	{/if}
@@ -125,7 +125,7 @@
 {/if}
 {if $wiki_list_backlinks eq 'y'}
 	{if $feature_backlinks eq 'y'}
-	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].backlinks}</a></td>
+	<td style="text-align:right;" class="{cycle advance=false}"><a href="tiki-backlinks.php?page={$listpages[changes].pageName|escape:"url"}">{$listpages[changes].backlinks}</a></td>
 	{else}
 	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].backlinks}</td>
 	{/if}

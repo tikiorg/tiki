@@ -60,7 +60,7 @@
 <td>{$channels[user].cookieId}</td>
 <td>{$channels[user].cookie}</td>
 <td>
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
+   &nbsp;&nbsp;<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
 title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
@@ -71,7 +71,7 @@ title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src
 <td>{$channels[user].cookieId}</td>
 <td>{$channels[user].cookie}</td>
 <td>
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
+   &nbsp;&nbsp;<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
 title="{tr}Click here to delete this cookie{/tr}"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>

@@ -22,7 +22,7 @@
 <div class="tiki-content">
 <table >
 {section name=xi loop=$rankings[ix].data}
-<tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  class="form" align="right">{$rankings[ix].data[xi].hits}</td></tr>
+<tr><td align="left" >{$smarty.section.xi.index_next})</td><td  align="left"><a href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  align="right">{$rankings[ix].data[xi].hits}</td></tr>
 {/section}
 </table>
 </div>

@@ -18,15 +18,15 @@
 <h2>{tr}Create/edit dsn{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">
 <input type="hidden" name="dsnId" value="{$dsnId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}dsn{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<table>
+<tr><td>{tr}name{/tr}:</td><td><input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" /></td></tr>
+<tr><td>{tr}dsn{/tr}:</td><td><input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" /></td></tr>
+<tr><td >&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 
 <h2>{tr}dsn{/tr}</h2>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'dsn_desc'}dsn_asc{else}dsn_desc{/if}">{tr}dsn{/tr}</a></td>
@@ -38,10 +38,10 @@
 <td class="{cycle advance=false}">{$channels[user].name}</td>
 <td class="{cycle advance=false}">{$channels[user].dsn}</td>
 <td class="{cycle}">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId} 
+   &nbsp;&nbsp;<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId} 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this dsn?{/tr}')" 
 title="Click here to delete this dsn"><img alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   <a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/section}

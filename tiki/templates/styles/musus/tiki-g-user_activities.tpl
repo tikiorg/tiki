@@ -72,7 +72,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <input type="hidden" name="where" value="{$where|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="normal">
+<table>
 <tr>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</td>
@@ -87,7 +87,7 @@
 	<td class="{cycle advance=false}" style="text-align:left;">
 		{$items[ix].type|act_icon:"$items[ix].isInteractive"} 
 		{if $items[ix].instances > 0}
-		<a class="link" href="tiki-g-user_instances.php?filter_process={$items[ix].pId}&amp;filter_activity={$items[ix].activityId}">{$items[ix].name}</a>
+		<a href="tiki-g-user_instances.php?filter_process={$items[ix].pId}&amp;filter_activity={$items[ix].activityId}">{$items[ix].name}</a>
 		{else}
 		{$items[ix].name}
 		{/if}

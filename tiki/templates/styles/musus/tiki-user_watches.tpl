@@ -14,7 +14,7 @@
 </form>
 
 <form action="tiki-user_watches.php" method="post">
-<table class="normal">
+<table>
 <tr>
 <td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}event{/tr}</td>
@@ -27,7 +27,7 @@
 <input type="checkbox" name="watch[{$watches[ix].hash}]" />
 </td>
 <td class="{cycle advance=false}">{$watches[ix].event}</td>
-<td class="{cycle}"><a class="link" href="{$watches[ix].url}">{$watches[ix].type}:{$watches[ix].title}</a></td>
+<td class="{cycle}"><a href="{$watches[ix].url}">{$watches[ix].type}:{$watches[ix].title}</a></td>
 </tr>
 {/section}
 </table>

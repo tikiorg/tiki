@@ -5,7 +5,7 @@
 
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
-<table class="normal">
+<table>
   <tr>
     <td class="heading"><a class="tableheading" href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
     <td class="heading"><a class="tableheading" href="tiki-directory_ranking.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
@@ -15,7 +15,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
+<td class="{cycle advance=false}"><a href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>

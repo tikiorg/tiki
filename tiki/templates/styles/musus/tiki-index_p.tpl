@@ -95,7 +95,7 @@
 </div>
 
 
-<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a class="link" href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></p>
+<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} <a href="tiki-user_information.php?view_user={$lastUser}">{$lastUser}</a></p>
 
       
       </div>
