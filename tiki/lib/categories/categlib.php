@@ -1,13 +1,13 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.16 2003-10-26 14:12:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.17 2003-10-28 22:12:59 ohertel Exp $
  *
  * \brief Categiries support class
  *
  */
 class CategLib extends TikiLib {
 	function CategLib($db) {
-		# this is probably uneeded now
+		# this is probably unneeded now
 		if (!$db) {
 			die ("Invalid db object passed to CategLib constructor");
 		}
@@ -21,10 +21,9 @@ class CategLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$bindvals=array($findesc,$findesc);
-
 			$mid = " where (`name` like ? or `description` like ?)";
 		} else {
-		        $bindvals=array();
+      $bindvals=array();
 			$mid = "";
 		}
 
@@ -312,7 +311,7 @@ class CategLib extends TikiLib {
 	function categorize_page($pageName, $categId) {
 		// Check if we already have this object in the tiki_categorized_objects page
 
-		$catObjectId = $this->is_categorized('wiki page', $pageName_sl);
+		$catObjectId = $this->is_categorized('wiki page', $pageName);
 
 		if (!$catObjectId) {
 			// The page is not cateorized
@@ -513,7 +512,7 @@ class CategLib extends TikiLib {
 		return $ret;
 	}
 
-	// get categories related to a link. For Whats relates module.
+	// get categories related to a link. For Whats related module.
 	function get_link_categories($link) {
 		$ret=array();
 		$parsed=parse_url($link);
