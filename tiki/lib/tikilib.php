@@ -2658,8 +2658,7 @@ function get_user_email($user) {
 }
 
 function get_user_info($user) {
-    $query = "select `login` , `email`, `lastLogin`
-	from `tiki_users` where `user`=?";
+    $query = "select `user` , `email`, `lastLogin` from `tiki_users` where `user`=?";
 
     $result = $this->query($query, array( $user ));
     $res = $result->fetchRow();
