@@ -102,10 +102,11 @@ $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
 
-if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	print "
 <html><body>
-<p>Unable to login to the MySQL database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'<br />
+<h2><font color='red'>TikiWiki is not properly set up:</font></h1>
+<div>Unable to connect to the database !</div>
 <a href='tiki-install.php'>Go here to begin the installation process</a>, if you haven't done so already.</p>
 </body></html>
 ";
