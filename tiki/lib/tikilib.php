@@ -1748,9 +1748,9 @@ class TikiLib {
 
 	    // store name of category
 	    if ($count != 0) {
-		$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+				$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
 	    } else {
-		$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+				$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
 	    }
 
 	    // keep track of how many categories there are for split mode off
@@ -1765,12 +1765,11 @@ class TikiLib {
 	    $objectcat = $categlib->list_category_objects($id, $offset, $maxRecords, $sort, $find);
 
 	    foreach ($objectcat["data"] as $obj) {
-		$type = $obj["type"];
+				$type = $obj["type"];
 
-		if (!($this->in_multi_array($obj['name'], $listcat))) // TODO: check for name+type
-		{
-		    $listcat[$typetitles["$type"]][] = $obj;
-		}
+				if (!($this->in_multi_array($obj['name'], $listcat)) and $typetitles["$type"]) {
+					$listcat["{$typetitles["$type"]}"][] = $obj;
+				}
 	    }
 
 	    // split mode: appending onto $out each time
@@ -5713,12 +5712,12 @@ function httpScheme() {
 
 function httpPrefix() {
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
-	$rv = 'https://' . $_SERVER['SERVER_NAME'];
+	$rv = 'https://' . $_SERVER['HTTP_HOST'];
 
 	if ($_SERVER['SERVER_PORT'] != 443)
 	    $rv .= ':' . $_SERVER['SERVER_PORT'];
     } else {
-	$rv = 'http://' . $_SERVER['SERVER_NAME'];
+	$rv = 'http://' . $_SERVER['HTTP_HOST'];
 
 	if ($_SERVER['SERVER_PORT'] != 80)
 	    $rv .= ':' . $_SERVER['SERVER_PORT'];
