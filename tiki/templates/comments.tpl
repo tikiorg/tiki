@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.25 2003-10-25 14:04:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.26 2003-11-02 21:50:19 dgdaniels Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -12,8 +12,8 @@
     {if $comments_cant gt 0}
 
  
-  {* This section (comment) is only displayed *}
-  {*if a reply to it is being composed *}
+  {* This section (comment) is only displayed * }
+  {* if a reply to it is being composed * }
   {* The $parent_com is only set in this case *}
   {if $parent_com}
   <table class="normal">
@@ -234,7 +234,7 @@
       </td>
     </tr>
     <tr>
-      <td class="formcolor">{tr}Title{/tr}</td>
+      <td class="formcolor">{tr}Title{/tr} <span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span></td>
       <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
     {if $feature_smileys eq 'y'}
@@ -252,10 +252,14 @@
   <br />
   <table class="normal" id="commentshelp">
   <tr><td class="even">
-  <b>{tr}Posting comments{/tr}:</b><br /><br />
+  <b>{tr}Posting comments{/tr}:</b>
+  <br />
+  <br />
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
   {tr}HTML tags are not allowed inside comments{/tr}<br />
-  </td></tr></table>
+  </td>
+  </tr>
+  </table>
   <br />
 
   {/if}
