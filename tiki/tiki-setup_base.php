@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+
 require_once("setup.php");
 require_once("lib/tikilib.php");
 $tikilib = new TikiLib($dbTiki);

@@ -1,5 +1,5 @@
-<?
-// show_image.php
+<?php # $Header: /cvsroot/tikiwiki/tiki/received_article_image.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
 if(!isset($_REQUEST["id"])) {

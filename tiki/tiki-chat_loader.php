@@ -73,10 +73,8 @@ if(count($messages)>0) {
 
 ?>
 </head>
-<?
+<?php
 print('<body onLoad="window.setInterval(\'location.reload()\','.$refresh.');">');
-?>
-<?
 if(isset($com)) {
 //print_r($messages);
 //print(htmlentities($com));

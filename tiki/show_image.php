@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+
 include_once("tiki-setup_base.php");
 // show_image.php
 // application to display an image from the database with 

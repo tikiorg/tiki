@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.6 2003-01-04 19:34:15 rossta Exp $
+
 include_once('db/tiki-db.php');
 include_once('lib/tikilib.php');
 include_once('lib/userslib.php');

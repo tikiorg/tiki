@@ -1,5 +1,4 @@
-<?
-
+<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.2 2003-01-04 19:34:15 rossta Exp $
 
 if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])) {
   $size = $_FILES['filepath']['size'];

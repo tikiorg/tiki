@@ -1,4 +1,5 @@
-<?
+<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.9 2003-01-04 19:34:16 rossta Exp $
+
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
 require_once('lib/userslib.php');
