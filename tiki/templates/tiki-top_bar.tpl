@@ -1,4 +1,4 @@
-{tr}This is{/tr} Tiki v1.9 -Sirius- &#169; 2002&#8211;2004 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>
+{tr}This is{/tr} Tiki v1.9 pre-release (CVS) -Sirius- &#169; 2002&#8211;2004 {tr}by the{/tr} <a href="http://tikiwiki.org" title="tikiwiki.org">{tr}Tiki community{/tr}</a>
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   <a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
 {else}

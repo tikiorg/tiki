@@ -1,5 +1,5 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+<h1>Tiki installer v{$tiki_version} pre-release (CVS) <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 <a href="tiki-install.php?restart=1" class="link">reload</a><br /><br />
 
