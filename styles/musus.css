@@ -396,8 +396,8 @@ TD.form {
 }
 
 /* The table */
-/* renaming the .normal class to .table */
-.table {
+/* renaming the .normal class to table */
+table {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: Black;
 	background-color: #EFEFEF;
@@ -441,6 +441,38 @@ TABLE.normalnoborder {
 	font-size:   11px;
 	font-weight:   bold;
 	text-decoration:   none;
+}
+
+.heading-right {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFA34F;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #006699;
+	height: 25px;
+	background-image: url(subsilver/cellpic3.gif);
+	padding-left: 2px;
+	padding-right: 5px;
+	text-decoration: none;
+	text-align: right;
+}
+
+.heading-right:active {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+	text-align: right;
+}
+
+.heading-right:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FF860D;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+	text-align: right;
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
@@ -1297,7 +1329,7 @@ div.articleheadingtext {
 }
 
 /* The body */
-div.articlebody {
+.articlebody {
 	background:    white;
 	border:   0px solid black;
 	padding-left:   0.8em;
@@ -1311,23 +1343,16 @@ div.articlebody {
 }
 
 /* The article title */
-span.titlea {
+.titlea {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   18px;
 	font-weight:   bold;
 }
 
 /* The author, date and number of reads */
-span.titleb {
+.titleb {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-}
-
-/* The trailer */
-span.trailer {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	font-weight:   bold;
 }
 
 .trailer {
@@ -1397,7 +1422,7 @@ a.listart:hover {
 }
 
 /* Columns for the articles listing */
-td.listarttitleodd {
+.listarttitleodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
@@ -1406,7 +1431,7 @@ td.listarttitleodd {
 	text-align:   left;
 }
 
-td.listarttitleeven {
+.listarttitleeven {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   Black;
@@ -1419,11 +1444,8 @@ a.artname {
 	font-weight:    bold;
 	font-size:   12px;
 	letter-spacing:   1px;
-	color:   #006699
-}
-
-a.artname {
 	text-decoration:    none;
+	color:   #006699
 }
 
 a.artname:hover {
@@ -1584,7 +1606,7 @@ a.artname:hover {
 }
 
 /* Post comment form */
-div.commentspost {
+.commentspost {
 	display:    inherit;
 	border:   1px solid blue;
 	margin-top:   10px;
@@ -1615,7 +1637,7 @@ TD.comform {
 }
 
 /* The toolbar where the ordering number of comments and find box are found */
-div.commentstoolbar {
+.commentstoolbar {
 	background:    #EFEFEF;
 	color:   black;
 	margin-bottom:   20px;
@@ -1625,7 +1647,7 @@ div.commentstoolbar {
 	padding-left:   2px;
 }
 /* The comment title */
-span.commentstitle {
+.commentstitle {
 	font-weight:    bold;
 	font-size:   12px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1633,14 +1655,14 @@ span.commentstitle {
 }
 
 /* The comment */
-div.commentscomment {
+.commentscomment {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	margin-bottom:   20px;
 	width:   98%;
 }
 /* The header for a comment */
-div.commentheader {
+.commentheader {
 	background:    #EFEFEF;
 	border:   0px solid blue;
 	font-size:   11px;
@@ -1649,7 +1671,7 @@ div.commentheader {
 }
 
 /* The text */
-div.commenttext {
+.commenttext {
 	font-size:    11px;
 	margin-left:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1657,21 +1679,21 @@ div.commenttext {
 }
 
 /* Links in comments */
-.commentslink {
+a.comments {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   #00639C;
 	text-decoration:   none;
 }
 
-.commentslink:active {
+a.comments:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   #00639C;
 	text-decoration:   none;
 }
 
-.commentslink:hover {
+a.comments:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   red;
@@ -2964,5 +2986,13 @@ a.tikihelp:hover {
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
-    display: none;
+	display: none;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
 }
