@@ -17,9 +17,6 @@
 
 <table class="normal">
 <tr>
-{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<th style="width:20px;">&nbsp;</th>
-{/if}
 {foreach key=jx item=ix from=$fields}
 {if $ix.type eq 'l'}
 <td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
