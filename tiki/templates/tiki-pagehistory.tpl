@@ -1,26 +1,26 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.19 2004-08-13 15:31:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.20 2004-08-17 16:33:31 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
-<h2>{tr}Version{/tr}: {$old.version}</h2>
-<div  class="wikitext">{$preview.data}</div>
+<h2>{tr}Version{/tr}: {$preview}</h2>
+<div  class="wikitext">{$previewd}</div>
 {/if}
 
 {if $source}
-<h2>{tr}Version{/tr}: {$old.version}</h2>
-<div  class="wikitext">{$sourcev}</div>
+<h2>{tr}Version{/tr}: {$source}</h2>
+<div  class="wikitext">{$sourced}</div>
 {/if}
 
 {if $diff_style}
-<h2>{if $new.version == $info.version}{tr}Comparing the version {$old.version} with the last version{/tr}{else}{tr}Comparing the version {$old.version} with the version {$new.version}{/tr}{/if}</h2>
+<h2>{if $new.version == $info.version}{tr}Comparing the version {$old.version} with the version {$new.version}{/tr}{/if}{if $new.version == $info.version} ({tr}current{/tr}){/if}</h2>
 <table class="normal diff">
 <tr>
-  <th colspan="2" align="center"><b>{tr}Version:{/tr}{$old.version}</b></th>
-  <th colspan="2" align="center"><b>{if $new.version == $info.version}{tr}Last version{/tr}{else}{tr}Version:{/tr}{$new.version}{/if}</b></th>
+  <th colspan="2" align="center"><b>{tr}Version:{/tr} {$old.version}</b></th>
+  <th colspan="2" align="center"><b>{tr}Version:{/tr} {$new.version}{if $new.version == $info.version} ({tr}current{/tr}){/if}</b></th>
 </tr>
 <tr>
-  <td colspan="2" align="center">{$old.user|userlink} - {$old.lastModif|tiki_short_datetime}</td>
-  <td colspan="2" align="center">{$new.user|userlink} - {$new.lastModif|tiki_short_datetime}</td>
+  <td colspan="2" align="center">{if $tiki_p_wiki_view_author ne 'n'}{$old.user|userlink} - {/if}{$old.lastModif|tiki_short_datetime}</td>
+  <td colspan="2" align="center">{if $tiki_p_wiki_view_author ne 'n'}{$new.user|userlink} - {/if}{$new.lastModif|tiki_short_datetime}</td>
 </tr>
 {if $old.comment || $new.comment}
 <tr>
@@ -49,7 +49,7 @@
 {/if}
 
 {if $diff_style eq 'sidediff' || $diff_style eq 'unidiff' || $diff_style eq 'minsidediff'}
-  {$diffdata}
+  {if $diffdata}{$diffdata}{else}<tr><td colspan="4" align="center">{tr}Versions are identical{/tr}</td></tr></table>{/if}
 {/if}
 <br />
 
@@ -71,10 +71,10 @@
 <td class="heading">{tr}Action{/tr}</td>
 <td class="heading" colspan="2">
 <select name="diff_style">
-	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+	<option value="minsidediff" {if $diff_style == "minsidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}All side-by-side diff{/tr}</option>
 	<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
 	<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
-	<option value="minsidediff" {if $diff_style == "minsidediff"}selected="selected"{/if}>{tr}Compact side-by-side diff{/tr}</option>
 </select><br /><input type="submit" name="compare" value="{tr}compare{/tr}" /><br />
 {tr}old ver - new ver{/tr}</td>
 </tr>
@@ -83,11 +83,12 @@
 <td class="odd">&nbsp;</td>
 {/if}
 <td class="odd">{$info.lastModif|tiki_short_datetime}</td>
-<td class="odd" align="center">{$info.version}</td>
-<td class="odd">{$info.user}</td>
+<td class="odd" align="center">{$info.version}<br />{tr}current{/tr}</td>
+{if $tiki_p_wiki_view_author ne 'n'}<td class="odd">{$info.user}</td>{/if}
 {if $feature_wiki_history_ip ne 'n'}<td class="odd">{$info.ip}</td>{/if}
 <td class="odd">{if $info.comment}{$info.comment}{else}&nbsp;{/if}</td>
-<td class="odd" align="center"><a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}current{/tr}</a></td>
+<td class="odd" align="center"><a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$info.version}" title="{tr}view{/tr}">v</a>&nbsp;{if $tiki_p_rollback eq 'y'}&nbsp;&nbsp;{/if}<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$info.version}" title="{tr}source{/tr}">s</a>
+</td>
 <td class="odd">&nbsp;</td>
 <td class="odd" align="center"><input type="radio" name="newver" value="0" title="Select a newer version for comparison" checked="checked" /></td>
 </tr>
@@ -99,7 +100,7 @@
 {/if}
 <td class="{cycle advance=false}">{$history[hist].lastModif|tiki_short_datetime}</td>
 <td class="{cycle advance=false}" align="center">{$history[hist].version}</td>
-<td class="{cycle advance=false}">{$history[hist].user}</td>
+{if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$history[hist].user}</td>{/if}
 {if $feature_wiki_history_ip ne 'n'}<td class="{cycle advance=false}">{$history[hist].ip}</td>{/if}
 <td class="{cycle advance=false}">{if $history[hist].comment}{$history[hist].comment}{else}&nbsp;{/if}</td>
 <td class="{cycle advance=false}" align="center"><a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}" title="{tr}view{/tr}">v</a>&nbsp;
@@ -116,7 +117,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="{if $feature_wiki_history_ip ne 'n'}9{else}8{/if}">
+<tr><td colspan="{if $feature_wiki_history_ip ne 'n'}{if $tiki_p_wiki_view_author ne 'n'}9{else}\{/if}{else}{if $tiki_p_wiki_view_author ne 'n'}8{else}7{/if}{/if}">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character.php,v 1.1 2004-08-11 18:34:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_character.php,v 1.2 2004-08-17 16:33:31 sylvieg Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -47,7 +47,7 @@ class Text_Diff_Renderer_character extends Text_Diff_Renderer {
 			$this->orig .= $line;
 			$this->final .= $line;
 	        }
-    	} elseif ($type == 'added' || $type == 'changed-added') {
+    	} elseif ($type == 'added' || $type == 'change-added') {
 	        $l = "";
 	        foreach ($lines as $line) {
 			$l .= $line;
@@ -88,7 +88,6 @@ class Text_Diff_Renderer_character extends Text_Diff_Renderer {
 
     function _changed($orig, $final)
     {
- //       $lines = diffChar($orig, $final);
         $this->_deleted($orig, TRUE);
         $this->_added($final, TRUE);
     }
