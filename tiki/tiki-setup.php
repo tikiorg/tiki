@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.258 2004-08-12 16:38:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.259 2004-08-12 22:31:23 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -431,7 +431,7 @@ $smarty->assign('feature_wiki_allowhtml ', $feature_wiki_allowhtml );
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);
 
-$helpurl = "http://tikiwiki.org/tiki-index.php?page=";
+$helpurl = "http://doc.tikiwiki.org/tiki-index.php?page=";
 $smarty->assign('helpurl', $helpurl);
 
 $wiki_feature_copyrights = 'n';
@@ -609,7 +609,10 @@ $feature_wiki_userpage = 'y';
 $smarty->assign('feature_wiki_userpage', $feature_wiki_userpage);
 $feature_wiki_userpage_prefix = 'UserPage';
 $smarty->assign('feature_wiki_userpage_prefix', $feature_wiki_userpage_prefix);
-
+$feature_score = 'n';
+$smarty->assign('feature_score', $feature_score);
+$user_list_order = 'score_desc';
+$smarty->assign('user_list_order', $user_list_order);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
@@ -1427,188 +1430,31 @@ if (!strstr($_SERVER["REQUEST_URI"], 'tiki-login')) {
     }
 }
 
-$smarty->assign('mnu_dirmenu', 'display:none;');
+setDisplayMenu("nlmenu");
+setDisplayMenu("chartmenu");
+setDisplayMenu("ephmenu");
+setDisplayMenu("mymenu");
+setDisplayMenu("wfmenu");
+setDisplayMenu("usrmenu");
+setDisplayMenu("friendsmenu");
+setDisplayMenu("wikimenu");
+setDisplayMenu("homeworkmenu");
+setDisplayMenu("srvmenu");
+setDisplayMenu("trkmenu");
+setDisplayMenu("jukeboxmenu");
+setDisplayMenu("quizmenu");
+setDisplayMenu("formenu");
+setDisplayMenu("dirmenu");
+setDisplayMenu("admmnu");
+setDisplayMenu("faqsmenu");
+setDisplayMenu("galmenu");
+setDisplayMenu("cmsmenu");
+setDisplayMenu("blogmenu");
+setDisplayMenu("filegalmenu");
+setDisplayMenu("mapsmenu");
+setDisplayMenu("layermenu");
+setDisplayMenu("shtmenu");
 
-if (isset($_SESSION['tiki_cookie_jar']["dirmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["dirmenu"] == 'o') {
-        $smarty->assign('mnu_dirmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_nlmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["nlmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["nlmenu"] == 'o') {
-        $smarty->assign('mnu_nlmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_chartmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["chartmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["chartmenu"] == 'o') {
-        $smarty->assign('mnu_chartmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_ephmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["ephmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["ephmenu"] == 'o') {
-        $smarty->assign('mnu_ephmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_mymenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["mymenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["mymenu"] == 'o') {
-        $smarty->assign('mnu_mymenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_workflow', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["wfmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["wfmenu"] == 'o') {
-        $smarty->assign('mnu_workflow', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_usrmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["usrmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["usrmenu"] == 'o') {
-        $smarty->assign('mnu_usrmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_friendsmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["friendsmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["friendsmenu"] == 'o') {
-        $smarty->assign('mnu_friendsmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_wikimenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["wikimenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["wikimenu"] == 'o') {
-        $smarty->assign('mnu_wikimenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_homeworkmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["homeworkmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["homeworkmenu"] == 'o') {
-        $smarty->assign('mnu_homeworkmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_srvmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["srvmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["srvmenu"] == 'o') {
-        $smarty->assign('mnu_srvmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_trkmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["trkmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["trkmenu"] == 'o') {
-        $smarty->assign('mnu_trkmenu', 'display:block;');
-    }
-}
-
-// Jukebox menu added 18-jan-04 damian aka damosoft
-$smarty->assign('mnu_jukeboxmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["jukeboxmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["jukeboxmenu"] == 'o') {
-        $smarty->assign('mnu_jukeboxmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_quizmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["quizmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["quizmenu"] == 'o') {
-        $smarty->assign('mnu_quizmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_formenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["formenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["formenu"] == 'o') {
-        $smarty->assign('mnu_formenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_admmnu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["admmnu"])) {
-    if ($_SESSION['tiki_cookie_jar']["admmnu"] == 'o') {
-        $smarty->assign('mnu_admmnu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_faqsmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["faqsmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["faqsmenu"] == 'o') {
-        $smarty->assign('mnu_faqsmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_galmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["galmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["galmenu"] == 'o') {
-        $smarty->assign('mnu_galmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_cmsmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["cmsmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["cmsmenu"] == 'o') {
-        $smarty->assign('mnu_cmsmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_blogmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["blogmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["blogmenu"] == 'o') {
-        $smarty->assign('mnu_blogmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_filegalmenu', 'display:none;');
-
-if (isset($_SESSION['tiki_cookie_jar']["filegalmenu"])) {
-    if ($_SESSION['tiki_cookie_jar']["filegalmenu"] == 'o') {
-        $smarty->assign('mnu_filegalmenu', 'display:block;');
-    }
-}
-
-$smarty->assign('mnu_mapsmenu','display:none;');
-if(isset($_SESSION['tiki_cookie_jar']["mapsmenu"])) {
-  if($_SESSION['tiki_cookie_jar']["mapsmenu"]=='o') {
-    $smarty->assign('mnu_mapsmenu','display:block;');
-  }
-}
-
-$smarty->assign('mnu_layermenu','display:none;');
-if(isset($_SESSION['tiki_cookie_jar']["layermenu"])) {
-  if($_SESSION['tiki_cookie_jar']["layermenu"]=='o') {
-      $smarty->assign('mnu_layermenu','display:block;');
-  }
-}
 
 if ($user && $feature_usermenu == 'y') {
     if (!isset($_SESSION['usermenu'])) {
@@ -1780,7 +1626,7 @@ if ($feature_referer_stats == 'y') {
 
 //Check for an update of dynamic vars
 if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
-    if(isset($_REQUEST['_dyn_update'])) { echo "****";
+    if(isset($_REQUEST['_dyn_update'])) { 
         foreach($_REQUEST as $name => $value) {
             if(substr($name,0,4)=='dyn_' and $name!='_dyn_update') {
                 $tikilib->update_dynamic_variable(substr($name,4),$_REQUEST[$name]);
@@ -1874,5 +1720,39 @@ if (is_file('.lastup') and is_readable('.lastup')) {
 	$lastup = file('.lastup');
 	$smarty->assign('lastup',$lastup[0]);
 }
-
+function getCookie($name, $section=null, $default=null) {
+	if (isset($feature_no_cookie) && $feature_no_cookie == 'y') {
+		if (isset($_SESSION['tiki_cookie_jar'])) {// if cookie jar doesn't work
+			if (isset($_SESSION['tiki_cookie_jar'][$name]))
+				return $_SESSION['tiki_cookie_jar'][$name];
+			else
+				return $default;
+		}
+	}
+	else if ($section){
+		if (isset($_COOKIE[$section])) {
+			if (preg_match("/@".$name."\:([^@;]*)/", $_COOKIE[$section], $matches))
+				return $matches[1];
+			else
+				return $default;
+		}
+		else
+			return $default;
+	}
+	else {
+		if (isset($_COOKIE[$name]))
+			return $_COOKIE[$name];
+		else
+			return $default;
+	}
+}
+function setDisplayMenu($name) {
+	global $smarty;
+	if (getCookie($name, "menu") == 'o') {
+		$smarty->assign('mnu_'.$name, 'display:block;');
+		$smarty->assign('icn_'.$name, 'o');
+}
+	else
+		$smarty->assign('mnu_'.$name, 'display:none;');
+}
 ?>

@@ -1486,6 +1486,10 @@ div.commenttext {
 	text-decoration:   underline;
 }
 
+.comments .normal {
+	width: 100%;
+}
+
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
 	border-color:    #5A4A39;

@@ -62,6 +62,7 @@ function wikiplugin_articles($data,$params) {
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 	
-	return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
+	//return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
+	return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl'));
 }
 ?>

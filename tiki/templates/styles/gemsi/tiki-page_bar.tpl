@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.4 2004-07-20 19:57:41 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.5 2004-08-12 22:32:14 teedog Exp $ *}
 
 <div id="page-bar">
 
@@ -18,13 +18,11 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
 {if $tiki_p_rename eq 'y'}
 <div class="button2"><a href="tiki-rename_page.php?page={$page|escape:"url"}" class="linkbut">{tr}rename{/tr}</a></div>
 {/if}
-
-{if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
-{if $lock}
+{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
 <div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="linkbut">{tr}unlock{/tr}</a></div>
-{else}
-<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}lock{/tr}</a></div>
 {/if}
+{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}lock{/tr}</a></div>
+
 {/if}
 
 {if $tiki_p_admin_wiki eq 'y'}
@@ -104,7 +102,7 @@ class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_ca
   {/if}{* attachments *}
 
 {/if}
-{if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' }}
+{if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y'  and !$lock}
      <div class="button2"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="linkbut">{tr}translation{/tr}</a></div>
   {/if}
 

@@ -14,15 +14,18 @@ ul
 margin-top: 2px;
 margin-bottom: 6px;
 }
-a,a:visited,a:active {
+a {
 	color: #225566;
 	font-weight: bold;
 	text-decoration: none;
 }
 a:hover {
-  color: #226822;
-	background-color: #f5f5b6;
+  color: #000000;
+	background-color: #ffffff;
 	text-decoration: none;
+}
+small {
+font-size : .8em;
 }
 /* GENERAL LAYOUT EXPLANATION
  *
@@ -37,14 +40,13 @@ a:hover {
 /*********************** GENERAL LAYOUT ************************************/
 
 /* This div encloses the whole Tiki application */
-DIV#tiki-main {  margin: 0px;  }
+#tiki-main {  margin: 0px;  }
 
 /* This is the header */
 #tiki-top {
-font-family: "Trebuchet MS", Arial, sans-serif;
 font-size: .9em;
 background-color: #C7D0D9;
-height: 41px;
+height: 42px;
 border-bottom: 1px solid #8CACBB;
 }
 #tiki-top img {
@@ -75,13 +77,11 @@ padding-right: 10px;
 right: 0px;
 top: 0;
 text-align: right;
-border-bottom: 1px solid #8CACBB;
 }
 #tiki-top #topcenter {
 position: absolute;
 left: 190px;
 right: 190px;
-top: 26px;
 text-align: center;
 height: 40px;
 }
@@ -90,82 +90,33 @@ height: 40px;
 	display: inline;
 }
 
-/* This is the middle */
-#tiki-mid {
-clear: both;
-}
 
 /* And this is the footer */
 #tiki-bot {
 padding-top: 10px;  
 padding-bottom: 5px; 
-margin-top: 0px;   
-margin-bottom: 10px; 
+margin: 0px 5px;   
 }
 
 #topmenu {  
-float: right;
 background-image: url(styles/tiki/mozilla-menubar.png);
-border-bottom: 1px solid #8CACBB;
-margin: 5px;
-height: 22px;
-padding-left: 10px;
-z-index: 10;
-clear: both;
-}
-#topmenu #usermenu {
-background-color: #E9ECEF;
-height: 20px;
-margin-top: 9px;
-border: 1px solid #8CACBB;
--moz-border-radius: 6px 6px 0px 0px;
-border-bottom: 0;
-right: 10px;
-padding: 3px 10px 0px 10px;
-}
-#topmenu #toplinks {
-height: 20px;
-margin-top: 9px;
-z-index: 1;
-}
-#topmenu #toplinks a,#topmenu #toplinks a:visited {
-background-color: #C7D0D9;
-font-weight: normal;
-color: #46596f;
-padding: 1px 6px 1px 6px;
-border: 1px solid #46596f;
--moz-border-radius: 6px 6px 6px 6px;
-margin: 0px;
-}
-#topmenu #toplinks a:hover {
-color: #000000;
-background-color: #E9ECEF;
+margin : 5px;
+height : 22px;
+padding-left : 10px;
+z-index : 10;
+clear : both;
 }
 /* The three columns */
 #leftcolumn {  
-position: absolute;
-left: 10px;
-margin-top: 10px;
-width: 190px;
+width : 190px;
+padding-top : 20px;
 }
 #centercolumn { 
-margin-left: 190px;
-margin-right: 190px;
-voice-family: "\"}\"";
-voice-family: inherit;
-margin-left: 190px;
-margin-right: 190px;
-}
-html>body #centercolumn {
-margin-left: 190px;
-margin-right: 190px;
 }
 
 #rightcolumn {  
-position: absolute;
-right: 10px;
-margin-top: 10px;
-width: 190px;
+width : 190px;
+padding-top : 20px;
 }
 
 /* And this is what lies inside the centercolumn */
@@ -173,7 +124,7 @@ DIV#tiki-center {
 background-color: #f3f6f9; 
 border: 1px solid #46596f;
 -moz-border-radius: 6px;
-margin: 10px;
+margin: 10px 0;
 padding: 10px;
 z-index: 15;
 }
@@ -194,18 +145,17 @@ span.on-option { color: #00C000; }
 span.off-option { color: #005000; }
 
 div.tabt1 {
-position: absolute;
-right: 200px;
-padding-right: 10px;
+float : right;
 top: auto;
 border-bottom: 1px solid #46596f;
 padding-bottom: 0;
 margin: 0;
 clear: both;
 }
+div.tabt1 form {
+display : inline;
+}
 div.tabt2 {
-position: absolute;
-left: 200px;
 padding-left: 10px;
 padding-top: 10px;
 top: auto;
@@ -263,7 +213,6 @@ div.box-title {
 	background-color: #f3f6f9;
 	border: 1px solid #5a7a8a;
 	-moz-border-radius: 0px 0px 6px 6px;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; 
   overflow: hidden;
 	font-size: .8em;
   text-align: center;
@@ -272,7 +221,7 @@ div.box-title {
 div.box-title table {
     width: 100%;
 }
-#rightcolumn .box {
+#rightcolumn div .box {
 	text-align: right;
 }
 /* And this is the data */
@@ -281,18 +230,13 @@ div.box-data {
   color: black;
 	padding-right: 15px;
 	padding: 5px;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  
 	font-size: .9em;  
 	text-align: left;
-}
-#rightcolumn .box .box-data {
-	padding-right: 5px;
-	padding-left: 15px;
 }
 
 /* Menus */
 /* Separators are used to sepparate menu areas in the application menu and user created menus*/
-div.separator {
+div.separator, div.separatorline {
 	background-color: #f3f6f9;
   color: black; 
   margin: 4px 2px 2px 0px;  
@@ -309,18 +253,20 @@ div.separated a, div.separated a:visited {
 }
 
 /* Links in menus */
-.linkmenu, .rsslink { }
-.linkmenu:active, .rsslink:active {  }
-.linkmenu:hover, .rsslink:hover {  }
+.linkmenu, .rsslink { font-weight : normal; }
+.linkmenu:active, .rsslink:active { font-weight : normal; }
+.linkmenu:hover, .rsslink:hover { font-weight : normal; }
 /* style for rss lists in modules or in wiki */
 .rsslist {
   background-color: #ffffff;
   margin: 0;
+	font-weight : normal;
   margin-right: 10px;
   padding: 1px;
   border: 1px solid #dadac9;
 }
 .rssitem {
+	font-weight : normal;
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
   margin-left: 15px;
@@ -354,8 +300,8 @@ span.user-box-text {
 TD.module {   text-align: left;}
 
 /* Links in modules */
-.linkmodule, .linkmodule:visited { padding: 1px;}
-.linkmodule:hover { }
+.linkmodule, .linkmodule:visited { padding: 1px; font-weight : normal; }
+.linkmodule:hover { font-weight : normal; }
 
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {  
@@ -682,6 +628,10 @@ border-bottom: 1px solid #99bec6;
 margin: 0;
 }
 
+.tab1 form {
+display : inline;
+}
+
 /* When a cached version of an external link is displayed */
 div.cache {
   background: #DEE7EC;
@@ -715,7 +665,6 @@ div.wikitext {
 	padding-top: 30px;
   margin: 5px; 
   clear: both;
-	font-size: 1.1em;
 }
 
 /* Links to wiki pages */
@@ -726,7 +675,7 @@ p.editdate {
 text-align: right;
 color: #223344; 
 border-top: 1px solid #8CACBB;
-font-size: 0.8em; 
+font-size: 0.9em; 
 padding-left: 10px
 }
 
@@ -737,6 +686,8 @@ border: 1px solid black;
 padding: 10px;
 }
 
+/* external link icons */
+img.externallink { margin-left: 3px; margin-right: 2px;}
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -879,9 +830,11 @@ color: #666666;
 
 /* The article heading */
 div.articleheading {
-	margin: 5px 40px 5px 40px;
-	font-size: 1.1em;
+	margin: 5px 20px 5px 20px;
   clear: both;
+}
+div.articleheading td img {
+margin-right : 20px;
 }
 /* Text in the article heading */
 div.articleheadingtext {    
@@ -937,7 +890,9 @@ div.articlebody {
 #comzoneopen {  display: block;  margin-left: 1px;  margin-right: 1px;  margin-top: 5px;  margin-bottom: 5px;  padding-left: 2px;  padding-right: 2px;}
 
 /* The comment title */
-span.commentstitle {  font-weight: bold;  font-size: 1.1em;   width: 100%;}
+span.commentstitle {  font-weight: bold;  font-size: 1.1em;   }
+
+.subcomment {margin-left: 10px; }
 
 /************************************************************ CHAT *********************************************************/
 
@@ -1150,7 +1105,7 @@ border-bottom: 1px solid #8CACBB;
 }
 
 div.shoutboxmodmsg {
-  font-size: .9em;
+  font-size: .95em;
   margin-bottom: 0 5px 4px 5px;
   padding-top: 5px;
   padding-bottom: 1px;
@@ -1166,7 +1121,6 @@ textarea.tshoutbox{
 
 .wiki-table {
  border-color: 1px solid #8CACBB;
- width: 100%;
 }
 
 .wiki-tr-a td {
@@ -1945,8 +1899,6 @@ div#rules-copy-panel {
 
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
-  background-color: #dedede;
-  font-size: 70%;
   color: #666666;
   padding: 5px;
 }
@@ -2081,7 +2033,6 @@ TABLE.admin {
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
-	width: 100%;
 }
 
 
@@ -2104,10 +2055,27 @@ TABLE.admin {
 /**** coloration for c o d e plugin *****/
 .codelisting {
 font-family : monospace;
-padding : 2ex;
-background-color : #C7D0D9;
-margin : 1ex;
-border : 1px dashed #adacaf; }
+padding : 1ex;
+background-color : #ffffff;
+margin : 0;
+border : 1px solid #adacaf; 
+}
+
+.codecaption {
+font-size : smaller;
+padding : 0ex 1ex;
+background-color : #ffffff;
+position : relative;
+bottom : -.5ex;
+display : inline;
+border : 1px solid #adacaf;
+border-bottom : 0;
+margin : 0;
+color : #666666;
+background-color: #E9ECEF;
+font-weight : bold;
+-moz-border-radius-topright : 1ex;
+}
 
 /* wiki diff styles */
 

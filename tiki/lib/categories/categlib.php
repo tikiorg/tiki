@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.58 2004-07-30 21:41:47 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.59 2004-08-12 22:31:41 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -136,12 +136,6 @@ class CategLib extends TikiLib {
 		$query = "select `catObjectId` from `tiki_category_objects` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
 
-		// remove any permissions assigned to this category
-		$type = 'category';
-		$object = $type . $categId;
-		$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
-		$result = $this->query($query,array(md5($object),$type));
-
 		while ($res = $result->fetchRow()) {
 			$object = $res["catObjectId"];
 
@@ -152,6 +146,12 @@ class CategLib extends TikiLib {
 			$result2 = $this->query($query2,array($object));
 			}
 		}
+		
+		// remove any permissions assigned to this category
+		$type = 'category';
+		$object = $type . $categId;
+		$query = "delete from `users_objectpermissions` where `objectId`=? and `objectType`=?";
+		$result = $this->query($query,array(md5($object),$type));
 
 		$query = "delete from `tiki_category_objects` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));

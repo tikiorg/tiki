@@ -47,6 +47,7 @@ class WikiLib extends TikiLib {
 	// from broke <PRE> tags and leave well known <PRE>
 	// behaviour (i.e. type all text inside AS IS w/o
 	// any interpretation)
+	/*
 	$preparsed = array();
 
 	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
@@ -61,7 +62,7 @@ class WikiLib extends TikiLib {
 	    $data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
 	    $idx = $idx + 1;
 	}
-
+*/
 	// Get slides
 	$parts = explode("...page...", $data);
 	$ret = $parts[$i - 1];
@@ -261,7 +262,7 @@ class WikiLib extends TikiLib {
 	
 		// in tiki_mail_events by object
 		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
-		$this->query($query, array( $newId, $oldId ) );
+		$this->query($query, array( 'wikipage' . $newName, 'wikipage' . $oldName ) );
 
 		// user watches
 		$query = "update `tiki_user_watches` set `object`=?, `title`=? where `object`=? and `type` = 'Page Wiki'";
@@ -277,6 +278,12 @@ class WikiLib extends TikiLib {
 		// group home page
 		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 		$this->query($query, array( $newName, $oldName ) );
+
+		//breadcrumb
+		if (isset($_SESSION["breadCrumb"]) && in_array($oldName, $_SESSION["breadCrumb"])) {
+			$pos = array_search($oldName, $_SESSION["breadCrumb"]);
+			unset($_SESSION["breadCrumb"][$pos]);
+		}
 
 		return true;
 	}
@@ -555,9 +562,9 @@ class WikiLib extends TikiLib {
 	$result = $this->query($query, array( "L",$page ) );
 
 	if (isset($user)) {
-	    $query = "update `tiki_pages` set `user`=? where `pageName`=?";
+		$query = "update `tiki_pages` set `user`=?  where `pageName`=?";
 
-	    $result = $this->query($query, array( $user, $page ) );
+		$result = $this->query($query, array( $user, $page ) );
 	}
 
 	return true;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.75 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.76 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -414,7 +414,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 			    // Deal with mail notifications.
 			    include_once('lib/notifications/notificationemaillib.php');
-			    sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"]);
+			    sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"], '', '', $threadId);
 			}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.38 2004-07-16 19:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.39 2004-08-12 22:31:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,13 +141,30 @@ if (isset($_REQUEST["newuser"])) {
 	}					
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST["submit_mult"] == "remove_users") {
+		$area = 'batchdeluser';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
 		foreach ($_REQUEST["checked"] as $deleteuser) {
-			$userslibadmin->remove_user($deleteuser);
+			$userlib->remove_user($deleteuser);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("user"),$deleteuser));
+		}
+		} else {
+			key_get($area);
 		}
 	} elseif ($_REQUEST['submit_mult'] == 'assign_groups') {
 		$group_management_mode = TRUE;
 		$smarty->assign('group_management_mode', 'y');
+		$numrows = $maxRecords;
+		$sort_mode = 'groupName_asc';
+		$offset = 0;
+		$initial = '';
+		$find = '';
+
+		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
+		$smarty->assign('groups', $groups['data']);
+	} elseif ($_REQUEST['submit_mult'] == 'set_default_groups') {
+		$set_default_groups_mode = TRUE;
+		$smarty->assign('set_default_groups_mode', 'y');
 		$numrows = $maxRecords;
 		$sort_mode = 'groupName_asc';
 		$offset = 0;
@@ -170,9 +187,17 @@ if (isset($_REQUEST["newuser"])) {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $user) {
 			foreach ($_REQUEST["checked_groups"] as $group) {
-				$userslibadmin->remove_user_from_group($user, $group);
+				$userlib->remove_user_from_group($user, $group);
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("user"),$user,tra("group"),$group));
 			}
+		}
+	}
+} elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
+	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
+		foreach ($_REQUEST['checked'] as $user) {
+			$group = $_REQUEST["checked_group"];
+			$userlib->set_default_group($user, $group);
+			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$user));
 		}
 	}
 }
@@ -216,7 +241,7 @@ $smarty->assign('find', $find);
 
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial);
 
-if (!empty($group_management_mode)) {
+if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
 	$arraylen = count($users['data']);
 	for ($i=0; $i<$arraylen; $i++) {
 		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {

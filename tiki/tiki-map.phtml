@@ -150,9 +150,15 @@ if (isset($_REQUEST['zoom']))
   {
     $my_point->setXY(($map->height)/2,($map->width)/2);
   }
+  
   if ($zoom==0)  // It is a query
-  {
+  {  
+    if($xsize!=$ysize){//query for nonsquare maps
+     $my_point->setXY(($map->height)/2,($map->width)/2);  
+    }
+    else{
     $map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
+    }
     if (isset($_REQUEST['x']) && isset($_REQUEST['y']))
     {
       //get the real world coordinates

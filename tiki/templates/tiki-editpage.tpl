@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.57 2004-07-22 13:08:47 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.58 2004-08-12 22:31:57 teedog Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
-<!--Check to see if there is an editing conflict-->
+{* Check to see if there is an editing conflict *}
 {if $editpageconflict == 'y'}
 <script language='Javascript' type='text/javascript'>
 <!-- //Hide Script
@@ -11,7 +11,6 @@
 </script>
 {/if}
 
-<!--<a {popup sticky="true" trigger="onclick" caption="Special characters help" text="kj"}>foo</a><br />-->
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
@@ -59,7 +58,7 @@
 {/section}
 </select>
 </td></tr>
-{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input size="80" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
+{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input style="width:95%;" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
 {/if}
 
 {if $feature_smileys eq 'y'}
@@ -68,9 +67,8 @@
 </td>
 </tr>
 {/if}
-<!--<a class="link" href="javascript:insertAt('editwiki',"''text here''");">i</a>-->
 {if $feature_wiki_description eq 'y'}
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input style="width:95%;" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
@@ -83,12 +81,12 @@
 </td></tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="42" style="width:95%;" >{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
 
 {if $page ne 'SandBox'}
-<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
@@ -175,5 +173,4 @@
 </table>
 </form>
 <br />
-<!--<a href="javascript:replaceSome('editwiki','foo','bar');">foo2bar</a>-->
 {include file=tiki-edit_help.tpl}

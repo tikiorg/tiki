@@ -11,13 +11,13 @@
  or ($listpages[ix].show_reads eq 'y')}	
 <span class="titleb">
 {if $listpages[ix].show_author eq 'y'}	
-{tr}By:{/tr} {$listpages[ix].authorName}
+{tr}By:{/tr} {$listpages[ix].authorName}&nbsp;
 {/if}
 {if $listpages[ix].show_pubdate eq 'y'}
-{tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime} 
+{tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;
 {/if}
 {if $listpages[ix].show_expdate eq 'y'}
-{tr}expires:{/tr} {$listpages[ix].expireDate|tiki_short_datetime} 
+{tr}expires:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;
 {/if}
 {if $listpages[ix].show_reads eq 'y'}
 ({$listpages[ix].reads} {tr}reads{/tr})
@@ -29,10 +29,10 @@
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$listpages[ix].rating}
-<img src="img/icons/blue.gif" alt=''/>
+<img src="img/icons/blue.gif" alt=""/>
 {/repeat}
 {if $listpages[ix].rating > $listpages[ix].entrating}
-<img src="img/icons/bluehalf.gif" alt=''/>
+<img src="img/icons/bluehalf.gif" alt=""/>
 {/if}
 ({$listpages[ix].rating}/10)
 </div>

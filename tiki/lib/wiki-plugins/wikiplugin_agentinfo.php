@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_agentinfo.php,v 1.2 2004-05-12 13:15:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_agentinfo.php,v 1.3 2004-08-12 22:31:46 teedog Exp $
 
 // Wiki plugin to display a browser client information
 // damian aka damosoft May 2004
 
 function wikiplugin_agentinfo_help() {
-        return tra("Displays browser client info").":<br :>~np~{AGENTINFO(info=>IP/SVRSW/BROWSER)}{AGENTINFO}~/np~";
+        return tra("Displays browser client info").":<br :>~np~{AGENTINFO(info=>IP or SVRSW or BROWSER)/}~/np~";
 }
 
 function wikiplugin_agentinfo($data, $params) {

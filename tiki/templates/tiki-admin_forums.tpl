@@ -22,7 +22,7 @@
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {else}
 <h2>{tr}Create New Forum{/tr}</h2>
-(<a href="#editforums">Edit existing forums</a>)
+<a href="#editforums" class="linkbut">{tr}Edit existing forums{/tr}</a>
 {/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>

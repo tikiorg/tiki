@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.61 2004-08-02 20:45:32 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.62 2004-08-12 22:31:56 teedog Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -114,15 +114,16 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   </script>
 </table>
   <p align="left"> {*on the left to have it close to the checkboxes*}
-  {if $group_management_mode neq 'y'}
+  {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
     <option value="" selected>-</option>
     <option value="remove_users" >{tr}remove{/tr}</option>
     <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
+    <option value="set_default_groups">{tr}set default groups{/tr}</option>
   </select>
   <input type="submit" value="{tr}ok{/tr}" />
-  {else}
+  {elseif $group_management_mode eq 'y'}
   <select name="group_management">
   	<option value="add">{tr}Assign selected to{/tr}</option>
   	<option value="remove">{tr}Remove selected from{/tr}</option>
@@ -132,6 +133,13 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   	<br /><input type="checkbox" name="checked_groups[]" value="{$groups[ix].groupName}" /> <a class="link" href="tiki-admingroups.php?group={$groups[ix].groupName|escape:"url"}" title="{tr}edit{/tr}">{$groups[ix].groupName}</a>
   {/section}
   <br /><input type="submit" value="{tr}ok{/tr}" />
+  {elseif $set_default_groups_mode eq 'y'}
+  {tr}Set the default group of the selected users to{/tr}:
+  {section name=ix loop=$groups}
+  	<br /><input type="radio" name="checked_group" value="{$groups[ix].groupName}" /> <a class="link" href="tiki-admingroups.php?group={$groups[ix].groupName|escape:"url"}" title="{tr}edit{/tr}">{$groups[ix].groupName}</a>
+  {/section}
+  <br /><input type="submit" value="{tr}ok{/tr}" />
+  <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
   </p>
 <input type="hidden" name="find" value="{$find|escape}" />

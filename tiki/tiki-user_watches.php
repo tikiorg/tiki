@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.10 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,7 @@ if (!isset($_REQUEST['event']))
 // get all the information for the event
 $watches = $tikilib->get_user_watches($user, $_REQUEST['event']);
 $smarty->assign('watches', $watches);
-
+//get_strings tra("forum_post_topic"); tra("wiki_page_changed"), tra("forum_post_thread");
 include_once ('tiki-mytiki_shared.php');
 
 ask_ticket('user-watches');

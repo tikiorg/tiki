@@ -624,7 +624,7 @@ class TikiLib extends TikiDB {
 
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
-	    $star = "<img src=\"images/$star\" height=\"11\" width=\"11\" alt=\"$alt\" />&nbsp;";
+	    $star = "<img src=\"img/icons/$star\" height=\"11\" width=\"11\" alt=\"$alt\" />&nbsp;";
 	}
 
 	return $star;
@@ -2925,282 +2925,294 @@ class TikiLib extends TikiDB {
 	    return $data;
 	}
 
-	// This function handles wiki codes for those special HTML characters
-	// that textarea won't leave alone.
-	function parse_htmlchar(&$data) {
-	    // cleaning some user input
-	    $data = preg_replace("/&(?!([a-z]{1,7};))/", "&amp;", $data);
+    // This function handles wiki codes for those special HTML characters
+    // that textarea won't leave alone.
+    function parse_htmlchar(&$data) {
+	// cleaning some user input
+	$data = preg_replace("/&(?!([a-z]{1,7};))/", "&amp;", $data);
 
-	    // oft-used characters (case insensitive)
-	    $data = preg_replace("/~bs~/i", "&#92;", $data);
-	    $data = preg_replace("/~hs~/i", "&nbsp;", $data);
-	    $data = preg_replace("/~amp~/i", "&amp;", $data);
-	    $data = preg_replace("/~ldq~/i", "&ldquo;", $data);
-	    $data = preg_replace("/~rdq~/i", "&rdquo;", $data);
-	    $data = preg_replace("/~lsq~/i", "&lsquo;", $data);
-	    $data = preg_replace("/~rsq~/i", "&rsquo;", $data);
-	    $data = preg_replace("/~c~/i", "&copy;", $data);
-	    $data = preg_replace("/~--~/", "&mdash;", $data);
-	    $data = preg_replace("/ -- /", " &mdash; ", $data);
-	    $data = preg_replace("/~lt~/i", "&lt;", $data);
-	    $data = preg_replace("/~gt~/i", "&gt;", $data);
+	// oft-used characters (case insensitive)
+	$data = preg_replace("/~bs~/i", "&#92;", $data);
+	$data = preg_replace("/~hs~/i", "&nbsp;", $data);
+	$data = preg_replace("/~amp~/i", "&amp;", $data);
+	$data = preg_replace("/~ldq~/i", "&ldquo;", $data);
+	$data = preg_replace("/~rdq~/i", "&rdquo;", $data);
+	$data = preg_replace("/~lsq~/i", "&lsquo;", $data);
+	$data = preg_replace("/~rsq~/i", "&rsquo;", $data);
+	$data = preg_replace("/~c~/i", "&copy;", $data);
+	$data = preg_replace("/~--~/", "&mdash;", $data);
+	$data = preg_replace("/ -- /", " &mdash; ", $data);
+	$data = preg_replace("/~lt~/i", "&lt;", $data);
+	$data = preg_replace("/~gt~/i", "&gt;", $data);
 
-	    // HTML numeric character entities
-	    $data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
+	// HTML numeric character entities
+	$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
+    }
+
+/*
+    Removed by Robin Powell.  Functions moved in to replace_preparse.  Left for
+    reference; should be removed eventually.  Date: 11 Aug 2004.
+
+    // AWC ADDITION
+    // This function replaces pre- and no-parsed sections with unique keys
+    // and saves the section contents for later reinsertion.
+    function parse_pp_np(&$data, &$preparsed, &$noparsed) {
+	// Find all sections delimited by ~pp~ ... ~/pp~
+	// and replace them in the data stream with a unique key
+	preg_match_all("/~pp~([^~]*)~\/pp~/m", $data, $preparse);
+
+	foreach ($preparse[1] as $pp) {
+	    $key = md5($this->genPass());
+	    $preparsed["key"][] = "/". preg_quote($key)."/";
+	    $preparsed["data"][] = "<pre>$pp</pre>";
+	    $data = str_replace("~pp~". $pp. "~/pp~", $key, $data);
 	}
 
-	// AWC ADDITION
-	// This function replaces pre- and no-parsed sections with unique keys
-	// and saves the section contents for later reinsertion.
-	function parse_pp_np(&$data, &$preparsed, &$noparsed) {
-	    // Find all sections delimited by ~pp~ ... ~/pp~
-	    // and replace them in the data stream with a unique key
-	    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/", $data, $preparse);
+	// TODO: Is this a problem if user insert <PRE> but after parsing
+	//     will get <pre> (lowercase)?? :)
+	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $ppreparse);
+	$idx = 0;
 
-	    foreach (array_unique($preparse[1])as $pp) {
-		$key = md5($this->genPass());
-
-		$aux["key"] = $key;
-		$aux["data"] = $pp;
-		$preparsed[] = $aux;
-		$data = str_replace("~pp~$pp~/pp~", $key, $data);
-	    }
-
-	    // Temporary remove <pre> tags too
-	    // TODO: Is this a problem if user insert <PRE> but after parsing
-	    //     will get <pre> (lowercase)?? :)
-	    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $preparse);
-	    $idx = 0;
-
-	    foreach (array_unique($preparse[2])as $pp) {
-		$key = md5($this->genPass());
-
-		$aux["key"] = $key;
-		$aux["data"] = $pp;
-		$preparsed[] = $aux;
-		$data = str_replace($preparse[1][$idx] . $pp . $preparse[4][$idx], $key, $data);
-		$idx = $idx + 1;
-	    }
-
-	    // This section used to be the ~np~ handling, but it's *way* too
-	    // complicated.  A sensible version follows; the below should
-	    // eventually be removed.  --rlpowell, 24 May 2004
-	    /*
-	    // Find all sections delimited by ~np~ ... ~/np~
-	    $new_data = '';
-	    $nopa = '';
-	    $state = true;
-	    $skip = false;
-
-	    $dlength=strlen($data);
-	    for ($i = 0; $i < $dlength; $i++) {
-	    $tag5 = substr($data, $i, 5);
-
-	    $tag4 = substr($tag5, 0, 4);
-	    $tag1 = substr($tag4, 0, 1);
-
-	    // Beginning of a noparse section found
-	    if ($state && $tag4 == '~np~') {
-	    $i += 3;
-
-	    $state = false;
-	    $skip = true;
-	    }
-
-	    // Termination of a noparse section found
-	    if (!$state && ($tag5 == '~/np~')) {
-	    $state = true;
-
-	    $i += 4;
-	    $skip = true;
+	foreach ($ppreparse[2] as $ppp) {
 	    $key = md5($this->genPass());
-	    $new_data .= $key;
-	    $aux["key"] = $key;
-	    $aux["data"] = $nopa;
-	    //print "<p>nopa: $nopa</p>";
-	    //print "<p>new: $new_data</p>";
-	    $noparsed[] = $aux;
-	    $nopa = '';
-	    }
+	    $preparsed["key"][] = "/". preg_quote($key)."/";
+	    $preparsed["data"][] = "<pre>$ppp</pre>";
+	    $data = str_replace($ppreparse[1][$idx] . $ppp . $ppreparse[4][$idx], $key, $data);
+	    $idx++;
+	}
 
-	    if (!$skip) { // This character is not part of a noparse tag
-	    if ($state) { // This character is not within a noparse section
-	    $new_data .= $tag1;
-	    } else { // This character is within a noparse section
-	    $nopa .= $tag1;
-	    }
-	    } else { // Tag is now skipped over
-	    $skip = false;
-	    }
-	    }
-	     */
 
 	    // Find all sections delimited by ~np~ ... ~/np~
 	    // and replace them in the data stream with a unique key
 	    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/", $data, $noparse);
 
-	    foreach (array_unique($noparse[1])as $np) {
-		$key = md5($this->genPass());
-
-		$aux["key"] = $key;
-		$aux["data"] = $np;
-		$noparsed[] = $aux;
-		$data = str_replace("~np~$np~/np~", $key, $data);
-	    }
+	foreach ($noparse[1] as $np) {
+	    $key = md5($this->genPass());
+	    $noparsed["key"][] = "/". preg_quote($key)."/";
+	    $noparsed["data"][] = $np;
+	    $data = str_replace("~np~". $np."~/np~", $key, $data);
 	}
+    }
+*/
 
-	// Reverses parse_pp_np.
-	function replace_pp_np(&$data, &$preparsed, &$noparsed)
+    // Reverses parse_pp_np.
+    function replace_preparse(&$data, &$preparsed, &$noparsed) {
+	$data1 = $data;
+	$data2 = "";
+
+	// Cook until done.  Handles nested cases.
+	while( $data1 != $data2 )
 	{
-	    foreach ($noparsed as $np) {
-		$data = str_replace($np["key"], $np["data"], $data);
+	    $data1 = $data;
+	    if (isset($noparsed["key"]) and count($noparsed["key"]) and count($noparsed["key"]) == count($noparsed["data"]))
+	    { 
+		$data = preg_replace($noparsed["key"], $noparsed["data"], $data);
 	    }
 
-	    foreach ($preparsed as $pp) {
-		$data = str_replace($pp["key"], "<pre>" . $pp["data"] . "</pre>", $data);
+	    if (isset($preparsed["key"]) and count($preparsed["key"]) and count($preparsed["key"]) == count($preparsed["data"]))
+	    {
+		$data = preg_replace($preparsed["key"], $preparsed["data"], $data);
 	    }
+	    $data2 = $data;
 	}
+    }
 
-	// This recursive function handles pre- and no-parse sections and plugins
-	function parse_first(&$data, &$preparsed, &$noparsed) {
-	    global $dbTiki, $feature_wiki_plugins_allcaps;
-	    // Handle pre- and no-parse sections
-	    $this->parse_pp_np($data, $preparsed, $noparsed);
+    // This recursive function handles pre- and no-parse sections and plugins
+    function parse_first(&$data, &$preparsed, &$noparsed) {
+	global $dbTiki;
+
+	$matcher = "/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}|~(pp)~|~(np)~|&lt;[pP][rR][eE]&gt;/";
+
+	// Handle pre- and no-parse sections
+	//$this->parse_pp_np($data, $preparsed, $noparsed);
+
+	// Find the plugins
+	// note: [1] is plugin name, [2] is plugin arguments
+	preg_match( $matcher, $data, $plugins );
+
+	$data1 = $data;
+	$data2 = "";
+
+	// Cook until done.
+	while( count($plugins) > 0 && ( $data1 != $data2 ) )
+	{
+	    $data1 = $data;
+	    $plugin_start = $plugins[0];
+
+	    /*
+	       print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
+
+	       print "<pre>plugins:";
+	       print_r( $plugins );
+	       print "</pre>";
+	       print "<pre>start: :".htmlspecialchars( $plugin_start ) .":</pre>";
+	     */
+
+	    if( count($plugins) > 1 )
+	    {
+		$plugin = $plugins[1];
+		$plugin_start_base = '{' . $plugins[1] . '(';
+	    }
+
+	    $pos = strpos($data, $plugin_start); // where plugin starts
+
+	    // process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
+	    if( preg_match("/\/ *\}$/",$plugin_start) )
+	    {
+		$plugin_end='';
+		$pos_end=$pos+strlen($plugin_start);
+	    } else if( preg_match( "/~pp~|~np~/", $plugin_start ) ) {
+		$plugin_end = preg_replace( '/^(.)/', '$1/', $plugin_start );
+		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+	    } else if( preg_match( "/&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
+		preg_match("/&lt;\/[pP][rR][eE]&gt;/", $data, $plugin_ends, 0, $pos); // where plugin data ends
+		$plugin_end = $plugin_ends[0];
+		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+	    } else {
+		$plugin_end = '{' . $plugin . '}';
+		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+	    }
+
+
+	    // Extract the plugin data
+	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
+	    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
+
+	    /*
+	       print "<pre>data: :".htmlspecialchars( $plugin_data ) .":</pre>";
+	       print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
+	     */
+
+	    if( preg_match( "/&lt;[pP][rR][eE]&gt;|~pp~|~np~/", $plugin_start ) )
+		// ~pp~ type "plugins"
+	    {
+		$key = md5($this->genPass());
+		$noparsed["key"][] = "/". preg_quote($key)."/";
+
+		if( $plugin_start == "~pp~" )
+		{
+		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
+		} else if( preg_match( "/&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
+		    preg_match( "/&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
+		    $plugin_start2 = $plugins[1];
+		    preg_match( "/&lt;\/([pP][rR][eE])&gt;/", $plugin_end, $plugins );
+		    $plugin_end2 = $plugins[1];
+		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
+		} else {
+		    $noparsed["data"][] = $plugin_data;
+		}
+
+		// Replace plugin section with its output in data
+		$data = substr_replace($data, $key, $pos, $pos_end - $pos + strlen($plugin_end));
+	    } else {
+
+		// We store CODE stuff out of the way too, but then process it as a plugin as well.
+		if( $plugin_start == "{CODE()}" )
+		{
+		    $key = md5($this->genPass());
+		    $noparsed["key"][] = "/". preg_quote($key)."/";
+		    $noparsed["data"][] = $plugin_data;
+
+		    $plugin_data = $key;
+		}
+
+		// Normal plugins
+
+		// Construct plugin file pathname
+		$php_name = 'lib/wiki-plugins/wikiplugin_';
+		$php_name .= strtolower($plugins[1]). '.php';
+
+		// Construct plugin function name
+		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
+
+		// Construct argument list array
+		$params = split(',', trim($plugins[2]));
+		$arguments = array();
+
+		foreach ($params as $param) {
+		    // the following str_replace line is to decode the &gt; char when html is turned off
+		    // perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+		    $decoded_param = str_replace('&gt;', '>', $param);
+		    $parts = split( '=>?', $decoded_param );
+
+		    if (isset($parts[0]) && isset($parts[1])) {
+			$name = trim($parts[0]);
+			$argument = trim($parts[1]);
+			// the following preg_replace removes more unwanted css attributes passed after ";" (including)
+			$arguments[$name] = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
+		    }
+		}
+
+		if (file_exists($php_name)) {
+		    include_once ($php_name);
+
+		    // Handle nested plugins.
+		    $this->parse_first($ret, $preparsed, $noparsed);
+
+		    $ret = $func_name($plugin_data, $arguments);
+
+		    // Handle pre- & no-parse sections and plugins inserted by this plugin
+		    $this->parse_first($ret, $preparsed, $noparsed);
+		    //$ret = $this->parse_data($ret);
+
+		    // Replace plugin section with its output in data
+		    $data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+		}
+	    }
 
 	    // Find the plugins
 	    // note: [1] is plugin name, [2] is plugin arguments
-	    if (!empty($feature_wiki_plugins_allcaps) && $feature_wiki_plugins_allcaps == 'y') {
-	    	// match PLUGIN in all caps
-		    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
-	    } else {
-	    	// match PLUGIN, case-insensitive
-	    	preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/i", $data, $plugins);
+	    preg_match( $matcher, $data, $plugins );
+
+	    $data2 = $data;
+
+	} // while
+
+	// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
+
+	// Handle pre- and no-parse sections
+	//$this->parse_pp_np($data, $preparsed, $noparsed);
+    }
+
+    // Replace hotwords in given line
+    function replace_hotwords($line, $words) {
+	global $feature_hotwords;
+	global $feature_hotwords_nw;
+	$hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
+
+	// Replace Hotwords
+	if ($feature_hotwords == 'y') {
+	    foreach ($words as $word => $url) {
+		// \b is a word boundary, \s is a space char
+		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+		$line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+		$line = preg_replace("/:::::$word,:::::/i","$word",$line);
 	    }
-
-	    // if true, replace only CODE plugin, if false, replace all other plugins
-	    $code_first = true;
-
-	    // Process plugins in reverse order, so that nested plugins are handled
-	    // from the inside out.
-	    $i = count($plugins[0]) - 1;
-
-	    while ($i >= 0) {
-		$plugin_start = $plugins[0][$i];
-
-		$plugin = $plugins[1][$i];
-		$plugin_start_base = '{' . $plugins[1][$i] . '(';
-		$pos = strpos($data, $plugin_start); // where plugin starts
-		// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
-		if (preg_match("/\/ *\}$/",$plugin_start))
-		{
-		    $plugin_end='';
-		    $pos_end=$pos+strlen($plugin_start);
-		}
-		else
-		{
-		    $plugin_end = '{' . $plugin . '}';
-		    $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
-		}
-
-
-		if (
-			// when in CODE parsing mode, replace only CODE plugins
-			((($code_first) && ($plugin == 'CODE')) ||
-			 // when NOT in CODE parsing mode, replace all other plugins
-			 ((!$code_first) && ($plugin <> 'CODE'))) && ($pos_end > $pos)) {
-		    // Extract the plugin data
-		    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
-		    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
-
-		    // Construct plugin file pathname
-		    $php_name = 'lib/wiki-plugins/wikiplugin_';
-		    $php_name .= strtolower($plugins[1][$i]). '.php';
-
-		    // Construct plugin function name
-		    $func_name = 'wikiplugin_' . strtolower($plugins[1][$i]);
-
-		    // Construct argument list array
-		    $params = split(',', trim($plugins[2][$i]));
-		    $arguments = array();
-
-		    foreach ($params as $param) {
-			// the following str_replace line is to decode the &gt; char when html is turned off
-			// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-			$decoded_param = str_replace('&gt;', '>', $param);
-			$parts = split( '=>?', $decoded_param );
-
-			if (isset($parts[0]) && isset($parts[1])) {
-			    $name = trim($parts[0]);
-					$argument = trim($parts[1]);
-
-					// the following preg_replace removes more unwanted css attributes passed after ";" (including)
-					$arguments[$name] = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
-			}
-		    }
-
-		    if (file_exists($php_name)) {
-			include_once ($php_name);
-
-			$ret = $func_name($plugin_data, $arguments);
-
-			// Handle pre- & no-parse sections and plugins inserted by this plugin
-			$this->parse_first($ret, $preparsed, $noparsed);
-
-			// Replace plugin section with its output in data
-			$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
-		    }
-		}
-
-		$i--;
-
-		// if we are in CODE parsing mode and list is done, switch to 'parse other plugins' mode and start all over
-		if (($code_first) && ($i < 0)) {
-		    $i = count($plugins[0]) - 1;
-
-		    $code_first = false;
-		}
-	    } // while
 	}
+	return $line;
+    }
 
-	// Replace hotwords in given line
-	function replace_hotwords($line, $words) {
-	    global $feature_hotwords;
-	    global $feature_hotwords_nw;
-	    $hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
+    // Make plain text URIs in text into clickable hyperlinks
+    function autolinks($text) {
+	//	check to see if autolinks is enabled before calling this function
+	//		global $feature_autolinks;
 
-	    // Replace Hotwords
-	    if ($feature_hotwords == 'y') {
-		foreach ($words as $word => $url) {
-		    // \b is a word boundary, \s is a space char
-		    $line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
-		    $line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
-		    $line = preg_replace("/:::::$word,:::::/i","$word",$line);
-		}
-	    }
-	    return $line;
-	}
+	//		if ($feature_autolinks == "y") {
 
-	// Make plain text URIs in text into clickable hyperlinks
-	function autolinks($text) {
-	    //	check to see if autolinks is enabled before calling this function
-	    //		global $feature_autolinks;
+	// add a space so we can match links starting at the beginning of the first line
+	$text = " " . $text;
+	// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
+	$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
+	$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
+	$text = preg_replace($patterns, $replacements, $text);
+	// strip the space we added
+	$text = substr($text, 1);
+	return $text;
 
-	    //		if ($feature_autolinks == "y") {
-
-	    // add a space so we can match links starting at the beginning of the first line
-	    $text = " " . $text;
-	    // match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
-	    $patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
-	    $replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
-	    $text = preg_replace($patterns, $replacements, $text);
-	    // strip the space we added
-	    $text = substr($text, 1);
-	    return $text;
-
-	    //		} else {
-	    //			return $text;
-	    //		}
-	}
+	//		} else {
+	//			return $text;
+	//		}
+    }
 
 
 	//Updates a dynamic variable found in some object
@@ -3213,105 +3225,105 @@ class TikiLib extends TikiDB {
 	}
 
 
-	// split string into a list of
-	function split_tag($string) {
-	    $_splts = split('&quot;', $string);
-	    $inside = FALSE;
-	    $cleanup= TRUE;  // @todo: make this an option for other code
-	    $parts = array();
-	    $index=0;
+    // split string into a list of
+    function split_tag($string) {
+	$_splts = split('&quot;', $string);
+	$inside = FALSE;
+	$cleanup= TRUE;  // @todo: make this an option for other code
+	$parts = array();
+	$index=0;
 
-	    foreach ($_splts as $i)  {
-		if ($cleanup) {
-		    $i = str_replace('}', '', $i);
-		    $i = str_replace('{', '', $i);
-		    $i = str_replace('\'', '', $i);
-		}
-
-		if ($inside) {  // inside "foo bar" - append
-		    if ($index>0) {
-			$parts[$index-1] .= $i;
-		    } else {    // else: first element (should never happen)
-			$parts[] = $i;
-		    }
-		} else {        //
-		    $_spl = split(" ", $i);
-		    foreach($_spl as $j) {
-			$parts[$index++] = $j;
-		    }
-		}
-		$inside = ! $inside;
+	foreach ($_splts as $i)  {
+	    if ($cleanup) {
+		$i = str_replace('}', '', $i);
+		$i = str_replace('{', '', $i);
+		$i = str_replace('\'', '', $i);
 	    }
-	    return $parts;
-	}
 
-	function split_assoc_array($parts, $assoc) {
-	    //$assoc = array();
-	    foreach($parts as $part) {
-		$res=array();
-		$assoc[$part] = '';
-		preg_match("/(\w+)\s*=\s*(.*)/", $part, $res);
-		if ($res) {
-		    $assoc[$res[1]] = $res[2];
+	    if ($inside) {  // inside "foo bar" - append
+		if ($index>0) {
+		    $parts[$index-1] .= $i;
+		} else {    // else: first element (should never happen)
+		    $parts[] = $i;
+		}
+	    } else {        //
+		$_spl = split(" ", $i);
+		foreach($_spl as $j) {
+		    $parts[$index++] = $j;
 		}
 	    }
-	    return $assoc;
+	    $inside = ! $inside;
 	}
+	return $parts;
+    }
 
-	/**
-	 * close_blocks - Close out open paragraph, lists, and div's
-	 *
-	 * During parse_data, information is kept on blocks of text (paragraphs, lists, divs)
-	 * that need to be closed out. This function does that, rather than duplicating the
-	 * code inline.
-	 *
-	 * @param	$data			- Output data
-	 * @param	$in_paragraph		- TRUE if there is an open paragraph
-	 * @param	$listbeg		- array of open list terminators
-	 * @param	$divdepth		- array indicating how many div's are open
-	 * @param	$close_paragraph	- TRUE if open paragraph should be closed.
-	 * @param	$close_lists		- TRUE if open lists should be closed.
-	 * @param	$close_divs		- TRUE if open div's should be closed.
-	 */
-	/* private */
-	function close_blocks(&$data,
-		&$in_paragraph,
-		&$listbeg,
-		&$divdepth,
-		$close_paragraph,
-		$close_lists,
-		$close_divs)
-	{
-	    $closed = 0;	// Set to non-zero if something has been closed out
-	    // Close the paragraph if inside one.
-	    if ($close_paragraph && $in_paragraph) {
-		$data .= "</p>";	
-		$in_paragraph = 0;
+    function split_assoc_array($parts, $assoc) {
+	//$assoc = array();
+	foreach($parts as $part) {
+	    $res=array();
+	    $assoc[$part] = '';
+	    preg_match("/(\w+)\s*=\s*(.*)/", $part, $res);
+	    if ($res) {
+		$assoc[$res[1]] = $res[2];
+	    }
+	}
+	return $assoc;
+    }
+
+    /**
+     * close_blocks - Close out open paragraph, lists, and div's
+     *
+     * During parse_data, information is kept on blocks of text (paragraphs, lists, divs)
+     * that need to be closed out. This function does that, rather than duplicating the
+     * code inline.
+     *
+     * @param	$data			- Output data
+     * @param	$in_paragraph		- TRUE if there is an open paragraph
+     * @param	$listbeg		- array of open list terminators
+     * @param	$divdepth		- array indicating how many div's are open
+     * @param	$close_paragraph	- TRUE if open paragraph should be closed.
+     * @param	$close_lists		- TRUE if open lists should be closed.
+     * @param	$close_divs		- TRUE if open div's should be closed.
+     */
+    /* private */
+    function close_blocks(&$data,
+	    &$in_paragraph,
+	    &$listbeg,
+	    &$divdepth,
+	    $close_paragraph,
+	    $close_lists,
+	    $close_divs)
+    {
+	$closed = 0;	// Set to non-zero if something has been closed out
+	// Close the paragraph if inside one.
+	if ($close_paragraph && $in_paragraph) {
+	    $data .= "</p>";	
+	    $in_paragraph = 0;
+	    $closed++;
+	}
+	// Close open lists
+	if ($close_lists) {
+	    while (count($listbeg)) {
+		$data .= array_shift($listbeg);
 		$closed++;
 	    }
-	    // Close open lists
-	    if ($close_lists) {
-		while (count($listbeg)) {
-		    $data .= array_shift($listbeg);
-		    $closed++;
-		}
-	    }
-
-	    // Close open divs
-	    if ($close_divs) {
-		$temp_max = count($divdepth);
-		for ($i = 1; $i <= $temp_max; $i++) {
-		    $data .= '</div>';
-		    $closed++;
-		}
-	    }
-
-	    if ($closed) {
-		$data .= "\n";
-	    }
-
-	    return $closed;
 	}
+
+	// Close open divs
+	if ($close_divs) {
+	    $temp_max = count($divdepth);
+	    for ($i = 1; $i <= $temp_max; $i++) {
+		$data .= '</div>';
+		$closed++;
+	    }
+	}
+
+	if ($closed) {
+	    $data .= "\n";
+	}
+
+	return $closed;
+    }
 
 	//PARSEDATA
 	function parse_data($data) {
@@ -3694,14 +3706,15 @@ class TikiLib extends TikiDB {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    global $feature_wiki_jstooltips;
+		    $bestLang = ($feature_multilingual == 'y')? "&amp;bl" : ""; // to choose the best page language
 		    if ($desc != tra('no description')) {
 			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
-				$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
+				$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse).$bestLang. '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
 			} else {
-			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
+			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 			}
 		    } else {
-		    	$repl = "<a href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
+		    	$repl = "<a href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		    }
 		    } else {
 				global $tiki_p_edit;
@@ -3926,56 +3939,84 @@ class TikiLib extends TikiDB {
 	    $data = str_replace( "[[", "[", $data );
 
 	    if ($feature_wiki_tables != 'new') {
-		// New syntax for tables
-		if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
-		    $maxcols = 1;
+	    // New syntax for tables
+	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+		$maxcols = 1;
 
-		    $cols = array();
+		$cols = array();
 
-		    $temp_max = count($tables[0]);
-		    for ($i = 0; $i < $temp_max; $i++) {
-			$rows = explode('||', $tables[0][$i]);
+		$temp_max = count($tables[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
+		    $rows = explode('||', $tables[0][$i]);
 
-			$col[$i] = array();
+	    // If the first character is space then
+	    // change spaces for &nbsp;
+	    $line = '<font face="courier">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
+	}
 
-			$temp_max2 = count($rows);
-			for ($j = 0; $j < $temp_max2; $j++) {
-			    $cols[$i][$j] = explode('|', $rows[$j]);
+	// Replace Hotwords before begin
+	$line = $this->replace_hotwords($line, $words);
 
-			    if (count($cols[$i][$j]) > $maxcols)
-				$maxcols = count($cols[$i][$j]);
-			}
-		    }
+	// Replace monospaced text
+	$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+	// Replace bold text
+	$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+	$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+	// Replace definition lists
+	$line = preg_replace("/^;(.*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
-		    $temp_max3 = count($tables[0]);
-		    for ($i = 0; $i < $temp_max3; $i++) {
-			$repl = '<table class="wikitable">';
+	if (0) {
+	    $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
 
-			$temp_max4 = count($cols[$i]);
-			for ($j = 0; $j < $temp_max4; $j++) {
-			    $ncols = count($cols[$i][$j]);
+	    // Segundo intento reemplazar los [link] comunes
+	    $line = preg_replace("/\[([^\]]+)\]/", "<a class='wiki' $target href='$1'>$1</a>", $line);
+	    $line = preg_replace("/\-\=([^=]+)\=\-/", "<div class='wikihead'>$1</div>", $line);
+	}
 
-			    if ($ncols == 1 && !$cols[$i][$j][0])
-				continue;
+	// This line is parseable then we have to see what we have
+	if (substr($line, 0, 3) == '---') {
+	    // This is not list item -- must close lists currently opened
+	    while (count($listbeg))
+		$data .= array_shift($listbeg);
 
-			    $repl .= '<tr>';
+		    $temp_max2 = count($rows);
+		    for ($j = 0; $j < $temp_max2; $j++) {
+			$cols[$i][$j] = explode('|', $rows[$j]);
 
-			    for ($k = 0; $k < $ncols; $k++) {
-				$repl .= '<td class="wikicell" ';
-
-				if ($k == $ncols - 1 && $ncols < $maxcols)
-				    $repl .= ' colspan="' . ($maxcols - $k).'"';
-
-				$repl .= '>' . $cols[$i][$j][$k] . '</td>';
-			    }
-
-			    $repl .= '</tr>';
-			}
-
-			$repl .= '</table>';
-			$data = str_replace($tables[0][$i], $repl, $data);
+			if (count($cols[$i][$j]) > $maxcols)
+			    $maxcols = count($cols[$i][$j]);
 		    }
 		}
+
+		$temp_max3 = count($tables[0]);
+		for ($i = 0; $i < $temp_max3; $i++) {
+		    $repl = '<table class="wikitable">';
+
+		    $temp_max4 = count($cols[$i]);
+		    for ($j = 0; $j < $temp_max4; $j++) {
+			$ncols = count($cols[$i][$j]);
+
+			if ($ncols == 1 && !$cols[$i][$j][0])
+			    continue;
+
+			$repl .= '<tr>';
+
+			for ($k = 0; $k < $ncols; $k++) {
+			    $repl .= '<td class="wikicell" ';
+
+			    if ($k == $ncols - 1 && $ncols < $maxcols)
+				$repl .= ' colspan="' . ($maxcols - $k).'"';
+
+			    $repl .= '>' . $cols[$i][$j][$k] . '</td>';
+			}
+
+			$repl .= '</tr>';
+		    }
+
+		    $repl .= '</table>';
+		    $data = str_replace($tables[0][$i], $repl, $data);
+		}
+	    }
 	    } else {
 		// New syntax for tables
 		// REWRITE THIS CODE
@@ -4135,13 +4176,13 @@ class TikiLib extends TikiDB {
 		    $line = $this->autolinks($line);
 		}
 
-		// Replace monospaced text
-		$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
-		// Replace bold text
-		$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-		$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-		// Replace definition lists
-		$line = preg_replace("/^;(.*):[^\/\/](.*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+	    // Replace monospaced text
+	    $line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
+	    // Replace bold text
+	    $line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+	    $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+	    // Replace definition lists
+	    $line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
 		/* this code following if (0) is never executed, right?
 		   if (0) {
@@ -4361,24 +4402,24 @@ class TikiLib extends TikiDB {
 		}
 	    }
 
-	    // linebreaks using %%%
-	    $data = str_replace("%%%", "<br />", $data);
+	// linebreaks using %%%
+	$data = str_replace("%%%", "<br />", $data);
 
-	    // Close BiDi DIVs if any
-	    for ($i = 0; $i < $bidiCount; $i++) {
-		$data .= "</div>";
-	    }
-
-	    // Put removed strings back.
-	    $this->replace_pp_np($data, $preparsed, $noparsed);
-
-	    // Process pos_handlers here
-	    foreach ($this->pos_handlers as $handler) {
-		$data = $handler($data);
-	    }
-
-	    return $data;
+	// Close BiDi DIVs if any
+	for ($i = 0; $i < $bidiCount; $i++) {
+	    $data .= "</div>";
 	}
+
+	// Put removed strings back.
+	$this->replace_preparse($data, $preparsed, $noparsed);
+
+	// Process pos_handlers here
+	foreach ($this->pos_handlers as $handler) {
+	    $data = $handler($data);
+	}
+
+	return $data;
+    }
 
 	function parse_smileys($data) {
 	    global $feature_smileys;
@@ -4952,13 +4993,13 @@ class TikiLib extends TikiDB {
 			    function list_styles() {
 				global $tikidomain;
 
-				$sty = array();
-				$h = opendir("styles/");
-				while ($file = readdir($h)) {
-				    if (strstr($file, ".css") and substr($file,0,1) != '.') {
-					$sty[$file] = 1;
-				    }
+			    $sty = array();
+			    $h = opendir("styles/");
+			    while ($file = readdir($h)) {
+				if (ereg("\.css$", $file)) {
+				    $sty[$file] = 1;
 				}
+			    }
 				closedir($h);
 
 				/* What is this $tikidomain section?

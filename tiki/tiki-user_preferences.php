@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.58 2004-07-15 22:55:16 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.59 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -134,14 +134,15 @@ if (isset($_REQUEST['info'])) {
 	if (isset($_REQUEST["homePage"]))
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
-	if (isset($_REQUEST["lat"])) {
-		$smarty->assign('lat', floatval($_REQUEST["lat"]));
-		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
-	}
-
-	if (isset($_REQUEST["lon"])) {
-		$smarty->assign('lon', floatval($_REQUEST["lon"]));
-		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
+	if ($feature_maps == 'y') {
+		if (isset($_REQUEST["lat"])) {
+			$smarty->assign('lat', (float) $_REQUEST["lat"]);
+			$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
+		}
+		if (isset($_REQUEST["lon"])) {
+			$smarty->assign('lon', (float) $_REQUEST["lon"]);
+			$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
+		}
 	}
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);

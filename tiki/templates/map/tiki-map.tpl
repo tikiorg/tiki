@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.21 2004-07-29 17:38:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.22 2004-08-12 22:31:58 teedog Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -81,8 +81,6 @@
      			</a>
      		{/if}
      &nbsp;
-     <input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" />
-     &nbsp;
      <a href="tiki-map.phtml?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a>
      <br />
 		  <small>{tr}Click on the map or click redraw{/tr}</small>
@@ -99,10 +97,11 @@
 		<td valign="top">
 		  <table class="normal">
 		  <tr><td align="left" valign="middle">
-		  <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
+		    <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" />
 		  </td ></tr>
 		  <tr><td>
-		  <img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" />
+		    <tr><td class="heading" align="center"><b>Legend</b></td></tr>
+		    <tr><td align="center"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
 		  </td></tr>
 		  <tr><td>
 		  <div class="separator">

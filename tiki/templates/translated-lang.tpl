@@ -3,7 +3,7 @@
 		{if $td}<td style="text-align: left; width:auto;">{/if}
 		{if count($trads) > 1}
 			<form action="tiki-index.php" method="post">
-			<select name="page_id" onchange="page_id.form.submit()">
+			<select name="page_id" onchange="this.form.submit()">
 			{section name=i loop=$trads}
 			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
 			{/section}

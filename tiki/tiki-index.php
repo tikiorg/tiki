@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.124 2004-07-28 20:16:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.125 2004-08-12 22:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,6 +31,7 @@ if(!isset($_SESSION["thedate"])) {
 
 if (isset($_REQUEST["page_id"])) {
 	$_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
+//TODO: introduce a get_info_from_id to save a sql request
 }
 
 if (!isset($_REQUEST["page"])) {
@@ -51,6 +52,21 @@ if (!isset($_REQUEST["page"])) {
 
 }
 $page = $_REQUEST["page"];
+
+$info = null;
+if ($feature_multilingual == 'y' && isset($_REQUEST["bl"])) { // chose the best language page
+	global $multilinguallib;
+	include_once("lib/multilingual/multilinguallib.php");
+	$info = $tikilib->get_page_info($page);
+	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+	if ($info['page_id'] != $bestLangPageId) {
+		$page = $tikilib->get_page_name_from_id($bestLangPageId);
+//TODO: introduce a get_info_from_id to save a sql request
+		$info = null;
+	}
+}
+
+
 
 $smarty->assign('structure','n');
 
@@ -95,6 +111,7 @@ if(isset($page_ref_id)) {
     $smarty->assign('parent_info', $navigation_info["parent"]);
     $smarty->assign('home_info', $navigation_info["home"]);
     $page = $page_info["pageName"];
+    $info = null;
     // others still need a good set page name or they will get confused.
     // comments of home page were all visible on every structure page
     $_REQUEST["page"]=$page;
@@ -107,7 +124,8 @@ $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);
 
 // Get page data, if available
-$info = $tikilib->get_page_info($page);
+if (!$info)
+	$info = $tikilib->get_page_info($page);
 
 // If the page doesn't exist then display an error
 if(empty($info)) {
@@ -180,7 +198,8 @@ if($tiki_p_view != 'y') {
 }
 
 // Get translated page
-if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { //temporary patch
+if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { //NULL is a temporary patch
+	global $multilinguallib;
 	include_once("lib/multilingual/multilinguallib.php");
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
@@ -387,11 +406,6 @@ if(isset($_REQUEST['refresh'])) {
     $tikilib->invalidate_cache($page);	
 }
 
-// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
-$preparsed = array();
-$noparsed = array();
-$tikilib->parse_pp_np( $info["data"], $preparsed, $noparsed );
-
 $smarty->assign('cached_page','n');
 if(isset($info['wiki_cache'])) {$wiki_cache=$info['wiki_cache'];}
 if($wiki_cache>0) {
@@ -408,6 +422,7 @@ if($wiki_cache>0) {
     $pdata = $tikilib->parse_data($info["data"]);
 }
 
+$smarty->assign_by_ref('parsed',$pdata);
 
 if(!isset($_REQUEST['pagenum'])) $_REQUEST['pagenum']=1;
 
@@ -435,11 +450,6 @@ $smarty->assign('last_page',$pages);
 
 $smarty->assign('pagenum',$_REQUEST['pagenum']);
 
-// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_pp_np( $info["data"], $preparsed, $noparsed );
-$tikilib->replace_pp_np( $pdata, $preparsed, $noparsed );
-
-$smarty->assign_by_ref('parsed',$pdata);
 
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);

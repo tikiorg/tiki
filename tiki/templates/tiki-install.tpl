@@ -17,12 +17,12 @@ MultiTiki setup</div>
 <div><a href="tiki-install.php">default</a></div><br />
 {foreach key=k item=i from=$virt}
 <div>
+<tt>{if $i eq 'y'}<b style="color:#00CC00;">DBok</b>{else}<b style="color:#CC0000;">NoDB</b>{/if}</tt>
 {if $k eq $multi}
 <b>{$k}</b>
 {else}
 <a href="tiki-install.php?multi={$k}" class='linkmodule'>{$k}</a>
 {/if}
-{if $i eq 'y'} (db ok){else} (db not set){/if}
 </div>
 {/foreach}
 </div></div>
@@ -36,7 +36,7 @@ To add a new virtual host run the setup.sh with the domain name of the new host 
 <td valign="top">
 {/if}
 
-<h2>(MultiTiki) {$multi|default:"default"}</h2>
+<h2>{if $multi}(MultiTiki) {/if}{$multi|default:"default"}</h2>
 {* / multitiki --------------------------- *}
 
 <a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}" class="link">reload</a><br /><br />
@@ -116,6 +116,7 @@ hosting service to create a MySQL database.  Normally Tiki tables won't conflict
 		    <b>Welcome to the installation script!</b><br/>
 		    You can now create a new database or update your current database<br/><br/>
 		    <form method="post" action="tiki-install.php">
+				{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 		    <table>
 		    <tr><td>
 			Create database with profile:
@@ -150,8 +151,7 @@ hosting service to create a MySQL database.  Normally Tiki tables won't conflict
 				<li>structure_fix_1.7to1.8.sql use only once!</li>
 				<li>tiki_1.8to1.9.sql - can be run more than once if errors occur</li>
 			</ol>
-			We recommend that you <b>backup your database</b> with mysqldump and
-			we recommend<br />to run these scripts from the command line (mysql tikidatabase < scriptname.sql).
+			We recommend that you <b>backup your database</b> with mysqldump or phpmyadmin.
 		</td></tr>
 		    </table>
 		    </form><br/>
@@ -163,6 +163,7 @@ hosting service to create a MySQL database.  Normally Tiki tables won't conflict
 		    Please enter your admin password to continue<br/><br/>
 
      <form name="loginbox" action="tiki-install.php" method="post"> 
+			{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
           <table>
           <tr><td class="module">{tr}user{/tr}:</td></tr>
           <tr><td>admin</td></tr>
@@ -172,20 +173,6 @@ hosting service to create a MySQL database.  Normally Tiki tables won't conflict
           </table>
       </form>
 
-{*
-		  	<form action="tiki-install.php" method="post">
-		  	<table class="normal">
-		  		<tr>
-		  			<td class="formcolor">Admin password</td>
-		  			<td class="formcolor"><input type="password" name="pass" /></td>
-		  		</tr>
-		  		<tr>
-		  			<td class="formcolor">&nbsp;</td>
-		  			<td class="formcolor"><input type="submit" name="login" value="login" /></td>
-		  		</tr>
-		    </table>
-		    </form>
-*}
 		  {/if}
     	{else}
     		<b>Print operations executed successfully</b><br/>
@@ -207,15 +194,16 @@ hosting service to create a MySQL database.  Normally Tiki tables won't conflict
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
-    		<a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
-    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
-    		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a><br /><br />
-    		<a href="tiki-install.php" class="link">Go back and run another install/upgrade script</a> - do not use your Back button in your browser!<br /><br />
+    		<a href="tiki-install.php?kill=1" class="link">Click here to disable the install script and proceed into tiki</a><br /><br />
+    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without disabling the script</a><br /><br />
+    		<a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}" class="link">Reset database connection settings</a><br /><br />
+    		<a href="tiki-install.php{if $multi}?multi={$multi}{/if}" class="link">Go back and run another install/upgrade script</a> - do not use your Back button in your browser!<br /><br />
     	{/if}
 	{/if}
 	{if $pkg_available eq 'y'}
 		<p><p>
 		<form method="post" action="tiki-install.php">
+		{if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
 		<h1>Tiki packages</h1>
 		<table>
 			<tr><td>

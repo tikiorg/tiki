@@ -1,11 +1,11 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.159 2004-06-27 03:05:41 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.160 2004-08-12 22:31:21 teedog Exp $
 
-All developers are invited to add relevant changes to this file as they
-apply them to the CVS source. You can optionally indicate an identifier
-for the origin of the change (author, submitter, anyone involved), but
-it's not very useful as the CVS log knows who adds what and when.
+All developers are invited to add relevant changes in that file as they
+apply them to the CVS source. You can optionally include an identifer
+for the origin of the change (author, submitter, anyone involved) but
+that's not so useful as the cvs log knows who adds what when.
 
 Use the following tags to distinguish changes :
 * [NEW] apply if something new was added in tikiwiki
@@ -138,6 +138,51 @@ Version 1.9
 * [MOD] Parse absolute URI correctly in group home page setting
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
+
+Version 1.8.4 - Polaris -
+<http://tikiwiki.org/ReleaseProcess184>
+* [FIX] individual wiki page permissions could be bypassed
+* [FIX] path disclosure vulnerabilities in the smarty_tiki area
+* [FIX] removing any parent categories of an object caused the object to
+        become uncategorized even if there are other parent categories
+* [FIX] version conflicts related to wiki tag restorations
+* [FIX] wiki edit permission shouldn't depended on global wiki view permission
+        even if individual permissions are assigned for a wiki page
+* [FIX] duplicate version numbers when editing wiki pages
+* [FIX] scrollbar of textarea jumped to the top after using a quicktag in
+        Gecko-based browsers
+* [FIX] articles plugin ignored displayed 0 comments all the time
+* [FIX] default groups for users were displayed even when they were not set
+* [FIX] bugged display of the rating field when selecting article type
+        "Review"
+* [FIX] workaround for environments where $_SERVER['SERVER_NAME'] is undefined
+* [MOD] added RSS feeds with optional authentication
+* [FIX] reply icons were displayed in forum threads even if user has no
+        permission to post
+* [FIX] forum stats aren't updated after moving a thread (until someone enters
+        the affected forum)
+* [FIX] broken find function for orphan wiki pages
+* [FIX] tracker categorization broken on tiki-admin_trackers.php
+* [FIX] avoid login problems when tiki-index.php is the DirectoryIndex
+* [FIX] current page was deleted without a trace when rolling back to a
+        previous version, resulting in the inability to undo a rollback and a
+        gap in version numbers
+* [FIX] CATEGORY() plugin couldn't handle type=directory or type=forum
+* [FIX] a forum home was selected even when none is set in Admin/Forums
+* [FIX] directory category removal function left zombie subcategories and
+        member sites
+* [FIX] buggy wiki page edit-conflict feature
+* [FIX] users logging in from the Tiki homepage were not sent to their group
+        homepages
+* [FIX] users logging in from any wiki page were redirected to the wiki
+        homepage
+* [FIX] inner boxes created by embedding BOX plugins within each other had
+        messed up line spacing
+* [FIX] author of a shoutbox msg changed to the shoutbox admin who edits the
+        message
+* [FIX] name inputted by an anonymous user in Live Support was lost
+* [FIX] overlib tooltips in moreneat.css extended across the entire screen
+* [MOD] diff engine was replaced with LGPL code to avoid licensing issues
 
 Version 1.8.3 - Polaris -
 <http://tikiwiki.org/ReleaseProcess183>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.11 2004-07-01 19:06:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-slideshow2.php,v 1.12 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,18 +44,6 @@ if (!isset($_SESSION["thedate"])) {
 //$smarty->assign_by_ref('page', $_REQUEST["page"]);
 
 require_once ('tiki-pagesetup.php');
-
-// Check if we have to perform an action for this page
-// for example lock/unlock
-if ($tiki_p_admin_wiki == 'y') {
-	if (isset($_REQUEST["action"])) {
-		if ($_REQUEST["action"] == 'lock') {
-			$tikilib->lock_page($page);
-		} elseif ($_REQUEST["action"] == 'unlock') {
-			$tikilib->unlock_page($page);
-		}
-	}
-}
 
 $page = $page_info["pageName"];
 
