@@ -859,7 +859,7 @@ class SheetLib extends TikiLib
 				$sort = "`title` DESC";
 		}
 
-		$result = $this->query( "SELECT * FROM `tiki_sheets` ORDER BY $sort", array(), $offset, $maxRecord );
+		$result = $this->query( "SELECT * FROM `tiki_sheets`  ORDER BY $sort", array(), $maxRecord, $offset );
 
 		while( $row = $result->fetchRow() )
 			$results['data'][] = $row;
