@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.5 2004-03-08 02:10:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_trackers.php,v 1.6 2004-03-08 02:38:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,8 +46,23 @@ if (!isset($_REQUEST["sort_mode"])) {
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-
+if (isset($_REQUEST["all2db"])) {
+	$attachements = $trklib->list_all_attachements();
+	for ($i=0;$i<$attachements['cant'];$i++) {
+		if ($attachements['data'][$i]['path']) {
+			$trklib->file_to_db($t_use_dir.$attachements['data'][$i]['path'],$attachements['data'][$i]['attId']);
+		}
+	}
+} elseif (isset($_REQUEST["all2file"])) {
+	$attachements = $trklib->list_all_attachements();
+	for ($i=0;$i<$attachements['cant'];$i++) {
+		if (!$attachements['data'][$i]['path']) {
+			$trklib->db_to_file($t_use_dir. md5($attachements['data'][$i]['filename']),$attachements['data'][$i]['attId']);
+		}
+	}
+}
 $attachements = $trklib->list_all_attachements($offset,$maxRecords,$sort_mode,$find);
+
 $smarty->assign_by_ref('attachements', $attachements['data']);
 $urlquery['find'] = $find;
 $urlquery['page'] = 'trackers';
