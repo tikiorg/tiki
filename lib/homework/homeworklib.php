@@ -1,8 +1,9 @@
 <?php
-// require_once("ggg-trace.php");
-// $ggg_tracer->outln(__FILE__." line: ".__LINE__);
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.2 2004-02-05 05:25:28 ggeller Exp $
+require_once("doc/devtools/ggg-trace.php");
+$ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
-/* GGG
+/*
     The idea here is that all access to the hw tables goes through this
      library.
  */
@@ -12,8 +13,473 @@ class HomeworkLib extends TikiLib {
   // Constructor receiving a PEAR::Db database object.
   function HomeworkLib($db) {
 	TikiLib::TikiLib($db);
+	// This is a little defensive programming.
+	// The homeworklib and hw_ functions always assume that admin has
+	//   the permissions of teacher, teacher has the pemissions of 
+	//   grader, and grader has the permissions of student
+	if (isset($tiki_p_hw_admin) && $tiki_p_hw_admin == 'y'){
+	  $tiki_p_hw_teacher = 'y';
+	  $tiki_p_hw_grader = 'y';
+	  $tiki_p_hw_student = 'y';
+	}
+	else if (isset($tiki_p_hw_teacher) && $tiki_p_hw_teacher == 'y'){
+	  $tiki_p_hw_grader = 'y';
+	  $tiki_p_hw_student = 'y';
+	}
+	else if (isset($tiki_p_hw_grader) && $tiki_p_hw_grader == 'y'){
+	  $tiki_p_hw_student = 'y';
+	}
   }
 
+  // hw_grading_queue table
+  //   id Number in the total queue. (int autoincrement)
+  //   status (int)
+  //       0 - deleted
+  //       1 - awaiting grading
+  //   submissionDate - timestamp
+  //   userLogin - user doing the submitting
+  //   userIp - ip of user doing the submitting
+  //   pageId (int) - index to hw_pages
+  //   pageDate - timestamp when work was done.
+  //   pageVersion - version from hw_page
+  //   assignmentId (int) - index to hw_assignments
+
+  // Add the page to the grading queue.
+  // 
+  // db: hw_grading_queue table, read/write
+  // $pageId - index of page in hw_pages
+  // $pageDate - last modified timestamp from hw_pages
+  // $pageVersion - version from hw_pages
+  // $assignmentId - index of assignment in hw_assignments
+  //
+  // If earlier submission of same page is present, mark it deleted.
+  // Place page in the grading queue.
+  function hw_grading_queue_submit($pageId, $pageDate, $pageVersion, $assignmentId){
+    global $user;
+    global $ggg_tracer;
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' submit detected! ');
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageId = '.$pageId);
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageDate = '.$pageDate);
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageVersion = '.$pageVersion);
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $assignmentId = '.$assignmentId);
+    
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $user = '.$user);
+    
+    $ipAddr = $_SERVER["REMOTE_ADDR"];
+    
+    $date = date('U');
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $date = '.$date);
+    // If this page is in the que, mark that entry as deleted.
+    // Add this page to the que.
+    $query = "INSERT INTO `hw_grading_queue` (
+                     `status`,
+                     `submissionDate`,
+                     `userLogin`,
+                     `userIp`,
+                     `pageId`,
+                     `pageDate`,
+                     `pageVersion`,
+                     `assignmentId`)";
+
+    $query.= " values(?,?,?,?,?,?,?,?)";
+    $val = array(
+		 'status'=>0,
+		 'submissionDate'=>$date,
+		 'userLogin'=>$user,
+                 'userIp'=>$ipAddr,
+                 'pageId'=>$pageId,
+                 'pageDate'=>$pageDate,
+                 'pageVersion'=>$pageVersion,
+                 'assignmentId'=>$assignmentId);
+    $result = $this->query($query, $val);
+    
+    while (!$result->EOF) {
+      for ($i=0, $max=$result->FieldCount(); $i < $max; $i++)
+	print $result->fields[$i].' ';
+      $result->MoveNext();
+      print "<br>\n";
+    }
+  }
+  // Return the highest hw privilege for $user
+  // There are a lot of way to do this using different functions in userlib.
+  // Called by: tiki-hw_page.php
+  // The best way is probably to add an editor's role field to the hw_pages
+  //   table.
+  function hw_user_type($user){
+    global $userlib;
+    $bAdmin = false;
+    $bTeacher = false;
+    $bGrader = false;
+    $bStudent = false;
+    $perms = $userlib->get_user_permissions($user);
+    foreach ($perms as $perm)
+	  {
+		switch ($perm)
+		  {
+		  case 'tiki_p_hw_admin':
+			$bAdmin = true;
+			break;
+		  case 'tiki_p_hw_teacher':
+			$bTeacher = true;
+			break;
+		  case 'HW_GRADER':
+			$bGrader = true;
+			break;
+		  case 'HW_STUDENT':
+			$bStudent = true;
+			break;
+		  }
+	  }
+    if ($bAdmin)
+      return('HW_ADMIN');
+    if ($bTeacher)
+      return('HW_TEACHER');
+    if ($bGrader)
+      return('HW_GRADER');
+    return('HW_STUDENT');
+  }
+
+  // GGG - stub
+  // Need to use the id for the page, get the assignment number, etc. etc.
+  function hw_grading_queue($pageId) {
+	global $ggg_tracer;
+	$ggg_tracer->outln(__FILE__." line: ".__LINE__.' In hw_grading queue stub. ');
+	$ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageId = '.$pageId);
+	return 0;
+  }
+  
+  // GGG - needs work Confirm that $assignmentId is in hw_assignments table
+  function hw_assignmentId_is_valid($assignmentId) {
+	return true;
+  }
+
+  // Grab a homework wiki-like page based on the user (student) and
+  //  the assignmentId from the hw_pages table.
+  //  
+  //  db: hw_pages table, read only
+  //  
+  //  $info - write only, the query results
+  //  $studentName - the name of the student
+  //  $assignmentId - index shared with hw_assignment table
+  function hw_page_fetch(&$info, $studentName, $assignmentId) {
+	// global $ggg_tracer;
+	// $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_fetch.");
+
+	global $tiki_p_hw_student;
+	global $smarty;
+	$info = array();
+	// assert current user has tiki_p_hw_student permission
+	if($tiki_p_hw_student != 'y') {
+	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: No")." tiki_p_hw_student ".tra("permission."));
+	  $smarty->display("error.tpl");
+	  die;  
+	}
+
+	// assert $assignmentId is in the hw_assignments list
+	if(!$this->hw_assignmentId_is_valid($assignmentId)) {
+	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: Invalid")." assignmentId");
+	  $smarty->display("error.tpl");
+	  die;
+	}
+
+	$query = "select * from `hw_pages` where `studentName`=? and `assignmentId`=?";
+	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
+	// $ggg_tracer->outvar($query);
+    $result = $this->query($query, array("$studentName","$assignmentId"));
+	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $result = ');
+	// $ggg_tracer->outvar($result);
+
+	// while (!$result->EOF) {
+	//   for ($i=0, $max=$result->FieldCount(); $i < $max; $i++)
+	// 	print $result->fields[$i].' ';
+	//  $result->MoveNext();
+	//  print "<br>\n";
+	// }
+
+    if (!$result->numRows()){
+	  // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
+      return false;
+	}
+    else{
+	  // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
+	  $info = $result->fetchRow();
+      return true;
+	}
+  }
+
+  // Grab a homework wiki-like page based on its id in 
+  //  the hw_pages table.
+  //  
+  //  db: hw_pages table, read only
+  //  
+  //  $info   write-only
+  //  $id     read-only 
+  //  $lock   read-only
+  //  returns status
+  function hw_page_fetch_by_id(&$info, $id, $lock=false) {
+	// global $ggg_tracer;
+
+	global $tiki_p_hw_student;
+	global $smarty;
+	$info = array();
+	// assert current user has tiki_p_hw_student permission
+	if($tiki_p_hw_student != 'y') {
+	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: No")." tiki_p_hw_student ".tra("permission."));
+	  $smarty->display("error.tpl");
+	  die;  
+	}
+
+	$query = "select * from `hw_pages` where `id`=?";
+	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
+	// $ggg_tracer->outvar($query);
+    $result = $this->query($query, array("$id"));
+	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $result = ');
+	// $ggg_tracer->outvar($result);
+
+    if (!$result->numRows()){
+      return "HW_INVALID_ID";
+    }
+
+    // check the lockUser and the lockExpires from the page
+    // break the lock if lockUser == $user
+    // break the lock if lockExpires > date
+    // otherwise return HW_PAGE_LOCKED
+
+    // Todo: if $lock is true, lock the page
+    // This is related to:
+    // session.gc_maxlifetime = 1440
+    // in /etc/php.ini
+    // and some code in tiki-setup_base.php
+    // probably want something like lockExpires = date + session.gc_maxlifetime + 60;
+
+    // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
+    $info = $result->fetchRow();
+    return "HW_OK";
+  }
+
+  /*
+    There are two tables for homework:
+    hw_assignments - Holds assignments created by the teacher.
+    hw_pages - Holds the work of the students.
+
+    This is the mysql to create the hw_pages table:
+    CREATE TABLE `hw_pages` (
+      `id` int(14) NOT NULL  auto_increment,
+      `assignmentId` int(14) NOT NULL,
+      `studentName` varchar(200) NOT NULL,
+      `data` text default NULL,
+      `description` varchar(200) default NULL,
+      `lastModif` int(14) default NULL,
+      `user` varchar(200) default NULL,
+      `comment` varchar(200) default NULL,
+      `version` int(8) NOT NULL default '0',
+      `ip` varchar(15) default NULL,
+      `flag` char(1) default NULL,
+      `points` int(8) default NULL,
+      `votes` int(8) default NULL,
+      `cache` text default NULL,
+      `wiki_cache` int(10) default '0',
+      `cache_timestamp` int(14) default NULL,
+      `page_size` int(10) unsigned default '0',
+      KEY `id` (`id`),
+      KEY `assignmentId` (`assignmentId`),
+      KEY `studentName` (`studentName`),
+      PRIMARY KEY  (`studentName`,`assignmentId`)
+    ) TYPE=MyISAM;
+
+    Explanation of fields:
+      id - Each page has a unique id used for anonymous graders and peer review.
+      assignmentID - The corresponding id from the hw_assignments table.
+      studentName - Only used by and visible to teachers
+      data - wiki text of the essay
+      description - reserved for future use
+      lastModif - date
+      user - name of most recent editor (if another student or anon grader, 
+        only visible to teacher).
+      comment - short description of this edit version
+      version - revision number starts at 0
+      ip - address of most recent editor, only visible to teacher
+      flag - locked if someone else is editing
+      points - reserved
+      votes - reserved
+      cache - reserved
+      wiki_cache - reserved
+      cache_timestamp - reserved
+      page_size - reserved
+  */
+
+  // Stub: Need more args?
+  // Called by: tiki-hw_editpage.php
+  function hw_page_update($pageId, $data, $comment) {
+    global $ggg_tracer;
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_update.");
+    $ggg_tracer->outln("Have to update the version number\n  \
+                        Store the usersRole etc.\n \
+                        Need more args?");
+  }
+
+  // Create a homework page
+  //  
+
+  // Have to make a primary key of
+  function hw_page_create($user,$assignmentId) {
+    global $ggg_tracer;
+    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_create.");
+    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $user = ');
+    // $ggg_tracer->outvar($user);
+    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $assignmentId = ');
+    // $ggg_tracer->outvar($assignmentId);
+    $theDate = date("U");
+    $ipAddr = $_SERVER["REMOTE_ADDR"];
+    $query = "INSERT INTO `hw_pages` (
+                `assignmentId`,
+                `studentName`,
+                `user`,
+                `lastModif`,
+                `version`,
+                `ip`
+                )";
+
+    $query.= " values(?,?,?,?,?,?)";
+
+    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
+    // $ggg_tracer->outvar($query);
+
+    $val = array(
+		 'assignmentId'=>$assignmentId,
+		 'studentName'=>$user,
+		 'user'=>$user,
+		 'lastModif'=>"$theDate",
+		 'version'=>0,
+		 'ip'=>$ipAddr );
+    
+    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $val = ');
+    // $ggg_tracer->outvar($val);
+    
+    // With the right settings, query checks result.
+    // More checking would be good, though.
+    $result = $this->query($query, $val);
+    
+    while (!$result->EOF) {
+      for ($i=0, $max=$result->FieldCount(); $i < $max; $i++)
+	print $result->fields[$i].' ';
+      $result->MoveNext();
+      print "<br>\n";
+    }
+    
+    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $result = ');
+    // $ggg_tracer->outvar($result);
+    
+    return true;
+  }
+
+  function list_assignments($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
+    global $userlib;
+	
+	global $ggg_tracer;
+	// $ggg_tracer->outln(__FILE__.": ".__LINE__);
+	// $ggg_tracer->outln('$offset = '.$offset);          // 0
+	// $ggg_tracer->outln('$maxRecords = '.$maxRecords);  // 10
+	//	$ggg_tracer->outln('$sort_mode = '.$sort_mode);    // publishDate_desc
+	//	$ggg_tracer->outln('$find = '.$find);              // ""
+	//	$ggg_tracer->outln('$date = '.$date);              // 1074719153
+	//	$ggg_tracer->outln('$user = '.$user);              // ggeller
+	//	$ggg_tracer->outln('$type = '.$type);              // ""
+	//	$ggg_tracer->outln('$topicId = '.$topicId);        // ""
+
+    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
+    $bindvars=array();
+    if ($find) {
+	$findesc = '%' . $find . '%';
+	$mid .= " and (`title` like ? or `heading` like ? or `body` like ?) ";
+	$bindvars=array($findesc,$findesc,$findesc);
+    }
+    if ($type) {
+	$bindvars[]=$type;
+	if ($mid) {
+	    $mid .= " and `tiki_articles`.`type`=? ";
+	} else {
+	    $mid = " where `tiki_articles`.`type`=? ";
+	}
+    }
+
+    if ($topicId) {
+	$bindvars[] = (int) $topicId;
+	if ($mid) {
+	    $mid .= " and `topicId`=? ";
+	} else {
+	    $mid = " where `topicId`=? ";
+	}
+
+    }
+
+    $query = "select `tiki_articles`.*,
+	`users_users`.`avatarLibName`,
+	`tiki_article_types`.`use_ratings`,
+	`tiki_article_types`.`show_pre_publ`,
+	`tiki_article_types`.`show_post_expire`,
+	`tiki_article_types`.`heading_only`,
+	`tiki_article_types`.`allow_comments`,
+	`tiki_article_types`.`show_image`,
+	`tiki_article_types`.`show_avatar`,
+	`tiki_article_types`.`show_author`,
+	`tiki_article_types`.`show_pubdate`,
+	`tiki_article_types`.`show_expdate`,
+	`tiki_article_types`.`show_reads`,
+	`tiki_article_types`.`show_size`,
+	`tiki_article_types`.`creator_edit`
+	from `tiki_articles`, `tiki_article_types`, `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types`, `users_users` $mid";
+	$query = 'select `hw_assignments`.* from `hw_assignments`ORDER BY `expireDate`'; // GGG
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
+    $ret = array();
+
+    while ($res = $result->fetchRow()) {
+	$res["entrating"] = floor($res["rating"]);
+
+	$add = 1;
+
+	if ($userlib->object_has_one_permission($res["topicId"], 'topic')) {
+	    if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
+		$add = 0;
+	    }
+	}
+	if (empty($res["body"])) {
+	    $res["isEmpty"] = 'y';
+	} else {
+	    $res["isEmpty"] = 'n';
+	}
+	if (strlen($res["image_data"]) > 0) {
+	    $res["hasImage"] = 'y';
+	} else {
+	    $res["hasImage"] = 'n';
+	}
+	$res['count_comments'] = 0;
+
+	// Determine if the article would be displayed in the view page
+	$res["disp_article"] = 'y';
+	$now = date("U");
+	//if ($date) {
+	//	   if (($res["show_pre_publ"] != 'y') and ($now < $res["publishDate"])) {
+	//	       $res["disp_article"] = 'n';
+	//	   }
+	//	   if (($res["show_post_expire"] != 'y') and ($now > $res["expireDate"])) {
+	//	       $res["disp_article"] = 'n';
+	//	   }
+	//}
+
+	if ($add) {
+	    $ret[] = $res;
+	}
+    }
+
+    $retval = array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+}
+  
   function assignment_store($id,$dueDate,$data,$user,$ip,$description){
 	//	global $ggg_tracer;
 	//	$ggg_tracer->outln("$id = ".$id);
@@ -310,7 +776,7 @@ function get_assignment($articleId) {
 	`tiki_article_types`.`show_size`,
 	`tiki_article_types`.`creator_edit`
 	from `hw_assignments`, `tiki_article_types`, `users_users` where `hw_assignments`.`articleId`=?";
-    //$query = "select * from `tiki_articles` where `articleId`=?";
+    //$query = "select * from `hw_assignments` where `articleId`=?";
     $result = $this->query($query,array((int)$articleId));
 //    	global $ggg_tracer;
 //  	$ggg_tracer->outln(__FILE__." line: ".__LINE__);
