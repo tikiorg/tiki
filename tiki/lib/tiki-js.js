@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.25 2003-11-13 06:45:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.26 2003-11-21 11:45:30 sylvieg Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -461,6 +461,10 @@ function textareaSize(elementId, height, width, formId) {
 		 textarea.cols += width;
 		if (form.cols)
 			form.cols.value = textarea.cols;
+		pattern = new RegExp("&cols=[0-9]*");
+		url = location.href.replace(pattern, ""); 
+		url = url + "&cols="+textarea.cols;
+		location.replace(url);
 	}
 }
 
