@@ -354,11 +354,11 @@ class AdminLib extends TikiLib {
 	// Dumps the database to dump/new.tar
 	// changed for virtualhost support
 	function dump() {
-		global $tikidomain, $wikiHomePage;
+		global $tikidomain, $wikiHomePage, $style;
 
 		@unlink ("dump/" . $tikidomain . "new.tar");
 		$tar = new tar();
-		$tar->addFile("styles/main.css");
+		$tar->addFile("styles/$style");
 		// Foreach page
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query,array());
@@ -373,7 +373,7 @@ class AdminLib extends TikiLib {
 			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
 			//print_r($cosas);
-			$data = "<html><head><title>" . $res["pageName"] . "</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='$wikiHomePage.html'>home</a><br/><h1>" . $res["pageName"] . "</h1><div class='wikitext'>" . $dat . '</div></body></html>';
+			$data = "<html><head><title>" . $res["pageName"] . "</title><link rel='StyleSheet' href='styles/$style' type='text/css'></head><body><a class='wiki' href='$wikiHomePage.html'>home</a><br/><h1>" . $res["pageName"] . "</h1><div class='wikitext'>" . $dat . '</div></body></html>';
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
