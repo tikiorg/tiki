@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.27 2004-01-25 14:55:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.28 2004-01-26 03:32:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,79 +65,78 @@ $ins_fields = $fields;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
-	$ins_id = 'ins_' . $fid;
-	$filter_id = 'filter_' . $fid;
-	$fields["data"][$i]["id"] = $filter_id;
-	$ins_fields["data"][$i]["id"] = $ins_id;
-
-	if ($fields["data"][$i]["type"] != 'c' && $fields["data"][$i]["type"] != 'f') {
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
-
-		if (isset($_REQUEST["$ins_id"])) {
-			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-		} else {
-			$ins_fields["data"][$i]["value"] = '';
-		}
-	}
-
-	if ($fields["data"][$i]["type"] == 'i')	{
-	   $userfile=$fields["data"][$i]["value"] ;
-	   if (isset($_FILES[$userfile]) && is_uploaded_file($_FILES[$userfile]['tmp_name'])) {
-	        if (!empty($gal_match_regex)) {
-		  	 if (!preg_match("/$gal_match_regex/", $_FILES[$userfile1]['name'], $reqs)) {
-					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-					$smarty->display("error.tpl");
-					die;
-				}
-			}
-
-			if (!empty($gal_nmatch_regex)) {
-				if (preg_match("/$gal_nmatch_regex/", $_FILES[$userfile]['name'], $reqs)) {
-					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-					$smarty->display("error.tpl");
-					die;
-				}
-			}
-			$type = $_FILES[$userfile]['type'];
-			$size = $_FILES[$userfile]['size'];
-			$filename = $_FILES[$userfile1]['name'];
-			$ins_fields["data"][$i]["value"]=$filename;
-	  }
-	}
 	
+	$ins_id = 'ins_' . $fid;
+	$fields["data"][$i]["ins_id"] = $ins_id;
+	
+	$filter_id = 'filter_' . $fid;
+	$fields["data"][$i]["filter_id"] = $filter_id;
+
 	if ($fields["data"][$i]["type"] == 'f') {
 		$fields["data"][$i]["value"] = '';
-
+		$ins_fields["data"][$i]["value"] = '';
 		if (isset($_REQUEST["$ins_id" . "Day"])) {
 			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
-				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
+			0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 		} else {
 			$ins_fields["data"][$i]["value"] = date("U");
 		}
-	}
-	if ($fields["data"][$i]["type"] == 'e') {
+	
+	} elseif ($fields["data"][$i]["type"] == 'e') {
 		include_once('lib/categories/categlib.php');
 		$k = $ins_fields["data"][$i]["options"];
 		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-	}
-	if ($fields["data"][$i]["type"] == 'c') {
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
+	
+	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
 		} else {
 			$ins_fields["data"][$i]["value"] = 'n';
 		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+
+	} else {
+		if (isset($_REQUEST["$ins_id"])) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+		} else {
+			$ins_fields["data"][$i]["value"] = '';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+		if ($fields["data"][$i]["type"] == 'i')	{
+			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
+				if (!empty($gal_match_regex)) {
+					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+						$smarty->display("error.tpl");
+						die;
+					}
+				}
+				if (!empty($gal_nmatch_regex)) {
+					if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+						$smarty->display("error.tpl");
+						die;
+					}
+				}
+				$type = $_FILES["$ins_id"]['type'];
+				$size = $_FILES["$ins_id"]['size'];
+				$filename = $_FILES["$ins_id"]['name'];
+				$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
+				$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+				$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+			}
+		}
 	}
 }
-//var_dump($ins_fields);
+
 if ($tiki_p_admin_trackers == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers');
