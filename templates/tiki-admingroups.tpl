@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.25 2004-01-14 09:25:16 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.26 2004-01-14 20:34:06 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -17,13 +17,19 @@
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
 <br /><br /><br />
 
-{cycle name=tabs values="1,2,3" print=false advance=false}
+{cycle name=tabs values="1,2,3,4" print=false advance=false}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}List{/tr}</span>
 <span id="tab{cycle name=tabs}" class="tab">{tr}Add/Edit{/tr}</span>
+{if $ins_fields}
+<span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
+{/if}
+{if $memberslist}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Members{/tr}</span>
+{/if}
 </div>
 
-{cycle name=content values="1,2,3" print=false advance=false}
+{cycle name=content values="1,2,3,4" print=false advance=false}
 
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}List of existing groups{/tr}</h3>
@@ -162,3 +168,38 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 <br /><br />
 
 </div>
+
+{if $ins_fields}
+<div id="content{cycle name=content}" class="content">
+<h3>{tr}Additionnal information{/tr}</h3>
+<table class="normal">
+{section name=ix loop=$ins_fields}
+{if $fields[ix].type eq 'h'}
+</table>
+<h3>{$fields[ix].label}</h3>
+<table class="normal">
+{elseif $fields[ix].type ne 'x'}
+<tr class="formcolor"><td>{$fields[ix].label}</td>
+<td>
+{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
+{$ins_fields[ix].value|date_format:$daformat}
+{elseif $ins_fields[ix].type eq 'a'}
+{$ins_fields[ix].pvalue}
+{else}
+{$ins_fields[ix].value}
+{/if}
+</td>
+</tr>
+{/if}
+{/section}
+</table>
+</div>
+{/if}
+
+{if $memberslist}
+<div id="content{cycle name=content}" class="content">
+<h3>{tr}Members List{/tr}</h3>
+
+</div>
+{/if}
+

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.22 2004-01-05 05:52:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.23 2004-01-14 20:34:06 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,6 @@ $smarty->assign('tracker_info', $tracker_info);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
-
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$name = $fields["data"][$i]["name"];
 	$ins_name = 'ins_' . $name;
@@ -145,7 +144,6 @@ if ($_REQUEST["itemId"]) {
 			if ($fields["data"][$i]["type"] == 'a') {
 				$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
 			}
-		// var_dump($info);
 		}
 	}
 }
