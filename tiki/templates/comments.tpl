@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.27 2003-11-16 00:19:54 xenfasa Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.28 2003-11-21 11:51:09 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
