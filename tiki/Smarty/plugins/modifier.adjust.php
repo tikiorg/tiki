@@ -7,7 +7,8 @@
  * Name:     adjust
  * Purpose:  Adjust a string to a certain length if necessary,
  *           optionally splitting in the middle of a word, and 
- *           appending the $etc string.
+ *           appending the $etc string or padding the string
+ *			 using $pad as filler.
  * -------------------------------------------------------------
  */
 function smarty_modifier_adjust($string, $length = 80, 
@@ -33,7 +34,5 @@ function smarty_modifier_adjust($string, $length = 80,
     }
      
 }
-
-/* vim: set expandtab: */
 
 ?>

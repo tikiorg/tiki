@@ -597,7 +597,7 @@ $auth_ldap_groupdn = "";
 $smarty->assign('auth_ldap_groupdn',$auth_ldap_groupdn);
 $auth_ldap_groupattr = "cn";
 $smarty->assign('auth_ldap_groupattr',$auth_ldap_groupattr);
-$auth_ldap_groupoc = "grouOfUniqueNames";
+$auth_ldap_groupoc = "groupOfUniqueNames";
 $smarty->assign('auth_ldap_groupoc',$auth_ldap_groupoc);
 $auth_ldap_memberattr = "uniqueMember";
 $smarty->assign('auth_ldap_memberattr',$auth_ldap_memberattr);
