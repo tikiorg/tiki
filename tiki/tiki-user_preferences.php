@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.47 2004-05-06 04:47:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.48 2004-05-07 21:40:47 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -270,7 +270,7 @@ $smarty->assign('minPrio', $minPrio);
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
 
-$styles = array();
+$sty = array();
 $h = opendir("styles/");
 while ($file = readdir($h)) {
 	if (strstr($file, ".css") and substr($file,0,1) != '.') {
@@ -279,7 +279,7 @@ while ($file = readdir($h)) {
 }
 closedir($h);
 if ($tikidomain) {
-	$h = opendir("styles/");
+	$h = opendir("styles/$tikidomain");
 	while ($file = readdir($h)) {
   	if (strstr($file, ".css") and substr($file,0,1) != '.') {
 	    $sty["$file"] = 1;
