@@ -1,4 +1,3 @@
-<div class="simplebox">
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
 {if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
 
@@ -15,7 +14,7 @@
 </div>
 {/if}
 
-<table class="normal">
+<table class="normal" width="96%">
 <tr>
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
@@ -72,7 +71,7 @@
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 
 {elseif $items[user].field_values[ix].type eq 'c'}
-{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
+[ {$items[user].field_values[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"} ]
 
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}" alt="" />
@@ -88,6 +87,10 @@
 {if $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}
 <td class="auto">
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
+</td>
+{elseif $items[user].field_values[ix].type eq 'c'}
+<td class="auto">
+{$items[user].field_values[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"|default:"{tr}No{/tr}"}
 </td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
@@ -150,4 +153,3 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 </div>
 {/if}
 
-</div>
