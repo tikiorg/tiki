@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.25 2004-09-24 15:54:34 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.26 2004-10-18 22:31:29 redflo Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -67,51 +67,6 @@ PRIMARY KEY ( id )
 
 #
 # Opinion-Network tables END
-#
-
-#
-# Imagegals enhancements
-#
-
-ALTER TABLE tiki_galleries ADD COLUMN (
-	sortorder VARCHAR(20) NOT NULL DEFAULT 'created',
-	sortdirection VARCHAR(4) NOT NULL DEFAULT 'desc',
-	galleryimage VARCHAR(20) NOT NULL DEFAULT 'first'
-);
-
-ALTER TABLE tiki_galleries ADD COLUMN (
-	parentgallery int(14) NOT NULL default -1
-);
-
-ALTER TABLE tiki_galleries ADD COLUMN (
-	showname char(1) NOT NULL DEFAULT 'y',
-	showimageid char(1) NOT NULL DEFAULT 'n',
-	showdescription char(1) NOT NULL DEFAULT 'n',
-	showcreated char(1) NOT NULL DEFAULT 'n',
-	showuser char(1) NOT NULL DEFAULT 'n',
-	showhits char(1) NOT NULL DEFAULT 'y',
-	showxysize char(1) NOT NULL DEFAULT 'y',
-	showfilesize char(1) NOT NULL DEFAULT 'n',
-	showfilename char(1) NOT NULL DEFAULT 'n'
-);
-
-ALTER TABLE tiki_galleries ADD COLUMN (
-        defaultscale varchar(10) NOT NULL DEFAULT 'o'
-);
-
-# simplify scales
-
-alter table tiki_galleries_scales add column (scale int(11) NOT NULL default 0);
-update tiki_galleries_scales set scale=greatest(xsize,ysize);
-alter table tiki_galleries_scales drop primary key;
-alter table tiki_galleries_scales drop column xsize;
-alter table tiki_galleries_scales drop column ysize;
-alter table tiki_galleries_scales add primary key (galleryId,scale);
-
-
-
-#
-# End Imagegals enhancements
 #
 
 # added on 2004-9-2 sylvie
