@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.6 2003-08-28 20:22:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.7 2003-08-28 20:33:53 sylvieg Exp $ *}
 
 {if $feature_live_support eq 'y'}
 <div class="box">
@@ -7,7 +7,7 @@
 </div>
 <div class="box-data" align="center" style="margin:0px;padding:0px;">
 {if $modsupport > 0}
-<a href='javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");'><img border="0" src="tiki-live_support_server.php?operators_online=1" alt="image" /></a>
+<a href="#" onClick='javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");'><img border="0" src="tiki-live_support_server.php?operators_online=1" alt="image" /></a>
 {else}
 <img border="0" src="tiki-live_support_server.php?operators_online=0" alt="image" />
 {/if}
