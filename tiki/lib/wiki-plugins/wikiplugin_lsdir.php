@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lsdir.php,v 1.1 2004-07-02 18:39:53 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lsdir.php,v 1.2 2004-07-02 18:48:40 teedog Exp $
  *
  * TikiWiki LSDIR plugin: lists files in a directory
  * 
@@ -45,7 +45,13 @@ function wikiplugin_lsdir($data, $params) {
 		$getkey = 'filesize';
 	}
 
-	$dh = opendir($dir);
+	$dh = @opendir($dir);
+	
+	if (!$dh) {
+		$error = "<span class='attention'>". tra('Permission denied when opening') . " <b>$dir</b></span>";
+		return $error;
+	}
+	
 	while ($file = readdir($dh)) {
 		if (empty($filter) || strpos($file,$filter)) {
 			//Don't list subdirectories
