@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.53 2004-03-01 07:30:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.54 2004-03-01 09:34:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -351,8 +351,8 @@ if ($_REQUEST["itemId"]) {
 					//ob_start();var_dump($last);$output = ob_get_contents();ob_end_clean();
 					//$ins_fields["data"][$i]["links"][] = $output;
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
-					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($ins_fields["data"][$i]["options_array"][0],$ins_fields["data"][$i]["options_array"][1],$info["$fid"]);
-					$ins_fields["data"][$i]["value"] = $info["$fid"];
+					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info[$fid]);
+					$ins_fields["data"][$i]["value"] = $info[$fid];
 					$ins_fields["data"][$i]["type"] = 't';
 				} elseif ($fields["data"][$i]["type"] == 'u') {
 					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
