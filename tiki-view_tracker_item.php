@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.55 2004-03-01 10:17:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.56 2004-03-04 05:23:54 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,22 +21,27 @@ if ($feature_trackers != 'y') {
 
 if ($userTracker == 'y') {
 	if (isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == ' user') {
-		$_REQUEST['trackerId'] = $userlib->get_usertrackerid($group);
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'Login',$user);
+		$utid = $userlib->get_usertrackerid($group);
+		var_dump($utid);
+		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$user);
 	} elseif (isset($_REQUEST["usertracker"]) and $tiki_p_admin == 'y') {
 		$thatgroup = $userlib->get_user_default_group($_REQUEST["usertracker"]);
-		$_REQUEST["trackerId"] = $userlib->get_usertrackerid($thatgroup);
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'Login',$_REQUEST["usertracker"]);
+		$utid = $userlib->get_usertrackerid($thatgroup);
+		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$utid['usersFieldId'],$_REQUEST["usertracker"]);
 	}
 }
 
 if ($groupTracker == 'y') {
 	if (isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == ' group') {
-		$_REQUEST['trackerId'] = $userlib->get_grouptrackerid($group);
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'groupName',$group);
+		$gtid = $userlib->get_grouptrackerid($group);
+		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$group);
 	} elseif (isset($_REQUEST["grouptracker"]) and $tiki_p_admin == 'y') {
-		$_REQUEST["trackerId"] = $userlib->get_grouptrackerid($_REQUEST["grouptracker"]);
-		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'groupName',$_REQUEST["grouptracker"]);
+		$gtid = $userlib->get_grouptrackerid($_REQUEST["grouptracker"]);
+		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$_REQUEST["grouptracker"]);
 	}
 }
 

@@ -188,8 +188,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
 <a class="tablename" href="#" title="{tr}more info{/tr}"
-onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return
-true;"><img src="img/icons/question.gif" border="0" alt="{tr}question{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
+onClick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');"><img src="img/icons/question.gif" border="0" alt="{tr}question{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
 class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}download{/tr}" hspace="8" vspace="O" /></a>
 </td>
 {foreach key=k item=x from=$attfields}
