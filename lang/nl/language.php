@@ -772,18 +772,6 @@ $lang=Array(
 // "admin modules" => "admin modules", // ## CLOSE: Admin Modules=>Modules beheren // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl, ./templates/tiki-admin_modules.tpl
 // "admin modules tpl" => "admin modules tpl", // ## CLOSE: Admin Modules=>Modules beheren // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl, ./templates/tiki-admin_modules.tpl
 // "\r\n<b>Note 1</b>: if you allow your users to configure modules then assigned\r\nmodules won't be reflected in the screen until you configure them\r\nfrom MyTiki->modules.<br />\r\n<b>Note 2</b>: If you assign modules to groups make sure that you\r\nhave turned off the option 'display modules to all groups always'\r\nfrom Admin->General\r\n" => "\r\n<b>Note 1</b>: if you allow your users to configure modules then assigned\r\nmodules won't be reflected in the screen until you configure them\r\nfrom MyTiki->modules.<br />\r\n<b>Note 2</b>: If you assign modules to groups make sure that you\r\nhave turned off the option 'display modules to all groups always'\r\nfrom Admin->General\r\n", // ## CLOSE: 
-<b>Note 1</b>: if you allow your users to configure modules then assigned
-modules won't be reflected in the screen until you configure them
-from MyTiki->modules.<br/>
-<b>Note 2</b>: If you assign modules to groups make sure that you
-have turned off the option 'display modules to all groups always'
-from Admin->General
-=>
-<b>Noot 1</b>: als u uw gebruikers toestaat om modules te configureren
-dan zullen toegekende modules niet weergegeven worden op het scherm
-tot u hen configureert vanuit MijnTiki->modules.<br/>
-<b>Noot 2</b>: Als u modules toekent aan groepen zorg er dan voor dat
-u de optie 'Modules altijd aan alle groepen tonen' uitgeschakeld heeft  // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl
 // "Assign new module" => "Assign new module", // ## CLOSE: assign module=>module toekennen // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl, ./templates/tiki-admin_modules.tpl
 // "Visibility" => "Visibility", // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl, ./templates/tiki-admin_modules.tpl
 // "Displayed for the eligible users with no personal assigned modules" => "Displayed for the eligible users with no personal assigned modules", // ## MODULES ./templates/styles/musus/tiki-admin_modules.tpl, ./templates/tiki-admin_modules.tpl
