@@ -110,9 +110,9 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('code', $res["code"]);
 		$smarty->assign('url_subscribe', $url_subscribe);
-		$mail_data = $smarty->fetch('mail/newsletter_welcome.tpl');
-		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
+		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
+		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
 		$mail = new htmlMimeMail();
 		$mail->setFrom($sender_email);
 		$mail->setSubject(encodeString(sprintf(tra("Welcome to %s at %s", $lg), $info["name"], $_SERVER["SERVER_NAME"]), $charset));
@@ -147,9 +147,9 @@ class NlLib extends TikiLib {
 		$user = $userlib->get_user_by_email($res["email"]); //global $user is not necessary defined as the user is not necessary logged in
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
-		$mail_data = $smarty->fetch('mail/newsletter_byebye.tpl');
-		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
+		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
+		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
 		$mail = new htmlMimeMail();
 		$mail->setFrom($sender_email);
 		$mail->setSubject(encodeString(sprintf(tra("Bye bye from %s at %s", $lg), $info["name"], $_SERVER["SERVER_NAME"]), $charset));
