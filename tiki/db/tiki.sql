@@ -213,8 +213,7 @@ create table users_users(
 
 ### ADministrator account
 insert into users_users(email,login,password,realname,hash) values('','admin','admin','System Administrator',md5('admin'));
-update users_users set currentLogin=lastLogin;
-update users_users set registrationDate=lastLogin;
+update users_users set currentLogin=lastLogin,registrationDate=lastLogin;
 
 
 DROP TABLE IF EXISTS users_groups;
@@ -1316,7 +1315,7 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_
 ### Newsletters
 
 
-# $Id: tiki.sql,v 1.21 2003-01-13 16:26:04 lrargerich Exp $
+# $Id: tiki.sql,v 1.22 2003-02-12 16:11:23 rossta Exp $
 
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_webmail','webmail','Can use webmail');
