@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.52 2004-06-17 14:40:26 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.53 2004-06-17 16:28:14 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,59 +143,60 @@ if (isset($_REQUEST['info'])) {
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 }
 
-if (isset($_REQUEST['chgemail'])) {
+if (isset($_REQUEST['chgadmin'])) {
 	check_ticket('user-prefs');
-	// check user's password
+
 	if (isset($_REQUEST['pass'])) {
-		$pass = $_REQUEST['pass'];
+	    $pass = $_REQUEST['pass'];
 	} else {
-		$pass = '';
+	    $pass = '';
 	}
-	if (!$userlib->validate_user($userwatch, $pass, '', '')) {
-		$smarty->assign('msg', tra("Invalid password.  You current password is required to change your email address."));
 
+	// check user's password, admin doesn't need it to change other user's info
+	if ($tiki_p_admin != 'y' || $user == $userwatch) {
+
+	    if (!$userlib->validate_user($userwatch, $pass, '', '')) {
+		$smarty->assign('msg', tra("Invalid password.  You current password is required to change administrative info"));
+		
 		$smarty->display("error.tpl");
 		die;
+	    }
+	}
+	
+	if (!empty($_REQUEST['email'])) {
+	    $userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
 	}
 
-	$userlib->change_user_email($userwatch, $_REQUEST['email'], $_REQUEST['pass']);
-}
+	// If user has provided new password, let's try to change
+	if (!empty($_REQUEST["pass1"])) {
 
-if (isset($_REQUEST["chgpswd"])) {
-	check_ticket('user-prefs');
-	if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
+	    if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
 		$smarty->assign('msg', tra("The passwords didn't match"));
-
+		
 		$smarty->display("error.tpl");
 		die;
-	}
+	    }
 
-	// admin can change password of __other__ users without giving old password
-	if (($tiki_p_admin != 'y' || $user == $userwatch) && !$userlib->validate_user($userwatch, $_REQUEST["old"], '', '')) {
-		$smarty->assign('msg', tra("Invalid old password"));
-		$smarty->display("error.tpl");
-		die;
-	}
-
-	//Validate password here
-	if (strlen($_REQUEST["pass1"]) < $min_pass_length) {
+	    //Validate password here
+	    if (strlen($_REQUEST["pass1"]) < $min_pass_length) {
 		$smarty->assign('msg', tra("Password should be at least"). ' ' . $min_pass_length . ' ' . tra("characters long"));
-
+		
 		$smarty->display("error.tpl");
 		die;
-	}
+	    }
 
-	// Check this code
-	if ($pass_chr_num == 'y') {
+	    // Check this code
+	    if ($pass_chr_num == 'y') {
 		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass1"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass1"], $foo)) {
-			$smarty->assign('msg', tra("Password must contain both letters and numbers"));
-
-			$smarty->display("error.tpl");
-			die;
+		    $smarty->assign('msg', tra("Password must contain both letters and numbers"));
+		    
+		    $smarty->display("error.tpl");
+		    die;
 		}
-	}
+	    }
 
-	$userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
+	    $userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
+	}
 }
 
 if (isset($_REQUEST['messprefs'])) {
