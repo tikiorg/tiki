@@ -33,7 +33,7 @@
 
 {cycle name=content values="1,2,3,4" print=false advance=false}
 {* --- tab with list --- *}
-<div id="content{cycle name=content assign=focustab}" class="wikitext" {if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext" {if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 
 <div  align="center">
@@ -83,7 +83,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 </div>
 
 {* --- tab with form --- *}
-<div id="content{cycle name=content assign=focustab}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
 <div class="simplebox">
@@ -182,7 +182,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 </div>
 
 {* --- tab with raw form --- *}
-<div id="content{cycle name=content assign=focustab}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Import/export trackers{/tr}</h2>
 
 <form action="tiki-admin_trackers.php" method="post">
