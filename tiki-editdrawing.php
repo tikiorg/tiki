@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.11 2003-09-25 01:05:15 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.12 2003-11-27 22:44:40 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.11 2003-09-25 01:05:15 rlpowell Exp $
-include_once ("tiki-setup_base.php");
+# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.12 2003-11-27 22:44:40 ohertel Exp $
+require_once ("tiki-setup.php");
 
 if (($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y')) {
 	die;
@@ -20,7 +20,9 @@ if (isset($_REQUEST["close"])) {
 	die;
 }
 
-$tikilib->invalidate_cache($_REQUEST['page']);
+if (isset($_REQUEST['page'])) {
+  $tikilib->invalidate_cache($_REQUEST['page']);
+}  
 $name = $_REQUEST["drawing"];
 $path = $_REQUEST["path"];
 
