@@ -2,10 +2,10 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
-/* $Id: taillib.php,v 1.3 2004-03-27 21:24:42 mose Exp $*/
+/* $Id: taillib.php,v 1.4 2004-03-29 21:26:40 mose Exp $*/
 function tail_filter_irc(&$item, $key) {
 	# here is a sample line
 	# [06-24-03/05:13] <mose> how is everyone ?

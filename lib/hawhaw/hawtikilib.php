@@ -2,10 +2,10 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.10 2004-03-27 21:24:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.11 2004-03-29 21:26:34 mose Exp $
 
 // HAWHAW function library for TikiWiki
 // Last modified: 13. December 2003

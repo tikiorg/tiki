@@ -17,14 +17,14 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.4 2004-03-27 21:24:05 mose Exp $
+// $Id: TimeZoneWindows.php,v 1.5 2004-03-29 21:26:30 mose Exp $
 //
 // Date_TimeZone Class Windows Support File
 //
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 /**

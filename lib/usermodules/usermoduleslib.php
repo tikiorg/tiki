@@ -1,13 +1,13 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.24 2004-03-27 21:24:47 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.25 2004-03-29 21:26:41 mose Exp $
  *
  * \brief Manage user assigned modules
  */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 include_once ('lib/debug/debugger.php');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.7 2004-03-27 21:24:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.8 2004-03-29 21:26:29 mose Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,7 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 /*!

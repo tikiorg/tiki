@@ -2,7 +2,7 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 //$api_tiki        = 'pear';
@@ -145,13 +145,41 @@ unset ($user_tiki);
 unset ($pass_tiki);
 unset ($dbs_tiki);
 
+
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
+// 29 Mar 2004 DJNZ www.paulbloomfield.com
+
+// helper functions
+function make_clean(&$var) {
+	if ( is_array($var) ) {
+		foreach ( $var as $key=>$val ) {
+			make_clean($var[$key]);
+		}
+	} else {
+		$var = htmlspecialchars($var, ENT_QUOTES);
+	}
+}
+
+// call this from anywhere to restore a variable passed in $_GET
+function get_unclean($var) {
+	if ( is_array($var) ) {
+		foreach ( $var as $key=>$val ) {
+			$ret[$key] = get_unclean($val);
+		}
+	} else {
+		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)));
+	}
+	return $ret;
+}
 
 // deal with register_globals
 if ( ini_get('register_globals') ) {
-	foreach ( array_merge($_ENV, $_REQUEST, $SERVER) as $key=>$val ) {
-		if ( $GLOBALS[$key]==$val ) { // if global has been set some other way that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
-			unset($GLOBALS[$key]);
+	foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
+		foreach ( $superglob as $key=>$val ) {
+			if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
+				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
+				unset($GLOBALS[$key]);
+			}
 		}
 	}
 }
@@ -172,11 +200,11 @@ if ( get_magic_quotes_gpc() ) { // don't do this here because Tiki must already 
 */
 
 // deal with attempted <script> attacks and any other trash in URI
-// note that embedded tags in post and cookie must be handled specifically by code
-// as they might be valid!
-foreach ( $_GET as $key=>$val ) {
-	$_GET[$key] = htmlspecialchars($val);
-}
+// note that embedded tags in post, post files and cookie must be handled
+// specifically by code as they might be valid!
+make_clean($_GET);
+make_clean($_SERVER['QUERY_STRING']);
+make_clean($_SERVER['REQUEST_URI']);
 
 // rebuild in a safe order
 $_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);

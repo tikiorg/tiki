@@ -16,12 +16,12 @@
 // | Author: Allan Kent <allan@lodestone.co.za>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Human.php,v 1.2 2004-03-27 21:24:05 mose Exp $
+// $Id: Human.php,v 1.3 2004-03-29 21:26:30 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 /**
