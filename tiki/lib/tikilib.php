@@ -7268,7 +7268,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $aux["len"] = $res["len"];
       $aux["comment"] = $res["comment"];
       $aux["version"] = $res["version"];
-      $aux["flag"] = $res["flag"] == 'y' ? 'locked' : 'unlocked';
+      $aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
       $aux["versions"] = $this->db->getOne("select count(*) from tiki_history where pageName='$page'");
       $aux["links"] = $this->db->getOne("select count(*) from tiki_links where fromPage='$page'");
       $aux["backlinks"] = $this->db->getOne("select count(*) from tiki_links where toPage='$page'");

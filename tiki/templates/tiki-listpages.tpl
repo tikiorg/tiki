@@ -1,10 +1,10 @@
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br/><br/>
 <table class="findtable">
-<tr><td class="findtitle">Find</td>
+<tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
    <form method="get" action="tiki-listpages.php">
      <input type="text" name="find" value="{$find}" />
-     <input type="submit" value="find" name="search" />
+     <input type="submit" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
@@ -30,7 +30,7 @@
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
 {if $tiki_p_edit eq 'y'}
-<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">edit</a>)
+<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
 {/if}
 </td>
 <td class="odd">&nbsp;{$listpages[changes].hits}&nbsp;</td>
@@ -54,7 +54,7 @@
 {else}
 <td class="even">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
 {if $tiki_p_edit eq 'y'}
-<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">edit</a>)
+<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
 {/if}
 </td>
 <td class="even">&nbsp;{$listpages[changes].hits}&nbsp;</td>
