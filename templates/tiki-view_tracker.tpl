@@ -214,6 +214,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <h3>{tr}Insert new item{/tr}</h3>
 <table class="normal">
 {section name=ix loop=$fields}
+{assign var=fid value=$fields[ix].fieldId}
 
 {if $fields[ix].type ne 'x' and $fields[ix].type ne 'l'}
 {if $fields[ix].type eq 'h'}
@@ -234,7 +235,11 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
+{if $dvals.fields[ix].fieldId}
+<option value="{$one|escape}"{if $one eq $dvals.fields[ix].fieldId} selected="selected"{/if}>{$one}</option>
+{else}
 <option value="{$one|escape}">{$one}</option>
+{/if}
 {/foreach}
 </select>
 
@@ -258,11 +263,11 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <input type="file" name="{$fields[ix].ins_id}"/>
 
 {elseif $fields[ix].type eq 't'}
-<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} />
+<input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} value="{$defaultvalues.$fid|escape}" />
 {if $fields[ix].options_array[2]}<span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>{/if}
 
 {elseif $fields[ix].type eq 'a'}
-<textarea name="{$fields[ix].ins_id}" rows="4" cols="50"></textarea>
+<textarea name="{$fields[ix].ins_id}" rows="4" cols="50">{$defaultvalues.$fid|escape}</textarea>
 
 {elseif $fields[ix].type eq 'f'}
 {html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
@@ -270,12 +275,12 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {elseif $fields[ix].type eq 'd'}
 <select name="{$fields[ix].name}">
 {section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]|escape}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+<option value="{$fields[ix].options_array[jx]|escape}" {if $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
 
 {elseif $fields[ix].type eq 'c'}
-<input type="checkbox" name="{$fields[ix].ins_id}" {if $fields[ix].value eq 'y'}checked="checked"{/if}/>
+<input type="checkbox" name="{$fields[ix].ins_id}" {if $defaultvalues.$fid eq 'y'}checked="checked"{/if}/>
 
 {elseif $fields[ix].type eq 'j'}
 <input type="hidden" name="ins_{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
@@ -294,13 +299,9 @@ align       : "bR"
 </script>
 
 {elseif $fields[ix].type eq 'r'}
-<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
-
-{elseif $fields[ix].type eq 'l'}
-<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
+<input type="text" name="{$fields[ix].ins_id}" value="{$defaultvalues.$fid|escape}" {if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
 
 {/if}
-
 
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
 </td>{assign var=stick value="y"}
