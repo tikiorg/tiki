@@ -1,14 +1,61 @@
 <a class="pagetitle" href="tiki-live_support_admin.php">{tr}Live support system{/tr}</a>
 <br/><br/>
 [ <a class="link" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a> |
-<a class="link" {jspopup width="300" height="450" href="tiki-live_support_client.php"}>{tr} Open client window{/tr}</a> ]
+<a class="link" {jspopup width="300" height="450" href="tiki-live_support_client.php"}>{tr} Open client window{/tr}</a> |
+<a class="link" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a> ]
 <br/><br/>
-
+{if $html}
+	<b>Generated HTML code:</b><br/>
+	Copy-paste the following XHTML snippet in the pages where you want to provide live support.<br/>
+	<table>
+	<tr>
+		<td>
+		<small>HTML code</small><br/>	
+		<textarea rows="5" cols="60">{$html|escape}</textarea>
+		</td>
+		<td>
+		<small>result</small><br/>
+		{$html}
+		</td>
+	</tr>
+	</table>	
+{/if}
 {if count($online_operators) > 0}
 <h3>{tr}Online operators{/tr}</h3>
+<table class="normal">
+	<tr>
+		<td width="2%" class="heading" style="text-align:center;">	
+		{tr}Operator{/tr}
+		</td>
+		<td class="heading" colspan='2'>
+		{tr}stats{/tr}
+		</td>		
+	</tr>
+{cycle values='odd,even' print=false}	
 {section name=ix loop=$online_operators}
-{$online_operators[ix].user|avatarize}<br/>
+<tr>
+		<td width="2%" class="{cycle advance=false}" style="text-align:center;">
+			{$online_operators[ix].user|avatarize}<br />	
+			<b>{$online_operators[ix].user}</b>
+		</td>
+		<td class="{cycle advance=false}">
+			<table width="100%">
+				<tr>
+					<td>{tr}Accepted requests{/tr}:</td>
+					<td>{$online_operators[ix].accepted_requests}</td>
+				</tr>
+				<tr>
+					<td>{$online_operators[ix].status} {tr}since{/tr}:</td>
+					<td>{$online_operators[ix].status_since|tiki_short_datetime}</td>
+				</tr>
+			</table>
+		</td>
+		<td class="{cycle}" style="text-align:right;">
+		<a href='tiki-live_support_admin.php?removeuser={$offline_operators[ix].user}'><img src='img/icons/trash.gif' border='0' alt='{tr}del{/tr}' title='{tr}del{/tr}' /></a>
+		</td>
+	</tr>
 {/section}
+</table>
 {/if}
 
 {if count($offline_operators) > 0}

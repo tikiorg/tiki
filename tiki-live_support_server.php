@@ -36,15 +36,28 @@ if(isset($_REQUEST['set_operator_status'])) {
 	$lslib->set_operator_status($_REQUEST['set_operator_status'],$_REQUEST['status']);
 }
 
+if(isset($_REQUEST['operators_online'])) {
+	if($lslib->operators_online()) {
+		header("Content-type: image/gif");
+		readfile('img/icons/support_on.gif');
+	} else {
+		header("Content-type: image/gif");
+		readfile('img/icons/support_off.gif');
+	}
+}
+
 if(isset($_REQUEST['write'])) {
 	if($_REQUEST['role']=='operator') {
-	
+		$color='blue';
 	}
 	if($_REQUEST['role']=='user') {
-	
+		$color='black';
 	}
-	if(!strstr('has left the chat',$_REQUEST['msg'])) {
-		$_REQUEST['msg']='('.$_REQUEST['name'].')'.' '.$_REQUEST['msg'];
+	if($_REQUEST['role']=='observer') {
+		$color='grey';
+	}
+	if(!strstr($_REQUEST['msg'],'has left')) {
+		$_REQUEST['msg']='<span style="color:'.$color.';">('.$_REQUEST['name'].')'.' '.$_REQUEST['msg'].'</span>';
 	}
 	$lslib->put_message($_REQUEST['write'],$_REQUEST['msg'],$_REQUEST['senderId']);
 }

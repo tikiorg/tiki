@@ -8,6 +8,18 @@ header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");                          // HTTP/1.0
 
+if($feature_live_support != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
+
+if(!$lslib->operators_online()) {
+	header("location: tiki-live_support_message.php");
+	die;
+}
+
 $smarty->assign('senderId',md5(uniqid('.')));
 if($user) {
   $smarty->assign('user_email',$tikilib->get_user_email($user));

@@ -205,7 +205,10 @@ class Lslib {
   	$this->query($query);
   }
   
-    
+  function operators_online()
+  {
+  	return $this->getOne("select count(*) from tiki_live_support_operators where status='online'");
+  }    
 
 }
 

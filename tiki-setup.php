@@ -361,6 +361,9 @@ $smarty->assign('feature_phpopentracker',$feature_phpopentracker);
 $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
 
+$feature_live_support = 'n';
+$smarty->assign('feature_live_support',$feature_live_support);
+
 $feature_wiki_usrlock = 'n';
 $smarty->assign('feature_wiki_usrlock',$feature_wiki_usrlock);
 

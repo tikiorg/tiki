@@ -4,6 +4,11 @@ require_once('tiki-setup.php');
 include('lib/live_support/lsadminlib.php');
 include('lib/live_support/lslib.php');
 
+if($feature_live_support != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
 
 if($tiki_p_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -11,7 +16,11 @@ if($tiki_p_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
     die;
 }
 
-
+$smarty->assign('html',false);
+if(isset($_REQUEST['show_html'])) {
+	$html='<a href="#" onClick=\'javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");\'><img border="0" src="tiki-live_support_server.php?operators_online" alt="image" /></a>';
+	$smarty->assign('html',$html);
+}
 
 if(isset($_REQUEST['adduser'])) {
 	$lsadminlib->add_operator($_REQUEST['user']);
