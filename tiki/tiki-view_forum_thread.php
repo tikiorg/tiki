@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.67 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.68 2004-06-29 21:21:49 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,12 +30,21 @@ if (!isset($_REQUEST['comments_parentId'])) {
     die;
 }
 
+include_once ("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
+$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
+$comments_default_ordering = $forum_info["topicOrdering"];
+
 if (!isset($_REQUEST['topics_offset'])) {
     $_REQUEST['topics_offset'] = 1;
 }
 
 if(!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode'])) {
-    $_REQUEST['topics_sort_mode'] = 'commentDate_desc';
+    $_REQUEST['topics_sort_mode'] = $comments_default_ordering;
+    $smarty->assign('topics_sort_mode_param', NULL);
+} else {
+	$topics_sort_mode_param = '&topics_sort_mode=' . $_REQUEST['topics_sort_mode'];
+	$smarty->assign('topics_sort_mode_param', htmlspecialchars($topics_sort_mode_param));
 }
 
 if (!isset($_REQUEST['topics_find'])) {
@@ -80,13 +89,9 @@ if( isset( $_REQUEST["comments_reply_threadId"] ) )
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
 
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
-
-$forum_info = $commentslib->get_forum($_REQUEST["forumId"]);
 
 $smarty->assign('individual', 'n');
 
