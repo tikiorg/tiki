@@ -541,7 +541,8 @@ class UsersLib extends TikiLib {
 
 	// set additional attributes here
 	$userattr = array();
-	$userattr["email"] = $this->getOne("select `email` from `users_users` where `login`='$user'");
+	$userattr["email"] = $this->getOne("select `email` from `users_users`
+			where `login`=?", array($user));
 
 	// set the Auth options
 	$a = new Auth("LDAP", $options);
@@ -592,20 +593,22 @@ class UsersLib extends TikiLib {
     }
 
     function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $find = '') {
-	$sort_mode = str_replace("_", " ", $sort_mode);
+	$sort_mode = $this->convert_sortmode($sort_mode);
 
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 	if ($find) {
-	    $mid = " where `login` like '%" . $find . "%'";
+	    $mid = " where `login` like ?";
+	    $bindvars = array('%'.$find.'%');
 	} else {
 	    $mid = '';
+	    $bindvars = array();
 	}
 
-	$query = "select * from `users_users` $mid order by $sort_mode limit $offset,$maxRecords";
+	$query = "select * from `users_users` $mid order by $sort_mode";
 
-	$query_cant = "select count(*) from users_users";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$query_cant = "select count(*) from `users_users`";
+	$result = $this->query($query, $bindvars, $maxRecords, $offset);
+	$cant = $this->getOne($query_cant, array());
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -628,9 +631,10 @@ class UsersLib extends TikiLib {
     }
 
     function group_inclusion($group, $include) {
-	$query = "replace into tiki_group_inclusion(groupName,includeGroup) values('$group','$include')";
+	$query = "insert into `tiki_group_inclusion`(`groupName`,`includeGroup`)
+		values(?,?)";
 
-	$result = $this->query($query);
+	$result = $this->query($query, array($group, $include));
     }
 
     function get_included_groups($group) {
@@ -652,8 +656,9 @@ class UsersLib extends TikiLib {
     function remove_user_from_group($user, $group) {
 	$userid = $this->get_user_id($user);
 
-	$query = "delete from `users_usergroups` where `userId`=$userid and groupName='$group'";
-	$result = $this->query($query);
+	$query = "delete from `users_usergroups` where `userId` = ? and
+		`groupName` = ?";
+	$result = $this->query($query, array($userid, $group));
     }
 
     function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '') {
@@ -662,14 +667,11 @@ class UsersLib extends TikiLib {
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 	if ($find) {
 	    $mid = " where `groupName` like ?";
-
 	    $bindvars[] = "%" . $find . "%";
-	    $findesc = $this->qstr('%' . $find . '%');
-	    $mid = " where groupName like $findesc";
 	} else {
 	    $mid = '';
 
-	    $bindvars = false;
+	    $bindvars = array();
 	}
 
 	$query = "select `groupName` , `groupDesc` from `users_groups` $mid order by $sort_mode";
