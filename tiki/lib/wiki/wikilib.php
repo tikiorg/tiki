@@ -131,7 +131,7 @@ class WikiLib extends TikiLib {
 	}
 
 	function wiki_get_link_structure($page, $level) {
-		$query = "select toPage from `tiki_links` where `fromPage`='$page'";
+		$query = "select `toPage` from `tiki_links` where `fromPage`='$page'";
 
 		$result = $this->query($query);
 		$aux['pages'] = array();
@@ -167,7 +167,7 @@ class WikiLib extends TikiLib {
 		$query = "update `tiki_history` set `pageName`='$newName_as' where `pageName`='$oldName_as'";
 		$this->query($query);
 		// get pages linking to the old page
-		$query = "select fromPage from `tiki_links` where `toPage`='$oldName_as'";
+		$query = "select `fromPage` from `tiki_links` where `toPage`='$oldName_as'";
 		$result = $this->query($query);
 
 		while ($res = $result->fetchRow()) {
@@ -267,7 +267,7 @@ class WikiLib extends TikiLib {
 	// Methods to cache and handle the cached version of wiki pages
 	// to prevent parsing large pages.
 	function get_cache_info($page) {
-		$query = "select cache,cache_timestamp from `tiki_pages` where `pageName`='$page'";
+		$query = "select `cache`,cache_timestamp from `tiki_pages` where `pageName`='$page'";
 
 		$result = $this->query($query);
 		$res = $result->fetchRow();
@@ -284,13 +284,13 @@ class WikiLib extends TikiLib {
 	}
 
 	function get_attachment_owner($attId) {
-		return $this->getOne("select user from `tiki_wiki_attachments` where `attId`=$attId");
+		return $this->getOne("select `user` from `tiki_wiki_attachments` where `attId`=$attId");
 	}
 
 	function remove_wiki_attachment($attId) {
 		global $w_use_dir;
 
-		$path = $this->getOne("select path from `tiki_wiki_attachments` where `attId`=$attId");
+		$path = $this->getOne("select `path` from `tiki_wiki_attachments` where `attId`=$attId");
 
 		if ($path) {
 			@unlink ($w_use_dir . $path);
@@ -313,20 +313,19 @@ class WikiLib extends TikiLib {
 	}
 
 	function list_wiki_attachments($page, $offset, $maxRecords, $sort_mode, $find) {
-		$page = addslashes($page);
-
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$mid = " where `page`='$page' and (filename like '%" . $find . "%')";
+			$mid = " where `page`=? and (`filename` like ?)"; // why braces?
+			$bindvars=array($page,"%".$find."%");
 		} else {
-			$mid = " where `page`='$page' ";
+			$mid = " where `page`=? ";
+			$bindvars=array($page);
 		}
 
-		$query = "select user,attId,page,filename,filesize,filetype,downloads,created,comment from `tiki_wiki_attachments` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment` from `tiki_wiki_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -348,7 +347,7 @@ class WikiLib extends TikiLib {
 		if (!$count) {
 			return '';
 		} else {
-			return $this->getOne("select data from `tiki_page_footnotes` where `user`='$user' and pageName='$page'");
+			return $this->getOne("select `data` from `tiki_page_footnotes` where `user`='$user' and pageName='$page'");
 		}
 	}
 
@@ -368,7 +367,7 @@ class WikiLib extends TikiLib {
 	}
 
 	function wiki_link_structure() {
-		$query = "select pageName from `tiki_pages` order by pageName asc";
+		$query = "select `pageName` from `tiki_pages` order by pageName asc";
 
 		$result = $this->query($query);
 
@@ -376,7 +375,7 @@ class WikiLib extends TikiLib {
 			print ($res["pageName"] . " ");
 
 			$page = $res["pageName"];
-			$query2 = "select toPage from `tiki_links` where `fromPage`='$page'";
+			$query2 = "select `toPage` from `tiki_links` where `fromPage`='$page'";
 			$result2 = $this->query($query2);
 			$pages = array();
 
@@ -432,7 +431,7 @@ class WikiLib extends TikiLib {
 		}
 
 		$exp = implode(" or ", $exps);
-		$query = "select pageName from `tiki_pages` where $exp";
+		$query = "select `pageName` from `tiki_pages` where $exp";
 		$result = $this->query($query);
 		$ret = array();
 
@@ -446,7 +445,7 @@ class WikiLib extends TikiLib {
 	function is_locked($page) {
 		$page = addslashes($page);
 
-		$query = "select flag from `tiki_pages` where `pageName`='$page'";
+		$query = "select `flag` from `tiki_pages` where `pageName`='$page'";
 		$result = $this->query($query);
 		$res = $result->fetchRow();
 
@@ -482,7 +481,7 @@ class WikiLib extends TikiLib {
 
 	// Returns backlinks for a given page
 	function get_backlinks($page) {
-		$query = "select fromPage from `tiki_links` where `toPage` = '$page'";
+		$query = "select `fromPage` from `tiki_links` where `toPage` = '$page'";
 
 		$result = $this->query($query);
 		$ret = array();
