@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.49 2004-01-04 14:18:18 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.50 2004-01-30 07:45:00 btodoroff Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -380,6 +380,10 @@ $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
 $style = $tikilib->get_preference("style", 'moreneat.css');
 $smarty->assign('style', $style);
+
+$icon_style = $tikilib->get_preference("icon_style", 'default');
+//$smarty->assign('icon_style', $icon_style); //btodoroff: I see no reason to need this
+$icon_style_base=$icon_style;
 
 $slide_style = $tikilib->get_preference("slide_style", 'slidestyle.css');
 $smarty->assign('slide_style', $slide_style);
