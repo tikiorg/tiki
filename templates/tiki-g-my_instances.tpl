@@ -24,7 +24,7 @@
             {*exception*}
             {if $tiki_p_exception_instance eq 'y'}
               {if $instance.status ne 'aborted' and $instance.status ne 'exception' and $instance.user eq $user}
-                <td><a href="tiki-g-user_instances.php?abort=1&amp;iid={$instance.instanceId}&amp;aid={$instance.activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
+                <td><a href="tiki-g-user_instances.php?exception=1&amp;iid={$instance.instanceId}&amp;aid={$instance.activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a></td>
               {else}
                 <td><img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" /></td>
               {/if}
