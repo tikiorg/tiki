@@ -177,8 +177,8 @@ class WikiLib extends TikiLib {
 	    $data = $info['data'];
 	    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 	    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
-	    $query = "update `tiki_pages` set `data`=? where `pageName`=?";
-	    $this->query($query, array( $data, $page));
+	    $query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
+	    $this->query($query, array( $data,(int) strlen($data), $page));
 	    $this->invalidate_cache($page);
 	}
 
@@ -242,10 +242,7 @@ class WikiLib extends TikiLib {
 
     function set_page_cache($page,$cache) {
 	$query = "update `tiki_pages` set `wiki_cache`=? where `pageName`=?";
-	$this->query($query, array(
-		    $cache,
-		    $page
-		    ));
+	$this->query($query, array( $cache, $page));
 
     }
 
