@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.7 2005-02-14 18:42:34 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.8 2005-02-25 00:20:57 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -89,7 +89,7 @@ a.pagedescription:hover, a.forumspagedescription:hover, DIV#tiki-foot a:hover, D
 
 /* black */
 /*
-DIV#tiki-top a, .highlight {
+DIV#tiki-top a, .highlight, .rbox-title, .rbox-data {
   color: black;
 }
 */
@@ -124,7 +124,7 @@ a, h1, h2, h3, h4, h5, h6, a, DIV#tiki-top a:hover, DIV#tiki-bot a:hover,
 /* bright red accent */
 
 /* pale red accent */
-.linkbut, .linkbut:visited, .highlight {
+.linkbut, .linkbut:visited, .highlight, .rbox-title {
   background-color: #DDCCCC;
 }
 
@@ -145,7 +145,7 @@ a:hover, DIV#tiki-top a:hover, DIV.simplebox a:hover, a.pagetitle:hover,
 	.Caldir:before, .Calfgal:before, .Calfaq:before, .Calquiz:before,
 	.Caltrack:before, .Calsurv:before, .Calnl:before, .Caleph:before,
 	.Calchart:before, .viewmodeoff, div.cbox-title a:active,
-	.cboxtlink:active, div.cbox-title a:hover, .cboxtlink:hover
+	.cboxtlink:active, div.cbox-title a:hover, .cboxtlink:hover, .rbox-data
 {
   background-color: #EFECEC;
 }
@@ -157,6 +157,23 @@ th.listfilesheading, th.listartheading, th.forumheading, th.thead
 {
   color: #EFECEC;
 }
+
+
+.rbox-title[name="note"] {
+  background-color: #CCCCDD;
+}
+.rbox-data[name="note"] {
+  background-color: #ECECEF;
+  border: 1px solid #CCCCDD;
+}
+.rbox-title[name="comment"], .rbox-title[name="tip"] {
+  background-color: #CCCCDD;
+}
+.rbox-data[name="comment"], .rbox-data[name="tip"] {
+  background-color: #ECEFEC;
+  border: 1px solid #CCDDCC;
+}
+
 /*
  * =================================
  */
@@ -606,6 +623,30 @@ div.box-title a:active, div.box-title a:hover
   text-decoration: underline;
 }
 
+div.box-title table {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  border-spacing: 0;
+}
+
+div.box-title table td {
+  text-align: center;
+}
+
+span.box-titletext {
+  width: 100%;
+}
+
+.box-fliplink, .flipmodtitle {
+}
+
+.box-flipimage, .flipmodimage {
+  border: 0px;
+  float: right;
+  margin-left: 0px;
+}
+
 /* This is the left data */
 div.box-datal {                            
 /*
@@ -665,9 +706,10 @@ div.cbox {
 /*
   background-image: url(kuroBK/midbg);
 */
-  margin-top: 7px;  
+  margin 5px;
   margin-bottom: 0px;
   padding: 0px;
+  padding-top: 5px;
   padding-bottom: 10px;  
   overflow: hidden; 
 }
@@ -708,9 +750,22 @@ div.cbox-title a:hover, a.cboxtlink:hover {
 div.cbox-data {
   overflow: hidden;
   width: 100%;
-  padding: 0px 0px 0px 0px;
+  padding: 5px 5px 5px 5px;
   margin: 0px 0px 0px 0px;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: black;
+
+  background-image: url(kuroBK/simplebg);
+  background-position: top;
+  background-repeat: repeat-x;
+  background-color: white;
+/*
+  overflow: hidden;
+*/
+  border: none;
+  border-right-image: url(kuroBK/rightbg);
+  box-shadow: 0.2em 0.2em #CCC; /* CSS3 */
 }
 
 
@@ -811,7 +866,7 @@ div.simplebox {
 /*
   margin-left: 5px;  margin-right: 5px;  margin-top: 5px;  margin-bottom: 5px;
 */
-  padding-left: 15px;  padding-top: 10px;  padding-bottom: 15px;  padding-right: 0px;
+  padding-left: 10px;  padding-top: 10px;  padding-bottom: 15px;  padding-right: 10px;
   color: black;
   font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;
   width: 100%;
@@ -2309,6 +2364,18 @@ div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }
 
+/** rbox: remarks box (note/warning/tip/comment) */
+.rbox {
+  margin-top: 10px;
+}
+.rbox-data {
+  padding: 2px;
+  border: 1px solid #DDCCCC;
+}
+.highlight {
+  padding: 0px;
+}
+
 /*
  * Caption in tables.
  * Currently in Attachments and comments only.
@@ -2687,6 +2754,47 @@ color: black;
 background-color: #ccffcc;
 }
 .diffchar{color: red;}
+
+/**** coloration for c o d e plugin *****/
+div.code {
+        font-size : 10px;
+        padding : 5px;
+        border : 1px dashed #CCCCCC;
+        background-color : #F4F4F4;
+        font-family : monospace;
+}
+.codelisting {
+        font-family : monospace;
+        padding : 10px;
+        background-color : #FFFFFF;
+        margin : 0;
+        border : 1px solid #ADACAF;
+        overflow: auto;       /* for Netscape, Firefox, Opera */
+        overflow-y: auto;     /* for IE */
+        overflow-x: hidden;   /* for IE */
+        width: 100%;
+}
+.codecaption {
+  background-color : #FFFFFF;
+  background-color: #E9ECEF;
+  color : #666666;
+  bottom : -5px;
+  border : 1px solid #ADACAF;
+  border-bottom : 0;
+  -moz-border-radius-topright : 1ex;
+}
+.rbox-title {
+  border: 0;
+  -moz-border-radius-topright : 1ex;
+}
+.codecaption, .rbox-title {
+        font-size : 10px;
+        padding : 0 10px;
+        position : relative;
+        display : inline;
+        margin : 0;
+        font-weight : bold;
+}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
