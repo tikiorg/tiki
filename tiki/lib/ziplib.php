@@ -759,7 +759,7 @@ function MimeifyPageRevision($page) {
 
 	$params["description"] = $page["description"];
 
-	$params['charset'] = 'iso-8859-1';
+	$params['charset'] = 'utf-8';
 
 	// Non-US-ASCII is not allowed in Mime headers (at least not without
 	// special handling) --- so we urlencode all parameter values.
