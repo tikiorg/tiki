@@ -603,7 +603,7 @@ class TrackerLib extends TikiLib {
 		$type['g'] = array('label'=>tra('group selector'),'opt'=>true,  'help'=>tra('Group Selector: use options for automatic field feeding : you can use 1 for group of creation and 2 for group where modification come from. The default group has to be set, or the first group that come is chosen for a user, or the default group is Registered.'));
 		$type['f'] = array('label'=>tra('date and time'), 'opt'=>false);
 		$type['j'] = array('label'=>tra('jscalendar'),    'opt'=>false);
-		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options: xSize,ySize indicated in pixelsi.')  );
+		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options: xSize,ySize indicated in pixels.')  );
 		$type['x'] = array('label'=>tra('action'),        'opt'=>true, 'help'=>tra('Action options: Label,post,tiki-index.php,page:fieldname,highlight=test') );
 		$type['h'] = array('label'=>tra('header'),        'opt'=>false);
 		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options: parentId') );
