@@ -18,7 +18,6 @@
 {if $tiki_p_rename eq 'y'}
 <td><div class="button2"><a href="tiki-rename_page.php?page={$page}" class="linkbut">{tr}rename{/tr}</a></div></td>
 {/if}
-
 {/if}
 {if $page ne 'SandBox'}
 {if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
@@ -32,11 +31,13 @@
 <td><div class="button2"><a href="tiki-pagepermissions.php?page={$page}" class="linkbut">{tr}perms{/tr}</a></div></td>
 {/if}
 {/if}
+
 {if $page ne 'SandBox'}
 {if $feature_history eq 'y'}
 <td><div class="button2"><a href="tiki-pagehistory.php?page={$page}" class="linkbut">{tr}history{/tr}</a></div></td>
 {/if}
 {/if}
+
 {if $feature_likePages eq 'y'}
 <td><div class="button2"><a href="tiki-likepages.php?page={$page}" class="linkbut">{tr}similar{/tr}</a></div></td>
 {/if}

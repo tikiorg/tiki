@@ -11,6 +11,23 @@ body {
   margin-right: 0px;
 }
 
+span.tabbut {
+	border-top: 1px solid #74AE0B;
+	border-left: 1px solid #74AE0B;
+	border-right: 1px solid #74AE0B;
+	color: #578308;
+	margin-left:2px;
+	padding-left:2px;
+	padding-right: 2px;
+	background-color: #CDE2A7;
+}
+
+.tablink {
+color: #578308; 
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+text-decoration: none;
+}
+
 /* GENERAL LAYOUT EXPLANATION
  *
  * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top, 
@@ -36,6 +53,42 @@ height: 12px;
 padding-right: 0px;  
 font-size: 10px;
 width: 100%; }
+
+DIV#tiki-top-menu {  
+background-color: #DEE7EC; 
+border-top: 1px solid #8CACBB;
+border-bottom: 1px solid #8CACBB;
+color: #436976; 
+height: 12px;  
+text-align:right;
+padding-right: 10px;
+padding-bottom: 2px;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+width: 100%; }
+
+.tikitopmenu {  
+color: #436976; 
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;   
+text-decoration: none;
+width: 100%; }
+
+.tikitopmenu2 {  
+color: black; 
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+text-decoration: none;
+width: 100%; }
+
+
+DIV#usermenu {  
+background-color: white; 
+border-bottom: 1px solid #8CACBB;
+color: black; 
+margin-bottom: 5px;
+padding-right: 10px;
+padding-bottom: 2px;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+width: 100%; }
+
 
 /* This is the middle */
 DIV#tiki-mid {  background: white;  height: auto;  padding-bottom: 0px; }
@@ -107,9 +160,9 @@ div.separator {
 .linkmenu:hover, .rsslink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976; text-decoration: none;}
 
 /* Links to extend/collapse menus */
-.separator {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976;  text-decoration: none; font-weight: bold;}
-.separator:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976;  text-decoration: none; font-weight: bold;}
-.separator:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436876;  text-decoration: none; font-weight: bold;}
+.separator {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976;  text-decoration: none; }
+.separator:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976;  text-decoration: none; }
+.separator:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436876;  text-decoration: none; }
 
 /* Links to collapse menus for example the main menu can be completely collapsed*/
 .flip {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black;  text-decoration: none;}
