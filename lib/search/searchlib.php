@@ -56,6 +56,9 @@ class SearchLib extends TikiLib {
 	    case "faqs":
 	      return $this->find_exact_faqs($words,$offset, $maxRecords);
 	      break;
+	    case "directory":
+	      return $this->find_exact_directory($words,$offset, $maxRecords);
+	      break;
 	    default:
 	      return $this->find_exact_all($words,$offset, $maxRecords);
 	      break;
@@ -70,15 +73,18 @@ class SearchLib extends TikiLib {
 	  $blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
 	  $blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
 	  $faqresults=$this->find_exact_faqs($words,$offset, $maxRecords);
+	  $dirresults=$this->find_exact_directory($words,$offset, $maxRecords);
 
 	  //merge the results
 	  $res=array();
 	  $res["data"]=array_merge($wikiresults["data"],$artresults["data"],
 	  		$blogresults["data"],$faqresults["data"],
-			$blogpostsresults["data"],$forumresults["data"]);
+			$blogpostsresults["data"],$forumresults["data"],
+			$dirresults["data"]);
 	  $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
 	  		$blogresults["cant"]+$faqresults["cant"]+
-			$blogpostsresults["cant"]+$forumresults["cant"];
+			$blogpostsresults["cant"]+$forumresults["cant"]+
+			$dirresults["cant"];
 	  return ($res);
 	}
 
@@ -222,6 +228,75 @@ class SearchLib extends TikiLib {
 	  } else {
 	  return array('data' => array(),'cant' => 0);
 	  }
+        }
+
+        function &find_exact_directory($words,$offset, $maxRecords) {
+          global $feature_directory;
+          if ($feature_directory== 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                d.`description`,d.`hits`,d.`name` from
+                `tiki_searchindex` s, `tiki_directory_categories` d where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='dir_cat' and
+                s.`page`=d.`categId` order by `hits` desc";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_categories` d where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='dir_cat' and
+                s.`page`=d.`categId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-directory_browse.php?parent=".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => $res["name"],
+                'location' => tra("Directory category"),
+                'data' => substr($res["description"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => time(), //not determinable
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            $dsiteres=$this->find_exact_directory_sites($words,$offset, $maxRecords);
+            return array('data' => array_merge($ret,$dsiteres["data"]),'cant' => $cant+$dsiteres["cant"]);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
+        }
+
+        function &find_exact_directory_sites($words,$offset, $maxRecords) {
+          global $feature_directory;
+          if ($feature_directory== 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                d.`description`,d.`hits`,d.`name`,d.`lastModif`,cs.`categId` from
+                `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='dir_site' and
+                s.`page`=d.`siteId` order by `hits` desc";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_sites` d where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='dir_site' and
+                s.`page`=d.`siteId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-directory_browse.php?parent=".urlencode($res["categId"]);
+              $ret[] = array(
+                'pageName' => $res["name"],
+                'location' => tra("Directory"),
+                'data' => substr($res["description"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["lastModif"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            return array('data' => $ret,'cant' => $cant);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
         }
 
 
