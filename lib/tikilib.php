@@ -3229,7 +3229,8 @@ class TikiLib {
               }
               $liclose='';
             }
-            if ($litype == '*'&&!strstr(current($listbeg),'</ul>')) {
+            if ($litype=='*'&&!strstr(current($listbeg),'</ul>')
+             || $litype=='#'&&!strstr(current($listbeg),'</ol>')) {
               $data.=array_shift($listbeg).($litype=='*'?'<ul>':'<ol>');
               $liclose='';
             }
