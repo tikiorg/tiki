@@ -10,7 +10,8 @@ class Cachelib {
   var $folder;
 
   function Cachelib() {
-	$this->folder = "temp/cache";
+	global $tikidomain;
+	$this->folder = "temp/".$tikidomain."cache";
     if(!file_exists($this->folder)) {
   	    // NO, this does _not_ create a world writeable directory. mkdir will '&' current mask (default 0022) with 0777 to give you '0755'. Older versions of php 4.1 (4.1.2 for sure) had the mask as a required paramter.
   	    mkdir($this->folder, 0777);
