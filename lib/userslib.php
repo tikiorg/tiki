@@ -29,7 +29,7 @@ class UsersLib extends TikiLib {
 
   function assign_object_permission($groupName,$objectId,$objectType,$permName)
   {
-    
+    $groupName=addslashes($groupName); 
     $objectId = md5($objectType.$objectId);
     
     $query = "replace into users_objectpermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
