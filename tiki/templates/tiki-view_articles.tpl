@@ -64,7 +64,7 @@
 </td><td  valign="top">
 {/if}
 {/if}
-<span class="articleheading">{$listpages[ix].parsed_heading}</span>
+<div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
 </td></tr>
 </table>
 </div>

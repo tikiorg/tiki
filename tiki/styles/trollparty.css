@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.14 2003-12-07 12:45:46 mose Exp $
+$Id: trollparty.css,v 1.15 2003-12-07 15:48:44 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -1506,8 +1506,8 @@ clear: both;
 }
 
 /* Text in the article heading */
-span.articleheading
-{
+div.articleheadingtext {
+display: inline;
 }
 
 /* The body */

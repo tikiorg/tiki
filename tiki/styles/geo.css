@@ -1261,8 +1261,9 @@ div.articletrailer {
 }
 
 /* Text in the article heading */
-span.articleheading {
+div.articleheadingtext {
 	font-size: 12px;
+	display: inline;
 }
 
 /* The body */

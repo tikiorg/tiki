@@ -1158,9 +1158,10 @@ div.articletrailer {
 }
 
 /* Text in the article heading */
-span.articleheading {
+div.articleheadingtext {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
+	display: inline;
 }
 
 /* The body */
