@@ -1,4 +1,4 @@
-<?php
+<?php // -*- coding:utf-8 -*-
 $lang=Array(
 "User_versions_for" => "Gebruiker_versies_voor",
 "Version" => "Versie",
@@ -898,13 +898,13 @@ to preview the appeareance of the page, no versions are stored for this page." =
 "Restoring a backup" => "Back-up terugplaatsen",
 "Warning!" => "Waarschuwing!",
 "Restoring a backup destoys all the data in your Tiki database.
-All your tables will be replaced with the information in the backup." => "Het herstellen van een back-up vernietigt al de data in uw Tiki-databank.
+All your tables will be replaced with the information in the backup." => "Het herstellen van een back-up vernietigt al de data in uw Tiki-databank.",
 "Click here to confirm restoring" => "Hier klikken om het herstel te bevestigen",
 "Create new backup" => "Nieuwe back-up maken",
 "Creating backups may take a long time. If the process is not completed you will
 see a blank screen. If so you need to increment the maximum script execution time
 from your php.ini file" => "Het maken van back-ups kan veel tijd in beslag nemen. Als het proces niet be&euml;indigd is zal u
-een blanco scherm zien. Als dat zo is moet u de maximale tijd voor uitvoering van een script verhogen
+een blanco scherm zien. Als dat zo is moet u de maximale tijd voor uitvoering van een script verhogen",
 "Click here to create a new backup" => "Klik hier om een nieuwe back-up te maken",
 "Upload a backup" => "Een reserverkopie aanleveren",
 "Upload backup" => "Reservekopie aanleveren",
@@ -1327,7 +1327,7 @@ een blanco scherm zien. Als dat zo is moet u de maximale tijd voor uitvoering va
 "excerpt" => "uittreksel",
 "Survey stats" => "Statistieken voor opinieonderzoek",
 "Thanks for your subscription. You will receive an email soon to confirm your subscription.
-No newsletters will be sent to you until the subscription is confirmed." => "Bedankt voor uw inschrijving. U zal binnenkort een e-mailbericht ontvangen om uw inschrijving te bevestigen.
+No newsletters will be sent to you until the subscription is confirmed." => "Bedankt voor uw inschrijving. U zal binnenkort een e-mailbericht ontvangen om uw inschrijving te bevestigen.",
 "Your email address was removed from the list of subscriptors." => "Uw e-mailadres is verwijderd van de abonneelijst.",
 "Subscription confirmed!" => "Inschrijving bevestigd!",
 "Subscribe to newsletter" => "Zich op nieuwsbrief abonneren",
@@ -1559,7 +1559,7 @@ from Admin->General
 dan zullen toegekende modules niet weergegeven worden op het scherm
 tot u hen configureert vanuit MijnTiki->modules.<br/>
 <b>Noot 2</b>: Als u modules toekent aan groepen zorg er dan voor dat
-u de optie 'Modules altijd aan alle groepen tonen' uitgeschakeld heeft 
+u de optie 'Modules altijd aan alle groepen tonen' uitgeschakeld heeft ",
 "Admin newsletter subscriptions" => "Nieuwsbrief-abonnementen beheren",
 "Admin newsletters" => "Nieuwsbrieven beheren",
 "Poll options" => "Opties voor opiniepeilingen",
@@ -2003,7 +2003,7 @@ u de optie 'Modules altijd aan alle groepen tonen' uitgeschakeld heeft
 "Displays the user Avatar" => "Toon de gebruikers Avatar",
 "Centers the plugin content in the wiki page" => "Centreer de plugin inhoud in de wiki pagina",
 "Displays a snippet of code.
-Set optional paramater -+ln+- to 1 if you need line numbering feature." => "Toont een stukje code. Zet de optionele parameter -+ln+- naar 1 als u ook lijnnummering wil."
+Set optional paramater -+ln+- to 1 if you need line numbering feature." => "Toont een stukje code. Zet de optionele parameter -+ln+- naar 1 als u ook lijnnummering wil.",
 "No description available" => "Geen beschrijving beschikbaar",
 "Displays a graphical GAUGE" => "Toont een grafische VOLUMEMETER",
 "Renders a graph" => "Tekent een grafiek",
@@ -2831,7 +2831,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature." => "Toon
 "Forums best topics" => "Fora's beste onderwerpen",
 "Forums most visited forums" => "Fora's meest bezochte fora",
 "Forums with most posts" => "Fora met meest bijdragen",
-"Wiki top galleries" => "Wiki top galerijen,
+"Wiki top galleries" => "Wiki top galerijen",
 "Wiki top file galleries" => "Wiki top bestandsgalerijen",
 "Wiki top images" => "Wiki top afbeeldingen",
 "Wiki top files" => "Wiki top bestanden",
