@@ -251,6 +251,15 @@ $smarty->assign('map_querymsg',$map_querymsg);
 
 $image = $map->drawquery();
 $image_url = $image->saveWebImage();
+//the user wants an image only
+if (isset($_REQUEST['maponly']))
+{
+  header("Content-type: image/png");
+  $image_file=str_replace($image->imageurl,$image->imagepath,$image_url);
+  readfile($image_file);
+  die;
+} 
+
 $image_ref = $map->drawReferenceMap();
 $image_ref_url = $image_ref->saveWebImage();
 $image_leg = $map->drawLegend();
