@@ -15,6 +15,7 @@
 </a>
 {/if}
 <! -- linkbuttons, they'd be better if they had rollover info -->
+
 <br /><br />
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
@@ -24,8 +25,11 @@
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>
 <br /><br />
 
+<! -- end link buttons -- >
+
 <h2>{tr}Quiz stats{/tr}</h2>
 <div  align="center">
+
 <! -- begin table for stats data -->
 
 <table class="normal">
@@ -44,7 +48,7 @@ Set the names of the table headings to reflect the names of the db
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].user}</td>
+<td class="odd">{$channels[user].user|userlink}</td>
 <td class="odd">{$channels[user].timestamp|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].timeTaken} secs</td>
 <td class="odd">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
