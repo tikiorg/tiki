@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.3 2003-10-17 16:10:17 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_integrator_repositories.tpl,v 1.4 2003-10-18 23:17:01 zaufi Exp $ *}
 
 <h2>{tr}Available Repositories{/tr}</h2>
 
@@ -13,7 +13,9 @@
 {/if}
 <br />
 
-{* Table with list of repositories *}
+
+{* Table with list of repositories (if array is not empty) *}
+{if count($repositories) gt 0}
 <table class="normal" id="integrator-repositories">
   <tr>
     <td class="heading">{tr}Name{/tr}</td>
@@ -31,3 +33,20 @@
     </tr>
   {/section}
 </table>
+{else}
+
+{* Here should be panel (let it be style 'info-panel') with info
+ * Smth like: "No configured/visible repositories...", but if
+ * current user with tiki_p_admin it continue with "Ypu may setup
+ * repositories on the following page (or by press button above :)"
+ *
+ * Moreover such 'info' panels can be everywhere :) -- at least at
+ * wiki edit help and comments help ... let it be standart way to
+ * display hints. :) -- not separate styles... to be personalized
+ * (if smbd needs :) it can contain id attribute... i.e. smth like
+ * <div class='info-panel' id='wiki-help'>...</div>
+ * <div class='info-panel' id='comments-help'>...</div>
+ * <div class='info-panel' id='integrator-no-reps'>...</div>
+ *}
+
+{/if}
