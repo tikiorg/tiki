@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.16 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.17 2004-04-19 00:51:21 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.16 2004-03-28 07:32:22 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.17 2004-04-19 00:51:21 franck Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -18,7 +18,7 @@ include_once ("lib/imagegals/imagegallib.php");
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
 // you have to check if the user has permission to see this gallery
-if (!isset($_REQUEST["id"])) {
+if (!isset($_REQUEST["id"]) && !isset($_REQUEST["name"])) {
 	die;
 }
 
@@ -44,11 +44,17 @@ if (isset($_REQUEST["thumb"])) {
 	$itype = 'o';
 }
 
-$imagegallib->get_image($_REQUEST["id"], $itype, $sxsize, $sysize);
+if (isset($_REQUEST["name"])) {
+	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
+} else {
+	$id=$_REQUEST["id"];
+}
 
+$imagegallib->get_image($id, $itype, $sxsize, $sysize);
+	
 if (!isset($imagegallib->image)) {
 	// cannot scale image. Get original
-	$imagegallib->get_image($_REQUEST["id"], 'o');
+	$imagegallib->get_image($id, 'o');
 }
 
 $galleryId = $imagegallib->galleryId;
@@ -83,21 +89,21 @@ if ($tiki_p_view_image_gallery!='y') {
 }
 
 if (!isset($_REQUEST["thumb"])) {
-	$imagegallib->add_image_hit($_REQUEST["id"]);
+	$imagegallib->add_image_hit($id);
 }
 
 $type = $imagegallib->filetype;
 
 //echo"<pre>";print_r(get_defined_vars());echo"</pre>";
 
-header ("Content-type: $type");
-header ("Content-length: ".$imagegallib->filesize);
-header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
-//if($data["path"]) {
-//  readfile($gal_use_dir.$data["path"].$ter);
-//} else {
-echo $imagegallib->image;
-//}
-// ????? echo $data;
+if (isset($imagegallib->image)) {
 
+  header ("Content-type: $type");
+  header ("Content-length: ".$imagegallib->filesize);
+  header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
+
+  echo $imagegallib->image;
+} else {
+  header("HTTP/1.0 404 Not Found");
+}
 ?>
