@@ -16,7 +16,7 @@ if(!$user) {
    die;
 }
 
-
+$userwatch=$user;
 if(isset($_REQUEST["view_user"])) {
   if($_REQUEST["view_user"]<>$user) {
     if($tiki_p_admin == 'y') {
