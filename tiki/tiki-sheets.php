@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.1 2004-04-10 22:01:47 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.2 2004-04-11 18:53:49 lphuberdeau Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if($tiki_p_view != 'y') {
   die;  
 }
 */
-if ($feature_sheets != 'y') {
+if ($feature_sheet != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
 
 	$smarty->display("error.tpl");
@@ -181,7 +181,7 @@ $cant_pages = ceil($sheets["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($galleries["cant"] > ($offset + $maxRecords)) {
+if ($sheets["cant"] > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
 	$smarty->assign('next_offset', -1);

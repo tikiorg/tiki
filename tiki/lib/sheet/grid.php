@@ -856,10 +856,10 @@ class SheetLib extends TikiLib
 		{
 			case "title_desc":
 			default:
-				$sort = "`title`, `description`";
+				$sort = "`title` DESC";
 		}
 
-		$result = $this->query( "SELECT * FROM `tiki_sheets ORDER BY $sort`", array(), $offset, $maxRecord );
+		$result = $this->query( "SELECT * FROM `tiki_sheets` ORDER BY $sort", array(), $offset, $maxRecord );
 
 		while( $row = $result->fetchRow() )
 			$results['data'][] = $row;
@@ -892,4 +892,5 @@ class SheetLib extends TikiLib
 
 } // }}}1
 
+$sheetlib = &new SheetLib( $tikilib->db );
 ?>
