@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.18 2003-12-15 00:08:03 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.19 2003-12-20 09:11:00 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,16 +82,16 @@ if (isset($_REQUEST["create"])) {
 if (isset($_REQUEST["move_node"])) {
 	$move_node = $_REQUEST["move_node"];
 	if (0 == strcmp($move_node, tra("Promote"))) {
-		$structlib->promote_node($page_ref_id);
+		$structlib->promote_node($_REQUEST["page_ref_id"]);
 	}
 	elseif (0 == strcmp($move_node, tra("Demote"))) {
-		$structlib->demote_node($page_ref_id);
+		$structlib->demote_node($_REQUEST["page_ref_id"]);
 	}
 	elseif (0 == strcmp($move_node, tra("Next"))) {
-		$structlib->move_after_next_node($page_ref_id);
+		$structlib->move_after_next_node($_REQUEST["page_ref_id"]);
 	}
 	elseif (0 == strcmp($move_node, tra("Previous"))) {
-		$structlib->move_before_previous_node($page_ref_id);
+		$structlib->move_before_previous_node($_REQUEST["page_ref_id"]);
 	}
 	
 }
