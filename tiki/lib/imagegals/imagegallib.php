@@ -826,6 +826,7 @@ class ImageGalsLib extends TikiLib {
 		$result = $this->query($query,array((int)$id));
 		$query = "delete from `tiki_images_data` where `imageId`=?";
 		$result = $this->query($query,array((int)$id));
+		$this->remove_object('image', $id);
 		return true;
 	}
 
@@ -1239,6 +1240,8 @@ class ImageGalsLib extends TikiLib {
 
 			$query3 = "delete from `tiki_images_data` where `imageId`=?";
 			$result3 = $this->query($query3,array((int)$res["imageId"]));
+
+			$this->remove_object('image', $res["imageId"]);
 		}
 
 		$query = "delete from `tiki_galleries` where `galleryId`=?";

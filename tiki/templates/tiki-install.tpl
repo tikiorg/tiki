@@ -134,7 +134,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 		    </td></tr>
 		    <tr><td>
 			</td><td>
-			<a href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
+			<a target="_new" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
 			<p>
 		    </td></tr>
 		    <tr><td>

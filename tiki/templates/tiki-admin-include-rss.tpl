@@ -18,6 +18,7 @@
         <tr><td class="form">{tr}Feed for forums{/tr}:</td><td><input type="checkbox" name="rss_forums" {if $rss_forums eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forums" size="5" value="{$max_rss_forums|escape}" /></td></tr>
         <tr><td class="form">{tr}Feed for individual forums{/tr}:</td><td><input type="checkbox" name="rss_forum" {if $rss_forum eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_forum" size="5" value="{$max_rss_forum|escape}" /></td></tr>
         <tr><td class="form">{tr}Feed for mapfiles{/tr}:</td><td><input type="checkbox" name="rss_mapfiles" {if $rss_mapfiles eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_mapfiles" size="5" value="{$max_rss_mapfiles|escape}" /></td></tr>
+        <tr><td class="form">{tr}Feed for directories{/tr}:</td><td><input type="checkbox" name="rss_directories" {if $rss_directories eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_directories" size="5" value="{$max_rss_directories|escape}" /></td></tr>
 
         <tr><td class="form" colspan="3">&nbsp;</td></tr>
         <tr><td class="form">{tr}Default RDF version{/tr}:</td><td class="form"><input type="text" name="rssfeed_default_version" size="1" value="{$rssfeed_default_version|escape}" />.0</td><td class="form">{tr}Specification{/tr} 1: <a href="http://www.w3.org/TR/rdf-schema/" class="tikihelp" title="{tr}Specification{/tr}: RDF 1.0">RDF 1.0</a>,

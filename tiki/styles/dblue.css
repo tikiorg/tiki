@@ -920,6 +920,10 @@ div.wiki-edithelp {
 }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
 
 /* Gallery description */
 div.galdesc {

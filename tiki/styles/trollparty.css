@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.29 2004-04-29 22:31:47 mose Exp $
+$Id: trollparty.css,v 1.30 2004-05-01 01:06:33 damosoft Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -351,6 +351,7 @@ color : white;
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #323232;
+  margin-left: 15px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -1268,6 +1269,10 @@ padding: 10px;
 /*
 IMAGE GALLERIES 
 */
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
 
 /* 
 Gallery description 

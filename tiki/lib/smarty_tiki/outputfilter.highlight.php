@@ -44,7 +44,7 @@
 
     // Wrap all the highlight words with tags bolding them and changing
     // their background colors
-    $wordArr = split(" ",$words);
+    $wordArr = split(" ",addslashes($words));
     $i = 0;
     foreach($wordArr as $word) {
 			$source = preg_replace("'($word)'si", '<span style="color:black;background-color:'.$colorArr[$i].';">$1</span>', $source); 
@@ -60,6 +60,6 @@
 			$source = preg_replace("!@@@SMARTY:TRIM:TAG@@@!",$curr_block,$source,1);
     }
 
-    return $source; 
+    return $source;
  }
 ?>

@@ -66,7 +66,7 @@ function write_msg(txt, role, name) {
 	/* And now send the message to the server */
 	window.chat_data.scrollTo(0, 1000000);
 	var ret = msg('tiki-live_support_server.php?write=' + document.getElementById('reqId').value
-		+ '&amp;msg=' + txt + '&amp;senderId=' + document.getElementById('senderId').value + '&amp;role=' + role + '&amp;name=' + name);
+		+ '&msg=' + txt + '&senderId=' + document.getElementById('senderId').value + '&role=' + role + '&name=' + name);
 }
 
 function event_poll() {
@@ -75,7 +75,7 @@ function event_poll() {
 
 function pollForEvents() {
 	var ret = msg('tiki-live_support_server.php?get_last_event='
-		+ document.getElementById('reqId').value + '&amp;senderId=' + document.getElementById('senderId').value);
+		+ document.getElementById('reqId').value + '&senderId=' + document.getElementById('senderId').value);
 	/* alert(ret);
 	alert(last_event); */
 	if (ret > last_event) {
@@ -83,7 +83,7 @@ function pollForEvents() {
 			last_event = last_event + 1;
 
 			var txt = msg('tiki-live_support_server.php?get_event=' + document.getElementById('reqId').value
-				+ '&amp;last=' + last_event + '&amp;senderId=' + document.getElementById('senderId').value);
+				+ '&last=' + last_event + '&senderId=' + document.getElementById('senderId').value);
 
 			if (txt) {
 				window.chat_data.document.write(txt);
@@ -105,8 +105,7 @@ function request_chat(user, tiki_user, email, reason) {
 	document.getElementById('request_chat').style.display = 'none';
 
 	document.getElementById('requesting_chat').style.display = 'block';
-	var ret = msg('tiki-live_support_server.php?request_chat=1&amp;reason='
-		+ reason + '&amp;user=' + user + '&amp;tiki_user=' + tiki_user + '&amp;email=' + email);
+	var ret = msg('tiki-live_support_server.php?request_chat=1&reason=' + reason + '&user=' + user + '&tiki_user=' + tiki_user + '&email=' + email);
 	document.getElementById('reqId').value = ret;
 	client_poll();
 }
@@ -121,7 +120,7 @@ function pollForAccept() {
 	if (ret == 'op_accepted') {
 		clearInterval(clourInterval);
 
-		window.location.href = 'tiki-live_support_chat_window.php?reqId=' + document.getElementById('reqId').value + '&amp;role=user';
+		window.location.href = 'tiki-live_support_chat_window.php?reqId=' + document.getElementById('reqId').value + '&role=user';
 	}
 }
 
@@ -142,7 +141,7 @@ function pollForRequests() {
 
 function set_operator_status(status) {
 	var ret =
-		msg('tiki-live_support_server.php?set_operator_status=' + document.getElementById('user').value + '&amp;status=' + status);
+		msg('tiki-live_support_server.php?set_operator_status=' + document.getElementById('user').value + '&status=' + status);
 }
 
 function console_poll() {

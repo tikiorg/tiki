@@ -530,8 +530,8 @@ class CalendarLib extends TikiLib {
 		}
 
 		if (trim($data["newcat"])) {
-			$bindvars=array((int)$data["calendarId"],trim($data["newcat"]));
 			$query = "delete from `tiki_calendar_categories` where `calendarId`=? and `name`=?";
+			$bindvars=array((int)$data["calendarId"],trim($data["newcat"]));
 			$this->query($query,$bindvars,-1,-1,false);
 			$query = "insert into `tiki_calendar_categories` (`calendarId`,`name`) values (?,?)";
 			$this->query($query,$bindvars);

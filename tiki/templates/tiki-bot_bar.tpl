@@ -39,6 +39,10 @@
 				<a title="{tr}Maps RSS{/tr}" href="tiki-map_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}"><img alt="RSS" style="border: 0" src="img/rss.png" /></a>
 				<small>{tr}Maps{/tr}</small>
 		{/if}
+		{if $rss_directories eq 'y'}
+				<a href="tiki-directories_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}"><img alt="rss" style="border: 0" src="img/rss.png" /></a>
+				<small>{tr}Directories{/tr}</small>
+		{/if}
 	</div>
 
 {include file="babelfish.tpl"}

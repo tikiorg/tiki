@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.14 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.15 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,6 +59,10 @@ $smarty->assign('url', $info["url"]);
 $smarty->assign('refresh', $info["refresh"]);
 $smarty->assign('showTitle', $info["showTitle"]);
 $smarty->assign('showPubDate', $info["showPubDate"]);
+
+if (isset($_REQUEST["refresh"])) {
+	$rsslib->get_rss_module_content($_REQUEST["refresh"], true);
+}
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delrss';

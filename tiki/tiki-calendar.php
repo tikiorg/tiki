@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.37 2004-04-30 09:34:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.38 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -163,7 +163,7 @@ $tikiItems = array(
 	"eph" => array(
 	"label" => tra("Ephemerides"),
 	"feature" => "$feature_eph",
-	"right" => "y"
+	"right" => "$tiki_p_view_eph"
 ),
 	"chart" => array(
 	"label" => tra("Charts"),

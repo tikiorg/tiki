@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.8 2004-04-03 09:36:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.9 2004-05-01 01:06:27 damosoft Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -170,6 +170,11 @@ function convert_query(&$query) {
 
         break;
 
+	case "mssql":
+    	  $query = preg_replace("/`/","",$query);
+	  $query = preg_replace("/\?/","'?'",$query);
+	  break;
+
             case "sqlite":
             $query = preg_replace("/`/", "", $query);
             break;
@@ -208,6 +213,7 @@ function convert_sortmode($sort_mode) {
         case "postgres7":
             case "oci8":
             case "sybase":
+	case "mssql":
             // Postgres needs " " around column names
             //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
             $sort_mode = str_replace("_asc", "\" asc", $sort_mode);

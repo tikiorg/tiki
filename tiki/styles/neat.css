@@ -940,6 +940,7 @@ div.wiki-edithelp {
 /******************************************************* IMAGE GALLERIES **********************************************/
 TABLE.galtable {
 	border-collapse: collapse;
+	width: 100%;
 }
 
 /* You can set a different background color for odd and even rows in the thumbnails table */

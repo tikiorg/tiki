@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.213 2004-04-27 17:57:22 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.214 2004-05-01 01:06:19 damosoft Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -264,7 +264,7 @@ if (!isset($_SESSION["appname"])) {
     $_SESSION["appname"] = $appname;
 }
 
-$smarty->assign("appname", "tiki");
+$smarty->assign("appname", $appname);
 
 if (isset($_REQUEST["PHPSESSID"])) {
     $tikilib->update_session($_REQUEST["PHPSESSID"]);
@@ -557,6 +557,7 @@ $smarty->assign('feature_multilingual', $feature_multilingual);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
+$rss_directories = 'y';
 $rss_articles = 'y';
 $rss_blogs = 'y';
 $rss_image_galleries = 'y';
@@ -579,6 +580,7 @@ $smarty->assign('directory_open_links', $directory_open_links);
 
 $max_rss_forums = 10;
 $max_rss_forum = 10;
+$max_rss_directories = 10;
 $max_rss_articles = 10;
 $max_rss_blogs = 10;
 $max_rss_image_galleries = 10;
@@ -760,6 +762,7 @@ $smarty->assign('userbreadCrumb', $userbreadCrumb);
 $smarty->assign('feature_polls', $feature_polls);
 $smarty->assign('feature_quizzes', $feature_quizzes);
 $smarty->assign('feature_chat', $feature_chat);
+$smarty->assign('rss_directories', $rss_directories);
 $smarty->assign('rss_articles', $rss_articles);
 $smarty->assign('rss_forum', $rss_forum);
 $smarty->assign('rss_forums', $rss_forums);
@@ -771,6 +774,7 @@ $smarty->assign('rss_image_gallery', $rss_image_gallery);
 $smarty->assign('rss_file_gallery', $rss_file_gallery);
 $smarty->assign('rss_blog', $rss_blog);
 
+$smarty->assign('max_rss_directories', $max_rss_directories);
 $smarty->assign('max_rss_articles', $max_rss_articles);
 $smarty->assign('max_rss_blogs', $max_rss_blogs);
 $smarty->assign('max_rss_image_galleries', $max_rss_image_galleries);

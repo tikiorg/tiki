@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.48 2004-04-30 09:01:57 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.49 2004-05-01 01:06:32 damosoft Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -404,6 +404,7 @@ div.separator:hover {
 .rssitem {
 	padding: 1px 6px 1px 6px;
 	border-top: 1px dashed #dadac9;
+  margin-left: 15px;
 }
 .rssitem:first-child {
 	border-top: 0;
@@ -865,6 +866,10 @@ div.wiki-edithelp {
 /*
 IMAGE GALLERIES 
 */
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
 
 /* 
 Gallery description 

@@ -322,6 +322,7 @@ div.separated a, div.separated a:visited {
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
+  margin-left: 15px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -738,7 +739,7 @@ padding: 10px;
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
-TABLE.galtable { border-collapse:collapse;}
+TABLE.galtable { border-collapse:collapse; width:100%;}
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows are shown inside oddthumb tds */

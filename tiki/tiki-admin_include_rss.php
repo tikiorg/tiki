@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.9 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_rss.php,v 1.10 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,15 +14,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["rss"])) {
 	check_ticket('admin-inc-rss');
-	$tikilib->set_preference('max_rss_articles', $_REQUEST["max_rss_blogs"]);
-
-	$smarty->assign("max_rss_blogs", $_REQUEST["max_rss_blogs"]);
+	$tikilib->set_preference('max_rss_articles', $_REQUEST["max_rss_articles"]);
+	$smarty->assign("max_rss_articles", $_REQUEST["max_rss_articles"]);
+	$tikilib->set_preference('max_rss_directories', $_REQUEST["max_rss_directories"]);
+	$smarty->assign("max_rss_directories", $_REQUEST["max_rss_directories"]);
 	$tikilib->set_preference('max_rss_image_galleries', $_REQUEST["max_rss_image_galleries"]);
 	$smarty->assign("max_rss_image_galleries", $_REQUEST["max_rss_image_galleries"]);
 	$tikilib->set_preference('max_rss_file_galleries', $_REQUEST["max_rss_file_galleries"]);
 	$smarty->assign("max_rss_file_galleries", $_REQUEST["max_rss_file_galleries"]);
 	$tikilib->set_preference('max_rss_image_gallery', $_REQUEST["max_rss_image_gallery"]);
-	$smarty->assign("max_rss_image_gallerys", $_REQUEST["max_rss_image_gallery"]);
+	$smarty->assign("max_rss_image_gallery", $_REQUEST["max_rss_image_gallery"]);
 	$tikilib->set_preference('max_rss_file_gallery', $_REQUEST["max_rss_file_gallery"]);
 	$smarty->assign("max_rss_file_gallery", $_REQUEST["max_rss_file_gallery"]);
 	$tikilib->set_preference('max_rss_wiki', $_REQUEST["max_rss_wiki"]);
@@ -59,6 +60,16 @@ if (isset($_REQUEST["rss"])) {
 		$tikilib->set_preference("rssfeed_css", 'n');
 
 		$smarty->assign('rssfeed_css', 'n');
+	}
+
+	if (isset($_REQUEST["rss_directories"]) && $_REQUEST["rss_directories"] == "on") {
+		$tikilib->set_preference("rss_directories", 'y');
+
+		$smarty->assign('rss_directories', 'y');
+	} else {
+		$tikilib->set_preference("rss_directories", 'n');
+
+		$smarty->assign('rss_directories', 'n');
 	}
 
 	if (isset($_REQUEST["rss_articles"]) && $_REQUEST["rss_articles"] == "on") {
@@ -171,8 +182,8 @@ if (isset($_REQUEST["rss"])) {
 		$smarty->assign('rss_file_gallery', 'n');
 	}
 } else {
+	$smarty->assign("max_rss_directories", $tikilib->get_preference("max_rss_directories", 10));
 	$smarty->assign("max_rss_articles", $tikilib->get_preference("max_rss_articles", 10));
-
 	$smarty->assign("max_rss_wiki", $tikilib->get_preference("max_rss_wiki", 10));
 	$smarty->assign("max_rss_blog", $tikilib->get_preference("max_rss_blog", 10));
 	$smarty->assign("max_rss_blogs", $tikilib->get_preference("max_rss_blogs", 10));

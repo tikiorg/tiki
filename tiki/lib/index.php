@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/index.php,v 1.3 2004-03-28 07:32:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/index.php,v 1.4 2004-05-01 01:06:27 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 
 // This redirects to the sites root to prevent directory browsing
 
-header ("location: ../tiki-index.php");
+header ("location: ../index.php");
 die;
 
 ?>

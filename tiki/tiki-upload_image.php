@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.29 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.30 2004-05-01 01:06:20 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -300,6 +300,15 @@ if (isset($_REQUEST["upload"])) {
 		$smarty->assign('show', 'y');
 		$smarty->assign_by_ref('tmpfname', $tmpfname);
 		$smarty->assign_by_ref('fname', $_REQUEST["url"]);
+
+		// Finally categorise it
+		$cat_type = 'image';
+		$cat_objid = $imageId;
+		$cat_desc = substr($_REQUEST["description"], 0, 200);
+		$cat_name = $name;
+		$cat_href = $foo1."?imageId=" . $cat_objid;
+		include_once ("categorize.php");
+
 	}
 }
 
@@ -353,6 +362,10 @@ for ($i = 0; $i < count($galleries["data"]); $i++) {
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+
+$cat_type = 'image';
+$cat_objid = '0';
+include_once ("categorize_list.php");
 
 $section = 'galleries';
 include_once ('tiki-section_options.php');

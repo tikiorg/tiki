@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.5 2004-04-11 23:38:07 mose Exp $
+# $Id: tikirelease.sh,v 1.6 2004-05-01 01:06:21 damosoft Exp $
 # written and maintained by mose@feu.org
 
 # HOWTO release TikiWiki ?
@@ -95,7 +95,7 @@ echo ""
 # ############################################################
 # special operation for a lighter tikiwiki
 # 
-# cp -rp tikiwiki_$VER tikilight_$VER
+# cp -rp $MODULE-$VER tikilight_$VER
 # find tikilight_$VER/img/avatars/ -type f -name '*.gif' | grep -v 000 | xargs -- rm -f
 # rm -rf tikilight_$VER/img/custom
 # find tikilight_$VER/lang -type f -name language.php | grep -v "/en/" | xargs -- rm -rf

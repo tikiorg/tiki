@@ -889,6 +889,10 @@ div.wiki-edithelp {
 }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
 
 /* Image gallery listing (the screen displaying the list of available file galleries */
 

@@ -7,7 +7,10 @@ syntax: {phplayers [type=tree|phptree|plain] [id=1] [file=/path/to/menufile]}
 
 */
 function smarty_function_phplayers($params, &$smarty) {
-	global $tikilib,$smarty;
+	global $tikilib,$smarty,$feature_phplayers;
+	if ($feature_phplayers != 'y') {
+	  echo "phplayers are not available on this site";
+	} else {
 	$smarty->assign('uses_phplayers','y');
 	extract($params);
 
@@ -96,6 +99,6 @@ function smarty_function_phplayers($params, &$smarty) {
 	} else {
 		echo $phplayers->$new["$type"]($struct["$type"]);
 	}
-	
+	}
 }
 ?>

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.190 2004-04-30 23:53:01 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.191 2004-05-01 01:06:20 damosoft Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4200,6 +4200,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxRecords','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_directories','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_articles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blog','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blogs','10');
@@ -4226,6 +4227,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('registerPasscode','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rememberme','disabled');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('remembertime','7200');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rnd_num_reg','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_directories','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_articles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blog','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blogs','y');

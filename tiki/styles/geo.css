@@ -350,6 +350,7 @@ Links in menus
 .rssitem {
   padding: 1px 6px 1px 6px;
   border-top: 1px dashed #dadac9;
+  margin-left: 15px;
 }
 .rssitem:first-child {
   border-top: 0;
@@ -1019,6 +1020,10 @@ div.wiki-edithelp {
 /*
 IMAGE GALLERIES 
 */
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
 
 /* 
 Gallery description 

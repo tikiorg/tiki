@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_result_stats.php,v 1.9 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_result_stats.php,v 1.10 2004-05-01 01:06:19 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,7 @@ $smarty->assign('userResultId', $_REQUEST["userResultId"]);
 $ur_info = $quizlib->get_user_quiz_result($_REQUEST["userResultId"]);
 $smarty->assign('ur_info', $ur_info);
 
-$result = $quizlib->get_quiz_result($resultId);
+$result = $quizlib->get_quiz_result($_REQUEST["resultId"]);
 $smarty->assign_by_ref('result', $result);
 
 $questions = $quizlib->get_user_quiz_questions($_REQUEST["userResultId"]);
