@@ -10,8 +10,8 @@ defined('TIKI_IRCBOT_LOG_DIR') ||
  define('TIKI_IRCBOT_LOG_DIR', dirname(dirname(dirname(__FILE__))) . '/var/log/ircbot');
 
 define('TIKI_IRCBOT_ACTION',	'Action');
-define('TIKI_IRCBOT_JOINED',	'Joined');
-define('TIKI_IRCBOT_LOGGING',	'Log');
+define('TIKI_IRCBOT_JOIN',		'Joined');
+define('TIKI_IRCBOT_LOG',		'Log');
 define('TIKI_IRCBOT_NICK',		'Nick');
 define('TIKI_IRCBOT_PART',		'Part');
 define('TIKI_IRCBOT_PRIVMSG',	'Privmsg');
@@ -76,7 +76,7 @@ class IRCbot extends Net_IRC_Event {
     function event_join($nick, $nickhost, $channel, $params) {
     	if ($nick == $this->nick)
     		return;
-    	$this->_log('Joined: ' . $nick . ' (' . $nickhost . ')');
+    	$this->_log('Join: ' . $nick . ' (' . $nickhost . ')');
     }
 
     function event_nick($nick, $nickhost, $channel, $params) {
