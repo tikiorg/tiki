@@ -1,7 +1,9 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/weather/get_weather_inc.php,v 1.2 2004-01-07 07:59:00 gravesweeper Exp $
+
 global $fCityID;
 ?>
-<form name="form1" method="get" action="<?=$PHP_SELF?>">
+<form name="form1" method="post" action="<?=$PHP_SELF?>">
   <div align="center">Enter a City ID to test: 
     <input type="text" name="fCityID" value="<?=(empty($fCityID)?'USNC0558':$fCityID)?>">
     <input type="submit" name="Submit" value="Submit">
