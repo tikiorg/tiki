@@ -1,13 +1,13 @@
-<a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
+<a title="{tr}Click here to compose a new message{/tr}" class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Compose Message{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<a title="{tr}Click here for help on composing a new message{/tr}" href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp">
+<img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}compose message tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+<a title="{tr}Click here to edit this template{/tr}" href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp">
+<img border="0" src="img/icons/info.gif" alt="{tr}edit template{/tr}" /></a>
 {/if}
 
 {include file=tiki-mytiki_bar.tpl}

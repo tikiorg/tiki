@@ -1,10 +1,10 @@
-<a class="pagetitle" href="messu-read.php?msgId={$msgId}">{tr}Read message{/tr}</a><br /><br />
+<a title="{tr}Click here to refresh this page{/tr}" class="pagetitle" href="messu-read.php?msgId={$msgId}">{tr}Read message{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br />
-{if $prev}<a class="readlink" href="messu-read.php?offset={$offset}&amp;msgId={$prev}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Prev{/tr}</a>{/if} 
-{if $next}<a class="readlink" href="messu-read.php?offset={$offset}&amp;msgId={$next}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Next{/tr}</a>{/if} 
-<a class="readlink" href="messu-mailbox.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Return to messages{/tr}</a>
+{if $prev}<a title="{tr}Click here to view the previous message{/tr}" class="readlink" href="messu-read.php?offset={$offset}&amp;msgId={$prev}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Prev{/tr}</a>{/if} 
+{if $next}<a title="{tr}Click here to view the next message{/tr}" class="readlink" href="messu-read.php?offset={$offset}&amp;msgId={$next}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Next{/tr}</a>{/if} 
+<a title="{tr}Click here to view your mailbox{/tr}" class="readlink" href="messu-mailbox.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Return to mailbox{/tr}</a>
 <br /><br />
 {if $legend}
   {$legend}
@@ -61,9 +61,9 @@
   </table>
   <div class="messureadflag">
   {if $msg.isFlagged eq 'y'}
-  <img alt="flag" src="img/flagged.gif" /><a class="link" href="messu-read.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Unflag{/tr}</a>
+  <img alt="flag" src="img/flagged.gif" /><a title="{tr}Click here to unflag this message{/tr}" class="link" href="messu-read.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Unflag{/tr}</a>
   {else}
-  <a class="link" href="messu-read.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Flag this message{/tr}</a>
+  <a title="{tr}Click here to flag this message{/tr}" class="link" href="messu-read.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Flag this message{/tr}</a>
   {/if}
   </div>
   <div class="messureadhead">

@@ -25,8 +25,8 @@
 {/foreach}
 <input type="submit" name="ticket_action_button" value="{tr}Click here to confirm your action{/tr}" />
 </form><br /><br />
-<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
-<a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+<a title="{tr}Click here to return to the previous page{/tr}"  href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+<a title="{tr}Click here to go to the homepage{/tr}" href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
 </div>
 </div>
 </div>
